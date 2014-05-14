@@ -1,0 +1,29 @@
+{
+  "name": "ngeo",
+  "version": "0.0.1",
+  "description": "AngularJS OpenLayers 3 Library",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/elemoine/ngeo.git"
+  },
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/elemoine/ngeo/issues"
+  },
+  "dependencies": {
+    "async": "~0.2.10",
+    "htmlparser2": "~3.7.1"
+  },
+  "devDependencies": {
+    "closure-util": "~0.11.0",
+    "jshint": "~2.4.4",
+    "jsdoc": "~3.3.0-alpha5",
+    "walk": "~2.3.1",
+    "fs-extra": "~0.8.1",
+    "nomnom": "~1.6.2",
+    "temp": "~0.7.0",
+    "phantomjs": "~1.9.7-5"
+  }
+}
