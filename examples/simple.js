@@ -1,7 +1,7 @@
 (function() {
   goog.provide('app');
 
-  goog.require('ga_map');
+  goog.require('go_map_directive');
   goog.require('ol.Map');
   goog.require('ol.layer.Tile');
   goog.require('ol.source.OSM');
