@@ -1,4 +1,7 @@
-all: .build/closure-compiler/compiler.jar .build/python-venv/bin/gjslint
+all: .build/closure-compiler/compiler.jar .build/python-venv/bin/gjslint node_modules
+
+node_modules:
+	npm install
 
 .build/python-venv/bin/gjslint: .build/python-venv
 	.build/python-venv/bin/pip install "http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz"
