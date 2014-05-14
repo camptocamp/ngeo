@@ -1,6 +1,6 @@
 all: .build/closure-compiler/compiler.jar .build/python-venv/bin/gjslint node_modules
 
-node_modules:
+node_modules: package.json
 	npm install
 
 .build/python-venv/bin/gjslint: .build/python-venv
