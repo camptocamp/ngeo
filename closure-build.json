@@ -1,0 +1,25 @@
+{
+  "exports": [],
+  "src": ["node_modules/ol3/src/**/*.js", "src/**/*.js"],
+  "compile": {
+    "js": ["examples/simple.js", "node_modules/ol3/externs/olx.js"],
+    "closure_entry_point": "app",
+    "externs": [
+      "node_modules/ol3/externs/bingmaps.js",
+      "node_modules/ol3/externs/example.js",
+      "node_modules/ol3/externs/geojson.js",
+      "node_modules/ol3/externs/oli.js",
+      "node_modules/ol3/externs/proj4js.js",
+      "node_modules/ol3/externs/tilejson.js",
+      "node_modules/ol3/externs/topojson.js",
+      "node_modules/ol3/externs/vbarray.js"
+    ],
+    "define": [
+      "goog.dom.ASSUME_STANDARDS_MODE=true",
+      "goog.DEBUG=false"
+    ],
+    "compilation_level": "ADVANCED_OPTIMIZATIONS",
+    "output_wrapper": "(function(){%output%})();",
+    "use_types_for_optimization": true
+  }
+}
