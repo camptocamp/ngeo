@@ -19,3 +19,8 @@ node_modules: package.json
 	mkdir -p $(dir $@)
 	wget -O $@ http://closure-compiler.googlecode.com/files/compiler-latest.zip
 	touch $@
+
+.build/externs/angular-1.3.js:
+	mkdir -p $(dir $@)
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.3.js
+	touch $@
