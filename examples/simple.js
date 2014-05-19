@@ -11,19 +11,23 @@
     'go_map_directive'
   ]);
 
-  module.controller('MainController', ['$scope', function($scope) {
-      $scope.map = new ol.Map({
-        layers: [
-          new ol.layer.Tile({
-            source: new ol.source.OSM()
-          })
-        ],
-        view: new ol.View2D({
-          center: [0, 0],
-          zoom: 4
-        })
-      });
-    }]);
+  module.controller('MainController', ['$scope',
+      /**
+       * @param {angular.Scope} $scope Scope.
+       */
+      function($scope) {
+          $scope.map = new ol.Map({
+            layers: [
+              new ol.layer.Tile({
+                source: new ol.source.OSM()
+              })
+            ],
+            view: new ol.View2D({
+              center: [0, 0],
+              zoom: 4
+            })
+          });
+        }]);
 
 })();
 
