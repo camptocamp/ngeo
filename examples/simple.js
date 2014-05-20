@@ -16,6 +16,7 @@ goog.require('ol.View2D');
        * @param {angular.Scope} $scope Scope.
        */
       function($scope) {
+          /** @type {ol.Map} */
           $scope.map = new ol.Map({
             layers: [
               new ol.layer.Tile({
