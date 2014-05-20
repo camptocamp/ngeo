@@ -63,6 +63,7 @@
     ],
     "compilation_level": "ADVANCED_OPTIMIZATIONS",
     "output_wrapper": "(function(){%output%})();",
-    "use_types_for_optimization": true
+    "use_types_for_optimization": true,
+    "manage_closure_dependencies": true
   }
 }
