@@ -1,12 +1,12 @@
+goog.provide('app');
+
+goog.require('go_map_directive');
+goog.require('ol.Map');
+goog.require('ol.layer.Tile');
+goog.require('ol.source.OSM');
+goog.require('ol.View2D');
+
 (function() {
-  goog.provide('app');
-
-  goog.require('go_map_directive');
-  goog.require('ol.Map');
-  goog.require('ol.layer.Tile');
-  goog.require('ol.source.OSM');
-  goog.require('ol.View2D');
-
   var module = angular.module('app', [
     'go_map_directive'
   ]);
