@@ -1,5 +1,39 @@
 # ngeo
 
+## Developer Guide
+
+### Directives
+
+* In the definition of a directive, if an object is used for the `scope`
+  property (isolate scope case) then quotes must be used for the keys in that
+  object. And in the `link` function, `goog.object.get` must be used to get
+  references to objects associated with these keys. See the example below.
+
+  ```js
+  module.directive('goDirectiveExample',
+      /**
+       * @return {angular.Directive} The directive specs.
+       */
+      function() {
+        return {
+          restrict: 'A',
+          scope: {
+            'm': '=goDirectiveExampleMap'
+          }
+          link:
+              /**
+               * @param {angular.Scope} scope Scope.
+               * @param {angular.JQLite} element Element.
+               * @param {angular.Attributes} attrs Attributes.
+               */
+              function(scope, element, attrs) {
+                var m = goog.object.get(scope, 'm');
+                // …
+              },
+          // …
+        });
+  ```
+
 ## Issues
 
 * Cannot use compile flags as missingProperties because of a problem in
