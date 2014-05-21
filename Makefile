@@ -1,5 +1,9 @@
 all: examples/simple.min.js
 
+dist/ngeo.js: dist/ngeo.json
+	mkdir -p $(dir $@)
+	node node_modules/openlayers/tasks/build.js $< $@
+
 examples/%.min.js: .build/examples/%.json .build/externs/angular-1.3.js examples/%.js node_modules
 	node node_modules/openlayers/tasks/build.js $< $@
 
