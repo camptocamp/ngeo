@@ -1,3 +1,4 @@
+EXAMPLES_JS_FILES := $(shell find examples -type f -name '*.js')
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 
 .PHONY: all
@@ -10,25 +11,26 @@ help:
 	@echo "Possible targets:"
 	@echo
 	@echo "- dist                    Compile the lib into an ngeo.js standalone build (in dist/)"
+	@echo "- examples                Compile all the examples"
 	@echo "- clean                   Remove generated files"
-	@echo "- allclean                Remove all the build artefacts"
 	@echo "- help                    Display this help message"
 	@echo
 
 .PHONY: dist
 dist: dist/ngeo.js
 
-dist/ngeo.js: dist/ngeo.json $(SRC_JS_FILES)
+.PHONY: examples
+examples: $(addprefix .build/, $(patsubst %.js, %.min.js, $(EXAMPLES_JS_FILES)))
+
+dist/ngeo.js: dist/ngeo.json $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node node_modules/openlayers/tasks/build.js $< $@
 
-examples/%.min.js: .build/examples/%.json .build/externs/angular-1.3.js examples/%.js node_modules
+.build/examples/%.min.js: .build/examples/%.json .build/externs/angular-1.3.js examples/%.js .build/node_modules.timestamp
+	mkdir -p $(dir $@)
 	node node_modules/openlayers/tasks/build.js $< $@
 
-.PHONY: node_modules
-node_modules: node_modules/closure-util/gruntfile.js
-
-node_modules/closure-util/gruntfile.js: package.json
+.build/node_modules.timestamp: package.json
 	npm install
 	touch $@
 
@@ -61,7 +63,7 @@ node_modules/closure-util/gruntfile.js: package.json
 
 .PHONY: clean
 clean:
-	rm -f examples/*.min.js
+	rm -f .build/examples/*.min.js
 	rm -f dist/ngeo.js
 
 .PHONY: allclean

@@ -2,7 +2,7 @@
   "exports": [],
   "src": ["node_modules/openlayers/src/**/*.js", "src/**/*.js"],
   "compile": {
-    "closure_entry_point": "app",
+    "closure_entry_point": "{{example}}",
     "externs": [
       "node_modules/openlayers/externs/bingmaps.js",
       "node_modules/openlayers/externs/example.js",
