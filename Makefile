@@ -13,6 +13,7 @@ help:
 	@echo "- dist                    Compile the lib into an ngeo.js standalone build (in dist/)"
 	@echo "- examples                Compile all the examples"
 	@echo "- clean                   Remove generated files"
+	@echo "- allclean                Remove all the build artefacts"
 	@echo "- help                    Display this help message"
 	@echo
 
