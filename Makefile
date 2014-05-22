@@ -1,4 +1,20 @@
-all: examples/simple.min.js
+.PHONY: all
+all: help
+
+.PHONY: help
+help:
+	@echo "Usage: make <target>"
+	@echo
+	@echo "Possible targets:"
+	@echo
+	@echo "- dist                    Build the standalone ngeo.js lib (in dist/)"
+	@echo "- clean                   Remove generated files"
+	@echo "- allclean                Remove all the build artefacts"
+	@echo "- help                    Display this help message"
+	@echo
+
+.PHONY: dist
+dist: dist/ngeo.js
 
 dist/ngeo.js: dist/ngeo.json
 	mkdir -p $(dir $@)
@@ -44,6 +60,7 @@ node_modules/closure-util/gruntfile.js: package.json
 .PHONY: clean
 clean:
 	rm -f examples/*.min.js
+	rm -f dist/ngeo.js
 
 .PHONY: allclean
 allclean: clean
