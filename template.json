@@ -41,7 +41,6 @@
       "duplicate",
       "duplicateMessage",
       "es3",
-      "es5Strict",
       "externsValidation",
       "fileoverviewTags",
       "globalThis",
@@ -60,6 +59,9 @@
       "uselessCode",
       "violatedModuleDep",
       "visibility"
+    ],
+    "jscomp_off": [
+      "es5Strict"
     ],
     "compilation_level": "ADVANCED_OPTIMIZATIONS",
     "output_wrapper": "(function(){%output%})();",
