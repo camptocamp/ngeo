@@ -22,8 +22,7 @@
     ],
     "js": [
       "examples/{{example}}.js",
-      "node_modules/openlayers/externs/olx.js",
-      "node_modules/closure-util/.deps/library/6d6b725a69717fd03873b27c13dd94db5dfcbc14/closure/goog/deps.js"
+      "node_modules/openlayers/externs/olx.js"
     ],
     "jscomp_error": [
       "accessControls",
