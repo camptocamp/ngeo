@@ -1,3 +1,5 @@
+SRC_JS_FILES := $(shell find src -type f -name '*.js')
+
 .PHONY: all
 all: help
 
@@ -7,7 +9,7 @@ help:
 	@echo
 	@echo "Possible targets:"
 	@echo
-	@echo "- dist                    Build the standalone ngeo.js lib (in dist/)"
+	@echo "- dist                    Compile the lib into an ngeo.js standalone build (in dist/)"
 	@echo "- clean                   Remove generated files"
 	@echo "- allclean                Remove all the build artefacts"
 	@echo "- help                    Display this help message"
@@ -16,7 +18,7 @@ help:
 .PHONY: dist
 dist: dist/ngeo.js
 
-dist/ngeo.js: dist/ngeo.json
+dist/ngeo.js: dist/ngeo.json $(SRC_JS_FILES)
 	mkdir -p $(dir $@)
 	node node_modules/openlayers/tasks/build.js $< $@
 
