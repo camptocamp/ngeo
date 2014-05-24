@@ -25,11 +25,15 @@ dist: dist/ngeo.js
 examples: $(addprefix .build/, $(patsubst %.js, %.min.js, $(EXAMPLES_JS_FILES)))
 
 .PHONY: lint
-lint: .build/python-venv/bin/gjslint gjslint
+lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp gjslint jshint
 
 .PHONY: gjslint
 gjslint: $(SRC_JS_FILES) $(EXAMPLES_JS_FILES)
 	.build/python-venv/bin/gjslint --jslint_error=all --strict $?
+
+.PHONY: jshint
+jshint: $(SRC_JS_FILES) $(EXAMPLES_JS_FILES)
+	./node_modules/.bin/jshint --verbose $?
 
 dist/ngeo.js: dist/ngeo.json $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
