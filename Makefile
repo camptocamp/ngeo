@@ -11,6 +11,7 @@ help:
 	@echo "Possible targets:"
 	@echo
 	@echo "- dist                    Compile the lib into an ngeo.js standalone build (in dist/)"
+	@echo "- check                   Perform a number of checks on the code"
 	@echo "- examples                Compile all the examples"
 	@echo "- lint                    Check the code with the linter"
 	@echo "- clean                   Remove generated files"
@@ -20,6 +21,9 @@ help:
 
 .PHONY: dist
 dist: dist/ngeo.js
+
+.PHONY: check
+check: lint dist examples
 
 .PHONY: examples
 examples: $(addprefix .build/, $(patsubst %.js, %.min.js, $(EXAMPLES_JS_FILES)))
