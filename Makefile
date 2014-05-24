@@ -35,7 +35,7 @@ lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslin
 	./node_modules/.bin/jshint --verbose $?
 	touch $@
 
-dist/ngeo.js: dist/ngeo.json $(SRC_JS_FILES) .build/node_modules.timestamp
+dist/ngeo.js: dist/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node build/build.js $< $@
 
