@@ -12,6 +12,7 @@ help:
 	@echo
 	@echo "- dist                    Compile the lib into an ngeo.js standalone build (in dist/)"
 	@echo "- examples                Compile all the examples"
+	@echo "- lint                    Check the code with the linter"
 	@echo "- clean                   Remove generated files"
 	@echo "- allclean                Remove all the build artefacts"
 	@echo "- help                    Display this help message"
@@ -22,6 +23,13 @@ dist: dist/ngeo.js
 
 .PHONY: examples
 examples: $(addprefix .build/, $(patsubst %.js, %.min.js, $(EXAMPLES_JS_FILES)))
+
+.PHONY: lint
+lint: .build/python-venv/bin/gjslint gjslint
+
+.PHONY: gjslint
+gjslint: $(SRC_JS_FILES) $(EXAMPLES_JS_FILES)
+	.build/python-venv/bin/gjslint --jslint_error=all --strict $?
 
 dist/ngeo.js: dist/ngeo.json $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
