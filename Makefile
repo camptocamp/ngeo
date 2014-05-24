@@ -25,11 +25,11 @@ examples: $(addprefix .build/, $(patsubst %.js, %.min.js, $(EXAMPLES_JS_FILES)))
 
 dist/ngeo.js: dist/ngeo.json $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	node node_modules/openlayers/tasks/build.js $< $@
+	node build/build.js $< $@
 
 .build/examples/%.min.js: .build/examples/%.json .build/externs/angular-1.3.js examples/%.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	node node_modules/openlayers/tasks/build.js $< $@
+	node build/build.js $< $@
 
 .build/node_modules.timestamp: package.json
 	npm install
