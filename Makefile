@@ -45,6 +45,7 @@ dist/ngeo.js: dist/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .buil
 
 .build/node_modules.timestamp: package.json
 	npm install
+	mkdir -p $(dir $@)
 	touch $@
 
 .build/closure-compiler/compiler.jar: .build/closure-compiler/compiler-latest.zip
