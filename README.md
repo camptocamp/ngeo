@@ -36,6 +36,18 @@ For example:
 $ make .build/examples/simple.min.js
 ```
 
+## The `check` target
+
+Run the `check` target before submitting a PR:
+
+```shell
+$ make check
+```
+
+The `check` target runs a number of checks on the code of the library and
+the examples (lint, compile, …). We recommend using this target before pushing
+code to GitHub and creating PRs.
+
 ## Developer Guide
 
 This section includes information for developpers of ngeo.
