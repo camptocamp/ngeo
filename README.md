@@ -1,5 +1,40 @@
 # ngeo
 
+## Build the standalone version
+
+To build the standalone version of ngeo use the `dist` target:
+
+```shell
+$ make dist
+```
+
+The resulting file is `dist/ngeo.js`.
+
+## Run the examples
+
+To run the examples use the `serve` target:
+
+```shell
+$ make serve
+```
+
+and point your browser to http://localhost:3000/examples.
+
+## Compile the examples
+
+To compile the examples in advanced mode use:
+
+```shell
+$ make examples
+```
+
+To compile a single example use `make .build/examples/<example_name>.min.js`. For
+example:
+
+```shell
+$ make .build/examples/simple.min.js
+```
+
 ## Developer Guide
 
 ### Directives
@@ -35,10 +70,6 @@
   ```
 
 ## Issues
-
-* Cannot use compile flags like `missingProperties`, `checkTypes`, `duplicate`,
-  because of a problem in closure-util. See
-  https://github.com/openlayers/closure-util/issues/15.
 
 * We use our own closure-compiler.js externs file because ol3's includes the
   definitions of msRequestFullscreen and msExitFullscreen which are defined in
