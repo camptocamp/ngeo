@@ -14,6 +14,7 @@ help:
 	@echo "- check                   Perform a number of checks on the code"
 	@echo "- examples                Compile all the examples"
 	@echo "- lint                    Check the code with the linter"
+	@echo "- serve                   Run a development web server for running the examples"
 	@echo "- clean                   Remove generated files"
 	@echo "- allclean                Remove all the build artefacts"
 	@echo "- help                    Display this help message"
@@ -30,6 +31,10 @@ examples: $(addprefix .build/, $(patsubst %.js, %.min.js, $(EXAMPLES_JS_FILES)))
 
 .PHONY: lint
 lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslint.timestamp .build/jshint.timestamp
+
+.PHONY: serve
+serve:
+	node serve.js
 
 .build/gjslint.timestamp: $(SRC_JS_FILES) $(EXAMPLES_JS_FILES)
 	.build/python-venv/bin/gjslint --jslint_error=all --strict $?
