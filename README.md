@@ -1,6 +1,6 @@
 # ngeo
 
-## Build the standalone version
+## Build standalone version
 
 To build the standalone version of ngeo use the `dist` target:
 
@@ -18,18 +18,19 @@ To run the examples use the `serve` target:
 $ make serve
 ```
 
-and point your browser to http://localhost:3000/examples.
+and point your browser to
+[http://localhost:3000/examples](http://localhost:3000/examples).
 
 ## Compile the examples
 
-To compile the examples in advanced mode use:
+To compile all the examples use:
 
 ```shell
 $ make examples
 ```
 
-To compile a single example use `make .build/examples/<example_name>.min.js`. For
-example:
+To compile a single example use `make .build/examples/<example_name>.min.js`.
+For example:
 
 ```shell
 $ make .build/examples/simple.min.js
@@ -37,7 +38,15 @@ $ make .build/examples/simple.min.js
 
 ## Developer Guide
 
-### Directives
+This section includes information for developpers of ngeo.
+
+### The `ol.js` externs
+
+To be able to compile ngeo (in advanced mode) as a standalone library an
+externs file for ol3 is needed. This externs file, `externs/ol.js`, needs to be
+updated as new ol3 objects are used in ngeo.
+
+### Writing directives
 
 * In the definition of a directive, if an object is used for the `scope`
   property (isolate scope case) then quotes must be used for the keys in that
