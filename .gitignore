@@ -1,4 +1,4 @@
 /.build
 /node_modules
 /examples/simple.min.js
-/dist/ngeo.js
+/dist
