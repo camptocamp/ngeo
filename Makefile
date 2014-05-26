@@ -34,7 +34,7 @@ lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslin
 
 .PHONY: serve
 serve:
-	node serve.js
+	node buildtools/serve.js
 
 .build/gjslint.timestamp: $(SRC_JS_FILES) $(EXAMPLES_JS_FILES)
 	.build/python-venv/bin/gjslint --jslint_error=all --strict $?
@@ -46,11 +46,11 @@ serve:
 
 dist/ngeo.js: dist/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	node build.js $< $@
+	node buildtools/build.js $< $@
 
 .build/examples/%.min.js: .build/examples/%.json .build/externs/angular-1.3.js examples/%.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	node build.js $< $@
+	node buildtools/build.js $< $@
 
 .build/node_modules.timestamp: package.json
 	npm install
