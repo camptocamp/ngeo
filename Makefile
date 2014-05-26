@@ -44,7 +44,7 @@ serve:
 	./node_modules/.bin/jshint --verbose $?
 	touch $@
 
-dist/ngeo.js: dist/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
+dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -67,7 +67,7 @@ dist/ngeo.js: dist/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .buil
 	touch $@
 
 .PRECIOUS: .build/examples/%.json
-.build/examples/%.json: template.json
+.build/examples/%.json: buildtools/example.json
 	mkdir -p $(dir $@)
 	sed 's/{{example}}/$*/' $< > $@
 
@@ -94,4 +94,5 @@ clean:
 .PHONY: allclean
 allclean: clean
 	rm -rf .build
+	rm -rf dist
 	rm -rf node_modules
