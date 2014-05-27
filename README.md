@@ -82,7 +82,7 @@ For example
 $ make gh-pages GITHUB_USERNAME=camptocamp
 ```
 
-will publish the examples to http://camptocamp.github.io/ngeo/<branchname>/.
+will publish the examples to `http://camptocamp.github.io/ngeo/<branchname>/`.
 
 ## Developer Guide
 
