@@ -67,7 +67,7 @@ dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES)
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.build/examples/%.min.js: .build/examples/%.json .build/externs/angular-1.3.js examples/%.js .build/node_modules.timestamp
+.build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) .build/externs/angular-1.3.js examples/%.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
