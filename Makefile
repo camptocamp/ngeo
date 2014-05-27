@@ -42,7 +42,7 @@ serve:
 
 .PHONY: gh-pages
 gh-pages: GIT_BRANCH = $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-gh-pages: .build/ngeo-gh-pages $(BUILD_EXAMPLES_JS_FILES) $(BUILD_EXAMPLES_HTML_FILES)
+gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages $(BUILD_EXAMPLES_JS_FILES) $(BUILD_EXAMPLES_HTML_FILES)
 	(cd $< && \
 	 git fetch origin && \
 	 git merge --ff-only origin/gh-pages && \
@@ -75,8 +75,8 @@ dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES)
 	mkdir -p $(dir $@)
 	sed 's/\/@?main=$*.js/$*.min.js/' $< > $@
 
-.build/ngeo-gh-pages:
-	git clone --branch gh-pages git@github.com:$(GITHUB_USER)/ngeo.git $@
+.build/ngeo-%-gh-pages:
+	git clone --branch gh-pages git@github.com:$*/ngeo.git $@
 
 .build/node_modules.timestamp: package.json
 	npm install
