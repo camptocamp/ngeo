@@ -20,7 +20,7 @@ help:
 	@echo "- serve                   Run a development web server for running the examples"
 	@echo "- gh-pages                Publish examples to GitHub pages"
 	@echo "- clean                   Remove generated files"
-	@echo "- allclean                Remove all the build artefacts"
+	@echo "- cleanall                Remove all the build artefacts"
 	@echo "- help                    Display this help message"
 	@echo
 
@@ -122,8 +122,8 @@ clean:
 	rm -f .build/jshint.timestamp
 	rm -f dist/ngeo.js
 
-.PHONY: allclean
-allclean: clean
+.PHONY: cleanall
+cleanall: clean
 	rm -rf .build
 	rm -rf dist
 	rm -rf node_modules
