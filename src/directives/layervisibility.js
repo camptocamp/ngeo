@@ -1,9 +1,9 @@
-goog.provide('go_opacityslider_directive');
+goog.provide('go_layervisibility_directive');
 
 goog.require('go');
 goog.require('goog.asserts');
 
-goModule.directive('goOpacitySlider', [
+goModule.directive('goLayerVisibility', [
 
   /**
    * @return {angular.Directive} The directive specs.
@@ -11,10 +11,9 @@ goModule.directive('goOpacitySlider', [
   function() {
     return {
       restrict: 'E',
-      template: '<input type="range" min="0" max="1" step="0.05" ' +
-          'value="1" ng-model="l.invertedOpacity" />',
+      template: '<input type="checkbox" ng-model="l.visible"/>',
       scope: {
-        'l': '=goOpacitySliderLayer'
+        'l': '=goLayer'
       },
       link:
           /**
@@ -27,12 +26,12 @@ goModule.directive('goOpacitySlider', [
             var layer = scope['l'];
             goog.asserts.assertInstanceof(layer, ol.layer.Layer);
 
-            Object.defineProperty(layer, 'invertedOpacity', {
+            Object.defineProperty(layer, 'visible', {
               get: function() {
-                return (Math.round((1 - this.getOpacity()) * 100) / 100) + '';
+                return this.getVisible();
               },
               set: function(val) {
-                this.setOpacity(1 - val);
+                this.setVisible(val);
               }
             });
           }
