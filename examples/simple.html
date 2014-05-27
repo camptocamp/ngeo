@@ -7,14 +7,14 @@
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <style>
-      #map {
+      #map > div {
         width: 600px;
         height: 400px;
       }
     </style>
   </head>
   <body ng-controller="MainController">
-    <div id="map" go-map go-map-map="map"></div>
+    <go-map id="map" go-map-map="map"></go-map>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.10/angular.min.js"></script>
     <script src="/@?main=simple.js"></script>
   </body>

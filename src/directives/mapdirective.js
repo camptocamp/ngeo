@@ -8,7 +8,8 @@ goModule.directive('goMap',
      */
     function() {
       return {
-        restrict: 'A',
+        restrict: 'E',
+        template: '<div></div>',
         scope: {
           'm': '=goMapMap'
         },
@@ -21,7 +22,9 @@ goModule.directive('goMap',
             function(scope, element, attrs) {
               /** @type {ol.Map} */
               var map = scope['m'];
-              map.setTarget(element[0]);
+              goog.asserts.assertInstanceof(map, ol.Map);
+
+              map.setTarget(element.children()[0]);
             }
       };
     });
