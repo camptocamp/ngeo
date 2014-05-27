@@ -1,7 +1,7 @@
-goog.provide('opacityslider');
+goog.provide('layeropacity');
 
+goog.require('go_layeropacity_directive');
 goog.require('go_map_directive');
-goog.require('go_opacityslider_directive');
 goog.require('ol.Map');
 goog.require('ol.View2D');
 goog.require('ol.layer.Tile');

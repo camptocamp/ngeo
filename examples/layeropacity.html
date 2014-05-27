@@ -1,25 +1,25 @@
 <!DOCTYPE>
 <html ng-app='app'>
   <head>
-    <title>Opacity slider example</title>
+    <title>Layer opacity example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <style>
         #map > div {
-            width: 600px;
-            height: 400px;
+          width: 600px;
+          height: 400px;
         }
     </style>
   </head>
   <body ng-controller="MainController">
-  <go-map id="map" go-map-map="map"></go-map>
+    <go-map id="map" go-map-map="map"></go-map>
     <div>
         Layer opacity:
-        <go-opacity-slider go-opacity-slider-layer="layer" ></go-opacity-slider>
+        <go-layer-opacity go-layer="layer" ></go-layer-opacity>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.10/angular.min.js"></script>
-    <script src="/@?main=opacityslider.js"></script>
+    <script src="/@?main=layeropacity.js"></script>
   </body>
 </html>
