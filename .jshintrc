@@ -1,0 +1,4 @@
+{
+   // suppresses warnings about using [] notation (person['name']) W069
+   "sub": true
+}

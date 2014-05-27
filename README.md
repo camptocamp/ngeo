@@ -97,9 +97,10 @@ updated as new ol3 objects are used in ngeo.
 ### Writing directives
 
 * In the definition of a directive, if an object is used for the `scope`
-  property (isolate scope case) then quotes must be used for the keys in that
-  object. And in the `link` function, `goog.object.get` must be used to get
-  references to objects associated with these keys. See the example below.
+  property (case of an isolate scope) then quotes must be used for the keys in
+  that object. And in the `link` function, the `[]` notation, instead of the
+  `.` notation, must be used when accessing scope properties. See the example
+  below.
 
   ```js
   module.directive('goDirectiveExample',
