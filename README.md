@@ -48,6 +48,42 @@ The `check` target runs a number of checks on the code of the library and
 the examples (lint, compile, …). We recommend using this target before pushing
 code to GitHub and creating PRs.
 
+## Publish examples to GitHub Pages
+
+Let's say you're working on a new feature in a branch and want to publish
+examples to, for example, show what that feature's UI looks like. The Makefile
+provides a `gh-pages` target for exactly this.
+
+Before anything you need to make sure you have a `gh-pages` branch in your
+`ngeo` repository on GitHub. That not may the case if you're using your
+own `ngeo` repository/fork on GitHub.
+
+Create the `gh-pages` branch in your `ngeo` repo on GitHub (you only need to
+do that once):
+
+```shell
+$ git fetch upstream
+$ git branch gh-pages upstream/gh-pages
+$ git push origin gh-pages:gh-pages
+```
+
+You're now ready to publish the examples to GitHub Pages:
+
+```shell
+$ make gh-pages GITHUB_USERNAME=<your_github_username>
+```
+
+The `GITHUB_USERNAME` defines the user or organization name to
+publish to on GitHub.
+
+For example
+
+```shell
+$ make gh-pages GITHUB_USERNAME=camptocamp
+```
+
+will publish the examples to http://camptocamp.github.io/ngeo/<branchname>.
+
 ## Developer Guide
 
 This section includes information for developpers of ngeo.
