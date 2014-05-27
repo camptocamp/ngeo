@@ -51,12 +51,12 @@ code to GitHub and creating PRs.
 ## Publish examples to GitHub Pages
 
 Let's say you're working on a new feature in a branch and want to publish
-examples to, for example, show what that feature's UI looks like. The Makefile
+examples to show others what that feature's UI looks like. The Makefile
 provides a `gh-pages` target for exactly this.
 
 Before anything you need to make sure you have a `gh-pages` branch in your
-`ngeo` repository on GitHub. That not may the case if you're using your
-own `ngeo` repository/fork on GitHub.
+`ngeo` repository on GitHub. That may not be the case if you're using your own
+`ngeo` repository/fork on GitHub.
 
 Create the `gh-pages` branch in your `ngeo` repo on GitHub (you only need to
 do that once):
@@ -67,13 +67,13 @@ $ git branch gh-pages upstream/gh-pages
 $ git push origin gh-pages:gh-pages
 ```
 
-You're now ready to publish the examples to GitHub Pages:
+You're now ready to publish your current branch's examples to GitHub Pages:
 
 ```shell
 $ make gh-pages GITHUB_USERNAME=<your_github_username>
 ```
 
-The `GITHUB_USERNAME` defines the user or organization name to
+The `GITHUB_USERNAME` variable is used to specify the user/organization name to
 publish to on GitHub.
 
 For example
@@ -82,7 +82,7 @@ For example
 $ make gh-pages GITHUB_USERNAME=camptocamp
 ```
 
-will publish the examples to http://camptocamp.github.io/ngeo/<branchname>.
+will publish the examples to http://camptocamp.github.io/ngeo/<branchname>/.
 
 ## Developer Guide
 
