@@ -2,7 +2,7 @@ SRC_JS_FILES := $(shell find src -type f -name '*.js')
 EXAMPLES_JS_FILES := $(shell find examples -type f -name '*.js')
 BUILD_EXAMPLES_JS_FILES := $(addprefix .build/, $(patsubst %.js, %.min.js, $(EXAMPLES_JS_FILES)))
 EXAMPLES_HTML_FILES := $(shell find examples -type f -name '*.html')
-BUILD_EXAMPLES_HTML_FILES := $(addprefix .build/, $(EXAMPLE_HTML_FILES))
+BUILD_EXAMPLES_HTML_FILES := $(addprefix .build/, $(EXAMPLES_HTML_FILES))
 
 .PHONY: all
 all: help
