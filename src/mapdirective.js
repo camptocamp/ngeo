@@ -1,7 +1,6 @@
 goog.provide('go_map_directive');
 
 goog.require('go');
-goog.require('goog.object');
 
 goModule.directive('goMap',
     /**
@@ -21,7 +20,7 @@ goModule.directive('goMap',
              */
             function(scope, element, attrs) {
               /** @type {ol.Map} */
-              var map = goog.object.get(scope, 'm');
+              var map = scope['m'];
               map.setTarget(element[0]);
             }
       };
