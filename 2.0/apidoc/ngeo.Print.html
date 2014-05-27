@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: Print</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: Print</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2 id="Print">
+            <span class="ancestors">ngeo.</span>Print
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="Print"><span class="type-signature"></span>new Print<span class="signature">(url, $http)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Provides a function to create ngeo.Print objects used to
+interact with MapFish Print v3 services.</p>
+<p>ngeo.Print objects expose the following methods:</p>
+<ul>
+<li>createSpec: create a report specification object</li>
+<li>createReport: send a create report request</li>
+<li>getStatus: get the status of a report</li>
+<li>getReportUrl: get the URL of a report</li>
+<li>getCapabilities: get the capabilities of the server</li>
+</ul>
+<pre class="prettyprint source"><code>var printBaseUrl = 'http://example.com/print';
+var print = new ngeo.Print(printBaseUrl);
+
+var scale = 5000;
+var dpi = 72;
+var layout = 'A4 portrait';
+var reportSpec = print.createSpec(map, scale, dpi, layout, {
+  'title': 'A title for my report'
+});</code></pre><p>See our live example: <code>../examples/mapfishprint.html</code></p>
+<p>TODO and limitations:</p>
+<ul>
+<li>createSpec should also accept a bbox instead of a center and a scale.</li>
+<li>Add support for ol.style.RegularShape. MapFish Print supports symbols
+like crosses, stars and squares, so printing regular shapes should be
+possible.</li>
+<li>ol.style.Icon may use a sprite image, and offsets to define to rectangle
+to use within the sprite. This type of icons won't be printed correctly
+as MapFish Print does not support sprite icons.</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>URL to MapFish print web service.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>$http</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://docs.angularjs.org/api/ng/service/$http">angular.$http</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Angular $http service.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js">src/services/print.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js#L103">line 103</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="cancel"><span class="type-signature"></span>cancel<span class="signature">(ref, opt_httpConfig<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {angular.$http.HttpPromise}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Cancel a report.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ref</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Print report reference.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opt_httpConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">angular.$http.Config</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>$http config object.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js">src/services/print.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js#L131">line 131</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>HTTP promise.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">angular.$http.HttpPromise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="createReport"><span class="type-signature"></span>createReport<span class="signature">(printSpec, opt_httpConfig<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {angular.$http.HttpPromise}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Send a create report request to the MapFish Print service.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>printSpec</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">MapFishPrintSpec</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Print specification.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opt_httpConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">angular.$http.Config</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>$http config object.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js">src/services/print.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js#L725">line 725</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>HTTP promise.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">angular.$http.HttpPromise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="createSpec"><span class="type-signature"></span>createSpec<span class="signature">(map, scale, dpi, layout, customAttributes)</span><span class="type-signature"> &rarr; {MapFishPrintSpec}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Create a report specification.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>map</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="http://openlayers.org/en/master/apidoc/ol.Map.html">ol.Map</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Map.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scale</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Scale.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dpi</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>DPI.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>layout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Layout.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>customAttributes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>.&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, *></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Custom attributes.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js">src/services/print.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js#L149">line 149</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The print spec.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">MapFishPrintSpec</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="encodeLayer"><span class="type-signature"></span>encodeLayer<span class="signature">(arr, layer, resolution)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>.&lt;MapFishPrintLayer></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Array.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>layer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="http://openlayers.org/en/master/apidoc/ol.layer.Base.html">ol.layer.Base</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Layer.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>resolution</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Resolution.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js">src/services/print.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js#L218">line 218</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getCapabilities"><span class="type-signature"></span>getCapabilities<span class="signature">(opt_httpConfig<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {angular.$http.HttpPromise}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Get the print capabilities from MapFish Print.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>opt_httpConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">angular.$http.Config</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>$http config object.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js">src/services/print.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js#L767">line 767</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>HTTP promise.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">angular.$http.HttpPromise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getReportUrl"><span class="type-signature"></span>getReportUrl<span class="signature">(ref)</span><span class="type-signature"> &rarr; {<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Get the URL of a report.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ref</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Print report reference.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js">src/services/print.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js#L757">line 757</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The report URL for this ref.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getStatus"><span class="type-signature"></span>getStatus<span class="signature">(ref, opt_httpConfig<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {angular.$http.HttpPromise}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Get the status of a report.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ref</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Print report reference.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opt_httpConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">angular.$http.Config</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>$http config object.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js">src/services/print.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/src/services/print.js#L744">line 744</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>HTTP promise.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">angular.$http.HttpPromise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h2>gmf</h2><h3>Directives</h3><ul><li><a href="gmf.authenticationDirective.html">authenticationDirective</a></li><li><a href="gmf.layertreeDirective.html">layertreeDirective</a></li><li><a href="gmf.mapDirective.html">mapDirective</a></li><li><a href="gmf.mobileBackgroundlayerselectorDirective.html">mobileBackgroundlayerselectorDirective</a></li><li><a href="gmf.mobiledisplayqueriesDirective.html">mobiledisplayqueriesDirective</a></li><li><a href="gmf.mobileMeasureLengthDirective.html">mobileMeasureLengthDirective</a></li><li><a href="gmf.mobileMeasurePointDirective.html">mobileMeasurePointDirective</a></li><li><a href="gmf.searchDirective.html">searchDirective</a></li><li><a href="gmf.themeselectorDirective.html">themeselectorDirective</a></li></ul><h3>Services</h3><ul><li><a href="gmf.Altitude.html">Altitude</a></li><li><a href="gmf.Permalink.html">Permalink</a></li><li><a href="gmf.QueryManager.html">QueryManager</a></li><li><a href="gmf.Themes.html">Themes</a></li></ul><h3>Controllers</h3><ul><li><a href="gmf.AuthenticationController.html">AuthenticationController</a></li><li><a href="gmf.LayertreeController.html">LayertreeController</a></li><li><a href="gmf.MapController.html">MapController</a></li><li><a href="gmf.MobileBackgroundlayerselectorController.html">MobileBackgroundlayerselectorController</a></li><li><a href="gmf.MobileMeasureLengthController.html">MobileMeasureLengthController</a></li><li><a href="gmf.MobileMeasurePointController.html">MobileMeasurePointController</a></li><li><a href="gmf.MobileNavController.html">MobileNavController</a></li><li><a href="gmf.SearchController.html">SearchController</a></li><li><a href="gmf.ThemeselectorController.html">ThemeselectorController</a></li></ul><h3>Classes</h3><ul><li><a href="gmf.AbstractController.html">AbstractController</a></li><li><a href="gmf.AbstractDesktopController.html">AbstractDesktopController</a></li><li><a href="gmf.AbstractMobileController.html">AbstractMobileController</a></li><li><a href="gmf.Authentication.html">Authentication</a></li><li><a href="gmf.AuthenticationEvent.html">AuthenticationEvent</a></li><li><a href="gmf.MobiledisplayqueriesController.html">MobiledisplayqueriesController</a></li></ul><h3>Types</h3><ul><li><a href="gmf.html#AuthenticationDefaultResponse">AuthenticationDefaultResponse</a></li><li><a href="gmf.html#AuthenticationLoginResponse">AuthenticationLoginResponse</a></li><li><a href="gmf.html#ExportFeatures">ExportFeatures</a></li><li><a href="gmf.html#ThemesResponse">ThemesResponse</a></li></ul><h3>Enumerations</h3><ul><li><a href="gmf.html#AltitudeParam">AltitudeParam</a></li><li><a href="gmf.html#AuthenticationEventType">AuthenticationEventType</a></li><li><a href="gmf.html#AuthenticationRouteSuffix">AuthenticationRouteSuffix</a></li><li><a href="gmf.html#ExportFormat">ExportFormat</a></li><li><a href="gmf.html#PermalinkParam">PermalinkParam</a></li><li><a href="gmf.html#ThemesEventType">ThemesEventType</a></li></ul><h2>gmf.source</h2><h3>Classes</h3><ul><li><a href="gmf.source.AsitVD.html">AsitVD</a></li><li><a href="gmf.source.Swisstopo.html">Swisstopo</a></li></ul><h2>ngeo</h2><h3>Directives</h3><ul><li><a href="ngeo.btnDirective.html">btnDirective</a></li><li><a href="ngeo.btngroupDirective.html">btngroupDirective</a></li><li><a href="ngeo.controlDirective.html">controlDirective</a></li><li><a href="ngeo.desktopGeolocationDirective.html">desktopGeolocationDirective</a></li><li><a href="ngeo.filereaderDirective.html">filereaderDirective</a></li><li><a href="ngeo.layertreeDirective.html">layertreeDirective</a></li><li><a href="ngeo.mapDirective.html">mapDirective</a></li><li><a href="ngeo.mobileGeolocationDirective.html">mobileGeolocationDirective</a></li><li><a href="ngeo.mobileQueryDirective.html">mobileQueryDirective</a></li><li><a href="ngeo.modalDirective.html">modalDirective</a></li><li><a href="ngeo.profileDirective.html">profileDirective</a></li><li><a href="ngeo.recenterDirective.html">recenterDirective</a></li><li><a href="ngeo.resizemapDirective.html">resizemapDirective</a></li><li><a href="ngeo.scaleselectorDirective.html">scaleselectorDirective</a></li><li><a href="ngeo.searchDirective.html">searchDirective</a></li><li><a href="ngeo.sortableDirective.html">sortableDirective</a></li></ul><h3>Services</h3><ul><li><a href="ngeo.BackgroundLayerMgr.html">BackgroundLayerMgr</a></li><li><a href="ngeo.CreateGeoJSONBloodhound.html">CreateGeoJSONBloodhound</a></li><li><a href="ngeo.createPrintServiceFactory.html">createPrintServiceFactory</a></li><li><a href="ngeo.Debounce.html">Debounce</a></li><li><a href="ngeo.DecorateGeolocation.html">DecorateGeolocation</a></li><li><a href="ngeo.DecorateInteraction.html">DecorateInteraction</a></li><li><a href="ngeo.DecorateLayer.html">DecorateLayer</a></li><li><a href="ngeo.FeatureOverlayMgr.html">FeatureOverlayMgr</a></li><li><a href="ngeo.getBrowserLanguageFactory.html">getBrowserLanguageFactory</a></li><li><a href="ngeo.LayerHelper.html">LayerHelper</a></li><li><a href="ngeo.Location.html">Location</a></li><li><a href="ngeo.Popup.html">Popup</a></li><li><a href="ngeo.PrintUtils.html">PrintUtils</a></li><li><a href="ngeo.Query.html">Query</a></li><li><a href="ngeo.SyncArrays.html">SyncArrays</a></li><li><a href="ngeo.ToolActivateMgr.html">ToolActivateMgr</a></li></ul><h3>Controllers</h3><ul><li><a href="ngeo.BtnGroupController.html">BtnGroupController</a></li><li><a href="ngeo.DesktopGeolocationController.html">DesktopGeolocationController</a></li><li><a href="ngeo.LayertreeController.html">LayertreeController</a></li><li><a href="ngeo.MobileGeolocationController.html">MobileGeolocationController</a></li><li><a href="ngeo.ScaleselectorController.html">ScaleselectorController</a></li></ul><h3>Classes</h3><ul><li><a href="ngeo.BackgroundEvent.html">BackgroundEvent</a></li><li><a href="ngeo.FeatureOverlay.html">FeatureOverlay</a></li><li><a href="ngeo.MeasureEvent.html">MeasureEvent</a></li><li><a href="ngeo.Popover.html">Popover</a></li><li><a href="ngeo.Print.html">Print</a></li><li><a href="ngeo.profile.html">profile</a></li><li><a href="ngeo.StateManager.html">StateManager</a></li><li><a href="ngeo.ToolActivate.html">ToolActivate</a></li></ul><h3>Types</h3><ul><li><a href="ngeo.html#CreatePopup">CreatePopup</a></li><li><a href="ngeo.html#CreatePrint">CreatePrint</a></li><li><a href="ngeo.html#FeatureOverlayGroup">FeatureOverlayGroup</a></li><li><a href="ngeo.html#GetBrowserLanguage">GetBrowserLanguage</a></li><li><a href="ngeo.html#MockLocationProvider">MockLocationProvider</a></li><li><a href="ngeo.html#QueryCacheItem">QueryCacheItem</a></li><li><a href="ngeo.html#QueryResult">QueryResult</a></li><li><a href="ngeo.html#QueryResultSource">QueryResultSource</a></li><li><a href="ngeo.html#ScaleselectorOptions">ScaleselectorOptions</a></li><li><a href="ngeo.html#SortableOptions">SortableOptions</a></li><li><a href="ngeo.html#ToolMgrEntry">ToolMgrEntry</a></li></ul><h3>Enumerations</h3><ul><li><a href="ngeo.html#BackgroundEventType">BackgroundEventType</a></li><li><a href="ngeo.html#DesktopGeolocationEventType">DesktopGeolocationEventType</a></li><li><a href="ngeo.html#MeasureEventType">MeasureEventType</a></li><li><a href="ngeo.html#MobileGeolocationEventType">MobileGeolocationEventType</a></li><li><a href="ngeo.html#PrintStyleType">PrintStyleType</a></li><li><a href="ngeo.html#QueryInfoFormatType">QueryInfoFormatType</a></li></ul><h2>ngeo.format</h2><h3>Classes</h3><ul><li><a href="ngeo.format.FeatureHash.html">FeatureHash</a></li></ul><h3>Enumerations</h3><ul><li><a href="ngeo.format.html#FeatureHashStyleType">FeatureHashStyleType</a></li></ul><h2>ngeo.interaction</h2><h3>Classes</h3><ul><li><a href="ngeo.interaction.DrawAzimut.html">DrawAzimut</a></li><li><a href="ngeo.interaction.Measure.html">Measure</a></li><li><a href="ngeo.interaction.MeasureArea.html">MeasureArea</a></li><li><a href="ngeo.interaction.MeasureAzimut.html">MeasureAzimut</a></li><li><a href="ngeo.interaction.MeasureLength.html">MeasureLength</a></li><li><a href="ngeo.interaction.MeasureLengthMobile.html">MeasureLengthMobile</a></li><li><a href="ngeo.interaction.MeasurePointMobile.html">MeasurePointMobile</a></li><li><a href="ngeo.interaction.MobileDraw.html">MobileDraw</a></li></ul><h3>Types</h3><ul><li><a href="ngeo.interaction.html#MeasureBaseOptions">MeasureBaseOptions</a></li></ul><h3>Enumerations</h3><ul><li><a href="ngeo.interaction.html#MobileDrawProperty">MobileDrawProperty</a></li></ul><h2>ngeo.MeasureEvent</h2><h3>Events</h3><ul><li><a href="ngeo.MeasureEvent.html#event:measureend">measureend</a></li></ul><h2>ngeox</h2><h3>Interfaces</h3><ul><li><a href="ngeox.BackgroundEvent.html">BackgroundEvent</a></li><li><a href="ngeox.MeasureEvent.html">MeasureEvent</a></li></ul><h3>Types</h3><ul><li><a href="ngeox.html#DesktopGeolocationDirectiveOptions">DesktopGeolocationDirectiveOptions</a></li><li><a href="ngeox.html#MobileGeolocationDirectiveOptions">MobileGeolocationDirectiveOptions</a></li><li><a href="ngeox.html#QueryOptions">QueryOptions</a></li><li><a href="ngeox.html#QuerySource">QuerySource</a></li><li><a href="ngeox.html#SearchDirectiveListeners">SearchDirectiveListeners</a></li></ul><h2>gmfx</h2><h3>Types</h3><ul><li><a href="gmfx.html#AuthenticationFunctionalities">AuthenticationFunctionalities</a></li><li><a href="gmfx.html#Config">Config</a></li><li><a href="gmfx.html#PermalinkOptions">PermalinkOptions</a></li><li><a href="gmfx.html#SearchDirectiveDatasource">SearchDirectiveDatasource</a></li><li><a href="gmfx.html#ServiceUrls">ServiceUrls</a></li><li><a href="gmfx.html#User">User</a></li></ul><h2>gmfx.source</h2><h3>Types</h3><ul><li><a href="gmfx.source.html#AsitVDOptions">AsitVDOptions</a></li><li><a href="gmfx.source.html#SwisstopoOptions">SwisstopoOptions</a></li></ul><h2>ngeox.format</h2><h3>Types</h3><ul><li><a href="ngeox.format.html#FeatureHashOptions">FeatureHashOptions</a></li></ul><h2>ngeox.interaction</h2><h3>Types</h3><ul><li><a href="ngeox.interaction.html#MeasureOptions">MeasureOptions</a></li><li><a href="ngeox.interaction.html#MobileDrawOptions">MobileDrawOptions</a></li></ul><h2>ngeox.profile</h2><h3>Types</h3><ul><li><a href="ngeox.profile.html#ElevationExtractor">ElevationExtractor</a></li><li><a href="ngeox.profile.html#PoiExtractor">PoiExtractor</a></li><li><a href="ngeox.profile.html#ProfileFormatter">ProfileFormatter</a></li><li><a href="ngeox.profile.html#ProfileOptions">ProfileOptions</a></li></ul><h3>Global</h3><ul><li><a href="global.html#gmfx">gmfx</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

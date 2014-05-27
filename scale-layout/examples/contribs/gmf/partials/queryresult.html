@@ -1,0 +1,38 @@
+<h3>Total: {{ qrCtrl.result.total }}</h3>
+
+<ul class="nav nav-tabs"
+    role="tablist">
+  <!-- sources are dynamically added in GMF after reading the themes, so
+       no one-time binding here -->
+  <li ng-repeat="source in qrCtrl.result.sources"
+      role="presentation"
+      ng-if="source.features.length">
+    <a href="#{{ ::source.id }}"
+       aria-controls="{{ ::source.id }}"
+       role="tab"
+       data-toggle="tab">
+      <span>{{ ::source.label }}</span>
+      <span>({{ ::source.features.length }})</span>
+    </a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <!-- same thing here -->
+  <div ng-repeat="source in qrCtrl.result.sources"
+       role="tabpanel"
+       class="tab-pane"
+       ng-if="source.features.length"
+       id="{{ ::source.id }}">
+    <div ng-repeat="feature in ::source.features">
+      <h3>{{ ::feature.get('display_name') }}</h3>
+      <div ng-repeat="(key, value) in ::feature.getProperties()"
+           ng-init="value = value !== undefined ? value : ''">
+        <span ng-if="::(key !== 'THE_GEOM' && key !== 'POINT')">
+          <span ng-bind="::key"></span>:
+          <span ng-bind="::value"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

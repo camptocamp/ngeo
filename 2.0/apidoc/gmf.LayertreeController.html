@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: LayertreeController <small>controller:gmfLayertreeController</small></title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: LayertreeController <small>controller:gmfLayertreeController</small></h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2 id="LayertreeController">
+            <span class="ancestors">gmf.</span>LayertreeController
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="LayertreeController"><span class="type-signature"></span>new LayertreeController<span class="signature">($http, $sce, ngeoCreatePopup, ngeoLayerHelper, gmfWmsUrl)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>$http</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://docs.angularjs.org/api/ng/service/$http">angular.$http</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Angular http service.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>$sce</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://docs.angularjs.org/api/ng/service/$sce">angular.$sce</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Angular sce service.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ngeoCreatePopup</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ngeo.html#CreatePopup">ngeo.CreatePopup</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Popup service.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ngeoLayerHelper</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ngeo.LayerHelper.html">ngeo.LayerHelper</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Ngeo Layer Helper.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gmfWmsUrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>URL to the wms service to use by default.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L109">line 109</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".DATALAYERGROUP_NAME"><span class="type-signature">(static, constant) </span>DATALAYERGROUP_NAME<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L173">line 173</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".TYPE_EXTERNALWMS"><span class="type-signature">(static, constant) </span>TYPE_EXTERNALWMS<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L197">line 197</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".TYPE_MIXEDGROUP"><span class="type-signature">(static, constant) </span>TYPE_MIXEDGROUP<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L179">line 179</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".TYPE_NOTMIXEDGROUP"><span class="type-signature">(static, constant) </span>TYPE_NOTMIXEDGROUP<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L185">line 185</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".TYPE_WMS"><span class="type-signature">(static, constant) </span>TYPE_WMS<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L203">line 203</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".TYPE_WMTS"><span class="type-signature">(static, constant) </span>TYPE_WMTS<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L191">line 191</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="openLinksInNewWindow"><span class="type-signature"></span>openLinksInNewWindow<span class="type-signature"> :<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L158">line 158</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".getLayerNodeIds"><span class="type-signature">(static) </span>getLayerNodeIds<span class="signature">(node)</span><span class="type-signature"> &rarr; {<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>.&lt;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>|<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Collect and return all ids of this layer node and all child nodes as well.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>node</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="GmfThemesNode.html">GmfThemesNode</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Layer tree node.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L874">line 874</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Layer names.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>.&lt;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>|<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="displayMetadata"><span class="type-signature"></span>displayMetadata<span class="signature">(treeCtrl)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Display a ngeo.infoPopup with the content of the metadata url of a node.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>treeCtrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ngeo.LayertreeController.html">ngeo.LayertreeController</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>ngeo layertree controller, from
+    the current node.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L814">line 814</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getLayer"><span class="type-signature"></span>getLayer<span class="signature">(node, opt_depth<span class="signature-attributes">opt</span>, opt_createWMS<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="http://openlayers.org/en/master/apidoc/ol.layer.Base.html">ol.layer.Base</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Create and return a layer corresponding to the ngeo layertree's node.
+This function will only create a layer for each &quot;top-level&quot; (depth 1) groups.</p>
+<p>On &quot;not mixed&quot; type nodes, the returned layer will be an ol.layer.Image (WMS)
+with each name of node's children as LAYERS parameters.</p>
+<p>On &quot;mixed&quot; type node, the returned  layer will be an ol.layer.Group with
+a collection of layers that corresponds to each children of the node.</p>
+<p>All layer created will receive:</p>
+<ul>
+<li>A 'querySourceId' parameter with the node id as value.</li>
+<li>A 'layerName' parameter with the node name as value.</li>
+</ul>
+<p>All layer created will be added at the top of the map and with a Z Index
+value of 1.</p>
+<p>If the node metadata 'isChecked' value is 'true', the layer visibility will
+be set to true.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>node</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="GmfThemesNode.html">GmfThemesNode</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Layer tree node.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opt_depth</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>ngeo layertree node depth.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opt_createWMS</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>True to allow create wms layer.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L256">line 256</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The OpenLayers layer or group for the node.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="http://openlayers.org/en/master/apidoc/ol.layer.Base.html">ol.layer.Base</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getLegendIconURL"><span class="type-signature"></span>getLegendIconURL<span class="signature">(treeCtrl)</span><span class="type-signature"> &rarr; (nullable) {<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Get the icon image URL for the given treeCtrl's layer. It can only return a
+string for internal WMS layers without multiple childlayers in the node.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>treeCtrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ngeo.LayertreeController.html">ngeo.LayertreeController</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>ngeo layertree controller, from
+    the current node.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L706">line 706</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The icon legend URL or null.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getLegendURL"><span class="type-signature"></span>getLegendURL<span class="signature">(treeCtrl)</span><span class="type-signature"> &rarr; (nullable) {<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Get the legend URL for the given treeCtrl.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>treeCtrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ngeo.LayertreeController.html">ngeo.LayertreeController</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>ngeo layertree controller, from
+    the current node.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L729">line 729</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The legend URL or null.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getNodeState"><span class="type-signature"></span>getNodeState<span class="signature">(treeCtrl)</span><span class="type-signature"> &rarr; {<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Return the current state of the given treeCtrl's node.
+Return a class name that match with the current node activation state.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>treeCtrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ngeo.LayertreeController.html">ngeo.LayertreeController</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>ngeo layertree controller, from
+    the current node.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L578">line 578</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>'on' or 'off' or 'indeterminate'.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getNoSourceStyle"><span class="type-signature"></span>getNoSourceStyle<span class="signature">(treeCtrl)</span><span class="type-signature"> &rarr; (nullable) {<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Return 'noSource' if no source is defined in the given treeCtrl's WMTS layer.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>treeCtrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ngeo.LayertreeController.html">ngeo.LayertreeController</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>ngeo layertree controller, from
+    the current node.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L843">line 843</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>'noSource' or null</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getResolutionStyle"><span class="type-signature"></span>getResolutionStyle<span class="signature">(node)</span><span class="type-signature"> &rarr; (nullable) {<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Return 'outOfResolution' if the current resolution of the map is out of
+the min/max resolution in the node.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>node</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="GmfThemesNode.html">GmfThemesNode</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Layer tree node.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L459">line 459</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>'outOfResolution' or null.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="listeners"><span class="type-signature"></span>listeners<span class="signature">(scope, treeCtrl)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Remove layer from this component's layergroup (and then, from the map) on
+a ngeo layertree destroy event.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>scope</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://docs.angularjs.org/guide/scope">angular.Scope</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>treeCtrl scope.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>treeCtrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ngeo.LayertreeController.html">ngeo.LayertreeController</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>ngeo layertree controller, from
+    the current node.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L443">line 443</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="toggleActive"><span class="type-signature"></span>toggleActive<span class="signature">(treeCtrl)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Toggle the state of treeCtrl's node.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>treeCtrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ngeo.LayertreeController.html">ngeo.LayertreeController</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>ngeo layertree controller, from
+    the current node.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L478">line 478</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="zoomToResolution"><span class="type-signature"></span>zoomToResolution<span class="signature">(node)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Set the resolution of the map with the max or min resolution of the node.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>node</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="GmfThemesNode.html">GmfThemesNode</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Layer tree node.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js">contribs/gmf/src/directives/layertree.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/317a90e095b092215e6211023f67f18783ab1fd5/contribs/gmf/src/directives/layertree.js#L860">line 860</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h2>gmf</h2><h3>Directives</h3><ul><li><a href="gmf.authenticationDirective.html">authenticationDirective</a></li><li><a href="gmf.layertreeDirective.html">layertreeDirective</a></li><li><a href="gmf.mapDirective.html">mapDirective</a></li><li><a href="gmf.mobileBackgroundlayerselectorDirective.html">mobileBackgroundlayerselectorDirective</a></li><li><a href="gmf.mobiledisplayqueriesDirective.html">mobiledisplayqueriesDirective</a></li><li><a href="gmf.mobileMeasureLengthDirective.html">mobileMeasureLengthDirective</a></li><li><a href="gmf.mobileMeasurePointDirective.html">mobileMeasurePointDirective</a></li><li><a href="gmf.searchDirective.html">searchDirective</a></li><li><a href="gmf.themeselectorDirective.html">themeselectorDirective</a></li></ul><h3>Services</h3><ul><li><a href="gmf.Altitude.html">Altitude</a></li><li><a href="gmf.Permalink.html">Permalink</a></li><li><a href="gmf.QueryManager.html">QueryManager</a></li><li><a href="gmf.Themes.html">Themes</a></li></ul><h3>Controllers</h3><ul><li><a href="gmf.AuthenticationController.html">AuthenticationController</a></li><li><a href="gmf.LayertreeController.html">LayertreeController</a></li><li><a href="gmf.MapController.html">MapController</a></li><li><a href="gmf.MobileBackgroundlayerselectorController.html">MobileBackgroundlayerselectorController</a></li><li><a href="gmf.MobileMeasureLengthController.html">MobileMeasureLengthController</a></li><li><a href="gmf.MobileMeasurePointController.html">MobileMeasurePointController</a></li><li><a href="gmf.MobileNavController.html">MobileNavController</a></li><li><a href="gmf.SearchController.html">SearchController</a></li><li><a href="gmf.ThemeselectorController.html">ThemeselectorController</a></li></ul><h3>Classes</h3><ul><li><a href="gmf.AbstractController.html">AbstractController</a></li><li><a href="gmf.AbstractDesktopController.html">AbstractDesktopController</a></li><li><a href="gmf.AbstractMobileController.html">AbstractMobileController</a></li><li><a href="gmf.Authentication.html">Authentication</a></li><li><a href="gmf.AuthenticationEvent.html">AuthenticationEvent</a></li><li><a href="gmf.MobiledisplayqueriesController.html">MobiledisplayqueriesController</a></li></ul><h3>Types</h3><ul><li><a href="gmf.html#AuthenticationDefaultResponse">AuthenticationDefaultResponse</a></li><li><a href="gmf.html#AuthenticationLoginResponse">AuthenticationLoginResponse</a></li><li><a href="gmf.html#ExportFeatures">ExportFeatures</a></li><li><a href="gmf.html#ThemesResponse">ThemesResponse</a></li></ul><h3>Enumerations</h3><ul><li><a href="gmf.html#AltitudeParam">AltitudeParam</a></li><li><a href="gmf.html#AuthenticationEventType">AuthenticationEventType</a></li><li><a href="gmf.html#AuthenticationRouteSuffix">AuthenticationRouteSuffix</a></li><li><a href="gmf.html#ExportFormat">ExportFormat</a></li><li><a href="gmf.html#PermalinkParam">PermalinkParam</a></li><li><a href="gmf.html#ThemesEventType">ThemesEventType</a></li></ul><h2>gmf.source</h2><h3>Classes</h3><ul><li><a href="gmf.source.AsitVD.html">AsitVD</a></li><li><a href="gmf.source.Swisstopo.html">Swisstopo</a></li></ul><h2>ngeo</h2><h3>Directives</h3><ul><li><a href="ngeo.btnDirective.html">btnDirective</a></li><li><a href="ngeo.btngroupDirective.html">btngroupDirective</a></li><li><a href="ngeo.controlDirective.html">controlDirective</a></li><li><a href="ngeo.desktopGeolocationDirective.html">desktopGeolocationDirective</a></li><li><a href="ngeo.filereaderDirective.html">filereaderDirective</a></li><li><a href="ngeo.layertreeDirective.html">layertreeDirective</a></li><li><a href="ngeo.mapDirective.html">mapDirective</a></li><li><a href="ngeo.mobileGeolocationDirective.html">mobileGeolocationDirective</a></li><li><a href="ngeo.mobileQueryDirective.html">mobileQueryDirective</a></li><li><a href="ngeo.modalDirective.html">modalDirective</a></li><li><a href="ngeo.profileDirective.html">profileDirective</a></li><li><a href="ngeo.recenterDirective.html">recenterDirective</a></li><li><a href="ngeo.resizemapDirective.html">resizemapDirective</a></li><li><a href="ngeo.scaleselectorDirective.html">scaleselectorDirective</a></li><li><a href="ngeo.searchDirective.html">searchDirective</a></li><li><a href="ngeo.sortableDirective.html">sortableDirective</a></li></ul><h3>Services</h3><ul><li><a href="ngeo.BackgroundLayerMgr.html">BackgroundLayerMgr</a></li><li><a href="ngeo.CreateGeoJSONBloodhound.html">CreateGeoJSONBloodhound</a></li><li><a href="ngeo.createPrintServiceFactory.html">createPrintServiceFactory</a></li><li><a href="ngeo.Debounce.html">Debounce</a></li><li><a href="ngeo.DecorateGeolocation.html">DecorateGeolocation</a></li><li><a href="ngeo.DecorateInteraction.html">DecorateInteraction</a></li><li><a href="ngeo.DecorateLayer.html">DecorateLayer</a></li><li><a href="ngeo.FeatureOverlayMgr.html">FeatureOverlayMgr</a></li><li><a href="ngeo.getBrowserLanguageFactory.html">getBrowserLanguageFactory</a></li><li><a href="ngeo.LayerHelper.html">LayerHelper</a></li><li><a href="ngeo.Location.html">Location</a></li><li><a href="ngeo.Popup.html">Popup</a></li><li><a href="ngeo.PrintUtils.html">PrintUtils</a></li><li><a href="ngeo.Query.html">Query</a></li><li><a href="ngeo.SyncArrays.html">SyncArrays</a></li><li><a href="ngeo.ToolActivateMgr.html">ToolActivateMgr</a></li></ul><h3>Controllers</h3><ul><li><a href="ngeo.BtnGroupController.html">BtnGroupController</a></li><li><a href="ngeo.DesktopGeolocationController.html">DesktopGeolocationController</a></li><li><a href="ngeo.LayertreeController.html">LayertreeController</a></li><li><a href="ngeo.MobileGeolocationController.html">MobileGeolocationController</a></li><li><a href="ngeo.ScaleselectorController.html">ScaleselectorController</a></li></ul><h3>Classes</h3><ul><li><a href="ngeo.BackgroundEvent.html">BackgroundEvent</a></li><li><a href="ngeo.FeatureOverlay.html">FeatureOverlay</a></li><li><a href="ngeo.MeasureEvent.html">MeasureEvent</a></li><li><a href="ngeo.Popover.html">Popover</a></li><li><a href="ngeo.Print.html">Print</a></li><li><a href="ngeo.profile.html">profile</a></li><li><a href="ngeo.StateManager.html">StateManager</a></li><li><a href="ngeo.ToolActivate.html">ToolActivate</a></li></ul><h3>Types</h3><ul><li><a href="ngeo.html#CreatePopup">CreatePopup</a></li><li><a href="ngeo.html#CreatePrint">CreatePrint</a></li><li><a href="ngeo.html#FeatureOverlayGroup">FeatureOverlayGroup</a></li><li><a href="ngeo.html#GetBrowserLanguage">GetBrowserLanguage</a></li><li><a href="ngeo.html#MockLocationProvider">MockLocationProvider</a></li><li><a href="ngeo.html#QueryCacheItem">QueryCacheItem</a></li><li><a href="ngeo.html#QueryResult">QueryResult</a></li><li><a href="ngeo.html#QueryResultSource">QueryResultSource</a></li><li><a href="ngeo.html#ScaleselectorOptions">ScaleselectorOptions</a></li><li><a href="ngeo.html#SortableOptions">SortableOptions</a></li><li><a href="ngeo.html#ToolMgrEntry">ToolMgrEntry</a></li></ul><h3>Enumerations</h3><ul><li><a href="ngeo.html#BackgroundEventType">BackgroundEventType</a></li><li><a href="ngeo.html#DesktopGeolocationEventType">DesktopGeolocationEventType</a></li><li><a href="ngeo.html#MeasureEventType">MeasureEventType</a></li><li><a href="ngeo.html#MobileGeolocationEventType">MobileGeolocationEventType</a></li><li><a href="ngeo.html#PrintStyleType">PrintStyleType</a></li><li><a href="ngeo.html#QueryInfoFormatType">QueryInfoFormatType</a></li></ul><h2>ngeo.format</h2><h3>Classes</h3><ul><li><a href="ngeo.format.FeatureHash.html">FeatureHash</a></li></ul><h3>Enumerations</h3><ul><li><a href="ngeo.format.html#FeatureHashStyleType">FeatureHashStyleType</a></li></ul><h2>ngeo.interaction</h2><h3>Classes</h3><ul><li><a href="ngeo.interaction.DrawAzimut.html">DrawAzimut</a></li><li><a href="ngeo.interaction.Measure.html">Measure</a></li><li><a href="ngeo.interaction.MeasureArea.html">MeasureArea</a></li><li><a href="ngeo.interaction.MeasureAzimut.html">MeasureAzimut</a></li><li><a href="ngeo.interaction.MeasureLength.html">MeasureLength</a></li><li><a href="ngeo.interaction.MeasureLengthMobile.html">MeasureLengthMobile</a></li><li><a href="ngeo.interaction.MeasurePointMobile.html">MeasurePointMobile</a></li><li><a href="ngeo.interaction.MobileDraw.html">MobileDraw</a></li></ul><h3>Types</h3><ul><li><a href="ngeo.interaction.html#MeasureBaseOptions">MeasureBaseOptions</a></li></ul><h3>Enumerations</h3><ul><li><a href="ngeo.interaction.html#MobileDrawProperty">MobileDrawProperty</a></li></ul><h2>ngeo.MeasureEvent</h2><h3>Events</h3><ul><li><a href="ngeo.MeasureEvent.html#event:measureend">measureend</a></li></ul><h2>ngeox</h2><h3>Interfaces</h3><ul><li><a href="ngeox.BackgroundEvent.html">BackgroundEvent</a></li><li><a href="ngeox.MeasureEvent.html">MeasureEvent</a></li></ul><h3>Types</h3><ul><li><a href="ngeox.html#DesktopGeolocationDirectiveOptions">DesktopGeolocationDirectiveOptions</a></li><li><a href="ngeox.html#MobileGeolocationDirectiveOptions">MobileGeolocationDirectiveOptions</a></li><li><a href="ngeox.html#QueryOptions">QueryOptions</a></li><li><a href="ngeox.html#QuerySource">QuerySource</a></li><li><a href="ngeox.html#SearchDirectiveListeners">SearchDirectiveListeners</a></li></ul><h2>gmfx</h2><h3>Types</h3><ul><li><a href="gmfx.html#AuthenticationFunctionalities">AuthenticationFunctionalities</a></li><li><a href="gmfx.html#Config">Config</a></li><li><a href="gmfx.html#PermalinkOptions">PermalinkOptions</a></li><li><a href="gmfx.html#SearchDirectiveDatasource">SearchDirectiveDatasource</a></li><li><a href="gmfx.html#ServiceUrls">ServiceUrls</a></li><li><a href="gmfx.html#User">User</a></li></ul><h2>gmfx.source</h2><h3>Types</h3><ul><li><a href="gmfx.source.html#AsitVDOptions">AsitVDOptions</a></li><li><a href="gmfx.source.html#SwisstopoOptions">SwisstopoOptions</a></li></ul><h2>ngeox.format</h2><h3>Types</h3><ul><li><a href="ngeox.format.html#FeatureHashOptions">FeatureHashOptions</a></li></ul><h2>ngeox.interaction</h2><h3>Types</h3><ul><li><a href="ngeox.interaction.html#MeasureOptions">MeasureOptions</a></li><li><a href="ngeox.interaction.html#MobileDrawOptions">MobileDrawOptions</a></li></ul><h2>ngeox.profile</h2><h3>Types</h3><ul><li><a href="ngeox.profile.html#ElevationExtractor">ElevationExtractor</a></li><li><a href="ngeox.profile.html#PoiExtractor">PoiExtractor</a></li><li><a href="ngeox.profile.html#ProfileFormatter">ProfileFormatter</a></li><li><a href="ngeox.profile.html#ProfileOptions">ProfileOptions</a></li></ul><h3>Global</h3><ul><li><a href="global.html#gmfx">gmfx</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

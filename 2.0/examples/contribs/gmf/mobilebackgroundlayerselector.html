@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>GeoMapFish's mobile background layer selector example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/ngeo.css" type="text/css">
+    <style>
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+      .gmf-mobile-backgroundlayerselector {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .gmf-mobile-backgroundlayerselector li {
+        cursor: pointer;
+        margin: 10px;
+      }
+      .gmf-mobile-backgroundlayerselector .gmf-check,
+      .gmf-mobile-backgroundlayerselector .gmf-text,
+      .gmf-mobile-backgroundlayerselector .gmf-thumb {
+        float: left;
+      }
+      .gmf-mobile-backgroundlayerselector .gmf-check {
+        height: 20px;
+        margin: 15px 5px 0 0;
+        width: 20px;
+      }
+      .gmf-mobile-backgroundlayerselector .gmf-check .gmf-icon.gmf-icon-check:after {
+        content: 'o';
+      }
+      .gmf-mobile-backgroundlayerselector .gmf-text {
+        margin: 15px 10px 0 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 120px;
+        white-space: nowrap;
+      }
+      .gmf-mobile-backgroundlayerselector .gmf-thumb {
+        height: 60px;
+        width: 60px;
+      }
+      .gmf-mobile-backgroundlayerselector .gmf-eol {
+        clear: left;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the
+    <code>gmf-mobile-backgroundlayerselector</code>
+    directive to select the map background layer.</p>
+    <div>
+        <span>Select base layer:</span>
+        <gmf-mobile-backgroundlayerselector
+          gmf-mobile-backgroundlayerselector-map="::ctrl.map">
+        </gmf-mobile-backgroundlayerselector>
+    </div>
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/proj4.js"></script>
+    <script src="../../lib/gmf.js"></script>
+    <script src="mobilebackgroundlayerselector.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+  </body>
+</html>

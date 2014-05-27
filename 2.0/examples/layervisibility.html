@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Layer visibility example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="lib/ngeo.css" type="text/css">
+    <style>
+        #map {
+          width: 800px;
+          height: 400px;
+        }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+    <p>
+      <label>
+        Layer visibility
+        <input type="checkbox" ng-model="ctrl.layer.visible">
+      </label>
+    </p>
+    <p id="desc">This examples shows how to use <code><a href="../apidoc/ngeo.DecorateLayer.html" title="Read our documentation">ngeoDecorateLayer</a></code> to control the visibility of a layer through <code>ng-model</code>.</p>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/ngeo.js"></script>
+    <script src="layervisibility.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>

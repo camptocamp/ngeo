@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="{{desktopCtrl.lang}}" ng-app="app" ng-controller="DesktopController as mainCtrl">
+  <head>
+    <title translate>Desktop Application</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../build/desktop.css">
+  </head>
+  <body>
+    <header>
+      <div>
+        Put your logos or menus here
+      </div>
+    </header>
+    <main>
+      <!-- using the mobile background layer selector (hidden) temporarily
+           here to get a background-layer -->
+      <gmf-mobile-background-layer-selector
+        gmf-mobile-background-layer-selector-map="::mainCtrl.map"
+        style="display: none;">
+      </gmf-mobile-background-layer-selector>
+      <div class="data-panel">
+        <div class="header">
+          <div class="dropdown">
+            <a href class="btn btn-default btn-block"
+              data-toggle="dropdown">
+              <span class="fa fa-grid"></span>
+              <span translate>Theme:</span>
+              <b ng-bind="mainCtrl.theme['name']" translate>Loading...</b>
+              <span class="caret"></span>
+            </a>
+            <gmf-themeselector class="dropdown-menu"
+              gmf-themeselector-defaulttheme="OSM"
+              gmf-themeselector-currenttheme="mainCtrl.theme"
+              gmf-themeselector-filter="::mainCtrl.filter">
+            </gmf-themeselector>
+          </div>
+        </div>
+        <div class="content">
+          <gmf-layertree
+            gmf-layertree-source="mainCtrl.theme"
+            gmf-layertree-map="::mainCtrl.map"
+            gmf-layertree-openlinksinnewwindow="true">
+          </gmf-layertree>
+        </div>
+      </div>
+      <div class="tools" ngeo-resizemap="mainCtrl.map"
+        ngeo-resizemap-state="mainCtrl.toolsActive">
+        <div ngeo-btn-group class="bar btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
+          <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
+            data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
+            <span class="fa fa-user"></span>
+          </button>
+          <button ngeo-btn class="btn btn-default" ng-model="printActive"
+            data-toggle="tooltip" data-placement="left" data-original-title="{{'Print'|translate}}">
+            <span class="fa fa-print"></span>
+          </button>
+          <button ngeo-btn class="btn btn-default" ng-model="measureActive"
+            data-toggle="tooltip" data-placement="left" data-original-title="{{'Measure tools'|translate}}">
+            <span class="fa fa-circle">
+          </button>
+        </div>
+        <div class="tools-content" ng-class="{active: mainCtrl.toolsActive}">
+          <div ng-show="mainCtrl.loginActive">
+            <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
+            <div class="tools-content-heading">
+              Login
+            </div>
+            <gmf-authentication></gmf-authentication>
+            <br>
+          </div>
+          <div ng-show="printActive">
+            <a class="btn close" ng-click="printActive = false">&times;</a>
+            <div class="tools-content-heading">
+              Print
+            </div>
+          </div>
+          <div ng-show="measureActive">
+            <a class="btn close" ng-click="measureActive = false">&times;</a>
+            <div class="tools-content-heading">
+              Measure
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="map-container">
+        <div class="search">
+          <gmf-search gmf-search-map="mainCtrl.map"
+            gmf-search-datasources="mainCtrl.searchDatasources"
+            gmf-search-currenttheme="mainCtrl.theme"
+            gmf-search-clearbutton="true">
+          </gmf-search>
+        </div>
+        <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"></gmf-map>
+      </div>
+    </main>
+    <script src="../../build/desktop.js"></script>
+    <script src="../../../../lib/watchwatchers.js"></script>
+    <script>
+      (function() {
+         var module = angular.module('app');
+         module.constant('defaultLang', 'en');
+         module.constant('langUrls', {
+           'en': '../../build/gmf-en.json',
+           'fr': '../../build/gmf-fr.json',
+           'de': '../../build/gmf-de.json'
+         });
+         module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi');
+         module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?limit=30&partitionlimit=5');
+         module.constant('gmfWmsUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/mapserv_proxy');
+         module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/themes?version=2&background=background');
+         module.constant('gmfSearchGroups', ['osm','district']);
+         // Requires that the gmfSearchGroups is specified
+         // TODO: add 'add_group' and 'add_layer' when supported
+         module.constant('gmfSearchActions', ['add_theme']);
+       })();
+    </script>
+  </body>
+</html>

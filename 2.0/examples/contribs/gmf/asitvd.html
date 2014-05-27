@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>ASITVD source example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/ngeo.css" type="text/css">
+    <style>
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <p id="desc">
+      This example shows how to use the <code>gmf.source.AsitVD</code> source to access tiles from the
+      <a href="https://asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html">ASIT VD tile server</a>.
+    </p>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/gmf.js"></script>
+    <script src="asitvd.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+  </body>
+</html>

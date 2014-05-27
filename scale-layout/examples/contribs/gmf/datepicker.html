@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>GeoMapFish Datepicker example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <style>
+      li {
+        margin: 20px;
+        list-style: none;
+      }
+      .end-date {
+        display: inline-block;
+      }
+      .start-date {
+        display: inline-block;
+      }
+      pre {
+        display: block;
+        padding: 9.5px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        color: #333;
+        word-break: break-all;
+        word-wrap: break-word;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the <code>gmf-date-picker</code> directive.</p>
+    <ul>
+      <li>Select a periode with a datepicker
+          <gmf-date-picker time="ctrl.datePickerRange" on-date-selected="ctrl.onDateRangeSelected(time)"></gmf-date-picker>
+      </li>
+      <li style="margin-top: 50px">
+        Date selected:
+        <pre>
+          {{ctrl.rangeValue | json}}
+        </pre>
+      </li>
+      <li>Select a single date with a datepicker
+          <gmf-date-picker time="ctrl.datePicker" on-date-selected="ctrl.onDateSelected(time)"></gmf-date-picker>
+      </li>
+      <li style="margin-top: 50px">
+        Date selected:
+        <pre>
+          {{ctrl.value | json}}
+        </pre>
+      </li>
+    </ul>
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js" type="text/javascript"></script>
+    <script src="../../lib/gmf.js"></script>
+    <script src="datepicker.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script type="text/javascript">
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>

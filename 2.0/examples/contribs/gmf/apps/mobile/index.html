@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="{{mobileCtrl.lang}}" ng-app="app" ng-controller="MobileController as mainCtrl">
+  <head>
+    <title translate>Mobile Application</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../build/mobile.css">
+  </head>
+  <body ng-class="{'nav-is-visible': mainCtrl.navIsVisible(),
+                   'nav-left-is-visible': mainCtrl.leftNavIsVisible(),
+                   'nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
+    <main ng-class="{'search-is-active': mainCtrl.searchOverlayVisible}">
+      <gmf-map gmf-map-map="mainCtrl.map"
+        ngeo-mobile-query=""
+        ngeo-mobile-query-map="::mainCtrl.map"
+        ngeo-mobile-query-active="mainCtrl.queryActive"></gmf-map>
+      <gmf-mobiledisplayqueries
+        gmf-mobiledisplayqueries-featuresstyle="::mainCtrl.queryFeatureStyle">
+      </gmf-mobiledisplayqueries>
+      <div
+        class="measure-tools-control"
+        gmf-mobile-measure-length
+        gmf-mobile-measure-length-active="mainCtrl.measureLengthActive"
+        gmf-mobile-measure-length-decimals="2"
+        gmf-mobile-measure-length-map="::mainCtrl.map">
+      </div>
+      <div
+        class="measure-tools-control"
+        gmf-mobile-measure-point
+        gmf-mobile-measure-point-active="mainCtrl.measurePointActive"
+        gmf-mobile-measure-point-decimals="2"
+        gmf-mobile-measure-point-map="::mainCtrl.map">
+      </div>
+      <button class="nav-trigger nav-left-trigger"
+        ng-click="mainCtrl.toggleLeftNavVisibility()">
+        <span class="gmf-icon gmf-icon-layers"></span>
+      </button>
+      <div class="search">
+        <gmf-search gmf-search-map="mainCtrl.map"
+          gmf-search-datasources="mainCtrl.searchDatasources"
+          gmf-search-currenttheme="mainCtrl.theme"
+          gmf-search-clearbutton="true"
+          gmf-search-listeners="::mainCtrl.searchListeners">
+        </gmf-search>
+      </div>
+      <button class="nav-trigger nav-right-trigger"
+        ng-click="mainCtrl.toggleRightNavVisibility()">
+        <i class="fa fa-wrench"></i>
+      </button>
+      <div class="overlay" ng-click="mainCtrl.hideNav()"></div>
+      <div class="search-overlay" ng-click="mainCtrl.hideSearchOverlay()"></div>
+      <button ngeo-mobile-geolocation=""
+        ngeo-mobile-geolocation-map="::mainCtrl.map"
+        ngeo-mobile-geolocation-options="::mainCtrl.mobileGeolocationOptions">
+        <span class="fa fa-location-arrow"></span>
+      </button>
+    </main>
+    <nav class="nav-left" gmf-mobile-nav>
+      <header>
+        <a class="go-back" href>{{'Back' | translate}}</a>
+      </header>
+      <!-- main menu -->
+      <div class="active slide">
+        <ul>
+          <li>
+            <a href data-target="#background" data-toggle="slide-in">{{'Background' | translate}}</a>
+          </li>
+          <li>
+            <a href data-target="#themes" data-toggle="slide-in">{{'Themes' | translate}}</a>
+          </li>
+          <gmf-layertree
+            gmf-layertree-source="mainCtrl.theme"
+            gmf-layertree-map="::mainCtrl.map"
+            gmf-layertree-openlinksinnewwindow="true">
+          </gmf-layertree>
+        </ul>
+      </div>
+      <div id="background" class="slide" data-header-title="{{'Background' | translate}}">
+        <gmf-mobile-backgroundlayerselector
+          gmf-mobile-backgroundlayerselector-map="::mainCtrl.map"
+          gmf-mobile-backgroundlayerselector-select="mainCtrl.hideNav()">
+        </gmf-mobile-backgroundlayerselector>
+      </div>
+      <gmf-themeselector
+        id="themes"
+        class="slide"
+        data-header-title="{{'Themes' | translate}}"
+        gmf-themeselector-defaulttheme="OSM"
+        gmf-themeselector-currenttheme="mainCtrl.theme"
+        gmf-themeselector-filter="::mainCtrl.filter"
+        gmf-mobile-nav-back="mainCtrl.theme">
+      </gmf-themeselector>
+    </nav>
+    <nav class="nav-right" gmf-mobile-nav>
+      <header>
+        <a class="go-back" href>{{'Back' | translate}}</a>
+      </header>
+      <!-- main menu -->
+      <div class="active slide">
+        <ul>
+          <li>
+            <a href data-target="#measure-tools" data-toggle="slide-in">{{'Measure tools' | translate}}</a>
+            <a href data-target="#login" data-toggle="slide-in">{{'Login' | translate}}</a>
+          </li>
+        </ul>
+      </div>
+      <div id="measure-tools" class="slide" data-header-title="{{'Measure tools' | translate}}">
+        <a ngeo-btn
+          ng-click="mainCtrl.hideNav()"
+          class="measure-tools-button"
+          ng-model="mainCtrl.measurePointActive">
+          <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measurePointActive}"></span>
+          {{'Coordinate' | translate}}
+        </a>
+        <a ngeo-btn
+          ng-click="mainCtrl.hideNav()"
+          class="measure-tools-button"
+          ng-model="mainCtrl.measureLengthActive">
+          <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measureLengthActive}"></span>
+          {{'Length' | translate}}
+        </a>
+      </div>
+      <gmf-authentication id="login" class="slide" data-header-title="{{'Login' | translate}}">
+      </gmf-authentication>
+    </nav>
+    <script src="../../build/mobile.js"></script>
+    <script src="../../../../lib/watchwatchers.js"></script>
+    <script>
+      (function() {
+         var module = angular.module('app');
+         module.constant('defaultLang', 'en');
+         module.constant('langUrls', {
+           'en': '../../build/gmf-en.json',
+           'fr': '../../build/gmf-fr.json',
+           'de': '../../build/gmf-de.json'
+         });
+         module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi');
+         module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?limit=20');
+         module.constant('gmfWmsUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/mapserv_proxy');
+         module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/themes?version=2&background=background');
+         module.constant('gmfSearchGroups', []);
+         // Requires that the gmfSearchGroups is specified
+         module.constant('gmfSearchActions', []);
+       })();
+    </script>
+  </body>
+</html>

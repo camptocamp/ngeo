@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Control example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="lib/ngeo.css" type="text/css">
+    <style>
+      #map {
+        width: 600px;
+        height: 400px;
+      }
+      #mouse-position {
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+    Mouse position: <div id="mouse-position" ngeo-control="ctrl.control" ngeo-control-map="ctrl.map"></div>
+    <p id="desc">This example shows how to use the <code><a href="../apidoc/ngeo.controlDirective.html" title="Read our documentation">ngeo-control</a></code> directive to insert an OpenLayers control in the page.</p>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/ngeo.js"></script>
+    <script src="control.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>

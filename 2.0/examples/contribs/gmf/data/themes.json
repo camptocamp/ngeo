@@ -1,0 +1,1027 @@
+{
+  "themes": [
+    {
+      "name": "Enseignement",
+      "functionalities": {},
+      "id": 38,
+      "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/enseignement.jpeg",
+      "children": [
+        {
+          "mixed": "false",
+          "metadata": {},
+          "children": [
+            {
+              "layers": "bus_stop",
+              "name": "bus_stop",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 101,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "legendRule": "Arrêts de bus",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "information",
+              "name": "information",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 98,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Informations",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            }
+          ],
+          "id": 35,
+          "name": "Enseignement"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "Transport",
+      "functionalities": {},
+      "id": 37,
+      "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/transports.jpeg",
+      "children": [
+        {
+          "mixed": "false",
+          "metadata": {},
+          "children": [
+            {
+              "layers": "fuel",
+              "name": "fuel",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 124,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Stations service",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "parking",
+              "name": "parking",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 103,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "legendRule": "Parkings",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "bus_stop",
+              "name": "bus_stop",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 101,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "legendRule": "Arrêts de bus",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            }
+          ],
+          "id": 36,
+          "name": "Transport"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "Cadastre",
+      "functionalities": {},
+      "id": 29,
+      "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/cadastre.jpeg",
+      "children": [
+        {
+          "mixed": "true",
+          "metadata": {},
+          "children": [
+            {
+              "layers": "ch.swisstopo.dreiecksvermaschung",
+              "minResolutionHint": 0,
+              "name": "ch.swisstopo.dreiecksvermaschung",
+              "url": "http://wms.geo.admin.ch?lang=fr",
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "false",
+              "maxResolutionHint": 26458.32,
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 115,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "legend": "true",
+                "disclaimer": "<a href=\"http://www.geo.admin.ch/\">Données publiques de l'infrastructure fédérale de données géographiques (IFDG)<\/a>"
+              }
+            },
+            {
+              "layers": "ch.swisstopo.geologie-gravimetrischer_atlas",
+              "minResolutionHint": 0,
+              "name": "ch.swisstopo.geologie-gravimetrischer_atlas",
+              "url": "http://wms.geo.admin.ch?lang=fr",
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "false",
+              "maxResolutionHint": 26458.32,
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 116,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "legend": "true",
+                "disclaimer": "<a href=\"http://www.geo.admin.ch/\">Données publiques de l'infrastructure fédérale de données géographiques (IFDG)<\/a>"
+              }
+            },
+            {
+              "layers": "ch.swisstopo.geologie-geotechnik-gk500-lithologie_hauptgruppen",
+              "minResolutionHint": 0,
+              "name": "ch.swisstopo.geologie-geotechnik-gk500-lithologie_hauptgruppen",
+              "url": "http://wms.geo.admin.ch?lang=fr",
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "false",
+              "maxResolutionHint": 26458.32,
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 117,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "isChecked": "true",
+                "legend": "true",
+                "disclaimer": "<a href=\"http://www.geo.admin.ch/\">Données publiques de l'infrastructure fédérale de données géographiques (IFDG)<\/a>"
+              }
+            },
+            {
+              "layers": "ch.swisstopo.geologie-geotechnik-gk500-gesteinsklassierung",
+              "minResolutionHint": 0,
+              "name": "ch.swisstopo.geologie-geotechnik-gk500-gesteinsklassierung",
+              "url": "http://wms.geo.admin.ch?lang=fr",
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "false",
+              "maxResolutionHint": 26458.32,
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 118,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "legend": "true",
+                "disclaimer": "<a href=\"http://www.geo.admin.ch/\">Données publiques de l'infrastructure fédérale de données géographiques (IFDG)<\/a>"
+              }
+            },
+            {
+              "name": "ch.are.alpenkonvention",
+              "url": "http://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr",
+              "dimensions": {},
+              "type": "WMTS",
+              "id": 119,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "maxResolution": "1000.0",
+                "minResolution": "100.0",
+                "legend": "true",
+                "disclaimer": "<a href=\"http://www.geo.admin.ch/\">Données publiques de l'infrastructure fédérale de données géographiques (IFDG)<\/a>"
+              }
+            },
+            {
+              "style": "ch.astra.ausnahmetransportrouten",
+              "name": "ch.astra.ausnahmetransportrouten",
+              "url": "http://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr",
+              "matrixSet": "21781_26",
+              "dimensions": {
+                "Time": "20141003"
+              },
+              "type": "WMTS",
+              "id": 120,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "legend": "true",
+                "disclaimer": "<a href=\"http://www.geo.admin.ch/\">Données publiques de l'infrastructure fédérale de données géographiques (IFDG)<\/a>"
+              }
+            }, {
+              "mixed": "true",
+              "metadata": {},
+              "children": [
+                {
+                  "layers": "line",
+                  "name": "line",
+                  "url": null,
+                  "isSingleTile": "false",
+                  "serverType": "mapserver",
+                  "queryable": 1,
+                  "childLayers": [],
+                  "wfsSupport": "true",
+                  "urlWfs": null,
+                  "type": "WMS",
+                  "id": 111,
+                  "imageType": "image/png",
+                  "metadata": {
+                    "identifierAttributeField": "name",
+                    "isChecked": "true",
+                    "legend": "true",
+                    "legendRule": "Line"
+                  }
+                },
+                {
+                  "layers": "polygon",
+                  "name": "polygon",
+                  "url": null,
+                  "isSingleTile": "false",
+                  "serverType": "mapserver",
+                  "queryable": 1,
+                  "childLayers": [],
+                  "wfsSupport": "true",
+                  "urlWfs": null,
+                  "type": "WMS",
+                  "id": 112,
+                  "imageType": "image/png",
+                  "metadata": {
+                    "identifierAttributeField": "name",
+                    "isChecked": "true",
+                    "legend": "true",
+                    "legendRule": "Polygon"
+                  }
+                },
+                {
+                  "layers": "point",
+                  "name": "point",
+                  "url": null,
+                  "isSingleTile": "false",
+                  "serverType": "mapserver",
+                  "queryable": 1,
+                  "childLayers": [],
+                  "wfsSupport": "true",
+                  "urlWfs": null,
+                  "type": "WMS",
+                  "id": 113,
+                  "imageType": "image/jpeg",
+                  "metadata": {
+                    "metadataUrl": "data/metadata.html",
+                    "isChecked": "true",
+                    "identifierAttributeField": "name",
+                    "legend": "true",
+                    "legendRule": "Point"
+                  }
+                }
+              ],
+              "id": 72,
+              "name": "Edit"
+            }
+          ],
+          "id": 30,
+          "name": "Cadastre"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "OSM",
+      "functionalities": {},
+      "id": 64,
+      "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/osm.png",
+      "children": [
+        {
+          "mixed": "false",
+          "metadata": {},
+          "children": [
+            {
+              "layers": "osm",
+              "name": "osm",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 0,
+              "childLayers": [
+                {
+                  "name": "fuel",
+                  "queryable": 1
+                },
+                {
+                  "name": "hotel",
+                  "queryable": 1
+                },
+                {
+                  "name": "information",
+                  "queryable": 1
+                },
+                {
+                  "name": "cinema",
+                  "queryable": 1
+                },
+                {
+                  "name": "alpine_hut",
+                  "queryable": 1
+                },
+                {
+                  "name": "bank",
+                  "queryable": 1
+                },
+                {
+                  "name": "bus_stop",
+                  "queryable": 1
+                },
+                {
+                  "name": "cafe",
+                  "queryable": 1
+                },
+                {
+                  "name": "parking",
+                  "queryable": 1
+                },
+                {
+                  "name": "place_of_worship",
+                  "queryable": 1
+                },
+                {
+                  "name": "police",
+                  "queryable": 1
+                },
+                {
+                  "name": "post_office",
+                  "queryable": 1
+                },
+                {
+                  "name": "restaurant",
+                  "queryable": 1
+                },
+                {
+                  "name": "zoo",
+                  "queryable": 1
+                }
+              ],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 109,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isLegendExpanded": "true",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OSM"
+              }
+            }
+          ],
+          "id": 66,
+          "name": "Group"
+        },
+        {
+          "mixed": "false",
+          "metadata": {},
+          "children": [
+            {
+              "layers": "osm_time",
+              "name": "osm_time",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "time": {
+                "widget": "slider",
+                "interval": [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "maxValue": "2013-12-31T00:00:00Z",
+                "minValue": "2006-01-01T00:00:00Z",
+                "maxDefValue": null,
+                "minDefValue": null,
+                "resolution": "day",
+                "mode": "range"
+              },
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 110,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "name",
+                "isChecked": "true",
+                "legendRule": "Dans les temps",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "osm_scale",
+              "minResolutionHint": 0.53,
+              "name": "osm_scale",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "maxResolutionHint": 1.41,
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 114,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "OSM",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            }
+          ],
+          "id": 68,
+          "name": "OSM function"
+        },
+        {
+          "mixed": "false",
+          "metadata": {},
+          "children": [
+            {
+              "layers": "hotel",
+              "name": "hotel",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 97,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Hôtels",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "cinema",
+              "name": "cinema",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 99,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Cinémas",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "cafe",
+              "name": "cafe",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 102,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Cafés",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "police",
+              "name": "police",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 105,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Postes de police",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "post_office",
+              "name": "post_office",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 106,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Offices de poste",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "restaurant",
+              "name": "restaurant",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 107,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Restaurants",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "osm_time",
+              "name": "osm_time",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "time": {
+                "widget": "datepicker",
+                "interval": [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "maxValue": "2013-12-31T00:00:00Z",
+                "minValue": "2006-01-01T00:00:00Z",
+                "maxDefValue": null,
+                "minDefValue": null,
+                "resolution": "day",
+                "mode": "range"
+              },
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 126,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "name",
+                "legend": "true",
+                "legendRule": "Dans les temps"
+              }
+            }, {
+              "mixed": "false",
+              "metadata": {},
+              "children": [
+                {
+                  "layers": "bus_stop",
+                  "name": "bus_stop",
+                  "url": null,
+                  "isSingleTile": "false",
+                  "serverType": "mapserver",
+                  "queryable": 1,
+                  "childLayers": [],
+                  "wfsSupport": "true",
+                  "urlWfs": null,
+                  "type": "WMS",
+                  "id": 101,
+                  "imageType": "image/jpeg",
+                  "metadata": {
+                    "identifierAttributeField": "display_name",
+                    "legendRule": "Arrêts de bus",
+                    "legend": "true",
+                    "disclaimer": "© les contributeurs d’OpenStreetMap"
+                  }
+                },
+                {
+                  "layers": "information",
+                  "name": "information",
+                  "url": null,
+                  "isSingleTile": "false",
+                  "serverType": "mapserver",
+                  "queryable": 1,
+                  "childLayers": [],
+                  "wfsSupport": "true",
+                  "urlWfs": null,
+                  "type": "WMS",
+                  "id": 98,
+                  "imageType": "image/jpeg",
+                  "metadata": {
+                    "identifierAttributeField": "display_name",
+                    "isChecked": "true",
+                    "legendRule": "Informations",
+                    "legend": "true",
+                    "disclaimer": "© les contributeurs d’OpenStreetMap"
+                  }
+                }
+              ],
+              "id": 35,
+              "name": "Enseignement"
+            }
+          ],
+          "id": 63,
+          "name": "Layers"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "Edit",
+      "functionalities": {},
+      "id": 73,
+      "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/edit.png",
+      "children": [
+        {
+          "mixed": "true",
+          "metadata": {},
+          "children": [
+            {
+              "layers": "line",
+              "name": "line",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 111,
+              "imageType": "image/png",
+              "metadata": {
+                "identifierAttributeField": "name",
+                "isChecked": "true",
+                "legend": "true",
+                "legendRule": "Line"
+              }
+            },
+            {
+              "layers": "polygon",
+              "name": "polygon",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 112,
+              "imageType": "image/png",
+              "metadata": {
+                "identifierAttributeField": "name",
+                "isChecked": "true",
+                "legend": "true",
+                "legendRule": "Polygon"
+              }
+            },
+            {
+              "layers": "point",
+              "name": "point",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 113,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "metadataUrl": "data/metadata.html",
+                "isChecked": "true",
+                "identifierAttributeField": "name",
+                "legend": "true",
+                "legendRule": "Point"
+              }
+            }
+          ],
+          "id": 72,
+          "name": "Edit"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "Enseignement",
+      "functionalities": {},
+      "id": 92,
+      "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/enseignement2.jpeg",
+      "children": [
+        {
+          "mixed": "false",
+          "metadata": {},
+          "children": [
+            {
+              "layers": "bus_stop",
+              "name": "bus_stop",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 101,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "legendRule": "Arrêts de bus",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "information",
+              "name": "information",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 98,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Informations",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            }
+          ],
+          "id": 35,
+          "name": "Enseignement"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "Patrimoine",
+      "functionalities": {},
+      "id": 4,
+      "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/patrimoine.jpeg",
+      "children": [
+        {
+          "mixed": "false",
+          "metadata": {},
+          "children": [
+            {
+              "layers": "bank",
+              "name": "bank",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 100,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Banques",
+                "legend": "false",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "place_of_worship",
+              "name": "place_of_worship",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 104,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Lieux de culte",
+                "legend": "false",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            }
+          ],
+          "id": 7,
+          "name": "Patrimoine"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "Gestion des eaux",
+      "functionalities": {},
+      "id": 3,
+      "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/gestion_eaux.jpeg",
+      "children": [
+        {
+          "mixed": "false",
+          "metadata": {},
+          "children": [
+            {
+              "layers": "zoo",
+              "name": "zoo",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 108,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Zoos",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "fuel",
+              "name": "fuel",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 124,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Stations service",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            }
+          ],
+          "id": 8,
+          "name": "Gestion des eaux"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "name": "Paysage",
+      "functionalities": {},
+      "id": 2,
+      "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/paysage.jpeg",
+      "children": [
+        {
+          "mixed": "false",
+          "metadata": {},
+          "children": [
+            {
+              "layers": "alpine_hut",
+              "name": "alpine_hut",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 123,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Cabanes alpines",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            },
+            {
+              "layers": "zoo",
+              "name": "zoo",
+              "url": null,
+              "isSingleTile": "false",
+              "serverType": "mapserver",
+              "queryable": 1,
+              "childLayers": [],
+              "wfsSupport": "true",
+              "urlWfs": null,
+              "type": "WMS",
+              "id": 108,
+              "imageType": "image/jpeg",
+              "metadata": {
+                "identifierAttributeField": "display_name",
+                "isChecked": "true",
+                "legendRule": "Zoos",
+                "legend": "true",
+                "disclaimer": "© les contributeurs d’OpenStreetMap"
+              }
+            }
+          ],
+          "id": 9,
+          "name": "Paysage"
+        }
+      ],
+      "metadata": {}
+    }
+  ],
+  "errors": []
+}

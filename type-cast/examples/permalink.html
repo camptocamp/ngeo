@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <script src="https.js"></script>
+    <title>Permalink example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="lib/ngeo.css" type="text/css">
+    <style>
+      app-map > div {
+        width: 600px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <app-map app-map="::ctrl.map"></app-map>
+    <app-draw app-draw-map="::ctrl.map" app-draw-layer="::ctrl.vectorLayer"></app-draw>
+    <p id="desc">This example shows how to create an application-specific map directive based on the <code><a href="../apidoc/ngeo.mapDirective.html" title="Read our documentation">ngeoMap</a></code> directive that uses the <code><a href="../apidoc/ngeo.Location.html" title="Read our documentation">ngeoLocation</a></code> and <code><a href="../apidoc/ngeo.Debounce.html" title="Read our documentation">ngeoDebounce</a></code> services to update the browser address bar URL when the map view changes.</p>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-gettext.min.js"></script>
+    <script src="lib/date.min.js"></script>
+    <script src="lib/angular-floatThead.js"></script>
+    <script src="lib/jquery.floatThead.min.js"></script>
+    <script src="lib/proj4.js"></script>
+    <script src="lib/transpile.js"></script>
+    <script src="permalink.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>

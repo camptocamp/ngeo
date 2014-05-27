@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="bootstrap.min.css" type="text/css">
+    <title>ngeo examples</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h2>Examples index</h2>
+      <div>
+        <a href="apps/mobile/index.html"><b>Mobile application</b></a>
+        <p>The mobile example application for GeoMapFish.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="apps/desktop/index.html"><b>Desktop application</b></a>
+        <p>The desktop example application for GeoMapFish.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="asitvd.html">ASITVD source example</a>
+        <p>
+      This example shows how to use the <code>gmf.source.AsitVD</code> source to access tiles from the
+      <a href="https://asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html">ASIT VD tile server</a>.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="authentication.html">GeoMapFish Authentication example</a>
+        <p>
+      This example shows how to use the <code>gmf-authentication</code>
+      directive to insert an authentication panel in a GeoMapFish page.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="layertree.html">GeoMapFish Layer Tree Example</a>
+        <p>This example shows how to use the <code>gmf.Layertree</code> directive. This layertree needs a source object (that can change) that describes layers like the c2cgeoportal themes service. The wmsUrl is used by internals WMS layers but you can use WMS externals layers and WMTS layers too.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="mobilebackgroundlayerselector.html">GeoMapFish's mobile background layer selector example</a>
+        <p>This example shows how to use the
+    <code>gmf-mobile-backgroundlayerselector</code>
+    directive to select the map background layer.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="mobilemeasure.html">Mobile Measure Example</a>
+        <p>
+      This example shows how to use the <code>gmf-mobile-measure-length</code>
+      and <code>gmf-mobile-measure-point</code> directives in combination with
+      <code>ngeo.interaction.MobileDraw</code> interaction objects to allow
+      mobile users to measure distances and know the center coordinate on
+      their devices. The point measure also uses the <code>gmf-altitude</code>
+      service to also obtain the height of the location as well.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="mobilequery.html">GeoMapFish Mobile Query example</a>
+        <p>
+      This example shows how to use the <code>ngeo-mobile-query</code>
+      directive in combination with the <code>gmf.QueryManager</code>.
+      The QueryManager fetches the themes returned by the theme service and
+      adds one source to the query service per layer definition found. In this
+      example, the layer tree is responsible of creating the layer. You can
+      switch theme and turn on/off layers to see the impact it has on results
+      returned by the query service.
+      To display results, this example use the <code>gmf-mobiledisplayqueries
+      </code> componant. Here, this last directive uses a custom style to
+      display all selected features.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="permalink.html">GeoMapFish Permalink example</a>
+        <p>
+      This example demonstrates the use of the <code>gmf-permalink</code>
+      service, which is injected inside the <code>gmf-map</code> directive.
+      The following links demonstrate the different features:
+      <ul>
+<li>
+<a href="?map_crosshair=true">map_crosshair=true</a>
+          When set, a marker is added either at the location of the
+          <code>map_x</code> and <code>map_y</code> if those parameters
+          are set, otherwise it is added at the center of the map.
+        </li>
+<li>
+<a href="?map_tooltip=hello">map_tooltip=hello</a>
+          When set, a tooltip is added with the content equal to the value
+          set either at the location of the <code>map_x</code> and
+          <code>map_y</code> if those parameters are set, otherwise it is
+          added at the center of the map.
+        </li>
+<li><a href="?">no param</a></li>
+</ul>
+      This example also demonstrates the use of the
+      <code>gmfPermalinkOptions</code> to customize the permalink crosshair
+      feature style.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="search.html">Search GeoMapFish example</a>
+        <p>This example shows how to use the <code>gmf-search</code> directive, which
+      is based on Twitter's <code>typeahead</code> component.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="simple.html">Simple GeoMapFish example</a>
+        <p>This example shows how to use the <code>gmf-map</code> directive to insert an OpenLayers map in a GeoMapFish page.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="themeselector.html">GeoMapFish Theme Selector Example</a>
+        <p>This example shows how to use the <code>gmf.themeselector</code> directive from a c2c geoportal theme service.</p>
+      </div>
+      <hr>
+    </div>
+  </body>
+</html>
+
