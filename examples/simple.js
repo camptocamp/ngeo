@@ -7,9 +7,7 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
 (function() {
-  var module = angular.module('app', [
-    'go_map_directive'
-  ]);
+  var module = angular.module('app', ['go']);
 
   module.controller('MainController', ['$scope',
     /**
