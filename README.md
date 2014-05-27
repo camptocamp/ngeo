@@ -120,7 +120,7 @@ updated as new ol3 objects are used in ngeo.
                * @param {angular.Attributes} attrs Attributes.
                */
               function(scope, element, attrs) {
-                var m = goog.object.get(scope, 'm');
+                var m = scope['m'];
                 // …
               },
           // …
