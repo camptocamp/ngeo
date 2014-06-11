@@ -68,12 +68,15 @@ function readConfig(configPath, callback) {
  * Get the list of sources sorted in dependency order.
  * @param {Array.<string>} src List of paths or patterns to source files.  By
  *     default, all .js files in the src directory are included.
+ * @param {string} ignoreRequires Ignore requires pattern.  Will be used in
+ *     a RegExp object.
  * @param {function(Error, Array.<string>)} callback Called with a list of paths
  *     or any error.
  */
-function getDependencies(src, callback) {
+function getDependencies(src, ignoreRequires, callback) {
   log.info('ol', 'Parsing dependencies');
-  closure.getDependencies({lib: src}, function(err, paths) {
+  var options = {lib: src, ignoreRequires: ignoreRequires};
+  closure.getDependencies(options, function(err, paths) {
     if (err) {
       callback(err);
       return;
@@ -137,7 +140,7 @@ function build(config, paths, callback) {
 function main(config, callback) {
   async.waterfall([
     assertValidConfig.bind(null, config),
-    getDependencies.bind(null, config.src),
+    getDependencies.bind(null, config.src, config.ignoreRequires),
     build.bind(null, config)
   ], callback);
 }
