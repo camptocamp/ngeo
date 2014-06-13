@@ -14,7 +14,7 @@ goog.require('ol.source.TileWMS');
   module.controller('MainController', ['$scope', 'goDecorateLayer',
     /**
      * @param {angular.Scope} $scope Scope.
-     * @param {go.DecorateLayer} goDecorateLayer decorate layer service.
+     * @param {go.DecorateLayer} goDecorateLayer Decorate layer service.
      */
     function($scope, goDecorateLayer) {
 

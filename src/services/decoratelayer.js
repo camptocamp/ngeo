@@ -18,7 +18,7 @@ go.DecorateLayer;
 goModule.value('goDecorateLayer',
 
     /**
-     * @param {ol.layer.Layer} layer to decorate.
+     * @param {ol.layer.Layer} layer Layer to decorate.
      */
     function(layer) {
 
