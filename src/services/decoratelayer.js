@@ -10,6 +10,11 @@ goog.require('goog.asserts');
 go.DecorateLayer;
 
 
+/**
+ * This service provides a function that adds properties (using
+ * `Object.defineProperty`) to the passed ol.layer.Layer object
+ * that can then be used with ngModel.
+ */
 goModule.value('goDecorateLayer',
 
     /**
