@@ -3,6 +3,13 @@ goog.provide('go_decoratelayer_service');
 goog.require('go');
 goog.require('goog.asserts');
 
+
+/**
+ * @typedef {function(ol.layer.Layer)}
+ */
+go.DecorateLayer;
+
+
 goModule.value('goDecorateLayer',
 
     /**
