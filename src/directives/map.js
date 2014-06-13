@@ -1,6 +1,7 @@
 goog.provide('go_map_directive');
 
 goog.require('go');
+goog.require('goog.asserts');
 
 goModule.directive('goMap', ['goDefaultMap',
   /**

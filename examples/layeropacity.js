@@ -1,6 +1,6 @@
 goog.provide('layeropacity');
 
-goog.require('go_layeropacity_directive');
+goog.require('go_decoratelayer_service');
 goog.require('go_map_directive');
 goog.require('ol.Map');
 goog.require('ol.View2D');
@@ -10,18 +10,17 @@ goog.require('ol.source.OSM');
 (function() {
   var module = angular.module('app', ['go']);
 
-  module.controller('MainController', ['$scope',
+  module.controller('MainController', ['$scope', 'goDecorateLayer',
     /**
      * @param {angular.Scope} $scope Scope.
+     * @param {Function} goDecorateLayer decorate layer service.
      */
-    function($scope) {
+    function($scope, goDecorateLayer) {
       /** @type {ol.layer.Layer} */
       $scope.layer = new ol.layer.Tile({
         source: new ol.source.OSM()
       });
-
-      // initial opacity of the OSM layer
-      $scope.layeropacity = 0.5;
+      goDecorateLayer($scope.layer);
 
       /** @type {ol.Map} */
       $scope.map = new ol.Map({
