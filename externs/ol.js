@@ -61,20 +61,24 @@ ol.layer = {};
  */
 ol.layer.Base = function() {};
 
+
 /**
  * @return {boolean|undefined}
  */
 ol.layer.Base.prototype.getVisible = function() {};
+
 
 /**
  * @return {number|undefined}
  */
 ol.layer.Base.prototype.getOpacity = function() {};
 
+
 /**
  * @param {boolean|undefined} visible
  */
 ol.layer.Base.prototype.setVisible = function(visible) {};
+
 
 /**
  * @param {number|undefined} opacity
@@ -87,4 +91,3 @@ ol.layer.Base.prototype.setOpacity = function(opacity) {};
  * @extends {ol.layer.Base}
  */
 ol.layer.Layer = function() {};
-
