@@ -22,7 +22,7 @@ goModule.directive('goLayerOpacity', ['goDefaultMap', '$timeout', '$parse',
   function(goDefaultMap, $timeout, $parse) {
     return {
       restrict: 'A',
-      require: '?ngModel',
+      require: 'ngModel',
       link:
           /**
            * @param {angular.Scope} scope Scope.

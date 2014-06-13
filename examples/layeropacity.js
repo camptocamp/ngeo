@@ -20,6 +20,9 @@ goog.require('ol.source.OSM');
         source: new ol.source.OSM()
       });
 
+      // initial opacity of the OSM layer
+      $scope.layeropacity = 0.5;
+
       /** @type {ol.Map} */
       $scope.map = new ol.Map({
         layers: [
