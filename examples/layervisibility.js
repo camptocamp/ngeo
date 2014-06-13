@@ -26,6 +26,9 @@ goog.require('ol.source.TileWMS');
         })
       });
 
+      // initial visibility of the WMS layer
+      $scope.layervisibility = false;
+
       /** @type {ol.Map} */
       $scope.map = new ol.Map({
         layers: [
@@ -39,5 +42,6 @@ goog.require('ol.source.TileWMS');
           zoom: 4
         })
       });
+
     }]);
 })();
