@@ -23,7 +23,7 @@ goModule.directive('goLayerVisibility', ['goDefaultMap', '$timeout', '$parse',
 
     return {
       restrict: 'A',
-      require: '?ngModel',
+      require: 'ngModel',
       link:
           /**
            * @param {angular.Scope} scope Scope.
