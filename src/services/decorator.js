@@ -4,16 +4,9 @@ goog.require('go');
 goog.require('goog.asserts');
 
 
-/**
- * This service provides functions that add properties (using
- * `Object.defineProperty`) to the passed object
- * that can then be used with ngModel.
- */
-goModule.value('goDecorator', {
+/** @type {gox.goDecorator} */
+var goDecorator = {
 
-  /**
-   * @param {ol.layer.Layer} layer Layer to decorate.
-   */
   layer: function(layer) {
 
     goog.asserts.assertInstanceof(layer, ol.layer.Layer);
@@ -39,10 +32,6 @@ goModule.value('goDecorator', {
     });
   },
 
-  /**
-   * @param {ol.interaction.Interaction} interaction Interaction to decorate.
-   * @param {ol.Map} map Map to bind the interaction with.
-   */
   interaction: function(interaction, map) {
 
     goog.asserts.assertInstanceof(interaction, ol.interaction.Interaction);
@@ -62,4 +51,12 @@ goModule.value('goDecorator', {
       }
     });
   }
-});
+};
+
+
+/**
+ * This service provides functions that add properties (using
+ * `Object.defineProperty`) to the passed object
+ * that can then be used with ngModel.
+ */
+goModule.value('goDecorator', goDecorator);

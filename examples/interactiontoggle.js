@@ -15,7 +15,7 @@ goog.require('ol.source.MapQuest');
   module.controller('MainController', ['$scope', 'goDecorator',
     /**
      * @param {angular.Scope} $scope Scope.
-     * @param {Object} goDecorator decorate layer service.
+     * @param {gox.goDecorator} goDecorator decorate layer service.
      */
     function($scope, goDecorator) {
 
