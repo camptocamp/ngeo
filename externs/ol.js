@@ -22,6 +22,23 @@ ol.Collection = function() {};
 ol.Map = function() {};
 
 /**
+ * @return {ol.Collection}
+ */
+ol.Map.prototype.getInteractions = function() {};
+
+
+/**
+ * @param {ol.interaction.Interaction} interaction
+ */
+ol.Map.prototype.addInteraction = function(interaction) {};
+
+
+/**
+ * @param {ol.interaction.Interaction} interaction
+ */
+ol.Map.prototype.removeInteraction = function(interaction) {};
+
+/**
  * @param {Element|string|undefined} target
  */
 ol.Map.prototype.setTarget = function(target) {};
@@ -48,6 +65,23 @@ ol.Observable = function() {};
  */
 ol.Observable.prototype.on = function(type, listener, opt_this) {};
 
+
+/**
+ * @type {Object}
+ */
+ol.interaction = {};
+
+
+/**
+ * @constructor
+ */
+ol.interaction.Interaction = function() {};
+
+
+/**
+ * @return {ol.Map}
+ */
+ol.interaction.Interaction.prototype.getMap = function() {};
 
 /**
  * @type {Object}
