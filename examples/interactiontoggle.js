@@ -1,12 +1,13 @@
-goog.provide('layervisibility');
+goog.provide('interactiontoggle');
 
 goog.require('go_decorator_service');
 goog.require('go_map_directive');
+goog.require('ol.FeatureOverlay');
 goog.require('ol.Map');
 goog.require('ol.View2D');
+goog.require('ol.interaction.Draw');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.MapQuest');
-goog.require('ol.source.TileWMS');
 
 (function() {
   var module = angular.module('app', ['go']);
@@ -18,29 +19,28 @@ goog.require('ol.source.TileWMS');
      */
     function($scope, goDecorator) {
 
-      /** @type {ol.layer.Layer} */
-      $scope.layer = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-          url: 'http://demo.opengeo.org/geoserver/wms',
-          params: {'LAYERS': 'topp:states'},
-          serverType: 'geoserver',
-          extent: [-13884991, 2870341, -7455066, 6338219]
-        })
-      });
-      goDecorator.layer($scope.layer);
-
       /** @type {ol.Map} */
       $scope.map = new ol.Map({
         layers: [
           new ol.layer.Tile({
             source: new ol.source.MapQuest({layer: 'sat'})
-          }),
-          $scope.layer
+          })
         ],
         view: new ol.View2D({
           center: [-10997148, 4569099],
           zoom: 4
         })
       });
+
+      var featureOverlay = new ol.FeatureOverlay();
+      featureOverlay.setMap($scope.map);
+
+      /** @type {ol.interaction.Draw} */
+      $scope.interaction = new ol.interaction.Draw(
+          /** @type {olx.interaction.DrawOptions} */ ({
+            type: 'Point',
+            features: featureOverlay.getFeatures()
+          }));
+      goDecorator.interaction($scope.interaction, $scope.map);
     }]);
 })();
