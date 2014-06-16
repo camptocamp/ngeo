@@ -21,6 +21,7 @@
     ],
     "js": [
       "examples/{{example}}.js",
+      "externs/ngeo.js",
       "node_modules/openlayers/externs/olx.js"
     ],
     "jscomp_error": [
