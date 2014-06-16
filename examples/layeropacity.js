@@ -13,7 +13,7 @@ goog.require('ol.source.OSM');
   module.controller('MainController', ['$scope', 'goDecorateLayer',
     /**
      * @param {angular.Scope} $scope Scope.
-     * @param {Function} goDecorateLayer decorate layer service.
+     * @param {go.DecoratorLayer} goDecorateLayer decorate layer service.
      */
     function($scope, goDecorateLayer) {
       /** @type {ol.layer.Layer} */
