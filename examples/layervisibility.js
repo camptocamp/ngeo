@@ -1,6 +1,6 @@
 goog.provide('layervisibility');
 
-goog.require('go_decorator_service');
+goog.require('go_decoratelayer_service');
 goog.require('go_map_directive');
 goog.require('ol.Map');
 goog.require('ol.View2D');
@@ -11,12 +11,12 @@ goog.require('ol.source.TileWMS');
 (function() {
   var module = angular.module('app', ['go']);
 
-  module.controller('MainController', ['$scope', 'goDecorator',
+  module.controller('MainController', ['$scope', 'goDecorateLayer',
     /**
      * @param {angular.Scope} $scope Scope.
-     * @param {Object} goDecorator decorate layer service.
+     * @param {go.DecorateLayer} goDecorateLayer Decorate layer service.
      */
-    function($scope, goDecorator) {
+    function($scope, goDecorateLayer) {
 
       /** @type {ol.layer.Layer} */
       $scope.layer = new ol.layer.Tile({
@@ -27,7 +27,7 @@ goog.require('ol.source.TileWMS');
           extent: [-13884991, 2870341, -7455066, 6338219]
         })
       });
-      goDecorator.layer($scope.layer);
+      goDecorateLayer($scope.layer);
 
       /** @type {ol.Map} */
       $scope.map = new ol.Map({
