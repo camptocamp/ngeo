@@ -38,7 +38,7 @@ examples: $(BUILD_EXAMPLES_JS_FILES)
 lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslint.timestamp .build/jshint.timestamp
 
 .PHONY: test
-test: .build/ol-deps.js
+test: .build/ol-deps.js .build/node_modules.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: serve
@@ -119,7 +119,7 @@ dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES)
 	mkdir -p .build
 	git clone http://github.com/google/closure-library/ $@
 
-.build/ol-deps.js:
+.build/ol-deps.js: .build/python-venv/bin/python
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 	  --root_with_prefix="node_modules/openlayers/src ../../../../../../openlayers/src" --output_file=$@
 
@@ -129,6 +129,7 @@ clean:
 	rm -f .build/examples/*.html
 	rm -f .build/gjslint.timestamp
 	rm -f .build/jshint.timestamp
+	rm -f .build/ol-deps.js
 	rm -f dist/ngeo.js
 
 .PHONY: cleanall
