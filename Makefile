@@ -17,6 +17,7 @@ help:
 	@echo "- check                   Perform a number of checks on the code"
 	@echo "- examples                Compile all the examples"
 	@echo "- lint                    Check the code with the linter"
+	@echo "- test                    Run the test suite"
 	@echo "- serve                   Run a development web server for running the examples"
 	@echo "- gh-pages                Publish examples to GitHub pages"
 	@echo "- clean                   Remove generated files"
@@ -35,6 +36,10 @@ examples: $(BUILD_EXAMPLES_JS_FILES)
 
 .PHONY: lint
 lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslint.timestamp .build/jshint.timestamp
+
+.PHONY: test
+test:
+	./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: serve
 serve:
