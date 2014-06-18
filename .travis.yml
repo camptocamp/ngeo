@@ -1,5 +1,5 @@
 before_install:
   - "sudo apt-get install python-virtualenv"
-  - "npm install -g npm"
+  - "npm install -g npm && npm install"
 
 script: "make check"
