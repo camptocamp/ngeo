@@ -2,8 +2,7 @@
   "name": "ngeo",
   "version": "0.0.1",
   "description": "AngularJS OpenLayers 3 Library",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git://github.com/elemoine/ngeo.git"
@@ -25,6 +24,9 @@
     "nomnom": "~1.6.2",
     "temp": "~0.7.0",
     "openlayers": "openlayers/ol3#master",
-    "phantomjs": "~1.9.7-5"
+    "phantomjs": "~1.9.7-5",
+    "karma": "^0.12.16",
+    "karma-jasmine": "^0.1.5",
+    "karma-phantomjs-launcher": "^0.1.4"
   }
 }
