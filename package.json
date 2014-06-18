@@ -25,6 +25,8 @@
     "temp": "~0.7.0",
     "openlayers": "openlayers/ol3#master",
     "phantomjs": "~1.9.7-5",
-    "karma": "^0.12.16"
+    "karma": "^0.12.16",
+    "karma-jasmine": "^0.1.5",
+    "karma-phantomjs-launcher": "^0.1.4"
   }
 }
