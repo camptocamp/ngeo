@@ -1,6 +1,6 @@
 goog.provide('interactiontoggle');
 
-goog.require('go_decorator_service');
+goog.require('go_decorateinteraction_service');
 goog.require('go_map_directive');
 goog.require('ol.FeatureOverlay');
 goog.require('ol.Map');
@@ -12,12 +12,13 @@ goog.require('ol.source.MapQuest');
 (function() {
   var module = angular.module('app', ['go']);
 
-  module.controller('MainController', ['$scope', 'goDecorator',
+  module.controller('MainController', ['$scope', 'goDecorateInteraction',
     /**
      * @param {angular.Scope} $scope Scope.
-     * @param {Object} goDecorator decorate layer service.
+     * @param {go.DecorateInteraction} goDecorateInteraction Decorate
+     *     interaction service.
      */
-    function($scope, goDecorator) {
+    function($scope, goDecorateInteraction) {
 
       /** @type {ol.Map} */
       $scope.map = new ol.Map({
@@ -41,6 +42,6 @@ goog.require('ol.source.MapQuest');
             type: 'Point',
             features: featureOverlay.getFeatures()
           }));
-      goDecorator.interaction($scope.interaction, $scope.map);
+      goDecorateInteraction($scope.interaction, $scope.map);
     }]);
 })();
