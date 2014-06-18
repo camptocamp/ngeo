@@ -1,5 +1,7 @@
 # ngeo
 
+[![Travis CI Status](https://api.travis-ci.org/camptocamp/ngeo.svg?branch=master)](https://travis-ci.org/camptocamp/ngeo)
+
 ## Build standalone version
 
 To build the standalone version of ngeo use the `dist` target:
