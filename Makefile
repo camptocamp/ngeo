@@ -29,7 +29,7 @@ help:
 dist: dist/ngeo.js
 
 .PHONY: check
-check: lint dist examples
+check: lint dist examples test
 
 .PHONY: examples
 examples: $(BUILD_EXAMPLES_JS_FILES)
