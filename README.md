@@ -116,6 +116,37 @@ updated as new ol3 objects are used in ngeo.
         });
   ```
 
+## Building Closure Compiler
+
+When building the standalone version of ngeo, `ngeo.js`, the compiler complains
+on `goog.require`'s that don't have corresponding `goog.provide`'s. This
+happens on `goog.require`'s for `ol` namespaces, because, when building
+`ngeo.js`, we don't pass `ol` source files to the compiler.
+
+To prevent this compilation error we set the `brokenClosureRequiresLevel`
+compiler
+[option](https://github.com/google/closure-compiler/blob/da97b6b/src/com/google/javascript/jscomp/CompilerOptions.java#L938)
+to `off`. This option is not available on the command line, so setting it to
+`off` requires building our own version of the compiler.
+
+Building the compiler:
+
+```shell
+$ git clone git@github.com:google/closure-compiler.git
+$ # edit the CompilerOptions.java file and set `brokenClosureRequiresLevel` to
+$ # `CheckLevel.OFF` in the `CompilerOptions` constructor.
+$ ant jar
+$ mkdir compiler-20140611 # use the correct date here!
+$ cp build/compiler.jar compiler-20140611/
+$ zip -r compiler-20140611.zip compiler-20140611
+  adding: compiler-20140611/ (stored 0%)
+  adding: compiler-20140611/compiler.jar (deflated 9%)
+```
+
+Now make the zip file available on
+http://dev.camptocamp.com/files/closure-compiler/compiler-20140611.zip and
+change `closure-util.json` as appropriate.
+
 ## Issues
 
 * We use our own closure-compiler.js externs file because ol3's includes the

@@ -16,7 +16,7 @@
     "htmlparser2": "~3.7.1"
   },
   "devDependencies": {
-    "closure-util": "~0.14.0",
+    "closure-util": "~0.16.0",
     "jshint": "~2.5.1",
     "walk": "~2.3.3",
     "fs-extra": "~0.8.1",

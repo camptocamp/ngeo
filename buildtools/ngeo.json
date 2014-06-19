@@ -1,5 +1,6 @@
 {
   "src": ["src/**/*.js"],
+  "ignoreRequires": "^ol\\.*",
   "compile": {
     "externs": [
       "externs/closure-compiler.js",
