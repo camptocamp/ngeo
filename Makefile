@@ -1,8 +1,10 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 EXAMPLES_JS_FILES := $(shell find examples -type f -name '*.js')
-BUILD_EXAMPLES_JS_FILES := $(addprefix .build/, $(patsubst %.js, %.min.js, $(EXAMPLES_JS_FILES)))
+BUILD_EXAMPLES_JS_FILES := $(addprefix .build/, $(EXAMPLES_JS_FILES))
+BUILD_EXAMPLES_MIN_JS_FILES := $(addprefix .build/, $(patsubst %.js, %.min.js, $(EXAMPLES_JS_FILES)))
 EXAMPLES_HTML_FILES := $(shell find examples -type f -name '*.html')
 BUILD_EXAMPLES_HTML_FILES := $(addprefix .build/, $(EXAMPLES_HTML_FILES))
+BUILD_EXAMPLES_MIN_HTML_FILES := $(addprefix .build/, $(patsubst %.html, %.min.html, $(EXAMPLES_HTML_FILES)))
 
 .PHONY: all
 all: help
@@ -32,7 +34,7 @@ dist: dist/ngeo.js
 check: lint dist examples test
 
 .PHONY: examples
-examples: $(BUILD_EXAMPLES_JS_FILES)
+examples: $(BUILD_EXAMPLES_JS_FILES) $(BUILD_EXAMPLES_HTML_FILES) .build/examples/ngeo.js $(BUILD_EXAMPLES_MIN_JS_FILES) $(BUILD_EXAMPLES_MIN_HTML_FILES)
 
 .PHONY: lint
 lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslint.timestamp .build/jshint.timestamp
@@ -47,14 +49,14 @@ serve:
 
 .PHONY: gh-pages
 gh-pages: GIT_BRANCH = $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages $(BUILD_EXAMPLES_JS_FILES) $(BUILD_EXAMPLES_HTML_FILES)
+gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages examples
 	(cd $< && \
 	 git fetch origin && \
 	 git merge --ff-only origin/gh-pages && \
 	 git rm --ignore-unmatch -rqf $(GIT_BRANCH) && \
 	 mkdir -p $(GIT_BRANCH) && \
 	 cp -r ../examples/*.html $(GIT_BRANCH) && \
-	 cp -r ../examples/*.min.js $(GIT_BRANCH) && \
+	 cp -r ../examples/*.js $(GIT_BRANCH) && \
 	 git add -A . && \
 	 git commit -m 'Update GitHub pages' && \
 	 git push origin gh-pages)
@@ -72,13 +74,27 @@ dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES)
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
+.build/examples/%.min.html: examples/%.html
+	mkdir -p $(dir $@)
+	sed -e 's/\/@?main=$*.js/$*.min.js/' $< > $@
+
 .build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) .build/externs/angular-1.3.js examples/%.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
+.build/examples/ngeo.js: dist/ngeo.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples/%.html: examples/%.html
 	mkdir -p $(dir $@)
-	sed 's/\/@?main=$*.js/$*.min.js/' $< > $@
+	sed -e '/src=.*angular.*\.js/a\    <script src="http://ol3js.org/en/master/build/ol.js"></script>' \
+		-e '/src=.*angular.*\.js/a\    <script src="ngeo.js"></script>' \
+		-e 's/\/@?main=$*.js/$*.js/' $< > $@
+
+.build/examples/%.js: examples/%.js
+	mkdir -p $(dir $@)
+	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
 .build/ngeo-%-gh-pages:
 	git clone --branch gh-pages git@github.com:$*/ngeo.git $@
@@ -125,7 +141,7 @@ dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES)
 
 .PHONY: clean
 clean:
-	rm -f .build/examples/*.min.js
+	rm -f .build/examples/*.js
 	rm -f .build/examples/*.html
 	rm -f .build/gjslint.timestamp
 	rm -f .build/jshint.timestamp
