@@ -1,4 +1,5 @@
 {
+  "exports": [],
   "src": ["node_modules/openlayers/src/**/*.js", "src/**/*.js"],
   "compile": {
     "closure_entry_point": "{{example}}",
