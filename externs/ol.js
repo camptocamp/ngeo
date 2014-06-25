@@ -17,6 +17,12 @@ ol.Collection = function() {};
 
 
 /**
+ * @return {Array}
+ */
+ol.Collection.prototype.getArray = function() {};
+
+
+/**
  * @constructor
  */
 ol.Map = function() {};
@@ -77,11 +83,6 @@ ol.interaction = {};
  */
 ol.interaction.Interaction = function() {};
 
-
-/**
- * @return {ol.Map}
- */
-ol.interaction.Interaction.prototype.getMap = function() {};
 
 /**
  * @type {Object}

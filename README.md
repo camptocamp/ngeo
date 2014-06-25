@@ -23,21 +23,6 @@ $ make serve
 and point your browser to
 [http://localhost:3000/examples](http://localhost:3000/examples).
 
-## Compile the examples
-
-To compile all the examples use:
-
-```shell
-$ make examples
-```
-
-To compile a single example use `make .build/examples/<example_name>.min.js`.
-For example:
-
-```shell
-$ make .build/examples/simple.min.js
-```
-
 ## The `check` target
 
 Run the `check` target before submitting a PR:
@@ -72,6 +57,12 @@ $ make gh-pages GITHUB_USERNAME=camptocamp
 ```
 
 will publish the examples to `http://camptocamp.github.io/ngeo/<branchname>/`.
+
+Two versions of each example is published: a compiled version, and
+a non-compiled version that uses ol.js and ngeo.js standalone builds.
+
+* Non-compiled version: http://camptocamp.github.io/ngeo/simple.html
+* Compiled version: http://camptocamp.github.io/ngeo/simple.min.html
 
 ## Developer Guide
 

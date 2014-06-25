@@ -29,9 +29,7 @@ goModule.value('goDecorateInteraction',
 
       Object.defineProperty(interaction, 'active', {
         get: function() {
-          var currentMap = interaction.getMap();
-          goog.asserts.assert(goog.isNull(currentMap) || currentMap === map);
-          return !goog.isNull(currentMap);
+          return map.getInteractions().getArray().indexOf(interaction) >= 0;
         },
         set: function(val) {
           if (val) {
