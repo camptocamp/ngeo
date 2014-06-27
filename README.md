@@ -70,40 +70,61 @@ a non-compiled version that uses the `ngeo.js` standalone builds.
 
 ## Developer Guide
 
-This section includes information for developpers of ngeo.
+This section includes information for developpers and users of ngeo.
 
-### Writing directives
+### Property renaming and `$scope`
 
-* In the definition of a directive, if an object is used for the `scope`
-  property (case of an isolate scope) then quotes must be used for the keys in
-  that object. And in the `link` function, the `[]` notation, instead of the
-  `.` notation, must be used when accessing scope properties. See the example
-  below.
+The ngeo code is compiled with Closure Compiler in *advanced* mode. This
+means we should conform to the restrictions imposed by the compiler.
 
-  ```js
-  module.directive('goDirectiveExample',
-      /**
-       * @return {angular.Directive} The directive specs.
-       */
-      function() {
-        return {
-          restrict: 'A',
-          scope: {
-            'm': '=goDirectiveExampleMap'
-          }
-          link:
-              /**
-               * @param {angular.Scope} scope Scope.
-               * @param {angular.JQLite} element Element.
-               * @param {angular.Attributes} attrs Attributes.
-               */
-              function(scope, element, attrs) {
-                var m = scope['m'];
-                // …
-              },
-          // …
-        });
-  ```
+In particular, Angular controllers and directives typically set properties on
+the `$scope`. These properties are then referenced by their names in HTML pages
+and templates. This means that we need to prevent the compiler from renaming
+the properties controllers and directives set on the `$scope`.
+
+The way to do that is to use the `[]` notation rather than the `.` notation
+when setting (and accessing) properties on the `$scope`. For example if you
+need to set a property `foo` on the `$scope` you should do as follows:
+
+```js
+$scope['foo'] = 'bar';
+```
+
+The jshint linter, which we use for to check the ngeo code, complains when the
+`[]` notation is used. We set the `sub` jshint to `true` in a `.jshintrc` file
+to make jshint stay silent on that.
+
+### Directives
+
+In the definition of a directive, if an object is used for the `scope` property
+(*isolate scope*) then quotes must be used for the keys in that object. And in
+the `link` function, the `[]` notation, instead of the `.` notation, must be
+used when accessing scope properties. See the example below.
+
+```js
+module.directive('goDirectiveExample',
+  /**
+   * @return {angular.Directive} The directive specs.
+   */
+  function() {
+    return {
+      restrict: 'A',
+      scope: {
+        'm': '=goDirectiveExampleMap'
+      }
+      link:
+          /**
+           * @param {angular.Scope} scope Scope.
+           * @param {angular.JQLite} element Element.
+           * @param {angular.Attributes} attrs Attributes.
+           */
+          function(scope, element, attrs) {
+            var m = scope['m'];
+            // …
+          },
+      // …
+    });
+```
 
 ## Issues
 
