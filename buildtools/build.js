@@ -1,3 +1,6 @@
+/**
+ * This task builds OpenLayers with the Closure Compiler.
+ */
 var fs = require('fs');
 var path = require('path');
 
@@ -7,7 +10,10 @@ var fse = require('fs-extra');
 var nomnom = require('nomnom');
 var temp = require('temp').track();
 
+var generateExports = require('./generate-exports');
+
 var log = closure.log;
+var root = path.join(__dirname, '..');
 
 
 /**
@@ -17,6 +23,10 @@ var log = closure.log;
  */
 function assertValidConfig(config, callback) {
   process.nextTick(function() {
+    if (!Array.isArray(config.exports)) {
+      callback(new Error('Config missing "exports" array'));
+      return;
+    }
     if (config.namespace && typeof config.namespace !== 'string') {
       callback(new Error('Config "namespace" must be a string'));
       return;
@@ -65,23 +75,59 @@ function readConfig(configPath, callback) {
 
 
 /**
- * Get the list of sources sorted in dependency order.
- * @param {Array.<string>} src List of paths or patterns to source files.  By
- *     default, all .js files in the src directory are included.
- * @param {string} ignoreRequires Ignore requires pattern.  Will be used in
- *     a RegExp object.
- * @param {function(Error, Array.<string>)} callback Called with a list of paths
- *     or any error.
+ * Write the exports code to a temporary file.
+ * @param {string} exports Exports code.
+ * @param {function(Error, string)} callback Called with the path to the temp
+ *     file (or any error).
  */
-function getDependencies(src, ignoreRequires, callback) {
-  log.info('ol', 'Parsing dependencies');
-  var options = {lib: src, ignoreRequires: ignoreRequires};
-  closure.getDependencies(options, function(err, paths) {
+function writeExports(exports, callback) {
+  temp.open({prefix: 'exports', suffix: '.js'}, function(err, info) {
     if (err) {
       callback(err);
       return;
     }
-    callback(null, paths);
+    log.verbose('build', 'Writing exports: ' + info.path);
+    fs.writeFile(info.path, exports, function(err) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      fs.close(info.fd, function(err) {
+        if (err) {
+          callback(err);
+          return;
+        }
+        callback(null, info.path);
+      });
+    });
+  });
+}
+
+
+/**
+ * Get the list of sources sorted in dependency order.
+ * @param {Array.<string>} src List of paths or patterns to source files.  By
+ *     default, all .js files in the src directory are included.
+ * @param {string} exports Exports code (with goog.exportSymbol calls).
+ * @param {function(Error, Array.<string>)} callback Called with a list of paths
+ *     or any error.
+ */
+function getDependencies(src, exports, callback) {
+  writeExports(exports, function(err, exportsPath) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    log.info('ol', 'Parsing dependencies');
+    src = src || ['src/**/*.js'];
+    closure.getDependencies({lib: src}, function(err, paths) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      paths.push(exportsPath);
+      callback(null, paths);
+    });
   });
 }
 
@@ -140,7 +186,8 @@ function build(config, paths, callback) {
 function main(config, callback) {
   async.waterfall([
     assertValidConfig.bind(null, config),
-    getDependencies.bind(null, config.src, config.ignoreRequires),
+    generateExports.bind(null, config),
+    getDependencies.bind(null, config.src),
     build.bind(null, config)
   ], callback);
 }

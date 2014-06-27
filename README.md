@@ -4,13 +4,17 @@
 
 ## Build standalone version
 
-To build the standalone version of ngeo use the `dist` target:
+To build the "standalone" version of ngeo use the `dist` target:
 
 ```shell
 $ make dist
 ```
 
 The resulting file is `dist/ngeo.js`.
+
+The standalone version of ngeo contains both the `ngeo` code and the `ol` code.
+So when you use `ngeo.js` in a web page you should not have a script tag for
+`ol.js`.
 
 ## Run the examples
 
@@ -59,7 +63,7 @@ $ make gh-pages GITHUB_USERNAME=camptocamp
 will publish the examples to `http://camptocamp.github.io/ngeo/<branchname>/`.
 
 Two versions of each example is published: a compiled version, and
-a non-compiled version that uses ol.js and ngeo.js standalone builds.
+a non-compiled version that uses the `ngeo.js` standalone builds.
 
 * Non-compiled version: http://camptocamp.github.io/ngeo/simple.html
 * Compiled version: http://camptocamp.github.io/ngeo/simple.min.html
@@ -67,12 +71,6 @@ a non-compiled version that uses ol.js and ngeo.js standalone builds.
 ## Developer Guide
 
 This section includes information for developpers of ngeo.
-
-### The `ol.js` externs
-
-To be able to compile ngeo (in advanced mode) as a standalone library an
-externs file for ol3 is needed. This externs file, `externs/ol.js`, needs to be
-updated as new ol3 objects are used in ngeo.
 
 ### Writing directives
 
@@ -106,37 +104,6 @@ updated as new ol3 objects are used in ngeo.
           // …
         });
   ```
-
-## Building Closure Compiler
-
-When building the standalone version of ngeo, `ngeo.js`, the compiler complains
-on `goog.require`'s that don't have corresponding `goog.provide`'s. This
-happens on `goog.require`'s for `ol` namespaces, because, when building
-`ngeo.js`, we don't pass `ol` source files to the compiler.
-
-To prevent this compilation error we set the `brokenClosureRequiresLevel`
-compiler
-[option](https://github.com/google/closure-compiler/blob/da97b6b/src/com/google/javascript/jscomp/CompilerOptions.java#L938)
-to `off`. This option is not available on the command line, so setting it to
-`off` requires building our own version of the compiler.
-
-Building the compiler:
-
-```shell
-$ git clone git@github.com:google/closure-compiler.git
-$ # edit the CompilerOptions.java file and set `brokenClosureRequiresLevel` to
-$ # `CheckLevel.OFF` in the `CompilerOptions` constructor.
-$ ant jar
-$ mkdir compiler-20140611 # use the correct date here!
-$ cp build/compiler.jar compiler-20140611/
-$ zip -r compiler-20140611.zip compiler-20140611
-  adding: compiler-20140611/ (stored 0%)
-  adding: compiler-20140611/compiler.jar (deflated 9%)
-```
-
-Now make the zip file available on
-http://dev.camptocamp.com/files/closure-compiler/compiler-20140611.zip and
-change `closure-util.json` as appropriate.
 
 ## Issues
 
