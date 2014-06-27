@@ -15,7 +15,7 @@ goog.require('ol.source.OSM');
      */
     function($scope) {
       /** @type {ol.Map} */
-      $scope.map = new ol.Map({
+      $scope['map'] = new ol.Map({
         layers: [
           new ol.layer.Tile({
             source: new ol.source.OSM()

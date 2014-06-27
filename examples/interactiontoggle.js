@@ -21,7 +21,7 @@ goog.require('ol.source.MapQuest');
     function($scope, goDecorateInteraction) {
 
       /** @type {ol.Map} */
-      $scope.map = new ol.Map({
+      var map = new ol.Map({
         layers: [
           new ol.layer.Tile({
             source: new ol.source.MapQuest({layer: 'sat'})
@@ -32,16 +32,19 @@ goog.require('ol.source.MapQuest');
           zoom: 4
         })
       });
+      $scope['map'] = map;
 
       var featureOverlay = new ol.FeatureOverlay();
-      featureOverlay.setMap($scope.map);
+      featureOverlay.setMap(map);
 
       /** @type {ol.interaction.Draw} */
-      $scope.interaction = new ol.interaction.Draw(
+      var interaction = new ol.interaction.Draw(
           /** @type {olx.interaction.DrawOptions} */ ({
             type: 'Point',
             features: featureOverlay.getFeatures()
           }));
-      goDecorateInteraction($scope.interaction, $scope.map);
+      goDecorateInteraction(interaction, map);
+      $scope['interaction'] = interaction;
+
     }]);
 })();
