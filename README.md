@@ -65,8 +65,8 @@ will publish the examples to `http://camptocamp.github.io/ngeo/<branchname>/`.
 Two versions of each example is published: a compiled version, and
 a non-compiled version that uses the `ngeo.js` standalone builds.
 
-* Non-compiled version: http://camptocamp.github.io/ngeo/simple.html
-* Compiled version: http://camptocamp.github.io/ngeo/simple.min.html
+* Non-compiled version: http://camptocamp.github.io/ngeo/master/simple.html
+* Compiled version: http://camptocamp.github.io/ngeo/master/simple.min.html
 
 ## Developer Guide
 
