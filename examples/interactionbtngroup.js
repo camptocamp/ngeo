@@ -96,7 +96,7 @@ goog.require('ol.source.MapQuest');
              * @param {angular.Scope} btnScope Scope of the goBtn directive.
              */
             this.activate = function(btnScope) {
-              goog.array.forEach(buttons, function(b) {
+              buttons.forEach(function(b) {
                 if (b.scope != btnScope) {
                   b.setter(b.scope, false);
                 }
