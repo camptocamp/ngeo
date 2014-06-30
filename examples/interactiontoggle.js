@@ -4,7 +4,7 @@ goog.require('go_decorateinteraction_service');
 goog.require('go_map_directive');
 goog.require('ol.FeatureOverlay');
 goog.require('ol.Map');
-goog.require('ol.View2D');
+goog.require('ol.View');
 goog.require('ol.interaction.Draw');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.MapQuest');
@@ -27,7 +27,7 @@ goog.require('ol.source.MapQuest');
             source: new ol.source.MapQuest({layer: 'sat'})
           })
         ],
-        view: new ol.View2D({
+        view: new ol.View({
           center: [-10997148, 4569099],
           zoom: 4
         })
