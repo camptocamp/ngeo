@@ -159,7 +159,6 @@ clean:
 	rm -f .build/jshint.timestamp
 	rm -f .build/ol-deps.js
 	rm -f .build/info.json
-	rm -f .build/exports.js
 	rm -f dist/ngeo.js
 
 .PHONY: cleanall
