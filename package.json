@@ -16,17 +16,18 @@
     "htmlparser2": "~3.7.1"
   },
   "devDependencies": {
-    "closure-util": "~0.16.0",
-    "jshint": "~2.5.1",
-    "jsdoc": "~3.3.0-alpha7",
-   "walk": "~2.3.3",
+    "closure-util": "~0.17.0",
     "fs-extra": "~0.8.1",
-    "nomnom": "~1.6.2",
-    "temp": "~0.7.0",
-    "openlayers": "openlayers/ol3#master",
-    "phantomjs": "~1.9.7-5",
+    "graceful-fs": "~3.0.2",
+    "jsdoc": "~3.3.0-alpha7",
+    "jshint": "~2.5.1",
     "karma": "^0.12.16",
     "karma-jasmine": "^0.1.5",
-    "karma-phantomjs-launcher": "^0.1.4"
+    "karma-phantomjs-launcher": "^0.1.4",
+    "nomnom": "~1.6.2",
+    "openlayers": "openlayers/ol3#master",
+    "phantomjs": "~1.9.7-5",
+    "temp": "~0.7.0",
+    "walk": "~2.3.3"
   }
 }
