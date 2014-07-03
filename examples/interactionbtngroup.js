@@ -42,7 +42,7 @@ goog.require('ol.source.MapQuest');
       });
 
       /** @type {ol.Map} */
-      $scope.map = new ol.Map({
+      var map = new ol.Map({
         layers: [
           new ol.layer.Tile({
             source: new ol.source.MapQuest({layer: 'sat'})
@@ -54,31 +54,34 @@ goog.require('ol.source.MapQuest');
           zoom: 4
         })
       });
+      $scope['map'] = map;
 
       /** @type {ol.interaction.Draw} */
-      $scope.drawPolygon = new ol.interaction.Draw(
+      var drawPolygon = new ol.interaction.Draw(
           /** @type {olx.interaction.DrawOptions} */ ({
             type: 'Polygon',
             source: source
           }));
-      goDecorateInteraction($scope.drawPolygon, $scope.map);
-
+      goDecorateInteraction(drawPolygon, map);
+      $scope['drawPolygon'] = drawPolygon;
 
       /** @type {ol.interaction.Draw} */
-      $scope.drawPoint = new ol.interaction.Draw(
+      var drawPoint = new ol.interaction.Draw(
           /** @type {olx.interaction.DrawOptions} */ ({
             type: 'Point',
             source: source
           }));
-      goDecorateInteraction($scope.drawPoint, $scope.map);
+      goDecorateInteraction(drawPoint, map);
+      $scope['drawPoint'] = drawPoint;
 
       /** @type {ol.interaction.Draw} */
-      $scope.drawLine = new ol.interaction.Draw(
+      var drawLine = new ol.interaction.Draw(
           /** @type {olx.interaction.DrawOptions} */ ({
             type: 'LineString',
             source: source
           }));
-      goDecorateInteraction($scope.drawLine, $scope.map);
+      goDecorateInteraction(drawLine, map);
+      $scope['drawLine'] = drawLine;
     }]);
 
   module.directive('goBtnGroup', function() {

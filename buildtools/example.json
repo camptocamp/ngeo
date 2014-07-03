@@ -13,7 +13,6 @@
       "node_modules/openlayers/externs/topojson.js",
       "node_modules/openlayers/externs/vbarray.js",
       "externs/closure-compiler.js",
-      "externs/examples.js",
       ".build/externs/angular-1.3.js"
     ],
     "define": [
