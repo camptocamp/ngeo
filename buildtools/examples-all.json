@@ -1,0 +1,68 @@
+{
+  "exports": [],
+  "src": ["node_modules/openlayers/src/**/*.js", "src/**/*.js"],
+  "compile": {
+    "externs": [
+      "node_modules/openlayers/externs/bingmaps.js",
+      "node_modules/openlayers/externs/example.js",
+      "node_modules/openlayers/externs/geojson.js",
+      "node_modules/openlayers/externs/oli.js",
+      "node_modules/openlayers/externs/proj4js.js",
+      "node_modules/openlayers/externs/tilejson.js",
+      "node_modules/openlayers/externs/topojson.js",
+      "node_modules/openlayers/externs/vbarray.js",
+      "externs/closure-compiler.js",
+      ".build/externs/angular-1.3.js"
+    ],
+    "define": [
+      "goog.dom.ASSUME_STANDARDS_MODE=true",
+      "goog.DEBUG=false"
+    ],
+    "js": [
+      ".build/examples/all.js",
+      "node_modules/openlayers/externs/olx.js"
+    ],
+    "jscomp_error": [
+      "accessControls",
+      "ambiguousFunctionDecl",
+      "checkDebuggerStatement",
+      "checkEventfulObjectDisposal",
+      "checkProvides",
+      "checkRegExp",
+      "checkStructDictInheritance",
+      "checkTypes",
+      "checkVars",
+      "const",
+      "constantProperty",
+      "deprecated",
+      "duplicate",
+      "duplicateMessage",
+      "es3",
+      "externsValidation",
+      "fileoverviewTags",
+      "globalThis",
+      "internetExplorerChecks",
+      "invalidCasts",
+      "misplacedTypeAnnotation",
+      "missingProperties",
+      "nonStandardJsDocs",
+      "strictModuleDepCheck",
+      "suspiciousCode",
+      "typeInvalidation",
+      "tweakValidation",
+      "undefinedNames",
+      "undefinedVars",
+      "unknownDefines",
+      "uselessCode",
+      "violatedModuleDep",
+      "visibility"
+    ],
+    "jscomp_off": [
+      "es5Strict"
+    ],
+    "compilation_level": "ADVANCED_OPTIMIZATIONS",
+    "output_wrapper": "(function(){%output%})();",
+    "use_types_for_optimization": true
+  }
+}
+
