@@ -125,9 +125,3 @@ module.directive('goDirectiveExample',
       // …
     });
 ```
-
-## Issues
-
-* We use our own closure-compiler.js externs file because ol3's includes the
-  definitions of msRequestFullscreen and msExitFullscreen which are defined in
-  the html5.js externs file of recent Compiler versions.
