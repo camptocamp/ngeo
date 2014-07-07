@@ -66,7 +66,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages compile-examples check-example
 
 
 .build/gjslint.timestamp: $(SRC_JS_FILES) $(EXAMPLES_JS_FILES)
-	.build/python-venv/bin/gjslint --jslint_error=all --strict $?
+	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable $?
 	touch $@
 
 .build/jshint.timestamp: $(SRC_JS_FILES) $(EXAMPLES_JS_FILES)
