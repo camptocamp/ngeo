@@ -4,6 +4,7 @@
   "compile": {
     "externs": [
       "node_modules/openlayers/externs/bingmaps.js",
+      "node_modules/openlayers/externs/closure-compiler.js",
       "node_modules/openlayers/externs/example.js",
       "node_modules/openlayers/externs/geojson.js",
       "node_modules/openlayers/externs/oli.js",
@@ -12,7 +13,6 @@
       "node_modules/openlayers/externs/tilejson.js",
       "node_modules/openlayers/externs/topojson.js",
       "node_modules/openlayers/externs/vbarray.js",
-      "externs/closure-compiler.js",
       ".build/externs/angular-1.3.js"
     ],
     "define": [
@@ -52,6 +52,9 @@
       "uselessCode",
       "violatedModuleDep",
       "visibility"
+    ],
+    "extra_annotation_name": [
+      "api", "observable"
     ],
     "jscomp_off": [
       "es5Strict"
