@@ -59,12 +59,13 @@ goog.require('ol.source.TileWMS');
     function($scope, goDecorateLayer, decorateLayer) {
 
       /** @type {ol.Map} */
-      $scope.map = new ol.Map({
+      var map = new ol.Map({
         view: new ol.View({
           center: [-6655.5402445057125, 6709968.258934638],
           zoom: 11
         })
       });
+      $scope['map'] = map;
 
       /** @type {ol.layer.Layer} */
       var osm = new ol.layer.Tile({
@@ -73,7 +74,7 @@ goog.require('ol.source.TileWMS');
         source: new ol.source.OSM()
       });
       goDecorateLayer(osm);
-      decorateLayer(osm, $scope.map);
+      decorateLayer(osm, map);
 
       /** @type {ol.layer.Layer} */
       var mapQuest = new ol.layer.Tile({
@@ -82,7 +83,7 @@ goog.require('ol.source.TileWMS');
         source: new ol.source.MapQuest({layer: 'sat'})
       });
       goDecorateLayer(mapQuest);
-      decorateLayer(mapQuest, $scope.map);
+      decorateLayer(mapQuest, map);
 
       /** @type {ol.layer.Layer} */
       var stamen = new ol.layer.Tile({
@@ -93,7 +94,7 @@ goog.require('ol.source.TileWMS');
         })
       });
       goDecorateLayer(stamen);
-      decorateLayer(stamen, $scope.map);
+      decorateLayer(stamen, map);
 
       $scope['layers'] = [osm, mapQuest, stamen];
     }]);
