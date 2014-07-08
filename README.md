@@ -35,9 +35,20 @@ Run the `check` target before submitting a PR:
 $ make check
 ```
 
-The `check` target runs a number of checks on the code of the library and
-the examples (lint, compile, …). We recommend using this target before pushing
-code to GitHub and creating PRs.
+The `check` target runs a number of checks on the code of the library and the
+examples (lint, compile, …). This is the target run on Travis.
+
+Note: this target compiles the examples' code. The examples are combined into
+a single file before compilation. See the following section to know how to
+individually compile the examples.
+
+## Compile the examples individually
+
+Each example can be individually compiled. For example:
+
+```shell
+$ make .build/examples/simple.min.js
+```
 
 ## Publish examples to GitHub Pages
 
@@ -62,11 +73,9 @@ $ make gh-pages GITHUB_USERNAME=camptocamp
 
 will publish the examples to `http://camptocamp.github.io/ngeo/<branchname>/`.
 
-Two versions of each example is published: a compiled version, and
-a non-compiled version that uses the `ngeo.js` standalone builds.
+The published examples use the `ngeo.js` standalone build.
 
-* Non-compiled version: http://camptocamp.github.io/ngeo/master/simple.html
-* Compiled version: http://camptocamp.github.io/ngeo/master/simple.min.html
+Example: http://camptocamp.github.io/ngeo/master/simple.html.
 
 ## Developer Guide
 

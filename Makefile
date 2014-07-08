@@ -1,11 +1,7 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 EXAMPLES_JS_FILES := $(shell find examples -type f -name '*.js')
-BUILD_EXAMPLES_JS_FILES := $(addprefix .build/, $(EXAMPLES_JS_FILES))
-BUILD_EXAMPLES_MIN_JS_FILES := $(addprefix .build/, $(patsubst %.js, %.min.js, $(EXAMPLES_JS_FILES)))
 EXAMPLES_HTML_FILES := $(shell find examples -type f -name '*.html')
-BUILD_EXAMPLES_HTML_FILES := $(addprefix .build/, $(EXAMPLES_HTML_FILES))
-BUILD_EXAMPLES_MIN_HTML_FILES := $(addprefix .build/, $(patsubst %.html, %.min.html, $(EXAMPLES_HTML_FILES)))
-BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(addprefix .build/, $(patsubst %.html, %.check.timestamp, $(EXAMPLES_HTML_FILES)))
+BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html, .build/%.check.timestamp, $(EXAMPLES_HTML_FILES))
 
 .PHONY: all
 all: help
@@ -34,7 +30,7 @@ dist: dist/ngeo.js
 check: lint dist check-examples compile-examples test
 
 .PHONY: compile-examples
-compile-examples: $(BUILD_EXAMPLES_MIN_JS_FILES) $(BUILD_EXAMPLES_MIN_HTML_FILES)
+compile-examples: .build/examples/all.min.js
 
 .PHONY: check-examples
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
@@ -52,14 +48,14 @@ serve:
 
 .PHONY: gh-pages
 gh-pages: GIT_BRANCH = $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages compile-examples check-examples
+gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 	(cd $< && \
 	 git fetch origin && \
 	 git merge --ff-only origin/gh-pages && \
 	 git rm --ignore-unmatch -rqf $(GIT_BRANCH) && \
 	 mkdir -p $(GIT_BRANCH) && \
-	 cp -r ../examples/*.html $(GIT_BRANCH) && \
-	 cp -r ../examples/*.js $(GIT_BRANCH) && \
+	 cp -r ../examples-hosted/*.html $(GIT_BRANCH) && \
+	 cp -r ../examples-hosted/*.js $(GIT_BRANCH) && \
 	 git add -A . && \
 	 git commit -m 'Update GitHub pages' && \
 	 git push origin gh-pages)
@@ -77,32 +73,34 @@ dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES)
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.PRECIOUS: .build/examples/%.min.html
-.build/examples/%.min.html: examples/%.html
-	mkdir -p $(dir $@)
-	sed -e 's/\/@?main=$*.js/$*.min.js/' $< > $@
-
-.PRECIOUS: .build/examples/%.min.js
 .build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) .build/externs/angular-1.3.js examples/%.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.build/examples/ngeo.js: dist/ngeo.js
+.build/examples/all.min.js: buildtools/examples-all.json $(SRC_JS_FILES) .build/externs/angular-1.3.js .build/examples/all.js .build/node_modules.timestamp
+	mkdir -p $(dir $@)
+	node buildtools/build.js $< $@
+
+.build/examples/all.js: $(EXAMPLES_JS_FILES) .build/python-venv
+	mkdir -p $(dir $@)
+	./.build/python-venv/bin/python buildtools/combine-examples.py $(EXAMPLES_JS_FILES) > $@
+
+.build/examples-hosted/ngeo.js: dist/ngeo.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
 .PRECIOUS: .build/examples/%.html
-.build/examples/%.html: examples/%.html
+.build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
 	sed -e '/src=.*angular.*\.js/a\    <script src="ngeo.js"></script>' \
 		-e 's/\/@?main=$*.js/$*.js/' $< > $@
 
-.PRECIOUS: .build/examples/%.js
-.build/examples/%.js: examples/%.js
+.PRECIOUS: .build/examples-hosted/%.js
+.build/examples-hosted/%.js: examples/%.js
 	mkdir -p $(dir $@)
 	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
-.build/examples/%.check.timestamp: .build/examples/%.html .build/examples/%.js .build/examples/ngeo.js .build/node_modules.timestamp
+.build/%.check.timestamp: .build/examples-hosted/%.html .build/examples-hosted/%.js .build/examples-hosted/ngeo.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
@@ -146,15 +144,16 @@ dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES)
 	mkdir -p .build
 	git clone http://github.com/google/closure-library/ $@
 
-.build/ol-deps.js: .build/python-venv/bin/python
+.build/ol-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 	  --root_with_prefix="node_modules/openlayers/src ../../../../../../openlayers/src" --output_file=$@
 
 .PHONY: clean
 clean:
+	rm -f .build/*.check.timestamp
 	rm -f .build/examples/*.js
-	rm -f .build/examples/*.html
-	rm -f .build/examples/*.check.timestamp
+	rm -f .build/examples-hosted/*.js
+	rm -f .build/examples-hosted/*.html
 	rm -f .build/gjslint.timestamp
 	rm -f .build/jshint.timestamp
 	rm -f .build/ol-deps.js
