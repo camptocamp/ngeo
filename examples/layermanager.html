@@ -14,9 +14,8 @@
         input[type=range] {
             width: auto !important;
         }
-        .btn-container {
-            width: 200px;
-            margin: 0 auto 10px;
+        .catalog-item {
+            display: block;
         }
         .main-container {
             margin: 15px;
@@ -33,10 +32,11 @@
   <div id="map" go-map></div>
 
     <div class="main-container" ng-cloak>
-        <div class="well pull-left btn-container">
-            <button ng-repeat="l in layersDef" type="button" class="btn btn-block btn-default"
-                    ng-click="l.active = !l.active" ng-class="{active : l.active}">{{l.get('label')}}</button>
-        </div>
+        <h3>Layer catalog</h3>
+        <label ng-repeat="layer in layers" for="{{layer.get('id')}}" class="catalog-item">
+            <input type="checkbox" id="{{layer.get('id')}}" ng-model="layer.active" />
+            {{layer.get('label')}}
+        </label>
         <div class="layermanager">
             <h3>LayerManager</h3>
             <ul class="list-group">
