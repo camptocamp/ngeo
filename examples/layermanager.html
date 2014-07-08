@@ -12,41 +12,39 @@
           height: 400px;
         }
         input[type=range] {
-            width: auto !important;
+            width: auto;
         }
         .catalog-item {
             display: block;
         }
         .main-container {
             margin: 15px;
-            display: block;
-        }
-        .layermanager {
-            width: 400px;
-            margin-left: 300px;
         }
     </style>
     <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" type="text/css">
   </head>
   <body ng-controller="MainController">
-  <div id="map" go-map></div>
 
-    <div class="main-container" ng-cloak>
-        <h3>Layer catalog</h3>
-        <label ng-repeat="layer in layers" for="{{layer.get('id')}}" class="catalog-item">
-            <input type="checkbox" id="{{layer.get('id')}}" ng-model="layer.active" />
-            {{layer.get('label')}}
-        </label>
-        <div class="layermanager">
+    <div id="map" go-map></div>
+
+    <div class="main-container row" ng-cloak>
+        <div class="col-md-offset-1 col-md-2">
+          <h3>Layer catalog</h3>
+          <label ng-repeat="layer in layers" class="catalog-item">
+              <input type="checkbox" ng-model="layer.active" />
+              {{layer.get('label')}}
+          </label>
+        </div>
+        <div class="col-md-3">
             <h3>Layer manager</h3>
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="layer in map.getLayers().getArray() | goReverse" style="padding-bottom:15px">
+                <li class="list-group-item" ng-repeat="layer in map.getLayers().getArray()  | goReverse track by layer.get('id')">
                     <button type="button" ng-click="layer.active = false" class="btn btn-primary btn-xs badge">×</button>
                     <label class="ga-checkbox">
-                        <input id="checkbox" type="checkbox" ng-model="layer.visible"  />
+                        <input type="checkbox" ng-model="layer.visible"  />
                         {{layer.get('label')}}
                     </label>
-                    <input id="range" type="range" min="0" max="1" step="0.05" ng-model="layer.opacity" />
+                    <input type="range" min="0" max="1" step="0.05" ng-model="layer.opacity" />
                 </li>
             </ul>
         </div>
