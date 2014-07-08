@@ -69,29 +69,29 @@ goog.require('ol.source.TileWMS');
       /** @type {ol.layer.Layer} */
       var osm = new ol.layer.Tile({
         id: 'osm',
+        label: 'OSM',
         source: new ol.source.OSM()
       });
-      osm.set('label', 'OSM');
       goDecorateLayer(osm);
       decorateLayer(osm, $scope.map);
 
       /** @type {ol.layer.Layer} */
       var mapQuest = new ol.layer.Tile({
         id: 'mapquest',
+        label: 'MapQuest',
         source: new ol.source.MapQuest({layer: 'sat'})
       });
-      mapQuest.set('label', 'MapQuest');
       goDecorateLayer(mapQuest);
       decorateLayer(mapQuest, $scope.map);
 
       /** @type {ol.layer.Layer} */
       var stamen = new ol.layer.Tile({
         id: 'stamen',
+        label: 'Stamen',
         source: new ol.source.Stamen({
           layer: 'watercolor'
         })
       });
-      stamen.set('label', 'Stamen');
       goDecorateLayer(stamen);
       decorateLayer(stamen, $scope.map);
 
