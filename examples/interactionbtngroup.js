@@ -84,10 +84,6 @@ goog.require('ol.source.MapQuest');
       goDecorateInteraction(drawLine, map);
       $scope['drawLine'] = drawLine;
 
-      $scope['showInfo'] = false;
-      $scope['showInfo2'] = true;
-      $scope['showInfo3'] = {};
-
     }]);
 
 })();

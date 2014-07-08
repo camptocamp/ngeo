@@ -55,7 +55,7 @@ goModule.directive('goBtnGroup', function() {
                 var ngModelSet = ngModelGet.assign;
 
                 // Set ng-model value to false if undefined
-                if (goog.isDef(ngModelGet(scope))) {
+                if (!goog.isDef(ngModelGet(scope))) {
                   ngModelSet(scope, false);
                 }
                 if (goog.isDef(buttonsCtrl)) {
