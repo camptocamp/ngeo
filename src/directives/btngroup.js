@@ -7,7 +7,7 @@ goModule.directive('goBtnGroup', function() {
     restrict: 'A',
     controller: ['$scope',
       function($scope) {
-        /** @type {Array.<function((!angular.Scope), *)>} */
+        /** @type {Array.<function(!angular.Scope, boolean)>} */
         var buttons = [];
 
         /**
