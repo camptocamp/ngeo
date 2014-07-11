@@ -20,7 +20,8 @@
     ],
     "js": [
       ".build/examples/all.js",
-      "node_modules/openlayers/externs/olx.js"
+      "node_modules/openlayers/externs/olx.js",
+      "externs/ngeox.js"
     ],
     "jscomp_error": [
       "accessControls",
