@@ -1,5 +1,6 @@
 goog.provide('interactionbtngroup');
 
+goog.require('go_btngroup_directive');
 goog.require('go_decorateinteraction_service');
 goog.require('go_map_directive');
 goog.require('ol.FeatureOverlay');
@@ -82,81 +83,7 @@ goog.require('ol.source.MapQuest');
           }));
       goDecorateInteraction(drawLine, map);
       $scope['drawLine'] = drawLine;
+
     }]);
 
-  module.directive('goBtnGroup', function() {
-    return {
-      restrict: 'A',
-      controller:
-          function() {
-            /**
-             * @type {Array.<{scope:angular.Scope,
-             *                setter:function((!angular.Scope), *)}>}
-             */
-            var buttons = [];
-
-            /**
-             * @param {angular.Scope} btnScope Scope of the goBtn directive.
-             */
-            this.activate = function(btnScope) {
-              buttons.forEach(function(b) {
-                if (b.scope != btnScope) {
-                  b.setter(b.scope, false);
-                }
-              });
-            };
-
-            /**
-             * @param {angular.Scope} btnScope Scope of the goBtn directive.
-             * @param {function((!angular.Scope), *)} ngModelSet Setter.
-             */
-            this.addButton = function(btnScope, ngModelSet) {
-              buttons.push({
-                scope: btnScope,
-                setter: ngModelSet
-              });
-            };
-          }
-    };
-  })
-    .directive('goBtn', ['$parse',
-        function($parse) {
-          return {
-            require: ['^goBtnGroup', 'ngModel'],
-            restrict: 'A',
-            scope: true,
-            link:
-                /**
-                 * @param {angular.Scope} scope Scope.
-                 * @param {angular.JQLite} element Element.
-                 * @param {angular.Attributes} attrs Attributes.
-                 * @param {!Array.<!Object>} ctrls Controllers.
-                 */
-                function(scope, element, attrs, ctrls) {
-                  var buttonsCtrl = ctrls[0];
-                  var ngModelCtrl = ctrls[1];
-
-                  var ngModelGet = $parse(attrs['ngModel']);
-                  var ngModelSet = ngModelGet.assign;
-
-                  buttonsCtrl.addButton(scope, ngModelSet);
-
-                  //ui->model
-                  element.bind('click', function() {
-                    scope.$apply(function() {
-                      ngModelCtrl.$setViewValue(!ngModelCtrl.$viewValue);
-                      ngModelCtrl.$render();
-                    });
-                  });
-
-                  //model -> UI
-                  ngModelCtrl.$render = function() {
-                    if (ngModelCtrl.$viewValue) {
-                      buttonsCtrl.activate(scope);
-                    }
-                    element.toggleClass('active', ngModelCtrl.$viewValue);
-                  };
-                }
-          };
-        }]);
 })();
