@@ -1,0 +1,65 @@
+{
+  "exports": ["*"],
+  "src": ["node_modules/openlayers/src/**/*.js", "src/**/*.js"],
+  "compile": {
+    "externs": [
+      "node_modules/openlayers/externs/bingmaps.js",
+      "node_modules/openlayers/externs/closure-compiler.js",
+      "node_modules/openlayers/externs/example.js",
+      "node_modules/openlayers/externs/geojson.js",
+      "node_modules/openlayers/externs/oli.js",
+      "node_modules/openlayers/externs/olx.js",
+      "node_modules/openlayers/externs/proj4js.js",
+      "node_modules/openlayers/externs/tilejson.js",
+      "node_modules/openlayers/externs/topojson.js",
+      "node_modules/openlayers/externs/vbarray.js",
+      ".build/externs/angular-1.3.js"
+    ],
+    "define": [
+      "goog.DEBUG=false"
+    ],
+    "jscomp_error": [
+      "accessControls",
+      "ambiguousFunctionDecl",
+      "checkDebuggerStatement",
+      "checkEventfulObjectDisposal",
+      "checkProvides",
+      "checkRegExp",
+      "checkStructDictInheritance",
+      "checkTypes",
+      "checkVars",
+      "const",
+      "constantProperty",
+      "deprecated",
+      "duplicate",
+      "duplicateMessage",
+      "es3",
+      "externsValidation",
+      "fileoverviewTags",
+      "globalThis",
+      "internetExplorerChecks",
+      "invalidCasts",
+      "misplacedTypeAnnotation",
+      "missingProperties",
+      "nonStandardJsDocs",
+      "strictModuleDepCheck",
+      "suspiciousCode",
+      "typeInvalidation",
+      "tweakValidation",
+      "undefinedNames",
+      "undefinedVars",
+      "unknownDefines",
+      "uselessCode",
+      "violatedModuleDep",
+      "visibility"
+    ],
+    "extra_annotation_name": [
+      "api", "observable"
+    ],
+    "jscomp_off": [
+      "es5Strict"
+    ],
+    "compilation_level": "SIMPLE_OPTIMIZATIONS",
+    "manage_closure_dependencies": false
+  }
+}

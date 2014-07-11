@@ -24,7 +24,7 @@ help:
 	@echo
 
 .PHONY: dist
-dist: dist/ngeo.js
+dist: dist/ngeo.js dist/ngeo-simple.js dist/ngeo-whitespace.js
 
 .PHONY: check
 check: lint dist check-examples compile-examples test
@@ -70,6 +70,14 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 	touch $@
 
 dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
+	mkdir -p $(dir $@)
+	node buildtools/build.js $< $@
+
+dist/ngeo-simple.js: buildtools/ngeo-simple.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
+	mkdir -p $(dir $@)
+	node buildtools/build.js $< $@
+
+dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
