@@ -33,7 +33,7 @@ goog.require('ol.source.TileWMS');
        */
       function(layer, map) {
 
-        Object.defineProperty(layer, 'active', {
+        Object.defineProperty(layer, 'inmap', {
           get: function() {
             return map.getLayers().getArray().indexOf(layer) >= 0;
           },
@@ -98,5 +98,30 @@ goog.require('ol.source.TileWMS');
 
       $scope['layers'] = [osm, mapQuest, stamen];
     }]);
+
+  module.directive('goLayermanager', [
+    function() {
+      return {
+        restrict: 'A',
+        scope: {
+          map: '=goLayermanager'
+        },
+        template: '<ul class="list-group">' +
+            '<li class="list-group-item" ng-repeat="layer in ' +
+                'map.getLayers().getArray()' +
+                ' | goReverse track by layer.get(\'id\')">' +
+            '<button type="button" ng-click="layer.inmap = false" ' +
+                'class="btn btn-primary btn-xs badge">×</button>' +
+            '<label class="ga-checkbox">' +
+            '<input type="checkbox" ng-model="layer.visible"  />' +
+                '{{layer.get("label")}}' +
+            '</label>' +
+            '<input type="range" min="0" max="1" step="0.05" ' +
+                'ng-model="layer.opacity" />' +
+            '</li>' +
+            '</ul>'
+      };
+    }]);
+
 })();
 
