@@ -92,7 +92,7 @@ openlayers:
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.PRECIOUS: .build/examples/%.html
+.PRECIOUS: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
 	sed -e '/src=.*angular.*\.js/a\    <script src="ngeo.js"></script>' \
