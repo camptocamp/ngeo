@@ -3,7 +3,7 @@
 
 module.exports = function(config) {
   var closureLib = 'node_modules/closure-util/.deps/library/**/';
-  var ol = 'node_modules/openlayers/src/';
+  var ol = 'openlayers/src/';
 
   config.set({
 
