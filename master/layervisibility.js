@@ -10,8 +10,8 @@
      */
     function($scope, goDecorateLayer) {
 
-      /** @type {ol.layer.Layer} */
-      $scope.layer = new ol.layer.Tile({
+      /** @type {ol.layer.Tile} */
+      var wmsLayer = new ol.layer.Tile({
         source: new ol.source.TileWMS({
           url: 'http://demo.opengeo.org/geoserver/wms',
           params: {'LAYERS': 'topp:states'},
@@ -19,17 +19,18 @@
           extent: [-13884991, 2870341, -7455066, 6338219]
         })
       });
-      goDecorateLayer($scope.layer);
+      goDecorateLayer(wmsLayer);
+      $scope['layer'] = wmsLayer;
 
       /** @type {ol.Map} */
-      $scope.map = new ol.Map({
+      $scope['map'] = new ol.Map({
         layers: [
           new ol.layer.Tile({
             source: new ol.source.MapQuest({layer: 'sat'})
           }),
-          $scope.layer
+          wmsLayer
         ],
-        view: new ol.View2D({
+        view: new ol.View({
           center: [-10997148, 4569099],
           zoom: 4
         })
