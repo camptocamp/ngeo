@@ -1,17 +1,17 @@
 {
   "exports": [],
-  "src": ["openlayers/src/**/*.js", "src/**/*.js"],
+  "src": ["node_modules/openlayers/src/**/*.js", "src/**/*.js"],
   "compile": {
     "externs": [
-      "openlayers/externs/bingmaps.js",
-      "openlayers/externs/closure-compiler.js",
-      "openlayers/externs/example.js",
-      "openlayers/externs/geojson.js",
-      "openlayers/externs/oli.js",
-      "openlayers/externs/proj4js.js",
-      "openlayers/externs/tilejson.js",
-      "openlayers/externs/topojson.js",
-      "openlayers/externs/vbarray.js",
+      "node_modules/openlayers/externs/bingmaps.js",
+      "node_modules/openlayers/externs/closure-compiler.js",
+      "node_modules/openlayers/externs/example.js",
+      "node_modules/openlayers/externs/geojson.js",
+      "node_modules/openlayers/externs/oli.js",
+      "node_modules/openlayers/externs/proj4js.js",
+      "node_modules/openlayers/externs/tilejson.js",
+      "node_modules/openlayers/externs/topojson.js",
+      "node_modules/openlayers/externs/vbarray.js",
       ".build/externs/angular-1.3.js"
     ],
     "define": [
@@ -20,7 +20,7 @@
     ],
     "js": [
       ".build/examples/all.js",
-      "openlayers/externs/olx.js"
+      "node_modules/openlayers/externs/olx.js"
     ],
     "jscomp_error": [
       "accessControls",
