@@ -146,7 +146,7 @@ dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES)
 
 .build/ol-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-	  --root_with_prefix="node_modules/openlayers/src ../../../../../../openlayers/src" --output_file=$@
+	  --root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" --output_file=$@
 
 .PHONY: clean
 clean:
