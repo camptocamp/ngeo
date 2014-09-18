@@ -14,7 +14,7 @@ goog.require('ol.source.TileWMS');
 (function() {
   var module = angular.module('app', ['go']);
 
-  module.filter('goReverse', function() {
+  module.filter('reverse', function() {
 
     /**
      * @param {Array} items Array to reverse.
@@ -99,20 +99,20 @@ goog.require('ol.source.TileWMS');
       $scope['layers'] = [osm, mapQuest, stamen];
     }]);
 
-  module.directive('goLayermanager', [
+  module.directive('layerManager', [
     function() {
       return {
         restrict: 'A',
         scope: {
-          map: '=goLayermanager'
+          map: '=layerManager'
         },
         template: '<ul class="list-group">' +
             '<li class="list-group-item" ng-repeat="layer in ' +
                 'map.getLayers().getArray()' +
-                ' | goReverse track by layer.get(\'id\')">' +
+                ' | reverse track by layer.get(\'id\')">' +
             '<button type="button" ng-click="layer.inmap = false" ' +
                 'class="btn btn-primary btn-xs badge">×</button>' +
-            '<label class="ga-checkbox">' +
+            '<label>' +
             '<input type="checkbox" ng-model="layer.visible"  />' +
                 '{{layer.get("label")}}' +
             '</label>' +
