@@ -21,9 +21,7 @@
     "jscomp_error": [
       "accessControls",
       "ambiguousFunctionDecl",
-      "checkDebuggerStatement",
       "checkEventfulObjectDisposal",
-      "checkProvides",
       "checkRegExp",
       "checkStructDictInheritance",
       "checkTypes",
@@ -31,34 +29,35 @@
       "const",
       "constantProperty",
       "deprecated",
-      "duplicate",
       "duplicateMessage",
       "es3",
+      "es5Strict",
       "externsValidation",
       "fileoverviewTags",
       "globalThis",
       "internetExplorerChecks",
       "invalidCasts",
       "misplacedTypeAnnotation",
+      "missingGetCssName",
       "missingProperties",
+      "missingProvide",
+      "missingRequire",
+      "missingReturn",
+      "newCheckTypes",
       "nonStandardJsDocs",
-      "strictModuleDepCheck",
       "suspiciousCode",
+      "strictModuleDepCheck",
       "typeInvalidation",
-      "tweakValidation",
       "undefinedNames",
       "undefinedVars",
       "unknownDefines",
       "uselessCode",
-      "violatedModuleDep",
       "visibility"
     ],
     "extra_annotation_name": [
       "api", "observable"
     ],
-    "jscomp_off": [
-      "es5Strict"
-    ],
+    "output_wrapper": "(function(){%output%})();",
     "compilation_level": "SIMPLE_OPTIMIZATIONS",
     "manage_closure_dependencies": false
   }
