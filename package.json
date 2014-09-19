@@ -16,6 +16,7 @@
     "htmlparser2": "~3.7.1"
   },
   "devDependencies": {
+    "clean-css": "^2.2.7",
     "fs-extra": "~0.8.1",
     "graceful-fs": "~3.0.2",
     "jsdoc": "~3.3.0-alpha7",
