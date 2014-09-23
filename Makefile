@@ -56,6 +56,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 	 mkdir -p $(GIT_BRANCH) && \
 	 cp -r ../examples-hosted/*.html $(GIT_BRANCH) && \
 	 cp -r ../examples-hosted/*.js $(GIT_BRANCH) && \
+	 cp -r ../examples-hosted/*.css $(GIT_BRANCH) && \
 	 git add -A . && \
 	 git commit -m 'Update GitHub pages' && \
 	 git push origin gh-pages)
@@ -72,6 +73,12 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+
+# At this point ngeo does not include its own CSS, so dist/ngeo.css is just
+# a minified version of ol.css. This will change in the future.
+dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
+	mkdir -p $(dir $@)
+	./node_modules/.bin/cleancss $< > $@
 
 dist/ngeo-simple.js: buildtools/ngeo-simple.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
@@ -97,10 +104,15 @@ dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/ngeo.css: dist/ngeo.css
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .PRECIOUS: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
-	sed -e '/src=.*angular.*\.js/a\    <script src="ngeo.js"></script>' \
+	sed -e 's|\.\./node_modules/openlayers/css/ol.css|ngeo.css|' \
+	    -e '/src=.*angular.*\.js/a\    <script src="ngeo.js"></script>' \
 		-e 's/\/@?main=$*.js/$*.js/' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
@@ -108,7 +120,7 @@ dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-
 	mkdir -p $(dir $@)
 	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
-.build/%.check.timestamp: .build/examples-hosted/%.html .build/examples-hosted/%.js .build/examples-hosted/ngeo.js .build/node_modules.timestamp
+.build/%.check.timestamp: .build/examples-hosted/%.html .build/examples-hosted/%.js .build/examples-hosted/ngeo.js .build/examples-hosted/ngeo.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
@@ -162,11 +174,13 @@ clean:
 	rm -f .build/examples/*.js
 	rm -f .build/examples-hosted/*.js
 	rm -f .build/examples-hosted/*.html
+	rm -f .build/examples-hosted/ngeo.css
 	rm -f .build/gjslint.timestamp
 	rm -f .build/jshint.timestamp
 	rm -f .build/ol-deps.js
 	rm -f .build/info.json
 	rm -f dist/ngeo.js
+	rm -f dist/ngeo.css
 
 .PHONY: cleanall
 cleanall: clean
