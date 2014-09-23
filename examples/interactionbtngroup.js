@@ -63,7 +63,9 @@ goog.require('ol.source.MapQuest');
             type: 'Polygon',
             source: source
           }));
-      ngeoDecorateInteraction(drawPolygon, map);
+      drawPolygon.setActive(false);
+      ngeoDecorateInteraction(drawPolygon);
+      map.addInteraction(drawPolygon);
       this['drawPolygon'] = drawPolygon;
 
       /** @type {ol.interaction.Draw} */
@@ -72,7 +74,9 @@ goog.require('ol.source.MapQuest');
             type: 'Point',
             source: source
           }));
-      ngeoDecorateInteraction(drawPoint, map);
+      drawPoint.setActive(false);
+      ngeoDecorateInteraction(drawPoint);
+      map.addInteraction(drawPoint);
       this['drawPoint'] = drawPoint;
 
       /** @type {ol.interaction.Draw} */
@@ -81,7 +85,9 @@ goog.require('ol.source.MapQuest');
             type: 'LineString',
             source: source
           }));
-      ngeoDecorateInteraction(drawLine, map);
+      drawLine.setActive(false);
+      ngeoDecorateInteraction(drawLine);
+      map.addInteraction(drawLine);
       this['drawLine'] = drawLine;
 
     }]);
