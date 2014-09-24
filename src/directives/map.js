@@ -21,8 +21,7 @@ goModule.directive('goMap', ['goDefaultMap',
             var attr = 'goMap';
             var prop = attrs[attr] || goDefaultMap;
 
-            /** @type {ol.Map} */
-            var map = scope[prop];
+            var map = /** @type {ol.Map} */ (scope.$eval(prop));
             goog.asserts.assertInstanceof(map, ol.Map);
 
             map.setTarget(element[0]);
