@@ -2,9 +2,9 @@
 // Generated on Wed Jun 18 2014 14:25:40 GMT+0200 (CEST)
 
 module.exports = function(config) {
-  var closureLib = 'node_modules/openlayers/node_modules/' +
+  var closureLib = 'node_modules/ol/node_modules/' +
       'closure-util/.deps/library/**/';
-  var ol = 'node_modules/openlayers/src/';
+  var ol = 'node_modules/ol/src/';
 
   config.set({
 
