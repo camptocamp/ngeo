@@ -7,7 +7,6 @@
       "node_modules/ol/externs/closure-compiler.js",
       "node_modules/ol/externs/example.js",
       "node_modules/ol/externs/geojson.js",
-      "node_modules/ol/externs/oli.js",
       "node_modules/ol/externs/proj4js.js",
       "node_modules/ol/externs/tilejson.js",
       "node_modules/ol/externs/topojson.js",
@@ -21,7 +20,8 @@
     ],
     "js": [
       ".build/examples/all.js",
-      "node_modules/ol/externs/olx.js"
+      "node_modules/ol/externs/olx.js",
+      "node_modules/ol/externs/oli.js"
     ],
     "jscomp_error": [
       "accessControls",
