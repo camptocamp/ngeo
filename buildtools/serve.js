@@ -31,7 +31,7 @@ var manager = new closure.Manager({
   closure: true, // use the bundled Closure Library
   lib: [
     'src/**/*.js',
-    'node_modules/openlayers/src/**/*.js'
+    'node_modules/ol/src/**/*.js'
   ],
   main: 'examples/*.js'
 });

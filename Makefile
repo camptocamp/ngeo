@@ -70,29 +70,29 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 	./node_modules/.bin/jshint --verbose $?
 	touch $@
 
-dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
+dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
 # At this point ngeo does not include its own CSS, so dist/ngeo.css is just
 # a minified version of ol.css. This will change in the future.
-dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
+dist/ngeo.css: node_modules/ol/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/cleancss $< > $@
 
-dist/ngeo-simple.js: buildtools/ngeo-simple.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
+dist/ngeo-simple.js: buildtools/ngeo-simple.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-1.3.js $(SRC_JS_FILES) .build/node_modules.timestamp
+dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) .build/externs/angular-1.3.js examples/%.js .build/node_modules.timestamp
+.build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js examples/%.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.build/examples/all.min.js: buildtools/examples-all.json $(SRC_JS_FILES) .build/externs/angular-1.3.js .build/examples/all.js .build/node_modules.timestamp
+.build/examples/all.min.js: buildtools/examples-all.json $(SRC_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js .build/examples/all.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -111,7 +111,7 @@ dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-
 .PRECIOUS: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
-	sed -e 's|\.\./node_modules/openlayers/css/ol.css|ngeo.css|' \
+	sed -e 's|\.\./node_modules/ol/css/ol.css|ngeo.css|' \
 	    -e '/src=.*angular.*\.js/a\    <script src="ngeo.js"></script>' \
 		-e 's/\/@?main=$*.js/$*.js/' $< > $@
 
@@ -152,6 +152,11 @@ dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-
 	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.3.js
 	touch $@
 
+.build/externs/angular-1.3-q.js:
+	mkdir -p $(dir $@)
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.3-q.js
+	touch $@
+
 .build/python-venv:
 	mkdir -p .build
 	virtualenv --no-site-packages $@
@@ -166,7 +171,7 @@ dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-
 
 .build/ol-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-	  --root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" --output_file=$@
+	  --root_with_prefix="node_modules/ol/src ../../../../../../../../ol/src" --output_file=$@
 
 .PHONY: clean
 clean:
