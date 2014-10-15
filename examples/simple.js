@@ -1,13 +1,13 @@
 goog.provide('simple');
 
-goog.require('go_map_directive');
+goog.require('ngeo_map_directive');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
 (function() {
-  var module = angular.module('app', ['go']);
+  var module = angular.module('app', ['ngeo']);
 
   module.controller('MainController', ['$scope',
     /**

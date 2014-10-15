@@ -1,14 +1,14 @@
-goog.provide('go_map_directive');
+goog.provide('ngeo_map_directive');
 
-goog.require('go');
 goog.require('goog.asserts');
+goog.require('ngeo');
 
-goModule.directive('goMap', ['goDefaultMap',
+ngeoModule.directive('ngeoMap', ['ngeoDefaultMap',
   /**
-   * @param {string} goDefaultMap Default map constant.
+   * @param {string} ngeoDefaultMap Default map constant.
    * @return {angular.Directive} The directive specs.
    */
-  function(goDefaultMap) {
+  function(ngeoDefaultMap) {
     return {
       restrict: 'A',
       link:
@@ -18,8 +18,8 @@ goModule.directive('goMap', ['goDefaultMap',
            * @param {angular.Attributes} attrs Attributes.
            */
           function(scope, element, attrs) {
-            var attr = 'goMap';
-            var prop = attrs[attr] || goDefaultMap;
+            var attr = 'ngeoMap';
+            var prop = attrs[attr] || ngeoDefaultMap;
 
             var map = /** @type {ol.Map} */ (scope.$eval(prop));
             goog.asserts.assertInstanceof(map, ol.Map);

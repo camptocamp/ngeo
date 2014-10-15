@@ -1,7 +1,7 @@
-goog.provide('go');
+goog.provide('ngeo');
 
 
 /** @type {!angular.Module} */
-var goModule = angular.module('go', []);
+var ngeoModule = angular.module('ngeo', []);
 
-goModule.constant('goDefaultMap', 'map');
+ngeoModule.constant('ngeoDefaultMap', 'map');

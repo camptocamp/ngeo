@@ -1,8 +1,8 @@
-goog.provide('go_btngroup_directive');
+goog.provide('ngeo_btngroup_directive');
 
-goog.require('go');
+goog.require('ngeo');
 
-goModule.directive('goBtnGroup', function() {
+ngeoModule.directive('ngeoBtnGroup', function() {
   return {
     restrict: 'A',
     controller: ['$scope',
@@ -34,10 +34,10 @@ goModule.directive('goBtnGroup', function() {
     ]
   };
 })
-  .directive('goBtn', ['$parse',
+  .directive('ngeoBtn', ['$parse',
       function($parse) {
         return {
-          require: ['?^goBtnGroup', 'ngModel'],
+          require: ['?^ngeoBtnGroup', 'ngModel'],
           restrict: 'A',
           link:
               /**
