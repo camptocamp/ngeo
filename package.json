@@ -25,7 +25,7 @@
     "karma-jasmine": "^0.1.5",
     "karma-phantomjs-launcher": "^0.1.4",
     "nomnom": "~1.6.2",
-    "ol": "openlayers/ol3#master",
+    "openlayers": "openlayers/ol3#master",
     "phantomjs": "~1.9.7-5",
     "temp": "~0.7.0",
     "walk": "~2.3.3"

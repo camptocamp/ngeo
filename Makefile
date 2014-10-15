@@ -76,7 +76,7 @@ dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js .build/externs/
 
 # At this point ngeo does not include its own CSS, so dist/ngeo.css is just
 # a minified version of ol.css. This will change in the future.
-dist/ngeo.css: node_modules/ol/css/ol.css .build/node_modules.timestamp
+dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/cleancss $< > $@
 
@@ -111,7 +111,7 @@ dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-
 .PRECIOUS: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
-	sed -e 's|\.\./node_modules/ol/css/ol.css|ngeo.css|' \
+	sed -e 's|\.\./node_modules/openlayers/css/ol.css|ngeo.css|' \
 	    -e '/src=.*angular.*\.js/a\    <script src="ngeo.js"></script>' \
 		-e 's/\/@?main=$*.js/$*.js/' $< > $@
 
@@ -171,7 +171,7 @@ dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-
 
 .build/ol-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-	  --root_with_prefix="node_modules/ol/src ../../../../../../../../ol/src" --output_file=$@
+	  --root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" --output_file=$@
 
 .PHONY: clean
 clean:
