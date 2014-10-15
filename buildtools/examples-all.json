@@ -1,6 +1,9 @@
 {
   "exports": [],
-  "src": ["node_modules/openlayers/src/**/*.js", "src/**/*.js"],
+  "src": [
+    "node_modules/openlayers/src/**/*.js",
+    "src/**/*.js"
+  ],
   "compile": {
     "externs": [
       "node_modules/openlayers/externs/bingmaps.js",
