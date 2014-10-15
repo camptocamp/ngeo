@@ -1,14 +1,14 @@
-goog.require('go_decoratelayer_service');
+goog.require('ngeo_decoratelayer_service');
 goog.require('ol.Map');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
-describe('go_decoratelayer_service', function() {
-  var goDecorateLayer;
+describe('ngeo_decoratelayer_service', function() {
+  var ngeoDecorateLayer;
 
   beforeEach(function() {
     inject(function($injector) {
-      goDecorateLayer = $injector.get('goDecorateLayer');
+      ngeoDecorateLayer = $injector.get('ngeoDecorateLayer');
     });
   });
 
@@ -17,7 +17,7 @@ describe('go_decoratelayer_service', function() {
       source: new ol.source.OSM(),
       visible: false
     });
-    goDecorateLayer(layer);
+    ngeoDecorateLayer(layer);
     layer.visible = true;
     expect(layer.getVisible()).toBe(true);
     layer.visible = false;
@@ -29,7 +29,7 @@ describe('go_decoratelayer_service', function() {
       source: new ol.source.OSM(),
       opacity: 0.5
     });
-    goDecorateLayer(layer);
+    ngeoDecorateLayer(layer);
     layer.opacity = 0.7;
     expect(layer.getOpacity()).toBe(0.7);
   });

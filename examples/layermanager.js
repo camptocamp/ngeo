@@ -1,7 +1,7 @@
 goog.provide('layermanager');
 
-goog.require('go_decoratelayer_service');
-goog.require('go_map_directive');
+goog.require('ngeo_decoratelayer_service');
+goog.require('ngeo_map_directive');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -12,7 +12,7 @@ goog.require('ol.source.Stamen');
 goog.require('ol.source.TileWMS');
 
 (function() {
-  var module = angular.module('app', ['go']);
+  var module = angular.module('app', ['ngeo']);
 
   module.filter('reverse', function() {
 
@@ -49,14 +49,14 @@ goog.require('ol.source.TileWMS');
 
   module.controller('MainController', [
     '$scope',
-    'goDecorateLayer',
+    'ngeoDecorateLayer',
     'decorateLayer',
 
     /**
      * @param {angular.Scope} $scope Scope.
-     * @param {go.DecorateLayer} goDecorateLayer Decorate layer service.
+     * @param {ngeo.DecorateLayer} ngeoDecorateLayer Decorate layer service.
      */
-    function($scope, goDecorateLayer, decorateLayer) {
+    function($scope, ngeoDecorateLayer, decorateLayer) {
 
       /** @type {ol.Map} */
       var map = new ol.Map({
@@ -73,7 +73,7 @@ goog.require('ol.source.TileWMS');
         label: 'OSM',
         source: new ol.source.OSM()
       });
-      goDecorateLayer(osm);
+      ngeoDecorateLayer(osm);
       decorateLayer(osm, map);
 
       /** @type {ol.layer.Layer} */
@@ -82,7 +82,7 @@ goog.require('ol.source.TileWMS');
         label: 'MapQuest',
         source: new ol.source.MapQuest({layer: 'sat'})
       });
-      goDecorateLayer(mapQuest);
+      ngeoDecorateLayer(mapQuest);
       decorateLayer(mapQuest, map);
 
       /** @type {ol.layer.Layer} */
@@ -93,7 +93,7 @@ goog.require('ol.source.TileWMS');
           layer: 'watercolor'
         })
       });
-      goDecorateLayer(stamen);
+      ngeoDecorateLayer(stamen);
       decorateLayer(stamen, map);
 
       $scope['layers'] = [osm, mapQuest, stamen];

@@ -1,13 +1,13 @@
-goog.provide('go_decorateinteraction_service');
+goog.provide('ngeo_decorateinteraction_service');
 
-goog.require('go');
 goog.require('goog.asserts');
+goog.require('ngeo');
 
 
 /**
  * @typedef {function(ol.interaction.Interaction, ol.Map)}
  */
-go.DecorateInteraction;
+ngeo.DecorateInteraction;
 
 
 /**
@@ -18,7 +18,7 @@ go.DecorateInteraction;
  * Example:
  * <input type="checkbox" ngModel="interaction.active" />
  */
-goModule.value('goDecorateInteraction',
+ngeoModule.value('ngeoDecorateInteraction',
 
     /**
      * @param {ol.interaction.Interaction} interaction Interaction to decorate.

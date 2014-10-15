@@ -1,13 +1,13 @@
-goog.provide('go_decoratelayer_service');
+goog.provide('ngeo_decoratelayer_service');
 
-goog.require('go');
 goog.require('goog.asserts');
+goog.require('ngeo');
 
 
 /**
  * @typedef {function(ol.layer.Layer)}
  */
-go.DecorateLayer;
+ngeo.DecorateLayer;
 
 
 /**
@@ -18,7 +18,7 @@ go.DecorateLayer;
  * Example:
  * <input type="checkbox" ngModel="layer.visible" />
  */
-goModule.value('goDecorateLayer',
+ngeoModule.value('ngeoDecorateLayer',
 
     /**
      * @param {ol.layer.Layer} layer Layer to decorate.

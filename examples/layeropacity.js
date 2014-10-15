@@ -1,27 +1,27 @@
 goog.provide('layeropacity');
 
-goog.require('go_decoratelayer_service');
-goog.require('go_map_directive');
+goog.require('ngeo_decoratelayer_service');
+goog.require('ngeo_map_directive');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
 (function() {
-  var module = angular.module('app', ['go']);
+  var module = angular.module('app', ['ngeo']);
 
-  module.controller('MainController', ['$scope', 'goDecorateLayer',
+  module.controller('MainController', ['$scope', 'ngeoDecorateLayer',
     /**
      * @param {angular.Scope} $scope Scope.
-     * @param {go.DecorateLayer} goDecorateLayer Decorate layer service.
+     * @param {ngeo.DecorateLayer} ngeoDecorateLayer Decorate layer service.
      */
-    function($scope, goDecorateLayer) {
+    function($scope, ngeoDecorateLayer) {
 
       /** @type {ol.layer.Tile} */
       var layer = new ol.layer.Tile({
         source: new ol.source.OSM()
       });
-      goDecorateLayer(layer);
+      ngeoDecorateLayer(layer);
       $scope['layer'] = layer;
 
       /** @type {ol.Map} */

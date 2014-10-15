@@ -1,8 +1,8 @@
 goog.provide('interactionbtngroup');
 
-goog.require('go_btngroup_directive');
-goog.require('go_decorateinteraction_service');
-goog.require('go_map_directive');
+goog.require('ngeo_btngroup_directive');
+goog.require('ngeo_decorateinteraction_service');
+goog.require('ngeo_map_directive');
 goog.require('ol.FeatureOverlay');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -11,15 +11,15 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.MapQuest');
 
 (function() {
-  var module = angular.module('app', ['go']);
+  var module = angular.module('app', ['ngeo']);
 
-  module.controller('MainController', ['$scope', 'goDecorateInteraction',
+  module.controller('MainController', ['$scope', 'ngeoDecorateInteraction',
     /**
      * @param {angular.Scope} $scope Scope.
-     * @param {go.DecorateInteraction} goDecorateInteraction Decorate
+     * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
      *     interaction service.
      */
-    function($scope, goDecorateInteraction) {
+    function($scope, ngeoDecorateInteraction) {
 
       var source = new ol.source.Vector();
 
@@ -63,7 +63,7 @@ goog.require('ol.source.MapQuest');
             type: 'Polygon',
             source: source
           }));
-      goDecorateInteraction(drawPolygon, map);
+      ngeoDecorateInteraction(drawPolygon, map);
       $scope['drawPolygon'] = drawPolygon;
 
       /** @type {ol.interaction.Draw} */
@@ -72,7 +72,7 @@ goog.require('ol.source.MapQuest');
             type: 'Point',
             source: source
           }));
-      goDecorateInteraction(drawPoint, map);
+      ngeoDecorateInteraction(drawPoint, map);
       $scope['drawPoint'] = drawPoint;
 
       /** @type {ol.interaction.Draw} */
@@ -81,7 +81,7 @@ goog.require('ol.source.MapQuest');
             type: 'LineString',
             source: source
           }));
-      goDecorateInteraction(drawLine, map);
+      ngeoDecorateInteraction(drawLine, map);
       $scope['drawLine'] = drawLine;
 
     }]);

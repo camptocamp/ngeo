@@ -1,3 +1,3 @@
 beforeEach(function() {
-  module('go');
+  module('ngeo');
 });
