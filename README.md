@@ -134,3 +134,41 @@ module.directive('goDirectiveExample',
       // …
     });
 ```
+
+### Custom `ol.Object` properties
+
+OpenLayers 3 allows passing custom properties to classes inheriting from
+`ol.Object`. For example:
+
+```js
+var layer = new ol.layer.Tile({
+  maxResolution: 5000,
+  title: 'A title',
+  source: new ol.source.OSM()
+});
+```
+
+`title` is the custom property in this example. (While `maxResolution` is an
+ol3 built-in layer property.)
+
+You can then use the `get` methods to get that property's value:
+
+```js
+var layerTitle = layer.get('title');
+```
+
+**But** this won't work in the case of the ngeo, or any code compiled in with
+Closure Compiler in ADVANCED mode. The compiler is indeed going to rename the
+key `title` in the options object passed to the `ol.layer.Tile` constructor.
+
+One option to work-around the issue involves using the `set` method after
+the construction of the layer:
+
+```js
+var layer = new ol.layer.Tile({
+  maxResolution: 5000,
+  source: new ol.source.OSM()
+});
+// use `set` to set custom layer properties
+layer.set('title', 'A title');
+```
