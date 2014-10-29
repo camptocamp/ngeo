@@ -183,7 +183,7 @@ clean:
 	rm -f .build/gjslint.timestamp
 	rm -f .build/jshint.timestamp
 	rm -f .build/ol-deps.js
-	rm -f .build/info.json
+	rm -f .build/info-*.json
 	rm -f dist/ngeo.js
 	rm -f dist/ngeo.css
 
