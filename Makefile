@@ -70,7 +70,8 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 	./node_modules/.bin/jshint --verbose $?
 	touch $@
 
-dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js $(SRC_JS_FILES) .build/node_modules.timestamp
+dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
+	          .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -80,19 +81,23 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/cleancss $< > $@
 
-dist/ngeo-simple.js: buildtools/ngeo-simple.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js $(SRC_JS_FILES) .build/node_modules.timestamp
+dist/ngeo-simple.js: buildtools/ngeo-simple.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
+	                 .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js $(SRC_JS_FILES) .build/node_modules.timestamp
+dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
+	                     .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js examples/%.js .build/node_modules.timestamp
+.build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
+	                      .build/externs/angular-1.3-http-promise.js examples/%.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.build/examples/all.min.js: buildtools/examples-all.json $(SRC_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js .build/examples/all.js .build/node_modules.timestamp
+.build/examples/all.min.js: buildtools/examples-all.json $(SRC_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
+	                        .build/externs/angular-1.3-http-promise.js .build/examples/all.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -127,7 +132,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
-.build/%.check.timestamp: .build/examples-hosted/%.html .build/examples-hosted/%.js .build/examples-hosted/ngeo.js .build/examples-hosted/ngeo.css .build/examples-hosted/angular.min.js .build/node_modules.timestamp
+.build/%.check.timestamp: .build/examples-hosted/%.html .build/examples-hosted/%.js .build/examples-hosted/ngeo.js \
+	                      .build/examples-hosted/ngeo.css .build/examples-hosted/angular.min.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
@@ -162,6 +168,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/externs/angular-1.3-q.js:
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.3-q.js
+	touch $@
+
+.build/externs/angular-1.3-http-promise.js:
+	mkdir -p $(dir $@)
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.3-http-promise.js
 	touch $@
 
 .build/python-venv:
