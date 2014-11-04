@@ -19,7 +19,7 @@ var BloodhoundDatum;
  *   rateLimitBy: (string|undefined),
  *   rateLimitWait: (number|undefined),
  *   filter: (function(?):Array.<BloodhoundDatum>|undefined),
- *   ajax: (Object.<string,*>|undefined)
+ *   ajax: (jQueryAjaxSettings|undefined)
  * }}
  */
 var BloodhoundRemoteOptions;
