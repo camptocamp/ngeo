@@ -53,17 +53,19 @@ function getConfig(configPath, callback) {
 
 /**
  * Read the symbols from info file.
+ * @param {string} sourceDir Source directory.
+ * @param {string} infoPath JSON info file path.
  * @param {Array.<string>} patterns List of patterns to pass along.
  * @param {funciton(Error, Array.<string>, Array.<Object>)} callback Called
  *     with the patterns and symbols (or any error).
  */
-function getSymbols(patterns, callback) {
-  generateInfo(function(err) {
+function getSymbols(sourceDir, infoPath, patterns, callback) {
+  generateInfo(sourceDir, infoPath, function(err) {
     if (err) {
       callback(new Error('Trouble generating info: ' + err.message));
       return;
     }
-    var symbols = require('../.build/info.json').symbols;
+    var symbols = require(infoPath).symbols;
     callback(null, patterns, symbols);
   });
 }
@@ -90,26 +92,19 @@ function filterSymbols(patterns, symbols, callback) {
   });
 
   patterns.forEach(function(name) {
-    var match = false;
     var pattern = (name.substr(-1) === '*');
     if (pattern) {
       name = name.substr(0, name.length - 1);
       symbols.forEach(function(symbol) {
         if (symbol.name.indexOf(name) === 0) {
           matches.push(symbol);
-          match = true;
         }
       });
     } else {
       var symbol = lookup[name];
       if (symbol) {
         matches.push(symbol);
-        match = true;
       }
-    }
-    if (!match) {
-      var message = 'No matching symbol found: ' + name + (pattern ? '*' : '');
-      callback(new Error(message));
     }
   });
 
@@ -179,13 +174,15 @@ function generateExports(symbols, namespace) {
 /**
  * Generate the exports code.
  *
+ * @param {string} sourceDir Source directory for which to generate exports.
+ * @param {string} infoPath JSON info file path.
  * @param {Object} config Config object with exports and (optional) namespace.
  * @param {function(Error, string)} callback Called with the exports code or any
  *     error generating it.
  */
-function main(config, callback) {
+function main(sourceDir, infoPath, config, callback) {
   async.waterfall([
-    getSymbols.bind(null, config.exports),
+    getSymbols.bind(null, sourceDir, infoPath, config.exports),
     filterSymbols,
     function(symbols, done) {
       var code, err;
@@ -206,8 +203,18 @@ function main(config, callback) {
  */
 if (require.main === module) {
   var options = nomnom.options({
-    output: {
+    input: {
       position: 0,
+      required: true,
+      help: 'Input dir path'
+    },
+    info: {
+      position: 1,
+      required: true,
+      help: 'Info file path'
+    },
+    output: {
+      position: 2,
       required: true,
       help: 'Output file path'
     },
@@ -220,7 +227,7 @@ if (require.main === module) {
 
   async.waterfall([
     getConfig.bind(null, options.config),
-    main,
+    main.bind(null, options.input, options.info),
     fse.outputFile.bind(fse, options.output)
   ], function(err) {
     if (err) {
