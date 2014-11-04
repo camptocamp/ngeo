@@ -20,15 +20,15 @@
     </style>
     <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" type="text/css">
   </head>
-  <body ng-controller="MainController">
+  <body ng-controller="MainController as ctrl">
     <div id="map" ngeo-map></div>
 
     <div ngeo-btn-group>
-      <button ngeo-btn class="btn btn-success" ng-model="drawPoint.active">Point</button>
-      <button ngeo-btn class="btn btn-success" ng-model="drawLine.active">Linestring</button>
-      <button ngeo-btn class="btn btn-success" ng-model="drawPolygon.active">Polygon</button>
+      <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawPoint.active">Point</button>
+      <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawLine.active">Linestring</button>
+      <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawPolygon.active">Polygon</button>
     </div>
-    <button ngeo-btn class="btn btn-primary" ng-model="showInfo">Info</button>
+    <button ngeo-btn class="btn btn-primary" ng-model="ctrl.showInfo">Info</button>
     <div ng-show="showInfo" class="alert alert-success" role="alert"><b>ngeo-btn</b> directive works also outside <b>ngeo-btn-group</b> one</div>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="/@?main=interactionbtngroup.js"></script>

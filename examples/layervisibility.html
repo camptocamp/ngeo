@@ -14,12 +14,12 @@
         }
     </style>
   </head>
-  <body ng-controller="MainController">
+  <body ng-controller="MainController as ctrl">
     <div id="map" ngeo-map></div>
     <p>
       <label>
         Layer visibility
-        <input type="checkbox" ng-model="layer.visible">
+        <input type="checkbox" ng-model="ctrl.layer.visible">
       </label>
     </p>
     <script src="../node_modules/angular/angular.js"></script>

@@ -44,7 +44,7 @@ goog.require('ol.source.MapQuest');
             features: featureOverlay.getFeatures()
           }));
       ngeoDecorateInteraction(interaction, map);
-      $scope['interaction'] = interaction;
+      this['interaction'] = interaction;
 
     }]);
 })();

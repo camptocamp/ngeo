@@ -28,7 +28,7 @@ goog.require('ol.source.TileWMS');
         })
       });
       ngeoDecorateLayer(wmsLayer);
-      $scope['layer'] = wmsLayer;
+      this['layer'] = wmsLayer;
 
       /** @type {ol.Map} */
       $scope['map'] = new ol.Map({
