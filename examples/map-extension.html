@@ -8,14 +8,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
     <style>
-      #map {
+      app-map > div {
         width: 600px;
         height: 400px;
       }
     </style>
   </head>
-  <body ng-controller="MainController">
-    <div id="map" ngeo-map app-map></div>
+  <body ng-controller="MainController as ctrl">
+    <app-map app-map="ctrl.map"></app-map>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.0/angular.min.js"></script>
     <script src="/@?main=map-extension.js"></script>
   </body>
