@@ -15,6 +15,12 @@ var generateExports = require('./generate-exports');
 var log = closure.log;
 var root = path.join(__dirname, '..');
 
+var openlayersInfoPath = path.join(root, '.build', 'info-openlayers.json');
+var ngeoInfoPath = path.join(root, '.build', 'info-ngeo.json');
+
+var openlayersSourceDir = path.join(root, 'node_modules', 'openlayers', 'src');
+var ngeoSourceDir = path.join(root, 'src');
+
 
 /**
  * Assert that a provided config object is valid.
@@ -107,12 +113,16 @@ function writeExports(exports, callback) {
 /**
  * Get the list of sources sorted in dependency order.
  * @param {Object} config Build configuration object.
- * @param {string} exports Exports code (with goog.exportSymbol calls).
- * @param {function(Error, Array.<string>)} callback Called with a list of paths
- *     or any error.
+ * @param {Array.<string>} exports Array of exports code (with
+ *     goog.exportSymbol calls).
+ * @param {function(Error, Array.<string>)} callback Called with a list of
+ *     paths or any error.
  */
 function getDependencies(config, exports, callback) {
-  writeExports(exports, function(err, exportsPath) {
+  var writeExportsFuncs = exports.map(function(i) {
+    return writeExports.bind(null, i);
+  });
+  async.series(writeExportsFuncs, function(err, exportsPaths) {
     if (err) {
       callback(err);
       return;
@@ -135,8 +145,7 @@ function getDependencies(config, exports, callback) {
         callback(err);
         return;
       }
-      paths.push(exportsPath);
-      callback(null, paths);
+      callback(null, paths.concat(exportsPaths));
     });
   });
 }
@@ -196,7 +205,14 @@ function build(config, paths, callback) {
 function main(config, callback) {
   async.waterfall([
     assertValidConfig.bind(null, config),
-    generateExports.bind(null, config),
+    function(callback) {
+      async.series([
+        generateExports.bind(null, openlayersSourceDir,
+            openlayersInfoPath, config),
+        generateExports.bind(null, ngeoSourceDir,
+            ngeoInfoPath, config)
+      ], callback);
+    },
     getDependencies.bind(null, config),
     build.bind(null, config)
   ], callback);

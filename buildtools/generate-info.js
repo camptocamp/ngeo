@@ -1,13 +1,12 @@
 var fs = require('fs');
 var path = require('path');
+var nomnom = require('nomnom');
 var spawn = require('child_process').spawn;
 
 var async = require('async');
 var fse = require('fs-extra');
 var walk = require('walk').walk;
 
-var sourceDir = path.join(__dirname, '..', 'node_modules', 'openlayers', 'src');
-var infoPath = path.join(__dirname, '..', '.build', 'info.json');
 var jsdoc = path.join(__dirname, '..', 'node_modules', '.bin', 'jsdoc');
 var jsdocConfig = path.join(__dirname, '..', 'buildtools', 'jsdoc', 'info',
     'conf.json');
@@ -24,10 +23,11 @@ function createInfo() {
 
 /**
  * Read symbols & defines metadata from info file.
+ * @param {string} infoPath Info JSON file path.
  * @param {function(Error, Object, Date)} callback Callback called with any
  *     error, the metadata, and the mtime of the info file.
  */
-function readInfo(callback) {
+function readInfo(infoPath, callback) {
   fs.stat(infoPath, function(err, stats) {
     if (err) {
       if (err.code === 'ENOENT') {
@@ -60,12 +60,13 @@ function makeUnique(array) {
 /**
  * Generate a list of .js paths in the source directory that are newer than
  * the info file.
+ * @param {string} sourceDir Source directory.
  * @param {Object} info Symbol and defines metadata.
  * @param {Date} date Modification time of info file.
  * @param {function(Error, Object, Array.<string>)} callback Called with any
  *     error, the info object, and the array of newer source paths.
  */
-function getNewer(info, date, callback) {
+function getNewer(sourceDir, info, date, callback) {
   var allPaths = [];
   var newerPaths = [];
 
@@ -264,11 +265,12 @@ function addSymbolProvides(info, newInfo, callback) {
 
 /**
  * Write symbol and define metadata to the info file.
+ * @param {string} infoPath Info JSON file path.
  * @param {Object} info Existing metadata.
  * @param {Object} newInfo New meatadat.
  * @param {function(Error)} callback Callback.
  */
-function writeInfo(info, newInfo, callback) {
+function writeInfo(infoPath, info, newInfo, callback) {
 
   info.symbols = info.symbols.concat(newInfo.symbols).sort(function(a, b) {
     return a.name < b.name ? -1 : 1;
@@ -287,17 +289,19 @@ function writeInfo(info, newInfo, callback) {
  * Determine which source files have been changed, run JSDoc against those, and
  * write out updated info.
  *
+ * @param {string} sourceDir Source directory from which to read info.
+ * @param {string} infoPath Info JSON file path.
  * @param {function(Error)} callback Called when the info file has been written
  *     (or an error occurs).
  */
-function main(callback) {
+function main(sourceDir, infoPath, callback) {
   async.waterfall([
-    readInfo,
-    getNewer,
+    readInfo.bind(null, infoPath),
+    getNewer.bind(null, sourceDir),
     spawnJSDoc,
     parseOutput,
     addSymbolProvides,
-    writeInfo
+    writeInfo.bind(null, infoPath)
   ], callback);
 }
 
@@ -307,7 +311,20 @@ function main(callback) {
  * function.
  */
 if (require.main === module) {
-  main(function(err) {
+  var options = nomnom.options({
+    input: {
+      position: 0,
+      required: true,
+      help: 'Input dir path'
+    },
+    output: {
+      position: 1,
+      required: true,
+      help: 'Output file path'
+    }
+  }).parse();
+
+  main(options.input, options.output, function(err) {
     if (err) {
       console.error(err.message);
       process.exit(1);

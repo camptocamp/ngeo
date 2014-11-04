@@ -1,7 +1,38 @@
+goog.provide('ngeo.MapDirectiveController');
 goog.provide('ngeo_map_directive');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
+
+
+
+/**
+ * @constructor
+ */
+ngeo.MapDirectiveController = function() {
+  /**
+   * @type {ol.Map}
+   * @private
+   */
+  this.map_ = null;
+};
+
+
+/**
+ * @return {ol.Map} Map.
+ * @api
+ */
+ngeo.MapDirectiveController.prototype.getMap = function() {
+  return this.map_;
+};
+
+
+/**
+ * @param {ol.Map} map Map.
+ */
+ngeo.MapDirectiveController.prototype.setMap = function(map) {
+  this.map_ = map;
+};
 
 
 /**
@@ -28,19 +59,22 @@ ngeoModule.directive('ngeoMap', ['ngeoDefaultMap',
   function(ngeoDefaultMap) {
     return {
       restrict: 'A',
+      controller: ngeo.MapDirectiveController,
       link:
           /**
            * @param {angular.Scope} scope Scope.
            * @param {angular.JQLite} element Element.
            * @param {angular.Attributes} attrs Attributes.
+           * @param {ngeo.MapDirectiveController} controller Controller.
            */
-          function(scope, element, attrs) {
+          function(scope, element, attrs, controller) {
             var attr = 'ngeoMap';
             var prop = attrs[attr] || ngeoDefaultMap;
 
             var map = /** @type {ol.Map} */ (scope.$eval(prop));
             goog.asserts.assertInstanceof(map, ol.Map);
 
+            controller.setMap(map);
             map.setTarget(element[0]);
           }
     };
