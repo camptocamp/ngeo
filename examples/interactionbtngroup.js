@@ -64,7 +64,7 @@ goog.require('ol.source.MapQuest');
             source: source
           }));
       ngeoDecorateInteraction(drawPolygon, map);
-      $scope['drawPolygon'] = drawPolygon;
+      this['drawPolygon'] = drawPolygon;
 
       /** @type {ol.interaction.Draw} */
       var drawPoint = new ol.interaction.Draw(
@@ -73,7 +73,7 @@ goog.require('ol.source.MapQuest');
             source: source
           }));
       ngeoDecorateInteraction(drawPoint, map);
-      $scope['drawPoint'] = drawPoint;
+      this['drawPoint'] = drawPoint;
 
       /** @type {ol.interaction.Draw} */
       var drawLine = new ol.interaction.Draw(
@@ -82,7 +82,7 @@ goog.require('ol.source.MapQuest');
             source: source
           }));
       ngeoDecorateInteraction(drawLine, map);
-      $scope['drawLine'] = drawLine;
+      this['drawLine'] = drawLine;
 
     }]);
 

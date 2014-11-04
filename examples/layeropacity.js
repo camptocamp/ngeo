@@ -22,7 +22,7 @@ goog.require('ol.source.OSM');
         source: new ol.source.OSM()
       });
       ngeoDecorateLayer(layer);
-      $scope['layer'] = layer;
+      this['layer'] = layer;
 
       /** @type {ol.Map} */
       $scope['map'] = new ol.Map({

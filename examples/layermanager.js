@@ -65,7 +65,7 @@ goog.require('ol.source.TileWMS');
           zoom: 11
         })
       });
-      $scope['map'] = map;
+      this['map'] = $scope['map'] = map;
 
       /** @type {ol.layer.Layer} */
       var osm = new ol.layer.Tile({
@@ -96,7 +96,7 @@ goog.require('ol.source.TileWMS');
       ngeoDecorateLayer(stamen);
       decorateLayer(stamen, map);
 
-      $scope['layers'] = [osm, mapQuest, stamen];
+      this['layers'] = [osm, mapQuest, stamen];
     }]);
 
   module.directive('layerManager', [
@@ -104,7 +104,8 @@ goog.require('ol.source.TileWMS');
       return {
         restrict: 'A',
         scope: {
-          map: '=layerManager'
+          map: '=layerManager',
+          layers: '=layerManagerLayers'
         },
         template: '<ul class="list-group">' +
             '<li class="list-group-item" ng-repeat="layer in ' +
