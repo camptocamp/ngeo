@@ -1,4 +1,5 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
+EXPORTS_JS_FILES := $(shell find exports -type f -name '*.js')
 EXAMPLES_JS_FILES := $(shell find examples -type f -name '*.js')
 EXAMPLES_HTML_FILES := $(shell find examples -type f -name '*.html')
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html, .build/%.check.timestamp, $(EXAMPLES_HTML_FILES))
@@ -62,16 +63,16 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 	 git push origin gh-pages)
 
 
-.build/gjslint.timestamp: $(SRC_JS_FILES) $(EXAMPLES_JS_FILES)
+.build/gjslint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES)
 	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable $?
 	touch $@
 
-.build/jshint.timestamp: $(SRC_JS_FILES) $(EXAMPLES_JS_FILES)
+.build/jshint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES)
 	./node_modules/.bin/jshint --verbose $?
 	touch $@
 
 dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
-	          .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) .build/node_modules.timestamp
+	          .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -82,21 +83,21 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	./node_modules/.bin/cleancss $< > $@
 
 dist/ngeo-simple.js: buildtools/ngeo-simple.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
-	                 .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) .build/node_modules.timestamp
+	                 .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
 dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
-	                     .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) .build/node_modules.timestamp
+	                     .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
+.build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
 	                      .build/externs/angular-1.3-http-promise.js examples/%.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.build/examples/all.min.js: buildtools/examples-all.json $(SRC_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
+.build/examples/all.min.js: buildtools/examples-all.json $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
 	                        .build/externs/angular-1.3-http-promise.js .build/examples/all.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
