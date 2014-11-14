@@ -112,7 +112,7 @@ ngeoModule.directive('ngeoBtn', ['$parse',
             if (!goog.isDef(ngModelGet(scope))) {
               ngModelSet(scope, false);
             }
-            if (goog.isDef(buttonsCtrl)) {
+            if (!goog.isNull(buttonsCtrl)) {
               indexInGroup = buttonsCtrl.addButton(ngModelSet);
             }
 
@@ -126,7 +126,7 @@ ngeoModule.directive('ngeoBtn', ['$parse',
 
             // model -> UI
             ngModelCtrl.$render = function() {
-              if (ngModelCtrl.$viewValue && goog.isDef(buttonsCtrl)) {
+              if (ngModelCtrl.$viewValue && !goog.isNull(buttonsCtrl)) {
                 buttonsCtrl.activate(indexInGroup);
               }
               element.toggleClass('active', ngModelCtrl.$viewValue);
