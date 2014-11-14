@@ -23,23 +23,36 @@ goog.require('ol.source.OSM');
         scope: {
           'map': '=appMap'
         },
-        controller: function() {
-          var map = this['map'];
-          // do something with map…
-          map.getView().on('propertychange',
-              /**
-               * @param {ol.ObjectEvent} e Object event.
-               */
-              function(e) {
-                // we simply output the view property here, but we
-                // could update the browser URL for example…
-                window.console.log('"' + e.key + '" event received');
-              });
-        },
+        controller: 'appMapController',
         controllerAs: 'ctrl',
         bindToController: true,
         template: '<div ngeo-map=ctrl.map></div>'
       };
+    }]);
+
+
+  /**
+   * Controller for the `appMap` directive.
+   */
+  module.controller('appMapController', ['$scope',
+    /**
+     * @param {angular.Scope} $scope Scope.
+     */
+    function($scope) {
+      /**
+       * @type {ol.Map}
+       */
+      var map = this['map'];
+      // do something with map…
+      map.getView().on('propertychange',
+          /**
+           * @param {ol.ObjectEvent} e Object event.
+           */
+          function(e) {
+            // we simply output the view property here, but we
+            // could update the browser URL for example…
+            window.console.log('"' + e.key + '" event received');
+          });
     }]);
 
 
