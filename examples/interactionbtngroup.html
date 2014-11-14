@@ -29,7 +29,7 @@
       <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawPolygon.active">Polygon</button>
     </div>
     <button ngeo-btn class="btn btn-primary" ng-model="ctrl.showInfo">Info</button>
-    <div ng-show="showInfo" class="alert alert-success" role="alert"><b>ngeo-btn</b> directive works also outside <b>ngeo-btn-group</b> one</div>
+    <div ng-show="ctrl.showInfo" ng-cloak class="alert alert-success" role="alert"><b>ngeo-btn</b> directive works also outside <b>ngeo-btn-group</b> one</div>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="/@?main=interactionbtngroup.js"></script>
   </body>
