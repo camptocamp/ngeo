@@ -21,37 +21,42 @@ goog.require('ngeo');
  */
 ngeoModule.directive('ngeoBtnGroup', [
   /**
+   * @return {angular.Directive} The directive specs.
    */
   function() {
     return {
       restrict: 'A',
-      controller: ['$scope',
-        function($scope) {
-          /** @type {Array.<function(!angular.Scope, boolean)>} */
-          var buttons = [];
+      controller: 'ngeoBtnGroupController'
+    };
+  }]);
 
-          /**
-           * @param {number} index Index of the button in buttons array.
-           */
-          this.activate = function(index) {
-            goog.array.forEach(buttons,
-                function(s, i) {
-                  if (i != index) {
-                    s($scope, false);
-                  }
-                });
-          };
+ngeoModule.controller('ngeoBtnGroupController', ['$scope',
+  /**
+   * @param {angular.Scope} $scope Scope.
+   */
+  function($scope) {
+    /** @type {Array.<function(!angular.Scope, boolean)>} */
+    var buttons = [];
 
-          /**
-           * @param {function((!angular.Scope), *)} ngModelSet Setter.
-           * @return {number} Index of the pushed setter.
-           */
-          this.addButton = function(ngModelSet) {
-            buttons.push(ngModelSet);
-            return buttons.length - 1;
-          };
-        }
-      ]
+    /**
+     * @param {number} index Index of the button in buttons array.
+     */
+    this.activate = function(index) {
+      goog.array.forEach(buttons,
+          function(s, i) {
+            if (i != index) {
+              s($scope, false);
+            }
+          });
+    };
+
+    /**
+     * @param {function((!angular.Scope), *)} ngModelSet Setter.
+     * @return {number} Index of the pushed setter.
+     */
+    this.addButton = function(ngModelSet) {
+      buttons.push(ngModelSet);
+      return buttons.length - 1;
     };
   }]);
 
@@ -82,6 +87,7 @@ ngeoModule.directive('ngeoBtnGroup', [
  */
 ngeoModule.directive('ngeoBtn', ['$parse',
   /**
+   * @return {angular.Directive} The directive specs.
    */
   function($parse) {
     return {
