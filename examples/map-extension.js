@@ -1,5 +1,6 @@
 goog.provide('mapextension');
 
+goog.require('ngeo_debounce_service');
 goog.require('ngeo_location_service');
 goog.require('ngeo_map_directive');
 goog.require('ol.Map');
@@ -39,12 +40,14 @@ goog.require('ol.source.OSM');
   /**
    * The controller for the `appMap` directive.
    */
-  module.controller('AppMapController', ['$scope', 'ngeoLocation',
+  module.controller('AppMapController', [
+    '$scope', 'ngeoLocation', 'ngeoDebounce',
     /**
      * @param {angular.Scope} $scope Scope.
      * @param {ngeo.Location} ngeoLocation ngeo Location service.
+     * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
      */
-    function($scope, ngeoLocation) {
+    function($scope, ngeoLocation, ngeoDebounce) {
       var map = this['map'];
       var view = map.getView();
 
@@ -66,20 +69,19 @@ goog.require('ol.source.OSM');
       });
 
       view.on('propertychange',
-          /**
-           * @param {ol.ObjectEvent} e Object event.
-           */
-          function(e) {
-            var center = view.getCenter();
-            var params = {
-              'z': view.getZoom(),
-              'x': Math.round(center[0]),
-              'y': Math.round(center[1])
-            };
-            $scope.$apply(function() {
-              ngeoLocation.updateParams(params);
-            });
-          });
+          ngeoDebounce(
+              /**
+               * @param {ol.ObjectEvent} e Object event.
+               */
+              function(e) {
+                var center = view.getCenter();
+                var params = {
+                  'z': view.getZoom(),
+                  'x': Math.round(center[0]),
+                  'y': Math.round(center[1])
+                };
+                ngeoLocation.updateParams(params);
+              }, 300, /* invokeApply */ true));
 
     }]);
 
