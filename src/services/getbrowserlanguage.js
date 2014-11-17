@@ -1,3 +1,4 @@
+goog.provide('ngeo.GetBrowserLanguage');
 goog.provide('ngeo_getbrowserlanguage_service');
 
 goog.require('ngeo');
