@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html ng-app='app'>
   <head>
-    <title>Map directive extension example</title>
+    <title>Permalink example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
@@ -16,7 +16,8 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <app-map app-map="ctrl.map"></app-map>
+    <p>This example shows how to create an application-specific map directive based on the <code>ngeoMap</code> directive that uses the <code>ngeoLocation</code> and <code>ngeoDebounce</code> services to update the browser address bar URL when the map view changes.</p>
     <script src="../node_modules/angular/angular.js"></script>
-    <script src="/@?main=map-extension.js"></script>
+    <script src="/@?main=permalink.js"></script>
   </body>
 </html>

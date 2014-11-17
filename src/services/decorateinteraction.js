@@ -1,3 +1,4 @@
+goog.provide('ngeo.DecorateInteraction');
 goog.provide('ngeo_decorateinteraction_service');
 
 goog.require('goog.asserts');

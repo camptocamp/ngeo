@@ -1,3 +1,4 @@
+goog.provide('ngeo.DecorateLayer');
 goog.provide('ngeo_decoratelayer_service');
 
 goog.require('goog.asserts');
