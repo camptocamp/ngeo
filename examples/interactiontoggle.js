@@ -43,7 +43,9 @@ goog.require('ol.source.MapQuest');
             type: 'Point',
             features: featureOverlay.getFeatures()
           }));
-      ngeoDecorateInteraction(interaction, map);
+      interaction.setActive(false);
+      map.addInteraction(interaction);
+      ngeoDecorateInteraction(interaction);
       this['interaction'] = interaction;
 
     }]);

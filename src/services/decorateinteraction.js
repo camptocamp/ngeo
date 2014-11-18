@@ -6,7 +6,7 @@ goog.require('ngeo');
 
 
 /**
- * @typedef {function(ol.interaction.Interaction, ol.Map)}
+ * @typedef {function(ol.interaction.Interaction)}
  */
 ngeo.DecorateInteraction;
 
@@ -23,21 +23,16 @@ ngeoModule.value('ngeoDecorateInteraction',
 
     /**
      * @param {ol.interaction.Interaction} interaction Interaction to decorate.
-     * @param {ol.Map} map Map.
      */
-    function(interaction, map) {
+    function(interaction) {
       goog.asserts.assertInstanceof(interaction, ol.interaction.Interaction);
 
       Object.defineProperty(interaction, 'active', {
         get: function() {
-          return map.getInteractions().getArray().indexOf(interaction) >= 0;
+          return interaction.getActive();
         },
         set: function(val) {
-          if (val) {
-            map.addInteraction(interaction);
-          } else {
-            map.removeInteraction(interaction);
-          }
+          interaction.setActive(val);
         }
       });
     });
