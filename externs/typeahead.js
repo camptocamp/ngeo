@@ -129,10 +129,20 @@ Bloodhound.tokenizers.obj.nonword = function(key) {};
 
 /**
  * @typedef {{
+ *   empty: (function(Object):string|undefined),
+ *   footer: (function(Object):string|undefined),
+ *   header: (function(Object):string|undefined),
+ *   suggestion: (function(Object):string|undefined)
+ * }}
+ */
+var TypeaheadTemplates;
+
+/**
+ * @typedef {{
  *   source: function(string,function(Array.<BloodhoundDatum>)),
  *   name: (string|undefined),
  *   displayKey: (string|undefined),
- *   templates: (Object.<string,function(Object):string>|undefined)
+ *   templates: (TypeaheadTemplates|undefined)
  * }}
  */
 var TypeaheadDataset;
