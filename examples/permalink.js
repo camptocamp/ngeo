@@ -1,4 +1,4 @@
-goog.provide('mapextension');
+goog.provide('permalink');
 
 goog.require('ngeo_debounce_service');
 goog.require('ngeo_location_service');
