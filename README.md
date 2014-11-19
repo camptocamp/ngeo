@@ -172,3 +172,83 @@ var layer = new ol.layer.Tile({
 // use `set` to set custom layer properties
 layer.set('title', 'A title');
 ```
+
+### Authoring examples
+
+A number of constraints must be respected when developing examples for `ngeo`.
+
+As described above the `gh-pages` make target can be used to publish the
+examples to github.io. The examples published on github.io are not compiled,
+they rely on the standalone `ngeo.js` build.
+
+Because of that the examples cannot rely on non-exported symbols or properties.
+For example they cannot use `goog` objects and they cannot use `ol` objects
+that are not part of the OpenLayers API (that is marked with `@api` in the
+OpenLayers source code).
+
+There's one exception to the rule: the examples (must) use `goog.provide` and
+`goog.require`. This is necessary for running the examples in development mode
+and for compiling them (see below). The `goog.provide` and `goog.require`
+statements are removed before publication of the examples on github.io.
+
+Even though the examples are not compiled on github.io the `check` target does
+compile them, as a verification step. This means that the examples must use
+compiler annotations and respect the constraints imposed by the compiler.
+
+### Service typing
+
+`ngeo` defines Angular services. They're located in the `src/services`
+directory. Angular services may be of any type : objects, functions, etc.
+
+For each type we define in `ngeo` we must provide a type. This allows having
+a type for `@param` when using (injecting) an `ngeo` service in a function.
+
+If the service is a function the type will be defined using a `@typedef`.
+For example:
+
+```js
+/**
+ * @typedef {function(ol.layer.Layer)}
+ */
+ngeo.DecorateLayer;
+```
+
+If the service is an object a `@constructor` must be defined. For example:
+
+```js
+/**
+ * The ngeo Location type.
+ * @constructor
+ * @param {Location} location Location.
+ * @param {History} history History.
+ */
+ngeo.Location = function(location, history) {
+  /**
+   * @type {History}
+   * @private
+   */
+  this.history_ = history;
+
+  /**
+   * @type {!goog.Uri}
+   * @private
+   */
+  this.uri_ = goog.Uri.parse(location);
+};
+```
+
+And in both cases a `goog.provide` must be added for the type. For
+example:
+
+```js
+goog.provide('ngeo.DecorateLayer');
+```
+
+### Exports
+
+Services that are objects (rather than numbers, strings, or functions) may need
+"exports". Exports are needed for users of the `ngeo.js` standalone build.
+
+For now we don't use the `@api` annotation as in OpenLayers. We explicitly use
+`goog.exportProperty` in separate "exports" files. See the `exports` directory
+in the repo.
