@@ -1,0 +1,26 @@
+<!DOCTYPE>
+<html ng-app='app'>
+  <head>
+    <title>Geolocation example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
+    <style>
+        #map {
+          width: 800px;
+          height: 400px;
+        }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map></div>
+    <p>
+      <label for="checkbox">Enable Geolocation interaction:</label>
+      <input id="checkbox" type="checkbox" ng-model="ctrl.geolocation.tracking"  />
+    </p>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="/@?main=geolocation.js"></script>
+  </body>
+</html>
