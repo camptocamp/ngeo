@@ -1,5 +1,4 @@
 goog.provide('ngeo.DecorateGeolocation');
-goog.provide('ngeo_decorategeolocation_service');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
@@ -18,21 +17,22 @@ ngeo.DecorateGeolocation;
  *
  * Example:
  * <input type="checkbox" ngModel="geolocation.tracking" />
+ *
+ * @param {ol.Geolocation} geolocation Geolocation to decorate.
+ * @ngInject
  */
-ngeoModule.value('ngeoDecorateGeolocation',
+ngeo.decorateGeolocation = function(geolocation) {
+  goog.asserts.assertInstanceof(geolocation, ol.Geolocation);
 
-    /**
-     * @param {ol.Geolocation} geolocation Geolocation to decorate.
-     */
-    function(geolocation) {
-      goog.asserts.assertInstanceof(geolocation, ol.Geolocation);
+  Object.defineProperty(geolocation, 'tracking', {
+    get: function() {
+      return geolocation.getTracking();
+    },
+    set: function(val) {
+      geolocation.setTracking(val);
+    }
+  });
+};
 
-      Object.defineProperty(geolocation, 'tracking', {
-        get: function() {
-          return geolocation.getTracking();
-        },
-        set: function(val) {
-          geolocation.setTracking(val);
-        }
-      });
-    });
+
+ngeoModule.value('ngeoDecorateGeolocation', ngeo.decorateGeolocation);
