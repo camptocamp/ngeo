@@ -1,4 +1,4 @@
-goog.provide('ngeo_map_directive');
+goog.provide('ngeo.mapDirective');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
@@ -19,29 +19,29 @@ goog.require('ngeo');
  *
  * <div ngeo-map="map1"></div>
  *
+ * @param {string} ngeoDefaultMap Default map constant.
+ * @return {angular.Directive} Directive Definition Object.
+ * @ngInject
  */
-ngeoModule.directive('ngeoMap', ['ngeoDefaultMap',
-  /**
-   * @param {string} ngeoDefaultMap Default map constant.
-   * @return {angular.Directive} The directive specs.
-   */
-  function(ngeoDefaultMap) {
-    return {
-      restrict: 'A',
-      link:
-          /**
-           * @param {angular.Scope} scope Scope.
-           * @param {angular.JQLite} element Element.
-           * @param {angular.Attributes} attrs Attributes.
-           */
-          function(scope, element, attrs) {
-            var attr = 'ngeoMap';
-            var prop = attrs[attr] || ngeoDefaultMap;
+ngeo.mapDirective = function(ngeoDefaultMap) {
+  return {
+    restrict: 'A',
+    link:
+        /**
+         * @param {angular.Scope} scope Scope.
+         * @param {angular.JQLite} element Element.
+         * @param {angular.Attributes} attrs Attributes.
+         */
+        function(scope, element, attrs) {
+          var attr = 'ngeoMap';
+          var prop = attrs[attr] || ngeoDefaultMap;
 
-            var map = /** @type {ol.Map} */ (scope.$eval(prop));
-            goog.asserts.assertInstanceof(map, ol.Map);
+          var map = /** @type {ol.Map} */ (scope.$eval(prop));
+          goog.asserts.assertInstanceof(map, ol.Map);
 
-            map.setTarget(element[0]);
-          }
-    };
-  }]);
+          map.setTarget(element[0]);
+        }
+  };
+};
+
+ngeoModule.directive('ngeoMap', ngeo.mapDirective);
