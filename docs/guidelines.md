@@ -2,6 +2,11 @@
 
 These are guidelines for `ngeo` application developers.
 
+## Google style guide
+
+We more or less follow the [AngularJS Style Guide for Closure Users at
+Google](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html).
+
 ## Limit the use of `ng-controller`
 
 Use one `ng-controller` only, the "main controller", somewhere at the root of
