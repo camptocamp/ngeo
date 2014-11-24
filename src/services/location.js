@@ -1,5 +1,4 @@
 goog.provide('ngeo.Location');
-goog.provide('ngeo_location_service');
 
 goog.require('goog.Uri');
 goog.require('goog.object');
@@ -9,9 +8,9 @@ goog.require('ngeo');
 
 /**
  * The ngeo Location type.
- * @constructor
  * @param {Location} location Location.
  * @param {History} history History.
+ * @constructor
  */
 ngeo.Location = function(location, history) {
   /**
@@ -81,32 +80,32 @@ ngeo.Location.prototype.refresh = function() {
 
 /**
  * The factory creating the ngeo Location service.
+ *
+ * @param {angular.Scope} $rootScope The root scope.
+ * @param {angular.$window} $window Angular window service.
+ * @return {ngeo.Location} The ngeo location service.
+ * @ngInject
  */
-ngeoModule.factory('ngeoLocation', [
-  '$rootScope', '$window',
-  /**
-   * @param {angular.Scope} $rootScope The root scope.
-   * @param {angular.$window} $window Angular window service.
-   * @return {ngeo.Location} The ngeo location service.
-   */
-  function($rootScope, $window) {
+ngeo.LocationFactory = function($rootScope, $window) {
+  var history = $window.history;
+  var service = new ngeo.Location($window.location, $window.history);
 
-    var history = $window.history;
-    var service = new ngeo.Location($window.location, $window.history);
+  var lastUri = service.getUri();
+  $rootScope.$watch(function() {
+    var newUri = service.getUri();
+    if (lastUri !== newUri) {
+      $rootScope.$evalAsync(function() {
+        lastUri = newUri;
+        if (goog.isDef(history)) {
+          history.replaceState(null, '', newUri);
+        }
+        $rootScope.$broadcast('ngeoLocationChange');
+      });
+    }
+  });
 
-    var lastUri = service.getUri();
-    $rootScope.$watch(function() {
-      var newUri = service.getUri();
-      if (lastUri !== newUri) {
-        $rootScope.$evalAsync(function() {
-          lastUri = newUri;
-          if (goog.isDef(history)) {
-            history.replaceState(null, '', newUri);
-          }
-          $rootScope.$broadcast('ngeoLocationChange');
-        });
-      }
-    });
+  return service;
+};
 
-    return service;
-  }]);
+
+ngeoModule.factory('ngeoLocation', ngeo.LocationFactory);

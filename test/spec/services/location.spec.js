@@ -1,6 +1,6 @@
-goog.require('ngeo_location_service');
+goog.require('ngeo.Location');
 
-describe('ngeo_location_service', function() {
+describe('ngeo.Location', function() {
   var win;
   var ngeoLocation;
 
