@@ -1,5 +1,4 @@
 goog.provide('ngeo.DecorateInteraction');
-goog.provide('ngeo_decorateinteraction_service');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
@@ -18,21 +17,21 @@ ngeo.DecorateInteraction;
  *
  * Example:
  * <input type="checkbox" ngModel="interaction.active" />
+ *
+ * @param {ol.interaction.Interaction} interaction Interaction to decorate.
  */
-ngeoModule.value('ngeoDecorateInteraction',
+ngeo.decorateInteraction = function(interaction) {
+  goog.asserts.assertInstanceof(interaction, ol.interaction.Interaction);
 
-    /**
-     * @param {ol.interaction.Interaction} interaction Interaction to decorate.
-     */
-    function(interaction) {
-      goog.asserts.assertInstanceof(interaction, ol.interaction.Interaction);
+  Object.defineProperty(interaction, 'active', {
+    get: function() {
+      return interaction.getActive();
+    },
+    set: function(val) {
+      interaction.setActive(val);
+    }
+  });
+};
 
-      Object.defineProperty(interaction, 'active', {
-        get: function() {
-          return interaction.getActive();
-        },
-        set: function(val) {
-          interaction.setActive(val);
-        }
-      });
-    });
+
+ngeoModule.value('ngeoDecorateInteraction', ngeo.decorateInteraction);
