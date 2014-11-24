@@ -1,6 +1,6 @@
-goog.require('ngeo_getbrowserlanguage_service');
+goog.require('ngeo.GetBrowserLanguage');
 
-describe('ngeo_getbrowserlanguage_service', function() {
+describe('ngeo.GetBrowserLanguage', function() {
   var win;
   var ngeoGetBrowserLanguage;
 
