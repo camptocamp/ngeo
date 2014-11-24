@@ -1,6 +1,6 @@
-goog.require('ngeo_debounce_service');
+goog.require('ngeo.Debounce');
 
-describe('ngeo_debounce_service', function() {
+describe('ngeo.Debounce', function() {
   var ngeoDebounce;
   var $timeout; 
 
