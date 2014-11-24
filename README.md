@@ -81,6 +81,11 @@ Example: http://camptocamp.github.io/ngeo/master/simple.html.
 
 This section includes information for developpers and users of ngeo.
 
+### Style guide
+
+We more or less follow the [AngularJS Style Guide for Closure Users at
+Google](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html).
+
 ### Property renaming and `$scope`
 
 The ngeo code is compiled with Closure Compiler in *advanced* mode. This
