@@ -15,10 +15,10 @@
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
-    <div id="map" ngeo-map></div>
+    <div id="map" ngeo-map="ctrl.map"></div>
     <p>
       <label for="checkbox">Draw point interaction:</label>
-      <input id="checkbox" type="checkbox" ng-model="ctrl.interaction.active"  />
+      <input id="checkbox" type="checkbox" ng-model="ctrl.interaction.active" />
     </p>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="/@?main=interactiontoggle.js"></script>
