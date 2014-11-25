@@ -20,13 +20,12 @@ var module = angular.module('app', ['ngeo']);
 
 
 /**
- * @param {angular.Scope} $scope Scope.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoDecorateInteraction) {
+app.MainController = function(ngeoDecorateInteraction) {
   var source = new ol.source.Vector();
 
   var vector = new ol.layer.Vector({

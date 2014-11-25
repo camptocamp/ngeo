@@ -61,14 +61,13 @@ module.value('decorateLayer', app.decorateLayerService);
 
 
 /**
- * @param {angular.Scope} $scope Scope.
  * @param {ngeo.DecorateLayer} ngeoDecorateLayer ngeo decorate layer service.
  * @param {function(!ol.layer.Layer, ol.Map)} decorateLayer Application decorate
  *     layer service.
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoDecorateLayer, decorateLayer) {
+app.MainController = function(ngeoDecorateLayer, decorateLayer) {
   /** @type {ol.Map} */
   var map = new ol.Map({
     view: new ol.View({
@@ -116,7 +115,6 @@ module.controller('MainController', app.MainController);
 
 /**
  * @return {angular.Directive} Directive Definition Object.
- * @ngInject
  */
 app.layerManagerDirective = function() {
   return {

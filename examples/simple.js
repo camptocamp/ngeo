@@ -16,11 +16,9 @@ var module = angular.module('app', ['ngeo']);
 
 
 /**
- * @param {angular.Scope} $scope Scope.
  * @constructor
- * @ngInject
  */
-app.MainController = function($scope) {
+app.MainController = function() {
   /**
    * @type {ol.Map}
    */

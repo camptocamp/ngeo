@@ -25,7 +25,6 @@ var module = angular.module('app', ['ngeo']);
  * attribute.
  *
  * @return {angular.Directive} The directive specs.
- * @ngInject
  */
 app.mapDirective = function() {
   return {
@@ -46,13 +45,12 @@ module.directive('appMap', app.mapDirective);
 
 
 /**
- * @param {angular.Scope} $scope Scope.
  * @param {ngeo.Location} ngeoLocation ngeo Location service.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @ngInject
  */
-app.MapDirectiveController = function($scope, ngeoLocation, ngeoDebounce) {
+app.MapDirectiveController = function(ngeoLocation, ngeoDebounce) {
   var map = this['map'];
   var view = map.getView();
 
@@ -95,11 +93,9 @@ module.controller('AppMapController', app.MapDirectiveController);
 
 
 /**
- * @param {angular.Scope} $scope Scope.
  * @constructor
- * @ngInject
  */
-app.MainController = function($scope) {
+app.MainController = function() {
   /** @type {ol.Map} */
   this['map'] = new ol.Map({
     layers: [

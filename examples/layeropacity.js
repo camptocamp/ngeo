@@ -17,12 +17,11 @@ var module = angular.module('app', ['ngeo']);
 
 
 /**
- * @param {angular.Scope} $scope Scope.
  * @param {ngeo.DecorateLayer} ngeoDecorateLayer Decorate layer service.
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoDecorateLayer) {
+app.MainController = function(ngeoDecorateLayer) {
   /** @type {ol.layer.Tile} */
   var layer = new ol.layer.Tile({
     source: new ol.source.OSM()
