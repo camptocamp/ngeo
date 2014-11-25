@@ -18,11 +18,9 @@ var module = angular.module('app', ['ngeo']);
 
 
 /**
- * @param {angular.Scope} $scope Scope.
  * @constructor
- * @ngInject
  */
-app.MainController = function($scope) {
+app.MainController = function() {
   /** @type {ol.Map} */
   this['map'] = new ol.Map({
     layers: [
@@ -38,8 +36,8 @@ app.MainController = function($scope) {
 
   /**
    * The "control" directive requires a function that creates the
-   * control instance. And that function should be defined on the
-   * scope.
+   * control instance.
+   *
    * @param {Element} target Target element.
    * @return {ol.control.MousePosition} Mouse position control.
    */

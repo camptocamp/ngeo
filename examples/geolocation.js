@@ -20,13 +20,12 @@ var module = angular.module('app', ['ngeo']);
 
 
 /**
- * @param {angular.Scope} $scope Scope.
  * @param {ngeo.DecorateGeolocation} ngeoDecorateGeolocation Decorate
  *     Geolocation service.
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoDecorateGeolocation) {
+app.MainController = function(ngeoDecorateGeolocation) {
   var view = new ol.View({
     center: [647019, 6239641],
     zoom: 4
