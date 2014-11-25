@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Provides a function that adds an "active" property (using
+ * `Object.defineProperty`) to an interaction, making it possible to use ngModel
+ * to activate/deactivate interactions.
+ *
+ * Example:
+ * <input type="checkbox" ngModel="interaction.active" />
+ */
+
 goog.provide('ngeo.DecorateInteraction');
 
 goog.require('goog.asserts');
@@ -11,13 +20,6 @@ ngeo.DecorateInteraction;
 
 
 /**
- * This service provides a function that adds an "active" property (using
- * `Object.defineProperty`) to the interaction, making it possible to
- * use ngModel to activate/deactivate interactions.
- *
- * Example:
- * <input type="checkbox" ngModel="interaction.active" />
- *
  * @param {ol.interaction.Interaction} interaction Interaction to decorate.
  */
 ngeo.decorateInteraction = function(interaction) {
