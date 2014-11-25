@@ -1,3 +1,16 @@
+/**
+ * @fileoverview Provides a directive can be used to add a control to a DOM
+ * element of the HTML page. The user of the directive is responsible for
+ * providing a function that returns the control instance. That function should
+ * be defined in the parent scope.
+ *
+ * Example #1:
+ * <div ngeo-control="createScaleLineControl"></div>
+ *
+ * Example #2:
+ * <div ngeo-control="createScaleLineControl" ngeo-control-map="map1"></div>
+ */
+
 goog.provide('ngeo.CreateControl');
 goog.provide('ngeo.controlDirective');
 
@@ -12,17 +25,6 @@ ngeo.CreateControl;
 
 
 /**
- * This directive can be used to add a control to a DOM element of
- * the HTML page. The user of the directive is responsible for
- * providing a function that returns the control instance. That
- * function should be defined in the parent scope.
- *
- * Example #1:
- * <div ngeo-control="createScaleLineControl"></div>
- *
- * Example #2:
- * <div ngeo-control="createScaleLineControl" ngeo-control-map="map1"></div>
- *
  * @return {angular.Directive} The directive specs.
  * @ngInject
  */
