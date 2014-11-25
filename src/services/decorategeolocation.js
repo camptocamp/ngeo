@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Provides a function that adds a "tracking" property (using
+ * `Object.defineProperty`) to the `ol.Geolocation` instance, making it
+ * possible to activate/deactivate the tracking mode.
+ *
+ * Example:
+ * <input type="checkbox" ngModel="geolocation.tracking" />
+ */
+
 goog.provide('ngeo.DecorateGeolocation');
 
 goog.require('goog.asserts');
@@ -11,13 +20,6 @@ ngeo.DecorateGeolocation;
 
 
 /**
- * This service provides a function that adds a "tracking" property (using
- * `Object.defineProperty`) to the `ol.Geolocation` instance, making it
- * possible to activate/deactivate the tracking mode.
- *
- * Example:
- * <input type="checkbox" ngModel="geolocation.tracking" />
- *
  * @param {ol.Geolocation} geolocation Geolocation to decorate.
  * @ngInject
  */
