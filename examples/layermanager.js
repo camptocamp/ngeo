@@ -16,7 +16,8 @@ goog.require('ol.source.TileWMS');
 var app = {};
 
 
-var module = angular.module('app', ['ngeo']);
+/** @type {!angular.Module} **/
+app.module = angular.module('app', ['ngeo']);
 
 
 /**
@@ -33,7 +34,7 @@ app.reverseFilter = function() {
 };
 
 
-module.filter('reverse', app.reverseFilter);
+app.module.filter('reverse', app.reverseFilter);
 
 
 /**
@@ -56,7 +57,7 @@ app.decorateLayerService = function(layer, map) {
 };
 
 
-module.value('decorateLayer', app.decorateLayerService);
+app.module.value('decorateLayer', app.decorateLayerService);
 
 
 
@@ -110,7 +111,7 @@ app.MainController = function(ngeoDecorateLayer, decorateLayer) {
 };
 
 
-module.controller('MainController', app.MainController);
+app.module.controller('MainController', app.MainController);
 
 
 /**
@@ -141,4 +142,4 @@ app.layerManagerDirective = function() {
 };
 
 
-module.directive('layerManager', app.layerManagerDirective);
+app.module.directive('layerManager', app.layerManagerDirective);

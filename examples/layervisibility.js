@@ -13,7 +13,8 @@ goog.require('ol.source.TileWMS');
 var app = {};
 
 
-var module = angular.module('app', ['ngeo']);
+/** @type {!angular.Module} **/
+app.module = angular.module('app', ['ngeo']);
 
 
 
@@ -52,4 +53,4 @@ app.MainController = function(ngeoDecorateLayer) {
 };
 
 
-module.controller('MainController', app.MainController);
+app.module.controller('MainController', app.MainController);

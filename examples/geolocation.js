@@ -15,7 +15,8 @@ goog.require('ol.source.MapQuest');
 var app = {};
 
 
-var module = angular.module('app', ['ngeo']);
+/** @type {!angular.Module} **/
+app.module = angular.module('app', ['ngeo']);
 
 
 
@@ -69,4 +70,4 @@ app.MainController = function(ngeoDecorateGeolocation) {
 };
 
 
-module.controller('MainController', app.MainController);
+app.module.controller('MainController', app.MainController);
