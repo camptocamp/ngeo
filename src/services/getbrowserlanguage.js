@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Provides a function that returns the most appropriate 2-letter
+ * language code depending on the list of available languages and the browser
+ * languages settings.
+ */
+
 goog.provide('ngeo.GetBrowserLanguage');
 
 goog.require('ngeo');
@@ -10,10 +16,6 @@ ngeo.GetBrowserLanguage;
 
 
 /**
- * This service provides a function that returns the most appropriate 2-letter
- * language code depending on the list of available languages and the browser
- * languages settings.
- *
  * @param {angular.$window} $window Angular $window service.
  * @return {ngeo.GetBrowserLanguage} The "GetBrowserLanguage" function.
  * @ngInject
