@@ -79,24 +79,36 @@ Example: http://camptocamp.github.io/ngeo/master/simple.html.
 
 ## Developer Guide
 
-This section includes information for developpers and users of ngeo.
+This section includes information for developers and users of ngeo.
 
-### Property renaming and `$scope`
+### Style guide
+
+We more or less follow the [AngularJS Style Guide for Closure Users at
+Google](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html).
+
+### Property renaming
 
 The ngeo code is compiled with Closure Compiler in *advanced* mode. This
 means we should conform to the restrictions imposed by the compiler.
 
 In particular, Angular controllers and directives typically set properties on
-the `$scope`. These properties are then referenced by their names in HTML pages
-and templates. This means that we need to prevent the compiler from renaming
-the properties controllers and directives set on the `$scope`.
+the controller instance (`this`) or on the `$scope`. These properties are then
+referenced by their names in HTML pages and templates. So it is required to
+prevent the compiler from renaming these properties.
 
 The way to do that is to use the `[]` notation rather than the `.` notation
-when setting (and accessing) properties on the `$scope`. For example if you
-need to set a property `foo` on the `$scope` you should do as follows:
+when setting (and accessing) properties. For example if you need to set
+a property `foo` on the controller instance you should do as follows:
 
 ```js
-$scope['foo'] = 'bar';
+/**
+ * @constructor
+ * @ngInject
+ */
+app.MainController = function() {
+  this['foo'] = 'bar';
+  // …
+};
 ```
 
 The jshint linter, which we use for to check the ngeo code, complains when the
@@ -108,7 +120,7 @@ to make jshint stay silent on that.
 In the definition of a directive, if an object is used for the `scope` property
 (*isolate scope*) then quotes must be used for the keys in that object. And in
 the `link` function, the `[]` notation, instead of the `.` notation, must be
-used when accessing scope properties. See the example below.
+used when accessing these properties. See the example below.
 
 ```js
 module.directive('goDirectiveExample',
@@ -121,16 +133,12 @@ module.directive('goDirectiveExample',
       scope: {
         'm': '=goDirectiveExampleMap'
       }
-      link:
-          /**
-           * @param {angular.Scope} scope Scope.
-           * @param {angular.JQLite} element Element.
-           * @param {angular.Attributes} attrs Attributes.
-           */
-          function(scope, element, attrs) {
-            var m = scope['m'];
-            // …
-          },
+      controller: function() {
+        var m = this['m'];
+        // …
+      },
+      controllerAs: 'ctrl',
+      bindToController: true,
       // …
     });
 ```
@@ -242,6 +250,10 @@ example:
 
 ```js
 goog.provide('ngeo.DecorateLayer');
+```
+
+```js
+goog.provide('ngeo.Location');
 ```
 
 ### Exports

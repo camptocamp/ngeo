@@ -17,8 +17,8 @@
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
-    <div id="map" ngeo-map></div>
-    Mouse position: <div id="mouse-position" ngeo-control="createControl"></div>
+    <div id="map" ngeo-map="ctrl.map"></div>
+    Mouse position: <div id="mouse-position" ngeo-control="ctrl.createControl" ngeo-control-map="ctrl.map"></div>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="/@?main=control.js"></script>
   </body>

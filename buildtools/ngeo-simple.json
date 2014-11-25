@@ -64,6 +64,7 @@
     "extra_annotation_name": [
       "api", "observable"
     ],
+    "angular_pass": true,
     "output_wrapper": "(function(){%output%})();",
     "compilation_level": "SIMPLE_OPTIMIZATIONS",
     "manage_closure_dependencies": false

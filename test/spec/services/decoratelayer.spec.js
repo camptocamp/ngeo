@@ -1,9 +1,9 @@
-goog.require('ngeo_decoratelayer_service');
+goog.require('ngeo.DecorateLayer');
 goog.require('ol.Map');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
-describe('ngeo_decoratelayer_service', function() {
+describe('ngeo.DecorateLayer', function() {
   var ngeoDecorateLayer;
 
   beforeEach(function() {
