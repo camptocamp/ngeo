@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Provides a function that adds properties (using
+ * `Object.defineProperty`) to the layer, making it possible to control layer
+ * properties with ngModel.
+ *
+ * Example:
+ * <input type="checkbox" ngModel="layer.visible" />
+ */
+
 goog.provide('ngeo.DecorateLayer');
 
 goog.require('goog.asserts');
@@ -11,13 +20,6 @@ ngeo.DecorateLayer;
 
 
 /**
- * This service provides a function that adds properties (using
- * `Object.defineProperty`) to the layer, making it possible to
- * control layer properties with ngModel.
- *
- * Example:
- * <input type="checkbox" ngModel="layer.visible" />
- *
  * @param {ol.layer.Layer} layer Layer to decorate.
  */
 ngeo.decorateLayer = function(layer) {
