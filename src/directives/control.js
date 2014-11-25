@@ -23,11 +23,10 @@ ngeo.CreateControl;
  * Example #2:
  * <div ngeo-control="createScaleLineControl" ngeo-control-map="map1"></div>
  *
- * @param {string} ngeoDefaultMap Default map constant.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  */
-ngeo.controlDirective = function(ngeoDefaultMap) {
+ngeo.controlDirective = function() {
   return {
     restrict: 'A',
     link:
@@ -45,8 +44,7 @@ ngeo.controlDirective = function(ngeoDefaultMap) {
           var control = createControl(element[0]);
 
           attr = 'ngeoControlMap';
-          var map = /** @type {ol.Map} */
-              (scope.$eval(attrs[attr] || ngeoDefaultMap));
+          var map = /** @type {ol.Map} */ (scope.$eval(attrs[attr]));
           goog.asserts.assertInstanceof(map, ol.Map);
 
           map.addControl(control);

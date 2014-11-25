@@ -19,11 +19,10 @@ goog.require('ngeo');
  *
  * <div ngeo-map="map1"></div>
  *
- * @param {string} ngeoDefaultMap Default map constant.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  */
-ngeo.mapDirective = function(ngeoDefaultMap) {
+ngeo.mapDirective = function() {
   return {
     restrict: 'A',
     link:
@@ -34,7 +33,7 @@ ngeo.mapDirective = function(ngeoDefaultMap) {
          */
         function(scope, element, attrs) {
           var attr = 'ngeoMap';
-          var prop = attrs[attr] || ngeoDefaultMap;
+          var prop = attrs[attr];
 
           var map = /** @type {ol.Map} */ (scope.$eval(prop));
           goog.asserts.assertInstanceof(map, ol.Map);
