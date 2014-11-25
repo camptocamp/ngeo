@@ -14,6 +14,7 @@ goog.require('ol.source.MapQuest');
 var app = {};
 
 
+/** @type {!angular.Module} **/
 var module = angular.module('app', ['ngeo']);
 
 

@@ -13,7 +13,8 @@ goog.require('ol.source.OSM');
 var app = {};
 
 
-var module = angular.module('app', ['ngeo']);
+/** @type {!angular.Module} **/
+app.module = angular.module('app', ['ngeo']);
 
 
 
@@ -50,4 +51,4 @@ app.MainController = function() {
 };
 
 
-module.controller('MainController', app.MainController);
+app.module.controller('MainController', app.MainController);

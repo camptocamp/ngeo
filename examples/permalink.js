@@ -13,7 +13,8 @@ goog.require('ol.source.OSM');
 var app = {};
 
 
-var module = angular.module('app', ['ngeo']);
+/** @type {!angular.Module} **/
+app.module = angular.module('app', ['ngeo']);
 
 
 /**
@@ -40,7 +41,7 @@ app.mapDirective = function() {
 };
 
 
-module.directive('appMap', app.mapDirective);
+app.module.directive('appMap', app.mapDirective);
 
 
 
@@ -88,7 +89,7 @@ app.MapDirectiveController = function(ngeoLocation, ngeoDebounce) {
 };
 
 
-module.controller('AppMapController', app.MapDirectiveController);
+app.module.controller('AppMapController', app.MapDirectiveController);
 
 
 
@@ -107,4 +108,4 @@ app.MainController = function() {
 };
 
 
-module.controller('MainController', app.MainController);
+app.module.controller('MainController', app.MainController);
