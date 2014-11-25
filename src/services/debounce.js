@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Provides a debounce service. That service is a function
+ * used to debounce calls to a user-provided function.
+ */
+
 goog.provide('ngeo.Debounce');
 
 goog.require('ngeo');
@@ -10,7 +15,6 @@ ngeo.Debounce;
 
 
 /**
- * Factory creating the "debounce" service.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @return {ngeo.Debounce} The debounce function.
  * @ngInject
