@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Provides a service for interacting with the URL in the
+ * browser address bar.
+ */
+
 goog.provide('ngeo.Location');
 
 goog.require('goog.Uri');
