@@ -118,23 +118,33 @@ dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-
 	mkdir -p $(dir $@)
 	cp $< $@
 
-node_modules/angular/angular.min.js: .build/node_modules.timestamp
+.build/examples-hosted/angular-animate.min.js: node_modules/angular-animate/angular-animate.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
+node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate.min.js: .build/node_modules.timestamp
 
 .PRECIOUS: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|ngeo.css|' \
 		-e 's|\.\./node_modules/angular/angular.js|angular.min.js|' \
-	    -e '/src=.*angular.*\.js/a\    <script src="ngeo.js"></script>' \
-		-e 's/\/@?main=$*.js/$*.js/' $< > $@
+		-e 's|\.\./node_modules/angular-animate/angular-animate.js|angular-animate.min.js|' \
+		-e 's/\/@?main=$*.js/$*.js/' \
+	    -e '/$*.js/i\    <script src="ngeo.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
 	mkdir -p $(dir $@)
 	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
-.build/%.check.timestamp: .build/examples-hosted/%.html .build/examples-hosted/%.js .build/examples-hosted/ngeo.js \
-	                      .build/examples-hosted/ngeo.css .build/examples-hosted/angular.min.js .build/node_modules.timestamp
+.build/%.check.timestamp: .build/examples-hosted/%.html \
+                          .build/examples-hosted/%.js \
+	                      .build/examples-hosted/ngeo.js \
+	                      .build/examples-hosted/ngeo.css \
+						  .build/examples-hosted/angular.min.js \
+						  .build/examples-hosted/angular-animate.min.js \
+						  .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
