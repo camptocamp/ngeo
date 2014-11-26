@@ -1,0 +1,40 @@
+{
+    "name": "OSM",
+    "children": [{
+        "name": "Stamen 0",
+        "children": [{
+            "name": "Watercolor",
+            "layerType": "stamenWatercolor"
+        }, {
+            "name": "Terrain labels",
+            "layerType": "stamenTerrain-labels"
+        }]
+    }, {
+        "name": "MapQuest 0",
+        "children": [{
+            "name": "MapQuest 00",
+            "children": [{
+                "name": "MapQuest 01",
+                "children": [{
+                    "name": "OSM",
+                    "layerType": "mapquestOsm"
+                }, {
+                    "name": "Satellite",
+                    "layerType": "mapquestSat"
+                }, {
+                    "name": "Hybrid",
+                    "layerType": "mapquestHyb"
+                }]
+            }]
+        }, {
+            "name": "Stamen 1",
+            "children": [{
+                "name": "Stamen 10",
+                "children": [{
+                    "name": "Watercolor",
+                    "layerType": "stamenWatercolor"
+                }]
+            }]
+        }]
+    }]
+}
