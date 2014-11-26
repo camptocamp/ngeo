@@ -20,7 +20,7 @@ ngeo.GetBrowserLanguage;
  * @return {ngeo.GetBrowserLanguage} The "GetBrowserLanguage" function.
  * @ngInject
  */
-ngeo.getBrowserLanguageFactory = function($window) {
+ngeo.GetBrowserLanguageFactory = function($window) {
   return (
       /**
        * @param {Array.<string>} availableLanguages Available languages.
@@ -50,4 +50,4 @@ ngeo.getBrowserLanguageFactory = function($window) {
 };
 
 
-ngeoModule.factory('ngeoGetBrowserLanguage', ngeo.getBrowserLanguageFactory);
+ngeoModule.factory('ngeoGetBrowserLanguage', ngeo.GetBrowserLanguageFactory);

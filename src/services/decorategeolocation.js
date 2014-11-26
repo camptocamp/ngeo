@@ -23,7 +23,7 @@ ngeo.DecorateGeolocation;
  * @param {ol.Geolocation} geolocation Geolocation to decorate.
  * @ngInject
  */
-ngeo.decorateGeolocation = function(geolocation) {
+ngeo.DecorateGeolocation = function(geolocation) {
   goog.asserts.assertInstanceof(geolocation, ol.Geolocation);
 
   Object.defineProperty(geolocation, 'tracking', {
@@ -37,4 +37,4 @@ ngeo.decorateGeolocation = function(geolocation) {
 };
 
 
-ngeoModule.value('ngeoDecorateGeolocation', ngeo.decorateGeolocation);
+ngeoModule.value('ngeoDecorateGeolocation', ngeo.DecorateGeolocation);

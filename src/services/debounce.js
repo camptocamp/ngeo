@@ -19,7 +19,7 @@ ngeo.Debounce;
  * @return {ngeo.Debounce} The debounce function.
  * @ngInject
  */
-ngeo.debounceServiceFactory = function($timeout) {
+ngeo.DebounceServiceFactory = function($timeout) {
   return (
       /**
        * @param {function(?)} func The function to debounce.
@@ -50,4 +50,4 @@ ngeo.debounceServiceFactory = function($timeout) {
 };
 
 
-ngeoModule.factory('ngeoDebounce', ngeo.debounceServiceFactory);
+ngeoModule.factory('ngeoDebounce', ngeo.DebounceServiceFactory);
