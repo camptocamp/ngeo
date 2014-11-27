@@ -36,22 +36,27 @@ ngeo.resizemapDirective = function($window) {
           var map = scope.$eval(prop);
           goog.asserts.assertInstanceof(map, ol.Map);
 
+          var updateMapSize = function() {
+            map.updateSize();
+            map.renderSync();
+          };
+
           var animationDelay = new goog.async.AnimationDelay(
               /**
                * @param {number} time Time.
                */
               function(time) {
-                map.updateSize();
+                updateMapSize();
                 animationDelay.start();
               }, $window);
 
           element.on('$animate:before', function() {
-            animationDelay.stop();
+            updateMapSize();
             animationDelay.start();
           });
 
           element.on('$animate:close', function() {
-            map.updateSize();
+            updateMapSize();
             animationDelay.stop();
           });
         }
