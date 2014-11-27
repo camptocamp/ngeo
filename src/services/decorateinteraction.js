@@ -22,7 +22,7 @@ ngeo.DecorateInteraction;
 /**
  * @param {ol.interaction.Interaction} interaction Interaction to decorate.
  */
-ngeo.decorateInteraction = function(interaction) {
+ngeo.DecorateInteraction = function(interaction) {
   goog.asserts.assertInstanceof(interaction, ol.interaction.Interaction);
 
   Object.defineProperty(interaction, 'active', {
@@ -36,4 +36,4 @@ ngeo.decorateInteraction = function(interaction) {
 };
 
 
-ngeoModule.value('ngeoDecorateInteraction', ngeo.decorateInteraction);
+ngeoModule.value('ngeoDecorateInteraction', ngeo.DecorateInteraction);

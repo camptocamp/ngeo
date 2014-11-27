@@ -22,7 +22,7 @@ ngeo.DecorateLayer;
 /**
  * @param {ol.layer.Layer} layer Layer to decorate.
  */
-ngeo.decorateLayer = function(layer) {
+ngeo.DecorateLayer = function(layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Layer);
 
   Object.defineProperty(layer, 'visible', {
@@ -47,4 +47,4 @@ ngeo.decorateLayer = function(layer) {
 };
 
 
-ngeoModule.value('ngeoDecorateLayer', ngeo.decorateLayer);
+ngeoModule.value('ngeoDecorateLayer', ngeo.DecorateLayer);
