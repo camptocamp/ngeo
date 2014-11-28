@@ -16,8 +16,8 @@ And instead of `ng-controller` instances use application-specific directives,
 and store the directive-specific data in the directive itself. For that, use
 a directive controller, with `controllerAs` and `bindToController`.
 
-[The `map-extension`
-example](https://github.com/camptocamp/ngeo/tree/master/examples/map-extension.js)
+[The `permalink`
+example](https://github.com/camptocamp/ngeo/tree/master/examples/permalink.js)
 shows how to create an application-specific map directive wrapping the
 `ngeo-map` directive.
 
