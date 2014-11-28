@@ -48,6 +48,91 @@ See [this blog
 post](http://toddmotto.com/digging-into-angulars-controller-as-syntax/) for
 more details.
 
+## Use `@export` for controllers
+
+So following the
+[angularjs-google-style](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html)
+controllers are written as classes, and controller functions should be defined
+on the constructor prototype.
+
+Here is an example:
+
+```js
+/**
+ * Application main controller.
+ *
+ * @param {!angular.Scope} $scope Scope.
+ * @constructor
+ * @ngInject
+ * @export
+ */
+app.MainController = function($scope) {
+  // …
+};
+
+
+/**
+ * @param {number} a
+ * @param {number} b
+ * @return {number} Result.
+ * @export
+ */
+app.MainController.prototype.add = function(a, b) {
+   return a + b;
+};
+
+
+angular.module('MainController', app.MainController);
+```
+
+And this is the template:
+
+```html
+<div ng-controller="MainController as ctrl">
+  <span>{{ctrl.add(2, 3)}}</span>
+</div>
+```
+
+For this to work the `add` property must exist on the controller prototype.
+This is why the `app.MainController` and `add` functions are annotated with
+`@export`. The `@export` annotation tells Closure Compiler to generate exports
+in the build for the annotated functions.
+
+Note that compiler flag
+
+```
+"--generate_exports"
+```
+
+is required for the Compiler to actually generate exports!
+
+And remember to `@export` the constructor as well! If you just export the
+method this is the code the compiler will generate for the export:
+
+```js
+t("app.MainController.prototype.add",cw.prototype.d)
+```
+
+`t` is actually `goog.exportSymbol` here (renamed). What this function does
+is basically the following:
+
+```js
+app = {};
+app.MainController = {};
+app.MainController.prototype = {};
+app.MainController.prototype.add = cw.prototype.d;
+```
+
+which does not help. If the constructor is `@export`'ed as well this is
+what the compiler will generate:
+
+```js
+t("app.MainController",cw);
+cw.prototype.add=cw.prototype.d;
+```
+
+which looks much better!
+
 ## Watch your watchers!
 
 Angular runs something called a *digest cycle*. This digest cycle is a loop
