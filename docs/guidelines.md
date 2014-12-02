@@ -155,3 +155,13 @@ There are other techniques to reduce the number of watchers in Angular
 applications. [This blog
 post](http://www.binpress.com/tutorial/speeding-up-angular-js-with-simple-optimizations/135)
 provides a very good overview.
+
+## Use `goog`
+
+For applications compiled together with ngeo, OpenLayers, and Closure Compiler
+the `goog` functions and objects should always be preferred.
+
+For example, `goog.isDef` should be preferred over `angular.isDefined`. When
+using `goog.isDef` Closure Compiler will remove the call to `goog.isDef` and
+use code that is much smaller. In contrast, `angular.isDefined` is defined in
+the Angular externs file so it won't be changed by the compiler.
