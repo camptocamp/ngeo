@@ -156,6 +156,10 @@ applications. [This blog
 post](http://www.binpress.com/tutorial/speeding-up-angular-js-with-simple-optimizations/135)
 provides a very good overview.
 
+ngeo [includes](../utils/watchwatchers.js) a JavaScript script that can be used
+to watch the number of watchers in an Angular application. Look at this file to
+know how to use it.
+
 ## Use `goog`
 
 For applications compiled together with ngeo, OpenLayers, and Closure Compiler
