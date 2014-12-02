@@ -1,4 +1,5 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
+SRC_DIRECTIVES_PARTIALS_FILES := $(shell find src/directives -type f -name '*.html')
 EXPORTS_JS_FILES := $(shell find exports -type f -name '*.js')
 EXAMPLES_JS_FILES := $(shell find examples -maxdepth 1 -type f -name '*.js')
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
@@ -73,8 +74,14 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 	./node_modules/.bin/jshint --verbose $?
 	touch $@
 
-dist/ngeo.js: buildtools/ngeo.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
-	          .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/node_modules.timestamp
+dist/ngeo.js: buildtools/ngeo.json \
+	          .build/externs/angular-1.3.js \
+			  .build/externs/angular-1.3-q.js \
+	          .build/externs/angular-1.3-http-promise.js \
+			  $(SRC_JS_FILES) \
+			  .build/templatecache.js \
+			  $(EXPORTS_JS_FILES) \
+			  .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -206,6 +213,10 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	.build/python-venv/bin/pip install "http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz"
 	touch $@
 
+.build/python-venv/bin/mako-render: .build/python-venv
+	.build/python-venv/bin/pip install "Mako==1.0.0"
+	touch $@
+
 .build/closure-library:
 	mkdir -p .build
 	git clone http://github.com/google/closure-library/ $@
@@ -213,6 +224,12 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 .build/ol-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 	  --root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" --output_file=$@
+
+# The keys in the template cache begin with "../src/directives/partials". This
+# is done so ngeo.js works for the examples on github.io. If another key
+# pattern is needed this should be changed.
+.build/templatecache.js: buildtools/templatecache.mako.js .build/python-venv/bin/mako-render
+	.build/python-venv/bin/mako-render --var "partials=$(addprefix ../,$(SRC_DIRECTIVES_PARTIALS_FILES))" --var "basedir=src" $< > $@
 
 .PHONY: clean
 clean:
@@ -227,6 +244,7 @@ clean:
 	rm -f .build/jshint.timestamp
 	rm -f .build/ol-deps.js
 	rm -f .build/info.json
+	rm -f .build/templatecache.js
 	rm -f dist/ngeo.js
 	rm -f dist/ngeo.css
 

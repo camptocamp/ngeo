@@ -4,7 +4,8 @@
     "node_modules/openlayers/src/**/*.js",
     "node_modules/openlayers/build/ol.ext/*.js",
     "src/**/*.js",
-    "exports/**/*.js"
+    "exports/**/*.js",
+    ".build/templatecache.js"
   ],
   "compile": {
     "externs": [
