@@ -41,7 +41,7 @@ check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslint.timestamp .build/jshint.timestamp
 
 .PHONY: test
-test: .build/ol-deps.js .build/node_modules.timestamp
+test: .build/ol-deps.js .build/ngeo-deps.js .build/node_modules.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: serve
@@ -225,6 +225,10 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 	  --root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" --output_file=$@
 
+.build/ngeo-deps.js: .build/python-venv
+	.build/python-venv/bin/python buildtools/closure/depswriter.py \
+	  --root_with_prefix="src ../../../../../../../../../src" --output_file=$@
+
 # The keys in the template cache begin with "../src/directives/partials". This
 # is done so ngeo.js works for the examples on github.io. If another key
 # pattern is needed this should be changed.
@@ -243,6 +247,7 @@ clean:
 	rm -f .build/gjslint.timestamp
 	rm -f .build/jshint.timestamp
 	rm -f .build/ol-deps.js
+	rm -f .build/ngeo-deps.js
 	rm -f .build/info.json
 	rm -f .build/templatecache.js
 	rm -f dist/ngeo.js

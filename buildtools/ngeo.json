@@ -67,6 +67,7 @@
     ],
     "angular_pass": true,
     "compilation_level": "ADVANCED_OPTIMIZATIONS",
+    "generate_exports": true,
     "output_wrapper": "(function(){%output%})();",
     "use_types_for_optimization": true
   }
