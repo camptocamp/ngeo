@@ -1,7 +1,0 @@
-{{::ctrl.node.name}}
-<input type="checkbox" ng-if="::!ctrl.node.children"
-    ng-model="ctrl.getSetActive" ng-model-options="{getterSetter: true}"/>
-<ul ng-if="::ctrl.node.children">
-  <li ng-repeat="node in ::ctrl.node.children"
-      app-catalog-node="::node" app-catalog-node-map="::ctrl.map"></li>
-</ul>
