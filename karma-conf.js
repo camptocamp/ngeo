@@ -22,10 +22,9 @@ module.exports = function(config) {
       closureLib + 'closure/goog/base.js',
       closureLib + 'closure/goog/deps.js',
       '.build/ol-deps.js',
+      '.build/ngeo-deps.js',
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
-      'src/*.js',
-      'src/**/*.js',
       'test/spec/beforeeach.js',
       'test/spec/**/*.spec.js',
       {
@@ -39,7 +38,13 @@ module.exports = function(config) {
         included: false,
         watched: false,
         served: true
-      }
+      },
+      {
+        pattern: 'src/**/*.js',
+        included: false,
+        watched: true,
+        served: true
+       }
     ],
 
 

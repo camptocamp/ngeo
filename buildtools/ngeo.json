@@ -4,7 +4,8 @@
     "node_modules/openlayers/src/**/*.js",
     "node_modules/openlayers/build/ol.ext/*.js",
     "src/**/*.js",
-    "exports/**/*.js"
+    "exports/**/*.js",
+    ".build/templatecache.js"
   ],
   "compile": {
     "externs": [
@@ -66,6 +67,7 @@
     ],
     "angular_pass": true,
     "compilation_level": "ADVANCED_OPTIMIZATIONS",
+    "generate_exports": true,
     "output_wrapper": "(function(){%output%})();",
     "use_types_for_optimization": true
   }
