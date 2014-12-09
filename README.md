@@ -115,7 +115,7 @@ The jshint linter, which we use for to check the ngeo code, complains when the
 `[]` notation is used. We set the `sub` jshint to `true` in a `.jshintrc` file
 to make jshint stay silent on that.
 
-### Directives
+### Property renaming and directives
 
 In the definition of a directive, if an object is used for the `scope` property
 (*isolate scope*) then quotes must be used for the keys in that object. And in
@@ -142,6 +142,68 @@ module.directive('goDirectiveExample',
       // …
     });
 ```
+
+### Directive scoping
+
+When creating a "widget" directive (i.e. directive with templates/partials) it
+is usually recommended to use an *isolate* scope for the directive.
+
+In the case of ngeo we want to be able to override directive templates at the
+application level. And when overiding a directive's template one expects to be
+able to use properties of an application-defined scope. This is not possible if
+the template is processed in the context of an isolate scope.
+
+So this is what ngeo "widget" directives should look like:
+
+```js
+/**
+ * @return {angular.Directive} Directive Definition Object.
+ */
+ngeo.foobarDirective = function() {
+  return {
+    restrict: 'A',
+    scope: true,
+    templateUrl: …
+    // …
+  };
+};
+```
+
+We still use `scope: true` so that a new, non-isolate, scope is created for the
+directive. In this way the directive will write to its own scope when adding
+new properties to the scope passed to `link` or to the directive's controller.
+
+Note that there's a chance that directive will hide properties from the parent
+scope. This will happen if the directive uses a property name that is already
+used in the parent scope. To mitigate the problem it is recommended that the
+directive use only one scope property, with a specific name. It is recommended
+to use a directive controller as follows:
+
+```js
+/**
+ * @constructor
+ * @param {angular.Scope} $scope The directive scope.
+ * @ngInject
+ * @export
+ */
+ngeo.NgeoFoobarController = function($scope) {
+  $scope['foobarCtrl'] = this;
+  this['prop1'] = …;
+  this['prop2'] = …;
+};
+
+
+/**
+ * @export
+ */
+ngeo.NgeoFoobarController.prototype.aMethod = function() {
+  // …
+};
+```
+
+Then the directive template uses `foobarCtrl.prop1`, `foobarCtrl.prop2`, and
+`foobarCtrl.aMethod` to access to the scope property `prop1`, `prop2`, and
+`aMethod`, respectively.
 
 ### Custom `ol.Object` properties
 
