@@ -1,0 +1,9 @@
+{
+  "exports": ["*"],
+  "src": [
+    "node_modules/openlayers/src/**/*.js",
+    "node_modules/openlayers/build/ol.ext/*.js",
+    "src/**/*.js",
+    ".build/templatecache.js"
+  ]
+}
