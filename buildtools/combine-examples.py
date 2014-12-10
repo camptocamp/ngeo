@@ -12,7 +12,9 @@ def main(argv):
         if len(lines) > 0 and lines[0].startswith('// NOCOMPILE'):
             continue
         requires.update(line for line in lines if line.startswith('goog.require'))
-        examples[filename] = [line for line in lines if not line.startswith('goog.require')]
+        examples[filename] = [line for line in lines if \
+            not (line.startswith('goog.require') or \
+                 line.startswith('goog.provide'))]
     for require in sorted(requires):
         sys.stdout.write(require)
     for filename in sorted(examples.keys()):
