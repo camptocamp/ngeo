@@ -1,12 +1,12 @@
 /**
- * @fileoverview This example shows how to create a layer catalog tree based
- * on ngeo's ngeoLayercatalog directive.
+ * @fileoverview This example shows how to create a layer tree tree based
+ * on ngeo's ngeoLayertree directive.
  */
 
-goog.provide('layercatalog');
+goog.provide('layertree');
 
-goog.require('ngeo.layercatalogDirective');
-goog.require('ngeo.layercatalognodeDirective');
+goog.require('ngeo.layertreeDirective');
+goog.require('ngeo.layertreenodeDirective');
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -24,36 +24,36 @@ var app = {};
 app.module = angular.module('app', ['ngeo']);
 
 
-// Use the default "layer catalog" template.
-app.module.value('ngeoLayercatalogTemplateUrl',
-    '../src/directives/partials/layercatalog.html');
+// Use the default "layer tree" template.
+app.module.value('ngeoLayertreeTemplateUrl',
+    '../src/directives/partials/layertree.html');
 
-// Use an application-specific "layer catalog node" template.
-app.module.value('ngeoLayercatalognodeTemplateUrl',
-    'partials/layercatalognode.html');
+// Use an application-specific "layer tree node" template.
+app.module.value('ngeoLayertreenodeTemplateUrl',
+    'partials/layertreenode.html');
 
 
 /**
- * An application-specific directive wrapping the ngeo catalog layer directive.
- * The directive includes a controller defining the catalog tree.
+ * An application-specific directive wrapping the ngeo tree layer directive.
+ * The directive includes a controller defining the tree tree.
  * @return {angular.Directive} The Directive Definition Object.
  */
-app.layercatalogDirective = function() {
+app.layertreeDirective = function() {
   return {
     restrict: 'E',
     scope: {
-      'map': '=appLayercatalogMap'
+      'map': '=appLayertreeMap'
     },
-    controller: 'AppLayercatalogController',
+    controller: 'AppLayertreeController',
     controllerAs: 'ctrl',
     bindToController: true,
-    template: '<div ngeo-layercatalog="ctrl.tree" ' +
-        'ngeo-layercatalog-map="ctrl.map"></div>'
+    template: '<div ngeo-layertree="ctrl.tree" ' +
+        'ngeo-layertree-map="ctrl.map"></div>'
   };
 };
 
 
-app.module.directive('appLayercatalog', app.layercatalogDirective);
+app.module.directive('appLayertree', app.layertreeDirective);
 
 
 
@@ -63,7 +63,7 @@ app.module.directive('appLayercatalog', app.layercatalogDirective);
  * @ngInject
  * @export
  */
-app.LayercatalogController = function($http) {
+app.LayertreeController = function($http) {
   $http.get('data/tree.json').then(angular.bind(this, function(resp) {
     this['tree'] = resp.data;
   }));
@@ -75,30 +75,30 @@ app.LayercatalogController = function($http) {
  * @param {ol.layer.Layer} layer Layer.
  * @export
  */
-app.LayercatalogController.prototype.onButtonClick = function(node, layer) {
+app.LayertreeController.prototype.onButtonClick = function(node, layer) {
   window.alert(node['name']);
 };
 
 
-app.module.controller('AppLayercatalogController', app.LayercatalogController);
+app.module.controller('AppLayertreeController', app.LayertreeController);
 
 
 /**
  * A function that returns a layer for a node. A cache is used, so always the
  * same layer instance is returned for a given node. This function is used by
- * the ngeoLayercatalognode directive for creating layers from tree nodes.
+ * the ngeoLayertreenode directive for creating layers from tree nodes.
  * The function returns `null` when no layer should be created for the node.
- * @param {Object} node Layer catalog node.
+ * @param {Object} node Layer tree node.
  * @return {ol.layer.Layer} Layer.
  */
-app.layercatalogLayerFactory = (function() {
+app.layertreeLayerFactory = (function() {
   /**
    * @type {Object.<string, ol.layer.Layer>}
    */
   var layerCache = {};
   return (
       /**
-       * @param {Object} node Catalog node.
+       * @param {Object} node Tree node.
        * @return {ol.layer.Layer} Layer.
        */
       function(node) {
@@ -142,7 +142,7 @@ app.layercatalogLayerFactory = (function() {
 })();
 
 
-app.module.value('ngeoLayercatalogLayerFactory', app.layercatalogLayerFactory);
+app.module.value('ngeoLayertreeLayerFactory', app.layertreeLayerFactory);
 
 
 

@@ -1,25 +1,25 @@
 /**
- * @fileoverview Provides a layer catalog node directive. This directive is
- * used by the "ngeoLayercatalog" directive.
+ * @fileoverview Provides a layer tree node directive. This directive is
+ * used by the "ngeoLayertree" directive.
  *
  * The directive assumes that tree nodes that are not leaves have a "children"
  * property referencing an array of child nodes.
  *
- * It also assumes that a service named "ngeoLayercatalogLayerFactory" is
+ * It also assumes that a service named "ngeoLayertreeLayerFactory" is
  * defined. This service must be defined by the application. This service
  * is a function that takes a node object and returns an OpenLayers layer.
  * The function should return `null` when the node should not have
  * a corresponding layer, because it's not a leaf for example.
  *
- * By default the directive uses "layercatalognode.html" as its templateUrl.
- * This can be changed by redefining the "ngeoLayercatalognodeTemplateUrl"
+ * By default the directive uses "layertreenode.html" as its templateUrl.
+ * This can be changed by redefining the "ngeoLayertreenodeTemplateUrl"
  * value.
  *
  * The directive has its own scope, but it is not isolate scope. The name of
- * this directive's scope, as used in the template, is "layercatalognodeCtrl".
+ * this directive's scope, as used in the template, is "layertreenodeCtrl".
  */
 
-goog.provide('ngeo.layercatalognodeDirective');
+goog.provide('ngeo.layertreenodeDirective');
 
 goog.require('ngeo');
 
@@ -28,28 +28,28 @@ goog.require('ngeo');
  * @const
  * @type {string}
  */
-ngeo.layercatalognodeTemplateUrl = 'layercatalognode.html';
+ngeo.layertreenodeTemplateUrl = 'layertreenode.html';
 
 
-ngeoModule.value('ngeoLayercatalognodeTemplateUrl',
-    ngeo.layercatalognodeTemplateUrl);
+ngeoModule.value('ngeoLayertreenodeTemplateUrl',
+    ngeo.layertreenodeTemplateUrl);
 
 
 /**
  * @param {angular.$compile} $compile Angular compile service.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
- *     ngeoLayercatalognodeTemplateUrl Template URL for the directive.
+ *     ngeoLayertreenodeTemplateUrl Template URL for the directive.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  */
-ngeo.layercatalognodeDirective = function(
-    $compile, ngeoLayercatalognodeTemplateUrl) {
+ngeo.layertreenodeDirective = function(
+    $compile, ngeoLayertreenodeTemplateUrl) {
   return {
     restrict: 'A',
-    require: '^ngeoLayercatalog',
+    require: '^ngeoLayertree',
     scope: true,
-    templateUrl: ngeoLayercatalognodeTemplateUrl,
-    controller: 'NgeoLayercatalognodeController',
+    templateUrl: ngeoLayertreenodeTemplateUrl,
+    controller: 'NgeoLayertreenodeController',
     compile:
         /**
          * @param {angular.JQLite} tElement Template element.
@@ -84,16 +84,16 @@ ngeo.layercatalognodeDirective = function(
 };
 
 
-ngeoModule.directive('ngeoLayercatalognode', ngeo.layercatalognodeDirective);
+ngeoModule.directive('ngeoLayertreenode', ngeo.layertreenodeDirective);
 
 
 
 /**
- * The controller for the "catalog node" directive.
+ * The controller for the "tree node" directive.
  * @param {angular.Scope} $scope Scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.
- * @param {function(Object):ol.layer.Layer} ngeoLayercatalogLayerFactory Layer
+ * @param {function(Object):ol.layer.Layer} ngeoLayertreeLayerFactory Layer
  *     factory. This is a function provided by the application. The function
  *     receives a tree node and returns an `ol.layer.Layer` or `null` if no
  *     layer is to be created for that node.
@@ -101,13 +101,13 @@ ngeoModule.directive('ngeoLayercatalognode', ngeo.layercatalognodeDirective);
  * @ngInject
  * @export
  */
-ngeo.LayercatalognodeController = function(
-    $scope, $element, $attrs, ngeoLayercatalogLayerFactory) {
+ngeo.LayertreenodeController = function(
+    $scope, $element, $attrs, ngeoLayertreeLayerFactory) {
 
-  var nodeProp = $attrs['ngeoLayercatalognode'];
+  var nodeProp = $attrs['ngeoLayertreenode'];
   var node = /** @type {Object} */ ($scope.$eval(nodeProp));
 
-  var mapProp = $attrs['ngeoLayercatalognodeMap'];
+  var mapProp = $attrs['ngeoLayertreenodeMap'];
   var map = /** @type {ol.Map} */ ($scope.$eval(mapProp));
 
   /**
@@ -115,7 +115,7 @@ ngeo.LayercatalognodeController = function(
    * @type {ol.layer.Layer}
    * @private
    */
-  this.layer_ = ngeoLayercatalogLayerFactory(node);
+  this.layer_ = ngeoLayertreeLayerFactory(node);
 
   /**
    * @type {ol.Map}
@@ -123,7 +123,7 @@ ngeo.LayercatalognodeController = function(
    */
   this.map_ = map;
 
-  $scope['layercatalognodeCtrl'] = this;
+  $scope['layertreenodeCtrl'] = this;
   this['layer'] = this.layer_;
   this['map'] = map;
   this['node'] = node;
@@ -135,7 +135,7 @@ ngeo.LayercatalognodeController = function(
  * @return {boolean|undefined} Value.
  * @export
  */
-ngeo.LayercatalognodeController.prototype.getSetActive = function(val) {
+ngeo.LayertreenodeController.prototype.getSetActive = function(val) {
   var layer = this.layer_;
   var map = this.map_;
   goog.asserts.assert(!goog.isNull(layer));
@@ -151,5 +151,5 @@ ngeo.LayercatalognodeController.prototype.getSetActive = function(val) {
 };
 
 
-ngeoModule.controller('NgeoLayercatalognodeController',
-    ngeo.LayercatalognodeController);
+ngeoModule.controller('NgeoLayertreenodeController',
+    ngeo.LayertreenodeController);
