@@ -1,8 +1,0 @@
-{{::layercatalognodeCtrl.node.name}}
-<input type="checkbox" ng-if="::!layercatalognodeCtrl.node.children"
-    ng-model="layercatalognodeCtrl.getSetActive" ng-model-options="{getterSetter: true}"/>
-<button ng-if="::!layercatalognodeCtrl.node.children" ng-click="ctrl.onButtonClick(node, layer)">i</button>
-<ul ng-if="::layercatalognodeCtrl.node.children">
-  <li ng-repeat="node in ::layercatalognodeCtrl.node.children"
-      ngeo-layercatalognode="::node" ngeo-layercatalognode-map="::layercatalognodeCtrl.map"></li>
-</ul>
