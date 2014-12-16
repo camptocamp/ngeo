@@ -26,7 +26,7 @@ help:
 	@echo
 
 .PHONY: dist
-dist: dist/ngeo.js dist/ngeo-simple.js dist/ngeo-whitespace.js
+dist: dist/ngeo.js dist/ngeo-debug.js
 
 .PHONY: check
 check: lint dist check-examples compile-examples test
@@ -85,21 +85,22 @@ dist/ngeo.js: buildtools/ngeo.json \
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
+dist/ngeo-debug.js: buildtools/ngeo-debug.json \
+	          .build/externs/angular-1.3.js \
+			  .build/externs/angular-1.3-q.js \
+	          .build/externs/angular-1.3-http-promise.js \
+			  $(SRC_JS_FILES) \
+			  .build/templatecache.js \
+			  $(EXPORTS_JS_FILES) \
+			  .build/node_modules.timestamp
+	mkdir -p $(dir $@)
+	node buildtools/build.js $< $@
+
 # At this point ngeo does not include its own CSS, so dist/ngeo.css is just
 # a minified version of ol.css. This will change in the future.
 dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/cleancss $< > $@
-
-dist/ngeo-simple.js: buildtools/ngeo-simple.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
-	                 .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
-
-dist/ngeo-whitespace.js: buildtools/ngeo-whitespace.json .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
-	                     .build/externs/angular-1.3-http-promise.js $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
 
 .build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
 	                      .build/externs/angular-1.3-http-promise.js examples/%.js .build/node_modules.timestamp
