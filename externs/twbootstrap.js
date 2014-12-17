@@ -6,7 +6,7 @@
 
 
 /**
-* @param {string|Object.<string,*>|undefined} opt_options
+* @param {(string|Object.<string,*>)=} opt_options
 * @return {jQuery}
 */
 jQuery.prototype.modal = function(opt_options) {};
