@@ -5,7 +5,6 @@
 
 
 /**
- * @type {Object}
  * @const
  */
 var angularGettext = {};
