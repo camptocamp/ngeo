@@ -47,7 +47,9 @@ app.layertreeDirective = function() {
     controller: 'AppLayertreeController',
     controllerAs: 'ctrl',
     bindToController: true,
-    template: '<div ngeo-layertree="ctrl.tree" ' +
+    // use "::ctrl.tree" for the "tree" expression as we know the
+    // layer tree won't change
+    template: '<div ngeo-layertree="::ctrl.tree" ' +
         'ngeo-layertree-map="ctrl.map"></div>'
   };
 };
