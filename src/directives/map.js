@@ -5,6 +5,12 @@
  * Example:
  *
  * <div ngeo-map="ctrl.map"></div>
+ *
+ * This directive creates a watcher on the "map" expression ("ctrl.map" in
+ * the above example). Use a one-time binding expression if you know the map
+ * won't changed:
+ *
+ * <div ngeo-map="::ctrl.map"></div>
  */
 goog.provide('ngeo.mapDirective');
 
@@ -27,12 +33,24 @@ ngeo.mapDirective = function() {
          */
         function(scope, element, attrs) {
           var attr = 'ngeoMap';
-          var prop = attrs[attr];
+          var expr = attrs[attr];
 
-          var map = /** @type {ol.Map} */ (scope.$eval(prop));
-          goog.asserts.assertInstanceof(map, ol.Map);
+          /**
+           * The current map attached to this directive/element.
+           * @type {ol.Map}
+           */
+          var map = null;
 
-          map.setTarget(element[0]);
+          scope.$watch(expr, function(newVal, oldVal) {
+            if (!goog.isNull(map)) {
+              map.setTarget(null);
+            }
+            map = goog.isDef(newVal) ? /** @type {ol.Map} */ (newVal) : null;
+            if (!goog.isNull(map)) {
+              goog.asserts.assertInstanceof(map, ol.Map);
+              map.setTarget(element[0]);
+            }
+          });
         }
   };
 };
