@@ -7,18 +7,27 @@
  * <div ngeo-layertree="ctrl.tree" ngeo-layertree-map="ctrl.map">
  * </div>
  *
- * The directive assumes that the root of the tree includes a "children"
- * property containing tree nodes.
+ * Things to know about this directive:
  *
- * This directive relies on the "ngeoLayertreenode" directive which assumes
- * that a service named "ngeoLayertreeLayerFactory" is defined by the
- * application. See the "ngeoLayertreenode" docs for more information.
+ * - The directive assumes that the root of the tree includes a "children"
+ *   property containing tree nodes.
  *
- * By default the directive uses "layertree.html" as its templateUrl. This
- * can be changed by redefining the "ngeoLayertreeTemplateUrl" value.
+ * - The directive relies on the "ngeoLayertreenode" directive which assumes
+ *   that a service named "ngeoLayertreeLayerFactory" is defined by the
+ *   application. See the "ngeoLayertreenode" docs for more information.
  *
- * The directive has its own scope, but it is not isolate scope. The name of
- * this directive's scope, as used in the template, is "layertreeCtrl".
+ * - By default the directive uses "layertree.html" as its templateUrl. This
+ *   can be changed by redefining the "ngeoLayertreeTemplateUrl" value.
+ *
+ * - The directive has its own scope, but it is not isolate scope. The name of
+ *   this directive's scope, as used in the template, is "layertreeCtrl".
+ *
+ * - The directive creates a watcher on the "tree" expression ("ctrl.tree" in
+ *   the usage example given above). Use a one-time binding expression if you
+ *   know that the layer tree definition won't change:
+ *
+ *   <div ngeo-layertree="::ctrl.tree" ngeo-layertree-map="ctrl.map">
+ *   </div>
  */
 
 goog.provide('ngeo.layertreeDirective');
@@ -66,8 +75,8 @@ ngeoModule.directive('ngeoLayertree', ngeo.layertreeDirective);
  * @ngInject
  */
 ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
-  var treeProp = $attrs['ngeoLayertree'];
-  var tree = /** @type {Object} */ ($scope.$eval(treeProp));
+  var treeExpr = $attrs['ngeoLayertree'];
+  var tree = /** @type {Object} */ ($scope.$eval(treeExpr));
 
   var mapProp = $attrs['ngeoLayertreeMap'];
   var map = /** @type {ol.Map} */ ($scope.$eval(mapProp));
@@ -76,11 +85,8 @@ ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
   this['tree'] = tree;
   this['map'] = map;
 
-  var dereg = $scope.$watch(treeProp, goog.bind(function(newVal, oldVal) {
-    if (goog.isDef(newVal)) {
-      this['tree'] = newVal;
-      dereg();
-    }
+  $scope.$watch(treeExpr, goog.bind(function(newVal, oldVal) {
+    this['tree'] = newVal;
   }, this));
 };
 

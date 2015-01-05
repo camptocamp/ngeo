@@ -36,7 +36,7 @@ app.mapDirective = function() {
     controller: 'AppMapController',
     controllerAs: 'ctrl',
     bindToController: true,
-    template: '<div ngeo-map=ctrl.map></div>'
+    template: '<div ngeo-map="::ctrl.map"></div>'
   };
 };
 
