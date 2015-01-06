@@ -15,7 +15,7 @@
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
-    <div id="map" ngeo-map="::ctrl.map"></div>
+    <div id="map" ngeo-map="ctrl.map"></div>
     <p>
       <label for="checkbox">Enable Geolocation interaction:</label>
       <input id="checkbox" type="checkbox" ng-model="ctrl.geolocation.tracking"  />
