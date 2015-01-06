@@ -121,12 +121,14 @@ app.layerManagerDirective = function() {
   return {
     restrict: 'A',
     scope: {
-      map: '=layerManager',
-      layers: '=layerManagerLayers'
+      map: '=layerManager'
     },
+    controller: function() {},
+    controllerAs: 'ctrl',
+    bindToController: true,
     template: '<ul class="list-group">' +
         '<li class="list-group-item" ng-repeat="layer in ' +
-            'map.getLayers().getArray()' +
+            'ctrl.map.getLayers().getArray()' +
             ' | reverse track by layer.get(\'id\')">' +
         '<button type="button" ng-click="layer.inmap = false" ' +
             'class="btn btn-primary btn-xs badge">×</button>' +

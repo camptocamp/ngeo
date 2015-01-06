@@ -31,14 +31,14 @@
     <div class="main-container row" ng-cloak>
         <div class="col-md-offset-1 col-md-2">
           <h3>Layer catalog</h3>
-          <label ng-repeat="layer in ctrl.layers" class="catalog-item">
+          <label ng-repeat="layer in ::ctrl.layers" class="catalog-item">
               <input type="checkbox" ng-model="layer.inmap" />
               {{layer.get('label')}}
           </label>
         </div>
         <div class="col-md-3">
             <h3>Layer manager</h3>
-          <div layer-manager="ctrl.map" layer-manager-layers="ctrl.layers"></div>
+          <div layer-manager="::ctrl.map"></div>
         </div>
     </div>
 
