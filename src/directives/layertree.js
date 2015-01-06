@@ -84,6 +84,7 @@ ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
   $scope['layertreeCtrl'] = this;
   this['tree'] = tree;
   this['map'] = map;
+  this['uid'] = goog.getUid(this);
 
   $scope.$watch(treeExpr, goog.bind(function(newVal, oldVal) {
     this['tree'] = newVal;
