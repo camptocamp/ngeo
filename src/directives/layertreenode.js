@@ -127,6 +127,7 @@ ngeo.LayertreenodeController = function(
   this['layer'] = this.layer_;
   this['map'] = map;
   this['node'] = node;
+  this['uid'] = goog.getUid(this);
 };
 
 
