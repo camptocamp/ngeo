@@ -35,7 +35,7 @@ When `ng-controller` is used in the HTML code it is recommended to use
 the `controller as` syntax. For example:
 
 ```html
-<body ng-controller="MainController as crtl">
+<body ng-controller="MainController as ctrl">
   …
   …
   <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawPoint.active">Point</button>
