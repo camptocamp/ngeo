@@ -4,11 +4,9 @@
  * providing a function that returns the control instance. That function should
  * be defined in the parent scope.
  *
- * Example #1:
- * <div ngeo-control="createScaleLineControl"></div>
- *
- * Example #2:
- * <div ngeo-control="createScaleLineControl" ngeo-control-map="map1"></div>
+ * Example:
+ * <div ngeo-control="ctrl.createScaleLineControl
+ *      ngeo-control-map="ctrl.map"></div>
  */
 
 goog.provide('ngeo.CreateControl');
