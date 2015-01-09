@@ -5,7 +5,7 @@
  * be defined in the parent scope.
  *
  * Example:
- * <div ngeo-control="ctrl.createScaleLineControl
+ * <div ngeo-control="ctrl.createScaleLineControl"
  *      ngeo-control-map="ctrl.map"></div>
  */
 
