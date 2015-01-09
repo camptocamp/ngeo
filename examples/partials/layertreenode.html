@@ -1,7 +1,8 @@
 {{::layertreenodeCtrl.node.name}}
 <input type="checkbox" ng-if="::!layertreenodeCtrl.node.children"
     ng-model="layertreenodeCtrl.getSetActive" ng-model-options="{getterSetter: true}"/>
-<button ng-if="::!layertreenodeCtrl.node.children" ng-click="ctrl.onButtonClick(node, layer)">i</button>
+<button ng-if="::!layertreenodeCtrl.node.children"
+        ng-click="ctrl.onButtonClick(layertreenodeCtrl.node, layertreenodeCtrl.layer)">i</button>
 <ul ng-if="::layertreenodeCtrl.node.children">
   <li ng-repeat="node in ::layertreenodeCtrl.node.children"
       ngeo-layertreenode="::node" ngeo-layertreenode-map="::layertreenodeCtrl.map"></li>
