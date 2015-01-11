@@ -4,17 +4,14 @@
  *
  * Example usage:
  *
- * <div ngeo-layertree="ctrl.tree" ngeo-layertree-map="ctrl.map">
+ * <div ngeo-layertree="ctrl.tree" ngeo-layertree-map="ctrl.map"
+ *      ngeo-layertree-layer="ctrl.getLayer(node)">
  * </div>
  *
  * Things to know about this directive:
  *
  * - The directive assumes that the root of the tree includes a "children"
  *   property containing tree nodes.
- *
- * - The directive relies on the "ngeoLayertreenode" directive which assumes
- *   that a service named "ngeoLayertreeLayerFactory" is defined by the
- *   application. See the "ngeoLayertreenode" docs for more information.
  *
  * - By default the directive uses "layertree.html" as its templateUrl. This
  *   can be changed by redefining the "ngeoLayertreeTemplateUrl" value.
@@ -26,7 +23,8 @@
  *   the usage example given above). Use a one-time binding expression if you
  *   know that the layer tree definition won't change:
  *
- *   <div ngeo-layertree="::ctrl.tree" ngeo-layertree-map="ctrl.map">
+ *   <div ngeo-layertree="::ctrl.tree" ngeo-layertree-map="ctrl.map"
+ *        ngeo-layertree-layer="ctrl.getLayer(node)">
  *   </div>
  */
 
@@ -75,21 +73,26 @@ ngeoModule.directive('ngeoLayertree', ngeo.layertreeDirective);
  * @ngInject
  */
 ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
+
   var treeExpr = $attrs['ngeoLayertree'];
   var tree = /** @type {Object} */ ($scope.$eval(treeExpr));
+  this['tree'] = tree;
 
   var mapExpr = $attrs['ngeoLayertreeMap'];
   var map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
-
-  $scope['layertreeCtrl'] = this;
-  this['tree'] = tree;
   this['map'] = map;
-  $scope['uid'] = this['uid'] = goog.getUid(this);
-  $scope['depth'] = 0;
+
+  var layerExpr = $attrs['ngeoLayertreeLayer'];
+  this['layerExpr'] = layerExpr;
 
   $scope.$watch(treeExpr, goog.bind(function(newVal, oldVal) {
     this['tree'] = newVal;
   }, this));
+
+  $scope['uid'] = this['uid'] = goog.getUid(this);
+  $scope['depth'] = 0;
+
+  $scope['layertreeCtrl'] = this;
 };
 
 
