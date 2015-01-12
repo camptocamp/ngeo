@@ -1,12 +1,26 @@
 /**
- * @fileoverview Provides a layer tree widget directive. This directive uses
- * the "ngeoLayertreenode" directive.
+ * @fileoverview Provides the "ngeoLayertree" directive, a layer tree widget
+ * directive. This directive uses the "ngeoLayertreenode" directive.
  *
  * Example usage:
  *
  * <div ngeo-layertree="ctrl.tree" ngeo-layertree-map="ctrl.map"
  *      ngeo-layertree-layer="ctrl.getLayer(node)">
  * </div>
+ *
+ * The "ngeo-layertree", "ngeo-layertree-map" and "ngeo-layertree-layer"
+ * attributes are mandatory.
+ *
+ * - The "ngeo-layertree" attribute specifies the scope property whose value
+ *   is a reference to the layer tree structure/object.
+ *
+ * - The "ngeo-layertree-map" attribute specifies the scope property whose
+ *   value is a reference to the map.
+ *
+ * -  The "ngeo-layertree-layer" attribute specifies the expression to evaluate
+ *    to get the layer object for a specific node of the tree. The directive
+ *    will evaluate this expression for each node of the tree. `node` can be
+ *    used in the expression to refer to the current tree node.
  *
  * Things to know about this directive:
  *
@@ -16,8 +30,9 @@
  * - By default the directive uses "layertree.html" as its templateUrl. This
  *   can be changed by redefining the "ngeoLayertreeTemplateUrl" value.
  *
- * - The directive has its own scope, but it is not isolate scope. The name of
- *   this directive's scope, as used in the template, is "layertreeCtrl".
+ * - The directive has its own scope, but it is not isolate scope. That scope
+ *   includes a reference to the directive's controller: the "layertreeCtrl"
+ *   scope property.
  *
  * - The directive creates a watcher on the "tree" expression ("ctrl.tree" in
  *   the usage example given above). Use a one-time binding expression if you

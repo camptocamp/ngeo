@@ -1,16 +1,38 @@
 /**
- * @fileoverview Provides a layer tree node directive. This directive is
- * used by the "ngeoLayertree" directive.
+ * @fileoverview Provides the "ngeoLayertreenode" directive, a layer tree node
+ * directive. This directive is used by the "ngeoLayertree" directive.
  *
  * The directive assumes that tree nodes that are not leaves have a "children"
  * property referencing an array of child nodes.
  *
- * By default the directive uses "layertreenode.html" as its templateUrl.
- * This can be changed by redefining the "ngeoLayertreenodeTemplateUrl"
- * value.
+ * Example usage:
  *
- * The directive has its own scope, but it is not isolate scope. The name of
- * this directive's scope, as used in the template, is "layertreenodeCtrl".
+ * <div ngeo-layertreenode="ctrl.node" ngeo-layertreenode-map="ctrl.map"
+ *      ngeo-layertreenode-layerexpr="ctrl.layerExpr">
+ * </div>
+ *
+ * The "ngeo-layertreenode", "ngeo-layertreenode-map" and
+ * "ngeo-layertreenode-layerexpr" attributes are mandatory.
+ *
+ * - The "ngeo-layertreenode" specifies the scope property whose value is
+ *   a reference to the tree node object.
+ *
+ * - The "ngeo-layertreenode-map" specifies the scope property whose value is
+ *   a reference to the map.
+ *
+ * - The "ngeo-layertreenode-layerexpr" specifies the scope property whose
+ *   value is the layer expression (a string) to evaluate to get the layer
+ *   object for this tree node.
+ *
+ * By default the directive uses "layertreenode.html" as its templateUrl. This
+ * can be changed by redefining the "ngeoLayertreenodeTemplateUrl" value.
+ *
+ * The directive has its own scope, but it is not isolate scope. That scope
+ * includes a reference to the directive's controller: the "layertreenodeCtrl"
+ * property.
+ *
+ * This directive doesn't itself create watchers, but its partial uses Angular
+ * directives like ngRepeat and ngModel which do create watchers.
  */
 
 goog.provide('ngeo.layertreenodeDirective');
