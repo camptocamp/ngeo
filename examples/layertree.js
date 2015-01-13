@@ -78,7 +78,7 @@ app.LayertreeController = function($http) {
  * @export
  */
 app.LayertreeController.prototype.onButtonClick = function(node, layer) {
-  window.alert(node['name']);
+  window.alert(node['name'] + ', ' + layer.get('type'));
 };
 
 
@@ -138,6 +138,7 @@ app.layertreeLayerFactory = (function() {
         var layer = new ol.layer.Tile({
           source: source
         });
+        layer.set('type', type);
         layerCache[type] = layer;
         return layer;
       });

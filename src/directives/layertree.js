@@ -78,8 +78,8 @@ ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
   var treeExpr = $attrs['ngeoLayertree'];
   var tree = /** @type {Object} */ ($scope.$eval(treeExpr));
 
-  var mapProp = $attrs['ngeoLayertreeMap'];
-  var map = /** @type {ol.Map} */ ($scope.$eval(mapProp));
+  var mapExpr = $attrs['ngeoLayertreeMap'];
+  var map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
 
   $scope['layertreeCtrl'] = this;
   this['tree'] = tree;
