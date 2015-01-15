@@ -101,7 +101,7 @@ ngeo.LocationFactory = function($rootScope, $window) {
     if (lastUri !== newUri) {
       $rootScope.$evalAsync(function() {
         lastUri = newUri;
-        if (goog.isDef(history)) {
+        if (goog.isDef(history) && goog.isDef(history.replaceState)) {
           history.replaceState(null, '', newUri);
         }
         $rootScope.$broadcast('ngeoLocationChange');
