@@ -27,22 +27,39 @@ ngeo.decorateLayer = function(layer) {
 
   Object.defineProperty(layer, 'visible', {
     configurable: true,
-    get: function() {
-      return layer.getVisible();
-    },
-    set: function(val) {
-      layer.setVisible(val);
-    }
+    get:
+        /**
+         * @return {boolean} Visible.
+         */
+        function() {
+          return /** @type {boolean} */ (layer.getVisible());
+        },
+    set:
+        /**
+         * @param {boolean} val Visible.
+         */
+        function(val) {
+          layer.setVisible(val);
+        }
   });
 
   Object.defineProperty(layer, 'opacity', {
     configurable: true,
-    get: function() {
-      return (Math.round((layer.getOpacity()) * 100) / 100) + '';
-    },
-    set: function(val) {
-      layer.setOpacity(val);
-    }
+    get:
+        /**
+         * @return {string} Opacity.
+         */
+        function() {
+          var opacity = /** @type {number} */ (layer.getOpacity());
+          return (Math.round(opacity * 100) / 100) + '';
+        },
+    set:
+        /**
+         * @param {string} val Opacity.
+         */
+        function(val) {
+          layer.setOpacity(+val);
+        }
   });
 };
 
