@@ -41,7 +41,7 @@ ngeo.decorateLayer = function(layer) {
       return (Math.round((layer.getOpacity()) * 100) / 100) + '';
     },
     set: function(val) {
-      layer.setOpacity(val);
+      layer.setOpacity(+val);
     }
   });
 };
