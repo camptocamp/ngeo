@@ -132,7 +132,6 @@ ngeo.LayertreenodeController = function($scope, $element, $attrs) {
 
   // The node is passed in the "locals" object (2nd arg to $eval). This
   // is to allow expressions like "ctrl.getLayer(node)".
-  console.log('directive', node.children, layerexprExpr);
   var layer = /** @type {ol.layer.Layer} */
       ($scope.$eval(layerExpr, {'node': node}));
   goog.asserts.assert(goog.isDef(layer));
