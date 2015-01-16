@@ -51,7 +51,7 @@ app.layertreeDirective = function() {
     // layer tree won't change
     template: '<div ngeo-layertree="::ctrl.tree" ' +
         'ngeo-layertree-map="ctrl.map" ' +
-        'ngeo-layertree-layer="ctrl.getLayer(node)">' +
+        'ngeo-layertree-nodelayer="ctrl.getLayer(node)">' +
         '</div>'
   };
 };

@@ -97,8 +97,8 @@ ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
   var map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
   this['map'] = map;
 
-  var layerExpr = $attrs['ngeoLayertreeLayer'];
-  this['layerExpr'] = layerExpr;
+  var nodelayerExpr = $attrs['ngeoLayertreeNodelayer'];
+  this['layerExpr'] = nodelayerExpr;
 
   $scope.$watch(treeExpr, goog.bind(function(newVal, oldVal) {
     this['tree'] = newVal;
