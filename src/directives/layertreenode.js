@@ -127,7 +127,16 @@ ngeo.LayertreenodeController = function(
   this['layer'] = this.layer_;
   this['map'] = map;
   this['node'] = node;
+  this['parentUid'] = $scope.$parent['uid'];
+
   this['uid'] = goog.getUid(this);
+  this['depth'] = $scope.$parent['depth'] + 1;
+
+  // we set 'uid' and 'depth' in the scope as well to access the parent values
+  // in the inherited scopes. This is intended to be used in the javascript not
+  // in the templates.
+  $scope['uid'] = this['uid'];
+  $scope['depth'] = this['depth'];
 };
 
 
