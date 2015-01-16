@@ -2,6 +2,8 @@
  * @fileoverview Provides a function that returns the most appropriate 2-letter
  * language code depending on the list of available languages and the browser
  * languages settings.
+ * If you compile your code with the Closure Compiler, the externs file
+ * `ngeo/externs/closure-compiler.js` has to be included.
  */
 
 goog.provide('ngeo.GetBrowserLanguage');
