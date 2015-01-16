@@ -22,6 +22,7 @@ app.module = angular.module('app', ['ngeo']);
  * @constructor
  */
 app.MainController = function() {
+
   /** @type {ol.Map} */
   this['map'] = new ol.Map({
     layers: [
@@ -35,19 +36,10 @@ app.MainController = function() {
     })
   });
 
-  /**
-   * The "control" directive requires a function that creates the
-   * control instance.
-   *
-   * @param {Element} target Target element.
-   * @return {ol.control.MousePosition} Mouse position control.
-   */
-  this['createControl'] = function(target) {
-    return new ol.control.MousePosition({
-      className: 'mouse-position',
-      target: target
-    });
-  };
+  /** @type {ol.control.Control} */
+  this['control'] = new ol.control.MousePosition({
+    className: 'mouse-position'
+  });
 };
 
 

@@ -1,25 +1,22 @@
 /**
  * @fileoverview Provides a directive can be used to add a control to a DOM
- * element of the HTML page. The user of the directive is responsible for
- * providing a function that returns the control instance. That function should
- * be defined in the parent scope.
+ * element of the HTML page.
  *
  * Example:
- * <div ngeo-control="ctrl.createScaleLineControl"
- *      ngeo-control-map="ctrl.map"></div>
+ *
+ * <div ngeo-control="ctrl.control" ngeo-control-map="ctrl.map"></div>
+ *
+ * The expression passed to "ngeo-control" should evaluate to a control
+ * instance, and the expression passed to "ngeo-control-map" should
+ * evaluate to a map instance.
  */
 
-goog.provide('ngeo.CreateControl');
 goog.provide('ngeo.controlDirective');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
-
-
-/**
- * @typedef {function(Element): ol.control.Control}
- */
-ngeo.CreateControl;
+goog.require('ol.Map');
+goog.require('ol.control.Control');
 
 
 /**
@@ -36,17 +33,16 @@ ngeo.controlDirective = function() {
          * @param {angular.Attributes} attrs Attributes.
          */
         function(scope, element, attrs) {
-          var attr;
 
-          attr = 'ngeoControl';
-          var createControl = /** @type {ngeo.CreateControl} */
-              (scope.$eval(attrs[attr]));
-          var control = createControl(element[0]);
+          var control = /** @type {ol.control.Control} */
+              (scope.$eval(attrs['ngeoControl']));
+          goog.asserts.assertInstanceof(control, ol.control.Control);
 
-          attr = 'ngeoControlMap';
-          var map = /** @type {ol.Map} */ (scope.$eval(attrs[attr]));
+          var map = /** @type {ol.Map} */
+              (scope.$eval(attrs['ngeoControlMap']));
           goog.asserts.assertInstanceof(map, ol.Map);
 
+          control.setTarget(element[0]);
           map.addControl(control);
         }
   };
