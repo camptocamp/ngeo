@@ -1,32 +1,45 @@
 /**
- * @fileoverview Provides a layer tree widget directive. This directive uses
- * the "ngeoLayertreenode" directive.
+ * @fileoverview Provides the "ngeoLayertree" directive, a layer tree widget
+ * directive. This directive uses the "ngeoLayertreenode" directive.
  *
  * Example usage:
  *
- * <div ngeo-layertree="ctrl.tree" ngeo-layertree-map="ctrl.map">
+ * <div ngeo-layertree="ctrl.tree" ngeo-layertree-map="ctrl.map"
+ *      ngeo-layertree-layer="ctrl.getLayer(node)">
  * </div>
+ *
+ * The "ngeo-layertree", "ngeo-layertree-map" and "ngeo-layertree-layer"
+ * attributes are mandatory.
+ *
+ * - The "ngeo-layertree" attribute specifies the scope property whose value
+ *   is a reference to the layer tree structure/object.
+ *
+ * - The "ngeo-layertree-map" attribute specifies the scope property whose
+ *   value is a reference to the map.
+ *
+ * -  The "ngeo-layertree-layer" attribute specifies the expression to evaluate
+ *    to get the layer object for a specific node of the tree. The directive
+ *    will evaluate this expression for each node of the tree. `node` can be
+ *    used in the expression to refer to the current tree node.
  *
  * Things to know about this directive:
  *
  * - The directive assumes that the root of the tree includes a "children"
  *   property containing tree nodes.
  *
- * - The directive relies on the "ngeoLayertreenode" directive which assumes
- *   that a service named "ngeoLayertreeLayerFactory" is defined by the
- *   application. See the "ngeoLayertreenode" docs for more information.
- *
  * - By default the directive uses "layertree.html" as its templateUrl. This
  *   can be changed by redefining the "ngeoLayertreeTemplateUrl" value.
  *
- * - The directive has its own scope, but it is not isolate scope. The name of
- *   this directive's scope, as used in the template, is "layertreeCtrl".
+ * - The directive has its own scope, but it is not isolate scope. That scope
+ *   includes a reference to the directive's controller: the "layertreeCtrl"
+ *   scope property.
  *
  * - The directive creates a watcher on the "tree" expression ("ctrl.tree" in
  *   the usage example given above). Use a one-time binding expression if you
  *   know that the layer tree definition won't change:
  *
- *   <div ngeo-layertree="::ctrl.tree" ngeo-layertree-map="ctrl.map">
+ *   <div ngeo-layertree="::ctrl.tree" ngeo-layertree-map="ctrl.map"
+ *        ngeo-layertree-layer="ctrl.getLayer(node)">
  *   </div>
  */
 
@@ -75,21 +88,26 @@ ngeoModule.directive('ngeoLayertree', ngeo.layertreeDirective);
  * @ngInject
  */
 ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
+
   var treeExpr = $attrs['ngeoLayertree'];
   var tree = /** @type {Object} */ ($scope.$eval(treeExpr));
+  this['tree'] = tree;
 
   var mapExpr = $attrs['ngeoLayertreeMap'];
   var map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
-
-  $scope['layertreeCtrl'] = this;
-  this['tree'] = tree;
   this['map'] = map;
-  $scope['uid'] = this['uid'] = goog.getUid(this);
-  $scope['depth'] = 0;
+
+  var layerExpr = $attrs['ngeoLayertreeLayer'];
+  this['layerExpr'] = layerExpr;
 
   $scope.$watch(treeExpr, goog.bind(function(newVal, oldVal) {
     this['tree'] = newVal;
   }, this));
+
+  $scope['uid'] = this['uid'] = goog.getUid(this);
+  $scope['depth'] = 0;
+
+  $scope['layertreeCtrl'] = this;
 };
 
 

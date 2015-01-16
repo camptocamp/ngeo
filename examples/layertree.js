@@ -50,7 +50,9 @@ app.layertreeDirective = function() {
     // use "::ctrl.tree" for the "tree" expression as we know the
     // layer tree won't change
     template: '<div ngeo-layertree="::ctrl.tree" ' +
-        'ngeo-layertree-map="ctrl.map"></div>'
+        'ngeo-layertree-map="ctrl.map" ' +
+        'ngeo-layertree-layer="ctrl.getLayer(node)">' +
+        '</div>'
   };
 };
 
@@ -62,13 +64,33 @@ app.module.directive('appLayertree', app.layertreeDirective);
 /**
  * @constructor
  * @param {angular.$http} $http Angular http service.
+ * @param {function(Object):ol.layer.Layer} appGetLayer Get layer service.
  * @ngInject
  * @export
  */
-app.LayertreeController = function($http) {
+app.LayertreeController = function($http, appGetLayer) {
   $http.get('data/tree.json').then(angular.bind(this, function(resp) {
     this['tree'] = resp.data;
   }));
+
+  /**
+   * @private
+   * @type {function(Object):ol.layer.Layer}
+   */
+  this.getLayer_ = appGetLayer;
+};
+
+
+/**
+ * Function called by the ngeo-layertreenode directives to create a layer
+ * from a tree node. The function should return `null` if no layer should
+ * be associated to the node (because it's not a leaf).
+ * @param {Object} node Node object.
+ * @return {ol.layer.Layer} The layer for this node.
+ * @export
+ */
+app.LayertreeController.prototype.getLayer = function(node) {
+  return this.getLayer_(node);
 };
 
 
@@ -87,13 +109,14 @@ app.module.controller('AppLayertreeController', app.LayertreeController);
 
 /**
  * A function that returns a layer for a node. A cache is used, so always the
- * same layer instance is returned for a given node. This function is used by
- * the ngeoLayertreenode directive for creating layers from tree nodes.
- * The function returns `null` when no layer should be created for the node.
+ * same layer instance is returned for a given node. This function is called by
+ * the ngeoLayertreenode directive for creating layers from tree nodes. The
+ * function returns `null` when no layer should be created for the node.
+ *
  * @param {Object} node Layer tree node.
  * @return {ol.layer.Layer} Layer.
  */
-app.layertreeLayerFactory = (function() {
+app.getLayer = (function() {
   /**
    * @type {Object.<string, ol.layer.Layer>}
    */
@@ -145,7 +168,7 @@ app.layertreeLayerFactory = (function() {
 })();
 
 
-app.module.value('ngeoLayertreeLayerFactory', app.layertreeLayerFactory);
+app.module.value('appGetLayer', app.getLayer);
 
 
 

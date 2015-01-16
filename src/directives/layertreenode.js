@@ -1,22 +1,38 @@
 /**
- * @fileoverview Provides a layer tree node directive. This directive is
- * used by the "ngeoLayertree" directive.
+ * @fileoverview Provides the "ngeoLayertreenode" directive, a layer tree node
+ * directive. This directive is used by the "ngeoLayertree" directive.
  *
  * The directive assumes that tree nodes that are not leaves have a "children"
  * property referencing an array of child nodes.
  *
- * It also assumes that a service named "ngeoLayertreeLayerFactory" is
- * defined. This service must be defined by the application. This service
- * is a function that takes a node object and returns an OpenLayers layer.
- * The function should return `null` when the node should not have
- * a corresponding layer, because it's not a leaf for example.
+ * Example usage:
  *
- * By default the directive uses "layertreenode.html" as its templateUrl.
- * This can be changed by redefining the "ngeoLayertreenodeTemplateUrl"
- * value.
+ * <div ngeo-layertreenode="ctrl.node" ngeo-layertreenode-map="ctrl.map"
+ *      ngeo-layertreenode-layerexpr="ctrl.layerExpr">
+ * </div>
  *
- * The directive has its own scope, but it is not isolate scope. The name of
- * this directive's scope, as used in the template, is "layertreenodeCtrl".
+ * The "ngeo-layertreenode", "ngeo-layertreenode-map" and
+ * "ngeo-layertreenode-layerexpr" attributes are mandatory.
+ *
+ * - The "ngeo-layertreenode" specifies the scope property whose value is
+ *   a reference to the tree node object.
+ *
+ * - The "ngeo-layertreenode-map" specifies the scope property whose value is
+ *   a reference to the map.
+ *
+ * - The "ngeo-layertreenode-layerexpr" specifies the scope property whose
+ *   value is the layer expression (a string) to evaluate to get the layer
+ *   object for this tree node.
+ *
+ * By default the directive uses "layertreenode.html" as its templateUrl. This
+ * can be changed by redefining the "ngeoLayertreenodeTemplateUrl" value.
+ *
+ * The directive has its own scope, but it is not isolate scope. That scope
+ * includes a reference to the directive's controller: the "layertreenodeCtrl"
+ * property.
+ *
+ * This directive doesn't itself create watchers, but its partial uses Angular
+ * directives like ngRepeat and ngModel which do create watchers.
  */
 
 goog.provide('ngeo.layertreenodeDirective');
@@ -93,29 +109,34 @@ ngeoModule.directive('ngeoLayertreenode', ngeo.layertreenodeDirective);
  * @param {angular.Scope} $scope Scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.
- * @param {function(Object):ol.layer.Layer} ngeoLayertreeLayerFactory Layer
- *     factory. This is a function provided by the application. The function
- *     receives a tree node and returns an `ol.layer.Layer` or `null` if no
- *     layer is to be created for that node.
  * @constructor
  * @ngInject
  * @export
  */
-ngeo.LayertreenodeController = function(
-    $scope, $element, $attrs, ngeoLayertreeLayerFactory) {
+ngeo.LayertreenodeController = function($scope, $element, $attrs) {
 
-  var nodeProp = $attrs['ngeoLayertreenode'];
-  var node = /** @type {Object} */ ($scope.$eval(nodeProp));
+  var nodeExpr = $attrs['ngeoLayertreenode'];
+  var node = /** @type {Object} */ ($scope.$eval(nodeExpr));
+  goog.asserts.assert(goog.isDef(node));
+  this['node'] = node;
 
-  var mapProp = $attrs['ngeoLayertreenodeMap'];
-  var map = /** @type {ol.Map} */ ($scope.$eval(mapProp));
+  var mapExpr = $attrs['ngeoLayertreenodeMap'];
+  var map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
+  goog.asserts.assert(goog.isDef(map));
+  this['map'] = map;
 
-  /**
-   * This node's layer. `null` if there's no layer for that node.
-   * @type {ol.layer.Layer}
-   * @private
-   */
-  this.layer_ = ngeoLayertreeLayerFactory(node);
+  var layerexprExpr = $attrs['ngeoLayertreenodeLayerexpr'];
+  var layerExpr = /** @type {string} */ ($scope.$eval(layerexprExpr));
+  goog.asserts.assert(goog.isDef(layerExpr));
+  this['layerExpr'] = layerExpr;
+
+  // The node is passed in the "locals" object (2nd arg to $eval). This
+  // is to allow expressions like "ctrl.getLayer(node)".
+  console.log('directive', node.children, layerexprExpr);
+  var layer = /** @type {ol.layer.Layer} */
+      ($scope.$eval(layerExpr, {'node': node}));
+  goog.asserts.assert(goog.isDef(layer));
+  this['layer'] = layer;
 
   /**
    * @type {ol.Map}
@@ -123,20 +144,25 @@ ngeo.LayertreenodeController = function(
    */
   this.map_ = map;
 
-  $scope['layertreenodeCtrl'] = this;
-  this['layer'] = this.layer_;
-  this['map'] = map;
-  this['node'] = node;
-  this['parentUid'] = $scope.$parent['uid'];
+  /**
+   * This node's layer. `null` if there's no layer for that node (for
+   * example if the node is not a leaf).
+   * @type {ol.layer.Layer}
+   * @private
+   */
+  this.layer_ = layer;
 
+  this['parentUid'] = $scope.$parent['uid'];
   this['uid'] = goog.getUid(this);
   this['depth'] = $scope.$parent['depth'] + 1;
 
-  // we set 'uid' and 'depth' in the scope as well to access the parent values
+  // We set 'uid' and 'depth' in the scope as well to access the parent values
   // in the inherited scopes. This is intended to be used in the javascript not
   // in the templates.
   $scope['uid'] = this['uid'];
   $scope['depth'] = this['depth'];
+
+  $scope['layertreenodeCtrl'] = this;
 };
 
 

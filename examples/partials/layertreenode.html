@@ -5,5 +5,7 @@
         ng-click="ctrl.onButtonClick(layertreenodeCtrl.node, layertreenodeCtrl.layer)">i</button>
 <ul ng-if="::layertreenodeCtrl.node.children">
   <li ng-repeat="node in ::layertreenodeCtrl.node.children"
-      ngeo-layertreenode="::node" ngeo-layertreenode-map="::layertreenodeCtrl.map"></li>
+      ngeo-layertreenode="::node" ngeo-layertreenode-map="::layertreenodeCtrl.map"
+      ngeo-layertreenode-layerexpr="layertreenodeCtrl.layerExpr">
+  </li>
 </ul>
