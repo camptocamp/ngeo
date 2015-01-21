@@ -52,27 +52,20 @@ ngeo.sortableDirective = function($timeout) {
             }, 0, false);
           });
 
+          element.sortable();
 
-          var callbacks = {};
-          callbacks.start = function(e, ui) {
+          element.sortable('option', 'start', function(e, ui) {
             // Save the starting position of dragged item
             startIndex = ui.item.index();
-          };
+          });
 
-          callbacks.update = function(e, ui) {
+          element.sortable('option', 'update', function(e, ui) {
             scope.$apply(function() {
               sortable.splice(
                   ui.item.index(), 0,
                   sortable.splice(startIndex, 1)[0]);
             });
             startIndex = undefined;
-          };
-
-
-          element.sortable();
-
-          angular.forEach(callbacks, function(value, key) {
-            element.sortable('option', key, value);
           });
 
           element.sortable('option', 'handle', '.handle');
