@@ -76,23 +76,23 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 
 dist/ngeo.js: buildtools/ngeo.json \
 	          .build/externs/angular-1.3.js \
-			  .build/externs/angular-1.3-q.js \
+		  .build/externs/angular-1.3-q.js \
 	          .build/externs/angular-1.3-http-promise.js \
-			  $(SRC_JS_FILES) \
-			  .build/templatecache.js \
-			  $(EXPORTS_JS_FILES) \
-			  .build/node_modules.timestamp
+		  $(SRC_JS_FILES) \
+		  .build/templatecache.js \
+		  $(EXPORTS_JS_FILES) \
+		  .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
 dist/ngeo-debug.js: buildtools/ngeo-debug.json \
 	          .build/externs/angular-1.3.js \
-			  .build/externs/angular-1.3-q.js \
+		  .build/externs/angular-1.3-q.js \
 	          .build/externs/angular-1.3-http-promise.js \
-			  $(SRC_JS_FILES) \
-			  .build/templatecache.js \
-			  $(EXPORTS_JS_FILES) \
-			  .build/node_modules.timestamp
+		  $(SRC_JS_FILES) \
+		  .build/templatecache.js \
+		  $(EXPORTS_JS_FILES) \
+		  .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -132,6 +132,18 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/bootstrap.min.js: node_modules/bootstrap/dist/js/bootstrap.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.build/examples-hosted/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.build/examples-hosted/jquery.min.js: node_modules/jquery/dist/jquery.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/partials: examples/partials
 	mkdir -p $@
 	cp examples/partials/* $@
@@ -146,10 +158,13 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|ngeo.css|' \
+	        -e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|bootstrap.min.css|' \
+	        -e 's|\.\./node_modules/jquery/dist/jquery.js|jquery.min.js|' \
+	        -e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|angular.min.js|' \
 		-e 's|\.\./node_modules/angular-animate/angular-animate.js|angular-animate.min.js|' \
 		-e 's/\/@?main=$*.js/$*.js/' \
-	    -e '/$*.js/i\    <script src="ngeo.js"></script>' $< > $@
+		-e '/$*.js/i\    <script src="ngeo.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
@@ -158,13 +173,16 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
                           .build/examples-hosted/%.js \
-	                      .build/examples-hosted/ngeo.js \
-	                      .build/examples-hosted/ngeo.css \
-						  .build/examples-hosted/angular.min.js \
-						  .build/examples-hosted/angular-animate.min.js \
-						  .build/examples-hosted/data \
-						  .build/examples-hosted/partials \
-						  .build/node_modules.timestamp
+	                  .build/examples-hosted/ngeo.js \
+	                  .build/examples-hosted/ngeo.css \
+			  .build/examples-hosted/angular.min.js \
+			  .build/examples-hosted/angular-animate.min.js \
+			  .build/examples-hosted/bootstrap.min.js \
+			  .build/examples-hosted/bootstrap.min.css \
+			  .build/examples-hosted/jquery.min.js \
+			  .build/examples-hosted/data \
+			  .build/examples-hosted/partials \
+			  .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
