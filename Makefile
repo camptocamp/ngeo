@@ -45,7 +45,7 @@ test: .build/ol-deps.js .build/ngeo-deps.js .build/node_modules.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: serve
-serve:
+serve: .build/node_modules.timestamp .build/bower_components.timestamp
 	node buildtools/serve.js
 
 .PHONY: gh-pages
@@ -78,6 +78,7 @@ dist/ngeo.js: buildtools/ngeo.json \
 	          .build/externs/angular-1.3.js \
 		  .build/externs/angular-1.3-q.js \
 	          .build/externs/angular-1.3-http-promise.js \
+	          .build/externs/jquery-1.9.js \
 		  $(SRC_JS_FILES) \
 		  .build/templatecache.js \
 		  $(EXPORTS_JS_FILES) \
@@ -89,6 +90,7 @@ dist/ngeo-debug.js: buildtools/ngeo-debug.json \
 	          .build/externs/angular-1.3.js \
 		  .build/externs/angular-1.3-q.js \
 	          .build/externs/angular-1.3-http-promise.js \
+	          .build/externs/jquery-1.9.js \
 		  $(SRC_JS_FILES) \
 		  .build/templatecache.js \
 		  $(EXPORTS_JS_FILES) \
@@ -103,12 +105,13 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	./node_modules/.bin/cleancss $< > $@
 
 .build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
-	                      .build/externs/angular-1.3-http-promise.js examples/%.js .build/node_modules.timestamp
+	                      .build/externs/angular-1.3-http-promise.js .build/externs/jquery-1.9.js examples/%.js .build/node_modules.timestamp
+	           \
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
 .build/examples/all.min.js: buildtools/examples-all.json $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
-	                        .build/externs/angular-1.3-http-promise.js .build/examples/all.js .build/node_modules.timestamp
+	                        .build/externs/angular-1.3-http-promise.js .build/externs/jquery-1.9.js .build/examples/all.js .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -144,6 +147,10 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/jquery-ui-sortable.min.js: bower_components/jquery-ui-sortable/jquery-ui-sortable.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/partials: examples/partials
 	mkdir -p $@
 	cp examples/partials/* $@
@@ -160,6 +167,7 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|ngeo.css|' \
 	        -e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|bootstrap.min.css|' \
 	        -e 's|\.\./node_modules/jquery/dist/jquery.js|jquery.min.js|' \
+	        -e 's|\.\./bower_components/jquery-ui-sortable/jquery-ui-sortable.js|jquery-ui-sortable.min.js|' \
 	        -e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|angular.min.js|' \
 		-e 's|\.\./node_modules/angular-animate/angular-animate.js|angular-animate.min.js|' \
@@ -180,9 +188,11 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 			  .build/examples-hosted/bootstrap.min.js \
 			  .build/examples-hosted/bootstrap.min.css \
 			  .build/examples-hosted/jquery.min.js \
+			  .build/examples-hosted/jquery-ui-sortable.min.js \
 			  .build/examples-hosted/data \
 			  .build/examples-hosted/partials \
-			  .build/node_modules.timestamp
+			  .build/node_modules.timestamp \
+			  .build/bower_components.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
@@ -192,6 +202,11 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 
 .build/node_modules.timestamp: package.json
 	npm install
+	mkdir -p $(dir $@)
+	touch $@
+
+.build/bower_components.timestamp: bower.json
+	bower install
 	mkdir -p $(dir $@)
 	touch $@
 
@@ -222,6 +237,11 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 .build/externs/angular-1.3-http-promise.js:
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.3-http-promise.js
+	touch $@
+
+.build/externs/jquery-1.9.js:
+	mkdir -p $(dir $@)
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/jquery-1.9.js
 	touch $@
 
 .build/python-venv:
