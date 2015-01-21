@@ -205,8 +205,8 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	mkdir -p $(dir $@)
 	touch $@
 
-.build/bower_components.timestamp: bower.json
-	bower install
+.build/bower_components.timestamp: bower.json .build/node_modules.timestamp
+	../node_modules/bower/bin/bower install
 	mkdir -p $(dir $@)
 	touch $@
 
