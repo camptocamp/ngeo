@@ -76,23 +76,23 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 
 dist/ngeo.js: buildtools/ngeo.json \
 	          .build/externs/angular-1.3.js \
-			  .build/externs/angular-1.3-q.js \
+		  .build/externs/angular-1.3-q.js \
 	          .build/externs/angular-1.3-http-promise.js \
-			  $(SRC_JS_FILES) \
-			  .build/templatecache.js \
-			  $(EXPORTS_JS_FILES) \
-			  .build/node_modules.timestamp
+		  $(SRC_JS_FILES) \
+		  .build/templatecache.js \
+		  $(EXPORTS_JS_FILES) \
+		  .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
 dist/ngeo-debug.js: buildtools/ngeo-debug.json \
 	          .build/externs/angular-1.3.js \
-			  .build/externs/angular-1.3-q.js \
+		  .build/externs/angular-1.3-q.js \
 	          .build/externs/angular-1.3-http-promise.js \
-			  $(SRC_JS_FILES) \
-			  .build/templatecache.js \
-			  $(EXPORTS_JS_FILES) \
-			  .build/node_modules.timestamp
+		  $(SRC_JS_FILES) \
+		  .build/templatecache.js \
+		  $(EXPORTS_JS_FILES) \
+		  .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -158,13 +158,13 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
                           .build/examples-hosted/%.js \
-	                      .build/examples-hosted/ngeo.js \
-	                      .build/examples-hosted/ngeo.css \
-						  .build/examples-hosted/angular.min.js \
-						  .build/examples-hosted/angular-animate.min.js \
-						  .build/examples-hosted/data \
-						  .build/examples-hosted/partials \
-						  .build/node_modules.timestamp
+	                  .build/examples-hosted/ngeo.js \
+	                  .build/examples-hosted/ngeo.css \
+			  .build/examples-hosted/angular.min.js \
+			  .build/examples-hosted/angular-animate.min.js \
+			  .build/examples-hosted/data \
+			  .build/examples-hosted/partials \
+			  .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
