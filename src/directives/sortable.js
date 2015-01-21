@@ -19,12 +19,11 @@ goog.require('ngeo');
 
 
 /**
- * @param {angular.$log} $log Angular log service.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  */
-ngeo.sortableDirective = function($log, $timeout) {
+ngeo.sortableDirective = function($timeout) {
   return {
     restrict: 'A',
     scope: true,
@@ -40,11 +39,8 @@ ngeo.sortableDirective = function($log, $timeout) {
 
           var sortable = /** @type {Array} */ (scope.$eval(prop));
 
-          if (!angular.element.fn || !angular.element.fn.jquery) {
-            $log.error('ui.sortable: jQuery should be included before' +
-                'AngularJS!');
-            return;
-          }
+          goog.asserts.assert(goog.isDef(angular.element.fn) &&
+              goog.isDef(angular.element.fn.jquery), 'jQuery is required');
 
           var startIndex;
 
