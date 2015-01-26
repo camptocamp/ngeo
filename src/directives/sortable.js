@@ -15,6 +15,7 @@
 
 goog.provide('ngeo.sortableDirective');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 
 
