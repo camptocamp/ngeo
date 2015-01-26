@@ -36,7 +36,8 @@ ngeo.sortableDirective = function($timeout) {
         function(scope, element, attrs) {
           var sortableExpr = attrs['ngeoSortable'];
 
-          var sortable = /** @type {Array} */ (scope.$eval(sortableExpr));
+          var sortable = /** @type {Array.<ol.layer.Base>} */
+              (scope.$eval(sortableExpr));
 
           goog.asserts.assert(goog.isDef(angular.element.fn) &&
               goog.isDef(angular.element.fn.jquery), 'jQuery is required');
