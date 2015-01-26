@@ -42,8 +42,8 @@
       <br>
       Hint: drag-drop elements using the red handle.
     </p>
-    <ul ngeo-sortable="ctrl.map.getLayers().getArray()">
-      <li ng-repeat="layer in ctrl.map.getLayers().getArray()">
+    <ul ngeo-sortable="ctrl.layers">
+      <li ng-repeat="layer in ctrl.layers">
         <span class="handle"></span>{{layer.get('name')}}
       </li>
     </ul>

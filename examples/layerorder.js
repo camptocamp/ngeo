@@ -89,10 +89,15 @@ app.MainController = function($scope, ngeoDecorateLayer) {
     })
   });
 
-  // watch any change on layers array to refresh the map
   var map = this['map'];
+
+  /** @type Array.<ol.layer.Layer> */
+  this['layers'] = map.getLayers().getArray();
+  var layers = this['layers'];
+
+  // watch any change on layers array to refresh the map
   $scope.$watchCollection(function() {
-    return map.getLayers().getArray();
+    return layers;
   }, function() {
     map.render();
   });
