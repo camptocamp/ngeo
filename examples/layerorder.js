@@ -27,15 +27,21 @@ app.module = angular.module('app', ['ngeo']);
  */
 app.MainController = function($scope, ngeoDecorateLayer) {
 
+  /** @type {ol.layer.Tile] */
+  var mapquest = new ol.layer.Tile({
+    source: new ol.source.MapQuest({layer: 'sat'})
+  });
+  mapquest.set('name', 'MapQuest');
+
   /** @type {ol.layer.Tile} */
   var boundaries = new ol.layer.Tile({
     source: new ol.source.TileWMS({
       url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:tasmania_state_boundaries'},
       serverType: 'geoserver'
-    }),
-    name: 'Boundaries'
+    })
   });
+  boundaries.set('name', 'Boundaries');
 
   /** @type {ol.layer.Tile} */
   var roads = new ol.layer.Tile({
@@ -43,9 +49,9 @@ app.MainController = function($scope, ngeoDecorateLayer) {
       url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:tasmania_roads'},
       serverType: 'geoserver'
-    }),
-    name: 'Roads'
+    })
   });
+  roads.set('name', 'Roads');
 
   /** @type {ol.layer.Tile} */
   var waterBodies = new ol.layer.Tile({
@@ -53,9 +59,9 @@ app.MainController = function($scope, ngeoDecorateLayer) {
       url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:tasmania_water_bodies'},
       serverType: 'geoserver'
-    }),
-    name: 'Water bodies'
+    })
   });
+  waterBodies.set('name', 'Water bodies');
 
   /** @type {ol.layer.Tile} */
   var cities = new ol.layer.Tile({
@@ -63,18 +69,15 @@ app.MainController = function($scope, ngeoDecorateLayer) {
       url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:tasmania_cities'},
       serverType: 'geoserver'
-    }),
-    name: 'Cities'
+    })
   });
+  cities.set('name', 'Cities');
 
 
   /** @type {ol.Map} */
   this['map'] = new ol.Map({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.MapQuest({layer: 'sat'}),
-        name: 'MapQuest'
-      }),
+      mapquest,
       boundaries,
       roads,
       waterBodies,
