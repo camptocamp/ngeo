@@ -27,7 +27,7 @@ app.module = angular.module('app', ['ngeo']);
  */
 app.MainController = function($scope, ngeoDecorateLayer) {
 
-  /** @type {ol.layer.Tile] */
+  /** @type {ol.layer.Tile} */
   var mapquest = new ol.layer.Tile({
     source: new ol.source.MapQuest({layer: 'sat'})
   });
@@ -91,7 +91,7 @@ app.MainController = function($scope, ngeoDecorateLayer) {
 
   var map = this['map'];
 
-  /** @type Array.<ol.layer.Layer> */
+  /** @type {Array.<ol.layer.Layer>} */
   this['layers'] = map.getLayers().getArray();
   var layers = this['layers'];
 
