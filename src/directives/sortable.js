@@ -54,15 +54,17 @@ ngeo.sortableDirective = function($timeout) {
 
           element.sortable();
 
+          // ui.item comes from JQuery sortable plugin
+
           element.sortable('option', 'start', function(e, ui) {
             // Save the starting position of dragged item
-            startIndex = ui.item.index();
+            startIndex = ui['item'].index();
           });
 
           element.sortable('option', 'update', function(e, ui) {
             scope.$apply(function() {
               sortable.splice(
-                  ui.item.index(), 0,
+                  ui['item'].index(), 0,
                   sortable.splice(startIndex, 1)[0]);
             });
             startIndex = undefined;
