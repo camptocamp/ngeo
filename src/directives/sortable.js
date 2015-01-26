@@ -43,15 +43,6 @@ ngeo.sortableDirective = function($timeout) {
 
           var startIndex;
 
-          // When we add or remove elements, we need the sortable to 'refresh'
-          // so it can find the new/removed elements.
-          scope.$watch('sortable.length', function() {
-            // Timeout to let ng-repeat modify the DOM
-            $timeout(function() {
-              element.sortable('refresh');
-            }, 0, false);
-          });
-
           element.sortable();
 
           // ui.item comes from JQuery sortable plugin
