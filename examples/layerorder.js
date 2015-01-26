@@ -87,10 +87,12 @@ app.MainController = function($scope, ngeoDecorateLayer) {
   });
 
   // watch any change on layers array to refresh the map
-  $scope.layers = this['map'].getLayers().getArray();
-  $scope.$watchCollection('layers', goog.bind(function() {
-    this['map'].render();
-  }, this));
+  var map = this['map'];
+  $scope.$watchCollection(function() {
+    return map.getLayers().getArray();
+  }, function() {
+    map.render();
+  });
 };
 
 
