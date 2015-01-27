@@ -29,7 +29,7 @@ goog.require('ngeo');
 
 /**
  * @typedef {function(Array.<*>, Array.<*>, angular.Scope,
- *     function(*):boolean)}
+ *     function(?):boolean)}
  */
 ngeo.ArraySync;
 
