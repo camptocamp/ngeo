@@ -1,5 +1,6 @@
 goog.provide('layerorder');
 
+goog.require('ngeo.ArraySync');
 goog.require('ngeo.DecorateLayer');
 goog.require('ngeo.mapDirective');
 goog.require('ngeo.sortableDirective');
@@ -22,10 +23,11 @@ app.module = angular.module('app', ['ngeo']);
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {ngeo.DecorateLayer} ngeoDecorateLayer Decorate layer service.
+ * @param {ngeo.ArraySync} ngeoArraySync Array sync service.
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoDecorateLayer) {
+app.MainController = function($scope, ngeoDecorateLayer, ngeoArraySync) {
 
   /** @type {ol.layer.Tile} */
   var mapquest = new ol.layer.Tile({
@@ -91,13 +93,25 @@ app.MainController = function($scope, ngeoDecorateLayer) {
 
   var map = this['map'];
 
+
+  /**
+   * @param {ol.layer.Base} layer Layer.
+   * @return {boolean} `false` if the layer shouldn't be part of the
+selected layers.
+   */
+  function layerFilter(layer) {
+    return layer !== mapquest;
+  }
+
   /** @type {Array.<ol.layer.Layer>} */
-  this['layers'] = map.getLayers().getArray();
-  var layers = this['layers'];
+  var mapLayers = map.getLayers().getArray();
+  this['selectedLayers'] = [];
+  var selectedLayers = this['selectedLayers'];
+  ngeoArraySync(mapLayers, selectedLayers, $scope, layerFilter);
 
   // watch any change on layers array to refresh the map
   $scope.$watchCollection(function() {
-    return layers;
+    return selectedLayers;
   }, function() {
     map.render();
   });
