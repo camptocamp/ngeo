@@ -161,6 +161,8 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 
 node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate.min.js: .build/node_modules.timestamp
 
+bower_components/jquery-ui-sortable/jquery-ui-sortable.min.js: .build/bower_components.timestamp
+
 .PRECIOUS: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
