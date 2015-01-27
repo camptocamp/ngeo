@@ -11,11 +11,13 @@
  *
  * Example:
  *
- * ngeoArraySync(map.getLayers().getArray(), selectedLayers, scope,
+ * var dereg = ngeoArraySync(map.getLayers().getArray(), selectedLayers, scope,
  *     function(layer) {
  *       // exclude the layer at index 0 in the map
  *       return map.getLayers().indexOf(layer) !== 0;
  *     });
+ *
+ * This will return a function that can be called to cancel synchronization.
  *
  */
 
@@ -38,6 +40,7 @@ ngeo.ArraySync;
  * @param {angular.Scope} scope Angular scope. Used to watch arr1 and arr2
  *     using $watchCollection.
  * @param {function(T):boolean} filter Filter function.
+ * @return {function()} Function to call to stop synchronization
  * @template T
  */
 ngeo.arraySync = function(arr1, arr2, scope, filter) {
@@ -45,7 +48,7 @@ ngeo.arraySync = function(arr1, arr2, scope, filter) {
 
   // Update arr2 when elements are added to, or removed from, arr1.
 
-  scope.$watchCollection(function() {
+  var dereg1 = scope.$watchCollection(function() {
     return arr1;
   }, function() {
     var i, ii, j;
@@ -65,7 +68,7 @@ ngeo.arraySync = function(arr1, arr2, scope, filter) {
    */
   var indices = [];
 
-  scope.$watchCollection(function() {
+  var dereg2 = scope.$watchCollection(function() {
     return arr2;
   }, function() {
     // find the positions in arr1 of the elements that pass the
@@ -83,6 +86,11 @@ ngeo.arraySync = function(arr1, arr2, scope, filter) {
       arr1[indices[i]] = arr2[i];
     }
   });
+
+  return function() {
+    dereg1();
+    dereg2();
+  };
 };
 
 
