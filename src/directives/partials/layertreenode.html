@@ -1,9 +1,8 @@
-{{::layertreenodeCtrl.node.name}}
-<input type="checkbox" ng-if="::!layertreenodeCtrl.node.children"
-    ng-model="layertreenodeCtrl.getSetActive" ng-model-options="{getterSetter: true}"/>
-<ul ng-if="::layertreenodeCtrl.node.children">
-  <li ng-repeat="node in ::layertreenodeCtrl.node.children"
-      ngeo-layertreenode="node" ngeo-layertreenode-map="layertreenodeCtrl.map"
-      ngeo-layertreenode-layerexpr="layertreenodeCtrl.layerExpr">
+<ul>
+  <li ng-repeat="node in ::node.children" ngeo-layertreenode="node" ngeo-layertreenode-map="layertreeCtrl.map" ngeo-layertreenode-layerexpr="layertreeCtrl.layerExpr">
+    {{node.name}}
+    <input type="checkbox" ng-if="::!node.children"
+        ng-model="layertreenodeCtrl.getSetActive" ng-model-options="{getterSetter: true}"/>
+    <div ng-if="::node.children" ng-include="layertreeCtrl.nodeTemplateUrl"></div>
   </li>
 </ul>

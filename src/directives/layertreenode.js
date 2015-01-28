@@ -53,18 +53,14 @@ ngeoModule.value('ngeoLayertreenodeTemplateUrl',
 
 /**
  * @param {angular.$compile} $compile Angular compile service.
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
- *     ngeoLayertreenodeTemplateUrl Template URL for the directive.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  */
-ngeo.layertreenodeDirective = function(
-    $compile, ngeoLayertreenodeTemplateUrl) {
+ngeo.layertreenodeDirective = function($compile) {
   return {
     restrict: 'A',
     require: '^ngeoLayertree',
     scope: true,
-    templateUrl: ngeoLayertreenodeTemplateUrl,
     controller: 'NgeoLayertreenodeController',
     compile:
         /**
@@ -160,7 +156,6 @@ ngeo.LayertreenodeController = function($scope, $element, $attrs) {
   // in the templates.
   $scope['uid'] = this['uid'];
   $scope['depth'] = this['depth'];
-
   $scope['layertreenodeCtrl'] = this;
 };
 

@@ -87,7 +87,7 @@ ngeoModule.directive('ngeoLayertree', ngeo.layertreeDirective);
  * @param {angular.Attributes} $attrs Attributes.
  * @ngInject
  */
-ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
+ngeo.NgeoLayertreeController = function($scope, $element, $attrs, ngeoLayertreenodeTemplateUrl) {
 
   var treeExpr = $attrs['ngeoLayertree'];
   var tree = /** @type {Object} */ ($scope.$eval(treeExpr));
@@ -108,6 +108,7 @@ ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
   $scope['depth'] = 0;
 
   $scope['layertreeCtrl'] = this;
+  this['nodeTemplateUrl'] = ngeoLayertreenodeTemplateUrl;
 };
 
 

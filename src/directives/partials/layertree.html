@@ -1,5 +1,1 @@
-<ul>
-  <li ng-repeat="node in ::layertreeCtrl.tree.children"
-      ngeo-layertreenode="node" ngeo-layertreenode-map="layertreeCtrl.map"
-      ngeo-layertreenode-layerexpr="layertreeCtrl.layerExpr"></li>
-</ul>
+<div ng-include="layertreeCtrl.nodeTemplateUrl" ng-init="node = layertreeCtrl.tree"></div>
