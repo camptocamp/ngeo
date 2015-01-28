@@ -96,8 +96,8 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoArraySync) {
 
   /**
    * @param {ol.layer.Base} layer Layer.
-   * @return {boolean} `false` if the layer shouldn't be part of the
-selected layers.
+   * @return {boolean} `false` if the layer shouldn't be part of the selected
+   *     layers.
    */
   function layerFilter(layer) {
     return layer !== mapquest;
@@ -107,7 +107,7 @@ selected layers.
   var mapLayers = map.getLayers().getArray();
   this['selectedLayers'] = [];
   var selectedLayers = this['selectedLayers'];
-  ngeoArraySync(mapLayers, selectedLayers, $scope, layerFilter);
+  ngeoArraySync(mapLayers, selectedLayers, true, $scope, layerFilter);
 
   // watch any change on layers array to refresh the map
   $scope.$watchCollection(function() {
