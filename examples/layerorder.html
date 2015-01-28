@@ -47,6 +47,10 @@
         <span class="handle"></span>{{layer.get('name')}}
       </li>
     </ul>
+    <label>
+      Add/remove the "Roads" layer:
+      <input type="checkbox" ng-model="ctrl.toggleRoadsLayer" ng-model-options="{getterSetter: true}"/>
+    <label>
     <script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../bower_components/jquery-ui-sortable/jquery-ui-sortable.js"></script>
     <script src="../node_modules/angular/angular.js"></script>
