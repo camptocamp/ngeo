@@ -23,10 +23,10 @@
           border: 1px solid;
           padding: 5px;
         }
-        li:hover .handle {
+        li:hover .sortable-handle {
           opacity: 1;
         }
-        .handle {
+        .sortable-handle {
           opacity: 0.3;
           margin-right: 10px;
           cursor: -moz-grab;
@@ -43,17 +43,15 @@
       <br>
       Hint: drag-drop elements using the handle.
     </p>
-    <ul ngeo-sortable="ctrl.selectedLayers">
+    <ul ngeo-sortable="ctrl.selectedLayers" ngeo-sortable-options="{handleClassName: 'sortable-handle'}">
       <li ng-repeat="layer in ctrl.selectedLayers">
-        <span class="handle fa fa-reorder"></span>{{layer.get('name')}}
+        <span class="sortable-handle fa fa-reorder"></span>{{layer.get('name')}}
       </li>
     </ul>
     <label>
       Add/remove the "Roads" layer:
       <input type="checkbox" ng-model="ctrl.toggleRoadsLayer" ng-model-options="{getterSetter: true}"/>
     <label>
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../bower_components/jquery-ui-sortable/jquery-ui-sortable.js"></script>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="/@?main=layerorder.js"></script>
   </body>
