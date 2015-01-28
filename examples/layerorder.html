@@ -1,0 +1,55 @@
+<!DOCTYPE>
+<html ng-app='app'>
+  <head>
+    <title>Layer order example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
+    <style>
+        #map {
+          width: 800px;
+          height: 400px;
+        }
+
+        ul {
+          width: 250px;
+        }
+        li {
+          margin: 5px;
+          background-color: white;
+          border: 1px solid;
+          padding: 5px;
+        }
+        .handle {
+          border: 1px solid red;
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          margin-right: 10px;
+          cursor: -moz-grab;
+          cursor: -webkit-grab;
+          cursor: grab;
+        }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+    <p>
+      Change order of layers on the map by changing the order of items in the
+      list below.
+      <br>
+      Hint: drag-drop elements using the red handle.
+    </p>
+    <ul ngeo-sortable="ctrl.selectedLayers">
+      <li ng-repeat="layer in ctrl.selectedLayers">
+        <span class="handle"></span>{{layer.get('name')}}
+      </li>
+    </ul>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/jquery-ui-sortable/jquery-ui-sortable.js"></script>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="/@?main=layerorder.js"></script>
+  </body>
+</html>

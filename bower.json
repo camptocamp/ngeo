@@ -1,0 +1,6 @@
+{
+  "name": "ngeo",
+  "dependencies": {
+    "jquery-ui-sortable": "*"
+  }
+}
