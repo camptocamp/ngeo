@@ -5,6 +5,19 @@
  */
 
 
+
+/**
+ * @constructor
+ */
+function jQueryUI() {}
+
+
+/**
+ * @type {jQuery}
+ */
+jQueryUI.prototype.item;
+
+
 /**
 * @param {(string|Object.<string,*>)=} opt_options
 * @return {jQuery}
