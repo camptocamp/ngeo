@@ -28,7 +28,7 @@ goog.require('ngeo');
 
 
 /**
- * @typedef {function(Array.<*>, Array.<*>, angular.Scope,
+ * @typedef {function(Array, Array, boolean, angular.Scope,
  *     function(?):boolean)}
  */
 ngeo.ArraySync;
@@ -37,13 +37,15 @@ ngeo.ArraySync;
 /**
  * @param {Array.<T>} arr1 Array 1.
  * @param {Array.<T>} arr2 Array 2.
+ * @param {boolean} reverse `true` if arr2 is in reverse order, `false`
+ *     otherwise.
  * @param {angular.Scope} scope Angular scope. Used to watch arr1 and arr2
  *     using $watchCollection.
  * @param {function(T):boolean} filter Filter function.
  * @return {function()} Function to call to stop synchronization
  * @template T
  */
-ngeo.arraySync = function(arr1, arr2, scope, filter) {
+ngeo.arraySync = function(arr1, arr2, reverse, scope, filter) {
 
 
   // Update arr2 when elements are added to, or removed from, arr1.
@@ -52,9 +54,17 @@ ngeo.arraySync = function(arr1, arr2, scope, filter) {
     return arr1;
   }, function() {
     var i, ii, j;
-    for (i = 0, ii = arr1.length, j = 0; i < ii; ++i) {
-      if (filter(arr1[i])) {
-        arr2[j++] = arr1[i];
+    if (reverse) {
+      for (i = arr1.length - 1, j = 0; i >= 0; --i) {
+        if (filter(arr1[i])) {
+          arr2[j++] = arr1[i];
+        }
+      }
+    } else {
+      for (i = 0, ii = arr1.length, j = 0; i < ii; ++i) {
+        if (filter(arr1[i])) {
+          arr2[j++] = arr1[i];
+        }
       }
     }
     arr2.length = j;
@@ -63,27 +73,24 @@ ngeo.arraySync = function(arr1, arr2, scope, filter) {
 
   // Update arr1 when the order of elements changes in arr2.
 
-  /**
-   * @type {Array.<number>}
-   */
-  var indices = [];
-
   var dereg2 = scope.$watchCollection(function() {
     return arr2;
   }, function() {
-    // find the positions in arr1 of the elements that pass the
-    // filter
     var i, ii, j;
-    for (i = 0, ii = arr1.length, j = 0; i < ii; ++i) {
-      if (filter(arr1[i])) {
-        indices[j++] = i;
+    if (reverse) {
+      for (i = 0, ii = arr1.length, j = arr2.length - 1; i < ii; ++i) {
+        if (filter(arr1[i])) {
+          arr1[i] = arr2[j--];
+        }
       }
-    }
-    indices.length = j;
-    // now reorder arr1
-    goog.asserts.assert(indices.length == arr2.length);
-    for (i = 0, ii = arr2.length; i < ii; ++i) {
-      arr1[indices[i]] = arr2[i];
+      goog.asserts.assert(j == -1);
+    } else {
+      for (i = 0, ii = arr1.length, j = 0; i < ii; ++i) {
+        if (filter(arr1[i])) {
+          arr1[i] = arr2[j++];
+        }
+      }
+      goog.asserts.assert(j == arr2.length);
     }
   });
 

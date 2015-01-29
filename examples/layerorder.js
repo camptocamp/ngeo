@@ -25,6 +25,7 @@ app.module = angular.module('app', ['ngeo']);
  * @param {ngeo.DecorateLayer} ngeoDecorateLayer Decorate layer service.
  * @param {ngeo.ArraySync} ngeoArraySync Array sync service.
  * @constructor
+ * @export
  * @ngInject
  */
 app.MainController = function($scope, ngeoDecorateLayer, ngeoArraySync) {
@@ -44,16 +45,6 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoArraySync) {
     })
   });
   boundaries.set('name', 'Boundaries');
-
-  /** @type {ol.layer.Tile} */
-  var roads = new ol.layer.Tile({
-    source: new ol.source.TileWMS({
-      url: 'http://demo.opengeo.org/geoserver/wms',
-      params: {'LAYERS': 'topp:tasmania_roads'},
-      serverType: 'geoserver'
-    })
-  });
-  roads.set('name', 'Roads');
 
   /** @type {ol.layer.Tile} */
   var waterBodies = new ol.layer.Tile({
@@ -81,7 +72,6 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoArraySync) {
     layers: [
       mapquest,
       boundaries,
-      roads,
       waterBodies,
       cities
     ],
@@ -93,11 +83,29 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoArraySync) {
 
   var map = this['map'];
 
+  /**
+   * @type {ol.Map}
+   * @private
+   */
+  this.map_ = map;
+
+  /**
+   * @type {ol.layer.Tile}
+   * @private
+   */
+  this.roads_ = new ol.layer.Tile({
+    source: new ol.source.TileWMS({
+      url: 'http://demo.opengeo.org/geoserver/wms',
+      params: {'LAYERS': 'topp:tasmania_roads'},
+      serverType: 'geoserver'
+    })
+  });
+  this.roads_.set('name', 'Roads');
 
   /**
    * @param {ol.layer.Base} layer Layer.
-   * @return {boolean} `false` if the layer shouldn't be part of the
-selected layers.
+   * @return {boolean} `false` if the layer shouldn't be part of the selected
+   *     layers.
    */
   function layerFilter(layer) {
     return layer !== mapquest;
@@ -107,7 +115,7 @@ selected layers.
   var mapLayers = map.getLayers().getArray();
   this['selectedLayers'] = [];
   var selectedLayers = this['selectedLayers'];
-  ngeoArraySync(mapLayers, selectedLayers, $scope, layerFilter);
+  ngeoArraySync(mapLayers, selectedLayers, true, $scope, layerFilter);
 
   // watch any change on layers array to refresh the map
   $scope.$watchCollection(function() {
@@ -115,6 +123,28 @@ selected layers.
   }, function() {
     map.render();
   });
+};
+
+
+/**
+ * Add/remove the "Roads" layer when used as a setter, and return whether
+ * the "Roads" layer is in the map when used as a getter.
+ * @param {boolean|undefined} val Value.
+ * @return {boolean|undefined} `true` if the "Roads" layer is in the map,
+ *     `false` if the "Roads" layer is not in the map, `undefined` if the
+ *     function is used as setter.
+ * @export
+ */
+app.MainController.prototype.toggleRoadsLayer = function(val) {
+  if (!angular.isDefined(val)) {
+    return this.map_.getLayers().getArray().indexOf(this.roads_) >= 0;
+  } else {
+    if (val) {
+      this.map_.addLayer(this.roads_);
+    } else {
+      this.map_.removeLayer(this.roads_);
+    }
+  }
 };
 
 

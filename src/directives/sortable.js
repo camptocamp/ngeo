@@ -43,25 +43,39 @@ ngeo.sortableDirective = function($timeout) {
           goog.asserts.assert(goog.isDef(angular.element.fn) &&
               goog.isDef(angular.element.fn.jquery), 'jQuery is required');
 
-          var startIndex;
-
           element.sortable();
+
+          /**
+           * @type {number}
+           */
+          var startIndex = -1;
 
           // ui.item comes from JQuery sortable plugin
 
-          element.sortable('option', 'start', function(e, ui) {
-            // Save the starting position of dragged item
-            startIndex = ui['item'].index();
-          });
+          element.sortable('option', 'start',
+              /**
+               * @param {jQuery.event} e jQuery Event.
+               * @param {jQueryUI} ui jQuery UI object.
+               */
+              function(e, ui) {
+                // save the starting position of dragged item
+                startIndex = ui.item.index();
+              });
 
-          element.sortable('option', 'update', function(e, ui) {
-            scope.$apply(function() {
-              sortable.splice(
-                  ui['item'].index(), 0,
-                  sortable.splice(startIndex, 1)[0]);
-            });
-            startIndex = undefined;
-          });
+          element.sortable('option', 'update',
+              /**
+               * @param {jQuery.event} e jQuery Event.
+               * @param {jQueryUI} ui jQuery UI object.
+               */
+              function(e, ui) {
+                goog.asserts.assert(startIndex != -1);
+                scope.$apply(function() {
+                  sortable.splice(
+                      ui.item.index(), 0,
+                      sortable.splice(startIndex, 1)[0]);
+                });
+                startIndex = -1;
+              });
 
           element.sortable('option', 'handle', '.handle');
           element.sortable('option', 'containment', 'parent');
