@@ -11,8 +11,8 @@
  *
  * Example:
  *
- * var dereg = ngeoArraySync(map.getLayers().getArray(), selectedLayers, scope,
- *     function(layer) {
+ * var dereg = ngeoSyncArrays(map.getLayers().getArray(), selectedLayers,
+ *     true, scope, function(layer) {
  *       // exclude the layer at index 0 in the map
  *       return map.getLayers().indexOf(layer) !== 0;
  *     });
@@ -21,7 +21,7 @@
  *
  */
 
-goog.provide('ngeo.ArraySync');
+goog.provide('ngeo.SyncArrays');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
@@ -31,7 +31,7 @@ goog.require('ngeo');
  * @typedef {function(Array, Array, boolean, angular.Scope,
  *     function(?):boolean)}
  */
-ngeo.ArraySync;
+ngeo.SyncArrays;
 
 
 /**
@@ -45,7 +45,7 @@ ngeo.ArraySync;
  * @return {function()} Function to call to stop synchronization
  * @template T
  */
-ngeo.arraySync = function(arr1, arr2, reverse, scope, filter) {
+ngeo.syncArrays = function(arr1, arr2, reverse, scope, filter) {
 
 
   // Update arr2 when elements are added to, or removed from, arr1.
@@ -101,4 +101,4 @@ ngeo.arraySync = function(arr1, arr2, reverse, scope, filter) {
 };
 
 
-ngeoModule.value('ngeoArraySync', ngeo.arraySync);
+ngeoModule.value('ngeoSyncArrays', ngeo.syncArrays);
