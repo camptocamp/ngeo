@@ -1,6 +1,6 @@
-goog.require('ngeo.ArraySync');
+goog.require('ngeo.SyncArrays');
 
-describe('ngeo.ArraySync', function() {
+describe('ngeo.SyncArrays', function() {
   var $rootScope;
 
   beforeEach(function() {
@@ -15,13 +15,13 @@ describe('ngeo.ArraySync', function() {
 
     beforeEach(function() {
       inject(function($injector) {
-        var ngeoArraySync = $injector.get('ngeoArraySync');
+        var ngeoSyncArrays = $injector.get('ngeoSyncArrays');
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
         var filter = function(n) {
           return n < 10;
         };
-        dereg = ngeoArraySync(arr1, arr2, false, $rootScope, filter);
+        dereg = ngeoSyncArrays(arr1, arr2, false, $rootScope, filter);
         $rootScope.$digest();
         expect(arr2).toEqual([0, 1, 2, 3]);
       });
@@ -66,13 +66,13 @@ describe('ngeo.ArraySync', function() {
 
     beforeEach(function() {
       inject(function($injector) {
-        var ngeoArraySync = $injector.get('ngeoArraySync');
+        var ngeoSyncArrays = $injector.get('ngeoSyncArrays');
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
         var filter = function(n) {
           return n < 10;
         };
-        dereg = ngeoArraySync(arr1, arr2, true, $rootScope, filter);
+        dereg = ngeoSyncArrays(arr1, arr2, true, $rootScope, filter);
         $rootScope.$digest();
         expect(arr2).toEqual([3, 2, 1, 0]);
       });
