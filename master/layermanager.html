@@ -24,25 +24,25 @@
     </style>
     <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" type="text/css">
   </head>
-  <body ng-controller="MainController">
+  <body ng-controller="MainController as ctrl">
 
-    <div id="map" go-map></div>
+    <div id="map" ngeo-map="ctrl.map"></div>
 
     <div class="main-container row" ng-cloak>
         <div class="col-md-offset-1 col-md-2">
           <h3>Layer catalog</h3>
-          <label ng-repeat="layer in layers" class="catalog-item">
+          <label ng-repeat="layer in ::ctrl.layers" class="catalog-item">
               <input type="checkbox" ng-model="layer.inmap" />
               {{layer.get('label')}}
           </label>
         </div>
         <div class="col-md-3">
             <h3>Layer manager</h3>
-          <div layer-manager="map"></div>
+          <div layer-manager="::ctrl.map"></div>
         </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.0/angular.min.js"></script>
+    <script src="angular.min.js"></script>
     <script src="ngeo.js"></script>
     <script src="layermanager.js"></script>
   </body>
