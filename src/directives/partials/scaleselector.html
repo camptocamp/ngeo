@@ -1,0 +1,10 @@
+<div ng-class="::{'dropdown': true, 'dropup': scaleselectorCtrl.options.dropup}">
+  <button type="button" class="btn btn-primary" data-toggle="dropdown">
+    <span ng-bind-html="scaleselectorCtrl.currentScale"></span>&nbsp;<span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li ng-repeat="(zoom, scale) in ::scaleselectorCtrl.scales">
+      <a href ng-click="scaleselectorCtrl.changeZoom(zoom)" ng-bind-html="::scale"></a>
+    </li>
+  </ul>
+</div>
