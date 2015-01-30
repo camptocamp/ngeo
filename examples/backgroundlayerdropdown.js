@@ -22,8 +22,8 @@ app.module = angular.module('app', ['ngeo']);
 /**
  * The application-specific background layer directive.
  *
- * The directive is based on Angular UI Bootstrap's dropdown and dropdownToggle
- * directives. It also uses Angular's ngRepeat and ngClick directives.
+ * The directive is based on Bootstrap's dropdown jQuery plugin and on
+ * the ngeoBackgroundLayerMgr service.
  *
  * @return {angular.Directive} Directive Defintion Object.
  */
