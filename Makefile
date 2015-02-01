@@ -45,7 +45,7 @@ test: .build/ol-deps.js .build/ngeo-deps.js .build/node_modules.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: serve
-serve: .build/node_modules.timestamp .build/bower_components.timestamp
+serve: .build/node_modules.timestamp
 	node buildtools/serve.js
 
 .PHONY: gh-pages
@@ -147,10 +147,6 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/jquery-ui-sortable.min.js: bower_components/jquery-ui-sortable/jquery-ui-sortable.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
 .build/examples-hosted/partials: examples/partials
 	mkdir -p $@
 	cp examples/partials/* $@
@@ -161,15 +157,12 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 
 node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate.min.js: .build/node_modules.timestamp
 
-bower_components/jquery-ui-sortable/jquery-ui-sortable.min.js: .build/bower_components.timestamp
-
 .PRECIOUS: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|ngeo.css|' \
 	        -e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|bootstrap.min.css|' \
 	        -e 's|\.\./node_modules/jquery/dist/jquery.js|jquery.min.js|' \
-	        -e 's|\.\./bower_components/jquery-ui-sortable/jquery-ui-sortable.js|jquery-ui-sortable.min.js|' \
 	        -e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|angular.min.js|' \
 		-e 's|\.\./node_modules/angular-animate/angular-animate.js|angular-animate.min.js|' \
@@ -182,19 +175,17 @@ bower_components/jquery-ui-sortable/jquery-ui-sortable.min.js: .build/bower_comp
 	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
-                          .build/examples-hosted/%.js \
-	                  .build/examples-hosted/ngeo.js \
-	                  .build/examples-hosted/ngeo.css \
-			  .build/examples-hosted/angular.min.js \
-			  .build/examples-hosted/angular-animate.min.js \
-			  .build/examples-hosted/bootstrap.min.js \
-			  .build/examples-hosted/bootstrap.min.css \
-			  .build/examples-hosted/jquery.min.js \
-			  .build/examples-hosted/jquery-ui-sortable.min.js \
-			  .build/examples-hosted/data \
-			  .build/examples-hosted/partials \
-			  .build/node_modules.timestamp \
-			  .build/bower_components.timestamp
+						.build/examples-hosted/%.js \
+						.build/examples-hosted/ngeo.js \
+						.build/examples-hosted/ngeo.css \
+						.build/examples-hosted/angular.min.js \
+						.build/examples-hosted/angular-animate.min.js \
+						.build/examples-hosted/bootstrap.min.js \
+						.build/examples-hosted/bootstrap.min.css \
+						.build/examples-hosted/jquery.min.js \
+						.build/examples-hosted/data \
+						.build/examples-hosted/partials \
+						.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
@@ -204,11 +195,6 @@ bower_components/jquery-ui-sortable/jquery-ui-sortable.min.js: .build/bower_comp
 
 .build/node_modules.timestamp: package.json
 	npm install
-	mkdir -p $(dir $@)
-	touch $@
-
-.build/bower_components.timestamp: bower.json .build/node_modules.timestamp
-	./node_modules/bower/bin/bower install
 	mkdir -p $(dir $@)
 	touch $@
 
