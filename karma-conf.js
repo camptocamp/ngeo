@@ -2,9 +2,10 @@
 // Generated on Wed Jun 18 2014 14:25:40 GMT+0200 (CEST)
 
 module.exports = function(config) {
-  var closureLib = 'node_modules/openlayers/node_modules/' +
+  var closureLibPath = 'node_modules/openlayers/node_modules/' +
       'closure-util/.deps/library/**/';
-  var ol = 'node_modules/openlayers/src/';
+  var olSrcPath = 'node_modules/openlayers/src/';
+  var olExtPath = 'node_modules/openlayers/build/ol.ext/';
 
   config.set({
 
@@ -19,8 +20,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      closureLib + 'closure/goog/base.js',
-      closureLib + 'closure/goog/deps.js',
+      closureLibPath + 'closure/goog/base.js',
+      closureLibPath + 'closure/goog/deps.js',
       '.build/ol-deps.js',
       '.build/ngeo-deps.js',
       'node_modules/angular/angular.js',
@@ -28,13 +29,19 @@ module.exports = function(config) {
       'test/spec/beforeeach.js',
       'test/spec/**/*.spec.js',
       {
-        pattern: closureLib + 'closure/**/*.js',
+        pattern: closureLibPath + 'closure/**/*.js',
         included: false,
         watched: false,
         served: true
       },
       {
-        pattern: ol + '**/*.js',
+        pattern: olSrcPath + '**/*.js',
+        included: false,
+        watched: false,
+        served: true
+      },
+      {
+        pattern: olExtPath + '**/*.js',
         included: false,
         watched: false,
         served: true

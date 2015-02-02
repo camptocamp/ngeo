@@ -264,7 +264,9 @@ bower_components/jquery-ui-sortable/jquery-ui-sortable.min.js: .build/bower_comp
 
 .build/ol-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-	  --root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" --output_file=$@
+	  --root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" \
+	  --root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../../../openlayers/build/ol.ext" \
+	  --output_file=$@
 
 .build/ngeo-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
