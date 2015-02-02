@@ -80,7 +80,9 @@ ngeo.Popup.prototype.setTitle = function(title) {
 
 /**
  * Set the popup's content.
- * @param {string} content The content.
+ * Note: the type of the `content` param is `*` instead of `string`, this
+ * is because the content may be trusted using `$sce.trustAsHtml`.
+ * @param {*} content The content.
  */
 ngeo.Popup.prototype.setContent = function(content) {
   this.scope_['content'] = content;
