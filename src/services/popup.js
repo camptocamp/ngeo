@@ -90,8 +90,7 @@ ngeo.Popup.prototype.setContent = function(content) {
 /**
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.Scope} $rootScope Angular rootScope service.
- * @return {ngeo.CreatePopup} The function to create a
- *     popup.
+ * @return {ngeo.CreatePopup} The function to create a popup.
  * @ngInject
  */
 ngeo.createPopupServiceFactory = function($compile, $rootScope) {
