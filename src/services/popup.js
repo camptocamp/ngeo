@@ -44,11 +44,9 @@ ngeo.Popup = function($compile, $rootScope) {
    * @type {angular.JQLite}
    * @private
    */
-  this.element_;
-
-  // Create the popup element with its content and add it to the HTML page
   this.element_ = angular.element('<div ngeo-popup></div>');
 
+  // Add the element and its content to the document
   angular.element(document.body).append(this.element_);
   $compile(this.element_)(this.scope_);
 };
@@ -92,8 +90,7 @@ ngeo.Popup.prototype.setContent = function(content) {
 /**
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.Scope} $rootScope Angular rootScope service.
- * @return {ngeo.CreatePopup} The function to create a
- *     popup.
+ * @return {ngeo.CreatePopup} The function to create a popup.
  * @ngInject
  */
 ngeo.createPopupServiceFactory = function($compile, $rootScope) {
