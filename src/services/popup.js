@@ -44,11 +44,9 @@ ngeo.Popup = function($compile, $rootScope) {
    * @type {angular.JQLite}
    * @private
    */
-  this.element_;
-
-  // Create the popup element with its content and add it to the HTML page
   this.element_ = angular.element('<div ngeo-popup></div>');
 
+  // Add the element and its content to the document
   angular.element(document.body).append(this.element_);
   $compile(this.element_)(this.scope_);
 };
