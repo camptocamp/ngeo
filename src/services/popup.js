@@ -53,7 +53,7 @@ ngeo.Popup = function($compile, $rootScope) {
 
 
 /**
- * Display the popup
+ * Display the popup.
  */
 ngeo.Popup.prototype.show = function() {
   this.scope_['open'] = true;
@@ -61,7 +61,7 @@ ngeo.Popup.prototype.show = function() {
 
 
 /**
- * Destroy the popup
+ * Destroy the popup.
  */
 ngeo.Popup.prototype.destroy = function() {
   this.scope_.$destroy();
@@ -70,8 +70,8 @@ ngeo.Popup.prototype.destroy = function() {
 
 
 /**
- * Set the popup's title
- * @param {string} title The title
+ * Set the popup's title.
+ * @param {string} title The title.
  */
 ngeo.Popup.prototype.setTitle = function(title) {
   this.scope_['title'] = title;
@@ -79,8 +79,10 @@ ngeo.Popup.prototype.setTitle = function(title) {
 
 
 /**
- * Set the popup's content
- * @param {string} content The content
+ * Set the popup's content.
+ * Note: the type of the `content` param is `*` instead of `string`, this
+ * is because the content may be trusted using `$sce.trustAsHtml`.
+ * @param {*} content The content.
  */
 ngeo.Popup.prototype.setContent = function(content) {
   this.scope_['content'] = content;
