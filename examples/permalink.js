@@ -18,6 +18,49 @@ app.module = angular.module('app', ['ngeo']);
 
 
 /**
+ * Note: the "config" and "run" function defined below are used to work around
+ * a bug in Angular that makes the ngeoLocation service incompatible with the
+ * $location service. With this workaround we make $location play more nicely
+ * with code that uses the history API.
+ * See <https://github.com/angular/angular.js/issues/1417>.
+ */
+
+
+/**
+ * @param {angular.$locationProvider} $locationProvider Angular location
+ *     provider.
+ * @private
+ * @ngInject
+ */
+app.config_ = function($locationProvider) {
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
+};
+
+app.module.config(app.config_);
+
+
+/**
+ * @param {angular.Scope} $rootScope Angular root scope.
+ * @private
+ * @ngInject
+ */
+app.run_ = function($rootScope) {
+  $rootScope.$on('$locationChangeStart',
+      /**
+       * @param {angular.Scope.Event} e Angular scope event.
+       */
+      function(e) {
+        e.preventDefault();
+      });
+};
+
+app.module.run(app.run_);
+
+
+/**
  * An application-specific map directive that updates the URL in the browser
  * address bar when the map view changes. It also sets the initial view based
  * on the URL query params at init time.
@@ -95,8 +138,12 @@ app.module.controller('AppMapController', app.MapDirectiveController);
 
 /**
  * @constructor
+ * @param {angular.$location} $location Angular location service. It is
+ * injected into the main controller just to demonstrate its incompatibility
+ * with ngeoLocation and the workaround used (see above).
+ * @ngInject
  */
-app.MainController = function() {
+app.MainController = function($location) {
   /** @type {ol.Map} */
   this['map'] = new ol.Map({
     layers: [
