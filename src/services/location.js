@@ -1,6 +1,13 @@
 /**
  * @fileoverview Provides a service for interacting with the URL in the
  * browser address bar.
+ *
+ * WARNING: because of a bug in Angular this service is not compatible with
+ * the $location service. This further means that service is not compatible
+ * with the $anchorScroll and $route services, and with the ng-include and
+ * ng-view directives (which are based on the $anchorScroll and $route
+ * services). See <https://github.com/angular/angular.js/issues/1417>. See
+ * also the ngeo "permalink" example for a possible workaround.
  */
 
 goog.provide('ngeo.Location');
