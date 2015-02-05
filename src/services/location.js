@@ -145,6 +145,7 @@ ngeoModule.factory('ngeoLocation', ngeo.LocationFactory);
  *
  * @param {angular.$locationProvider} $locationProvider Angular location
  *     provider.
+ * @ngInject
  */
 ngeo.mockLocationProvider = function($locationProvider) {
   /**
