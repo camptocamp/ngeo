@@ -122,7 +122,8 @@ ngeo.interaction.Measure = function(opt_options) {
    * @type {ol.interaction.Draw|ngeo.interaction.DrawAzimut}
    * @private
    */
-  this.drawInteraction_ = this.getDrawInteraction(style, this.overlay_);
+  this.drawInteraction_ = this.getDrawInteraction(options.sketchStyle,
+      this.overlay_);
 
   goog.events.listen(this,
       ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
