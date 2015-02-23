@@ -360,6 +360,12 @@ ngeo.interaction.DrawAzimut.prototype.abortDrawing_ = function() {
 
 
 /**
+ * @inheritDoc
+ */
+ngeo.interaction.DrawAzimut.prototype.shouldStopEvent = goog.functions.FALSE;
+
+
+/**
  * @private
  */
 ngeo.interaction.DrawAzimut.prototype.updateState_ = function() {
