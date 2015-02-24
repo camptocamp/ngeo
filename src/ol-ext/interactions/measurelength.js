@@ -69,13 +69,13 @@ ngeo.interaction.MeasureLength.prototype.handleMeasure = function(callback) {
  * @private
  */
 ngeo.interaction.MeasureLength.prototype.formatMeasure_ = function(line) {
-  var length = Math.round(line.getLength() * 100) / 100;
+  var length = line.getLength();
   var output;
-  if (length > 100) {
-    output = (Math.round(length / 1000 * 100) / 100) +
+  if (length > 1000) {
+    output = parseFloat((length / 1000).toPrecision(3)) +
         ' ' + 'km';
   } else {
-    output = (Math.round(length * 100) / 100) +
+    output = parseFloat(length.toPrecision(3)) +
         ' ' + 'm';
   }
   return output;
