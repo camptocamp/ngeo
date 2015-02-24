@@ -37,7 +37,7 @@ ngeo.Popup = function($compile, $rootScope) {
    * @type {angular.Scope}
    * @private
    */
-  this.scope_ = $rootScope.$new();
+  this.scope_ = $rootScope.$new(true);
 
   /**
    * The element.
