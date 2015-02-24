@@ -21,7 +21,8 @@
       ".build/externs/angular-1.3-q.js",
       ".build/externs/angular-1.3-http-promise.js",
       ".build/externs/jquery-1.9.js",
-      "externs/ngeox.js"
+      "externs/ngeox.js",
+      "externs/d3.js"
     ],
     "define": [
       "goog.dom.ASSUME_STANDARDS_MODE=true",

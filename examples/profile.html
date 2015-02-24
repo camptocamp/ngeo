@@ -1,0 +1,35 @@
+<!DOCTYPE>
+<html ng-app='app'>
+  <head>
+    <title>Interaction button group example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" type="text/css">
+    <style>
+
+        .profile {
+          width: 450px;
+          height: 250px;
+        }
+
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div class="profile" ngeo-profile="::ctrl.profileData"
+         ngeo-profile-onhover="ctrl.onProfileHover(point)"
+         ngeo-profile-onout="ctrl.onProfileOut()"></div>
+
+    <ul ng-show="ctrl.point != null">
+      <li>Longitude: {{ctrl.point.x}}</li>
+      <li>Latitude: {{ctrl.point.y}}</li>
+      <li>Elevation: {{ctrl.point.values.mnt}}</li>
+      <li>Distance: {{ctrl.point.dist}}</li>
+    </ul>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/d3/d3.js"></script>
+    <script src="/@?main=profile.js"></script>
+  </body>
+</html>
