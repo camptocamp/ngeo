@@ -54,6 +54,15 @@ ngeo.Popup = function($compile, $rootScope) {
 
 
 /**
+ * Get the current popup state.
+ * @return {boolean} `true` if the popup is currently, otherwise `false`.
+ */
+ngeo.Popup.prototype.getOpen = function() {
+  return this.scope_['open'];
+};
+
+
+/**
  * Show/hide the popup.
  * @param {boolean} open `true` to show the popup, `false` to hide it.
  */
