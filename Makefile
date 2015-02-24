@@ -75,26 +75,26 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 	touch $@
 
 dist/ngeo.js: buildtools/ngeo.json \
-	          .build/externs/angular-1.3.js \
-		  .build/externs/angular-1.3-q.js \
-	          .build/externs/angular-1.3-http-promise.js \
-	          .build/externs/jquery-1.9.js \
-		  $(SRC_JS_FILES) \
-		  .build/templatecache.js \
-		  $(EXPORTS_JS_FILES) \
-		  .build/node_modules.timestamp
+	    .build/externs/angular-1.3.js \
+	    .build/externs/angular-1.3-q.js \
+	    .build/externs/angular-1.3-http-promise.js \
+	    .build/externs/jquery-1.9.js \
+	    $(SRC_JS_FILES) \
+	    .build/templatecache.js \
+	    $(EXPORTS_JS_FILES) \
+	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
 dist/ngeo-debug.js: buildtools/ngeo-debug.json \
-	          .build/externs/angular-1.3.js \
-		  .build/externs/angular-1.3-q.js \
-	          .build/externs/angular-1.3-http-promise.js \
-	          .build/externs/jquery-1.9.js \
-		  $(SRC_JS_FILES) \
-		  .build/templatecache.js \
-		  $(EXPORTS_JS_FILES) \
-		  .build/node_modules.timestamp
+	    .build/externs/angular-1.3.js \
+	    .build/externs/angular-1.3-q.js \
+	    .build/externs/angular-1.3-http-promise.js \
+	    .build/externs/jquery-1.9.js \
+	    $(SRC_JS_FILES) \
+	    .build/templatecache.js \
+	    $(EXPORTS_JS_FILES) \
+	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -104,14 +104,27 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/cleancss $< > $@
 
-.build/examples/%.min.js: .build/examples/%.json $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
-	                      .build/externs/angular-1.3-http-promise.js .build/externs/jquery-1.9.js examples/%.js .build/node_modules.timestamp
-	           \
+.build/examples/%.min.js: .build/examples/%.json \
+	    $(SRC_JS_FILES) \
+	    $(EXPORTS_JS_FILES) \
+	    .build/externs/angular-1.3.js \
+	    .build/externs/angular-1.3-q.js \
+	    .build/externs/angular-1.3-http-promise.js \
+	    .build/externs/jquery-1.9.js \
+	    examples/%.js \
+	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.build/examples/all.min.js: buildtools/examples-all.json $(SRC_JS_FILES) $(EXPORTS_JS_FILES) .build/externs/angular-1.3.js .build/externs/angular-1.3-q.js \
-	                        .build/externs/angular-1.3-http-promise.js .build/externs/jquery-1.9.js .build/examples/all.js .build/node_modules.timestamp
+.build/examples/all.min.js: buildtools/examples-all.json \
+	    $(SRC_JS_FILES) \
+	    $(EXPORTS_JS_FILES) \
+	    .build/externs/angular-1.3.js \
+	    .build/externs/angular-1.3-q.js \
+	    .build/externs/angular-1.3-http-promise.js \
+	    .build/externs/jquery-1.9.js \
+	    .build/examples/all.js \
+	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -161,13 +174,13 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|ngeo.css|' \
-	        -e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|bootstrap.min.css|' \
-	        -e 's|\.\./node_modules/jquery/dist/jquery.js|jquery.min.js|' \
-	        -e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|bootstrap.min.js|' \
-		-e 's|\.\./node_modules/angular/angular.js|angular.min.js|' \
-		-e 's|\.\./node_modules/angular-animate/angular-animate.js|angular-animate.min.js|' \
-		-e 's/\/@?main=$*.js/$*.js/' \
-		-e '/$*.js/i\    <script src="ngeo.js"></script>' $< > $@
+	    -e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|bootstrap.min.css|' \
+	    -e 's|\.\./node_modules/jquery/dist/jquery.js|jquery.min.js|' \
+	    -e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|bootstrap.min.js|' \
+	    -e 's|\.\./node_modules/angular/angular.js|angular.min.js|' \
+	    -e 's|\.\./node_modules/angular-animate/angular-animate.js|angular-animate.min.js|' \
+	    -e 's/\/@?main=$*.js/$*.js/' \
+	    -e '/$*.js/i\    <script src="ngeo.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
@@ -175,17 +188,17 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
-						.build/examples-hosted/%.js \
-						.build/examples-hosted/ngeo.js \
-						.build/examples-hosted/ngeo.css \
-						.build/examples-hosted/angular.min.js \
-						.build/examples-hosted/angular-animate.min.js \
-						.build/examples-hosted/bootstrap.min.js \
-						.build/examples-hosted/bootstrap.min.css \
-						.build/examples-hosted/jquery.min.js \
-						.build/examples-hosted/data \
-						.build/examples-hosted/partials \
-						.build/node_modules.timestamp
+	    .build/examples-hosted/%.js \
+	    .build/examples-hosted/ngeo.js \
+	    .build/examples-hosted/ngeo.css \
+	    .build/examples-hosted/angular.min.js \
+	    .build/examples-hosted/angular-animate.min.js \
+	    .build/examples-hosted/bootstrap.min.js \
+	    .build/examples-hosted/bootstrap.min.css \
+	    .build/examples-hosted/jquery.min.js \
+	    .build/examples-hosted/data \
+	    .build/examples-hosted/partials \
+	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
@@ -250,13 +263,13 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 
 .build/ol-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-	  --root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" \
-	  --root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../../../openlayers/build/ol.ext" \
-	  --output_file=$@
+	    --root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" \
+	    --root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../../../openlayers/build/ol.ext" \
+	    --output_file=$@
 
 .build/ngeo-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-	  --root_with_prefix="src ../../../../../../../../../src" --output_file=$@
+	    --root_with_prefix="src ../../../../../../../../../src" --output_file=$@
 
 # The keys in the template cache begin with "../src/directives/partials". This
 # is done so ngeo.js works for the examples on github.io. If another key
