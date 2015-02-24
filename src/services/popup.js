@@ -33,7 +33,7 @@ ngeo.CreatePopup;
 ngeo.Popup = function($compile, $rootScope) {
 
   /**
-   * The scope the element is compiled with.
+   * The scope the compiled element is link to.
    * @type {angular.Scope}
    * @private
    */
