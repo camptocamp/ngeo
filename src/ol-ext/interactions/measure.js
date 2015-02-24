@@ -197,7 +197,6 @@ ngeo.interaction.Measure.prototype.createHelpTooltip_ = function() {
   this.helpTooltipElement_ = goog.dom.createDom(goog.dom.TagName.DIV);
   goog.dom.classlist.add(this.helpTooltipElement_, 'tooltip');
   this.helpTooltip_ = new ol.Overlay({
-    autoPan: false,
     element: this.helpTooltipElement_,
     offset: [15, 0],
     positioning: 'center-left'
@@ -230,7 +229,6 @@ ngeo.interaction.Measure.prototype.createMeasureTooltip_ = function() {
   goog.dom.classlist.addAll(this.measureTooltipElement_,
       ['tooltip', 'tooltip-measure']);
   this.measureTooltip_ = new ol.Overlay({
-    autoPan: false,
     element: this.measureTooltipElement_,
     offset: [0, -15],
     positioning: 'bottom-center'
