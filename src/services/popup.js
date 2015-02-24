@@ -7,7 +7,7 @@
  * var popup = ngeoCreatePopup();
  * popup.setTitle("A title");
  * popup.setContent("Some content");
- * popup.show();
+ * popup.setOpen(true);
  *
  */
 
@@ -33,11 +33,11 @@ ngeo.CreatePopup;
 ngeo.Popup = function($compile, $rootScope) {
 
   /**
-   * The scope the element is compiled with.
+   * The scope the compiled element is link to.
    * @type {angular.Scope}
    * @private
    */
-  this.scope_ = $rootScope.$new();
+  this.scope_ = $rootScope.$new(true);
 
   /**
    * The element.
@@ -46,17 +46,28 @@ ngeo.Popup = function($compile, $rootScope) {
    */
   this.element_ = angular.element('<div ngeo-popup></div>');
 
-  // Add the element and its content to the document
-  angular.element(document.body).append(this.element_);
+
+  // Compile the element, link it to the scope and add it to the document.
   $compile(this.element_)(this.scope_);
+  angular.element(document.body).append(this.element_);
 };
 
 
 /**
- * Display the popup.
+ * Get the current popup state.
+ * @return {boolean} `true` if the popup is currently, otherwise `false`.
  */
-ngeo.Popup.prototype.show = function() {
-  this.scope_['open'] = true;
+ngeo.Popup.prototype.getOpen = function() {
+  return this.scope_['open'];
+};
+
+
+/**
+ * Show/hide the popup.
+ * @param {boolean} open `true` to show the popup, `false` to hide it.
+ */
+ngeo.Popup.prototype.setOpen = function(open) {
+  this.scope_['open'] = open;
 };
 
 

@@ -2,8 +2,13 @@ goog.require('ngeo.Popup');
 
 goog.exportProperty(
     ngeo.Popup.prototype,
-    'show',
-    ngeo.Popup.prototype.show);
+    'getOpen',
+    ngeo.Popup.prototype.getOpen);
+
+goog.exportProperty(
+    ngeo.Popup.prototype,
+    'setOpen',
+    ngeo.Popup.prototype.setOpen);
 
 goog.exportProperty(
     ngeo.Popup.prototype,

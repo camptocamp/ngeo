@@ -144,7 +144,7 @@ app.LayertreeController.prototype.onButtonClick = function(node, layer) {
   this.promises_[layerType].then(function(html) {
     infoPopup.setTitle(node['name']);
     infoPopup.setContent(html);
-    infoPopup.show();
+    infoPopup.setOpen(true);
   });
 };
 
