@@ -7,7 +7,7 @@
  * var popup = ngeoCreatePopup();
  * popup.setTitle("A title");
  * popup.setContent("Some content");
- * popup.show();
+ * popup.setOpen(true);
  *
  */
 
@@ -54,10 +54,11 @@ ngeo.Popup = function($compile, $rootScope) {
 
 
 /**
- * Display the popup.
+ * Show/hide the popup.
+ * @param {boolean} open `true` to show the popup, `false` to hide it.
  */
-ngeo.Popup.prototype.show = function() {
-  this.scope_['open'] = true;
+ngeo.Popup.prototype.setOpen = function(open) {
+  this.scope_['open'] = open;
 };
 
 
