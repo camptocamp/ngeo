@@ -46,9 +46,10 @@ ngeo.Popup = function($compile, $rootScope) {
    */
   this.element_ = angular.element('<div ngeo-popup></div>');
 
-  // Add the element and its content to the document
-  angular.element(document.body).append(this.element_);
+
+  // Compile the element, link it to the scope and add it to the document.
   $compile(this.element_)(this.scope_);
+  angular.element(document.body).append(this.element_);
 };
 
 
