@@ -1,22 +1,45 @@
 /**
- * @fileoverview Provides a directive that can be used to change the order of
- * items in an array.
- * It can be used to change the order of layers in the map for example.
- * It requires JQuery-UI Sortable.
+ * @fileoverview Provides the "ngeoSortable" directive. This directive allows
+ * drag-and-dropping DOM items between them. The directive also changes the
+ * order of elements in the array it is given.
+ *
+ * It is typically used together with `ng-repeat`, for example for re-ordering
+ * layers in a map.
  *
  * Example:
  *
- * <ul ngeo-sortable="ctrl.map.getLayers().getArray()">
- *   <li ng-repeat="ctrl.map.getLayers().getArray()">
- *      <span class="handle"></span>{{layer.get('name')}}
+ * <ul ngeo-sortable="ctrl.layers"
+ *     ngeo-sortable-options="{handleClassName: 'sortable-handle'}">
+ *   <li ng-repeat="layer in ctrl.layers">
+ *     <span class="sortable-handle">handle</span>{{layer.get('name')}}
  *   </li>
  * </ul>
+ *
+ * The value of the "ngeo-sortable" attribute is an expression which evaluates
+ * to an array (an array of layers in the above example). This is the array
+ * that is re-ordered after a drag-and-drop.
+ *
+ * The element with the class "sortable-handle" is the "drag handle". It is
+ * required.
+ *
+ * This directives uses `$watchCollection` to watch the "sortable" array. So
+ * if some outside code adds/removes elements to/from the "sortable" array,
+ * the "ngeoSortable" directive will pick it up.
  */
 
+goog.provide('ngeo.SortableOptions');
 goog.provide('ngeo.sortableDirective');
 
-goog.require('goog.asserts');
+goog.require('goog.dom');
+goog.require('goog.fx.DragListDirection');
+goog.require('goog.fx.DragListGroup');
 goog.require('ngeo');
+
+
+/**
+ * @typedef {{handleClassName: (string|undefined)}}
+ */
+ngeo.SortableOptions;
 
 
 /**
@@ -27,7 +50,6 @@ goog.require('ngeo');
 ngeo.sortableDirective = function($timeout) {
   return {
     restrict: 'A',
-    scope: true,
     link:
         /**
          * @param {angular.Scope} scope Scope.
@@ -35,52 +57,113 @@ ngeo.sortableDirective = function($timeout) {
          * @param {angular.Attributes} attrs Attributes.
          */
         function(scope, element, attrs) {
-          var sortableExpr = attrs['ngeoSortable'];
 
-          var sortable = /** @type {Array.<ol.layer.Base>} */
-              (scope.$eval(sortableExpr));
+          var sortable = /** @type {Array} */
+              (scope.$eval(attrs['ngeoSortable']));
+          goog.asserts.assert(goog.isArray(sortable));
 
-          goog.asserts.assert(goog.isDef(angular.element.fn) &&
-              goog.isDef(angular.element.fn.jquery), 'jQuery is required');
-
-          element.sortable();
+          var options = scope.$eval(attrs['ngeoSortableOptions']);
 
           /**
-           * @type {number}
+           * @type {goog.fx.DragListGroup}
            */
-          var startIndex = -1;
+          var dragListGroup = null;
 
-          // ui.item comes from JQuery sortable plugin
+          scope.$watchCollection(function() {
+            return sortable;
+          }, function() {
+            resetUpDragDrop();
+          });
 
-          element.sortable('option', 'start',
-              /**
-               * @param {jQuery.event} e jQuery Event.
-               * @param {jQueryUI} ui jQuery UI object.
-               */
-              function(e, ui) {
-                // save the starting position of dragged item
-                startIndex = ui.item.index();
-              });
+          /**
+           * This function resets drag&drop for the list. It is called each
+           * time the sortable array changes (see $watchCollection above).
+           */
+          function resetUpDragDrop() {
+            var children = element.children();
+            for (var i = 0; i < children.length; ++i) {
+              angular.element(children[i]).data('idx', i);
+            }
 
-          element.sortable('option', 'update',
-              /**
-               * @param {jQuery.event} e jQuery Event.
-               * @param {jQueryUI} ui jQuery UI object.
-               */
-              function(e, ui) {
-                goog.asserts.assert(startIndex != -1);
-                scope.$apply(function() {
-                  sortable.splice(
-                      ui.item.index(), 0,
-                      sortable.splice(startIndex, 1)[0]);
+            if (!goog.isNull(dragListGroup)) {
+              goog.events.removeAll(dragListGroup);
+            }
+
+            dragListGroup = new goog.fx.DragListGroup();
+            dragListGroup.addDragList(element[0],
+                goog.fx.DragListDirection.DOWN);
+            dragListGroup.setFunctionToGetHandleForDragItem(
+                /**
+                 * @param {Element} dragItem Drag item.
+                 * @return {Element} The handle.
+                 */
+                function(dragItem) {
+                  var className = options['handleClassName'];
+                  return goog.dom.getElementByClass(className, dragItem);
                 });
-                startIndex = -1;
-              });
 
-          element.sortable('option', 'handle', '.handle');
-          element.sortable('option', 'containment', 'parent');
-          element.sortable('option', 'opacity', 0.5);
-          element.sortable('option', 'cursor', 'move');
+            /** @type {number} */
+            var hoverNextItemIdx = -1;
+
+            /** @type {Element} */
+            var hoverList = null;
+
+            goog.events.listen(dragListGroup, 'dragstart', function(e) {
+              hoverNextItemIdx = -1;
+              hoverList = null;
+            });
+
+            goog.events.listen(dragListGroup, 'dragmove', function(e) {
+              var next = e.hoverNextItem;
+              hoverNextItemIdx = goog.isNull(next) ? -1 :
+                  /** @type {number} */ (angular.element(next).data('idx'));
+              hoverList = e.hoverList;
+            });
+
+            goog.events.listen(dragListGroup, 'dragend', function(e) {
+              var li = e.currDragItem;
+              var idx = /** @type {number} */
+                  (angular.element(li).data('idx'));
+              if (hoverNextItemIdx != -1) {
+                // there's a next item, so insert
+                if (hoverNextItemIdx != idx) {
+                  if (hoverNextItemIdx > idx) {
+                    hoverNextItemIdx--;
+                  }
+                  scope.$apply(function() {
+                    sortable.splice(hoverNextItemIdx, 0,
+                        sortable.splice(idx, 1)[0]);
+                  });
+                }
+              } else if (!goog.isNull(hoverList)) {
+                // there's no next item, so push
+                scope.$apply(function() {
+                  sortable.push(sortable.splice(idx, 1)[0]);
+                });
+              }
+            });
+
+            dragListGroup.init();
+          }
+
+          /**
+           * @param {?} options Options after expression evaluation.
+           * @return {!ngeo.SortableOptions} Options object.
+           * @private
+           */
+          function getOptions(options) {
+            var ret;
+            if (!goog.isDef(options)) {
+              ret = {'handleClassName': 'handle'};
+            } else {
+              if (!goog.isDef(options['handleClassName'])) {
+                options['handleClassName'] = 'handle';
+              }
+              ret = /** @type {ngeo.SortableOptions} */ (options);
+            }
+            return ret;
+          }
+
         }
   };
 };
