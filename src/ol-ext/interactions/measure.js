@@ -11,7 +11,7 @@ goog.require('ol.FeatureOverlay');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Observable');
 goog.require('ol.Overlay');
-goog.require('ol.interaction.Pointer');
+goog.require('ol.interaction.Interaction');
 goog.require('ol.style.Style');
 
 
@@ -30,7 +30,7 @@ ngeo.interaction.MeasureBaseOptions;
  * Interaction that allows measuring (length, area, ...).
  *
  * @constructor
- * @extends {ol.interaction.Pointer}
+ * @extends {ol.interaction.Interaction}
  * @param {ngeo.interaction.MeasureBaseOptions=} opt_options Options
  */
 ngeo.interaction.Measure = function(opt_options) {
@@ -38,7 +38,7 @@ ngeo.interaction.Measure = function(opt_options) {
   var options = goog.isDef(opt_options) ? opt_options : {};
 
   goog.base(this, {
-    handleMoveEvent: this.handlePointerMoveEvent_
+    handleEvent: ngeo.interaction.Measure.handleEvent_
   });
 
   /**
@@ -135,7 +135,37 @@ ngeo.interaction.Measure = function(opt_options) {
       ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
       this.updateState_, false, this);
 };
-goog.inherits(ngeo.interaction.Measure, ol.interaction.Pointer);
+goog.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
+
+
+/**
+ * Handle map browser event.
+ * @param {ol.MapBrowserEvent} evt Map browser event.
+ * @return {boolean} `false` if event propagation should be stopped.
+ * @this {ngeo.interaction.Measure}
+ * @private
+ */
+ngeo.interaction.Measure.handleEvent_ = function(evt) {
+  if (evt.type != ol.MapBrowserEvent.EventType.POINTERMOVE || evt.dragging) {
+    return true;
+  }
+
+  var helpMsg = this.startMsg;
+  if (!goog.isNull(this.sketchFeature)) {
+    this.handleMeasure(goog.bind(function(measure, coord, helpMsg_) {
+      if (!goog.isNull(coord)) {
+        this.measureTooltipElement_.innerHTML = measure;
+        this.measureTooltip_.setPosition(coord);
+      }
+      helpMsg = helpMsg_;
+    }, this));
+  }
+
+  this.helpTooltipElement_.innerHTML = helpMsg;
+  this.helpTooltip_.setPosition(evt.coordinate);
+
+  return true;
+};
 
 
 /**
@@ -273,32 +303,6 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
     this.removeMeasureTooltip_();
     this.removeHelpTooltip_();
   }
-};
-
-
-/**
- * Handle pointer move.
- * @param {ol.MapBrowserEvent} evt
- * @private
- */
-ngeo.interaction.Measure.prototype.handlePointerMoveEvent_ = function(evt) {
-  if (evt.dragging) {
-    return;
-  }
-
-  var helpMsg = this.startMsg;
-  if (!goog.isNull(this.sketchFeature)) {
-    this.handleMeasure(goog.bind(function(measure, coord, helpMsg_) {
-      if (!goog.isNull(coord)) {
-        this.measureTooltipElement_.innerHTML = measure;
-        this.measureTooltip_.setPosition(coord);
-      }
-      helpMsg = helpMsg_;
-    }, this));
-  }
-
-  this.helpTooltipElement_.innerHTML = helpMsg;
-  this.helpTooltip_.setPosition(evt.coordinate);
 };
 
 
