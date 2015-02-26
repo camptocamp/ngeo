@@ -5,6 +5,7 @@ goog.require('goog.dom');
 goog.require('goog.dom.classlist');
 goog.require('goog.events');
 goog.require('ol.DrawEvent');
+goog.require('ol.DrawEventType');
 goog.require('ol.Feature');
 goog.require('ol.FeatureOverlay');
 goog.require('ol.MapBrowserEvent');
@@ -125,6 +126,11 @@ ngeo.interaction.Measure = function(opt_options) {
   this.drawInteraction_ = this.getDrawInteraction(options.sketchStyle,
       this.overlay_);
 
+  goog.events.listen(this.drawInteraction_, ol.DrawEventType.DRAWSTART,
+      this.onDrawStart_, false, this);
+  goog.events.listen(this.drawInteraction_, ol.DrawEventType.DRAWEND,
+      this.onDrawEnd_, false, this);
+
   goog.events.listen(this,
       ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
       this.updateState_, false, this);
@@ -157,9 +163,6 @@ ngeo.interaction.Measure.prototype.setMap = function(map) {
     }
   } else {
     map.addInteraction(this.drawInteraction_);
-
-    this.drawInteraction_.on('drawstart', goog.bind(this.onDrawStart_, this));
-    this.drawInteraction_.on('drawend', goog.bind(this.onDrawEnd_, this));
   }
 };
 
