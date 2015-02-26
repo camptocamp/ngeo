@@ -156,12 +156,13 @@ ngeo.interaction.Measure.prototype.setMap = function(map) {
   goog.base(this, 'setMap', map);
 
   this.overlay_.setMap(map);
-  if (goog.isNull(map)) {
-    var prevMap = this.drawInteraction_.getMap();
-    if (!goog.isNull(prevMap)) {
-      prevMap.removeInteraction(this.drawInteraction_);
-    }
-  } else {
+
+  var prevMap = this.drawInteraction_.getMap();
+  if (!goog.isNull(prevMap)) {
+    prevMap.removeInteraction(this.drawInteraction_);
+  }
+
+  if (!goog.isNull(map)) {
     map.addInteraction(this.drawInteraction_);
   }
 };
