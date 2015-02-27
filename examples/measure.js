@@ -11,6 +11,7 @@ goog.require('ol.Map');
 goog.require('ol.Observable');
 goog.require('ol.Overlay');
 goog.require('ol.View');
+goog.require('ol.control.ScaleLine');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
@@ -127,6 +128,8 @@ app.MainController = function() {
     })
   });
   this['map'] = map;
+
+  map.addControl(new ol.control.ScaleLine());
 
 };
 

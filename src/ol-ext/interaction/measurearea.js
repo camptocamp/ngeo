@@ -3,6 +3,7 @@ goog.provide('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.geom.Polygon');
 goog.require('ol.interaction.Draw');
+goog.require('ol.sphere.WGS84');
 
 
 
@@ -74,7 +75,12 @@ ngeo.interaction.MeasureArea.prototype.handleMeasure = function(callback) {
  * @private
  */
 ngeo.interaction.MeasureArea.prototype.formatMeasure_ = function(polygon) {
-  var area = polygon.getArea();
+  var map = this.getMap();
+  var sourceProj = map.getView().getProjection();
+  var geom = /** @type {ol.geom.Polygon} */ (polygon.clone().transform(
+      sourceProj, 'EPSG:4326'));
+  var coordinates = geom.getLinearRing(0).getCoordinates();
+  var area = Math.abs(ol.sphere.WGS84.geodesicArea(coordinates));
   var output;
   if (area > 10000) {
     output = (Math.round(area / 1000000 * 100) / 100) +
