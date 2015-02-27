@@ -205,9 +205,9 @@ ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
   var currentScale = this['scales'][view.getZoom().toString()];
   this.$scope_.$apply(
       /** @type {function(?)} */ (
-      angular.bind(this, function() {
+      goog.bind(function() {
         this['currentScale'] = currentScale;
-      })));
+      }, this)));
 };
 
 
