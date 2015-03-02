@@ -25,22 +25,21 @@ app.MainController = function($http, $scope) {
     this['profileData'] = resp.data['profile'];
   }));
 
-  this['point'] = null;
-};
+  var profileOptions = {
+    extractor: {
+      z: function(item) { return item['values']['mnt']; },
+      dist: function(item) { return item['dist']; }
+    },
+    hoverCallback: angular.bind(this, function(point) {
+      // An item in the list of points given to the profile.
+      this['point'] = point;
+    }),
+    outCallback: angular.bind(this, function() {
+      this['point'] = null;
+    })
+  };
 
-
-/**
- * @param {Object} point The point object. It correspond to an item in the list
- * of points given to the profile.
- */
-app.MainController.prototype.onProfileHover = function(point) {
-  this['point'] = point;
-};
-
-
-/**
- */
-app.MainController.prototype.onProfileOut = function() {
+  this['profileOptions'] = profileOptions;
   this['point'] = null;
 };
 

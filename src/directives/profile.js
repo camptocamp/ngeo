@@ -5,16 +5,13 @@
  * Example:
  *
  * <div ngeo-profile="ctrl.profileData"
- *      ngeo-profile-onhover="ctrl.onHover(point)"
- *      ngeo-profile-onout="ctrl.onProfileOut()"></div>
+ *      ngeo-profile-ooptions="ctrl.profileOptions"></div>
  *
- * Note: "point" in the onhover callback corresponds to an item of the data
- * provided to the profile (profileData in the above example). It's
- * integrator's job to extract the information he/she wants for the given
- * point (coordinates, elevation, distance, ...).
+ * Note: "ctrl.profileOptions" is of type ngeox.profile.ProfileOptions.
  */
 goog.provide('ngeo.profileDirective');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.profile');
 
@@ -33,25 +30,29 @@ ngeo.profileDirective = function() {
          */
         function(scope, element, attrs) {
 
-          var selection = d3.select(element[0]);
-          var profile = ngeo.profile();
+          var optionsAttr = attrs['ngeoProfileOptions'];
+          goog.asserts.assert(goog.isDef(optionsAttr));
 
-          scope.$watch(attrs['ngeoProfile'], function(newVal, oldVal) {
-            if (goog.isDef(newVal)) {
-              selection.datum(newVal).call(profile);
+          var selection = d3.select(element[0]);
+          var profile, options, data;
+
+          scope.$watch(attrs['ngeoProfileOptions'], function(newVal, oldVal) {
+            options = newVal;
+            if (options) {
+              profile = ngeo.profile(options);
+              refreshData();
             }
           });
 
-          profile.onHover(function(point) {
-            scope.$apply(function() {
-              scope.$eval(attrs['ngeoProfileOnhover'], {'point': point});
-            });
-          });
+          function refreshData() {
+            if (profile && data) {
+              selection.datum(data).call(profile);
+            }
+          }
 
-          profile.onOut(function() {
-            scope.$apply(function() {
-              scope.$eval(attrs['ngeoProfileOnout']);
-            });
+          scope.$watch(attrs['ngeoProfile'], function(newVal, oldVal) {
+            data = newVal;
+            refreshData();
           });
         }
   };
