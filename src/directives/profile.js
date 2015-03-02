@@ -34,25 +34,16 @@ ngeo.profileDirective = function() {
           goog.asserts.assert(goog.isDef(optionsAttr));
 
           var selection = d3.select(element[0]);
-          var profile, options, data;
 
-          scope.$watch(attrs['ngeoProfileOptions'], function(newVal, oldVal) {
-            options = newVal;
-            if (options) {
-              profile = ngeo.profile(options);
-              refreshData();
-            }
-          });
-
-          function refreshData() {
-            if (profile && data) {
-              selection.datum(data).call(profile);
-            }
-          }
+          var options = /** @type {ngeox.profile.ProfileOptions} */
+              (scope.$eval(optionsAttr));
+          var profile = ngeo.profile(options);
 
           scope.$watch(attrs['ngeoProfile'], function(newVal, oldVal) {
-            data = newVal;
-            refreshData();
+            var data = newVal;
+            if (goog.isDef(data)) {
+              selection.datum(data).call(profile);
+            }
           });
         }
   };
