@@ -46,12 +46,6 @@ ngeo.popupDirective = function(ngeoPopupTemplateUrl) {
          */
         function(scope, element, attrs) {
           element.addClass('popover');
-          var bodyWidth = goog.style.getSize(document.body).width;
-          var elementWidth = goog.style.getSize(element[0]).width;
-          element.css({
-            left: bodyWidth / 2 - elementWidth / 2,
-            top: 50
-          });
 
           scope.close = function(evt) {
             if (evt) {
