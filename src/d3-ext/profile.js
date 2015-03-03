@@ -5,23 +5,32 @@
  * Example usage:
  *
  * var selection = d3.select('#element_id');
- * var profile = ngeo.profile().onHover(function(point) {
- *   console.log(point.x, point.y);
- * }).onOut(function() {console.log("out");});
+ * var profile = ngeo.profile({
+ *  extractor: {
+ *    z: function (item) {return item['values']['z'];)},
+ *    dist: function (item) {return item['dist'];)}
+ *  },
+ *  hoverCallback: function(point) {
+ *    console.log(point.x, point.y);
+ *  },
+ *  outCallback: function() {
+ *    console.log("out");
+ *  }});
  * selection.datum(data).call(profile);
  *
+ * The selection data must be an array.
+ * The layout for the items of this array is unconstrained: the elevation
+ * and distance values are extracted using the extractor config option.
  *
- * The selection data to be used should look like the following:
- *
+ * The data below will work for the above example:
  * [
  *     {
  *         "y": 199340,
- *         "values": {"mnt": 788.7},
+ *         "values": {"z": 788.7},
  *         "dist": 0.0,
  *         "x": 541620
  *     }, ...
  * ]
- *
  */
 goog.provide('ngeo.profile');
 
@@ -71,6 +80,12 @@ ngeo.profile = function(options) {
    */
   var outCallback = goog.isDef(options.outCallback) ?
       options.outCallback : goog.nullFunction;
+
+  /**
+   * @type {boolean}
+   * Whether the simplified profile should be shown.
+   */
+  var light = goog.isDef(options.light) ? options.light : false;
 
   /**
    * The color to be used for filling the area.
@@ -144,20 +159,21 @@ ngeo.profile = function(options) {
       gEnter.insert('g', ':first-child')
           .attr('class', 'grid-y');
 
-      gEnter.append('g')
+      if (!light) {
+        gEnter.append('g')
           .attr('class', 'x axis')
           .attr('transform', 'translate(0,' + height + ')');
 
-      gEnter.append('text')
+        gEnter.append('text')
           .attr('class', 'x label')
           .attr('text-anchor', 'end')
           .attr('x', width - 4)
           .attr('y', height - 4);
 
-      gEnter.append('g')
+        gEnter.append('g')
           .attr('class', 'y axis');
 
-      gEnter.append('text')
+        gEnter.append('text')
           .attr('class', 'y label')
           .attr('text-anchor', 'end')
           .attr('y', 6)
@@ -166,9 +182,10 @@ ngeo.profile = function(options) {
           .style('fill', 'grey')
           .text('elevation (m)');
 
-      gEnter.append('g')
+        gEnter.append('g')
           .attr('class', 'metas')
           .attr('transform', 'translate(' + (width + 3) + ', 0)');
+      }
 
       var yHover = gEnter.append('g').attr('class', 'y grid-hover');
       yHover.append('svg:line').attr('stroke-dasharray', '5,5');
@@ -220,22 +237,24 @@ ngeo.profile = function(options) {
         units = 'm';
       }
 
-      xAxis.tickFormat(function(d) {
-        return d / xFactor;
-      });
+      if (!light) {
+        xAxis.tickFormat(function(d) {
+          return d / xFactor;
+        });
 
-      g.select('.x.axis')
+        g.select('.x.axis')
           .transition()
           .call(xAxis);
 
-      g.select('.x.label')
+        g.select('.x.label')
           .text('distance (' + units + ')')
           .style('fill', 'grey')
           .style('shape-rendering', 'crispEdges');
 
-      g.select('.y.axis')
+        g.select('.y.axis')
           .transition()
           .call(yAxis);
+      }
 
       g.select('.grid-y')
           .transition()
