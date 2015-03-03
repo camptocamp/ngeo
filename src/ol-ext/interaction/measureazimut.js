@@ -41,11 +41,11 @@ ngeo.interaction.MeasureAzimut = function(opt_options) {
 
   /**
    * Message to show after the first point is clicked.
-   * @type {string}
+   * @type {Element}
    * @private
    */
   this.continueMsg_ = goog.isDef(options.continueMsg) ? options.continueMsg :
-      'Click to finish';
+      goog.dom.createDom(goog.dom.TagName.SPAN, {}, 'Click to finish.');
 
 };
 goog.inherits(ngeo.interaction.MeasureAzimut, ngeo.interaction.Measure);

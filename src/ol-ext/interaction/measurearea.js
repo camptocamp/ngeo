@@ -24,12 +24,14 @@ ngeo.interaction.MeasureArea = function(opt_options) {
 
   /**
    * Message to show after the first point is clicked.
-   * @type {string}
+   * @type {Element}
    * @private
    */
   this.continueMsg_ = goog.isDef(options.continueMsg) ? options.continueMsg :
-      'Click to continue drawing the polygon<br>' +
-      'Double-click or click starting point to finish';
+      goog.dom.createDom(goog.dom.TagName.SPAN, {},
+          'Click to continue drawing the polygon.',
+          goog.dom.createDom(goog.dom.TagName.BR),
+          'Double-click or click starting point to finish.');
 
 };
 goog.inherits(ngeo.interaction.MeasureArea, ngeo.interaction.Measure);

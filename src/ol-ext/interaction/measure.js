@@ -18,7 +18,7 @@ goog.require('ol.style.Style');
 /**
  * Interactions for measure tools base class.
  * @typedef {{
- *    startMsg: (string|undefined),
+ *    startMsg: (Element|undefined),
  *    style:(ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined)
  * }}
  */
@@ -82,10 +82,10 @@ ngeo.interaction.Measure = function(opt_options) {
 
   /**
    * The message to show when user is about to start drawing.
-   * @type {string}
+   * @type {Element}
    */
   this.startMsg = goog.isDef(options.startMsg) ? options.startMsg :
-      'Click to start drawing';
+      goog.dom.createDom(goog.dom.TagName.SPAN, {}, 'Click to start drawing.');
 
   var style = goog.isDef(options.style) ? options.style :
       [
@@ -161,7 +161,8 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
     }, this));
   }
 
-  this.helpTooltipElement_.innerHTML = helpMsg;
+  goog.dom.removeChildren(this.helpTooltipElement_);
+  goog.dom.appendChild(this.helpTooltipElement_, helpMsg);
   this.helpTooltipOverlay_.setPosition(evt.coordinate);
 
   return true;
@@ -309,8 +310,8 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
 /**
  * Function implemented in inherited classes to compute measurement, determine
  * where to place the tooltip and determine which help message to display.
- * @param {function(string, ?ol.Coordinate, string)} callback The function
- * to be called.
+ * @param {function(string, ?ol.Coordinate, Element)} callback The function
+ *     to be called.
  * @protected
  */
 ngeo.interaction.Measure.prototype.handleMeasure = goog.abstractMethod;

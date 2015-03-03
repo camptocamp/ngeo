@@ -12,8 +12,8 @@ ngeox.interaction;
 /**
  * Interactions for measure tools.
  * @typedef {{
- *    startMsg: (string|undefined),
- *    continueMsg: (string|undefined),
+ *    startMsg: (Element|undefined),
+ *    continueMsg: (Element|undefined),
  *    style: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
  *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined)
  * }}
@@ -22,17 +22,17 @@ ngeox.interaction.MeasureOptions;
 
 
 /**
- * The message to show in the help tooltip when the user just activated the
- * interaction.
- * @type {string|undefined}
+ * Element including the message to display in the help tooltip when the user
+ * just activated the interaction.
+ * @type {Element|undefined}
  */
 ngeox.interaction.MeasureOptions.prototype.startMsg;
 
 
 /**
- * The message to show in the help tooltip when the user already added the
- * first point.
- * @type {string|undefined}
+ * Element including the message to display in the help tooltip when the user
+ * already added the first point.
+ * @type {Element|undefined}
  */
 ngeox.interaction.MeasureOptions.prototype.continueMsg;
 
