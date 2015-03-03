@@ -25,22 +25,53 @@ app.MainController = function($http, $scope) {
     this['profileData'] = resp.data['profile'];
   }));
 
-  this['point'] = null;
-};
+  /**
+   * @param {Object} item
+   * @return {number}
+   */
+  var z = function(item) {
+    return item['values']['mnt'];
+  };
+
+  /**
+    * @param {Object} item
+    * @return {number}
+    */
+  var dist = function(item) {
+    return item['dist'];
+  };
+
+  /**
+   * @type {ngeox.profile.ProfileExtractor}
+   */
+  var extractor = {z: z, dist: dist};
 
 
-/**
- * @param {Object} point The point object. It correspond to an item in the list
- * of points given to the profile.
- */
-app.MainController.prototype.onProfileHover = function(point) {
-  this['point'] = point;
-};
+  // Using closures for hoverCallback and outCallback since
+  // wrapping in angular.bind leads to a closure error.
+  // See PR https://github.com/google/closure-compiler/pull/867
+  var that = this;
+
+  /**
+   * @param {Object} point
+   */
+  var hoverCallback = function(point) {
+    // An item in the list of points given to the profile.
+    that['point'] = point;
+  };
+
+  var outCallback = function() {
+    that['point'] = null;
+  };
 
 
-/**
- */
-app.MainController.prototype.onProfileOut = function() {
+  this['profileOptions'] = {
+    extractor: extractor,
+    hoverCallback: hoverCallback,
+    outCallback: outCallback
+  };
+
+
   this['point'] = null;
 };
 

@@ -29,10 +29,12 @@ goog.provide('ngeo.profile');
 /**
  *
  * @return {Object}
+ * @param {ngeox.profile.ProfileOptions} options
  * @export
  *
  */
-ngeo.profile = function() {
+ngeo.profile = function(options) {
+
 
   /**
    * The values for margins around the chart defined in pixels.
@@ -42,7 +44,9 @@ ngeo.profile = function() {
   /**
    * Method to get the coordinate in pixels from a distance.
    */
-  var bisectDistance = d3.bisector(function(d) { return d['dist']; }).left;
+  var bisectDistance = d3.bisector(function(d) {
+    return extractor.dist(d);
+  }).left;
 
   /**
    * Distance units. Either 'm' or 'km'.
@@ -58,13 +62,15 @@ ngeo.profile = function() {
    * @type {function(Object)}
    * Hover callback function.
    */
-  var hoverCallback = goog.nullFunction;
+  var hoverCallback = goog.isDef(options.hoverCallback) ?
+      options.hoverCallback : goog.nullFunction;
 
   /**
    * @type {function()}
    * Out callback function.
    */
-  var outCallback = goog.nullFunction;
+  var outCallback = goog.isDef(options.outCallback) ?
+      options.outCallback : goog.nullFunction;
 
   /**
    * The color to be used for filling the area.
@@ -95,6 +101,12 @@ ngeo.profile = function() {
    */
   var y;
 
+  /**
+   * Extractor used to ge the dist and elevation from data.
+   */
+  var extractor = options.extractor;
+
+
   var profile = function(selection) {
     selection.each(function(data) {
 
@@ -110,12 +122,12 @@ ngeo.profile = function() {
           .orient('left');
 
       var area = d3.svg.area()
-          .x(function(d) { return x(d['dist']); })
+          .x(function(d) { return x(extractor.dist(d)); })
           .y0(height)
-          .y1(function(d) { return y(d['values']['mnt']); });
+          .y1(function(d) { return y(extractor.z(d)); });
       var line = d3.svg.line()
-          .x(function(d) { return x(d['dist']); })
-          .y(function(d) { return y(d['values']['mnt']); });
+          .x(function(d) { return x(extractor.dist(d)); })
+          .y(function(d) { return y(extractor.z(d)); });
 
       // Select the svg element, if it exists.
       svg = d3.select(this).selectAll('svg').data([data]);
@@ -183,11 +195,11 @@ ngeo.profile = function() {
           .attr('transform', 'translate(' + margin.left + ',' +
               margin.top + ')');
 
-      var xDomain = d3.extent(data, function(d) { return d['dist']; });
+      var xDomain = d3.extent(data, function(d) { return extractor.dist(d); });
       x.domain(xDomain);
 
-      var yDomain = [d3.min(data, function(d) { return d['values']['mnt']; }),
-            d3.max(data, function(d) { return d['values']['mnt']; })];
+      var yDomain = [d3.min(data, function(d) { return extractor.z(d); }),
+            d3.max(data, function(d) { return extractor.z(d); })];
 
       var padding = (yDomain[1] - yDomain[0]) * 0.1;
       y.domain([yDomain[0] - padding, yDomain[1] + padding]);
@@ -251,8 +263,8 @@ ngeo.profile = function() {
         var i = bisectDistance(data, x0, 1);
 
         var point = data[i];
-        var elevation = point['values']['mnt'];
-        var dist = point['dist'];
+        var elevation = extractor.z(point);
+        var dist = extractor.dist(point);
 
         g.select('.x.grid-hover')
             .style('display', 'inline')
@@ -294,22 +306,6 @@ ngeo.profile = function() {
         outCallback.call(null);
       }
     });
-  };
-
-  profile.onHover = function(cb) {
-    if (!arguments.length) {
-      return hoverCallback;
-    }
-    hoverCallback = cb;
-    return this;
-  };
-
-  profile.onOut = function(cb) {
-    if (!arguments.length) {
-      return outCallback;
-    }
-    outCallback = cb;
-    return this;
   };
 
   return profile;

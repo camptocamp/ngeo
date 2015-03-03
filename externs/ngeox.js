@@ -49,3 +49,68 @@ ngeox.interaction.MeasureOptions.prototype.style;
  * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
  */
 ngeox.interaction.MeasureOptions.prototype.sketchStyle;
+
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+ngeox.profile;
+
+
+/**
+ * Options for the profile.
+ *  @typedef {{
+ *    extractor: ngeox.profile.ProfileExtractor,
+ *    light: (boolean|undefined),
+ *    hoverCallback: (function(Object)|undefined),
+ *    outCallback: (function()|undefined)
+ *  }}
+ */
+ngeox.profile.ProfileOptions;
+
+
+/**
+ * @type {ngeox.profile.ProfileExtractor}
+ */
+ngeox.profile.ProfileOptions.prototype.extractor;
+
+
+/**
+ * @type {boolean|undefined}
+ */
+ngeox.profile.ProfileOptions.prototype.light;
+
+
+/**
+ * @type {function(Object)|undefined}
+ */
+ngeox.profile.ProfileOptions.prototype.hoverCallback;
+
+
+/**
+ * @type {function()|undefined}
+ */
+ngeox.profile.ProfileOptions.prototype.outCallback;
+
+
+/**
+ * Profile data extractor.
+ * @typedef {{
+ *   z: function(Object): number,
+ *   dist: function(Object): number
+ * }}
+ */
+ngeox.profile.ProfileExtractor;
+
+
+/**
+ * @type {function(Object, string=): number}
+ */
+ngeox.profile.ProfileExtractor.prototype.z;
+
+
+/**
+ * @type {function(Object): number}
+ */
+ngeox.profile.ProfileExtractor.prototype.dist;
