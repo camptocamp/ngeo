@@ -82,6 +82,12 @@ ngeo.profile = function(options) {
       options.outCallback : goog.nullFunction;
 
   /**
+   * @type {boolean}
+   * Whether the simplified profile should be shown.
+   */
+  var light = goog.isDef(options.light) ? options.light : false;
+
+  /**
    * The color to be used for filling the area.
    * Can be overriden using the '.area' CSS selector.
    * @type {string}
@@ -153,20 +159,21 @@ ngeo.profile = function(options) {
       gEnter.insert('g', ':first-child')
           .attr('class', 'grid-y');
 
-      gEnter.append('g')
+      if (!light) {
+        gEnter.append('g')
           .attr('class', 'x axis')
           .attr('transform', 'translate(0,' + height + ')');
 
-      gEnter.append('text')
+        gEnter.append('text')
           .attr('class', 'x label')
           .attr('text-anchor', 'end')
           .attr('x', width - 4)
           .attr('y', height - 4);
 
-      gEnter.append('g')
+        gEnter.append('g')
           .attr('class', 'y axis');
 
-      gEnter.append('text')
+        gEnter.append('text')
           .attr('class', 'y label')
           .attr('text-anchor', 'end')
           .attr('y', 6)
@@ -175,9 +182,10 @@ ngeo.profile = function(options) {
           .style('fill', 'grey')
           .text('elevation (m)');
 
-      gEnter.append('g')
+        gEnter.append('g')
           .attr('class', 'metas')
           .attr('transform', 'translate(' + (width + 3) + ', 0)');
+      }
 
       var yHover = gEnter.append('g').attr('class', 'y grid-hover');
       yHover.append('svg:line').attr('stroke-dasharray', '5,5');
@@ -229,22 +237,24 @@ ngeo.profile = function(options) {
         units = 'm';
       }
 
-      xAxis.tickFormat(function(d) {
-        return d / xFactor;
-      });
+      if (!light) {
+        xAxis.tickFormat(function(d) {
+          return d / xFactor;
+        });
 
-      g.select('.x.axis')
+        g.select('.x.axis')
           .transition()
           .call(xAxis);
 
-      g.select('.x.label')
+        g.select('.x.label')
           .text('distance (' + units + ')')
           .style('fill', 'grey')
           .style('shape-rendering', 'crispEdges');
 
-      g.select('.y.axis')
+        g.select('.y.axis')
           .transition()
           .call(yAxis);
+      }
 
       g.select('.grid-y')
           .transition()
