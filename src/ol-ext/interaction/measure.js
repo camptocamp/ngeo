@@ -54,7 +54,7 @@ ngeo.interaction.Measure = function(opt_options) {
    * @type {ol.Overlay}
    * @private
    */
-  this.helpTooltip_ = null;
+  this.helpTooltipOverlay_ = null;
 
 
   /**
@@ -70,7 +70,7 @@ ngeo.interaction.Measure = function(opt_options) {
    * @type {ol.Overlay}
    * @private
    */
-  this.measureTooltip_ = null;
+  this.measureTooltipOverlay_ = null;
 
 
   /**
@@ -155,14 +155,14 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
     this.handleMeasure(goog.bind(function(measure, coord, helpMsg_) {
       if (!goog.isNull(coord)) {
         this.measureTooltipElement_.innerHTML = measure;
-        this.measureTooltip_.setPosition(coord);
+        this.measureTooltipOverlay_.setPosition(coord);
       }
       helpMsg = helpMsg_;
     }, this));
   }
 
   this.helpTooltipElement_.innerHTML = helpMsg;
-  this.helpTooltip_.setPosition(evt.coordinate);
+  this.helpTooltipOverlay_.setPosition(evt.coordinate);
 
   return true;
 };
@@ -217,7 +217,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
  */
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
   goog.dom.classlist.add(this.measureTooltipElement_, 'tooltip-static');
-  this.measureTooltip_.setOffset([0, -7]);
+  this.measureTooltipOverlay_.setOffset([0, -7]);
   this.sketchFeature = null;
 };
 
@@ -230,12 +230,12 @@ ngeo.interaction.Measure.prototype.createHelpTooltip_ = function() {
   this.removeHelpTooltip_();
   this.helpTooltipElement_ = goog.dom.createDom(goog.dom.TagName.DIV);
   goog.dom.classlist.add(this.helpTooltipElement_, 'tooltip');
-  this.helpTooltip_ = new ol.Overlay({
+  this.helpTooltipOverlay_ = new ol.Overlay({
     element: this.helpTooltipElement_,
     offset: [15, 0],
     positioning: 'center-left'
   });
-  this.getMap().addOverlay(this.helpTooltip_);
+  this.getMap().addOverlay(this.helpTooltipOverlay_);
 };
 
 
@@ -244,12 +244,12 @@ ngeo.interaction.Measure.prototype.createHelpTooltip_ = function() {
  * @private
  */
 ngeo.interaction.Measure.prototype.removeHelpTooltip_ = function() {
-  this.getMap().removeOverlay(this.helpTooltip_);
+  this.getMap().removeOverlay(this.helpTooltipOverlay_);
   if (!goog.isNull(this.helpTooltipElement_)) {
     this.helpTooltipElement_.parentNode.removeChild(this.helpTooltipElement_);
   }
   this.helpTooltipElement_ = null;
-  this.helpTooltip_ = null;
+  this.helpTooltipOverlay_ = null;
 };
 
 
@@ -262,12 +262,12 @@ ngeo.interaction.Measure.prototype.createMeasureTooltip_ = function() {
   this.measureTooltipElement_ = goog.dom.createDom(goog.dom.TagName.DIV);
   goog.dom.classlist.addAll(this.measureTooltipElement_,
       ['tooltip', 'tooltip-measure']);
-  this.measureTooltip_ = new ol.Overlay({
+  this.measureTooltipOverlay_ = new ol.Overlay({
     element: this.measureTooltipElement_,
     offset: [0, -15],
     positioning: 'bottom-center'
   });
-  this.getMap().addOverlay(this.measureTooltip_);
+  this.getMap().addOverlay(this.measureTooltipOverlay_);
 };
 
 
@@ -280,7 +280,7 @@ ngeo.interaction.Measure.prototype.removeMeasureTooltip_ = function() {
     this.measureTooltipElement_.parentNode.removeChild(
         this.measureTooltipElement_);
     this.measureTooltipElement_ = null;
-    this.measureTooltip_ = null;
+    this.measureTooltipOverlay_ = null;
   }
 };
 
@@ -299,7 +299,7 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
     this.createHelpTooltip_();
   } else {
     this.overlay_.getFeatures().clear();
-    this.getMap().removeOverlay(this.measureTooltip_);
+    this.getMap().removeOverlay(this.measureTooltipOverlay_);
     this.removeMeasureTooltip_();
     this.removeHelpTooltip_();
   }
