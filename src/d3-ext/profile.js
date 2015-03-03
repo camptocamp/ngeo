@@ -5,23 +5,32 @@
  * Example usage:
  *
  * var selection = d3.select('#element_id');
- * var profile = ngeo.profile().onHover(function(point) {
- *   console.log(point.x, point.y);
- * }).onOut(function() {console.log("out");});
+ * var profile = ngeo.profile({
+ *  extractor: {
+ *    z: function (item) {return item['values']['z'];)},
+ *    dist: function (item) {return item['dist'];)}
+ *  },
+ *  hoverCallback: function(point) {
+ *    console.log(point.x, point.y);
+ *  },
+ *  outCallback: function() {
+ *    console.log("out");
+ *  }});
  * selection.datum(data).call(profile);
  *
+ * The selection data must be an array.
+ * The layout for the items of this array is unconstrained: the elevation
+ * and distance values are extracted using the extractor config option.
  *
- * The selection data to be used should look like the following:
- *
+ * The data below will work for the above example:
  * [
  *     {
  *         "y": 199340,
- *         "values": {"mnt": 788.7},
+ *         "values": {"z": 788.7},
  *         "dist": 0.0,
  *         "x": 541620
  *     }, ...
  * ]
- *
  */
 goog.provide('ngeo.profile');
 
