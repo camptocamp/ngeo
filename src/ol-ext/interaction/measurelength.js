@@ -24,12 +24,14 @@ ngeo.interaction.MeasureLength = function(opt_options) {
 
   /**
    * Message to show after the first point is clicked.
-   * @type {string}
+   * @type {Element}
    * @private
    */
   this.continueMsg_ = goog.isDef(options.continueMsg) ? options.continueMsg :
-      'Click to continue drawing the line<br>' +
-      'Double-click or click last point to finish';
+      goog.dom.createDom(goog.dom.TagName.SPAN, {},
+          'Click to continue drawing the line.',
+          goog.dom.createDom(goog.dom.TagName.BR),
+          'Double-click or click last point to finish.');
 
 };
 goog.inherits(ngeo.interaction.MeasureLength, ngeo.interaction.Measure);

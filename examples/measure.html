@@ -53,8 +53,10 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <div id="map" ngeo-map="::ctrl.map"></div>
-
-    <div app-measuretools app-measuretools-map="::ctrl.map"></div>
+    <div app-measuretools app-measuretools-map="::ctrl.map" app-measuretools-lang="ctrl.lang"></div>
+    <p>Use the following selector to change the language used for the measure tooltips.</p>
+    <label>Select language:</label>
+    <select ng-options="lang for lang in ['en', 'fr']" ng-model="ctrl.lang"></select>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="/@?main=measure.js"></script>
   </body>
