@@ -5,7 +5,7 @@
  * Example:
  *
  * <div ngeo-profile="ctrl.profileData"
- *      ngeo-profile-ooptions="ctrl.profileOptions"></div>
+ *      ngeo-profile-options="ctrl.profileOptions"></div>
  *
  * Note: "ctrl.profileOptions" is of type ngeox.profile.ProfileOptions.
  */
@@ -34,17 +34,26 @@ ngeo.profileDirective = function() {
           goog.asserts.assert(goog.isDef(optionsAttr));
 
           var selection = d3.select(element[0]);
+          var profile, options, data;
 
-          var options = /** @type {ngeox.profile.ProfileOptions} */
-              (scope.$eval(optionsAttr));
-          var profile = ngeo.profile(options);
-
-          scope.$watch(attrs['ngeoProfile'], function(newVal, oldVal) {
-            var data = newVal;
-            if (goog.isDef(data)) {
-              selection.datum(data).call(profile);
+          scope.$watchCollection(optionsAttr, function(newVal) {
+            options = newVal;
+            if (goog.isDef(options)) {
+              profile = ngeo.profile(options);
+              refreshData();
             }
           });
+
+          scope.$watch(attrs['ngeoProfile'], function(newVal, oldVal) {
+            data = newVal;
+            refreshData();
+          });
+
+          function refreshData() {
+            if (goog.isDef(profile) && goog.isDef(data)) {
+              selection.datum(data).call(profile);
+            }
+          }
         }
   };
 };
