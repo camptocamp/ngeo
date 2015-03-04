@@ -308,6 +308,34 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
 
 
 /**
+ * Format measure output.
+ * @param {ol.geom.LineString} line
+ * @return {string}
+ * @protected
+ */
+ngeo.interaction.Measure.prototype.formatLength = function(line) {
+  var length = 0;
+  var map = this.getMap();
+  var sourceProj = map.getView().getProjection();
+  var coordinates = line.getCoordinates();
+  for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+    var c1 = ol.proj.transform(coordinates[i], sourceProj, 'EPSG:4326');
+    var c2 = ol.proj.transform(coordinates[i + 1], sourceProj, 'EPSG:4326');
+    length += ol.sphere.WGS84.haversineDistance(c1, c2);
+  }
+  var output;
+  if (length > 1000) {
+    output = parseFloat((length / 1000).toPrecision(3)) +
+        ' ' + 'km';
+  } else {
+    output = parseFloat(length.toPrecision(3)) +
+        ' ' + 'm';
+  }
+  return output;
+};
+
+
+/**
  * Function implemented in inherited classes to compute measurement, determine
  * where to place the tooltip and determine which help message to display.
  * @param {function(string, ?ol.Coordinate, Element)} callback The function
