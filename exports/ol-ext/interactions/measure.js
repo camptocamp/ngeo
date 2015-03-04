@@ -8,3 +8,8 @@ goog.exportSymbol('ngeo.interaction.MeasureAzimut',
     ngeo.interaction.MeasureAzimut);
 goog.exportSymbol('ngeo.interaction.MeasureLength',
     ngeo.interaction.MeasureLength);
+
+goog.exportProperty(
+    ngeo.interaction.Measure.prototype,
+    'getTooltipElement',
+    ngeo.interaction.Measure.prototype.getTooltipElement);

@@ -29,6 +29,7 @@ goog.require('ol.style.Style');
  * Interaction dedicated to measure length.
  *
  * @constructor
+ * @fires ol.DrawEvent
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
  */

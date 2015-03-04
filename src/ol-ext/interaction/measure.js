@@ -1,3 +1,4 @@
+goog.provide('ngeo.MeasureEvent');
 goog.provide('ngeo.interaction');
 goog.provide('ngeo.interaction.Measure');
 
@@ -23,6 +24,45 @@ goog.require('ol.style.Style');
  * }}
  */
 ngeo.interaction.MeasureBaseOptions;
+
+
+/**
+ * @enum {string}
+ */
+ngeo.MeasureEventType = {
+  /**
+   * Triggered upon feature draw end
+   * @event ol.MeasureEvent#measureend
+   */
+  MEASUREEND: 'measureend'
+};
+
+
+
+/**
+ * @classdesc
+ * Events emitted by {@link ngeo.interaction.Interaction} instances are
+ * instances of this type.
+ *
+ * @constructor
+ * @extends {goog.events.Event}
+ * @implements {ngeox.MeasureEvent}
+ * @param {ngeo.MeasureEventType} type Type.
+ * @param {ol.Feature} feature The feature drawn.
+ */
+ngeo.MeasureEvent = function(type, feature) {
+
+  goog.base(this, type);
+
+  /**
+   * The feature being drawn.
+   * @type {ol.Feature}
+   * @api stable
+   */
+  this.feature = feature;
+
+};
+goog.inherits(ngeo.MeasureEvent, goog.events.Event);
 
 
 
@@ -220,6 +260,8 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
   goog.dom.classlist.add(this.measureTooltipElement_, 'tooltip-static');
   this.measureTooltipOverlay_.setOffset([0, -7]);
   this.sketchFeature = null;
+  this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
+      this.sketchFeature));
 };
 
 
@@ -343,3 +385,12 @@ ngeo.interaction.Measure.prototype.formatLength = function(line) {
  * @protected
  */
 ngeo.interaction.Measure.prototype.handleMeasure = goog.abstractMethod;
+
+
+/**
+ * Get a reference to the tooltip element.
+ * @return {Element}
+ */
+ngeo.interaction.Measure.prototype.getTooltipElement = function() {
+  return this.measureTooltipElement_;
+};
