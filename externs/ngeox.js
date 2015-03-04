@@ -61,7 +61,8 @@ ngeox.profile;
 /**
  * Options for the profile.
  *  @typedef {{
- *    extractor: ngeox.profile.ProfileExtractor,
+ *    elevationExtractor: ngeox.profile.ElevationExtractor,
+ *    poiExtractor: ngeox.profile.PoiExtractor,
  *    light: (boolean|undefined),
  *    hoverCallback: (function(Object)|undefined),
  *    outCallback: (function()|undefined)
@@ -71,9 +72,15 @@ ngeox.profile.ProfileOptions;
 
 
 /**
- * @type {ngeox.profile.ProfileExtractor}
+ * @type {ngeox.profile.ElevationExtractor}
  */
-ngeox.profile.ProfileOptions.prototype.extractor;
+ngeox.profile.ProfileOptions.prototype.elevationExtractor;
+
+
+/**
+ * @type {ngeox.profile.PoiExtractor}
+ */
+ngeox.profile.ProfileOptions.prototype.poiExtractor;
 
 
 /**
@@ -95,25 +102,75 @@ ngeox.profile.ProfileOptions.prototype.outCallback;
 
 
 /**
- * Profile data extractor.
+ * Elevation data extractor.
  * @typedef {{
  *   z: function(Object): number,
  *   dist: function(Object): number
  * }}
  */
-ngeox.profile.ProfileExtractor;
+ngeox.profile.ElevationExtractor;
 
 
 /**
- * @type {function(Object, string=): number}
- */
-ngeox.profile.ProfileExtractor.prototype.z;
-
-
-/**
+ * Extract the elevation of a point.
  * @type {function(Object): number}
  */
-ngeox.profile.ProfileExtractor.prototype.dist;
+ngeox.profile.ElevationExtractor.prototype.z;
+
+
+/**
+ * Extract the distance from origin of a point.
+ * @type {function(Object): number}
+ */
+ngeox.profile.ElevationExtractor.prototype.dist;
+
+
+/**
+ * POI data extractor.
+ * @typedef {{
+ *   id: function(Object): string,
+ *   dist: function(Object): number,
+ *   z: function(Object, number=): number,
+ *   sort: function(Object): number,
+ *   title: function(Object): string
+ * }}
+ */
+ngeox.profile.PoiExtractor;
+
+
+/**
+ * Extract the id of a point.
+ * @type {function(Object): string}
+ */
+ngeox.profile.PoiExtractor.prototype.id;
+
+
+/**
+ * Extract the distance from origin of a point.
+ * @type {function(Object): number}
+ */
+ngeox.profile.PoiExtractor.prototype.dist;
+
+
+/**
+ * Extract the elevation of a point.
+ * @type {function(Object, number=): number}
+ */
+ngeox.profile.PoiExtractor.prototype.z;
+
+
+/**
+ * Extract the sequence number of a point.
+ * @type {function(Object): number}
+ */
+ngeox.profile.PoiExtractor.prototype.sort;
+
+
+/**
+ * Extract the title of a point.
+ * @type {function(Object): string}
+ */
+ngeox.profile.PoiExtractor.prototype.title;
 
 
 /**
@@ -126,3 +183,4 @@ ngeox.MeasureEvent = function() {};
  * @type {ol.Feature}
  */
 ngeox.MeasureEvent.prototype.feature;
+

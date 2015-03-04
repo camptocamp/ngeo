@@ -54,7 +54,7 @@ ngeo.profile = function(options) {
    * Method to get the coordinate in pixels from a distance.
    */
   var bisectDistance = d3.bisector(function(d) {
-    return extractor.dist(d);
+    return elevationExtractor.dist(d);
   }).left;
 
   /**
@@ -117,13 +117,19 @@ ngeo.profile = function(options) {
   var y;
 
   /**
-   * Extractor used to ge the dist and elevation from data.
+   * Elevation data extractor used to get the dist and elevation values.
    */
-  var extractor = options.extractor;
+  var elevationExtractor = options.elevationExtractor;
+
+  /**
+   * POI data extractor.
+   */
+  var poiExtractor = options.poiExtractor;
 
 
   var profile = function(selection) {
     selection.each(function(data) {
+      var extractor = elevationExtractor;
 
       var width = this.clientWidth - margin.right - margin.left;
       x = d3.scale.linear().range([0, width]);
@@ -146,6 +152,7 @@ ngeo.profile = function(options) {
 
       // Select the svg element, if it exists.
       svg = d3.select(this).selectAll('svg').data([data]);
+      clearPois();
 
       // Otherwise, create the skeletal chart.
       var gEnter = svg.enter().append('svg').append('g');
@@ -187,6 +194,8 @@ ngeo.profile = function(options) {
           .attr('transform', 'translate(' + (width + 3) + ', 0)');
       }
 
+      gEnter.append('g').attr('class', 'pois');
+
       var yHover = gEnter.append('g').attr('class', 'y grid-hover');
       yHover.append('svg:line').attr('stroke-dasharray', '5,5');
       yHover.append('text');
@@ -203,8 +212,7 @@ ngeo.profile = function(options) {
           .style('pointer-events', 'all');
 
       // Update the outer dimensions.
-      svg
-          .attr('width', width + margin.left + margin.right)
+      svg.attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom);
 
       // Update the inner dimensions.
@@ -220,6 +228,7 @@ ngeo.profile = function(options) {
 
       var padding = (yDomain[1] - yDomain[0]) * 0.1;
       y.domain([yDomain[0] - padding, yDomain[1] + padding]);
+
 
       // Update the area path.
       g.select('.area')
@@ -326,6 +335,80 @@ ngeo.profile = function(options) {
       }
     });
   };
+
+
+  profile.showPois = function(pois) {
+    clearPois();
+    if (!goog.isDef(pois)) {
+      return;
+    }
+
+    var pe = poiExtractor;
+    var g = svg.select('g');
+    var profileData = svg.datum();
+    var ps = g.select('.pois');
+
+    var p = ps.selectAll('.poi').data(pois, function(d) {
+      var i = bisectDistance(profileData, Math.round(pe.dist(d) * 10) / 10, 1);
+      var point = profileData[i];
+      if (point) {
+        var z = elevationExtractor.z(point);
+        pe.z(d, z);
+      }
+      return pe.id(d);
+    });
+
+    var poiEnter = p.enter()
+      .append('g')
+      .attr('class', 'poi');
+
+    ps.selectAll('.poi')
+      .style('opacity', 0)
+      .transition()
+      .duration(1000)
+      .delay(100)
+      .style('opacity', 1);
+
+    poiEnter
+      .append('text')
+      .attr('x', light ? 0 : 9)
+      .attr('dy', '.35em')
+      .attr('text-anchor', light ? 'middle' : 'start')
+      .attr('transform', function(d) {
+          if (light) {
+            return ['translate(',
+              x(pe.dist(d)), ',',
+              y(pe.z(d)) - 10, ')'
+            ].join('');
+          } else {
+            return ['translate(',
+              x(pe.dist(d)), ',',
+              y(pe.z(d)) - 20, ') rotate(-60)'
+            ].join('');
+          }
+        })
+      .text(function(d) {
+          return pe.sort(d) + (light ? '' : (' - ' + pe.title(d)));
+        });
+
+    poiEnter.append('line')
+       .style('stroke', 'grey')
+       .attr('x1', function(d) { return x(pe.dist(d));})
+       .attr('y1', function(d) { return y(y.domain()[0]);})
+       .attr('x2', function(d) { return x(pe.dist(d));})
+       .attr('y2', function(d) { return y(pe.z(d));});
+
+    poiEnter.selectAll('line')
+       .style('shape-rendering', 'crispEdges');
+  };
+
+  function clearPois() {
+    var g = svg.select('g');
+    var ps = g.select('.pois');
+    // remove any previously existing pois
+    ps.selectAll('.poi').data([]).exit().remove();
+  }
+
 
   return profile;
 };

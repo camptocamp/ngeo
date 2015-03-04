@@ -42,7 +42,7 @@ app.MainController = function($http, $scope) {
   };
 
   /**
-   * @type {ngeox.profile.ProfileExtractor}
+   * @type {ngeox.profile.ElevationExtractor}
    */
   var extractor = {z: z, dist: dist};
 
@@ -66,7 +66,7 @@ app.MainController = function($http, $scope) {
 
 
   this['profileOptions'] = {
-    extractor: extractor,
+    elevationExtractor: extractor,
     hoverCallback: hoverCallback,
     outCallback: outCallback
   };
