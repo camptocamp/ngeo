@@ -35,6 +35,7 @@
     "openlayers": "openlayers/ol3#master",
     "phantomjs": "~1.9.7-5",
     "temp": "~0.7.0",
+    "typeahead.js": "~0.10.5",
     "walk": "~2.3.3"
   }
 }
