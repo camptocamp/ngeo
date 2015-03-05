@@ -19,7 +19,8 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <div class="profile" ngeo-profile="::ctrl.profileData"
-         ngeo-profile-options="ctrl.profileOptions">
+         ngeo-profile-options="::ctrl.profileOptions"
+         ngeo-profile-pois="::ctrl.profilePoisData">
     </div>
 
     <ul ng-show="ctrl.point != null">

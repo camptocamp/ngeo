@@ -61,7 +61,8 @@ ngeox.profile;
 /**
  * Options for the profile.
  *  @typedef {{
- *    extractor: ngeox.profile.ProfileExtractor,
+ *    elevationExtractor: ngeox.profile.ElevationExtractor,
+ *    poiExtractor: ngeox.profile.PoiExtractor,
  *    light: (boolean|undefined),
  *    hoverCallback: (function(Object)|undefined),
  *    outCallback: (function()|undefined)
@@ -71,49 +72,114 @@ ngeox.profile.ProfileOptions;
 
 
 /**
- * @type {ngeox.profile.ProfileExtractor}
+ * Extractor for parsing elevation data.
+ * @type {ngeox.profile.ElevationExtractor}
  */
-ngeox.profile.ProfileOptions.prototype.extractor;
+ngeox.profile.ProfileOptions.prototype.elevationExtractor;
 
 
 /**
+ * Extractor for parsing POI data.
+ * @type {ngeox.profile.PoiExtractor}
+ */
+ngeox.profile.ProfileOptions.prototype.poiExtractor;
+
+
+/**
+ * Show a simplified profile when true.
  * @type {boolean|undefined}
  */
 ngeox.profile.ProfileOptions.prototype.light;
 
 
 /**
+ * A callback called from the profile when the mouse moves over a point.
+ * The point, an item of the elevation data array, is passed as the first
+ * argument of the function.
  * @type {function(Object)|undefined}
  */
 ngeox.profile.ProfileOptions.prototype.hoverCallback;
 
 
 /**
+ * A callback called from the profile when the mouse leaves the profile.
  * @type {function()|undefined}
  */
 ngeox.profile.ProfileOptions.prototype.outCallback;
 
 
 /**
- * Profile data extractor.
+ * The elevation data extractor is used to extract data from a point.
+ * The point is an item of the elevation data array.
  * @typedef {{
  *   z: function(Object): number,
  *   dist: function(Object): number
  * }}
  */
-ngeox.profile.ProfileExtractor;
+ngeox.profile.ElevationExtractor;
 
 
 /**
- * @type {function(Object, string=): number}
- */
-ngeox.profile.ProfileExtractor.prototype.z;
-
-
-/**
+ * Extract the elevation of a point.
  * @type {function(Object): number}
  */
-ngeox.profile.ProfileExtractor.prototype.dist;
+ngeox.profile.ElevationExtractor.prototype.z;
+
+
+/**
+ * Extract the distance from origin of a point.
+ * @type {function(Object): number}
+ */
+ngeox.profile.ElevationExtractor.prototype.dist;
+
+
+/**
+ * The POI data extractor is used to extract data from a POI.
+ * The POI is an item of the POI data array.
+ * @typedef {{
+ *   id: function(Object): string,
+ *   dist: function(Object): number,
+ *   z: function(Object, number=): number,
+ *   sort: function(Object): number,
+ *   title: function(Object): string
+ * }}
+ */
+ngeox.profile.PoiExtractor;
+
+
+/**
+ * Extract the id of a POI.
+ * @type {function(Object): string}
+ */
+ngeox.profile.PoiExtractor.prototype.id;
+
+
+/**
+ * Extract the distance from origin of a POI.
+ * @type {function(Object): number}
+ */
+ngeox.profile.PoiExtractor.prototype.dist;
+
+
+/**
+ * Extract the elevation of a POI.
+ * @type {function(Object, number=): number}
+ */
+ngeox.profile.PoiExtractor.prototype.z;
+
+
+/**
+ * Extract the sequence number of a POI.
+ * @type {function(Object): number}
+ */
+ngeox.profile.PoiExtractor.prototype.sort;
+
+
+/**
+ * Extract the title of a POI.
+ * @type {function(Object): string}
+ */
+ngeox.profile.PoiExtractor.prototype.title;
 
 
 /**
@@ -126,3 +192,4 @@ ngeox.MeasureEvent = function() {};
  * @type {ol.Feature}
  */
 ngeox.MeasureEvent.prototype.feature;
+
