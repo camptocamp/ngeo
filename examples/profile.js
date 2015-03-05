@@ -21,30 +21,74 @@ app.module = angular.module('app', ['ngeo']);
  */
 app.MainController = function($http, $scope) {
 
+  this['profilePoisData'] = [
+    {sort: 1, dist: 1000, title: 'First POI', id: 12345},
+    {sort: 2, dist: 3000, title: 'Second POI', id: 12346}
+  ];
+
   $http.get('data/profile.json').then(angular.bind(this, function(resp) {
     this['profileData'] = resp.data['profile'];
   }));
 
-  /**
-   * @param {Object} item
-   * @return {number}
-   */
-  var z = function(item) {
-    return item['values']['mnt'];
-  };
 
   /**
-    * @param {Object} item
-    * @return {number}
-    */
-  var dist = function(item) {
-    return item['dist'];
+   * Factory for creating simple getter functions for extractors.
+   * If the value is in a child property, the opt_childKey must be defined.
+   * The type parameter is used by closure to type the returned function.
+   * @param {T} type An object of the expected result type.
+   * @param {string} key Key used for retrieving the value.
+   * @param {string=} opt_childKey Key of a child object.
+   * @template T
+   * @return {function(Object): T}
+   */
+  var typedFunctionsFactory = function(type, key, opt_childKey) {
+    /**
+      * @param {Object} item
+      * @return {T}
+      */
+    return function(item) {
+      if (opt_childKey !== undefined) {
+        item = item[opt_childKey];
+      }
+      return item[key];
+    };
   };
+
+  var types = {
+    number: 1,
+    string: ''
+  };
+
 
   /**
    * @type {ngeox.profile.ElevationExtractor}
    */
-  var extractor = {z: z, dist: dist};
+  var elevationExtractor = {
+    z: typedFunctionsFactory(types.number, 'mnt', 'values'),
+    dist: typedFunctionsFactory(types.number, 'dist')
+  };
+
+
+  /**
+   * @type {ngeox.profile.PoiExtractor}
+   */
+  var poiExtractor = {
+    sort: typedFunctionsFactory(types.number, 'sort'),
+    id: typedFunctionsFactory(types.string, 'id'),
+    dist: typedFunctionsFactory(types.number, 'dist'),
+    title: typedFunctionsFactory(types.string, 'title'),
+    /**
+      * @param {Object} item
+      * @param {number=} opt_z
+      * @return {number}
+      */
+    z: function(item, opt_z) {
+      if (opt_z !== undefined) {
+        item['z'] = opt_z;
+      }
+      return item['z'];
+    }
+  };
 
 
   // Using closures for hoverCallback and outCallback since
@@ -66,7 +110,8 @@ app.MainController = function($http, $scope) {
 
 
   this['profileOptions'] = {
-    elevationExtractor: extractor,
+    elevationExtractor: elevationExtractor,
+    poiExtractor: poiExtractor,
     hoverCallback: hoverCallback,
     outCallback: outCallback
   };

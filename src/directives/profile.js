@@ -34,7 +34,7 @@ ngeo.profileDirective = function() {
           goog.asserts.assert(goog.isDef(optionsAttr));
 
           var selection = d3.select(element[0]);
-          var profile, options, data;
+          var profile, options, elevationData, poiData;
 
           scope.$watchCollection(optionsAttr, function(newVal) {
             options = newVal;
@@ -45,13 +45,19 @@ ngeo.profileDirective = function() {
           });
 
           scope.$watch(attrs['ngeoProfile'], function(newVal, oldVal) {
-            data = newVal;
+            elevationData = newVal;
+            refreshData();
+          });
+
+          scope.$watch(attrs['ngeoProfilePois'], function(newVal, oldVal) {
+            poiData = newVal;
             refreshData();
           });
 
           function refreshData() {
-            if (goog.isDef(profile) && goog.isDef(data)) {
-              selection.datum(data).call(profile);
+            if (goog.isDef(profile) && goog.isDef(elevationData)) {
+              selection.datum(elevationData).call(profile);
+              profile.showPois(poiData);
             }
           }
         }
