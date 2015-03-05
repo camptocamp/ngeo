@@ -43,12 +43,18 @@ goog.provide('ngeo.profile');
  *
  */
 ngeo.profile = function(options) {
+  /**
+   * @type {boolean}
+   * Whether the simplified profile should be shown.
+   */
+  var light = goog.isDef(options.light) ? options.light : false;
 
 
   /**
    * The values for margins around the chart defined in pixels.
    */
-  var margin = {top: 10, right: 10, bottom: 30, left: 40};
+  var margin = light ? {top: 0, right: 0, bottom: 0, left: 0} :
+      {top: 10, right: 10, bottom: 30, left: 40};
 
   /**
    * Method to get the coordinate in pixels from a distance.
@@ -80,12 +86,6 @@ ngeo.profile = function(options) {
    */
   var outCallback = goog.isDef(options.outCallback) ?
       options.outCallback : goog.nullFunction;
-
-  /**
-   * @type {boolean}
-   * Whether the simplified profile should be shown.
-   */
-  var light = goog.isDef(options.light) ? options.light : false;
 
   /**
    * The color to be used for filling the area.
