@@ -72,37 +72,45 @@ ngeox.profile.ProfileOptions;
 
 
 /**
+ * Extractor for parsing elevation data.
  * @type {ngeox.profile.ElevationExtractor}
  */
 ngeox.profile.ProfileOptions.prototype.elevationExtractor;
 
 
 /**
+ * Extractor for parsing POI data.
  * @type {ngeox.profile.PoiExtractor}
  */
 ngeox.profile.ProfileOptions.prototype.poiExtractor;
 
 
 /**
+ * Show a simplified profile when true.
  * @type {boolean|undefined}
  */
 ngeox.profile.ProfileOptions.prototype.light;
 
 
 /**
+ * A callback called from the profile when the mouse moves over a point.
+ * The point, an item of the elevation data array, is passed as the first
+ * argument of the function.
  * @type {function(Object)|undefined}
  */
 ngeox.profile.ProfileOptions.prototype.hoverCallback;
 
 
 /**
+ * A callback called from the profile when the mouse leaves the profile.
  * @type {function()|undefined}
  */
 ngeox.profile.ProfileOptions.prototype.outCallback;
 
 
 /**
- * Elevation data extractor.
+ * The elevation data extractor is used to extract data from a point.
+ * The point is an item of the elevation data array.
  * @typedef {{
  *   z: function(Object): number,
  *   dist: function(Object): number
@@ -126,7 +134,8 @@ ngeox.profile.ElevationExtractor.prototype.dist;
 
 
 /**
- * POI data extractor.
+ * The POI data extractor is used to extract data from a POI.
+ * The POI is an item of the POI data array.
  * @typedef {{
  *   id: function(Object): string,
  *   dist: function(Object): number,
@@ -139,35 +148,35 @@ ngeox.profile.PoiExtractor;
 
 
 /**
- * Extract the id of a point.
+ * Extract the id of a POI.
  * @type {function(Object): string}
  */
 ngeox.profile.PoiExtractor.prototype.id;
 
 
 /**
- * Extract the distance from origin of a point.
+ * Extract the distance from origin of a POI.
  * @type {function(Object): number}
  */
 ngeox.profile.PoiExtractor.prototype.dist;
 
 
 /**
- * Extract the elevation of a point.
+ * Extract the elevation of a POI.
  * @type {function(Object, number=): number}
  */
 ngeox.profile.PoiExtractor.prototype.z;
 
 
 /**
- * Extract the sequence number of a point.
+ * Extract the sequence number of a POI.
  * @type {function(Object): number}
  */
 ngeox.profile.PoiExtractor.prototype.sort;
 
 
 /**
- * Extract the title of a point.
+ * Extract the title of a POI.
  * @type {function(Object): string}
  */
 ngeox.profile.PoiExtractor.prototype.title;

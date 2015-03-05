@@ -5,9 +5,14 @@
  * Example:
  *
  * <div ngeo-profile="ctrl.profileData"
- *      ngeo-profile-options="ctrl.profileOptions"></div>
+ *      ngeo-profile-options="ctrl.profileOptions"
+ *      ngeo-profile-pois="ctrl.profilePois"
+ * ></div>
  *
- * Note: "ctrl.profileOptions" is of type ngeox.profile.ProfileOptions.
+ * Where "ctrl.profileOptions" is of type {@link ngeox.profile.ProfileOptions);
+ * "ctrl.profileData" and "ctrl.profilePois" are arrays which will be
+ * processed by {@link ngeox.profile.ElevationExtractor) and
+ * {@link ngeox.profile.PoiExtractor).
  */
 goog.provide('ngeo.profileDirective');
 

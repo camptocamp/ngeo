@@ -6,7 +6,7 @@
  *
  * var selection = d3.select('#element_id');
  * var profile = ngeo.profile({
- *  extractor: {
+ *  elevationExtractor: {
  *    z: function (item) {return item['values']['z'];)},
  *    dist: function (item) {return item['dist'];)}
  *  },
@@ -20,7 +20,9 @@
  *
  * The selection data must be an array.
  * The layout for the items of this array is unconstrained: the elevation
- * and distance values are extracted using the extractor config option.
+ * and distance values are extracted using the elevationExtractor config
+ * option. Optionally, POIs can be displayed and depend on a poiExtractor
+ * config option.
  *
  * The data below will work for the above example:
  * [
