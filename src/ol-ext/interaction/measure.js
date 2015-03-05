@@ -1,3 +1,4 @@
+goog.provide('ngeo.MeasureEvent');
 goog.provide('ngeo.interaction');
 goog.provide('ngeo.interaction.Measure');
 
@@ -23,6 +24,45 @@ goog.require('ol.style.Style');
  * }}
  */
 ngeo.interaction.MeasureBaseOptions;
+
+
+/**
+ * @enum {string}
+ */
+ngeo.MeasureEventType = {
+  /**
+   * Triggered upon feature draw end
+   * @event ol.MeasureEvent#measureend
+   */
+  MEASUREEND: 'measureend'
+};
+
+
+
+/**
+ * @classdesc
+ * Events emitted by {@link ngeo.interaction.Interaction} instances are
+ * instances of this type.
+ *
+ * @constructor
+ * @extends {goog.events.Event}
+ * @implements {ngeox.MeasureEvent}
+ * @param {ngeo.MeasureEventType} type Type.
+ * @param {ol.Feature} feature The feature drawn.
+ */
+ngeo.MeasureEvent = function(type, feature) {
+
+  goog.base(this, type);
+
+  /**
+   * The feature being drawn.
+   * @type {ol.Feature}
+   * @api stable
+   */
+  this.feature = feature;
+
+};
+goog.inherits(ngeo.MeasureEvent, goog.events.Event);
 
 
 
@@ -220,6 +260,8 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
   goog.dom.classlist.add(this.measureTooltipElement_, 'tooltip-static');
   this.measureTooltipOverlay_.setOffset([0, -7]);
   this.sketchFeature = null;
+  this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
+      this.sketchFeature));
 };
 
 
@@ -308,6 +350,34 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
 
 
 /**
+ * Format measure output.
+ * @param {ol.geom.LineString} line
+ * @return {string}
+ * @protected
+ */
+ngeo.interaction.Measure.prototype.formatLength = function(line) {
+  var length = 0;
+  var map = this.getMap();
+  var sourceProj = map.getView().getProjection();
+  var coordinates = line.getCoordinates();
+  for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+    var c1 = ol.proj.transform(coordinates[i], sourceProj, 'EPSG:4326');
+    var c2 = ol.proj.transform(coordinates[i + 1], sourceProj, 'EPSG:4326');
+    length += ol.sphere.WGS84.haversineDistance(c1, c2);
+  }
+  var output;
+  if (length > 1000) {
+    output = parseFloat((length / 1000).toPrecision(3)) +
+        ' ' + 'km';
+  } else {
+    output = parseFloat(length.toPrecision(3)) +
+        ' ' + 'm';
+  }
+  return output;
+};
+
+
+/**
  * Function implemented in inherited classes to compute measurement, determine
  * where to place the tooltip and determine which help message to display.
  * @param {function(string, ?ol.Coordinate, Element)} callback The function
@@ -315,3 +385,12 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
  * @protected
  */
 ngeo.interaction.Measure.prototype.handleMeasure = goog.abstractMethod;
+
+
+/**
+ * Get a reference to the tooltip element.
+ * @return {Element}
+ */
+ngeo.interaction.Measure.prototype.getTooltipElement = function() {
+  return this.measureTooltipElement_;
+};

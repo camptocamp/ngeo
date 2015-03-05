@@ -114,3 +114,15 @@ ngeox.profile.ProfileExtractor.prototype.z;
  * @type {function(Object): number}
  */
 ngeox.profile.ProfileExtractor.prototype.dist;
+
+
+/**
+ * @interface
+ */
+ngeox.MeasureEvent = function() {};
+
+
+/**
+ * @type {ol.Feature}
+ */
+ngeox.MeasureEvent.prototype.feature;

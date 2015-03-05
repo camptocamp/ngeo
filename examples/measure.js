@@ -1,6 +1,7 @@
 goog.provide('measure');
 
 goog.require('ngeo.DecorateInteraction');
+goog.require('ngeo.MeasureEvent');
 goog.require('ngeo.btngroupDirective');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureAzimut');
@@ -162,6 +163,15 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
   ngeoDecorateInteraction(measureAzimut);
   map.addInteraction(measureAzimut);
   this['measureAzimut'] = measureAzimut;
+
+
+  // the following code shows how one can add additional information to the
+  // tooltip. This can be useful to display the elevation offset from the
+  // 2 points of an azimut measurement.
+  measureAzimut.on('measureend', function(evt) {
+    var el = evt.target.getTooltipElement();
+    el.innerHTML += '<br>Additional info';
+  });
 };
 
 app.module.controller('AppMeasuretoolsController', app.MeasuretoolsController);

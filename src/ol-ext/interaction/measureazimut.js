@@ -29,6 +29,7 @@ goog.require('ol.style.Style');
  * Interaction dedicated to measure length.
  *
  * @constructor
+ * @fires ol.DrawEvent
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
  */
@@ -93,6 +94,8 @@ ngeo.interaction.MeasureAzimut.prototype.formatMeasure_ = function(line) {
   var factor = dx > 0 ? 1 : -1;
   var azimut = Math.round(factor * rad * 180 / Math.PI) % 360;
   var output = azimut + '°';
+
+  output += '<br/>' + this.formatLength(line);
   return output;
 };
 
