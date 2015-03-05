@@ -1,5 +1,5 @@
 goog.provide('ngeo.MeasureEvent');
-goog.provide('ngeo.interaction');
+goog.provide('ngeo.MeasureEventType');
 goog.provide('ngeo.interaction.Measure');
 
 goog.require('goog.dom');
