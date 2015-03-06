@@ -154,10 +154,11 @@ ngeo.profile = function(options) {
 
       // Select the svg element, if it exists.
       svg = d3.select(this).selectAll('svg').data([data]);
-      clearPois();
 
       // Otherwise, create the skeletal chart.
       var gEnter = svg.enter().append('svg').append('g');
+      clearPois();
+
       gEnter.style('font', '11px Arial');
       gEnter.append('path').attr('class', 'area')
           .style('fill', fill_color);
@@ -340,10 +341,7 @@ ngeo.profile = function(options) {
 
 
   profile.showPois = function(pois) {
-    clearPois();
-    if (!goog.isDef(pois)) {
-      return;
-    }
+    pois = goog.isDef(pois) ? pois : [];
 
     var pe = poiExtractor;
     var g = svg.select('g');
@@ -360,22 +358,25 @@ ngeo.profile = function(options) {
       return pe.id(d);
     });
 
-    var poiEnter = p.enter()
+    var poiEnterG = p.enter()
       .append('g')
       .attr('class', 'poi');
 
-    ps.selectAll('.poi')
-      .style('opacity', 0)
+    poiEnterG.append('text')
+      .attr('x', light ? 0 : 9)
+      .attr('dy', '.35em')
+      .attr('text-anchor', light ? 'middle' : 'start');
+
+    poiEnterG.append('line')
+      .style('shape-rendering', 'crispEdges');
+
+    p.style('opacity', 0)
       .transition()
       .duration(1000)
       .delay(100)
       .style('opacity', 1);
 
-    poiEnter
-      .append('text')
-      .attr('x', light ? 0 : 9)
-      .attr('dy', '.35em')
-      .attr('text-anchor', light ? 'middle' : 'start')
+    p.selectAll('text')
       .attr('transform', function(d) {
           if (light) {
             return ['translate(',
@@ -393,22 +394,19 @@ ngeo.profile = function(options) {
           return pe.sort(d) + (light ? '' : (' - ' + pe.title(d)));
         });
 
-    poiEnter.append('line')
+    p.selectAll('line')
        .style('stroke', 'grey')
        .attr('x1', function(d) { return x(pe.dist(d));})
        .attr('y1', function(d) { return y(y.domain()[0]);})
        .attr('x2', function(d) { return x(pe.dist(d));})
        .attr('y2', function(d) { return y(pe.z(d));});
 
-    poiEnter.selectAll('line')
-       .style('shape-rendering', 'crispEdges');
+    // remove unused pois
+    p.exit().remove();
   };
 
   function clearPois() {
-    var g = svg.select('g');
-    var ps = g.select('.pois');
-    // remove any previously existing pois
-    ps.selectAll('.poi').data([]).exit().remove();
+    profile.showPois([]);
   }
 
 
