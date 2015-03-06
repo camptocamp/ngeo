@@ -133,10 +133,10 @@ ngeo.profile = function(options) {
     selection.each(function(data) {
       var extractor = elevationExtractor;
 
-      var width = this.clientWidth - margin.right - margin.left;
+      var width = Math.max(this.clientWidth - margin.right - margin.left, 0);
       x = d3.scale.linear().range([0, width]);
 
-      var height = this.clientHeight - margin.top - margin.bottom;
+      var height = Math.max(this.clientHeight - margin.top - margin.bottom, 0);
       y = d3.scale.linear().range([height, 0]);
 
       var xAxis = d3.svg.axis().scale(x).orient('bottom');
