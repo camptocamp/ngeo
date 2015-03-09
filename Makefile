@@ -50,7 +50,7 @@ serve: .build/node_modules.timestamp
 
 .PHONY: gh-pages
 gh-pages: GIT_BRANCH = $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
+gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples .build/examples-hosted/index.html
 	(cd $< && \
 	 git fetch origin && \
 	 git merge --ff-only origin/gh-pages && \
@@ -209,6 +209,9 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	mkdir -p $(dir $@)
 	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
+.build/examples-hosted/index.html: buildtools/examples-index.mako.html $(EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render
+	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
+
 .build/%.check.timestamp: .build/examples-hosted/%.html \
 	    .build/examples-hosted/%.js \
 	    .build/examples-hosted/ngeo.js \
@@ -281,6 +284,10 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 
 .build/python-venv/bin/mako-render: .build/python-venv
 	.build/python-venv/bin/pip install "Mako==1.0.0"
+	touch $@
+
+.build/beautifulsoup4.timestamp: .build/python-venv
+	.build/python-venv/bin/pip install "beautifulsoup4==4.3.2"
 	touch $@
 
 .build/closure-library:

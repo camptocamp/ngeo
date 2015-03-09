@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="bootstrap.min.css" type="text/css">
+    <title>ngeo examples</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h2>Examples index</h2>
+% for example in examples:
+      <div>
+        <a href="${example['href']}">${example['title']}</a>
+        <p>${example['desc']}</p>
+      </div>
+      <hr>
+% endfor
+    </div>
+  </body>
+</html>
