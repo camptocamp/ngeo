@@ -22,6 +22,10 @@ app.module.value('ngeoLayertreeTemplateUrl',
 app.module.value('ngeoLayertreenodeTemplateUrl',
     'partials/layertreenode.html');
 
+// Use the default "popup" template.
+app.module.value('ngeoPopupTemplateUrl',
+    '../src/directives/partials/popup.html');
+
 
 /**
  * An application-specific directive wrapping the ngeo tree layer directive.
@@ -54,20 +58,46 @@ app.module.directive('appLayertree', app.layertreeDirective);
 /**
  * @constructor
  * @param {angular.$http} $http Angular http service.
+ * @param {angular.$sce} $sce Angular sce service.
  * @param {function(Object):ol.layer.Layer} appGetLayer Get layer service.
+ * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @ngInject
  * @export
  */
-app.LayertreeController = function($http, appGetLayer) {
+app.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
   $http.get('data/tree.json').then(angular.bind(this, function(resp) {
     this['tree'] = resp.data;
   }));
 
   /**
    * @private
+   * @type {angular.$http}
+   */
+  this.http_ = $http;
+
+  /**
+   * @private
+   * @type {angular.$sce}
+   */
+  this.sce_ = $sce;
+
+  /**
+   * @private
    * @type {function(Object):ol.layer.Layer}
    */
   this.getLayer_ = appGetLayer;
+
+  /**
+   * @private
+   * @type {ngeo.Popup}
+   */
+  this.infoPopup_ = ngeoCreatePopup();
+
+  /**
+   * @type {Object.<string, !angular.$q.Promise>}
+   * @private
+   */
+  this.promises_ = {};
 };
 
 
@@ -90,7 +120,20 @@ app.LayertreeController.prototype.getLayer = function(node) {
  * @export
  */
 app.LayertreeController.prototype.onButtonClick = function(node, layer) {
-  window.alert(node['name'] + ', ' + layer.get('type'));
+  var layerType = node['layerType'];
+  if (!(layerType in this.promises_)) {
+    this.promises_[layerType] = this.http_.get('data/metadata.html').then(
+        angular.bind(this, function(resp) {
+          var html = this.sce_.trustAsHtml(resp.data);
+          return html;
+        }));
+  }
+  var infoPopup = this.infoPopup_;
+  this.promises_[layerType].then(function(html) {
+    infoPopup.setTitle(node['name']);
+    infoPopup.setContent(html);
+    infoPopup.setOpen(true);
+  });
 };
 
 

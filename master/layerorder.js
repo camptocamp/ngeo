@@ -56,7 +56,6 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   });
   cities.set('name', 'Cities');
 
-
   /** @type {ol.Map} */
   this['map'] = new ol.Map({
     layers: [
@@ -76,6 +75,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   /**
    * @type {ol.Map}
    * @private
+   * @const
    */
   this.map_ = map;
 
@@ -93,6 +93,23 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   this.roads_.set('name', 'Roads');
 
   /**
+   * @type {Array.<ol.layer.Base>}
+   * @const
+   */
+  this['selectedLayers'] = [];
+
+  var selectedLayers = this['selectedLayers'];
+  ngeoSyncArrays(map.getLayers().getArray(), selectedLayers, true, $scope,
+      layerFilter);
+
+  // watch any change on layers array to refresh the map
+  $scope.$watchCollection(function() {
+    return selectedLayers;
+  }, function() {
+    map.render();
+  });
+
+  /**
    * @param {ol.layer.Base} layer Layer.
    * @return {boolean} `false` if the layer shouldn't be part of the selected
    *     layers.
@@ -101,18 +118,6 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
     return layer !== mapquest;
   }
 
-  /** @type {Array.<ol.layer.Layer>} */
-  var mapLayers = map.getLayers().getArray();
-  this['selectedLayers'] = [];
-  var selectedLayers = this['selectedLayers'];
-  ngeoSyncArrays(mapLayers, selectedLayers, true, $scope, layerFilter);
-
-  // watch any change on layers array to refresh the map
-  $scope.$watchCollection(function() {
-    return selectedLayers;
-  }, function() {
-    map.render();
-  });
 };
 
 
