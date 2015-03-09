@@ -65,6 +65,23 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples
 	 git commit -m 'Update GitHub pages' && \
 	 git push origin gh-pages)
 
+.PHONY: gh-pages-from-travis
+gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples
+	(cd $< && \
+	 git fetch origin && \
+	 git merge --ff-only origin/gh-pages && \
+	 git rm --ignore-unmatch -rqf master && \
+	 mkdir -p master && \
+	 cp -r ../examples-hosted/*.html master && \
+	 cp -r ../examples-hosted/*.js master && \
+	 cp -r ../examples-hosted/*.css master && \
+	 cp -r ../examples-hosted/data master && \
+	 cp -r ../examples-hosted/partials master && \
+	 git config user.name "Travis" && \
+	 git config user.email "travis@travis-ci.org" && \
+	 git add -A . && \
+	 git commit -m 'Update GitHub pages' && \
+	 git push https://$(GH_TOKEN)@github.com/$(TRAVIS_REPO_SLUG).git gh-pages > /dev/null)
 
 .build/gjslint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES)
 	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable $?
@@ -208,6 +225,9 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
+
+.build/ngeo-travis-gh-pages:
+	git clone --branch gh-pages https://$(GH_TOKEN)@github.com/$(TRAVIS_REPO_SLUG).git $@
 
 .build/ngeo-%-gh-pages:
 	git clone --branch gh-pages git@github.com:$*/ngeo.git $@
