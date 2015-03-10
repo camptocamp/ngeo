@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html ng-app='app'>
   <head>
-    <title>Interaction button group example</title>
+    <title>Measure example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
@@ -57,6 +57,7 @@
     <p>Use the following selector to change the language used for the measure tooltips.</p>
     <label>Select language:</label>
     <select ng-options="lang for lang in ['en', 'fr']" ng-model="ctrl.lang"></select>
+    <p id="desc">This example shows how to use the <code>ngeo.interaction.MeasureLength</code>, <code>ngeo.interaction.MeasureArea</code>, and <code>ngeo.interaction.MeasureAzimut</code> interactions to create measure tools for an OpenLayers map.</p>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="/@?main=measure.js"></script>
   </body>
