@@ -209,7 +209,7 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	mkdir -p $(dir $@)
 	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
-.build/examples-hosted/index.html: buildtools/examples-index.mako.html $(EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render
+.build/examples-hosted/index.html: buildtools/examples-index.mako.html $(EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
 	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
