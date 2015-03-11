@@ -61,14 +61,22 @@ ngeox.profile;
 /**
  * Options for the profile.
  *  @typedef {{
+ *    styleDefs: (string|undefined),
  *    elevationExtractor: ngeox.profile.ElevationExtractor,
- *    poiExtractor: ngeox.profile.PoiExtractor,
+ *    poiExtractor: (ngeox.profile.PoiExtractor|undefined),
  *    light: (boolean|undefined),
  *    hoverCallback: (function(Object)|undefined),
  *    outCallback: (function()|undefined)
  *  }}
  */
 ngeox.profile.ProfileOptions;
+
+
+/**
+ * Inline CSS style definition to inject in the SVG.
+ * @type {string|undefined}
+ */
+ngeox.profile.ProfileOptions.prototype.styleDefs;
 
 
 /**
@@ -80,7 +88,7 @@ ngeox.profile.ProfileOptions.prototype.elevationExtractor;
 
 /**
  * Extractor for parsing POI data.
- * @type {ngeox.profile.PoiExtractor}
+ * @type {ngeox.profile.PoiExtractor|undefined}
  */
 ngeox.profile.ProfileOptions.prototype.poiExtractor;
 
