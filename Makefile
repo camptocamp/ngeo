@@ -66,7 +66,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples .build/examples
 	 git push origin gh-pages)
 
 .PHONY: gh-pages-from-travis
-gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples
+gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples .build/examples-hosted/index.html
 	(cd $< && \
 	 git fetch origin && \
 	 git merge --ff-only origin/gh-pages && \
