@@ -61,6 +61,7 @@ ngeox.profile;
 /**
  * Options for the profile.
  *  @typedef {{
+ *    styleDefs: (string|undefined),
  *    elevationExtractor: ngeox.profile.ElevationExtractor,
  *    poiExtractor: ngeox.profile.PoiExtractor,
  *    light: (boolean|undefined),
@@ -69,6 +70,13 @@ ngeox.profile;
  *  }}
  */
 ngeox.profile.ProfileOptions;
+
+
+/**
+ * Inline CSS style definition to inject in the SVG.
+ * @type {string|undefined}
+ */
+ngeox.profile.ProfileOptions.prototype.styleDefs;
 
 
 /**

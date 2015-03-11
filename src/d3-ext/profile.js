@@ -128,6 +128,10 @@ ngeo.profile = function(options) {
    */
   var poiExtractor = options.poiExtractor;
 
+  /**
+   * Optional SVG inline style.
+   */
+  var styleDefs = options.styleDefs;
 
   var profile = function(selection) {
     selection.each(function(data) {
@@ -156,7 +160,13 @@ ngeo.profile = function(options) {
       svg = d3.select(this).selectAll('svg').data([data]);
 
       // Otherwise, create the skeletal chart.
-      var gEnter = svg.enter().append('svg').append('g');
+      var svgEnter = svg.enter().append('svg');
+      if (goog.isDef(styleDefs)) {
+        svgEnter.append('defs').append('style')
+          .attr('type', 'text/css')
+          .text(styleDefs);
+      }
+      var gEnter = svgEnter.append('g');
       clearPois();
 
       gEnter.style('font', '11px Arial');
