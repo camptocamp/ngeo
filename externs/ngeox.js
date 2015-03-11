@@ -63,7 +63,7 @@ ngeox.profile;
  *  @typedef {{
  *    styleDefs: (string|undefined),
  *    elevationExtractor: ngeox.profile.ElevationExtractor,
- *    poiExtractor: ngeox.profile.PoiExtractor,
+ *    poiExtractor: (ngeox.profile.PoiExtractor|undefined),
  *    light: (boolean|undefined),
  *    hoverCallback: (function(Object)|undefined),
  *    outCallback: (function()|undefined)
@@ -88,7 +88,7 @@ ngeox.profile.ProfileOptions.prototype.elevationExtractor;
 
 /**
  * Extractor for parsing POI data.
- * @type {ngeox.profile.PoiExtractor}
+ * @type {ngeox.profile.PoiExtractor|undefined}
  */
 ngeox.profile.ProfileOptions.prototype.poiExtractor;
 

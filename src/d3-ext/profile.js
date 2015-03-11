@@ -352,6 +352,7 @@ ngeo.profile = function(options) {
 
   profile.showPois = function(pois) {
     pois = goog.isDef(pois) ? pois : [];
+    goog.asserts.assert(pois.length === 0 || goog.isDef(poiExtractor));
 
     var pe = poiExtractor;
     var g = svg.select('g');
