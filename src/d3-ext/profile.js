@@ -65,15 +65,6 @@ ngeo.profile = function(options) {
     return elevationExtractor.dist(d);
   }).left;
 
-  /**
-   * Distance units. Either 'm' or 'km'.
-   */
-  var units;
-
-  /**
-   * Factor to determine whether to use 'm' or 'km'.
-   */
-  var xFactor;
 
   /**
    * @type {function(Object)}
@@ -88,35 +79,6 @@ ngeo.profile = function(options) {
    */
   var outCallback = goog.isDef(options.outCallback) ?
       options.outCallback : goog.nullFunction;
-
-  /**
-   * The color to be used for filling the area.
-   * Can be overriden using the '.area' CSS selector.
-   * @type {string}
-   */
-  var fill_color = 'rgba(222, 222, 222, 0.5)';
-
-  /**
-   * The color to be used the line stroke.
-   * Can be overriden using the '.line' CSS selector.
-   * @type {string}
-   */
-  var stroke_color = '#F00';
-
-  /**
-   * @type {Object}
-   */
-  var svg;
-
-  /**
-   * D3 x scale.
-   */
-  var x;
-
-  /**
-   * D3 y scale.
-   */
-  var y;
 
   /**
    * Elevation data extractor used to get the dist and elevation values.
@@ -157,8 +119,36 @@ ngeo.profile = function(options) {
    */
   var lightXAxis = goog.isDef(options.lightXAxis) ? options.lightXAxis : false;
 
+
+  // Objects shared with the showPois function
+  /**
+   * @type {Object}
+   */
+  var svg;
+
+  /**
+   * D3 x scale.
+   */
+  var x;
+
+  /**
+   * D3 y scale.
+   */
+  var y;
+
+
   var profile = function(selection) {
     selection.each(function(data) {
+      /**
+      * Distance units. Either 'm' or 'km'.
+      */
+      var units;
+
+      /**
+      * Factor to determine whether to use 'm' or 'km'.
+      */
+      var xFactor;
+
       var extractor = elevationExtractor;
 
       var width = Math.max(this.clientWidth - margin.right - margin.left, 0);
@@ -195,9 +185,9 @@ ngeo.profile = function(options) {
 
       gEnter.style('font', '11px Arial');
       gEnter.append('path').attr('class', 'area')
-          .style('fill', fill_color);
+          .style('fill', 'rgba(222, 222, 222, 0.5)');
       gEnter.append('path').attr('class', 'line')
-          .style('stroke', stroke_color)
+          .style('stroke', '#F00')
           .style('fill', 'none');
 
       gEnter.insert('g', ':first-child')
