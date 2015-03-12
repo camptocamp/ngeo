@@ -56,7 +56,7 @@ ngeo.profile = function(options) {
    * The values for margins around the chart defined in pixels.
    */
   var margin = light ? {top: 0, right: 0, bottom: 0, left: 0} :
-      {top: 10, right: 10, bottom: 30, left: 40};
+      {top: 10, right: 20, bottom: 30, left: 40};
 
   /**
    * Method to get the coordinate in pixels from a distance.
@@ -65,15 +65,6 @@ ngeo.profile = function(options) {
     return elevationExtractor.dist(d);
   }).left;
 
-  /**
-   * Distance units. Either 'm' or 'km'.
-   */
-  var units;
-
-  /**
-   * Factor to determine whether to use 'm' or 'km'.
-   */
-  var xFactor;
 
   /**
    * @type {function(Object)}
@@ -90,19 +81,46 @@ ngeo.profile = function(options) {
       options.outCallback : goog.nullFunction;
 
   /**
-   * The color to be used for filling the area.
-   * Can be overriden using the '.area' CSS selector.
-   * @type {string}
+   * Elevation data extractor used to get the dist and elevation values.
    */
-  var fill_color = 'rgba(222, 222, 222, 0.5)';
+  var elevationExtractor = options.elevationExtractor;
 
   /**
-   * The color to be used the line stroke.
-   * Can be overriden using the '.line' CSS selector.
-   * @type {string}
+   * POI data extractor.
    */
-  var stroke_color = '#F00';
+  var poiExtractor = options.poiExtractor;
 
+  /**
+   * Optional SVG inline style.
+   */
+  var styleDefs = options.styleDefs;
+
+  /**
+   * @type {number}
+   */
+  var poiLabelAngle = goog.isDef(options.poiLabelAngle) ?
+      options.poiLabelAngle : -60;
+
+  /**
+   * @type {ngeox.profile.ProfileFormatter}
+   */
+  var formatter = goog.isDef(options.formatter) ?
+      options.formatter : {
+        xhover: function(dist, units) {
+          return parseFloat(dist.toPrecision(3)) + ' ' + units;
+        },
+        yhover: function(ele, units) { return Math.round(ele) + ' m'; },
+        xtick: function(dist, units) { return dist; },
+        ytick: function(ele, units) { return ele; }
+      };
+
+  /**
+   * @type {boolean}
+   */
+  var lightXAxis = goog.isDef(options.lightXAxis) ? options.lightXAxis : false;
+
+
+  // Objects shared with the showPois function
   /**
    * @type {Object}
    */
@@ -118,23 +136,19 @@ ngeo.profile = function(options) {
    */
   var y;
 
-  /**
-   * Elevation data extractor used to get the dist and elevation values.
-   */
-  var elevationExtractor = options.elevationExtractor;
-
-  /**
-   * POI data extractor.
-   */
-  var poiExtractor = options.poiExtractor;
-
-  /**
-   * Optional SVG inline style.
-   */
-  var styleDefs = options.styleDefs;
 
   var profile = function(selection) {
     selection.each(function(data) {
+      /**
+      * Distance units. Either 'm' or 'km'.
+      */
+      var units;
+
+      /**
+      * Factor to determine whether to use 'm' or 'km'.
+      */
+      var xFactor;
+
       var extractor = elevationExtractor;
 
       var width = Math.max(this.clientWidth - margin.right - margin.left, 0);
@@ -171,9 +185,9 @@ ngeo.profile = function(options) {
 
       gEnter.style('font', '11px Arial');
       gEnter.append('path').attr('class', 'area')
-          .style('fill', fill_color);
+          .style('fill', 'rgba(222, 222, 222, 0.5)');
       gEnter.append('path').attr('class', 'line')
-          .style('stroke', stroke_color)
+          .style('stroke', '#F00')
           .style('fill', 'none');
 
       gEnter.insert('g', ':first-child')
@@ -236,9 +250,7 @@ ngeo.profile = function(options) {
       var xDomain = d3.extent(data, function(d) { return extractor.dist(d); });
       x.domain(xDomain);
 
-      var yDomain = [d3.min(data, function(d) { return extractor.z(d); }),
-            d3.max(data, function(d) { return extractor.z(d); })];
-
+      var yDomain = d3.extent(data, function(d) { return extractor.z(d); });
       var padding = (yDomain[1] - yDomain[0]) * 0.1;
       y.domain([yDomain[0] - padding, yDomain[1] + padding]);
 
@@ -261,7 +273,14 @@ ngeo.profile = function(options) {
 
       if (!light) {
         xAxis.tickFormat(function(d) {
-          return d / xFactor;
+          return formatter.xtick(d / xFactor, units);
+        });
+        if (lightXAxis) {
+          xAxis.tickValues([0, x.domain()[1]]);
+        }
+
+        yAxis.tickFormat(function(d) {
+          return formatter.ytick(d, 'm');
         });
 
         g.select('.x.axis')
@@ -328,13 +347,13 @@ ngeo.profile = function(options) {
         xtranslate += right ? -10 : 10;
 
         g.select('.x.grid-hover text')
-            .text(parseFloat(dist.toPrecision(3) / xFactor) + ' ' + units)
+            .text(formatter.xhover(dist / xFactor, units))
             .style('text-anchor', right ? 'end' : 'start')
             .attr('transform', 'translate(' + xtranslate + ',' +
                 (height - 10) + ')');
 
         g.select('.y.grid-hover text')
-            .text(Math.round(elevation) + ' m')
+            .text(formatter.yhover(elevation, 'm'))
             .style('text-anchor', right ? 'end' : 'start')
             .attr('transform', 'translate(' + xtranslate + ',' +
                 (y(elevation) - 10) + ')');
@@ -397,7 +416,7 @@ ngeo.profile = function(options) {
           } else {
             return ['translate(',
               x(pe.dist(d)), ',',
-              y(pe.z(d)) - 20, ') rotate(-60)'
+              y(pe.z(d)) - 20, ') rotate(', poiLabelAngle, ')'
             ].join('');
           }
         })
