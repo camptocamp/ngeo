@@ -56,7 +56,7 @@ ngeo.profile = function(options) {
    * The values for margins around the chart defined in pixels.
    */
   var margin = light ? {top: 0, right: 0, bottom: 0, left: 0} :
-      {top: 10, right: 10, bottom: 30, left: 40};
+      {top: 10, right: 20, bottom: 30, left: 40};
 
   /**
    * Method to get the coordinate in pixels from a distance.
