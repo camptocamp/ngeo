@@ -260,9 +260,7 @@ ngeo.profile = function(options) {
       var xDomain = d3.extent(data, function(d) { return extractor.dist(d); });
       x.domain(xDomain);
 
-      var yDomain = [d3.min(data, function(d) { return extractor.z(d); }),
-            d3.max(data, function(d) { return extractor.z(d); })];
-
+      var yDomain = d3.extent(data, function(d) { return extractor.z(d); });
       var padding = (yDomain[1] - yDomain[0]) * 0.1;
       y.domain([yDomain[0] - padding, yDomain[1] + padding]);
 
