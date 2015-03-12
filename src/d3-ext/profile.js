@@ -139,6 +139,11 @@ ngeo.profile = function(options) {
   var poiLabelAngle = goog.isDef(options.poiLabelAngle) ?
       options.poiLabelAngle : -60;
 
+  /**
+   * @type {boolean}
+   */
+  var lightXAxis = goog.isDef(options.lightXAxis) ? options.lightXAxis : false;
+
   var profile = function(selection) {
     selection.each(function(data) {
       var extractor = elevationExtractor;
@@ -268,6 +273,9 @@ ngeo.profile = function(options) {
       if (!light) {
         xAxis.tickFormat(function(d) {
           return d / xFactor;
+        if (lightXAxis) {
+          xAxis.tickValues([0, x.domain()[1]]);
+        }
         });
 
         g.select('.x.axis')

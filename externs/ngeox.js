@@ -66,6 +66,7 @@ ngeox.profile;
  *    elevationExtractor: ngeox.profile.ElevationExtractor,
  *    poiExtractor: (ngeox.profile.PoiExtractor|undefined),
  *    light: (boolean|undefined),
+ *    lightXAxis: (boolean|undefined),
  *    hoverCallback: (function(Object)|undefined),
  *    outCallback: (function()|undefined)
  *  }}
@@ -105,6 +106,13 @@ ngeox.profile.ProfileOptions.prototype.poiExtractor;
  * @type {boolean|undefined}
  */
 ngeox.profile.ProfileOptions.prototype.light;
+
+
+/**
+ * Show a simplified x axis with only both end ticks.
+ * @type {boolean|undefined}
+ */
+ngeox.profile.ProfileOptions.prototype.lightXAxis;
 
 
 /**
