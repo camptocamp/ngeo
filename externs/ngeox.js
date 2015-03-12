@@ -68,6 +68,7 @@ ngeox.profile;
  *    poiExtractor: (ngeox.profile.PoiExtractor|undefined),
  *    light: (boolean|undefined),
  *    lightXAxis: (boolean|undefined),
+ *    ratioXYRule: (function(number): number|undefined),
  *    hoverCallback: (function(Object)|undefined),
  *    outCallback: (function()|undefined)
  *  }}
@@ -122,6 +123,14 @@ ngeox.profile.ProfileOptions.prototype.light;
  * @type {boolean|undefined}
  */
 ngeox.profile.ProfileOptions.prototype.lightXAxis;
+
+
+/**
+ * Return a ratio value for constraining the y domain based on the maximum
+ * value from the x domain. In the absence of constraint, use a negative value.
+ * @type {function(number):number|undefined}
+ */
+ngeox.profile.ProfileOptions.prototype.ratioXYRule;
 
 
 /**
