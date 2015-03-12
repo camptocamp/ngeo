@@ -102,6 +102,11 @@ ngeo.profile = function(options) {
       options.poiLabelAngle : -60;
 
   /**
+   * @type {function(number): number|undefined}
+   */
+  var ratioXYRule = options.ratioXYRule;
+
+  /**
    * @type {ngeox.profile.ProfileFormatter}
    */
   var formatter = goog.isDef(options.formatter) ?
@@ -254,6 +259,16 @@ ngeo.profile = function(options) {
       var padding = (yDomain[1] - yDomain[0]) * 0.1;
       y.domain([yDomain[0] - padding, yDomain[1] + padding]);
 
+      // set the ratio according to the horizontal distance
+      if (goog.isDef(ratioXYRule)) {
+        var ratioXY = ratioXYRule(xDomain[1]);
+        if (ratioXY > 0) {
+          var yMean = (yDomain[1] - yDomain[0]) / 2 + yDomain[0];
+          var xResolution = (xDomain[1] - xDomain[0]) / width;
+          var yTarget2 = ratioXY * xResolution * height / 2;
+          y.domain([yMean - yTarget2, yMean + yTarget2]);
+        }
+      }
 
       // Update the area path.
       g.select('.area')
