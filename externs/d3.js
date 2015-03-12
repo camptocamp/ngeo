@@ -178,6 +178,9 @@ var d3 = {
         "tree": function () {},
         "treemap": function () {}
     },
+    "locale": {
+        "numberFormat": function() {}
+    },
     "csv": function () {},
     "tsv": function () {},
     "geo": {
