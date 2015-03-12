@@ -63,6 +63,7 @@ ngeox.profile;
  *  @typedef {{
  *    styleDefs: (string|undefined),
  *    poiLabelAngle: (number|undefined),
+ *    formatter: (ngeox.profile.ProfileFormatter|undefined),
  *    elevationExtractor: ngeox.profile.ElevationExtractor,
  *    poiExtractor: (ngeox.profile.PoiExtractor|undefined),
  *    light: (boolean|undefined),
@@ -88,6 +89,14 @@ ngeox.profile.ProfileOptions.prototype.styleDefs;
 ngeox.profile.ProfileOptions.prototype.poiLabelAngle;
 
 
+/**
+ * Formatter giving full control on how numbers are formatted.
+ * @type {ngeox.profile.ProfileFormatter|undefined}
+ */
+ngeox.profile.ProfileOptions.prototype.formatter;
+
+
+/**
  * Extractor for parsing elevation data.
  * @type {ngeox.profile.ElevationExtractor}
  */
@@ -203,6 +212,46 @@ ngeox.profile.PoiExtractor.prototype.sort;
  * @type {function(Object): string}
  */
 ngeox.profile.PoiExtractor.prototype.title;
+
+
+
+/**
+ * @typedef {{
+ *   xhover: function(number, string): string,
+ *   yhover: function(number, string): string,
+ *   xtick: function(number, string): (string|number),
+ *   ytick: function(number, string): (string|number)
+ * }}
+ */
+ngeox.profile.ProfileFormatter;
+
+
+/**
+ * Format the xhover distance.
+ * @type {function(number, string): string}
+ */
+ngeox.profile.ProfileFormatter.prototype.xhover;
+
+
+/**
+ * Format the yhover elevation.
+ * @type {function(number, string): string}
+ */
+ngeox.profile.ProfileFormatter.prototype.yhover;
+
+
+/**
+ * Format the xtick, for graduating the x axis.
+ * @type {function(number, string): (string|number)}
+ */
+ngeox.profile.ProfileFormatter.prototype.xtick;
+
+
+/**
+ * Format the ytick, for graduating the y axis.
+ * @type {function(number, string): (string|number)}
+ */
+ngeox.profile.ProfileFormatter.prototype.ytick;
 
 
 /**

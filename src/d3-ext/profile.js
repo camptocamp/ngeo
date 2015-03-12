@@ -140,6 +140,19 @@ ngeo.profile = function(options) {
       options.poiLabelAngle : -60;
 
   /**
+   * @type {ngeox.profile.ProfileFormatter}
+   */
+  var formatter = goog.isDef(options.formatter) ?
+      options.formatter : {
+        xhover: function(dist, units) {
+          return parseFloat(dist.toPrecision(3)) + ' ' + units;
+        },
+        yhover: function(ele, units) { return Math.round(ele) + ' m'; },
+        xtick: function(dist, units) { return dist; },
+        ytick: function(ele, units) { return ele; }
+      };
+
+  /**
    * @type {boolean}
    */
   var lightXAxis = goog.isDef(options.lightXAxis) ? options.lightXAxis : false;
@@ -272,10 +285,14 @@ ngeo.profile = function(options) {
 
       if (!light) {
         xAxis.tickFormat(function(d) {
-          return d / xFactor;
+          return formatter.xtick(d / xFactor, units);
+        });
         if (lightXAxis) {
           xAxis.tickValues([0, x.domain()[1]]);
         }
+
+        yAxis.tickFormat(function(d) {
+          return formatter.ytick(d, 'm');
         });
 
         g.select('.x.axis')
@@ -342,13 +359,13 @@ ngeo.profile = function(options) {
         xtranslate += right ? -10 : 10;
 
         g.select('.x.grid-hover text')
-            .text(parseFloat(dist.toPrecision(3) / xFactor) + ' ' + units)
+            .text(formatter.xhover(dist / xFactor, units))
             .style('text-anchor', right ? 'end' : 'start')
             .attr('transform', 'translate(' + xtranslate + ',' +
                 (height - 10) + ')');
 
         g.select('.y.grid-hover text')
-            .text(Math.round(elevation) + ' m')
+            .text(formatter.yhover(elevation, 'm'))
             .style('text-anchor', right ? 'end' : 'start')
             .attr('transform', 'translate(' + xtranslate + ',' +
                 (y(elevation) - 10) + ')');
