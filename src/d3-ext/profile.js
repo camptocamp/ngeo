@@ -133,6 +133,12 @@ ngeo.profile = function(options) {
    */
   var styleDefs = options.styleDefs;
 
+  /**
+   * @type {number}
+   */
+  var poiLabelAngle = goog.isDef(options.poiLabelAngle) ?
+      options.poiLabelAngle : -60;
+
   var profile = function(selection) {
     selection.each(function(data) {
       var extractor = elevationExtractor;
@@ -397,7 +403,7 @@ ngeo.profile = function(options) {
           } else {
             return ['translate(',
               x(pe.dist(d)), ',',
-              y(pe.z(d)) - 20, ') rotate(-60)'
+              y(pe.z(d)) - 20, ') rotate(', poiLabelAngle, ')'
             ].join('');
           }
         })
