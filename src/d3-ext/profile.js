@@ -325,7 +325,7 @@ ngeo.profile = function(options) {
 
       g.select('.grid-y')
           .transition()
-          .call(yAxis.tickSize(-width, 0, 0).tickFormat(''))
+          .call(yAxis.tickSize(-width, 0).tickFormat(''))
           .selectAll('.tick line')
           .style('stroke', '#ccc')
           .style('opacity', 0.7);
