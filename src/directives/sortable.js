@@ -37,7 +37,10 @@ goog.require('ngeo');
 
 
 /**
- * @typedef {{handleClassName: (string|undefined)}}
+ * @typedef {{
+ *     handleClassName: (string|undefined),
+ *     draggerClassName: (string|undefined)
+ * }}
  */
 ngeo.SortableOptions;
 
@@ -101,6 +104,10 @@ ngeo.sortableDirective = function($timeout) {
                   var className = options['handleClassName'];
                   return goog.dom.getElementByClass(className, dragItem);
                 });
+
+            if (goog.isDef(options['draggerClassName'])) {
+              dragListGroup.setDraggerElClass(options['draggerClassName']);
+            }
 
             /** @type {number} */
             var hoverNextItemIdx = -1;
