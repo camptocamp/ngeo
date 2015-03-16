@@ -89,7 +89,7 @@ ngeo.sortableDirective = function($timeout) {
             }
 
             if (!goog.isNull(dragListGroup)) {
-              goog.events.removeAll(dragListGroup);
+              dragListGroup.dispose();
             }
 
             dragListGroup = new goog.fx.DragListGroup();
