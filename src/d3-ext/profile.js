@@ -124,6 +124,11 @@ ngeo.profile = function(options) {
    */
   var lightXAxis = goog.isDef(options.lightXAxis) ? options.lightXAxis : false;
 
+  /**
+   * @type {number|undefined}
+   */
+  var yLowerBound = options.yLowerBound;
+
 
   // Objects shared with the showPois function
   /**
@@ -268,6 +273,12 @@ ngeo.profile = function(options) {
           var yTarget2 = ratioXY * xResolution * height / 2;
           y.domain([yMean - yTarget2, yMean + yTarget2]);
         }
+      }
+
+      // Lower bound for y-axis
+      if (goog.isDef(yLowerBound) && y.domain()[0] < yLowerBound) {
+        var shift = yLowerBound - y.domain()[0];
+        y.domain([yLowerBound, y.domain()[1] - shift]);
       }
 
       // Update the area path.
