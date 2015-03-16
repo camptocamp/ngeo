@@ -68,6 +68,7 @@ ngeox.profile;
  *    poiExtractor: (ngeox.profile.PoiExtractor|undefined),
  *    light: (boolean|undefined),
  *    lightXAxis: (boolean|undefined),
+ *    yLowerBound: (number|undefined),
  *    ratioXYRule: (function(number): number|undefined),
  *    hoverCallback: (function(Object)|undefined),
  *    outCallback: (function()|undefined)
@@ -123,6 +124,13 @@ ngeox.profile.ProfileOptions.prototype.light;
  * @type {boolean|undefined}
  */
 ngeox.profile.ProfileOptions.prototype.lightXAxis;
+
+
+/**
+ * Lower bound for the y domain.
+ * @type {number|undefined}
+ */
+ngeox.profile.ProfileOptions.prototype.yLowerBound;
 
 
 /**

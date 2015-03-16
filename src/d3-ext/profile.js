@@ -124,6 +124,11 @@ ngeo.profile = function(options) {
    */
   var lightXAxis = goog.isDef(options.lightXAxis) ? options.lightXAxis : false;
 
+  /**
+   * @type {number|undefined}
+   */
+  var yLowerBound = options.yLowerBound;
+
 
   // Objects shared with the showPois function
   /**
@@ -270,6 +275,12 @@ ngeo.profile = function(options) {
         }
       }
 
+      // Lower bound for y-axis
+      if (goog.isDef(yLowerBound) && y.domain()[0] < yLowerBound) {
+        var shift = yLowerBound - y.domain()[0];
+        y.domain([yLowerBound, y.domain()[1] - shift]);
+      }
+
       // Update the area path.
       g.select('.area')
           .transition()
@@ -314,7 +325,7 @@ ngeo.profile = function(options) {
 
       g.select('.grid-y')
           .transition()
-          .call(yAxis.tickSize(-width, 0, 0).tickFormat(''))
+          .call(yAxis.tickSize(-width, 0).tickFormat(''))
           .selectAll('.tick line')
           .style('stroke', '#ccc')
           .style('opacity', 0.7);
