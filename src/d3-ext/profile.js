@@ -318,6 +318,11 @@ ngeo.profile = function(options) {
           .style('fill', 'grey')
           .style('shape-rendering', 'crispEdges');
 
+        // Avoid too much lines with overlapping labels in small profiles
+        if (height / 15 < 10) {
+          yAxis.ticks(height / 15);
+        }
+
         g.select('.y.axis')
           .transition()
           .call(yAxis);
