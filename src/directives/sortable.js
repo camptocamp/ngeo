@@ -65,7 +65,8 @@ ngeo.sortableDirective = function($timeout) {
               (scope.$eval(attrs['ngeoSortable']));
           goog.asserts.assert(goog.isArray(sortable));
 
-          var options = scope.$eval(attrs['ngeoSortableOptions']);
+          var optionsObject = scope.$eval(attrs['ngeoSortableOptions']);
+          var options = getOptions(optionsObject);
 
           /**
            * @type {goog.fx.DragListGroup}
