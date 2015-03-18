@@ -1,0 +1,94 @@
+<!DOCTYPE>
+<html ng-app='app'>
+  <head>
+    <title>Search example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <style>
+      #map {
+        width: 600px;
+        height: 400px;
+      }
+      /* CSS stolen from https://github.com/bassjobsen/typeahead.js-bootstrap-css/ */
+      span.twitter-typeahead .tt-dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        float: left;
+        min-width: 160px;
+        padding: 5px 0;
+        margin: 2px 0 0;
+        list-style: none;
+        font-size: 14px;
+        text-align: left;
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        background-clip: padding-box;
+      }
+      span.twitter-typeahead .tt-suggestion > p {
+        display: block;
+        padding: 3px 20px;
+        margin-bottom: 0px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.42857143;
+        color: #333333;
+        white-space: nowrap;
+      }
+      span.twitter-typeahead .tt-suggestion > p:hover,
+      span.twitter-typeahead .tt-suggestion > p:focus {
+        color: #ffffff;
+        text-decoration: none;
+        outline: 0;
+        background-color: #428bca;
+      }
+      span.twitter-typeahead .tt-suggestion.tt-cursor {
+        color: #ffffff;
+        background-color: #428bca;
+      }
+      span.twitter-typeahead .tt-suggestion button {
+        background: none;
+        border: 0;
+        float: right;
+      }
+      span.twitter-typeahead {
+        width: 100%;
+      }
+      .input-group span.twitter-typeahead {
+        display: block !important;
+      }
+      .input-group span.twitter-typeahead .tt-dropdown-menu {
+        top: 32px !important;
+      }
+      .input-group.input-group-lg span.twitter-typeahead .tt-dropdown-menu {
+        top: 44px !important;
+      }
+      .input-group.input-group-sm span.twitter-typeahead .tt-dropdown-menu {
+        top: 28px !important;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div class="container-fluid">
+      <div id="map" ngeo-map="ctrl.map"></div>
+      <p>Search for « 45 did » for example…<p>
+      <app-search app-search-map="ctrl.map"></app-search>
+      <p id="desc">This example shows how to use the <code>ngeo-search</code> directive, which
+      is based on Twitter's <code>typeahead</code> component.</p>
+    </div>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/typeahead.js/dist/typeahead.bundle.js"></script>
+    <script src="/@?main=search.js"></script>
+  </body>
+</html>

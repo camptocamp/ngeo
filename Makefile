@@ -181,6 +181,10 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/typeahead.bundle.min.js: node_modules/typeahead.js/dist/typeahead.bundle.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/partials: examples/partials
 	mkdir -p $@
 	cp examples/partials/* $@
@@ -201,6 +205,7 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	    -e 's|\.\./node_modules/angular/angular.js|angular.min.js|' \
 	    -e 's|\.\./node_modules/angular-animate/angular-animate.js|angular-animate.min.js|' \
 	    -e 's|\.\./node_modules/d3/d3.js|d3.min.js|' \
+	    -e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|typeahead.bundle.min.js|' \
 	    -e 's/\/@?main=$*.js/$*.js/' \
 	    -e '/$*.js/i\    <script src="ngeo.js"></script>' $< > $@
 
@@ -222,6 +227,7 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	    .build/examples-hosted/bootstrap.min.css \
 	    .build/examples-hosted/jquery.min.js \
 	    .build/examples-hosted/d3.min.js \
+	    .build/examples-hosted/typeahead.bundle.min.js \
 	    .build/examples-hosted/data \
 	    .build/examples-hosted/partials \
 	    .build/node_modules.timestamp

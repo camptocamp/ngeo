@@ -282,3 +282,47 @@ ngeox.MeasureEvent = function() {};
  */
 ngeox.MeasureEvent.prototype.feature;
 
+
+/**
+ * @typedef {{
+ *   opened: (function()|undefined),
+ *   closed: (function()|undefined),
+ *   cursorchanged: (function(jQuery.event, Object,
+ *       TypeaheadDataset)|undefined),
+ *   selected: (function(jQuery.event, Object,
+ *       TypeaheadDataset)|undefined),
+ *   autocompleted: (function(jQuery.event, Object,
+ *       TypeaheadDataset)|undefined)
+ * }}
+ */
+ngeox.SearchDirectiveListeners;
+
+
+/**
+ * @type {function()|undefined}
+ */
+ngeox.SearchDirectiveListeners.prototype.opened;
+
+
+/**
+ * @type {function()|undefined}
+ */
+ngeox.SearchDirectiveListeners.prototype.closed;
+
+
+/**
+ * @type {function(jQuery.event, Object, TypeaheadDataset)|undefined}
+ */
+ngeox.SearchDirectiveListeners.prototype.cursorchanged;
+
+
+/**
+ * @type {function(jQuery.event, Object, TypeaheadDataset)|undefined}
+ */
+ngeox.SearchDirectiveListeners.prototype.selected;
+
+
+/**
+ * @type {function(jQuery.event, Object, TypeaheadDataset)|undefined}
+ */
+ngeox.SearchDirectiveListeners.prototype.autocompleted;
