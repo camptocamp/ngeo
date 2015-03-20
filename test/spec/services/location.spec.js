@@ -29,6 +29,15 @@ describe('ngeo.Location', function() {
     });
   });
 
+  describe('#hasParam', function() {
+    it('returns true if the param exists', function() {
+      var value = ngeoLocation.hasParam('some');
+      expect(value).toBe(true);
+      value = ngeoLocation.hasParam('missing');
+      expect(value).toBe(false);
+    });
+  });
+
   describe('#getParam', function() {
     it('returns the param value', function() {
       var value = ngeoLocation.getParam('some');

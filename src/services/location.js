@@ -70,6 +70,15 @@ ngeo.Location.prototype.getUri = function(opt_params) {
 
 /**
  * @param {string} key Param key.
+ * @return {boolean} True if the param exists.
+ */
+ngeo.Location.prototype.hasParam = function(key) {
+  return this.uri_.getQueryData().containsKey(key);
+};
+
+
+/**
+ * @param {string} key Param key.
  * @return {string} Param value.
  */
 ngeo.Location.prototype.getParam = function(key) {
