@@ -21,19 +21,70 @@
  * collection. When a background layer is set it is inserted (at index 0)
  * if the map does not already have a background layer, otherwise the
  * new background layer replaces the previous one at index 0.
+ *
+ * Users can subscribe to a 'change' event to get notified when the background
+ * layer changes:
+ *
+ * ngeoBackgroundLayerMgr.on('change', function(e) {
+ *   // do something with the layer
+ *   var layer = ngeoBackgroundLayerMgr.get();
+ *   // know which layer was used before
+ *   var previous = e.previous
+ * });
  */
 
+goog.provide('ngeo.BackgroundEvent');
+goog.provide('ngeo.BackgroundEventType');
 goog.provide('ngeo.BackgroundLayerMgr');
 
 goog.require('goog.asserts');
+goog.require('goog.events.Event');
 goog.require('ngeo');
+goog.require('ol.Observable');
+
+
+/**
+ * @enum {string}
+ */
+ngeo.BackgroundEventType = {
+  /**
+   * Triggered when the background layer changes.
+   */
+  CHANGE: 'change'
+};
 
 
 
 /**
  * @constructor
+ * @extends {goog.events.Event}
+ * @param {ngeo.BackgroundEventType} type Type.
+ * @param {ol.layer.Base} previous
+ * @implements {ngeox.BackgroundEvent}
+ */
+ngeo.BackgroundEvent = function(type, previous) {
+
+  goog.base(this, type);
+
+  /**
+   * The layer used as background before a change.
+   * @type {ol.layer.Base}
+   */
+  this.previous = previous;
+};
+goog.inherits(ngeo.BackgroundEvent, goog.events.Event);
+
+
+
+/**
+ * @extends {ol.Observable}
+ * @constructor
  */
 ngeo.BackgroundLayerMgr = function() {
+
+  goog.base(this);
+
+
   /**
    * Object used to track if maps have background layers.
    * @type {Object.<string, boolean>}
@@ -41,6 +92,7 @@ ngeo.BackgroundLayerMgr = function() {
    */
   this.mapUids_ = {};
 };
+goog.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
 
 
 /**
@@ -77,6 +129,9 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
     map.getLayers().insertAt(0, layer);
     this.mapUids_[mapUid] = true;
   }
+
+  this.dispatchEvent(new ngeo.BackgroundEvent(ngeo.BackgroundEventType.CHANGE,
+      previous));
   return previous;
 };
 

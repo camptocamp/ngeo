@@ -326,3 +326,15 @@ ngeox.SearchDirectiveListeners.prototype.selected;
  * @type {function(jQuery.event, Object, TypeaheadDataset)|undefined}
  */
 ngeox.SearchDirectiveListeners.prototype.autocompleted;
+
+
+/**
+ * @interface
+ */
+ngeox.BackgroundEvent = function() {};
+
+
+/**
+ * @type {ol.layer.Base}
+ */
+ngeox.BackgroundEvent.prototype.previous;
