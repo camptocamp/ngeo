@@ -25,8 +25,9 @@
  * Users can subscribe to a 'change' event to get notified when the background
  * layer changes:
  *
- * goog.events.listen(ngoe.BackgroundEventType.CHANGE, function() {
- *   // do something
+ * ngeoBackgroundLayerMgr.on(ngeo.BackgroundEventType.CHANGE, function(e) {
+ *   var layer = ngeoBackgroundLayerMgr.get();
+ *   // do something with the layer
  * });
  */
 
@@ -36,8 +37,8 @@ goog.provide('ngeo.BackgroundLayerMgr');
 
 goog.require('goog.asserts');
 goog.require('goog.events.Event');
-goog.require('goog.events.EventTarget');
 goog.require('ngeo');
+goog.require('ol.Observable');
 
 
 /**
@@ -66,7 +67,7 @@ goog.inherits(ngeo.BackgroundEvent, goog.events.Event);
 
 
 /**
- * @extends {goog.events.EventTarget}
+ * @extends {ol.Observable}
  * @constructor
  */
 ngeo.BackgroundLayerMgr = function() {
@@ -81,7 +82,7 @@ ngeo.BackgroundLayerMgr = function() {
    */
   this.mapUids_ = {};
 };
-goog.inherits(ngeo.BackgroundLayerMgr, goog.events.EventTarget);
+goog.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
 
 
 /**
