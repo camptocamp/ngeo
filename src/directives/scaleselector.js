@@ -104,6 +104,14 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs, $timeout) {
       ($scope.$eval(scalesExpr));
   goog.asserts.assert(goog.isDef(this['scales']));
 
+  var zoomLevels = goog.array.map(goog.object.getKeys(this['scales']), Number);
+  goog.array.sort(zoomLevels);
+
+  /**
+   * @type {Array.<number>}
+   */
+  this['zoomLevels'] = zoomLevels;
+
   var mapExpr = $attrs['ngeoScaleselectorMap'];
 
   /**
@@ -148,7 +156,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs, $timeout) {
   if (!goog.isNull(view)) {
     var currentZoom = this.map_.getView().getZoom();
     if (goog.isDef(currentZoom)) {
-      this['currentScale'] = this['scales'][currentZoom.toString()];
+      this['currentScale'] = this.getScale(currentZoom);
     }
   }
 
@@ -182,7 +190,17 @@ ngeo.ScaleselectorController.getOptions_ = function(options) {
 
 
 /**
- * @param {string} zoom Zoom level.
+ * @param {number} zoom Zoom level.
+ * @return {string} Scale.
+ * @export
+ */
+ngeo.ScaleselectorController.prototype.getScale = function(zoom) {
+  return this['scales'][zoom.toString()];
+};
+
+
+/**
+ * @param {number} zoom Zoom level.
  * @export
  */
 ngeo.ScaleselectorController.prototype.changeZoom = function(zoom) {
@@ -191,7 +209,7 @@ ngeo.ScaleselectorController.prototype.changeZoom = function(zoom) {
   // and make sure that setZoom is called outside Angular context.
   var view = this.map_.getView();
   this.$timeout_(function() {
-    view.setZoom(+zoom);
+    view.setZoom(zoom);
   }, 0, false);
 };
 
