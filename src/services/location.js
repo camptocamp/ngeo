@@ -53,6 +53,15 @@ ngeo.Location = function(location, history) {
 
 
 /**
+ * Get the location's current path.
+ * @return {string} The path.
+ */
+ngeo.Location.prototype.getPath = function() {
+  return this.uri_.getPath();
+};
+
+
+/**
  * @param {Object.<string, string>=} opt_params Params.
  * @return {string} The URI.
  */
@@ -109,6 +118,15 @@ ngeo.Location.prototype.deleteParam = function(key) {
  */
 ngeo.Location.prototype.refresh = function() {
   this.history_.replaceState(null, '', this.getUri());
+};
+
+
+/**
+ * Set a new path for this location.
+ * @param {string} path Path.
+ */
+ngeo.Location.prototype.setPath = function(path) {
+  this.uri_.setPath(path);
 };
 
 
