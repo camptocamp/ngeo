@@ -259,9 +259,9 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
   goog.dom.classlist.add(this.measureTooltipElement_, 'tooltip-static');
   this.measureTooltipOverlay_.setOffset([0, -7]);
-  this.sketchFeature = null;
   this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
       this.sketchFeature));
+  this.sketchFeature = null;
 };
 
 
