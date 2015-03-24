@@ -96,6 +96,14 @@ ngeo.Location.prototype.getParam = function(key) {
 
 
 /**
+ * @return {Array.<string>} Param keys.
+ */
+ngeo.Location.prototype.getParamKeys = function() {
+  return this.uri_.getQueryData().getKeys();
+};
+
+
+/**
  * @param {Object.<string, string>} params
  */
 ngeo.Location.prototype.updateParams = function(params) {
