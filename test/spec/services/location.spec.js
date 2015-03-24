@@ -45,6 +45,13 @@ describe('ngeo.Location', function() {
     });
   });
 
+  describe('#getParamKeys', function() {
+    it('returns the param keys', function() {
+      var keys = ngeoLocation.getParamKeys();
+      expect(keys).toEqual(['some']);
+    });
+  });
+
   describe('#deleteParam', function() {
     it('delete the params', function() {
       ngeoLocation.deleteParam('some');

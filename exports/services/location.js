@@ -10,6 +10,18 @@ goog.exportProperty(
     ngeo.Location.prototype.getParam);
 goog.exportProperty(
     ngeo.Location.prototype,
+    'getParamKeys',
+    ngeo.Location.prototype.getParamKeys);
+goog.exportProperty(
+    ngeo.Location.prototype,
+    'getPath',
+    ngeo.Location.prototype.getPath);
+goog.exportProperty(
+    ngeo.Location.prototype,
+    'hasParam',
+    ngeo.Location.prototype.hasParam);
+goog.exportProperty(
+    ngeo.Location.prototype,
     'updateParams',
     ngeo.Location.prototype.updateParams);
 goog.exportProperty(
@@ -20,3 +32,7 @@ goog.exportProperty(
     ngeo.Location.prototype,
     'refresh',
     ngeo.Location.prototype.refresh);
+goog.exportProperty(
+    ngeo.Location.prototype,
+    'setPath',
+    ngeo.Location.prototype.setPath);
