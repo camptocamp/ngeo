@@ -10,7 +10,7 @@
  *    z: function (item) {return item['values']['z'];)},
  *    dist: function (item) {return item['dist'];)}
  *  },
- *  hoverCallback: function(point) {
+ *  hoverCallback: function(point, dist, xUnits, ele, yUnits) {
  *    console.log(point.x, point.y);
  *  },
  *  outCallback: function() {
@@ -69,7 +69,7 @@ ngeo.profile = function(options) {
 
 
   /**
-   * @type {function(Object)}
+   * @type {function(Object, number, string, number, string)}
    * Hover callback function.
    */
   var hoverCallback = goog.isDef(options.hoverCallback) ?
@@ -169,7 +169,7 @@ ngeo.profile = function(options) {
       /**
       * Distance units. Either 'm' or 'km'.
       */
-      var units;
+      var xUnits;
 
       /**
       * Factor to determine whether to use 'm' or 'km'.
@@ -308,15 +308,15 @@ ngeo.profile = function(options) {
 
       if (xDomain[1] > 2000) {
         xFactor = 1000;
-        units = 'km';
+        xUnits = 'km';
       } else {
         xFactor = 1;
-        units = 'm';
+        xUnits = 'm';
       }
 
       if (!light) {
         xAxis.tickFormat(function(d) {
-          return formatter.xtick(d / xFactor, units);
+          return formatter.xtick(d / xFactor, xUnits);
         });
         if (lightXAxis) {
           xAxis.tickValues([0, x.domain()[1]]);
@@ -331,7 +331,7 @@ ngeo.profile = function(options) {
           .call(xAxis);
 
         g.select('.x.label')
-          .text('distance (' + units + ')')
+          .text('distance (' + xUnits + ')')
           .style('fill', 'grey')
           .style('shape-rendering', 'crispEdges');
 
@@ -395,17 +395,19 @@ ngeo.profile = function(options) {
         xtranslate += right ? -10 : 10;
 
         g.select('.x.grid-hover text')
-            .text(formatter.xhover(dist / xFactor, units))
+            .text(formatter.xhover(dist / xFactor, xUnits))
             .style('text-anchor', right ? 'end' : 'start')
             .attr('transform', 'translate(' + xtranslate + ',' +
                 (height - 10) + ')');
 
+        var yUnits = 'm';
         g.select('.y.grid-hover text')
-            .text(formatter.yhover(elevation, 'm'))
+            .text(formatter.yhover(elevation, yUnits))
             .style('text-anchor', right ? 'end' : 'start')
             .attr('transform', 'translate(' + xtranslate + ',' +
                 (y(elevation) - 10) + ')');
-        hoverCallback.call(null, point);
+        hoverCallback.call(null, point, dist / xFactor, xUnits, elevation,
+            yUnits);
       }
 
       function mouseout() {
