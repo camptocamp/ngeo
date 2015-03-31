@@ -36,6 +36,8 @@
  */
 goog.provide('ngeo.profile');
 
+goog.require('goog.object');
+
 
 /**
  *
@@ -109,15 +111,30 @@ ngeo.profile = function(options) {
   /**
    * @type {ngeox.profile.ProfileFormatter}
    */
-  var formatter = goog.isDef(options.formatter) ?
-      options.formatter : {
-        xhover: function(dist, units) {
-          return parseFloat(dist.toPrecision(3)) + ' ' + units;
-        },
-        yhover: function(ele, units) { return Math.round(ele) + ' m'; },
-        xtick: function(dist, units) { return dist; },
-        ytick: function(ele, units) { return ele; }
-      };
+  var formatter = {
+    /**
+     * @return {string}
+     */
+    xhover: function(dist, units) {
+      return parseFloat(dist.toPrecision(3)) + ' ' + units;
+    },
+    /**
+     * @return {string}
+     */
+    yhover: function(ele, units) { return Math.round(ele) + ' m'; },
+    /**
+     * @return {string|number}
+     */
+    xtick: function(dist, units) { return dist; },
+    /**
+     * @return {string|number}
+     */
+    ytick: function(ele, units) { return ele; }
+  };
+
+  if (goog.isDef(options.formatter)) {
+    goog.object.extend(formatter, options.formatter);
+  }
 
   /**
    * @type {boolean}
