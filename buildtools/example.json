@@ -58,7 +58,6 @@
       "missingGetCssName",
       "missingProperties",
       "missingProvide",
-      "missingRequire",
       "missingReturn",
       "newCheckTypes",
       "nonStandardJsDocs",
@@ -71,6 +70,7 @@
       "visibility"
     ],
     "jscomp_off": [
+      "missingRequire",
       "unknownDefines"
     ],
     "extra_annotation_name": [
