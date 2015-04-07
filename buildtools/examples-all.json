@@ -21,7 +21,6 @@
       ".build/externs/angular-1.3-q.js",
       ".build/externs/angular-1.3-http-promise.js",
       ".build/externs/jquery-1.9.js",
-      "externs/ngeox.js",
       "externs/d3.js",
       "externs/typeahead.js"
     ],
@@ -31,6 +30,7 @@
     ],
     "js": [
       ".build/examples/all.js",
+      "externs/ngeox.js",
       "node_modules/openlayers/externs/olx.js",
       "node_modules/openlayers/externs/oli.js"
     ],
