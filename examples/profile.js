@@ -1,4 +1,4 @@
-goog.provide('profile_example');
+goog.provide('profile');
 
 
 goog.require('ngeo');
