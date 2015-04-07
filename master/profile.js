@@ -39,16 +39,18 @@ app.MainController = function($http, $scope) {
    * @return {function(Object): T}
    */
   var typedFunctionsFactory = function(type, key, opt_childKey) {
-    /**
-      * @param {Object} item
-      * @return {T}
-      */
-    return function(item) {
-      if (opt_childKey !== undefined) {
-        item = item[opt_childKey];
-      }
-      return item[key];
-    };
+    return (
+        /**
+         * @param {Object} item
+         * @return {T}
+         * @template T
+         */
+        function(item) {
+          if (opt_childKey !== undefined) {
+            item = item[opt_childKey];
+          }
+          return item[key];
+        });
   };
 
   var types = {
