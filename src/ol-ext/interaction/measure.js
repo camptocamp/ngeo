@@ -13,6 +13,8 @@ goog.require('ol.MapBrowserEvent');
 goog.require('ol.Observable');
 goog.require('ol.Overlay');
 goog.require('ol.interaction.Interaction');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 

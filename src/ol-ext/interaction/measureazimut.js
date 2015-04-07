@@ -7,6 +7,7 @@ goog.require('goog.events.Event');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.Collection');
 goog.require('ol.Coordinate');
+goog.require('ol.DrawEvent');
 goog.require('ol.Feature');
 goog.require('ol.FeatureOverlay');
 goog.require('ol.Map');
