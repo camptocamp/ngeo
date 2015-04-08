@@ -42,7 +42,9 @@ app.MainController = function(ngeoDecorateGeolocation) {
   var positionFeature = new ol.Feature(positionPoint);
 
   var accuracyFeature = new ol.Feature();
-  accuracyFeature.bindTo('geometry', geolocation, 'accuracyGeometry');
+  geolocation.on('change:accuracyGeometry', function() {
+    accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+  });
 
   var featureOverlay = new ol.FeatureOverlay({
     features: [positionFeature, accuracyFeature]
