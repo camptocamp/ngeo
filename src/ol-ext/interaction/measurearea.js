@@ -84,12 +84,11 @@ ngeo.interaction.MeasureArea.prototype.formatMeasure_ = function(polygon) {
   var coordinates = geom.getLinearRing(0).getCoordinates();
   var area = Math.abs(ol.sphere.WGS84.geodesicArea(coordinates));
   var output;
-  if (area > 10000) {
-    output = (Math.round(area / 1000000 * 100) / 100) +
+  if (area > 1000000) {
+    output = parseFloat((area / 1000000).toPrecision(3)) +
         ' ' + 'km<sup>2</sup>';
   } else {
-    output = (Math.round(area * 100) / 100) +
-        ' ' + 'm<sup>2</sup>';
+    output = parseFloat(area.toPrecision(3)) + ' ' + 'm<sup>2</sup>';
   }
   return output;
 };
