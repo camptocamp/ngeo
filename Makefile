@@ -41,7 +41,7 @@ check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslint.timestamp .build/jshint.timestamp
 
 .PHONY: test
-test: .build/ol-deps.js .build/ngeo-deps.js .build/node_modules.timestamp
+test: .build/ol-deps.js .build/ngeo-deps.js .build/templatecache.js .build/node_modules.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: serve
