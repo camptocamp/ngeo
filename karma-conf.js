@@ -51,7 +51,8 @@ module.exports = function(config) {
         included: false,
         watched: true,
         served: true
-       }
+      },
+      '.build/templatecache.js'
     ],
 
 

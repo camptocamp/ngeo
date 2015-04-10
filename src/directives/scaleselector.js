@@ -88,11 +88,10 @@ ngeoModule.directive('ngeoScaleselector', ngeo.scaleselectorDirective);
  * @param {angular.Scope} $scope Directive scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.
- * @param {angular.$timeout} $timeout Angular timeout service.
  * @export
  * @ngInject
  */
-ngeo.ScaleselectorController = function($scope, $element, $attrs, $timeout) {
+ngeo.ScaleselectorController = function($scope, $element, $attrs) {
 
   var scalesExpr = $attrs['ngeoScaleselector'];
 
@@ -134,12 +133,6 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs, $timeout) {
    * @private
    */
   this.$scope_ = $scope;
-
-  /**
-   * @type {angular.$timeout}
-   * @private
-   */
-  this.$timeout_ = $timeout;
 
   /**
    * @type {goog.events.Key}
@@ -204,13 +197,7 @@ ngeo.ScaleselectorController.prototype.getScale = function(zoom) {
  * @export
  */
 ngeo.ScaleselectorController.prototype.changeZoom = function(zoom) {
-  // setZoom triggers a change:resolution event, and our change:resolution
-  // handler uses $apply to change the currentScale state, so we use $timeout
-  // and make sure that setZoom is called outside Angular context.
-  var view = this.map_.getView();
-  this.$timeout_(function() {
-    view.setZoom(zoom);
-  }, 0, false);
+  this.map_.getView().setZoom(zoom);
 };
 
 
@@ -221,7 +208,19 @@ ngeo.ScaleselectorController.prototype.changeZoom = function(zoom) {
 ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
   var view = this.map_.getView();
   var currentScale = this['scales'][view.getZoom().toString()];
-  this.$scope_.$apply(
+
+  // handleResolutionChange_ is a change:resolution listener. The listener
+  // may be executed outside the Angular context, for example when the user
+  // double-clicks to zoom on the map.
+  //
+  // But it may also be executed inside the Angular context, when a function
+  // in Angular context calls setZoom or setResolution on the view, which
+  // is for example what happens when this controller's changeZoom function
+  // is called.
+  //
+  // For that reason we use $applyAsync instead of $apply here.
+
+  this.$scope_.$applyAsync(
       /** @type {function(?)} */ (
       goog.bind(function() {
         this['currentScale'] = currentScale;
