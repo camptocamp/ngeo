@@ -61,8 +61,8 @@ ngeo.profileDirective = function() {
 
               if (goog.isDef(options.hoverCallback)) {
                 var origHoverCallback = options.hoverCallback;
-                options.hoverCallback = function(point) {
-                  origHoverCallback(point);
+                options.hoverCallback = function() {
+                  origHoverCallback.apply(null, arguments);
                   scope.$applyAsync();
                 };
               }
