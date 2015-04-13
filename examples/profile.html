@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" type="text/css">
     <style>
 
+        #map {
+          width: 600px;
+          height: 400px;
+        }
         .profile {
           width: 450px;
           height: 250px;
@@ -18,9 +22,11 @@
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
     <div class="profile" ngeo-profile="::ctrl.profileData"
          ngeo-profile-options="::ctrl.profileOptions"
-         ngeo-profile-pois="::ctrl.profilePoisData">
+         ngeo-profile-pois="::ctrl.profilePoisData"
+         ngeo-profile-highlight="ctrl.profileHighlight">
     </div>
 
     <ul ng-show="ctrl.point != null">

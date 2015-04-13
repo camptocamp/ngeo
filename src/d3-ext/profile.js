@@ -164,24 +164,43 @@ ngeo.profile = function(options) {
   var y;
 
 
+  var g;
+
+  /**
+   * Height of the chart in pixels
+   */
+  var height;
+
+  /**
+   * Width of the chart in pixels
+   */
+  var width;
+
+  /**
+  * Factor to determine whether to use 'm' or 'km'.
+  */
+  var xFactor;
+
+  /**
+  * Distance units. Either 'm' or 'km'.
+  */
+  var xUnits;
+
+  /**
+   * D3 extent of the distance.
+   */
+  var xDomain;
+
+
   var profile = function(selection) {
     selection.each(function(data) {
-      /**
-      * Distance units. Either 'm' or 'km'.
-      */
-      var xUnits;
-
-      /**
-      * Factor to determine whether to use 'm' or 'km'.
-      */
-      var xFactor;
 
       var extractor = elevationExtractor;
 
-      var width = Math.max(this.clientWidth - margin.right - margin.left, 0);
+      width = Math.max(this.clientWidth - margin.right - margin.left, 0);
       x = d3.scale.linear().range([0, width]);
 
-      var height = Math.max(this.clientHeight - margin.top - margin.bottom, 0);
+      height = Math.max(this.clientHeight - margin.top - margin.bottom, 0);
       y = d3.scale.linear().range([height, 0]);
 
       var xAxis = d3.svg.axis().scale(x).orient('bottom');
@@ -270,11 +289,11 @@ ngeo.profile = function(options) {
           .attr('height', height + margin.top + margin.bottom);
 
       // Update the inner dimensions.
-      var g = svg.select('g')
+      g = svg.select('g')
           .attr('transform', 'translate(' + margin.left + ',' +
               margin.top + ')');
 
-      var xDomain = d3.extent(data, function(d) { return extractor.dist(d); });
+      xDomain = d3.extent(data, function(d) { return extractor.dist(d); });
       x.domain(xDomain);
 
       var yDomain = d3.extent(data, function(d) { return extractor.z(d); });
@@ -368,54 +387,73 @@ ngeo.profile = function(options) {
       function mousemove() {
         var mouseX = d3.mouse(this)[0];
         var x0 = x.invert(mouseX);
-        var i = bisectDistance(data, x0, 1);
 
-        var point = data[i];
-        var elevation = extractor.z(point);
-        var dist = extractor.dist(point);
-
-        g.select('.x.grid-hover')
-            .style('display', 'inline')
-            .select('line')
-            .attr('x1', x(dist))
-            .attr('y1', height)
-            .attr('x2', x(dist))
-            .attr('y2', y(elevation));
-
-        g.select('.y.grid-hover')
-            .style('display', 'inline')
-            .select('line')
-            .attr('x1', x(0))
-            .attr('y1', y(elevation))
-            .attr('x2', width)
-            .attr('y2', y(elevation));
-
-        var right = x0 > xDomain[1] / 2;
-        var xtranslate = x(dist);
-        xtranslate += right ? -10 : 10;
-
-        g.select('.x.grid-hover text')
-            .text(formatter.xhover(dist / xFactor, xUnits))
-            .style('text-anchor', right ? 'end' : 'start')
-            .attr('transform', 'translate(' + xtranslate + ',' +
-                (height - 10) + ')');
-
-        var yUnits = 'm';
-        g.select('.y.grid-hover text')
-            .text(formatter.yhover(elevation, yUnits))
-            .style('text-anchor', right ? 'end' : 'start')
-            .attr('transform', 'translate(' + xtranslate + ',' +
-                (y(elevation) - 10) + ')');
-        hoverCallback.call(null, point, dist / xFactor, xUnits, elevation,
-            yUnits);
+        profile.highlight(x0);
       }
 
       function mouseout() {
-        g.selectAll('.grid-hover')
-            .style('display', 'none');
-        outCallback.call(null);
+        profile.clearHighlight();
       }
     });
+  };
+
+  /**
+   * Remove any highlight.
+   * Fire the outCallback callback.
+   */
+  profile.clearHighlight = function() {
+    g.selectAll('.grid-hover')
+        .style('display', 'none');
+    outCallback.call(null);
+  };
+
+  /**
+   * Highlight the given distance and corresponding elevation on chart.
+   * Fire the hoverCallback callback with corresponding point.
+   * @param {number} distance Distance.
+   */
+  profile.highlight = function(distance) {
+    var data = svg.datum();
+    var i = bisectDistance(data, distance);
+    var point = data[i];
+
+    var extractor = elevationExtractor;
+    var elevation = extractor.z(point);
+    var dist = extractor.dist(point);
+
+    g.select('.x.grid-hover')
+        .style('display', 'inline')
+        .select('line')
+        .attr('x1', x(dist))
+        .attr('y1', height)
+        .attr('x2', x(dist))
+        .attr('y2', y(elevation));
+
+    g.select('.y.grid-hover')
+        .style('display', 'inline')
+        .select('line')
+        .attr('x1', x(0))
+        .attr('y1', y(elevation))
+        .attr('x2', width)
+        .attr('y2', y(elevation));
+
+    var right = dist > xDomain[1] / 2;
+    var xtranslate = x(dist);
+    xtranslate += right ? -10 : 10;
+
+    g.select('.x.grid-hover text')
+        .text(formatter.xhover(dist / xFactor, xUnits))
+        .style('text-anchor', right ? 'end' : 'start')
+        .attr('transform', 'translate(' + xtranslate + ',' +
+            (height - 10) + ')');
+
+    var yUnits = 'm';
+    g.select('.y.grid-hover text')
+        .text(formatter.yhover(elevation, 'm'))
+        .style('text-anchor', right ? 'end' : 'start')
+        .attr('transform', 'translate(' + xtranslate + ',' +
+            (y(elevation) - 10) + ')');
+    hoverCallback.call(null, point, dist / xFactor, xUnits, elevation, yUnits);
   };
 
 

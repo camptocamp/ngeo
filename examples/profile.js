@@ -2,7 +2,20 @@ goog.provide('profile');
 
 
 goog.require('ngeo');
+goog.require('ngeo.mapDirective');
 goog.require('ngeo.profileDirective');
+goog.require('ol');
+goog.require('ol.Attribution');
+goog.require('ol.Feature');
+goog.require('ol.FeatureOverlay');
+goog.require('ol.Map');
+goog.require('ol.View');
+goog.require('ol.geom.GeometryLayout');
+goog.require('ol.geom.LineString');
+goog.require('ol.layer.Image');
+goog.require('ol.proj');
+goog.require('ol.proj.Projection');
+goog.require('ol.source.ImageWMS');
 
 
 /** @const **/
@@ -21,14 +34,90 @@ app.module = angular.module('app', ['ngeo']);
  */
 app.MainController = function($http, $scope) {
 
+  this.scope_ = $scope;
+
+  var projection = new ol.proj.Projection({
+    code: 'EPSG:21781',
+    units: 'meters',
+    extent: [485869.5728, 76443.1884, 837076.5648, 299941.7864]
+  });
+  var extent = [420000, 30000, 900000, 350000];
+
+  var source = new ol.source.Vector();
+
+  /**
+   * @type {ol.Map}
+   */
+  var map = this['map'] = new ol.Map({
+    layers: [
+      new ol.layer.Image({
+        source: new ol.source.ImageWMS({
+          url: 'http://wms.geo.admin.ch/',
+          crossOrigin: 'anonymous',
+          attributions: [new ol.Attribution({
+            html: '&copy; ' +
+                '<a href="http://www.geo.admin.ch/internet/geoportal/' +
+                'en/home.html">' +
+                'Pixelmap 1:500000 / geo.admin.ch</a>'
+          })],
+          params: {
+            'LAYERS': 'ch.swisstopo.pixelkarte-farbe-pk1000.noscale',
+            'FORMAT': 'image/jpeg'
+          },
+          serverType: /** @type {ol.source.wms.ServerType} */ ('mapserver')
+        })
+      }),
+      new ol.layer.Vector({
+        source: source
+      })
+    ],
+    view: new ol.View({
+      projection: projection,
+      extent: extent,
+      zoom: 0,
+      center: [0, 0]
+    })
+  });
+
+  var overlay = new ol.FeatureOverlay();
+  this.snappedPoint_ = new ol.Feature();
+  overlay.addFeature(this.snappedPoint_);
+  overlay.setMap(map);
+
   this['profilePoisData'] = [
     {sort: 1, dist: 1000, title: 'First POI', id: 12345},
     {sort: 2, dist: 3000, title: 'Second POI', id: 12346}
   ];
 
   $http.get('data/profile.json').then(angular.bind(this, function(resp) {
-    this['profileData'] = resp.data['profile'];
+    var data = resp.data['profile'];
+    this['profileData'] = data;
+
+    var i;
+    var len = data.length;
+    var lineString = new ol.geom.LineString([],
+        /** @type {ol.geom.GeometryLayout} */ ('XYM'));
+    for (i = 0; i < len; i++) {
+      var p = data[i];
+      lineString.appendCoordinate([p.x, p.y, p.dist]);
+    }
+    source.addFeature(new ol.Feature(lineString));
+    map.getView().fitExtent(source.getExtent(), this['map'].getSize());
   }));
+
+
+  // Using closures for hoverCallback and outCallback since
+  // wrapping in angular.bind leads to a closure error.
+  // See PR https://github.com/google/closure-compiler/pull/867
+  var that = this;
+
+  map.on('pointermove', function(evt) {
+    if (evt.dragging) {
+      return;
+    }
+    var coordinate = map.getEventCoordinate(evt.originalEvent);
+    that.snapToGeometry(coordinate, source.getFeatures()[0].getGeometry());
+  });
 
 
   /**
@@ -92,22 +181,18 @@ app.MainController = function($http, $scope) {
     }
   };
 
-
-  // Using closures for hoverCallback and outCallback since
-  // wrapping in angular.bind leads to a closure error.
-  // See PR https://github.com/google/closure-compiler/pull/867
-  var that = this;
-
   /**
    * @param {Object} point
    */
   var hoverCallback = function(point) {
     // An item in the list of points given to the profile.
     that['point'] = point;
+    that.snappedPoint_.setGeometry(new ol.geom.Point([point.x, point.y]));
   };
 
   var outCallback = function() {
     that['point'] = null;
+    that.snappedPoint_.setGeometry(null);
   };
 
 
@@ -120,6 +205,27 @@ app.MainController = function($http, $scope) {
 
 
   this['point'] = null;
+};
+
+
+/**
+ * @param {ol.Coordinate} coordinate The current pointer coordinate.
+ * @param {ol.geom.Geometry|undefined} geometry The geometry to snap to.
+ */
+app.MainController.prototype.snapToGeometry = function(coordinate, geometry) {
+  var closestPoint = geometry.getClosestPoint(coordinate);
+  // compute distance to line in pixels
+  var dx = closestPoint[0] - coordinate[0];
+  var dy = closestPoint[1] - coordinate[1];
+  var dist = Math.sqrt(dx * dx + dy * dy);
+  var pixelDist = dist / this['map'].getView().getResolution();
+
+  if (pixelDist < 8) {
+    this['profileHighlight'] = closestPoint[2];
+  } else {
+    this['profileHighlight'] = -1;
+  }
+  this.scope_.$apply();
 };
 
 
