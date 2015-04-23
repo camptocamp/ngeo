@@ -194,6 +194,10 @@ ngeo.profile = function(options) {
 
   var profile = function(selection) {
     selection.each(function(data) {
+      if (!goog.isDef(data)) {
+        d3.select(this).selectAll('svg').remove();
+        return;
+      }
 
       var extractor = elevationExtractor;
 
