@@ -103,9 +103,11 @@ ngeo.profileDirective = function() {
               });
 
           function refreshData() {
-            if (goog.isDef(profile) && goog.isDef(elevationData)) {
+            if (goog.isDef(profile)) {
               selection.datum(elevationData).call(profile);
-              profile.showPois(poiData);
+              if (goog.isDef(elevationData)) {
+                profile.showPois(poiData);
+              }
             }
           }
         }
