@@ -32,8 +32,11 @@ app.MainController = function(ngeoDecorateGeolocation) {
     zoom: 4
   });
 
-  /** @type {ol.Map} */
-  var map = new ol.Map({
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()
@@ -41,12 +44,18 @@ app.MainController = function(ngeoDecorateGeolocation) {
     ],
     view: view
   });
-  this['map'] = map;
 
-  var geolocation = new ol.Geolocation({
+  var map = this.map;
+
+  /**
+   * @type {ol.Geolocation}
+   * @export
+   */
+  this.geolocation = new ol.Geolocation({
     projection: view.getProjection()
   });
-  this['geolocation'] = geolocation;
+
+  var geolocation = this.geolocation;
 
   var positionPoint = new ol.geom.Point([0, 0]);
   var positionFeature = new ol.Feature(positionPoint);

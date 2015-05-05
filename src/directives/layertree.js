@@ -91,21 +91,47 @@ ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
 
   var treeExpr = $attrs['ngeoLayertree'];
   var tree = /** @type {Object} */ ($scope.$eval(treeExpr));
-  this['tree'] = tree;
+
+  /**
+   * @type {Object}
+   * @export
+   */
+  this.tree = tree;
 
   var mapExpr = $attrs['ngeoLayertreeMap'];
   var map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
-  this['map'] = map;
+
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = map;
 
   var nodelayerExpr = $attrs['ngeoLayertreeNodelayer'];
-  this['layerExpr'] = nodelayerExpr;
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.layerExpr = nodelayerExpr;
 
   $scope.$watch(treeExpr, goog.bind(function(newVal, oldVal) {
-    this['tree'] = newVal;
+    this.tree = newVal;
   }, this));
 
-  $scope['uid'] = this['uid'] = goog.getUid(this);
-  $scope['depth'] = 0;
+  $scope['uid'] = goog.getUid(this);
+
+  /**
+   * @type {number}
+   * @export
+   */
+  this.uid = $scope['uid'];
+
+  /**
+   * @type {number}
+   * @export
+   */
+  $scope.depth = 0;
 
   $scope['layertreeCtrl'] = this;
 };

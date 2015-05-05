@@ -59,11 +59,30 @@ app.module.directive('appBackgroundlayer', app.backgroundlayerDirective);
  * @ngInject
  */
 app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
+
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map;
+
+  /**
+   * @type {Array.<Object>}
+   * @export
+   */
+  this.bgLayers = null;
+
+  /**
+   * @type {Object}
+   * @export
+   */
+  this.bgLayer = null;
+
   $http.get('data/backgroundlayers.json').then(
       angular.bind(this, function(resp) {
-        this['bgLayers'] = resp.data;
+        this.bgLayers = resp.data;
         // use the first layer by default
-        this['bgLayer'] = this['bgLayers'][0];
+        this.bgLayer = this.bgLayers[0];
       }));
 
   /**
@@ -81,9 +100,9 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
  * @export
  */
 app.BackgroundlayerController.prototype.change = function() {
-  var layerSpec = this['bgLayer'];
+  var layerSpec = this.bgLayer;
   var layer = this.getLayer_(layerSpec['name']);
-  this.backgroundLayerMgr_.set(this['map'], layer);
+  this.backgroundLayerMgr_.set(this.map, layer);
 };
 
 
@@ -119,14 +138,14 @@ app.MainController = function($scope) {
 
   /**
    * @type {ol.Map}
+   * @export
    */
-  var map = new ol.Map({
+  this.map = new ol.Map({
     view: new ol.View({
       center: [-10635142.37, 4813698.29],
       zoom: 4
     })
   });
-  this['map'] = map;
 
   /**
    * An overlay layer.
@@ -140,7 +159,7 @@ app.MainController = function($scope) {
     })
   });
 
-  map.addLayer(overlay);
+  this.map.addLayer(overlay);
 
 };
 

@@ -48,8 +48,11 @@ app.module.directive('appMap', app.mapDirective);
  * @constructor
  */
 app.MainController = function() {
-  /** @type {ol.Map} */
-  this['map'] = new ol.Map({
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()
@@ -61,7 +64,11 @@ app.MainController = function() {
     })
   });
 
-  this['open'] = false;
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.open = false;
 };
 
 

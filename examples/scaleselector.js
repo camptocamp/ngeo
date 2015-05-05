@@ -56,12 +56,19 @@ app.module.directive('appScaleselector', app.scaleselectorDirective);
 app.ScaleselectorController = function($sce) {
 
   /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map;
+
+  /**
    * The zoom level/scale map object for the ngeoScaleselector directive.
    * The values need to be trusted as HTML.
    * @type {Object.<string, string>}
    * @const
+   * @export
    */
-  this['scales'] = {
+  this.scales = {
     '0': $sce.trustAsHtml('1&nbsp;:&nbsp;200\'000\'000'),
     '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000\'000'),
     '2': $sce.trustAsHtml('1&nbsp;:&nbsp;50\'000\'000'),
@@ -72,8 +79,9 @@ app.ScaleselectorController = function($sce) {
   /**
    * Use the "dropup" variation of the Bootstrap dropdown.
    * @type {ngeo.ScaleselectorOptions}
+   * @export
    */
-  this['options'] = {
+  this.options = {
     'dropup': true
   };
 };
@@ -92,8 +100,9 @@ app.MainController = function($scope) {
 
   /**
    * @type {ol.Map}
+   * @export
    */
-  var map = new ol.Map({
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()
@@ -105,7 +114,6 @@ app.MainController = function($scope) {
       maxZoom: 4
     })
   });
-  this['map'] = map;
 
 };
 
