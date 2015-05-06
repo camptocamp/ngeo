@@ -53,6 +53,15 @@ ngeo.Location = function(location, history) {
 
 
 /**
+ * Get the location's URI object.
+ * @return {!goog.Uri}
+ */
+ngeo.Location.prototype.getUri = function() {
+  return this.uri_;
+};
+
+
+/**
  * Get the location's current path.
  * @return {string} The path.
  */
@@ -65,7 +74,7 @@ ngeo.Location.prototype.getPath = function() {
  * @param {Object.<string, string>=} opt_params Params.
  * @return {string} The URI.
  */
-ngeo.Location.prototype.getUri = function(opt_params) {
+ngeo.Location.prototype.getUriString = function(opt_params) {
   var extendedUri;
   if (goog.isDef(opt_params)) {
     extendedUri = this.uri_.clone();
@@ -125,7 +134,7 @@ ngeo.Location.prototype.deleteParam = function(key) {
 /**
  */
 ngeo.Location.prototype.refresh = function() {
-  this.history_.replaceState(null, '', this.getUri());
+  this.history_.replaceState(null, '', this.getUriString());
 };
 
 
@@ -150,9 +159,9 @@ ngeo.LocationFactory = function($rootScope, $window) {
   var history = $window.history;
   var service = new ngeo.Location($window.location, $window.history);
 
-  var lastUri = service.getUri();
+  var lastUri = service.getUriString();
   $rootScope.$watch(function() {
-    var newUri = service.getUri();
+    var newUri = service.getUriString();
     if (lastUri !== newUri) {
       $rootScope.$evalAsync(function() {
         lastUri = newUri;

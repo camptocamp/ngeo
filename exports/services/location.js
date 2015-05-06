@@ -6,6 +6,10 @@ goog.exportProperty(
     ngeo.Location.prototype.getUri);
 goog.exportProperty(
     ngeo.Location.prototype,
+    'getUriString',
+    ngeo.Location.prototype.getUriString);
+goog.exportProperty(
+    ngeo.Location.prototype,
     'getParam',
     ngeo.Location.prototype.getParam);
 goog.exportProperty(

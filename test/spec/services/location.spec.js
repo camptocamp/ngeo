@@ -18,13 +18,13 @@ describe('ngeo.Location', function() {
     });
   });
 
-  describe('#getUri', function() {
+  describe('#getUriString', function() {
     it('returns the URI', function() {
-      var uri = ngeoLocation.getUri();
+      var uri = ngeoLocation.getUriString();
       expect(uri).toBe('http://domain.com/some/path?some=param');
     });
     it('returns the URI with additional params', function() {
-      var uri = ngeoLocation.getUri({'another': 'param'});
+      var uri = ngeoLocation.getUriString({'another': 'param'});
       expect(uri).toBe('http://domain.com/some/path?some=param&another=param');
     });
   });
@@ -55,7 +55,7 @@ describe('ngeo.Location', function() {
   describe('#deleteParam', function() {
     it('delete the params', function() {
       ngeoLocation.deleteParam('some');
-      var uri = ngeoLocation.getUri();
+      var uri = ngeoLocation.getUriString();
       expect(uri).toBe('http://domain.com/some/path');
     });
   });
