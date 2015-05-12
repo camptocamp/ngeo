@@ -16,15 +16,22 @@ app.module = angular.module('app', ['ngeo']);
  * @ngInject
  */
 app.MainController = function(ngeoDecorateLayer) {
-  /** @type {ol.layer.Tile} */
-  var layer = new ol.layer.Tile({
+  /**
+   * @type {ol.layer.Tile}
+   * @export
+   */
+  this.layer = new ol.layer.Tile({
     source: new ol.source.OSM()
   });
-  ngeoDecorateLayer(layer);
-  this['layer'] = layer;
 
-  /** @type {ol.Map} */
-  this['map'] = new ol.Map({
+  var layer = this.layer;
+  ngeoDecorateLayer(layer);
+
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = new ol.Map({
     layers: [layer],
     view: new ol.View({
       center: [0, 0],

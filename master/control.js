@@ -15,8 +15,11 @@ app.module = angular.module('app', ['ngeo']);
  */
 app.MainController = function() {
 
-  /** @type {ol.Map} */
-  this['map'] = new ol.Map({
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()
@@ -28,8 +31,11 @@ app.MainController = function() {
     })
   });
 
-  /** @type {ol.control.Control} */
-  this['control'] = new ol.control.MousePosition({
+  /**
+   * @type {ol.control.Control}
+   * @export
+   */
+  this.control = new ol.control.MousePosition({
     className: 'mouse-position'
   });
 };

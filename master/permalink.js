@@ -44,7 +44,13 @@ app.module.directive('appMap', app.mapDirective);
  * @ngInject
  */
 app.MapDirectiveController = function(ngeoLocation, ngeoDebounce) {
-  var map = this['map'];
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map;
+
+  var map = this.map;
   var view = map.getView();
 
   var zoom = ngeoLocation.getParam('z');
@@ -89,8 +95,12 @@ app.module.controller('AppMapController', app.MapDirectiveController);
  * @constructor
  */
 app.MainController = function() {
-  /** @type {ol.Map} */
-  this['map'] = new ol.Map({
+
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()

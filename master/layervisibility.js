@@ -17,8 +17,11 @@ app.module = angular.module('app', ['ngeo']);
  */
 app.MainController = function(ngeoDecorateLayer) {
 
-  /** @type {ol.layer.Tile} */
-  var wmsLayer = new ol.layer.Tile({
+  /**
+   * @type {ol.layer.Tile}
+   * @export
+   */
+  this.layer = new ol.layer.Tile({
     source: new ol.source.TileWMS({
       url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:states'},
@@ -26,11 +29,15 @@ app.MainController = function(ngeoDecorateLayer) {
       extent: [-13884991, 2870341, -7455066, 6338219]
     })
   });
-  ngeoDecorateLayer(wmsLayer);
-  this['layer'] = wmsLayer;
 
-  /** @type {ol.Map} */
-  this['map'] = new ol.Map({
+  var wmsLayer = this.layer;
+  ngeoDecorateLayer(wmsLayer);
+
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.MapQuest({layer: 'sat'})

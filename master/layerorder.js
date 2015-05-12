@@ -56,8 +56,11 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   });
   cities.set('name', 'Cities');
 
-  /** @type {ol.Map} */
-  this['map'] = new ol.Map({
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = new ol.Map({
     layers: [
       mapquest,
       boundaries,
@@ -70,14 +73,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
     })
   });
 
-  var map = this['map'];
-
-  /**
-   * @type {ol.Map}
-   * @private
-   * @const
-   */
-  this.map_ = map;
+  var map = this.map;
 
   /**
    * @type {ol.layer.Tile}
@@ -95,10 +91,12 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   /**
    * @type {Array.<ol.layer.Base>}
    * @const
+   * @export
    */
-  this['selectedLayers'] = [];
+  this.selectedLayers = [];
 
-  var selectedLayers = this['selectedLayers'];
+  var selectedLayers = this.selectedLayers;
+
   ngeoSyncArrays(map.getLayers().getArray(), selectedLayers, true, $scope,
       layerFilter);
 
@@ -132,12 +130,12 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
  */
 app.MainController.prototype.toggleRoadsLayer = function(val) {
   if (!angular.isDefined(val)) {
-    return this.map_.getLayers().getArray().indexOf(this.roads_) >= 0;
+    return this.map.getLayers().getArray().indexOf(this.roads_) >= 0;
   } else {
     if (val) {
-      this.map_.addLayer(this.roads_);
+      this.map.addLayer(this.roads_);
     } else {
-      this.map_.removeLayer(this.roads_);
+      this.map.removeLayer(this.roads_);
     }
   }
 };

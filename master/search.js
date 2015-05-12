@@ -58,6 +58,12 @@ app.SearchController = function($rootScope, $compile,
     ngeoCreateGeoJSONBloodhound) {
 
   /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map;
+
+  /**
    * @type {ol.FeatureOverlay}
    * @private
    */
@@ -67,13 +73,21 @@ app.SearchController = function($rootScope, $compile,
   var bloodhoundEngine = this.createAndInitBloodhound_(
       ngeoCreateGeoJSONBloodhound);
 
-  /** @type {TypeaheadOptions} */
-  this['options'] = {
-    highlight: true
+  /**
+   * @type {TypeaheadOptions}
+   * @export
+   */
+  this.options = {
+    highlight: true,
+    hint: undefined,
+    minLength: undefined
   };
 
-  /** @type {Array.<TypeaheadDataset>} */
-  this['datasets'] = [{
+  /**
+   * @type {Array.<TypeaheadDataset>}
+   * @export
+   */
+  this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
     displayKey: function(suggestion) {
       var feature = /** @type {ol.Feature} */ (suggestion);
@@ -101,7 +115,11 @@ app.SearchController = function($rootScope, $compile,
     }
   }];
 
-  this['listeners'] = /** @type {ngeox.SearchDirectiveListeners} */ ({
+  /**
+   * @type {ngeox.SearchDirectiveListeners}
+   * @export
+   */
+  this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
     selected: angular.bind(this, app.SearchController.selected_)
   });
 
@@ -114,7 +132,7 @@ app.SearchController = function($rootScope, $compile,
  */
 app.SearchController.prototype.createFeatureOverlay_ = function() {
   var featureOverlay = new ol.FeatureOverlay();
-  featureOverlay.setMap(this['map']);
+  featureOverlay.setMap(this.map);
   return featureOverlay;
 };
 
@@ -142,7 +160,7 @@ app.SearchController.prototype.createAndInitBloodhound_ =
  * @private
  */
 app.SearchController.selected_ = function(event, suggestion, dataset) {
-  var map = /** @type {ol.Map} */ (this['map']);
+  var map = /** @type {ol.Map} */ (this.map);
   var feature = /** @type {ol.Feature} */ (suggestion);
   var features = this.featureOverlay_.getFeatures();
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
@@ -165,8 +183,9 @@ app.module.controller('AppSearchController', app.SearchController);
 app.MainController = function() {
   /**
    * @type {ol.Map}
+   * @export
    */
-  this['map'] = new ol.Map({
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()

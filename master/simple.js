@@ -14,10 +14,12 @@ app.module = angular.module('app', ['ngeo']);
  * @constructor
  */
 app.MainController = function() {
+
   /**
    * @type {ol.Map}
+   * @export
    */
-  this['map'] = new ol.Map({
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()
