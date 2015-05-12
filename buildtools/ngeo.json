@@ -26,7 +26,8 @@
       ".build/externs/jquery-1.9.js",
       "externs/ngeox.js",
       "externs/d3.js",
-      "externs/typeahead.js"
+      "externs/typeahead.js",
+      "externs/mapfish-print-v3.js"
     ],
     "define": [
       "goog.DEBUG=false"
