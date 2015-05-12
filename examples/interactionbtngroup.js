@@ -55,8 +55,11 @@ app.MainController = function(ngeoDecorateInteraction) {
     })
   });
 
-  /** @type {ol.Map} */
-  var map = new ol.Map({
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.MapQuest({layer: 'sat'})
@@ -68,40 +71,54 @@ app.MainController = function(ngeoDecorateInteraction) {
       zoom: 4
     })
   });
-  this['map'] = map;
 
-  /** @type {ol.interaction.Draw} */
-  var drawPolygon = new ol.interaction.Draw(
+  var map = this.map;
+
+  /**
+   * @type {ol.interaction.Draw}
+   * @export
+   */
+  this.drawPolygon = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Polygon',
         source: source
       }));
+
+  var drawPolygon = this.drawPolygon;
+
   drawPolygon.setActive(false);
   ngeoDecorateInteraction(drawPolygon);
   map.addInteraction(drawPolygon);
-  this['drawPolygon'] = drawPolygon;
 
-  /** @type {ol.interaction.Draw} */
-  var drawPoint = new ol.interaction.Draw(
+  /**
+   * @type {ol.interaction.Draw}
+   * @export
+   */
+  this.drawPoint = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Point',
         source: source
       }));
+
+  var drawPoint = this.drawPoint;
   drawPoint.setActive(false);
   ngeoDecorateInteraction(drawPoint);
   map.addInteraction(drawPoint);
-  this['drawPoint'] = drawPoint;
 
-  /** @type {ol.interaction.Draw} */
-  var drawLine = new ol.interaction.Draw(
+  /**
+   * @type {ol.interaction.Draw}
+   * @export
+   */
+  this.drawLine = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'LineString',
         source: source
       }));
+
+  var drawLine = this.drawLine;
   drawLine.setActive(false);
   ngeoDecorateInteraction(drawLine);
   map.addInteraction(drawLine);
-  this['drawLine'] = drawLine;
 
 };
 

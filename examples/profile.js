@@ -34,6 +34,10 @@ app.module = angular.module('app', ['ngeo']);
  */
 app.MainController = function($http, $scope) {
 
+  /**
+   * @type {angular.Scope}
+   * @private
+   */
   this.scope_ = $scope;
 
   var projection = new ol.proj.Projection({
@@ -47,8 +51,9 @@ app.MainController = function($http, $scope) {
 
   /**
    * @type {ol.Map}
+   * @export
    */
-  var map = this['map'] = new ol.Map({
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -79,19 +84,31 @@ app.MainController = function($http, $scope) {
     })
   });
 
+  var map = this.map;
+
   var overlay = new ol.FeatureOverlay();
   this.snappedPoint_ = new ol.Feature();
   overlay.addFeature(this.snappedPoint_);
   overlay.setMap(map);
 
-  this['profilePoisData'] = [
+  /**
+   * @type {Array.<Object>}
+   * @export
+   */
+  this.profilePoisData = [
     {sort: 1, dist: 1000, title: 'First POI', id: 12345},
     {sort: 2, dist: 3000, title: 'Second POI', id: 12346}
   ];
 
+  /**
+   * @type {Object|undefined}
+   * @export
+   */
+  this.profileData = undefined;
+
   $http.get('data/profile.json').then(angular.bind(this, function(resp) {
     var data = resp.data['profile'];
-    this['profileData'] = data;
+    this.profileData = data;
 
     var i;
     var len = data.length;
@@ -102,7 +119,9 @@ app.MainController = function($http, $scope) {
       lineString.appendCoordinate([p.x, p.y, p.dist]);
     }
     source.addFeature(new ol.Feature(lineString));
-    map.getView().fitExtent(source.getExtent(), this['map'].getSize());
+
+    map.getView().fitExtent(source.getExtent(),
+        /** @type {ol.Size} */ (this.map.getSize()));
   }));
 
 
@@ -186,25 +205,38 @@ app.MainController = function($http, $scope) {
    */
   var hoverCallback = function(point) {
     // An item in the list of points given to the profile.
-    that['point'] = point;
+    that.point = point;
     that.snappedPoint_.setGeometry(new ol.geom.Point([point.x, point.y]));
   };
 
   var outCallback = function() {
-    that['point'] = null;
+    that.point = null;
     that.snappedPoint_.setGeometry(null);
   };
 
 
-  this['profileOptions'] = {
+  /**
+   * @type {Object}
+   * @export
+   */
+  this.profileOptions = {
     elevationExtractor: elevationExtractor,
     poiExtractor: poiExtractor,
     hoverCallback: hoverCallback,
     outCallback: outCallback
   };
 
+  /**
+   * @type {Object}
+   * @export
+   */
+  this.point = null;
 
-  this['point'] = null;
+  /**
+   * @type {number|undefined}
+   * @export
+   */
+  this.profileHighlight = undefined;
 };
 
 
@@ -218,12 +250,12 @@ app.MainController.prototype.snapToGeometry = function(coordinate, geometry) {
   var dx = closestPoint[0] - coordinate[0];
   var dy = closestPoint[1] - coordinate[1];
   var dist = Math.sqrt(dx * dx + dy * dy);
-  var pixelDist = dist / this['map'].getView().getResolution();
+  var pixelDist = dist / this.map.getView().getResolution();
 
   if (pixelDist < 8) {
-    this['profileHighlight'] = closestPoint[2];
+    this.profileHighlight = closestPoint[2];
   } else {
-    this['profileHighlight'] = -1;
+    this.profileHighlight = -1;
   }
   this.scope_.$apply();
 };

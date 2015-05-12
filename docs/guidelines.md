@@ -67,6 +67,13 @@ Here is an example:
  * @export
  */
 app.MainController = function($scope) {
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.title = 'Addition';
+
   // …
 };
 
@@ -89,25 +96,29 @@ And this is the template:
 
 ```html
 <div ng-controller="MainController as ctrl">
+  <h2>{{ctrl.title}}</h2>
   <span>{{ctrl.add(2, 3)}}</span>
 </div>
 ```
 
-For this to work the `add` property must exist on the controller prototype.
-This is why the `app.MainController` and `add` functions are annotated with
-`@export`. The `@export` annotation tells Closure Compiler to generate exports
-in the build for the annotated functions.
+For this to work the `title` and `add` properties must exist on the controller
+object. This is why the `app.MainController` constructor, the `add` method, and
+the `title` property, are annotated with `@export`. The `@export` annotation
+tells Closure Compiler to generate exports in the build for the annotated
+functions, and to not rename the annotated properties.
 
-Note that compiler flag
+Note that the compiler flags
 
 ```
 "--generate_exports"
+"--export_local_property_definitions"
 ```
 
-is required for the Compiler to actually generate exports!
+are required for the Compiler to actually take the `@export` annotations into
+account.
 
 And remember to `@export` the constructor as well! If you just export the
-method this is the code the compiler will generate for the export:
+method (`add` here) this is the code the compiler will generate for the export:
 
 ```js
 t("app.MainController.prototype.add",cw.prototype.d)

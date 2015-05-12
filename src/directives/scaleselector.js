@@ -98,8 +98,9 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   /**
    * The zoom level/scale map object.
    * @type {Object.<string, string>}
+   * @export
    */
-  this['scales'] = /** @type {Object.<string, string>} */
+  this.scales = /** @type {Object.<string, string>} */
       ($scope.$eval(scalesExpr));
   goog.asserts.assert(goog.isDef(this['scales']));
 
@@ -108,8 +109,9 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
 
   /**
    * @type {Array.<number>}
+   * @export
    */
-  this['zoomLevels'] = zoomLevels;
+  this.zoomLevels = zoomLevels;
 
   var mapExpr = $attrs['ngeoScaleselectorMap'];
 
@@ -125,8 +127,9 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
 
   /**
    * @type {!ngeo.ScaleselectorOptions}
+   * @export
    */
-  this['options'] = ngeo.ScaleselectorController.getOptions_(options);
+  this.options = ngeo.ScaleselectorController.getOptions_(options);
 
   /**
    * @type {angular.Scope}
@@ -142,14 +145,15 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
 
   /**
    * @type {string|undefined}
+   * @export
    */
-  this['currentScale'] = undefined;
+  this.currentScale = undefined;
 
   var view = this.map_.getView();
   if (!goog.isNull(view)) {
     var currentZoom = this.map_.getView().getZoom();
     if (goog.isDef(currentZoom)) {
-      this['currentScale'] = this.getScale(currentZoom);
+      this.currentScale = this.getScale(currentZoom);
     }
   }
 
@@ -188,7 +192,7 @@ ngeo.ScaleselectorController.getOptions_ = function(options) {
  * @export
  */
 ngeo.ScaleselectorController.prototype.getScale = function(zoom) {
-  return this['scales'][zoom.toString()];
+  return this.scales[zoom.toString()];
 };
 
 
@@ -207,7 +211,7 @@ ngeo.ScaleselectorController.prototype.changeZoom = function(zoom) {
  */
 ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
   var view = this.map_.getView();
-  var currentScale = this['scales'][view.getZoom().toString()];
+  var currentScale = this.scales[view.getZoom().toString()];
 
   // handleResolutionChange_ is a change:resolution listener. The listener
   // may be executed outside the Angular context, for example when the user
@@ -223,7 +227,7 @@ ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
   this.$scope_.$applyAsync(
       /** @type {function(?)} */ (
       goog.bind(function() {
-        this['currentScale'] = currentScale;
+        this.currentScale = currentScale;
       }, this)));
 };
 

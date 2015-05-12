@@ -77,8 +77,15 @@ app.module.directive('appLayertree', app.layertreeDirective);
  * @export
  */
 app.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
+
+  /**
+   * @type {Object}
+   * @export
+   */
+  this.tree = null;
+
   $http.get('data/tree.json').then(angular.bind(this, function(resp) {
-    this['tree'] = resp.data;
+    this.tree = resp.data;
   }));
 
   /**
@@ -222,8 +229,12 @@ app.module.value('appGetLayer', app.getLayer);
  * @constructor
  */
 app.MainController = function() {
-  /** @type {ol.Map} */
-  this['map'] = new ol.Map({
+
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()

@@ -62,6 +62,43 @@ app.module.directive('appMeasuretools', app.measuretoolsDirective);
 app.MeasuretoolsController = function($scope, $compile, $sce,
     ngeoDecorateInteraction) {
 
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map;
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.lang;
+
+  /**
+   * @type {Object}
+   * @export
+   */
+  this.measureStartMsg = null;
+
+  /**
+   * @type {Object}
+   * @export
+   */
+  this.measureLengthContinueMsg = null;
+
+
+  /**
+   * @type {Object}
+   * @export
+   */
+  this.measureAreaContinueMsg = null;
+
+  /**
+   * @type {Object}
+   * @export
+   */
+  this.measureAzimutContinueMsg = null;
+
   // Translations for the measure tools' tooltips.
   var measureStartMsgs = {
     'en': $sce.trustAsHtml('Click to start drawing.'),
@@ -101,12 +138,12 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
   // Watch the "lang" property and update the toolip messages
   // based on the selected language.
   $scope.$watch(angular.bind(this, function() {
-    return this['lang'];
+    return this.lang;
   }), angular.bind(this, function(newVal) {
-    this['measureStartMsg'] = measureStartMsgs[newVal];
-    this['measureLengthContinueMsg'] = measureLengthContinueMsgs[newVal];
-    this['measureAreaContinueMsg'] = measureAreaContinueMsgs[newVal];
-    this['measureAzimutContinueMsg'] = measureAzimutContinueMsgs[newVal];
+    this.measureStartMsg = measureStartMsgs[newVal];
+    this.measureLengthContinueMsg = measureLengthContinueMsgs[newVal];
+    this.measureAreaContinueMsg = measureAreaContinueMsgs[newVal];
+    this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
   }));
 
   var style = new ol.style.Style({
@@ -129,40 +166,52 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     })
   });
 
-  var map = this['map'];
+  var map = this.map;
 
-  /** @type {ngeo.interaction.MeasureLength} */
-  var measureLength = new ngeo.interaction.MeasureLength({
+  /**
+   * @type {ngeo.interaction.MeasureLength}
+   * @export
+   */
+  this.measureLength = new ngeo.interaction.MeasureLength({
     sketchStyle: style,
     startMsg: measureStartMsg[0],
     continueMsg: measureLengthContinueMsg[0]
   });
+
+  var measureLength = this.measureLength;
   measureLength.setActive(false);
   ngeoDecorateInteraction(measureLength);
   map.addInteraction(measureLength);
-  this['measureLength'] = measureLength;
 
-  /** @type {ngeo.interaction.MeasureArea} */
-  var measureArea = new ngeo.interaction.MeasureArea({
+  /**
+   * @type {ngeo.interaction.MeasureArea}
+   * @export
+   */
+  this.measureArea = new ngeo.interaction.MeasureArea({
     sketchStyle: style,
     startMsg: measureStartMsg[0],
     continueMsg: measureAreaContinueMsg[0]
   });
+
+  var measureArea = this.measureArea;
   measureArea.setActive(false);
   ngeoDecorateInteraction(measureArea);
   map.addInteraction(measureArea);
-  this['measureArea'] = measureArea;
 
-  /** @type {ngeo.interaction.MeasureAzimut} */
-  var measureAzimut = new ngeo.interaction.MeasureAzimut({
+  /**
+   * @type {ngeo.interaction.MeasureAzimut}
+   * @export
+   */
+  this.measureAzimut = new ngeo.interaction.MeasureAzimut({
     sketchStyle: style,
     startMsg: measureStartMsg[0],
     continueMsg: measureAzimutContinueMsg[0]
   });
+
+  var measureAzimut = this.measureAzimut;
   measureAzimut.setActive(false);
   ngeoDecorateInteraction(measureAzimut);
   map.addInteraction(measureAzimut);
-  this['measureAzimut'] = measureAzimut;
 
 
   // the following code shows how one can add additional information to the
@@ -183,11 +232,17 @@ app.module.controller('AppMeasuretoolsController', app.MeasuretoolsController);
  */
 app.MainController = function() {
 
-  /** @type {string} */
-  this['lang'] = 'en';
+  /**
+   * @type {string}
+   * @export
+   */
+  this.lang = 'en';
 
-  /** @type {ol.Map} */
-  var map = new ol.Map({
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()
@@ -198,10 +253,8 @@ app.MainController = function() {
       zoom: 15
     })
   });
-  this['map'] = map;
 
-  map.addControl(new ol.control.ScaleLine());
-
+  this.map.addControl(new ol.control.ScaleLine());
 };
 
 

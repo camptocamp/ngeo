@@ -118,24 +118,44 @@ ngeo.LayertreenodeController = function($scope, $element, $attrs) {
   var nodeExpr = $attrs['ngeoLayertreenode'];
   var node = /** @type {Object} */ ($scope.$eval(nodeExpr));
   goog.asserts.assert(goog.isDef(node));
-  this['node'] = node;
+
+  /**
+   * @type {Object}
+   * @export
+   */
+  this.node = node;
 
   var mapExpr = $attrs['ngeoLayertreenodeMap'];
   var map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
   goog.asserts.assert(goog.isDef(map));
-  this['map'] = map;
+
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = map;
 
   var layerexprExpr = $attrs['ngeoLayertreenodeLayerexpr'];
   var layerExpr = /** @type {string} */ ($scope.$eval(layerexprExpr));
   goog.asserts.assert(goog.isDef(layerExpr));
-  this['layerExpr'] = layerExpr;
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.layerExpr = layerExpr;
 
   // The node is passed in the "locals" object (2nd arg to $eval). This
   // is to allow expressions like "ctrl.getLayer(node)".
   var layer = /** @type {ol.layer.Layer} */
       ($scope.$eval(layerExpr, {'node': node}));
   goog.asserts.assert(goog.isDef(layer));
-  this['layer'] = layer;
+
+  /**
+   * @type {ol.layer.Layer}
+   * @export
+   */
+  this.layer = layer;
 
   /**
    * @type {ol.Map}
@@ -151,15 +171,29 @@ ngeo.LayertreenodeController = function($scope, $element, $attrs) {
    */
   this.layer_ = layer;
 
-  this['parentUid'] = $scope.$parent['uid'];
-  this['uid'] = goog.getUid(this);
-  this['depth'] = $scope.$parent['depth'] + 1;
+  /**
+   * @type {number}
+   * @export
+   */
+  this.parentUid = $scope.$parent['uid'];
+
+  /**
+   * @type {number}
+   * @export
+   */
+  this.uid = goog.getUid(this);
+
+  /**
+   * @type {number}
+   * @export
+   */
+  this.depth = $scope.$parent['depth'] + 1;
 
   // We set 'uid' and 'depth' in the scope as well to access the parent values
   // in the inherited scopes. This is intended to be used in the javascript not
   // in the templates.
-  $scope['uid'] = this['uid'];
-  $scope['depth'] = this['depth'];
+  $scope['uid'] = this.uid;
+  $scope['depth'] = this.depth;
 
   $scope['layertreenodeCtrl'] = this;
 };

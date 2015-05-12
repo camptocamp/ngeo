@@ -27,8 +27,11 @@ var module = angular.module('app', ['ngeo']);
  */
 app.MainController = function(ngeoDecorateInteraction) {
 
-  /** @type {ol.Map} */
-  var map = new ol.Map({
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.MapQuest({layer: 'sat'})
@@ -39,21 +42,26 @@ app.MainController = function(ngeoDecorateInteraction) {
       zoom: 4
     })
   });
-  this['map'] = map;
+
+  var map = this.map;
 
   var featureOverlay = new ol.FeatureOverlay();
   featureOverlay.setMap(map);
 
-  /** @type {ol.interaction.Draw} */
-  var interaction = new ol.interaction.Draw(
+  /**
+   * @type {ol.interaction.Draw}
+   * @export
+   */
+  this.interaction = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Point',
         features: featureOverlay.getFeatures()
       }));
+
+  var interaction = this.interaction;
   interaction.setActive(false);
   map.addInteraction(interaction);
   ngeoDecorateInteraction(interaction);
-  this['interaction'] = interaction;
 
 };
 
