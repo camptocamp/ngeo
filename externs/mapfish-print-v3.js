@@ -226,6 +226,12 @@ MapFishPrintWmtsLayer.prototype.matrixSet;
 /**
  * @type {string}
  */
+MapFishPrintWmtsLayer.prototype.requestEncoding;
+
+
+/**
+ * @type {string}
+ */
 MapFishPrintWmtsLayer.prototype.style;
 
 
