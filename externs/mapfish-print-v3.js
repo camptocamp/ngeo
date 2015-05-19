@@ -104,6 +104,38 @@ MapFishPrintLayer.prototype.type;
  * @constructor
  * @extends {MapFishPrintLayer}
  */
+var MapFishPrintVectorLayer = function() {};
+
+
+/**
+ * @type {GeoJSONObject}
+ */
+MapFishPrintVectorLayer.prototype.geoJson;
+
+
+/**
+ * @type {MapFishPrintVectorStyle}
+ */
+MapFishPrintVectorLayer.prototype.style;
+
+
+
+/**
+ * @constructor
+ */
+var MapFishPrintVectorStyle = function() {};
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintVectorStyle.prototype.version;
+
+
+/**
+ * @constructor
+ * @extends {MapFishPrintLayer}
+ */
 var MapFishPrintWmsLayer = function() {};
 
 
@@ -283,3 +315,148 @@ MapFishPrintStatusResponse.prototype.done;
  * @type {string}
  */
 MapFishPrintStatusResponse.prototype.downloadURL;
+
+
+
+/**
+ * @constructor
+ */
+var MapFishPrintSymbolizers = function() {};
+
+
+/**
+ * @type {Array.<MapFishPrintSymbolizer>}
+ */
+MapFishPrintSymbolizers.prototype.symbolizers;
+
+
+/**
+ * @constructor
+ */
+var MapFishPrintSymbolizer = function() {};
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizer.prototype.type;
+
+
+
+/**
+ * @constructor
+ * @extends {MapFishPrintSymbolizer}
+ */
+var MapFishPrintSymbolizerLine = function() {};
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerLine.prototype.strokeColor;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerLine.prototype.strokeOpacity;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerLine.prototype.strokeWidth;
+
+
+
+/**
+ * @constructor
+ * @extends {MapFishPrintSymbolizer}
+ */
+var MapFishPrintSymbolizerPoint = function() {};
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerPoint.prototype.externalGraphic;
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerPoint.prototype.fillColor;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.fillOpacity;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.pointRadius;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.rotation;
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerPoint.prototype.strokeColor;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.strokeOpacity;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.strokeWidth;
+
+
+
+/**
+ * @constructor
+ * @extends {MapFishPrintSymbolizer}
+ */
+var MapFishPrintSymbolizerPolygon = function() {};
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerPolygon.prototype.fillColor;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPolygon.prototype.fillOpacity;
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerPolygon.prototype.strokeColor;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPolygon.prototype.strokeOpacity;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPolygon.prototype.strokeWidth;
