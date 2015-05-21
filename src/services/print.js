@@ -273,56 +273,33 @@ ngeo.Print.prototype.getWmtsUrl_ = function(source) {
 /**
  * Send a create report request to the MapFish Print service.
  * @param {MapFishPrintSpec} printSpec Print specification.
- * @return {angular.$q.Promise} Promise.
+ * @param {angular.$http.Config=} opt_httpConfig $http config object.
+ * @return {angular.$http.HttpPromise} HTTP promise.
  */
-ngeo.Print.prototype.createReport = function(printSpec) {
+ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
   var url = this.url_ + '/report.pdf';
-  var promise = this.$http_.post(url, printSpec, {
+  var httpConfig = /** @type {angular.$http.Config} */ ({
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'
     }
   });
-  return promise.then(
-      /**
-       * @param {!angular.$http.Response} resp Response.
-       * @return {MapFishPrintReportResponse} MapFish Print report response.
-       */
-      function(resp) {
-        return /** @type {MapFishPrintReportResponse} */ (resp.data);
-      },
-      /**
-       * @param {!angular.$http.Response} resp Response.
-       * @return {!angular.$http.Response} Response.
-       */
-      function(resp) {
-        return resp;
-      });
+  goog.object.extend(httpConfig,
+      goog.isDef(opt_httpConfig) ? opt_httpConfig : {});
+  return this.$http_.post(url, printSpec, httpConfig);
 };
 
 
 /**
  * Get the status of a report.
  * @param {string} ref Print report reference.
- * @return {angular.$q.Promise} Promise.
+ * @param {angular.$http.Config=} opt_httpConfig $http config object.
+ * @return {angular.$http.HttpPromise} HTTP promise.
  */
-ngeo.Print.prototype.getStatus = function(ref) {
+ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
+  var httpConfig = goog.isDef(opt_httpConfig) ? opt_httpConfig :
+      /** @type {angular.$http.Config} */ ({});
   var url = this.url_ + '/status/' + ref + '.json';
-  var promise = this.$http_.get(url);
-  return promise.then(
-      /**
-       * @param {!angular.$http.Response} resp Response.
-       * @return {MapFishPrintStatusResponse} MapFish Print status response.
-       */
-      function(resp) {
-        return /** @type {MapFishPrintStatusResponse} */ (resp.data);
-      },
-      /**
-       * @param {!angular.$http.Response} resp Response.
-       * @return {!angular.$http.Response} Response.
-       */
-      function(resp) {
-        return resp;
-      });
+  return this.$http_.get(url, httpConfig);
 };
 
 

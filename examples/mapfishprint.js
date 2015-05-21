@@ -192,11 +192,12 @@ app.MainController.prototype.print = function() {
 
 
 /**
- * @param {MapFishPrintReportResponse} resp Response.
+ * @param {!angular.$http.Response} resp Response.
  * @private
  */
 app.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
-  this.getStatus_(resp.ref);
+  var mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
+  this.getStatus_(mfResp.ref);
 };
 
 
@@ -212,7 +213,7 @@ app.MainController.prototype.getStatus_ = function(ref) {
 
 
 /**
- * @param {MapFishPrintReportResponse} resp Response.
+ * @param {!angular.$http.Response} resp Response.
  * @private
  */
 app.MainController.prototype.handleCreateReportError_ = function(resp) {
@@ -222,11 +223,12 @@ app.MainController.prototype.handleCreateReportError_ = function(resp) {
 
 /**
  * @param {string} ref Ref.
- * @param {MapFishPrintStatusResponse} resp Response.
+ * @param {!angular.$http.Response} resp Response.
  * @private
  */
 app.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
-  var done = resp.done;
+  var mfResp = /** @type {MapFishPrintStatusResponse} */ (resp.data);
+  var done = mfResp.done;
   if (done) {
     // The report is ready. Open it by changing the window location.
     this.printState = '';
@@ -242,10 +244,10 @@ app.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
 
 
 /**
- * @param {Object} data Data.
+ * @param {!angular.$http.Response} resp Response.
  * @private
  */
-app.MainController.prototype.handleGetStatusError_ = function(data) {
+app.MainController.prototype.handleGetStatusError_ = function(resp) {
   this.printState = 'Print error';
 };
 
