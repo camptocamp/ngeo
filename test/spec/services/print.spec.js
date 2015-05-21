@@ -273,11 +273,28 @@ describe('ngeo.CreatePrint', function() {
       $httpBackend.flush();
 
       expect(spy.calls.length).toBe(1);
-      expect(spy.mostRecentCall.args[0]).toEqual({
+      expect(spy.mostRecentCall.args[0].data).toEqual({
         ref: 'deadbeef',
         statusURL: '/print/status/deadbeef.json',
         downloadURL: '/print/report/deadbeef.json'
       });
+    });
+
+    describe('cancel report request', function() {
+
+      it('cancels the request', inject(function($q) {
+        $httpBackend.expectPOST('http://example.com/print/report.pdf');
+
+        var canceler = $q.defer();
+        var promise = print.createReport(spec, {
+          timeout: canceler.promise
+        });
+
+        canceler.resolve(); // abort the $http request
+
+        // We will get an "Unflushed requests: 1" error in afterEach when
+        // calling verifyNoOutstandingRequest if the aborting did not work.
+      }));
     });
 
   });
@@ -336,7 +353,7 @@ describe('ngeo.CreatePrint', function() {
       $httpBackend.flush();
 
       expect(spy.calls.length).toBe(1);
-      expect(spy.mostRecentCall.args[0]).toEqual({
+      expect(spy.mostRecentCall.args[0].data).toEqual({
         done: false,
         downloadURL: '/print/report/deadbeef.json'
       });
