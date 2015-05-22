@@ -7,7 +7,6 @@ goog.require('goog.events.Event');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.Collection');
 goog.require('ol.Coordinate');
-goog.require('ol.DrawEvent');
 goog.require('ol.Feature');
 goog.require('ol.FeatureOverlay');
 goog.require('ol.Map');
@@ -18,6 +17,7 @@ goog.require('ol.geom.GeometryCollection');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEvent');
 goog.require('ol.interaction.InteractionProperty');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.source.Vector');
@@ -30,7 +30,7 @@ goog.require('ol.style.Style');
  * Interaction dedicated to measure length.
  *
  * @constructor
- * @fires ol.DrawEvent
+ * @fires ol.interaction.DrawEvent
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
  */
@@ -313,8 +313,8 @@ ngeo.interaction.DrawAzimut.prototype.startDrawing_ = function(event) {
   this.sketchFeature_ = new ol.Feature();
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();
-  this.dispatchEvent(new ol.DrawEvent(ol.DrawEventType.DRAWSTART,
-      this.sketchFeature_));
+  this.dispatchEvent(new ol.interaction.DrawEvent(
+      ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
 };
 
 
@@ -396,7 +396,8 @@ ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
   if (!goog.isNull(this.source_)) {
     this.source_.addFeature(sketchFeature);
   }
-  this.dispatchEvent(new ol.DrawEvent(ol.DrawEventType.DRAWEND, sketchFeature));
+  this.dispatchEvent(new ol.interaction.DrawEvent(
+      ol.interaction.DrawEventType.DRAWEND, sketchFeature));
 };
 
 
