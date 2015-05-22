@@ -5,13 +5,13 @@ goog.provide('ngeo.interaction.Measure');
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
 goog.require('goog.events');
-goog.require('ol.DrawEvent');
-goog.require('ol.DrawEventType');
 goog.require('ol.Feature');
 goog.require('ol.FeatureOverlay');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Observable');
 goog.require('ol.Overlay');
+goog.require('ol.interaction.DrawEvent');
+goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
@@ -168,10 +168,10 @@ ngeo.interaction.Measure = function(opt_options) {
   this.drawInteraction_ = this.getDrawInteraction(options.sketchStyle,
       this.overlay_);
 
-  goog.events.listen(this.drawInteraction_, ol.DrawEventType.DRAWSTART,
-      this.onDrawStart_, false, this);
-  goog.events.listen(this.drawInteraction_, ol.DrawEventType.DRAWEND,
-      this.onDrawEnd_, false, this);
+  goog.events.listen(this.drawInteraction_,
+      ol.interaction.DrawEventType.DRAWSTART, this.onDrawStart_, false, this);
+  goog.events.listen(this.drawInteraction_,
+      ol.interaction.DrawEventType.DRAWEND, this.onDrawEnd_, false, this);
 
   goog.events.listen(this,
       ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
@@ -243,7 +243,7 @@ ngeo.interaction.Measure.prototype.setMap = function(map) {
 
 /**
  * Handle draw interaction `drawstart` event.
- * @param {ol.DrawEvent} evt
+ * @param {ol.interaction.DrawEvent} evt
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
@@ -255,7 +255,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
 
 /**
  * Handle draw interaction `drawend` event.
- * @param {ol.DrawEvent} evt
+ * @param {ol.interaction.DrawEvent} evt
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
