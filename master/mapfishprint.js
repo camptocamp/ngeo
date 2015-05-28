@@ -82,11 +82,19 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
           },
           serverType: /** @type {ol.source.wms.ServerType} */ ('mapserver')
         })
+      }),
+      new ol.layer.Vector({
+        source: new ol.source.Vector({
+          url: 'data/polygon-swizerland.json',
+          format: new ol.format.GeoJSON({
+            defaultDataProjection: 'EPSG:21781'
+          })
+        })
       })
     ],
     view: new ol.View({
       projection: projection,
-      resolutions: [50, 20, 10, 5, 2.5, 2, 1],
+      resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1],
       center: [537635, 152640],
       zoom: 3
     })
