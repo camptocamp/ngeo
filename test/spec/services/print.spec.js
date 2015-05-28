@@ -1,9 +1,18 @@
+goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.extent');
+goog.require('ol.geom.LineString');
+goog.require('ol.geom.Point');
+goog.require('ol.geom.Polygon');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
+goog.require('ol.layer.Vector');
 goog.require('ol.source.ImageWMS');
+goog.require('ol.source.Vector');
 goog.require('ol.source.WMTS');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
 goog.require('ol.tilegrid.WMTS');
 goog.require('ngeo.CreatePrint');
 goog.require('ngeo.Print');
@@ -170,6 +179,190 @@ describe('ngeo.CreatePrint', function() {
           layout: 'foo layout'
         });
 
+      });
+
+    });
+
+    describe('Vector', function() {
+      var style0, style1, style2;
+
+      beforeEach(function() {
+
+        var feature0 = new ol.Feature({
+          geometry: new ol.geom.Point([0, 0]),
+          foo: '0'
+        });
+
+        var feature1 = new ol.Feature({
+          geometry: new ol.geom.LineString([[0, 0], [1, 1]]),
+          foo: '1'
+        });
+
+        var feature2 = new ol.Feature({
+          geometry: new ol.geom.Polygon([[[0, 0], [1, 1], [1, 0], [0, 0]]]),
+          foo: '2'
+        });
+
+        style0 = new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 1,
+            stroke: new ol.style.Stroke({
+              width: 1,
+              color: [1, 1, 1, 0.1]
+            })
+          })
+        });
+
+        // styles for feature0
+        var styles0 = [style0];
+
+        style1 = new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            width: 2,
+            color: [2, 2, 2, 0.2]
+          })
+        });
+
+        // styles for feature1
+        var styles1 = [style0, style1];
+
+        style2 = new ol.style.Style({
+          fill: new ol.style.Fill({
+            color: [3, 3, 3, 0.3]
+          }),
+          stroke: new ol.style.Stroke({
+            width: 3,
+            color: [3, 3, 3, 0.3]
+          })
+        });
+
+        // styles for features2
+        var styles2 = [style2];
+
+        var styleFunction = function(feature, resolution) {
+          var v = feature.get('foo');
+          if (v == '0') {
+            return styles0;
+          } else if (v == '1') {
+            return styles1;
+          } else if (v == '2') {
+            return styles2;
+          }
+        };
+
+        map.addLayer(new ol.layer.Vector({
+          source: new ol.source.Vector({
+            features: [feature0, feature1, feature2]
+          }),
+          style: styleFunction
+        }));
+      });
+
+      it('creates a valid spec object', function() {
+
+        var scale = 500;
+        var dpi = 72;
+        var layout = 'foo layout';
+        var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+
+        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+
+        var styleId0 = goog.getUid(style0).toString();
+        var styleId1 = goog.getUid(style1).toString();
+        var styleId2 = goog.getUid(style2).toString();
+
+        var expectedStyle = {
+          version: 2
+        };
+        expectedStyle['[_ngeo_style_0 = \'' + styleId0 + '\']'] = {
+          symbolizers: [{
+            type: 'point',
+            pointRadius: 1,
+            strokeColor: '#010101',
+            strokeOpacity: 0.1,
+            strokeWidth: 1
+          }]
+        };
+        expectedStyle['[_ngeo_style_1 = \'' + styleId1 + '\']'] = {
+          symbolizers: [{
+            type: 'line',
+            strokeColor: '#020202',
+            strokeOpacity: 0.2,
+            strokeWidth: 2
+          }]
+        };
+        expectedStyle['[_ngeo_style_0 = \'' + styleId2 + '\']'] = {
+          symbolizers: [{
+            type: 'polygon',
+            fillColor: '#030303',
+            fillOpacity: 0.3,
+            strokeColor: '#030303',
+            strokeOpacity: 0.3,
+            strokeWidth: 3
+          }]
+        };
+
+        // the expected properties of feature0
+        var properties0 = {
+          foo: '0',
+          '_ngeo_style_0': styleId0
+        };
+
+        // the expected properties of feature1
+        var properties1 = {
+          foo: '1',
+          '_ngeo_style_0': styleId0,
+          '_ngeo_style_1': styleId1
+        };
+
+        // the expected properties of feature2
+        var properties2 = {
+          foo: '2',
+          '_ngeo_style_0': styleId2
+        };
+
+        expect(spec).toEqual({
+          attributes: {
+            map: {
+              dpi: 72,
+              center: [3000, 4000],
+              projection: 'EPSG:3857',
+              scale: 500,
+              layers: [{
+                geoJson: {
+                  type: 'FeatureCollection',
+                  features: [{
+                    type: 'Feature',
+                    geometry: {
+                      type: 'Point',
+                      coordinates: [0, 0]
+                    },
+                    properties: properties0
+                  }, {
+                    type: 'Feature',
+                    geometry: {
+                      type: 'LineString',
+                      coordinates: [[0, 0], [1, 1]]
+                    },
+                    properties: properties1
+                  }, {
+                    type: 'Feature',
+                    geometry: {
+                      type: 'Polygon',
+                      coordinates: [[[0, 0], [1, 1], [1, 0], [0, 0]]]
+                    },
+                    properties: properties2
+                  }]
+                },
+                style: expectedStyle,
+                type: 'geojson'
+              }]
+            },
+            foo: 'fooval',
+            bar: 'barval'
+          },
+          layout: 'foo layout'
+        });
       });
 
     });
