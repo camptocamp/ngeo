@@ -193,18 +193,30 @@ ngeo.Print.prototype.encodeImageLayer_ = function(arr, layer) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Image} layer Layer.
+ * @param {ol.layer.Tile|ol.layer.Image} layer Layer.
  * @private
  */
 ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
-  goog.asserts.assertInstanceof(layer, ol.layer.Image);
+  var url;
   var source = layer.getSource();
-  goog.asserts.assertInstanceof(source, ol.source.ImageWMS);
-  var url = source.getUrl();
+
+  if (source instanceof ol.source.ImageWMS) {
+    goog.asserts.assertInstanceof(layer, ol.layer.Image);
+    goog.asserts.assertInstanceof(source, ol.source.ImageWMS);
+    url = source.getUrl();
+  } else {
+    goog.asserts.assertInstanceof(layer, ol.layer.Tile);
+    goog.asserts.assertInstanceof(source, ol.source.TileWMS);
+    url = source.getUrls()[0];
+  }
+
   var params = source.getParams();
   var object = /** @type {MapFishPrintWmsLayer} */ ({
     baseURL: url,
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
+    customParams: {
+      transparent: true
+    },
     layers: params['LAYERS'].split(','),
     type: 'wms'
   });
@@ -222,6 +234,8 @@ ngeo.Print.prototype.encodeTileLayer_ = function(arr, layer) {
   var source = layer.getSource();
   if (source instanceof ol.source.WMTS) {
     this.encodeTileWmtsLayer_(arr, layer);
+  } else if (source instanceof ol.source.TileWMS) {
+    this.encodeImageWmsLayer_(arr, layer);
   }
 };
 
