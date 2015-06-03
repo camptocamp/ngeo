@@ -306,19 +306,21 @@ ngeo.profile = function(options) {
 
       // set the ratio according to the horizontal distance
       if (goog.isDef(ratioXYRule)) {
-        var ratioXY = ratioXYRule(xDomain[1]);
-        if (ratioXY > 0) {
+        // ratioYOverX = expectedYResolution / xResolution
+        var ratioYOverX = ratioXYRule(xDomain[1]);
+        if (ratioYOverX > 0) {
           var yMean = (yDomain[1] - yDomain[0]) / 2 + yDomain[0];
           var xResolution = (xDomain[1] - xDomain[0]) / width;
-          var yTarget2 = ratioXY * xResolution * height / 2;
-          y.domain([yMean - yTarget2, yMean + yTarget2]);
+          var yHalfDomain = ratioYOverX * xResolution * height / 2;
+          y.domain([yMean - yHalfDomain, yMean + yHalfDomain]);
         }
       }
 
       // Lower bound for y-axis
       if (goog.isDef(yLowerBound) && y.domain()[0] < yLowerBound) {
         var shift = yLowerBound - y.domain()[0];
-        y.domain([yLowerBound, y.domain()[1] - shift]);
+        // For yLowerBound=0 and y0=-50, y is shifted 50m up
+        y.domain([yLowerBound, y.domain()[1] + shift]);
       }
 
       // Update the area path.
