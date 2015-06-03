@@ -193,24 +193,28 @@ ngeo.Print.prototype.encodeImageLayer_ = function(arr, layer) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Tile|ol.layer.Image} layer Layer.
+ * @param {ol.layer.Image} layer Layer.
  * @private
  */
 ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
-  var url;
   var source = layer.getSource();
 
-  if (source instanceof ol.source.ImageWMS) {
-    goog.asserts.assertInstanceof(layer, ol.layer.Image);
-    goog.asserts.assertInstanceof(source, ol.source.ImageWMS);
-    url = source.getUrl();
-  } else {
-    goog.asserts.assertInstanceof(layer, ol.layer.Tile);
-    goog.asserts.assertInstanceof(source, ol.source.TileWMS);
-    url = source.getUrls()[0];
-  }
+  goog.asserts.assertInstanceof(layer, ol.layer.Image);
+  goog.asserts.assertInstanceof(source, ol.source.ImageWMS);
 
+  var url = source.getUrl();
   var params = source.getParams();
+  this.encodeWmsLayer_(arr, url, params);
+};
+
+
+/**
+ * @param {Array.<MapFishPrintLayer>} arr Array.
+ * @param {string|undefined} url Url of the WMS server.
+ * @param {Object} params Url parameters
+ * @private
+ */
+ngeo.Print.prototype.encodeWmsLayer_ = function(arr, url, params) {
   var object = /** @type {MapFishPrintWmsLayer} */ ({
     baseURL: url,
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
@@ -235,7 +239,7 @@ ngeo.Print.prototype.encodeTileLayer_ = function(arr, layer) {
   if (source instanceof ol.source.WMTS) {
     this.encodeTileWmtsLayer_(arr, layer);
   } else if (source instanceof ol.source.TileWMS) {
-    this.encodeImageWmsLayer_(arr, layer);
+    this.encodeTileWmsLayer_(arr, layer);
   }
 };
 
@@ -291,6 +295,23 @@ ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
   });
 
   arr.push(object);
+};
+
+
+/**
+ * @param {Array.<MapFishPrintLayer>} arr Array.
+ * @param {ol.layer.Tile} layer Layer.
+ * @private
+ */
+ngeo.Print.prototype.encodeTileWmsLayer_ = function(arr, layer) {
+  var source = layer.getSource();
+
+  goog.asserts.assertInstanceof(layer, ol.layer.Tile);
+  goog.asserts.assertInstanceof(source, ol.source.TileWMS);
+
+  var url = source.getUrls()[0];
+  var params = source.getParams();
+  this.encodeWmsLayer_(arr, url, params);
 };
 
 
