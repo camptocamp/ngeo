@@ -8,6 +8,7 @@
  * - createReport: send a create report request
  * - getStatus: get the status of a report
  * - getReportUrl: get the URL of a report
+ * - getCapabilities: get the capabilities of the server
  *
  * Example:
  *
@@ -22,8 +23,6 @@
  *
  * TODO and limitations:
  *
- * - Add getCapabilities method that gets the print capabilities from the
- *   MapFish Print service.
  * - createSpec should also accept a bbox instead of a center and a scale.
  * - Add support for ol.style.RegularShape. MapFish Print supports symbols
  *   like crosses, stars and squares, so printing regular shapes should be
@@ -546,6 +545,19 @@ ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
  */
 ngeo.Print.prototype.getReportUrl = function(ref) {
   return this.url_ + '/report/' + ref;
+};
+
+
+/**
+ * Get the print capabilities from MapFish Print.
+ * @param {angular.$http.Config=} opt_httpConfig $http config object.
+ * @return {angular.$http.HttpPromise} HTTP promise.
+ */
+ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
+  var httpConfig = goog.isDef(opt_httpConfig) ? opt_httpConfig :
+          /** @type {angular.$http.Config} */ ({});
+  var url = this.url_ + '/capabilities.json';
+  return this.$http_.get(url, httpConfig);
 };
 
 

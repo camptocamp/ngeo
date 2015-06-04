@@ -567,4 +567,35 @@ describe('ngeo.CreatePrint', function() {
     });
   });
 
+  describe('#getCapabilities', function() {
+    var print;
+    var $httpBackend;
+    // Only used to test that getCapabilities fetch the json from the proper url
+    var capabilities;
+
+    beforeEach(inject(function (_$httpBackend_) {
+
+      $httpBackend = _$httpBackend_;
+
+      capabilities = {
+        'test': true
+      };
+
+      $httpBackend.when('GET', 'http://example.com/print/capabilities.json')
+              .respond(capabilities);
+    }));
+
+    beforeEach(function() {
+      print = ngeoCreatePrint('http://example.com/print');
+    });
+
+    it('gets the correct capabilities', function () {
+      var resp;
+      print.getCapabilities().success(function(data) {
+        resp = data;
+      });
+      $httpBackend.flush();
+      expect(resp).toEqual(capabilities);
+    });
+  });
 });
