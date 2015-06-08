@@ -25,9 +25,8 @@ ngeo.interaction.MeasureArea = function(opt_options) {
   /**
    * Message to show after the first point is clicked.
    * @type {Element}
-   * @private
    */
-  this.continueMsg_ = goog.isDef(options.continueMsg) ? options.continueMsg :
+  this.continueMsg = goog.isDef(options.continueMsg) ? options.continueMsg :
       goog.dom.createDom(goog.dom.TagName.SPAN, {},
           'Click to continue drawing the polygon.',
           goog.dom.createDom(goog.dom.TagName.BR),
@@ -61,12 +60,11 @@ ngeo.interaction.MeasureArea.prototype.handleMeasure = function(callback) {
       (this.sketchFeature.getGeometry());
   var output = this.formatMeasure_(geom);
   var verticesCount = geom.getCoordinates()[0].length;
-  var helpMsg = this.continueMsg_;
   var coord = null;
   if (verticesCount > 2) {
     coord = geom.getInteriorPoint().getCoordinates();
   }
-  callback(output, coord, helpMsg);
+  callback(output, coord);
 };
 
 

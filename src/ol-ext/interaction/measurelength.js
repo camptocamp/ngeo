@@ -25,9 +25,8 @@ ngeo.interaction.MeasureLength = function(opt_options) {
   /**
    * Message to show after the first point is clicked.
    * @type {Element}
-   * @private
    */
-  this.continueMsg_ = goog.isDef(options.continueMsg) ? options.continueMsg :
+  this.continueMsg = goog.isDef(options.continueMsg) ? options.continueMsg :
       goog.dom.createDom(goog.dom.TagName.SPAN, {},
           'Click to continue drawing the line.',
           goog.dom.createDom(goog.dom.TagName.BR),
@@ -61,7 +60,7 @@ ngeo.interaction.MeasureLength.prototype.handleMeasure = function(callback) {
       (this.sketchFeature.getGeometry());
   var output = this.formatMeasure_(geom);
   var coord = geom.getLastCoordinate();
-  callback(output, coord, this.continueMsg_);
+  callback(output, coord);
 };
 
 
