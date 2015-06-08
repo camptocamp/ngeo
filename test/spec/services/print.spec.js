@@ -48,6 +48,24 @@ describe('ngeo.CreatePrint', function() {
       });
     });
 
+    describe('rotation', function() {
+
+      beforeEach(function() {
+        var view = map.getView();
+        view.rotate(Math.PI);
+      });
+
+      it('rotation angle is correct', function() {
+        var scale = 500;
+        var dpi = 72;
+        var layout = 'foo layout';
+        var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+
+        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        expect(spec.attributes.map.rotation).toEqual(180);
+      });
+    });
+
     describe('ImageWMS', function() {
 
       beforeEach(function() {
@@ -77,6 +95,7 @@ describe('ngeo.CreatePrint', function() {
               dpi: 72,
               center: [3000, 4000],
               projection: 'EPSG:3857',
+              rotation: 0,
               scale: 500,
               layers: [{
                 baseURL: 'http://example.com/wms',
@@ -136,6 +155,7 @@ describe('ngeo.CreatePrint', function() {
               dpi: 72,
               center: [3000, 4000],
               projection: 'EPSG:3857',
+              rotation: 0,
               scale: 500,
               layers: [{
                 baseURL: 'http://example.com/wmts/layer/{Style}/' +
@@ -327,6 +347,7 @@ describe('ngeo.CreatePrint', function() {
               dpi: 72,
               center: [3000, 4000],
               projection: 'EPSG:3857',
+              rotation: 0,
               scale: 500,
               layers: [{
                 geoJson: {
