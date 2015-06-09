@@ -149,7 +149,7 @@ When creating a "widget" directive (i.e. directive with templates/partials) it
 is usually recommended to use an *isolate* scope for the directive.
 
 In the case of ngeo we want to be able to override directive templates at the
-application level. And when overiding a directive's template one expects to be
+application level. And when overriding a directive's template one expects to be
 able to use properties of an application-defined scope. This is not possible if
 the template is processed in the context of an isolate scope.
 
