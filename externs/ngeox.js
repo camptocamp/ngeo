@@ -287,11 +287,11 @@ ngeox.MeasureEvent.prototype.feature;
  * @typedef {{
  *   opened: (function()|undefined),
  *   closed: (function()|undefined),
- *   cursorchanged: (function(jQuery.Event, Object,
+ *   cursorchanged: (function(jQuery.event, Object,
  *       TypeaheadDataset)|undefined),
- *   selected: (function(jQuery.Event, Object,
+ *   selected: (function(jQuery.event, Object,
  *       TypeaheadDataset)|undefined),
- *   autocompleted: (function(jQuery.Event, Object,
+ *   autocompleted: (function(jQuery.event, Object,
  *       TypeaheadDataset)|undefined)
  * }}
  */
@@ -311,19 +311,19 @@ ngeox.SearchDirectiveListeners.prototype.closed;
 
 
 /**
- * @type {function(jQuery.Event, Object, TypeaheadDataset)|undefined}
+ * @type {function(jQuery.event, Object, TypeaheadDataset)|undefined}
  */
 ngeox.SearchDirectiveListeners.prototype.cursorchanged;
 
 
 /**
- * @type {function(jQuery.Event, Object, TypeaheadDataset)|undefined}
+ * @type {function(jQuery.event, Object, TypeaheadDataset)|undefined}
  */
 ngeox.SearchDirectiveListeners.prototype.selected;
 
 
 /**
- * @type {function(jQuery.Event, Object, TypeaheadDataset)|undefined}
+ * @type {function(jQuery.event, Object, TypeaheadDataset)|undefined}
  */
 ngeox.SearchDirectiveListeners.prototype.autocompleted;
 
