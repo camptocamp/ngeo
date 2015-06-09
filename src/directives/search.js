@@ -68,7 +68,7 @@ ngeo.searchDirective = function() {
 
           element.on('typeahead:cursorchanged',
               /**
-               * @param {jQuery.Event} event Event.
+               * @param {jQuery.event} event Event.
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
@@ -80,7 +80,7 @@ ngeo.searchDirective = function() {
 
           element.on('typeahead:selected',
               /**
-               * @param {jQuery.Event} event Event.
+               * @param {jQuery.event} event Event.
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
@@ -92,7 +92,7 @@ ngeo.searchDirective = function() {
 
           element.on('typeahead:autocompleted',
               /**
-               * @param {jQuery.Event} event Event.
+               * @param {jQuery.event} event Event.
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
