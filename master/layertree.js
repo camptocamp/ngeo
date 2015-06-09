@@ -67,10 +67,10 @@ app.module.directive('appLayertree', app.layertreeDirective);
 app.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
 
   /**
-   * @type {Object}
+   * @type {Object|undefined}
    * @export
    */
-  this.tree = null;
+  this.tree = undefined;
 
   $http.get('data/tree.json').then(angular.bind(this, function(resp) {
     this.tree = resp.data;
