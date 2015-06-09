@@ -153,7 +153,7 @@ app.SearchController.prototype.createAndInitBloodhound_ =
 
 
 /**
- * @param {jQuery.Event} event Event.
+ * @param {jQuery.event} event Event.
  * @param {Object} suggestion Suggestion.
  * @param {TypeaheadDataset} dataset Dataset.
  * @this {app.SearchController}
