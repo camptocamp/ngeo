@@ -44,9 +44,8 @@ ngeo.interaction.MeasureAzimut = function(opt_options) {
   /**
    * Message to show after the first point is clicked.
    * @type {Element}
-   * @private
    */
-  this.continueMsg_ = goog.isDef(options.continueMsg) ? options.continueMsg :
+  this.continueMsg = goog.isDef(options.continueMsg) ? options.continueMsg :
       goog.dom.createDom(goog.dom.TagName.SPAN, {}, 'Click to finish.');
 
 };
@@ -77,7 +76,7 @@ ngeo.interaction.MeasureAzimut.prototype.handleMeasure = function(callback) {
   var line = /** @type {ol.geom.LineString} */ (geom.getGeometries()[0]);
   var output = this.formatMeasure_(line);
   var coord = /** @type {ol.Coordinate} */ (line.getLastCoordinate());
-  callback(output, coord, this.continueMsg_);
+  callback(output, coord);
 };
 
 

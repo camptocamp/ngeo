@@ -2,6 +2,7 @@ goog.provide('ngeo.MeasureEvent');
 goog.provide('ngeo.MeasureEventType');
 goog.provide('ngeo.interaction.Measure');
 
+goog.require('goog.asserts');
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
 goog.require('goog.events');
@@ -123,11 +124,24 @@ ngeo.interaction.Measure = function(opt_options) {
   this.sketchFeature = null;
 
   /**
+   * Message to show after the first point is clicked.
+   * @type {?Element}
+   */
+  this.continueMsg = null;
+
+  /**
    * The message to show when user is about to start drawing.
    * @type {Element}
    */
   this.startMsg = goog.isDef(options.startMsg) ? options.startMsg :
       goog.dom.createDom(goog.dom.TagName.SPAN, {}, 'Click to start drawing.');
+
+  /**
+   * The key for geometry change event.
+   * @type {?goog.events.Key}
+   * @private
+   */
+  this.changeEventKey_ = null;
 
   var style = goog.isDef(options.style) ? options.style :
       [
@@ -194,13 +208,7 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
 
   var helpMsg = this.startMsg;
   if (!goog.isNull(this.sketchFeature)) {
-    this.handleMeasure(goog.bind(function(measure, coord, helpMsg_) {
-      if (!goog.isNull(coord)) {
-        this.measureTooltipElement_.innerHTML = measure;
-        this.measureTooltipOverlay_.setPosition(coord);
-      }
-      helpMsg = helpMsg_;
-    }, this));
+    helpMsg = this.continueMsg;
   }
 
   goog.dom.removeChildren(this.helpTooltipElement_);
@@ -250,6 +258,19 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
   this.sketchFeature = evt.feature;
   this.overlay_.getFeatures().clear();
   this.createMeasureTooltip_();
+
+  var geometry = this.sketchFeature.getGeometry();
+  goog.asserts.assert(goog.isDef(geometry));
+  this.changeEventKey_ = goog.events.listen(geometry,
+      goog.events.EventType.CHANGE,
+      function() {
+        this.handleMeasure(goog.bind(function(measure, coord) {
+          if (!goog.isNull(coord)) {
+            this.measureTooltipElement_.innerHTML = measure;
+            this.measureTooltipOverlay_.setPosition(coord);
+          }
+        }, this));
+      }, false, this);
 };
 
 
@@ -264,6 +285,7 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
   this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
       this.sketchFeature));
   this.sketchFeature = null;
+  goog.events.unlistenByKey(this.changeEventKey_);
 };
 
 
@@ -382,7 +404,7 @@ ngeo.interaction.Measure.prototype.formatLength = function(line) {
 /**
  * Function implemented in inherited classes to compute measurement, determine
  * where to place the tooltip and determine which help message to display.
- * @param {function(string, ?ol.Coordinate, Element)} callback The function
+ * @param {function(string, ?ol.Coordinate)} callback The function
  *     to be called.
  * @protected
  */
