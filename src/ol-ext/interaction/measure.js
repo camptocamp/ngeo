@@ -7,13 +7,14 @@ goog.require('goog.dom');
 goog.require('goog.dom.classlist');
 goog.require('goog.events');
 goog.require('ol.Feature');
-goog.require('ol.FeatureOverlay');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Observable');
 goog.require('ol.Overlay');
 goog.require('ol.interaction.DrawEvent');
 goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
+goog.require('ol.layer.Vector');
+goog.require('ol.source.Vector');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
@@ -165,14 +166,14 @@ ngeo.interaction.Measure = function(opt_options) {
       ];
 
   /**
-   * The draw overlay
-   * @type {ol.FeatureOverlay}
+   * The vector layer used to show final measure features.
+   * @type {ol.layer.Vector}
    * @private
    */
-  this.overlay_ = new ol.FeatureOverlay({
+  this.vectorLayer_ = new ol.layer.Vector({
+    source: new ol.source.Vector(),
     style: style
   });
-
 
   /**
    * The draw interaction to be used.
@@ -180,7 +181,7 @@ ngeo.interaction.Measure = function(opt_options) {
    * @private
    */
   this.drawInteraction_ = this.getDrawInteraction(options.sketchStyle,
-      this.overlay_);
+      this.vectorLayer_.getSource());
 
   goog.events.listen(this.drawInteraction_,
       ol.interaction.DrawEventType.DRAWSTART, this.onDrawStart_, false, this);
@@ -223,7 +224,7 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
  * Creates the draw interaction.
  * @param {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
  *     style The sketchStyle used for the drawing interaction.
- * @param {ol.FeatureOverlay} overlay The feature overlay.
+ * @param {ol.source.Vector} source Vector source.
  * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut}
  * @protected
  */
@@ -236,7 +237,7 @@ ngeo.interaction.Measure.prototype.getDrawInteraction = goog.abstractMethod;
 ngeo.interaction.Measure.prototype.setMap = function(map) {
   goog.base(this, 'setMap', map);
 
-  this.overlay_.setMap(map);
+  this.vectorLayer_.setMap(map);
 
   var prevMap = this.drawInteraction_.getMap();
   if (!goog.isNull(prevMap)) {
@@ -256,7 +257,7 @@ ngeo.interaction.Measure.prototype.setMap = function(map) {
  */
 ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
   this.sketchFeature = evt.feature;
-  this.overlay_.getFeatures().clear();
+  this.vectorLayer_.getSource().clear(true);
   this.createMeasureTooltip_();
 
   var geometry = this.sketchFeature.getGeometry();
@@ -365,7 +366,7 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
     this.createMeasureTooltip_();
     this.createHelpTooltip_();
   } else {
-    this.overlay_.getFeatures().clear();
+    this.vectorLayer_.getSource().clear(true);
     this.getMap().removeOverlay(this.measureTooltipOverlay_);
     this.removeMeasureTooltip_();
     this.removeHelpTooltip_();

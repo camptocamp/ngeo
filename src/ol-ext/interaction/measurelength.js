@@ -40,12 +40,12 @@ goog.inherits(ngeo.interaction.MeasureLength, ngeo.interaction.Measure);
  * @inheritDoc
  */
 ngeo.interaction.MeasureLength.prototype.getDrawInteraction = function(style,
-    overlay) {
+    source) {
 
   return new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'LineString',
-        features: overlay.getFeatures(),
+        source: source,
         style: style
       }));
 
