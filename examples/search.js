@@ -3,12 +3,13 @@ goog.provide('search');
 goog.require('ngeo.CreateGeoJSONBloodhound');
 goog.require('ngeo.mapDirective');
 goog.require('ngeo.searchDirective');
-goog.require('ol.FeatureOverlay');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
+goog.require('ol.layer.Vector');
 goog.require('ol.proj');
 goog.require('ol.source.OSM');
+goog.require('ol.source.Vector');
 
 
 /** @const **/
@@ -74,10 +75,10 @@ app.SearchController = function($rootScope, $compile,
   this.map;
 
   /**
-   * @type {ol.FeatureOverlay}
+   * @type {ol.layer.Vector}
    * @private
    */
-  this.featureOverlay_ = this.createFeatureOverlay_();
+  this.vectorLayer_ = this.createVectorLayer_();
 
   /** @type {Bloodhound} */
   var bloodhoundEngine = this.createAndInitBloodhound_(
@@ -137,13 +138,17 @@ app.SearchController = function($rootScope, $compile,
 
 
 /**
- * @return {ol.FeatureOverlay} The feature overlay.
+ * @return {ol.layer.Vector} The vector layer.
  * @private
  */
-app.SearchController.prototype.createFeatureOverlay_ = function() {
-  var featureOverlay = new ol.FeatureOverlay();
-  featureOverlay.setMap(this.map);
-  return featureOverlay;
+app.SearchController.prototype.createVectorLayer_ = function() {
+  var vectorLayer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  });
+  // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
+  // makes the vector layer "unmanaged", meaning that it is always on top.
+  vectorLayer.setMap(this.map);
+  return vectorLayer;
 };
 
 
@@ -172,12 +177,12 @@ app.SearchController.prototype.createAndInitBloodhound_ =
 app.SearchController.selected_ = function(event, suggestion, dataset) {
   var map = /** @type {ol.Map} */ (this.map);
   var feature = /** @type {ol.Feature} */ (suggestion);
-  var features = this.featureOverlay_.getFeatures();
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
   var mapSize = /** @type {ol.Size} */ (map.getSize());
-  features.clear();
-  features.push(feature);
+  var source = this.vectorLayer_.getSource();
+  source.clear(true);
+  source.addFeature(feature);
   map.getView().fitGeometry(featureGeometry, mapSize,
       /** @type {olx.view.FitGeometryOptions} */ ({maxZoom: 16}));
 };

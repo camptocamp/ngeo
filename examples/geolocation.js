@@ -3,12 +3,13 @@ goog.provide('geolocation');
 goog.require('ngeo.DecorateGeolocation');
 goog.require('ngeo.mapDirective');
 goog.require('ol.Feature');
-goog.require('ol.FeatureOverlay');
 goog.require('ol.Geolocation');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
+goog.require('ol.layer.Vector');
 goog.require('ol.source.MapQuest');
+goog.require('ol.source.Vector');
 
 
 /** @const **/
@@ -65,10 +66,15 @@ app.MainController = function(ngeoDecorateGeolocation) {
     accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
   });
 
-  var featureOverlay = new ol.FeatureOverlay({
-    features: [positionFeature, accuracyFeature]
+  var vectorLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+      features: [positionFeature, accuracyFeature]
+    })
   });
-  featureOverlay.setMap(map);
+
+  // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
+  // makes the vector layer "unmanaged", meaning that it is always on top.
+  vectorLayer.setMap(map);
 
   geolocation.on('change:position', function(e) {
     var position = /** @type {ol.Coordinate} */ (geolocation.getPosition());
