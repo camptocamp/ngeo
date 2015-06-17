@@ -55,10 +55,15 @@ app.MainController = function(ngeoDecorateGeolocation) {
     accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
   });
 
-  var featureOverlay = new ol.FeatureOverlay({
-    features: [positionFeature, accuracyFeature]
+  var vectorLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+      features: [positionFeature, accuracyFeature]
+    })
   });
-  featureOverlay.setMap(map);
+
+  // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
+  // makes the vector layer "unmanaged", meaning that it is always on top.
+  vectorLayer.setMap(map);
 
   geolocation.on('change:position', function(e) {
     var position = /** @type {ol.Coordinate} */ (geolocation.getPosition());

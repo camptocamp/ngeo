@@ -70,10 +70,16 @@ app.MainController = function($http, $scope) {
 
   var map = this.map;
 
-  var overlay = new ol.FeatureOverlay();
+  var vectorLayer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  });
+
   this.snappedPoint_ = new ol.Feature();
-  overlay.addFeature(this.snappedPoint_);
-  overlay.setMap(map);
+  vectorLayer.getSource().addFeature(this.snappedPoint_);
+
+  // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
+  // makes the vector layer "unmanaged", meaning that it is always on top.
+  vectorLayer.setMap(map);
 
   /**
    * @type {Array.<Object>}
