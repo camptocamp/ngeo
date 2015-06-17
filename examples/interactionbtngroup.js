@@ -3,7 +3,6 @@ goog.provide('interactionbtngroup');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.btngroupDirective');
 goog.require('ngeo.mapDirective');
-goog.require('ol.FeatureOverlay');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.geom.Point');

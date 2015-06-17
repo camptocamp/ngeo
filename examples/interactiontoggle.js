@@ -2,12 +2,13 @@ goog.provide('interactiontoggle');
 
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.mapDirective');
-goog.require('ol.FeatureOverlay');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.interaction.Draw');
 goog.require('ol.layer.Tile');
+goog.require('ol.layer.Vector');
 goog.require('ol.source.MapQuest');
+goog.require('ol.source.Vector');
 
 
 /** @const **/
@@ -45,8 +46,13 @@ app.MainController = function(ngeoDecorateInteraction) {
 
   var map = this.map;
 
-  var featureOverlay = new ol.FeatureOverlay();
-  featureOverlay.setMap(map);
+  var vectorLayer = new ol.layer.Vector({
+    source: new ol.source.Vector()
+  });
+
+  // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
+  // makes the vector layer "unmanaged", meaning that it is always on top.
+  vectorLayer.setMap(map);
 
   /**
    * @type {ol.interaction.Draw}
@@ -55,7 +61,7 @@ app.MainController = function(ngeoDecorateInteraction) {
   this.interaction = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Point',
-        features: featureOverlay.getFeatures()
+        source: vectorLayer.getSource()
       }));
 
   var interaction = this.interaction;

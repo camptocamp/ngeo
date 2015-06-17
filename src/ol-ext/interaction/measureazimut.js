@@ -8,7 +8,6 @@ goog.require('ngeo.interaction.Measure');
 goog.require('ol.Collection');
 goog.require('ol.Coordinate');
 goog.require('ol.Feature');
-goog.require('ol.FeatureOverlay');
 goog.require('ol.Map');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.MapBrowserEvent.EventType');
@@ -20,6 +19,7 @@ goog.require('ol.interaction.Draw');
 goog.require('ol.interaction.DrawEvent');
 goog.require('ol.interaction.InteractionProperty');
 goog.require('ol.interaction.Pointer');
+goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 goog.require('ol.style.Style');
 
@@ -56,10 +56,10 @@ goog.inherits(ngeo.interaction.MeasureAzimut, ngeo.interaction.Measure);
  * @inheritDoc
  */
 ngeo.interaction.MeasureAzimut.prototype.getDrawInteraction = function(style,
-    overlay) {
+    source) {
 
   return new ngeo.interaction.DrawAzimut({
-    features: overlay.getFeatures(),
+    source: source,
     style: style
   });
 
@@ -132,13 +132,6 @@ ngeo.interaction.DrawAzimut = function(options) {
   this.source_ = goog.isDef(options.source) ? options.source : null;
 
   /**
-   * Target collection for drawn features.
-   * @type {ol.Collection.<ol.Feature>}
-   * @private
-   */
-  this.features_ = goog.isDef(options.features) ? options.features : null;
-
-  /**
    * Tglls whether the drawing has started or not.
    * @type {boolean}
    * @private
@@ -171,11 +164,15 @@ ngeo.interaction.DrawAzimut = function(options) {
 
 
   /**
-   * Draw overlay where our sketch features are drawn.
-   * @type {ol.FeatureOverlay}
+   * Vector layer where our sketch features are drawn.
+   * @type {ol.layer.Vector}
    * @private
    */
-  this.overlay_ = new ol.FeatureOverlay({
+  this.sketchLayer_ = new ol.layer.Vector({
+    source: new ol.source.Vector({
+      useSpatialIndex: false,
+      wrapX: false
+    }),
     style: goog.isDef(options.style) ?
         options.style : ol.interaction.Draw.getDefaultStyleFunction()
   });
@@ -293,7 +290,9 @@ ngeo.interaction.DrawAzimut.prototype.updateSketchFeatures_ = function() {
   if (!goog.isNull(this.sketchPoint_)) {
     sketchFeatures.push(this.sketchPoint_);
   }
-  this.overlay_.setFeatures(new ol.Collection(sketchFeatures));
+  var source = this.sketchLayer_.getSource();
+  source.clear(true);
+  source.addFeatures(sketchFeatures);
 };
 
 
@@ -356,7 +355,7 @@ ngeo.interaction.DrawAzimut.prototype.abortDrawing_ = function() {
   if (!goog.isNull(sketchFeature)) {
     this.sketchFeature_ = null;
     this.sketchPoint_ = null;
-    this.overlay_.getFeatures().clear();
+    this.sketchLayer_.getSource().clear(true);
   }
   return sketchFeature;
 };
@@ -377,7 +376,7 @@ ngeo.interaction.DrawAzimut.prototype.updateState_ = function() {
   if (goog.isNull(map) || !active) {
     this.abortDrawing_();
   }
-  this.overlay_.setMap(active ? map : null);
+  this.sketchLayer_.setMap(active ? map : null);
 };
 
 
@@ -389,9 +388,6 @@ ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
   var sketchFeature = this.abortDrawing_();
   goog.asserts.assert(!goog.isNull(sketchFeature));
 
-  if (!goog.isNull(this.features_)) {
-    this.features_.push(sketchFeature);
-  }
   if (!goog.isNull(this.source_)) {
     this.source_.addFeature(sketchFeature);
   }

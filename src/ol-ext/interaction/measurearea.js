@@ -40,12 +40,12 @@ goog.inherits(ngeo.interaction.MeasureArea, ngeo.interaction.Measure);
  * @inheritDoc
  */
 ngeo.interaction.MeasureArea.prototype.getDrawInteraction = function(style,
-    overlay) {
+    source) {
 
   return new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Polygon',
-        features: overlay.getFeatures(),
+        source: source,
         style: style
       }));
 
