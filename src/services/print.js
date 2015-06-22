@@ -498,7 +498,7 @@ ngeo.Print.prototype.encodeVectorStyleStroke_ =
  * @private
  */
 ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
-  var symbolizer = {
+  var symbolizer = /** @type {MapFishPrintSymbolizerText} */ {
     type: 'Text'
   };
   var font = textStyle.getFont().split(' ');
@@ -508,7 +508,8 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
   }
   var labelRotation = textStyle.getRotation();
   if (labelRotation) {
-    symbolizer.labelRotation = labelRotation * 180 / Math.PI;
+    // Mapfish print expects a string, not a number to rotate text
+    symbolizer.labelRotation = (labelRotation * 180 / Math.PI).toString();
   }
   symbolizer.fontWeight = font[0];
   symbolizer.fontSize = font[1];
