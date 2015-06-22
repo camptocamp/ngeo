@@ -13,7 +13,7 @@ app.module = angular.module('app', ['ngeo']);
  * @const
  * @private
  */
-app.WMS_URL_ = 'http://geomapfish.demo-camptocamp.com/1.6/wsgi/' +
+app.WMS_URL_ = 'http://geomapfish-demo.camptocamp.net/1.6/wsgi/' +
     'mapserv_proxy';
 
 
@@ -21,7 +21,7 @@ app.WMS_URL_ = 'http://geomapfish.demo-camptocamp.com/1.6/wsgi/' +
  * @const
  * @private
  */
-app.PRINT_URL_ = 'http://geomapfish.demo-camptocamp.com/1.6/wsgi/' +
+app.PRINT_URL_ = 'http://geomapfish-demo.camptocamp.net/1.6/wsgi/' +
     'printproxy';
 
 
