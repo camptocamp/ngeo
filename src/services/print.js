@@ -501,28 +501,30 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
   var symbolizer = /** @type {MapFishPrintSymbolizerText} */ ({
     type: 'Text'
   });
-  var font = textStyle.getFont().split(' ');
   var label = textStyle.getText();
   if (label) {
     symbolizer.label = label;
   }
+
   var labelAlign = textStyle.getTextAlign();
   if (labelAlign) {
     symbolizer.labelAlign = labelAlign;
   }
+
   var labelRotation = textStyle.getRotation();
   if (labelRotation) {
     // Mapfish print expects a string, not a number to rotate text
     symbolizer.labelRotation = (labelRotation * 180 / Math.PI).toString();
   }
-  symbolizer.fontWeight = font[0];
-  symbolizer.fontSize = font[1];
-  symbolizer.fontFamily = font.splice(2).join(' ');
-  symbolizer.XOffset = textStyle.getOffsetX();
-  symbolizer.YOffset = textStyle.getOffsetY();
+
+  var font = textStyle.getFont().split(' ');
+  if (font.length >= 3) {
+    symbolizer.fontWeight = font[0];
+    symbolizer.fontSize = font[1];
+    symbolizer.fontFamily = font.splice(2).join(' ');
+  }
 
   var strokeStyle = textStyle.getStroke();
-  var fillStyle = textStyle.getFill();
   if (!goog.isNull(strokeStyle)) {
     var strokeColorRgba = ol.color.asArray(strokeStyle.getColor());
     symbolizer.haloColor = goog.color.rgbArrayToHex(strokeColorRgba);
@@ -532,10 +534,15 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
       symbolizer.haloRadius = width;
     }
   }
+
+  var fillStyle = textStyle.getFill();
   if (!goog.isNull(fillStyle)) {
     var fillColorRgba = ol.color.asArray(fillStyle.getColor());
     symbolizer.fontColor = goog.color.rgbArrayToHex(fillColorRgba);
   }
+
+  symbolizer.XOffset = textStyle.getOffsetX();
+  symbolizer.YOffset = textStyle.getOffsetY();
 
   symbolizers.push(symbolizer);
 };
