@@ -206,17 +206,18 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
 
   var url = source.getUrl();
   var params = source.getParams();
-  this.encodeWmsLayer_(arr, url, params);
+  this.encodeWmsLayer_(arr, layer.getOpacity(), url, params);
 };
 
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
+ * @param {number} opacity Opacity of the layer.
  * @param {string|undefined} url Url of the WMS server.
  * @param {Object} params Url parameters
  * @private
  */
-ngeo.Print.prototype.encodeWmsLayer_ = function(arr, url, params) {
+ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   var customParams = {'TRANSPARENT': true};
   goog.object.extend(customParams, params);
 
@@ -228,7 +229,8 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, url, params) {
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
     customParams: customParams,
-    type: 'wms'
+    type: 'wms',
+    opacity: opacity
   });
   arr.push(object);
 };
@@ -317,7 +319,7 @@ ngeo.Print.prototype.encodeTileWmsLayer_ = function(arr, layer) {
 
   var url = source.getUrls()[0];
   var params = source.getParams();
-  this.encodeWmsLayer_(arr, url, params);
+  this.encodeWmsLayer_(arr, layer.getOpacity(), url, params);
 };
 
 
