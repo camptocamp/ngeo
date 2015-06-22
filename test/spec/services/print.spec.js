@@ -106,7 +106,8 @@ describe('ngeo.CreatePrint', function() {
                   TRANSPARENT: true
                 },
                 layers: ['foo', 'bar'],
-                type: 'wms'
+                type: 'wms',
+                opacity: 1
               }]
             },
             foo: 'fooval',
@@ -157,7 +158,8 @@ describe('ngeo.CreatePrint', function() {
                   TRANSPARENT: true
                 },
                 layers: ['foo', 'bar'],
-                type: 'wms'
+                type: 'wms',
+                opacity: 1
               }]
             },
             foo: 'fooval',
