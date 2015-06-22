@@ -46,6 +46,7 @@ goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
 goog.require('ol.size');
 goog.require('ol.source.ImageWMS');
+goog.require('ol.source.TileWMS');
 goog.require('ol.source.Vector');
 goog.require('ol.source.WMTS');
 goog.require('ol.style.Circle');
