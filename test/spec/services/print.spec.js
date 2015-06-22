@@ -79,11 +79,12 @@ describe('ngeo.CreatePrint', function() {
               center: [3000, 4000],
               projection: 'EPSG:3857',
               scale: 500,
+              rotation: 0,
               layers: [{
                 baseURL: 'http://example.com/wms',
                 imageFormat: 'image/jpeg',
                 customParams: {
-                  transparent: true
+                  TRANSPARENT: true
                 },
                 layers: ['foo', 'bar'],
                 type: 'wms'
@@ -129,11 +130,12 @@ describe('ngeo.CreatePrint', function() {
               center: [3000, 4000],
               projection: 'EPSG:3857',
               scale: 500,
+              rotation: 0,
               layers: [{
                 baseURL: 'http://example.com/wms',
                 imageFormat: 'image/jpeg',
                 customParams: {
-                  transparent: true
+                  TRANSPARENT: true
                 },
                 layers: ['foo', 'bar'],
                 type: 'wms'
