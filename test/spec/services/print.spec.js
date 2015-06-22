@@ -8,6 +8,7 @@ goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.ImageWMS');
+goog.require('ol.source.TileWMS');
 goog.require('ol.source.Vector');
 goog.require('ol.source.WMTS');
 goog.require('ol.style.Circle');
@@ -97,9 +98,64 @@ describe('ngeo.CreatePrint', function() {
               projection: 'EPSG:3857',
               rotation: 0,
               scale: 500,
+              rotation: 0,
               layers: [{
                 baseURL: 'http://example.com/wms',
                 imageFormat: 'image/jpeg',
+                customParams: {
+                  TRANSPARENT: true
+                },
+                layers: ['foo', 'bar'],
+                type: 'wms'
+              }]
+            },
+            foo: 'fooval',
+            bar: 'barval'
+          },
+          layout: 'foo layout'
+        });
+
+      });
+
+    });
+
+
+    describe('TileWMS', function() {
+
+      beforeEach(function() {
+        map.addLayer(new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://example.com/wms',
+            params: {
+              'LAYERS': 'foo,bar',
+              'FORMAT': 'image/jpeg'
+            }
+          })
+        }));
+      });
+
+      it('creates a valid spec object', function() {
+
+        var scale = 500;
+        var dpi = 72;
+        var layout = 'foo layout';
+        var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+
+        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        expect(spec).toEqual({
+          attributes: {
+            map: {
+              dpi: 72,
+              center: [3000, 4000],
+              projection: 'EPSG:3857',
+              scale: 500,
+              rotation: 0,
+              layers: [{
+                baseURL: 'http://example.com/wms',
+                imageFormat: 'image/jpeg',
+                customParams: {
+                  TRANSPARENT: true
+                },
                 layers: ['foo', 'bar'],
                 type: 'wms'
               }]
