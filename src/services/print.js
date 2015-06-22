@@ -498,10 +498,14 @@ ngeo.Print.prototype.encodeVectorStyleStroke_ =
  * @private
  */
 ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
-  var symbolizer = /** @type {MapFishPrintSymbolizerText} */ {
+  var symbolizer = /** @type {MapFishPrintSymbolizerText} */ ({
     type: 'Text'
-  };
+  });
   var font = textStyle.getFont().split(' ');
+  var label = textStyle.getText();
+  if (label) {
+    symbolizer.label = label;
+  }
   var labelAlign = textStyle.getTextAlign();
   if (labelAlign) {
     symbolizer.labelAlign = labelAlign;
@@ -514,7 +518,6 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
   symbolizer.fontWeight = font[0];
   symbolizer.fontSize = font[1];
   symbolizer.fontFamily = font.splice(2).join(' ');
-  symbolizer.label = textStyle.getText();
   symbolizer.XOffset = textStyle.getOffsetX();
   symbolizer.YOffset = textStyle.getOffsetY();
 
@@ -524,7 +527,10 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     var strokeColorRgba = ol.color.asArray(strokeStyle.getColor());
     symbolizer.haloColor = goog.color.rgbArrayToHex(strokeColorRgba);
     symbolizer.haloOpacity = strokeColorRgba[3];
-    symbolizer.haloRadius = strokeStyle.getWidth();
+    var width = strokeStyle.getWidth();
+    if (width) {
+      symbolizer.haloRadius = width;
+    }
   }
   if (!goog.isNull(fillStyle)) {
     var fillColorRgba = ol.color.asArray(fillStyle.getColor());

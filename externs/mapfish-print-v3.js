@@ -460,3 +460,70 @@ MapFishPrintSymbolizerPolygon.prototype.strokeOpacity;
  * @type {number}
  */
 MapFishPrintSymbolizerPolygon.prototype.strokeWidth;
+
+
+/**
+ * @constructor
+ * @extends {MapFishPrintSymbolizer}
+ */
+var MapFishPrintSymbolizerText = function() {};
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerText.prototype.label;
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerText.prototype.labelAlign;
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerText.prototype.labelRotation;
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerText.prototype.fontWeight;
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerText.prototype.fontSize;
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerText.prototype.fontFamily;
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerText.prototype.XOffset;
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerText.prototype.YOffset;
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerText.prototype.haloColor;
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerText.prototype.haloOpacity;
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerText.prototype.haloRadius;
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerText.prototype.fontColor;
