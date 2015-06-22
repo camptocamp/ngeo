@@ -508,7 +508,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
   }
   var labelRotation = textStyle.getRotation();
   if (labelRotation) {
-    symbolizer.labelRotation = labelRotation;
+    symbolizer.labelRotation = labelRotation * 180 / Math.PI;
   }
   symbolizer.fontWeight = font[0];
   symbolizer.fontSize = font[1];
