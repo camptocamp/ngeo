@@ -603,7 +603,7 @@ describe('ngeo.CreatePrint', function() {
       };
 
       $httpBackend.when('GET', 'http://example.com/print/capabilities.json')
-              .respond(capabilities);
+          .respond(capabilities);
     }));
 
     beforeEach(function() {
