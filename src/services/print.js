@@ -30,7 +30,6 @@
  * - ol.style.Icon may use a sprite image, and offsets to define to rectangle
  *   to use within the sprite. This type of icons won't be printed correctly
  *   as MapFish Print does not support sprite icons.
- * - Text styles (ol.style.Text) are currently not supported/printed.
  */
 
 goog.provide('ngeo.CreatePrint');
@@ -408,6 +407,7 @@ ngeo.Print.prototype.encodeVectorStyle_ =
   var fillStyle = style.getFill();
   var imageStyle = style.getImage();
   var strokeStyle = style.getStroke();
+  var textStyle = style.getText();
   if (!goog.isNull(fillStyle)) {
     this.encodeVectorStylePolygon_(
         styleObject.symbolizers, fillStyle, strokeStyle);
@@ -415,6 +415,10 @@ ngeo.Print.prototype.encodeVectorStyle_ =
     this.encodeVectorStyleLine_(styleObject.symbolizers, strokeStyle);
   } else if (!goog.isNull(imageStyle)) {
     this.encodeVectorStylePoint_(styleObject.symbolizers, imageStyle);
+  }
+
+  if (!goog.isNull(textStyle)) {
+    this.encodeTextStyle_(styleObject.symbolizers, textStyle);
   }
 };
 
@@ -525,6 +529,66 @@ ngeo.Print.prototype.encodeVectorStyleStroke_ =
   var strokeWidth = strokeStyle.getWidth();
   if (goog.isDef(strokeWidth)) {
     symbolizer.strokeWidth = strokeWidth;
+  }
+};
+
+
+/**
+ * @param {Array.<MapFishPrintSymbolizer>} symbolizers Array of MapFish Print
+ *     symbolizers.
+ * @param {!ol.style.Text} textStyle Text style.
+ * @private
+ */
+ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
+  var symbolizer = /** @type {MapFishPrintSymbolizerText} */ ({
+    type: 'Text'
+  });
+  var label = textStyle.getText();
+  if (goog.isDef(label)) {
+    symbolizer.label = label;
+
+    var labelAlign = textStyle.getTextAlign();
+    if (goog.isDef(labelAlign)) {
+      symbolizer.labelAlign = labelAlign;
+    }
+
+    var labelRotation = textStyle.getRotation();
+    if (goog.isDef(labelRotation)) {
+      // Mapfish print expects a string, not a number to rotate text
+      symbolizer.labelRotation = (labelRotation * 180 / Math.PI).toString();
+    }
+
+    var fontStyle = textStyle.getFont();
+    if (goog.isDef(fontStyle)) {
+      var font = fontStyle.split(' ');
+      if (font.length >= 3) {
+        symbolizer.fontWeight = font[0];
+        symbolizer.fontSize = font[1];
+        symbolizer.fontFamily = font.splice(2).join(' ');
+      }
+    }
+
+    var strokeStyle = textStyle.getStroke();
+    if (!goog.isNull(strokeStyle)) {
+      var strokeColorRgba = ol.color.asArray(strokeStyle.getColor());
+      symbolizer.haloColor = goog.color.rgbArrayToHex(strokeColorRgba);
+      symbolizer.haloOpacity = strokeColorRgba[3];
+      var width = strokeStyle.getWidth();
+      if (goog.isDef(width)) {
+        symbolizer.haloRadius = width;
+      }
+    }
+
+    var fillStyle = textStyle.getFill();
+    if (!goog.isNull(fillStyle)) {
+      var fillColorRgba = ol.color.asArray(fillStyle.getColor());
+      symbolizer.fontColor = goog.color.rgbArrayToHex(fillColorRgba);
+    }
+
+    symbolizer.XOffset = textStyle.getOffsetX();
+    symbolizer.YOffset = textStyle.getOffsetY();
+
+    symbolizers.push(symbolizer);
   }
 };
 

@@ -14,6 +14,7 @@ goog.require('ol.source.WMTS');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+goog.require('ol.style.Text');
 goog.require('ol.tilegrid.WMTS');
 goog.require('ngeo.CreatePrint');
 goog.require('ngeo.Print');
@@ -262,7 +263,7 @@ describe('ngeo.CreatePrint', function() {
     });
 
     describe('Vector', function() {
-      var style0, style1, style2;
+      var style0, style1, style2, style3;
 
       beforeEach(function() {
 
@@ -279,6 +280,11 @@ describe('ngeo.CreatePrint', function() {
         var feature2 = new ol.Feature({
           geometry: new ol.geom.Polygon([[[0, 0], [1, 1], [1, 0], [0, 0]]]),
           foo: '2'
+        });
+
+        var feature3 = new ol.Feature({
+          geometry: new ol.geom.Point([0, 0]),
+          foo: '3'
         });
 
         style0 = new ol.style.Style({
@@ -317,6 +323,16 @@ describe('ngeo.CreatePrint', function() {
         // styles for features2
         var styles2 = [style2];
 
+        style3 = new ol.style.Style({
+          text: new ol.style.Text({
+            font: 'normal 16px "sans serif"',
+            text: 'Ngeo'
+          })
+        });
+
+        // styles for features3
+        var styles3 = [style3];
+
         var styleFunction = function(feature, resolution) {
           var v = feature.get('foo');
           if (v == '0') {
@@ -325,12 +341,14 @@ describe('ngeo.CreatePrint', function() {
             return styles1;
           } else if (v == '2') {
             return styles2;
+          } else if (v == '3') {
+            return styles3;
           }
         };
 
         map.addLayer(new ol.layer.Vector({
           source: new ol.source.Vector({
-            features: [feature0, feature1, feature2]
+            features: [feature0, feature1, feature2, feature3]
           }),
           style: styleFunction
         }));
@@ -348,6 +366,7 @@ describe('ngeo.CreatePrint', function() {
         var styleId0 = goog.getUid(style0).toString();
         var styleId1 = goog.getUid(style1).toString();
         var styleId2 = goog.getUid(style2).toString();
+        var styleId3 = goog.getUid(style3).toString();
 
         var expectedStyle = {
           version: 2
@@ -379,6 +398,17 @@ describe('ngeo.CreatePrint', function() {
             strokeWidth: 3
           }]
         };
+        expectedStyle['[_ngeo_style_0 = \'' + styleId3 + '\']'] = {
+          symbolizers: [{
+            type: 'Text',
+            fontWeight: 'normal',
+            fontSize: '16px',
+            fontFamily: '"sans serif"',
+            label: 'Ngeo',
+            XOffset: 0,
+            YOffset: 0
+          }]
+        };
 
         // the expected properties of feature0
         var properties0 = {
@@ -397,6 +427,11 @@ describe('ngeo.CreatePrint', function() {
         var properties2 = {
           foo: '2',
           '_ngeo_style_0': styleId2
+        };
+
+        var properties3 = {
+          foo: '3',
+          '_ngeo_style_0': styleId3
         };
 
         expect(spec).toEqual({
@@ -431,6 +466,13 @@ describe('ngeo.CreatePrint', function() {
                       coordinates: [[[0, 0], [1, 1], [1, 0], [0, 0]]]
                     },
                     properties: properties2
+                  }, {
+                    type: 'Feature',
+                    geometry: {
+                      type: 'Point',
+                      coordinates: [0, 0]
+                    },
+                    properties: properties3
                   }]
                 },
                 style: expectedStyle,
