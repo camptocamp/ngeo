@@ -5,6 +5,12 @@
 
 
 /**
+ * @typedef {function(string):string}
+ */
+var gettext;
+
+
+/**
  * @const
  */
 var angularGettext = {};

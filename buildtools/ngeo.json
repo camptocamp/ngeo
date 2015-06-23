@@ -24,6 +24,7 @@
       ".build/externs/angular-1.3-q.js",
       ".build/externs/angular-1.3-http-promise.js",
       ".build/externs/jquery-1.9.js",
+      "externs/angular-gettext.js",
       "externs/ngeox.js",
       "externs/d3.js",
       "externs/typeahead.js",
