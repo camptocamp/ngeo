@@ -39,6 +39,7 @@ goog.require('goog.color');
 goog.require('goog.math');
 goog.require('goog.object');
 goog.require('ngeo');
+goog.require('ol.color');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
@@ -53,6 +54,7 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Image');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+goog.require('ol.style.Text');
 goog.require('ol.tilegrid.WMTS');
 
 
