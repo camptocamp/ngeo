@@ -375,7 +375,7 @@ ngeo.Print.prototype.encodeVectorStyle_ =
     this.encodeVectorStylePoint_(styleObject.symbolizers, imageStyle);
   }
 
-  if (!goog.isNull(textStyle) && textStyle.getText()) {
+  if (!goog.isNull(textStyle)) {
     this.encodeTextStyle_(styleObject.symbolizers, textStyle);
   }
 };
@@ -502,49 +502,52 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     type: 'Text'
   });
   var label = textStyle.getText();
-  if (label) {
+  if (goog.isDef(label)) {
     symbolizer.label = label;
-  }
 
-  var labelAlign = textStyle.getTextAlign();
-  if (labelAlign) {
-    symbolizer.labelAlign = labelAlign;
-  }
-
-  var labelRotation = textStyle.getRotation();
-  if (labelRotation) {
-    // Mapfish print expects a string, not a number to rotate text
-    symbolizer.labelRotation = (labelRotation * 180 / Math.PI).toString();
-  }
-
-  var font = textStyle.getFont().split(' ');
-  if (font.length >= 3) {
-    symbolizer.fontWeight = font[0];
-    symbolizer.fontSize = font[1];
-    symbolizer.fontFamily = font.splice(2).join(' ');
-  }
-
-  var strokeStyle = textStyle.getStroke();
-  if (!goog.isNull(strokeStyle)) {
-    var strokeColorRgba = ol.color.asArray(strokeStyle.getColor());
-    symbolizer.haloColor = goog.color.rgbArrayToHex(strokeColorRgba);
-    symbolizer.haloOpacity = strokeColorRgba[3];
-    var width = strokeStyle.getWidth();
-    if (width) {
-      symbolizer.haloRadius = width;
+    var labelAlign = textStyle.getTextAlign();
+    if (goog.isDef(labelAlign)) {
+      symbolizer.labelAlign = labelAlign;
     }
+
+    var labelRotation = textStyle.getRotation();
+    if (goog.isDef(labelRotation)) {
+      // Mapfish print expects a string, not a number to rotate text
+      symbolizer.labelRotation = (labelRotation * 180 / Math.PI).toString();
+    }
+
+    var fontStyle = textStyle.getFont();
+    if (goog.isDef(fontStyle)) {
+      var font = fontStyle.split(' ');
+      if (font.length >= 3) {
+        symbolizer.fontWeight = font[0];
+        symbolizer.fontSize = font[1];
+        symbolizer.fontFamily = font.splice(2).join(' ');
+      }
+    }
+
+    var strokeStyle = textStyle.getStroke();
+    if (!goog.isNull(strokeStyle)) {
+      var strokeColorRgba = ol.color.asArray(strokeStyle.getColor());
+      symbolizer.haloColor = goog.color.rgbArrayToHex(strokeColorRgba);
+      symbolizer.haloOpacity = strokeColorRgba[3];
+      var width = strokeStyle.getWidth();
+      if (goog.isDef(width)) {
+        symbolizer.haloRadius = width;
+      }
+    }
+
+    var fillStyle = textStyle.getFill();
+    if (!goog.isNull(fillStyle)) {
+      var fillColorRgba = ol.color.asArray(fillStyle.getColor());
+      symbolizer.fontColor = goog.color.rgbArrayToHex(fillColorRgba);
+    }
+
+    symbolizer.XOffset = textStyle.getOffsetX();
+    symbolizer.YOffset = textStyle.getOffsetY();
+
+    symbolizers.push(symbolizer);
   }
-
-  var fillStyle = textStyle.getFill();
-  if (!goog.isNull(fillStyle)) {
-    var fillColorRgba = ol.color.asArray(fillStyle.getColor());
-    symbolizer.fontColor = goog.color.rgbArrayToHex(fillColorRgba);
-  }
-
-  symbolizer.XOffset = textStyle.getOffsetX();
-  symbolizer.YOffset = textStyle.getOffsetY();
-
-  symbolizers.push(symbolizer);
 };
 
 
