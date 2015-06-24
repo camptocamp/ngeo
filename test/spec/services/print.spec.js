@@ -703,7 +703,7 @@ describe('ngeo.CreatePrint', function() {
       };
 
       $httpBackend.when('GET', 'http://example.com/print/capabilities.json')
-              .respond(capabilities);
+          .respond(capabilities);
     }));
 
     beforeEach(function() {
@@ -717,6 +717,36 @@ describe('ngeo.CreatePrint', function() {
       });
       $httpBackend.flush();
       expect(resp).toEqual(capabilities);
+    });
+  });
+
+  describe('#cancel', function() {
+    var print;
+    var $httpBackend;
+
+    beforeEach(inject(function(_$httpBackend_) {
+      print = ngeoCreatePrint('http://example.com/print');
+      $httpBackend = _$httpBackend_;
+      $httpBackend.when('DELETE', 'http://example.com/print/cancel/deadbeef')
+          .respond(200)
+    }));
+
+    afterEach(function() {
+      $httpBackend.verifyNoOutstandingExpectation();
+      $httpBackend.verifyNoOutstandingRequest();
+    });
+
+    it('triggers the cancel request and resolves the promise', function() {
+      $httpBackend.expectDELETE('http://example.com/print/cancel/deadbeef');
+      var promise = print.cancel('deadbeef');
+
+      var spy = jasmine.createSpy();
+      promise.then(spy);
+
+      $httpBackend.flush();
+
+      expect(spy.calls.length).toBe(1);
+      expect(spy.mostRecentCall.args[0].status).toEqual(200);
     });
   });
 });

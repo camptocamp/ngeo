@@ -94,6 +94,21 @@ ngeo.Print.FEAT_STYLE_PROP_PREFIX_ = '_ngeo_style_';
 
 
 /**
+ * Cancel a report.
+ * @param {string} ref Print report reference.
+ * @param {angular.$http.Config=} opt_httpConfig $http config object.
+ * @return {angular.$http.HttpPromise} HTTP promise.
+ */
+ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
+  var httpConfig = goog.isDef(opt_httpConfig) ? opt_httpConfig :
+      /** @type {angular.$http.Config} */ ({});
+  var url = this.url_ + '/cancel/' + ref;
+  // "delete" is a reserved word, so use ['delete']
+  return this.$http_['delete'](url, httpConfig);
+};
+
+
+/**
  * Create a report specification.
  * @param {ol.Map} map Map.
  * @param {number} scale Scale.
