@@ -41,6 +41,7 @@ goog.require('goog.object');
 goog.require('ngeo');
 goog.require('ol.color');
 goog.require('ol.format.GeoJSON');
+goog.require('ol.geom.GeometryType');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
@@ -362,12 +363,19 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
       if (goog.isNull(geojsonFeature.properties)) {
         geojsonFeature.properties = {};
       }
+      var geometry = feature.getGeometry();
+      var geometryType;
+      if (goog.isDefAndNotNull(geometry)) {
+        geometryType = geometry.getType();
+      } else {
+        continue;
+      }
       for (var j = 0, jj = styles.length; j < jj; ++j) {
         var style = styles[j];
         var styleId = goog.getUid(style).toString();
         var featureStyleProp = ngeo.Print.FEAT_STYLE_PROP_PREFIX_ + j;
         this.encodeVectorStyle_(
-            mapfishStyleObject, style, styleId, featureStyleProp);
+            mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
         geojsonFeature.properties[featureStyleProp] = styleId;
       }
     }
@@ -390,13 +398,14 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
 
 /**
  * @param {MapFishPrintVectorStyle} object MapFish style object.
+ * @param {string} geometryType Type of the GeoJSON geometry
  * @param {ol.style.Style} style Style.
  * @param {string} styleId Style id.
  * @param {string} featureStyleProp Feature style property name.
  * @private
  */
 ngeo.Print.prototype.encodeVectorStyle_ =
-    function(object, style, styleId, featureStyleProp) {
+    function(object, geometryType, style, styleId, featureStyleProp) {
   var key = '[' + featureStyleProp + ' = \'' + styleId + '\']';
   if (key in object) {
     // do nothing if we already have a style object for this CQL rule
@@ -410,7 +419,9 @@ ngeo.Print.prototype.encodeVectorStyle_ =
   var imageStyle = style.getImage();
   var strokeStyle = style.getStroke();
   var textStyle = style.getText();
-  if (!goog.isNull(fillStyle)) {
+  var isLine = geometryType === ol.geom.GeometryType.LINE_STRING ||
+          geometryType === ol.geom.GeometryType.MULTI_LINE_STRING;
+  if (!goog.isNull(fillStyle) && !isLine) {
     this.encodeVectorStylePolygon_(
         styleObject.symbolizers, fillStyle, strokeStyle);
   } else if (!goog.isNull(strokeStyle)) {
