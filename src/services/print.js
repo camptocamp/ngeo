@@ -346,6 +346,14 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
 
   for (var i = 0, ii = features.length; i < ii; ++i) {
     var feature = features[i];
+    var geometry = feature.getGeometry();
+
+    // no need to encode features with no geometry
+    if (!goog.isDefAndNotNull(geometry)) {
+      continue;
+    }
+
+    var geometryType = geometry.getType();
     var geojsonFeature = geojsonFormat.writeFeatureObject(feature);
 
     var styles = null;
@@ -362,13 +370,6 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
       geojsonFeatures.push(geojsonFeature);
       if (goog.isNull(geojsonFeature.properties)) {
         geojsonFeature.properties = {};
-      }
-      var geometry = feature.getGeometry();
-      var geometryType;
-      if (goog.isDefAndNotNull(geometry)) {
-        geometryType = geometry.getType();
-      } else {
-        continue;
       }
       for (var j = 0, jj = styles.length; j < jj; ++j) {
         var style = styles[j];
