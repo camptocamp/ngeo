@@ -10,6 +10,10 @@ goog.exportProperty(
     ngeo.Print.prototype.createSpec);
 goog.exportProperty(
     ngeo.Print.prototype,
+    'encodeLayer',
+    ngeo.Print.prototype.encodeLayer);
+goog.exportProperty(
+    ngeo.Print.prototype,
     'getReportUrl',
     ngeo.Print.prototype.getReportUrl);
 goog.exportProperty(
