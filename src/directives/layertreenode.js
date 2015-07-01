@@ -78,7 +78,7 @@ ngeo.layertreenodeDirective = function(
           return (
               /**
                * Post-link function.
-               * @param {angular.Scope} scope Scope.
+               * @param {!angular.Scope} scope Scope.
                * @param {angular.JQLite} iElement Instance element.
                * @param {angular.Attributes} iAttrs Instance attributes.
                */

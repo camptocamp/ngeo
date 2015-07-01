@@ -50,7 +50,7 @@ app.module.directive('appMeasuretools', app.measuretoolsDirective);
 
 
 /**
- * @param {angular.Scope} $scope Angular scope.
+ * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$sce} $sce Angular sce service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate

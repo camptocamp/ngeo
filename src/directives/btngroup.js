@@ -48,7 +48,7 @@ ngeoModule.directive('ngeoBtnGroup', ngeo.btngroupDirective);
 
 
 /**
- * @param {angular.Scope} $scope Scope.
+ * @param {!angular.Scope} $scope Scope.
  * @constructor
  * @ngInject
  */
@@ -60,7 +60,7 @@ ngeo.BtnGroupController = function($scope) {
   this.buttons_ = [];
 
   /**
-   * @type {angular.Scope}
+   * @type {!angular.Scope}
    * @private
    */
   this.scope_ = $scope;
@@ -104,7 +104,7 @@ ngeo.btnDirective = function($parse) {
     restrict: 'A',
     link:
         /**
-         * @param {angular.Scope} scope Scope.
+         * @param {!angular.Scope} scope Scope.
          * @param {angular.JQLite} element Element.
          * @param {angular.Attributes} attrs Attributes.
          * @param {!Array.<!Object>} ctrls Controllers.
