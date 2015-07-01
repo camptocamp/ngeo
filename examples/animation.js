@@ -44,10 +44,12 @@ app.module.directive('appMap', app.mapDirective);
 
 /**
  * The application's main controller.
+ * @param {angular.$timeout} $timeout Angular timeout service.
  *
  * @constructor
+ * @ngInject
  */
-app.MainController = function() {
+app.MainController = function($timeout) {
   /**
    * @type {ol.Map}
    * @export
@@ -69,6 +71,16 @@ app.MainController = function() {
    * @export
    */
   this.open = false;
+
+  // We want the sidebar to be open at application launch so we set the `open`
+  // property to true at startup.
+  // But we need to do it asynchronously in order to have the `resizemap`
+  // directive working. If we don't, the `ng-class` directive doesn't fire the
+  // animation hooks.
+  var self = this;
+  $timeout(function() {
+    self.open = true;
+  }, 0);
 };
 
 

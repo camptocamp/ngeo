@@ -92,9 +92,9 @@ gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples .build/examples
 	touch $@
 
 dist/ngeo.js: buildtools/ngeo.json \
-	    .build/externs/angular-1.3.js \
-	    .build/externs/angular-1.3-q.js \
-	    .build/externs/angular-1.3-http-promise.js \
+	    .build/externs/angular-1.4.js \
+	    .build/externs/angular-1.4-q_templated.js \
+	    .build/externs/angular-1.4-http-promise_templated.js \
 	    .build/externs/jquery-1.9.js \
 	    $(SRC_JS_FILES) \
 	    .build/templatecache.js \
@@ -104,9 +104,9 @@ dist/ngeo.js: buildtools/ngeo.json \
 	node buildtools/build.js $< $@
 
 dist/ngeo-debug.js: buildtools/ngeo-debug.json \
-	    .build/externs/angular-1.3.js \
-	    .build/externs/angular-1.3-q.js \
-	    .build/externs/angular-1.3-http-promise.js \
+	    .build/externs/angular-1.4.js \
+	    .build/externs/angular-1.4-q_templated.js \
+	    .build/externs/angular-1.4-http-promise_templated.js \
 	    .build/externs/jquery-1.9.js \
 	    $(SRC_JS_FILES) \
 	    .build/templatecache.js \
@@ -124,9 +124,9 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 .build/examples/%.min.js: .build/examples/%.json \
 	    $(SRC_JS_FILES) \
 	    $(EXPORTS_JS_FILES) \
-	    .build/externs/angular-1.3.js \
-	    .build/externs/angular-1.3-q.js \
-	    .build/externs/angular-1.3-http-promise.js \
+	    .build/externs/angular-1.4.js \
+	    .build/externs/angular-1.4-q_templated.js \
+	    .build/externs/angular-1.4-http-promise_templated.js \
 	    .build/externs/jquery-1.9.js \
 	    examples/%.js \
 	    .build/node_modules.timestamp
@@ -136,9 +136,9 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 .build/examples/all.min.js: buildtools/examples-all.json \
 	    $(SRC_JS_FILES) \
 	    $(EXPORTS_JS_FILES) \
-	    .build/externs/angular-1.3.js \
-	    .build/externs/angular-1.3-q.js \
-	    .build/externs/angular-1.3-http-promise.js \
+	    .build/externs/angular-1.4.js \
+	    .build/externs/angular-1.4-q_templated.js \
+	    .build/externs/angular-1.4-http-promise_templated.js \
 	    .build/externs/jquery-1.9.js \
 	    .build/examples/all.js \
 	    .build/node_modules.timestamp
@@ -260,19 +260,19 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	mkdir -p $(dir $@)
 	sed 's/{{example}}/$*/' $< > $@
 
-.build/externs/angular-1.3.js:
+.build/externs/angular-1.4.js:
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.3.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4.js
 	touch $@
 
-.build/externs/angular-1.3-q.js:
+.build/externs/angular-1.4-q_templated.js:
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.3-q.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4-q_templated.js
 	touch $@
 
-.build/externs/angular-1.3-http-promise.js:
+.build/externs/angular-1.4-http-promise_templated.js:
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.3-http-promise.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4-http-promise_templated.js
 	touch $@
 
 .build/externs/jquery-1.9.js:
