@@ -333,7 +333,8 @@ ngeo.interaction.Measure.prototype.createMeasureTooltip_ = function() {
   this.measureTooltipOverlay_ = new ol.Overlay({
     element: this.measureTooltipElement_,
     offset: [0, -15],
-    positioning: 'bottom-center'
+    positioning: 'bottom-center',
+    stopEvent: false
   });
   this.getMap().addOverlay(this.measureTooltipOverlay_);
 };
