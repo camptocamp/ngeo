@@ -174,7 +174,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
        */
       function(layer, idx, layers) {
         goog.asserts.assert(goog.isDef(viewResolution));
-        this.encodeLayer_(object.layers, layer, viewResolution);
+        this.encodeLayer(object.layers, layer, viewResolution);
       }, this);
 };
 
@@ -183,9 +183,8 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
  * @param {Array.<MapFishPrintLayer>} arr Array.
  * @param {ol.layer.Base} layer Layer.
  * @param {number} resolution Resolution.
- * @private
  */
-ngeo.Print.prototype.encodeLayer_ = function(arr, layer, resolution) {
+ngeo.Print.prototype.encodeLayer = function(arr, layer, resolution) {
   if (layer instanceof ol.layer.Image) {
     this.encodeImageLayer_(arr, layer);
   } else if (layer instanceof ol.layer.Tile) {
