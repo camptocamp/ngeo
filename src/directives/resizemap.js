@@ -55,10 +55,12 @@ ngeo.resizemapDirective = function($window, $animate) {
                 animationDelay.start();
               }, $window);
 
-          var animationCallback = function(element, phase) {
-            animationDelay.start();
-            if (phase == 'close') {
-              animationDelay.stop();
+          var animationCallback = function(target, phase) {
+            if (target == element) {
+              animationDelay.start();
+              if (phase == 'close') {
+                animationDelay.stop();
+              }
             }
           };
           $animate.on('addClass', element, animationCallback);
