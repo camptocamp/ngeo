@@ -69,7 +69,7 @@ MapFishPrintMap.prototype.dpi;
 
 
 /**
- * @type {Array.<MapFishPrintWmsLayer>}
+ * @type {Array.<MapFishPrintLayer>}
  */
 MapFishPrintMap.prototype.layers;
 
