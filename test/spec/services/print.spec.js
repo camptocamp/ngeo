@@ -288,12 +288,19 @@ describe('ngeo.CreatePrint', function() {
         });
 
         style0 = new ol.style.Style({
+          fill: new ol.style.Fill({
+            color: [1, 1, 1, 0.1]
+          }),
           image: new ol.style.Circle({
             radius: 1,
             stroke: new ol.style.Stroke({
               width: 1,
               color: [1, 1, 1, 0.1]
             })
+          }),
+          stroke: new ol.style.Stroke({
+            width: 1,
+            color: [1, 1, 1, 0.1]
           })
         });
 
@@ -429,6 +436,7 @@ describe('ngeo.CreatePrint', function() {
           '_ngeo_style_0': styleId2
         };
 
+        // the expected properties of feature3
         var properties3 = {
           foo: '3',
           '_ngeo_style_0': styleId3
