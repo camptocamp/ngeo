@@ -183,8 +183,8 @@ app.SearchController.selected_ = function(event, suggestion, dataset) {
   var source = this.vectorLayer_.getSource();
   source.clear(true);
   source.addFeature(feature);
-  map.getView().fitGeometry(featureGeometry, mapSize,
-      /** @type {olx.view.FitGeometryOptions} */ ({maxZoom: 16}));
+  map.getView().fit(featureGeometry, mapSize,
+      /** @type {olx.view.FitOptions} */ ({maxZoom: 16}));
 };
 
 
