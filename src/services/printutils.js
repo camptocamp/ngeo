@@ -102,7 +102,11 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose =
  * @param {number} mapResolution Resolution of the map on the screen.
  * @param {ol.Size} printMapSize Size of the map on the paper (dots).
  * @param {Array.<number>} printMapScales Supported map scales on the paper.
- * @return {number} The best scale.
+ * The scales are provided as scale denominators, sorted in ascending order.
+ * E.g. `[500, 1000, 2000, 4000]`.
+ * @return {number} The best scale. `-1` is returned if there is no optimal
+ * scale, that is the optimal scale is lower than or equal to the first value
+ * in `printMapScales`.
  */
 ngeo.PrintUtils.prototype.getOptimalScale = function(
     mapSize, mapResolution, printMapSize, printMapScales) {
@@ -116,8 +120,8 @@ ngeo.PrintUtils.prototype.getOptimalScale = function(
       ngeo.PrintUtils.DOTS_PER_INCH_ / printMapSize[1];
 
   var scale = Math.min(scaleWidth, scaleHeight);
-  var optimal = Infinity;
 
+  var optimal = -1;
   for (var i = 0, ii = printMapScales.length; i < ii; ++i) {
     if (scale > printMapScales[i]) {
       optimal = printMapScales[i];
