@@ -426,18 +426,23 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
     }
   }
 
-  var geojsonFeatureCollection = /** @type {GeoJSONFeatureCollection} */ ({
-    type: 'FeatureCollection',
-    features: geojsonFeatures
-  });
+  // MapFish Print fails if there are no style rules, even if there are no
+  // features either. To work around this we just ignore the layer if the
+  // array of GeoJSON features is empty.
+  // See https://github.com/mapfish/mapfish-print/issues/279
 
-  var object = /** @type {MapFishPrintVectorLayer} */ ({
-    geoJson: geojsonFeatureCollection,
-    style: mapfishStyleObject,
-    type: 'geojson'
-  });
-
-  arr.push(object);
+  if (geojsonFeatures.length > 0) {
+    var geojsonFeatureCollection = /** @type {GeoJSONFeatureCollection} */ ({
+      type: 'FeatureCollection',
+      features: geojsonFeatures
+    });
+    var object = /** @type {MapFishPrintVectorLayer} */ ({
+      geoJson: geojsonFeatureCollection,
+      style: mapfishStyleObject,
+      type: 'geojson'
+    });
+    arr.push(object);
+  }
 };
 
 
