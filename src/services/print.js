@@ -65,6 +65,36 @@ goog.require('ol.tilegrid.WMTS');
 ngeo.CreatePrint;
 
 
+/**
+ * @enum {string}
+ */
+ngeo.PrintStyleType = {
+  LINE_STRING: 'LineString',
+  POINT: 'Point',
+  POLYGON: 'Polygon'
+};
+
+
+/**
+ * @type {Object.<ol.geom.GeometryType, ngeo.PrintStyleType>}
+ * @private
+ */
+ngeo.PrintStyleTypes_ = {};
+
+ngeo.PrintStyleTypes_[ol.geom.GeometryType.LINE_STRING] =
+    ngeo.PrintStyleType.LINE_STRING;
+ngeo.PrintStyleTypes_[ol.geom.GeometryType.POINT] =
+    ngeo.PrintStyleType.POINT;
+ngeo.PrintStyleTypes_[ol.geom.GeometryType.POLYGON] =
+    ngeo.PrintStyleType.POLYGON;
+ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_LINE_STRING] =
+    ngeo.PrintStyleType.LINE_STRING;
+ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POINT] =
+    ngeo.PrintStyleType.POINT;
+ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
+    ngeo.PrintStyleType.POLYGON;
+
+
 
 /**
  * @constructor
@@ -396,24 +426,29 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
     }
   }
 
-  var geojsonFeatureCollection = /** @type {GeoJSONFeatureCollection} */ ({
-    type: 'FeatureCollection',
-    features: geojsonFeatures
-  });
+  // MapFish Print fails if there are no style rules, even if there are no
+  // features either. To work around this we just ignore the layer if the
+  // array of GeoJSON features is empty.
+  // See https://github.com/mapfish/mapfish-print/issues/279
 
-  var object = /** @type {MapFishPrintVectorLayer} */ ({
-    geoJson: geojsonFeatureCollection,
-    style: mapfishStyleObject,
-    type: 'geojson'
-  });
-
-  arr.push(object);
+  if (geojsonFeatures.length > 0) {
+    var geojsonFeatureCollection = /** @type {GeoJSONFeatureCollection} */ ({
+      type: 'FeatureCollection',
+      features: geojsonFeatures
+    });
+    var object = /** @type {MapFishPrintVectorLayer} */ ({
+      geoJson: geojsonFeatureCollection,
+      style: mapfishStyleObject,
+      type: 'geojson'
+    });
+    arr.push(object);
+  }
 };
 
 
 /**
  * @param {MapFishPrintVectorStyle} object MapFish style object.
- * @param {string} geometryType Type of the GeoJSON geometry
+ * @param {ol.geom.GeometryType} geometryType Type of the GeoJSON geometry
  * @param {ol.style.Style} style Style.
  * @param {string} styleId Style id.
  * @param {string} featureStyleProp Feature style property name.
@@ -421,6 +456,11 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
  */
 ngeo.Print.prototype.encodeVectorStyle_ =
     function(object, geometryType, style, styleId, featureStyleProp) {
+  if (!(geometryType in ngeo.PrintStyleTypes_)) {
+    // unsupported geometry type
+    return;
+  }
+  var styleType = ngeo.PrintStyleTypes_[geometryType];
   var key = '[' + featureStyleProp + ' = \'' + styleId + '\']';
   if (key in object) {
     // do nothing if we already have a style object for this CQL rule
@@ -434,17 +474,20 @@ ngeo.Print.prototype.encodeVectorStyle_ =
   var imageStyle = style.getImage();
   var strokeStyle = style.getStroke();
   var textStyle = style.getText();
-  var isLine = geometryType === ol.geom.GeometryType.LINE_STRING ||
-          geometryType === ol.geom.GeometryType.MULTI_LINE_STRING;
-  if (!goog.isNull(fillStyle) && !isLine) {
-    this.encodeVectorStylePolygon_(
-        styleObject.symbolizers, fillStyle, strokeStyle);
-  } else if (!goog.isNull(strokeStyle)) {
-    this.encodeVectorStyleLine_(styleObject.symbolizers, strokeStyle);
-  } else if (!goog.isNull(imageStyle)) {
-    this.encodeVectorStylePoint_(styleObject.symbolizers, imageStyle);
+  if (styleType == ngeo.PrintStyleType.POLYGON) {
+    if (!goog.isNull(fillStyle)) {
+      this.encodeVectorStylePolygon_(
+          styleObject.symbolizers, fillStyle, strokeStyle);
+    }
+  } else if (styleType == ngeo.PrintStyleType.LINE_STRING) {
+    if (!goog.isNull(strokeStyle)) {
+      this.encodeVectorStyleLine_(styleObject.symbolizers, strokeStyle);
+    }
+  } else if (styleType == ngeo.PrintStyleType.POINT) {
+    if (!goog.isNull(imageStyle)) {
+      this.encodeVectorStylePoint_(styleObject.symbolizers, imageStyle);
+    }
   }
-
   if (!goog.isNull(textStyle)) {
     this.encodeTextStyle_(styleObject.symbolizers, textStyle);
   }
