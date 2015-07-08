@@ -162,3 +162,11 @@ var TypeaheadOptions;
  * @return {!jQuery}
  */
 jQuery.prototype.typeahead = function(options, var_dataset) {};
+
+
+/**
+ * @param {string|TypeaheadOptions} options
+ * @param {...TypeaheadDataset} var_dataset
+ * @return {!angular.JQLite}
+ */
+angular.JQLite.prototype.typeahead = function(options, var_dataset) {};
