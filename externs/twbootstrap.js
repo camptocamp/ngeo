@@ -14,7 +14,7 @@ jQuery.prototype.alert = function(opt_action) {};
 
 /**
  * @param {string=} opt_action
- * @return {!angular.jQLite}
+ * @return {!angular.JQLite}
  */
 angular.JQLite.prototype.alert = function(opt_action) {};
 
