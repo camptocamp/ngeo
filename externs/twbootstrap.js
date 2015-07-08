@@ -13,10 +13,24 @@ jQuery.prototype.alert = function(opt_action) {};
 
 
 /**
-* @param {(string|Object.<string,*>)=} opt_options
-* @return {jQuery}
-*/
+ * @param {string=} opt_action
+ * @return {!angular.jQLite}
+ */
+angular.JQLite.prototype.alert = function(opt_action) {};
+
+
+/**
+ * @param {(string|Object.<string,*>)=} opt_options
+ * @return {jQuery}
+ */
 jQuery.prototype.modal = function(opt_options) {};
+
+
+/**
+ * @param {(string|Object.<string,*>)=} opt_options
+ * @return {angular.JQLite}
+ */
+angular.JQLite.prototype.modal = function(opt_options) {};
 
 
 /**
@@ -24,3 +38,10 @@ jQuery.prototype.modal = function(opt_options) {};
  * @return {!jQuery}
  */
 jQuery.prototype.tab = function(action) {};
+
+
+/**
+ * @param {string} action
+ * @return {!angular.JQLite}
+ */
+angular.JQLite.prototype.tab = function(action) {};
