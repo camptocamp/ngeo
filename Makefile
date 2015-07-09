@@ -161,10 +161,6 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/angular-animate.min.js: node_modules/angular-animate/angular-animate.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
 .build/examples-hosted/bootstrap.min.js: node_modules/bootstrap/dist/js/bootstrap.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -193,7 +189,7 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $@
 	cp examples/data/* $@
 
-node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate.min.js: .build/node_modules.timestamp
+node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .PRECIOUS: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: examples/%.html
@@ -203,7 +199,6 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	    -e 's|\.\./node_modules/jquery/dist/jquery.js|jquery.min.js|' \
 	    -e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|bootstrap.min.js|' \
 	    -e 's|\.\./node_modules/angular/angular.js|angular.min.js|' \
-	    -e 's|\.\./node_modules/angular-animate/angular-animate.js|angular-animate.min.js|' \
 	    -e 's|\.\./node_modules/d3/d3.js|d3.min.js|' \
 	    -e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|typeahead.bundle.min.js|' \
 	    -e 's/\/@?main=$*.js/$*.js/' \
@@ -222,7 +217,6 @@ node_modules/angular/angular.min.js node_modules/angular-animate/angular-animate
 	    .build/examples-hosted/ngeo.js \
 	    .build/examples-hosted/ngeo.css \
 	    .build/examples-hosted/angular.min.js \
-	    .build/examples-hosted/angular-animate.min.js \
 	    .build/examples-hosted/bootstrap.min.js \
 	    .build/examples-hosted/bootstrap.min.css \
 	    .build/examples-hosted/jquery.min.js \

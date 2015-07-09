@@ -1,23 +1,20 @@
 /**
- * @fileoverview Provides a directive to use on resizable elements that change
- * the map size when they are resized. The directive calls `map.updateSize`
- * during the animation.
- * For now, this directive only works in combination with the `ng-class`
- * directive.
- * Also, this directive can only work with angular >= 1.4.
- *
- * Beware that the 'addClass' event may not be fired at first. You can use a 0
- * timeout to simulate a ng-class change.
+ * @fileoverview Provides a directive that resizes the map in an animation loop
+ * during 1 second when the value of "state" changes. This is especially useful
+ * when changing the size of other elements with a transition leads to a change
+ * of the map size.
  *
  * Example:
  *
- *   <div ng-class="ctrl.open ? 'open' : 'close' ngeo-resizemap="ctrl.map"><div>
+ *   <div ng-class="ctrl.open ? 'open' : 'close' ngeo-resizemap="ctrl.map"
+ *        ngeo-resizemap-state="open"><div>
  *   <input type="checkbox" ng-model="ctrl.open" />
  *
  */
 
 goog.provide('ngeo.resizemapDirective');
 
+goog.require('goog.asserts');
 goog.require('goog.async.AnimationDelay');
 goog.require('ngeo');
 goog.require('ol.Map');
@@ -30,6 +27,8 @@ goog.require('ol.Map');
  * @ngInject
  */
 ngeo.resizemapDirective = function($window, $animate) {
+  var /** @type {number} */ duration = 1000;
+
   return {
     restrict: 'A',
     link:
@@ -44,27 +43,28 @@ ngeo.resizemapDirective = function($window, $animate) {
           var map = scope.$eval(prop);
           goog.asserts.assertInstanceof(map, ol.Map);
 
-          var updateMapSize = function() {
-            map.updateSize();
-            map.renderSync();
-          };
+          var stateExpr = attrs['ngeoResizemapState'];
+          goog.asserts.assert(goog.isDef(stateExpr));
+
+          var start;
 
           var animationDelay = new goog.async.AnimationDelay(
               function() {
-                updateMapSize();
-                animationDelay.start();
+                map.updateSize();
+                map.renderSync();
+
+                if (goog.now() - start < duration) {
+                  animationDelay.start();
+                }
               }, $window);
 
-          var animationCallback = function(target, phase) {
-            if (target == element) {
+          scope.$watch(stateExpr, function(newVal, oldVal) {
+            if (newVal != oldVal) {
+              start = goog.now();
+              animationDelay.stop();
               animationDelay.start();
-              if (phase == 'close') {
-                animationDelay.stop();
-              }
             }
-          };
-          $animate.on('addClass', element, animationCallback);
-          $animate.on('removeClass', element, animationCallback);
+          });
         }
   };
 };

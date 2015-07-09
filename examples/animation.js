@@ -13,7 +13,7 @@ var app = {};
 
 
 /** @type {!angular.Module} */
-app.module = angular.module('app', ['ngAnimate', 'ngeo']);
+app.module = angular.module('app', ['ngeo']);
 
 
 /**

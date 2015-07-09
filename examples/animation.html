@@ -46,7 +46,8 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <div id="container">
-      <div id="sidebar" ng-class="ctrl.open ? 'open' : ''" ngeo-resizemap="ctrl.map"></div>
+      <div id="sidebar" ng-class="ctrl.open ? 'open' : ''"
+           ngeo-resizemap="ctrl.map" ngeo-resizemap-state="ctrl.open"></div>
       <app-map app-map="ctrl.map"></app-map>
     </div>
     <label>
@@ -56,7 +57,6 @@
     <p>Use the <em>Open sidebar!</em> to open the sidebar and change the width of the map.</p>
     <p id="desc">This example shows how to animate the resizing of a map without distortions of the map during the animation. This uses the <code>ngeoResizemap</code> directive.</p>
     <script src="../node_modules/angular/angular.js"></script>
-    <script src="../node_modules/angular-animate/angular-animate.js"></script>
     <script src="/@?main=animation.js"></script>
   </body>
 </html>
