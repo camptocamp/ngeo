@@ -625,7 +625,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
 
     var labelRotation = textStyle.getRotation();
     if (goog.isDef(labelRotation)) {
-      // Mapfish print expects a string, not a number to rotate text
+      // Mapfish Print expects a string, not a number to rotate text
       symbolizer.labelRotation = (labelRotation * 180 / Math.PI).toString();
     }
 
@@ -656,8 +656,13 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
       symbolizer.fontColor = goog.color.rgbArrayToHex(fillColorRgba);
     }
 
-    symbolizer.XOffset = textStyle.getOffsetX();
-    symbolizer.YOffset = textStyle.getOffsetY();
+    // Mapfish Print allows offset only if labelAlign is defined.
+    if (goog.isDef(symbolizer.labelAlign)) {
+      symbolizer.labelXOffset = textStyle.getOffsetX();
+      // Mapfish uses the opposite direction of OpenLayers for y axis, so the
+      // minus sign is required for the y offset to be identical.
+      symbolizer.labelYOffset = -textStyle.getOffsetY();
+    }
 
     symbolizers.push(symbolizer);
   }
