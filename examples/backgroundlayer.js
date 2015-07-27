@@ -67,10 +67,10 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
   this.map;
 
   /**
-   * @type {Array.<Object>}
+   * @type {Array.<Object>|undefined}
    * @export
    */
-  this.bgLayers = null;
+  this.bgLayers = undefined;
 
   /**
    * @type {Object}
