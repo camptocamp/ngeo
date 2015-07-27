@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git://github.com/camptocamp/ngeo.git"
   },
-  "license": "BSD",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/camptocamp/ngeo/issues"
   },
