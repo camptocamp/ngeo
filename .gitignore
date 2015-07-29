@@ -1,6 +1,5 @@
 /.build
 /node_modules
-/bower_components
 /examples/simple.min.js
 /dist
 *.pyc
