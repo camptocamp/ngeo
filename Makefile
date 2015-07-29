@@ -177,6 +177,10 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/watchwatchers.js: utils/watchwatchers.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/typeahead.bundle.min.js: node_modules/typeahead.js/dist/typeahead.bundle.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -202,6 +206,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	    -e 's|\.\./node_modules/d3/d3.js|d3.min.js|' \
 	    -e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|typeahead.bundle.min.js|' \
 	    -e 's/\/@?main=$*.js/$*.js/' \
+	    -e 's|\.\./utils/watchwatchers.js|watchwatchers.js|' \
 	    -e '/$*.js/i\    <script src="ngeo.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
@@ -221,6 +226,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	    .build/examples-hosted/bootstrap.min.css \
 	    .build/examples-hosted/jquery.min.js \
 	    .build/examples-hosted/d3.min.js \
+	    .build/examples-hosted/watchwatchers.js \
 	    .build/examples-hosted/typeahead.bundle.min.js \
 	    .build/examples-hosted/data \
 	    .build/examples-hosted/partials \
