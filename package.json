@@ -12,8 +12,7 @@
     "url": "https://github.com/camptocamp/ngeo/issues"
   },
   "dependencies": {
-    "async": "~0.2.10",
-    "htmlparser2": "~3.7.1"
+    "async": "~0.2.10"
   },
   "devDependencies": {
     "angular": "1.4.1",
