@@ -281,6 +281,13 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
+  this.handleMeasureEnd(goog.bind(function(measure, coord) {
+    if (!goog.isNull(coord)) {
+      this.measureTooltipElement_.innerHTML = measure;
+      this.measureTooltipOverlay_.setPosition(coord);
+    }
+  }, this));
+
   goog.dom.classlist.add(this.measureTooltipElement_, 'tooltip-static');
   this.measureTooltipOverlay_.setOffset([0, -7]);
   this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
@@ -411,6 +418,16 @@ ngeo.interaction.Measure.prototype.formatLength = function(line) {
  * @protected
  */
 ngeo.interaction.Measure.prototype.handleMeasure = goog.abstractMethod;
+
+
+/**
+ * Optional function implemented in inherited classes to update the tooltip
+ * position and content at the end of the measurement.
+ * @param {function(string, ?ol.Coordinate)} callback The function
+ *     to be called.
+ * @protected
+ */
+ngeo.interaction.Measure.prototype.handleMeasureEnd = goog.functions.NULL;
 
 
 /**
