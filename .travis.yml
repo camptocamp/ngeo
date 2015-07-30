@@ -16,3 +16,6 @@ addons:
     - python-virtualenv
 cache:
   apt: true
+  directories:
+  - node_modules
+
