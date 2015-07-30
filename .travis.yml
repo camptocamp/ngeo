@@ -1,9 +1,9 @@
 language: ruby
+sudo: false
 branches:
   only:
   - master
 before_install:
-- sudo apt-get install python-virtualenv
 - npm install -g npm && npm install
 script:
 - make check
@@ -12,3 +12,7 @@ after_success:
 env:
   global:
   - secure: "WZWqYrRy5uhk3IgXT9HXAL1zrZfrmJbbglF4gwNpSnrZkLv63gFwpMj6bjxOPKPouU76p4K7x/fnZb/FWRl6/fEnJzLKNvbknQtvmC4dAoHLynFVpilYholmdscT2fo/SOmE3XKOA4EJTF7oxToCgT2+e68e/oH87izXUn4FvK8="
+addons:
+  apt:
+    packages:
+    - python-virtualenv
