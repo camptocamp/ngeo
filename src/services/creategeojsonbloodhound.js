@@ -14,7 +14,6 @@
  *
  * var bloodhound = ngeoCreateGeoJSONBloodhound({
  *   remote: {
- *     limit: 10,
  *     url: mySearchEngineUrl,
  *     replace: function(url, query) {
  *       return url +
@@ -53,10 +52,12 @@ ngeo.createGeoJSONBloodhound = function(options, opt_featureProjection,
   var bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {
       url: goog.isString(options) ? options : '',
-      ajax: {
-        dataType: 'jsonp'
+      prepare: function(query, settings) {
+        settings.url = settings.url.replace('%QUERY', query);
+        settings.dataType = 'jsonp';
+        return settings;
       },
-      filter: function(parsedResponse) {
+      transform: function(parsedResponse) {
         var featureCollection = /** @type {GeoJSONFeatureCollection} */
             (parsedResponse);
         return geojsonFormat.readFeatures(featureCollection, {
