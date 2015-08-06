@@ -35,6 +35,7 @@
       "examples/{{example}}.js",
       "node_modules/openlayers/externs/olx.js",
       "node_modules/openlayers/externs/oli.js",
+      "contribs/gmf/externs/gmfx.js",
       "externs/ngeox.js"
     ],
     "jscomp_error": [

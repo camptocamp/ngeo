@@ -26,6 +26,7 @@
       ".build/externs/angular-1.4-http-promise_templated.js",
       ".build/externs/jquery-1.9.js",
       "externs/angular-gettext.js",
+      "contribs/gmf/externs/gmfx.js",
       "externs/ngeox.js",
       "externs/d3.js",
       "externs/typeahead.js",
