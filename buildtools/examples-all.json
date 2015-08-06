@@ -33,6 +33,7 @@
     ],
     "js": [
       ".build/examples/all.js",
+      "contribs/gmf/externs/gmfx.js",
       "externs/ngeox.js",
       "node_modules/openlayers/externs/olx.js",
       "node_modules/openlayers/externs/oli.js"

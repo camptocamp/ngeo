@@ -7,6 +7,7 @@
  *
  * var bloodhound = ngeoCreateGeoJSONBloodhound(
  *   'http://example.com/fulltextsearch?query=%QUERY',
+ *   aFilterFunction,
  *   ol.proj.get('EPSG:3857'));
  * bloodhound.initialize();
  *
@@ -21,7 +22,7 @@
  *           '&lang=' + gettextCatalog.currentLanguage;
  *     }
  *   }
- * }, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
+ * }, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
  * bloodhound.initialize
  */
 
@@ -32,8 +33,8 @@ goog.require('ol.format.GeoJSON');
 
 
 /**
- * @typedef {function(string, ol.proj.Projection=,
- *     ol.proj.Projection=):Bloodhound}
+ * @typedef {function(string, (function(GeoJSONFeature): boolean)=,
+ * ol.proj.Projection=, ol.proj.Projection=):Bloodhound}
  */
 ngeo.CreateGeoJSONBloodhound;
 
@@ -42,12 +43,14 @@ ngeo.CreateGeoJSONBloodhound;
  * @param {BloodhoundOptions|string} options Bloodhound options or a URL to the
  *     search service. If a URL is provided then default Bloodhound options are
  *     used.
+ * @param {(function(GeoJSONFeature): boolean)=} opt_filter function to filter
+ * results.
  * @param {ol.proj.Projection=} opt_featureProjection Feature projection.
  * @param {ol.proj.Projection=} opt_dataProjection Data projection.
  * @return {Bloodhound} The Bloodhound object.
  */
-ngeo.createGeoJSONBloodhound = function(options, opt_featureProjection,
-    opt_dataProjection) {
+ngeo.createGeoJSONBloodhound = function(options, opt_filter,
+    opt_featureProjection, opt_dataProjection) {
   var geojsonFormat = new ol.format.GeoJSON();
   var bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {
@@ -58,8 +61,16 @@ ngeo.createGeoJSONBloodhound = function(options, opt_featureProjection,
         return settings;
       },
       transform: function(parsedResponse) {
+        /** @type {GeoJSONFeatureCollection} */
         var featureCollection = /** @type {GeoJSONFeatureCollection} */
             (parsedResponse);
+        if (goog.isDef(opt_filter)) {
+          featureCollection = /** @type {GeoJSONFeatureCollection} */ ({
+            type: 'FeatureCollection',
+            features: goog.array.filter(featureCollection.features, opt_filter)
+          });
+        }
+
         return geojsonFormat.readFeatures(featureCollection, {
           featureProjection: opt_featureProjection,
           dataProjection: opt_dataProjection
