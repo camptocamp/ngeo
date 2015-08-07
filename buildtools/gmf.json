@@ -1,0 +1,83 @@
+{
+  "exports": ["*"],
+  "src": [
+    "node_modules/openlayers/src/**/*.js",
+    "node_modules/openlayers/build/ol.ext/*.js",
+    "src/**/*.js",
+    "contribs/gmf/src/*.js",
+    "exports/**/*.js",
+    ".build/templatecache.js"
+  ],
+  "compile": {
+    "externs": [
+      "node_modules/openlayers/externs/bingmaps.js",
+      "node_modules/openlayers/externs/closure-compiler.js",
+      "node_modules/openlayers/externs/geojson.js",
+      "node_modules/openlayers/externs/oli.js",
+      "node_modules/openlayers/externs/olx.js",
+      "node_modules/openlayers/externs/proj4js.js",
+      "node_modules/openlayers/externs/tilejson.js",
+      "node_modules/openlayers/externs/topojson.js",
+      "node_modules/openlayers/externs/esrijson.js",
+      "externs/closure-compiler.js",
+      "externs/jqueryui.js",
+      ".build/externs/angular-1.4.js",
+      ".build/externs/angular-1.4-q_templated.js",
+      ".build/externs/angular-1.4-http-promise_templated.js",
+      ".build/externs/jquery-1.9.js",
+      "externs/angular-gettext.js",
+      "externs/ngeox.js",
+      "externs/d3.js",
+      "externs/typeahead.js",
+      "externs/mapfish-print-v3.js"
+    ],
+    "define": [
+      "goog.DEBUG=false"
+    ],
+    "jscomp_error": [
+      "accessControls",
+      "ambiguousFunctionDecl",
+      "checkEventfulObjectDisposal",
+      "checkRegExp",
+      "checkStructDictInheritance",
+      "checkTypes",
+      "checkVars",
+      "const",
+      "constantProperty",
+      "deprecated",
+      "duplicateMessage",
+      "es3",
+      "es5Strict",
+      "externsValidation",
+      "fileoverviewTags",
+      "globalThis",
+      "internetExplorerChecks",
+      "invalidCasts",
+      "misplacedTypeAnnotation",
+      "missingGetCssName",
+      "missingProperties",
+      "missingProvide",
+      "missingRequire",
+      "missingReturn",
+      "newCheckTypes",
+      "nonStandardJsDocs",
+      "suspiciousCode",
+      "strictModuleDepCheck",
+      "typeInvalidation",
+      "undefinedNames",
+      "undefinedVars",
+      "unknownDefines",
+      "uselessCode",
+      "visibility"
+    ],
+    "extra_annotation_name": [
+      "api", "observable"
+    ],
+    "angular_pass": true,
+    "compilation_level": "ADVANCED_OPTIMIZATIONS",
+    "export_local_property_definitions": true,
+    "generate_exports": true,
+    "output_wrapper": "(function(){%output%})();",
+    "use_types_for_optimization": true
+  }
+}

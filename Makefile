@@ -1,9 +1,15 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 SRC_DIRECTIVES_PARTIALS_FILES := $(shell find src/directives -type f -name '*.html')
+
 EXPORTS_JS_FILES := $(shell find exports -type f -name '*.js')
+
 EXAMPLES_JS_FILES := $(shell find examples -maxdepth 1 -type f -name '*.js')
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
+
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html, .build/%.check.timestamp, $(EXAMPLES_HTML_FILES))
+
+GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
+GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
 
 .PHONY: all
 all: help
@@ -29,10 +35,13 @@ help:
 dist: dist/ngeo.js dist/ngeo-debug.js
 
 .PHONY: check
-check: lint dist check-examples compile-examples test
+check: lint dist check-examples test compile-gmf compile-examples
 
 .PHONY: compile-examples
 compile-examples: .build/examples/all.min.js
+
+.PHONY: compile-gmf
+compile-gmf: .build/gmf.js
 
 .PHONY: check-examples
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
@@ -120,6 +129,19 @@ dist/ngeo-debug.js: buildtools/ngeo-debug.json \
 dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/cleancss $< > $@
+
+.build/gmf.js: buildtools/gmf.json \
+	    .build/externs/angular-1.4.js \
+	    .build/externs/angular-1.4-q_templated.js \
+	    .build/externs/angular-1.4-http-promise_templated.js \
+	    .build/externs/jquery-1.9.js \
+	    $(SRC_JS_FILES) \
+	    $(GMF_SRC_JS_FILES) \
+	    .build/templatecache.js \
+	    $(EXPORTS_JS_FILES) \
+	    .build/node_modules.timestamp
+	mkdir -p $(dir $@)
+	node buildtools/build.js $< $@
 
 .build/examples/%.min.js: .build/examples/%.json \
 	    $(SRC_JS_FILES) \
