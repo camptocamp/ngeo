@@ -31,11 +31,12 @@ var manager = new closure.Manager({
   closure: true, // use the bundled Closure Library
   lib: [
     'src/**/*.js',
-    "externs/*.js",
+    'contribs/**/src/**/*.js',
+    'externs/*.js',
     'node_modules/openlayers/src/**/*.js',
     'node_modules/openlayers/build/ol.ext/*.js'
   ],
-  main: 'examples/*.js'
+  main: ['examples/*.js', 'contribs/**/examples/*.js']
 });
 manager.on('error', function(e) {
   log.error('ngeo', e.message);
