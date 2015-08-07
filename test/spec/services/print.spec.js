@@ -178,6 +178,7 @@ describe('ngeo.CreatePrint', function() {
       beforeEach(function() {
         var projection = ol.proj.get('EPSG:3857');
         map.addLayer(new ol.layer.Tile({
+          opacity: 0.5,
           source: new ol.source.WMTS({
             dimensions: {'TIME': 'time'},
             format: 'image/jpeg',
@@ -246,6 +247,7 @@ describe('ngeo.CreatePrint', function() {
                   matrixSize: [4, 4]
                 }],
                 matrixSet: 'matrixset',
+                opacity: 0.5,
                 requestEncoding: 'REST',
                 style: 'style',
                 type: 'WMTS',
