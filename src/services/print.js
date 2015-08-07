@@ -250,9 +250,8 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Image);
   goog.asserts.assertInstanceof(source, ol.source.ImageWMS);
 
-  var url = source.getUrl();
-  var params = source.getParams();
-  this.encodeWmsLayer_(arr, layer.getOpacity(), url, params);
+  this.encodeWmsLayer_(
+      arr, layer.getOpacity(), source.getUrl(), source.getParams());
 };
 
 
@@ -363,9 +362,8 @@ ngeo.Print.prototype.encodeTileWmsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Tile);
   goog.asserts.assertInstanceof(source, ol.source.TileWMS);
 
-  var url = source.getUrls()[0];
-  var params = source.getParams();
-  this.encodeWmsLayer_(arr, layer.getOpacity(), url, params);
+  this.encodeWmsLayer_(
+      arr, layer.getOpacity(), source.getUrls()[0], source.getParams());
 };
 
 
