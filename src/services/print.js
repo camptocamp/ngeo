@@ -437,6 +437,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
     });
     var object = /** @type {MapFishPrintVectorLayer} */ ({
       geoJson: geojsonFeatureCollection,
+      opacity: layer.getOpacity(),
       style: mapfishStyleObject,
       type: 'geojson'
     });
