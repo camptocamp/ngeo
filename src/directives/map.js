@@ -10,6 +10,7 @@ goog.provide('ngeo.mapDirective');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
+goog.require('ol.Map');
 
 
 /**
