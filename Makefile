@@ -11,6 +11,12 @@ BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html, .build/%.che
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
 
+EXTERNS_ANGULAR = .build/externs/angular-1.4.js
+EXTERNS_ANGULAR_Q = .build/externs/angular-1.4-q_templated.js
+EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.4-http-promise_templated.js
+EXTERNS_JQUERY = .build/externs/jquery-1.9.js
+EXTERNS_FILES = $(EXTERNS_ANGULAR) $(EXTERNS_ANGULAR_Q) $(EXTERNS_ANGULAR_HTTP_PROMISE) $(EXTERNS_JQUERY)
+
 .PHONY: all
 all: help
 
@@ -101,10 +107,7 @@ gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples .build/examples
 	touch $@
 
 dist/ngeo.js: buildtools/ngeo.json \
-	    .build/externs/angular-1.4.js \
-	    .build/externs/angular-1.4-q_templated.js \
-	    .build/externs/angular-1.4-http-promise_templated.js \
-	    .build/externs/jquery-1.9.js \
+	    $(EXTERNS_FILES) \
 	    $(SRC_JS_FILES) \
 	    .build/templatecache.js \
 	    $(EXPORTS_JS_FILES) \
@@ -113,10 +116,7 @@ dist/ngeo.js: buildtools/ngeo.json \
 	node buildtools/build.js $< $@
 
 dist/ngeo-debug.js: buildtools/ngeo-debug.json \
-	    .build/externs/angular-1.4.js \
-	    .build/externs/angular-1.4-q_templated.js \
-	    .build/externs/angular-1.4-http-promise_templated.js \
-	    .build/externs/jquery-1.9.js \
+	    $(EXTERNS_FILES) \
 	    $(SRC_JS_FILES) \
 	    .build/templatecache.js \
 	    $(EXPORTS_JS_FILES) \
@@ -131,10 +131,7 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	./node_modules/.bin/cleancss $< > $@
 
 .build/gmf.js: buildtools/gmf.json \
-	    .build/externs/angular-1.4.js \
-	    .build/externs/angular-1.4-q_templated.js \
-	    .build/externs/angular-1.4-http-promise_templated.js \
-	    .build/externs/jquery-1.9.js \
+	    $(EXTERNS_FILES) \
 	    $(SRC_JS_FILES) \
 	    $(GMF_SRC_JS_FILES) \
 	    .build/templatecache.js \
@@ -146,10 +143,7 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 .build/examples/%.min.js: .build/examples/%.json \
 	    $(SRC_JS_FILES) \
 	    $(EXPORTS_JS_FILES) \
-	    .build/externs/angular-1.4.js \
-	    .build/externs/angular-1.4-q_templated.js \
-	    .build/externs/angular-1.4-http-promise_templated.js \
-	    .build/externs/jquery-1.9.js \
+	    $(EXTERNS_FILES) \
 	    examples/%.js \
 	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
@@ -159,10 +153,7 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	    $(SRC_JS_FILES) \
 	    $(GMF_SRC_JS_FILES) \
 	    $(EXPORTS_JS_FILES) \
-	    .build/externs/angular-1.4.js \
-	    .build/externs/angular-1.4-q_templated.js \
-	    .build/externs/angular-1.4-http-promise_templated.js \
-	    .build/externs/jquery-1.9.js \
+	    $(EXTERNS_FILES) \
 	    .build/examples/all.js \
 	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
@@ -283,22 +274,22 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	sed 's/{{example}}/$*/' $< > $@
 
-.build/externs/angular-1.4.js:
+$(EXTERNS_ANGULAR):
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4.js
 	touch $@
 
-.build/externs/angular-1.4-q_templated.js:
+$(EXTERNS_ANGULAR_Q):
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4-q_templated.js
 	touch $@
 
-.build/externs/angular-1.4-http-promise_templated.js:
+$(EXTERNS_ANGULAR_HTTP_PROMISE):
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4-http-promise_templated.js
 	touch $@
 
-.build/externs/jquery-1.9.js:
+$(EXTERNS_JQUERY):
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/jquery-1.9.js
 	touch $@
@@ -356,6 +347,7 @@ clean:
 	rm -f .build/templatecache.js
 	rm -f dist/ngeo.js
 	rm -f dist/ngeo.css
+	rm -f $(EXTERNS_FILES)
 
 .PHONY: cleanall
 cleanall: clean
