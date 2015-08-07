@@ -92,11 +92,11 @@ gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples .build/examples
 	 git commit -m 'Update GitHub pages' && \
 	 git push https://$(GH_TOKEN)@github.com/$(TRAVIS_REPO_SLUG).git gh-pages > /dev/null)
 
-.build/gjslint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES)
+.build/gjslint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES)
 	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable $?
 	touch $@
 
-.build/jshint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES)
+.build/jshint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES)
 	./node_modules/.bin/jshint --verbose $?
 	touch $@
 
