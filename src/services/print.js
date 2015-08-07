@@ -250,15 +250,18 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Image);
   goog.asserts.assertInstanceof(source, ol.source.ImageWMS);
 
-  this.encodeWmsLayer_(
-      arr, layer.getOpacity(), source.getUrl(), source.getParams());
+  var url = source.getUrl();
+  if (goog.isDef(url)) {
+    this.encodeWmsLayer_(
+        arr, layer.getOpacity(), url, source.getParams());
+  }
 };
 
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
  * @param {number} opacity Opacity of the layer.
- * @param {string|undefined} url Url of the WMS server.
+ * @param {string} url Url of the WMS server.
  * @param {Object} params Url parameters
  * @private
  */
@@ -270,7 +273,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   goog.object.remove(customParams, 'FORMAT');
 
   var object = /** @type {MapFishPrintWmsLayer} */ ({
-    baseURL: url,
+    baseURL: ngeo.Print.getAbsoluteUrl_(url),
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
     customParams: customParams,
@@ -278,6 +281,18 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
     opacity: opacity
   });
   arr.push(object);
+};
+
+
+/**
+ * @param {string} url
+ * @return {string} Absolute URL.
+ * @private
+ */
+ngeo.Print.getAbsoluteUrl_ = function(url) {
+  var a = document.createElement('a');
+  a.href = encodeURI(url);
+  return decodeURI(a.href);
 };
 
 
@@ -682,7 +697,7 @@ ngeo.Print.prototype.getWmtsUrl_ = function(source) {
   if (url.indexOf('{Layer}') >= 0) {
     url = url.replace('{Layer}', layer);
   }
-  return url;
+  return ngeo.Print.getAbsoluteUrl_(url);
 };
 
 
