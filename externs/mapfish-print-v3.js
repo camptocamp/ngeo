@@ -99,6 +99,12 @@ var MapFishPrintLayer = function() {};
 MapFishPrintLayer.prototype.type;
 
 
+/**
+ * @type {number}
+ */
+MapFishPrintLayer.prototype.opacity;
+
+
 
 /**
  * @constructor
@@ -155,12 +161,6 @@ MapFishPrintWmsLayer.prototype.customParams;
  * @type {Array.<string>}
  */
 MapFishPrintWmsLayer.prototype.layers;
-
-
-/**
- * @type {number}
- */
-MapFishPrintWmsLayer.prototype.opacity;
 
 
 /**
