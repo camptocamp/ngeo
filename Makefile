@@ -157,6 +157,7 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 
 .build/examples/all.min.js: buildtools/examples-all.json \
 	    $(SRC_JS_FILES) \
+	    $(GMF_SRC_JS_FILES) \
 	    $(EXPORTS_JS_FILES) \
 	    .build/externs/angular-1.4.js \
 	    .build/externs/angular-1.4-q_templated.js \
@@ -167,9 +168,9 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.build/examples/all.js: $(EXAMPLES_JS_FILES) .build/python-venv
+.build/examples/all.js: $(EXAMPLES_JS_FILES) $(GMF_EXAMPLES_JS_FILES) .build/python-venv
 	mkdir -p $(dir $@)
-	./.build/python-venv/bin/python buildtools/combine-examples.py $(EXAMPLES_JS_FILES) > $@
+	./.build/python-venv/bin/python buildtools/combine-examples.py $(EXAMPLES_JS_FILES) $(GMF_EXAMPLES_JS_FILES) > $@
 
 .build/examples-hosted/ngeo.js: dist/ngeo.js
 	mkdir -p $(dir $@)

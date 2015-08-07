@@ -3,7 +3,8 @@
   "src": [
     "node_modules/openlayers/src/**/*.js",
     "node_modules/openlayers/build/ol.ext/*.js",
-    "src/**/*.js"
+    "src/**/*.js",
+    "contribs/**/src/**/*.js"
   ],
   "compile": {
     "externs": [
