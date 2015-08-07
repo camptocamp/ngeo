@@ -1,13 +1,14 @@
 /**
- * @fileoverview This file provides the "map" directive
- * for GeoMapFish applications.
+ * @fileoverview This file provides the "map" directive for GeoMapFish
+ * applications.
  *
  * Example:
  *
- * <ngeo-gmf-map ngeo-gmf-map-map="::mainCtrl.map"></ngeo-gmf-map>
+ * <gmf-map gmf-map-map="::mainCtrl.map"></gmf-map>
  */
-goog.provide('ngeo.gmf.mapDirective');
+goog.provide('gmf.mapDirective');
 
+goog.require('gmf');
 goog.require('goog.asserts');
 goog.require('ngeo.Debounce');
 goog.require('ngeo.Location');
@@ -18,19 +19,19 @@ goog.require('ngeo.mapDirective');
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  */
-ngeo.gmf.mapDirective = function() {
+gmf.mapDirective = function() {
   return {
     scope: {},
     bindToController: {
-      'map': '=ngeoGmfMapMap'
+      'map': '=gmfMapMap'
     },
-    controller: 'NgeoGmfMapController',
+    controller: 'GmfMapController',
     controllerAs: 'ctrl',
     template: '<div ngeo-map="ctrl.map"></div>'
   };
 };
 
-ngeoModule.directive('ngeoGmfMap', ngeo.gmf.mapDirective);
+gmfModule.directive('gmfMap', gmf.mapDirective);
 
 
 
@@ -40,7 +41,7 @@ ngeoModule.directive('ngeoGmfMap', ngeo.gmf.mapDirective);
  * @constructor
  * @ngInject
  */
-ngeo.gmf.MapController = function(ngeoLocation, ngeoDebounce) {
+gmf.MapController = function(ngeoLocation, ngeoDebounce) {
 
   /**
    * @type {!ol.Map}
@@ -71,4 +72,4 @@ ngeo.gmf.MapController = function(ngeoLocation, ngeoDebounce) {
   }, 300, /* invokeApply */ true));
 };
 
-ngeoModule.controller('NgeoGmfMapController', ngeo.gmf.MapController);
+gmfModule.controller('GmfMapController', gmf.MapController);

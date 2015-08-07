@@ -1,6 +1,6 @@
 goog.provide('gmf-simple');
 
-goog.require('ngeo.gmf.mapDirective');
+goog.require('gmf.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -12,7 +12,7 @@ var app = {};
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', ['gmf']);
 
 
 
