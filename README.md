@@ -20,7 +20,9 @@ If you use ngeo we recommend that you also use Closure, because this is the way
 we design and use ngeo at Camptocamp. But using Closure is not mandatory:
 standalone builds of ngeo can be created.
 
-See the [examples](https://camptocamp.github.io/ngeo/master).
+Currently, ngeo doesn't have an API documentation. To know what features ngeo
+provides and how to use ngeo you can look at the
+[examples](https://camptocamp.github.io/ngeo/master).
 
 Docs:
 
