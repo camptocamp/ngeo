@@ -178,6 +178,7 @@ describe('ngeo.CreatePrint', function() {
       beforeEach(function() {
         var projection = ol.proj.get('EPSG:3857');
         map.addLayer(new ol.layer.Tile({
+          opacity: 0.5,
           source: new ol.source.WMTS({
             dimensions: {'TIME': 'time'},
             format: 'image/jpeg',
@@ -246,6 +247,7 @@ describe('ngeo.CreatePrint', function() {
                   matrixSize: [4, 4]
                 }],
                 matrixSet: 'matrixset',
+                opacity: 0.5,
                 requestEncoding: 'REST',
                 style: 'style',
                 type: 'WMTS',
@@ -354,6 +356,7 @@ describe('ngeo.CreatePrint', function() {
         };
 
         map.addLayer(new ol.layer.Vector({
+          opacity: 0.8,
           source: new ol.source.Vector({
             features: [feature0, feature1, feature2, feature3]
           }),
@@ -483,6 +486,7 @@ describe('ngeo.CreatePrint', function() {
                     properties: properties3
                   }]
                 },
+                opacity: 0.8,
                 style: expectedStyle,
                 type: 'geojson'
               }]

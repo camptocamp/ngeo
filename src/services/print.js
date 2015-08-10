@@ -250,9 +250,8 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Image);
   goog.asserts.assertInstanceof(source, ol.source.ImageWMS);
 
-  var url = source.getUrl();
-  var params = source.getParams();
-  this.encodeWmsLayer_(arr, layer.getOpacity(), url, params);
+  this.encodeWmsLayer_(
+      arr, layer.getOpacity(), source.getUrl(), source.getParams());
 };
 
 
@@ -342,6 +341,7 @@ ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
     layer: source.getLayer(),
     matrices: matrices,
     matrixSet: source.getMatrixSet(),
+    opacity: layer.getOpacity(),
     requestEncoding: /** @type {string} */ (source.getRequestEncoding()),
     style: source.getStyle(),
     type: 'WMTS',
@@ -363,9 +363,8 @@ ngeo.Print.prototype.encodeTileWmsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Tile);
   goog.asserts.assertInstanceof(source, ol.source.TileWMS);
 
-  var url = source.getUrls()[0];
-  var params = source.getParams();
-  this.encodeWmsLayer_(arr, layer.getOpacity(), url, params);
+  this.encodeWmsLayer_(
+      arr, layer.getOpacity(), source.getUrls()[0], source.getParams());
 };
 
 
@@ -438,6 +437,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
     });
     var object = /** @type {MapFishPrintVectorLayer} */ ({
       geoJson: geojsonFeatureCollection,
+      opacity: layer.getOpacity(),
       style: mapfishStyleObject,
       type: 'geojson'
     });
