@@ -66,7 +66,7 @@ serve: .build/node_modules.timestamp
 
 .PHONY: gh-pages
 gh-pages: GIT_BRANCH = $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples .build/examples-hosted/index.html
+gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples .build/examples-hosted/index.html .build/examples-hosted/contribs/gmf/index.html
 	(cd $< && \
 	 git fetch origin && \
 	 git merge --ff-only origin/gh-pages && \
@@ -78,7 +78,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples .build/examples
 	 git push origin gh-pages)
 
 .PHONY: gh-pages-from-travis
-gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples .build/examples-hosted/index.html
+gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples .build/examples-hosted/index.html .build/examples-hosted/contribs/gmf/index.html
 	(cd $< && \
 	 git fetch origin && \
 	 git merge --ff-only origin/gh-pages && \
@@ -246,6 +246,9 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .build/examples-hosted/index.html: buildtools/examples-index.mako.html $(EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
 	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
+
+.build/examples-hosted/contribs/gmf/index.html: buildtools/examples-index.mako.html $(GMF_EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
+	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(GMF_EXAMPLES_HTML_FILES) > $@
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
 	    .build/examples-hosted/%.js \
