@@ -1,9 +1,22 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 SRC_DIRECTIVES_PARTIALS_FILES := $(shell find src/directives -type f -name '*.html')
+
 EXPORTS_JS_FILES := $(shell find exports -type f -name '*.js')
+
 EXAMPLES_JS_FILES := $(shell find examples -maxdepth 1 -type f -name '*.js')
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
-BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html, .build/%.check.timestamp, $(EXAMPLES_HTML_FILES))
+
+GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
+GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
+GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
+
+BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html, .build/%.check.timestamp, $(EXAMPLES_HTML_FILES)) $(patsubst contribs/gmf/examples/%.html, .build/contribs/gmf/%.check.timestamp, $(GMF_EXAMPLES_HTML_FILES))
+
+EXTERNS_ANGULAR = .build/externs/angular-1.4.js
+EXTERNS_ANGULAR_Q = .build/externs/angular-1.4-q_templated.js
+EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.4-http-promise_templated.js
+EXTERNS_JQUERY = .build/externs/jquery-1.9.js
+EXTERNS_FILES = $(EXTERNS_ANGULAR) $(EXTERNS_ANGULAR_Q) $(EXTERNS_ANGULAR_HTTP_PROMISE) $(EXTERNS_JQUERY)
 
 .PHONY: all
 all: help
@@ -26,10 +39,10 @@ help:
 	@echo
 
 .PHONY: dist
-dist: dist/ngeo.js dist/ngeo-debug.js
+dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
 .PHONY: check
-check: lint dist check-examples compile-examples test
+check: lint dist check-examples test compile-examples
 
 .PHONY: compile-examples
 compile-examples: .build/examples/all.min.js
@@ -50,52 +63,41 @@ serve: .build/node_modules.timestamp
 
 .PHONY: gh-pages
 gh-pages: GIT_BRANCH = $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples .build/examples-hosted/index.html
+gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples .build/examples-hosted/index.html .build/examples-hosted/contribs/gmf/index.html
 	(cd $< && \
 	 git fetch origin && \
 	 git merge --ff-only origin/gh-pages && \
 	 git rm --ignore-unmatch -rqf $(GIT_BRANCH) && \
 	 mkdir -p $(GIT_BRANCH) && \
-	 cp -r ../examples-hosted/*.html $(GIT_BRANCH) && \
-	 cp -r ../examples-hosted/*.js $(GIT_BRANCH) && \
-	 cp -r ../examples-hosted/*.css $(GIT_BRANCH) && \
-	 cp -r ../examples-hosted/data $(GIT_BRANCH) && \
-	 cp -r ../examples-hosted/partials $(GIT_BRANCH) && \
+	 cp -r ../examples-hosted/* $(GIT_BRANCH) && \
 	 git add -A . && \
 	 git commit -m 'Update GitHub pages' && \
 	 git push origin gh-pages)
 
 .PHONY: gh-pages-from-travis
-gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples .build/examples-hosted/index.html
+gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples .build/examples-hosted/index.html .build/examples-hosted/contribs/gmf/index.html
 	(cd $< && \
 	 git fetch origin && \
 	 git merge --ff-only origin/gh-pages && \
 	 git rm --ignore-unmatch -rqf master && \
 	 mkdir -p master && \
-	 cp -r ../examples-hosted/*.html master && \
-	 cp -r ../examples-hosted/*.js master && \
-	 cp -r ../examples-hosted/*.css master && \
-	 cp -r ../examples-hosted/data master && \
-	 cp -r ../examples-hosted/partials master && \
+	 cp -r ../examples-hosted/* $(GIT_BRANCH) && \
 	 git config user.name "Travis" && \
 	 git config user.email "travis@travis-ci.org" && \
 	 git add -A . && \
 	 git commit -m 'Update GitHub pages' && \
 	 git push https://$(GH_TOKEN)@github.com/$(TRAVIS_REPO_SLUG).git gh-pages > /dev/null)
 
-.build/gjslint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES)
+.build/gjslint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES)
 	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable $?
 	touch $@
 
-.build/jshint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES)
+.build/jshint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES)
 	./node_modules/.bin/jshint --verbose $?
 	touch $@
 
 dist/ngeo.js: buildtools/ngeo.json \
-	    .build/externs/angular-1.4.js \
-	    .build/externs/angular-1.4-q_templated.js \
-	    .build/externs/angular-1.4-http-promise_templated.js \
-	    .build/externs/jquery-1.9.js \
+	    $(EXTERNS_FILES) \
 	    $(SRC_JS_FILES) \
 	    .build/templatecache.js \
 	    $(EXPORTS_JS_FILES) \
@@ -104,10 +106,7 @@ dist/ngeo.js: buildtools/ngeo.json \
 	node buildtools/build.js $< $@
 
 dist/ngeo-debug.js: buildtools/ngeo-debug.json \
-	    .build/externs/angular-1.4.js \
-	    .build/externs/angular-1.4-q_templated.js \
-	    .build/externs/angular-1.4-http-promise_templated.js \
-	    .build/externs/jquery-1.9.js \
+	    $(EXTERNS_FILES) \
 	    $(SRC_JS_FILES) \
 	    .build/templatecache.js \
 	    $(EXPORTS_JS_FILES) \
@@ -121,13 +120,20 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/cleancss $< > $@
 
+dist/gmf.js: buildtools/gmf.json \
+	    $(EXTERNS_FILES) \
+	    $(SRC_JS_FILES) \
+	    $(GMF_SRC_JS_FILES) \
+	    .build/templatecache.js \
+	    $(EXPORTS_JS_FILES) \
+	    .build/node_modules.timestamp
+	mkdir -p $(dir $@)
+	node buildtools/build.js $< $@
+
 .build/examples/%.min.js: .build/examples/%.json \
 	    $(SRC_JS_FILES) \
 	    $(EXPORTS_JS_FILES) \
-	    .build/externs/angular-1.4.js \
-	    .build/externs/angular-1.4-q_templated.js \
-	    .build/externs/angular-1.4-http-promise_templated.js \
-	    .build/externs/jquery-1.9.js \
+	    $(EXTERNS_FILES) \
 	    examples/%.js \
 	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
@@ -135,53 +141,47 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 
 .build/examples/all.min.js: buildtools/examples-all.json \
 	    $(SRC_JS_FILES) \
+	    $(GMF_SRC_JS_FILES) \
 	    $(EXPORTS_JS_FILES) \
-	    .build/externs/angular-1.4.js \
-	    .build/externs/angular-1.4-q_templated.js \
-	    .build/externs/angular-1.4-http-promise_templated.js \
-	    .build/externs/jquery-1.9.js \
+	    $(EXTERNS_FILES) \
 	    .build/examples/all.js \
 	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
-.build/examples/all.js: $(EXAMPLES_JS_FILES) .build/python-venv
+.build/examples/all.js: $(EXAMPLES_JS_FILES) $(GMF_EXAMPLES_JS_FILES) .build/python-venv
 	mkdir -p $(dir $@)
-	./.build/python-venv/bin/python buildtools/combine-examples.py $(EXAMPLES_JS_FILES) > $@
+	./.build/python-venv/bin/python buildtools/combine-examples.py $(EXAMPLES_JS_FILES) $(GMF_EXAMPLES_JS_FILES) > $@
 
-.build/examples-hosted/ngeo.js: dist/ngeo.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/ngeo.css: dist/ngeo.css
+.build/examples-hosted/lib/%: dist/%
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/angular.min.js: node_modules/angular/angular.min.js
+.build/examples-hosted/lib/angular.min.js: node_modules/angular/angular.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/bootstrap.min.js: node_modules/bootstrap/dist/js/bootstrap.min.js
+.build/examples-hosted/lib/bootstrap.min.js: node_modules/bootstrap/dist/js/bootstrap.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
+.build/examples-hosted/lib/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/jquery.min.js: node_modules/jquery/dist/jquery.min.js
+.build/examples-hosted/lib/jquery.min.js: node_modules/jquery/dist/jquery.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/d3.min.js: node_modules/d3/d3.min.js
+.build/examples-hosted/lib/d3.min.js: node_modules/d3/d3.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/watchwatchers.js: utils/watchwatchers.js
+.build/examples-hosted/lib/watchwatchers.js: utils/watchwatchers.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/typeahead.bundle.min.js: node_modules/typeahead.js/dist/typeahead.bundle.min.js
+.build/examples-hosted/lib/typeahead.bundle.min.js: node_modules/typeahead.js/dist/typeahead.bundle.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
@@ -189,45 +189,76 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $@
 	cp examples/partials/* $@
 
+.build/examples-hosted/contribs/gmf/partials: contribs/gmf/examples/partials
+	mkdir -p $@
+	cp contribs/gmf/examples/partials/* $@
+
 .build/examples-hosted/data: examples/data
 	mkdir -p $@
 	cp examples/data/* $@
+
+.build/examples-hosted/contribs/gmf/data: contribs/gmf/examples/data
+	mkdir -p $@
+	cp contribs/gmf/examples/data/* $@
 
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .PRECIOUS: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
-	sed -e 's|\.\./node_modules/openlayers/css/ol.css|ngeo.css|' \
-	    -e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|bootstrap.min.css|' \
-	    -e 's|\.\./node_modules/jquery/dist/jquery.js|jquery.min.js|' \
-	    -e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|bootstrap.min.js|' \
-	    -e 's|\.\./node_modules/angular/angular.js|angular.min.js|' \
-	    -e 's|\.\./node_modules/d3/d3.js|d3.min.js|' \
-	    -e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|typeahead.bundle.min.js|' \
+	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
+	    -e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
+	    -e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
+	    -e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
+	    -e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
+	    -e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
+	    -e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 	    -e 's/\/@?main=$*.js/$*.js/' \
-	    -e 's|\.\./utils/watchwatchers.js|watchwatchers.js|' \
-	    -e '/$*.js/i\    <script src="ngeo.js"></script>' $< > $@
+	    -e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
+	    -e '/$*.js/i\    <script src="lib/ngeo.js"></script>' $< > $@
+
+.PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
+.build/examples-hosted/contribs/gmf/%.html: contribs/gmf/examples/%.html
+	mkdir -p $(dir $@)
+	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
+	    -e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
+	    -e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
+	    -e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
+	    -e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
+	    -e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
+	    -e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
+	    -e 's/\/@?main=$*.js/$*.js/' \
+	    -e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
+	    -e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
 	mkdir -p $(dir $@)
 	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
+.PRECIOUS: .build/examples-hosted/contribs/gmf/%.js
+.build/examples-hosted/contribs/gmf/%.js: contribs/gmf/examples/%.js
+	mkdir -p $(dir $@)
+	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
+
 .build/examples-hosted/index.html: buildtools/examples-index.mako.html $(EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
 	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
 
+.build/examples-hosted/contribs/gmf/index.html: buildtools/examples-index.mako.html $(GMF_EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
+	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(GMF_EXAMPLES_HTML_FILES) > $@
+
 .build/%.check.timestamp: .build/examples-hosted/%.html \
 	    .build/examples-hosted/%.js \
-	    .build/examples-hosted/ngeo.js \
-	    .build/examples-hosted/ngeo.css \
-	    .build/examples-hosted/angular.min.js \
-	    .build/examples-hosted/bootstrap.min.js \
-	    .build/examples-hosted/bootstrap.min.css \
-	    .build/examples-hosted/jquery.min.js \
-	    .build/examples-hosted/d3.min.js \
-	    .build/examples-hosted/watchwatchers.js \
-	    .build/examples-hosted/typeahead.bundle.min.js \
+	    .build/examples-hosted/lib/ngeo.js \
+	    .build/examples-hosted/lib/ngeo.css \
+	    .build/examples-hosted/lib/gmf.js \
+	    .build/examples-hosted/lib/angular.min.js \
+	    .build/examples-hosted/lib/bootstrap.min.js \
+	    .build/examples-hosted/lib/bootstrap.min.css \
+	    .build/examples-hosted/lib/jquery.min.js \
+	    .build/examples-hosted/lib/d3.min.js \
+	    .build/examples-hosted/lib/watchwatchers.js \
+	    .build/examples-hosted/lib/typeahead.bundle.min.js \
 	    .build/examples-hosted/data \
 	    .build/examples-hosted/partials \
 	    .build/node_modules.timestamp
@@ -260,22 +291,22 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	sed 's/{{example}}/$*/' $< > $@
 
-.build/externs/angular-1.4.js:
+$(EXTERNS_ANGULAR):
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4.js
 	touch $@
 
-.build/externs/angular-1.4-q_templated.js:
+$(EXTERNS_ANGULAR_Q):
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4-q_templated.js
 	touch $@
 
-.build/externs/angular-1.4-http-promise_templated.js:
+$(EXTERNS_ANGULAR_HTTP_PROMISE):
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4-http-promise_templated.js
 	touch $@
 
-.build/externs/jquery-1.9.js:
+$(EXTERNS_JQUERY):
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/jquery-1.9.js
 	touch $@
@@ -320,19 +351,16 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 clean:
 	rm -f .build/*.check.timestamp
 	rm -f .build/examples/*.js
-	rm -f .build/examples-hosted/*.js
-	rm -f .build/examples-hosted/*.html
-	rm -f .build/examples-hosted/ngeo.css
-	rm -rf .build/examples-hosted/data
-	rm -rf .build/examples-hosted/partials
 	rm -f .build/gjslint.timestamp
 	rm -f .build/jshint.timestamp
 	rm -f .build/ol-deps.js
 	rm -f .build/ngeo-deps.js
 	rm -f .build/info.json
 	rm -f .build/templatecache.js
-	rm -f dist/ngeo.js
-	rm -f dist/ngeo.css
+	rm -f dist/*
+	rm -f $(EXTERNS_FILES)
+	rm -rf .build/examples-hosted
+	rm -rf .build/contribs
 
 .PHONY: cleanall
 cleanall: clean

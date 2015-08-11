@@ -1,17 +1,20 @@
 {
-  "exports": [],
+  "exports": ["*"],
   "src": [
     "node_modules/openlayers/src/**/*.js",
     "node_modules/openlayers/build/ol.ext/*.js",
     "src/**/*.js",
-    "contribs/**/src/**/*.js"
+    "contribs/gmf/src/*.js",
+    "exports/**/*.js",
+    ".build/templatecache.js"
   ],
   "compile": {
     "externs": [
       "node_modules/openlayers/externs/bingmaps.js",
       "node_modules/openlayers/externs/closure-compiler.js",
-      "node_modules/openlayers/externs/example.js",
       "node_modules/openlayers/externs/geojson.js",
+      "node_modules/openlayers/externs/oli.js",
+      "node_modules/openlayers/externs/olx.js",
       "node_modules/openlayers/externs/proj4js.js",
       "node_modules/openlayers/externs/tilejson.js",
       "node_modules/openlayers/externs/topojson.js",
@@ -23,19 +26,13 @@
       ".build/externs/angular-1.4-http-promise_templated.js",
       ".build/externs/jquery-1.9.js",
       "externs/angular-gettext.js",
+      "externs/ngeox.js",
       "externs/d3.js",
       "externs/typeahead.js",
       "externs/mapfish-print-v3.js"
     ],
     "define": [
-      "goog.dom.ASSUME_STANDARDS_MODE=true",
       "goog.DEBUG=false"
-    ],
-    "js": [
-      ".build/examples/all.js",
-      "externs/ngeox.js",
-      "node_modules/openlayers/externs/olx.js",
-      "node_modules/openlayers/externs/oli.js"
     ],
     "jscomp_error": [
       "accessControls",
@@ -60,6 +57,7 @@
       "missingGetCssName",
       "missingProperties",
       "missingProvide",
+      "missingRequire",
       "missingReturn",
       "newCheckTypes",
       "nonStandardJsDocs",
@@ -72,17 +70,14 @@
       "uselessCode",
       "visibility"
     ],
-    "jscomp_off": [
-      "missingRequire"
-    ],
     "extra_annotation_name": [
       "api", "observable"
     ],
     "angular_pass": true,
     "compilation_level": "ADVANCED_OPTIMIZATIONS",
     "export_local_property_definitions": true,
+    "generate_exports": true,
     "output_wrapper": "(function(){%output%})();",
     "use_types_for_optimization": true
   }
 }
-
