@@ -39,16 +39,13 @@ help:
 	@echo
 
 .PHONY: dist
-dist: dist/ngeo.js dist/ngeo-debug.js
+dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
 .PHONY: check
-check: lint dist check-examples test compile-gmf compile-examples
+check: lint dist check-examples test compile-examples
 
 .PHONY: compile-examples
 compile-examples: .build/examples/all.min.js
-
-.PHONY: compile-gmf
-compile-gmf: dist/gmf.js
 
 .PHONY: check-examples
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
