@@ -421,6 +421,10 @@ ngeo.profile = function(options) {
   profile.highlight = function(distance) {
     var data = svg.datum();
     var i = bisectDistance(data, distance);
+    if (i >= data.length) {
+      return;
+    }
+
     var point = data[i];
 
     var extractor = elevationExtractor;
