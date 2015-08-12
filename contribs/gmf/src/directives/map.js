@@ -4,7 +4,7 @@
  *
  * Example:
  *
- * <gmf-map gmf-map-map="::mainCtrl.map"></gmf-map>
+ * <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
  */
 goog.provide('gmf.mapDirective');
 
@@ -13,6 +13,7 @@ goog.require('goog.asserts');
 goog.require('ngeo.Debounce');
 goog.require('ngeo.Location');
 goog.require('ngeo.mapDirective');
+goog.require('ol.Map');
 
 
 /**
@@ -21,9 +22,8 @@ goog.require('ngeo.mapDirective');
  */
 gmf.mapDirective = function() {
   return {
-    scope: {},
-    bindToController: {
-      'map': '=gmfMapMap'
+    scope: {
+      'getMapFn': '&gmfMapMap'
     },
     controller: 'GmfMapController',
     controllerAs: 'ctrl',
@@ -36,19 +36,25 @@ gmfModule.directive('gmfMap', gmf.mapDirective);
 
 
 /**
+ * @param {angular.Scope} $scope The directive's scope.
  * @param {ngeo.Location} ngeoLocation ngeo Location service.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @ngInject
  */
-gmf.MapController = function(ngeoLocation, ngeoDebounce) {
+gmf.MapController = function($scope, ngeoLocation, ngeoDebounce) {
+
+  var map = $scope['getMapFn']();
+  goog.asserts.assertInstanceof(map, ol.Map);
 
   /**
    * @type {!ol.Map}
+   * @export
    */
-  var map = this['map'];
-  goog.asserts.assert(goog.isDef(map));
+  this.map = map;
+
   var view = map.getView();
+  goog.asserts.assert(!goog.isNull(view));
 
   var x = ngeoLocation.getParam('map_x');
   var y = ngeoLocation.getParam('map_y');
