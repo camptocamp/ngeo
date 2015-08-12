@@ -265,7 +265,7 @@ describe('ngeo.CreatePrint', function() {
     });
 
     describe('Vector', function() {
-      var style0, style1, style2, style3;
+      var style0, style1, style2, style3, style4;
 
       beforeEach(function() {
 
@@ -335,12 +335,25 @@ describe('ngeo.CreatePrint', function() {
         style3 = new ol.style.Style({
           text: new ol.style.Text({
             font: 'normal 16px "sans serif"',
-            text: 'Ngeo'
+            text: 'Ngeo',
+            textAlign: 'left',
+            offsetX: 42,
+            offsetY: -42
+          })
+        });
+
+        // Here to check that no offset are present if textAlign is not there.
+        style4 = new ol.style.Style({
+          text: new ol.style.Text({
+            font: 'normal 16px "sans serif"',
+            text: 'Ngeo',
+            offsetX: 42,
+            offsetY: -42
           })
         });
 
         // styles for features3
-        var styles3 = [style3];
+        var styles3 = [style3, style4];
 
         var styleFunction = function(feature, resolution) {
           var v = feature.get('foo');
@@ -377,6 +390,7 @@ describe('ngeo.CreatePrint', function() {
         var styleId1 = goog.getUid(style1).toString();
         var styleId2 = goog.getUid(style2).toString();
         var styleId3 = goog.getUid(style3).toString();
+        var styleId4 = goog.getUid(style4).toString();
 
         var expectedStyle = {
           version: 2
@@ -415,8 +429,18 @@ describe('ngeo.CreatePrint', function() {
             fontSize: '16px',
             fontFamily: '"sans serif"',
             label: 'Ngeo',
-            XOffset: 0,
-            YOffset: 0
+            labelAlign: 'left',
+            labelXOffset: 42,
+            labelYOffset: 42
+          }]
+        };
+        expectedStyle['[_ngeo_style_1 = \'' + styleId4 + '\']'] = {
+          symbolizers: [{
+            type: 'Text',
+            fontWeight: 'normal',
+            fontSize: '16px',
+            fontFamily: '"sans serif"',
+            label: 'Ngeo'
           }]
         };
 
@@ -442,7 +466,8 @@ describe('ngeo.CreatePrint', function() {
         // the expected properties of feature3
         var properties3 = {
           foo: '3',
-          '_ngeo_style_0': styleId3
+          '_ngeo_style_0': styleId3,
+          '_ngeo_style_1': styleId4
         };
 
         expect(spec).toEqual({
