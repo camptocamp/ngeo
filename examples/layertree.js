@@ -7,7 +7,6 @@ goog.provide('layertree');
 
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.layertreeDirective');
-goog.require('ngeo.layertreenodeDirective');
 goog.require('ngeo.mapDirective');
 goog.require('ngeo.popupDirective');
 goog.require('ol.Map');
@@ -26,13 +25,8 @@ var app = {};
 app.module = angular.module('app', ['ngeo']);
 
 
-// Use the default "layer tree" template.
-app.module.value('ngeoLayertreeTemplateUrl',
-    '../src/directives/partials/layertree.html');
-
-// Use an application-specific "layer tree node" template.
-app.module.value('ngeoLayertreenodeTemplateUrl',
-    'partials/layertreenode.html');
+// Use a specific "layer tree" template.
+app.module.value('ngeoLayertreeTemplateUrl', 'partials/layertree.html');
 
 // Use the default "popup" template.
 app.module.value('ngeoPopupTemplateUrl',
@@ -55,7 +49,8 @@ app.layertreeDirective = function() {
     bindToController: true,
     // use "::ctrl.tree" for the "tree" expression as we know the
     // layer tree won't change
-    template: '<div ngeo-layertree="::ctrl.tree" ' +
+    template:
+        '<div ngeo-layertree="::ctrl.tree" ' +
         'ngeo-layertree-map="ctrl.map" ' +
         'ngeo-layertree-nodelayer="ctrl.getLayer(node)">' +
         '</div>'
@@ -121,7 +116,7 @@ app.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
 
 
 /**
- * Function called by the ngeo-layertreenode directives to create a layer
+ * Function called by the ngeo-layertree directives to create a layer
  * from a tree node. The function should return `null` if no layer should
  * be associated to the node (because it's not a leaf).
  * @param {Object} node Node object.
@@ -162,7 +157,7 @@ app.module.controller('AppLayertreeController', app.LayertreeController);
 /**
  * A function that returns a layer for a node. A cache is used, so always the
  * same layer instance is returned for a given node. This function is called by
- * the ngeoLayertreenode directive for creating layers from tree nodes. The
+ * the ngeoLayertree directive for creating layers from tree nodes. The
  * function returns `null` when no layer should be created for the node.
  *
  * @param {Object} node Layer tree node.
