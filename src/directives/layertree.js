@@ -1,6 +1,6 @@
 /**
- * @fileoverview Provides the "ngeoLayertree" directive, a layer tree
- * directive.
+ * @fileoverview Provides the "ngeoLayertree" directive, a directive for
+ * creating layer trees in application.
  *
  * The directive assumes that tree nodes that are not leaves have a "children"
  * property referencing an array of child nodes.
@@ -13,24 +13,40 @@
  * </div>
  *
  * The "ngeo-layertree", "ngeo-layertree-map" and
- * "ngeo-layertree-nodelayer" attributes are mandatory.
+ * "ngeo-layertree-nodelayer" attributes are mandatory attributes.
  *
  * - "ngeo-layertree" specifies an expression providing the tree. The
- *   directive watches that expression.
+ *   directive watches that expression, making it possible to retrieve
+ *   the tree data through Ajax.
  *
  * - "ngeo-layertree-map" specifies an expression providing the OpenLayers
- *   map.
+ *   map. The directive doesn't watch that expression.
  *
  * - The "ngeo-layertree-nodelayer" specifies an expression providing the
- *   layer for a given node.
+ *   layer for a given node. In most cases that expression will be function
+ *   call with "node" as the argument to the function call. E.g.
+ *   "ngeo-layertree-nodelayer="ctrl.getLayer(node)".
+ *
+ * The directive comes with a default template. That template assumes that
+ * tree nodes that are not leaves have a "children" property referencing an
+ * array of child nodes. It also assumes that nodes have a "name" property.
  *
  * By default the directive uses "layertree.html" as its templateUrl. This
- * can be changed by redefining the "ngeoLayertreeTemplateUrl" value.
+ * can be changed by redefining the "ngeoLayertreeTemplateUrl" value (using
+ * app.module.value('ngeoLayertreeTemplateUrl', 'path/layertree.html'), or
+ * by adding an "ngeo-layertree-templateurl" attribute to the element. For
+ * example:
+ *
+ * <div ngeo-layertree="ctrl.tree"
+ *      ngeo-layertree-templateurl="path/to/layertree.html"
+ *      ngeo-layertree-map="ctrl.map"
+ *      ngeo-layertree-nodelayer="ctrl.getLayer(node)"
+ * </div>
  *
  * The directive has its own scope, but it is not an isolate scope. That scope
- * includes a reference to the directive's controller, through the
- * "layertreeCtrl" property.
- *
+ * has a "layertreeCtrl" property which is a reference to the directive's
+ * controller: "layertreeCtrl". You can refer to that property in a custom
+ * template for example.
  */
 
 goog.provide('ngeo.LayertreeController');
