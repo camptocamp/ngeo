@@ -81,7 +81,7 @@ gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples .build/examples
 	 git merge --ff-only origin/gh-pages && \
 	 git rm --ignore-unmatch -rqf master && \
 	 mkdir -p master && \
-	 cp -r ../examples-hosted/* $(GIT_BRANCH) && \
+	 cp -r ../examples-hosted/* master && \
 	 git config user.name "Travis" && \
 	 git config user.email "travis@travis-ci.org" && \
 	 git add -A . && \
