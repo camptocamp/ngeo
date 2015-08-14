@@ -153,6 +153,7 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $(dir $@)
 	./.build/python-venv/bin/python buildtools/combine-examples.py $(EXAMPLES_JS_FILES) $(GMF_EXAMPLES_JS_FILES) > $@
 
+.PRECIOUS: .build/examples-hosted/lib/%
 .build/examples-hosted/lib/%: dist/%
 	mkdir -p $(dir $@)
 	cp $< $@
