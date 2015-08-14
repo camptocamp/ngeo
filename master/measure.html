@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="ngeo.css" type="text/css">
+    <link rel="stylesheet" href="lib/ngeo.css" type="text/css">
     <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" type="text/css">
     <style>
         #map {
@@ -58,9 +58,9 @@
     <label>Select language:</label>
     <select ng-options="lang for lang in ['en', 'fr']" ng-model="ctrl.lang"></select>
     <p id="desc">This example shows how to use the <code>ngeo.interaction.MeasureLength</code>, <code>ngeo.interaction.MeasureArea</code>, and <code>ngeo.interaction.MeasureAzimut</code> interactions to create measure tools for an OpenLayers map.</p>
-    <script src="angular.min.js"></script>
-    <script src="ngeo.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/ngeo.js"></script>
     <script src="measure.js"></script>
-    <script src="watchwatchers.js"></script>
+    <script src="lib/watchwatchers.js"></script>
   </body>
 </html>

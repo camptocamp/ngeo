@@ -6,7 +6,7 @@ var app = {};
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', ['gmf']);
 
 
 
