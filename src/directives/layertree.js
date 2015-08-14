@@ -195,6 +195,16 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
   this.map_ = map;
 
   /**
+   * @type {angular.Scope}
+   */
+  this.scope = $scope;
+
+  /**
+   * @type {angular.JQLite}
+   */
+  this.element = $element;
+
+  /**
    * @type {number}
    * @export
    */
@@ -217,6 +227,10 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
   // in the templates.
   $scope['uid'] = this.uid;
   $scope['depth'] = this.depth;
+
+  if (!goog.isNull(this.layer)) {
+    $scope['layer'] = this.layer;
+  }
 
   $scope['layertreeCtrl'] = this;
 
