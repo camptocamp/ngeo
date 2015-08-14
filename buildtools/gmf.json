@@ -4,7 +4,7 @@
     "node_modules/openlayers/src/**/*.js",
     "node_modules/openlayers/build/ol.ext/*.js",
     "src/**/*.js",
-    "contribs/gmf/src/*.js",
+    "contribs/gmf/src/**/*.js",
     "exports/**/*.js",
     ".build/templatecache.js"
   ],
