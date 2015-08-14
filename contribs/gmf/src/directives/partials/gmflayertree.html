@@ -1,0 +1,13 @@
+<span ng-if="::!layertreeCtrl.isRoot">{{::layertreeCtrl.node.name}}</span>
+<input type="checkbox" ng-if="::!layertreeCtrl.isRoot"
+       ng-model="::gmfLayertreeCtrl.getCheckboxGetterSetter(layertreeCtrl)"
+       ng-model-options="{getterSetter: true}"/>
+<ul ng-if="::layertreeCtrl.node.children">
+  <li ng-repeat="node in ::layertreeCtrl.node.children"
+      ngeo-layertree="::node"
+      ngeo-layertree-templateurl="../src/directives/partials/gmflayertree.html"
+      ngeo-layertree-notroot
+      ngeo-layertree-map="layertreeCtrl.map"
+      ngeo-layertree-nodelayerexpr="layertreeCtrl.nodelayerExpr">
+  </li>
+</ul>

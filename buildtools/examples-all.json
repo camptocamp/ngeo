@@ -35,6 +35,7 @@
     "js": [
       ".build/examples/all.js",
       "contribs/gmf/externs/gmfx.js",
+      "contribs/gmf/externs/gmf-themes.js",
       "externs/ngeox.js",
       "node_modules/openlayers/externs/olx.js",
       "node_modules/openlayers/externs/oli.js"

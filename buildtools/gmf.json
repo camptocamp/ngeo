@@ -28,6 +28,7 @@
       ".build/externs/jquery-1.9.js",
       "externs/angular-gettext.js",
       "contribs/gmf/externs/gmfx.js",
+      "contribs/gmf/externs/gmf-themes.js",
       "externs/ngeox.js",
       "externs/d3.js",
       "externs/typeahead.js",
