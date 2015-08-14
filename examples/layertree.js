@@ -25,9 +25,6 @@ var app = {};
 app.module = angular.module('app', ['ngeo']);
 
 
-// Use a specific "layer tree" template.
-app.module.value('ngeoLayertreeTemplateUrl', 'partials/layertree.html');
-
 // Use the default "popup" template.
 app.module.value('ngeoPopupTemplateUrl',
     '../src/directives/partials/popup.html');
@@ -51,6 +48,7 @@ app.layertreeDirective = function() {
     // layer tree won't change
     template:
         '<div ngeo-layertree="::ctrl.tree" ' +
+        'ngeo-layertree-templateurl="partials/layertree.html" ' +
         'ngeo-layertree-map="ctrl.map" ' +
         'ngeo-layertree-nodelayer="ctrl.getLayer(node)">' +
         '</div>'

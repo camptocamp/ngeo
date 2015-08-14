@@ -47,7 +47,14 @@ ngeo.layertreeTemplateUrl = 'layertree.html';
 
 
 ngeoModule.value('ngeoLayertreeTemplateUrl',
-    ngeo.layertreeTemplateUrl);
+    /**
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     */
+    function(element, attrs) {
+      var templateUrl = attrs['ngeoLayertreeTemplateurl'];
+      return goog.isDef(templateUrl) ? templateUrl : ngeo.layertreeTemplateUrl;
+    });
 
 
 /**
