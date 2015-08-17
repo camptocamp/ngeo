@@ -1,52 +1,58 @@
 /**
- * @fileoverview Provides the "ngeoLayertree" directive, a layer tree widget
- * directive. This directive uses the "ngeoLayertreenode" directive.
+ * @fileoverview Provides the "ngeoLayertree" directive, a directive for
+ * creating layer trees in application.
+ *
+ * The directive assumes that tree nodes that are not leaves have a "children"
+ * property referencing an array of child nodes.
  *
  * Example usage:
  *
- * <div ngeo-layertree="ctrl.tree" ngeo-layertree-map="ctrl.map"
- *      ngeo-layertree-layer="ctrl.getLayer(node)">
+ * <div ngeo-layertree="ctrl.tree"
+ *      ngeo-layertree-map="ctrl.map"
+ *      ngeo-layertree-nodelayer="ctrl.getLayer(node)"
  * </div>
  *
- * The "ngeo-layertree", "ngeo-layertree-map" and "ngeo-layertree-layer"
- * attributes are mandatory.
+ * The "ngeo-layertree", "ngeo-layertree-map" and
+ * "ngeo-layertree-nodelayer" attributes are mandatory attributes.
  *
- * - The "ngeo-layertree" attribute specifies the scope property whose value
- *   is a reference to the layer tree structure/object.
+ * - "ngeo-layertree" specifies an expression providing the tree. The
+ *   directive watches that expression, making it possible to retrieve
+ *   the tree data through Ajax.
  *
- * - The "ngeo-layertree-map" attribute specifies the scope property whose
- *   value is a reference to the map.
+ * - "ngeo-layertree-map" specifies an expression providing the OpenLayers
+ *   map. The directive doesn't watch that expression.
  *
- * -  The "ngeo-layertree-layer" attribute specifies the expression to evaluate
- *    to get the layer object for a specific node of the tree. The directive
- *    will evaluate this expression for each node of the tree. `node` can be
- *    used in the expression to refer to the current tree node.
+ * - The "ngeo-layertree-nodelayer" specifies an expression providing the
+ *   layer for a given node. In most cases that expression will be function
+ *   call with "node" as the argument to the function call. E.g.
+ *   "ngeo-layertree-nodelayer="ctrl.getLayer(node)".
  *
- * Things to know about this directive:
+ * The directive comes with a default template. That template assumes that
+ * tree nodes that are not leaves have a "children" property referencing an
+ * array of child nodes. It also assumes that nodes have a "name" property.
  *
- * - The directive assumes that the root of the tree includes a "children"
- *   property containing tree nodes.
+ * By default the directive uses "layertree.html" as its templateUrl. This
+ * can be changed by redefining the "ngeoLayertreeTemplateUrl" value (using
+ * app.module.value('ngeoLayertreeTemplateUrl', 'path/layertree.html'), or
+ * by adding an "ngeo-layertree-templateurl" attribute to the element. For
+ * example:
  *
- * - By default the directive uses "layertree.html" as its templateUrl. This
- *   can be changed by redefining the "ngeoLayertreeTemplateUrl" value.
+ * <div ngeo-layertree="ctrl.tree"
+ *      ngeo-layertree-templateurl="path/to/layertree.html"
+ *      ngeo-layertree-map="ctrl.map"
+ *      ngeo-layertree-nodelayer="ctrl.getLayer(node)"
+ * </div>
  *
- * - The directive has its own scope, but it is not isolate scope. That scope
- *   includes a reference to the directive's controller: the "layertreeCtrl"
- *   scope property.
- *
- * - The directive creates a watcher on the "tree" expression ("ctrl.tree" in
- *   the usage example given above). Use a one-time binding expression if you
- *   know that the layer tree definition won't change:
- *
- *   <div ngeo-layertree="::ctrl.tree" ngeo-layertree-map="ctrl.map"
- *        ngeo-layertree-layer="ctrl.getLayer(node)">
- *   </div>
+ * The directive has its own scope, but it is not an isolate scope. That scope
+ * has a "layertreeCtrl" property which is a reference to the directive's
+ * controller: "layertreeCtrl". You can refer to that property in a custom
+ * template for example.
  */
 
+goog.provide('ngeo.LayertreeController');
 goog.provide('ngeo.layertreeDirective');
 
 goog.require('ngeo');
-goog.require('ngeo.layertreenodeDirective');
 
 
 /**
@@ -57,21 +63,60 @@ ngeo.layertreeTemplateUrl = 'layertree.html';
 
 
 ngeoModule.value('ngeoLayertreeTemplateUrl',
-    ngeo.layertreeTemplateUrl);
+    /**
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     */
+    function(element, attrs) {
+      var templateUrl = attrs['ngeoLayertreeTemplateurl'];
+      return goog.isDef(templateUrl) ? templateUrl : ngeo.layertreeTemplateUrl;
+    });
 
 
 /**
+ * @param {angular.$compile} $compile Angular compile service.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoLayertreeTemplateUrl Template URL for the directive.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  */
-ngeo.layertreeDirective = function(ngeoLayertreeTemplateUrl) {
+ngeo.layertreeDirective = function(
+    $compile, ngeoLayertreeTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
+    templateUrl: ngeoLayertreeTemplateUrl,
     controller: 'NgeoLayertreeController',
-    templateUrl: ngeoLayertreeTemplateUrl
+    compile:
+        /**
+         * @param {angular.JQLite} tElement Template element.
+         * @param {angular.Attributes} tAttrs Template attributes.
+         * @return {Function} Post-link function.
+         */
+        function(tElement, tAttrs) {
+          var contents = tElement.contents().remove();
+          var compiledContents;
+          return (
+              /**
+               * Post-link function.
+               * @param {!angular.Scope} scope Scope.
+               * @param {angular.JQLite} iElement Instance element.
+               * @param {angular.Attributes} iAttrs Instance attributes.
+               */
+              function(scope, iElement, iAttrs) {
+                if (!compiledContents) {
+                  compiledContents = $compile(contents);
+                }
+                compiledContents(scope,
+                    /**
+                     * @param {Object} clone Clone element.
+                     */
+                    function(clone) {
+                      var cloneElement = /** @type {angular.JQLite} */ (clone);
+                      iElement.append(cloneElement);
+                    });
+              });
+        }
   };
 };
 
@@ -81,25 +126,44 @@ ngeoModule.directive('ngeoLayertree', ngeo.layertreeDirective);
 
 
 /**
- * @constructor
+ * The controller for the "tree node" directive.
  * @param {angular.Scope} $scope Scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.
+ * @constructor
  * @ngInject
+ * @export
  */
-ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
+ngeo.LayertreeController = function($scope, $element, $attrs) {
 
-  var treeExpr = $attrs['ngeoLayertree'];
-  var tree = /** @type {Object} */ ($scope.$eval(treeExpr));
+  var isRoot = !goog.isDef($attrs['ngeoLayertreeNotroot']);
 
   /**
-   * @type {Object}
+   * @type {boolean}
    * @export
    */
-  this.tree = tree;
+  this.isRoot = isRoot;
+
+  var nodeExpr = $attrs['ngeoLayertree'];
+
+  /**
+   * @type {Object|undefined}
+   * @export
+   */
+  this.node = undefined;
+
+  if (isRoot) {
+    $scope.$watch(nodeExpr, goog.bind(function(newVal, oldVal) {
+      this.node = newVal;
+    }, this));
+  } else {
+    this.node = /** @type {Object} */ ($scope.$eval(nodeExpr));
+    goog.asserts.assert(goog.isDef(this.node));
+  }
 
   var mapExpr = $attrs['ngeoLayertreeMap'];
   var map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
+  goog.asserts.assert(goog.isDef(map));
 
   /**
    * @type {ol.Map}
@@ -108,34 +172,80 @@ ngeo.NgeoLayertreeController = function($scope, $element, $attrs) {
   this.map = map;
 
   var nodelayerExpr = $attrs['ngeoLayertreeNodelayer'];
+  if (!goog.isDef(nodelayerExpr)) {
+    var nodelayerexprExpr = $attrs['ngeoLayertreeNodelayerexpr'];
+    nodelayerExpr = /** @type {string} */ ($scope.$eval(nodelayerexprExpr));
+  }
+  goog.asserts.assert(goog.isDef(nodelayerExpr));
 
   /**
    * @type {string}
    * @export
    */
-  this.layerExpr = nodelayerExpr;
+  this.nodelayerExpr = nodelayerExpr;
 
-  $scope.$watch(treeExpr, goog.bind(function(newVal, oldVal) {
-    this.tree = newVal;
-  }, this));
+  /**
+   * @type {ol.layer.Layer}
+   * @export
+   */
+  this.layer = isRoot ? null : /** @type {ol.layer.Layer} */
+      ($scope.$eval(nodelayerExpr, {'node': this.node}));
 
-  $scope['uid'] = goog.getUid(this);
+  /**
+   * @type {ol.Map}
+   * @private
+   */
+  this.map_ = map;
 
   /**
    * @type {number}
    * @export
    */
-  this.uid = $scope['uid'];
+  this.parentUid = $scope.$parent['uid'];
 
   /**
    * @type {number}
    * @export
    */
-  $scope.depth = 0;
+  this.uid = goog.getUid(this);
+
+  /**
+   * @type {number}
+   * @export
+   */
+  this.depth = isRoot ? 0 : $scope.$parent['depth'] + 1;
+
+  // We set 'uid' and 'depth' in the scope as well to access the parent values
+  // in the inherited scopes. This is intended to be used in the javascript not
+  // in the templates.
+  $scope['uid'] = this.uid;
+  $scope['depth'] = this.depth;
 
   $scope['layertreeCtrl'] = this;
+
+};
+
+
+/**
+ * @param {boolean|undefined} val Value.
+ * @return {boolean|undefined} Value.
+ * @export
+ */
+ngeo.LayertreeController.prototype.getSetActive = function(val) {
+  var layer = this.layer;
+  var map = this.map_;
+  goog.asserts.assert(!goog.isNull(this.layer));
+  if (goog.isDef(val)) {
+    if (!val) {
+      map.removeLayer(layer);
+    } else {
+      map.addLayer(layer);
+    }
+  } else {
+    return map.getLayers().getArray().indexOf(layer) >= 0;
+  }
 };
 
 
 ngeoModule.controller('NgeoLayertreeController',
-    ngeo.NgeoLayertreeController);
+    ngeo.LayertreeController);
