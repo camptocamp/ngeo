@@ -88,11 +88,11 @@ app.SearchController = function($rootScope, $compile,
    * @type {TypeaheadOptions}
    * @export
    */
-  this.options = {
+  this.options = /** @type {TypeaheadOptions} */ ({
     highlight: true,
     hint: undefined,
     minLength: undefined
-  };
+  });
 
   /**
    * @type {Array.<TypeaheadDataset>}
@@ -100,7 +100,7 @@ app.SearchController = function($rootScope, $compile,
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
-    displayKey: function(suggestion) {
+    display: function(suggestion) {
       var feature = /** @type {ol.Feature} */ (suggestion);
       return feature.get('label');
     },
