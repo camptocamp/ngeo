@@ -29,7 +29,8 @@
       "externs/ngeox.js",
       "externs/d3.js",
       "externs/typeahead.js",
-      "externs/mapfish-print-v3.js"
+      "externs/mapfish-print-v3.js",
+      "contribs/gmf/externs/gmf-themes.js"
     ],
     "define": [
       "goog.DEBUG=false"

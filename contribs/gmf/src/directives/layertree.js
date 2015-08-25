@@ -86,20 +86,20 @@ gmf.LayertreeController = function($scope) {
 
 
 /**
- * @param {Object} node Layer tree node.
+ * @param {GmfThemesNode} node Layer tree node.
  * @return {ol.layer.Layer} The OpenLayers layer for the node. `null`
  * if no layer should be associated to that node.
  * @export
  */
 gmf.LayertreeController.prototype.getLayer = function(node) {
   var layer = null;
-  if (node['isInternalWMS']) {
+  if (node.isInternalWMS) {
     // collect WMS layers for this node
     node.layers = [];
     var children = node.children;
     for (var i = 0; i < children.length; ++i) {
       var child = children[i];
-      if (child['type'] == 'internal WMS') {
+      if (child.type == 'internal WMS') {
         node.layers.push(child.name);
       }
     }
@@ -146,19 +146,19 @@ gmf.LayertreeController.prototype.getCheckboxGetterSetter =
  * @private
  */
 gmf.LayertreeController.checkboxGetterSetter_ = function(treeCtrl, map, val) {
-  var node = treeCtrl.node;
+  var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
   var layer = treeCtrl.scope['layer'];
   var source = layer.getSource();
   var layers, layersParam;
   if (goog.isDef(val)) {
     if (val) {
-      if (node['isInternalWMS']) {
+      if (node.isInternalWMS) {
         layers = node.layers;
-      } else if (node['type'] == 'internal WMS') {
+      } else if (node.type == 'internal WMS') {
         layersParam = source.getParams()['layers'];
         layers = layersParam.length > 0 ? layersParam.split(',') : [];
-        if (layers.indexOf(node['name']) < 0) {
-          layers.push(node['name']);
+        if (layers.indexOf(node.name) < 0) {
+          layers.push(node.name);
         }
       }
       if (goog.isDef(layers)) {
@@ -168,11 +168,11 @@ gmf.LayertreeController.checkboxGetterSetter_ = function(treeCtrl, map, val) {
         }
       }
     } else {
-      if (node['isInternalWMS']) {
+      if (node.isInternalWMS) {
         layers = [];
-      } else if (node['type'] == 'internal WMS') {
+      } else if (node.type == 'internal WMS') {
         layers = source.getParams()['layers'].split(',');
-        var idx = layers.indexOf(node['name']);
+        var idx = layers.indexOf(node.name);
         if (idx >= 0) {
           layers.splice(idx, 1);
         }
@@ -188,13 +188,13 @@ gmf.LayertreeController.checkboxGetterSetter_ = function(treeCtrl, map, val) {
     var state = map.getLayers().getArray().indexOf(layer) >= 0;
     var checkbox = treeCtrl.element.find('input');
     if (!state) {
-      if (node['isInternalWMS']) {
+      if (node.isInternalWMS) {
         goog.asserts.assert(checkbox.length > 0);
         checkbox[0].indeterminate = false;
       }
       return state;
     }
-    if (node['isInternalWMS']) {
+    if (node.isInternalWMS) {
       layersParam = source.getParams()['layers'];
       goog.asserts.assert(layersParam.length > 0);
       layers = layersParam.split(',');
@@ -202,9 +202,9 @@ gmf.LayertreeController.checkboxGetterSetter_ = function(treeCtrl, map, val) {
       checkbox[0].indeterminate = !goog.array.equals(
           layers.sort(), node.layers.slice().sort());
       state = true;
-    } else if (node['type'] == 'internal WMS') {
+    } else if (node.type == 'internal WMS') {
       layers = source.getParams()['layers'].split(',');
-      state = layers.indexOf(node['name']) >= 0;
+      state = layers.indexOf(node.name) >= 0;
     }
     return state;
   }
