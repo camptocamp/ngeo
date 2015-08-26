@@ -59,7 +59,9 @@ ngeo.FeatureOverlayMgr = function() {
    * @type {ol.source.Vector}
    * @private
    */
-  this.source_ = new ol.source.Vector();
+  this.source_ = new ol.source.Vector({
+    useSpatialIndex: false
+  });
 
   /**
    * @type {ol.layer.Vector}
@@ -67,8 +69,7 @@ ngeo.FeatureOverlayMgr = function() {
    */
   this.layer_ = new ol.layer.Vector({
     source: this.source_,
-    style: goog.bind(this.styleFunction_, this),
-    useSpatialgroupIndex: false
+    style: goog.bind(this.styleFunction_, this)
   });
 
 };
