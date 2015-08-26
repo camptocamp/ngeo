@@ -69,7 +69,9 @@ ngeo.FeatureOverlayMgr = function() {
    */
   this.layer_ = new ol.layer.Vector({
     source: this.source_,
-    style: goog.bind(this.styleFunction_, this)
+    style: goog.bind(this.styleFunction_, this),
+    updateWhileAnimating: true,
+    updateWhileInteracting: true
   });
 
 };
