@@ -271,6 +271,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
 
   goog.object.remove(customParams, 'LAYERS');
   goog.object.remove(customParams, 'FORMAT');
+  goog.object.remove(customParams, 'VERSION');
 
   var object = /** @type {MapFishPrintWmsLayer} */ ({
     baseURL: ngeo.Print.getAbsoluteUrl_(url),
@@ -278,7 +279,8 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
     layers: params['LAYERS'].split(','),
     customParams: customParams,
     type: 'wms',
-    opacity: opacity
+    opacity: opacity,
+    version: params['VERSION']
   });
   arr.push(object);
 };
