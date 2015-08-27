@@ -222,9 +222,14 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
  * @private
  */
 gmf.SearchController.prototype.filterLayername_ = function(layername) {
-  return function(feature) {
-    return (feature['properties']['layer_name'] === layername);
-  };
+  return (
+      /**
+       * @param {GeoJSONFeature} feature
+       * @return {boolean}
+       */
+      function(feature) {
+        return (feature['properties']['layer_name'] === layername);
+      });
 };
 
 
