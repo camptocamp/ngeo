@@ -161,7 +161,8 @@ app.SearchController.prototype.createVectorLayer_ = function() {
 app.SearchController.prototype.createAndInitBloodhound_ =
     function(ngeoCreateGeoJSONBloodhound) {
   var url = 'http://devv3.geoportail.lu/main/wsgi/fulltextsearch?query=%QUERY';
-  var bloodhound = ngeoCreateGeoJSONBloodhound(url, ol.proj.get('EPSG:3857'));
+  var bloodhound = ngeoCreateGeoJSONBloodhound(url, undefined,
+                                               ol.proj.get('EPSG:3857'));
   bloodhound.initialize();
   return bloodhound;
 };
