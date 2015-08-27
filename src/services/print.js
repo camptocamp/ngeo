@@ -271,6 +271,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
 
   goog.object.remove(customParams, 'LAYERS');
   goog.object.remove(customParams, 'FORMAT');
+  goog.object.remove(customParams, 'VERSION');
 
   var object = /** @type {MapFishPrintWmsLayer} */ ({
     baseURL: ngeo.Print.getAbsoluteUrl_(url),
