@@ -10,6 +10,10 @@
  * <gmf-search gmf-search-map="ctrl.map"
  *             gmf-search-datasources="ctrl.searchDatasources">
  * </gmf-search>
+ *
+ * This directive uses the ngeoFeatureOverlayMgr to create a feature overlay
+ * for drawing features on the map. The application is responsible to
+ * initialize the ngeoFeatureOverlayMgr with the map.
  */
 goog.provide('gmf.searchDirective');
 
@@ -218,9 +222,14 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
  * @private
  */
 gmf.SearchController.prototype.filterLayername_ = function(layername) {
-  return function(feature) {
-    return (feature['properties']['layer_name'] === layername);
-  };
+  return (
+      /**
+       * @param {GeoJSONFeature} feature
+       * @return {boolean}
+       */
+      function(feature) {
+        return (feature['properties']['layer_name'] === layername);
+      });
 };
 
 
