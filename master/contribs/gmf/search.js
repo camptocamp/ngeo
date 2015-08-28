@@ -14,7 +14,6 @@ app.module = angular.module('app', ['gmf']);
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
- * @export
  * @ngInject
  */
 app.MainController = function(ngeoFeatureOverlayMgr) {
