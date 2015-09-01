@@ -203,8 +203,10 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
        * @param {Array.<ol.layer.Layer>} layers Layers.
        */
       function(layer, idx, layers) {
-        goog.asserts.assert(goog.isDef(viewResolution));
-        this.encodeLayer(object.layers, layer, viewResolution);
+        if (layer.getVisible()) {
+          goog.asserts.assert(goog.isDef(viewResolution));
+          this.encodeLayer(object.layers, layer, viewResolution);
+        }
       }, this);
 };
 
