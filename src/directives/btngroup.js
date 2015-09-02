@@ -25,6 +25,7 @@
  * to activate/deactivate an OpenLayers 3 interaction.
  */
 
+goog.provide('ngeo.BtnGroupController');
 goog.provide('ngeo.btnDirective');
 goog.provide('ngeo.btngroupDirective');
 

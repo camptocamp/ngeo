@@ -15,6 +15,7 @@
  * for drawing features on the map. The application is responsible to
  * initialize the ngeoFeatureOverlayMgr with the map.
  */
+goog.provide('gmf.SearchController');
 goog.provide('gmf.searchDirective');
 
 goog.require('gmf');

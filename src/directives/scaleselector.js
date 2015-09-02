@@ -36,6 +36,7 @@
  * The directive doesn't create any watcher. In particular the object including
  * the scales information is now watched.
  */
+goog.provide('ngeo.ScaleselectorController');
 goog.provide('ngeo.ScaleselectorOptions');
 goog.provide('ngeo.scaleselectorDirective');
 
