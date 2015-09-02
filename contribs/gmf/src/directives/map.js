@@ -6,6 +6,7 @@
  *
  * <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
  */
+goog.provide('gmf.MapController');
 goog.provide('gmf.mapDirective');
 
 goog.require('gmf');
