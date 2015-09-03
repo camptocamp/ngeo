@@ -7,17 +7,21 @@
 <%
   import re
   import os
+  fspaths = fs_paths.split()
+  urlpaths = url_paths.split()
+  if len(fspaths) != len(urlpaths):
+    raise Exception('fs_paths and url_paths lengths do not match')
   _partials = {}
-  basedirparts = basedir.split('/')
-  for p in partials.split(' '):
-      parts = basedirparts + [p]
-      f = file(os.path.join(*parts))
+  for fspath, urlpath in zip(fspaths, urlpaths):
+      if urlpath in _partials:
+          raise Exception('Duplicate keys (%s)' % urlpath)
+      f = file(fspath)
       content = unicode(f.read().decode('utf8'))
       content = re.sub(r'>\s*<' , '><', content)
       content = re.sub(r'\s\s+', ' ', content)
       content = re.sub(r'\n', '', content)
       content = re.sub(r"'", "\\'", content)
-      _partials[p] = content
+      _partials[urlpath] = content
 %>\
 /**
  * @fileoverview ngeo template cache.

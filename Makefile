@@ -7,6 +7,7 @@ EXAMPLES_JS_FILES := $(shell find examples -maxdepth 1 -type f -name '*.js')
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
+GMF_SRC_DIRECTIVES_PARTIALS_FILES := $(shell find contribs/gmf/src/directives -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 
@@ -262,6 +263,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	    .build/examples-hosted/lib/typeahead.bundle.min.js \
 	    .build/examples-hosted/data \
 	    .build/examples-hosted/partials \
+	    .build/examples-hosted/contribs/gmf/data \
 	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
@@ -346,7 +348,8 @@ $(EXTERNS_JQUERY):
 # is done so ngeo.js works for the examples on github.io. If another key
 # pattern is needed this should be changed.
 .build/templatecache.js: buildtools/templatecache.mako.js .build/python-venv/bin/mako-render
-	.build/python-venv/bin/mako-render --var "partials=$(addprefix ../,$(SRC_DIRECTIVES_PARTIALS_FILES))" --var "basedir=src" $< > $@
+	#.build/python-venv/bin/mako-render --var "partials=$(addprefix ../,$(SRC_DIRECTIVES_PARTIALS_FILES)) $(subst contribs/gmf, .., $(GMF_SRC_DIRECTIVES_PARTIALS_FILES))" --var "basedir=src" $< > $@
+	.build/python-venv/bin/mako-render --var "fs_paths=$(SRC_DIRECTIVES_PARTIALS_FILES) $(GMF_SRC_DIRECTIVES_PARTIALS_FILES)" --var "url_paths=$(addprefix ../,$(SRC_DIRECTIVES_PARTIALS_FILES)) $(subst contribs/gmf, .., $(GMF_SRC_DIRECTIVES_PARTIALS_FILES))" $< > $@
 
 .PHONY: clean
 clean:
