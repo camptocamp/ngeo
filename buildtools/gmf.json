@@ -30,7 +30,8 @@
       "externs/ngeox.js",
       "externs/d3.js",
       "externs/typeahead.js",
-      "externs/mapfish-print-v3.js"
+      "externs/mapfish-print-v3.js",
+      "externs/twbootstrap.js"
     ],
     "define": [
       "goog.DEBUG=false"
