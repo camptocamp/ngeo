@@ -18,6 +18,14 @@ EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.4-http-promise_templated
 EXTERNS_JQUERY = .build/externs/jquery-1.9.js
 EXTERNS_FILES = $(EXTERNS_ANGULAR) $(EXTERNS_ANGULAR_Q) $(EXTERNS_ANGULAR_HTTP_PROMISE) $(EXTERNS_JQUERY)
 
+ifeq ($(OS),Darwin)
+	STAT_COMPRESSED = stat -f '  compressed: %z bytes'
+	STAT_UNCOMPRESSED = stat -f 'uncompressed: %z bytes'
+else
+	STAT_COMPRESSED = stat -c '  compressed: %s bytes'
+	STAT_UNCOMPRESSED = stat -c 'uncompressed: %s bytes'
+endif
+
 .PHONY: all
 all: help
 
@@ -104,6 +112,11 @@ dist/ngeo.js: buildtools/ngeo.json \
 	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+	@$(STAT_UNCOMPRESSED) $@
+	@cp $@ /tmp/
+	@gzip /tmp/ngeo.js
+	@$(STAT_COMPRESSED) /tmp/ngeo.js.gz
+	@rm /tmp/ngeo.js.gz
 
 dist/ngeo-debug.js: buildtools/ngeo-debug.json \
 	    $(EXTERNS_FILES) \
@@ -113,6 +126,11 @@ dist/ngeo-debug.js: buildtools/ngeo-debug.json \
 	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+	@$(STAT_UNCOMPRESSED) $@
+	@cp $@ /tmp/
+	@gzip /tmp/ngeo-debug.js
+	@$(STAT_COMPRESSED) /tmp/ngeo-debug.js.gz
+	@rm /tmp/ngeo-debug.js.gz
 
 # At this point ngeo does not include its own CSS, so dist/ngeo.css is just
 # a minified version of ol.css. This will change in the future.
@@ -129,6 +147,11 @@ dist/gmf.js: buildtools/gmf.json \
 	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+	@$(STAT_UNCOMPRESSED) $@
+	@cp $@ /tmp/
+	@gzip /tmp/gmf.js
+	@$(STAT_COMPRESSED) /tmp/gmf.js.gz
+	@rm /tmp/gmf.js.gz
 
 .build/examples/%.min.js: .build/examples/%.json \
 	    $(SRC_JS_FILES) \
