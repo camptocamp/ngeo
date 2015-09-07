@@ -361,7 +361,7 @@ ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
     matrices: matrices,
     matrixSet: source.getMatrixSet(),
     opacity: layer.getOpacity(),
-    requestEncoding: /** @type {string} */ (source.getRequestEncoding()),
+    requestEncoding: source.getRequestEncoding(),
     style: source.getStyle(),
     type: 'WMTS',
     version: source.getVersion()

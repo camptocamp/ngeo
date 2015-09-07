@@ -8,7 +8,6 @@ goog.require('goog.dom.classlist');
 goog.require('goog.events');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
-goog.require('ol.Observable');
 goog.require('ol.Overlay');
 goog.require('ol.interaction.DrawEvent');
 goog.require('ol.interaction.DrawEventType');

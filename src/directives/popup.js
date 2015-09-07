@@ -15,7 +15,6 @@
  */
 goog.provide('ngeo.popupDirective');
 
-goog.require('goog.style');
 goog.require('ngeo');
 
 

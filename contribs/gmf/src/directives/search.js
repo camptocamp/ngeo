@@ -25,8 +25,6 @@ goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.searchDirective');
 goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
 goog.require('ol.proj');
 
 
