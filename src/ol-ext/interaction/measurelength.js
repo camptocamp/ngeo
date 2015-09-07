@@ -3,7 +3,6 @@ goog.provide('ngeo.interaction.MeasureLength');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.geom.LineString');
 goog.require('ol.interaction.Draw');
-goog.require('ol.sphere.WGS84');
 
 
 

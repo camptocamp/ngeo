@@ -3,12 +3,9 @@ goog.provide('ngeo.interaction.MeasureAzimut');
 
 goog.require('goog.asserts');
 goog.require('goog.events');
-goog.require('goog.events.Event');
 goog.require('ngeo.interaction.Measure');
-goog.require('ol.Collection');
 goog.require('ol.Coordinate');
 goog.require('ol.Feature');
-goog.require('ol.Map');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.MapBrowserEvent.EventType');
 goog.require('ol.geom.Circle');
@@ -21,7 +18,6 @@ goog.require('ol.interaction.InteractionProperty');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
-goog.require('ol.style.Style');
 
 
 

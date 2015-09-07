@@ -11,7 +11,6 @@
  */
 goog.provide('ngeo.searchDirective');
 
-goog.require('goog.asserts');
 goog.require('ngeo');
 
 
