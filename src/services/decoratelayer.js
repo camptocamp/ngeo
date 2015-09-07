@@ -32,7 +32,7 @@ ngeo.decorateLayer = function(layer) {
          * @return {boolean} Visible.
          */
         function() {
-          return /** @type {boolean} */ (layer.getVisible());
+          return layer.getVisible();
         },
     set:
         /**
@@ -50,8 +50,7 @@ ngeo.decorateLayer = function(layer) {
          * @return {string} Opacity.
          */
         function() {
-          var opacity = /** @type {number} */ (layer.getOpacity());
-          return (Math.round(opacity * 100) / 100) + '';
+          return (Math.round(layer.getOpacity() * 100) / 100) + '';
         },
     set:
         /**
