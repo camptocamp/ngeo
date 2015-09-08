@@ -36,9 +36,11 @@ app.MainController = function(ngeoFeatureOverlayMgr) {
    * @export
    */
   this.searchDatasources = [{
-    title: 'From demo 1.6',
-    url: 'http://geomapfish-demo.camptocamp.net/1.6/wsgi/fulltextsearch',
-    projection: 'EPSG:21781'
+    datasetTitle: 'From demo 1.6',
+    labelKey: 'label',
+    projection: 'EPSG:21781',
+    url: 'http://geomapfish-demo.camptocamp.net/1.6/wsgi/fulltextsearch?' +
+        'query=%QUERY'
   }];
 
   /**
