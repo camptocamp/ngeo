@@ -220,7 +220,7 @@ describe('ngeo.CreatePrint', function() {
               layers: [{
                 baseURL: 'http://example.com/wmts/layer/{Style}/' +
                     '{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpeg',
-                dimensions: ['TIME'],
+                dimensions: ['Time'],
                 dimensionParams: {'TIME': 'time'},
                 imageFormat: 'image/jpeg',
                 layer: 'layer',
