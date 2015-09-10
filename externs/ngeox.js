@@ -3,6 +3,29 @@
  */
 var ngeox;
 
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+ngeox.format;
+
+
+/**
+ * @typedef {{
+ *    accuracy: (number|undefined)
+ * }}
+ */
+ngeox.format.FeatureHashOptions;
+
+
+/**
+ * The encoding and decoding accuracy.
+ * @type {number|undefined}
+ */
+ngeox.format.FeatureHashOptions.prototype.accuracy;
+
+
 /**
  * Namespace.
  * @type {Object}
