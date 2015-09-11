@@ -13,30 +13,37 @@ app.module = angular.module('app', ['ngeo']);
 /**
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
+ * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ *     manager.
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoDecorateInteraction) {
-  var source = new ol.source.Vector();
+app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
 
-  var vector = new ol.layer.Vector({
-    source: source,
-    style: new ol.style.Style({
+  /**
+   * Collection shared between the drawing interactions and the feature
+   * overlay used to render the drawn features.
+   * @type {ol.Collection.<ol.Feature>}
+   */
+  var features = new ol.Collection();
+
+  var overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  overlay.setFeatures(features);
+  overlay.setStyle(new ol.style.Style({
+    fill: new ol.style.Fill({
+      color: 'rgba(255, 255, 255, 0.2)'
+    }),
+    stroke: new ol.style.Stroke({
+      color: '#ffcc33',
+      width: 2
+    }),
+    image: new ol.style.Circle({
+      radius: 7,
       fill: new ol.style.Fill({
-        color: 'rgba(255, 255, 255, 0.2)'
-      }),
-      stroke: new ol.style.Stroke({
-        color: '#ffcc33',
-        width: 2
-      }),
-      image: new ol.style.Circle({
-        radius: 7,
-        fill: new ol.style.Fill({
-          color: '#ffcc33'
-        })
+        color: '#ffcc33'
       })
     })
-  });
+  }));
 
   /**
    * @type {ol.Map}
@@ -46,8 +53,7 @@ app.MainController = function(ngeoDecorateInteraction) {
     layers: [
       new ol.layer.Tile({
         source: new ol.source.MapQuest({layer: 'sat'})
-      }),
-      vector
+      })
     ],
     view: new ol.View({
       center: [-10997148, 4569099],
@@ -57,6 +63,9 @@ app.MainController = function(ngeoDecorateInteraction) {
 
   var map = this.map;
 
+  // initialize the feature overlay manager with the map
+  ngeoFeatureOverlayMgr.init(map);
+
   /**
    * @type {ol.interaction.Draw}
    * @export
@@ -64,7 +73,7 @@ app.MainController = function(ngeoDecorateInteraction) {
   this.drawPolygon = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Polygon',
-        source: source
+        features: features
       }));
 
   var drawPolygon = this.drawPolygon;
@@ -80,7 +89,7 @@ app.MainController = function(ngeoDecorateInteraction) {
   this.drawPoint = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Point',
-        source: source
+        features: features
       }));
 
   var drawPoint = this.drawPoint;
@@ -95,7 +104,7 @@ app.MainController = function(ngeoDecorateInteraction) {
   this.drawLine = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'LineString',
-        source: source
+        features: features
       }));
 
   var drawLine = this.drawLine;
