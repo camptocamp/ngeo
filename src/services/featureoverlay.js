@@ -21,6 +21,9 @@ goog.provide('ngeo.FeatureOverlayMgr');
 
 goog.require('goog.object');
 goog.require('ngeo');
+goog.require('ol.Collection');
+goog.require('ol.CollectionEvent');
+goog.require('ol.CollectionEventType');
 goog.require('ol.Feature');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -196,6 +199,12 @@ ngeo.FeatureOverlay = function(manager, index) {
   this.manager_ = manager;
 
   /**
+   * @type {ol.Collection.<ol.Feature>}
+   * @private
+   */
+  this.features_ = null;
+
+  /**
    * @type {number}
    * @private
    */
@@ -230,12 +239,61 @@ ngeo.FeatureOverlay.prototype.clear = function() {
 
 
 /**
+ * Configure this feature overlay with a feature collection. Features added
+ * to the collection are also added to the overlay. Same for removal. If you
+ * configure the feature overlay with a feature collection you will use the
+ * collection to add and remove features instead of using the overlay's
+ * `addFeature`, `removeFeature` and `clear` functions.
+ * @param {ol.Collection.<ol.Feature>} features Feature collection.
+ */
+ngeo.FeatureOverlay.prototype.setFeatures = function(features) {
+  if (!goog.isNull(this.features_)) {
+    this.features_.clear();
+    goog.events.unlisten(this.features_, ol.CollectionEventType.ADD,
+        this.handleFeatureAdd_, false, this);
+    goog.events.unlisten(this.features_, ol.CollectionEventType.REMOVE,
+        this.handleFeatureRemove_, false, this);
+  }
+  if (!goog.isNull(features)) {
+    features.forEach(function(feature) {
+      this.addFeature(feature);
+    }, this);
+    goog.events.listen(features, ol.CollectionEventType.ADD,
+        this.handleFeatureAdd_, false, this);
+    goog.events.listen(features, ol.CollectionEventType.REMOVE,
+        this.handleFeatureRemove_, false, this);
+  }
+  this.features_ = features;
+};
+
+
+/**
  * Set a style for the feature overlay.
  * @param {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction} style
  * Style.
  */
 ngeo.FeatureOverlay.prototype.setStyle = function(style) {
   this.manager_.setStyle(style, this.index_);
+};
+
+
+/**
+ * @param {ol.CollectionEvent} evt Feature collection event.
+ * @private
+ */
+ngeo.FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
+  var feature = /** @type {ol.Feature} */ (evt.element);
+  this.addFeature(feature);
+};
+
+
+/**
+ * @param {ol.CollectionEvent} evt Feature collection event.
+ * @private
+ */
+ngeo.FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {
+  var feature = /** @type {ol.Feature} */ (evt.element);
+  this.removeFeature(feature);
 };
 
 

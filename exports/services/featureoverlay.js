@@ -33,5 +33,10 @@ goog.exportProperty(
 
 goog.exportProperty(
     ngeo.FeatureOverlay.prototype,
+    'setFeatures',
+    ngeo.FeatureOverlay.prototype.setFeatures);
+
+goog.exportProperty(
+    ngeo.FeatureOverlay.prototype,
     'setStyle',
     ngeo.FeatureOverlay.prototype.setStyle);
