@@ -75,11 +75,13 @@
     "extra_annotation_name": [
       "api", "observable"
     ],
+    "language_in": "ECMASCRIPT5_STRICT",
+    "language_out": "ECMASCRIPT5_STRICT",
     "angular_pass": true,
     "compilation_level": "ADVANCED_OPTIMIZATIONS",
     "export_local_property_definitions": true,
     "generate_exports": true,
-    "output_wrapper": "(function(){%output%})();",
+    "output_wrapper": "(function(){%output%}).call(window);",
     "use_types_for_optimization": true
   }
 }
