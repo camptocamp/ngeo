@@ -142,30 +142,31 @@ gmf.SearchController = function($scope, $compile,
     var datasource = this.datasources_[i];
 
     /** @type {Array.<string>} */
-    var groupByProperties = goog.isDef(datasource.groupByProperties) ?
-        datasource.groupByProperties : [];
+    var groupValues = goog.isDef(datasource.groupValues) &&
+        goog.isDef(datasource.groupsKey) ? datasource.groupValues : [];
     var filter;
 
     do {
-      var title = datasource.title;
+      var title = datasource.datasetTitle;
 
-      if (groupByProperties.length > 0) {
+      if (groupValues.length > 0) {
         // Add an optional filter function to keep objects only from one
         // "layername" from a GMF's fulltextsearch service.
-        filter = this.filterLayername_(groupByProperties[0]);
-        title = title + groupByProperties[0];
-        groupByProperties.shift();
+        filter = this.filterLayername_(datasource.groupsKey, groupValues[0]);
+        title = title + groupValues[0];
+        groupValues.shift();
       } else {
         filter = undefined;
       }
 
       this.datasets.push(this.createDataset_({
-        title: title,
+        datasetTitle: title,
+        labelKey: datasource.labelKey,
         projection: datasource.projection,
         url: datasource.url
       }, filter));
 
-    } while (groupByProperties.length > 0);
+    } while (groupValues.length > 0);
   }
 
 
@@ -194,11 +195,11 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
     source: bloodhoundEngine.ttAdapter(),
     display: function(suggestion) {
       var feature = /** @type {ol.Feature} */ (suggestion);
-      return feature.get('label');
+      return feature.get(config.labelKey);
     },
     templates: /* TypeaheadTemplates */ ({
       header: function() {
-        return '<div class="header">' + config.title + '</div>';
+        return '<div class="header">' + config.datasetTitle + '</div>';
       },
       suggestion: function(suggestion) {
         var feature = /** @type {ol.Feature} */ (suggestion);
@@ -206,7 +207,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
         var scope = directiveScope.$new(true);
         scope['feature'] = feature;
 
-        var html = '<p>' + feature.get('label') + '</p>';
+        var html = '<p>' + feature.get(config.labelKey) + '</p>';
         return compile(html)(scope);
       }
     })
@@ -215,19 +216,21 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
 
 
 /**
- * @param {string} layername The dataset "type" to keep.
+ * @param {string} groupsKey key used to group this set of data.
+ * @param {string} groupValue The dataset "type" to keep.
  * @return {(function(GeoJSONFeature): boolean)} A filter function based on a
  *     GeoJSONFeaturesCollection's array.
  * @private
  */
-gmf.SearchController.prototype.filterLayername_ = function(layername) {
+gmf.SearchController.prototype.filterLayername_ = function(groupsKey,
+                                                           groupValue) {
   return (
       /**
        * @param {GeoJSONFeature} feature
        * @return {boolean}
        */
       function(feature) {
-        return (feature['properties']['layer_name'] === layername);
+        return (feature['properties'][groupsKey] === groupValue);
       });
 };
 
@@ -241,9 +244,8 @@ gmf.SearchController.prototype.filterLayername_ = function(layername) {
  */
 gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
     opt_filter) {
-  var url = config.url + '?query=%QUERY&';
   var mapProjectionCode = this.map_.getView().getProjection().getCode();
-  var bloodhound = this.ngeoCreateGeoJSONBloodhound_(url, opt_filter,
+  var bloodhound = this.ngeoCreateGeoJSONBloodhound_(config.url, opt_filter,
       ol.proj.get(mapProjectionCode), ol.proj.get(config.projection));
   bloodhound.initialize();
   return bloodhound;
