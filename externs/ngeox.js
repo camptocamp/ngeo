@@ -13,17 +13,28 @@ ngeox.format;
 
 /**
  * @typedef {{
- *    accuracy: (number|undefined)
+ *    accuracy: (number|undefined),
+ *    properties: (function(ol.Feature): Object.<string, (string|undefined)>|undefined)
  * }}
  */
 ngeox.format.FeatureHashOptions;
 
 
 /**
- * The encoding and decoding accuracy.
+ * The encoding and decoding accuracy. Optional. Default value is 1.
  * @type {number|undefined}
  */
 ngeox.format.FeatureHashOptions.prototype.accuracy;
+
+
+/**
+ * A function that returns serializable properties for a feature. Optional. By
+ * default the feature properties (as returned by `feature.getProperties()`)
+ * are used. To be serializable the returned properties should be numbers or
+ * strings.
+ * @type {(function(ol.Feature): Object.<string, (string|undefined)>|undefined)}
+ */
+ngeox.format.FeatureHashOptions.prototype.properties;
 
 
 /**
