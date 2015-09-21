@@ -338,7 +338,10 @@ describe('ngeo.CreatePrint', function() {
             text: 'Ngeo',
             textAlign: 'left',
             offsetX: 42,
-            offsetY: -42
+            offsetY: -42,
+            fill: new ol.style.Fill({
+              color: [3, 3, 3, 0.3]
+            })
           })
         });
 
@@ -348,7 +351,10 @@ describe('ngeo.CreatePrint', function() {
             font: 'normal 16px "sans serif"',
             text: 'Ngeo',
             offsetX: 42,
-            offsetY: -42
+            offsetY: -42,
+            fill: new ol.style.Fill({
+              color: [3, 3, 3, 0.3]
+            })
           })
         });
 
@@ -425,6 +431,7 @@ describe('ngeo.CreatePrint', function() {
         expectedStyle['[_ngeo_style_0 = \'' + styleId3 + '\']'] = {
           symbolizers: [{
             type: 'Text',
+            fontColor: '#030303',
             fontWeight: 'normal',
             fontSize: '16px',
             fontFamily: '"sans serif"',
@@ -437,6 +444,7 @@ describe('ngeo.CreatePrint', function() {
         expectedStyle['[_ngeo_style_1 = \'' + styleId4 + '\']'] = {
           symbolizers: [{
             type: 'Text',
+            fontColor: '#030303',
             fontWeight: 'normal',
             fontSize: '16px',
             fontFamily: '"sans serif"',
