@@ -24,6 +24,13 @@ Currently, ngeo doesn't have an API documentation. To know what features ngeo
 provides and how to use ngeo you can look at the
 [examples](https://camptocamp.github.io/ngeo/master).
 
+ngeo also includes a [contribs](contribs) directory where non-core
+contributions may be placed. ngeo currently includes one contrib: `gmf`.  That
+contrib includes components that are specific to the
+[GeoMapFish](http://geomapfish.org/) project, that is components that rely
+on GeoMapFish-specific web services. The `gmf` contrib examples are also
+available [online](http://camptocamp.github.io/ngeo/master/contribs/gmf/).
+
 Docs:
 
 * [Developer guide](docs/developer-guide.md)
