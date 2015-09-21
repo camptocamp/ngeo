@@ -274,6 +274,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/%.check.timestamp: .build/examples-hosted/%.html \
 	    .build/examples-hosted/%.js \
 	    .build/examples-hosted/lib/ngeo.js \
+	    .build/examples-hosted/lib/ngeo-debug.js \
 	    .build/examples-hosted/lib/ngeo.css \
 	    .build/examples-hosted/lib/gmf.js \
 	    .build/examples-hosted/lib/angular.min.js \
