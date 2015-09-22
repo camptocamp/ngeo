@@ -453,5 +453,20 @@ describe('ngeo.format.FeatureHash', function() {
       });
     });
 
+    describe('With a user-provided feature properties function', function() {
+      it('encodes feature properties as expected', function() {
+        fhFormat = new ngeo.format.FeatureHash({
+          properties: function(feature) {
+            return {foobar: feature.get('foo') + feature.get('bar')};
+          }
+        });
+        var feature = new ol.Feature(new ol.geom.Point([1, 1]));
+        feature.set('foo', 'foo');
+        feature.set('bar', 'bar');
+        var result = fhFormat.writeFeature(feature);
+        expect(result).toBe('p(__~foobar*foobar)');
+      });
+    });
+
   });
 });

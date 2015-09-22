@@ -87,6 +87,13 @@ ngeo.format.FeatureHash = function(opt_options) {
       options.accuracy : ngeo.format.FeatureHash.ACCURACY_;
 
   /**
+   * @type {function(ol.Feature):Object.<string, (string|number)>}
+   * @private
+   */
+  this.propertiesFunction_ = goog.isDef(options.properties) ?
+      options.properties : ngeo.format.FeatureHash.defaultPropertiesFunction_;
+
+  /**
    * @type {number}
    * @private
    */
@@ -118,6 +125,17 @@ ngeo.format.FeatureHash.CHAR64_ =
  * @private
  */
 ngeo.format.FeatureHash.ACCURACY_ = 1;
+
+
+/**
+ * @param {ol.Feature} feature Feature.
+ * @return {Object.<string, (string|number)>} The feature properties to
+ * serialize.
+ * @private
+ */
+ngeo.format.FeatureHash.defaultPropertiesFunction_ = function(feature) {
+  return feature.getProperties();
+};
 
 
 /**
@@ -861,7 +879,7 @@ ngeo.format.FeatureHash.prototype.writeFeatureText =
   // encode properties
 
   var /** @type {Array.<string>} */ encodedProperties = [];
-  goog.object.forEach(feature.getProperties(), (
+  goog.object.forEach(this.propertiesFunction_(feature), (
       /**
        * @param {*} value Value.
        * @param {string} key Key.
