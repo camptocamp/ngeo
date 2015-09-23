@@ -14,6 +14,7 @@ ngeox.format;
 /**
  * @typedef {{
  *    accuracy: (number|undefined),
+ *    encodeStyles: (boolean|undefined),
  *    properties: (function(ol.Feature): Object.<string, (string|undefined)>|undefined)
  * }}
  */
@@ -25,6 +26,13 @@ ngeox.format.FeatureHashOptions;
  * @type {number|undefined}
  */
 ngeox.format.FeatureHashOptions.prototype.accuracy;
+
+
+/**
+ * Encode styles. Optional. Default is `true`.
+ * @type {boolean|undefined}
+ */
+ngeox.format.FeatureHashOptions.prototype.encodeStyles;
 
 
 /**
