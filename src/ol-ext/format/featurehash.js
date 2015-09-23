@@ -87,6 +87,13 @@ ngeo.format.FeatureHash = function(opt_options) {
       options.accuracy : ngeo.format.FeatureHash.ACCURACY_;
 
   /**
+   * @type {boolean}
+   * @private
+   */
+  this.encodeStyles_ = goog.isDef(options.encodeStyles) ?
+      options.encodeStyles : true;
+
+  /**
    * @type {function(ol.Feature):Object.<string, (string|number)>}
    * @private
    */
@@ -903,16 +910,18 @@ ngeo.format.FeatureHash.prototype.writeFeatureText =
 
   // encode styles
 
-  var styleFunction = feature.getStyleFunction();
-  if (goog.isDef(styleFunction)) {
-    var styles = styleFunction.call(feature, 0);
-    if (!goog.isNull(styles)) {
-      var encodedStyles = [];
-      ngeo.format.FeatureHash.encodeStyles_(
-          styles, geometry.getType(), encodedStyles);
-      if (encodedStyles.length > 0) {
-        encodedParts.push('~');
-        Array.prototype.push.apply(encodedParts, encodedStyles);
+  if (this.encodeStyles_) {
+    var styleFunction = feature.getStyleFunction();
+    if (goog.isDef(styleFunction)) {
+      var styles = styleFunction.call(feature, 0);
+      if (!goog.isNull(styles)) {
+        var encodedStyles = [];
+        ngeo.format.FeatureHash.encodeStyles_(
+            styles, geometry.getType(), encodedStyles);
+        if (encodedStyles.length > 0) {
+          encodedParts.push('~');
+          Array.prototype.push.apply(encodedParts, encodedStyles);
+        }
       }
     }
   }
