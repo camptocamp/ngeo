@@ -7,12 +7,6 @@
 
 
 /**
- * @type {Array.<string>}
- */
-Navigator.prototype.languages;
-
-
-/**
  * @type {string}
  */
 Navigator.prototype.systemLanguage;
