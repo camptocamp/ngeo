@@ -333,7 +333,7 @@ $(EXTERNS_ANGULAR_HTTP_PROMISE):
 
 $(EXTERNS_JQUERY):
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/jquery-1.9.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/b27aa3b/contrib/externs/jquery-1.9.js
 	touch $@
 
 .build/python-venv:
