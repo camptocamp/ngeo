@@ -55,3 +55,17 @@ gmfx.SearchDirectiveDatasource.prototype.projection;
  * @type {string}
  */
 gmfx.SearchDirectiveDatasource.prototype.url;
+
+
+/**
+ * @typedef {{layer: string}}
+ */
+gmfx.source.AsitVDOptions;
+
+
+/**
+ * Layer name. Possible values are `asitvd.fond_couleur`, `asitvd.fond_gris`
+ * and `asitvd.fond_pourortho`.
+ * @type {string}
+ */
+gmfx.source.AsitVDOptions.prototype.layer;

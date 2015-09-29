@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>ASITVD source example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
+    <style>
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <p id="desc">
+      This example shows how to use the <code>gmf.source.AsitVD</code> source to access tiles from the
+      <a href="http://asitvd.ch/index.php?option=com_content&view=article&id=214&Itemid=154&lang=en">ASIT VD tile server</a>.
+    </p>
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="/@?main=asitvd.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+  </body>
+</html>
