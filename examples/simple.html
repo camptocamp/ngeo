@@ -1,4 +1,4 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html ng-app='app'>
   <head>
     <title>Simple example</title>
