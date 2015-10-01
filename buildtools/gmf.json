@@ -6,6 +6,7 @@
     "src/**/*.js",
     "contribs/gmf/src/**/*.js",
     "exports/**/*.js",
+    "contribs/gmf/exports/**/*.js",
     ".build/templatecache.js"
   ],
   "compile": {
