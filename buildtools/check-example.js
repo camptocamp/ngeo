@@ -30,4 +30,5 @@ page.open(examplePath, function(s) {
 });
 page.onConsoleMessage = function(msg) {
   console.log('console:', msg);
+  phantom.exit(msg.match(/error/i) ? 1 : 0);
 };
