@@ -19,7 +19,6 @@ goog.provide('gmf.SearchController');
 goog.provide('gmf.searchDirective');
 
 goog.require('gmf');
-goog.require('gmf.mapDirective');
 goog.require('ngeo.CreateGeoJSONBloodhound');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
