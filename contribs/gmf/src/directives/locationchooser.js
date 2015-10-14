@@ -1,13 +1,3 @@
-/**
- * @fileoverview This file provides a directive that creates an option list.
- * The options serve to switch quickly between differents places on the map.
- *
- * Example:
- * <gmf-locationchooser
- *   gmf-locationchooser-map="ctrl.map"
- *   gmf-locationchooser-locations="ctrl.locations">
- * </gmf-locationchooser>
- */
 goog.provide('gmf.LocationchooserController');
 goog.provide('gmf.locationchooserDirective');
 
@@ -15,8 +5,18 @@ goog.require('gmf');
 goog.require('ol.Map');
 
 
+
 /**
+ * This file provides a directive that creates an option list.
+ * The options serve to switch quickly between differents places on the map.
+ * @example
+ * <gmf-locationchooser
+ *   gmf-locationchooser-map="ctrl.map"
+ *   gmf-locationchooser-locations="ctrl.locations">
+ * </gmf-locationchooser>
+ *
  * @return {angular.Directive} The directive specs.
+ * @constructor
  * @ngInject
  */
 gmf.locationchooserDirective = function() {

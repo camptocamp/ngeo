@@ -1,11 +1,18 @@
+goog.provide('ngeo.BtnGroupController');
+goog.provide('ngeo.btnDirective');
+goog.provide('ngeo.btngroupDirective');
+
+goog.require('ngeo');
+
+
+
 /**
- * @fileoverview Provides two directives: ngeo-btn-group and ngeo-btn.
+ * Provides two directives: ngeo-btn-group and ngeo-btn.
  *
  * The ngeo-btn-group directive allows creating "toggle" groups. It works with
  * the ngeo-btn directive.
  *
- * Example:
- *
+ * @example
  * <div ngeo-btn-group>
  *   <button ngeo-btn class="btn" ng-model="ctrl.drawPoint.active"></button>
  *   <button ngeo-btn class="btn" ng-model="ctrl.drawLine.active"></button>
@@ -17,22 +24,13 @@
  * The ngeo-btn allows creating toggle buttons working with ng-model. It is
  * typically used with Bootstrap buttons (`btn`).
  *
- * Example:
- *
+ * @example
  * <button ngeo-btn class="btn" ng-model="ctrl.interaction.active"></button>
  *
  * This example is about creating a Bootstrap button that can pressed/depressed
  * to activate/deactivate an OpenLayers 3 interaction.
- */
-
-goog.provide('ngeo.BtnGroupController');
-goog.provide('ngeo.btnDirective');
-goog.provide('ngeo.btngroupDirective');
-
-goog.require('ngeo');
-
-
-/**
+ *
+ * @constructor
  * @return {angular.Directive} The directive specs.
  * @ngInject
  */

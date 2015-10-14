@@ -1,21 +1,3 @@
-/**
- * @fileoverview This file provides an OpenLayers format for encoding
- * and decoding features for use in permalinks.
- *
- * The code is based on Stéphane Brunner's URLCompressed format:
- * <https://github.com/sbrunner/OpenLayers-URLCompressed>
- *
- * TODOs:
- *
- * - The OpenLayers-URLCompressed format has options where the user
- *   can define attribute and style transformers. This is currently
- *   not supported by this format.
- * - The OpenLayers-URLCompressed format has a "simplify" option.
- *   This format does not have it.
- * - ol.style.Icon styles are not supported.
- * - Transformation of coordinates during encoding and decoding is
- *   not supported.
- */
 goog.provide('ngeo.format.FeatureHash');
 
 goog.require('goog.asserts');
@@ -70,6 +52,23 @@ ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
 
 
 /**
+ * This file provides an OpenLayers format for encoding
+ * and decoding features for use in permalinks.
+ *
+ * The code is based on Stéphane Brunner's URLCompressed format:
+ * <https://github.com/sbrunner/OpenLayers-URLCompressed>
+ *
+ * TODOs:
+ *
+ * - The OpenLayers-URLCompressed format has options where the user
+ *   can define attribute and style transformers. This is currently
+ *   not supported by this format.
+ * - The OpenLayers-URLCompressed format has a "simplify" option.
+ *   This format does not have it.
+ * - ol.style.Icon styles are not supported.
+ * - Transformation of coordinates during encoding and decoding is
+ *   not supported.
+ *
  * @constructor
  * @param {ngeox.format.FeatureHashOptions=} opt_options Options.
  * @extends {ol.format.TextFeature}

@@ -1,3 +1,6 @@
+/**
+ * @module gmf
+ */
 goog.provide('gmf');
 
 

@@ -26,6 +26,9 @@ else
 	STAT_UNCOMPRESSED = stat -c 'uncompressed: %s bytes'
 endif
 
+# Disabling Make built-in rules to speed up execution time
+.SUFFIXES:
+
 .PHONY: all
 all: help
 
@@ -40,7 +43,7 @@ help:
 	@echo "- lint                    Check the code with the linter"
 	@echo "- test                    Run the test suite"
 	@echo "- serve                   Run a development web server for running the examples"
-	@echo "- gh-pages                Publish examples to GitHub pages"
+	@echo "- gh-pages                Update the GitHub pages"
 	@echo "- clean                   Remove generated files"
 	@echo "- cleanall                Remove all the build artefacts"
 	@echo "- help                    Display this help message"
@@ -70,34 +73,32 @@ serve: .build/node_modules.timestamp
 	node buildtools/serve.js
 
 .PHONY: gh-pages
-gh-pages: GIT_BRANCH = $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages check-examples .build/examples-hosted/index.html .build/examples-hosted/contribs/gmf/index.html
-	(cd $< && \
-	 git fetch origin && \
-	 git merge --ff-only origin/gh-pages && \
-	 git rm --ignore-unmatch -rqf $(GIT_BRANCH) && \
-	 mkdir -p $(GIT_BRANCH) && \
-	 cp -r ../examples-hosted/* $(GIT_BRANCH) && \
-	 git add -A . && \
-	 git commit -m 'Update GitHub pages' && \
-	 git push origin gh-pages)
+GITHUB_USERNAME ?= camptocamp
+GIT_BRANCH ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+gh-pages: GIT_REMOTE_NAME ?= origin
+gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
+		.build/examples-hosted/index.html \
+		.build/examples-hosted/contribs/gmf/index.html \
+		.build/apidoc-$(GIT_BRANCH)
+	cd $<; git fetch origin
+	cd $<; git merge --ff-only origin/gh-pages
+	cd $<; git rm --ignore-unmatch -rqf $(GIT_BRANCH) examples-$(GIT_BRANCH) aptdoc-$(GIT_BRANCH)
+	cd $<; git clean --force -d
+	mkdir $</$(GIT_BRANCH)
+	cp -r .build/apidoc-$(GIT_BRANCH) $</$(GIT_BRANCH)/apidoc
+	mkdir $</$(GIT_BRANCH)/examples
+	cp -r .build/examples-hosted/* $</$(GIT_BRANCH)/examples
+	cd $<; git add -A
+	cd $<; git status
+	cd $<; git commit -m 'Update GitHub pages'
+	cd $<; git push $(GIT_REMOTE_NAME) gh-pages
 
-.PHONY: gh-pages-from-travis
-gh-pages-from-travis: .build/ngeo-travis-gh-pages check-examples .build/examples-hosted/index.html .build/examples-hosted/contribs/gmf/index.html
-	(cd $< && \
-	 git fetch origin && \
-	 git merge --ff-only origin/gh-pages && \
-	 git rm --ignore-unmatch -rqf master && \
-	 mkdir -p master && \
-	 cp -r ../examples-hosted/* master && \
-	 git config user.name "Travis" && \
-	 git config user.email "travis@travis-ci.org" && \
-	 git add -A . && \
-	 git commit -m 'Update GitHub pages' && \
-	 git push https://$(GH_TOKEN)@github.com/$(TRAVIS_REPO_SLUG).git gh-pages > /dev/null)
+.build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
+.build/ngeo-$(GITHUB_USERNAME)-gh-pages:
+	git clone --branch gh-pages $(GIT_REMOTE_URL) $@
 
 .build/gjslint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES)
-	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable $?
+	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable,example,module $?
 	touch $@
 
 .build/jshint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES)
@@ -266,9 +267,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
 .build/examples-hosted/index.html: buildtools/examples-index.mako.html $(EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
+	mkdir -p $(dir $@)
 	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
 
 .build/examples-hosted/contribs/gmf/index.html: buildtools/examples-index.mako.html $(GMF_EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
+	mkdir -p $(dir $@)
 	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(GMF_EXAMPLES_HTML_FILES) > $@
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
@@ -290,12 +293,6 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
-
-.build/ngeo-travis-gh-pages:
-	git clone --branch gh-pages https://$(GH_TOKEN)@github.com/$(TRAVIS_REPO_SLUG).git $@
-
-.build/ngeo-%-gh-pages:
-	git clone --branch gh-pages git@github.com:$*/ngeo.git $@
 
 .build/node_modules.timestamp: package.json
 	npm install
@@ -371,6 +368,10 @@ $(EXTERNS_JQUERY):
 # pattern is needed this should be changed.
 .build/templatecache.js: buildtools/templatecache.mako.js .build/python-venv/bin/mako-render
 	.build/python-venv/bin/mako-render --var "partials=$(addprefix ../,$(SRC_DIRECTIVES_PARTIALS_FILES))" --var "basedir=src" $< > $@
+
+.build/apidoc-%: .build/node_modules.timestamp jsdoc.json $(SRC_JS_FILES)
+	rm -rf $@
+	./node_modules/.bin/jsdoc -c jsdoc.json --destination $@
 
 .PHONY: clean
 clean:

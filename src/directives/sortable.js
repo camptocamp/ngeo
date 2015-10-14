@@ -1,32 +1,3 @@
-/**
- * @fileoverview Provides the "ngeoSortable" directive. This directive allows
- * drag-and-dropping DOM items between them. The directive also changes the
- * order of elements in the array it is given.
- *
- * It is typically used together with `ng-repeat`, for example for re-ordering
- * layers in a map.
- *
- * Example:
- *
- * <ul ngeo-sortable="ctrl.layers"
- *     ngeo-sortable-options="{handleClassName: 'sortable-handle'}">
- *   <li ng-repeat="layer in ctrl.layers">
- *     <span class="sortable-handle">handle</span>{{layer.get('name')}}
- *   </li>
- * </ul>
- *
- * The value of the "ngeo-sortable" attribute is an expression which evaluates
- * to an array (an array of layers in the above example). This is the array
- * that is re-ordered after a drag-and-drop.
- *
- * The element with the class "sortable-handle" is the "drag handle". It is
- * required.
- *
- * This directives uses `$watchCollection` to watch the "sortable" array. So
- * if some outside code adds/removes elements to/from the "sortable" array,
- * the "ngeoSortable" directive will pick it up.
- */
-
 goog.provide('ngeo.SortableOptions');
 goog.provide('ngeo.sortableDirective');
 
@@ -45,7 +16,35 @@ goog.require('ngeo');
 ngeo.SortableOptions;
 
 
+
 /**
+ * Provides the "ngeoSortable" directive. This directive allows
+ * drag-and-dropping DOM items between them. The directive also changes the
+ * order of elements in the array it is given.
+ *
+ * It is typically used together with `ng-repeat`, for example for re-ordering
+ * layers in a map.
+ *
+ * @example
+ * <ul ngeo-sortable="ctrl.layers"
+ *     ngeo-sortable-options="{handleClassName: 'sortable-handle'}">
+ *   <li ng-repeat="layer in ctrl.layers">
+ *     <span class="sortable-handle">handle</span>{{layer.get('name')}}
+ *   </li>
+ * </ul>
+ *
+ * The value of the "ngeo-sortable" attribute is an expression which evaluates
+ * to an array (an array of layers in the above example). This is the array
+ * that is re-ordered after a drag-and-drop.
+ *
+ * The element with the class "sortable-handle" is the "drag handle". It is
+ * required.
+ *
+ * This directives uses `$watchCollection` to watch the "sortable" array. So
+ * if some outside code adds/removes elements to/from the "sortable" array,
+ * the "ngeoSortable" directive will pick it up.
+ *
+ * @constructor
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @return {angular.Directive} The directive specs.
  * @ngInject

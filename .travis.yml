@@ -1,18 +1,26 @@
 language: python
 sudo: false
-branches:
-  only:
-  - master
-script:
-- make check
-- if [ ${TRAVIS_PULL_REQUEST} != "false" ] ; then git diff --check ${TRAVIS_BRANCH} -- ; fi
-after_success:
-- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && make gh-pages-from-travis || /bin/true'
+
 env:
   global:
   - secure: "WZWqYrRy5uhk3IgXT9HXAL1zrZfrmJbbglF4gwNpSnrZkLv63gFwpMj6bjxOPKPouU76p4K7x/fnZb/FWRl6/fEnJzLKNvbknQtvmC4dAoHLynFVpilYholmdscT2fo/SOmE3XKOA4EJTF7oxToCgT2+e68e/oH87izXUn4FvK8="
+
 cache:
   apt: true
   directories:
   - node_modules
 
+script:
+- if [ ${TRAVIS_PULL_REQUEST} != "false" ] ; then git diff --check ${TRAVIS_BRANCH} -- ; fi
+- make check
+- make .build/examples-hosted/index.html
+- make .build/examples-hosted/contribs/gmf/index.html
+- make .build/apidoc-master
+
+after_success:
+- export GIT_REMOTE_NAME=https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
+- export GIT_REMOTE_URL=https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
+- export GIT_BRANCH=${TRAVIS_BRANCH}
+- git config --global user.name "Travis"
+- git config --global user.email "travis@travis-ci.org"
+- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && make gh-pages'

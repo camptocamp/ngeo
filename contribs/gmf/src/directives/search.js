@@ -1,20 +1,3 @@
-/**
- * @fileoverview this file provides the "search" directive and controller for
- * a GeoMapFish application.
- *
- * FIXME: The 'placeholder' in the input field is hard-coded and can't currently
- * be internationalised.
- *
- * Example:
- *
- * <gmf-search gmf-search-map="ctrl.map"
- *             gmf-search-datasources="ctrl.searchDatasources">
- * </gmf-search>
- *
- * This directive uses the ngeoFeatureOverlayMgr to create a feature overlay
- * for drawing features on the map. The application is responsible to
- * initialize the ngeoFeatureOverlayMgr with the map.
- */
 goog.provide('gmf.SearchController');
 goog.provide('gmf.searchDirective');
 
@@ -27,8 +10,25 @@ goog.require('ol.Map');
 goog.require('ol.proj');
 
 
+
 /**
+ * This file provides the "search" directive and controller for
+ * a GeoMapFish application.
+ *
+ * FIXME: The 'placeholder' in the input field is hard-coded and can't currently
+ * be internationalised.
+ *
+ * This directive uses the ngeoFeatureOverlayMgr to create a feature overlay
+ * for drawing features on the map. The application is responsible to
+ * initialize the ngeoFeatureOverlayMgr with the map.
+ *
+ * @example
+ * <gmf-search gmf-search-map="ctrl.map"
+ *             gmf-search-datasources="ctrl.searchDatasources">
+ * </gmf-search>
+ *
  * @return {angular.Directive} The Directive Definition Object.
+ * @constructor
  * @ngInject
  */
 gmf.searchDirective = function() {

@@ -1,18 +1,3 @@
-/**
- * @fileoverview Provides a directive used to show a popup over the page with
- * a title and content.
- *
- *
- * Things to know about this directive:
- *
- * - This directive is intented to be used along with the popup service.
- *
- * - By default the directive uses "popup.html" as its templateUrl. This can be
- *   changed by redefining the "ngeoPopupTemplateUrl" value.
- *
- * - The directive doesn't create any scope but relies on its parent scope.
- *   Properties like 'content', 'title' or 'open' come from the parent scope.
- */
 goog.provide('ngeo.popupDirective');
 
 goog.require('ngeo');
@@ -28,7 +13,23 @@ ngeo.popupTemplateUrl = 'partials/popup.html';
 ngeoModule.value('ngeoPopupTemplateUrl', ngeo.popupTemplateUrl);
 
 
+
 /**
+ * Provides a directive used to show a popup over the page with
+ * a title and content.
+ *
+ *
+ * Things to know about this directive:
+ *
+ * - This directive is intented to be used along with the popup service.
+ *
+ * - By default the directive uses "popup.html" as its templateUrl. This can be
+ *   changed by redefining the "ngeoPopupTemplateUrl" value.
+ *
+ * - The directive doesn't create any scope but relies on its parent scope.
+ *   Properties like 'content', 'title' or 'open' come from the parent scope.
+ *
+ * @constructor
  * @param {string} ngeoPopupTemplateUrl Url to popup template.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject

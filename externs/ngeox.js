@@ -102,19 +102,19 @@ ngeox.profile;
 
 /**
  * Options for the profile.
- *  @typedef {{
- *    styleDefs: (string|undefined),
- *    poiLabelAngle: (number|undefined),
- *    formatter: (ngeox.profile.ProfileFormatter|undefined),
- *    elevationExtractor: ngeox.profile.ElevationExtractor,
- *    poiExtractor: (ngeox.profile.PoiExtractor|undefined),
- *    light: (boolean|undefined),
- *    lightXAxis: (boolean|undefined),
- *    yLowerBound: (number|undefined),
- *    ratioXYRule: (function(number): number|undefined),
- *    hoverCallback: (function(Object)|undefined),
- *    outCallback: (function()|undefined)
- *  }}
+ * @typedef {{
+ *   styleDefs: (string|undefined),
+ *   poiLabelAngle: (number|undefined),
+ *   formatter: (ngeox.profile.ProfileFormatter|undefined),
+ *   elevationExtractor: ngeox.profile.ElevationExtractor,
+ *   poiExtractor: (ngeox.profile.PoiExtractor|undefined),
+ *   light: (boolean|undefined),
+ *   lightXAxis: (boolean|undefined),
+ *   yLowerBound: (number|undefined),
+ *   ratioXYRule: (function(number): number|undefined),
+ *   hoverCallback: (function(Object)|undefined),
+ *   outCallback: (function()|undefined)
+ * }} ngeox.profile.ProfileOptions
  */
 ngeox.profile.ProfileOptions;
 
@@ -233,7 +233,7 @@ ngeox.profile.ElevationExtractor.prototype.dist;
  *   z: function(Object, number=): number,
  *   sort: function(Object): number,
  *   title: function(Object): string
- * }}
+ * }} ngeox.profile.PoiExtractor
  */
 ngeox.profile.PoiExtractor;
 

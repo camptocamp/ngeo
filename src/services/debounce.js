@@ -1,14 +1,12 @@
-/**
- * @fileoverview Provides a debounce service. That service is a function
- * used to debounce calls to a user-provided function.
- */
-
 goog.provide('ngeo.Debounce');
 
 goog.require('ngeo');
 
 
 /**
+ * Provides a debounce service. That service is a function
+ * used to debounce calls to a user-provided function.
+ *
  * @typedef {function(function(?), number, boolean):function()}
  */
 ngeo.Debounce;

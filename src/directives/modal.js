@@ -1,11 +1,19 @@
+
+goog.provide('ngeo.modalDirective');
+
+goog.require('ngeo');
+
+
+
 /**
- * @fileoverview Provides the "ngeoModal" directive. This directive allows
+ * Provides the "ngeoModal" directive. This directive allows
  * displaying a modal window. The directive takes care or the show/hide
  * actions.
  *
+ * This directive requires Bootstrap's `modal` classes and associated jQuery
+ * plugin.
  *
- * Example:
- *
+ * @example
  * <ngeo-modal ngeo-modal-shown="modalShown">
  *   <div class="modal-header">
  *     <button type="button" class="close" data-dismiss="modal"
@@ -15,16 +23,7 @@
  *   <div class="modal-body">Some content</div>
  * </ngeo-modal>
  *
- * This directive requires Bootstrap's `modal` classes and associated jQuery
- * plugin.
- */
-
-goog.provide('ngeo.modalDirective');
-
-goog.require('ngeo');
-
-
-/**
+ * @constructor
  * @param {angular.$parse} $parse Angular parse service.
  * @return {angular.Directive} The directive specs.
  * @ngInject

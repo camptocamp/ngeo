@@ -1,16 +1,3 @@
-/**
- * @fileoverview Provides a directive can be used to add a control to a DOM
- * element of the HTML page.
- *
- * Example:
- *
- * <div ngeo-control="ctrl.control" ngeo-control-map="ctrl.map"></div>
- *
- * The expression passed to "ngeo-control" should evaluate to a control
- * instance, and the expression passed to "ngeo-control-map" should
- * evaluate to a map instance.
- */
-
 goog.provide('ngeo.controlDirective');
 
 goog.require('goog.asserts');
@@ -19,7 +6,19 @@ goog.require('ol.Map');
 goog.require('ol.control.Control');
 
 
+
 /**
+ * Provides a directive can be used to add a control to a DOM
+ * element of the HTML page.
+ *
+ * @example
+ * <div ngeo-control="ctrl.control" ngeo-control-map="ctrl.map"></div>
+ *
+ * The expression passed to "ngeo-control" should evaluate to a control
+ * instance, and the expression passed to "ngeo-control-map" should
+ * evaluate to a map instance.
+ *
+ * @constructor
  * @return {angular.Directive} The directive specs.
  * @ngInject
  */

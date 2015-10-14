@@ -1,37 +1,3 @@
-/**
- * @fileoverview Provides a function to create ngeo.Print objects used to
- * interact with MapFish Print v3 services.
- *
- * ngeo.Print objects expose the following methods:
- *
- * - createSpec: create a report specification object
- * - createReport: send a create report request
- * - getStatus: get the status of a report
- * - getReportUrl: get the URL of a report
- * - getCapabilities: get the capabilities of the server
- *
- * Example:
- *
- * var printBaseUrl = 'http://example.com/print';
- * var print = new ngeo.Print(printBaseUrl);
- *
- * var scale = 5000;
- * var dpi = 72;
- * var layout = 'A4 portrait';
- * var reportSpec = print.createSpec(map, scale, dpi, layout,
- *     {'title': 'A title for my report'});
- *
- * TODO and limitations:
- *
- * - createSpec should also accept a bbox instead of a center and a scale.
- * - Add support for ol.style.RegularShape. MapFish Print supports symbols
- *   like crosses, stars and squares, so printing regular shapes should be
- *   possible.
- * - ol.style.Icon may use a sprite image, and offsets to define to rectangle
- *   to use within the sprite. This type of icons won't be printed correctly
- *   as MapFish Print does not support sprite icons.
- */
-
 goog.provide('ngeo.CreatePrint');
 goog.provide('ngeo.Print');
 
@@ -97,6 +63,37 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
 
 
 /**
+ * Provides a function to create ngeo.Print objects used to
+ * interact with MapFish Print v3 services.
+ *
+ * ngeo.Print objects expose the following methods:
+ *
+ * - createSpec: create a report specification object
+ * - createReport: send a create report request
+ * - getStatus: get the status of a report
+ * - getReportUrl: get the URL of a report
+ * - getCapabilities: get the capabilities of the server
+ *
+ * @example
+ * var printBaseUrl = 'http://example.com/print';
+ * var print = new ngeo.Print(printBaseUrl);
+ *
+ * var scale = 5000;
+ * var dpi = 72;
+ * var layout = 'A4 portrait';
+ * var reportSpec = print.createSpec(map, scale, dpi, layout,
+ *     {'title': 'A title for my report'});
+ *
+ * TODO and limitations:
+ *
+ * - createSpec should also accept a bbox instead of a center and a scale.
+ * - Add support for ol.style.RegularShape. MapFish Print supports symbols
+ *   like crosses, stars and squares, so printing regular shapes should be
+ *   possible.
+ * - ol.style.Icon may use a sprite image, and offsets to define to rectangle
+ *   to use within the sprite. This type of icons won't be printed correctly
+ *   as MapFish Print does not support sprite icons.
+ *
  * @constructor
  * @param {string} url URL to MapFish print web service.
  * @param {angular.$http} $http Angular $http service.

@@ -1,16 +1,3 @@
-/**
- * @fileoverview Provides a factory to create a popup in the page.
- * The factory returns a ngeo.Popup object.
- *
- * Example:
- *
- * var popup = ngeoCreatePopup();
- * popup.setTitle("A title");
- * popup.setContent("Some content");
- * popup.setOpen(true);
- *
- */
-
 goog.provide('ngeo.CreatePopup');
 goog.provide('ngeo.Popup');
 
@@ -26,6 +13,15 @@ ngeo.CreatePopup;
 
 
 /**
+ * Provides a factory to create a popup in the page.
+ * The factory returns a ngeo.Popup object.
+ *
+ * @example
+ * var popup = ngeoCreatePopup();
+ * popup.setTitle("A title");
+ * popup.setContent("Some content");
+ * popup.setOpen(true);
+ *
  * @constructor
  * @param {angular.$compile} $compile The compile provider.
  * @param {angular.Scope} $rootScope The rootScope provider.

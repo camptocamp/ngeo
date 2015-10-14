@@ -1,21 +1,3 @@
-/**
- * @fileoverview Provides a service for interacting with the URL in the
- * browser address bar.
- *
- * WARNING: because of a bug in Angular this service is not compatible with
- * the $location service. This further means that service is not compatible
- * with the $anchorScroll and $route services, and with the ng-include and
- * ng-view directives (which are based on the $anchorScroll and $route
- * services). See <https://github.com/angular/angular.js/issues/1417>.
- *
- * This file also provides an ngeo.mockLocationProvider function that you can
- * use to mock Angular's $location provider and make it possible to use both
- * ngeoLocation and ng-include.
- *
- * app.module.config(ngeo.mockLocationProvider);
- *
- */
-
 goog.provide('ngeo.Location');
 goog.provide('ngeo.MockLocationProvider');
 
@@ -32,7 +14,23 @@ ngeo.MockLocationProvider;
 
 
 /**
+ * Provides a service for interacting with the URL in the
+ * browser address bar.
+ *
+ * WARNING: because of a bug in Angular this service is not compatible with
+ * the $location service. This further means that service is not compatible
+ * with the $anchorScroll and $route services, and with the ng-include and
+ * ng-view directives (which are based on the $anchorScroll and $route
+ * services). See <https://github.com/angular/angular.js/issues/1417>.
+ *
+ * This file also provides an ngeo.mockLocationProvider function that you can
+ * use to mock Angular's $location provider and make it possible to use both
+ * ngeoLocation and ng-include.
+ *
+ * app.module.config(ngeo.mockLocationProvider);
+ *
  * The ngeo Location type.
+ *
  * @param {Location} location Location.
  * @param {History} history History.
  * @constructor

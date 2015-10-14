@@ -1,0 +1,23 @@
+{
+    "tags": {
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "source": {
+        "include": ["contribs/gmf/src", "src"],
+        "includePattern": ".+\\.js$"
+    },
+    "plugins": [
+        "node_modules/jsdoc/plugins/markdown",
+        "node_modules/angular-jsdoc/common/plugins/ngdoc"
+    ],
+    "templates": {
+        "cleverLinks": true,
+        "monospaceLinks": true
+    },
+    "opts": {
+        "template": "jsdoc-template",
+        "readme": "jsdoc-README.md",
+        "encoding": "utf8",
+        "recurse": true
+    }
+}

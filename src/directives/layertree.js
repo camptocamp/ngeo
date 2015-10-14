@@ -1,12 +1,36 @@
+goog.provide('ngeo.LayertreeController');
+goog.provide('ngeo.layertreeDirective');
+
+goog.require('ngeo');
+
+
 /**
- * @fileoverview Provides the "ngeoLayertree" directive, a directive for
+ * @const
+ * @type {string}
+ */
+ngeo.layertreeTemplateUrl = 'layertree.html';
+
+
+ngeoModule.value('ngeoLayertreeTemplateUrl',
+    /**
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     */
+    function(element, attrs) {
+      var templateUrl = attrs['ngeoLayertreeTemplateurl'];
+      return goog.isDef(templateUrl) ? templateUrl : ngeo.layertreeTemplateUrl;
+    });
+
+
+
+/**
+ * Provides the "ngeoLayertree" directive, a directive for
  * creating layer trees in application.
  *
  * The directive assumes that tree nodes that are not leaves have a "children"
  * property referencing an array of child nodes.
  *
- * Example usage:
- *
+ * @example
  * <div ngeo-layertree="ctrl.tree"
  *      ngeo-layertree-map="ctrl.map"
  *      ngeo-layertree-nodelayer="ctrl.getLayer(node)"
@@ -47,33 +71,8 @@
  * has a "layertreeCtrl" property which is a reference to the directive's
  * controller: "layertreeCtrl". You can refer to that property in a custom
  * template for example.
- */
-
-goog.provide('ngeo.LayertreeController');
-goog.provide('ngeo.layertreeDirective');
-
-goog.require('ngeo');
-
-
-/**
- * @const
- * @type {string}
- */
-ngeo.layertreeTemplateUrl = 'layertree.html';
-
-
-ngeoModule.value('ngeoLayertreeTemplateUrl',
-    /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     */
-    function(element, attrs) {
-      var templateUrl = attrs['ngeoLayertreeTemplateurl'];
-      return goog.isDef(templateUrl) ? templateUrl : ngeo.layertreeTemplateUrl;
-    });
-
-
-/**
+ *
+ * @constructor
  * @param {angular.$compile} $compile Angular compile service.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoLayertreeTemplateUrl Template URL for the directive.

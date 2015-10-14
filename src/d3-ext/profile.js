@@ -1,9 +1,14 @@
+goog.provide('ngeo.profile');
+
+goog.require('goog.object');
+
+
+
 /**
- * @fileoverview Provides a D3js component to be used to draw an elevation
+ * Provides a D3js component to be used to draw an elevation
  * profile chart.
  *
- * Example usage:
- *
+ * @example
  * var selection = d3.select('#element_id');
  * var profile = ngeo.profile({
  *  elevationExtractor: {
@@ -33,14 +38,8 @@
  *         "x": 541620
  *     }, ...
  * ]
- */
-goog.provide('ngeo.profile');
-
-goog.require('goog.object');
-
-
-/**
  *
+ * @constructor
  * @return {Object}
  * @param {ngeox.profile.ProfileOptions} options
  * @export
@@ -48,8 +47,8 @@ goog.require('goog.object');
  */
 ngeo.profile = function(options) {
   /**
-   * @type {boolean}
    * Whether the simplified profile should be shown.
+   * @type {boolean}
    */
   var light = goog.isDef(options.light) ? options.light : false;
 
@@ -69,15 +68,15 @@ ngeo.profile = function(options) {
 
 
   /**
-   * @type {function(Object, number, string, number, string)}
    * Hover callback function.
+   * @type {function(Object, number, string, number, string)}
    */
   var hoverCallback = goog.isDef(options.hoverCallback) ?
       options.hoverCallback : goog.nullFunction;
 
   /**
-   * @type {function()}
    * Out callback function.
+   * @type {function()}
    */
   var outCallback = goog.isDef(options.outCallback) ?
       options.outCallback : goog.nullFunction;

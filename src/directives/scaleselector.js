@@ -1,9 +1,37 @@
+goog.provide('ngeo.ScaleselectorController');
+goog.provide('ngeo.ScaleselectorOptions');
+goog.provide('ngeo.scaleselectorDirective');
+
+goog.require('goog.events');
+goog.require('goog.events.Key');
+goog.require('ngeo');
+goog.require('ol.Map');
+goog.require('ol.Object');
+
+
 /**
- * @fileoverview Provides the "ngeoScaleselector" directive, a widget for
+ * @const
+ * @type {string}
+ */
+ngeo.scaleselectorTemplateUrl = 'scaleselector.html';
+
+
+ngeoModule.value('ngeoScaleselectorTemplateUrl',
+    ngeo.scaleselectorTemplateUrl);
+
+
+/**
+ * @typedef {{dropup: (boolean|undefined)}}
+ */
+ngeo.ScaleselectorOptions;
+
+
+
+/**
+ * Provides the "ngeoScaleselector" directive, a widget for
  * selecting map scales.
  *
- * Example usage:
- *
+ * @example
  * <div ngeo-scaleselector="ctrl.scales" ngeo-scaleselector-map="ctrl.map">
  * </div>
  *
@@ -35,36 +63,8 @@
  *
  * The directive doesn't create any watcher. In particular the object including
  * the scales information is now watched.
- */
-goog.provide('ngeo.ScaleselectorController');
-goog.provide('ngeo.ScaleselectorOptions');
-goog.provide('ngeo.scaleselectorDirective');
-
-goog.require('goog.events');
-goog.require('goog.events.Key');
-goog.require('ngeo');
-goog.require('ol.Map');
-goog.require('ol.Object');
-
-
-/**
- * @const
- * @type {string}
- */
-ngeo.scaleselectorTemplateUrl = 'scaleselector.html';
-
-
-ngeoModule.value('ngeoScaleselectorTemplateUrl',
-    ngeo.scaleselectorTemplateUrl);
-
-
-/**
- * @typedef {{dropup: (boolean|undefined)}}
- */
-ngeo.ScaleselectorOptions;
-
-
-/**
+ *
+ * @constructor
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
  * @return {angular.Directive} Directive Definition Object.

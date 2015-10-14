@@ -1,18 +1,24 @@
+
+goog.provide('ngeo.CreateGeoJSONBloodhound');
+
+goog.require('goog.array');
+goog.require('ngeo');
+goog.require('ol.format.GeoJSON');
+
+
 /**
- * @fileoverview Provides a function that creates a Bloodhound engine
+ * Provides a function that creates a Bloodhound engine
  * expecting GeoJSON responses from the search web service, and creating
  * `ol.Feature` objects as suggestions.
  *
- * Example #1:
- *
+ * @example
  * var bloodhound = ngeoCreateGeoJSONBloodhound(
  *   'http://example.com/fulltextsearch?query=%QUERY',
  *   aFilterFunction,
  *   ol.proj.get('EPSG:3857'));
  * bloodhound.initialize();
  *
- * Example #2:
- *
+ * @example
  * var bloodhound = ngeoCreateGeoJSONBloodhound({
  *   remote: {
  *     url: mySearchEngineUrl,
@@ -24,16 +30,7 @@
  *   }
  * }, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
  * bloodhound.initialize
- */
-
-goog.provide('ngeo.CreateGeoJSONBloodhound');
-
-goog.require('goog.array');
-goog.require('ngeo');
-goog.require('ol.format.GeoJSON');
-
-
-/**
+ *
  * @typedef {function(string, (function(GeoJSONFeature): boolean)=,
  * ol.proj.Projection=, ol.proj.Projection=):Bloodhound}
  */
