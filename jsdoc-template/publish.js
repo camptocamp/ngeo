@@ -288,13 +288,17 @@ function attachModuleSymbols(doclets, modules) {
     });
 }
 
-function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
+function buildMemberNav(items, itemHeading, itemsSeen, linktoFn, module) {
     var nav = '';
 
     if (items.length) {
         var itemsNav = '';
 
         items.forEach(function(item) {
+            if (item.memberof != module) {
+                return;
+            }
+
             if ( !hasOwnProp.call(item, 'longname') ) {
                 itemsNav += '<li>' + linktoFn('', item.name) + '</li>';
             }
@@ -338,15 +342,45 @@ function buildNav(members) {
     var nav = '<h2><a href="index.html">Home</a></h2>';
     var seen = {};
     var seenTutorials = {};
+    var modules = {};
 
-    nav += buildMemberNav(members.modules, 'Modules', {}, linkto);
-    nav += buildMemberNav(members.externals, 'Externals', seen, linktoExternal);
-    nav += buildMemberNav(members.classes, 'Classes', seen, linkto);
-    nav += buildMemberNav(members.events, 'Events', seen, linkto);
-    nav += buildMemberNav(members.namespaces, 'Namespaces', seen, linkto);
-    nav += buildMemberNav(members.mixins, 'Mixins', seen, linkto);
-    nav += buildMemberNav(members.tutorials, 'Tutorials', seenTutorials, linktoTutorial);
-    nav += buildMemberNav(members.interfaces, 'Interfaces', seen, linkto);
+    members.externals.forEach(function(item) {
+        modules[item.memberof] = true;
+    });
+    members.classes.forEach(function(item) {
+        modules[item.memberof] = true;
+    });
+    members.events.forEach(function(item) {
+        modules[item.memberof] = true;
+    });
+    members.namespaces.forEach(function(item) {
+        modules[item.memberof] = true;
+    });
+    members.mixins.forEach(function(item) {
+        modules[item.memberof] = true;
+    });
+    members.tutorials.forEach(function(item) {
+        modules[item.memberof] = true;
+    });
+    members.interfaces.forEach(function(item) {
+        modules[item.memberof] = true;
+    });
+
+    for (module in modules) {
+        var _nav = '';
+        _nav += buildMemberNav(members.externals, '', {}, linkto, module);
+        _nav += buildMemberNav(members.externals, 'Externals', seen, linktoExternal, module);
+        _nav += buildMemberNav(members.classes, 'Classes', seen, linkto, module);
+        _nav += buildMemberNav(members.events, 'Events', seen, linkto, module);
+        _nav += buildMemberNav(members.namespaces, 'Namespaces', seen, linkto, module);
+        _nav += buildMemberNav(members.mixins, 'Mixins', seen, linkto, module);
+        _nav += buildMemberNav(members.tutorials, 'Tutorials', seenTutorials, linktoTutorial, module);
+        _nav += buildMemberNav(members.interfaces, 'Interfaces', seen, linkto, module);
+        if (_nav !== '') {
+            nav += '<h2>' + module + '</h2>';
+            nav += _nav;
+        }
+    }
 
     if (members.globals.length) {
         var globalNav = '';
