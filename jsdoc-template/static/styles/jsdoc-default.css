@@ -125,7 +125,7 @@ nav ul a, nav ul a:visited, nav ul a:active {
 }
 
 nav h3 {
-    margin-top: 12px;
+    margin-top: 0;
 }
 
 nav li {
@@ -153,12 +153,22 @@ h1
     margin: 12px 24px 20px;
 }
 
-h2, h3
+h2
 {
     font-size: 30px;
     font-weight: 700;
     letter-spacing: -1px;
-    margin-bottom: 12px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+
+h3
+{
+    font-size: 23px;
+    font-weight: 7600;
+    letter-spacing: -1px;
+    margin-top: 12px;
+    margin-bottom: 6px;
 }
 
 h4
