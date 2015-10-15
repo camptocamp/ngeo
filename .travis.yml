@@ -5,6 +5,7 @@ branches:
   - master
 script:
 - make check
+- if [ ${TRAVIS_PULL_REQUEST} != "false" ] ; then git diff --check ${TRAVIS_BRANCH} -- ; fi
 after_success:
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && make gh-pages-from-travis || /bin/true'
 env:
