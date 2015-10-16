@@ -95,16 +95,17 @@ nav {
 
   header {
     display: block;
-    height: 50px;
-    line-height: 50px;
+    height: @nav-bar-height;
+    line-height: @nav-bar-height;
     padding: 0 20px;
     background-color: grey;
   }
 
+  @menu-item-height: @nav-bar-height;
   ul a {
     display: block;
-    height: 50px;
-    line-height: 50px;
+    height: @menu-item-height;
+    line-height: @menu-item-height;
     padding: 0 20px;
     color: @nav-links;
     overflow: hidden;
