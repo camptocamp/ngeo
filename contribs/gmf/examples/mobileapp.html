@@ -7,6 +7,11 @@
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="style/mobileapp.css" type="text/css">
+    <style>
+    #desc {
+      display: none;
+    }
+    </style>
   </head>
   <body ng-controller="MainController as mainCtrl"
         ng-class="{'nav-is-visible': mainCtrl.navIsVisible(),
@@ -62,6 +67,7 @@
         </li>
       </ul>
     </nav>
+    <p id="desc">This example is a mobile application based on ngeo and gmf components.</p>
     <script src="../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../node_modules/angular/angular.js"></script>
     <script src="/@?main=mobileapp.js"></script>
