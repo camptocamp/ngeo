@@ -112,11 +112,11 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 	touch $@
 
 dist/ngeo.js: buildtools/ngeo.json \
-	    $(EXTERNS_FILES) \
-	    $(SRC_JS_FILES) \
-	    .build/templatecache.js \
-	    $(EXPORTS_JS_FILES) \
-	    .build/node_modules.timestamp
+		$(EXTERNS_FILES) \
+		$(SRC_JS_FILES) \
+		.build/templatecache.js \
+		$(EXPORTS_JS_FILES) \
+		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 	@$(STAT_UNCOMPRESSED) $@
@@ -126,11 +126,11 @@ dist/ngeo.js: buildtools/ngeo.json \
 	@rm /tmp/ngeo.js.gz
 
 dist/ngeo-debug.js: buildtools/ngeo-debug.json \
-	    $(EXTERNS_FILES) \
-	    $(SRC_JS_FILES) \
-	    .build/templatecache.js \
-	    $(EXPORTS_JS_FILES) \
-	    .build/node_modules.timestamp
+		$(EXTERNS_FILES) \
+		$(SRC_JS_FILES) \
+		.build/templatecache.js \
+		$(EXPORTS_JS_FILES) \
+		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 	@$(STAT_UNCOMPRESSED) $@
@@ -146,12 +146,12 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	./node_modules/.bin/cleancss $< > $@
 
 dist/gmf.js: buildtools/gmf.json \
-	    $(EXTERNS_FILES) \
-	    $(SRC_JS_FILES) \
-	    $(GMF_SRC_JS_FILES) \
-	    .build/templatecache.js \
-	    $(EXPORTS_JS_FILES) \
-	    .build/node_modules.timestamp
+		$(EXTERNS_FILES) \
+		$(SRC_JS_FILES) \
+		$(GMF_SRC_JS_FILES) \
+		.build/templatecache.js \
+		$(EXPORTS_JS_FILES) \
+		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 	@$(STAT_UNCOMPRESSED) $@
@@ -164,21 +164,21 @@ $(GMF_EXAMPLES_CSS_FILES): %.css: $(GMF_EXAMPLES_LESS_FILES) .build/node_modules
 	./node_modules/.bin/lessc $*-main.less $@
 
 .build/examples/%.min.js: .build/examples/%.json \
-	    $(SRC_JS_FILES) \
-	    $(EXPORTS_JS_FILES) \
-	    $(EXTERNS_FILES) \
-	    examples/%.js \
-	    .build/node_modules.timestamp
+		$(SRC_JS_FILES) \
+		$(EXPORTS_JS_FILES) \
+		$(EXTERNS_FILES) \
+		examples/%.js \
+		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
 .build/examples/all.min.js: buildtools/examples-all.json \
-	    $(SRC_JS_FILES) \
-	    $(GMF_SRC_JS_FILES) \
-	    $(EXPORTS_JS_FILES) \
-	    $(EXTERNS_FILES) \
-	    .build/examples/all.js \
-	    .build/node_modules.timestamp
+		$(SRC_JS_FILES) \
+		$(GMF_SRC_JS_FILES) \
+		$(EXPORTS_JS_FILES) \
+		$(EXTERNS_FILES) \
+		.build/examples/all.js \
+		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 
@@ -237,29 +237,29 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
-	    -e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
-	    -e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
-	    -e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
-	    -e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
-	    -e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
-	    -e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
-	    -e 's|/@?main=$*.js|$*.js|' \
-	    -e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
-	    -e '/$*.js/i\    <script src="lib/ngeo.js"></script>' $< > $@
+		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
+		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
+		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
+		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
+		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
+		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
+		-e 's|/@?main=$*.js|$*.js|' \
+		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
+		-e '/$*.js/i\    <script src="lib/ngeo.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
 .build/examples-hosted/contribs/gmf/%.html: contribs/gmf/examples/%.html
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
-	    -e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
-	    -e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
-	    -e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
-	    -e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
-	    -e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
-	    -e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
-	    -e 's|/@?main=$*.js|$*.js|' \
-	    -e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
-	    -e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
+		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
+		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
+		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
+		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
+		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
+		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
+		-e 's|/@?main=$*.js|$*.js|' \
+		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
+		-e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
@@ -280,22 +280,22 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(GMF_EXAMPLES_HTML_FILES) > $@
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
-	    .build/examples-hosted/%.js \
-	    .build/examples-hosted/lib/ngeo.js \
-	    .build/examples-hosted/lib/ngeo-debug.js \
-	    .build/examples-hosted/lib/ngeo.css \
-	    .build/examples-hosted/lib/gmf.js \
-	    .build/examples-hosted/lib/angular.min.js \
-	    .build/examples-hosted/lib/bootstrap.min.js \
-	    .build/examples-hosted/lib/bootstrap.min.css \
-	    .build/examples-hosted/lib/jquery.min.js \
-	    .build/examples-hosted/lib/d3.min.js \
-	    .build/examples-hosted/lib/watchwatchers.js \
-	    .build/examples-hosted/lib/typeahead.bundle.min.js \
-	    .build/examples-hosted/data \
-	    .build/examples-hosted/partials \
-	    .build/examples-hosted/contribs/gmf/style \
-	    .build/node_modules.timestamp
+		.build/examples-hosted/%.js \
+		.build/examples-hosted/lib/ngeo.js \
+		.build/examples-hosted/lib/ngeo-debug.js \
+		.build/examples-hosted/lib/ngeo.css \
+		.build/examples-hosted/lib/gmf.js \
+		.build/examples-hosted/lib/angular.min.js \
+		.build/examples-hosted/lib/bootstrap.min.js \
+		.build/examples-hosted/lib/bootstrap.min.css \
+		.build/examples-hosted/lib/jquery.min.js \
+		.build/examples-hosted/lib/d3.min.js \
+		.build/examples-hosted/lib/watchwatchers.js \
+		.build/examples-hosted/lib/typeahead.bundle.min.js \
+		.build/examples-hosted/data \
+		.build/examples-hosted/partials \
+		.build/examples-hosted/contribs/gmf/style \
+		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
@@ -361,13 +361,13 @@ $(EXTERNS_JQUERY):
 
 .build/ol-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-	    --root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" \
-	    --root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../../../openlayers/build/ol.ext" \
-	    --output_file=$@
+		--root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" \
+		--root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../../../openlayers/build/ol.ext" \
+		--output_file=$@
 
 .build/ngeo-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-	    --root_with_prefix="src ../../../../../../../../../src" --output_file=$@
+		--root_with_prefix="src ../../../../../../../../../src" --output_file=$@
 
 # The keys in the template cache begin with "../src/directives/partials". This
 # is done so ngeo.js works for the examples on github.io. If another key
