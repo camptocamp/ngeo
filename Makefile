@@ -7,10 +7,13 @@ EXAMPLES_JS_FILES := $(shell find examples -maxdepth 1 -type f -name '*.js')
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
-GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
+GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
+GMF_EXAMPLES_LESS_FILES := $(shell find contribs/gmf/examples/style -maxdepth 1 -type f -name '*.less')
+GMF_EXAMPLES_MAIN_LESS_FILES := $(filter %-main.less, $(GMF_EXAMPLES_LESS_FILES))
+GMF_EXAMPLES_CSS_FILES := $(patsubst %-main.less,%.css,$(GMF_EXAMPLES_MAIN_LESS_FILES))
 
-BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html, .build/%.check.timestamp, $(EXAMPLES_HTML_FILES)) $(patsubst contribs/gmf/examples/%.html, .build/contribs/gmf/%.check.timestamp, $(GMF_EXAMPLES_HTML_FILES))
+BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) $(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES))
 
 EXTERNS_ANGULAR = .build/externs/angular-1.4.js
 EXTERNS_ANGULAR_Q = .build/externs/angular-1.4-q_templated.js
@@ -66,8 +69,11 @@ test: .build/ol-deps.js .build/ngeo-deps.js .build/templatecache.js .build/node_
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: serve
-serve: .build/node_modules.timestamp
+serve: .build/node_modules.timestamp $(GMF_EXAMPLES_CSS_FILES)
 	node buildtools/serve.js
+
+.PHONY: less
+less: $(GMF_EXAMPLES_CSS_FILES)
 
 .PHONY: gh-pages
 gh-pages: GIT_BRANCH = $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
@@ -153,6 +159,9 @@ dist/gmf.js: buildtools/gmf.json \
 	@$(STAT_COMPRESSED) /tmp/gmf.js.gz
 	@rm /tmp/gmf.js.gz
 
+$(GMF_EXAMPLES_CSS_FILES): %.css: $(GMF_EXAMPLES_LESS_FILES) .build/node_modules.timestamp
+	./node_modules/.bin/lessc $*-main.less $@
+
 .build/examples/%.min.js: .build/examples/%.json \
 	    $(SRC_JS_FILES) \
 	    $(EXPORTS_JS_FILES) \
@@ -211,19 +220,15 @@ dist/gmf.js: buildtools/gmf.json \
 
 .build/examples-hosted/partials: examples/partials
 	mkdir -p $@
-	cp examples/partials/* $@
-
-.build/examples-hosted/contribs/gmf/partials: contribs/gmf/examples/partials
-	mkdir -p $@
-	cp contribs/gmf/examples/partials/* $@
+	cp $</* $@
 
 .build/examples-hosted/data: examples/data
 	mkdir -p $@
 	cp examples/data/* $@
 
-.build/examples-hosted/contribs/gmf/data: contribs/gmf/examples/data
+.build/examples-hosted/contribs/gmf/style: .build/examples-hosted/contribs/gmf/%: contribs/gmf/examples/% $(GMF_EXAMPLES_CSS_FILES)
 	mkdir -p $@
-	cp contribs/gmf/examples/data/* $@
+	cp $</* $@
 
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
@@ -237,7 +242,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	    -e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
 	    -e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 	    -e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
-	    -e 's/\/@?main=$*.js/$*.js/' \
+	    -e 's|/@?main=$*.js|$*.js|' \
 	    -e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
 	    -e '/$*.js/i\    <script src="lib/ngeo.js"></script>' $< > $@
 
@@ -251,7 +256,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	    -e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
 	    -e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 	    -e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
-	    -e 's/\/@?main=$*.js/$*.js/' \
+	    -e 's|/@?main=$*.js|$*.js|' \
 	    -e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
 	    -e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
 
@@ -286,6 +291,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	    .build/examples-hosted/lib/typeahead.bundle.min.js \
 	    .build/examples-hosted/data \
 	    .build/examples-hosted/partials \
+	    .build/examples-hosted/contribs/gmf/style \
 	    .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
@@ -384,6 +390,7 @@ clean:
 	rm -f .build/templatecache.js
 	rm -f dist/*
 	rm -f $(EXTERNS_FILES)
+	rm -f $(GMF_EXAMPLES_CSS_FILES)
 	rm -rf .build/examples-hosted
 	rm -rf .build/contribs
 

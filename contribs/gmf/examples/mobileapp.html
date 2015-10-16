@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Mobile Application</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="style/mobileapp.css" type="text/css">
+  </head>
+  <body ng-controller="MainController as mainCtrl"
+        ng-class="{'nav-is-visible': mainCtrl.navIsVisible(),
+                   'nav-left-is-visible': mainCtrl.leftNavIsVisible(),
+                   'nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
+    <main>
+      <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
+      <button class="nav-trigger nav-left-trigger"
+        ng-click="mainCtrl.toggleLeftNavVisibility()">
+        < Menu
+      </button>
+      <button class="nav-trigger nav-right-trigger"
+        ng-click="mainCtrl.toggleRightNavVisibility()">
+        Menu >
+      </button>
+      <div class="overlay" ng-click="mainCtrl.hideNav()"></div>
+    </main>
+    <nav class="nav-left" app-nav>
+     <header>
+       <a class="go-back" href="#"></a>
+       <span></span>
+     </header>
+     <ul>
+       <li class="has-children">
+         <a href="#">Background</a>
+       </li>
+       <li class="has-children">
+         <a href="#">Data</a>
+       </li>
+       <li class="has-children">
+         <a href="#">Legend</a>
+       </li>
+       <li>
+         <a href="#"><hr></a>
+       </li>
+       <li>
+         <a href="#">Login</a>
+       </li>
+     </ul>
+    </nav>
+    <nav class="nav-right" app-nav>
+      <header>
+        <a class="go-back" href="#"></a>
+        <span>Tools</span>
+      </header>
+      <ul>
+        <li class="has-children">
+          <a href="#0">Measure tools</a>
+          <ul class="is-hidden">
+            <li><a href="#0">Length</a></li>
+            <li><a href="#0">Area</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="/@?main=mobileapp.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+  </body>
+</html>
