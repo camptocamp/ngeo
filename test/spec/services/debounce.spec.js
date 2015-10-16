@@ -2,7 +2,7 @@ goog.require('ngeo.Debounce');
 
 describe('ngeo.Debounce', function() {
   var ngeoDebounce;
-  var $timeout; 
+  var $timeout;
 
   beforeEach(function() {
     inject(function($injector) {
