@@ -1,11 +1,3 @@
-/**
- * @fileoverview This file provides the "map" directive for GeoMapFish
- * applications.
- *
- * Example:
- *
- * <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
- */
 goog.provide('gmf.MapController');
 goog.provide('gmf.mapDirective');
 
@@ -17,8 +9,16 @@ goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 
 
+
 /**
+ * This file provides the "map" directive for GeoMapFish
+ * applications.
+ *
+ * @example
+ * <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
+ *
  * @return {angular.Directive} The Directive Definition Object.
+ * @constructor
  * @ngInject
  */
 gmf.mapDirective = function() {

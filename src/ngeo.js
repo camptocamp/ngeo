@@ -1,3 +1,6 @@
+/**
+ * @module ngeo
+ */
 goog.provide('ngeo');
 
 

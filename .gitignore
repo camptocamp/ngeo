@@ -5,3 +5,4 @@
 /contribs/gmf/examples/style/*.css
 !/contribs/gmf/examples/style/reset.css
 *.pyc
+.*.swp

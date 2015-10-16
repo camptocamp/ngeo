@@ -1,7 +1,3 @@
-/**
- * @fileoverview Provides a service with print utility functions.
- */
-
 goog.provide('ngeo.PrintUtils');
 
 goog.require('ngeo');
@@ -9,6 +5,8 @@ goog.require('ngeo');
 
 
 /**
+ * Provides a service with print utility functions.
+ *
  * @constructor
  */
 ngeo.PrintUtils = function() {

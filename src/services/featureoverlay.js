@@ -1,21 +1,3 @@
-/**
- * @fileoverview Provides a service that wraps an "unmanaged" vector layer,
- * used as a shared vector layer accross the application.
- *
- * Example:
- *
- * The application's main component/controller initializes the feature
- * overlay manager with the map:
- *
- * ngeoFeatureOverlayMgr.init(map);
- *
- * Once initialized, components of the application can use the manager to
- * create a feature overlay, configuring it with specific styles:
- *
- * var featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
- * featureOverlay.setStyle(myStyle);
- * featureOverlay.addFeature(myFeature);
- */
 goog.provide('ngeo.FeatureOverlay');
 goog.provide('ngeo.FeatureOverlayMgr');
 
@@ -42,6 +24,25 @@ ngeo.FeatureOverlayGroup;
 
 
 /**
+ * Provides a service that wraps an "unmanaged" vector layer,
+ * used as a shared vector layer accross the application.
+ *
+ * Example:
+ *
+ * The application's main component/controller initializes the feature
+ * overlay manager with the map:
+ *
+ * @example
+ * ngeoFeatureOverlayMgr.init(map);
+ *
+ * Once initialized, components of the application can use the manager to
+ * create a feature overlay, configuring it with specific styles:
+ *
+ * @example
+ * var featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+ * featureOverlay.setStyle(myStyle);
+ * featureOverlay.addFeature(myFeature);
+ *
  * @constructor
  */
 ngeo.FeatureOverlayMgr = function() {

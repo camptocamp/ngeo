@@ -1,19 +1,3 @@
-/**
- * @fileoverview Provides a directive used to insert an elevation profile chart
- * in the DOM.
- *
- * Example:
- *
- * <div ngeo-profile="ctrl.profileData"
- *      ngeo-profile-options="ctrl.profileOptions"
- *      ngeo-profile-pois="ctrl.profilePois"
- * ></div>
- *
- * Where "ctrl.profileOptions" is of type {@link ngeox.profile.ProfileOptions);
- * "ctrl.profileData" and "ctrl.profilePois" are arrays which will be
- * processed by {@link ngeox.profile.ElevationExtractor) and
- * {@link ngeox.profile.PoiExtractor).
- */
 goog.provide('ngeo.profileDirective');
 
 goog.require('goog.asserts');
@@ -21,7 +5,23 @@ goog.require('ngeo');
 goog.require('ngeo.profile');
 
 
+
 /**
+ * Provides a directive used to insert an elevation profile chart
+ * in the DOM.
+ *
+ * @example
+ * <div ngeo-profile="ctrl.profileData"
+ *      ngeo-profile-options="ctrl.profileOptions"
+ *      ngeo-profile-pois="ctrl.profilePois"
+ * ></div>
+ *
+ * Where "ctrl.profileOptions" is of type {@link ngeox.profile.ProfileOptions};
+ * "ctrl.profileData" and "ctrl.profilePois" are arrays which will be
+ * processed by {@link ngeox.profile.ElevationExtractor} and
+ * {@link ngeox.profile.PoiExtractor}.
+ *
+ * @constructor
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  */

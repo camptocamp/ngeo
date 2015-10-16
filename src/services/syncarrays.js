@@ -1,5 +1,11 @@
+goog.provide('ngeo.SyncArrays');
+
+goog.require('goog.asserts');
+goog.require('ngeo');
+
+
 /**
- * @fileoverview Provides a function that synchronizes two arrays, arr1 and
+ * Provides a function that synchronizes two arrays, arr1 and
  * arr2. arr2 is a subset of arr1, it includes the elements of arr1 that passes
  * the filter. When elements are added to/removed from arr1, arr2 is updated to
  * include the elements of arr1 that pass the filter. When the order of
@@ -9,8 +15,7 @@
  * with the array of selected layers, where layers may be added to/removed from
  * the map, and the order of selected layers may change.
  *
- * Example:
- *
+ * @example
  * var dereg = ngeoSyncArrays(map.getLayers().getArray(), selectedLayers,
  *     true, scope, function(layer) {
  *       // exclude the layer at index 0 in the map
@@ -19,15 +24,6 @@
  *
  * This will return a function that can be called to cancel synchronization.
  *
- */
-
-goog.provide('ngeo.SyncArrays');
-
-goog.require('goog.asserts');
-goog.require('ngeo');
-
-
-/**
  * @typedef {function(Array, Array, boolean, angular.Scope,
  *     function(?):boolean)}
  */
