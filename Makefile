@@ -161,7 +161,7 @@ dist/gmf.js: buildtools/gmf.json \
 	@rm /tmp/gmf.js.gz
 
 $(GMF_EXAMPLES_CSS_FILES): %.css: $(GMF_EXAMPLES_LESS_FILES) .build/node_modules.timestamp
-	./node_modules/.bin/lessc $*-main.less $@
+	./node_modules/.bin/lessc $*-main.less $@ --autoprefix
 
 .build/examples/%.min.js: .build/examples/%.json \
 		$(SRC_JS_FILES) \

@@ -30,7 +30,7 @@
     "karma-jasmine": "^0.1.5",
     "karma-phantomjs-launcher": "^0.1.4",
     "less": "2.5.3",
-    "more-or-less": "1.5.1",
+    "less-plugin-autoprefix": "^1.5.1",
     "nomnom": "~1.6.2",
     "openlayers": "openlayers/ol3#master",
     "phantomjs": "~1.9.7-5",
