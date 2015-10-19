@@ -97,8 +97,8 @@ nav {
     display: block;
     height: @nav-bar-height;
     line-height: @nav-bar-height;
-    padding: 0 20px;
-    background-color: grey;
+    background-color: @nav-header-bg;
+    text-align: center;
   }
 
   @menu-item-height: @nav-bar-height;
@@ -163,6 +163,9 @@ nav {
   }
 
   .go-back {
+    position: absolute;
+    left: 0;
+    height: @nav-bar-height;
     padding-left: 40px;
     &::before, &::after {
       /* arrow goes on the right side - children navigation */
