@@ -12,7 +12,8 @@ goog.require('ol.Map');
  * @example
  * <gmf-locationchooser
  *   gmf-locationchooser-map="ctrl.map"
- *   gmf-locationchooser-locations="ctrl.locations">
+ *   gmf-locationchooser-locations="ctrl.locations"
+ *   gmf-locationchooser-selected="ctrl.selectedLocation">
  * </gmf-locationchooser>
  *
  * @return {angular.Directive} The directive specs.
@@ -24,8 +25,10 @@ gmf.locationchooserDirective = function() {
     restrict: 'E',
     scope: {
       'getMapFn': '&gmfLocationchooserMap',
-      'getLocationsFn': '&gmfLocationchooserLocations'
+      'getLocationsFn': '&gmfLocationchooserLocations',
+      'selectedLocation': '=gmfLocationchooserSelected'
     },
+    bindToController: true,
     controller: 'gmfLocationchooserController',
     controllerAs: 'ctrl',
     template: '<select ' +
@@ -48,13 +51,7 @@ gmfModule.directive('gmfLocationchooser', gmf.locationchooserDirective);
  */
 gmf.LocationchooserController = function($scope) {
 
-  /**
-   * @type {angular.Scope}
-   * @private
-   */
-  this.scope_ = $scope;
-
-  var map = this.scope_['getMapFn']();
+  var map = this['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
 
   /**
@@ -63,7 +60,7 @@ gmf.LocationchooserController = function($scope) {
    */
   this.map_ = map;
 
-  var locations = this.scope_['getLocationsFn']();
+  var locations = this['getLocationsFn']();
   goog.asserts.assertArray(locations);
 
   /**
@@ -76,7 +73,16 @@ gmf.LocationchooserController = function($scope) {
    * @type {gmfx.LocationchooserLocation}
    * @export
    */
-  this.selectedLocation = this.locations[0];
+  this.selectedLocation;
+
+  if (!goog.isDef(this.selectedLocation)) {
+    this.selectedLocation = this.locations[0];
+  }
+
+  $scope.$watch(goog.bind(function() {
+    return this.selectedLocation;
+  }, this), goog.bind(this.setLocation, this));
+
 };
 
 gmfModule.controller('gmfLocationchooserController',
