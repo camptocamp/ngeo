@@ -6,14 +6,14 @@ main {
   padding-top: 120px;
   text-align: center;
 
-  .transform(translateZ(0));
-  .transition(transform .3s);
+  transform: translateZ(0);
+  transition: transform .3s;
   will-change: transform;
   .nav-left-is-visible & {
-    .transform(translateX(@nav-width));
+    transform: translateX(@nav-width);
   }
   .nav-right-is-visible & {
-    .transform(translateX(-@nav-width));
+    transform: translateX(-@nav-width);
   }
 
   .overlay {
@@ -62,8 +62,8 @@ nav, nav ul {
   -webkit-overflow-scrolling: touch;
   z-index: @below-content-index;
 
-  .transform(translateZ(0));
-  .transition(transform .3s);
+  transform: translateZ(0);
+  transition: transform .3s;
 }
 
 nav > ul {
@@ -95,16 +95,17 @@ nav {
 
   header {
     display: block;
-    height: 50px;
-    line-height: 50px;
-    padding: 0 20px;
-    background-color: grey;
+    height: @nav-bar-height;
+    line-height: @nav-bar-height;
+    background-color: @nav-header-bg;
+    text-align: center;
   }
 
+  @menu-item-height: @nav-bar-height;
   ul a {
     display: block;
-    height: 50px;
-    line-height: 50px;
+    height: @menu-item-height;
+    line-height: @menu-item-height;
     padding: 0 20px;
     color: @nav-links;
     overflow: hidden;
@@ -113,17 +114,17 @@ nav {
   }
 
   a {
-    .transform(translateZ(0));
+    transform: translateZ(0);
     will-change: transform, opacity;
-    .transition(transform .3s, opacity .3s;);
+    transition: transform .3s, opacity .3s;
   }
 
   .is-hidden {
-    .transform(translateX(100%));
+    transform: translateX(100%);
   }
   .moves-out {
     & > li > a {
-      .transform(translateX(-20%));
+      transform: translateX(-20%);
       opacity: 0;
     }
   }
@@ -146,10 +147,10 @@ nav {
     }
 
     &::before {
-      .transform(rotate(45deg));
+      transform: rotate(45deg);
     }
     &::after {
-      .transform(rotate(-45deg));
+      transform: rotate(-45deg);
     }
   }
   .has-children > a {
@@ -157,16 +158,19 @@ nav {
     &::before, &::after {
       /* arrow goes on the right side - children navigation */
       right: 20px;
-      .transform-origin(9px 50%);
+      transform-origin: 9px 50%;
     }
   }
 
   .go-back {
+    position: absolute;
+    left: 0;
+    height: @nav-bar-height;
     padding-left: 40px;
     &::before, &::after {
       /* arrow goes on the right side - children navigation */
       left: 20px;
-      .transform-origin(1px 50%);
+      transform-origin: 1px 50%;
     }
   }
 }
