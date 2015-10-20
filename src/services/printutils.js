@@ -95,7 +95,8 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose =
 
 
 /**
- * Get the optimal print scale for a map.
+ * Get the optimal print scale for a map, the map being defined by its
+ * size (in pixels) and resolution (in map units per pixel).
  * @param {ol.Size} mapSize Size of the map on the screen (px).
  * @param {number} mapResolution Resolution of the map on the screen.
  * @param {ol.Size} printMapSize Size of the map on the paper (dots).
