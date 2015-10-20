@@ -48,7 +48,7 @@ app.module = angular.module('app', ['gmf']);
  *   </ul>
  * </nav>
  *
- * When an element is selected the directive changes the text in the header.
+ * When an element slides in the directive changes the text in the header.
  *
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
@@ -64,63 +64,102 @@ app.navDirective = function() {
          */
         function(scope, element, attrs) {
 
-          // hide the "go-back" link
-          element.find('> header > a').css('visibility', 'hidden');
-
-          // get the header empty text, i.e. the text to display in the
-          // header when there's no item selected
-          var headerText = /** @type {string} */
-              (element.find('> header > span').html());
+          /**
+           * Stack of slid-in items.
+           * @type {Array.<!jQuery>}
+           */
+          var slid = [];
+          /**
+           * Currently active sliding box.
+           * @type {!jQuery}
+           */
+          var active = $(element.find('.active.slide'));
 
           /**
-           * Stack of selected items.
-           * @type {Array.<jQuery>}
+           * The navigation header.
+           * @type {!jQuery}
            */
-          var selected = [];
+          var header = $(element.find('> header'));
 
-          // watch for clicks on items with children
-          element.find('.has-children > a').on('click', function() {
+          /**
+           * The back button in the navigation header.
+           * @type {!jQuery}
+           */
+          var backButton = $(element.find('header > .go-back'));
+
+          // watch for clicks on "slide-in" elements
+          element.find('[data-toggle=slide-in]').on('click', function() {
+
+            // the element to slide out is the div.slide parent
+            var slideOut = $(this).parents('.slide');
+
             // push the item to the selected stack
-            selected.push($(this));
+            slid.push(slideOut);
 
-            // remove the is-hidden class from the next ul, if any
-            $(this).next('ul').removeClass('is-hidden');
+            // slide the "old" element out
+            slideOut.addClass('slide-out').removeClass('active');
 
-            // add the moves-out class to the parent ul
-            $(this).parents('ul').addClass('moves-out');
+            // element to slide in
+            var slideIn = $($(this).attr('href'));
 
-            // show the "go-back" link in the header
-            element.find('> header > a').css('visibility', 'visible');
+            // slide the "new" element in
+            slideIn.addClass('active');
 
-            // change the header's text
-            var html = /** @type {string} */ ($(this).html());
-            element.find('> header > span').html(html);
+            // update the navigation header
+            updateNavigationHeader(slideIn, false);
+
+            active = slideIn;
           });
 
           // watch for clicks on the header "go-back" link
-          element.find('> header > a').on('click', function() {
-            // get the currently selected item
-            var item = selected.pop();
+          backButton.click(function() {
+            // slide active item to the right
+            active.removeClass('active');
 
-            // add the is-hidden class to the next ul, if any
-            item.next('ul').addClass('is-hidden');
+            // get the previously active item
+            var slideBack = slid.pop();
 
-            // remove the moves-out class from the parent ul
-            item.parents('ul').removeClass('moves-out');
+            // slide previous item to the right
+            slideBack.addClass('active').removeClass('slide-out');
 
-            // get the next selected item
-            item = selected[selected.length - 1];
-            if (item) {
-              // update the header's text
-              var html = /** @type {string} */ (item.html());
-              element.find('> header > span').html(html);
-            } else {
-              // reset the header's text to the "empty text" value
-              $(this).next('span').html(headerText);
-              // hide the "go-back" link in the header
-              $(this).css('visibility', 'hidden');
-            }
+            // update the navigation header
+            updateNavigationHeader(slideBack, true);
+
+            active = slideBack;
           });
+
+          /**
+           * @param {!jQuery} active The currently active sliding box.
+           * @param {boolean} back Whether to move back.
+           */
+          function updateNavigationHeader(active, back) {
+            header.toggleClass('back', back);
+
+            // remove any inactive nav
+            header.find('nav:not(.active)').remove();
+
+            // deactivate the currently active nav
+            header.find('nav.active').removeClass('active')
+                .addClass('slide-out');
+
+            // show the back button when relevant
+            backButton.toggleClass('active', slid.length > 0);
+
+            // create a new nav
+            var nav = $('<nav>');
+            nav.append($('<span>', {
+              text: active.attr('data-header-title')
+            }));
+            header.append(nav);
+
+            // Delay the activation of the new navigation so that the previous
+            // one is properly deactivated. This prevents weird animation
+            // effects.
+            window.setTimeout(function() {
+              nav.addClass('active');
+            }, 0);
+          }
+
         }
   };
 };
