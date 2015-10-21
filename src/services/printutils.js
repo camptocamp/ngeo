@@ -95,7 +95,8 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose =
 
 
 /**
- * Get the optimal print scale for a map.
+ * Get the optimal print scale for a map, the map being defined by its
+ * size (in pixels) and resolution (in map units per pixel).
  * @param {ol.Size} mapSize Size of the map on the screen (px).
  * @param {number} mapResolution Resolution of the map on the screen.
  * @param {ol.Size} printMapSize Size of the map on the paper (dots).
@@ -127,6 +128,30 @@ ngeo.PrintUtils.prototype.getOptimalScale = function(
   }
 
   return optimal;
+};
+
+
+/**
+ * Get the optimal map resolution for a print scale and a map size.
+ * @param {ol.Size} mapSize Size of the map on the screen (px).
+ * @param {ol.Size} printMapSize Size of the map on the paper (dots).
+ * @param {number} printMapScale Map scale on the paper.
+ * @return {number} The optimal map resolution.
+ */
+ngeo.PrintUtils.prototype.getOptimalResolution = function(
+    mapSize, printMapSize, printMapScale) {
+
+  var dotsPerMeter =
+      ngeo.PrintUtils.DOTS_PER_INCH_ * ngeo.PrintUtils.INCHES_PER_METER_;
+
+  var resolutionX = (printMapSize[0] * printMapScale) /
+      (dotsPerMeter * mapSize[0]);
+  var resolutionY = (printMapSize[1] * printMapScale) /
+      (dotsPerMeter * mapSize[1]);
+
+  var optimalResolution = Math.max(resolutionX, resolutionY);
+
+  return optimalResolution;
 };
 
 
