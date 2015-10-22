@@ -41,6 +41,13 @@ app.MainController = function() {
     extent: [12044030, -4921322, 17914393, -1007746]
   }];
 
+
+  /**
+   * @type {gmfx.LocationchooserLocation}
+   * @export
+   */
+  this.selectedLocation = this.locations[2];
+
   /**
    * @type {ol.Map}
    * @export
