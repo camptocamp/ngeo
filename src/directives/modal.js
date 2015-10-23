@@ -23,6 +23,9 @@ goog.require('ngeo');
  *   <div class="modal-body">Some content</div>
  * </ngeo-modal>
  *
+ * Note: for z-indexing purpose, the modal DOM element is automatically moved
+ * to document body element.
+ *
  * @constructor
  * @param {angular.$parse} $parse Angular parse service.
  * @return {angular.Directive} The directive specs.
@@ -47,6 +50,9 @@ ngeo.modalDirective = function($parse) {
          */
         function(scope, element, attrs) {
           var modal = element.children();
+          // move the modal to document body to ensure that it is on top of
+          // other elements even if in a positioned element initially.
+          angular.element(document.body).append(modal);
 
           var shownGet = $parse(attrs['ngeoModalShown']);
           var shownSet = shownGet.assign;
