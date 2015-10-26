@@ -253,13 +253,12 @@ gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
 
 /**
  * @param {jQuery.Event} event Event.
- * @param {Object} suggestion Suggestion.
+ * @param {ol.Feature} feature Feature.
  * @param {TypeaheadDataset} dataset Dataset.
  * @this {gmf.SearchController}
  * @private
  */
-gmf.SearchController.selected_ = function(event, suggestion, dataset) {
-  var feature = /** @type {ol.Feature} */ (suggestion);
+gmf.SearchController.selected_ = function(event, feature, dataset) {
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
   this.featureOverlay_.clear();
