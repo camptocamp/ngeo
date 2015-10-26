@@ -259,7 +259,6 @@ gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
  * @private
  */
 gmf.SearchController.selected_ = function(event, suggestion, dataset) {
-  var map = /** @type {ol.Map} */ (this.map_);
   var feature = /** @type {ol.Feature} */ (suggestion);
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
@@ -267,8 +266,8 @@ gmf.SearchController.selected_ = function(event, suggestion, dataset) {
   this.featureOverlay_.addFeature(feature);
   var fitArray = featureGeometry.getType() === 'GeometryCollection' ?
       featureGeometry.getExtent() : featureGeometry;
-  var mapSize = /** @type {ol.Size} */ (map.getSize());
-  map.getView().fit(fitArray, mapSize,
+  var mapSize = /** @type {ol.Size} */ (this.map_.getSize());
+  this.map_.getView().fit(fitArray, mapSize,
       /** @type {olx.view.FitOptions} */ ({maxZoom: 16}));
 };
 
