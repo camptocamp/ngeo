@@ -6,7 +6,6 @@ goog.require('ngeo');
 goog.require('ol.Map');
 
 
-
 /**
  * Provides a directive that resizes the map in an animation loop
  * during 1 second when the value of "state" changes. This is especially useful
@@ -18,7 +17,6 @@ goog.require('ol.Map');
  *        ngeo-resizemap-state="open"><div>
  *   <input type="checkbox" ng-model="ctrl.open" />
  *
- * @constructor
  * @param {angular.$window} $window Angular window service.
  * @param {angular.$animate} $animate Angular animate service.
  * @return {angular.Directive} The directive specs.

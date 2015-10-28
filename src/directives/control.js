@@ -6,7 +6,6 @@ goog.require('ol.Map');
 goog.require('ol.control.Control');
 
 
-
 /**
  * Provides a directive can be used to add a control to a DOM
  * element of the HTML page.
@@ -18,7 +17,6 @@ goog.require('ol.control.Control');
  * instance, and the expression passed to "ngeo-control-map" should
  * evaluate to a map instance.
  *
- * @constructor
  * @return {angular.Directive} The directive specs.
  * @ngInject
  */

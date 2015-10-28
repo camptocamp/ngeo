@@ -26,7 +26,6 @@ ngeoModule.value('ngeoScaleselectorTemplateUrl',
 ngeo.ScaleselectorOptions;
 
 
-
 /**
  * Provides the "ngeoScaleselector" directive, a widget for
  * selecting map scales.
@@ -64,7 +63,6 @@ ngeo.ScaleselectorOptions;
  * The directive doesn't create any watcher. In particular the object including
  * the scales information is now watched.
  *
- * @constructor
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
  * @return {angular.Directive} Directive Definition Object.

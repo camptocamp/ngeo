@@ -22,7 +22,6 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
     });
 
 
-
 /**
  * Provides the "ngeoLayertree" directive, a directive for
  * creating layer trees in application.
@@ -72,7 +71,6 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
  * controller: "layertreeCtrl". You can refer to that property in a custom
  * template for example.
  *
- * @constructor
  * @param {angular.$compile} $compile Angular compile service.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoLayertreeTemplateUrl Template URL for the directive.

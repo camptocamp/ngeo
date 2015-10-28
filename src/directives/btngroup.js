@@ -5,7 +5,6 @@ goog.provide('ngeo.btngroupDirective');
 goog.require('ngeo');
 
 
-
 /**
  * Provides two directives: ngeo-btn-group and ngeo-btn.
  *
@@ -30,7 +29,6 @@ goog.require('ngeo');
  * This example is about creating a Bootstrap button that can pressed/depressed
  * to activate/deactivate an OpenLayers 3 interaction.
  *
- * @constructor
  * @return {angular.Directive} The directive specs.
  * @ngInject
  */

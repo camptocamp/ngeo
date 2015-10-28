@@ -10,7 +10,6 @@ goog.require('ol.Map');
 goog.require('ol.proj');
 
 
-
 /**
  * This file provides the "search" directive and controller for
  * a GeoMapFish application.
@@ -28,7 +27,6 @@ goog.require('ol.proj');
  * </gmf-search>
  *
  * @return {angular.Directive} The Directive Definition Object.
- * @constructor
  * @ngInject
  */
 gmf.searchDirective = function() {

@@ -9,7 +9,6 @@ goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 
 
-
 /**
  * This file provides the "map" directive for GeoMapFish
  * applications.
@@ -18,7 +17,6 @@ goog.require('ol.Map');
  * <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
  *
  * @return {angular.Directive} The Directive Definition Object.
- * @constructor
  * @ngInject
  */
 gmf.mapDirective = function() {
