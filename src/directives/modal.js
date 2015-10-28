@@ -1,18 +1,24 @@
 goog.provide('ngeo.modalDirective');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 
 
 /**
- * Provides the "ngeoModal" directive. This directive allows
- * displaying a modal window. The directive takes care or the show/hide
- * actions.
+ * Provides the "ngeoModal" directive.
  *
- * This directive requires Bootstrap's `modal` classes and associated jQuery
- * plugin.
+ * This directive shows a Bootstrap modal when the `ngModel` expression
+ * evaluates to `true`, and it hides it when the `ngModel` expression
+ * evaluates to `false`.
+ *
+ * The directives also changes the `ngModel` value when the user manually
+ * closes the modal.
+ *
+ * This directive is based on Bootstrap's `modal` classes and associated
+ * jQuery plugin.
  *
  * @example
- * <ngeo-modal ngeo-modal-shown="modalShown">
+ * <ngeo-modal ng-model="modalShown">
  *   <div class="modal-header">
  *     <button type="button" class="close" data-dismiss="modal"
  *         aria-hidden="true">&times;</button>
@@ -38,35 +44,31 @@ ngeo.modalDirective = function($parse) {
         '</div>' +
         '</div>',
     restrict: 'E',
+    require: 'ngModel',
     transclude: true,
     link:
         /**
          * @param {!angular.Scope} scope Scope.
          * @param {angular.JQLite} element Element.
          * @param {angular.Attributes} attrs Attributes.
+         * @param {angular.NgModelController} ngModelController The ngModel
+         * controller.
          */
-        function(scope, element, attrs) {
+        function(scope, element, attrs, ngModelController) {
           var modal = element.children();
           // move the modal to document body to ensure that it is on top of
           // other elements even if in a positioned element initially.
           angular.element(document.body).append(modal);
 
-          var shownGet = $parse(attrs['ngeoModalShown']);
-          var shownSet = shownGet.assign;
+          ngModelController.$render = function() {
+            modal.modal(ngModelController.$viewValue ? 'show' : 'hide');
+          };
 
-          scope.$watch(attrs['ngeoModalShown'], function(value) {
-            modal.modal(value ? 'show' : 'hide');
-          });
-
-          modal.on('shown.bs.modal', function() {
+          modal.on('shown.bs.modal hidden.bs.modal', function(e) {
+            var type = e.type;
+            goog.asserts.assert(type == 'shown' || type == 'hidden');
             scope.$apply(function() {
-              shownSet(scope, true);
-            });
-          });
-
-          modal.on('hidden.bs.modal', function() {
-            scope.$apply(function() {
-              shownSet(scope, false);
+              ngModelController.$setViewValue(type == 'shown');
             });
           });
         }
