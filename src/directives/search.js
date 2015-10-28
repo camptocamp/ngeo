@@ -3,7 +3,6 @@ goog.provide('ngeo.searchDirective');
 goog.require('ngeo');
 
 
-
 /**
  * Provides the "ngeoSearch" directive, which uses Twitter's
  * typeahead component to change an input text into a search field.
@@ -14,7 +13,6 @@ goog.require('ngeo');
  *   ngeo-search-datasets="ctrl.typeaheadDatasets"
  *   ngeo-search-listeners="crtl.typeaheadListeners">
  *
- * @constructor
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  */

@@ -5,7 +5,6 @@ goog.require('gmf');
 goog.require('ol.Map');
 
 
-
 /**
  * This file provides a directive that creates an option list.
  * The options serve to switch quickly between differents places on the map.
@@ -17,7 +16,6 @@ goog.require('ol.Map');
  * </gmf-locationchooser>
  *
  * @return {angular.Directive} The directive specs.
- * @constructor
  * @ngInject
  */
 gmf.locationchooserDirective = function() {

@@ -1,8 +1,6 @@
-
 goog.provide('ngeo.modalDirective');
 
 goog.require('ngeo');
-
 
 
 /**
@@ -26,7 +24,6 @@ goog.require('ngeo');
  * Note: for z-indexing purpose, the modal DOM element is automatically moved
  * to document body element.
  *
- * @constructor
  * @param {angular.$parse} $parse Angular parse service.
  * @return {angular.Directive} The directive specs.
  * @ngInject

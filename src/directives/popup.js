@@ -13,7 +13,6 @@ ngeo.popupTemplateUrl = 'partials/popup.html';
 ngeoModule.value('ngeoPopupTemplateUrl', ngeo.popupTemplateUrl);
 
 
-
 /**
  * Provides a directive used to show a popup over the page with
  * a title and content.
@@ -29,7 +28,6 @@ ngeoModule.value('ngeoPopupTemplateUrl', ngeo.popupTemplateUrl);
  * - The directive doesn't create any scope but relies on its parent scope.
  *   Properties like 'content', 'title' or 'open' come from the parent scope.
  *
- * @constructor
  * @param {string} ngeoPopupTemplateUrl Url to popup template.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject

@@ -5,7 +5,6 @@ goog.require('ngeo');
 goog.require('ngeo.profile');
 
 
-
 /**
  * Provides a directive used to insert an elevation profile chart
  * in the DOM.
@@ -21,7 +20,6 @@ goog.require('ngeo.profile');
  * processed by {@link ngeox.profile.ElevationExtractor} and
  * {@link ngeox.profile.PoiExtractor}.
  *
- * @constructor
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  */

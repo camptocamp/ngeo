@@ -16,7 +16,6 @@ goog.require('ngeo');
 ngeo.SortableOptions;
 
 
-
 /**
  * Provides the "ngeoSortable" directive. This directive allows
  * drag-and-dropping DOM items between them. The directive also changes the
@@ -44,7 +43,6 @@ ngeo.SortableOptions;
  * if some outside code adds/removes elements to/from the "sortable" array,
  * the "ngeoSortable" directive will pick it up.
  *
- * @constructor
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @return {angular.Directive} The directive specs.
  * @ngInject
