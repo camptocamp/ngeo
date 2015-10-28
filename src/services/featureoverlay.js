@@ -170,7 +170,7 @@ ngeo.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {ol.Feature|ol.render.Feature} feature Feature.
  * @param {number} resolution Resolution.
  * @return {Array.<ol.style.Style>} Styles.
  * @private
