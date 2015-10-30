@@ -18,7 +18,7 @@
   <body ng-controller="MainController as ctrl">
     <p id="desc">This example shows how to use the <code>ngeo-modal</code> directive to open a modal.</p>
     <button ng-click="ctrl.modalShown = true">Show modal</button>
-    <ngeo-modal ngeo-modal-shown="ctrl.modalShown">
+    <ngeo-modal ng-model="ctrl.modalShown">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
