@@ -348,7 +348,7 @@ $(EXTERNS_JQUERY):
 	touch $@
 
 .build/python-venv/bin/mako-render: .build/python-venv
-	.build/python-venv/bin/pip install "Mako==1.0.0"
+	.build/python-venv/bin/pip install "Mako==1.0.0" "htmlmin==0.1.10"
 	touch $@
 
 .build/beautifulsoup4.timestamp: .build/python-venv
