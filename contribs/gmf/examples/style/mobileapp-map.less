@@ -1,9 +1,164 @@
+@font-face {
+  font-family: "gmf-icons";
+  src: url("webfonts/gmf-icons.eot");
+  src: url("webfonts/gmf-icons.eot?#iefix") format("embedded-opentype"),
+       url("webfonts/gmf-icons.woff") format("woff"),
+       url("webfonts/gmf-icons.ttf") format("truetype"),
+       url("webfonts/gmf-icons.svg#gmf-icons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+main>* {
+  position: absolute;
+}
+
+main button {
+  height: @map-tools-size;
+  width: @map-tools-size;
+  background-color: @map-tools-bg-color;
+  border: solid 1px @map-tools-color;
+  color: @map-tools-color;
+  padding: 0;
+  &:after, &:before {
+    font-family: gmf-icons;
+    color: @map-tools-color;
+    font-size: @map-tools-size;
+    margin-left: 4px;
+  }
+  &:hover {
+    background-color: @onhover-color;
+    cursor: pointer;
+  }
+}
+
 gmf-map {
+  position: initial;
   > div {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+  }
+}
+
+.ol-zoom {
+  background-color: transparent;
+  right: 0;
+  left: auto;
+  top: 52px;
+  margin: 10px;
+  button {
+    margin-bottom: 3px;
+    height: @map-tools-size;
+    width: @map-tools-size;
+    background-color: @map-tools-bg-color;
+    border: solid 1px @map-tools-color;
+    color: @map-tools-color;
+    &:hover {
+      background-color: @onhover-color;
+    }
+  }
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.ol-attribution {
+  display:none;
+}
+
+.ol-scale-line, .ol-scale-line-inner {
+  background-color: @map-tools-bg-color;
+  border-color: @map-tools-color;
+  border-width: 2px;
+  color: @map-tools-color;
+}
+
+.search {
+  top: @app-margin;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 6px 10px;
+  background-color: @map-tools-bg-color;
+  width: 162px + @map-tools-size + @map-tools-size;
+  border-radius: 25px;
+  border: solid 1px @map-tools-color;
+  z-index: @content-index;
+  input {
+    width: 150px;
+    padding: 0 5px;
+    border-width: 0 1px;
+    border-radius: 0;
+  }
+}
+
+.nav-trigger {
+  top: @app-margin;
+  margin-top: 2px;
+  background-color: transparent;
+  border: none;
+  z-index: @above-content-index;
+}
+
+.nav-left-trigger {
+  margin-left: -102px;
+  &:after {
+    content: 'a';
+  }
+}
+
+.nav-right-trigger {
+  margin-left: 77px;
+  &:after {
+    content: 'd';
+  }
+}
+
+//For tablet only
+@media (min-width: @screen-sm-min) {
+  .ol-zoom {
+    top: auto;
+    bottom: 36px;
+  }
+
+  .search {
+    left: 26px + @map-tools-size;
+    padding: 3px 10px;
+    right: auto;
+    height: @map-tools-size;
+    width: 200px;
+    input {
+      width: 150px;
+      margin: 0;
+      border: none;
+    }
+    &:before {
+      content: 'c';
+      float: left;
+      font-family: gmf-icons;
+      color: grey;
+      font-size: 1.5em;
+      width: 0.5em;
+    }
+  }
+
+  .nav-trigger {
+    top: @app-margin;
+    margin: 0;
+    background-color: @map-tools-bg-color;
+    border: solid 1px @map-tools-color;
+  }
+
+  .nav-left-trigger {
+    left: @app-margin;
+  }
+
+  .nav-right-trigger {
+    left: auto;
+    right: @app-margin;
   }
 }
