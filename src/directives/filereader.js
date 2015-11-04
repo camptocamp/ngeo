@@ -7,10 +7,12 @@ goog.require('ngeo');
  * This directive is to used on an input file element. When a file is selected
  * the directive uses the browser `FileReader` API to read the file. The file
  * content is provided to the directive user through the assignable expression.
- * Only works for text file (`readAsText` used for reading the file).
+ * Only works for text files (`readAsText` used for reading the file). And does
+ * not work in Internet Explorer 9.
  *
  * @example
- * <input type="file" ngeo-filereader="ctrl.fileContent" />
+ * <input type="file" ngeo-filereader="ctrl.fileContent"
+ *        ngeo-filereader-supported="ctrl.supported"/>
  *
  * @param {angular.$window} $window The Angular $window service.
  * @return {angular.Directive} Directive Definition Object.

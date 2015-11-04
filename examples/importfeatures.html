@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Import features example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
+    <style>
+      #map {
+        width: 600px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+    <input id="export" type="file" ngeo-filereader="ctrl.fileContent" ngeo-filereader-supported="ctrl.fileReaderSupported" />
+    <p ng-hide="::ctrl.fileReaderSupported">Your browser doesn't support the <code>FileReader</code> API! IE 9?</p>
+    <p id="desc">This example shows how to use the <code>ngeo-filereader</code> directive to import features from a KML file read from the user's file system.</p>
+    <p>You can download and use the <a href="http://openlayers.org/en/master/examples/data/kml/2012-02-10.kml">2012-02-10.kml file</a> from the OpenLayers examples for testing.</p>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="/@?main=importfeatures.js"></script>
+    <script src="../utils/watchwatchers.js"></script>
+  </body>
+</html>
