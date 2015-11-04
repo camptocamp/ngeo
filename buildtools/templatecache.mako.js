@@ -7,16 +7,15 @@
 <%
   import re
   import os
+  import htmlmin
   _partials = {}
   basedirparts = basedir.split('/')
   for p in partials.split(' '):
       parts = basedirparts + [p]
       f = file(os.path.join(*parts))
       content = unicode(f.read().decode('utf8'))
-      content = re.sub(r'>\s*<' , '><', content)
-      content = re.sub(r'\s\s+', ' ', content)
-      content = re.sub(r'\n', '', content)
       content = re.sub(r"'", "\\'", content)
+      content = htmlmin.minify(content, remove_comments=True)
       _partials[p] = content
 %>\
 /**
