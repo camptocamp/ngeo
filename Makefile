@@ -373,7 +373,7 @@ $(EXTERNS_JQUERY):
 # is done so ngeo.js works for the examples on github.io. If another key
 # pattern is needed this should be changed.
 .build/templatecache.js: buildtools/templatecache.mako.js .build/python-venv/bin/mako-render
-	.build/python-venv/bin/mako-render --var "partials=$(addprefix ../,$(SRC_DIRECTIVES_PARTIALS_FILES))" --var "basedir=src" $< > $@
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render --var "partials=$(addprefix ../,$(SRC_DIRECTIVES_PARTIALS_FILES))" --var "basedir=src" $< > $@
 
 .build/apidoc-%: .build/node_modules.timestamp jsdoc.json $(SRC_JS_FILES)
 	rm -rf $@
