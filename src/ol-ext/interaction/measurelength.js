@@ -57,18 +57,8 @@ ngeo.interaction.MeasureLength.prototype.getDrawInteraction = function(style,
 ngeo.interaction.MeasureLength.prototype.handleMeasure = function(callback) {
   var geom = /** @type {ol.geom.LineString} */
       (this.sketchFeature.getGeometry());
-  var output = this.formatMeasure_(geom);
+  var proj = this.getMap().getView().getProjection();
+  var output = ngeo.interaction.Measure.getFormattedLength(geom, proj);
   var coord = geom.getLastCoordinate();
   callback(output, coord);
-};
-
-
-/**
- * Format measure output.
- * @param {ol.geom.LineString} line
- * @return {string}
- * @private
- */
-ngeo.interaction.MeasureLength.prototype.formatMeasure_ = function(line) {
-  return this.formatLength(line);
 };
