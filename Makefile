@@ -193,6 +193,10 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/angular-gettext.min.js: node_modules/angular-gettext/dist/angular-gettext.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/bootstrap.min.js: node_modules/bootstrap/dist/js/bootstrap.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -247,6 +251,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
+		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext.js|lib/angular-gettext.min.js|' \
 		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|/@?main=$*.js|$*.js|' \
@@ -261,6 +266,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
+		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext.js|lib/angular-gettext.min.js|' \
 		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|/@?main=$*.js|$*.js|' \
@@ -308,6 +314,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/examples-hosted/lib/ngeo.css \
 		.build/examples-hosted/lib/gmf.js \
 		.build/examples-hosted/lib/angular.min.js \
+		.build/examples-hosted/lib/angular-gettext.min.js \
 		.build/examples-hosted/lib/bootstrap.min.js \
 		.build/examples-hosted/lib/bootstrap.min.css \
 		.build/examples-hosted/lib/jquery.min.js \
