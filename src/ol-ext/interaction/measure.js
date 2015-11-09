@@ -195,6 +195,57 @@ goog.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
 
 
 /**
+ * Calculate the area of the passed polygon and return a formatted string
+ * of the area.
+ * @param {ol.geom.Polygon} polygon Polygon.
+ * @param {ol.proj.Projection} projection Projection of the polygon coords.
+ * @return {string} Formatted string of the area.
+ */
+ngeo.interaction.Measure.getFormattedArea = function(polygon, projection) {
+  var geom = /** @type {ol.geom.Polygon} */ (
+      polygon.clone().transform(projection, 'EPSG:4326'));
+  var coordinates = geom.getLinearRing(0).getCoordinates();
+  var area = Math.abs(ol.sphere.WGS84.geodesicArea(coordinates));
+  var output;
+  if (area > 1000000) {
+    output = parseFloat((area / 1000000).toPrecision(3)) +
+        ' ' + 'km<sup>2</sup>';
+  } else {
+    output = parseFloat(area.toPrecision(3)) + ' ' + 'm<sup>2</sup>';
+  }
+  return output;
+};
+
+
+/**
+ * Calculate the length of the passed line string and return a formatted
+ * string of the length.
+ * @param {ol.geom.LineString} lineString Line string.
+ * @param {ol.proj.Projection} projection Projection of the line string coords.
+ * @return {string} Formatted string of length.
+ */
+ngeo.interaction.Measure.getFormattedLength =
+    function(lineString, projection) {
+  var length = 0;
+  var coordinates = lineString.getCoordinates();
+  for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+    var c1 = ol.proj.transform(coordinates[i], projection, 'EPSG:4326');
+    var c2 = ol.proj.transform(coordinates[i + 1], projection, 'EPSG:4326');
+    length += ol.sphere.WGS84.haversineDistance(c1, c2);
+  }
+  var output;
+  if (length > 1000) {
+    output = parseFloat((length / 1000).toPrecision(3)) +
+        ' ' + 'km';
+  } else {
+    output = parseFloat(length.toPrecision(3)) +
+        ' ' + 'm';
+  }
+  return output;
+};
+
+
+/**
  * Handle map browser event.
  * @param {ol.MapBrowserEvent} evt Map browser event.
  * @return {boolean} `false` if event propagation should be stopped.
@@ -371,34 +422,6 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
     this.removeMeasureTooltip_();
     this.removeHelpTooltip_();
   }
-};
-
-
-/**
- * Format measure output.
- * @param {ol.geom.LineString} line
- * @return {string}
- * @protected
- */
-ngeo.interaction.Measure.prototype.formatLength = function(line) {
-  var length = 0;
-  var map = this.getMap();
-  var sourceProj = map.getView().getProjection();
-  var coordinates = line.getCoordinates();
-  for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-    var c1 = ol.proj.transform(coordinates[i], sourceProj, 'EPSG:4326');
-    var c2 = ol.proj.transform(coordinates[i + 1], sourceProj, 'EPSG:4326');
-    length += ol.sphere.WGS84.haversineDistance(c1, c2);
-  }
-  var output;
-  if (length > 1000) {
-    output = parseFloat((length / 1000).toPrecision(3)) +
-        ' ' + 'km';
-  } else {
-    output = parseFloat(length.toPrecision(3)) +
-        ' ' + 'm';
-  }
-  return output;
 };
 
 
