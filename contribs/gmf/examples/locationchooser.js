@@ -63,7 +63,6 @@ app.MainController = function() {
       zoom: 4
     })
   });
-
 };
 
 
