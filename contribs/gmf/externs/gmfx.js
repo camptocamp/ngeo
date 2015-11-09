@@ -108,3 +108,18 @@ gmfx.LocationchooserLocation.prototype.label;
  * @type {Array.<number>}
  */
 gmfx.LocationchooserLocation.prototype.extent;
+
+
+/**
+ * @typedef {{
+ *     exportgpxkml: string
+ * }}
+ */
+gmfx.ServiceUrls;
+
+
+/**
+ * URL to the "exportgpxkml" service.
+ * @type {string}
+ */
+gmfx.ServiceUrls.prototype.exportgpxkml;
