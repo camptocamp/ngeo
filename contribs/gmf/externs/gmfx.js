@@ -15,15 +15,25 @@ var gmfx;
 /**
  * Datasource configuration options for the search directive.
  * @typedef {{
+ *    bloodhoundOptions: (BloodhoundOptions|undefined),
  *    datasetTitle: (string|undefined),
  *    labelKey: string,
  *    groupsKey: (string|undefined),
  *    groupValues: (Array.<string>|undefined),
  *    projection: (string|undefined),
+ *    typeaheadDatasetOptions: (TypeaheadDataset|undefined),
  *    url: string
  * }}
  */
 gmfx.SearchDirectiveDatasource;
+
+
+/**
+ * The optional Bloodhound configuration for this data set.
+ * See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
+ * @type {BloodhoundOptions|undefined}
+ */
+gmfx.SearchDirectiveDatasource.prototype.bloodhoundOptions;
 
 
 /**
@@ -62,6 +72,15 @@ gmfx.SearchDirectiveDatasource.prototype.groupValues;
  * @type {string|undefined}
  */
 gmfx.SearchDirectiveDatasource.prototype.projection;
+
+
+/**
+ * The optional Typeahead configuration for this dataset.
+ * See: https://github.com/twitter/typeahead.js/blob/master/
+ * doc/jquery_typeahead.md#datasets
+ * @type {TypeaheadDataset|undefined}
+ */
+gmfx.SearchDirectiveDatasource.prototype.typeaheadDatasetOptions;
 
 
 /**

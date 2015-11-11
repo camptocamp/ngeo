@@ -19,40 +19,46 @@ goog.require('ol.format.GeoJSON');
  * bloodhound.initialize();
  *
  * @example
- * var bloodhound = ngeoCreateGeoJSONBloodhound({
- *   remote: {
- *     url: mySearchEngineUrl,
- *     replace: function(url, query) {
- *       return url +
- *           '?qtext=' + encodeURIComponent(query) +
- *           '&lang=' + gettextCatalog.currentLanguage;
+ * var bloodhound = ngeoCreateGeoJSONBloodhound(
+ *   '',
+ *   undefined,
+ *   ol.proj.get('EPSG:3857'),
+ *   ol.proj.get('EPSG:21781'),
+ *   {
+ *     remote: {
+ *       url: mySearchEngineUrl,
+ *       replace: function(url, query) {
+ *         return url +
+ *             '?qtext=' + encodeURIComponent(query) +
+ *             '&lang=' + gettextCatalog.currentLanguage;
+ *       }
  *     }
  *   }
- * }, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
+ * );
  * bloodhound.initialize
  *
  * @typedef {function(string, (function(GeoJSONFeature): boolean)=,
- * ol.proj.Projection=, ol.proj.Projection=):Bloodhound}
+ * ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=):Bloodhound}
  */
 ngeo.CreateGeoJSONBloodhound;
 
 
 /**
- * @param {BloodhoundOptions|string} options Bloodhound options or a URL to the
- *     search service. If a URL is provided then default Bloodhound options are
- *     used.
+ * @param {string} url an URL to a search service.
  * @param {(function(GeoJSONFeature): boolean)=} opt_filter function to filter
- * results.
+ *     results.
  * @param {ol.proj.Projection=} opt_featureProjection Feature projection.
  * @param {ol.proj.Projection=} opt_dataProjection Data projection.
+ * @param {BloodhoundOptions=} opt_options optional Bloodhound options. If
+ *     undefined, the default Bloodhound config will be used.
  * @return {Bloodhound} The Bloodhound object.
  */
-ngeo.createGeoJSONBloodhound = function(options, opt_filter,
-    opt_featureProjection, opt_dataProjection) {
+ngeo.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
+    opt_dataProjection, opt_options) {
   var geojsonFormat = new ol.format.GeoJSON();
   var bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {
-      url: goog.isString(options) ? options : '',
+      url: url,
       prepare: function(query, settings) {
         settings.url = settings.url.replace('%QUERY', query);
         settings.dataType = 'jsonp';
@@ -80,8 +86,8 @@ ngeo.createGeoJSONBloodhound = function(options, opt_filter,
     datumTokenizer: goog.nullFunction,
     queryTokenizer: Bloodhound.tokenizers.whitespace
   });
-  if (!goog.isString(options)) {
-    goog.object.extend(bloodhoundOptions, options);
+  if (opt_options) {
+    goog.object.extend(bloodhoundOptions, opt_options);
   }
   return new Bloodhound(bloodhoundOptions);
 };
