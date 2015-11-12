@@ -51,19 +51,19 @@ ngeo.searchDirective = function() {
           var typeaheadListeners = ngeo.searchDirective.adaptListeners_(
               typeaheadListeners_);
 
-          element.on('typeahead:opened', function() {
+          element.on('typeahead:open', function() {
             scope.$apply(function() {
-              typeaheadListeners.opened();
+              typeaheadListeners.open();
             });
           });
 
-          element.on('typeahead:closed', function() {
+          element.on('typeahead:close', function() {
             scope.$apply(function() {
-              typeaheadListeners.closed();
+              typeaheadListeners.close();
             });
           });
 
-          element.on('typeahead:cursorchanged',
+          element.on('typeahead:cursorchange',
               /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
@@ -71,11 +71,11 @@ ngeo.searchDirective = function() {
                */
               function(event, suggestion, dataset) {
                 scope.$apply(function() {
-                  typeaheadListeners.cursorchanged(event, suggestion, dataset);
+                  typeaheadListeners.cursorchange(event, suggestion, dataset);
                 });
               });
 
-          element.on('typeahead:selected',
+          element.on('typeahead:select',
               /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
@@ -83,11 +83,11 @@ ngeo.searchDirective = function() {
                */
               function(event, suggestion, dataset) {
                 scope.$apply(function() {
-                  typeaheadListeners.selected(event, suggestion, dataset);
+                  typeaheadListeners.select(event, suggestion, dataset);
                 });
               });
 
-          element.on('typeahead:autocompleted',
+          element.on('typeahead:autocomplete',
               /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
@@ -95,7 +95,7 @@ ngeo.searchDirective = function() {
                */
               function(event, suggestion, dataset) {
                 scope.$apply(function() {
-                  typeaheadListeners.autocompleted(event, suggestion, dataset);
+                  typeaheadListeners.autocomplete(event, suggestion, dataset);
                 });
               });
         }
@@ -115,24 +115,24 @@ ngeo.searchDirective.adaptListeners_ = function(object) {
   var typeaheadListeners;
   if (!goog.isDef(object)) {
     typeaheadListeners = {
-      opened: goog.nullFunction,
-      closed: goog.nullFunction,
-      cursorchanged: goog.nullFunction,
-      selected: goog.nullFunction,
-      autocompleted: goog.nullFunction
+      open: goog.nullFunction,
+      close: goog.nullFunction,
+      cursorchange: goog.nullFunction,
+      select: goog.nullFunction,
+      autocomplete: goog.nullFunction
     };
   } else {
     typeaheadListeners = {
-      opened: goog.isDef(object.opened) ?
-          object.opened : goog.nullFunction,
-      closed: goog.isDef(object.closed) ?
-          object.closed : goog.nullFunction,
-      cursorchanged: goog.isDef(object.cursorchanged) ?
-          object.cursorchanged : goog.nullFunction,
-      selected: goog.isDef(object.selected) ?
-          object.selected : goog.nullFunction,
-      autocompleted: goog.isDef(object.autocompleted) ?
-          object.autocompleted : goog.nullFunction
+      open: goog.isDef(object.open) ?
+          object.open : goog.nullFunction,
+      close: goog.isDef(object.close) ?
+          object.close : goog.nullFunction,
+      cursorchange: goog.isDef(object.cursorchange) ?
+          object.cursorchange : goog.nullFunction,
+      select: goog.isDef(object.select) ?
+          object.select : goog.nullFunction,
+      autocomplete: goog.isDef(object.autocomplete) ?
+          object.autocomplete : goog.nullFunction
     };
   }
   return typeaheadListeners;

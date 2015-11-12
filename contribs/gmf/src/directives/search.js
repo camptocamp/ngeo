@@ -24,6 +24,7 @@ goog.require('ol.proj');
  * @example
  * <gmf-search gmf-search-map="ctrl.map"
  *             gmf-search-datasources="ctrl.searchDatasources">
+ *             gmf-search-clearbutton="true">
  * </gmf-search>
  *
  * @return {angular.Directive} The Directive Definition Object.
@@ -34,15 +35,22 @@ gmf.searchDirective = function() {
     restrict: 'E',
     scope: {
       'getMapFn': '&gmfSearchMap',
-      'getDatasourcesFn': '&gmfSearchDatasources'
+      'getDatasourcesFn': '&gmfSearchDatasources',
+      'clearbutton': '=gmfSearchClearbutton'
     },
     controller: 'GmfSearchController',
     controllerAs: 'ctrl',
     template:
+        '<div class="gmf-search">' +
         '<input type="text" placeholder="search…" ' +
+        'ng-model="ctrl.input_value" ' +
         'ngeo-search="ctrl.options" ' +
         'ngeo-search-datasets="ctrl.datasets" ' +
-        'ngeo-search-listeners="ctrl.listeners">',
+        'ngeo-search-listeners="ctrl.listeners">' +
+        '<div class="clear-button ng-hide" ' +
+        'ng-hide="!ctrl.clearButton || ctrl.input_value == \'\'" ' +
+        'ng-click="ctrl.clear()"></div>' +
+        '</div>',
     link:
         /**
          * @param {angular.Scope} scope Scope.
@@ -50,10 +58,13 @@ gmf.searchDirective = function() {
          * @param {angular.Attributes} attrs Atttributes.
          */
         function(scope, element, attrs) {
-          // Empty the search field on focus and blur.
-          element.find('input').on('focus blur', function() {
-            $(this).val('');
-          });
+          if (!scope['clearbutton']) {
+            var ctrl = scope['ctrl'];
+            // Empty the search field on focus and blur.
+            element.find('input').on('focus blur', function() {
+              ctrl.clear();
+            });
+          }
         }
   };
 };
@@ -105,6 +116,14 @@ gmf.SearchController = function($scope, $compile,
   this.map_ = map;
 
   /**
+   * Use or not a clear button to clear the search's dropdown.
+   * Default to false.
+   * @type {boolean}
+   * @export
+   */
+  this.clearButton = this.scope_['clearbutton'] || false;
+
+  /**
    * @type {ngeo.FeatureOverlay}
    * @private
    */
@@ -135,6 +154,13 @@ gmf.SearchController = function($scope, $compile,
    */
   this.datasets = [];
 
+  /**
+   * @type {string}
+   * @export
+   */
+  this.input_value = '';
+
+  // Create each datasource
   for (var i = 0; i < this.datasources_.length; i++) {
     var datasource = this.datasources_[i];
 
@@ -174,7 +200,8 @@ gmf.SearchController = function($scope, $compile,
    * @export
    */
   this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    selected: goog.bind(gmf.SearchController.selected_, this)
+    select: goog.bind(gmf.SearchController.select_, this),
+    close: goog.bind(gmf.SearchController.close_, this)
   });
 };
 
@@ -226,7 +253,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
  * @private
  */
 gmf.SearchController.prototype.filterLayername_ = function(groupsKey,
-                                                           groupValue) {
+    groupValue) {
   return (
       /**
        * @param {GeoJSONFeature} feature
@@ -257,13 +284,39 @@ gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
 
 
 /**
+ * @private
+ */
+gmf.SearchController.prototype.setTTDropdownVisibility_ = function() {
+  if (this.clearButton) {
+    var ttDropdown = $('.twitter-typeahead .tt-menu');
+    (this.input_value) ? ttDropdown.show() : ttDropdown.hide();
+  }
+};
+
+
+/**
+ * @export
+ */
+gmf.SearchController.prototype.clear = function() {
+  var typeahead = $('.twitter-typeahead');
+  var ttmenu = typeahead.children('.tt-menu');
+  var inputs = typeahead.children('input');
+  // clear model value, the 'real' input value and tt's suggestions
+  this.input_value = '';
+  $(inputs[1]).typeahead('val', '');
+  ttmenu.children('.tt-dataset').empty();
+  this.setTTDropdownVisibility_();
+};
+
+
+/**
  * @param {jQuery.Event} event Event.
  * @param {ol.Feature} feature Feature.
  * @param {TypeaheadDataset} dataset Dataset.
  * @this {gmf.SearchController}
  * @private
  */
-gmf.SearchController.selected_ = function(event, feature, dataset) {
+gmf.SearchController.select_ = function(event, feature, dataset) {
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
   this.featureOverlay_.clear();
@@ -273,6 +326,17 @@ gmf.SearchController.selected_ = function(event, feature, dataset) {
   var mapSize = /** @type {ol.Size} */ (this.map_.getSize());
   this.map_.getView().fit(fitArray, mapSize,
       /** @type {olx.view.FitOptions} */ ({maxZoom: 16}));
+  this.clear();
+};
+
+
+/**
+ * @param {jQuery.Event} event Event.
+ * @this {gmf.SearchController}
+ * @private
+ */
+gmf.SearchController.close_ = function(event) {
+  this.setTTDropdownVisibility_();
 };
 
 
