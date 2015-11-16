@@ -157,9 +157,11 @@ gmf.SearchController = function($scope, $compile,
       }
 
       this.datasets.push(this.createDataset_({
+        bloodhoundOptions: datasource.bloodhoundOptions,
         datasetTitle: title,
         labelKey: datasource.labelKey,
         projection: datasource.projection,
+        typeaheadDatasetOptions: datasource.typeaheadDatasetOptions,
         url: datasource.url
       }, filter));
 
@@ -179,7 +181,7 @@ gmf.SearchController = function($scope, $compile,
 
 /**
  * @param {gmfx.SearchDirectiveDatasource} config The config of the dataset.
- * @param {(function(GeoJSONFeature): boolean)=} opt_filter Afilter function
+ * @param {(function(GeoJSONFeature): boolean)=} opt_filter A filter function
  *     based on a GeoJSONFeaturesCollection's array.
  * @return {TypeaheadDataset} A typeahead dataset.
  * @private
@@ -188,7 +190,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
   var directiveScope = this.scope_;
   var compile = this.compile_;
   var bloodhoundEngine = this.createAndInitBloodhound_(config, opt_filter);
-  return /** @type {TypeaheadDataset} */ ({
+  var typeaheadDataset = /** @type {TypeaheadDataset} */ ({
     source: bloodhoundEngine.ttAdapter(),
     display: function(suggestion) {
       var feature = /** @type {ol.Feature} */ (suggestion);
@@ -209,6 +211,10 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
       }
     })
   });
+  if (config.typeaheadDatasetOptions) {
+    goog.object.extend(typeaheadDataset, config.typeaheadDatasetOptions);
+  }
+  return typeaheadDataset;
 };
 
 
@@ -243,7 +249,8 @@ gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
     opt_filter) {
   var mapProjectionCode = this.map_.getView().getProjection().getCode();
   var bloodhound = this.ngeoCreateGeoJSONBloodhound_(config.url, opt_filter,
-      ol.proj.get(mapProjectionCode), ol.proj.get(config.projection));
+      ol.proj.get(mapProjectionCode), ol.proj.get(config.projection),
+      config.bloodhoundOptions);
   bloodhound.initialize();
   return bloodhound;
 };
