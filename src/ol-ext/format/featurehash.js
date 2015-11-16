@@ -915,6 +915,7 @@ ngeo.format.FeatureHash.prototype.writeFeatureText =
       var styles = styleFunction.call(feature, 0);
       if (!goog.isNull(styles)) {
         var encodedStyles = [];
+        styles = goog.isArray(styles) ? styles : [styles];
         ngeo.format.FeatureHash.encodeStyles_(
             styles, geometry.getType(), encodedStyles);
         if (encodedStyles.length > 0) {
