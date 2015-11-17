@@ -1,0 +1,95 @@
+{
+  "src": [
+    "node_modules/openlayers/src/**/*.js",
+    "node_modules/openlayers/build/ol.ext/**/*.js",
+    "src/**/*.js",
+    "contribs/gmf/src/**/*.js",
+    "contribs/gmf/apps/mobile/js/**/*.js"
+  ],
+  "compile": {
+    "closure_entry_point": "app_main",
+    "externs": [
+      "node_modules/openlayers/externs/bingmaps.js",
+      "node_modules/openlayers/externs/closure-compiler.js",
+      "node_modules/openlayers/externs/esrijson.js",
+      "node_modules/openlayers/externs/geojson.js",
+      "node_modules/openlayers/externs/proj4js.js",
+      "node_modules/openlayers/externs/tilejson.js",
+      "node_modules/openlayers/externs/topojson.js",
+      "externs/angular-gettext.js",
+      "externs/d3.js",
+      "externs/typeahead.js",
+      "externs/mapfish-print-v3.js",
+      "externs/twbootstrap.js",
+      "externs/closure-compiler.js",
+      ".build/externs/angular-1.4.js",
+      ".build/externs/angular-1.4-q_templated.js",
+      ".build/externs/angular-1.4-http-promise_templated.js",
+      ".build/externs/jquery-1.9.js"
+    ],
+    "define": [
+      "goog.array.ASSUME_NATIVE_FUNCTIONS=true",
+      "goog.dom.ASSUME_STANDARDS_MODE=true",
+      "goog.json.USE_NATIVE_JSON=true",
+      "goog.DEBUG=false",
+      "ol.ENABLE_DOM=false",
+      "ol.ENABLE_WEBGL=false"
+    ],
+    "js": [
+      "contribs/gmf/apps/mobile/js/main.js",
+      "node_modules/openlayers/externs/olx.js",
+      "node_modules/openlayers/externs/oli.js",
+      "externs/ngeox.js",
+      "contribs/gmf/externs/gmfx.js"
+    ],
+    "jscomp_error": [
+      "accessControls",
+      "ambiguousFunctionDecl",
+      "checkEventfulObjectDisposal",
+      "checkRegExp",
+      "checkTypes",
+      "checkVars",
+      "const",
+      "constantProperty",
+      "deprecated",
+      "duplicateMessage",
+      "es3",
+      "es5Strict",
+      "externsValidation",
+      "fileoverviewTags",
+      "globalThis",
+      "internetExplorerChecks",
+      "invalidCasts",
+      "misplacedTypeAnnotation",
+      "missingGetCssName",
+      "missingProperties",
+      "missingProvide",
+      "missingReturn",
+      "newCheckTypes",
+      "nonStandardJsDocs",
+      "suspiciousCode",
+      "strictModuleDepCheck",
+      "typeInvalidation",
+      "undefinedNames",
+      "undefinedVars",
+      "uselessCode",
+      "visibility"
+    ],
+    "jscomp_off": [
+      "unknownDefines",
+      "missingRequire"
+    ],
+    "extra_annotation_name": [
+      "api", "observable"
+    ],
+    "angular_pass": true,
+    "compilation_level": "ADVANCED",
+    "export_local_property_definitions": true,
+    "warning_level": "VERBOSE",
+    "generate_exports": true,
+    "language_in": "ECMASCRIPT5_STRICT",
+    "output_wrapper": "(function(){%output%}).call(window);",
+    "use_types_for_optimization": true,
+    "manage_closure_dependencies": true
+  }
+}
