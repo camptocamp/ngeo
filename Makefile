@@ -229,7 +229,7 @@ $(GMF_EXAMPLES_CSS_FILES): %.css: $(GMF_EXAMPLES_LESS_FILES) .build/node_modules
 
 .build/examples-hosted/contribs/gmf/style: .build/examples-hosted/contribs/gmf/%: contribs/gmf/examples/% $(GMF_EXAMPLES_CSS_FILES)
 	mkdir -p $@
-	cp $</* $@
+	cp -r $</* $@
 
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 

@@ -3,6 +3,8 @@ goog.provide('gmf-mobileapp');
 goog.require('gmf.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
+goog.require('ol.control.ScaleLine');
+goog.require('ol.control.Zoom');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
@@ -201,7 +203,11 @@ app.MainController = function() {
     view: new ol.View({
       center: [0, 0],
       zoom: 2
-    })
+    }),
+    controls: [
+      new ol.control.ScaleLine(),
+      new ol.control.Zoom()
+    ]
   });
 };
 
