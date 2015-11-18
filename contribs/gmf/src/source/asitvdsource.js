@@ -31,7 +31,7 @@ gmf.source.AsitVDTileGrid_ = new ol.tilegrid.WMTS({
 
 /**
  * Layer source for the ASIT VD tile server.
- * @see http://asitvd.ch/index.php?option=com_content&view=article&id=214&Itemid=154&lang=en
+ * @see https://www.asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html
  *
  * @constructor
  * @extends {ol.source.WMTS}
@@ -60,5 +60,5 @@ goog.inherits(gmf.source.AsitVD, ol.source.WMTS);
  * @private
  */
 gmf.source.AsitVD.ATTRIBUTION_ = new ol.Attribution({
-  html: '&copy; <a href="https://www.asitvd.ch/">ASIT VD</a>'
+  html: 'géodonnées &copy; Etat de Vaud & &copy; contributeurs OpenStreetMap'
 });
