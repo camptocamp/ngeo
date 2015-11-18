@@ -3,7 +3,6 @@ goog.provide('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.geom.Polygon');
 goog.require('ol.interaction.Draw');
-goog.require('ol.sphere.WGS84');
 
 
 

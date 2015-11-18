@@ -14,6 +14,7 @@ goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
+goog.require('ol.sphere.WGS84');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
