@@ -36,7 +36,7 @@ var manager = new closure.Manager({
     'node_modules/openlayers/src/**/*.js',
     'node_modules/openlayers/build/ol.ext/*.js'
   ],
-  main: ['examples/*.js', 'contribs/**/examples/*.js']
+  main: ['examples/*.js', 'contribs/**/examples/*.js', 'contribs/**/apps/**/*.js']
 });
 manager.on('error', function(e) {
   log.error('ngeo', e.message);
