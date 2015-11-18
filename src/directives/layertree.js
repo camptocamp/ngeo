@@ -76,6 +76,9 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
  *     ngeoLayertreeTemplateUrl Template URL for the directive.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
+ * @ngdoc directive
+ * @memberof ngeo
+ * @name ngeoLayertree
  */
 ngeo.layertreeDirective = function(
     $compile, ngeoLayertreeTemplateUrl) {
@@ -130,6 +133,9 @@ ngeoModule.directive('ngeoLayertree', ngeo.layertreeDirective);
  * @constructor
  * @ngInject
  * @export
+ * @ngdoc controller
+ * @memberof ngeo
+ * @name NgeoLayertreeController
  */
 ngeo.LayertreeController = function($scope, $element, $attrs) {
 

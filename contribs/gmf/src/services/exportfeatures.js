@@ -26,6 +26,9 @@ gmf.ExportFeatures;
  * @return {gmf.ExportFeatures} The "export features" function.
  * @ngInject
  * @private
+ * @memberof gmf
+ * @name gmfExportFeatures
+ * @ngdoc service
  */
 gmf.exportFeaturesFactory_ = function($document, gmfServiceUrls) {
   goog.asserts.assert(gmfServiceUrls.exportgpxkml);

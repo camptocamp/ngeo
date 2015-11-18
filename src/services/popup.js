@@ -25,6 +25,9 @@ ngeo.CreatePopup;
  * @constructor
  * @param {angular.$compile} $compile The compile provider.
  * @param {angular.Scope} $rootScope The rootScope provider.
+ * @ngdoc service
+ * @memberof ngeo
+ * @name ngeoCreatePopup
  */
 ngeo.Popup = function($compile, $rootScope) {
 

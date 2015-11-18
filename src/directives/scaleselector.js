@@ -67,6 +67,9 @@ ngeo.ScaleselectorOptions;
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
+ * @ngdoc directive
+ * @memberof ngeo
+ * @name ngeoScaleselector
  */
 ngeo.scaleselectorDirective = function(ngeoScaleselectorTemplateUrl) {
   return {
@@ -89,6 +92,9 @@ ngeoModule.directive('ngeoScaleselector', ngeo.scaleselectorDirective);
  * @param {angular.Attributes} $attrs Attributes.
  * @export
  * @ngInject
+ * @ngdoc controller
+ * @memberof ngeo
+ * @name NgeoScaleselectorController
  */
 ngeo.ScaleselectorController = function($scope, $element, $attrs) {
 

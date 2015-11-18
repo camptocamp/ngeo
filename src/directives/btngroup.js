@@ -31,6 +31,9 @@ goog.require('ngeo');
  *
  * @return {angular.Directive} The directive specs.
  * @ngInject
+ * @ngdoc directive
+ * @memberof ngeo
+ * @name ngeoBtnGroup
  */
 ngeo.btngroupDirective = function() {
   return {
@@ -48,6 +51,9 @@ ngeoModule.directive('ngeoBtnGroup', ngeo.btngroupDirective);
  * @param {!angular.Scope} $scope Scope.
  * @constructor
  * @ngInject
+ * @ngdoc controller
+ * @memberof ngeo
+ * @name ngeoBtnGroupController
  */
 ngeo.BtnGroupController = function($scope) {
   /**
@@ -94,6 +100,9 @@ ngeoModule.controller('ngeoBtnGroupController', ngeo.BtnGroupController);
  * @param {angular.$parse} $parse Angular parse service.
  * @return {angular.Directive} The directive specs.
  * @ngInject
+ * @ngdoc directive
+ * @memberof ngeo
+ * @name ngeoBtn
  */
 ngeo.btnDirective = function($parse) {
   return {

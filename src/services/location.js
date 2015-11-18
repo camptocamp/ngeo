@@ -34,6 +34,9 @@ ngeo.MockLocationProvider;
  * @param {Location} location Location.
  * @param {History} history History.
  * @constructor
+ * @ngdoc service
+ * @memberof ngeo
+ * @name ngeoLocation
  */
 ngeo.Location = function(location, history) {
   /**

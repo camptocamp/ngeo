@@ -1,7 +1,4 @@
 {
-    "tags": {
-        "dictionaries": ["jsdoc","closure"]
-    },
     "source": {
         "include": ["contribs/gmf/src", "src"],
         "includePattern": ".+\\.js$"
