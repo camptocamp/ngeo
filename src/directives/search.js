@@ -7,11 +7,10 @@ goog.require('ngeo');
  * Provides the "ngeoSearch" directive, which uses Twitter's
  * typeahead component to change an input text into a search field.
  *
- * @example
- * <input type="text"
- *   ngeo-search="ctrl.typeaheadOptions"
- *   ngeo-search-datasets="ctrl.typeaheadDatasets"
- *   ngeo-search-listeners="crtl.typeaheadListeners">
+ *     <input type="text"
+ *       ngeo-search="ctrl.typeaheadOptions"
+ *       ngeo-search-datasets="ctrl.typeaheadDatasets"
+ *       ngeo-search-listeners="crtl.typeaheadListeners">
  *
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject

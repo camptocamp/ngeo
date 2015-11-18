@@ -74,15 +74,16 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  * - getReportUrl: get the URL of a report
  * - getCapabilities: get the capabilities of the server
  *
- * @example
- * var printBaseUrl = 'http://example.com/print';
- * var print = new ngeo.Print(printBaseUrl);
  *
- * var scale = 5000;
- * var dpi = 72;
- * var layout = 'A4 portrait';
- * var reportSpec = print.createSpec(map, scale, dpi, layout,
- *     {'title': 'A title for my report'});
+ *     var printBaseUrl = 'http://example.com/print';
+ *     var print = new ngeo.Print(printBaseUrl);
+ *
+ *     var scale = 5000;
+ *     var dpi = 72;
+ *     var layout = 'A4 portrait';
+ *     var reportSpec = print.createSpec(map, scale, dpi, layout, {
+ *       'title': 'A title for my report'
+ *     });
  *
  * TODO and limitations:
  *

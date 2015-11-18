@@ -27,7 +27,7 @@ ngeo.MockLocationProvider;
  * use to mock Angular's $location provider and make it possible to use both
  * ngeoLocation and ng-include.
  *
- * app.module.config(ngeo.mockLocationProvider);
+ *     app.module.config(ngeo.mockLocationProvider);
  *
  * The ngeo Location type.
  *

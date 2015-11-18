@@ -17,15 +17,14 @@ goog.require('ngeo');
  * This directive is based on Bootstrap's `modal` classes and associated
  * jQuery plugin.
  *
- * @example
- * <ngeo-modal ng-model="modalShown">
- *   <div class="modal-header">
- *     <button type="button" class="close" data-dismiss="modal"
- *         aria-hidden="true">&times;</button>
- *     <h4 class="modal-title">The Title</h4>
- *   </div>
- *   <div class="modal-body">Some content</div>
- * </ngeo-modal>
+ *     <ngeo-modal ng-model="modalShown">
+ *       <div class="modal-header">
+ *         <button type="button" class="close" data-dismiss="modal"
+ *                 aria-hidden="true">&times;</button>
+ *         <h4 class="modal-title">The Title</h4>
+ *       </div>
+ *       <div class="modal-body">Some content</div>
+ *     </ngeo-modal>
  *
  * Note: for z-indexing purpose, the modal DOM element is automatically moved
  * to document body element.

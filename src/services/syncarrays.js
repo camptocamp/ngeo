@@ -15,12 +15,11 @@ goog.require('ngeo');
  * with the array of selected layers, where layers may be added to/removed from
  * the map, and the order of selected layers may change.
  *
- * @example
- * var dereg = ngeoSyncArrays(map.getLayers().getArray(), selectedLayers,
- *     true, scope, function(layer) {
- *       // exclude the layer at index 0 in the map
- *       return map.getLayers().indexOf(layer) !== 0;
- *     });
+ *     var dereg = ngeoSyncArrays(map.getLayers().getArray(), selectedLayers,
+ *         true, scope, function(layer) {
+ *           // exclude the layer at index 0 in the map
+ *           return map.getLayers().indexOf(layer) !== 0;
+ *         });
  *
  * This will return a function that can be called to cancel synchronization.
  *
