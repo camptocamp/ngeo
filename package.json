@@ -24,7 +24,7 @@
     "fs-extra": "~0.8.1",
     "graceful-fs": "~3.0.2",
     "jquery": "2.1.4",
-    "jsdoc": "^3.3.3",
+    "jsdoc": "3.4.0",
     "jshint": "~2.5.1",
     "karma": "^0.12.16",
     "karma-jasmine": "^0.1.5",
