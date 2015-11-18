@@ -225,7 +225,7 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $@
 	cp examples/data/* $@
 
-.build/examples-hosted/contribs/gmf/apps/mobile: contribs/gmf/apps/mobile/build contribs/gmf/apps/mobile/webfonts .build/examples-hosted/contribs/gmf/apps/mobile/index.html
+.build/examples-hosted/contribs/gmf/apps/mobile: build-gmf-mobile-app contribs/gmf/apps/mobile/webfonts .build/examples-hosted/contribs/gmf/apps/mobile/index.html
 	mkdir -p $@
 	cp -r contribs/gmf/apps/mobile/build $@
 	cp -r contribs/gmf/apps/mobile/webfonts $@
