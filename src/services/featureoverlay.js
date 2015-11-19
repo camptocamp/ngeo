@@ -32,16 +32,14 @@ ngeo.FeatureOverlayGroup;
  * The application's main component/controller initializes the feature
  * overlay manager with the map:
  *
- * @example
- * ngeoFeatureOverlayMgr.init(map);
+ *     ngeoFeatureOverlayMgr.init(map);
  *
  * Once initialized, components of the application can use the manager to
  * create a feature overlay, configuring it with specific styles:
  *
- * @example
- * var featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
- * featureOverlay.setStyle(myStyle);
- * featureOverlay.addFeature(myFeature);
+ *     var featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+ *     featureOverlay.setStyle(myStyle);
+ *     featureOverlay.addFeature(myFeature);
  *
  * @constructor
  */

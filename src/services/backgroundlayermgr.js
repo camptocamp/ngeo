@@ -50,11 +50,11 @@ goog.inherits(ngeo.BackgroundEvent, goog.events.Event);
  *
  * Setting a background layer to map is done with the `set` function:
  *
- * ngeoBackgroundLayerMgr.set(map, layer);
+ *     ngeoBackgroundLayerMgr.set(map, layer);
  *
  * To unset the background layer pass `null` as the `layer` argument:
  *
- * ngeoBackgroundLayerMgr.set(map, null);
+ *     ngeoBackgroundLayerMgr.set(map, null);
  *
  * The `get` function returns the current background layer of the map passed
  * as an argument. `null` is returned if the map doesn't have a background
@@ -68,13 +68,12 @@ goog.inherits(ngeo.BackgroundEvent, goog.events.Event);
  * Users can subscribe to a 'change' event to get notified when the background
  * layer changes:
  *
- * @example
- * ngeoBackgroundLayerMgr.on('change', function(e) {
- *   // do something with the layer
- *   var layer = ngeoBackgroundLayerMgr.get();
- *   // know which layer was used before
- *   var previous = e.previous
- * });
+ *     ngeoBackgroundLayerMgr.on('change', function(e) {
+ *       // do something with the layer
+ *       var layer = ngeoBackgroundLayerMgr.get();
+ *       // know which layer was used before
+ *       var previous = e.previous
+ *     });
  *
  * @extends {ol.Observable}
  * @constructor

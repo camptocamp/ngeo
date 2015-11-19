@@ -8,20 +8,19 @@ goog.require('goog.object');
  * Provides a D3js component to be used to draw an elevation
  * profile chart.
  *
- * @example
- * var selection = d3.select('#element_id');
- * var profile = ngeo.profile({
- *  elevationExtractor: {
- *    z: function (item) {return item['values']['z'];)},
- *    dist: function (item) {return item['dist'];)}
- *  },
- *  hoverCallback: function(point, dist, xUnits, ele, yUnits) {
- *    console.log(point.x, point.y);
- *  },
- *  outCallback: function() {
- *    console.log("out");
- *  }});
- * selection.datum(data).call(profile);
+ *     var selection = d3.select('#element_id');
+ *     var profile = ngeo.profile({
+ *      elevationExtractor: {
+ *        z: function (item) {return item['values']['z'];)},
+ *        dist: function (item) {return item['dist'];)}
+ *      },
+ *      hoverCallback: function(point, dist, xUnits, ele, yUnits) {
+ *        console.log(point.x, point.y);
+ *      },
+ *      outCallback: function() {
+ *        console.log("out");
+ *      }});
+ *     selection.datum(data).call(profile);
  *
  * The selection data must be an array.
  * The layout for the items of this array is unconstrained: the elevation
@@ -30,14 +29,15 @@ goog.require('goog.object');
  * config option.
  *
  * The data below will work for the above example:
- * [
- *     {
- *         "y": 199340,
- *         "values": {"z": 788.7},
- *         "dist": 0.0,
- *         "x": 541620
- *     }, ...
- * ]
+ *
+ *     [
+ *         {
+ *             "y": 199340,
+ *             "values": {"z": 788.7},
+ *             "dist": 0.0,
+ *             "x": 541620
+ *         }, ...
+ *     ]
  *
  * @constructor
  * @return {Object}
