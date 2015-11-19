@@ -17,13 +17,16 @@ goog.require('ol.proj');
  * FIXME: The 'placeholder' in the input field is hard-coded and can't currently
  * be internationalised.
  *
+ * FIXME: The 'groupsKey' in each result is displayed "as is" and can't
+ * currently be internationalised.
+ *
  * This directive uses the ngeoFeatureOverlayMgr to create a feature overlay
  * for drawing features on the map. The application is responsible to
  * initialize the ngeoFeatureOverlayMgr with the map.
  *
  * @example
  * <gmf-search gmf-search-map="ctrl.map"
- *             gmf-search-datasources="ctrl.searchDatasources">
+ *             gmf-search-datasources="ctrl.searchDatasources"
  *             gmf-search-clearbutton="true">
  * </gmf-search>
  *
@@ -116,7 +119,7 @@ gmf.SearchController = function($scope, $compile,
   this.map_ = map;
 
   /**
-   * Use or not a clear button to clear the search's dropdown.
+   * Whether or not to show a button to clear the search text.
    * Default to false.
    * @type {boolean}
    * @export
@@ -185,6 +188,7 @@ gmf.SearchController = function($scope, $compile,
       this.datasets.push(this.createDataset_({
         bloodhoundOptions: datasource.bloodhoundOptions,
         datasetTitle: title,
+        groupsKey: datasource.groupsKey,
         labelKey: datasource.labelKey,
         projection: datasource.projection,
         typeaheadDatasetOptions: datasource.typeaheadDatasetOptions,
@@ -225,7 +229,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
     },
     templates: /* TypeaheadTemplates */ ({
       header: function() {
-        return '<div class="header">' + config.datasetTitle + '</div>';
+        return '<div class="search-header">' + config.datasetTitle + '</div>';
       },
       suggestion: function(suggestion) {
         var feature = /** @type {ol.Feature} */ (suggestion);
@@ -233,7 +237,13 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
         var scope = directiveScope.$new(true);
         scope['feature'] = feature;
 
-        var html = '<p>' + feature.get(config.labelKey) + '</p>';
+        var html = '<p class="search-label">' + feature.get(config.labelKey) +
+                   '</p>';
+        if (config.groupsKey) {
+          html += '<p class="search-group">' + feature.get(config.groupsKey) +
+                  '</p>';
+        }
+        html = '<div class="search-datum">' + html + '</div>';
         return compile(html)(scope);
       }
     })

@@ -24,10 +24,9 @@ main button {
     font-family: gmf-icons;
     color: @map-tools-color;
     font-size: @map-tools-size;
-    margin-left: 4px;
+    line-height: 0.5em;
   }
   &:hover {
-    background-color: @onhover-color;
     cursor: pointer;
   }
 }
@@ -57,7 +56,7 @@ gmf-map {
     border: solid 1px @map-tools-color;
     color: @map-tools-color;
     &:hover {
-      background-color: @onhover-color;
+      background-color: @map-tools-bg-color;
     }
   }
   &:hover {
@@ -94,6 +93,25 @@ gmf-map {
     border-width: 0 1px;
     border-radius: 0;
   }
+  .clear-button {
+    position: absolute;
+    top: @app-margin;
+    left: 0;
+    right: 0;
+    margin: -6px auto 0 158px;
+    width: 1.5em;
+    &:after {
+      content: 'e';
+      color: grey;
+      font-family: gmf-icons;
+      font-size: 1.5em;
+      font-weight: bold;
+      line-height: 0.5em;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .nav-trigger {
@@ -105,14 +123,14 @@ gmf-map {
 }
 
 .nav-left-trigger {
-  margin-left: -102px;
+  margin-left: -104px;
   &:after {
     content: 'a';
   }
 }
 
 .nav-right-trigger {
-  margin-left: 77px;
+  margin-left: 76px;
   &:after {
     content: 'd';
   }
@@ -120,9 +138,16 @@ gmf-map {
 
 //For tablet only
 @media (min-width: @screen-sm-min) {
+  main button:hover{
+    background-color: @onhover-color;
+  }
+
   .ol-zoom {
     top: auto;
     bottom: 36px;
+    button:hover {
+      background-color: @onhover-color;
+    }
   }
 
   .search {
@@ -142,7 +167,11 @@ gmf-map {
       font-family: gmf-icons;
       color: grey;
       font-size: 1.5em;
+      line-height: 0.6em;
       width: 0.5em;
+    }
+    .clear-button {
+      margin: -8px auto 0 170px;
     }
   }
 
