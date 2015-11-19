@@ -1,0 +1,43 @@
+.tt-menu {
+  position: fixed!important;
+  left: 0;
+  right: 0;
+  top: 48px!important;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100vw;
+  background-color: white;
+  border: solid 1px black;
+  .search-header {
+    display: none;
+  }
+  .search-datum {
+    border-bottom: solid 1px black;
+    margin: 0;
+    padding: 10px @app-margin;
+    text-align: left;
+    &:hover {
+      cursor: pointer;
+      background-color: @onhover-color;
+    }
+    p {
+      margin: 0;
+    }
+    .search-label {
+      color: @search-result-font-color;
+    }
+    .search-group {
+      color: lighten(@search-result-font-color, 50%);
+      font-size: 0.8em;
+    }
+  }
+}
+
+//For tablet only
+@media (min-width: @screen-sm-min) {
+  .tt-menu {
+    top: 43px!important;
+    width: 33vw;
+  }
+}

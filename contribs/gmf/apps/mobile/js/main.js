@@ -12,3 +12,4 @@ goog.provide('app_main');
 goog.require('app.MainController');
 goog.require('app.navDirective');
 goog.require('gmf.mapDirective');
+goog.require('gmf.searchDirective');

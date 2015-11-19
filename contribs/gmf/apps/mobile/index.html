@@ -22,7 +22,12 @@
       <button class="nav-trigger nav-left-trigger"
         ng-click="mainCtrl.toggleLeftNavVisibility()">
       </button>
-      <div class="search"><input type="text" placeholder="Search..."></input></div>
+      <div class="search">
+        <gmf-search gmf-search-map="mainCtrl.map"
+                    gmf-search-datasources="mainCtrl.searchDatasources"
+                    gmf-search-clearbutton="true">
+        </gmf-search>
+      </div>
       <button class="nav-trigger nav-right-trigger"
         ng-click="mainCtrl.toggleRightNavVisibility()">
       </button>
@@ -88,6 +93,8 @@
     <p id="desc">This example is a mobile application based on ngeo and gmf components.</p>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../../node_modules/angular/angular.js"></script>
+    <script src="../../../../node_modules/typeahead.js/dist/typeahead.bundle.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js" type="text/javascript"></script>
     <script src="/@?main=mobile/js/main.js"></script>
     <script src="../../../../utils/watchwatchers.js"></script>
   </body>
