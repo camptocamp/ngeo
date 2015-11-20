@@ -13,6 +13,8 @@ goog.require('ol.Map');
  *
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
+ * @ngdoc directive
+ * @ngname ngeoMap
  */
 ngeo.mapDirective = function() {
   return {

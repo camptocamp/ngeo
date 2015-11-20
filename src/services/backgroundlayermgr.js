@@ -77,6 +77,8 @@ goog.inherits(ngeo.BackgroundEvent, goog.events.Event);
  *
  * @extends {ol.Observable}
  * @constructor
+ * @ngdoc service
+ * @ngname ngeoBackgroundLayerMgr
  */
 ngeo.BackgroundLayerMgr = function() {
 

@@ -19,6 +19,8 @@ goog.require('ol.control.Control');
  *
  * @return {angular.Directive} The directive specs.
  * @ngInject
+ * @ngdoc directive
+ * @ngname ngeoControl
  */
 ngeo.controlDirective = function() {
   return {

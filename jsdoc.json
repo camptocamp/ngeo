@@ -1,14 +1,12 @@
 {
-    "tags": {
-        "dictionaries": ["jsdoc","closure"]
-    },
     "source": {
         "include": ["contribs/gmf/src", "src"],
         "includePattern": ".+\\.js$"
     },
     "plugins": [
         "node_modules/jsdoc/plugins/markdown",
-        "node_modules/angular-jsdoc/common/plugins/ngdoc"
+        "node_modules/angular-jsdoc/common/plugins/ngdoc",
+        "jsdoc-plugin"
     ],
     "templates": {
         "cleverLinks": true,

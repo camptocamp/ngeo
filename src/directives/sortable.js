@@ -46,6 +46,8 @@ ngeo.SortableOptions;
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @return {angular.Directive} The directive specs.
  * @ngInject
+ * @ngdoc directive
+ * @ngname ngeoSortable
  */
 ngeo.sortableDirective = function($timeout) {
   return {

@@ -21,6 +21,8 @@ goog.require('ol.Map');
  * @param {angular.$animate} $animate Angular animate service.
  * @return {angular.Directive} The directive specs.
  * @ngInject
+ * @ngdoc directive
+ * @ngname ngeoResizemap
  */
 ngeo.resizemapDirective = function($window, $animate) {
   var /** @type {number} */ duration = 1000;

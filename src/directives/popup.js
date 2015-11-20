@@ -31,6 +31,8 @@ ngeoModule.value('ngeoPopupTemplateUrl', ngeo.popupTemplateUrl);
  * @param {string} ngeoPopupTemplateUrl Url to popup template.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
+ * @ngdoc directive
+ * @ngname ngeoPopup
  */
 ngeo.popupDirective = function(ngeoPopupTemplateUrl) {
   return {

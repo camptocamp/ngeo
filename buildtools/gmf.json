@@ -73,7 +73,7 @@
       "visibility"
     ],
     "extra_annotation_name": [
-      "api", "observable"
+      "api", "observable", "ngdoc", "ngname"
     ],
     "language_in": "ECMASCRIPT5_STRICT",
     "language_out": "ECMASCRIPT5_STRICT",

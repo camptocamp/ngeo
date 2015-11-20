@@ -13,6 +13,8 @@ goog.require('ngeo');
  * <input type="checkbox" ngModel="geolocation.tracking" />
  *
  * @typedef {function(ol.Geolocation)}
+ * @ngdoc service
+ * @ngname ngeoDecorateGeolocation
  */
 ngeo.DecorateGeolocation;
 
