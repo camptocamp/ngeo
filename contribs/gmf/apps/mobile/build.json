@@ -4,10 +4,11 @@
     "node_modules/openlayers/build/ol.ext/**/*.js",
     "src/**/*.js",
     "contribs/gmf/src/**/*.js",
-    "contribs/gmf/apps/mobile/js/**/*.js"
+    "contribs/gmf/apps/mobile/js/appmodule.js",
+    "contribs/gmf/apps/mobile/js/mobile.js"
   ],
   "compile": {
-    "closure_entry_point": "app_main",
+    "closure_entry_point": "app_mobile",
     "externs": [
       "node_modules/openlayers/externs/bingmaps.js",
       "node_modules/openlayers/externs/closure-compiler.js",
@@ -36,7 +37,7 @@
       "ol.ENABLE_WEBGL=false"
     ],
     "js": [
-      "contribs/gmf/apps/mobile/js/main.js",
+      "contribs/gmf/apps/mobile/js/mobile.js",
       "node_modules/openlayers/externs/olx.js",
       "node_modules/openlayers/externs/oli.js",
       "externs/ngeox.js",
