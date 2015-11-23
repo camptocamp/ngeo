@@ -69,6 +69,7 @@ ngeo.Location.prototype.getPath = function() {
 
 
 /**
+ * Get the location's URI as a string
  * @param {Object.<string, string>=} opt_params Params.
  * @return {string} The URI.
  */
@@ -85,6 +86,7 @@ ngeo.Location.prototype.getUriString = function(opt_params) {
 
 
 /**
+ * Check if a param exists in the location's URI.
  * @param {string} key Param key.
  * @return {boolean} True if the param exists.
  */
@@ -94,6 +96,7 @@ ngeo.Location.prototype.hasParam = function(key) {
 
 
 /**
+ * Get a param in the location's URI.
  * @param {string} key Param key.
  * @return {string} Param value.
  */
@@ -103,6 +106,7 @@ ngeo.Location.prototype.getParam = function(key) {
 
 
 /**
+ * Get an array with all existing param's keys in the location's URI.
  * @return {Array.<string>} Param keys.
  */
 ngeo.Location.prototype.getParamKeys = function() {
@@ -111,6 +115,7 @@ ngeo.Location.prototype.getParamKeys = function() {
 
 
 /**
+ * Set or create a param in the location's URI.
  * @param {Object.<string, string>} params
  */
 ngeo.Location.prototype.updateParams = function(params) {
@@ -122,6 +127,7 @@ ngeo.Location.prototype.updateParams = function(params) {
 
 
 /**
+ * Delete a param in the location's URI.
  * @param {string} key Param key.
  */
 ngeo.Location.prototype.deleteParam = function(key) {
@@ -130,6 +136,7 @@ ngeo.Location.prototype.deleteParam = function(key) {
 
 
 /**
+ * Refresh the the location's URI.
  */
 ngeo.Location.prototype.refresh = function() {
   this.history_.replaceState(null, '', this.getUriString());
