@@ -8,6 +8,9 @@ goog.require('ngeo');
  * Provides a service with print utility functions.
  *
  * @constructor
+ * @ngdoc service
+ * @memberof ngeo
+ * @name ngeoPrintUtils
  */
 ngeo.PrintUtils = function() {
 };

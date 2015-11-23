@@ -8,6 +8,9 @@ goog.require('ngeo');
  * used to debounce calls to a user-provided function.
  *
  * @typedef {function(function(?), number, boolean):function()}
+ * @ngdoc service
+ * @memberof ngeo
+ * @name ngeoDebounce
  */
 ngeo.Debounce;
 

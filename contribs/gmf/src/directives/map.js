@@ -17,6 +17,9 @@ goog.require('ol.Map');
  *
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
+ * @ngdoc directive
+ * @memberof gmf
+ * @name gmfMap
  */
 gmf.mapDirective = function() {
   return {
@@ -39,6 +42,9 @@ gmfModule.directive('gmfMap', gmf.mapDirective);
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @ngInject
+ * @ngdoc controller
+ * @memberof gmf
+ * @name GmfMapController
  */
 gmf.MapController = function($scope, ngeoLocation, ngeoDebounce) {
 

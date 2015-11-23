@@ -43,7 +43,6 @@ goog.require('goog.object');
  * @return {Object}
  * @param {ngeox.profile.ProfileOptions} options
  * @export
- *
  */
 ngeo.profile = function(options) {
   /**

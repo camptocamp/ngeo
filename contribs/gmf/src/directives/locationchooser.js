@@ -17,6 +17,9 @@ goog.require('ol.Map');
  *
  * @return {angular.Directive} The directive specs.
  * @ngInject
+ * @ngdoc directive
+ * @memberof gmf
+ * @name gmfLocationchooser
  */
 gmf.locationchooserDirective = function() {
   return {
@@ -46,6 +49,9 @@ gmfModule.directive('gmfLocationchooser', gmf.locationchooserDirective);
  * @constructor
  * @export
  * @ngInject
+ * @ngdoc controller
+ * @memberof gmf
+ * @name gmfLocationchooserController
  */
 gmf.LocationchooserController = function($scope) {
 

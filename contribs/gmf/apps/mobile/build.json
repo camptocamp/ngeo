@@ -80,7 +80,7 @@
       "missingRequire"
     ],
     "extra_annotation_name": [
-      "api", "observable"
+      "api", "observable", "ngdoc"
     ],
     "angular_pass": true,
     "compilation_level": "ADVANCED",

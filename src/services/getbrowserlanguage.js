@@ -19,6 +19,9 @@ ngeo.GetBrowserLanguage;
  * @param {angular.$window} $window Angular $window service.
  * @return {ngeo.GetBrowserLanguage} The "GetBrowserLanguage" function.
  * @ngInject
+ * @ngdoc service
+ * @memberof ngeo
+ * @name ngeoGetBrowserLanguage
  */
 ngeo.getBrowserLanguageFactory = function($window) {
   return (

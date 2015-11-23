@@ -32,6 +32,9 @@ goog.require('ngeo');
  * @param {angular.$parse} $parse Angular parse service.
  * @return {angular.Directive} The directive specs.
  * @ngInject
+ * @ngdoc directive
+ * @memberof ngeo
+ * @name ngeoModal
  */
 ngeo.modalDirective = function($parse) {
   return {
