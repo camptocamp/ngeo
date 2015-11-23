@@ -24,13 +24,13 @@ ngeo.SortableOptions;
  * It is typically used together with `ng-repeat`, for example for re-ordering
  * layers in a map.
  *
- * @example
- * <ul ngeo-sortable="ctrl.layers"
- *     ngeo-sortable-options="{handleClassName: 'sortable-handle'}">
- *   <li ng-repeat="layer in ctrl.layers">
- *     <span class="sortable-handle">handle</span>{{layer.get('name')}}
- *   </li>
- * </ul>
+ * Example:
+ *     <ul ngeo-sortable="ctrl.layers"
+ *         ngeo-sortable-options="{handleClassName: 'sortable-handle'}">
+ *       <li ng-repeat="layer in ctrl.layers">
+ *         <span class="sortable-handle">handle</span>{{layer.get('name')}}
+ *       </li>
+ *     </ul>
  *
  * The value of the "ngeo-sortable" attribute is an expression which evaluates
  * to an array (an array of layers in the above example). This is the array

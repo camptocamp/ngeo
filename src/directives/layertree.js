@@ -29,11 +29,11 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
  * The directive assumes that tree nodes that are not leaves have a "children"
  * property referencing an array of child nodes.
  *
- * @example
- * <div ngeo-layertree="ctrl.tree"
- *      ngeo-layertree-map="ctrl.map"
- *      ngeo-layertree-nodelayer="ctrl.getLayer(node)"
- * </div>
+ * Example:
+ *     <div ngeo-layertree="ctrl.tree"
+ *          ngeo-layertree-map="ctrl.map"
+ *          ngeo-layertree-nodelayer="ctrl.getLayer(node)"
+ *     </div>
  *
  * The "ngeo-layertree", "ngeo-layertree-map" and
  * "ngeo-layertree-nodelayer" attributes are mandatory attributes.
@@ -57,14 +57,14 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
  * By default the directive uses "layertree.html" as its templateUrl. This
  * can be changed by redefining the "ngeoLayertreeTemplateUrl" value (using
  * app.module.value('ngeoLayertreeTemplateUrl', 'path/layertree.html'), or
- * by adding an "ngeo-layertree-templateurl" attribute to the element. For
- * example:
+ * by adding an "ngeo-layertree-templateurl" attribute to the element.
  *
- * <div ngeo-layertree="ctrl.tree"
- *      ngeo-layertree-templateurl="path/to/layertree.html"
- *      ngeo-layertree-map="ctrl.map"
- *      ngeo-layertree-nodelayer="ctrl.getLayer(node)"
- * </div>
+ * Example:
+ *     <div ngeo-layertree="ctrl.tree"
+ *          ngeo-layertree-templateurl="path/to/layertree.html"
+ *          ngeo-layertree-map="ctrl.map"
+ *          ngeo-layertree-nodelayer="ctrl.getLayer(node)"
+ *     </div>
  *
  * The directive has its own scope, but it is not an isolate scope. That scope
  * has a "layertreeCtrl" property which is a reference to the directive's

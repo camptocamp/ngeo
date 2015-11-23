@@ -9,11 +9,11 @@ goog.require('ngeo.profile');
  * Provides a directive used to insert an elevation profile chart
  * in the DOM.
  *
- * @example
- * <div ngeo-profile="ctrl.profileData"
- *      ngeo-profile-options="ctrl.profileOptions"
- *      ngeo-profile-pois="ctrl.profilePois"
- * ></div>
+ * Example:
+ *     <div ngeo-profile="ctrl.profileData"
+ *          ngeo-profile-options="ctrl.profileOptions"
+ *          ngeo-profile-pois="ctrl.profilePois"
+ *     ></div>
  *
  * Where "ctrl.profileOptions" is of type {@link ngeox.profile.ProfileOptions};
  * "ctrl.profileData" and "ctrl.profilePois" are arrays which will be

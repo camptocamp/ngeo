@@ -10,8 +10,8 @@ goog.require('ol.control.Control');
  * Provides a directive can be used to add a control to a DOM
  * element of the HTML page.
  *
- * @example
- * <div ngeo-control="ctrl.control" ngeo-control-map="ctrl.map"></div>
+ * Example:
+ *     <div ngeo-control="ctrl.control" ngeo-control-map="ctrl.map"></div>
  *
  * The expression passed to "ngeo-control" should evaluate to a control
  * instance, and the expression passed to "ngeo-control-map" should
