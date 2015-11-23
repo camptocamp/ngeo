@@ -20,15 +20,6 @@ goog.require('ngeo');
  * In that example the ngeo-btn are combined together in a "toggle group",
  * where activating a button will deactivate the others.
  *
- * The ngeo-btn allows creating toggle buttons working with ng-model. It is
- * typically used with Bootstrap buttons (`btn`).
- *
- * @example
- * <button ngeo-btn class="btn" ng-model="ctrl.interaction.active"></button>
- *
- * This example is about creating a Bootstrap button that can pressed/depressed
- * to activate/deactivate an OpenLayers 3 interaction.
- *
  * @return {angular.Directive} The directive specs.
  * @ngInject
  */
@@ -91,6 +82,15 @@ ngeoModule.controller('ngeoBtnGroupController', ngeo.BtnGroupController);
 
 
 /**
+ * The ngeo-btn allows creating toggle buttons working with ng-model. It is
+ * typically used with Bootstrap buttons (`btn`).
+ *
+ * @example
+ * <button ngeo-btn class="btn" ng-model="ctrl.interaction.active"></button>
+ *
+ * This example is about creating a Bootstrap button that can pressed/depressed
+ * to activate/deactivate an OpenLayers 3 interaction.
+ *
  * @param {angular.$parse} $parse Angular parse service.
  * @return {angular.Directive} The directive specs.
  * @ngInject
