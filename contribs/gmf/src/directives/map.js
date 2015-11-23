@@ -10,8 +10,7 @@ goog.require('ol.Map');
 
 
 /**
- * This file provides the "map" directive for GeoMapFish
- * applications.
+ * A "map" directive for a GeoMapFish application.
  *
  * @example
  * <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>

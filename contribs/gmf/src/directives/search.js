@@ -11,8 +11,10 @@ goog.require('ol.proj');
 
 
 /**
- * This file provides the "search" directive and controller for
- * a GeoMapFish application.
+ * A "search" directive that allows to search and recenter on a selected
+ * result's feature.
+ * It can search in multiple GeoJSON datasources.
+ * It can filter and group results by a feature's property.
  *
  * FIXME: The 'placeholder' in the input field is hard-coded and can't currently
  * be internationalised.
