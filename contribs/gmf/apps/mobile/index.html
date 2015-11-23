@@ -97,5 +97,16 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js" type="text/javascript"></script>
     <script src="/@?main=mobile/js/mobile.js"></script>
     <script src="../../../../utils/watchwatchers.js"></script>
+    <script>
+      (function() {
+         var module = angular.module('app');
+         var serverVars = {
+           searchDatasourcesUrls: {
+             gmfDemo2: 'http://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?query=%QUERY'
+           }
+         };
+         module.constant('serverVars', serverVars);
+       })();
+    </script>
   </body>
 </html>

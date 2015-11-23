@@ -28,11 +28,12 @@ goog.require('ol.source.OSM');
 /**
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
+ * @param {Object} serverVars vars from GMF
  * @constructor
  * @ngInject
  * @export
  */
-app.MobileController = function(ngeoFeatureOverlayMgr) {
+app.MobileController = function(ngeoFeatureOverlayMgr, serverVars) {
 
   /**
    * @type {Array.<gmfx.SearchDirectiveDatasource>}
@@ -44,8 +45,7 @@ app.MobileController = function(ngeoFeatureOverlayMgr) {
     groupsKey: 'layer_name',
     groupValues: ['osm'],
     projection: 'EPSG:21781',
-    url: 'http://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?' +
-        'query=%QUERY'
+    url: serverVars['searchDatasourcesUrls']['gmfDemo2']
   }];
 
   /**
