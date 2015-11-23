@@ -11,11 +11,11 @@ goog.require('ngeo');
  * The ngeo-btn-group directive allows creating "toggle" groups. It works with
  * the ngeo-btn directive.
  *
- * @example
- * <div ngeo-btn-group>
- *   <button ngeo-btn class="btn" ng-model="ctrl.drawPoint.active"></button>
- *   <button ngeo-btn class="btn" ng-model="ctrl.drawLine.active"></button>
- * </div>
+ * Example:
+ *     <div ngeo-btn-group>
+ *       <button ngeo-btn class="btn" ng-model="ctrl.drawPoint.active"></button>
+ *       <button ngeo-btn class="btn" ng-model="ctrl.drawLine.active"></button>
+ *     </div>
  *
  * In that example the ngeo-btn are combined together in a "toggle group",
  * where activating a button will deactivate the others.
@@ -85,8 +85,8 @@ ngeoModule.controller('ngeoBtnGroupController', ngeo.BtnGroupController);
  * The ngeo-btn allows creating toggle buttons working with ng-model. It is
  * typically used with Bootstrap buttons (`btn`).
  *
- * @example
- * <button ngeo-btn class="btn" ng-model="ctrl.interaction.active"></button>
+ * Example:
+ *     <button ngeo-btn class="btn" ng-model="ctrl.interaction.active"></button>
  *
  * This example is about creating a Bootstrap button that can pressed/depressed
  * to activate/deactivate an OpenLayers 3 interaction.

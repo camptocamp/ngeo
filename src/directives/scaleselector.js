@@ -30,20 +30,20 @@ ngeo.ScaleselectorOptions;
  * Provides the "ngeoScaleselector" directive, a widget for
  * selecting map scales.
  *
- * @example
- * <div ngeo-scaleselector="ctrl.scales" ngeo-scaleselector-map="ctrl.map">
- * </div>
+ * Example:
+ *     <div ngeo-scaleselector="ctrl.scales" ngeo-scaleselector-map="ctrl.map">
+ *     </div>
  *
  * The expression passed to the ngeo-scaleselector attribute should return an
  * object of this form:
  *
- * {
- *   '0': $sce.trustAsHtml('1&nbsp;:&nbsp;200\'000\'000'),
- *   '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000\'000'),
- *   '2': $sce.trustAsHtml('1&nbsp;:&nbsp;50\'000\'000'),
- *   '3': $sce.trustAsHtml('1&nbsp;:&nbsp;25\'000\'000'),
- *   '4': $sce.trustAsHtml('1&nbsp;:&nbsp;12\'000\'000')
- * }
+ *     {
+ *       '0': $sce.trustAsHtml('1&nbsp;:&nbsp;200\'000\'000'),
+ *       '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000\'000'),
+ *       '2': $sce.trustAsHtml('1&nbsp;:&nbsp;50\'000\'000'),
+ *       '3': $sce.trustAsHtml('1&nbsp;:&nbsp;25\'000\'000'),
+ *       '4': $sce.trustAsHtml('1&nbsp;:&nbsp;12\'000\'000')
+ *     }
  *
  * This object's keys are strings representing zoom levels, the values are
  * strings representing scales. The directive's partial uses ng-bind-html so

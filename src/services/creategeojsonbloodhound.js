@@ -11,31 +11,30 @@ goog.require('ol.format.GeoJSON');
  * expecting GeoJSON responses from the search web service, and creating
  * `ol.Feature` objects as suggestions.
  *
- * @example
- * var bloodhound = ngeoCreateGeoJSONBloodhound(
- *   'http://example.com/fulltextsearch?query=%QUERY',
- *   aFilterFunction,
- *   ol.proj.get('EPSG:3857'));
- * bloodhound.initialize();
+ * Example:
+ *     var bloodhound = ngeoCreateGeoJSONBloodhound(
+ *       'http://example.com/fulltextsearch?query=%QUERY',
+ *       aFilterFunction,
+ *       ol.proj.get('EPSG:3857'));
+ *     bloodhound.initialize();
  *
- * @example
- * var bloodhound = ngeoCreateGeoJSONBloodhound(
- *   '',
- *   undefined,
- *   ol.proj.get('EPSG:3857'),
- *   ol.proj.get('EPSG:21781'),
- *   {
- *     remote: {
- *       url: mySearchEngineUrl,
- *       replace: function(url, query) {
- *         return url +
- *             '?qtext=' + encodeURIComponent(query) +
- *             '&lang=' + gettextCatalog.currentLanguage;
+ *     var bloodhound = ngeoCreateGeoJSONBloodhound(
+ *       '',
+ *       undefined,
+ *       ol.proj.get('EPSG:3857'),
+ *       ol.proj.get('EPSG:21781'),
+ *       {
+ *         remote: {
+ *           url: mySearchEngineUrl,
+ *           replace: function(url, query) {
+ *             return url +
+ *                 '?qtext=' + encodeURIComponent(query) +
+ *                 '&lang=' + gettextCatalog.currentLanguage;
+ *           }
+ *         }
  *       }
- *     }
- *   }
- * );
- * bloodhound.initialize
+ *     );
+ *     bloodhound.initialize();
  *
  * @typedef {function(string, (function(GeoJSONFeature): boolean)=,
  * ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=):Bloodhound}
