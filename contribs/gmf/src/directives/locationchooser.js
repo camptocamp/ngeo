@@ -6,8 +6,8 @@ goog.require('ol.Map');
 
 
 /**
- * This file provides a directive that creates an option list.
- * The options serve to switch quickly between differents places on the map.
+ * This directive creates an options list that serves to switch quickly
+ * between differents places on the map.
  * @example
  * <gmf-locationchooser
  *   gmf-locationchooser-map="ctrl.map"
