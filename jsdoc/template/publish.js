@@ -9,6 +9,7 @@ var path = require('jsdoc/path');
 var taffy = require('taffydb').taffy;
 var template = require('jsdoc/template');
 var util = require('util');
+var jsdocOl3 = require('../../.build/jsdocOl3.js');
 
 var htmlsafe = helper.htmlsafe;
 var linkto = helper.linkto;
@@ -447,6 +448,8 @@ exports.publish = function(taffyData, opts, tutorials) {
 
     var globalUrl = helper.getUniqueFilename('global');
     helper.registerLink('global', globalUrl);
+
+    jsdocOl3.registerOl3Link(helper);
 
     // set up templating
     view.layout = conf.default.layoutFile ?
