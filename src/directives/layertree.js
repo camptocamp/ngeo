@@ -30,6 +30,7 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
  * property referencing an array of child nodes.
  *
  * Example:
+ *
  *     <div ngeo-layertree="ctrl.tree"
  *          ngeo-layertree-map="ctrl.map"
  *          ngeo-layertree-nodelayer="ctrl.getLayer(node)"
@@ -60,6 +61,7 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
  * by adding an "ngeo-layertree-templateurl" attribute to the element.
  *
  * Example:
+ *
  *     <div ngeo-layertree="ctrl.tree"
  *          ngeo-layertree-templateurl="path/to/layertree.html"
  *          ngeo-layertree-map="ctrl.map"

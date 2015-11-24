@@ -10,6 +10,7 @@ goog.require('ngeo.profile');
  * in the DOM.
  *
  * Example:
+ *
  *     <div ngeo-profile="ctrl.profileData"
  *          ngeo-profile-options="ctrl.profileOptions"
  *          ngeo-profile-pois="ctrl.profilePois"

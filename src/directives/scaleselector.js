@@ -31,6 +31,7 @@ ngeo.ScaleselectorOptions;
  * selecting map scales.
  *
  * Example:
+ *
  *     <div ngeo-scaleselector="ctrl.scales" ngeo-scaleselector-map="ctrl.map">
  *     </div>
  *

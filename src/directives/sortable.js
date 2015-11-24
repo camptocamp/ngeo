@@ -25,6 +25,7 @@ ngeo.SortableOptions;
  * layers in a map.
  *
  * Example:
+ *
  *     <ul ngeo-sortable="ctrl.layers"
  *         ngeo-sortable-options="{handleClassName: 'sortable-handle'}">
  *       <li ng-repeat="layer in ctrl.layers">
