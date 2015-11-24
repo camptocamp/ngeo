@@ -1,14 +1,14 @@
-goog.provide('app.navDirective');
+goog.provide('gmf.mobileNavDirective');
 
-goog.require('app');
+goog.require('gmf');
 
 
 /**
- * An "app-nav" directive defining the behavior of a tree-structured menu.
+ * An "gmf-nav" directive defining the behavior of a tree-structured menu.
  *
  * The directive is to be placed on a `nav` element, with the following
  * structure:
- * <nav app-nav>
+ * <nav gmf-nav>
  *   <header>
  *     <a class="go-back" href="void(0)"></a>
  *     <span>Categories</span>
@@ -41,7 +41,7 @@ goog.require('app');
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  */
-app.navDirective = function() {
+gmf.mobileNavDirective = function() {
   return {
     restrict: 'A',
     link:
@@ -153,4 +153,4 @@ app.navDirective = function() {
 };
 
 
-app.module.directive('appNav', app.navDirective);
+gmfModule.directive('gmfMobileNav', gmf.mobileNavDirective);

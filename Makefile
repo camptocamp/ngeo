@@ -10,8 +10,8 @@ GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_APPS_MOBILE_JS_FILES := $(shell find contribs/gmf/apps/mobile/js -type f -name '*.js')
-GMF_APPS_MOBILE_LESS_FILES := $(shell find contribs/gmf/apps/mobile -type f -name '*.less')
-GMF_APPS_MOBILE_MAIN_LESS_FILES := $(filter %/main.less, $(GMF_APPS_LESS_FILES))
+GMF_APPS_MOBILE_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
+GMF_APPS_MOBILE_MAIN_LESS_FILES := $(filter %/mobile.less, $(GMF_APPS_LESS_FILES))
 
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) $(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES))
 
@@ -62,7 +62,7 @@ check: lint dist check-examples test compile-examples build-gmf-mobile-app
 compile-examples: .build/examples/all.min.js
 
 .PHONY: build-gmf-mobile-app
-build-gmf-mobile-app: $(addprefix contribs/gmf/apps/mobile/build/build,.js .css)
+build-gmf-mobile-app: $(addprefix contribs/gmf/build/mobile,.js .css)
 
 .PHONY: check-examples
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
@@ -75,7 +75,7 @@ test: .build/ol-deps.js .build/ngeo-deps.js .build/templatecache.js .build/node_
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: serve
-serve: .build/node_modules.timestamp contribs/gmf/apps/mobile/build/build.css
+serve: .build/node_modules.timestamp contribs/gmf/build/mobile.css
 	node buildtools/serve.js
 
 .PHONY: gh-pages
@@ -85,11 +85,11 @@ gh-pages: GIT_REMOTE_NAME ?= origin
 gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 		.build/examples-hosted/index.html \
 		.build/examples-hosted/contribs/gmf/index.html \
-		.build/examples-hosted/contribs/gmf/apps/mobile \
+		.build/examples-hosted/contribs/gmf/apps/mobile/index.html \
 		.build/apidoc-$(GIT_BRANCH)
 	cd $<; git fetch origin
 	cd $<; git merge --ff-only origin/gh-pages
-	cd $<; git rm --ignore-unmatch -rqf $(GIT_BRANCH) examples-$(GIT_BRANCH) aptdoc-$(GIT_BRANCH)
+	cd $<; git rm --ignore-unmatch -r --quiet --force $(GIT_BRANCH)
 	cd $<; git clean --force -d
 	mkdir $</$(GIT_BRANCH)
 	cp -r .build/apidoc-$(GIT_BRANCH) $</$(GIT_BRANCH)/apidoc
@@ -225,10 +225,17 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $@
 	cp examples/data/* $@
 
-.build/examples-hosted/contribs/gmf/apps/mobile: build-gmf-mobile-app contribs/gmf/apps/mobile/webfonts .build/examples-hosted/contribs/gmf/apps/mobile/index.html
-	mkdir -p $@
-	cp -r contribs/gmf/apps/mobile/build $@
-	cp -r contribs/gmf/apps/mobile/webfonts $@
+.build/examples-hosted/contribs/gmf/fonts: contribs/gmf/fonts build-gmf-mobile-app
+	mkdir -p $(dir $@)
+	cp -r $< $(dir $@)
+
+.build/examples-hosted/contribs/gmf/build: build-gmf-mobile-app .build/examples-hosted/contribs/gmf/apps/mobile/index.html
+	mkdir -p $(dir $@)
+	cp -r contribs/gmf/build $(dir $@)
+
+.build/examples-hosted/contribs/gmf/apps/mobile/js/mobile.js: contribs/gmf/apps/mobile/js/mobile.js
+	mkdir -p $(dir $@)
+	cp $< $(dir $@)
 
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
@@ -261,7 +268,10 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/mobile/index.html
-.build/examples-hosted/contribs/gmf/apps/mobile/index.html: contribs/gmf/apps/mobile/index.html
+.build/examples-hosted/contribs/gmf/apps/mobile/index.html: contribs/gmf/apps/mobile/index.html \
+		.build/examples-hosted/contribs/gmf/build \
+		.build/examples-hosted/contribs/gmf/fonts \
+		.build/examples-hosted/contribs/gmf/apps/mobile/js/mobile.js
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
 		-e 's|node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
@@ -271,7 +281,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|utils/watchwatchers.js|lib/watchwatchers.js|' \
-		-e 's|/@?main=mobile/js/main.js|build/build.js|' $< > $@
+		-e 's|/@?main=mobile/js/mobile.js|../../build/mobile.js|' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
@@ -393,17 +403,17 @@ $(EXTERNS_JQUERY):
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
 
-contribs/gmf/apps/mobile/build/build.js: contribs/gmf/apps/mobile/build.json \
+contribs/gmf/build/mobile.js: contribs/gmf/apps/mobile/build.json \
 		$(EXTERNS_FILES) \
 		$(GMF_APPS_MOBILE_JS_FILES) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/openlayers/node_modules/.bin/closure-util build $< $@
 
-contribs/gmf/apps/mobile/build/build.css: %/build/build.css: $(GMF_APPS_MOBILE_LESS_FILES) \
+contribs/gmf/build/mobile.css: $(GMF_APPS_MOBILE_LESS_FILES) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	./node_modules/.bin/lessc $*/less/main.less $@ --autoprefix
+	./node_modules/.bin/lessc contribs/gmf/less/mobile.less $@ --autoprefix
 
 .PHONY: clean
 clean:
@@ -419,7 +429,7 @@ clean:
 	rm -f $(EXTERNS_FILES)
 	rm -rf .build/examples-hosted
 	rm -rf .build/contribs
-	rm -rf contribs/gmf/apps/mobile/build
+	rm -rf contribs/gmf/build
 
 .PHONY: cleanall
 cleanall: clean
