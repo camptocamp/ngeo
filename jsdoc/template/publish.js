@@ -9,6 +9,7 @@ var path = require('jsdoc/path');
 var taffy = require('taffydb').taffy;
 var template = require('jsdoc/template');
 var util = require('util');
+var jsdocOl3 = require('../../.build/jsdocOl3.js');
 
 var htmlsafe = helper.htmlsafe;
 var linkto = helper.linkto;
@@ -366,11 +367,33 @@ function buildNav(members) {
         modules[item.memberof] = true;
     });
 
+    var directives = []
+    var services = []
+    var controllers = []
+    members.classes.forEach(function(item) {
+        if (item.ngdoc == 'directive') {
+            directives.push(item);
+        }
+        else if (item.ngdoc == 'service') {
+            services.push(item);
+        }
+        else if (item.ngdoc == 'controller') {
+            controllers.push(item);
+        }
+    });
+
     for (module in modules) {
         var _nav = '';
+
+        _nav += buildMemberNav(directives, 'Directives', seen, linkto, module);
+        _nav += buildMemberNav(services, 'Services', seen, linkto, module);
+        _nav += buildMemberNav(controllers, 'Controllers', seen, linkto, module);
+
         _nav += buildMemberNav(members.externals, '', {}, linkto, module);
         _nav += buildMemberNav(members.externals, 'Externals', seen, linktoExternal, module);
+
         _nav += buildMemberNav(members.classes, 'Classes', seen, linkto, module);
+
         _nav += buildMemberNav(members.events, 'Events', seen, linkto, module);
         _nav += buildMemberNav(members.namespaces, 'Namespaces', seen, linkto, module);
         _nav += buildMemberNav(members.mixins, 'Mixins', seen, linkto, module);
@@ -425,6 +448,8 @@ exports.publish = function(taffyData, opts, tutorials) {
 
     var globalUrl = helper.getUniqueFilename('global');
     helper.registerLink('global', globalUrl);
+
+    jsdocOl3.registerOl3Link(helper);
 
     // set up templating
     view.layout = conf.default.layoutFile ?
@@ -627,7 +652,15 @@ exports.publish = function(taffyData, opts, tutorials) {
 
         var myClasses = helper.find(classes, {longname: longname});
         if (myClasses.length) {
-            generate('Class: ' + myClasses[0].name, myClasses, helper.longnameToUrl[longname]);
+            var name = 'Class: ' + myClasses[0].name
+            if (myClasses[0].ngdoc) {
+                name += ' <small>' + myClasses[0].ngdoc;
+                if (myClasses[0].ngname) {
+                    name += ':' + myClasses[0].ngname;
+                }
+                name += '</small>';
+            }
+            generate(name, myClasses, helper.longnameToUrl[longname]);
         }
 
         var myNamespaces = helper.find(namespaces, {longname: longname});

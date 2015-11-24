@@ -22,6 +22,8 @@ goog.require('ngeo.profile');
  *
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
+ * @ngdoc directive
+ * @ngname ngeoProfile
  */
 ngeo.profileDirective = function() {
   return {

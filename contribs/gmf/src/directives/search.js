@@ -34,6 +34,8 @@ goog.require('ol.proj');
  *
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
+ * @ngdoc directive
+ * @ngname gmfSearch
  */
 gmf.searchDirective = function() {
   return {
@@ -89,6 +91,8 @@ gmfModule.directive('gmfSearch', gmf.searchDirective);
  *     overlay manager service.
  * @export
  * @ngInject
+ * @ngdoc controller
+ * @ngname GmfSearchController
  */
 gmf.SearchController = function($scope, $compile,
     ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr) {

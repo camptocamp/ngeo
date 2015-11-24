@@ -768,6 +768,8 @@ ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
  * @param {angular.$http} $http Angular $http service.
  * @return {ngeo.CreatePrint} The function to create a print service.
  * @ngInject
+ * @ngdoc service
+ * @ngname ngeoCreatePrint
  */
 ngeo.createPrintServiceFactory = function($http) {
   return (

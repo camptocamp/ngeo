@@ -38,6 +38,8 @@ goog.require('ol.format.GeoJSON');
  *
  * @typedef {function(string, (function(GeoJSONFeature): boolean)=,
  * ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=):Bloodhound}
+ * @ngdoc service
+ * @ngname ngeoCreateGeoJSONBloodhound
  */
 ngeo.CreateGeoJSONBloodhound;
 

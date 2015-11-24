@@ -13,6 +13,8 @@ goog.require('ngeo');
  * <input type="checkbox" ngModel="layer.visible" />
  *
  * @typedef {function(ol.layer.Layer)}
+ * @ngdoc service
+ * @ngname ngeoDecorateLayer
  */
 ngeo.DecorateLayer;
 
