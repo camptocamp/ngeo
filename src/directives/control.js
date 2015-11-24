@@ -11,6 +11,7 @@ goog.require('ol.control.Control');
  * element of the HTML page.
  *
  * Example:
+ *
  *     <div ngeo-control="ctrl.control" ngeo-control-map="ctrl.map"></div>
  *
  * The expression passed to "ngeo-control" should evaluate to a control

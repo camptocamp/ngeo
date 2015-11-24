@@ -12,6 +12,7 @@ goog.require('ol.format.GeoJSON');
  * `ol.Feature` objects as suggestions.
  *
  * Example:
+ *
  *     var bloodhound = ngeoCreateGeoJSONBloodhound(
  *       'http://example.com/fulltextsearch?query=%QUERY',
  *       aFilterFunction,

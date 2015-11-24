@@ -12,6 +12,7 @@ goog.require('ngeo');
  * the ngeo-btn directive.
  *
  * Example:
+ *
  *     <div ngeo-btn-group>
  *       <button ngeo-btn class="btn" ng-model="ctrl.drawPoint.active"></button>
  *       <button ngeo-btn class="btn" ng-model="ctrl.drawLine.active"></button>
@@ -90,6 +91,7 @@ ngeoModule.controller('ngeoBtnGroupController', ngeo.BtnGroupController);
  * typically used with Bootstrap buttons (`btn`).
  *
  * Example:
+ *
  *     <button ngeo-btn class="btn" ng-model="ctrl.interaction.active"></button>
  *
  * This example is about creating a Bootstrap button that can pressed/depressed
