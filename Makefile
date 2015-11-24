@@ -386,9 +386,9 @@ $(EXTERNS_JQUERY):
 .build/templatecache.js: buildtools/templatecache.mako.js .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render --var "partials=$(addprefix ../,$(SRC_DIRECTIVES_PARTIALS_FILES))" --var "basedir=src" $< > $@
 
-.build/apidoc-%: .build/node_modules.timestamp jsdoc.json $(SRC_JS_FILES)
+.build/apidoc-%: .build/node_modules.timestamp jsdoc/config.json $(SRC_JS_FILES)
 	rm -rf $@
-	./node_modules/.bin/jsdoc -c jsdoc.json --destination $@
+	./node_modules/.bin/jsdoc -c jsdoc/config.json --destination $@
 
 contribs/gmf/apps/mobile/build/build.js: contribs/gmf/apps/mobile/build.json \
 		$(EXTERNS_FILES) \
