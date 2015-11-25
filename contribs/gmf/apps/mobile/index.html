@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html ng-app='app'>
+<html lang="{{mobileCtrl.lang}}" ng-app="app" ng-controller="MobileController as mainCtrl">
   <head>
-    <title>Mobile Application</title>
+    <title translate>Mobile Application</title>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../../build/mobile.css" type="text/css">
+    <link rel="stylesheet/less" href="../../less/mobile.less" type="text/css">
     <style>
     #desc {
       display: none;
     }
     </style>
   </head>
-  <body ng-controller="MobileController as mainCtrl"
-        ng-class="{'nav-is-visible': mainCtrl.navIsVisible(),
+  <body ng-class="{'nav-is-visible': mainCtrl.navIsVisible(),
                    'nav-left-is-visible': mainCtrl.leftNavIsVisible(),
                    'nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
     <main>
@@ -94,15 +92,19 @@
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../../node_modules/angular/angular.js"></script>
     <script src="../../../../node_modules/typeahead.js/dist/typeahead.bundle.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js" type="text/javascript"></script>
+    <script src="../../../../node_modules/proj4/dist/proj4-src.js" type="text/javascript"></script>
+    <script src="../../../../node_modules/angular-gettext/dist/angular-gettext.js" type="text/javascript"></script>
+    <script src="../../../../node_modules/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>
+    <script src="../../../../node_modules/d3/d3.min.js" type="text/javascript"></script>
+    <script src="../../../../node_modules/less/dist/less.min.js"></script>
     <script src="/@?main=mobile/js/mobile.js"></script>
     <script src="../../../../utils/watchwatchers.js"></script>
     <script>
       (function() {
          var module = angular.module('app');
          var serverVars = {
-           searchDatasourcesUrls: {
-             gmfDemo2: 'http://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?query=%QUERY'
+           serviceUrls: {
+             fulltextsearch: 'http://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?query=%QUERY'
            }
          };
          module.constant('serverVars', serverVars);

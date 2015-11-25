@@ -12,6 +12,14 @@ GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type 
 GMF_APPS_MOBILE_JS_FILES := $(shell find contribs/gmf/apps/mobile/js -type f -name '*.js')
 GMF_APPS_MOBILE_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 GMF_APPS_MOBILE_MAIN_LESS_FILES := $(filter %/mobile.less, $(GMF_APPS_LESS_FILES))
+GMF_APPS_LIBS_JS_FILES += \
+	node_modules/jquery/dist/jquery.min.js \
+	node_modules/angular/angular.min.js \
+	node_modules/angular-gettext/dist/angular-gettext.min.js \
+	node_modules/bootstrap/dist/js/bootstrap.min.js \
+	node_modules/proj4/dist/proj4.js \
+	node_modules/d3/d3.min.js \
+	node_modules/typeahead.js/dist/typeahead.bundle.min.js
 
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) $(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES))
 
@@ -273,13 +281,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/examples-hosted/contribs/gmf/fonts \
 		.build/examples-hosted/contribs/gmf/apps/mobile/js/mobile.js
 	mkdir -p $(dir $@)
-	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
-		-e 's|node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
-		-e 's|node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
-		-e 's|node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
-		-e 's|node_modules/angular/angular.js|lib/angular.min.js|' \
-		-e 's|node_modules/d3/d3.js|lib/d3.min.js|' \
-		-e 's|node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
+	sed -e 's|stylesheet/less" href="../../less/mobile.less|stylesheet" href="../../build/mobile.css|' \
+		-e '/\/node_modules\//d' \
 		-e 's|utils/watchwatchers.js|lib/watchwatchers.js|' \
 		-e 's|/@?main=mobile/js/mobile.js|../../build/mobile.js|' $< > $@
 
@@ -403,12 +406,15 @@ $(EXTERNS_JQUERY):
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
 
-contribs/gmf/build/mobile.js: contribs/gmf/apps/mobile/build.json \
+contribs/gmf/build/mobile.closure.js: contribs/gmf/apps/mobile/build.json \
 		$(EXTERNS_FILES) \
 		$(GMF_APPS_MOBILE_JS_FILES) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/openlayers/node_modules/.bin/closure-util build $< $@
+
+contribs/gmf/build/mobile.js: contribs/gmf/build/mobile.closure.js $(GMF_APPS_LIBS_JS_FILES)
+	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
 
 contribs/gmf/build/mobile.css: $(GMF_APPS_MOBILE_LESS_FILES) \
 		.build/node_modules.timestamp
