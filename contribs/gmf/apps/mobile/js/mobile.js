@@ -40,12 +40,12 @@ app.MobileController = function(ngeoFeatureOverlayMgr, serverVars) {
    * @export
    */
   this.searchDatasources = [{
-    datasetTitle: 'From demo 2.0',
+    datasetTitle: 'Internal',
     labelKey: 'label',
     groupsKey: 'layer_name',
     groupValues: ['osm'],
     projection: 'EPSG:21781',
-    url: serverVars['searchDatasourcesUrls']['gmfDemo2']
+    url: serverVars['serviceUrls']['fulltextsearch']
   }];
 
   /**
