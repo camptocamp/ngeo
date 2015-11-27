@@ -1,6 +1,6 @@
 {
     "source": {
-        "include": ["contribs/gmf/src", "src"],
+        "include": ["contribs/gmf/src", "src", "externs/ngeox.js"],
         "includePattern": ".+\\.js$"
     },
     "plugins": [

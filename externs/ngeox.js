@@ -1,4 +1,5 @@
 /**
+ * @private
  * @type {Object}
  */
 var ngeox;

@@ -345,27 +345,11 @@ function buildNav(members) {
     var seenTutorials = {};
     var modules = {};
 
-    members.externals.forEach(function(item) {
-        modules[item.memberof] = true;
-    });
-    members.classes.forEach(function(item) {
-        modules[item.memberof] = true;
-    });
-    members.events.forEach(function(item) {
-        modules[item.memberof] = true;
-    });
-    members.namespaces.forEach(function(item) {
-        modules[item.memberof] = true;
-    });
-    members.mixins.forEach(function(item) {
-        modules[item.memberof] = true;
-    });
-    members.tutorials.forEach(function(item) {
-        modules[item.memberof] = true;
-    });
-    members.interfaces.forEach(function(item) {
-        modules[item.memberof] = true;
-    });
+    for (var type in members) {
+        members[type].forEach(function(item) {
+            modules[item.memberof] = true;
+        });
+    }
 
     var directives = []
     var services = []
@@ -399,6 +383,7 @@ function buildNav(members) {
         _nav += buildMemberNav(members.mixins, 'Mixins', seen, linkto, module);
         _nav += buildMemberNav(members.tutorials, 'Tutorials', seenTutorials, linktoTutorial, module);
         _nav += buildMemberNav(members.interfaces, 'Interfaces', seen, linkto, module);
+        _nav += buildMemberNav(members.typedefs, 'Types', seen, linkto, module);
         if (_nav !== '') {
             nav += '<h2>' + module + '</h2>';
             nav += _nav;
@@ -467,7 +452,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     var sourceFiles = {};
     var sourceFilePaths = [];
     data().each(function(doclet) {
-         doclet.attribs = '';
+        doclet.attribs = '';
 
         if (doclet.examples) {
             doclet.examples = doclet.examples.map(function(example) {
@@ -554,6 +539,9 @@ exports.publish = function(taffyData, opts, tutorials) {
     }
     data().each(function(doclet) {
         var url = helper.createLink(doclet);
+        if (doclet.kind == "typedef") {
+            url = doclet.memberof + ".html#" + doclet.name;
+        }
         helper.registerLink(doclet.longname, url);
 
         // add a shortened version of the full path
@@ -602,6 +590,13 @@ exports.publish = function(taffyData, opts, tutorials) {
 
     var members = helper.getMembers(data);
     members.tutorials = tutorials.children;
+
+    members.typedefs = [];
+    data().each(function(doclet) {
+        if (doclet.kind === "typedef") {
+            members.typedefs.push(doclet);
+        }
+    });
 
     // output pretty-printed source files by default
     var outputSourceFiles = conf.default && conf.default.outputSourceFiles !== false ? true :
@@ -683,6 +678,17 @@ exports.publish = function(taffyData, opts, tutorials) {
             generate('Interface: ' + myInterfaces[0].name, myInterfaces, helper.longnameToUrl[longname]);
         }
     });
+
+    var typedefs = {};
+    members.typedefs.forEach(function (typedef) {
+        if (!(typedef.memberof in typedefs)) {
+            typedefs[typedef.memberof] = [];
+        }
+        typedefs[typedef.memberof].push(typedef);
+    });
+    for (filename in typedefs) {
+        generate("Namespace: " + filename, typedefs[filename], filename + ".html");
+    }
 
     // TODO: move the tutorial functions to templateHelper.js
     function generateTutorial(title, tutorial, filename) {
