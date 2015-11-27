@@ -9,6 +9,7 @@ var path = require('jsdoc/path');
 var taffy = require('taffydb').taffy;
 var template = require('jsdoc/template');
 var util = require('util');
+var jsdocType = require("jsdoc/tag/type")
 var jsdocOl3 = require('../../.build/jsdocOl3.js');
 
 var htmlsafe = helper.htmlsafe;
@@ -554,6 +555,13 @@ exports.publish = function(taffyData, opts, tutorials) {
             }
         }
     });
+    data().each(function(doclet) {
+        if (doclet.kind == "typedef") {
+            if (linkto(doclet.memberof, "") === "") {
+                helper.registerLink(doclet.memberof, doclet.memberof + ".html");
+            }
+        }
+    });
 
     data().each(function(doclet) {
         var url = helper.longnameToUrl[doclet.longname];
@@ -595,6 +603,54 @@ exports.publish = function(taffyData, opts, tutorials) {
     data().each(function(doclet) {
         if (doclet.kind === "typedef") {
             members.typedefs.push(doclet);
+
+            // build typedef properties
+            doclet.properties = [];
+            var start = "@typedef {{";
+            var end = "}}";
+            var from = doclet.comment.indexOf(start);
+            if (from < 0) {
+                start = "@typedef {";
+                end = "}";
+                from = doclet.comment.indexOf(start);
+            }
+            if (from < 0) {
+                console.error(doclet.comment)
+                throw "Unexpected typedef"
+            }
+
+            from += start.length;
+            var to = doclet.comment.indexOf(end, from);
+            if (to < 0) {
+                console.error(doclet.comment)
+                throw "Unexpected typedef end"
+            }
+            var td = doclet.comment.substring(from, to);
+            var typeStrings = [];
+            td.split("\n").forEach(function (typeString) {
+                typeString = typeString.replace(/^[\s*]+|[\s,]+$/gm,'');
+                if (typeString == "") {
+                    return;
+                }
+                var split = typeString.indexOf(":")
+                if (split < 0) {
+                    typeStrings[typeStrings.length - 1] += typeString;
+                } else {
+                    typeStrings.push(typeString);
+                }
+            });
+            typeStrings.forEach(function (typeString) {
+                var split = typeString.indexOf(":")
+                var type = jsdocType.parse(
+                    "{" + typeString.substring(split + 1).trim() +
+                    "} " + typeString.substring(0, split), true, true);
+                doclet.properties.push({
+                    name: type.name,
+                    type: {
+                        names: type.type
+                    }
+                });
+            });
         }
     });
 
