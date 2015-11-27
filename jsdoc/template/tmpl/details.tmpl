@@ -14,7 +14,11 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
     if (properties && properties.length && properties.forEach) {
 ?>
 
+    <?js if (data.isEnum) {?>
+    <h5 class="subsection-title">Enumeration:</h5>
+    <?js } else { ?>
     <h5 class="subsection-title">Properties:</h5>
+    <?js } ?>
 
     <?js= this.partial('properties.tmpl', data) ?>
 

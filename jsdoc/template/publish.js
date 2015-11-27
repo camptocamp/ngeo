@@ -385,6 +385,7 @@ function buildNav(members) {
         _nav += buildMemberNav(members.tutorials, 'Tutorials', seenTutorials, linktoTutorial, module);
         _nav += buildMemberNav(members.interfaces, 'Interfaces', seen, linkto, module);
         _nav += buildMemberNav(members.typedefs, 'Types', seen, linkto, module);
+        _nav += buildMemberNav(members.enums, 'Enumerations', seen, linkto, module);
         if (_nav !== '') {
             nav += '<h2>' + module + '</h2>';
             nav += _nav;
@@ -543,6 +544,9 @@ exports.publish = function(taffyData, opts, tutorials) {
         if (doclet.kind == "typedef") {
             url = doclet.memberof + ".html#" + doclet.name;
         }
+        if (doclet.isEnum) {
+            url = doclet.memberof + ".html#" + doclet.name;
+        }
         helper.registerLink(doclet.longname, url);
 
         // add a shortened version of the full path
@@ -599,6 +603,12 @@ exports.publish = function(taffyData, opts, tutorials) {
     var members = helper.getMembers(data);
     members.tutorials = tutorials.children;
 
+    members.enums = [];
+    data().each(function(doclet) {
+        if (doclet.isEnum) {
+            members.enums.push(doclet);
+        }
+    });
     members.typedefs = [];
     data().each(function(doclet) {
         if (doclet.kind === "typedef") {
@@ -741,6 +751,12 @@ exports.publish = function(taffyData, opts, tutorials) {
             typedefs[typedef.memberof] = [];
         }
         typedefs[typedef.memberof].push(typedef);
+    });
+    members.enums.forEach(function (enum_) {
+        if (!(enum_.memberof in typedefs)) {
+            typedefs[enum_.memberof] = [];
+        }
+        typedefs[enum_.memberof].push(enum_);
     });
     for (filename in typedefs) {
         generate("Namespace: " + filename, typedefs[filename], filename + ".html");
