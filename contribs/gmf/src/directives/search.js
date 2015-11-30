@@ -16,12 +16,6 @@ goog.require('ol.proj');
  * It can search in multiple GeoJSON datasources.
  * It can filter and group results by a feature's property.
  *
- * FIXME: The 'placeholder' in the input field is hard-coded and can't currently
- * be internationalised.
- *
- * FIXME: The 'groupsKey' in each result is displayed "as is" and can't
- * currently be internationalised.
- *
  * This directive uses the ngeoFeatureOverlayMgr to create a feature overlay
  * for drawing features on the map. The application is responsible to
  * initialize the ngeoFeatureOverlayMgr with the map.
@@ -49,7 +43,7 @@ gmf.searchDirective = function() {
     controllerAs: 'ctrl',
     template:
         '<div class="gmf-search">' +
-        '<input type="text" placeholder="search…" ' +
+        '<input type="text" placeholder="{{\'search…\' | translate}}" ' +
         'ng-model="ctrl.input_value" ' +
         'ngeo-search="ctrl.options" ' +
         'ngeo-search-datasets="ctrl.datasets" ' +

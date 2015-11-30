@@ -31,9 +31,10 @@ gmf.locationchooserDirective = function() {
     bindToController: true,
     controller: 'gmfLocationchooserController',
     controllerAs: 'ctrl',
-    template: '<select ' +
-        'ng-model="ctrl.selectedLocation" ' +
-        'ng-options="location.label for location in ::ctrl.locations" ' +
+    template:
+        '<select ng-model="ctrl.selectedLocation" ' +
+        'ng-options="location as ctrl.translate(location.label) ' +
+        'for location in ctrl.locations" ' +
         'ng-change="ctrl.setLocation()">' +
         '</select>'
   };
@@ -44,6 +45,7 @@ gmfModule.directive('gmfLocationchooser', gmf.locationchooserDirective);
 
 
 /**
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {angular.Scope} $scope The directive's scope.
  * @constructor
  * @export
@@ -51,7 +53,13 @@ gmfModule.directive('gmfLocationchooser', gmf.locationchooserDirective);
  * @ngdoc controller
  * @ngname gmfLocationchooserController
  */
-gmf.LocationchooserController = function($scope) {
+gmf.LocationchooserController = function(gettextCatalog, $scope) {
+
+  /**
+   * @type {angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 
   var map = this['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
@@ -98,4 +106,14 @@ gmf.LocationchooserController.prototype.setLocation = function() {
   var mapSize = this.map_.getSize();
   goog.asserts.assert(goog.isDefAndNotNull(mapSize));
   this.map_.getView().fit(this.selectedLocation.extent, mapSize);
+};
+
+
+/**
+ * @param {string} str String to translate.
+ * @return {string}
+ * @export
+ */
+gmf.LocationchooserController.prototype.translate = function(str) {
+  return this.gettextCatalog_.getString(str);
 };
