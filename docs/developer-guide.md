@@ -205,6 +205,30 @@ Then the directive template uses `foobarCtrl.prop1`, `foobarCtrl.prop2`, and
 `foobarCtrl.aMethod` to access to the scope property `prop1`, `prop2`, and
 `aMethod`, respectively.
 
+### API documentation
+
+`ngeo` uses the [Angular-JSDoc](https://github.com/allenhwkim/angular-jsdoc)
+plugin in addition to JSDoc to create the API documentation.
+
+This plugin provides the `@ngdoc <type>` and `@ngname <name>` tags.
+`@ngdoc` is used to define the Angular type (directive, service, controller
+or filter) and `@ngname` defines the name used to register this component.
+
+For example:
+```js
+/**
+ * @return {angular.Directive} The directive specs.
+ * @ngInject
+ * @ngdoc directive
+ * @ngname ngeoControl
+ */
+ngeo.controlDirective = function() {
+  // …
+};
+ngeoModule.directive('ngeoControl', ngeo.controlDirective);
+```
+
+
 ### Custom `ol.Object` properties
 
 OpenLayers 3 allows passing custom properties to classes inheriting from
