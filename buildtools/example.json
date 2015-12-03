@@ -60,7 +60,7 @@
       "misplacedTypeAnnotation",
       "missingGetCssName",
       "missingProperties",
-      "missingProvide",
+      "missingRequire",
       "missingReturn",
       "newCheckTypes",
       "nonStandardJsDocs",
@@ -69,6 +69,7 @@
       "typeInvalidation",
       "undefinedNames",
       "undefinedVars",
+      "unknownDefines",
       "uselessCode",
       "visibility"
     ],
