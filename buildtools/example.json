@@ -60,7 +60,6 @@
       "misplacedTypeAnnotation",
       "missingGetCssName",
       "missingProperties",
-      "missingProvide",
       "missingRequire",
       "missingReturn",
       "newCheckTypes",
