@@ -270,6 +270,10 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $@
 	cp examples/data/* $@
 
+.build/examples-hosted/contribs/gmf/data: contribs/gmf/examples/data
+	mkdir -p $@
+	cp contribs/gmf/examples/data/* $@
+
 .build/examples-hosted/contribs/gmf/fonts: contribs/gmf/fonts build-gmf-mobile-app
 	mkdir -p $(dir $@)
 	cp -r $< $(dir $@)
@@ -320,6 +324,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/examples-hosted/contribs/gmf/apps/mobile/index.html: contribs/gmf/apps/mobile/index.html \
 		.build/examples-hosted/contribs/gmf/build \
 		.build/examples-hosted/contribs/gmf/fonts \
+		.build/examples-hosted/contribs/gmf/data \
 		.build/examples-hosted/contribs/gmf/apps/mobile/js/mobile.js
 	mkdir -p $(dir $@)
 	sed -e '/stylesheet\/less" href="..\/..\//d' \

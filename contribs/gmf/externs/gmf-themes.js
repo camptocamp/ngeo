@@ -19,15 +19,21 @@ GmfThemesNode.prototype.id;
 
 
 /**
- * @type {boolean}
- */
-GmfThemesNode.prototype.isInternalWMS;
-
-
-/**
  * @type {Array.<GmfThemesNode>}
  */
 GmfThemesNode.prototype.children;
+
+
+/**
+ * @type {number}
+ */
+GmfThemesNode.prototype.maxResolutionHint;
+
+
+/**
+ * @type {number}
+ */
+GmfThemesNode.prototype.minResolutionHint;
 
 
 /**

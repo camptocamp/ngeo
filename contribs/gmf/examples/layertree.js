@@ -45,7 +45,7 @@ app.MainController = function($http) {
     ],
     view: new ol.View({
       projection: projection,
-      resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1],
+      resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 3
     })
@@ -55,19 +55,27 @@ app.MainController = function($http) {
    * @type {string}
    * @export
    */
-  this.wmsUrl = 'http://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy';
+  this.wmsUrl = 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy';
+
+  /**
+   * @type {Array.<Object>|undefined}
+   * export
+   */
+  this.themes = undefined;
 
   /**
    * @type {Object|undefined}
    * @export
    */
-  this.themes = undefined;
+  this.source = undefined;
 
   $http.get('data/themes.json').success(angular.bind(this, function(data) {
-    this.themes = data;
+    var themes = data['themes'];
+    if (themes) {
+      this.themes = themes;
+      this.source = themes[3];
+    }
   }));
-
 };
-
 
 app.module.controller('MainController', app.MainController);

@@ -1,5 +1,4 @@
 /.build
-/contribs/gmf/build/
 /node_modules
 /examples/simple.min.js
 /dist
