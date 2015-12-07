@@ -4,13 +4,6 @@ goog.provide('ngeo.layertreeDirective');
 goog.require('ngeo');
 
 
-/**
- * @const
- * @type {string}
- */
-ngeo.layertreeTemplateUrl = 'layertree.html';
-
-
 ngeoModule.value('ngeoLayertreeTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
@@ -18,7 +11,8 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
      */
     function(element, attrs) {
       var templateUrl = attrs['ngeoLayertreeTemplateurl'];
-      return goog.isDef(templateUrl) ? templateUrl : ngeo.layertreeTemplateUrl;
+      return templateUrl !== undefined ? templateUrl :
+          ngeo.baseTemplateUrl + '/layertree.html';
     });
 
 

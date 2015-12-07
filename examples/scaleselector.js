@@ -17,11 +17,6 @@ var app = {};
 app.module = angular.module('app', ['ngeo']);
 
 
-// Use the default "scale selector" template.
-app.module.value('ngeoScaleselectorTemplateUrl',
-    '../src/directives/partials/scaleselector.html');
-
-
 /**
  * The application-specific scale selector directive, based on the
  * ngeo-scaleselector directive.

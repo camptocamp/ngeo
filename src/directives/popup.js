@@ -3,14 +3,16 @@ goog.provide('ngeo.popupDirective');
 goog.require('ngeo');
 
 
-/**
- * @const
- * @type {string}
- */
-ngeo.popupTemplateUrl = 'partials/popup.html';
-
-
-ngeoModule.value('ngeoPopupTemplateUrl', ngeo.popupTemplateUrl);
+ngeoModule.value('ngeoPopupTemplateUrl',
+    /**
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     */
+    function(element, attrs) {
+      var templateUrl = attrs['ngeoPopupTemplateurl'];
+      return templateUrl !== undefined ? templateUrl :
+          ngeo.baseTemplateUrl + '/popup.html';
+    });
 
 
 /**

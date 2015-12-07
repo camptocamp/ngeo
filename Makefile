@@ -1,5 +1,6 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
-SRC_DIRECTIVES_PARTIALS_FILES := $(shell find src/directives -type f -name '*.html')
+NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
+GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html | "")
 
 EXPORTS_JS_FILES := $(shell find exports -type f -name '*.js')
 
@@ -24,6 +25,20 @@ GMF_APPS_LIBS_JS_FILES += \
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES)) \
 	.build/contribs/gmf/apps/mobile.check.timestamp
+EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
+	.build/examples-hosted/lib/ngeo-debug.js \
+	.build/examples-hosted/lib/ngeo.css \
+	.build/examples-hosted/lib/gmf.js \
+	.build/examples-hosted/lib/angular.min.js \
+	.build/examples-hosted/lib/angular-gettext.min.js \
+	.build/examples-hosted/lib/bootstrap.min.js \
+	.build/examples-hosted/lib/bootstrap.min.css \
+	.build/examples-hosted/lib/jquery.min.js \
+	.build/examples-hosted/lib/d3.min.js \
+	.build/examples-hosted/lib/watchwatchers.js \
+	.build/examples-hosted/lib/typeahead.bundle.min.js \
+	.build/examples-hosted/partials \
+	.build/examples-hosted/data
 
 EXTERNS_ANGULAR = .build/externs/angular-1.4.js
 EXTERNS_ANGULAR_Q = .build/externs/angular-1.4-q_templated.js
@@ -49,17 +64,21 @@ all: help
 help:
 	@echo "Usage: make <target>"
 	@echo
-	@echo "Possible targets:"
+	@echo "Main targets:"
 	@echo
-	@echo "- dist                    Compile the lib into an ngeo.js standalone build (in dist/)"
-	@echo "- check                   Perform a number of checks on the code"
-	@echo "- lint                    Check the code with the linter"
-	@echo "- test                    Run the test suite"
+	@echo "- help                    Display this help message"
 	@echo "- serve                   Run a development web server for running the examples"
-	@echo "- gh-pages                Update the GitHub pages"
+	@echo "- check                   Perform a number of checks on the code"
+	@echo "- test                    Run the test suite"
 	@echo "- clean                   Remove generated files"
 	@echo "- cleanall                Remove all the build artefacts"
-	@echo "- help                    Display this help message"
+	@echo
+	@echo "Segondary targets:"
+	@echo
+	@echo "- examples-hosted         Build the hosted examples"
+	@echo "- lint                    Check the code with the linter"
+	@echo "- dist                    Compile the lib into an ngeo.js standalone build (in dist/)"
+	@echo "- gh-pages                Update the GitHub pages"
 	@echo
 
 .PHONY: dist
@@ -81,12 +100,19 @@ check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslint.timestamp .build/jshint.timestamp
 
 .PHONY: test
-test: .build/ol-deps.js .build/ngeo-deps.js .build/templatecache.js .build/node_modules.timestamp
+test: .build/ol-deps.js .build/ngeo-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: serve
 serve: .build/node_modules.timestamp contribs/gmf/build/mobile.css
 	node buildtools/serve.js
+
+.PHONY: examples-hosted
+examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
+		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(EXAMPLES_HTML_FILES)) \
+		$(patsubst examples/%.html,.build/examples-hosted/%.js,$(EXAMPLES_HTML_FILES)) \
+		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
+		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.js,$(GMF_EXAMPLES_HTML_FILES)) \
 
 .PHONY: gh-pages
 GITHUB_USERNAME ?= camptocamp
@@ -160,7 +186,7 @@ dist/gmf.js: buildtools/gmf.json \
 		$(EXTERNS_FILES) \
 		$(SRC_JS_FILES) \
 		$(GMF_SRC_JS_FILES) \
-		.build/templatecache.js \
+		.build/gmftemplatecache.js \
 		$(EXPORTS_JS_FILES) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
@@ -265,6 +291,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|/@?main=$*.js|$*.js|' \
+		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
 		-e '/$*.js/i\    <script src="lib/ngeo.js"></script>' $< > $@
 
@@ -280,6 +307,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|/@?main=$*.js|$*.js|' \
+		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
 		-e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
 
@@ -291,6 +319,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	sed -e 's|stylesheet/less" href="../../less/mobile.less|stylesheet" href="../../build/mobile.css|' \
 		-e '/\/node_modules\//d' \
+		-e '/default\.js/d' \
 		-e 's|utils/watchwatchers.js|lib/watchwatchers.js|' \
 		-e 's|/@?main=mobile/js/mobile.js|../../build/mobile.js|' $< > $@
 
@@ -314,20 +343,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
 		.build/examples-hosted/%.js \
-		.build/examples-hosted/lib/ngeo.js \
-		.build/examples-hosted/lib/ngeo-debug.js \
-		.build/examples-hosted/lib/ngeo.css \
-		.build/examples-hosted/lib/gmf.js \
-		.build/examples-hosted/lib/angular.min.js \
-		.build/examples-hosted/lib/angular-gettext.min.js \
-		.build/examples-hosted/lib/bootstrap.min.js \
-		.build/examples-hosted/lib/bootstrap.min.css \
-		.build/examples-hosted/lib/jquery.min.js \
-		.build/examples-hosted/lib/d3.min.js \
-		.build/examples-hosted/lib/watchwatchers.js \
-		.build/examples-hosted/lib/typeahead.bundle.min.js \
-		.build/examples-hosted/data \
-		.build/examples-hosted/partials \
+		$(EXAMPLE_HOSTED_REQUIREMENTS) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
@@ -410,8 +426,20 @@ $(EXTERNS_JQUERY):
 # The keys in the template cache begin with "../src/directives/partials". This
 # is done so ngeo.js works for the examples on github.io. If another key
 # pattern is needed this should be changed.
-.build/templatecache.js: buildtools/templatecache.mako.js .build/python-venv/bin/mako-render
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render --var "partials=$(addprefix ../,$(SRC_DIRECTIVES_PARTIALS_FILES))" --var "basedir=src" $< > $@
+.build/templatecache.js: buildtools/templatecache.mako.js \
+		.build/python-venv/bin/mako-render \
+		$(NGEO_DIRECTIVES_PARTIALS_FILES)
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var "app=ngeo" \
+		--var "partials=$(addprefix ngeo:,$(NGEO_DIRECTIVES_PARTIALS_FILES))" $< > $@
+
+.build/gmftemplatecache.js: buildtools/templatecache.mako.js \
+		.build/python-venv/bin/mako-render \
+		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_DIRECTIVES_PARTIALS_FILES)
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var "app=gmf" \
+		--var "partials=$(addprefix ngeo:,$(NGEO_DIRECTIVES_PARTIALS_FILES)) \
+		$(addprefix gmf:,$(GMF_DIRECTIVES_PARTIALS_FILES))" $< > $@
 
 .build/jsdocOl3.js: jsdoc/get-ol3-doc-ref.js .build/node_modules.timestamp
 	node $< > $@
@@ -445,6 +473,7 @@ clean:
 	rm -f .build/ngeo-deps.js
 	rm -f .build/info.json
 	rm -f .build/templatecache.js
+	rm -f .build/gmftemplatecache.js
 	rm -f dist/*
 	rm -f $(EXTERNS_FILES)
 	rm -rf .build/examples-hosted

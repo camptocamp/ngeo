@@ -1,3 +1,4 @@
+## -*- coding: utf-8 -*-
 <%doc>
     This is a Mako template that generates Angular code putting the contents of
     HTML partials into Angular's $templateCache. The generated code is then built
@@ -9,14 +10,13 @@
   import os
   import htmlmin
   _partials = {}
-  basedirparts = basedir.split('/')
-  for p in partials.split(' '):
-      parts = basedirparts + [p]
-      f = file(os.path.join(*parts))
+  for p in partials.strip().split():
+      dest_folder, filename = p.split(":")
+      f = file(filename)
       content = unicode(f.read().decode('utf8'))
       content = re.sub(r"'", "\\'", content)
       content = htmlmin.minify(content, remove_comments=True)
-      _partials[p] = content
+      _partials[os.path.join(dest_folder, os.path.basename(filename))] = content
 %>\
 /**
  * @fileoverview ngeo template cache.
@@ -24,7 +24,7 @@
  * GENERATED FILE. DO NOT EDIT.
  */
 
-goog.require('ngeo');
+goog.require('${app}');
 
 (function() {
   /**
@@ -37,5 +37,5 @@ goog.require('ngeo');
   %endfor
   };
 
-  ngeoModule.run(runner);
+  ${app}Module.run(runner);
 })();
