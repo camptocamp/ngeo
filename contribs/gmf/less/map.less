@@ -1,36 +1,3 @@
-@font-face {
-  font-family: "gmf-icons";
-  src: url("../fonts/gmf-icons.eot");
-  src: url("../fonts/gmf-icons.eot?#iefix") format("embedded-opentype"),
-       url("../fonts/gmf-icons.woff") format("woff"),
-       url("../fonts/gmf-icons.ttf") format("truetype"),
-       url("../fonts/gmf-icons.svg#gmf-icons") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
-
-main>* {
-  position: absolute;
-}
-
-main button {
-  height: @map-tools-size;
-  width: @map-tools-size;
-  background-color: @map-tools-bg-color;
-  border: solid 1px @map-tools-color;
-  color: @map-tools-color;
-  padding: 0;
-  &:after, &:before {
-    font-family: gmf-icons;
-    color: @map-tools-color;
-    font-size: @map-tools-size;
-    line-height: 0.5em;
-  }
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 gmf-map {
   position: initial;
   > div {
