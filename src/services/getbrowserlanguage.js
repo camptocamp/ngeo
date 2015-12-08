@@ -35,7 +35,7 @@ ngeo.getBrowserLanguageFactory = function($window) {
         if (!goog.isArray(browserLanguages)) {
           browserLanguages = [browserLanguages];
         }
-        browserLanguages = goog.array.map(browserLanguages, function(item) {
+        browserLanguages = browserLanguages.map(function(item) {
           return item.substring(0, 2);
         });
         // remove duplicated language codes
