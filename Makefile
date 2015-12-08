@@ -21,7 +21,9 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/d3/d3.min.js \
 	node_modules/typeahead.js/dist/typeahead.bundle.min.js
 
-BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) $(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES))
+BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
+	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES)) \
+	.build/contribs/gmf/apps/mobile.check.timestamp
 
 EXTERNS_ANGULAR = .build/externs/angular-1.4.js
 EXTERNS_ANGULAR_Q = .build/externs/angular-1.4-q_templated.js
@@ -327,6 +329,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/examples-hosted/data \
 		.build/examples-hosted/partials \
 		.build/node_modules.timestamp
+	mkdir -p $(dir $@)
+	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
+	touch $@
+
+.build/contribs/gmf/apps/mobile.check.timestamp: .build/examples-hosted/contribs/gmf/apps/mobile/index.html
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
