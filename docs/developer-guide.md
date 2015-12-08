@@ -205,6 +205,38 @@ Then the directive template uses `foobarCtrl.prop1`, `foobarCtrl.prop2`, and
 `foobarCtrl.aMethod` to access to the scope property `prop1`, `prop2`, and
 `aMethod`, respectively.
 
+
+### Template Url ###
+
+First of all the partials should be in the folder `src/directives/partials`.
+
+When we use a template URL it should be overwritten by an attribute.
+
+For that we should use this kind of code:
+
+```js
+ngeoModule.value('ngeo<Name>TemplateUrl',
+    /**
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     */
+    function(element, attrs) {
+      var templateUrl = attrs['ngeo<Name>Templateurl'];
+      return templateUrl !== undefined ? templateUrl :
+          ngeo.baseTemplateUrl + '/<name>.html';
+    });
+
+ngeo.popupDirective = function(ngeo<Name>TemplateUrl) {
+    return {
+        templateUrl: ngeo<Name>TemplateUrl,
+        ...
+```
+
+Where `<Name>` is the directive name in title case and `<name>` in lower case.
+
+It can be adapted for `contrib/gmf` by replacing `ngeo` by `gmf`.
+
+
 ### API documentation
 
 `ngeo` uses the [Angular-JSDoc](https://github.com/allenhwkim/angular-jsdoc)

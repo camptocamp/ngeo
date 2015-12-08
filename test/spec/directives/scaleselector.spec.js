@@ -9,9 +9,6 @@ describe('ngeo.scaleselectorDirective', function() {
 
   beforeEach(function() {
 
-    ngeoModule.value('ngeoScaleselectorTemplateUrl',
-      '../src/directives/partials/scaleselector.html');
-
     map = new ol.Map({
       view: new ol.View({
         center: [0, 0],

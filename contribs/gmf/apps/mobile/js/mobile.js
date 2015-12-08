@@ -143,4 +143,4 @@ app.MobileController.prototype.rightNavIsVisible = function() {
 };
 
 
-app.module.controller('MobileController', app.MobileController);
+appModule.controller('MobileController', app.MobileController);

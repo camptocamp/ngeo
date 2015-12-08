@@ -9,15 +9,16 @@ goog.require('ol.Map');
 goog.require('ol.Object');
 
 
-/**
- * @const
- * @type {string}
- */
-ngeo.scaleselectorTemplateUrl = 'scaleselector.html';
-
-
 ngeoModule.value('ngeoScaleselectorTemplateUrl',
-    ngeo.scaleselectorTemplateUrl);
+    /**
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     */
+    function(element, attrs) {
+      var templateUrl = attrs['ngeoScaleselectorTemplateurl'];
+      return templateUrl !== undefined ? templateUrl :
+          ngeo.baseTemplateUrl + '/scaleselector.html';
+    });
 
 
 /**

@@ -25,11 +25,6 @@ var app = {};
 app.module = angular.module('app', ['ngeo']);
 
 
-// Use the default "popup" template.
-app.module.value('ngeoPopupTemplateUrl',
-    '../src/directives/partials/popup.html');
-
-
 /**
  * An application-specific directive wrapping the ngeo tree layer directive.
  * The directive includes a controller defining the tree tree.
