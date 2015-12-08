@@ -194,7 +194,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   goog.asserts.assert(!goog.isNull(layersCollection));
   var layers = layersCollection.getArray().slice().reverse();
 
-  goog.array.forEach(layers,
+  layers.forEach(
       /**
        * @param {ol.layer.Layer} layer Layer.
        * @param {number} idx Index.
