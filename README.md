@@ -34,5 +34,5 @@ Other docs:
 
 * [Developer guide](docs/developer-guide.md) – This guide is for ngeo
   developers.
-* [Application development guidelines](docs/guidelines.md) – This guide if for
+* [Application development guidelines](docs/guidelines.md) – This guide is for
   application developers using ngeo.
