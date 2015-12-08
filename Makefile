@@ -85,7 +85,7 @@ test: .build/ol-deps.js .build/ngeo-deps.js .build/templatecache.js .build/node_
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: serve
-serve: .build/node_modules.timestamp contribs/gmf/build/mobile.css
+serve: .build/node_modules.timestamp
 	node buildtools/serve.js
 
 .PHONY: gh-pages
@@ -289,7 +289,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/examples-hosted/contribs/gmf/fonts \
 		.build/examples-hosted/contribs/gmf/apps/mobile/js/mobile.js
 	mkdir -p $(dir $@)
-	sed -e 's|stylesheet/less" href="../../less/mobile.less|stylesheet" href="../../build/mobile.css|' \
+	sed -e 's|stylesheet/less" href="mobile.less|stylesheet" href="../build/mobile.css|' \
 		-e '/\/node_modules\//d' \
 		-e 's|utils/watchwatchers.js|lib/watchwatchers.js|' \
 		-e 's|/@?main=mobile/js/mobile.js|../../build/mobile.js|' $< > $@
@@ -430,10 +430,10 @@ contribs/gmf/build/mobile.closure.js: contribs/gmf/apps/mobile/build.json \
 contribs/gmf/build/mobile.js: contribs/gmf/build/mobile.closure.js $(GMF_APPS_LIBS_JS_FILES)
 	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
 
-contribs/gmf/build/mobile.css: $(GMF_APPS_MOBILE_LESS_FILES) \
+contribs/gmf/apps/build/mobile.css: $(GMF_APPS_MOBILE_LESS_FILES) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	./node_modules/.bin/lessc contribs/gmf/less/mobile.less $@ --autoprefix
+	./node_modules/.bin/lessc contribs/gmf/apps/mobile/less/mobile.less $@ --autoprefix
 
 .PHONY: clean
 clean:
