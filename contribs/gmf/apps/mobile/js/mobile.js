@@ -24,6 +24,9 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
 
+gmfModule.constant('isMobile', true);
+
+
 
 /**
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
