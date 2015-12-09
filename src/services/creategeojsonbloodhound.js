@@ -1,7 +1,6 @@
 
 goog.provide('ngeo.CreateGeoJSONBloodhound');
 
-goog.require('goog.array');
 goog.require('ngeo');
 goog.require('ol.format.GeoJSON');
 
@@ -74,7 +73,7 @@ ngeo.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
         if (goog.isDef(opt_filter)) {
           featureCollection = /** @type {GeoJSONFeatureCollection} */ ({
             type: 'FeatureCollection',
-            features: goog.array.filter(featureCollection.features, opt_filter)
+            features: featureCollection.features.filter(opt_filter)
           });
         }
 
