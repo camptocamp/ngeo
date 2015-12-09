@@ -136,6 +136,14 @@ gmf-map {
   }
 }
 
+button[ngeo-mobile-geolocation] {
+  right: 13px;
+  top: 135px;
+  & button:after {
+    content: 'b'
+  }
+}
+
 //For tablet only
 @media (min-width: @screen-sm-min) {
   main button:hover{
@@ -189,5 +197,13 @@ gmf-map {
   .nav-right-trigger {
     left: auto;
     right: @app-margin;
+  }
+
+  button[ngeo-mobile-geolocation] {
+    bottom: 12px;
+    top: auto;
+    & button:after {
+      content: 'b'
+    }
   }
 }

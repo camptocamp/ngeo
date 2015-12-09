@@ -327,6 +327,39 @@ ngeox.MeasureEvent.prototype.feature;
 
 
 /**
+ * Options for the mobile geolocations directive.
+ * @typedef {{
+ *    accuracyFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
+ *    positionFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
+ *    zoom: (number|undefined)
+ * }}
+ */
+ngeox.MobileGeolocationDirectiveOptions;
+
+
+/**
+ * The style to use to sketch the accuracy feature, which is a regular polygon.
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ */
+ngeox.MobileGeolocationDirectiveOptions.prototype.accuracyFeatureStyle;
+
+
+/**
+ * The style to use to sketch the position feature, which is a point.
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ */
+ngeox.MobileGeolocationDirectiveOptions.prototype.positionFeatureStyle;
+
+
+/**
+ * If set, in addition to recentering the map view at the location, determines
+ * the zoom level to set when obtaining a new position.
+ * @type {number|undefined}
+ */
+ngeox.MobileGeolocationDirectiveOptions.prototype.zoom;
+
+
+/**
  * @typedef {{
  *   open: (function()|undefined),
  *   close: (function()|undefined),
