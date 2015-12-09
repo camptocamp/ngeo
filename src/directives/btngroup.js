@@ -64,12 +64,11 @@ ngeo.BtnGroupController = function($scope) {
  * @param {number} index Index of the button in buttons array.
  */
 ngeo.BtnGroupController.prototype.activate = function(index) {
-  goog.array.forEach(this.buttons_,
-      function(s, i) {
-        if (i != index) {
-          s(this.scope_, false);
-        }
-      }, this);
+  this.buttons_.forEach(function(s, i) {
+    if (i != index) {
+      s(this.scope_, false);
+    }
+  }, this);
 };
 
 

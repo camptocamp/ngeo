@@ -194,7 +194,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   goog.asserts.assert(!goog.isNull(layersCollection));
   var layers = layersCollection.getArray().slice().reverse();
 
-  goog.array.forEach(layers,
+  layers.forEach(
       /**
        * @param {ol.layer.Layer} layer Layer.
        * @param {number} idx Index.
@@ -269,9 +269,9 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   var customParams = {'TRANSPARENT': true};
   goog.object.extend(customParams, params);
 
-  goog.object.remove(customParams, 'LAYERS');
-  goog.object.remove(customParams, 'FORMAT');
-  goog.object.remove(customParams, 'VERSION');
+  delete customParams['LAYERS'];
+  delete customParams['FORMAT'];
+  delete customParams['VERSION'];
 
   var object = /** @type {MapFishPrintWmsLayer} */ ({
     baseURL: ngeo.Print.getAbsoluteUrl_(url),
@@ -348,7 +348,7 @@ ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
   }
 
   var dimensions = source.getDimensions();
-  var dimensionKeys = goog.object.getKeys(dimensions);
+  var dimensionKeys = Object.keys(dimensions);
 
   var object = /** @type {MapFishPrintWmtsLayer} */ ({
     baseURL: this.getWmtsUrl_(source),
