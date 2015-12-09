@@ -9,7 +9,7 @@ var ngeoModule = angular.module('ngeo', []);
 
 
 /**
- * @type {string}
  * The default template based URL, used as it by the template cache.
+ * @type {string}
  */
 ngeo.baseTemplateUrl = 'ngeo';
