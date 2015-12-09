@@ -110,7 +110,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   goog.asserts.assert(goog.isDef(this['scales']));
 
   var zoomLevels = Object.keys(this['scales']).map(Number);
-  goog.array.sort(zoomLevels);
+  zoomLevels.sort();
 
   /**
    * @type {Array.<number>}
