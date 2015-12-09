@@ -11,7 +11,7 @@ var gmfModule = angular.module('gmf', [ngeoModule.name, 'gettext']);
 
 
 /**
- * @type {string}
  * The default template based URL, used as it by the template cache.
+ * @type {string}
  */
 gmf.baseTemplateUrl = 'gmf';
