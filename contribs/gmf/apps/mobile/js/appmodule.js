@@ -5,6 +5,10 @@
  */
 goog.provide('app');
 
+/**
+ * This goog.require is needed because it provides gmfModule.
+ * @suppress {extraRequire}
+ */
 goog.require('gmf');
 
 

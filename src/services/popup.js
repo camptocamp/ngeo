@@ -2,6 +2,12 @@ goog.provide('ngeo.CreatePopup');
 goog.provide('ngeo.Popup');
 
 goog.require('ngeo');
+
+/**
+ * This goog.require is needed because of 'ngeo-popup' used in
+ * the template.
+ * @suppress {extraRequire}
+ */
 goog.require('ngeo.popupDirective');
 
 

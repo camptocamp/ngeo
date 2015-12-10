@@ -3,6 +3,10 @@
  */
 goog.provide('gmf');
 
+/**
+ * This goog.require is needed because it provides ngeoModule.
+ * @suppress {extraRequire}
+ */
 goog.require('ngeo');
 
 

@@ -10,11 +10,16 @@
 goog.provide('gmf.AbstractMobileController');
 
 goog.require('gmf');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mobileNavDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.proj.EPSG21781');
+/** @suppress {extraRequire} */
 goog.require('gmf.searchDirective');
 goog.require('ngeo.FeatureOverlayMgr');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mobileGeolocationDirective');
 goog.require('ol.Map');
 goog.require('ol.View');

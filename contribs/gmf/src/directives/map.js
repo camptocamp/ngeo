@@ -5,6 +5,11 @@ goog.require('gmf');
 goog.require('goog.asserts');
 goog.require('ngeo.Debounce');
 goog.require('ngeo.Location');
+/**
+ * This goog.require is needed because it provides 'ngeo-map' used in
+ * the template.
+ * @suppress {extraRequire}
+ */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 
