@@ -443,10 +443,13 @@ $(EXTERNS_JQUERY):
 		--var "partials=$(addprefix ngeo:,$(NGEO_DIRECTIVES_PARTIALS_FILES)) \
 		$(addprefix gmf:,$(GMF_DIRECTIVES_PARTIALS_FILES))" $< > $@
 
+.build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp
+	node $< > $@
+
 .build/jsdocOl3.js: jsdoc/get-ol3-doc-ref.js .build/node_modules.timestamp
 	node $< > $@
 
-.build/apidoc-%: jsdoc/config.json .build/node_modules.timestamp .build/jsdocOl3.js $(SRC_JS_FILES)
+.build/apidoc-%: jsdoc/config.json .build/node_modules.timestamp .build/jsdocAngularJS.js .build/jsdocOl3.js $(SRC_JS_FILES)
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
 
