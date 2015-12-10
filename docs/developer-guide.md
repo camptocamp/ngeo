@@ -86,294 +86,6 @@ This section includes information for developers and users of ngeo.
 We more or less follow the [AngularJS Style Guide for Closure Users at
 Google](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html).
 
-### Property renaming
-
-The ngeo code is compiled with Closure Compiler in *advanced* mode. This
-means we should conform to the restrictions imposed by the compiler.
-
-In particular, Angular controllers and directives typically set properties on
-the controller instance (`this`) or on the `$scope`. These properties are then
-referenced by their names in HTML pages and templates. So it is required to
-prevent the compiler from renaming these properties.
-
-The way to do that is to use the `[]` notation rather than the `.` notation
-when setting (and accessing) properties. For example if you need to set
-a property `foo` on the controller instance you should do as follows:
-
-```js
-/**
- * @constructor
- * @ngInject
- */
-app.MainController = function() {
-  this['foo'] = 'bar';
-  // …
-};
-```
-
-The jshint linter, which we use for to check the ngeo code, complains when the
-`[]` notation is used. We set the `sub` jshint to `true` in a `.jshintrc` file
-to make jshint stay silent on that.
-
-### Property renaming and directives
-
-In the definition of a directive, if an object is used for the `scope` property
-(*isolate scope*) then quotes must be used for the keys in that object. And in
-the `link` function, the `[]` notation, instead of the `.` notation, must be
-used when accessing these properties. See the example below.
-
-```js
-module.directive('goDirectiveExample',
-  /**
-   * @return {angular.Directive} The directive specs.
-   */
-  function() {
-    return {
-      restrict: 'A',
-      scope: {
-        'm': '=goDirectiveExampleMap'
-      }
-      controller: function() {
-        var m = this['m'];
-        // …
-      },
-      controllerAs: 'ctrl',
-      bindToController: true,
-      // …
-    });
-```
-
-### Directive scoping
-
-When creating a "widget" directive (i.e. directive with templates/partials) it
-is usually recommended to use an *isolate* scope for the directive.
-
-In the case of ngeo we want to be able to override directive templates at the
-application level. And when overriding a directive's template one expects to be
-able to use properties of an application-defined scope. This is not possible if
-the template is processed in the context of an isolate scope.
-
-So this is what ngeo "widget" directives should look like:
-
-```js
-/**
- * @return {angular.Directive} Directive Definition Object.
- */
-ngeo.foobarDirective = function() {
-  return {
-    restrict: 'A',
-    scope: true,
-    templateUrl: …
-    // …
-  };
-};
-```
-
-We still use `scope: true` so that a new, non-isolate, scope is created for the
-directive. In this way the directive will write to its own scope when adding
-new properties to the scope passed to `link` or to the directive's controller.
-
-Note that there's a chance that directive will hide properties from the parent
-scope. This will happen if the directive uses a property name that is already
-used in the parent scope. To mitigate the problem it is recommended that the
-directive use only one scope property, with a specific name. It is recommended
-to use a directive controller as follows:
-
-```js
-/**
- * @constructor
- * @param {angular.Scope} $scope The directive scope.
- * @ngInject
- * @export
- */
-ngeo.NgeoFoobarController = function($scope) {
-  $scope['foobarCtrl'] = this;
-  this['prop1'] = …;
-  this['prop2'] = …;
-};
-
-
-/**
- * @export
- */
-ngeo.NgeoFoobarController.prototype.aMethod = function() {
-  // …
-};
-```
-
-Then the directive template uses `foobarCtrl.prop1`, `foobarCtrl.prop2`, and
-`foobarCtrl.aMethod` to access to the scope property `prop1`, `prop2`, and
-`aMethod`, respectively.
-
-
-### Template Url ###
-
-First of all the partials should be in the folder `src/directives/partials`.
-
-When we use a template URL it should be overwritten by an attribute.
-
-For that we should use this kind of code:
-
-```js
-ngeoModule.value('ngeo<Name>TemplateUrl',
-    /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     */
-    function(element, attrs) {
-      var templateUrl = attrs['ngeo<Name>Templateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/<name>.html';
-    });
-
-ngeo.popupDirective = function(ngeo<Name>TemplateUrl) {
-    return {
-        templateUrl: ngeo<Name>TemplateUrl,
-        ...
-```
-
-Where `<Name>` is the directive name in title case and `<name>` in lower case.
-
-It can be adapted for `contrib/gmf` by replacing `ngeo` by `gmf`.
-
-
-### API documentation
-
-`ngeo` uses the [Angular-JSDoc](https://github.com/allenhwkim/angular-jsdoc)
-plugin in addition to JSDoc to create the API documentation.
-
-This plugin provides the `@ngdoc <type>` and `@ngname <name>` tags.
-`@ngdoc` is used to define the Angular type (directive, service, controller
-or filter) and `@ngname` defines the name used to register this component.
-
-For example:
-```js
-/**
- * @return {angular.Directive} The directive specs.
- * @ngInject
- * @ngdoc directive
- * @ngname ngeoControl
- */
-ngeo.controlDirective = function() {
-  // …
-};
-ngeoModule.directive('ngeoControl', ngeo.controlDirective);
-```
-
-
-### Custom `ol.Object` properties
-
-OpenLayers 3 allows passing custom properties to classes inheriting from
-`ol.Object`. For example:
-
-```js
-var layer = new ol.layer.Tile({
-  maxResolution: 5000,
-  title: 'A title',
-  source: new ol.source.OSM()
-});
-```
-
-`title` is the custom property in this example. (While `maxResolution` is an
-ol3 built-in layer property.)
-
-You can then use the `get` methods to get that property's value:
-
-```js
-var layerTitle = layer.get('title');
-```
-
-**But** this won't work in the case of the ngeo, or any code compiled in with
-Closure Compiler in ADVANCED mode. The compiler is indeed going to rename the
-key `title` in the options object passed to the `ol.layer.Tile` constructor.
-
-One option to work-around the issue involves using the `set` method after
-the construction of the layer:
-
-```js
-var layer = new ol.layer.Tile({
-  maxResolution: 5000,
-  source: new ol.source.OSM()
-});
-// use `set` to set custom layer properties
-layer.set('title', 'A title');
-```
-
-### Authoring examples
-
-A number of constraints must be respected when developing examples for `ngeo`.
-
-As described above the `gh-pages` make target can be used to publish the
-examples to github.io. The examples published on github.io are not compiled,
-they rely on the standalone `ngeo.js` build.
-
-Because of that the examples cannot rely on non-exported symbols or properties.
-For example they cannot use `goog` objects and they cannot use `ol` objects
-that are not part of the OpenLayers API (that is marked with `@api` in the
-OpenLayers source code).
-
-There's one exception to the rule: the examples (must) use `goog.provide` and
-`goog.require`. This is necessary for running the examples in development mode
-and for compiling them (see below). The `goog.provide` and `goog.require`
-statements are removed before publication of the examples on github.io.
-
-Even though the examples are not compiled on github.io the `check` target does
-compile them, as a verification step. This means that the examples must use
-compiler annotations and respect the constraints imposed by the compiler.
-
-### Service typing
-
-`ngeo` defines Angular services. They're located in the `src/services`
-directory. Angular services may be of any type : objects, functions, etc.
-
-For each type we define in `ngeo` we must provide a type. This allows having
-a type for `@param` when using (injecting) an `ngeo` service in a function.
-
-If the service is a function the type will be defined using a `@typedef`.
-For example:
-
-```js
-/**
- * @typedef {function(ol.layer.Layer)}
- */
-ngeo.DecorateLayer;
-```
-
-If the service is an object a `@constructor` must be defined. For example:
-
-```js
-/**
- * The ngeo Location type.
- * @constructor
- * @param {Location} location Location.
- * @param {History} history History.
- */
-ngeo.Location = function(location, history) {
-  /**
-   * @type {History}
-   * @private
-   */
-  this.history_ = history;
-
-  /**
-   * @type {!goog.Uri}
-   * @private
-   */
-  this.uri_ = goog.Uri.parse(location);
-};
-```
-
-And in both cases a `goog.provide` must be added for the type. For
-example:
-
-```js
-goog.provide('ngeo.DecorateLayer');
-```
-
-```js
-goog.provide('ngeo.Location');
-```
-
 ### Exports
 
 Services that are objects (rather than numbers, strings, or functions) may need
@@ -382,3 +94,97 @@ Services that are objects (rather than numbers, strings, or functions) may need
 For now we don't use the `@api` annotation as in OpenLayers. We explicitly use
 `goog.exportProperty` in separate "exports" files. See the `exports` directory
 in the repo.
+
+### Running examples
+
+#### Local mode
+
+To run the examples locally, just run `make serve` and open your browser in
+`http://localhost:3000/examples/` uri.
+
+
+All extern javascript includes must be defined in the example file, explicitly.
+
+```html
+  <script src="../node_modules/jquery/dist/jquery.js"></script>
+  <script src="../node_modules/angular/angular.js"></script>
+  <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+```
+
+To include the example code and all its dependencies through `ngeo` and `ol3`
+you have to include the following tag:
+
+```html
+  <script src="/@?main=scaleselector.js"></script>
+```
+
+The `/@?main=scaleselector.js` will take the `scaleselector.js` file in the
+example folder and will load in debug mode all the dependency tree built with
+the `goog.require()` call.
+In local examples, you will have all javascripts files in debug mode of ol3,
+ngeo, contribs and goog files loaded.
+
+#### Hosted examples and gh-pages
+
+The target `examples-hosted` will create a folder in your `.build` folder
+for *hosted examples*, where examples are fully compiled. You can then test
+them in advanced build mode.
+
+When you execute the target `gh-pages`, it pushs your `examples-hosted` to your
+github gh-pages, you can them test them online and share them.
+
+During the `examples-hosted` phase, some changes are made on source
+files to make them work in an advanced build context:
+
+##### Index file
+
+An `index.html` is created in `examples/` and `contribs/gmf/` to list
+all examples available in the library.
+
+##### External js files
+
+For example, all links to external js files are changed from
+ `../node_modules/angular/angular.js` to
+- `lib/angular.min.js` in ngeo examples
+- `../../lib/angular.min.js` in gmf examples
+
+##### ngeo js files
+
+In hosted examples, we use the standalone build of ngeo `ngeo.js` for ngeo
+ examples, and `gmf.js` for gmf examples.
+- `<script src="../../lib/gmf.js"></script>`
+- `<script src="lib/ngeo.js"></script>`
+
+##### examples js files
+
+The example source is finally added in debug mode. `/@?main=scaleselector.js` is
+changed to
+- `<script src="scaleselector.js"></script>` in ngeo
+- `<script src="locationchooser.js"></script>` in gmf
+
+So both are relative to the example folder.
+
+### GMF mobile application
+
+The GMF applications works the same way in local mode as the examples.
+But it is different for the hosted examples. As we want gmf applications to be
+a default instance of gmf ui, we want to build the whole application in
+advanced mode.
+So during make, all javascript includes are merged into one :
+`<script src="../../build/mobile.js"></script>`
+
+The build is done in `contribs/gmf/build/`.
+
+
+### Unit tests
+
+#### Writing tests
+
+The unit tests are located in `test/spec/` and uses the [Jasmine Framework](http://jasmine.github.io/1.3/introduction.html).
+Please refer to the [AngularJS's unit-testing guide](https://docs.angularjs.org/guide/unit-testing) for
+how to write unit tests.
+
+#### Running tests
+
+To run the unit tests on the command line, just run `make test`. All the tests will be
+run inside [PhantomJS](http://phantomjs.org/).
