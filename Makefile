@@ -81,6 +81,9 @@ help:
 	@echo "- gh-pages                Update the GitHub pages"
 	@echo
 
+.PHONY: apidoc
+apidoc: .build/apidoc
+
 .PHONY: dist
 dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
@@ -123,13 +126,13 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 		.build/examples-hosted/index.html \
 		.build/examples-hosted/contribs/gmf/index.html \
 		.build/examples-hosted/contribs/gmf/apps/mobile/index.html \
-		.build/apidoc-$(GIT_BRANCH)
+		.build/apidoc
 	cd $<; git fetch origin
 	cd $<; git merge --ff-only origin/gh-pages
 	cd $<; git rm --ignore-unmatch -r --quiet --force $(GIT_BRANCH)
 	cd $<; git clean --force -d
 	mkdir $</$(GIT_BRANCH)
-	cp -r .build/apidoc-$(GIT_BRANCH) $</$(GIT_BRANCH)/apidoc
+	cp -r .build/apidoc $</$(GIT_BRANCH)/apidoc
 	mkdir $</$(GIT_BRANCH)/examples
 	cp -r .build/examples-hosted/* $</$(GIT_BRANCH)/examples
 	cd $<; git add -A
@@ -449,7 +452,7 @@ $(EXTERNS_JQUERY):
 .build/jsdocOl3.js: jsdoc/get-ol3-doc-ref.js .build/node_modules.timestamp
 	node $< > $@
 
-.build/apidoc-%: jsdoc/config.json .build/node_modules.timestamp .build/jsdocAngularJS.js .build/jsdocOl3.js $(SRC_JS_FILES)
+.build/apidoc: jsdoc/config.json .build/node_modules.timestamp .build/jsdocAngularJS.js .build/jsdocOl3.js $(SRC_JS_FILES)
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
 
@@ -481,6 +484,7 @@ clean:
 	rm -f .build/gmftemplatecache.js
 	rm -f dist/*
 	rm -f $(EXTERNS_FILES)
+	rm -rf .build/apidoc
 	rm -rf .build/examples-hosted
 	rm -rf .build/contribs
 	rm -rf contribs/gmf/build
