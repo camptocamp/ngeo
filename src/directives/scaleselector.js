@@ -102,14 +102,14 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
 
   /**
    * The zoom level/scale map object.
-   * @type {Object.<string, string>}
+   * @type {!Object.<string, string>}
    * @export
    */
-  this.scales = /** @type {Object.<string, string>} */
+  this.scales = /** @type {!Object.<string, string>} */
       ($scope.$eval(scalesExpr));
-  goog.asserts.assert(goog.isDef(this['scales']));
+  goog.asserts.assert(goog.isDef(this.scales));
 
-  var zoomLevels = Object.keys(this['scales']).map(Number);
+  var zoomLevels = Object.keys(this.scales).map(Number);
   zoomLevels.sort();
 
   /**
