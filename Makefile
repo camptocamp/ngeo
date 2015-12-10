@@ -75,6 +75,7 @@ help:
 	@echo
 	@echo "Segondary targets:"
 	@echo
+	@echo "- apidoc                  Build the API documentation using JSDoc"
 	@echo "- examples-hosted         Build the hosted examples"
 	@echo "- lint                    Check the code with the linter"
 	@echo "- dist                    Compile the lib into an ngeo.js standalone build (in dist/)"
