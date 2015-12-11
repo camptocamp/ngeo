@@ -345,7 +345,9 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .build/examples-hosted/contribs/gmf/index.html: buildtools/examples-index.mako.html $(GMF_EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
 	mkdir -p $(dir $@)
-	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(GMF_EXAMPLES_HTML_FILES) > $@
+	.build/python-venv/bin/python buildtools/generate-examples-index.py \
+		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \
+		$< $(GMF_EXAMPLES_HTML_FILES) > $@
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
 		.build/examples-hosted/%.js \
