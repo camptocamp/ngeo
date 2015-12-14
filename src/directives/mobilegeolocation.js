@@ -113,6 +113,21 @@ ngeo.MobileGeolocationController = function($scope, $element,
    */
   this.zoom_ = options.zoom;
 
+  /**
+   * Whether to recenter the map at the position it gets updated
+   * @type {boolean}
+   * @private
+   */
+  this.follow_ = false;
+
+  /**
+   * A flag used to determine whether the view was changed by me or something
+   * else. In the latter case, stop following.
+   * @type {boolean}
+   * @private
+   */
+  this.viewChangedByMe_ = false;
+
   goog.events.listen(
       this.geolocation_,
       ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
@@ -129,6 +144,29 @@ ngeo.MobileGeolocationController = function($scope, $element,
       function(e) {
         this.setPosition_(e);
       },
+      false,
+      this);
+
+  var view = map.getView();
+
+  goog.events.listen(
+      view,
+      ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
+      this.handleViewChange_,
+      false,
+      this);
+
+  goog.events.listen(
+      view,
+      ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
+      this.handleViewChange_,
+      false,
+      this);
+
+  goog.events.listen(
+      view,
+      ol.Object.getChangeEventType(ol.ViewProperty.ROTATION),
+      this.handleViewChange_,
       false,
       this);
 
@@ -163,6 +201,7 @@ ngeo.MobileGeolocationController.prototype.toggleTracking = function() {
 ngeo.MobileGeolocationController.prototype.track_ = function() {
   this.featureOverlay_.addFeature(this.positionFeature_);
   this.featureOverlay_.addFeature(this.accuracyFeature_);
+  this.follow_ = true;
   this.geolocation_.setTracking(true);
 };
 
@@ -172,6 +211,7 @@ ngeo.MobileGeolocationController.prototype.track_ = function() {
  */
 ngeo.MobileGeolocationController.prototype.untrack_ = function() {
   this.featureOverlay_.clear();
+  this.follow_ = false;
   this.geolocation_.setTracking(false);
 };
 
@@ -186,10 +226,25 @@ ngeo.MobileGeolocationController.prototype.setPosition_ = function(event) {
       (this.positionFeature_.getGeometry());
 
   point.setCoordinates(position);
-  this.map_.getView().setCenter(position);
 
-  if (this.zoom_ !== undefined) {
-    this.map_.getView().setZoom(this.zoom_);
+  if (this.follow_) {
+    this.viewChangedByMe_ = true;
+    this.map_.getView().setCenter(position);
+    if (this.zoom_ !== undefined) {
+      this.map_.getView().setZoom(this.zoom_);
+    }
+    this.viewChangedByMe_ = false;
+  }
+};
+
+
+/**
+ * @param {ol.ObjectEvent} event Event.
+ * @private
+ */
+ngeo.MobileGeolocationController.prototype.handleViewChange_ = function(event) {
+  if (this.follow_ && !this.viewChangedByMe_) {
+    this.follow_ = false;
   }
 };
 
