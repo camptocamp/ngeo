@@ -1,6 +1,6 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
-GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html | "")
+GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
 
 EXPORTS_JS_FILES := $(shell find exports -type f -name '*.js')
 
@@ -443,7 +443,7 @@ $(EXTERNS_JQUERY):
 
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/bin/mako-render \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_DIRECTIVES_PARTIALS_FILES)
+		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(GMF_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var "app=gmf" \
 		--var "partials=$(addprefix ngeo:,$(NGEO_DIRECTIVES_PARTIALS_FILES)) \
@@ -462,6 +462,7 @@ $(EXTERNS_JQUERY):
 contribs/gmf/build/mobile.closure.js: contribs/gmf/apps/mobile/build.json \
 		$(EXTERNS_FILES) \
 		$(GMF_APPS_MOBILE_JS_FILES) \
+		.build/gmftemplatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/openlayers/node_modules/.bin/closure-util build $< $@

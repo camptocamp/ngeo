@@ -5,7 +5,8 @@
     "src/**/*.js",
     "contribs/gmf/src/**/*.js",
     "contribs/gmf/apps/mobile/js/appmodule.js",
-    "contribs/gmf/apps/mobile/js/mobile.js"
+    "contribs/gmf/apps/mobile/js/mobile.js",
+    ".build/gmftemplatecache.js"
   ],
   "compile": {
     "closure_entry_point": "app_mobile",
