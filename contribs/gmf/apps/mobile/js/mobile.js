@@ -14,6 +14,12 @@ goog.require('app');
 goog.require('gmf.AbstractMobileController');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.proj.EPSG21781');
+/** @suppress {extraRequire} */
+goog.require('gmf.searchDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.mobileGeolocationDirective');
 
 
 appModule.constant(
@@ -26,15 +32,24 @@ appModule.constant(
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {Object} serverVars vars from GMF
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {ngeo.StateManager} ngeoStateManager the state manager.
+ * @param {angular.Scope} $scope Scope.
+ * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
  * @constructor
  * @extends {gmf.AbstractMobileController}
  * @ngInject
  * @export
  */
-app.MobileController = function(ngeoFeatureOverlayMgr, serverVars) {
-  goog.base(this, ngeoFeatureOverlayMgr, serverVars);
+app.MobileController = function(
+    ngeoFeatureOverlayMgr, serverVars, gettextCatalog, ngeoStateManager, $scope,
+    ngeoGetBrowserLanguage) {
+  goog.base(
+      this, ngeoFeatureOverlayMgr, serverVars, gettextCatalog, ngeoStateManager,
+      $scope, ngeoGetBrowserLanguage);
 };
 goog.inherits(app.MobileController, gmf.AbstractMobileController);
+
 
 
 appModule.controller('MobileController', app.MobileController);

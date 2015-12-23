@@ -1,7 +1,10 @@
-/.build
-/node_modules
-/examples/simple.min.js
-/dist
-/contribs/gmf/build
 *.pyc
 .*.swp
+/.build
+/node_modules
+/dist
+/contribs/gmf/build
+/.tx/config
+/.tx/.tx/ngeo.ngeo-*
+/.tx/.tx/ngeo.gmf-*
+/examples/simple.min.js

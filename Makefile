@@ -40,6 +40,20 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/partials \
 	.build/examples-hosted/data
 
+# Git
+GITHUB_USERNAME ?= camptocamp
+GIT_BRANCH ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+GIT_REMOTE_NAME ?= origin
+
+# i18n
+L10N_LANGUAGES = de it
+L10N_PO_FILES = $(addprefix c2cgeoportal/locale/,$(addsuffix /LC_MESSAGES/c2cgeoportal.po, $(L10N_LANGUAGES)))
+LANGUAGES = en $(L10N_LANGUAGES)
+TX_GIT_BRANCH ?= master
+
+NGEO_JS_FILES = $(shell find src -type f -name '*.js')
+GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
+
 EXTERNS_ANGULAR = .build/externs/angular-1.4.js
 EXTERNS_ANGULAR_Q = .build/externs/angular-1.4-q_templated.js
 EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.4-http-promise_templated.js
@@ -95,7 +109,8 @@ check: lint dist check-examples test compile-examples build-gmf-mobile-app
 compile-examples: .build/examples/all.min.js
 
 .PHONY: build-gmf-mobile-app
-build-gmf-mobile-app: $(addprefix contribs/gmf/build/mobile,.js .css)
+build-gmf-mobile-app: $(addprefix contribs/gmf/build/mobile,.js .css) \
+	$(addprefix contribs/gmf/build/gmf-,$(addsuffix .json, $(LANGUAGES)))
 
 .PHONY: check-examples
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
@@ -120,9 +135,6 @@ examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
 		.build/examples-hosted/contribs/gmf/apps/mobile/index.html
 
 .PHONY: gh-pages
-GITHUB_USERNAME ?= camptocamp
-GIT_BRANCH ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-gh-pages: GIT_REMOTE_NAME ?= origin
 gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 		.build/examples-hosted/index.html \
 		.build/examples-hosted/contribs/gmf/index.html \
@@ -411,7 +423,7 @@ $(EXTERNS_JQUERY):
 	touch $@
 
 .build/python-venv:
-	mkdir -p .build
+	mkdir -p $(dir $@)
 	virtualenv --no-site-packages $@
 
 .build/python-venv/bin/gjslint: .build/python-venv
@@ -491,6 +503,65 @@ contribs/gmf/build/mobile.css: $(GMF_APPS_MOBILE_LESS_FILES) \
 	mkdir -p $(dir $@)
 	./node_modules/.bin/lessc contribs/gmf/apps/mobile/less/mobile.less $@ --autoprefix
 
+
+# i18n
+
+# if don't exists create one for read only access
+$(HOME)/.transifexrc:
+	echo "[https://www.transifex.com]" > $@
+	echo "hostname = https://www.transifex.com" >> $@
+	echo "username = c2c" >> $@
+	echo "password = c2cc2c" >> $@
+	echo "token =" >> $@
+
+.tx/config: .tx/config.mako .build/python-venv/bin/mako-render
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var "git_branch=$(TX_GIT_BRANCH)" $< > $@
+
+#.build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
+#		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES)
+#	mkdir -p $(dir $@)
+#	node buildtools/extract-messages.js $(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
+
+.build/locale/gmf.pot: lingua.cfg .build/node_modules.timestamp \
+		$(GMF_DIRECTIVES_PARTIALS_FILES) $(GMF_JS_FILES)
+	mkdir -p $(dir $@)
+	node buildtools/extract-messages $(GMF_DIRECTIVES_PARTIALS_FILES) $(GMF_JS_FILES) > $@
+
+.build/python-venv/bin/tx: .build/python-venv $(HOME)/.transifexrc
+	.build/python-venv/bin/pip install transifex-client
+	touch $@
+
+.PHONY: transifex-get
+transifex-get: c2cgeoportal/locale/c2cgeoportal.pot $(L10N_PO_FILES)
+
+.PHONY: transifex-send
+transifex-send: .tx/config .build/python-venv/bin/tx \
+		.build/locale/gmf.pot
+		# .build/locale/ngeo.pot
+	.build/python-venv/bin/tx push --source
+
+.PHONY: transifex-init
+transifex-init: .build/dev-requirements.timestamp c2cgeoportal/locale/c2cgeoportal.pot .tx/config
+	.build/venv/bin/tx push --source
+	.build/venv/bin/tx push --translations --force --no-interactive
+
+#.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
+#	.build/python-venv/bin/tx pull -l $* --force
+
+.build/locale/%/LC_MESSAGES/gmf.po: .tx/config .build/python-venv/bin/tx
+	.build/python-venv/bin/tx pull -l $* --force
+
+contribs/gmf/build/gmf-en.json:
+	mkdir -p $(dir $@)
+	echo '{}' > $@
+
+contribs/gmf/build/gmf-%.json: .build/locale/%/LC_MESSAGES/gmf.po .build/node_modules.timestamp
+	mkdir -p $(dir $@)
+	node buildtools/compile-catalog $< > $@
+
+# clean
+
 .PHONY: clean
 clean:
 	rm -f .build/*.check.timestamp
@@ -509,9 +580,11 @@ clean:
 	rm -rf .build/examples-hosted
 	rm -rf .build/contribs
 	rm -rf contribs/gmf/build
+	rm -f .build/locale/gmf.pot
 
 .PHONY: cleanall
 cleanall: clean
 	rm -rf .build
 	rm -rf dist
 	rm -rf node_modules
+	rm -f $(L10N_PO_FILES)

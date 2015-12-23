@@ -38,3 +38,4 @@ Other docs:
   developers.
 * [Application development guidelines](docs/guidelines.md) – This guide is for
   application developers using ngeo.
+* [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform

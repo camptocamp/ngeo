@@ -20,3 +20,5 @@ after_success:
 - git config --global user.email "travis@travis-ci.org"
 - export GIT_BRANCH=${TRAVIS_BRANCH}
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && make gh-pages'
+- openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in .transifexrc.enc -out $HOME/.transifexrc -d
+- '[ "${TRAVIS_BRANCH}" = "master" ] && make transifex-send'

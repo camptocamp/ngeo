@@ -496,9 +496,11 @@ in `ngeo`.
 
 ### template vs templateUrl
 
-There is at the moment no real exigence concerning this point. It's up to you to
-determine if the template is simple enough to be written inline in the directive
-code with the`template` attribute.
+The only technical reason to use `templateUrl` instead of `template` is that the
+template doesn't support i18n.
+
+It's up to you to determine if the template is simple enough to be written
+inline in the directive code with the `template` attribute.
 
 If the template looks too complex, please put it in an extern file and use the
 `templateUrl` attribute to point on it. In that case, the path of the template
@@ -509,7 +511,7 @@ directive folder:
 - `src/directives/partials` for `ngeo` directives.
 - `contribs/gmf/src/directives/partials` for `gmf` directives.
 
-### Template Url
+### Template URL
 
 First of all the partials should be in the folder `src/directives/partials`.
 

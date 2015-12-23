@@ -188,3 +188,37 @@ how to write unit tests.
 
 To run the unit tests on the command line, just run `make test`. All the tests will be
 run inside [PhantomJS](http://phantomjs.org/).
+
+### Create a new stabilisation branch
+
+When we create a new stabilisation branch we should also duplicate the localisation.
+
+Get the actual localisation:
+`make transifex-get`
+
+Create the new branch:
+`git checkout -b x.y`
+
+Update the `Makefile`:
+```diff
+- TX_GIT_BRANCH ?= master
++ TX_GIT_BRANCH ?= x_y
+```
+
+Commit and push the changes:
+```bash
+git add Makefile
+git commit -m "Start the branch x.y"
+git push origin x.y
+```
+
+Create the new localisation resource:
+* Go to URL: https://www.transifex.com/camptocamp/ngeo/content/
+* Click on 'Add a resource'
+* The name should be something like “gmf-1_0” (with the right version)
+* Click on 'Create a resource'
+* Run:
+  ```bash
+rm .tx/config
+make transifex-init
+```
