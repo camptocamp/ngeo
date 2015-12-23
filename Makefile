@@ -311,18 +311,18 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
 .build/examples-hosted/contribs/gmf/%.html: contribs/gmf/examples/%.html
 	mkdir -p $(dir $@)
-	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
-		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
-		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
-		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
-		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
-		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext.js|lib/angular-gettext.min.js|' \
-		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
-		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
-		-e 's|\.\./node_modules/proj4/dist/proj4.js|lib/proj4.js|' \
-		-e 's|/@?main=$*.js|$*.js|' \
+	sed -e 's|\.\./node_modules/openlayers/css/ol\.css|lib/ngeo.css|' \
+		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap\.css|lib/bootstrap.min.css|' \
+		-e 's|\.\./node_modules/jquery/dist/jquery\.js|lib/jquery.min.js|' \
+		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap\.js|lib/bootstrap.min.js|' \
+		-e 's|\.\./node_modules/angular/angular\.js|lib/angular.min.js|' \
+		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext\.js|lib/angular-gettext.min.js|' \
+		-e 's|\.\./node_modules/d3/d3\.js|lib/d3.min.js|' \
+		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
+		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
+		-e 's|/@?main=$*\.js|$*.js|' \
 		-e '/default\.js/d' \
-		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
+		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
 		-e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/mobile/index.html
@@ -335,8 +335,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	sed -e '/stylesheet\/less" href="..\/..\//d' \
 		-e '/\/node_modules\//d' \
 		-e '/default\.js/d' \
-		-e 's|utils/watchwatchers.js|lib/watchwatchers.js|' \
-		-e 's|/@?main=mobile/js/mobile.js|../../build/mobile.js|' $< > $@
+		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
+		-e 's|/@?main=mobile/js/mobile\.js|../../build/mobile.js|' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
