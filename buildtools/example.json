@@ -37,6 +37,7 @@
       "node_modules/openlayers/externs/olx.js",
       "node_modules/openlayers/externs/oli.js",
       "contribs/gmf/externs/gmfx.js",
+      "contribs/gmf/externs/gmf-themes.js",
       "externs/ngeox.js"
     ],
     "jscomp_error": [

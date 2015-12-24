@@ -189,12 +189,6 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
       ($scope.$eval(nodelayerExpr, {'node': this.node}));
 
   /**
-   * @type {ol.Map}
-   * @private
-   */
-  this.map_ = map;
-
-  /**
    * @type {number}
    * @export
    */
@@ -217,9 +211,11 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
   // in the templates.
   $scope['uid'] = this.uid;
   $scope['depth'] = this.depth;
-
   $scope['layertreeCtrl'] = this;
 
+  $scope.$on('$destroy', angular.bind(this, function() {
+    this.map.removeLayer(this.layer);
+  }));
 };
 
 
@@ -230,7 +226,7 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
  */
 ngeo.LayertreeController.prototype.getSetActive = function(val) {
   var layer = this.layer;
-  var map = this.map_;
+  var map = this.map;
   goog.asserts.assert(!goog.isNull(this.layer));
   if (goog.isDef(val)) {
     if (!val) {
