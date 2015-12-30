@@ -11,7 +11,9 @@ GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
 GMF_APPS_MOBILE_JS_FILES := $(shell find contribs/gmf/apps/mobile/js -type f -name '*.js')
+GMF_APPS_DESKTOP_JS_FILES := $(shell find contribs/gmf/apps/desktop/js -type f -name '*.js')
 GMF_APPS_MOBILE_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
+GMF_APPS_DESKTOP_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 GMF_APPS_LIBS_JS_FILES += \
 	node_modules/jquery/dist/jquery.min.js \
 	node_modules/angular/angular.min.js \
@@ -23,7 +25,8 @@ GMF_APPS_LIBS_JS_FILES += \
 
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES)) \
-	.build/contribs/gmf/apps/mobile.check.timestamp
+	.build/contribs/gmf/apps/mobile.check.timestamp \
+	.build/contribs/gmf/apps/desktop.check.timestamp
 EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/ngeo-debug.js \
 	.build/examples-hosted/lib/ngeo.css \
@@ -106,13 +109,17 @@ apidoc: .build/apidoc
 dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
 .PHONY: check
-check: lint dist check-examples test compile-examples build-gmf-mobile-app
+check: lint dist check-examples test compile-examples build-gmf-mobile-app build-gmf-desktop-app
 
 .PHONY: compile-examples
 compile-examples: .build/examples/all.min.js
 
 .PHONY: build-gmf-mobile-app
 build-gmf-mobile-app: $(addprefix contribs/gmf/build/mobile,.js .css) \
+	$(addprefix contribs/gmf/build/gmf-,$(addsuffix .json, $(LANGUAGES)))
+
+.PHONY: build-gmf-desktop-app
+build-gmf-desktop-app: $(addprefix contribs/gmf/build/desktop,.js .css) \
 	$(addprefix contribs/gmf/build/gmf-,$(addsuffix .json, $(LANGUAGES)))
 
 .PHONY: check-examples
@@ -137,13 +144,15 @@ examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
 		$(patsubst examples/%.html,.build/examples-hosted/%.js,$(EXAMPLES_HTML_FILES)) \
 		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
 		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.js,$(GMF_EXAMPLES_HTML_FILES)) \
-		.build/examples-hosted/contribs/gmf/apps/mobile/index.html
+		.build/examples-hosted/contribs/gmf/apps/mobile/index.html \
+		.build/examples-hosted/contribs/gmf/apps/desktop/index.html
 
 .PHONY: gh-pages
 gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 		.build/examples-hosted/index.html \
 		.build/examples-hosted/contribs/gmf/index.html \
 		.build/examples-hosted/contribs/gmf/apps/mobile/index.html \
+		.build/examples-hosted/contribs/gmf/apps/desktop/index.html \
 		.build/apidoc
 	cd $<; git fetch origin
 	cd $<; git merge --ff-only origin/gh-pages
@@ -162,11 +171,11 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages:
 	git clone --branch gh-pages $(GIT_REMOTE_URL) $@
 
-.build/gjslint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES)
+.build/gjslint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES) $(GMF_APPS_DESKTOP_JS_FILES)
 	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable,example,module,ngdoc,ngname,htmlAttribute $?
 	touch $@
 
-.build/jshint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES)
+.build/jshint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_DESKTOP_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES)
 	./node_modules/.bin/jshint --verbose $?
 	touch $@
 
@@ -307,15 +316,19 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $@
 	cp contribs/gmf/examples/data/* $@
 
-.build/examples-hosted/contribs/gmf/fonts: contribs/gmf/fonts build-gmf-mobile-app
+.build/examples-hosted/contribs/gmf/fonts: contribs/gmf/fonts build-gmf-mobile-app build-gmf-desktop-app
 	mkdir -p $(dir $@)
 	cp -r $< $(dir $@)
 
-.build/examples-hosted/contribs/gmf/build: build-gmf-mobile-app
+.build/examples-hosted/contribs/gmf/build: build-gmf-mobile-app build-gmf-desktop-app
 	mkdir -p $(dir $@)
 	cp -r contribs/gmf/build $(dir $@)
 
 .build/examples-hosted/contribs/gmf/apps/mobile/js/mobile.js: contribs/gmf/apps/mobile/js/mobile.js
+	mkdir -p $(dir $@)
+	cp $< $(dir $@)
+
+.build/examples-hosted/contribs/gmf/apps/desktop/js/desktop.js: contribs/gmf/apps/desktop/js/desktop.js
 	mkdir -p $(dir $@)
 	cp $< $(dir $@)
 
@@ -373,6 +386,20 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=mobile/js/mobile\.js|../../build/mobile.js|' \
 		-e '/mobile.js/i\    <script src="../../../../lib/Function.prototype.bind.js"></script>' $< > $@
 
+.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/desktop/index.html
+.build/examples-hosted/contribs/gmf/apps/desktop/index.html: contribs/gmf/apps/desktop/index.html \
+		.build/examples-hosted/contribs/gmf/build \
+		.build/examples-hosted/contribs/gmf/fonts \
+		.build/examples-hosted/contribs/gmf/data \
+		.build/examples-hosted/contribs/gmf/apps/desktop/js/desktop.js
+	mkdir -p $(dir $@)
+	sed -e '/stylesheet\/less" href="..\/..\//d' \
+		-e '/\/node_modules\//d' \
+		-e '/default\.js/d' \
+		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
+		-e 's|/@?main=desktop/js/desktop\.js|../../build/desktop.js|' \
+		-e '/desktop.js/i\    <script src="../../../../lib/Function.prototype.bind.js"></script>' $< > $@
+
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
 	mkdir -p $(dir $@)
@@ -391,6 +418,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	.build/python-venv/bin/python buildtools/generate-examples-index.py \
 		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \
+		--app 'Desktop application' apps/desktop/index.html 'The desktop example application for GeoMapFish.' \
 		$< $(GMF_EXAMPLES_HTML_FILES) > $@
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
@@ -402,6 +430,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	touch $@
 
 .build/contribs/gmf/apps/mobile.check.timestamp: .build/examples-hosted/contribs/gmf/apps/mobile/index.html
+	mkdir -p $(dir $@)
+	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
+	touch $@
+
+.build/contribs/gmf/apps/desktop.check.timestamp: .build/examples-hosted/contribs/gmf/apps/desktop/index.html
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
@@ -520,17 +553,34 @@ contribs/gmf/build/mobile.closure.js: contribs/gmf/apps/mobile/build.json \
 	mkdir -p $(dir $@)
 	./node_modules/openlayers/node_modules/.bin/closure-util build $< $@
 
+contribs/gmf/build/desktop.closure.js: contribs/gmf/apps/desktop/build.json \
+		$(EXTERNS_FILES) \
+		$(GMF_APPS_DESKTOP_JS_FILES) \
+		.build/gmftemplatecache.js \
+		.build/node_modules.timestamp
+	mkdir -p $(dir $@)
+	./node_modules/openlayers/node_modules/.bin/closure-util build $< $@
+
 contribs/gmf/build/mobile.js: contribs/gmf/build/mobile.closure.js $(GMF_APPS_LIBS_JS_FILES)
 	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
 
+contribs/gmf/build/desktop.js: contribs/gmf/build/desktop.closure.js $(GMF_APPS_LIBS_JS_FILES)
+	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
+
 .PHONY: compile-css
-compile-css: contribs/gmf/build/mobile.css
+compile-css: contribs/gmf/build/mobile.css contribs/gmf/build/desktop.css
 
 contribs/gmf/build/mobile.css: $(GMF_APPS_MOBILE_LESS_FILES) \
 		.build/node_modules.timestamp \
 		.build/font_awesome.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/lessc contribs/gmf/apps/mobile/less/mobile.less $@ --autoprefix
+
+contribs/gmf/build/desktop.css: $(GMF_APPS_DESKTOP_LESS_FILES) \
+		.build/node_modules.timestamp \
+		.build/font_awesome.timestamp
+	mkdir -p $(dir $@)
+	./node_modules/.bin/lessc contribs/gmf/apps/desktop/less/desktop.less $@ --autoprefix
 
 
 # i18n

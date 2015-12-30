@@ -3,3 +3,18 @@
 @import 'map.less';
 @import 'mobile-nav.less';
 @import 'icons.less';
+
+main>* {
+  position: absolute;
+}
+
+gmf-map {
+  position: initial;
+  > div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
