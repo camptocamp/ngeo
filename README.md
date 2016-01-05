@@ -20,8 +20,10 @@ If you use ngeo we recommend that you also use Closure, because this is the way
 we design and use ngeo at Camptocamp. But using Closure is not mandatory:
 standalone builds of ngeo can be created.
 
-To know more about ngeo the
-[examples](https://camptocamp.github.io/ngeo/master/examples)
+To know more about ngeo take a look to:
+
+* The [API documentation](http://camptocamp.github.io/ngeo/apidoc-ngeox/apidoc/index.html)
+* The [examples](https://camptocamp.github.io/ngeo/master/examples)
 
 ngeo also includes a [contribs](contribs) directory where non-core
 contributions may be placed. ngeo currently includes one contrib: `gmf`.  That
