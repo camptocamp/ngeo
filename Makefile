@@ -8,8 +8,8 @@ EXAMPLES_JS_FILES := $(shell find examples -maxdepth 1 -type f -name '*.js')
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
-GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
+GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
 GMF_APPS_MOBILE_JS_FILES := $(shell find contribs/gmf/apps/mobile/js -type f -name '*.js')
 GMF_APPS_MOBILE_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 GMF_APPS_MOBILE_MAIN_LESS_FILES := $(filter %/mobile.less, $(GMF_APPS_LESS_FILES))
@@ -270,6 +270,10 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $@
 	cp examples/data/* $@
 
+.build/examples-hosted/contribs/gmf/data: contribs/gmf/examples/data
+	mkdir -p $@
+	cp contribs/gmf/examples/data/* $@
+
 .build/examples-hosted/contribs/gmf/fonts: contribs/gmf/fonts build-gmf-mobile-app
 	mkdir -p $(dir $@)
 	cp -r $< $(dir $@)
@@ -320,6 +324,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/examples-hosted/contribs/gmf/apps/mobile/index.html: contribs/gmf/apps/mobile/index.html \
 		.build/examples-hosted/contribs/gmf/build \
 		.build/examples-hosted/contribs/gmf/fonts \
+		.build/examples-hosted/contribs/gmf/data \
 		.build/examples-hosted/contribs/gmf/apps/mobile/js/mobile.js
 	mkdir -p $(dir $@)
 	sed -e '/stylesheet\/less" href="..\/..\//d' \
