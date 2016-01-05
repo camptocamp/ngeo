@@ -23,6 +23,10 @@ var app = {};
 app.module = angular.module('app', ['gmf']);
 
 
+app.module.value('gmfWmsUrl',
+    'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy');
+
+
 
 /**
  * @constructor
@@ -45,29 +49,31 @@ app.MainController = function($http) {
     ],
     view: new ol.View({
       projection: projection,
-      resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1],
+      resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 3
     })
   });
 
   /**
-   * @type {string}
-   * @export
+   * @type {Array.<Object>|undefined}
+   * export
    */
-  this.wmsUrl = 'http://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy';
+  this.themes = undefined;
 
   /**
    * @type {Object|undefined}
    * @export
    */
-  this.themes = undefined;
+  this.treeSource = undefined;
 
   $http.get('data/themes.json').success(angular.bind(this, function(data) {
-    this.themes = data;
+    var themes = data['themes'];
+    if (themes) {
+      this.themes = themes;
+      this.treeSource = themes[3];
+    }
   }));
-
 };
-
 
 app.module.controller('MainController', app.MainController);
