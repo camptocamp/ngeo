@@ -27,6 +27,7 @@ module.exports = function(config) {
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'test/spec/beforeeach.js',
+      'test/spec/data/*.js',
       'test/spec/**/*.spec.js',
       {
         pattern: closureLibPath + 'closure/**/*.js',
