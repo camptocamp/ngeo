@@ -34,15 +34,19 @@ gmf.ThemesEventType = {
  * @constructor
  * @extends {goog.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
- * @param {string} treeUrl URL to "themes" web service.
- * @param {string} isThemePrivateUrl URL to check if theme is public.
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.Themes = function($http, treeUrl, isThemePrivateUrl) {
+gmf.Themes = function($http) {
 
   goog.base(this);
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.initialized_ = false;
 
   /**
    * @type {angular.$http}
@@ -54,13 +58,7 @@ gmf.Themes = function($http, treeUrl, isThemePrivateUrl) {
    * @type {string}
    * @private
    */
-  this.treeUrl_ = treeUrl;
-
-  /**
-   * @type {string}
-   * @private
-   */
-  this.isThemePrivateUrl_ = isThemePrivateUrl;
+  this.treeUrl_ = '';
 
   /**
    * @type {?angular.$q.Promise}
@@ -69,6 +67,19 @@ gmf.Themes = function($http, treeUrl, isThemePrivateUrl) {
   this.promise_ = null;
 };
 goog.inherits(gmf.Themes, goog.events.EventTarget);
+
+
+/**
+ * Init the service.
+ * @param {string} treeUrl URL to "themes" web service.
+ * @export
+ */
+gmf.Themes.prototype.init = function(treeUrl) {
+  if (!this.initialized_) {
+    this.treeUrl_ = treeUrl;
+    this.initialized_ = true;
+  }
+};
 
 
 /**
@@ -117,6 +128,8 @@ gmf.Themes.prototype.getBgLayers = function() {
           // create an ol.layer from the json spec
           // use a future layer factory shared with the layertree
           //return layer;
+
+          return item;
         }, this));
 
         // add the blank layer ???
@@ -181,18 +194,4 @@ gmf.Themes.prototype.loadThemes = function(roleId) {
         return /** @type {gmf.ThemesResponse} */ (resp.data);
       }, this));
 };
-
-
-/**
- * @param {string} themeId The theme id to send in the request.
- * checks if the theme is protected or not.
- * @return {angular.$q.Promise} Promise.
- */
-gmf.Themes.prototype.isThemePrivate = function(themeId) {
-  return this.$http_.get(this.isThemePrivateUrl_, {
-    params: {'theme': themeId},
-    cache: false
-  });
-};
-
 gmfModule.service('gmfThemes', gmf.Themes);

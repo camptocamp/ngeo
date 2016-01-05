@@ -24,11 +24,16 @@ module.exports = function(config) {
       closureLibPath + 'closure/goog/deps.js',
       '.build/ol-deps.js',
       '.build/ngeo-deps.js',
+      '.build/gmf-deps.js',
       'node_modules/angular/angular.js',
+      'node_modules/angular-gettext/dist/angular-gettext.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'test/spec/beforeeach.js',
       'test/spec/data/*.js',
       'test/spec/**/*.spec.js',
+      'contribs/gmf/test/spec/beforeeach.js',
+      'contribs/gmf/test/spec/data/*.js',
+      'contribs/gmf/test/spec/**/*.spec.js',
       {
         pattern: closureLibPath + 'closure/**/*.js',
         included: false,
@@ -49,6 +54,12 @@ module.exports = function(config) {
       },
       {
         pattern: 'src/**/*.js',
+        included: false,
+        watched: true,
+        served: true
+      },
+      {
+        pattern: 'contribs/gmf/src/**/*.js',
         included: false,
         watched: true,
         served: true
