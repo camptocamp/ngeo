@@ -5,6 +5,11 @@ goog.require('gmf');
 goog.require('ngeo.CreateGeoJSONBloodhound');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
+/**
+ * This goog.require is needed because it provides 'ngeo-search' used in
+ * the template.
+ * @suppress {extraRequire}
+ */
 goog.require('ngeo.searchDirective');
 goog.require('ol.Map');
 goog.require('ol.proj');

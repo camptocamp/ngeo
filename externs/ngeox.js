@@ -1,4 +1,8 @@
 /**
+ * @externs
+ */
+
+/**
  * @private
  * @type {Object}
  */

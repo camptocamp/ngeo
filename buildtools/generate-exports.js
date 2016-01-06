@@ -54,7 +54,7 @@ function getConfig(configPath, callback) {
 /**
  * Read the symbols from info file.
  * @param {Array.<string>} patterns List of patterns to pass along.
- * @param {funciton(Error, Array.<string>, Array.<Object>)} callback Called
+ * @param {function(Error, Array.<string>, Array.<Object>)} callback Called
  *     with the patterns and symbols (or any error).
  */
 function getSymbols(patterns, callback) {
@@ -72,7 +72,7 @@ function getSymbols(patterns, callback) {
 /**
  * Generate a list of symbol names given a list of patterns.  Patterns may
  * include a * wildcard at the end of the string, in which case all symbol names
- * that start with the preceeding string will be matched (e.g 'foo.Bar#*' will
+ * that start with the preceding string will be matched (e.g 'foo.Bar#*' will
  * match all symbol names that start with 'foo.Bar#').
  *
  * @param {Array.<string>} patterns A list of symbol names to match.  Wildcards
@@ -172,6 +172,11 @@ function generateExports(symbols, namespace) {
   Object.keys(requires).sort().reverse().forEach(function(name) {
     blocks.unshift('goog.require(\'' + name + '\');');
   });
+  blocks.unshift(
+      '/**\n' +
+      ' * @fileoverview Custom exports file.\n' +
+      ' * @suppress {checkVars,extraRequire}\n' +
+      ' */\n');
   return blocks.join('\n');
 }
 
