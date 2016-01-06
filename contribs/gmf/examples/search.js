@@ -42,7 +42,7 @@ app.MainController = function(ngeoFeatureOverlayMgr) {
     typeaheadDatasetOptions: {
       limit: 7
     },
-    url: 'http://geomapfish-demo.camptocamp.net/1.6/wsgi/fulltextsearch?' +
+    url: 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/fulltextsearch?' +
         'query=%QUERY'
   }];
 
