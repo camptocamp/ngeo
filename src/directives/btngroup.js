@@ -21,15 +21,44 @@ goog.require('ngeo');
  * In that example the ngeo-btn are combined together in a "toggle group",
  * where activating a button will deactivate the others.
  *
+ * One can use `ng-model` directive at the group level in order to know if
+ * a button is active.
+ *
+ * Example:
+ *
+ *     <div ngeo-btn-group ngeo-btn-group-active="ctrl.drawToolActive">
+ *
+ * @param {angular.$parse} $parse Angular parse service.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBtnGroup
  */
-ngeo.btngroupDirective = function() {
+ngeo.btngroupDirective = function($parse) {
   return {
     restrict: 'A',
-    controller: 'ngeoBtnGroupController'
+    controller: 'ngeoBtnGroupController',
+    link:
+        /**
+         * @param {!angular.Scope} scope Scope.
+         * @param {angular.JQLite} element Element.
+         * @param {angular.Attributes} attrs Attributes.
+         * @param {!Object} controller Controller.
+         */
+        function(scope, element, attrs, controller) {
+          var setActive = $parse(attrs['ngeoBtnGroupActive']).assign;
+
+          if (setActive) {
+            scope.$watch(function() {
+              // return true if at least one button is active otherwise false
+              return controller.buttons_.some(function(buttonModel) {
+                return (buttonModel(scope) === true);
+              });
+            }, function(newValue) {
+              setActive(scope, newValue);
+            });
+          }
+        }
   };
 };
 
@@ -47,7 +76,7 @@ ngeoModule.directive('ngeoBtnGroup', ngeo.btngroupDirective);
  */
 ngeo.BtnGroupController = function($scope) {
   /**
-   * @type {Array.<function(!angular.Scope, boolean)>}
+   * @type {Array.<angular.$parse.Expression>}
    * @private
    */
   this.buttons_ = [];
@@ -64,20 +93,20 @@ ngeo.BtnGroupController = function($scope) {
  * @param {number} index Index of the button in buttons array.
  */
 ngeo.BtnGroupController.prototype.activate = function(index) {
-  this.buttons_.forEach(function(s, i) {
+  this.buttons_.forEach(function(expressionFn, i) {
     if (i != index) {
-      s(this.scope_, false);
+      expressionFn.assign(this.scope_, false);
     }
   }, this);
 };
 
 
 /**
- * @param {function((!angular.Scope), *)} ngModelSet Setter.
+ * @param {angular.$parse.Expression} expressionFn Expression function.
  * @return {number} Index of the pushed setter.
  */
-ngeo.BtnGroupController.prototype.addButton = function(ngModelSet) {
-  this.buttons_.push(ngModelSet);
+ngeo.BtnGroupController.prototype.addButton = function(expressionFn) {
+  this.buttons_.push(expressionFn);
   return this.buttons_.length - 1;
 };
 
@@ -126,7 +155,7 @@ ngeo.btnDirective = function($parse) {
             ngModelSet(scope, false);
           }
           if (!goog.isNull(buttonsCtrl)) {
-            indexInGroup = buttonsCtrl.addButton(ngModelSet);
+            indexInGroup = buttonsCtrl.addButton(ngModelGet);
           }
 
           // UI -> model

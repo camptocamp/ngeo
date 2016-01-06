@@ -23,10 +23,11 @@
   <body ng-controller="MainController as ctrl">
     <div id="map" ngeo-map="ctrl.map"></div>
 
-    <div ngeo-btn-group>
+    <div ngeo-btn-group ngeo-btn-group-active="ctrl.drawToolActive">
       <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawPoint.active">Point</button>
       <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawLine.active">Linestring</button>
       <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawPolygon.active">Polygon</button>
+      <span ng-show="ctrl.drawToolActive">A tool is active</span>
     </div>
     <button ngeo-btn class="btn btn-primary" ng-model="ctrl.showInfo">Info</button>
     <div ng-show="ctrl.showInfo" ng-cloak class="alert alert-success" role="alert"><b>ngeo-btn</b> directive works also outside <b>ngeo-btn-group</b> one</div>
