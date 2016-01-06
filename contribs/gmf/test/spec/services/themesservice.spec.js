@@ -4,12 +4,12 @@ goog.require('gmf.test.data.themes');
 
 describe('gmf.Themes', function() {
   var gmfThemes;
-  var treeUrl = 'http://fake/gmf/themes';
+  var treeUrl;
 
   beforeEach(function() {
     inject(function($injector) {
       gmfThemes = $injector.get('gmfThemes');
-      gmfThemes.init(treeUrl);
+      treeUrl = $injector.get('gmfTtreeUrl');
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.when('GET', treeUrl).respond(themes);
     });

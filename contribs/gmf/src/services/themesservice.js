@@ -34,19 +34,14 @@ gmf.ThemesEventType = {
  * @constructor
  * @extends {goog.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
+ * @param {string} gmfTtreeUrl URL to "themes" web service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.Themes = function($http) {
+gmf.Themes = function($http, gmfTtreeUrl) {
 
   goog.base(this);
-
-  /**
-   * @type {boolean}
-   * @private
-   */
-  this.initialized_ = false;
 
   /**
    * @type {angular.$http}
@@ -58,7 +53,7 @@ gmf.Themes = function($http) {
    * @type {string}
    * @private
    */
-  this.treeUrl_ = '';
+  this.treeUrl_ = gmfTtreeUrl;
 
   /**
    * @type {?angular.$q.Promise}
@@ -67,19 +62,6 @@ gmf.Themes = function($http) {
   this.promise_ = null;
 };
 goog.inherits(gmf.Themes, goog.events.EventTarget);
-
-
-/**
- * Init the service.
- * @param {string} treeUrl URL to "themes" web service.
- * @export
- */
-gmf.Themes.prototype.init = function(treeUrl) {
-  if (!this.initialized_) {
-    this.treeUrl_ = treeUrl;
-    this.initialized_ = true;
-  }
-};
 
 
 /**
