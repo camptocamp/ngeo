@@ -71,11 +71,11 @@ For example
 $ make gh-pages GITHUB_USERNAME=camptocamp
 ```
 
-will publish the examples to `http://camptocamp.github.io/ngeo/<branchname>/`.
+will publish the examples to `https://camptocamp.github.io/ngeo/<branchname>/`.
 
 The published examples use the `ngeo.js` standalone build.
 
-Example: http://camptocamp.github.io/ngeo/master/examples/simple.html.
+Example: https://camptocamp.github.io/ngeo/master/examples/simple.html.
 
 ## Developer Guide
 
