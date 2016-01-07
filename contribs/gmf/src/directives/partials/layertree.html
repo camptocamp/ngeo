@@ -1,0 +1,17 @@
+<span ng-if="::!layertreeCtrl.isRoot"
+    ng-class="['depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNoSourceStyle(layertreeCtrl)]">
+  <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)">
+    <span class="state" ng-class="[gmfLayertreeCtrl.getNodeState(layertreeCtrl)]"></span>
+    <span class="name">{{::layertreeCtrl.node.name}}</span>
+  </a>
+  <span class="zoom" title="Zoom to a visible level" ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl.node)"></span>
+</span>
+<ul ng-if="::layertreeCtrl.node.children">
+  <li class="treenode" ng-repeat="node in layertreeCtrl.node.children"
+      ngeo-layertree="node"
+      ngeo-layertree-notroot
+      ngeo-layertree-map="layertreeCtrl.map"
+      ngeo-layertree-nodelayerexpr="layertreeCtrl.nodelayerExpr"
+      ngeo-layertree-listenersexpr="layertreeCtrl.listenersExpr">
+  </li>
+</ul>

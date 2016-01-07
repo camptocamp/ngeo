@@ -1,0 +1,75 @@
+<!DOCTYPE>
+<html ng-app='app'>
+  <head>
+    <title>GeoMapFish Layer Tree Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <style>
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+      ul {
+        list-style-type: none;
+      }
+      .treenode a{
+        color: black;
+        text-decoration: none;
+      }
+      .treenode .zoom {
+        display: none;
+      }
+      .treenode .zoom:hover {
+        cursor: pointer;
+      }
+      .treenode .zoom:before {
+        font-family: FontAwesome;
+        content: "\f18e";
+      }
+      .treenode .noSource {
+        opacity: 0.3;
+      }
+      .treenode .noSource:after {
+        content: "(source not available)";
+      }
+      .treenode .outOfResolution {
+        opacity: 0.6;
+      }
+      .treenode .outOfResolution .zoom {
+        display: inline;
+      }
+      .treenode .state {
+        font-family: FontAwesome;
+        font-weight: lighter;
+      }
+      .treenode .state.on:before {
+        content: "\f14a";
+      }
+      .treenode .state.off:before {
+        content: "\f096";
+      }
+      .treenode .state.indeterminate:before {
+        content: "\f147";
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <div><span>Theme: <select ng-model="ctrl.treeSource" ng-options="theme.name for theme in ctrl.themes"></select></span></div>
+    <gmf-layertree
+        gmf-layertree-source="ctrl.treeSource"
+        gmf-layertree-map="::ctrl.map">
+    </gmf-layertree>
+    <p id="desc">This example shows how to use the <code>gmf.Layertree</code> directive. This layertree needs a source object (that can change) that describes layers like the c2cgeoportal themes service. The wmsUrl is used by internals WMS layers but you can use WMS externals layers and WMTS layers too.</p>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js" type="text/javascript"></script>
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="/@?main=layertree.js"></script>
+    <script src="default.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+  </body>
+</html>

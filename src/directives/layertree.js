@@ -28,6 +28,7 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
  *     <div ngeo-layertree="ctrl.tree"
  *          ngeo-layertree-map="ctrl.map"
  *          ngeo-layertree-nodelayer="ctrl.getLayer(node)"
+ *          ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)"
  *     </div>
  *
  * The "ngeo-layertree", "ngeo-layertree-map" and
@@ -45,6 +46,11 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
  *   call with "node" as the argument to the function call. E.g.
  *   "ngeo-layertree-nodelayer="ctrl.getLayer(node)".
  *
+ * - The "ngeo-layertree-listeners" specifies an expression providing a function
+ *   to bind scope events to customs functions. You'll must set the listener on
+ *   the "treeScope" and probably use "treeCtrl" as context. E.g.
+ *   "ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)".
+ *
  * The directive comes with a default template. That template assumes that
  * tree nodes that are not leaves have a "children" property referencing an
  * array of child nodes. It also assumes that nodes have a "name" property.
@@ -60,6 +66,7 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
  *          ngeo-layertree-templateurl="path/to/layertree.html"
  *          ngeo-layertree-map="ctrl.map"
  *          ngeo-layertree-nodelayer="ctrl.getLayer(node)"
+ *          ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)"
  *     </div>
  *
  * The directive has its own scope, but it is not an isolate scope. That scope
@@ -189,12 +196,6 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
       ($scope.$eval(nodelayerExpr, {'node': this.node}));
 
   /**
-   * @type {ol.Map}
-   * @private
-   */
-  this.map_ = map;
-
-  /**
    * @type {number}
    * @export
    */
@@ -218,8 +219,24 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
   $scope['uid'] = this.uid;
   $scope['depth'] = this.depth;
 
-  $scope['layertreeCtrl'] = this;
+  var listenersExpr = $attrs['ngeoLayertreeListeners'];
+  if (!goog.isDef(listenersExpr)) {
+    var listenersexprExpr = $attrs['ngeoLayertreeListenersexpr'];
+    listenersExpr = /** @type {string} */ ($scope.$eval(listenersexprExpr));
+  }
 
+  /**
+   * @type {string}
+   * @export
+   */
+  this.listenersExpr = listenersExpr;
+
+  // Eval function to bind functions to this tree's events.
+  if (goog.isDefAndNotNull(listenersExpr)) {
+    $scope.$eval(listenersExpr, {'treeScope': $scope, 'treeCtrl': this});
+  }
+
+  $scope['layertreeCtrl'] = this;
 };
 
 
@@ -230,7 +247,7 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
  */
 ngeo.LayertreeController.prototype.getSetActive = function(val) {
   var layer = this.layer;
-  var map = this.map_;
+  var map = this.map;
   goog.asserts.assert(!goog.isNull(this.layer));
   if (goog.isDef(val)) {
     if (!val) {
