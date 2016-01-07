@@ -90,7 +90,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
    * @type {ol.Feature}
    * @private
    */
-  this.positionFeature_ = new ol.Feature(new ol.geom.Point([0, 0]));
+  this.positionFeature_ = new ol.Feature();
 
   if (options.positionFeatureStyle) {
     this.positionFeature_.setStyle(options.positionFeatureStyle);
@@ -221,10 +221,9 @@ ngeo.MobileGeolocationController.prototype.untrack_ = function() {
  */
 ngeo.MobileGeolocationController.prototype.setPosition_ = function(event) {
   var position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
-  var point = /** @type {ol.geom.Point} */
-      (this.positionFeature_.getGeometry());
+  var point = new ol.geom.Point(position);
 
-  point.setCoordinates(position);
+  this.positionFeature_.setGeometry(point);
 
   if (this.follow_) {
     this.viewChangedByMe_ = true;
