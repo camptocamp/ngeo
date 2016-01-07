@@ -12,6 +12,13 @@ goog.provide('app_mobile');
 
 goog.require('app');
 goog.require('gmf.AbstractMobileController');
+/** @suppress {extraRequire} */
+goog.require('gmf.authenticationDirective');
+
+
+appModule.constant(
+    'authenticationBaseUrl',
+    'https://geomapfish-demo.camptocamp.net/2.0/wsgi');
 
 
 
