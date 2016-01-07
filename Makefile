@@ -12,7 +12,6 @@ GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type 
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
 GMF_APPS_MOBILE_JS_FILES := $(shell find contribs/gmf/apps/mobile/js -type f -name '*.js')
 GMF_APPS_MOBILE_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
-GMF_APPS_MOBILE_MAIN_LESS_FILES := $(filter %/mobile.less, $(GMF_APPS_LESS_FILES))
 GMF_APPS_LIBS_JS_FILES += \
 	node_modules/jquery/dist/jquery.min.js \
 	node_modules/angular/angular.min.js \
