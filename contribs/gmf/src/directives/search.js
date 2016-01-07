@@ -344,7 +344,9 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
   var mapSize = /** @type {ol.Size} */ (this.map_.getSize());
   this.map_.getView().fit(fitArray, mapSize,
       /** @type {olx.view.FitOptions} */ ({maxZoom: 16}));
-  this.clear();
+  if (!this.clearButton) {
+    this.clear();
+  }
 };
 
 
@@ -354,7 +356,9 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
  * @private
  */
 gmf.SearchController.close_ = function(event) {
-  this.setTTDropdownVisibility_();
+  if (!this.clearButton) {
+    this.setTTDropdownVisibility_();
+  }
 };
 
 
