@@ -315,6 +315,15 @@ gmf.SearchController.prototype.setTTDropdownVisibility_ = function() {
 /**
  * @export
  */
+gmf.SearchController.prototype.onClearButton = function() {
+  this.featureOverlay_.clear();
+  this.clear();
+};
+
+
+/**
+ * @export
+ */
 gmf.SearchController.prototype.clear = function() {
   var typeahead = $('.twitter-typeahead');
   var ttmenu = typeahead.children('.tt-menu');
