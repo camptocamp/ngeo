@@ -2,6 +2,8 @@ goog.provide('ngeo.SourceLoaderController');
 goog.provide('ngeo.sourceLoaderDirective');
 
 goog.require('ngeo');
+goog.require('ngeo.formatIdentify');
+goog.require('ol.format.GeoJSON');
 goog.require('ol.format.KML');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -99,10 +101,16 @@ ngeo.SourceLoaderController.prototype.retrieveUrlObject = function(urlObject) {
  * @param {string} content
  */
 ngeo.SourceLoaderController.prototype.readFileContent = function(content) {
-  var kmlFormat = new ol.format.KML();
+  var formatConstructor = ngeo.formatIdentify(content);
+  if (!formatConstructor) {
+    // FIXME: error
+    return;
+  }
+
+  var format = new formatConstructor();
 
   /** @type {Array.<ol.Feature>} */
-  var features = kmlFormat.readFeatures(content, {
+  var features = format.readFeatures(content, {
     featureProjection: this.map.getView().getProjection()
   });
   var source = new ol.source.Vector({
