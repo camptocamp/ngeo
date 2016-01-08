@@ -123,7 +123,7 @@ test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templateca
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 
 .PHONY: serve
-serve: .build/node_modules.timestamp
+serve: .build/node_modules.timestamp .build/font_awesome.timestamp
 	node buildtools/serve.js
 
 .PHONY: examples-hosted
@@ -388,6 +388,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	touch $@
 
+.build/font_awesome.timestamp:
+	mkdir -p $(dir $@)
+	cp node_modules/font-awesome/fonts/* contribs/gmf/fonts
+	touch $@
+
 .build/closure-compiler/compiler.jar: .build/closure-compiler/compiler-latest.zip
 	unzip $< -d .build/closure-compiler
 	touch $@
@@ -499,7 +504,8 @@ contribs/gmf/build/mobile.js: contribs/gmf/build/mobile.closure.js $(GMF_APPS_LI
 compile-css: contribs/gmf/build/mobile.css
 
 contribs/gmf/build/mobile.css: $(GMF_APPS_MOBILE_LESS_FILES) \
-		.build/node_modules.timestamp
+		.build/node_modules.timestamp \
+		.build/font_awesome.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/lessc contribs/gmf/apps/mobile/less/mobile.less $@ --autoprefix
 

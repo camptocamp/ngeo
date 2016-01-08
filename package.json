@@ -23,6 +23,7 @@
     "bootstrap": "3.3.0",
     "clean-css": "2.2.7",
     "d3": "3.5.5",
+    "font-awesome": "4.5.0",
     "fs-extra": "0.8.1",
     "gaze": "0.5.2",
     "graceful-fs": "3.0.2",
