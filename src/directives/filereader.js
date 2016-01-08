@@ -25,6 +25,7 @@ ngeo.filereaderDirective = function($window) {
     restrict: 'A',
     scope: {
       'fileContent': '=ngeoFilereader',
+      'fileContentChange': '&ngeoFilereaderChange',
       'supported': '=ngeoFilereaderSupported'
     },
     link:
@@ -39,6 +40,10 @@ ngeo.filereaderDirective = function($window) {
           if (!supported) {
             return;
           }
+
+          var wantFileContent = attrs['ngeoFilereader'] !== "";
+          var wantFileContentChange = attrs['ngeoFilereaderChange'] !== "";
+
           element.bind('change', function(changeEvent) {
             /** @type {!FileReader} */
             var fileReader = new $window.FileReader();
@@ -48,7 +53,12 @@ ngeo.filereaderDirective = function($window) {
                  */
                 function(evt) {
                   scope.$apply(function() {
-                    scope['fileContent'] = evt.target.result;
+                    if (wantFileContent) {
+                      scope['fileContent'] = evt.target.result;
+                    }
+                    if (wantFileContentChange) {
+                      scope['fileContentChange']({'fileContent': evt.target.result});
+                    }
                   });
                 });
             fileReader.readAsText(changeEvent.target.files[0]);

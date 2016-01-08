@@ -18,11 +18,11 @@
     <div id="map" ngeo-map="ctrl.map"></div>
     <p id="desc">This example shows how to use the <code>ngeo-source-loader-*</code> directives to load WMTS, WMS, KML, GeoJSON...</p>
 
-    <div ng-controller="ngeoSourceLoaderController as sourceLoaderCtrl">
+    <div ngeo-source-loader="ctrl.map">
 
       <div id="local">
         <span>local</span>
-        <input type="file" ng-model="localFile" ng-change="sourceLoaderCtrl.loadLocalFile(localFile.file)"></input>
+        <input type="file" ngeo-filereader ngeo-filereader-change="sourceLoaderCtrl.readFileContent(fileContent)"></input>
       </div>
 
       <br /><br />

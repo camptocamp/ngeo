@@ -1,6 +1,8 @@
 goog.provide('sourceloader');
 
 goog.require('ngeo.SourceLoaderController');
+goog.require('ngeo.sourceLoaderDirective');
+goog.require('ngeo.filereaderDirective');
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -14,7 +16,6 @@ var app = {};
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', ['ngeo']);
-
 
 
 /**
@@ -36,7 +37,7 @@ app.MainController = function() {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  window.map = this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()
