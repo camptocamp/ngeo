@@ -3,7 +3,8 @@ goog.provide('ngeo.sourceLoaderDirective');
 
 goog.require('ngeo');
 goog.require('ol.format.KML');
-
+goog.require('ol.layer.Vector');
+goog.require('ol.source.Vector');
 
 
 /**
@@ -16,18 +17,21 @@ goog.require('ol.format.KML');
 ngeo.SourceLoaderUrlObject;
 
 
-
-
+/**
+ * @return {angular.Directive} The directive specs.
+ * @ngdoc directive
+ * @ngname ngeoSourceLoader
+ */
 ngeo.sourceLoaderDirective = function() {
   return {
     restrict: 'A',
     controller: 'ngeoSourceLoaderController as sourceLoaderCtrl',
     scope: {
       'map': '=ngeoSourceLoader',
-      'previewMap': '=ngeoSourceLoaderPreviewMap',
+      'previewMap': '=ngeoSourceLoaderPreviewMap'
     },
-    bindToController: true,
-    };
+    bindToController: true
+  };
 };
 
 ngeoModule.directive('ngeoSourceLoader', ngeo.sourceLoaderDirective);
@@ -36,6 +40,7 @@ ngeoModule.directive('ngeoSourceLoader', ngeo.sourceLoaderDirective);
 
 /**
  * @constructor
+ * @param {angular.Scope} $scope
  * @ngInject
  * @export
  */
@@ -83,26 +88,33 @@ ngeo.SourceLoaderController.prototype.retrieveUrlObject = function(urlObject) {
   // if WMS, use wms retrieval
   // if WMTS, use wmts retrieval
   // if KML, geojson, ... download and use dedicated retrieval
-  this.availableLayers = [urlObject.url + 'ofakelayer1', urlObject.url + 'ofakelayer2'];
+  this.availableLayers = [
+    urlObject.url + 'ofakelayer1',
+    urlObject.url + 'ofakelayer2'
+  ];
 };
 
 
+/**
+ * @param {string} content
+ */
 ngeo.SourceLoaderController.prototype.readFileContent = function(content) {
   var kmlFormat = new ol.format.KML();
 
   /** @type {Array.<ol.Feature>} */
   var features = kmlFormat.readFeatures(content, {
-      featureProjection: this.map.getView().getProjection()
+    featureProjection: this.map.getView().getProjection()
   });
   var source = new ol.source.Vector({
-      features: features
-    });
+    features: features
+  });
 
   var layer = new ol.layer.Vector({
-      source: source
+    source: source
   });
 
   this.map.addLayer(layer);
 };
 
-ngeoModule.controller('ngeoSourceLoaderController', ngeo.SourceLoaderController);
+ngeoModule.controller('ngeoSourceLoaderController',
+    ngeo.SourceLoaderController);

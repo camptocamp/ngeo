@@ -41,8 +41,8 @@ ngeo.filereaderDirective = function($window) {
             return;
           }
 
-          var wantFileContent = attrs['ngeoFilereader'] !== "";
-          var wantFileContentChange = attrs['ngeoFilereaderChange'] !== "";
+          var wantFileContent = attrs['ngeoFilereader'] !== '';
+          var wantFileContentChange = attrs['ngeoFilereaderChange'] !== '';
 
           element.bind('change', function(changeEvent) {
             /** @type {!FileReader} */
@@ -57,7 +57,9 @@ ngeo.filereaderDirective = function($window) {
                       scope['fileContent'] = evt.target.result;
                     }
                     if (wantFileContentChange) {
-                      scope['fileContentChange']({'fileContent': evt.target.result});
+                      scope['fileContentChange']({
+                        'fileContent': evt.target.result
+                      });
                     }
                   });
                 });

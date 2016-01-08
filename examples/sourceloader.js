@@ -1,9 +1,9 @@
 goog.provide('sourceloader');
 
 goog.require('ngeo.SourceLoaderController');
-goog.require('ngeo.sourceLoaderDirective');
 goog.require('ngeo.filereaderDirective');
 goog.require('ngeo.mapDirective');
+goog.require('ngeo.sourceLoaderDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -16,6 +16,7 @@ var app = {};
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', ['ngeo']);
+
 
 
 /**
