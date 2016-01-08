@@ -5,6 +5,8 @@ goog.require('ngeo');
 goog.require('ngeo.formatIdentify');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.format.KML');
+goog.require('ol.format.WMSCapabilities');
+goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 
@@ -43,10 +45,12 @@ ngeoModule.directive('ngeoSourceLoader', ngeo.sourceLoaderDirective);
 /**
  * @constructor
  * @param {angular.Scope} $scope
+ * @param {angular.$http} $http
+ * @param {angular.$q} $q
  * @ngInject
  * @export
  */
-ngeo.SourceLoaderController = function($scope) {
+ngeo.SourceLoaderController = function($scope, $http, $q) {
 
   /**
    * @type {ol.Map}
@@ -68,16 +72,69 @@ ngeo.SourceLoaderController = function($scope) {
    * @export
    */
   this.availableLayers = [];
+
+  /**
+   * @type {angular.$http}
+   * @private
+   */
+  this.http_ = $http;
+
+  /**
+   * @type {angular.$q}
+   * @private
+   */
+  this.q_ = $q;
+
+  /**
+   * @type {ol.format.WMTSCapabilities}
+   * @private
+   */
+  this.wmtsCapabilityFormat_ = new ol.format.WMTSCapabilities();
+
+  /**
+   * @type {ol.format.WMSCapabilities}
+   * @private
+   */
+  this.wmsCapabilityFormat_ = new ol.format.WMSCapabilities();
 };
 
 
 /**
  * @param {string} url
+ * @param {ol.format.WMSCapabilities|ol.format.WMTSCapabilities} format
+ * @return {angular.$q.Promise<string>}
  * @export
  */
-ngeo.SourceLoaderController.prototype.retrieveUnknownUrl = function(url) {
-  // TODO: try each type of retrieval method (WMS, WMTS, KML, geojson, ...)
-  this.availableLayers = [url + 'ufakelayer1', url + 'ufakelayer2'];
+ngeo.SourceLoaderController.prototype.retrieveCapability = function(url,
+    format) {
+  if (format instanceof ol.format.WMSCapabilities) {
+    url += '?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0';
+  } else if (format instanceof ol.format.WMTSCapabilities) {
+    url += '?WMTSCapabilities.xml';
+  }
+
+  return this.http_.get(url).then(function(response) {
+    try {
+      // When content is unknown we need to try parsing.
+      // An alternative would be to identify the content first.
+      return format.read(response.data);
+    } catch (e) {
+      return this.q_.reject(null);
+    }
+  }.bind(this));
+};
+
+
+/**
+ * @param {string} url
+ * @return {angular.$q.Promise<null|Array.<ol.Feature|null>|null>}
+ * @export
+ */
+ngeo.SourceLoaderController.prototype.retrieveFile = function(url) {
+  return this.http_.get(url).then(function(response) {
+    var features = this.readFeaturesFromFileContent(response.data);
+    return features ? features : this.q_.reject(null);
+  }.bind(this));
 };
 
 
@@ -86,9 +143,33 @@ ngeo.SourceLoaderController.prototype.retrieveUnknownUrl = function(url) {
  * @export
  */
 ngeo.SourceLoaderController.prototype.retrieveUrlObject = function(urlObject) {
-  // TODO
-  // if WMS, use wms retrieval
-  // if WMTS, use wmts retrieval
+  var url = urlObject.url;
+
+  var resultPromise;
+  switch (urlObject.type) {
+    case 'file':
+      resultPromise = this.retrieveFile(url);
+      break;
+    case 'unknown':
+      // Take the first valid result from
+      // File, then WMTS, then WMS.
+      resultPromise = this.retrieveFile(url).then(null, function() {
+        return this.retrieveCapability(url, this.wmtsCapabilityFormat_);
+      }.bind(this)).then(null, function() {
+        return this.retrieveCapability(url, this.wmsCapabilityFormat_);
+      }.bind(this));
+      break;
+    case 'wmts':
+      resultPromise = this.retrieveCapability(url, this.wmtsCapabilityFormat_);
+      break;
+    case 'wms':
+      resultPromise = this.retrieveCapability(url, this.wmsCapabilityFormat_);
+      break;
+  }
+
+  resultPromise.then(function(result) {
+    console.log('XXXX', result);
+  });
   // if KML, geojson, ... download and use dedicated retrieval
   this.availableLayers = [
     urlObject.url + 'ofakelayer1',
@@ -99,20 +180,37 @@ ngeo.SourceLoaderController.prototype.retrieveUrlObject = function(urlObject) {
 
 /**
  * @param {string} content
+ * @return {Array.<ol.Feature>}
+ */
+ngeo.SourceLoaderController.prototype.readFeaturesFromFileContent =
+    function(content) {
+  var fConstructor = ngeo.formatIdentify(content);
+  if (!fConstructor) {
+    return null;
+  }
+
+  var format = new fConstructor();
+  if (!(format instanceof ol.format.Feature)) {
+    return null;
+  }
+
+  return format.readFeatures(content, {
+    featureProjection: this.map.getView().getProjection()
+  });
+};
+
+
+/**
+ * @param {string} content
  */
 ngeo.SourceLoaderController.prototype.readFileContent = function(content) {
-  var formatConstructor = ngeo.formatIdentify(content);
-  if (!formatConstructor) {
-    // FIXME: error
+  var features = this.readFeaturesFromFileContent(content);
+  if (!features) {
+    // FIXME: error?
     return;
   }
 
-  var format = new formatConstructor();
-
-  /** @type {Array.<ol.Feature>} */
-  var features = format.readFeatures(content, {
-    featureProjection: this.map.getView().getProjection()
-  });
+  // Add to the map
   var source = new ol.source.Vector({
     features: features
   });

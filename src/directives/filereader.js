@@ -63,7 +63,9 @@ ngeo.filereaderDirective = function($window) {
                     }
                   });
                 });
-            fileReader.readAsText(changeEvent.target.files[0]);
+            if (changeEvent.target.files[0]) {
+              fileReader.readAsText(changeEvent.target.files[0]);
+            }
           });
         }
   };

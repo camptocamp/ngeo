@@ -30,11 +30,12 @@
         <span>online</span>
         <input
           ng-model="search"
+          ng-keypress="$event.keyCode == 13 && sourceLoaderCtrl.retrieveUrlObject({type: 'unknown', url: search})"
           ng-change="sourceLoaderCtrl.filteredUrls = (ctrl.externalUrls | filter:search)">
         </input>
-        <button ng-click="sourceLoaderCtrl.connect(search)" translate>connect</button>
+        <button ng-click="sourceLoaderCtrl.retrieveUrlObject({type: 'unknown', url: search})" translate>connect</button>
         <div ng-repeat="url in sourceLoaderCtrl.filteredUrls">
-          <a href="" ng-click="sourceLoaderCtrl.connect(url)">{{url}}</a>
+          <a href="" ng-click="sourceLoaderCtrl.retrieveUrlObject({type: 'unknown', url: url})">{{url}}</a>
         </div>
         <div ng-repeat="layer in sourceLoaderCtrl.availableLayers">
           --&gt; <a href="" ng-click="sourceLoaderCtrl.selectedLayerDescription='&nbsp;&nbsp;Description for ' + layer">{{layer}}</a>
