@@ -20,6 +20,20 @@ angular.JQLite.prototype.alert = function(opt_action) {};
 
 
 /**
+ * @param {string=} opt_action
+ * @return {!jQuery}
+ */
+jQuery.prototype.dropdown = function(opt_action) {};
+
+
+/**
+ * @param {string=} opt_action
+ * @return {!angular.JQLite}
+ */
+angular.JQLite.prototype.dropdown = function(opt_action) {};
+
+
+/**
  * @param {(string|Object.<string,*>)=} opt_options
  * @return {jQuery}
  */
