@@ -2,6 +2,7 @@ goog.provide('ngeo.SourceLoaderController');
 goog.provide('ngeo.sourceLoaderDirective');
 
 goog.require('ngeo');
+goog.require('ngeo.LayerFromCap');
 goog.require('ngeo.formatIdentify');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.format.KML');
@@ -68,7 +69,7 @@ ngeo.SourceLoaderController = function($scope, $http, $q) {
   $scope.$parent['sourceLoaderCtrl'] = this;
 
   /**
-   * @type {Array.<ngeo.SourceLoaderUrlObject>}
+   * @type {Array.<ngeo.CapLayer>|undefined}
    * @export
    */
   this.availableLayers = [];
@@ -133,7 +134,7 @@ ngeo.SourceLoaderController.prototype.retrieveCapability = function(url,
 ngeo.SourceLoaderController.prototype.retrieveFile = function(url) {
   return this.http_.get(url).then(function(response) {
     var features = this.readFeaturesFromFileContent(response.data);
-    return features ? features : this.q_.reject(null);
+    return features && features.length > 0 ? features : this.q_.reject(null);
   }.bind(this));
 };
 
@@ -168,13 +169,28 @@ ngeo.SourceLoaderController.prototype.retrieveUrlObject = function(urlObject) {
   }
 
   resultPromise.then(function(result) {
-    console.log('XXXX', result);
-  });
-  // if KML, geojson, ... download and use dedicated retrieval
-  this.availableLayers = [
-    urlObject.url + 'ofakelayer1',
-    urlObject.url + 'ofakelayer2'
-  ];
+    if (!Array.isArray(result)) {
+      // If WMS or WMTS get layers from capability result
+      if (result.Capability.Layer) {
+        var code = this.map.getView().getProjection().getCode();
+        var version = result.version;
+        var layerFromCap = new ngeo.LayerFromCap(this.map);
+        var root = layerFromCap.getChildLayers(result.Capability.Layer, code,
+            version, url);
+        if (root) {
+          this.availableLayers = root.Layer;
+        }
+      }
+    } else {
+      // if KML, geojson create vector layer using features
+      var layer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: result
+        })
+      });
+      this.map.addLayer(layer);
+    }
+  }.bind(this));
 };
 
 
