@@ -37,6 +37,7 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/d3.min.js \
 	.build/examples-hosted/lib/watchwatchers.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
+	.build/examples-hosted/lib/proj4.js \
 	.build/examples-hosted/partials \
 	.build/examples-hosted/data
 
@@ -262,6 +263,10 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/proj4.js: node_modules/proj4/dist/proj4.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/partials: examples/partials
 	mkdir -p $@
 	cp $</* $@
@@ -315,6 +320,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext.js|lib/angular-gettext.min.js|' \
 		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
+		-e 's|\.\./node_modules/proj4/dist/proj4.js|lib/proj4.js|' \
 		-e 's|/@?main=$*.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
