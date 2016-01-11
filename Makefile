@@ -566,6 +566,12 @@ contribs/gmf/build/gmf-%.json: .build/locale/%/LC_MESSAGES/gmf.po .build/node_mo
 	mkdir -p $(dir $@)
 	node buildtools/compile-catalog $< > $@
 
+.PHONY: generate-gmf-fonts
+gmf-icons-generate: package.json
+	node_modules/svg2ttf/svg2ttf.js contribs/gmf/fonts/gmf-icons.svg contribs/gmf/fonts/gmf-icons.ttf
+	node_modules/ttf2eot/ttf2eot.js contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot
+	node_modules/ttf2woff/ttf2woff.js contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.woff
+
 # clean
 
 .PHONY: clean
