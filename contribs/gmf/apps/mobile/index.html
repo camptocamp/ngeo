@@ -58,9 +58,13 @@
           </li>
         </ul>
       </div>
-      <div id="themes" class="slide" data-header-title="Themes">
-        <span>Themes</span>
-      </div>
+      <gmf-themeselector
+          id="themes"
+          class="slide"
+          data-header-title="Themes"
+          gmf-themeselector-currenttheme="mainCtrl.theme"
+          gmf-themeselector-filter="::mainCtrl.filter">
+      </gmf-themeselector>
       <gmf-authentication id="login" class="slide" data-header-title="Login">
       </gmf-authentication>
     </nav>

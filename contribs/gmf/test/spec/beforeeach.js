@@ -1,5 +1,5 @@
 beforeEach(function() {
   module('gmf', function($provide) {
-    $provide.value('gmfTtreeUrl', 'http://fake/gmf/themes');
+    $provide.value('gmfTreeUrl', 'http://fake/gmf/themes');
   });
 });

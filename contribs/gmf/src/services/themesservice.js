@@ -34,12 +34,12 @@ gmf.ThemesEventType = {
  * @constructor
  * @extends {goog.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
- * @param {string} gmfTtreeUrl URL to "themes" web service.
+ * @param {string} gmfTreeUrl URL to "themes" web service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.Themes = function($http, gmfTtreeUrl) {
+gmf.Themes = function($http, gmfTreeUrl) {
 
   goog.base(this);
 
@@ -53,7 +53,7 @@ gmf.Themes = function($http, gmfTtreeUrl) {
    * @type {string}
    * @private
    */
-  this.treeUrl_ = gmfTtreeUrl;
+  this.treeUrl_ = gmfTreeUrl;
 
   /**
    * @type {?angular.$q.Promise}
@@ -158,13 +158,13 @@ gmf.Themes.prototype.getThemesObject = function() {
 
 
 /**
- * @param {?number} roleId The role id to send in the request.
+ * @param {number=} opt_roleId The role id to send in the request.
  * Load themes from the "themes" service.
  * @export
  */
-gmf.Themes.prototype.loadThemes = function(roleId) {
+gmf.Themes.prototype.loadThemes = function(opt_roleId) {
   this.promise_ = this.$http_.get(this.treeUrl_, {
-    params: goog.isDef(roleId) ? {'role': roleId} : {},
+    params: opt_roleId !== undefined ? {'role': opt_roleId} : {},
     cache: false
   }).then(goog.bind(
       /**
@@ -176,4 +176,6 @@ gmf.Themes.prototype.loadThemes = function(roleId) {
         return /** @type {gmf.ThemesResponse} */ (resp.data);
       }, this));
 };
+
+
 gmfModule.service('gmfThemes', gmf.Themes);

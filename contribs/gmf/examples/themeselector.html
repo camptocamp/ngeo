@@ -1,0 +1,67 @@
+<!DOCTYPE>
+<html ng-app='app'>
+  <head>
+    <title>GeoMapFish Theme Selector Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <style>
+      .gmf-theme-selector {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .gmf-theme-selector li {
+        cursor: pointer;
+        margin: 10px;
+      }
+      .gmf-theme-selector .gmf-check,
+      .gmf-theme-selector .gmf-text,
+      .gmf-theme-selector .gmf-thumb {
+        float: left;
+      }
+      .gmf-theme-selector .gmf-check {
+        height: 20px;
+        margin: 15px 5px 0 0;
+        width: 20px;
+      }
+      .gmf-theme-selector .gmf-check.active {
+        background-color: green;
+      }
+      .gmf-theme-selector .gmf-text {
+        margin: 15px 10px 0 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 120px;
+        white-space: nowrap;
+      }
+      .gmf-theme-selector .gmf-thumb-rect {
+        height: 60px;
+        width: 110px;
+      }
+      .gmf-theme-selector .gmf-eol {
+        clear: left;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div class="container">
+      <gmf-themeselector
+              gmf-themeselector-currenttheme="ctrl.theme"
+              gmf-themeselector-filter="::ctrl.filter">
+      </gmf-themeselector>
+      <div> The theme selected is {{ctrl.theme['name']}}</div>
+
+    </div>
+    <p id="desc">This example shows how to use the <code>gmf.themeselector</code> directive from a c2c geoportal theme service.</p>
+
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="/@?main=themeselector.js"></script>
+    <script src="default.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+  </body>
+</html>

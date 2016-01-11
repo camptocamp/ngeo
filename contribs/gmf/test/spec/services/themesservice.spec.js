@@ -9,7 +9,7 @@ describe('gmf.Themes', function() {
   beforeEach(function() {
     inject(function($injector) {
       gmfThemes = $injector.get('gmfThemes');
-      treeUrl = $injector.get('gmfTtreeUrl');
+      treeUrl = $injector.get('gmfTreeUrl');
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.when('GET', treeUrl).respond(themes);
     });

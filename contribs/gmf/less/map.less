@@ -111,6 +111,50 @@ button[ngeo-mobile-geolocation] {
   }
 }
 
+.gmf-theme-selector {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    cursor: pointer;
+    margin: 10px 0 10px 10px;
+  }
+
+  .gmf-check,
+  .gmf-text,
+  .gmf-thumb {
+    float: left;
+  }
+
+  .gmf-check {
+    height: 20px;
+    margin: 15px 5px 0 0;
+    width: 20px;
+  }
+
+  .gmf-check.active {
+    background-color: green;
+  }
+
+  .gmf-text {
+    margin: 15px 10px 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 140px;
+    white-space: nowrap;
+  }
+
+  .gmf-thumb {
+    height: 60px;
+    width: 60px;
+  }
+
+  .gmf-eol {
+    clear: left;
+  }
+}
+
 //For tablet only
 @media (min-width: @screen-sm-min) {
   main button:hover{
