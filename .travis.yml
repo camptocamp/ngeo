@@ -1,10 +1,6 @@
 language: python
 sudo: false
 
-env:
-  global:
-  - secure: "WZWqYrRy5uhk3IgXT9HXAL1zrZfrmJbbglF4gwNpSnrZkLv63gFwpMj6bjxOPKPouU76p4K7x/fnZb/FWRl6/fEnJzLKNvbknQtvmC4dAoHLynFVpilYholmdscT2fo/SOmE3XKOA4EJTF7oxToCgT2+e68e/oH87izXUn4FvK8="
-
 cache:
   apt: true
   directories:
@@ -18,9 +14,9 @@ script:
 - make apidoc
 
 after_success:
-- export GIT_REMOTE_NAME=https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
-- export GIT_REMOTE_URL=https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
-- export GIT_BRANCH=${TRAVIS_BRANCH}
+- openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in deploy_key.enc -out ~/.ssh/id_rsa -d | true
+- chmod 600 ~/.ssh/id_rsa
 - git config --global user.name "Travis"
 - git config --global user.email "travis@travis-ci.org"
+- export GIT_BRANCH=${TRAVIS_BRANCH}
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && make gh-pages'
