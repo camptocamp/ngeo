@@ -30,7 +30,7 @@ ngeoModule.value('ngeoPopupTemplateUrl',
  * - The directive doesn't create any scope but relies on its parent scope.
  *   Properties like 'content', 'title' or 'open' come from the parent scope.
  *
- * @param {string} ngeoPopupTemplateUrl Url to popup template.
+ * @param {string} ngeoPopupTemplateUrl URL to popup template.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  * @ngdoc directive

@@ -14,13 +14,9 @@ goog.require('gmf');
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileNavDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.proj.EPSG21781');
-/** @suppress {extraRequire} */
-goog.require('gmf.searchDirective');
 goog.require('ngeo.FeatureOverlayMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mobileGeolocationDirective');
+goog.require('ngeo.GetBrowserLanguage');
+goog.require('ngeo.StateManager');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
@@ -32,7 +28,6 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
-
 gmfModule.constant('isMobile', true);
 
 
@@ -41,11 +36,17 @@ gmfModule.constant('isMobile', true);
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {Object} serverVars vars from GMF
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {ngeo.StateManager} ngeoStateManager the state manager.
+ * @param {angular.Scope} $scope Scope.
+ * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
  * @constructor
  * @ngInject
  * @export
  */
-gmf.AbstractMobileController = function(ngeoFeatureOverlayMgr, serverVars) {
+gmf.AbstractMobileController = function(
+    ngeoFeatureOverlayMgr, serverVars, gettextCatalog, ngeoStateManager, $scope,
+    ngeoGetBrowserLanguage) {
 
   /**
    * @type {Array.<gmfx.SearchDirectiveDatasource>}
@@ -115,6 +116,41 @@ gmf.AbstractMobileController = function(ngeoFeatureOverlayMgr, serverVars) {
     ]
   });
 
+  /**
+   * @type {ngeo.GetBrowserLanguage}
+   */
+  this.getBrowserLanguage = ngeoGetBrowserLanguage;
+
+  /**
+   * @type {ngeo.StateManager}
+   */
+  this.stateManager = ngeoStateManager;
+
+  /**
+   * @type {angular.Scope}
+   */
+  this.scope = $scope;
+
+  /**
+   * Default language
+   * @type {string}
+   */
+  this.defaultLang = serverVars['defaultLang'];
+
+  /**
+   * Languages URL
+   * @type {Object.<string, string>}
+   */
+  this.langUrls = serverVars['langUrls'];
+
+  /**
+   * The gettext catalog
+   * @type {angularGettext.Catalog}
+   */
+  this.gettextCatalog = gettextCatalog;
+
+  this.initLanguage();
+
   ngeoFeatureOverlayMgr.init(this.map);
 
 };
@@ -174,5 +210,50 @@ gmf.AbstractMobileController.prototype.rightNavIsVisible = function() {
   return this.rightNavVisible;
 };
 
+
+/**
+ * @param {string} lang Language code.
+ * @export
+ */
+gmf.AbstractMobileController.prototype.switchLanguage = function(lang) {
+  goog.asserts.assert(lang in this.langUrls);
+  this.gettextCatalog.setCurrentLanguage(lang);
+  this.gettextCatalog.loadRemote(this.langUrls[lang]);
+  this['lang'] = lang;
+};
+
+
+/**
+ */
+gmf.AbstractMobileController.prototype.initLanguage = function() {
+  this.scope.$watch(goog.bind(function() {
+    return this['lang'];
+  }, this), goog.bind(function(newValue) {
+    this.stateManager.updateState({
+      'lang': newValue
+    });
+  }, this));
+
+  var browserLanguage = /** @type {string|undefined} */
+      (this.getBrowserLanguage(goog.object.getKeys(this.langUrls)));
+  var urlLanguage = /** @type {string|undefined} */
+      (this.stateManager.getInitialValue('lang'));
+
+  if (goog.isDef(urlLanguage) &&
+      goog.object.containsKey(this.langUrls, urlLanguage)) {
+    this.switchLanguage(urlLanguage);
+    return;
+  } else if (goog.isDef(browserLanguage) &&
+      goog.object.containsKey(this.langUrls, browserLanguage)) {
+    this.switchLanguage(browserLanguage);
+    return;
+  } else {
+    // if there is no information about language preference,
+    // fallback to default language
+
+    this.switchLanguage(this.defaultLang);
+    return;
+  }
+};
 
 gmfModule.controller('AbstractMobileController', gmf.AbstractMobileController);
