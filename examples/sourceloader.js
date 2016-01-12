@@ -33,14 +33,23 @@ app.module = angular.module('app', ['ngeo']);
 app.MainController = function() {
 
   /**
-   * List of preconfigured WMS servers.
-   * @type {Array.<string>}
+   * List of preconfigured WMS and WMTS servers.
+   * @type {Array.<{label: string, url: string, type: string}>}
    * @export
    */
   this.externalUrls = [
-    'http://demo.opengeo.org/geoserver/wms',
-    'https://wms.geo.admin.ch/',
-    'http://ogc.heig-vd.ch/mapserver/wms'
+    {
+      'type': 'wms',
+      'label': 'demo opengeo',
+      'url': 'http://demo.opengeo.org/geoserver/wms'
+    }, {
+      'type': 'wms',
+      'url': 'https://wms.geo.admin.ch/'
+    }, {
+      'type': 'wmts',
+      'label': 'heig vd',
+      'url': 'http://ogc.heig-vd.ch/mapserver/wms'
+    }
   ];
 
   /**

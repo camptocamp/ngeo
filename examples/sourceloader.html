@@ -30,14 +30,14 @@
       Example KML: data/bikeRide.kml<br />
       <div id="online">
         <span>online</span>
-        <input
+        <input value=""
           ng-model="search"
           ng-keypress="$event.keyCode == 13 && sourceLoaderCtrl.retrieveUrlObject({type: 'unknown', url: search})"
-          ng-change="sourceLoaderCtrl.filteredUrls = (ctrl.externalUrls | filter:search)">
+          ng-change="sourceLoaderCtrl.filteredObjects = (ctrl.externalUrls | filter:{url:search})">
         </input>
         <button ng-click="sourceLoaderCtrl.retrieveUrlObject({type: 'unknown', url: search})" translate>connect</button>
-        <div ng-repeat="url in sourceLoaderCtrl.filteredUrls">
-          <a href="" ng-click="sourceLoaderCtrl.retrieveUrlObject({type: 'unknown', url: url})">{{url}}</a>
+        <div ng-repeat="urlobj in sourceLoaderCtrl.filteredObjects">
+          <a href="" ng-click="sourceLoaderCtrl.retrieveUrlObject(urlobj)">{{urlobj.label ? urlobj.label : urlobj.url}}</a>
         </div>
         <div style="height:240px; width:330px; border: 2px solid red; overflow-y: scroll; overflow-x: hidden">
           <div ng-repeat="layer in sourceLoaderCtrl.availableLayers">
