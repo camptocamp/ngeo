@@ -31,42 +31,6 @@
   color: @map-tools-color;
 }
 
-.search {
-  top: @app-margin;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 6px 10px;
-  background-color: @map-tools-bg-color;
-  width: 162px + @map-tools-size + @map-tools-size;
-  border-radius: 25px;
-  border: solid 1px @map-tools-color;
-  z-index: @content-index;
-  input {
-    width: 150px;
-    padding: 0 5px;
-    border-width: 0 1px;
-    border-radius: 0;
-  }
-  .clear-button {
-    position: absolute;
-    top: @app-margin;
-    left: 0;
-    right: 0;
-    margin: -6px auto 0 158px;
-    &:after {
-      content: '\f00d';
-      color: grey;
-      font-family: FontAwesome;
-      line-height: 0.5em;
-    }
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
 .nav-trigger {
   top: @app-margin;
   margin-top: 2px;
@@ -89,19 +53,6 @@ button[ngeo-mobile-geolocation] {
   color: @map-tools-color;
   right: 13px;
   top: 135px;
-}
-
-//For mobile only
-@media (max-width: @screen-xs-max) {
-  span.twitter-typeahead {
-    &:after {
-      content: none !important;
-    }
-
-    input {
-      padding: 0 5px !important;
-    }
-  }
 }
 
 .gmf-theme-selector,
@@ -145,6 +96,19 @@ button[ngeo-mobile-geolocation] {
   }
 }
 
+//For mobile only
+@media (max-width: @screen-xs-max) {
+  span.twitter-typeahead {
+    &:after {
+      content: none !important;
+    }
+
+    input {
+      padding: 0 5px !important;
+    }
+  }
+}
+
 //For tablet only
 @media (min-width: @screen-sm-min) {
   main button:hover{
@@ -156,22 +120,6 @@ button[ngeo-mobile-geolocation] {
     bottom: 36px;
     button:hover {
       background-color: @onhover-color;
-    }
-  }
-
-  .search {
-    left: 26px + @map-tools-size;
-    padding: 3px 10px;
-    right: auto;
-    height: @map-tools-size;
-    width: 200px;
-    input {
-      width: 150px;
-      margin: 0;
-      border: none;
-    }
-    .clear-button {
-      margin: -8px auto 0 170px;
     }
   }
 
