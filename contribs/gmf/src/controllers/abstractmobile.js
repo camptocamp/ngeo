@@ -15,6 +15,8 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.mobileBackgroundLayerSelectorDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mobileNavDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.proj.EPSG21781');
@@ -29,8 +31,6 @@ goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
@@ -125,14 +125,12 @@ gmf.AbstractMobileController = function(
    * @export
    */
   this.map = new ol.Map({
-    layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
-      })
-    ],
+    layers: [],
     view: new ol.View({
-      center: [0, 0],
-      zoom: 2
+      center: [632464, 185457],
+      projection: ol.proj.get('epsg:21781'),
+      minZoom: 3,
+      zoom: 3
     }),
     controls: [
       new ol.control.ScaleLine(),

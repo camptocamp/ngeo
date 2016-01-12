@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>GeoMapFish's Mobile Background Layer Selector example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
+    <style>
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+      .gmf-mobile-background-layer-selector {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .gmf-mobile-background-layer-selector li {
+        cursor: pointer;
+        margin: 10px;
+      }
+      .gmf-mobile-background-layer-selector .gmf-check,
+      .gmf-mobile-background-layer-selector .gmf-text,
+      .gmf-mobile-background-layer-selector .gmf-thumb {
+        float: left;
+      }
+      .gmf-mobile-background-layer-selector .gmf-check {
+        height: 20px;
+        margin: 15px 5px 0 0;
+        width: 20px;
+      }
+      .gmf-mobile-background-layer-selector .gmf-check.active {
+        background-color: green;
+      }
+      .gmf-mobile-background-layer-selector .gmf-text {
+        margin: 15px 10px 0 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 120px;
+        white-space: nowrap;
+      }
+      .gmf-mobile-background-layer-selector .gmf-thumb {
+        height: 60px;
+        width: 60px;
+      }
+      .gmf-mobile-background-layer-selector .gmf-eol {
+        clear: left;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the
+    <code>gmf-mobile-background-layer-selector</code>
+    directive to select the map background layer.</p>
+    <div>
+        <span>Select base layer:</span>
+        <gmf-mobile-background-layer-selector
+          gmf-mobile-background-layer-selector-map="::ctrl.map">
+        </gmf-mobile-background-layer-selector>
+    </div>
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js" type="text/javascript"></script>
+    <script src="/@?main=mobilebackgroundlayerselector.js"></script>
+    <script src="default.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+  </body>
+</html>

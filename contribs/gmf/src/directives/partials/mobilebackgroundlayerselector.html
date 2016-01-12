@@ -1,0 +1,11 @@
+<ul class="gmf-mobile-background-layer-selector">
+  <li ng-repeat="layer in ::ctrl.bgLayers"
+      ng-click="ctrl.setLayer(layer)">
+    <div class="gmf-check"
+         ng-class="{active: ctrl.bgLayer == layer}"></div>
+    <div class="gmf-text">{{::layer.get("label")}}</div>
+    <img class="gmf-thumb"
+         ng-src="{{::layer.get('metadata')['thumbnail']}}" />
+    <div class="gmf-eol"></div>
+  </li>
+</ul>
