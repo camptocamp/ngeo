@@ -1,0 +1,12 @@
+<ul class="gmf-theme-selector">
+  <li
+      ng-repeat="theme in tsCtrl.themes"
+      ng-click="tsCtrl.switchTheme(theme)">
+    <div class="gmf-check"
+         ng-class="{active: tsCtrl.currentTheme['name'] == theme.name}"></div>
+    <div class="gmf-text">{{::theme.name}}</div>
+    <img class="gmf-thumb"
+         ng-src="{{::theme.icon}}" />
+    <div class="gmf-eol"></div>
+  </li>
+</ul>
