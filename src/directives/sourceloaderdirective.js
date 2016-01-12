@@ -111,7 +111,7 @@ ngeo.SourceLoaderController.prototype.retrieveCapability = function(url,
   if (format instanceof ol.format.WMSCapabilities) {
     url += '?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0';
   } else if (format instanceof ol.format.WMTSCapabilities) {
-    url += '?WMTSCapabilities.xml';
+    url += '/WMTSCapabilities.xml';
   }
 
   return this.http_.get(url).then(function(response) {
