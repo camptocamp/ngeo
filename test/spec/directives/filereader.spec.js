@@ -29,6 +29,7 @@ describe('ngeo.filereaderDirective', function() {
 
   it('sets the file content onto the scope', function() {
     var input = element[0];
+    input.files[0] = 'fake_file';
     var customEvent = document.createEvent('CustomEvent');
     customEvent.initCustomEvent('change');
     input.dispatchEvent(customEvent);

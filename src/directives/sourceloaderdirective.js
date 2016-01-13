@@ -2,10 +2,8 @@ goog.provide('ngeo.SourceLoaderController');
 goog.provide('ngeo.sourceLoaderDirective');
 
 goog.require('ngeo');
-goog.require('ngeo.LayerFromCap');
+goog.require('ngeo.WMSLayerFromCap');
 goog.require('ngeo.formatIdentify');
-goog.require('ol.format.GeoJSON');
-goog.require('ol.format.KML');
 goog.require('ol.format.WMSCapabilities');
 goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.layer.Vector');
@@ -33,6 +31,7 @@ ngeo.sourceLoaderDirective = function() {
     controller: 'ngeoSourceLoaderController as sourceLoaderCtrl',
     scope: {
       'map': '=ngeoSourceLoader',
+      'ogcproxy': '@ngeoSourceOgcproxy',
       'previewMap': '=ngeoSourceLoaderPreviewMap'
     },
     bindToController: true
@@ -60,6 +59,12 @@ ngeo.SourceLoaderController = function($scope, $http, $q) {
   this.map; // scope
 
   /**
+   * @type {string}
+   * @export
+   */
+  this.ogcproxy; // scope
+
+  /**
    * @type {ol.Map}
    * @export
    */
@@ -69,7 +74,7 @@ ngeo.SourceLoaderController = function($scope, $http, $q) {
   $scope.$parent['sourceLoaderCtrl'] = this;
 
   /**
-   * @type {Array.<ngeo.CapLayer>|undefined}
+   * @type {Array.<ngeox.LayerItem>|undefined}
    * @export
    */
   this.availableLayers = [];
@@ -112,6 +117,10 @@ ngeo.SourceLoaderController.prototype.retrieveCapability = function(url,
     url += '?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0';
   } else if (format instanceof ol.format.WMTSCapabilities) {
     url += '/WMTSCapabilities.xml';
+  }
+
+  if (this.ogcproxy) {
+    url = this.ogcproxy + encodeURIComponent(url);
   }
 
   return this.http_.get(url).then(function(response) {
@@ -173,12 +182,10 @@ ngeo.SourceLoaderController.prototype.retrieveUrlObject = function(urlObject) {
       // If WMS or WMTS get layers from capability result
       if (result.Capability.Layer) {
         var code = this.map.getView().getProjection().getCode();
-        var version = result.version;
-        var layerFromCap = new ngeo.LayerFromCap(this.map);
-        var root = layerFromCap.getChildLayers(result.Capability.Layer, code,
-            version, url);
+        var layerFromCap = new ngeo.WMSLayerFromCap(this.map, result, url);
+        var root = layerFromCap.getChildLayers(result.Capability.Layer, code);
         if (root) {
-          this.availableLayers = root.Layer;
+          this.availableLayers = root.children;
         }
       }
     } else {

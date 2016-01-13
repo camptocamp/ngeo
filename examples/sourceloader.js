@@ -46,7 +46,7 @@ app.MainController = function() {
       'type': 'wms',
       'url': 'https://wms.geo.admin.ch/'
     }, {
-      'type': 'wmts',
+      'type': 'wms',
       'label': 'heig vd',
       'url': 'http://ogc.heig-vd.ch/mapserver/wms'
     }
@@ -71,31 +71,37 @@ app.MainController = function() {
 
 
 /**
- * @param {ngeo.CapLayer} layer
+ * @param {ngeox.LayerItem} layerItem
  */
-app.MainController.prototype.addLayerToMap = function(layer) {
-  // Reproject extent to view extent.
-  // Could search the bounding boxes if one for the target SRS exists.
-  var extent = ol.proj.transformExtent(
-      layer.BoundingBox[0].extent,
-      layer.BoundingBox[0].crs,
-      this.map.getView().getProjection());
+app.MainController.prototype.addLayerToMap = function(layerItem) {
+  // TODO: handle WMS
 
-  // Does not work for some reason, using this instead:
-  if (!extent.every(isFinite)) {
-    // Ex: http://demo.opengeo.org/geoserver/wms Tasmania
-    extent = this.map.getView().getProjection().getExtent();
+  var olLayer = layerItem.layer;
+  if (!olLayer) {
+    if (layerItem.type === 'wms') {
+      var raw = /** @type {ngeo.WMSCapLayer} */ (layerItem.raw);
+      layerItem.layer = olLayer = new ol.layer.Tile({
+        extent: layerItem.extent,
+        source: new ol.source.TileWMS({
+          url: layerItem.url,
+          params: {
+            'LAYERS': raw.Name
+          }
+        })
+      });
+    } else if (layerItem.type === 'wmts') {
+      console.log('Implement WMTS support');
+      // TODO
+      // var options = ol.source.WMTS.optionsFromCapabilities(capability, raw);
+      // layerItem.layer = olLayer = ol.layer.Tile({
+      //   extent: layerItem.extent,
+      //   source: new ol.source.TileWMTS(options)
+      // });
+    }
   }
-  console.log(extent);
-
-  var olLayer = new ol.layer.Tile({
-    extent: extent,
-    source: new ol.source.TileWMS({
-      url: layer.wmsUrl,
-      params: {'LAYERS': layer.Name}
-    })
-  });
-  this.map.addLayer(olLayer);
+  if (olLayer) {
+    this.map.addLayer(olLayer);
+  }
 };
 
 app.module.controller('MainController', app.MainController);

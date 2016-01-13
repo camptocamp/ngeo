@@ -19,7 +19,7 @@
     <div id="map" ngeo-map="ctrl.map"></div>
     <p id="desc">This example shows how to use the <code>ngeo-source-loader-*</code> directives to load WMTS, WMS, KML, GeoJSON...</p>
 
-    <div ngeo-source-loader="ctrl.map">
+    <div ngeo-source-loader="ctrl.map" ngeo-source-ogcproxy="https://api3.geo.admin.ch/ogcproxy?url=">
 
       <div id="local">
         <span>local</span>
@@ -41,10 +41,10 @@
         </div>
         <div style="height:240px; width:330px; border: 2px solid red; overflow-y: scroll; overflow-x: hidden">
           <div ng-repeat="layer in sourceLoaderCtrl.availableLayers">
-            --&gt; <a href="" ng-click="sourceLoaderCtrl.selectedLayer=layer">{{layer.Title}}</a>
+            <a href="" ng-click="sourceLoaderCtrl.selectedLayer=layer">{{layer.label}}</a>
           </div>
         </div>
-        <div>{{sourceLoaderCtrl.selectedLayer.Abstract}}</div>
+        <div>{{sourceLoaderCtrl.selectedLayer.details}}</div>
         <button ng-click="ctrl.addLayerToMap(sourceLoaderCtrl.selectedLayer)">Add to map</button>
       </div>
 
