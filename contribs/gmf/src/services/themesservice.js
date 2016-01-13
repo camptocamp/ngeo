@@ -10,6 +10,8 @@ goog.require('gmf');
 goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.events.EventTarget');
+goog.require('ngeo.LayerHelper');
+goog.require('ol.layer.Tile');
 
 
 /**
@@ -35,13 +37,21 @@ gmf.ThemesEventType = {
  * @extends {goog.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
  * @param {string} gmfTreeUrl URL to "themes" web service.
+ * @param {angular.$q} $q Angular q service
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.Themes = function($http, gmfTreeUrl) {
+gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper) {
 
   goog.base(this);
+
+  /**
+   * @type {angular.$q}
+   * @private
+   */
+  this.$q_ = $q;
 
   /**
    * @type {angular.$http}
@@ -54,6 +64,12 @@ gmf.Themes = function($http, gmfTreeUrl) {
    * @private
    */
   this.treeUrl_ = gmfTreeUrl;
+
+  /**
+   * @type {ngeo.LayerHelper}
+   * @private
+   */
+  this.layerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {?angular.$q.Promise}
@@ -96,26 +112,50 @@ gmf.Themes.findTheme_ = function(themes, themeName) {
  * @return {angular.$q.Promise} Promise.
  */
 gmf.Themes.prototype.getBgLayers = function() {
+
   goog.asserts.assert(!goog.isNull(this.promise_));
   return this.promise_.then(goog.bind(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
-       * @return {Array.<Object>} Array of background layer objects.
+       * @return {angular.$q.Promise}
        */
       function(data) {
-        var bgLayers = data['background_layers'].map(goog.bind(function(item) {
-          goog.asserts.assert('name' in item);
-          goog.asserts.assert('imageType' in item);
+        var promises = data['background_layers'].map(function(item) {
 
-          // create an ol.layer from the json spec
-          // use a future layer factory shared with the layertree
-          //return layer;
+          var callback = function(item, layer) {
+            if (layer) {
+              layer.set('label', item['name']);
+              layer.set('metadata', item['metadata']);
+            }
+            return layer;
+          };
 
-          return item;
-        }, this));
+          if (item['type'] === 'WMTS') {
+            return this.layerHelper_.createWMTSLayerFromCapabilitites(
+                item['url'],
+                item['name']
+            ).then(goog.bind(callback, this, item));
+          }
+        }, this);
+        return this.$q_.all(promises);
+      }, this))
 
-        // add the blank layer ???
-        return bgLayers;
+    .then(goog.bind(function(values) {
+        var layers = [];
+
+        // (1) add a blank layer
+        layers.push(new ol.layer.Tile({
+          'label': 'blank',
+          'metadata': {'thumbnail': ''}
+        }));
+
+        // (2) add layers that were returned
+        values.forEach(function(item) {
+          if (item) {
+            layers.push(item);
+          }
+        });
+        return layers;
       }, this));
 };
 

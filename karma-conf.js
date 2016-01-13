@@ -25,6 +25,7 @@ module.exports = function(config) {
       '.build/ol-deps.js',
       '.build/ngeo-deps.js',
       '.build/gmf-deps.js',
+      '.build/examples-hosted/lib/proj4.js',
       'node_modules/angular/angular.js',
       'node_modules/angular-gettext/dist/angular-gettext.js',
       'node_modules/angular-mocks/angular-mocks.js',
@@ -34,6 +35,7 @@ module.exports = function(config) {
       'contribs/gmf/test/spec/beforeeach.js',
       'contribs/gmf/test/spec/data/*.js',
       'contribs/gmf/test/spec/**/*.spec.js',
+      'contribs/gmf/src/proj/epsg21781projection.js',
       {
         pattern: closureLibPath + 'closure/**/*.js',
         included: false,

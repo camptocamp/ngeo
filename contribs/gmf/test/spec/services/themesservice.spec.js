@@ -27,12 +27,19 @@ describe('gmf.Themes', function() {
     }, undefined, this);
 
     $httpBackend.expectGET(treeUrl);
+    themes.background_layers.forEach(function(bgLayer) {
+      var response = bgLayer.name == 'map' ? capabilities.map :
+          capabilities.asitvd;
+      $httpBackend.when('GET', bgLayer.url).respond(response);
+      $httpBackend.expectGET(bgLayer.url);
+    });
     gmfThemes.loadThemes();
     $httpBackend.flush();
 
     expect(spy.calls.length).toBe(1);
     var response = spy.mostRecentCall.args[0];
-    var responseFirstBgName = response[0].name;
+    expect(response.length).toBe(4);
+    var responseFirstBgName = response[1].get('label');
     var firstBgName = themes.background_layers[0].name;
     expect(responseFirstBgName).toBe(firstBgName);
   });
