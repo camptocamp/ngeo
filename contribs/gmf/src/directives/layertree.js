@@ -157,7 +157,7 @@ gmf.LayertreeController.prototype.getLayer = function(node) {
   // If layer is 'checked', add it on the map.
   var metadata = node['metadata'];
   if (goog.isDefAndNotNull(metadata)) {
-    if (metadata['is_checked'] == 'true') {
+    if (metadata['isChecked'] == 'true') {
       this.layerHelper_.addLayerToMap(this.map, layer);
     }
   }
