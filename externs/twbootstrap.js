@@ -1,5 +1,5 @@
 /**
- * @fileoverview Externs for Twitter Bootstrap
+ * Externs for Twitter Bootstrap
  *
  * @externs
  */

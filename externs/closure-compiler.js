@@ -1,5 +1,5 @@
 /**
- * @fileoverview Definitions for externs that are missing in the
+ * Definitions for externs that are missing in the
  * current Closure Compiler.
  *
  * @externs

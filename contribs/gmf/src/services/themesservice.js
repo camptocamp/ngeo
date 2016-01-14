@@ -1,8 +1,3 @@
-/**
- * @fileoverview This file defines the Themes service. This service interacts
- * with c2cgeoportal's "themes" web service and exposes functions that return
- * objects in the tree returned by the "themes" web service.
- */
 goog.provide('gmf.Themes');
 goog.provide('gmf.ThemesEventType');
 
@@ -33,6 +28,10 @@ gmf.ThemesEventType = {
 
 
 /**
+ * The Themes service. This service interacts
+ * with c2cgeoportal's "themes" web service and exposes functions that return
+ * objects in the tree returned by the "themes" web service.
+ *
  * @constructor
  * @extends {goog.events.EventTarget}
  * @param {angular.$http} $http Angular http service.

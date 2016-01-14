@@ -1,5 +1,5 @@
 /**
- * @fileoverview This example shows how to create a layer tree tree based
+ * This example shows how to create a layer tree tree based
  * on ngeo's ngeoLayertree directive.
  */
 

@@ -1,8 +1,3 @@
-/**
- * @fileoverview This files provides a service for managing the application
- * state. The application state is written to both the URL and the local
- * storage.
- */
 goog.provide('ngeo.StateManager');
 
 goog.require('goog.asserts');

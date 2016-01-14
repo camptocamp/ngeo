@@ -1,5 +1,5 @@
 /**
- * @fileoverview Externs for MapFish Print v3.
+ * Externs for MapFish Print v3.
  *
  * @externs
  */
