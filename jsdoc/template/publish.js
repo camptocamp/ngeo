@@ -368,6 +368,11 @@ function buildNav(members) {
         }
     });
 
+    directives.forEach(function(directive) {
+        // remove the injected paramters
+        directive.params = [];
+    });
+
     for (module in modules) {
         var _nav = '';
 
