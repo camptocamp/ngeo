@@ -44,6 +44,10 @@ gmfModule.value('gmfSearchTemplateUrl',
  * </gmf-search>
  *
  * @param {string} gmfSearchTemplateUrl URL to template.
+ * @htmlAttribute {ol.Map} gmf-search-map The map
+ * @htmlAttribute {gmfx.SearchDirectiveDatasource} gmf-search-datasource
+ *      The datasources
+ * @htmlAttribute {boolean} gmf-search-clearbutton The clear button
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive

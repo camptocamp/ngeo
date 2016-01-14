@@ -43,7 +43,7 @@
       "lintChecks"
     ],
     "extra_annotation_name": [
-      "api", "observable", "ngdoc", "ngname"
+      "api", "observable", "ngdoc", "ngname", "htmlAttribute"
     ],
     "language_in": "ECMASCRIPT5_STRICT",
     "language_out": "ECMASCRIPT5_STRICT",
