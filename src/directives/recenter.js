@@ -18,9 +18,9 @@ goog.require('ngeo');
  *
  * Or with a select:
  *
- *     <select ngeo-locationchooser ngeo-locationchooser-map="::ctrl.map">
- *       <option extent="[-1898084, 4676723, 3972279, 8590299]">A</option>
- *       <option extent="[727681, 5784754, 1094579, 6029353]">B</option>
+ *     <select ngeo-recenter ngeo-recenter-map="::ctrl.map">
+ *       <option ngeo-extent="[-1898084, 4676723, 3972279, 8590299]">A</option>
+ *       <option ngeo-extent="[727681, 5784754, 1094579, 6029353]">B</option>
  *     </select>
  *
  *
