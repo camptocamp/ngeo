@@ -77,7 +77,6 @@ gmfModule.directive('gmfLayertree', gmf.layertreeDirective);
 
 
 /**
- * @param {angular.Scope} $scope The directive's scope.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
  * @constructor
@@ -86,7 +85,7 @@ gmfModule.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-gmf.LayertreeController = function($scope, ngeoLayerHelper, gmfWmsUrl) {
+gmf.LayertreeController = function(ngeoLayerHelper, gmfWmsUrl) {
 
   /**
    * @type {string}
@@ -146,6 +145,7 @@ gmf.LayertreeController.prototype.getLayer = function(node) {
     promise.then(function(layer) {
       if (goog.isDef(layer)) {
         newLayer.setSource(layer.getSource());
+        newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
       }
     });
     layer = newLayer;
@@ -155,7 +155,7 @@ gmf.LayertreeController.prototype.getLayer = function(node) {
   this.existingLayers_.push(layer);
 
   // If layer is 'checked', add it on the map.
-  var metadata = node['metadata'];
+  var metadata = node.metadata;
   if (goog.isDefAndNotNull(metadata)) {
     if (metadata['isChecked'] == 'true') {
       this.layerHelper_.addLayerToMap(this.map, layer);
@@ -268,6 +268,121 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
 
 
 /**
+ * Get the icon image URL for the given treeCtrl's layer. It can only return a
+ * string for internal WMS layers without multiple childlayers in the node.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ *     the current node.
+ * @return {?string} The icon legend URL or null.
+ * @export
+ */
+gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
+  var layer = treeCtrl.layer;
+  var node = treeCtrl.node;
+  var opt_legendRule = node.metadata['legendRule'];
+
+  if (goog.isDef(node.children) ||
+      !goog.isDef(opt_legendRule) ||
+      node.type === 'WMTS' ||
+      node.type === 'external WMS' ||
+      goog.isDef(node.childLayers) && node.childLayers.length > 1) {
+    return null;
+  }
+
+  goog.asserts.assertInstanceof(layer, ol.layer.Image);
+  return this.getWMSLegendURL_(layer, opt_legendRule);
+};
+
+
+/**
+ * Get the complete legend URL for the given treeCtrl's layer.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ *     the current node.
+ * @return {?string} The legend URL or null.
+ * @export
+ */
+gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
+  var layer = treeCtrl.layer;
+  var node = treeCtrl.node;
+
+  if (goog.isDef(node.children)) {
+    return null;
+  }
+
+  if (node.type === 'WMTS') {
+    goog.asserts.assertInstanceof(layer, ol.layer.Tile);
+    return this.getWMTSLegendURL_(layer);
+  } else {
+    goog.asserts.assertInstanceof(layer, ol.layer.Image);
+    return this.getWMSLegendURL_(layer);
+  }
+};
+
+
+/**
+ * Get the WMTS legend URL for the given layer.
+ * @param {ol.layer.Tile} layer Tile layer as returned by the
+ * gmf layerHelper service.
+ * @return {?string} The legend URL or null.
+ * @private
+ */
+gmf.LayertreeController.prototype.getWMTSLegendURL_ = function(layer) {
+  // FIXME case of multiple styles ?  case of multiple legendUrl ?
+  var url;
+  var styles = layer.get('capabilitiesStyles');
+  if (goog.isDef(styles)) {
+    var legendURL = styles[0]['legendURL'];
+    if (goog.isDef(legendURL)) {
+      url = legendURL[0]['href'];
+    }
+  }
+  return url || null;
+};
+
+
+/**
+ * Get the WMS legend URL for the given layer.
+ * @param {ol.layer.Image} layer Image layer.
+ * @param {string=} opt_legendRule rule parameters to add to the returned URL.
+ * @return {?string} The legend URL or null.
+ * @private
+ */
+gmf.LayertreeController.prototype.getWMSLegendURL_ = function(layer,
+    opt_legendRule) {
+  var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
+  var layerName = source.getParams()['LAYERS'];
+  var scale = this.getScale_();
+  var url = source.getUrl();
+  if (goog.isDef(url)) {
+    url = goog.uri.utils.setParam(url, 'FORMAT', 'image/png');
+    url = goog.uri.utils.setParam(url, 'TRANSPARENT', true);
+    url = goog.uri.utils.setParam(url, 'SERVICE', 'wms');
+    url = goog.uri.utils.setParam(url, 'VERSION', '1.1.1');
+    url = goog.uri.utils.setParam(url, 'REQUEST', 'GetLegendGraphic');
+    url = goog.uri.utils.setParam(url, 'LAYER', layerName);
+    url = goog.uri.utils.setParam(url, 'SCALE', scale);
+    if (goog.isDef(opt_legendRule)) {
+      url = goog.uri.utils.setParam(url, 'RULE', opt_legendRule);
+    }
+  }
+  return url || null;
+};
+
+
+/**
+ * Return the current scale of the map.
+ * @return {number}
+ * @private
+ */
+gmf.LayertreeController.prototype.getScale_ = function() {
+  var view = this.map.getView();
+  var resolution = view.getResolution();
+  var mpu = view.getProjection().getMetersPerUnit();
+  var dpi = 25.4 / 0.28;
+  return resolution * mpu * 39.37 * dpi;
+};
+
+
+/**
  * Return 'noSource' if no source is defined in the given treeCtrl's layer.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
@@ -292,9 +407,9 @@ gmf.LayertreeController.prototype.getNoSourceStyle = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.zoomToResolution = function(node) {
   var view = this.map.getView();
-  var extent = node.maxResolutionHint || node.minResolutionHint;
-  if (goog.isDef(extent)) {
-    view.setResolution(extent);
+  var resolution = node.minResolutionHint || node.maxResolutionHint;
+  if (goog.isDef(resolution)) {
+    view.setResolution(resolution);
   }
 };
 

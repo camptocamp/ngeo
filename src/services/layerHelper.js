@@ -95,7 +95,9 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
  * success, no layer else.
  * The WMTS layer source will be configured by the capabilities that are
  * loaded from the given capabilitiesUrl.
- * This layer will be tagged by a a helperID.
+ * The style object described in the capabilities for this layer will be added
+ * as key 'capabilitiesStyles' as param of the new layer.
+ * This layer will be tagged by a helperID.
  * @param {string} capabilitiesURL The getCapabilities url.
  * @param {string} layerName The name of the layer.
  * @return {angular.$q.Promise} A Promise with a layer (with source) on success,
@@ -118,6 +120,14 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
       var options = ol.source.WMTS.optionsFromCapabilities(result,
           {layer: layerName, requestEncoding: 'REST'});
       layer.setSource(new ol.source.WMTS(options));
+
+      // Add styles from capabilities as param of the layer
+      var layers = result['Contents']['Layer'];
+      var l = goog.array.find(layers, function(elt, index, array) {
+        return elt['Identifier'] == layerName;
+      });
+      layer.set('capabilitiesStyles', l['Style']);
+
       deferred.resolve(layer);
     } else {
       deferred.resolve();

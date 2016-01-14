@@ -25,9 +25,21 @@ GmfThemesNode.prototype.children;
 
 
 /**
+ * @type {Object.<string, string>}
+ */
+GmfThemesNode.prototype.childLayers;
+
+
+/**
  * @type {number}
  */
 GmfThemesNode.prototype.maxResolutionHint;
+
+
+/**
+ * @type {Object.<string, string>}
+ */
+GmfThemesNode.prototype.metadata;
 
 
 /**

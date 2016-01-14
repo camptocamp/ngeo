@@ -1,10 +1,18 @@
-<span ng-if="::!layertreeCtrl.isRoot"
-    ng-class="['depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNoSourceStyle(layertreeCtrl)]">
+<span ng-if="::!layertreeCtrl.isRoot" id="node-{{::layertreeCtrl.uid}}" ng-class="['depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNoSourceStyle(layertreeCtrl)]">
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)">
+    <span class="layerIcon">
+      <img ng-src="{{::gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}}"></img>
+    </span>
     <span class="state" ng-class="[gmfLayertreeCtrl.getNodeState(layertreeCtrl)]"></span>
     <span class="name">{{::layertreeCtrl.node.name}}</span>
   </a>
   <span class="zoom" title="Zoom to a visible level" ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl.node)"></span>
+  <span class="legend" ng-if="::(gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true')">
+    <a data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend"></a>
+    <div id="node-{{::layertreeCtrl.uid}}-legend" class="collapse" ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded == 'true' ? 'in' : '']">
+      <img ng-src="{{gmfLayertreeCtrl.getLegendURL(layertreeCtrl)}}"></img>
+    </div>
+  </span>
 </span>
 <ul ng-if="::layertreeCtrl.node.children">
   <li class="treenode" ng-repeat="node in layertreeCtrl.node.children"

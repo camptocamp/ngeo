@@ -8,6 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" type="text/css">
     <style>
       gmf-map > div {
         width: 600px;
@@ -20,6 +21,11 @@
         color: black;
         text-decoration: none;
       }
+      .treenode .layerIcon {
+        display: inline-flex;
+        width: 20px;
+        height: 10px;
+      }
       .treenode .zoom {
         display: none;
       }
@@ -29,6 +35,16 @@
       .treenode .zoom:before {
         font-family: FontAwesome;
         content: "\f18e";
+      }
+      .treenode .outOfResolution .legend {
+        display: none;
+      }
+      .treenode .legend a:after {
+        font-family: FontAwesome;
+        content: "\f036";
+      }
+      .treenode .legend img {
+        padding-left: 15px;
       }
       .treenode .noSource {
         opacity: 0.3;
@@ -65,8 +81,10 @@
         gmf-layertree-map="::ctrl.map">
     </gmf-layertree>
     <p id="desc">This example shows how to use the <code>gmf.Layertree</code> directive. This layertree needs a source object (that can change) that describes layers like the c2cgeoportal themes service. The wmsUrl is used by internals WMS layers but you can use WMS externals layers and WMTS layers too.</p>
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../node_modules/proj4/dist/proj4.js"></script>
     <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
     <script src="../../../node_modules/proj4/dist/proj4.js"></script>
     <script src="/@?main=layertree.js"></script>
