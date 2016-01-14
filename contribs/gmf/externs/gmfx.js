@@ -137,30 +137,6 @@ gmfx.source.SwisstopoOptions.prototype.timestamp;
 
 
 /**
- * Configuration object for the locationchooser component.
- * @typedef {{
- *    label: string,
- *    extent: Array.<number>
- * }}
- */
-gmfx.LocationchooserLocation;
-
-
-/**
- * The location label displayed for a location.
- * @type {string}
- */
-gmfx.LocationchooserLocation.prototype.label;
-
-
-/**
- * The location extent used as location.
- * @type {Array.<number>}
- */
-gmfx.LocationchooserLocation.prototype.extent;
-
-
-/**
  * @typedef {{
  *     exportgpxkml: string
  * }}
