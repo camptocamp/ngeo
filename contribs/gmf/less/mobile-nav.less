@@ -174,12 +174,13 @@ nav.nav-right {
 
   .slide {
     position: fixed;
-    height: 100%;
+    height: ~"calc(100% - @{nav-bar-height})";
     width: @nav-width;
     transform: translateX(100%);
     transition: transform @duration, opacity @duration;
     will-change: transform, opacity;
     opacity: 0;
+    overflow-y: auto;
 
     &.active {
       transform: translateX(0%);
