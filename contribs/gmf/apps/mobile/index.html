@@ -14,6 +14,7 @@
       <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
       <button class="nav-trigger nav-left-trigger"
         ng-click="mainCtrl.toggleLeftNavVisibility()">
+        <span class="gmf-icon gmf-icon-layers"></span>
       </button>
       <div class="search">
         <gmf-search gmf-search-map="mainCtrl.map"
@@ -23,11 +24,13 @@
       </div>
       <button class="nav-trigger nav-right-trigger"
         ng-click="mainCtrl.toggleRightNavVisibility()">
+        <i class="fa fa-wrench"></i>
       </button>
       <div class="overlay" ng-click="mainCtrl.hideNav()"></div>
       <button ngeo-mobile-geolocation=""
         ngeo-mobile-geolocation-map="::mainCtrl.map"
         ngeo-mobile-geolocation-options="::mainCtrl.mobileGeolocationOptions">
+        <span class="fa fa-location-arrow"></span>
       </button>
     </main>
     <nav class="nav-left" gmf-mobile-nav>

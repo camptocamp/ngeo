@@ -8,3 +8,5 @@
 /.tx/.tx/ngeo.ngeo-*
 /.tx/.tx/ngeo.gmf-*
 /examples/simple.min.js
+contribs/gmf/fonts/FontAwesome*
+contribs/gmf/fonts/fontawesome*

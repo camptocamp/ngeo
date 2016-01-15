@@ -1,47 +1,11 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
-<svg>
-<metadata>
-Created by FontForge 20120731 at Thu Nov 19 13:27:39 2015
- By c2c
-</metadata>
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Icons for GeoMapfish</metadata>
 <defs>
-<font id="font3018" horiz-adv-x="2048" >
-  <font-face
-    font-family="font3018"
-    font-weight="400"
-    font-stretch="normal"
-    units-per-em="2048"
-    panose-1="2 0 5 9 0 0 0 0 0 0"
-    ascent="1638"
-    descent="-410"
-    bbox="0 0 2000 2048"
-    underline-thickness="0"
-    underline-position="0"
-    unicode-range="U+0061-0065"
-  />
-<missing-glyph
-d="M0 0h2000v2048h-2000v-2048z" />
-    <glyph glyph-name=".notdef"
-d="M0 0h2000v2048h-2000v-2048z" />
-    <glyph glyph-name=".notdef"
-d="M0 0h2000v2048h-2000v-2048z" />
-    <glyph glyph-name=".null" horiz-adv-x="0"
- />
-    <glyph glyph-name="nonmarkingreturn"
- />
-    <glyph glyph-name="layers" unicode="a"
-d="M1024 1241l-640 -369l640 -370l640 370zM548 716l-164 -95l640 -369l640 369l-163 95l-477 -275zM548 466l-164 -95l640 -369l640 369l-163 95l-477 -275z" />
-    <glyph glyph-name="geolocation" unicode="b"
-d="M435 500l1178 680l-681 -1180v500h-497z" />
-    <glyph glyph-name="search" unicode="c"
-d="M947 1158q-147 0 -271 -67t-197 -182t-73 -251t73 -251t197 -182t270 -67q204 0 356 122l262 -262q14 -14 32 -14t32 13t14 31t-14 32l-262 262q120 138 120 316q0 136 -72 251t-196 182t-271 67zM946 1068q184 0 314 -120t130 -290t-130 -291t-314 -121t-314 121
-t-130 291t130 290t314 120z" />
-    <glyph glyph-name="tools" unicode="d"
-d="M1357 1223h-9q-89 -5 -160.5 -66t-95.5 -155q-11 -42 -9 -83l266 -268q92 2 166.5 63t98.5 158l-39 13q-4 -8 -11 -19t-31.5 -33.5t-53 -30t-74 9.5t-94.5 67q-38 38 -52.5 75.5t-7.5 67t23.5 55.5t41.5 45t46 32t37 20.5t15 6.5l8 35q-31 7 -65 7zM1082 870l-634 -635
-q-14 -13 -14 -32t14 -33l156 -156q14 -14 33 -14t32 14q10 12 633 635q-1 1 -43 43.5t-95.5 96zM663 310q34 0 57 -23q24 -24 24.5 -57.5t-23.5 -57.5t-57.5 -24t-57.5 24t-24 57.5t24 57.5q23 23 57 23z" />
-    <glyph glyph-name="clear" unicode="e"
-d="M1024 1228q-124 0 -237 -48.5t-194.5 -131t-130 -196t-48.5 -238.5t48.5 -238.5t130 -196t194.5 -131t237 -48.5t237 48.5t194.5 131t130 196t48.5 238.5t-48.5 238.5t-130 196t-194.5 131t-237 48.5zM1024 1144q143 0 264.5 -71t192 -193.5t70.5 -266.5t-70.5 -266
-t-192 -193t-264.5 -71t-264.5 71t-192 193t-70.5 266t70.5 266.5t192 193.5t264.5 71zM739 955l-59 -59l284 -284l-284 -284l59 -58l284 283l283 -283l59 58l-283 284l283 284l-58 59l-284 -284z" />
-  </font>
-</defs></svg>
+<font id="geomapfish" horiz-adv-x="1024">
+<font-face units-per-em="1024" ascent="960" descent="-64" />
+<missing-glyph horiz-adv-x="1024" />
+<glyph unicode="&#x20;" horiz-adv-x="512" d="" />
+<glyph unicode="&#xe600;" glyph-name="stack" d="M1024 640l-512 256-512-256 512-256 512 256zM512 811.030l342.058-171.030-342.058-171.030-342.058 171.030 342.058 171.030zM921.444 499.278l102.556-51.278-512-256-512 256 102.556 51.278 409.444-204.722zM921.444 307.278l102.556-51.278-512-256-512 256 102.556 51.278 409.444-204.722z" />
+</font></defs></svg>
