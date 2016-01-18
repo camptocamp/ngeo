@@ -39,6 +39,7 @@
     "nomnom": "1.6.2",
     "openlayers": "openlayers/ol3#master",
     "phantomjs": "1.9.19",
+    "polyfill": "0.1.0",
     "proj4": "2.3.6",
     "svg2ttf": "2.1.1",
     "temp": "0.7.0",
