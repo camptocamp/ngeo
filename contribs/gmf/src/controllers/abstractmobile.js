@@ -135,7 +135,8 @@ gmf.AbstractMobileController = function(
     controls: [
       new ol.control.ScaleLine(),
       new ol.control.Zoom()
-    ]
+    ],
+    interactions: ol.interaction.defaults({pinchRotate: false})
   });
 
   /**
