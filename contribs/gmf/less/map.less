@@ -34,22 +34,6 @@
   color: @map-tools-color;
 }
 
-.nav-trigger {
-  top: @app-margin;
-  margin-top: 2px;
-  background-color: transparent;
-  border: none;
-  z-index: @above-content-index;
-}
-
-.nav-left-trigger {
-  margin-left: -104px;
-}
-
-.nav-right-trigger {
-  margin-left: 76px;
-}
-
 button[ngeo-mobile-geolocation] {
   background-color: @map-tools-bg-color;
   border: solid 1px @map-tools-color;
@@ -101,9 +85,6 @@ button[ngeo-mobile-geolocation] {
 
 //For tablet only
 @media (min-width: @screen-sm-min) {
-  main button:hover{
-    background-color: @onhover-color;
-  }
 
   .ol-zoom {
     top: auto;
@@ -113,21 +94,6 @@ button[ngeo-mobile-geolocation] {
     }
   }
 
-  .nav-trigger {
-    top: @app-margin;
-    margin: 0;
-    background-color: @map-tools-bg-color;
-    border: solid 1px @map-tools-color;
-  }
-
-  .nav-left-trigger {
-    left: @app-margin;
-  }
-
-  .nav-right-trigger {
-    left: auto;
-    right: @app-margin;
-  }
 
   button[ngeo-mobile-geolocation] {
     bottom: 12px;
