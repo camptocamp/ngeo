@@ -37,6 +37,7 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/watchwatchers.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
 	.build/examples-hosted/lib/proj4.js \
+	.build/examples-hosted/lib/Function.prototype.bind.js \
 	.build/examples-hosted/partials \
 	.build/examples-hosted/data
 
@@ -278,6 +279,10 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/Function.prototype.bind.js: node_modules/polyfill/es5/Function.prototype.bind.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/partials: examples/partials
 	mkdir -p $@
 	cp $</* $@
@@ -319,6 +324,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=$*.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
+		-e '/$*.js/i\    <script src="lib/Function.prototype.bind.js"></script>' \
 		-e '/$*.js/i\    <script src="lib/ngeo.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
@@ -336,6 +342,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=$*\.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
+		-e '/$*.js/i\    <script src="../../lib/Function.prototype.bind.js"></script>' \
 		-e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/mobile/index.html
@@ -349,7 +356,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e '/\/node_modules\//d' \
 		-e '/default\.js/d' \
 		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
-		-e 's|/@?main=mobile/js/mobile\.js|../../build/mobile.js|' $< > $@
+		-e 's|/@?main=mobile/js/mobile\.js|../../build/mobile.js|' \
+		-e '/mobile.js/i\    <script src="../../../../lib/Function.prototype.bind.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
