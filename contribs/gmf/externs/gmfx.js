@@ -149,3 +149,8 @@ gmfx.ServiceUrls;
  * @type {string}
  */
 gmfx.ServiceUrls.prototype.exportgpxkml;
+
+/**
+ * @typedef {function(GmfThemesNode):ol.layer.Layer}
+ */
+gmfx.GetLayerForCatalogNode;

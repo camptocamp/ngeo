@@ -7,10 +7,10 @@ goog.provide('gmf.Themes');
 goog.provide('gmf.ThemesEventType');
 
 goog.require('gmf');
+goog.require('gmf.GetLayerForCatalogNode');
 goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.events.EventTarget');
-goog.require('ngeo.LayerHelper');
 goog.require('ol.layer.Tile');
 
 
@@ -38,12 +38,12 @@ gmf.ThemesEventType = {
  * @param {angular.$http} $http Angular http service.
  * @param {string} gmfTreeUrl URL to "themes" web service.
  * @param {angular.$q} $q Angular q service
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {gmf.GetLayerForCatalogNode} gmfGetLayerForCatalogNode Gmf layer
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper) {
+gmf.Themes = function($http, gmfTreeUrl, $q, gmfGetLayerForCatalogNode) {
 
   goog.base(this);
 
@@ -66,10 +66,10 @@ gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper) {
   this.treeUrl_ = gmfTreeUrl;
 
   /**
-   * @type {ngeo.LayerHelper}
-   * @private
+   * @type {gmf.GetLayerForCatalogNode}
+   * @export
    */
-  this.layerHelper_ = ngeoLayerHelper;
+  this.getLayerFunc = gmfGetLayerForCatalogNode;
 
   /**
    * @type {?angular.$q.Promise}
@@ -120,23 +120,7 @@ gmf.Themes.prototype.getBgLayers = function() {
        * @return {angular.$q.Promise}
        */
       function(data) {
-        var promises = data['background_layers'].map(function(item) {
-
-          var callback = function(item, layer) {
-            if (layer) {
-              layer.set('label', item['name']);
-              layer.set('metadata', item['metadata']);
-            }
-            return layer;
-          };
-
-          if (item['type'] === 'WMTS') {
-            return this.layerHelper_.createWMTSLayerFromCapabilitites(
-                item['url'],
-                item['name']
-            ).then(goog.bind(callback, this, item));
-          }
-        }, this);
+        var promises = data['background_layers'].map(this.getLayerFunc);
         return this.$q_.all(promises);
       }, this))
 
