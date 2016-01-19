@@ -24,7 +24,7 @@ app.module = angular.module('app', ['gmf']);
 
 
 app.module.value('gmfWmsUrl',
-    'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy');
+    'https://geomapfish-demo.camptocamp.net/2.0/wsgi/mapserv_proxy');
 
 
 
