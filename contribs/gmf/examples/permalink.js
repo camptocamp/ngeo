@@ -19,7 +19,6 @@ var app = {};
 app.module = angular.module('app', ['gmf']);
 
 
-
 /**
  * @constructor
  * @param {gmf.Permalink} gmfPermalink The gmf permalink service.

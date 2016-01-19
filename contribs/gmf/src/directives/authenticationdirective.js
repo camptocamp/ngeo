@@ -54,7 +54,6 @@ gmf.authenticationDirective = function(gmfAuthenticationTemplateUrl) {
 gmf.module.directive('gmfAuthentication', gmf.authenticationDirective);
 
 
-
 /**
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {angular.Scope} $scope The directive's scope.

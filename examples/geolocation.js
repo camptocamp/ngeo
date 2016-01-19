@@ -20,7 +20,6 @@ var app = {};
 app.module = angular.module('app', ['ngeo']);
 
 
-
 /**
  * @param {ngeo.DecorateGeolocation} ngeoDecorateGeolocation Decorate
  *     Geolocation service.

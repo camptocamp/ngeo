@@ -10,7 +10,6 @@ goog.require('ol.source.ImageWMS');
 goog.require('ol.source.WMTS');
 
 
-
 /**
  * Provides help functions that helps you to create and manage layers.
  * @param {angular.$q} $q Angular promises/deferred service.

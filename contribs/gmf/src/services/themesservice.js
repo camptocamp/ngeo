@@ -26,7 +26,6 @@ gmf.ThemesEventType = {
 };
 
 
-
 /**
  * The Themes service. This service interacts
  * with c2cgeoportal's "themes" web service and exposes functions that return

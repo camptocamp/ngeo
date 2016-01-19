@@ -20,7 +20,6 @@ var app = {};
 app.module = angular.module('app', ['ngeo']);
 
 
-
 /**
  * @constructor
  * @param {angular.Scope} $scope Scope.

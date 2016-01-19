@@ -84,7 +84,6 @@ ngeo.scaleselectorDirective = function(ngeoScaleselectorTemplateUrl) {
 ngeo.module.directive('ngeoScaleselector', ngeo.scaleselectorDirective);
 
 
-
 /**
  * @constructor
  * @param {angular.Scope} $scope Directive scope.

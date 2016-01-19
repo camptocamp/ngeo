@@ -68,7 +68,6 @@ gmf.module.value('gmfUser', {
 });
 
 
-
 /**
  * An "authentication" service for a GeoMapFish application. Upon loading, it
  * launches a request to determine whether a user is currently logged in or
@@ -241,7 +240,6 @@ gmf.Authentication.prototype.resetUser_ = function() {
     this.user_[key] = null;
   }
 };
-
 
 
 gmf.module.service('gmfAuthentication', gmf.Authentication);

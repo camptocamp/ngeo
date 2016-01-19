@@ -18,7 +18,6 @@ gmf.PermalinkParam = {
 };
 
 
-
 /**
  * The Permalink service for GMF, which uses the `ngeo.StateManager` to manage
  * the GMF application state. Here's the list of states are are managed:
@@ -227,7 +226,6 @@ gmf.Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
   object[gmf.PermalinkParam.BG_LAYER] = layerName;
   this.ngeoStateManager_.updateState(object);
 };
-
 
 
 gmf.module.service('gmfPermalink', gmf.Permalink);

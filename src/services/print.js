@@ -61,7 +61,6 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
     ngeo.PrintStyleType.POLYGON;
 
 
-
 /**
  * Provides a function to create ngeo.Print objects used to
  * interact with MapFish Print v3 services.

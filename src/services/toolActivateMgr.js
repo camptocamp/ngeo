@@ -4,7 +4,6 @@ goog.provide('ngeo.ToolActivateMgr');
 goog.require('ngeo');
 
 
-
 /**
  * A simple object that can be managed by `ngeo.ToolActivateMgr`.
  *
@@ -48,7 +47,6 @@ ngeo.module.value('ngeoToolActivate', ngeo.ToolActivate);
  *    unlisten: (function(): void)}}
  */
 ngeo.ToolMgrEntry;
-
 
 
 /**

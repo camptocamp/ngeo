@@ -54,7 +54,6 @@ app.queryresultDirective = function() {
 app.module.directive('appQueryresult', app.queryresultDirective);
 
 
-
 /**
  * @param {ngeo.QueryResult} ngeoQueryResult The ngeo query service.
  * @constructor
@@ -72,7 +71,6 @@ app.QueryresultController = function(ngeoQueryResult) {
 
 
 app.module.controller('AppQueryresultController', app.QueryresultController);
-
 
 
 /**

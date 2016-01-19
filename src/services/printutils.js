@@ -3,7 +3,6 @@ goog.provide('ngeo.PrintUtils');
 goog.require('ngeo');
 
 
-
 /**
  * Provides a service with print utility functions.
  *

@@ -56,7 +56,6 @@ app.searchDirective = function() {
 app.module.directive('appSearch', app.searchDirective);
 
 
-
 /**
  * @constructor
  * @param {angular.Scope} $rootScope Angular root scope.
@@ -190,7 +189,6 @@ app.SearchController.select_ = function(event, suggestion, dataset) {
 
 
 app.module.controller('AppSearchController', app.SearchController);
-
 
 
 /**

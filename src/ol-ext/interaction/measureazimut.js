@@ -19,7 +19,6 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 
 
-
 /**
  * @classdesc
  * Interaction dedicated to measure length.
@@ -92,7 +91,6 @@ ngeo.interaction.MeasureAzimut.prototype.formatMeasure_ = function(line) {
   output += '<br/>' + ngeo.interaction.Measure.getFormattedLength(line, proj);
   return output;
 };
-
 
 
 /**

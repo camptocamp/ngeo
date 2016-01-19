@@ -19,7 +19,6 @@ ngeo.BackgroundEventType = {
 };
 
 
-
 /**
  * @constructor
  * @extends {ol.events.Event}
@@ -38,7 +37,6 @@ ngeo.BackgroundEvent = function(type, previous) {
   this.previous = previous;
 };
 goog.inherits(ngeo.BackgroundEvent, ol.events.Event);
-
 
 
 /**

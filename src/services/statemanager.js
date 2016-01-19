@@ -6,7 +6,6 @@ goog.require('ngeo');
 goog.require('ngeo.Location');
 
 
-
 /**
  * Provides a service for managing the application state.
  * The application state is written to both the URL and the local storage.

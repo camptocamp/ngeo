@@ -42,7 +42,6 @@ ngeo.MeasureEventType = {
 };
 
 
-
 /**
  * @classdesc
  * Events emitted by {@link ngeo.interaction.Interaction} instances are
@@ -67,7 +66,6 @@ ngeo.MeasureEvent = function(type, feature) {
 
 };
 goog.inherits(ngeo.MeasureEvent, ol.events.Event);
-
 
 
 /**

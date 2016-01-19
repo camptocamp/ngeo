@@ -12,7 +12,6 @@ goog.require('ngeo');
 ngeo.MockLocationProvider;
 
 
-
 /**
  * Provides a service for interacting with the URL in the
  * browser address bar.

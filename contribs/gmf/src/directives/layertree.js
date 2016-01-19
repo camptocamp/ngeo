@@ -81,7 +81,6 @@ gmf.layertreeDirective = function(gmfLayertreeTemplate) {
 gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
 
 
-
 /**
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$sce} $sce Angular sce service.

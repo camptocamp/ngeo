@@ -53,7 +53,6 @@ ngeo.module.value('ngeoQueryResult', {
 });
 
 
-
 /**
  * The Query service provides a way to send WMS GetFeatureInfo requests from
  * visible layer objects within a map. Those do not necessarily need to have

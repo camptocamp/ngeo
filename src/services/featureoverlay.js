@@ -22,7 +22,6 @@ goog.require('ol.style.StyleFunction');
 ngeo.FeatureOverlayGroup;
 
 
-
 /**
  * Provides a service that wraps an "unmanaged" vector layer,
  * used as a shared vector layer accross the application.
@@ -183,7 +182,6 @@ ngeo.FeatureOverlayMgr.prototype.styleFunction_ =
   var group = this.groups_[groupIndex];
   return group.styleFunction(feature, resolution);
 };
-
 
 
 /**

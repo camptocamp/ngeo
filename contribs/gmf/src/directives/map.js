@@ -38,7 +38,6 @@ gmf.mapDirective = function() {
 gmf.module.directive('gmfMap', gmf.mapDirective);
 
 
-
 /**
  * @param {angular.Scope} $scope The directive's scope.
  * @param {gmf.Permalink} gmfPermalink The gmf permalink service.

@@ -50,7 +50,6 @@ ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
     ngeo.format.FeatureHashStyleType.POLYGON;
 
 
-
 /**
  * @classdesc
  * Provide an OpenLayers format for encoding and decoding features for use

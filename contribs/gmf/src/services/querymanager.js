@@ -10,7 +10,6 @@ goog.require('gmf.Themes');
 goog.require('ngeo.Query');
 
 
-
 /**
  * @constructor
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.

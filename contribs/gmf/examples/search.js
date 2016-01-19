@@ -19,7 +19,6 @@ app.module = angular.module('app', ['gmf']);
 app.module.constant('gmfTreeUrl', 'data/themes.json');
 
 
-
 /**
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.

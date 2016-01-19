@@ -41,7 +41,6 @@ app.mapDirective = function() {
 app.module.directive('appMap', app.mapDirective);
 
 
-
 /**
  * The application's main controller.
  * @param {angular.$timeout} $timeout Angular timeout service.

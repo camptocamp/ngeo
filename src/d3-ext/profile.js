@@ -3,7 +3,6 @@ goog.provide('ngeo.profile');
 goog.require('goog.object');
 
 
-
 /**
  * Provides a D3js component to be used to draw an elevation
  * profile chart.

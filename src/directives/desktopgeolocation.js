@@ -42,7 +42,6 @@ ngeo.module.directive('ngeoDesktopGeolocation',
     ngeo.desktopGeolocationDirective);
 
 
-
 /**
  * @constructor
  * @param {angular.Scope} $scope The directive's scope.

@@ -15,7 +15,6 @@ app.module = angular.module('app', ['gmf']);
 app.module.constant('gmfTreeUrl', 'data/themes.json');
 
 
-
 /**
  * @constructor
  * @param {angular.$http} $http Angular's $http service.
