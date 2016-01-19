@@ -154,10 +154,6 @@ main {
   float: right;
   background-color: @brand-secondary;
 
-  .bar {
-    background-color: @brand-primary;
-  }
-
   .content {
     padding: 10px;
     width: 250px;
@@ -170,9 +166,34 @@ main {
   }
 
   .bar {
+    background-color: @brand-primary;
+    width: @toolbar-width;
+
     float: right;
     height: 100%;
     position: relative;
+
+    > .btn + .btn {
+      margin-top: 0;
+    }
+
+    .btn {
+      background-color: @brand-primary;
+      border: 0;
+      border-radius: 0 !important;
+
+      &:hover {
+        background-color: lighten(@brand-primary, 10%);
+      }
+
+      &.active,
+      &:active {
+        box-shadow: none;
+      }
+      &.active {
+        background-color: @brand-secondary;
+      }
+    }
   }
 }
 
