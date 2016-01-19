@@ -43,22 +43,24 @@ gmfModule.constant('isMobile', true);
 
 
 /**
+ * @param {string} defaultLang The default language.
+ * @param {Object.<string, string>} langUrls The languages URLs.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
+ * @param {angular.Scope} $scope Scope.
+ * @param {ngeo.StateManager} ngeoStateManager the state manager.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {ngeo.StateManager} ngeoStateManager the state manager.
- * @param {angular.Scope} $scope Scope.
- * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
  * @param {gmf.Themes} gmfThemes Themes service.
- * @param {Object} serverVars vars from GMF
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
  * @constructor
  * @ngInject
  * @export
  */
 gmf.AbstractMobileController = function(
-    ngeoFeatureOverlayMgr, gettextCatalog, ngeoStateManager, $scope,
-    ngeoGetBrowserLanguage, gmfThemes, serverVars, fulltextsearchUrl) {
+    defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
+    $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
+    gmfThemes, fulltextsearchUrl) {
 
   /**
    * A reference to the current theme
@@ -155,13 +157,13 @@ gmf.AbstractMobileController = function(
    * Default language
    * @type {string}
    */
-  this.defaultLang = serverVars['defaultLang'];
+  this.defaultLang = defaultLang;
 
   /**
    * Languages URL
    * @type {Object.<string, string>}
    */
-  this.langUrls = serverVars['langUrls'];
+  this.langUrls = langUrls;
 
   /**
    * The gettext catalog
