@@ -10,6 +10,8 @@ goog.require('gmf.searchDirective');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.resizemapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
