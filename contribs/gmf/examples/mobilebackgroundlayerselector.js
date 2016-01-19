@@ -24,6 +24,10 @@ app.module.constant(
         'version=2&background=background');
 
 
+app.module.value('gmfWmsUrl',
+    'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy');
+
+
 
 /**
  * @param {gmf.Themes} gmfThemes Themes service.

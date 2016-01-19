@@ -2,9 +2,9 @@ goog.provide('gmf.LayertreeController');
 goog.provide('gmf.layertreeDirective');
 
 goog.require('gmf');
+goog.require('gmf.GetLayerForCatalogNode');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
-goog.require('ol.Collection');
 goog.require('ol.layer.Tile');
 
 
@@ -78,20 +78,16 @@ gmfModule.directive('gmfLayertree', gmf.layertreeDirective);
 
 /**
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {string} gmfWmsUrl URL to the wms service to use by default.
+ * @param {gmf.GetLayerForCatalogNode} gmfGetLayerForCatalogNode Gmf layer
+ * factory service.
  * @constructor
  * @export
  * @ngInject
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-gmf.LayertreeController = function(ngeoLayerHelper, gmfWmsUrl) {
-
-  /**
-   * @type {string}
-   * @private
-   */
-  this.gmfWmsUrl_ = gmfWmsUrl;
+gmf.LayertreeController = function(ngeoLayerHelper,
+                                   gmfGetLayerForCatalogNode) {
 
   /**
    * @type {ngeo.LayerHelper}
@@ -100,10 +96,10 @@ gmf.LayertreeController = function(ngeoLayerHelper, gmfWmsUrl) {
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {Array.<ol.layer.Layer>}
+   * @type {gmf.GetLayerForCatalogNode}
    * @private
    */
-  this.existingLayers_ = [];
+  this.getLayerFunc_ = gmfGetLayerForCatalogNode;
 };
 
 
@@ -115,53 +111,13 @@ gmf.LayertreeController = function(ngeoLayerHelper, gmfWmsUrl) {
  * @export
  */
 gmf.LayertreeController.prototype.getLayer = function(node) {
-  var layer;
-  var layerName = node.name;
-  var layerURL = node.url || this.gmfWmsUrl_;
-  var i, children = node.children;
-
-  // If node is a group.
-  if (goog.isDef(children)) {
-    var layers = new ol.Collection();
-    for (i = 0; i < children.length; i++) {
-      layers.push(this.getLayer(children[i]));
-    }
-    return this.layerHelper_.createBasicGroup(layers);
-  }
-
-  // If node describes a layer that was already created.
-  layer = this.layerHelper_.findLayer(this.existingLayers_,
-      this.layerHelper_.makeHelperID(layerURL, layerName));
-  if (goog.isDefAndNotNull(layer)) {
-    return layer;
-  }
-
-  // If node describes a layer that was not already created.
-  if (node.type === 'WMTS') {
-    var newLayer = new ol.layer.Tile();
-    this.layerHelper_.setHelperID(newLayer, layerURL, layerName);
-    var promise = this.layerHelper_.createWMTSLayerFromCapabilitites(layerURL,
-        layerName);
-    promise.then(function(layer) {
-      if (goog.isDef(layer)) {
-        newLayer.setSource(layer.getSource());
-        newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
-      }
-    });
-    layer = newLayer;
-  } else {
-    layer = this.layerHelper_.createBasicWMSLayer(layerURL, layerName);
-  }
-  this.existingLayers_.push(layer);
-
-  // If layer is 'checked', add it on the map.
+  var layer = this.getLayerFunc_(node);
   var metadata = node.metadata;
   if (goog.isDefAndNotNull(metadata)) {
     if (metadata['isChecked'] == 'true') {
       this.layerHelper_.addLayerToMap(this.map, layer);
     }
   }
-
   return layer;
 };
 
@@ -175,7 +131,7 @@ gmf.LayertreeController.prototype.getLayer = function(node) {
  * @export
  */
 gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
-  var existingLayers = this.existingLayers_;
+  var existingLayers = gmf.layerCache_;
   scope.$on('$destroy', angular.bind(treeCtrl, function() {
     var i, l;
     // Remove treeCtrl.layer from  map.
