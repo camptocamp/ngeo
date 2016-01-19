@@ -2,6 +2,7 @@ goog.provide('gmf.LayertreeController');
 goog.provide('gmf.layertreeDirective');
 
 goog.require('gmf');
+goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
 goog.require('ol.Collection');
@@ -52,6 +53,10 @@ ngeoModule.value('ngeoLayertreeTemplateUrl',
  *   gmf-layertree-map="ctrl.map"
  * </gmf-layertree>
  *
+ * You can add an attribute 'gmf-layertree-openlinksinnewwindow="true"' to open
+ * metadata URLs in a new window. By default, and in the default template,
+ * links will be opened in a popup.
+ *
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfLayertreeTemplate Template for the directive.
  * @return {angular.Directive} The directive specs.
@@ -63,7 +68,8 @@ gmf.layertreeDirective = function(gmfLayertreeTemplate) {
   return {
     scope: {
       'map': '=gmfLayertreeMap',
-      'tree': '=gmfLayertreeSource'
+      'tree': '=gmfLayertreeSource',
+      'openLinksInNewWindowFn': '&gmfLayertreeOpenlinksinnewwindow'
     },
     bindToController: true,
     controller: 'GmfLayertreeController',
@@ -77,6 +83,9 @@ gmfModule.directive('gmfLayertree', gmf.layertreeDirective);
 
 
 /**
+ * @param {angular.$http} $http Angular http service.
+ * @param {angular.$sce} $sce Angular sce service.
+ * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
  * @constructor
@@ -85,7 +94,20 @@ gmfModule.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-gmf.LayertreeController = function(ngeoLayerHelper, gmfWmsUrl) {
+gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
+    ngeoLayerHelper, gmfWmsUrl) {
+
+  /**
+   * @private
+   * @type {angular.$http}
+   */
+  this.$http_ = $http;
+
+  /**
+   * @private
+   * @type {angular.$sce}
+   */
+  this.$sce_ = $sce;
 
   /**
    * @type {string}
@@ -104,6 +126,25 @@ gmf.LayertreeController = function(ngeoLayerHelper, gmfWmsUrl) {
    * @private
    */
   this.existingLayers_ = [];
+
+  /**
+   * @private
+   * @type {ngeo.Popup}
+   */
+  this.infoPopup_ = ngeoCreatePopup();
+
+  /**
+   * @type {Object.<string, !angular.$q.Promise>}
+   * @private
+   */
+  this.promises_ = {};
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.openLinksInNewWindow = this['openLinksInNewWindowFn']() === true ?
+      true : false;
 };
 
 
@@ -379,6 +420,34 @@ gmf.LayertreeController.prototype.getScale_ = function() {
   var mpu = view.getProjection().getMetersPerUnit();
   var dpi = 25.4 / 0.28;
   return resolution * mpu * 39.37 * dpi;
+};
+
+
+/**
+ * Display a ngeo.infoPopup with the content of the metadata url of a node.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ *     the current node.
+ * @export
+ */
+gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
+  var treeUid = treeCtrl['uid'].toString();
+  var node = treeCtrl.node;
+  var metadataURL = node.metadata['metadataUrl'];
+  if (goog.isDef(metadataURL)) {
+    if (!(treeUid in this.promises_)) {
+      this.promises_[treeUid] = this.$http_.get(metadataURL).then(
+          angular.bind(this, function(resp) {
+            var html = this.$sce_.trustAsHtml(resp.data);
+            return html;
+          }));
+    }
+    var infoPopup = this.infoPopup_;
+    this.promises_[treeUid].then(function(html) {
+      infoPopup.setTitle(node.name);
+      infoPopup.setContent(html);
+      infoPopup.setOpen(true);
+    });
+  }
 };
 
 
