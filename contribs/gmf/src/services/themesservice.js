@@ -205,7 +205,8 @@ gmf.Themes.prototype.getThemesObject = function() {
 gmf.Themes.prototype.loadThemes = function(opt_roleId) {
   this.promise_ = this.$http_.get(this.treeUrl_, {
     params: opt_roleId !== undefined ? {'role': opt_roleId} : {},
-    cache: false
+    cache: false,
+    withCredentials: true
   }).then(goog.bind(
       /**
        * @param {angular.$http.Response} resp Ajax response.
