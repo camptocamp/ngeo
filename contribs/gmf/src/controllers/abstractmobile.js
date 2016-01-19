@@ -13,6 +13,8 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
+goog.require('gmf.layertreeDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileBackgroundLayerSelectorDirective');
@@ -39,29 +41,24 @@ goog.require('ol.style.Style');
 gmfModule.constant('isMobile', true);
 
 
-gmfModule.constant(
-    'gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.0/wsgi/themes?' +
-        'version=2&background=background');
-
-
 
 /**
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {Object} serverVars vars from GMF
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.StateManager} ngeoStateManager the state manager.
  * @param {angular.Scope} $scope Scope.
  * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
  * @param {gmf.Themes} gmfThemes Themes service.
+ * @param {Object} serverVars vars from GMF
+ * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
  * @constructor
  * @ngInject
  * @export
  */
 gmf.AbstractMobileController = function(
-    ngeoFeatureOverlayMgr, serverVars, gettextCatalog, ngeoStateManager, $scope,
-    ngeoGetBrowserLanguage, gmfThemes) {
+    ngeoFeatureOverlayMgr, gettextCatalog, ngeoStateManager, $scope,
+    ngeoGetBrowserLanguage, gmfThemes, serverVars, fulltextsearchUrl) {
 
   /**
    * A reference to the current theme
@@ -82,7 +79,7 @@ gmf.AbstractMobileController = function(
     groupsKey: 'layer_name',
     groupValues: ['osm'],
     projection: 'EPSG:21781',
-    url: serverVars['serviceUrls']['fulltextsearch']
+    url: fulltextsearchUrl
   }];
 
   /**

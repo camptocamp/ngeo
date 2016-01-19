@@ -1,0 +1,115 @@
+gmf-layertree div {
+  margin-right: 10px;
+}
+nav.nav-left ul .treenode {
+  padding: 10px 0 0 10px;
+  a {
+    color: black;
+    display: inline;
+    line-height: inherit;
+    padding-left: 0;
+    text-decoration: none;
+    &::after {
+      display:none;
+    }
+  }
+  .state, .rightButtons *::after {
+    background: none;
+    color: black;
+    display: inline;
+    font-family: FontAwesome;
+  }
+  .leaf .state {
+    &.on::after {
+      content: "\f058";
+    }
+    &.off::after {
+      content: "\f1db";
+    }
+  }
+  .group .state {
+    &.on::after {
+      content: "\f14a";
+    }
+    &.off::after {
+      content: "\f096";
+    }
+    &.indeterminate::after {
+      content: "\f147";
+    }
+  }
+  .group {
+    .layerIcon {
+      display: none;
+    }
+  }
+  .layerIcon {
+    display: inline-flex;
+    height: 10px;
+    width: 20px;
+  }
+  .name {
+    white-space: normal;
+  }
+  .rightButtons {
+    float: right;
+    *::after, *::before {
+      background: none;
+      position: relative;
+      right: initial;
+    }
+  }
+  .metadata {
+    a {
+      padding: 0;
+      &::after {
+        content: "\f129";
+        display: inline;
+        font-family: FontAwesome;
+      }
+    }
+  }
+  .zoom {
+    display: none;
+    &:hover {
+      cursor: pointer;
+    }
+    &::after {
+      content: "\f18e";
+    }
+  }
+  .noSource {
+    opacity: 0.3;
+    &::after {
+      content: "(source not available)";
+    }
+  }
+  .outOfResolution {
+    opacity: 0.6;
+    .rightButtons {
+      .zoom {
+        display: inline;
+      }
+      .legendButton {
+        display: none;
+      }
+    }
+  }
+  .legendButton {
+    a {
+      padding: 0;
+      &::after {
+        content: "\f036";
+        transform: initial;
+      }
+    }
+  }
+  .legend {
+    a::before {
+     display: none;
+    }
+    img {
+      padding-left: 15px;
+    }
+  }
+}
