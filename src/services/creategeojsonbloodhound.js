@@ -63,7 +63,9 @@ ngeo.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
       rateLimitWait: 50,
       prepare: function(query, settings) {
         settings.url = settings.url.replace('%QUERY', query);
-        settings.dataType = 'jsonp';
+        settings.xhrFields = {
+          withCredentials: true
+        };
         return settings;
       },
       transform: function(parsedResponse) {
