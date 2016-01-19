@@ -16,6 +16,8 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.layertreeDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.proj.EPSG21781');
 /** @suppress {extraRequire} */
 goog.require('gmf.searchDirective');

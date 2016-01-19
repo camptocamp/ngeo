@@ -1,5 +1,5 @@
 /**
- * @fileoverview Application entry point.
+* @fileoverview Application entry point.
  *
  * This file defines the "app_mobile" Closure namespace, which is be used as the
  * Closure entry point (see "closure_entry_point" in the "build.json" file).
@@ -12,6 +12,8 @@ goog.provide('gmf.AbstractMobileController');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.Themes');
+/** @suppress {extraRequire} */
+goog.require('gmf.layertreeDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */

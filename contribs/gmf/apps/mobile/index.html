@@ -61,6 +61,13 @@
           <li>
             <a href="#themes" data-toggle="slide-in">Themes</a>
           </li>
+          <li>
+            <gmf-layertree
+                gmf-layertree-source="mainCtrl.theme"
+                gmf-layertree-map="::mainCtrl.map"
+                gmf-layertree-openlinksinnewwindow="true">
+            </gmf-layertree>
+          </li>
         </ul>
       </div>
       <gmf-themeselector
@@ -115,9 +122,11 @@
              'de': '../../build/gmf-de.json'
            },
            serviceUrls: {
-             fulltextsearch: 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?query=%QUERY'
+             fulltextsearch: 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?query=%QUERY',
+             themes: 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/themes?version=2'
            }
          });
+         module.constant('gmfWmsUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/mapserv_proxy');
        })();
     </script>
   </body>
