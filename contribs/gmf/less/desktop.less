@@ -9,6 +9,8 @@
 @data-width: 320px;
 /* size of the links bar */
 @topbar-height: 50px;
+/* width for the vertical toolbar */
+@toolbar-width: 40px;
 
 @brand-secondary: lighten(@brand-primary, 20%);
 
@@ -158,12 +160,12 @@ main {
 
   .content {
     padding: 10px;
-    width: 200px;
-    margin-right: -200px;
+    width: 250px;
+    margin-right: -250px + @toolbar-width;
     transition: margin-right 0.2s ease;
 
     &.active {
-      margin-right: 0;
+      margin-right: @toolbar-width;
     }
   }
 
