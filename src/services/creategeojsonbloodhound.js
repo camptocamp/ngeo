@@ -37,7 +37,8 @@ goog.require('ol.format.GeoJSON');
  *     bloodhound.initialize();
  *
  * @typedef {function(string, (function(GeoJSONFeature): boolean)=,
- * ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=):Bloodhound}
+ * ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=,
+ * BloodhoundQueryOptions=):Bloodhound}
  * @ngdoc service
  * @ngname ngeoCreateGeoJSONBloodhound
  */
@@ -52,20 +53,29 @@ ngeo.CreateGeoJSONBloodhound;
  * @param {ol.proj.Projection=} opt_dataProjection Data projection.
  * @param {BloodhoundOptions=} opt_options optional Bloodhound options. If
  *     undefined, the default Bloodhound config will be used.
+ * @param {BloodhoundQueryOptions=} opt_query optional Bloodhound query options.
+ *     Effective only if `remote`is not defined in `opt_options`.
  * @return {Bloodhound} The Bloodhound object.
  */
 ngeo.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
-    opt_dataProjection, opt_options) {
+    opt_dataProjection, opt_options, opt_query) {
   var geojsonFormat = new ol.format.GeoJSON();
   var bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {
       url: url,
       rateLimitWait: 50,
       prepare: function(query, settings) {
-        settings.url = settings.url.replace('%QUERY', query);
-        settings.xhrFields = {
-          withCredentials: true
-        };
+        if (settings.url.indexOf('%QUERY') >= 0) {
+          settings.url = settings.url.replace('%QUERY', query);
+        }
+        else {
+          var lastChar = settings.url.slice(-1);
+          if (lastChar != '&' && lastChar != '?') {
+            settings.url += settings.url.indexOf('?') < 0 ? '?' : '&';
+          }
+          settings.url += opt_query.param + '=' + query;
+        }
+        goog.object.extend(settings, opt_query);
         return settings;
       },
       transform: function(parsedResponse) {

@@ -36,6 +36,22 @@ var BloodhoundPrefetchOptions;
 
 /**
  * @typedef {{
+ *   withCredentials: (boolean|undefined)
+ * }}
+ */
+var BloodhoundQueryXhrfieldsOptions;
+
+/**
+ * @typedef {{
+ *   dataType: (string|undefined),
+ *   param: (string|undefined),
+ *   xhrFields: (BloodhoundQueryXhrfieldsOptions|undefined)
+ * }}
+ */
+var BloodhoundQueryOptions;
+
+/**
+ * @typedef {{
  *   datumTokenizer: function(BloodhoundDatum):Array.<string>,
  *   queryTokenizer: function(string):Array.<string>,
  *   initialize: (string|undefined),
