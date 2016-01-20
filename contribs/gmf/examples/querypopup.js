@@ -43,16 +43,22 @@ app.MainController = function(gmfCreateQuerypopup) {
    */
   this.demoFeatures = [new ol.Feature({
     geometry: new ol.geom.Point([533065, 156135]),
+    layer_name: 'Point',
     name: 'Point 1',
-    id: '1234'
+    id: '1234',
+    foo: 'bar'
   }), new ol.Feature({
     geometry: new ol.geom.Point([535165, 152335]),
+    layer_name: 'Point',
     name: 'Point 2',
-    id: '5678'
+    id: '5678',
+    foo: 'bar'
   }), new ol.Feature({
     geometry: new ol.geom.Point([539565, 151935]),
+    layer_name: 'Petit point',
     name: 'Point 3',
-    id: '9101'
+    id: '9101',
+    foo: 'bar'
   })];
 
   this.selectOne = function() {

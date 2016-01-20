@@ -69,10 +69,14 @@ gmf.Querypopup = function($sce, $compile, $rootScope, ngeoCreatePopup) {
  */
 gmf.Querypopup.prototype.open = function(features) {
   if (features.length > 0) {
+    var feature = features[0];
+    var currentProperties = feature.getProperties();
     this.scope_['currentFeatureIdx'] = 0;
-    this.scope_['features'] = features;
+    delete currentProperties['geometry'];
+    this.scope_['current'] = currentProperties;
 
     var element = /** @type {string} */ (this.element_.html());
+    this.popup_.setTitle(currentProperties['layer_name'])
     this.popup_.setContent(this.$sce_.trustAsHtml(element));
     this.popup_.setOpen(true);
   }
