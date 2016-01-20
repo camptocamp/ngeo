@@ -1,5 +1,5 @@
 /**
- * @fileoverview Application entry point.
+ * Application entry point.
  *
  * This file defines the "app_mobile" Closure namespace, which is be used as the
  * Closure entry point (see "closure_entry_point" in the "build.json" file).

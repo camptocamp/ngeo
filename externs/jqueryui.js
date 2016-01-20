@@ -1,5 +1,5 @@
 /**
- * @fileoverview Externs for JQuery UI
+ * Externs for JQuery UI
  *
  * @externs
  */

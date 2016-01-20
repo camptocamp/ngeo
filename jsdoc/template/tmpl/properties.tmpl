@@ -56,7 +56,9 @@
         <th>Default</th>
         <?js } ?>
 
+        <?js if (data.kind != 'typedef') {?>
         <th class="last">Description</th>
+        <?js } ?>
     </tr>
     </thead>
 
@@ -98,8 +100,10 @@
                 </td>
             <?js } ?>
 
+            <?js if (data.kind != 'typedef') {?>
             <td class="description last"><?js= prop.description ?><?js if (prop.subprops) { ?>
                 <h6>Properties</h6><?js= self.partial('properties.tmpl', prop) ?>
+            <?js } ?></td>
             <?js } ?></td>
         </tr>
 

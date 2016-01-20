@@ -54,7 +54,7 @@
       "lintChecks"
     ],
     "extra_annotation_name": [
-      "api", "observable", "ngdoc", "ngname"
+      "api", "observable", "ngdoc", "ngname", "htmlAttribute"
     ],
     "angular_pass": true,
     "compilation_level": "ADVANCED",

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Externs for the GeoMapFish "themes" web service.
+ * Externs for the GeoMapFish "themes" web service.
  *
  * @externs
  */

@@ -1,5 +1,5 @@
 /**
- * @fileoverview This script provides a window.countWatchers function that
+ * This script provides a window.countWatchers function that
  * the number of Angular watchers in the page.
  *
  * You can do `countWatchers()` in a console to know the current number of

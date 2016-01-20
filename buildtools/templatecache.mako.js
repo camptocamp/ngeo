@@ -19,7 +19,7 @@
       _partials[os.path.join(dest_folder, os.path.basename(filename))] = content
 %>\
 /**
- * @fileoverview ngeo template cache.
+ * ngeo template cache.
  *
  * GENERATED FILE. DO NOT EDIT.
  */

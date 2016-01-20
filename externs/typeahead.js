@@ -1,5 +1,5 @@
 /**
- * @fileoverview Externs for Typeahead and Bloodhound 0.11.1
+ * Externs for Typeahead and Bloodhound 0.11.1
  * @see https://github.com/twitter/typeahead.js/blob/master/doc/jquery_typeahead.md
  * @see https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
  * @externs

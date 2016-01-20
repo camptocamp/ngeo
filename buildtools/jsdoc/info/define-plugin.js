@@ -1,5 +1,5 @@
 /**
- * @fileoverview  This plugin extracts info from boolean defines.  This only
+ * This plugin extracts info from boolean defines.  This only
  * handles boolean defines with the default value in the description.  Default
  * is assumed to be provided with something like "default is `true`" (case
  * insensitive, with or without ticks).

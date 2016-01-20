@@ -1,5 +1,5 @@
 /**
- * @fileoverview Externs for GeoMapFish
+ * Externs for GeoMapFish
  *
  * @externs
  */
