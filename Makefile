@@ -38,6 +38,8 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
 	.build/examples-hosted/lib/proj4.js \
 	.build/examples-hosted/lib/Function.prototype.bind.js \
+	.build/examples-hosted/lib/font-awesome.min.css \
+	.build/examples-hosted/fonts \
 	.build/examples-hosted/partials \
 	.build/examples-hosted/data
 
@@ -283,6 +285,14 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/font-awesome.min.css: node_modules/font-awesome/css/font-awesome.min.css
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.build/examples-hosted/fonts: node_modules/font-awesome/fonts
+	mkdir -p $@
+	cp node_modules/font-awesome/fonts/* $@
+
 .build/examples-hosted/partials: examples/partials
 	mkdir -p $@
 	cp $</* $@
@@ -314,6 +324,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
+		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
@@ -332,6 +343,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol\.css|lib/ngeo.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap\.css|lib/bootstrap.min.css|' \
+		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery\.js|lib/jquery.min.js|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap\.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular\.js|lib/angular.min.js|' \
