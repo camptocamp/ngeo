@@ -13,7 +13,7 @@ var BloodhoundDatum;
 
 /**
  * @typedef {{
- *   url: string,
+ *   url: (string|undefined),
  *   wildcard: (string|undefined),
  *   rateLimitBy: (string|undefined),
  *   rateLimitWait: (number|undefined),
@@ -25,7 +25,7 @@ var BloodhoundRemoteOptions;
 
 /**
  * @typedef {{
- *   url: string,
+ *   url: (string|undefined),
  *   cache: (boolean|undefined),
  *   ttl: (number|undefined),
  *   cacheKey: (string|undefined),
@@ -33,22 +33,6 @@ var BloodhoundRemoteOptions;
  * }}
  */
 var BloodhoundPrefetchOptions;
-
-/**
- * @typedef {{
- *   withCredentials: (boolean|undefined)
- * }}
- */
-var BloodhoundQueryXhrfieldsOptions;
-
-/**
- * @typedef {{
- *   dataType: (string|undefined),
- *   param: (string|undefined),
- *   xhrFields: (BloodhoundQueryXhrfieldsOptions|undefined)
- * }}
- */
-var BloodhoundQueryOptions;
 
 /**
  * @typedef {{
