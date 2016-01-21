@@ -3,7 +3,7 @@ main {
   position: relative;
   background-color: @color3;
   box-shadow: 0px 0px 15px black;
-  min-height: 100vh;
+  height: 100%;
   z-index: @content-index;
   padding-top: 120px;
   text-align: center;
@@ -43,12 +43,14 @@ main {
 
 @nav-bar-height: 50px;
 
-.nav-left-is-visible nav.nav-right {
+.nav-left-is-visible nav.nav-right,
+.nav-right-is-visible nav.nav-left  {
   display: none;
 }
 
-.nav-right-is-visible nav.nav-left {
-  display: none;
+.nav-left-is-visible nav.nav-left,
+.nav-right-is-visible nav.nav-right  {
+  visibility: visible;
 }
 
 nav.nav-left,
@@ -62,6 +64,7 @@ nav.nav-right {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   z-index: @below-content-index;
+  visibility: hidden;
 
   header {
     display: block;
