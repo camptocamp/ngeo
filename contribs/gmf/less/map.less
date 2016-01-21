@@ -3,11 +3,9 @@
  */
 .ol-zoom {
   background-color: transparent;
-  right: 0;
-  left: auto;
-  top: 52px;
-  margin: 10px;
+  padding: 0;
   button {
+    margin: 0;
     margin-bottom: 3px;
     height: @map-tools-size;
     width: @map-tools-size;
@@ -80,26 +78,5 @@ button[ngeo-mobile-geolocation] {
 
   .gmf-eol {
     clear: left;
-  }
-}
-
-//For tablet only
-@media (min-width: @screen-sm-min) {
-
-  .ol-zoom {
-    top: auto;
-    bottom: 36px;
-    button:hover {
-      background-color: @onhover-color;
-    }
-  }
-
-
-  button[ngeo-mobile-geolocation] {
-    bottom: 12px;
-    top: auto;
-    & button:after {
-      content: 'b'
-    }
   }
 }

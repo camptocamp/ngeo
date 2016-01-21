@@ -152,3 +152,32 @@ span.twitter-typeahead {
     }
   }
 }
+
+.ol-zoom {
+  right: @app-margin;
+  left: auto;
+
+  //For mobile only
+  @media (max-width: @screen-xs-max) {
+    top: 60px;
+  }
+  //For tablet only
+  @media (min-width: @screen-sm-min) {
+    top: auto;
+    bottom: 50px;
+    button:hover {
+      background-color: @onhover-color;
+    }
+  }
+}
+
+//For tablet only
+@media (min-width: @screen-sm-min) {
+  button[ngeo-mobile-geolocation] {
+    bottom: 12px;
+    top: auto;
+    & button:after {
+      content: 'b'
+    }
+  }
+}
