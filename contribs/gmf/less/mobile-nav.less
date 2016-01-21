@@ -43,12 +43,14 @@ main {
 
 @nav-bar-height: 50px;
 
-.nav-left-is-visible nav.nav-right {
+.nav-left-is-visible nav.nav-right,
+.nav-right-is-visible nav.nav-left  {
   display: none;
 }
 
-.nav-right-is-visible nav.nav-left {
-  display: none;
+.nav-left-is-visible nav.nav-left,
+.nav-right-is-visible nav.nav-right  {
+  visibility: visible;
 }
 
 nav.nav-left,
@@ -62,6 +64,7 @@ nav.nav-right {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   z-index: @below-content-index;
+  visibility: hidden;
 
   header {
     display: block;
