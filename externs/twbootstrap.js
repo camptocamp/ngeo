@@ -59,3 +59,17 @@ jQuery.prototype.tab = function(action) {};
  * @return {!angular.JQLite}
  */
 angular.JQLite.prototype.tab = function(action) {};
+
+
+/**
+ * @param {(string|Object.<string,*>)=} opt_options
+ * @return {jQuery}
+ */
+jQuery.prototype.tooltip = function(opt_options) {};
+
+
+/**
+ * @param {(string|Object.<string,*>)=} opt_options
+ * @return {angular.JQLite}
+ */
+angular.JQLite.prototype.tooltip = function(opt_options) {};

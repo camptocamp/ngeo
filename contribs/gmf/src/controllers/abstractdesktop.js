@@ -90,6 +90,10 @@ gmf.AbstractDesktopController = function(
 
   ngeoFeatureOverlayMgr.init(this.map);
 
+  // initialize tooltips
+  $('[data-toggle="tooltip"]').tooltip({
+    container: 'body'
+  });
 };
 
 

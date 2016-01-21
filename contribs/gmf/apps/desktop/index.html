@@ -19,13 +19,16 @@
       <div class="tools" ngeo-resizemap="mainCtrl.map"
            ngeo-resizemap-state="mainCtrl.toolsActive">
         <div ngeo-btn-group class="bar btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
-          <button ngeo-btn class="btn btn-default" ng-model="loginActive">
+          <button ngeo-btn class="btn btn-default" ng-model="loginActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
             <span class="fa fa-user"></span>
           </button>
-          <button ngeo-btn class="btn btn-default" ng-model="printActive">
+          <button ngeo-btn class="btn btn-default" ng-model="printActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Print'|translate}}">
             <span class="fa fa-print"></span>
           </button>
-          <button ngeo-btn class="btn btn-default" ng-model="measureActive">
+          <button ngeo-btn class="btn btn-default" ng-model="measureActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Measure tools'|translate}}">
             <span class="fa fa-circle">
           </button>
         </div>
