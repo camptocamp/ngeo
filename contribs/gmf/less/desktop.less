@@ -159,7 +159,7 @@ main {
   float: right;
   background-color: @brand-secondary;
 
-  .content {
+  .tools-content {
     padding: 10px;
     width: 250px;
     margin-right: -250px + @toolbar-width;
@@ -167,6 +167,20 @@ main {
 
     &.active {
       margin-right: @toolbar-width;
+    }
+
+    .close {
+      padding: 0;
+      line-height: 0.5em;
+      margin-bottom: 10px;
+    }
+
+    .tools-content-heading {
+      @color: lighten(@text-color, 30%);
+      color: @color;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid @color;
     }
   }
 

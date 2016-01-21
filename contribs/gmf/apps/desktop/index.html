@@ -29,21 +29,26 @@
             <span class="fa fa-circle">
           </button>
         </div>
-        <div class="content" ng-class="{active: mainCtrl.toolsActive}">
+        <div class="tools-content" ng-class="{active: mainCtrl.toolsActive}">
           <div ng-show="loginActive">
+            <a class="btn close" ng-click="loginActive = false">&times;</a>
+            <div class="tools-content-heading">
+              Login
+            </div>
             <gmf-authentication></gmf-authentication>
             <br>
-            <a class="btn" ng-click="loginActive = false">Close</a>
           </div>
           <div ng-show="printActive">
-            Print
-            <br>
-            <a class="btn" ng-click="printActive = false">Close</a>
+            <a class="btn close" ng-click="printActive = false">&times;</a>
+            <div class="tools-content-heading">
+              Print
+            </div>
           </div>
           <div ng-show="measureActive">
-            Measure
-            <br>
-            <a class="btn" ng-click="measureActive = false">Close</a>
+            <a class="btn close" ng-click="measureActive = false">&times;</a>
+            <div class="tools-content-heading">
+              Measure
+            </div>
           </div>
         </div>
       </div>
