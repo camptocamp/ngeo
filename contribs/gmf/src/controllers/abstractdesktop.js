@@ -16,6 +16,7 @@ goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
+goog.require('ol.interaction');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
@@ -74,7 +75,11 @@ gmf.AbstractDesktopController = function(
     controls: [
       new ol.control.ScaleLine(),
       new ol.control.Zoom()
-    ]
+    ],
+    interactions: ol.interaction.defaults({
+      pinchRotate: false,
+      altShiftDragRotate: false
+    })
   });
 
   /**
