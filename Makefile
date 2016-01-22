@@ -49,7 +49,7 @@ GIT_BRANCH ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
 GIT_REMOTE_NAME ?= origin
 
 # i18n
-L10N_LANGUAGES = de it
+L10N_LANGUAGES = fr de it
 L10N_PO_FILES = $(addprefix c2cgeoportal/locale/,$(addsuffix /LC_MESSAGES/c2cgeoportal.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
 TX_GIT_BRANCH ?= master
