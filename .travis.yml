@@ -22,3 +22,4 @@ after_success:
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && make gh-pages'
 - openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in .transifexrc.enc -out $HOME/.transifexrc -d
 - '[ "${TRAVIS_BRANCH}" = "master" ] && make transifex-send'
+- 'cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js'
