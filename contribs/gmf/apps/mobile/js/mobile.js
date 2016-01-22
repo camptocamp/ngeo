@@ -16,11 +16,7 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
-/** @suppress {extraRequire} */
 goog.require('gmf.proj.EPSG21781');
-/** @suppress {extraRequire} */
-goog.require('gmf.searchDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mobileGeolocationDirective');
 
@@ -48,7 +44,7 @@ app.MobileController = function(
     gmfThemes, fulltextsearchUrl) {
   goog.base(
       this, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
-      $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
+      $scope, ngeoStateManager, ngeoFeatureOverlayMgr, 21781,
       gmfThemes, fulltextsearchUrl);
 };
 goog.inherits(app.MobileController, gmf.AbstractMobileController);
