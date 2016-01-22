@@ -124,6 +124,8 @@ lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslin
 .PHONY: test
 test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
+	@cat .build/coverage/coverage.txt
+	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: serve
 serve: .build/node_modules.timestamp .build/font_awesome.timestamp
