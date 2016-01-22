@@ -43,7 +43,6 @@
           <li>
             <a href="#background" data-toggle="slide-in">Background</a>
             <a href="#data" data-toggle="slide-in">Data</a>
-            <a href="#login" data-toggle="slide-in">Login</a>
           </li>
         </ul>
         <hr />
@@ -77,8 +76,6 @@
           gmf-themeselector-currenttheme="mainCtrl.theme"
           gmf-themeselector-filter="::mainCtrl.filter">
       </gmf-themeselector>
-      <gmf-authentication id="login" class="slide" data-header-title="Login">
-      </gmf-authentication>
     </nav>
     <nav class="nav-right" gmf-mobile-nav>
       <header>
@@ -89,6 +86,7 @@
         <ul>
           <li>
             <a href="#measure-tools" data-toggle="slide-in">Measure tools</a>
+            <a href="#login" data-toggle="slide-in">Login</a>
           </li>
         </ul>
       </div>
@@ -100,6 +98,8 @@
           </li>
         </ul>
       </div>
+      <gmf-authentication id="login" class="slide" data-header-title="Login">
+      </gmf-authentication>
     </nav>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../../node_modules/angular/angular.js"></script>
