@@ -7,6 +7,11 @@
 @import 'mobile-nav.less';
 @import 'icons.less';
 
+@map-tools-size: 3em;
+@app-margin: 1em;
+
+@search-input-size: 200px;
+
 main>* {
   position: absolute;
 }
@@ -37,18 +42,19 @@ span.twitter-typeahead {
     color: grey;
     position: absolute;
     top: 0;
-    left: 0;
+    left: .25em;
+    line-height: 2.8em;
   }
 
   input {
-    padding-left: 18px;
+    padding-left: 1.5em;
   }
 }
 .tt-menu {
   position: fixed!important;
   left: 0;
   right: 0;
-  top: 48px!important;
+  top: 5em !important;
   bottom: 0;
   overflow-x: hidden;
   overflow-y: auto;
@@ -82,33 +88,35 @@ span.twitter-typeahead {
 
 .search {
   top: @app-margin;
+  height: @map-tools-size;
   left: 0;
   right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 6px 10px;
+  margin-left: @app-margin;
+  margin-right: @app-margin;
+  padding: 0 10px;
   background-color: @map-tools-bg-color;
-  width: 162px + @map-tools-size + @map-tools-size;
-  border-radius: 25px;
   border: solid 1px @map-tools-color;
   z-index: @content-index;
   input {
-    width: 150px;
+    width: @search-input-size;
     padding: 0 5px;
-    border-width: 0 1px;
+    border-width: 0;
     border-radius: 0;
+    height: @map-tools-size - .2em;
   }
   .clear-button {
     position: absolute;
-    top: @app-margin;
-    left: 0;
-    right: 0;
-    margin: -6px auto 0 158px;
+    top: 0;
+    left: 50%;
+    margin-left: ~"calc("@search-input-size / 2 ~" - " @map-tools-size~")";;
+    height: @map-tools-size;
+    width: @map-tools-size;
+    line-height: @map-tools-size;
     &:after {
       content: '\f00d';
       color: grey;
       font-family: FontAwesome;
-      line-height: 0.5em;
+      font-size: 1.5em;
     }
     &:hover {
       cursor: pointer;
@@ -118,24 +126,28 @@ span.twitter-typeahead {
 
 //For tablet only
 @media (min-width: @screen-sm-min) {
+  @search-width: 18em;
   .tt-menu {
-    top: 43px!important;
-    width: 33vw;
+    top: 4em !important;
+    width: @search-width;
+    left: 5em !important;
+    bottom: auto;
   }
 
   .search {
-    left: 26px + @map-tools-size;
-    padding: 3px 10px;
+    left: @app-margin + @map-tools-size;
     right: auto;
     height: @map-tools-size;
-    width: 200px;
+    width: @search-width;
+    padding: 0;
     input {
-      width: 150px;
       margin: 0;
       border: none;
+      width: ~"calc(" @search-width ~" - 2px)";
     }
     .clear-button {
-      margin: -8px auto 0 170px;
+      right: 0;
+      left: auto;
     }
   }
 }
@@ -153,18 +165,34 @@ span.twitter-typeahead {
   }
 }
 
+.ol-control button {
+  font-size: 1em;
+}
+.ol-zoom {
+  top: 5em;
+  .ol-zoom-in,
+  .ol-zoom-out {
+    border-radius: 0;
+  }
+}
+button[ngeo-mobile-geolocation] {
+  right: 1em;
+  top: 11.5em;
+}
+
 .ol-zoom {
   right: @app-margin;
   left: auto;
-
-  //For mobile only
-  @media (max-width: @screen-xs-max) {
-    top: 60px;
-  }
-  //For tablet only
-  @media (min-width: @screen-sm-min) {
+}
+//For tablet only
+@media (min-width: @screen-sm-min) {
+  .ol-zoom {
     top: auto;
-    bottom: 50px;
+    bottom: 4.5em;
+  }
+  button[ngeo-mobile-geolocation] {
+    top: auto;
+    bottom: @app-margin;
   }
 }
 

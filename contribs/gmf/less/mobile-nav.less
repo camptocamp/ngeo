@@ -212,19 +212,23 @@ nav.nav-right {
  */
 .nav-trigger {
   top: @app-margin;
-  margin-top: 2px;
-  background-color: transparent;
-  border: none;
+  background: white;
   z-index: @above-content-index;
+  height: ~"calc("@map-tools-size ~" - 3px)";
+  margin-top: 2px;
+  border: none;
 }
 
 .nav-left-trigger {
-  margin-left: -104px;
+  left: ~"calc("@app-margin ~" + 2px)";
+  box-shadow: 3px 0 5px -2px #bbb;
 }
 
 .nav-right-trigger {
-  margin-left: 76px;
+  right: ~"calc("@app-margin ~" + 2px)";
+  box-shadow: -2px 0 5px -2px #bbb;
 }
+
 
 //For tablet only
 @media (min-width: @screen-sm-min) {
@@ -237,6 +241,8 @@ nav.nav-right {
     margin: 0;
     background-color: @map-tools-bg-color;
     border: solid 1px @map-tools-color;
+    box-shadow: none;
+    height: 3em;
   }
 
   .nav-left-trigger {
