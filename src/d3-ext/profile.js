@@ -113,15 +113,21 @@ ngeo.profile = function(options) {
     /**
      * @return {string}
      */
-    yhover: function(ele, units) { return Math.round(ele) + ' m'; },
+    yhover: function(ele, units) {
+      return Math.round(ele) + ' m';
+    },
     /**
      * @return {string|number}
      */
-    xtick: function(dist, units) { return dist; },
+    xtick: function(dist, units) {
+      return dist;
+    },
     /**
      * @return {string|number}
      */
-    ytick: function(ele, units) { return ele; }
+    ytick: function(ele, units) {
+      return ele;
+    }
   };
 
   if (goog.isDef(options.formatter)) {
@@ -203,12 +209,20 @@ ngeo.profile = function(options) {
           .orient('left');
 
       var area = d3.svg.area()
-          .x(function(d) { return x(extractor.dist(d)); })
+          .x(function(d) {
+            return x(extractor.dist(d));
+          })
           .y0(height)
-          .y1(function(d) { return y(extractor.z(d)); });
+          .y1(function(d) {
+            return y(extractor.z(d));
+          });
       var line = d3.svg.line()
-          .x(function(d) { return x(extractor.dist(d)); })
-          .y(function(d) { return y(extractor.z(d)); });
+          .x(function(d) {
+            return x(extractor.dist(d));
+          })
+          .y(function(d) {
+            return y(extractor.z(d));
+          });
 
       // Select the svg element, if it exists.
       svg = d3.select(this).selectAll('svg').data([data]);
@@ -287,10 +301,14 @@ ngeo.profile = function(options) {
           .attr('transform', 'translate(' + margin.left + ',' +
               margin.top + ')');
 
-      xDomain = d3.extent(data, function(d) { return extractor.dist(d); });
+      xDomain = d3.extent(data, function(d) {
+        return extractor.dist(d);
+      });
       x.domain(xDomain);
 
-      var yDomain = d3.extent(data, function(d) { return extractor.z(d); });
+      var yDomain = d3.extent(data, function(d) {
+        return extractor.z(d);
+      });
       y.domain(yDomain);
 
       // set the ratio according to the horizontal distance
@@ -503,10 +521,18 @@ ngeo.profile = function(options) {
 
     p.selectAll('line')
        .style('stroke', 'grey')
-       .attr('x1', function(d) { return x(pe.dist(d));})
-       .attr('y1', function(d) { return y(y.domain()[0]);})
-       .attr('x2', function(d) { return x(pe.dist(d));})
-       .attr('y2', function(d) { return y(pe.z(d));});
+       .attr('x1', function(d) {
+         return x(pe.dist(d));
+       })
+       .attr('y1', function(d) {
+         return y(y.domain()[0]);
+       })
+       .attr('x2', function(d) {
+         return x(pe.dist(d));
+       })
+       .attr('y2', function(d) {
+         return y(pe.z(d));
+       });
 
     // remove unused pois
     p.exit().remove();
