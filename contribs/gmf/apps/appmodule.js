@@ -11,4 +11,4 @@ goog.require('gmf');
 /**
  * @type {!angular.Module}
  */
-var appModule = angular.module('app', [gmf.module.name]);
+app.module = angular.module('app', [gmf.module.name]);
