@@ -58,14 +58,6 @@ ngeo.profile = function(options) {
       {top: 10, right: 20, bottom: 30, left: 40};
 
   /**
-   * Method to get the coordinate in pixels from a distance.
-   */
-  var bisectDistance = d3.bisector(function(d) {
-    return elevationExtractor.dist(d);
-  }).left;
-
-
-  /**
    * Hover callback function.
    * @type {function(Object, number, string, number, string)}
    */
@@ -83,6 +75,13 @@ ngeo.profile = function(options) {
    * Elevation data extractor used to get the dist and elevation values.
    */
   var elevationExtractor = options.elevationExtractor;
+
+  /**
+   * Method to get the coordinate in pixels from a distance.
+   */
+  var bisectDistance = d3.bisector(function(d) {
+    return elevationExtractor.dist(d);
+  }).left;
 
   /**
    * POI data extractor.
