@@ -91,6 +91,7 @@ gmfModule.directive('gmfSearch', gmf.searchDirective);
  * @constructor
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.$compile} $compile Angular compile service.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.CreateGeoJSONBloodhound} ngeoCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
@@ -100,7 +101,7 @@ gmfModule.directive('gmfSearch', gmf.searchDirective);
  * @ngdoc controller
  * @ngname GmfSearchController
  */
-gmf.SearchController = function($scope, $compile,
+gmf.SearchController = function($scope, $compile, gettextCatalog,
     ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr) {
 
   /**
@@ -114,6 +115,12 @@ gmf.SearchController = function($scope, $compile,
    * @private
    */
   this.compile_ = $compile;
+
+  /**
+   * @type {angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {ngeo.CreateGeoJSONBloodhound}
@@ -297,17 +304,36 @@ gmf.SearchController.prototype.filterLayername_ = function(groupsKey,
 gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
     opt_filter) {
   var mapProjectionCode = this.map_.getView().getProjection().getCode();
-  var queryOptions = {
-    param: 'query',
-    xhrFields: {
-      withCredentials: true
-    }
-  };
+  var remoteOptions = this.getBloodhoudRemoteOptions_();
   var bloodhound = this.ngeoCreateGeoJSONBloodhound_(config.url, opt_filter,
       ol.proj.get(mapProjectionCode), ol.proj.get(config.projection),
-      config.bloodhoundOptions, queryOptions);
+      config.bloodhoundOptions, remoteOptions);
   bloodhound.initialize();
   return bloodhound;
+};
+
+
+/**
+ * @return {BloodhoundRemoteOptions}
+ * @private
+ */
+gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
+  var gettextCatalog = this.gettextCatalog_;
+  return {
+    prepare: function(query, settings) {
+      var url = settings.url;
+      var lang = gettextCatalog.currentLanguage;
+      var interfaceName = 'mobile'; // FIXME dynamic interfaces
+      url = goog.uri.utils.setParam(url, 'query', query);
+      url = goog.uri.utils.setParam(url, 'lang', lang);
+      url = goog.uri.utils.setParam(url, 'interface', interfaceName);
+      settings.xhrFields = {
+        withCredentials: true
+      };
+      settings.url = url;
+      return settings;
+    }
+  };
 };
 
 
