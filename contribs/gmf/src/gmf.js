@@ -7,7 +7,7 @@ goog.require('ngeo');
 
 
 /** @type {!angular.Module} */
-var gmfModule = angular.module('gmf', [ngeo.module.name, 'gettext']);
+gmf.module = angular.module('gmf', [ngeo.module.name, 'gettext']);
 
 
 /**

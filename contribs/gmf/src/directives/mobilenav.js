@@ -165,4 +165,4 @@ gmf.mobileNavDirective = function() {
 };
 
 
-gmfModule.directive('gmfMobileNav', gmf.mobileNavDirective);
+gmf.module.directive('gmfMobileNav', gmf.mobileNavDirective);

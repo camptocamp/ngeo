@@ -7,7 +7,7 @@ goog.require('gmf.Authentication');
 goog.require('ngeo.modalDirective');
 
 
-gmfModule.value('gmfAuthenticationTemplateUrl',
+gmf.module.value('gmfAuthenticationTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -51,7 +51,7 @@ gmf.authenticationDirective = function(gmfAuthenticationTemplateUrl) {
   };
 };
 
-gmfModule.directive('gmfAuthentication', gmf.authenticationDirective);
+gmf.module.directive('gmfAuthentication', gmf.authenticationDirective);
 
 
 
@@ -282,5 +282,5 @@ gmf.AuthenticationController.prototype.translate = function(str) {
 };
 
 
-gmfModule.controller('GmfAuthenticationController',
+gmf.module.controller('GmfAuthenticationController',
     gmf.AuthenticationController);

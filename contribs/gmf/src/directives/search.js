@@ -16,7 +16,7 @@ goog.require('ol.Map');
 goog.require('ol.proj');
 
 
-gmfModule.value('gmfSearchTemplateUrl',
+gmf.module.value('gmfSearchTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -87,7 +87,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
 };
 
 
-gmfModule.directive('gmfSearch', gmf.searchDirective);
+gmf.module.directive('gmfSearch', gmf.searchDirective);
 
 
 
@@ -469,4 +469,4 @@ gmf.SearchController.close_ = function(event) {
 };
 
 
-gmfModule.controller('GmfSearchController', gmf.SearchController);
+gmf.module.controller('GmfSearchController', gmf.SearchController);

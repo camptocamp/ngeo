@@ -5,14 +5,10 @@
  */
 goog.provide('app');
 
-/**
- * This goog.require is needed because it provides gmfModule.
- * @suppress {extraRequire}
- */
 goog.require('gmf');
 
 
 /**
  * @type {!angular.Module}
  */
-var appModule = angular.module('app', [gmfModule.name]);
+var appModule = angular.module('app', [gmf.module.name]);

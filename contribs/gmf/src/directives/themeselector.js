@@ -30,7 +30,7 @@ gmf.themeselectorDirective = function() {
   };
 };
 
-gmfModule.directive('gmfThemeselector', gmf.themeselectorDirective);
+gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
 
 
 
@@ -169,5 +169,5 @@ gmf.ThemeselectorController.prototype.switchTheme = function(theme) {
 };
 
 
-gmfModule.controller('gmfThemeselectorController',
+gmf.module.controller('gmfThemeselectorController',
     gmf.ThemeselectorController);

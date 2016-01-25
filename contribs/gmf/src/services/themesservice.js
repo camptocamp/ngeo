@@ -222,4 +222,4 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
 };
 
 
-gmfModule.service('gmfThemes', gmf.Themes);
+gmf.module.service('gmfThemes', gmf.Themes);
