@@ -115,7 +115,7 @@ gmf.Themes.prototype.getBgLayers = function() {
   return this.promise_.then(goog.bind(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
-       * @return {angular.$q.Promise}
+       * @return {angular.$q.Promise} Promise.
        */
       function(data) {
         var promises = data['background_layers'].map(function(item) {

@@ -13,6 +13,7 @@ gmf.module.value('gmfLayertreeTemplate',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
+     * @return {string} Template.
      */
     function(element, attrs) {
       var subTemplateUrl = gmf.baseTemplateUrl + '/layertree.html';
@@ -32,6 +33,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
+     * @return {string} Template URL.
      */
     function(element, attrs) {
       return gmf.baseTemplateUrl + '/layertree.html';
@@ -278,7 +280,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
  * Create an ol.layer.Group with all node's children as layers except others
  * groups.
  * @param {GmfThemesNode} node Layer tree node.
- * @return {ol.layer.Group}
+ * @return {ol.layer.Group} Layer group.
  * @private
  */
 gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
@@ -308,7 +310,7 @@ gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
 /**
  * Create an ol.layer.Image with all node's children as LAYERS params.
  * @param {GmfThemesNode} node Layer tree node.
- * @return {ol.layer.Image}
+ * @return {ol.layer.Image} Image layer.
  * @private
  */
 gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
@@ -759,7 +761,7 @@ gmf.LayertreeController.prototype.getWMSLegendURL_ = function(node,
 
 /**
  * Return the current scale of the map.
- * @return {number}
+ * @return {number} Scale.
  * @private
  */
 gmf.LayertreeController.prototype.getScale_ = function() {

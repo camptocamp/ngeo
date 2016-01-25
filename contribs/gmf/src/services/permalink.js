@@ -187,7 +187,7 @@ gmf.Permalink.prototype.unregisterMap_ = function() {
  * Get the background layer object to use to initialize the map from the
  * state manager.
  * @param {Array.<ol.layer.Base>} layers Array of background layer objects.
- * @return {?ol.layer.Base}
+ * @return {?ol.layer.Base} Background layer.
  * @export
  */
 gmf.Permalink.prototype.getBackgroundLayer = function(layers) {

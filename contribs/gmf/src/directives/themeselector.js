@@ -156,7 +156,7 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
 
 
 /**
- * @param {Object} theme
+ * @param {Object} theme Theme.
  * @export
  */
 gmf.ThemeselectorController.prototype.switchTheme = function(theme) {

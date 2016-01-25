@@ -53,7 +53,7 @@ ngeo.Location = function(location, history) {
 
 /**
  * Get the location's URI object.
- * @return {!goog.Uri}
+ * @return {!goog.Uri} URI.
  */
 ngeo.Location.prototype.getUri = function() {
   return this.uri_;
@@ -117,7 +117,7 @@ ngeo.Location.prototype.getParamKeys = function() {
 
 /**
  * Set or create a param in the location's URI.
- * @param {Object.<string, string>} params
+ * @param {Object.<string, string>} params Parameters.
  */
 ngeo.Location.prototype.updateParams = function(params) {
   var qd = this.uri_.getQueryData();
@@ -203,29 +203,58 @@ ngeo.mockLocationProvider = function($locationProvider) {
    */
   $locationProvider['$get'] = function() {
     var locationMock = /** @type {angular.$location} */ ({
+      /**
+       * @return {string} Absolute URL.
+       */
       absUrl: function() {
         return '';
       },
+      /**
+       * @param {string=} opt_path Path.
+       * @return {string} Hash.
+       */
       hash: function(opt_path) {
         return goog.isDef(opt_path) ? this : '';
       },
+      /**
+       * @return {string} Host.
+       */
       host: function() {
         return '';
       },
+      /**
+       * @param {string=} opt_path Path.
+       * @return {string} Path.
+       */
       path: function(opt_path) {
         return goog.isDef(opt_path) ? this : '';
       },
+      /**
+       * @return {number} Port.
+       */
       port: function() {
         return 0;
       },
+      /**
+       * @return {string} Protocol.
+       */
       protocol: function() {
         return '';
       },
       replace: function() {
       },
+      /**
+       * @param {string=} opt_search Search.
+       * @param {Object=} opt_paramValue Parameters.
+       * @return {Object} Search.
+       */
       search: function(opt_search, opt_paramValue) {
         return goog.isDef(opt_search) ? this : {};
       },
+      /**
+       * @param {string=} opt_url URL.
+       * @return {string} URL.
+       */
       url: function(opt_url) {
         return '';
       }

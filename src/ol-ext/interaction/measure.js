@@ -300,7 +300,7 @@ ngeo.interaction.Measure.prototype.setMap = function(map) {
 
 /**
  * Handle draw interaction `drawstart` event.
- * @param {ol.interaction.DrawEvent} evt
+ * @param {ol.interaction.DrawEvent} evt Event.
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
@@ -325,7 +325,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
 
 /**
  * Handle draw interaction `drawend` event.
- * @param {ol.interaction.DrawEvent} evt
+ * @param {ol.interaction.DrawEvent} evt Event.
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
@@ -437,7 +437,7 @@ ngeo.interaction.Measure.prototype.handleMeasure = goog.abstractMethod;
 
 /**
  * Get a reference to the tooltip element.
- * @return {Element}
+ * @return {Element} Tooltip Element.
  */
 ngeo.interaction.Measure.prototype.getTooltipElement = function() {
   return this.measureTooltipElement_;

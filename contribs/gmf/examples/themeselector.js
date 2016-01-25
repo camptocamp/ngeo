@@ -24,17 +24,13 @@ app.module.constant('gmfTreeUrl', 'data/themes.json');
 app.MainController = function($http, gmfThemes) {
 
   /**
-   * @type {Function}
+   * @param {Object} theme Theme.
+   * @return {boolean} Theme is 'Enseignement'
    * @export
    */
-  this.filter =
-      /**
-       * @param {Object} theme
-       * @return {boolean}
-       */
-      function(theme) {
-        return theme.name !== 'Enseignement';
-      };
+  this.filter = function(theme) {
+    return theme.name !== 'Enseignement';
+  };
 
   /**
    * @type {Object|undefined}

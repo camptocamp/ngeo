@@ -839,7 +839,7 @@ ngeo.format.FeatureHash.prototype.encodeCoordinates_ = function(flatCoordinates,
  * Read a feature from a logical sequence of characters.
  * @param {string} text Text.
  * @param {olx.format.ReadOptions=} opt_options Read options.
- * @return {ol.Feature}
+ * @return {ol.Feature} Feature.
  * @protected
  */
 ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_options) {
@@ -878,7 +878,7 @@ ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_optio
  * Read multiple features from a logical sequence of characters.
  * @param {string} text Text.
  * @param {olx.format.ReadOptions=} opt_options Read options.
- * @return {Array.<ol.Feature>}
+ * @return {Array.<ol.Feature>} Features.
  * @protected
  */
 ngeo.format.FeatureHash.prototype.readFeaturesFromText = function(text, opt_options) {
@@ -902,7 +902,7 @@ ngeo.format.FeatureHash.prototype.readFeaturesFromText = function(text, opt_opti
  * Read a geometry from a logical sequence of characters.
  * @param {string} text Text.
  * @param {olx.format.ReadOptions=} opt_options Read options.
- * @return {ol.geom.Geometry}
+ * @return {ol.geom.Geometry} Geometry.
  * @protected
  */
 ngeo.format.FeatureHash.prototype.readGeometryFromText = function(text, opt_options) {
@@ -918,7 +918,7 @@ ngeo.format.FeatureHash.prototype.readGeometryFromText = function(text, opt_opti
  * Encode a feature into a logical sequence of characters.
  * @param {ol.Feature} feature Feature.
  * @param {olx.format.ReadOptions=} opt_options Read options.
- * @return {string}
+ * @return {string} Encoded feature.
  * @protected
  */
 ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_options) {
@@ -994,7 +994,7 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
  * Encode an array of features into a logical sequence of characters.
  * @param {Array.<ol.Feature>} features Feature.
  * @param {olx.format.ReadOptions=} opt_options Read options.
- * @return {string}
+ * @return {string} Encoded features.
  * @protected
  */
 ngeo.format.FeatureHash.prototype.writeFeaturesText = function(features, opt_options) {
@@ -1013,7 +1013,7 @@ ngeo.format.FeatureHash.prototype.writeFeaturesText = function(features, opt_opt
  * Encode a geometry into a logical sequence of characters.
  * @param {ol.geom.Geometry} geometry Geometry.
  * @param {olx.format.ReadOptions=} opt_options Read options.
- * @return {string}
+ * @return {string} Encoded geometry.
  * @protected
  */
 ngeo.format.FeatureHash.prototype.writeGeometryText = function(geometry, opt_options) {

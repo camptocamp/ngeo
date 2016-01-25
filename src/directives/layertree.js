@@ -8,6 +8,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
+     * @return {boolean} Template URL.
      */
     function(element, attrs) {
       var templateUrl = attrs['ngeoLayertreeTemplateurl'];
@@ -88,36 +89,30 @@ ngeo.layertreeDirective = function($compile, ngeoLayertreeTemplateUrl) {
     scope: true,
     templateUrl: ngeoLayertreeTemplateUrl,
     controller: 'NgeoLayertreeController',
-    compile:
+    compile: function(tElement, tAttrs) {
+      var contents = tElement.contents().remove();
+      var compiledContents;
+      return (
         /**
-         * @param {angular.JQLite} tElement Template element.
-         * @param {angular.Attributes} tAttrs Template attributes.
-         * @return {Function} Post-link function.
+         * Post-link function.
+         * @param {!angular.Scope} scope Scope.
+         * @param {angular.JQLite} iElement Instance element.
+         * @param {angular.Attributes} iAttrs Instance attributes.
          */
-        function(tElement, tAttrs) {
-          var contents = tElement.contents().remove();
-          var compiledContents;
-          return (
-              /**
-               * Post-link function.
-               * @param {!angular.Scope} scope Scope.
-               * @param {angular.JQLite} iElement Instance element.
-               * @param {angular.Attributes} iAttrs Instance attributes.
-               */
-              function(scope, iElement, iAttrs) {
-                if (!compiledContents) {
-                  compiledContents = $compile(contents);
-                }
-                compiledContents(scope,
-                    /**
-                     * @param {Object} clone Clone element.
-                     */
-                    function(clone) {
-                      var cloneElement = /** @type {angular.JQLite} */ (clone);
-                      iElement.append(cloneElement);
-                    });
-              });
-        }
+        function(scope, iElement, iAttrs) {
+          if (!compiledContents) {
+            compiledContents = $compile(contents);
+          }
+          compiledContents(scope,
+            /**
+             * @param {Object} clone Clone element.
+             */
+            function(clone) {
+              var cloneElement = /** @type {angular.JQLite} */ (clone);
+              iElement.append(cloneElement);
+            });
+        });
+    }
   };
 };
 

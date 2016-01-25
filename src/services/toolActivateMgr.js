@@ -18,7 +18,7 @@ ngeo.ToolActivate = function(toolContext, activePropertyName) {
 
   /**
    * A getter function to get the active state of the tool.
-   * @return {boolean}
+   * @return {boolean} Is active.
    * @export
    */
   this.getActive = function() {

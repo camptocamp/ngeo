@@ -11,6 +11,7 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
+     * @return {boolean} Template URL.
      */
     function(element, attrs) {
       var templateUrl = attrs['gmfAuthenticationTemplateurl'];
@@ -58,7 +59,7 @@ gmf.module.directive('gmfAuthentication', gmf.authenticationDirective);
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {angular.Scope} $scope The directive's scope.
  * @param {gmf.Authentication} gmfAuthentication GMF Authentication service
- * @param {gmf.User} gmfUser
+ * @param {gmf.User} gmfUser User.
  * @constructor
  * @ngInject
  * @ngdoc controller
@@ -225,7 +226,7 @@ gmf.AuthenticationController.prototype.resetPassword = function() {
   this.gmfAuthentication_.resetPassword(this.loginVal).then(
       goog.bind(
           /**
-           * @param {gmf.AuthenticationDefaultResponse} respData
+           * @param {gmf.AuthenticationDefaultResponse} respData Response.
            */
           function(respData) {
             this.resetPasswordModalShown = true;
@@ -255,7 +256,7 @@ gmf.AuthenticationController.prototype.changePasswordReset = function() {
 
 
 /**
- * @param {string} error
+ * @param {string} error Error.
  * @private
  */
 gmf.AuthenticationController.prototype.setError_ = function(error) {
@@ -273,7 +274,7 @@ gmf.AuthenticationController.prototype.resetError_ = function() {
 
 /**
  * @param {string} str String to translate.
- * @return {string}
+ * @return {string} Translated string.
  * @export
  */
 gmf.AuthenticationController.prototype.translate = function(str) {

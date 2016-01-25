@@ -286,7 +286,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
 
 
 /**
- * @param {string} url
+ * @param {string} url URL.
  * @return {string} Absolute URL.
  * @private
  */

@@ -23,7 +23,7 @@ ngeo.BackgroundEventType = {
  * @constructor
  * @extends {ol.events.Event}
  * @param {ngeo.BackgroundEventType} type Type.
- * @param {ol.layer.Base} previous
+ * @param {ol.layer.Base} previous Previous background layer.
  * @implements {ngeox.BackgroundEvent}
  */
 ngeo.BackgroundEvent = function(type, previous) {

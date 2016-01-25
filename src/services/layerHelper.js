@@ -40,7 +40,7 @@ ngeo.LayerHelper = function($q, $http) {
  * separated layers names (see {@link ol.source.ImageWMS}).
  * @param {string} sourceURL The source URL.
  * @param {string} sourceLayersName A dot separated names string.
- * @return {ol.layer.Image}
+ * @return {ol.layer.Image} WMS Layer.
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
@@ -104,7 +104,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
  * directly add them in the returned group.
  * @param {ol.Collection.<ol.layer.Base>=} opt_layers The layer to add to the
  * returned Group.
- * @return {ol.layer.Group}
+ * @return {ol.layer.Group} Layer group.
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
@@ -120,7 +120,7 @@ ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
  * Get an array of all layers in a group. The group can contain multiple levels
  * of others groups.
  * @param {ol.layer.Base} layer The base layer, mostly a group of layers.
- * @return {Array.<ol.layer.Layer>}
+ * @return {Array.<ol.layer.Layer>} Layers.
  * @export
  */
 ngeo.LayerHelper.prototype.getFlatLayers = function(layer) {
@@ -133,7 +133,7 @@ ngeo.LayerHelper.prototype.getFlatLayers = function(layer) {
  * of others groups.
  * @param {ol.layer.Base} layer The base layer, mostly a group of layers.
  * @param {Array.<ol.layer.Base>} array An array to add layers.
- * @return {Array.<ol.layer.Layer>}
+ * @return {Array.<ol.layer.Layer>} Layers.
  * @private
  */
 ngeo.LayerHelper.prototype.getFlatLayers_ = function(layer, array) {

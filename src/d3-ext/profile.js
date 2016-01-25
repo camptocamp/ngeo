@@ -39,8 +39,8 @@ goog.require('goog.object');
  *     ]
  *
  * @constructor
- * @return {Object}
- * @param {ngeox.profile.ProfileOptions} options
+ * @return {Object} D3js component.
+ * @param {ngeox.profile.ProfileOptions} options Profile options.
  * @export
  */
 ngeo.profile = function(options) {
@@ -105,25 +105,33 @@ ngeo.profile = function(options) {
    */
   var formatter = {
     /**
-     * @return {string}
+     * @param {number} dist Distance.
+     * @param {string} units Units.
+     * @return {string} Distance.
      */
     xhover: function(dist, units) {
       return parseFloat(dist.toPrecision(3)) + ' ' + units;
     },
     /**
-     * @return {string}
+     * @param {number} ele Elevation.
+     * @param {string} units Units.
+     * @return {string} Elevation.
      */
     yhover: function(ele, units) {
       return Math.round(ele) + ' m';
     },
     /**
-     * @return {string|number}
+     * @param {number} dist Distance.
+     * @param {string} units Units.
+     * @return {string|number} Distance.
      */
     xtick: function(dist, units) {
       return dist;
     },
     /**
-     * @return {string|number}
+     * @param {number} ele Elevation.
+     * @param {string} units Units.
+     * @return {string|number} Elevation.
      */
     ytick: function(ele, units) {
       return ele;

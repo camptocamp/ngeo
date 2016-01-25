@@ -7,6 +7,7 @@ ngeo.module.value('ngeoPopupTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
+     * @return {string} Template URL.
      */
     function(element, attrs) {
       var templateUrl = attrs['ngeoPopupTemplateurl'];
@@ -49,6 +50,9 @@ ngeo.popupDirective = function(ngeoPopupTemplateUrl) {
         function(scope, element, attrs) {
           element.addClass('popover');
 
+          /**
+           * @param {jQuery.Event} evt Event.
+           */
           scope.close = function(evt) {
             if (evt) {
               evt.stopPropagation();

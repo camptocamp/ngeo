@@ -75,8 +75,8 @@ ngeo.interaction.MeasureAzimut.prototype.handleMeasure = function(callback) {
 
 /**
  * Format measure output.
- * @param {ol.geom.LineString} line
- * @return {string}
+ * @param {ol.geom.LineString} line LineString.
+ * @return {string} Formated measure.
  * @private
  */
 ngeo.interaction.MeasureAzimut.prototype.formatMeasure_ = function(line) {
