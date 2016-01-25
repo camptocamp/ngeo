@@ -223,8 +223,7 @@ ngeo.interaction.Measure.getFormattedArea = function(polygon, projection) {
  * @param {ol.proj.Projection} projection Projection of the line string coords.
  * @return {string} Formatted string of length.
  */
-ngeo.interaction.Measure.getFormattedLength =
-    function(lineString, projection) {
+ngeo.interaction.Measure.getFormattedLength = function(lineString, projection) {
   var length = 0;
   var coordinates = lineString.getCoordinates();
   for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {

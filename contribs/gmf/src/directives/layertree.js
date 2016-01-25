@@ -334,9 +334,9 @@ gmf.LayertreeController.prototype.getLayerCaseWMTS_ = function(node) {
   var newLayer = new ol.layer.Tile();
   this.layerHelper_.createWMTSLayerFromCapabilitites(node.url || '', node.name)
     .then(function(layer) {
-        newLayer.setSource(layer.getSource());
-        newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
-      });
+      newLayer.setSource(layer.getSource());
+      newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
+    });
   return newLayer;
 };
 
@@ -393,8 +393,7 @@ gmf.LayertreeController.prototype.retrieveNodeNames_ = function(node,
  * @return {ngeo.LayertreeController} the top level layertree.
  * @private
  */
-gmf.LayertreeController.prototype.retrieveFirstParentTree_ =
-    function(treeCtrl) {
+gmf.LayertreeController.prototype.retrieveFirstParentTree_ = function(treeCtrl) {
   var tree = treeCtrl;
   while (tree.depth > 1) {
     tree = tree.parent;

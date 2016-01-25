@@ -256,8 +256,7 @@ ngeo.interaction.DrawAzimut.prototype.handlePointerMove_ = function(event) {
  * @param {ol.MapBrowserEvent} event Event.
  * @private
  */
-ngeo.interaction.DrawAzimut.prototype.createOrUpdateSketchPoint_ =
-    function(event) {
+ngeo.interaction.DrawAzimut.prototype.createOrUpdateSketchPoint_ = function(event) {
   var coordinates = event.coordinate.slice();
   if (goog.isNull(this.sketchPoint_)) {
     this.sketchPoint_ = new ol.Feature(new ol.geom.Point(coordinates));

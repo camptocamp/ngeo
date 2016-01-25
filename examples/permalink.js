@@ -142,8 +142,7 @@ app.module.directive('appDraw', app.drawDirective);
  * @export
  * @ngInject
  */
-app.DrawDirectiveController =
-    function($scope, ngeoDecorateInteraction, ngeoLocation) {
+app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLocation) {
 
   /**
    * @type {ol.Map}

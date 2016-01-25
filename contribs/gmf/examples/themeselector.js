@@ -33,8 +33,8 @@ app.MainController = function($http, gmfThemes) {
        * @return {boolean}
        */
       function(theme) {
-    return theme.name !== 'Enseignement';
-  };
+        return theme.name !== 'Enseignement';
+      };
 
   /**
    * @type {Object|undefined}

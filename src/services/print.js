@@ -470,8 +470,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
  * @param {string} featureStyleProp Feature style property name.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStyle_ =
-    function(object, geometryType, style, styleId, featureStyleProp) {
+ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, styleId, featureStyleProp) {
   if (!(geometryType in ngeo.PrintStyleTypes_)) {
     // unsupported geometry type
     return;
@@ -531,8 +530,7 @@ ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
  * @param {!ol.style.Stroke} strokeStyle Stroke style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStyleLine_ =
-    function(symbolizers, strokeStyle) {
+ngeo.Print.prototype.encodeVectorStyleLine_ = function(symbolizers, strokeStyle) {
   var symbolizer = /** @type {MapFishPrintSymbolizerLine} */ ({
     type: 'line'
   });
@@ -547,8 +545,7 @@ ngeo.Print.prototype.encodeVectorStyleLine_ =
  * @param {!ol.style.Image} imageStyle Image style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStylePoint_ =
-    function(symbolizers, imageStyle) {
+ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle) {
   var symbolizer;
   if (imageStyle instanceof ol.style.Circle) {
     symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
@@ -589,8 +586,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ =
  * @param {ol.style.Stroke} strokeStyle Stroke style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStylePolygon_ =
-    function(symbolizers, fillStyle, strokeStyle) {
+ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle, strokeStyle) {
   var symbolizer = /** @type {MapFishPrintSymbolizerPolygon} */ ({
     type: 'polygon'
   });
@@ -607,8 +603,7 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ =
  * @param {!ol.style.Stroke} strokeStyle Stroke style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStyleStroke_ =
-    function(symbolizer, strokeStyle) {
+ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle) {
   var strokeColor = strokeStyle.getColor();
   if (!goog.isNull(strokeColor)) {
     var strokeColorRgba = ol.color.asArray(strokeColor);

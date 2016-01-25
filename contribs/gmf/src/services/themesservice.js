@@ -141,22 +141,22 @@ gmf.Themes.prototype.getBgLayers = function() {
       }, this))
 
     .then(goog.bind(function(values) {
-        var layers = [];
+      var layers = [];
 
-        // (1) add a blank layer
-        layers.push(new ol.layer.Tile({
-          'label': 'blank',
-          'metadata': {'thumbnail': ''}
-        }));
+      // (1) add a blank layer
+      layers.push(new ol.layer.Tile({
+        'label': 'blank',
+        'metadata': {'thumbnail': ''}
+      }));
 
-        // (2) add layers that were returned
-        values.forEach(function(item) {
-          if (item) {
-            layers.push(item);
-          }
-        });
-        return layers;
-      }, this));
+      // (2) add layers that were returned
+      values.forEach(function(item) {
+        if (item) {
+          layers.push(item);
+        }
+      });
+      return layers;
+    }, this));
 };
 
 

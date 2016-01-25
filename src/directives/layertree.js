@@ -82,8 +82,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * @ngdoc directive
  * @ngname ngeoLayertree
  */
-ngeo.layertreeDirective = function(
-    $compile, ngeoLayertreeTemplateUrl) {
+ngeo.layertreeDirective = function($compile, ngeoLayertreeTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
@@ -261,5 +260,4 @@ ngeo.LayertreeController.prototype.getSetActive = function(val) {
 };
 
 
-ngeo.module.controller('NgeoLayertreeController',
-    ngeo.LayertreeController);
+ngeo.module.controller('NgeoLayertreeController', ngeo.LayertreeController);

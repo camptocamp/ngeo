@@ -187,8 +187,7 @@ ngeo.format.FeatureHash.encodeNumber_ = function(num) {
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @private
  */
-ngeo.format.FeatureHash.encodeStyles_ =
-    function(styles, geometryType, encodedStyles) {
+ngeo.format.FeatureHash.encodeStyles_ = function(styles, geometryType, encodedStyles) {
   var styleType = ngeo.format.FeatureHashStyleTypes_[geometryType];
   goog.asserts.assert(goog.isDef(styleType));
   for (var i = 0; i < styles.length; ++i) {
@@ -225,8 +224,7 @@ ngeo.format.FeatureHash.encodeStyles_ =
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @private
  */
-ngeo.format.FeatureHash.encodeStyleLine_ =
-    function(strokeStyle, encodedStyles) {
+ngeo.format.FeatureHash.encodeStyleLine_ = function(strokeStyle, encodedStyles) {
   ngeo.format.FeatureHash.encodeStyleStroke_(strokeStyle, encodedStyles);
 };
 
@@ -238,8 +236,7 @@ ngeo.format.FeatureHash.encodeStyleLine_ =
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @private
  */
-ngeo.format.FeatureHash.encodeStylePoint_ =
-    function(imageStyle, encodedStyles) {
+ngeo.format.FeatureHash.encodeStylePoint_ = function(imageStyle, encodedStyles) {
   if (imageStyle instanceof ol.style.Circle) {
     var radius = imageStyle.getRadius();
     if (encodedStyles.length > 0) {
@@ -267,8 +264,7 @@ ngeo.format.FeatureHash.encodeStylePoint_ =
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @private
  */
-ngeo.format.FeatureHash.encodeStylePolygon_ =
-    function(fillStyle, strokeStyle, encodedStyles) {
+ngeo.format.FeatureHash.encodeStylePolygon_ = function(fillStyle, strokeStyle, encodedStyles) {
   ngeo.format.FeatureHash.encodeStyleFill_(fillStyle, encodedStyles);
   if (!goog.isNull(strokeStyle)) {
     ngeo.format.FeatureHash.encodeStyleStroke_(strokeStyle, encodedStyles);
@@ -285,8 +281,7 @@ ngeo.format.FeatureHash.encodeStylePolygon_ =
  * @param {string=} opt_propertyName Property name.
  * @private
  */
-ngeo.format.FeatureHash.encodeStyleFill_ =
-    function(fillStyle, encodedStyles, opt_propertyName) {
+ngeo.format.FeatureHash.encodeStyleFill_ = function(fillStyle, encodedStyles, opt_propertyName) {
   var propertyName = goog.isDef(opt_propertyName) ?
       opt_propertyName : 'fillColor';
   var fillColor = fillStyle.getColor();
@@ -309,8 +304,7 @@ ngeo.format.FeatureHash.encodeStyleFill_ =
  * @param {Array.<string>} encodedStyles Encoded styles array.
  * @private
  */
-ngeo.format.FeatureHash.encodeStyleStroke_ =
-    function(strokeStyle, encodedStyles) {
+ngeo.format.FeatureHash.encodeStyleStroke_ = function(strokeStyle, encodedStyles) {
   var strokeColor = strokeStyle.getColor();
   if (!goog.isNull(strokeColor)) {
     var strokeColorRgba = ol.color.asArray(strokeColor);
@@ -674,8 +668,7 @@ ngeo.format.FeatureHash.writeMultiPointGeometry_ = function(geometry) {
  * @this {ngeo.format.FeatureHash}
  * @private
  */
-ngeo.format.FeatureHash.encodeRings_ =
-    function(flatCoordinates, stride, offset, ends, textArray) {
+ngeo.format.FeatureHash.encodeRings_ = function(flatCoordinates, stride, offset, ends, textArray) {
   var linearRingCount = ends.length;
   for (var i = 0; i < linearRingCount; ++i) {
     // skip the "closing" point
@@ -780,8 +773,7 @@ ngeo.format.FeatureHash.GEOMETRY_WRITERS_ = {
  * @return {Array.<number>} Flat coordinates.
  * @private
  */
-ngeo.format.FeatureHash.prototype.decodeCoordinates_ =
-    function(text, opt_flatCoordinates) {
+ngeo.format.FeatureHash.prototype.decodeCoordinates_ = function(text, opt_flatCoordinates) {
   var len = text.length;
   var index = 0;
   var flatCoordinates = goog.isDef(opt_flatCoordinates) ?
@@ -825,8 +817,7 @@ ngeo.format.FeatureHash.prototype.decodeCoordinates_ =
  * @return {string} String.
  * @private
  */
-ngeo.format.FeatureHash.prototype.encodeCoordinates_ =
-    function(flatCoordinates, stride, offset, end) {
+ngeo.format.FeatureHash.prototype.encodeCoordinates_ = function(flatCoordinates, stride, offset, end) {
   var encodedCoordinates = '';
   for (var i = offset; i < end; i += stride) {
     var x = flatCoordinates[i];
@@ -851,8 +842,7 @@ ngeo.format.FeatureHash.prototype.encodeCoordinates_ =
  * @return {ol.Feature}
  * @protected
  */
-ngeo.format.FeatureHash.prototype.readFeatureFromText =
-    function(text, opt_options) {
+ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_options) {
   goog.asserts.assert(text.length > 2);
   goog.asserts.assert(text[1] === '(');
   goog.asserts.assert(text[text.length - 1] === ')');
@@ -891,8 +881,7 @@ ngeo.format.FeatureHash.prototype.readFeatureFromText =
  * @return {Array.<ol.Feature>}
  * @protected
  */
-ngeo.format.FeatureHash.prototype.readFeaturesFromText =
-    function(text, opt_options) {
+ngeo.format.FeatureHash.prototype.readFeaturesFromText = function(text, opt_options) {
   goog.asserts.assert(text[0] === 'F');
   /** @type {Array.<ol.Feature>} */
   var features = [];
@@ -916,8 +905,7 @@ ngeo.format.FeatureHash.prototype.readFeaturesFromText =
  * @return {ol.geom.Geometry}
  * @protected
  */
-ngeo.format.FeatureHash.prototype.readGeometryFromText =
-    function(text, opt_options) {
+ngeo.format.FeatureHash.prototype.readGeometryFromText = function(text, opt_options) {
   var geometryReader = ngeo.format.FeatureHash.GEOMETRY_READERS_[text[0]];
   goog.asserts.assert(goog.isDef(geometryReader));
   this.prevX_ = 0;
@@ -933,8 +921,7 @@ ngeo.format.FeatureHash.prototype.readGeometryFromText =
  * @return {string}
  * @protected
  */
-ngeo.format.FeatureHash.prototype.writeFeatureText =
-    function(feature, opt_options) {
+ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_options) {
   var /** @type {Array.<string>} */ encodedParts = [];
 
   // encode geometry
@@ -1010,8 +997,7 @@ ngeo.format.FeatureHash.prototype.writeFeatureText =
  * @return {string}
  * @protected
  */
-ngeo.format.FeatureHash.prototype.writeFeaturesText =
-    function(features, opt_options) {
+ngeo.format.FeatureHash.prototype.writeFeaturesText = function(features, opt_options) {
   var textArray = [];
   if (features.length > 0) {
     textArray.push('F');
@@ -1030,8 +1016,7 @@ ngeo.format.FeatureHash.prototype.writeFeaturesText =
  * @return {string}
  * @protected
  */
-ngeo.format.FeatureHash.prototype.writeGeometryText =
-    function(geometry, opt_options) {
+ngeo.format.FeatureHash.prototype.writeGeometryText = function(geometry, opt_options) {
   var geometryWriter = ngeo.format.FeatureHash.GEOMETRY_WRITERS_[
       geometry.getType()];
   goog.asserts.assert(goog.isDef(geometryWriter));

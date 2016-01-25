@@ -485,21 +485,21 @@ ngeo.profile = function(options) {
 
     p.selectAll('text')
       .attr('transform', function(d) {
-          if (light) {
-            return ['translate(',
-              x(pe.dist(d)), ',',
-              y(pe.z(d)) - 10, ')'
-            ].join('');
-          } else {
-            return ['translate(',
-              x(pe.dist(d)), ',',
-              y(pe.z(d)) - 20, ') rotate(', poiLabelAngle, ')'
-            ].join('');
-          }
-        })
+        if (light) {
+          return ['translate(',
+            x(pe.dist(d)), ',',
+            y(pe.z(d)) - 10, ')'
+          ].join('');
+        } else {
+          return ['translate(',
+            x(pe.dist(d)), ',',
+            y(pe.z(d)) - 20, ') rotate(', poiLabelAngle, ')'
+          ].join('');
+        }
+      })
       .text(function(d) {
-          return pe.sort(d) + (light ? '' : (' - ' + pe.title(d)));
-        });
+        return pe.sort(d) + (light ? '' : (' - ' + pe.title(d)));
+      });
 
     p.selectAll('line')
        .style('stroke', 'grey')
