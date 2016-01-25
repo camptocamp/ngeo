@@ -1,5 +1,209 @@
+/**
+ * Entry point for all styles required for the mobile application.
+ */
 @import 'font.less';
 @import 'base.less';
 @import 'map.less';
 @import 'mobile-nav.less';
 @import 'icons.less';
+
+@map-tools-size: 3em;
+@app-margin: 1em;
+
+@search-input-size: 200px;
+
+main>* {
+  position: absolute;
+}
+
+main button {
+  height: @map-tools-size;
+  width: @map-tools-size;
+}
+
+gmf-map {
+  position: initial;
+  > div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+/**
+ * Search (typeahead)
+ */
+span.twitter-typeahead {
+  &:after {
+    content: '\f002';
+    font-family: FontAwesome;
+    color: grey;
+    position: absolute;
+    top: 0;
+    left: .25em;
+    line-height: 2.8em;
+  }
+
+  input {
+    padding-left: 1.5em;
+  }
+}
+.tt-menu {
+  position: fixed!important;
+  left: 0;
+  right: 0;
+  top: 5em !important;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100vw;
+  background-color: white;
+  border: solid 1px black;
+  .search-header {
+    display: none;
+  }
+  .search-datum {
+    border-bottom: solid 1px black;
+    margin: 0;
+    padding: 10px @app-margin;
+    text-align: left;
+    &:hover {
+      cursor: pointer;
+      background-color: @onhover-color;
+    }
+    p {
+      margin: 0;
+    }
+    .search-label {
+      color: @search-result-font-color;
+    }
+    .search-group {
+      color: lighten(@search-result-font-color, 50%);
+      font-size: 0.8em;
+    }
+  }
+}
+
+.search {
+  top: @app-margin;
+  height: @map-tools-size;
+  left: 0;
+  right: 0;
+  margin-left: @app-margin;
+  margin-right: @app-margin;
+  padding: 0 10px;
+  background-color: @map-tools-bg-color;
+  border: solid 1px @map-tools-color;
+  z-index: @content-index;
+  input {
+    width: @search-input-size;
+    padding: 0 5px;
+    border-width: 0;
+    border-radius: 0;
+    height: @map-tools-size - .2em;
+  }
+  .clear-button {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: ~"calc("@search-input-size / 2 ~" - " @map-tools-size~")";;
+    height: @map-tools-size;
+    width: @map-tools-size;
+    line-height: @map-tools-size;
+    &:after {
+      content: '\f00d';
+      color: grey;
+      font-family: FontAwesome;
+      font-size: 1.5em;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+//For tablet only
+@media (min-width: @screen-sm-min) {
+  @search-width: 18em;
+  .tt-menu {
+    top: 4em !important;
+    width: @search-width;
+    left: 5em !important;
+    bottom: auto;
+  }
+
+  .search {
+    left: @app-margin + @map-tools-size;
+    right: auto;
+    height: @map-tools-size;
+    width: @search-width;
+    padding: 0;
+    input {
+      margin: 0;
+      border: none;
+      width: ~"calc(" @search-width ~" - 2px)";
+    }
+    .clear-button {
+      right: 0;
+      left: auto;
+    }
+  }
+}
+
+//For mobile only
+@media (max-width: @screen-xs-max) {
+  span.twitter-typeahead {
+    &:after {
+      content: none !important;
+    }
+
+    input {
+      padding: 0 5px !important;
+    }
+  }
+}
+
+.ol-control button,
+.ol-touch .ol-control button {
+  font-size: 1em;
+}
+.ol-zoom {
+  top: 5em;
+  .ol-zoom-in,
+  .ol-zoom-out {
+    border-radius: 0;
+  }
+}
+button[ngeo-mobile-geolocation] {
+  right: 1em;
+  top: 11.5em;
+}
+
+.ol-zoom {
+  right: @app-margin;
+  left: auto;
+}
+//For tablet only
+@media (min-width: @screen-sm-min) {
+  .ol-zoom {
+    top: auto;
+    bottom: 4.5em;
+  }
+  button[ngeo-mobile-geolocation] {
+    top: auto;
+    bottom: @app-margin;
+  }
+}
+
+//For tablet only
+@media (min-width: @screen-sm-min) {
+  button[ngeo-mobile-geolocation] {
+    bottom: 12px;
+    top: auto;
+    & button:after {
+      content: 'b'
+    }
+  }
+}

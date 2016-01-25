@@ -1,3 +1,6 @@
+/**
+ * Styles for mobile navigation menus (side menus).
+ */
 @duration: .3s;
 main {
   position: relative;
@@ -5,7 +8,6 @@ main {
   box-shadow: 0px 0px 15px black;
   height: 100%;
   z-index: @content-index;
-  padding-top: 120px;
   text-align: center;
 
   transform: translateZ(0);
@@ -135,7 +137,7 @@ nav.nav-right {
 
     &::before, &::after {
       /* arrow goes on the right side - children navigation */
-      right: 20px;
+      right: 0;
       transform-origin: 9px 50%;
     }
   }
@@ -168,7 +170,6 @@ nav.nav-right {
     display: block;
     height: @menu-item-height;
     line-height: @menu-item-height;
-    padding: 0 20px;
     color: @nav-links;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -184,6 +185,7 @@ nav.nav-right {
     will-change: transform, opacity;
     opacity: 0;
     overflow-y: auto;
+    padding: 10px;
 
     &.active {
       transform: translateX(0%);
@@ -203,4 +205,52 @@ nav.nav-right {
 
 .nav-right {
   right: 0;
+}
+
+/**
+ * Buttons to open right and left navigation menus
+ */
+.nav-trigger {
+  top: @app-margin;
+  background: white;
+  z-index: @above-content-index;
+  height: ~"calc("@map-tools-size ~" - 3px)";
+  margin-top: 2px;
+  border: none;
+}
+
+.nav-left-trigger {
+  left: ~"calc("@app-margin ~" + 2px)";
+  box-shadow: 3px 0 5px -2px #bbb;
+}
+
+.nav-right-trigger {
+  right: ~"calc("@app-margin ~" + 2px)";
+  box-shadow: -2px 0 5px -2px #bbb;
+}
+
+
+//For tablet only
+@media (min-width: @screen-sm-min) {
+  main button:hover{
+    background-color: @onhover-color;
+  }
+
+  .nav-trigger {
+    top: @app-margin;
+    margin: 0;
+    background-color: @map-tools-bg-color;
+    border: solid 1px @map-tools-color;
+    box-shadow: none;
+    height: 3em;
+  }
+
+  .nav-left-trigger {
+    left: @app-margin;
+  }
+
+  .nav-right-trigger {
+    left: auto;
+    right: @app-margin;
+  }
 }

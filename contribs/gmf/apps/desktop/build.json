@@ -5,11 +5,11 @@
     "src/**/*.js",
     "contribs/gmf/src/**/*.js",
     "contribs/gmf/apps/appmodule.js",
-    "contribs/gmf/apps/mobile/js/mobile.js",
+    "contribs/gmf/apps/desktop/js/desktop.js",
     ".build/gmftemplatecache.js"
   ],
   "compile": {
-    "closure_entry_point": "app_mobile",
+    "closure_entry_point": "app_desktop",
     "externs": [
       "node_modules/openlayers/externs/bingmaps.js",
       "node_modules/openlayers/externs/closure-compiler.js",
@@ -38,7 +38,7 @@
       "ol.ENABLE_WEBGL=false"
     ],
     "js": [
-      "contribs/gmf/apps/mobile/js/mobile.js",
+      "contribs/gmf/apps/desktop/js/desktop.js",
       "node_modules/openlayers/externs/olx.js",
       "node_modules/openlayers/externs/oli.js",
       "externs/ngeox.js",
