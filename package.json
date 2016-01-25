@@ -1,7 +1,7 @@
 {
   "name": "ngeo",
   "version": "0.0.1",
-  "description": "AngularJS OpenLayers 3 Library",
+  "description": "AngularJS OpenLayers 3 Library",
   "scripts": {
     "install": "make -f npm.mk install"
   },

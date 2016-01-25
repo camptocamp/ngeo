@@ -110,7 +110,7 @@ app.SearchController = function($rootScope, $compile,
       suggestion: function(suggestion) {
         var feature = /** @type {ol.Feature} */ (suggestion);
 
-        // A scope for the ng-click on the suggestion's « i » button.
+        // A scope for the ng-click on the suggestion's « i » button.
         var scope = $rootScope.$new(true);
         scope['feature'] = feature;
         scope['click'] = function(event) {

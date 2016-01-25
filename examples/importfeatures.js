@@ -80,7 +80,7 @@ app.MainController = function($scope) {
 
 
 /**
- * @param {string} kml KML document.
+ * @param {string} kml KML document.
  * @private
  */
 app.MainController.prototype.importKml_ = function(kml) {

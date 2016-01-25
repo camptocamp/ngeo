@@ -688,7 +688,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
 
 
 /**
- * Return the WMTS URL to use in the print spec.
+ * Return the WMTS URL to use in the print spec.
  * @param {ol.source.WMTS} source The WMTS source.
  * @return {string} URL.
  * @private
@@ -741,7 +741,7 @@ ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
 
 
 /**
- * Get the URL of a report.
+ * Get the URL of a report.
  * @param {string} ref Print report reference.
  * @return {string} The report URL for this ref.
  */
