@@ -43,7 +43,7 @@ gmf.Querypopup = function($sce, $compile, $rootScope, ngeoCreatePopup) {
    * @type {angular.Scope}
    * @private
    */
-  this.scope_ = $rootScope.$new(true);
+  this.contentScope_ = $rootScope.$new(true);
 
   /**
    * @type {ngeo.Popup}
@@ -52,13 +52,17 @@ gmf.Querypopup = function($sce, $compile, $rootScope, ngeoCreatePopup) {
   this.popup_ = ngeoCreatePopup();
 
   /**
-   * The element.
    * @type {angular.JQLite}
    * @private
    */
   this.element_ = angular.element('<div gmf-querypopup></div>');
-  $compile(this.element_)(this.scope_);
+  $compile(this.element_)(this.contentScope_);
 
+  /**
+   * @type {Array.<Object>}
+   * @export
+   */
+  this.results = [];
 };
 
 
@@ -68,18 +72,31 @@ gmf.Querypopup = function($sce, $compile, $rootScope, ngeoCreatePopup) {
  * @export
  */
 gmf.Querypopup.prototype.open = function(features) {
-  if (features.length > 0) {
-    var feature = features[0];
-    var currentProperties = feature.getProperties();
-    this.scope_['currentFeatureIdx'] = 0;
-    delete currentProperties['geometry'];
-    this.scope_['current'] = currentProperties;
+  this.filterFeatures_(features);
+  if (this.results.length > 0) {
+    this.contentScope_['results'] = this.results;
 
     var element = /** @type {string} */ (this.element_.html());
-    this.popup_.setTitle(currentProperties['layer_name'])
+    this.popup_.setTitle(this.results[0]['values_']['layer_name']);
     this.popup_.setContent(this.$sce_.trustAsHtml(element));
     this.popup_.setOpen(true);
   }
+};
+
+
+/**
+ * Todo
+ * @param {Array.<ol.Feature>} features todo
+ * @export
+ */
+gmf.Querypopup.prototype.filterFeatures_ = function(features) {
+  var i, results = [];
+  for (i = 0; i < features.length; i++) {
+    var feature = features[i];
+    delete feature['values_']['geometry'];
+    results.push(feature);
+  }
+  this.results = results;
 };
 
 

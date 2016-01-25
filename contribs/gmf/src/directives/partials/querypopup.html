@@ -1,11 +1,26 @@
-<div>
-  <h5>{{current.name}}</h5>
-  <ul>
-    <li ng-repeat="(key, value) in current" ng-if="key !== 'name'">
-      <span>{{key}}</span>
-      <span>{{value}}</span>
-    </li>
-  </ul>
+<div id="querypopup-carousel" class="carousel slide" data-interval="false">
+  <div class="carousel-inner">
+    <div class="item" ng-class="[$index === 0 ? 'active' : '']" ng-repeat="result in results">
+      <h5>{{result.getProperties().name}}</h5>
+      <ul>
+        <li ng-repeat="(key, value) in result.getProperties()" ng-if="key !== 'layer_name' && key !== 'name'">
+          <span class="key">{{key}}</span>
+          <span class="value">{{value}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="control">
+    <a class="prev" href="#querypopup-carousel" role="button" data-slide="prev">
+      <span class="icon-prev" aria-hidden="true">prev</span>
+    </a>
+    <span class ="current">{{$index + 1}}</span>
+    <span class="on">/</span>
+    <span class="total">{{results.length}}</span>
+    <a class="next" href="#querypopup-carousel" role="button" data-slide="next">
+      <span class="icon-next" aria-hidden="true">next</span>
+    </a>
+  </div>
 </div>
 
 <!--layer_name:name:id:foo:-->
