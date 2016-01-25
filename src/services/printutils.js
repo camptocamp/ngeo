@@ -157,4 +157,4 @@ ngeo.PrintUtils.prototype.getOptimalResolution = function(
 };
 
 
-ngeoModule.service('ngeoPrintUtils', ngeo.PrintUtils);
+ngeo.module.service('ngeoPrintUtils', ngeo.PrintUtils);

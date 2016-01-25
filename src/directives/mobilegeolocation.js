@@ -38,7 +38,7 @@ ngeo.mobileGeolocationDirective = function() {
 };
 
 
-ngeoModule.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
+ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
 
 
 
@@ -242,5 +242,5 @@ ngeo.MobileGeolocationController.prototype.handleViewChange_ = function(event) {
 };
 
 
-ngeoModule.controller('NgeoMobileGeolocationController',
+ngeo.module.controller('NgeoMobileGeolocationController',
     ngeo.MobileGeolocationController);

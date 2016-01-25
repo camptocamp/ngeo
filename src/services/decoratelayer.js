@@ -63,4 +63,4 @@ ngeo.decorateLayer = function(layer) {
 };
 
 
-ngeoModule.value('ngeoDecorateLayer', ngeo.decorateLayer);
+ngeo.module.value('ngeoDecorateLayer', ngeo.decorateLayer);

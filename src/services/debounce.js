@@ -50,4 +50,4 @@ ngeo.debounceServiceFactory = function($timeout) {
 };
 
 
-ngeoModule.factory('ngeoDebounce', ngeo.debounceServiceFactory);
+ngeo.module.factory('ngeoDebounce', ngeo.debounceServiceFactory);

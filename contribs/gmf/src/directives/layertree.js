@@ -28,7 +28,7 @@ gmfModule.value('gmfLayertreeTemplate',
 
 // Overrides the path to the layertree template (used by each nodes, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
-ngeoModule.value('ngeoLayertreeTemplateUrl',
+ngeo.module.value('ngeoLayertreeTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.

@@ -38,7 +38,7 @@ ngeo.desktopGeolocationDirective = function() {
 };
 
 
-ngeoModule.directive('ngeoDesktopGeolocation',
+ngeo.module.directive('ngeoDesktopGeolocation',
     ngeo.desktopGeolocationDirective);
 
 
@@ -192,5 +192,5 @@ ngeo.DesktopGeolocationController.prototype.setPosition_ = function(event) {
 };
 
 
-ngeoModule.controller('NgeoDesktopGeolocationController',
+ngeo.module.controller('NgeoDesktopGeolocationController',
     ngeo.DesktopGeolocationController);

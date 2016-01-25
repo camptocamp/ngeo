@@ -76,4 +76,4 @@ ngeo.modalDirective = function($parse) {
   };
 };
 
-ngeoModule.directive('ngeoModal', ngeo.modalDirective);
+ngeo.module.directive('ngeoModal', ngeo.modalDirective);

@@ -184,7 +184,7 @@ ngeo.LocationFactory = function($rootScope, $window) {
 };
 
 
-ngeoModule.factory('ngeoLocation', ngeo.LocationFactory);
+ngeo.module.factory('ngeoLocation', ngeo.LocationFactory);
 
 
 /**

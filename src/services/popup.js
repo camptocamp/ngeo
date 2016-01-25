@@ -118,4 +118,4 @@ ngeo.createPopupServiceFactory = function($compile, $rootScope) {
         return new ngeo.Popup($compile, $rootScope);
       });
 };
-ngeoModule.factory('ngeoCreatePopup', ngeo.createPopupServiceFactory);
+ngeo.module.factory('ngeoCreatePopup', ngeo.createPopupServiceFactory);

@@ -4,7 +4,7 @@ goog.provide('ngeo.layertreeDirective');
 goog.require('ngeo');
 
 
-ngeoModule.value('ngeoLayertreeTemplateUrl',
+ngeo.module.value('ngeoLayertreeTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -123,7 +123,7 @@ ngeo.layertreeDirective = function(
 };
 
 
-ngeoModule.directive('ngeoLayertree', ngeo.layertreeDirective);
+ngeo.module.directive('ngeoLayertree', ngeo.layertreeDirective);
 
 
 
@@ -261,5 +261,5 @@ ngeo.LayertreeController.prototype.getSetActive = function(val) {
 };
 
 
-ngeoModule.controller('NgeoLayertreeController',
+ngeo.module.controller('NgeoLayertreeController',
     ngeo.LayertreeController);

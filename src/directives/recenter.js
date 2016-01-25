@@ -61,4 +61,4 @@ ngeo.recenterDirective = function() {
     }
   };
 };
-ngeoModule.directive('ngeoRecenter', ngeo.recenterDirective);
+ngeo.module.directive('ngeoRecenter', ngeo.recenterDirective);

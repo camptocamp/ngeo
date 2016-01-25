@@ -49,4 +49,4 @@ ngeo.controlDirective = function() {
 };
 
 
-ngeoModule.directive('ngeoControl', ngeo.controlDirective);
+ngeo.module.directive('ngeoControl', ngeo.controlDirective);

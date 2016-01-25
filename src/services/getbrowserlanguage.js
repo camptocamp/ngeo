@@ -50,4 +50,4 @@ ngeo.getBrowserLanguageFactory = function($window) {
 };
 
 
-ngeoModule.factory('ngeoGetBrowserLanguage', ngeo.getBrowserLanguageFactory);
+ngeo.module.factory('ngeoGetBrowserLanguage', ngeo.getBrowserLanguageFactory);

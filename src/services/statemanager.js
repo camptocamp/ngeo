@@ -97,4 +97,4 @@ ngeo.StateManager.prototype.deleteParam = function(key) {
   }
 };
 
-ngeoModule.service('ngeoStateManager', ngeo.StateManager);
+ngeo.module.service('ngeoStateManager', ngeo.StateManager);

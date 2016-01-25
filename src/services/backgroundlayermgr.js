@@ -136,4 +136,4 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
 };
 
 
-ngeoModule.service('ngeoBackgroundLayerMgr', ngeo.BackgroundLayerMgr);
+ngeo.module.service('ngeoBackgroundLayerMgr', ngeo.BackgroundLayerMgr);

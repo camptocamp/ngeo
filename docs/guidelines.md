@@ -143,7 +143,7 @@ For example:
 ngeo.controlDirective = function() {
   // …
 };
-ngeoModule.directive('ngeoControl', ngeo.controlDirective);
+ngeo.module.directive('ngeoControl', ngeo.controlDirective);
 ```
 
 
@@ -523,7 +523,7 @@ When we use a template URL it should be overwritten by an attribute.
 For that we should use this kind of code:
 
 ```js
-ngeoModule.value('ngeo<Name>TemplateUrl',
+ngeo.module.value('ngeo<Name>TemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.

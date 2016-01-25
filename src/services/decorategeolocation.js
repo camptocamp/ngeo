@@ -37,4 +37,4 @@ ngeo.decorateGeolocation = function(geolocation) {
 };
 
 
-ngeoModule.value('ngeoDecorateGeolocation', ngeo.decorateGeolocation);
+ngeo.module.value('ngeoDecorateGeolocation', ngeo.decorateGeolocation);

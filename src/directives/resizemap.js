@@ -68,4 +68,4 @@ ngeo.resizemapDirective = function($window, $animate) {
 };
 
 
-ngeoModule.directive('ngeoResizemap', ngeo.resizemapDirective);
+ngeo.module.directive('ngeoResizemap', ngeo.resizemapDirective);

@@ -37,7 +37,7 @@ ngeo.ToolActivate = function(toolContext, activePropertyName) {
 };
 
 
-ngeoModule.value('ngeoToolActivate', ngeo.ToolActivate);
+ngeo.module.value('ngeoToolActivate', ngeo.ToolActivate);
 
 
 /**
@@ -236,4 +236,4 @@ ngeo.ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
 };
 
 
-ngeoModule.service('ngeoToolActivateMgr', ngeo.ToolActivateMgr);
+ngeo.module.service('ngeoToolActivateMgr', ngeo.ToolActivateMgr);
