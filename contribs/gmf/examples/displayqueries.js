@@ -1,6 +1,6 @@
-goog.provide('gmf-querypopup');
+goog.provide('gmf-displayqueries');
 
-goog.require('gmf.CreateQuerypopup');
+goog.require('gmf.Displayqueries');
 goog.require('gmf.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -25,17 +25,17 @@ app.module = angular.module('app', ['gmf']);
 
 
 /**
- * @param {gmf.CreateQuerypopup} gmfCreateQuerypopup service.
+ * @param {gmf.Displayqueries} gmfDisplayqueries gmf Displayqueries service.
  * @constructor
  * @ngInject
  */
-app.MainController = function(gmfCreateQuerypopup) {
+app.MainController = function(gmfDisplayqueries) {
 
   /**
-   * @type {gmf.Querypopup}
+   * @type {gmf.Displayqueries}
    * @private
    */
-  this.querypopup_ = gmfCreateQuerypopup();
+  this.displayqueries_ = gmfDisplayqueries;
 
   /**
    * @type {Array.<ol.Feature>}
@@ -62,11 +62,11 @@ app.MainController = function(gmfCreateQuerypopup) {
   })];
 
   this.selectOne = function() {
-    this.querypopup_.open(this.demoFeatures.slice(0, 1));
+    this.displayqueries_.show(this.demoFeatures.slice(0, 1));
   };
 
   this.selectMultiple = function() {
-    this.querypopup_.open(this.demoFeatures);
+    this.displayqueries_.show(this.demoFeatures);
   };
 
   var projection = ol.proj.get('EPSG:21781');

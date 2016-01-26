@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html ng-app='app'>
   <head>
-    <title>GeoMapFish Layer Tree Example</title>
+    <title>GeoMapFish display queries example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
@@ -16,7 +16,7 @@
       ul {
         list-style-type: none;
       }
-      [ngeo-popup] {
+      [gmf-displayqueries] {
         top: 20px;
         max-width: 350px;
         width: 350px;
@@ -26,7 +26,7 @@
         max-height: 400px;
         position: fixed;
       }
-      [ngeo-popup] .popover-content {
+      [gmf-displayqueries] .popover-content {
         overflow: auto;
         /*
          * popup's height - popover-title's height
@@ -39,7 +39,7 @@
           height: 200px;
           width: 200px;
         }
-        [ngeo-popup] {
+        [gmf-displayqueries] {
           position: fixed;
           top: 0;
           left: auto;
@@ -52,7 +52,7 @@
         }
       }
       @media (max-width: 768px) {
-        [ngeo-popup] .popover-content {
+        [gmf-displayqueries] .popover-content {
           /*
            * popup's height - popover-title's height
            * should be computed using bootstrap variables
@@ -75,7 +75,7 @@
     <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
     <script src="../../../node_modules/proj4/dist/proj4.js"></script>
-    <script src="/@?main=querypopup.js"></script>
+    <script src="/@?main=displayqueries.js"></script>
     <script src="default.js"></script>
     <script src="../../../utils/watchwatchers.js"></script>
   </body>
