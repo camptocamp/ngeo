@@ -195,11 +195,14 @@ gmf.LayertreeController.prototype.getLayer = function(node) {
   }
   this.existingLayers_.push(layer);
 
-  // If layer is 'checked', add it on the map.
+  // Add the new layer on the map
+  this.layerHelper_.addLayerToMap(this.map, layer);
+
+  // If layer is 'unchecked', set it to invisible.
   var metadata = node.metadata;
   if (goog.isDefAndNotNull(metadata)) {
-    if (metadata['isChecked'] == 'true') {
-      this.layerHelper_.addLayerToMap(this.map, layer);
+    if (metadata['isChecked'] != 'true') {
+      layer.setVisible(false);
     }
   }
 
@@ -262,11 +265,14 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
  */
 gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
   var layer = treeCtrl.layer;
+  var i;
   // Check if the current node state is 'activated'.
-  var add = (this.getNodeState(treeCtrl) === 'on') ? false : true;
-  // Add/remove layers
+  var visible = (this.getNodeState(treeCtrl) === 'on') ? false : true;
+
   var layers = this.layerHelper_.getFlatLayers(layer);
-  this.layerHelper_.moveInOutLayers(this.map, layers, add);
+  for (i = 0; i < layers.length; i++) {
+    layers[i].setVisible(visible);
+  }
 };
 
 
@@ -283,11 +289,11 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
   var layer = treeCtrl.layer;
 
   if (goog.isDef(node.children)) {
-    // Find number of actives layers on the map for this layer group.
+    // Find number of visible layers on the map for this layer group.
     var i, nbrLayerOnMap = 0;
     var layers = this.layerHelper_.getFlatLayers(layer);
     for (i = 0; i < layers.length; i++) {
-      if (this.layerHelper_.getLayerIndex(this.map, layers[i]) >= 0) {
+      if (layers[i].getVisible()) {
         nbrLayerOnMap++;
       }
     }
@@ -300,9 +306,8 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
       style = 'off';
     }
   } else {
-    // Get style of this node depending if the relative layer is on the map.
-    style = (this.layerHelper_.getLayerIndex(this.map, layer) >= 0) ?
-        'on' : 'off';
+    // Get style of this node depending if the relative layer is visible.
+    style = layer.getVisible() ? 'on' : 'off';
   }
   return style;
 };
