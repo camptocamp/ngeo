@@ -27,9 +27,11 @@ BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.chec
 	.build/contribs/gmf/apps/mobile.check.timestamp \
 	.build/contribs/gmf/apps/desktop.check.timestamp
 EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
+	.build/examples-hosted/lib/ngeo.js.map \
 	.build/examples-hosted/lib/ngeo-debug.js \
 	.build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/gmf.js \
+	.build/examples-hosted/lib/gmf.js.map \
 	.build/examples-hosted/lib/angular.min.js \
 	.build/examples-hosted/lib/angular-gettext.min.js \
 	.build/examples-hosted/lib/bootstrap.min.js \
@@ -161,6 +163,8 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 	cp -r .build/apidoc $</$(GIT_BRANCH)/apidoc
 	mkdir $</$(GIT_BRANCH)/examples
 	cp -r .build/examples-hosted/* $</$(GIT_BRANCH)/examples
+	rm $</$(GIT_BRANCH)/examples/lib/*.js.map
+	rm $</$(GIT_BRANCH)/examples/contribs/gmf/build/*.js.map
 	cd $<; git add -A
 	cd $<; git status
 	cd $<; git commit -m 'Update GitHub pages'
@@ -178,7 +182,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 	./node_modules/.bin/jshint --verbose $(filter-out .build/node_modules.timestamp, $?)
 	touch $@
 
-dist/ngeo.js: buildtools/ngeo.json \
+dist/ngeo.js: .build/ngeo.json \
 		$(EXTERNS_FILES) \
 		$(SRC_JS_FILES) \
 		.build/templatecache.js \
@@ -186,11 +190,14 @@ dist/ngeo.js: buildtools/ngeo.json \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+	echo '//# sourceMappingURL=ngeo.js.map' >> $@
 	@$(STAT_UNCOMPRESSED) $@
 	@cp $@ /tmp/
 	@gzip /tmp/ngeo.js
 	@$(STAT_COMPRESSED) /tmp/ngeo.js.gz
 	@rm /tmp/ngeo.js.gz
+
+dist/ngeo.js.map: dist/ngeo.js
 
 dist/ngeo-debug.js: buildtools/ngeo-debug.json \
 		$(EXTERNS_FILES) \
@@ -212,7 +219,7 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/cleancss $< > $@
 
-dist/gmf.js: buildtools/gmf.json \
+dist/gmf.js: .build/gmf.json \
 		$(EXTERNS_FILES) \
 		$(SRC_JS_FILES) \
 		$(GMF_SRC_JS_FILES) \
@@ -221,11 +228,14 @@ dist/gmf.js: buildtools/gmf.json \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+	echo '//# sourceMappingURL=gmf.js.map' >> $@
 	@$(STAT_UNCOMPRESSED) $@
 	@cp $@ /tmp/
 	@gzip /tmp/gmf.js
 	@$(STAT_COMPRESSED) /tmp/gmf.js.gz
 	@rm /tmp/gmf.js.gz
+
+dist/gmf.js.map: dist/gmf.js
 
 .build/examples/%.min.js: .build/examples/%.json \
 		$(SRC_JS_FILES) \
@@ -235,8 +245,9 @@ dist/gmf.js: buildtools/gmf.json \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+	echo '//# sourceMappingURL=$*.js.map' >> $@
 
-.build/examples/all.min.js: buildtools/examples-all.json \
+.build/examples/all.min.js: .build/examples-all.json \
 		$(SRC_JS_FILES) \
 		$(GMF_SRC_JS_FILES) \
 		$(EXPORTS_JS_FILES) \
@@ -245,6 +256,7 @@ dist/gmf.js: buildtools/gmf.json \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+	echo '//# sourceMappingURL=all.js.map' >> $@
 
 .build/examples/all.js: $(EXAMPLES_JS_FILES) $(GMF_EXAMPLES_JS_FILES) .build/python-venv
 	mkdir -p $(dir $@)
@@ -373,8 +385,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e '/\/node_modules\//d' \
 		-e '/default\.js/d' \
 		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
-		-e 's|/@?main=$?/js/controller\.js|../../build/$?.js|' \
-		-e '/$?.js/i\    <script src="../../../../lib/Function.prototype.bind.js"></script>' $< > $@
+		-e 's|/@?main=$*/js/controller\.js|../../build/$*.js|' \
+		-e '/$*.js/i\    <script src="../../../../lib/Function.prototype.bind.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
@@ -429,10 +441,40 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	wget -O $@ http://closure-compiler.googlecode.com/files/compiler-latest.zip
 	touch $@
 
-.PRECIOUS: .build/examples/%.json
-.build/examples/%.json: buildtools/example.json
+.build/examples/%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
 	mkdir -p $(dir $@)
-	sed 's/{{example}}/$*/' $< > $@
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var entry_point=$* \
+		--var js=examples/$*.js \
+		--var source_map=.build/examples/$*.js.map $< > $@
+
+.build/examples-all.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var src=contribs_gmf \
+		--var examples=true \
+		--var js=.build/examples/all.js \
+		--var strict=false \
+		--var source_map=.build/examples/all.js.map $< > $@
+
+.build/ngeo.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var lib=true \
+		--var src=ngeo \
+		--var source_map=dist/ngeo.js.map $< > $@
+
+.build/gmf.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var lib=true \
+		--var src=contribs_gmf \
+		--var source_map=dist/gmf.js.map $< > $@
+
+.build/app-%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var src=contribs_gmf \
+		--var entry_point=app_$* \
+		--var js=contribs/gmf/apps/$*/js/controller.js \
+		--var generate_exports=true \
+		--var source_map=contribs/gmf/build/$*.js.map $< > $@
 
 $(EXTERNS_ANGULAR):
 	mkdir -p $(dir $@)
@@ -516,13 +558,14 @@ $(EXTERNS_JQUERY):
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
 
-contribs/gmf/build/%.closure.js: contribs/gmf/apps/%/build.json \
+contribs/gmf/build/%.closure.js: .build/app-%.json \
 		$(EXTERNS_FILES) \
 		contribs/gmf/apps/%/js/controller.js \
 		.build/gmftemplatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/openlayers/node_modules/.bin/closure-util build $< $@
+	echo '//# sourceMappingURL=$*.js.map' >> $@
 
 contribs/gmf/build/%.js: contribs/gmf/build/%.closure.js $(GMF_APPS_LIBS_JS_FILES)
 	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
@@ -611,6 +654,10 @@ clean:
 	rm -f .build/ngeo-deps.js
 	rm -f .build/gmf-deps.js
 	rm -f .build/info.json
+	rm -f .build/examples-all.json
+	rm -f .build/ngeo.json
+	rm -f .build/gmf.json
+	rm -f .build/app-*.json
 	rm -f .build/templatecache.js
 	rm -f .build/gmftemplatecache.js
 	rm -f dist/*

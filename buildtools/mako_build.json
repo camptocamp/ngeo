@@ -1,0 +1,124 @@
+<%doc>
+lib:            Set to true to create the libraries files (ngeo or gmf)
+src:            The used source set (ngeo|contribs_gmf)
+examples:       Add the examples files
+entry_point:    The entry point
+js:             An evantual additional js file
+strict:         Set to false to don't do a strict validation
+source_map:     The source map destination file
+</%doc>
+{
+% if lib == 'true':
+  "exports": ["*"],
+% else:
+  "exports": [],
+% endif
+  "src": [
+% if src == 'ngeo':
+% if lib == 'true':
+    "exports/**/*.js",
+% endif
+% if examples != 'true':
+    ".build/templatecache.js",
+% endif
+% elif src == 'contribs_gmf':
+    "contribs/gmf/src/**/*.js",
+% if lib == 'true':
+    "exports/**/*.js",
+    "contribs/gmf/exports/**/*.js",
+% else:
+    "contribs/gmf/apps/**/*.js",
+% endif
+% if examples != 'true':
+    ".build/gmftemplatecache.js",
+% endif
+% endif
+    "node_modules/openlayers/src/**/*.js",
+    "node_modules/openlayers/build/ol.ext/*.js",
+    "src/**/*.js"
+  ],
+  "compile": {
+% if entry_point:
+    "closure_entry_point": "${entry_point}",
+% endif
+    "externs": [
+% if examples == 'true':
+      "node_modules/openlayers/externs/example.js",
+%endif
+      "node_modules/openlayers/externs/bingmaps.js",
+      "node_modules/openlayers/externs/closure-compiler.js",
+      "node_modules/openlayers/externs/esrijson.js",
+      "node_modules/openlayers/externs/geojson.js",
+      "node_modules/openlayers/externs/proj4js.js",
+      "node_modules/openlayers/externs/tilejson.js",
+      "node_modules/openlayers/externs/topojson.js",
+      "externs/angular-gettext.js",
+      "externs/d3.js",
+      "externs/typeahead.js",
+      "externs/twbootstrap.js",
+      "externs/closure-compiler.js",
+      "externs/jqueryui.js",
+      ".build/externs/angular-1.4.js",
+      ".build/externs/angular-1.4-q_templated.js",
+      ".build/externs/angular-1.4-http-promise_templated.js",
+      ".build/externs/jquery-1.9.js"
+% if lib != "true":
+    ],
+    "js": [
+% else:
+      ,
+% endif
+% if js is not UNDEFINED:
+      "${js}",
+% endif
+      "node_modules/openlayers/externs/olx.js",
+      "node_modules/openlayers/externs/oli.js",
+% if src == 'contribs_gmf':
+      "contribs/gmf/externs/gmfx.js",
+      "contribs/gmf/externs/gmf-themes.js",
+% endif
+      "externs/ngeox.js",
+      "externs/mapfish-print-v3.js"
+    ],
+    "define": [
+      "goog.array.ASSUME_NATIVE_FUNCTIONS=true",
+      "goog.dom.ASSUME_STANDARDS_MODE=true",
+      "goog.json.USE_NATIVE_JSON=true",
+      "goog.DEBUG=false",
+      "ol.ENABLE_DOM=false",
+      "ol.ENABLE_WEBGL=false"
+    ],
+    "jscomp_error": [
+      "*"
+    ],
+    "jscomp_off": [
+% if strict == 'false':
+      "extraRequire",
+      "missingProvide",
+% endif
+      "useOfGoogBase",
+      "unnecessaryCasts",
+      "lintChecks"
+    ],
+    "extra_annotation_name": [
+      "api", "observable", "ngdoc", "ngname", "htmlAttribute"
+    ],
+% if lib == "true" or generate_exports == 'true':
+    "generate_exports": true,
+% else:
+    "manage_closure_dependencies": true,
+% endif
+% if source_map is not UNDEFINED:
+    "create_source_map": "${source_map}",
+    "source_map_format": "V3",
+% endif
+    "language_in": "ECMASCRIPT5_STRICT",
+    "language_out": "ECMASCRIPT5_STRICT",
+    "angular_pass": true,
+    "compilation_level": "ADVANCED",
+    "warning_level": "VERBOSE",
+    "export_local_property_definitions": true,
+    "output_wrapper": "(function(){%output%}).call(window);",
+    "use_types_for_optimization": true
+  }
+}
