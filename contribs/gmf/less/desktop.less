@@ -4,6 +4,7 @@
 @import 'font.less';
 @import 'base.less';
 @import 'map.less';
+@import 'layertree.less';
 @import 'icons.less';
 
 @data-width: 320px;
@@ -162,7 +163,32 @@ main {
   float: left;
   background-color: @brand-secondary;
   width: @data-width;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+
+  .header {
+    flex: 0 1 auto;
+  }
+
+  .content {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    margin: 5px;
+  }
+
+  gmf-themeselector {
+    width: 500px;
+    .gmf-theme-selector li {
+      float: left;
+    }
+  }
 }
+
+gmf-layertree ul .treenode {
+  padding-top: 5px;
+}
+
 
 .tools {
   display: block;
@@ -230,4 +256,20 @@ main {
 .tools {
   height: 100%;
   position: relative;
+}
+
+
+::-webkit-scrollbar-track {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #eee;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: @brand-primary;
 }

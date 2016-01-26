@@ -12,8 +12,34 @@
       </div>
     </header>
     <main>
+      <!-- using the mobile background layer selector (hidden) temporarily
+           here to get a background-layer -->
+      <gmf-mobile-background-layer-selector
+        gmf-mobile-background-layer-selector-map="::mainCtrl.map"
+        style="display: none;">
+      </gmf-mobile-background-layer-selector>
       <div class="data-panel">
         <div class="header">
+          <div class="dropdown">
+            <a href class="btn btn-default btn-block"
+               data-toggle="dropdown">
+              <span class="fa fa-grid"></span>
+              <span translate>Theme:</span>
+              <b ng-bind="mainCtrl.theme['name']" translate>Loading...</b>
+              <span class="caret"></span>
+            </a>
+            <gmf-themeselector class="dropdown-menu"
+                gmf-themeselector-currenttheme="mainCtrl.theme"
+                gmf-themeselector-filter="::mainCtrl.filter">
+            </gmf-themeselector>
+          </div>
+        </div>
+        <div class="content">
+          <gmf-layertree
+              gmf-layertree-source="mainCtrl.theme"
+              gmf-layertree-map="::mainCtrl.map"
+              gmf-layertree-openlinksinnewwindow="true">
+          </gmf-layertree>
         </div>
       </div>
       <div class="tools" ngeo-resizemap="mainCtrl.map"
@@ -81,6 +107,8 @@
          var module = angular.module('app');
          module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi');
          module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch');
+         module.constant('gmfWmsUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/mapserv_proxy');
+         module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/themes?version=2&background=background');
        })();
     </script>
   </body>

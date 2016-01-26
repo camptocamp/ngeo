@@ -144,7 +144,7 @@ nav.nav-right {
   }
 
   .go-back,
-  a[data-toggle] {
+  a[data-toggle=slide-in] {
     &::before, &::after {
       /* arrow icon in CSS - for element with nested unordered lists */
       content: '';
@@ -167,7 +167,7 @@ nav.nav-right {
   }
 
   @menu-item-height: @nav-bar-height;
-  ul a {
+  ul a[data-toggle=slide-in] {
     display: block;
     height: @menu-item-height;
     line-height: @menu-item-height;
