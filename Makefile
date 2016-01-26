@@ -315,7 +315,7 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $@
 	cp contribs/gmf/examples/data/* $@
 
-.build/examples-hosted/contribs/gmf/fonts: contribs/gmf/fonts build-gmf-mobile-app build-gmf-desktop-app
+.build/examples-hosted/contribs/gmf/fonts: contribs/gmf/fonts .build/font_awesome.timestamp
 	mkdir -p $(dir $@)
 	cp -r $< $(dir $@)
 
