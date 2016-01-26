@@ -177,7 +177,7 @@ span.twitter-typeahead {
   }
 }
 button[ngeo-mobile-geolocation] {
-  right: 1em;
+  right: @app-margin;
   top: 11.5em;
 }
 
@@ -189,19 +189,11 @@ button[ngeo-mobile-geolocation] {
 @media (min-width: @screen-sm-min) {
   .ol-zoom {
     top: auto;
-    bottom: 4.5em;
+    bottom: 8.5em;
   }
   button[ngeo-mobile-geolocation] {
     top: auto;
-    bottom: @app-margin;
-  }
-}
-
-//For tablet only
-@media (min-width: @screen-sm-min) {
-  button[ngeo-mobile-geolocation] {
-    bottom: 12px;
-    top: auto;
+    bottom: 5.5em;
     & button:after {
       content: 'b'
     }
