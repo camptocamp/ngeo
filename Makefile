@@ -125,7 +125,7 @@ build-gmf-desktop-app: $(addprefix contribs/gmf/build/desktop,.js .css) \
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 
 .PHONY: lint
-lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslint.timestamp .build/jshint.timestamp
+lint: .build/gjslint.timestamp .build/jshint.timestamp
 
 .PHONY: test
 test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp
@@ -170,12 +170,12 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages:
 	git clone --branch gh-pages $(GIT_REMOTE_URL) $@
 
-.build/gjslint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_JS_FILES)
-	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable,example,module,ngdoc,ngname,htmlAttribute $?
+.build/gjslint.timestamp: .build/python-venv/bin/gjslint $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_JS_FILES)
+	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable,example,module,ngdoc,ngname,htmlAttribute $(filter-out .build/python-venv/bin/gjslint, $?)
 	touch $@
 
-.build/jshint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_JS_FILES)
-	./node_modules/.bin/jshint --verbose $?
+.build/jshint.timestamp: .build/node_modules.timestamp $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_JS_FILES)
+	./node_modules/.bin/jshint --verbose $(filter-out .build/node_modules.timestamp, $?)
 	touch $@
 
 dist/ngeo.js: buildtools/ngeo.json \
