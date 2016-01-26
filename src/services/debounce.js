@@ -2,6 +2,8 @@ goog.provide('ngeo.Debounce');
 
 goog.require('ngeo');
 
+/* eslint-disable valid-jsdoc */
+// FIXME: eslint can't detect that the function returns a function
 
 /**
  * Provides a debounce service. That service is a function
