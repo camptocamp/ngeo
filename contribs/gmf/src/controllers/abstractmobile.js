@@ -12,8 +12,6 @@ goog.require('gmf.mobileBackgroundLayerSelectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileNavDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.proj.EPSG21781');
-/** @suppress {extraRequire} */
 goog.require('gmf.searchDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.themeselectorDirective');
@@ -50,6 +48,7 @@ gmfModule.constant('isMobile', true);
  * @param {ngeo.StateManager} ngeoStateManager the state manager.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
+ * @param {number} srid The used EPSG code.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
  * @constructor
@@ -58,7 +57,7 @@ gmfModule.constant('isMobile', true);
  */
 gmf.AbstractMobileController = function(
     defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
-    $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
+    $scope, ngeoStateManager, ngeoFeatureOverlayMgr, srid,
     gmfThemes, fulltextsearchUrl) {
 
   /**
@@ -79,7 +78,7 @@ gmf.AbstractMobileController = function(
     labelKey: 'label',
     groupsKey: 'layer_name',
     groupValues: ['osm'],
-    projection: 'EPSG:21781',
+    projection: 'EPSG:' + srid,
     url: fulltextsearchUrl
   }];
 
@@ -126,7 +125,7 @@ gmf.AbstractMobileController = function(
     layers: [],
     view: new ol.View({
       center: [632464, 185457],
-      projection: ol.proj.get('epsg:21781'),
+      projection: ol.proj.get('epsg:' + 21781),
       minZoom: 3,
       zoom: 3
     }),
