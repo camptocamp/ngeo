@@ -40,12 +40,14 @@ gmf.Displayqueries = function($sce, $compile, $rootScope) {
    * @private
    */
   this.element_ = angular.element('<div gmf-displayqueries></div>');
-
+  
   /**
-   * @type {Array.<Object>}
+   * @type {Object} //FIXME
    * @export
    */
-  this.results = [];
+  this.result = null;
+
+  this.scope_['next'] = this.next;
 
   $compile(this.element_)(this.scope_);
   angular.element(document.body).append(this.element_);
@@ -84,14 +86,15 @@ gmf.Displayqueries.prototype.setContent = function(content) {
 
 /**
  * Todo
- * @param {Array.<ol.Feature>} features todo
+ * @param {Object} features todo
  * @export
  */
-gmf.Displayqueries.prototype.show = function(features) {
-  this.filterFeatures_(features);
-  if (this.results.length > 0) {
-    this.scope_['results'] = this.results;
-
+gmf.Displayqueries.prototype.show = function(result) {
+  // features = this.getFeatures_(results.source);
+  this.result = result;
+  var sources = this.result.sources;
+  if (goog.isDef(sources) && sources.length > 0) {
+    this.displayFirstQueryResult_();
     var element = /** @type {string} */ (this.element_.html());
     this.setContent(this.$sce_.trustAsHtml(element));
     this.setShow(true);
@@ -99,19 +102,89 @@ gmf.Displayqueries.prototype.show = function(features) {
 };
 
 
+gmf.Displayqueries.prototype.displayFirstQueryResult_ = function() {
+  var source = this.result.sources[0];
+  this.scope_['currentResult'] = 0;
+  this.scope_['source'] = source;
+  this.scope_['feature'] = source.features[0];
+};
+
+
+gmf.Displayqueries.prototype.setCurrentResult_ = function(position) {
+  var i, source, features;
+  var sources = this.result.sources;
+
+  this.scope_['currentResult'] = position;
+
+  for (i = 0; i < sources.length ; i++) {
+    var source = sources[i];
+    var features = source.features;
+    if (position > features.length) {
+      position -= features.length;
+    } else {
+      this.scope_['source'] = source;
+      this.scope_['feature'] = source.features[position];
+      break;
+    }
+  }
+};
+
+
+gmf.Displayqueries.prototype.prev = function() {
+  var position = this.scope_['currentResult'] - 1;
+  if (position < 0) {
+    position = this.getResultLength() - 1;
+  }
+  this.setCurrentResult(position);
+}
+
+
+gmf.Displayqueries.prototype.next = function() {
+  var position = this.scope_['currentResult'] + 1;
+  var positionMax = this.getResultLength() - 1;
+  if (position > positionMax) {
+    position = positionMax;
+  }
+  this.setCurrentResult(position);
+}
+
+
+gmf.Displayqueries.prototype.getResultLength = function() {
+  var source = this.results.sources;
+  var sourceLength = sources.length;
+  return sourceLength + source[sourceLength].features.length
+}
+
+
 /**
  * Todo
  * @param {Array.<ol.Feature>} features todo
  * @export
  */
-gmf.Displayqueries.prototype.filterFeatures_ = function(features) {
-  var i, results = [];
-  for (i = 0; i < features.length; i++) {
-    var feature = features[i];
-    delete feature['values_']['geometry'];
-    results.push(feature);
+gmf.Displayqueries.prototype.getFeatures_ = function(results) {
+  var i, ii, iii;
+  var result;
+  var feature, rawFeatures, features = [];
+  var prop, sourceProperties;
+  var newPropName;
+
+  for (i = 0; i < results.length; i++) {
+    result = results[i];
+    rawFeatures = result.features;
+    sourceProperties = Object.keys(result);
+    for (ii = 0; i < rawFeatures.length; i++) {
+      feature = rawFeatures[ii];
+      for (iii = 0; iii < sourceProperties.length; iii++) {
+        prop = sourceProperties[iii];
+        if (prop !== 'features') {
+          newPropName = 'source_' + prop;
+          feature.setProperties({newPropName: result[prop]});
+        }
+      }
+      features.push(feature);
+    }
   }
-  this.results = results;
+  return features;
 };
 
 

@@ -61,12 +61,47 @@ app.MainController = function(gmfDisplayqueries) {
     foo: 'bar'
   })];
 
-  this.selectOne = function() {
-    this.displayqueries_.show(this.demoFeatures.slice(0, 1));
+  /**
+   * @type {Array.<Object>}
+   * @export
+   */
+  this.queryResult = {
+    sources: [{
+      features: [
+        new ol.Feature({
+          geometry: new ol.geom.Point([533065, 156135]),
+          name: 'Point 1',
+          id: '1234',
+          foo: 'barz'
+        }),
+        new ol.Feature({
+          geometry: new ol.geom.Point([535165, 152335]),
+          name: 'Point 2',
+          id: '5678',
+          foo: 'bary'
+        })
+      ],
+      label: 'Bus Stop',
+      name: 'bus_stop',
+      pending: false
+    }, {
+      features: [
+        new ol.Feature({
+          geometry: new ol.geom.Point([539565, 151935]),
+          name: 'Point 3',
+          id: '9101',
+          foo: 'barx'
+        })
+      ],
+      label: 'Train station',
+      name: 'train_station',
+      pending: false
+    }],
+    'total': 0
   };
 
-  this.selectMultiple = function() {
-    this.displayqueries_.show(this.demoFeatures);
+  this.simulateQuery = function() {
+    this.displayqueries_.show(this.queryResult);
   };
 
   var projection = ol.proj.get('EPSG:21781');
