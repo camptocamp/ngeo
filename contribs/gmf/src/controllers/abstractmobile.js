@@ -114,7 +114,7 @@ gmf.AbstractMobileController = function(
   this.mobileGeolocationOptions = {
     positionFeatureStyle: positionFeatureStyle,
     accuracyFeatureStyle: accuracyFeatureStyle,
-    zoom: 17
+    zoom: 9
   };
 
   /**
