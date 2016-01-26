@@ -7,6 +7,9 @@ EXPORTS_JS_FILES := $(shell find exports -type f -name '*.js')
 EXAMPLES_JS_FILES := $(shell find examples -maxdepth 1 -type f -name '*.js')
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 
+
+FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2)
+
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
@@ -136,7 +139,7 @@ test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templateca
 	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: serve
-serve: .build/node_modules.timestamp .build/font_awesome.timestamp
+serve: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT)
 	node buildtools/serve.js
 
 .PHONY: examples-hosted
@@ -327,9 +330,15 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $@
 	cp contribs/gmf/examples/data/* $@
 
-.build/examples-hosted/contribs/gmf/fonts: contribs/gmf/fonts .build/font_awesome.timestamp
+.PRECIOUS: .build/examples-hosted/contribs/gmf/fonts/gmf-icons.%
+.build/examples-hosted/contribs/gmf/fonts/gmf-icons.%: contribs/gmf/fonts/gmf-icons.%
 	mkdir -p $(dir $@)
-	cp -r $< $(dir $@)
+	cp $< $@
+
+.PRECIOUS: .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont.%
+.build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont.%: contribs/gmf/fonts/fontawesome-webfont.%
+	mkdir -p $(dir $@)
+	cp $< $@
 
 .build/examples-hosted/contribs/gmf/build: build-gmf-mobile-app build-gmf-desktop-app
 	mkdir -p $(dir $@)
@@ -379,7 +388,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/desktop/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
 		.build/examples-hosted/contribs/gmf/build \
-		.build/examples-hosted/contribs/gmf/fonts
+		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
+		$(addprefix .build/examples-hosted/contribs/gmf/fonts/gmf-icons., eot ttf woff)
 	mkdir -p $(dir $@)
 	sed -e '/stylesheet\/less" href="..\/..\//d' \
 		-e '/\/node_modules\//d' \
@@ -427,10 +437,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	touch $@
 
-.build/font_awesome.timestamp:
+node_modules/font-awesome/fonts/fontawesome-webfont.%: .build/node_modules.timestamp
+
+contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontawesome-webfont.%
 	mkdir -p $(dir $@)
-	cp node_modules/font-awesome/fonts/* contribs/gmf/fonts
-	touch $@
+	cp $< $@
 
 .build/closure-compiler/compiler.jar: .build/closure-compiler/compiler-latest.zip
 	unzip $< -d .build/closure-compiler
@@ -575,7 +586,7 @@ compile-css: contribs/gmf/build/mobile.css contribs/gmf/build/desktop.css
 
 contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less $(GMF_APPS_LESS_FILES) \
 		.build/node_modules.timestamp \
-		.build/font_awesome.timestamp
+		$(FONTAWESOME_WEBFONT)
 	mkdir -p $(dir $@)
 	./node_modules/.bin/lessc $< $@ --autoprefix
 
@@ -637,10 +648,16 @@ contribs/gmf/build/gmf-%.json: .build/locale/%/LC_MESSAGES/gmf.po .build/node_mo
 	node buildtools/compile-catalog $< > $@
 
 .PHONY: generate-gmf-fonts
-gmf-icons-generate: package.json
-	node_modules/svg2ttf/svg2ttf.js contribs/gmf/fonts/gmf-icons.svg contribs/gmf/fonts/gmf-icons.ttf
-	node_modules/ttf2eot/ttf2eot.js contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot
-	node_modules/ttf2woff/ttf2woff.js contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.woff
+gmf-icons-generate: contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot contribs/gmf/fonts/gmf-icons.woff
+
+contribs/gmf/fonts/gmf-icons.ttf: contribs/gmf/fonts/gmf-icons.svg .build/node_modules.timestamp
+	node_modules/svg2ttf/svg2ttf.js $< $@
+
+contribs/gmf/fonts/gmf-icons.eot: contribs/gmf/fonts/gmf-icons.ttf .build/node_modules.timestamp
+	node_modules/ttf2eot/ttf2eot.js $< $@
+
+contribs/gmf/fonts/gmf-icons.woff: contribs/gmf/fonts/gmf-icons.ttf .build/node_modules.timestamp
+	node_modules/ttf2woff/ttf2woff.js $< $@
 
 # clean
 
