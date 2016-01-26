@@ -15,6 +15,7 @@ GMF_APPS_DESKTOP_JS_FILES := $(shell find contribs/gmf/apps/desktop/js -type f -
 GMF_APPS_MOBILE_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 GMF_APPS_DESKTOP_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 GMF_APPS_LIBS_JS_FILES += \
+	contribs/gmf/examples/https.js \
 	node_modules/jquery/dist/jquery.min.js \
 	node_modules/angular/angular.min.js \
 	node_modules/angular-gettext/dist/angular-gettext.min.js \
