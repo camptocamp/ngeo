@@ -54,90 +54,100 @@ main {
     bottom: 0;
     left: 0;
   }
+}
+.search {
+  position: absolute;
+  top: @app-margin;
+  left: @app-margin + 50px;
+  z-index: @content-index;
 
-  .search {
-    position: absolute;
-    top: @app-margin;
-    left: @app-margin + 50px;
-    z-index: @content-index;
-
-    .gmf-search > * {
-      float: left;
-    }
-    .gmf-search > .clear-button{
-      margin-left: -15px;
-      padding: 3px 0 2px;
-      position: relative;
-    }
-    .gmf-search > .clear-button:hover{
-      cursor: pointer;
-    }
-    .gmf-search > .clear-button:after{
-      content: 'x';
-    }
-
-    span.twitter-typeahead .tt-menu {
+  span.twitter-typeahead {
+    &:after {
+      // magnifier
+      content: '\f002';
+      font-family: FontAwesome;
+      color: grey;
       position: absolute;
-      top: 100%;
-      left: 0;
-      z-index: 1000;
-      display: none;
-      float: left;
-      min-width: 160px;
-      padding: 5px 0;
+      top: 0;
+      left: .5em;
+      line-height: @input-height-base;
+    }
+
+    input {
+      padding-left: 2em;
+    }
+
+    & + span.clear-button {
+      position: absolute;
+      line-height: @input-height-base;
+      top: 0;
+      right: .5em;;
+      display: block;
+      cursor: pointer;
+      color: white;
+      opacity: 0.5;
+      &:after{
+        // cross
+        content: '\f00d';
+        color: grey;
+        font-family: FontAwesome;
+      }
+      &:hover {
+        opacity: 1;
+      }
+    }
+    .form-control {
+      position: relative;
+      padding-right: 20px;
+      width: auto;
+    }
+
+    .tt-menu {
+      min-width: 250px;
       margin: 2px 0 0;
-      list-style: none;
-      font-size: 14px;
-      text-align: left;
       background-color: #ffffff;
-      border: 1px solid #cccccc;
       border: 1px solid rgba(0, 0, 0, 0.15);
       border-radius: 4px;
-      -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
       background-clip: padding-box;
-    }
-    span.twitter-typeahead .header {
-     background-color: #CCDDEE;
-     padding: 4px 0;
-    }
-    span.twitter-typeahead .tt-suggestion {
-      display: block;
-      padding: 3px 20px;
-      margin-bottom: 0px;
-      clear: both;
-      font-weight: normal;
-      line-height: 1.42857143;
-      color: #333333;
-      white-space: nowrap;
-    }
-    span.twitter-typeahead .tt-suggestion:hover,
-    span.twitter-typeahead .tt-suggestion:focus {
-      color: #ffffff;
-      text-decoration: none;
-      outline: 0;
-      background-color: #428bca;
-    }
-    span.twitter-typeahead .tt-suggestion.tt-cursor {
-      color: #ffffff;
-      background-color: #428bca;
-    }
-    span.twitter-typeahead .tt-suggestion button {
-      background: none;
-      border: 0;
-      float: right;
-    }
-    .input-group span.twitter-typeahead {
-      display: block !important;
-    }
-    .input-group span.twitter-typeahead .tt-menu {
-      top: 32px !important;
-    }
-    .input-group.input-group-lg span.twitter-typeahead .tt-menu {
-      top: 44px !important;
-    }
-    .input-group.input-group-sm span.twitter-typeahead .tt-menu {
-      top: 28px !important;
+      // border radius will clip content
+      overflow: hidden;
+
+      .search-header {
+        font-size: 0.9em;
+        background-color: #eee;
+        text-transform: uppercase;
+        color: #666;
+      }
+
+      .search-header,
+      .search-datum {
+        padding: 8px 10px;
+      }
+      .search-datum:not(:last-child) {
+        border-bottom: solid 1px #eee;
+      }
+      .search-datum {
+        font-weight: 600;
+
+        &.tt-cursor,
+        &:hover,
+        &:focus {
+          cursor: pointer;
+          background-color: @onhover-color;
+        }
+
+        p {
+          margin-bottom: 0;
+        }
+        .search-label {
+          color: @search-result-font-color;
+        }
+        .search-group {
+          color: lighten(@search-result-font-color, 50%);
+          font-size: 0.8em;
+        }
+      }
     }
   }
 }
