@@ -60,6 +60,11 @@ L10N_LANGUAGES = fr de it
 L10N_PO_FILES = $(addprefix c2cgeoportal/locale/,$(addsuffix /LC_MESSAGES/c2cgeoportal.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
 TX_GIT_BRANCH ?= master
+ifeq (,$(wildcard $(HOME)/.transifexrc))
+TOUCHBACK_TXRC = touch --date "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
+else
+TOUCHBACK_TXRC = touch --date "$(shell stat -c '%y' $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+endif
 
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
 GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
@@ -638,6 +643,7 @@ transifex-init: .build/dev-requirements.timestamp c2cgeoportal/locale/c2cgeoport
 
 .build/locale/%/LC_MESSAGES/gmf.po: .tx/config .build/python-venv/bin/tx
 	.build/python-venv/bin/tx pull -l $* --force
+	$(TOUCHBACK_TXRC)
 
 contribs/gmf/build/gmf-en.json:
 	mkdir -p $(dir $@)
