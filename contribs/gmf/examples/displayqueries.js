@@ -7,6 +7,11 @@ goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.proj');
 goog.require('ol.source.OSM');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
+
 
 
 proj4.defs('EPSG:21781',
@@ -52,7 +57,15 @@ app.module.value('ngeoQueryResult',
             geometry: new ol.geom.Point([539565, 151935]),
             name: 'Point 3',
             id: '9101',
-            foo: 'barx'
+            foo: 'barx',
+            prop1: 'a',
+            prop2: 'b',
+            prop3: 'c',
+            prop4: 'd',
+            prop5: 'e',
+            prop6: 'f',
+            prop7: 'Propertie with a long, long text as value. This text is' +
+                'so long, I think we can not display it "as is".'
           })
         ],
         label: 'Train station',
@@ -65,17 +78,33 @@ app.module.value('ngeoQueryResult',
 
 
 /**
+ * @param {Object} ngeoQueryResult ngeo query result FIXME
+ * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ *   overlay manager service.
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoQueryResult) {
+app.MainController = function(ngeoQueryResult, ngeoFeatureOverlayMgr) {
 
   var projection = ol.proj.get('EPSG:21781');
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   this.simulateQuery = function() {
-    //todo
+    // TODO
   };
+
+  var fill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
+  var stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
+
+  /**
+   * @type {ol.style.Style}
+   * @export
+   */
+  this.featureStyle = new ol.style.Style({
+    fill: fill,
+    image: new ol.style.Circle({fill: fill, radius: 5, stroke: stroke}),
+    stroke: stroke
+  });
 
   /**
    * @type {ol.Map}
@@ -94,6 +123,8 @@ app.MainController = function(ngeoQueryResult) {
       zoom: 3
     })
   });
+
+  ngeoFeatureOverlayMgr.init(this.map);
 };
 
 

@@ -1,26 +1,29 @@
 <div class="displayqueries" ng-class="[ctrl.open === true ? 'show' : 'hide']">
-  <button type="button" class="close" ng-click="ctrl.open = false"></button>
-  <div class="swap-animation-container">
-    <div ng-animate-swap="ctrl.currentResult" class="swap-animation" ng-class="[ctrl.wasNext === true ? 'wasnext' : 'wasprev']">
-      <div class="header"> 
-        <p class="title">{{ctrl.source.name}}</p>
-        <p class="subtitle">{{ctrl.source.label}}</p> 
-      </div>
-      <div class="details">
-        <table>
-          <tr ng-repeat="(key, value) in ctrl.feature.getProperties()" ng-if="key !== 'geometry'">
-            <td class="key">{{key}}</td>
-            <td class="value">{{value}}</td>
-          </tr>
-        </table>
+  <button class="collapse-button" type="button" ng-init="ctrl.collapse = true" ng-click="ctrl.collapse = !ctrl.collapse" ng-class="[ctrl.collapse ? 'up' : 'down']"></button>
+  <div class="displayqueries-container">
+    <button type="button" class="close" ng-click="ctrl.open = false"></button>
+    <div class="animation-container" ng-class="[ctrl.collapse ? '' : 'detailed']">
+      <div ng-animate-swap="ctrl.currentResult" class="slide-animation">
+        <div class="header"> 
+          <p class="title">{{ctrl.source.name}}</p>
+          <p class="subtitle">{{ctrl.source.label}}</p> 
+        </div>
+        <div class="details">
+          <table>
+            <tr ng-repeat="(key, value) in ctrl.feature.getProperties()" ng-if="key !== 'geometry'">
+              <td class="key">{{key}}</td>
+              <td class="value">{{value}}</td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="navigate">
-    <button type="button" class="prev" ng-click="ctrl.prev()"></button>
-    <span>{{ctrl.currentResult + 1}}</span>
-    <span>/</span>
-    <span>{{ctrl.getResultLength()}}</span>
-    <button type="button" class="next" ng-click="ctrl.next()"></button>
+    <div class="navigate">
+      <button type="button" class="previous" ng-click="ctrl.previous()"></button>
+      <span>{{ctrl.currentResult + 1}}</span>
+      <span>/</span>
+      <span>{{ctrl.getResultLength()}}</span>
+      <button type="button" class="next" ng-click="ctrl.next()"></button>
+    </div>
   </div>
 </div>
