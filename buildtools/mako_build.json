@@ -58,9 +58,9 @@ source_map:     The source map destination file
       "externs/twbootstrap.js",
       "externs/closure-compiler.js",
       "externs/jqueryui.js",
-      ".build/externs/angular-1.4.js",
-      ".build/externs/angular-1.4-q_templated.js",
-      ".build/externs/angular-1.4-http-promise_templated.js",
+      ".build/externs/angular-1.5.js",
+      ".build/externs/angular-1.5-q_templated.js",
+      ".build/externs/angular-1.5-http-promise_templated.js",
       ".build/externs/jquery-1.9.js"
 % if lib != "true":
     ],

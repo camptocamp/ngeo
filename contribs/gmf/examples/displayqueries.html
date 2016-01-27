@@ -8,6 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
     <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css"></link>
     <style>
       gmf-map > div {
         width: 600px;
@@ -16,7 +17,8 @@
       ul {
         list-style-type: none;
       }
-      [gmf-displayqueries] {
+      .displayqueries {
+        border: solid 1px black;
         top: 20px;
         max-width: 350px;
         width: 350px;
@@ -26,54 +28,104 @@
         max-height: 400px;
         position: fixed;
       }
-      [gmf-displayqueries] .popover-content {
-        overflow: auto;
-        /*
-         * popup's height - popover-title's height
-         * should be computed using bootstrap variables
-         */
-        max-height: calc(400px - 38px);
+      .swap-animation-container {
+        position: relative;
+        overflow: hidden;
+        height: 100px;
+        width: 320px;
+        margin: 0 15px;
       }
-      @media (max-width: 768px) {
-        #map {
-          height: 200px;
-          width: 200px;
-        }
-        [gmf-displayqueries] {
-          position: fixed;
-          top: 0;
-          left: auto;
-          right: auto;
-          max-width: 100%;
-          width: calc(100% - 20px);
-          height: calc(100% - 20px);
-          max-height: none;
-          margin: 10px;
-        }
+      .swap-animation-container .swap-animation {
+        padding: 5px 5px 0;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
       }
-      @media (max-width: 768px) {
-        [gmf-displayqueries] .popover-content {
-          /*
-           * popup's height - popover-title's height
-           * should be computed using bootstrap variables
-           */
-          max-height: calc(100% - 32px);
-          -webkit-overflow-scrolling: touch;
-        }
+      .swap-animation.ng-enter, .swap-animation.ng-leave {
+        transition: 0.3s ease-in all;
       }
-
+      .swap-animation.ng-enter {
+        left: 350px;
+      }
+      .swap-animation.ng-enter-active {
+        left: 0px;
+      }
+      .swap-animation.ng-leave {
+        left: 0px;
+      }
+      .swap-animation.ng-leave-active {
+        left: -350px;
+      }
+      .header .title {
+        font-weight: bold;
+      }
+      .header .subtitle {
+        margin-left: 10px;
+      }
+      .details {
+        padding: 0 0 10px;
+        overflow-y: scroll;
+        margin-left: 10px;
+        height: 40px;
+        width: 100%;
+      }
+      .details table {
+        font-size: 0.9em;
+        width: 100%;
+      }
+      .details .key {
+        width: 30%;
+      }
+      .details .value {
+        width: 70%;
+      }
+      .navigate {
+        border-top: solid 1px black;
+        text-align: center;
+        margin-top: 10px;
+      } 
+      button {
+        background: none;
+        border: none;
+        font-family: FontAwesome;
+      }
+      button.close {
+        padding: 5px 5px 0 0;
+      }
+      button.close:after {
+        content: "\f00d";
+      }
+      .navigate .prev {
+        float: left;
+      }
+      .navigate .prev:after {
+        content: "\f060";
+      }
+      .navigate .next {
+        float: right;
+      }
+      .navigate .next:after {
+        content: "\f061";
+      }
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
     <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <gmf-displayqueries
+      gmf-displayqueries-map="ctrl.map">
+    </gmf-displayqueries>
     <button class="btn btn-primary" ng-click="ctrl.simulateQuery()">Simulate query</button>
     <p id="desc">TODO</p>
     <script src="../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../node_modules/proj4/dist/proj4.js"></script>
     <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
     <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
     <script src="/@?main=displayqueries.js"></script>
     <script src="default.js"></script>
     <script src="../../../utils/watchwatchers.js"></script>

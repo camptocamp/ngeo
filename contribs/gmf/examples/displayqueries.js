@@ -1,6 +1,6 @@
 goog.provide('gmf-displayqueries');
 
-goog.require('gmf.Displayqueries');
+goog.require('gmf.displayqueriesDirective');
 goog.require('gmf.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -20,92 +20,62 @@ var app = {};
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+app.module = angular.module('app', ['gmf', 'ngAnimate']);
+
+
+app.module.value('ngeoQueryResult',
+    /**
+     * @type {Array.<Object>}
+     */
+    ({
+      sources: [{
+        features: [
+          new ol.Feature({
+            geometry: new ol.geom.Point([533065, 156135]),
+            name: 'Point 1',
+            id: '1234',
+            foo: 'barz'
+          }),
+          new ol.Feature({
+            geometry: new ol.geom.Point([535165, 152335]),
+            name: 'Point 2',
+            id: '5678',
+            foo: 'bary'
+          })
+        ],
+        label: 'Bus Stop',
+        name: 'bus_stop',
+        pending: false
+      }, {
+        features: [
+          new ol.Feature({
+            geometry: new ol.geom.Point([539565, 151935]),
+            name: 'Point 3',
+            id: '9101',
+            foo: 'barx'
+          })
+        ],
+        label: 'Train station',
+        name: 'train_station',
+        pending: false
+      }],
+      'total': 0
+    }));
 
 
 
 /**
- * @param {gmf.Displayqueries} gmfDisplayqueries gmf Displayqueries service.
  * @constructor
  * @ngInject
  */
-app.MainController = function(gmfDisplayqueries) {
-
-  /**
-   * @type {gmf.Displayqueries}
-   * @private
-   */
-  this.displayqueries_ = gmfDisplayqueries;
-
-  /**
-   * @type {Array.<ol.Feature>}
-   * @export
-   */
-  this.demoFeatures = [new ol.Feature({
-    geometry: new ol.geom.Point([533065, 156135]),
-    layer_name: 'Point',
-    name: 'Point 1',
-    id: '1234',
-    foo: 'bar'
-  }), new ol.Feature({
-    geometry: new ol.geom.Point([535165, 152335]),
-    layer_name: 'Point',
-    name: 'Point 2',
-    id: '5678',
-    foo: 'bar'
-  }), new ol.Feature({
-    geometry: new ol.geom.Point([539565, 151935]),
-    layer_name: 'Petit point',
-    name: 'Point 3',
-    id: '9101',
-    foo: 'bar'
-  })];
-
-  /**
-   * @type {Array.<Object>}
-   * @export
-   */
-  this.queryResult = {
-    sources: [{
-      features: [
-        new ol.Feature({
-          geometry: new ol.geom.Point([533065, 156135]),
-          name: 'Point 1',
-          id: '1234',
-          foo: 'barz'
-        }),
-        new ol.Feature({
-          geometry: new ol.geom.Point([535165, 152335]),
-          name: 'Point 2',
-          id: '5678',
-          foo: 'bary'
-        })
-      ],
-      label: 'Bus Stop',
-      name: 'bus_stop',
-      pending: false
-    }, {
-      features: [
-        new ol.Feature({
-          geometry: new ol.geom.Point([539565, 151935]),
-          name: 'Point 3',
-          id: '9101',
-          foo: 'barx'
-        })
-      ],
-      label: 'Train station',
-      name: 'train_station',
-      pending: false
-    }],
-    'total': 0
-  };
-
-  this.simulateQuery = function() {
-    this.displayqueries_.show(this.queryResult);
-  };
+app.MainController = function(ngeoQueryResult) {
 
   var projection = ol.proj.get('EPSG:21781');
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
+
+  this.simulateQuery = function() {
+    //todo
+  };
 
   /**
    * @type {ol.Map}
