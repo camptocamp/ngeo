@@ -7,13 +7,14 @@ EXPORTS_JS_FILES := $(shell find exports -type f -name '*.js')
 EXAMPLES_JS_FILES := $(shell find examples -maxdepth 1 -type f -name '*.js')
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 
+
+FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2)
+
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
-GMF_APPS_MOBILE_JS_FILES := $(shell find contribs/gmf/apps/mobile/js -type f -name '*.js')
-GMF_APPS_DESKTOP_JS_FILES := $(shell find contribs/gmf/apps/desktop/js -type f -name '*.js')
-GMF_APPS_MOBILE_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
-GMF_APPS_DESKTOP_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
+GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
+GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 GMF_APPS_LIBS_JS_FILES += \
 	contribs/gmf/examples/https.js \
 	node_modules/jquery/dist/jquery.min.js \
@@ -29,9 +30,11 @@ BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.chec
 	.build/contribs/gmf/apps/mobile.check.timestamp \
 	.build/contribs/gmf/apps/desktop.check.timestamp
 EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
+	.build/examples-hosted/lib/ngeo.js.map \
 	.build/examples-hosted/lib/ngeo-debug.js \
 	.build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/gmf.js \
+	.build/examples-hosted/lib/gmf.js.map \
 	.build/examples-hosted/lib/angular.min.js \
 	.build/examples-hosted/lib/angular-gettext.min.js \
 	.build/examples-hosted/lib/bootstrap.min.js \
@@ -57,6 +60,11 @@ L10N_LANGUAGES = fr de it
 L10N_PO_FILES = $(addprefix c2cgeoportal/locale/,$(addsuffix /LC_MESSAGES/c2cgeoportal.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
 TX_GIT_BRANCH ?= master
+ifeq (,$(wildcard $(HOME)/.transifexrc))
+TOUCHBACK_TXRC = touch --date "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
+else
+TOUCHBACK_TXRC = touch --date "$(shell stat -c '%y' $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+endif
 
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
 GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
@@ -127,7 +135,7 @@ build-gmf-desktop-app: $(addprefix contribs/gmf/build/desktop,.js .css) \
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 
 .PHONY: lint
-lint: .build/python-venv/bin/gjslint .build/node_modules.timestamp .build/gjslint.timestamp .build/jshint.timestamp
+lint: .build/gjslint.timestamp .build/jshint.timestamp
 
 .PHONY: test
 test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp
@@ -136,7 +144,7 @@ test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templateca
 	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: serve
-serve: .build/node_modules.timestamp .build/font_awesome.timestamp
+serve: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT)
 	node buildtools/serve.js
 
 .PHONY: examples-hosted
@@ -163,6 +171,8 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 	cp -r .build/apidoc $</$(GIT_BRANCH)/apidoc
 	mkdir $</$(GIT_BRANCH)/examples
 	cp -r .build/examples-hosted/* $</$(GIT_BRANCH)/examples
+	rm $</$(GIT_BRANCH)/examples/lib/*.js.map
+	rm $</$(GIT_BRANCH)/examples/contribs/gmf/build/*.js.map
 	cd $<; git add -A
 	cd $<; git status
 	cd $<; git commit -m 'Update GitHub pages'
@@ -172,15 +182,15 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages:
 	git clone --branch gh-pages $(GIT_REMOTE_URL) $@
 
-.build/gjslint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES) $(GMF_APPS_DESKTOP_JS_FILES)
-	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable,example,module,ngdoc,ngname,htmlAttribute $?
+.build/gjslint.timestamp: .build/python-venv/bin/gjslint $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_JS_FILES)
+	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable,example,module,ngdoc,ngname,htmlAttribute $(filter-out .build/python-venv/bin/gjslint, $?)
 	touch $@
 
-.build/jshint.timestamp: $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_DESKTOP_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES)
-	./node_modules/.bin/jshint --verbose $?
+.build/jshint.timestamp: .build/node_modules.timestamp $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_JS_FILES)
+	./node_modules/.bin/jshint --verbose $(filter-out .build/node_modules.timestamp, $?)
 	touch $@
 
-dist/ngeo.js: buildtools/ngeo.json \
+dist/ngeo.js: .build/ngeo.json \
 		$(EXTERNS_FILES) \
 		$(SRC_JS_FILES) \
 		.build/templatecache.js \
@@ -188,11 +198,14 @@ dist/ngeo.js: buildtools/ngeo.json \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+	echo '//# sourceMappingURL=ngeo.js.map' >> $@
 	@$(STAT_UNCOMPRESSED) $@
 	@cp $@ /tmp/
 	@gzip /tmp/ngeo.js
 	@$(STAT_COMPRESSED) /tmp/ngeo.js.gz
 	@rm /tmp/ngeo.js.gz
+
+dist/ngeo.js.map: dist/ngeo.js
 
 dist/ngeo-debug.js: buildtools/ngeo-debug.json \
 		$(EXTERNS_FILES) \
@@ -214,7 +227,7 @@ dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/cleancss $< > $@
 
-dist/gmf.js: buildtools/gmf.json \
+dist/gmf.js: .build/gmf.json \
 		$(EXTERNS_FILES) \
 		$(SRC_JS_FILES) \
 		$(GMF_SRC_JS_FILES) \
@@ -223,11 +236,14 @@ dist/gmf.js: buildtools/gmf.json \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+	echo '//# sourceMappingURL=gmf.js.map' >> $@
 	@$(STAT_UNCOMPRESSED) $@
 	@cp $@ /tmp/
 	@gzip /tmp/gmf.js
 	@$(STAT_COMPRESSED) /tmp/gmf.js.gz
 	@rm /tmp/gmf.js.gz
+
+dist/gmf.js.map: dist/gmf.js
 
 .build/examples/%.min.js: .build/examples/%.json \
 		$(SRC_JS_FILES) \
@@ -237,8 +253,9 @@ dist/gmf.js: buildtools/gmf.json \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+	echo '//# sourceMappingURL=$*.js.map' >> $@
 
-.build/examples/all.min.js: buildtools/examples-all.json \
+.build/examples/all.min.js: .build/examples-all.json \
 		$(SRC_JS_FILES) \
 		$(GMF_SRC_JS_FILES) \
 		$(EXPORTS_JS_FILES) \
@@ -247,6 +264,7 @@ dist/gmf.js: buildtools/gmf.json \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
+	echo '//# sourceMappingURL=all.js.map' >> $@
 
 .build/examples/all.js: $(EXAMPLES_JS_FILES) $(GMF_EXAMPLES_JS_FILES) .build/python-venv
 	mkdir -p $(dir $@)
@@ -317,21 +335,19 @@ dist/gmf.js: buildtools/gmf.json \
 	mkdir -p $@
 	cp contribs/gmf/examples/data/* $@
 
-.build/examples-hosted/contribs/gmf/fonts: contribs/gmf/fonts build-gmf-mobile-app build-gmf-desktop-app
+.PRECIOUS: .build/examples-hosted/contribs/gmf/fonts/gmf-icons.%
+.build/examples-hosted/contribs/gmf/fonts/gmf-icons.%: contribs/gmf/fonts/gmf-icons.%
 	mkdir -p $(dir $@)
-	cp -r $< $(dir $@)
+	cp $< $@
+
+.PRECIOUS: .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont.%
+.build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont.%: contribs/gmf/fonts/fontawesome-webfont.%
+	mkdir -p $(dir $@)
+	cp $< $@
 
 .build/examples-hosted/contribs/gmf/build: build-gmf-mobile-app build-gmf-desktop-app
 	mkdir -p $(dir $@)
 	cp -r contribs/gmf/build $(dir $@)
-
-.build/examples-hosted/contribs/gmf/apps/mobile/js/mobile.js: contribs/gmf/apps/mobile/js/mobile.js
-	mkdir -p $(dir $@)
-	cp $< $(dir $@)
-
-.build/examples-hosted/contribs/gmf/apps/desktop/js/desktop.js: contribs/gmf/apps/desktop/js/desktop.js
-	mkdir -p $(dir $@)
-	cp $< $(dir $@)
 
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
@@ -374,32 +390,18 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/mobile/index.html
-.build/examples-hosted/contribs/gmf/apps/mobile/index.html: contribs/gmf/apps/mobile/index.html \
-		.build/examples-hosted/contribs/gmf/build \
-		.build/examples-hosted/contribs/gmf/fonts \
-		.build/examples-hosted/contribs/gmf/data \
-		.build/examples-hosted/contribs/gmf/apps/mobile/js/mobile.js
-	mkdir -p $(dir $@)
-	sed -e '/stylesheet\/less" href="..\/..\//d' \
-		-e '/\/node_modules\//d' \
-		-e '/default\.js/d' \
-		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
-		-e 's|/@?main=mobile/js/mobile\.js|../../build/mobile.js|' \
-		-e '/mobile.js/i\    <script src="../../../../lib/Function.prototype.bind.js"></script>' $< > $@
-
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/desktop/index.html
-.build/examples-hosted/contribs/gmf/apps/desktop/index.html: contribs/gmf/apps/desktop/index.html \
+.build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
 		.build/examples-hosted/contribs/gmf/build \
-		.build/examples-hosted/contribs/gmf/fonts \
-		.build/examples-hosted/contribs/gmf/data \
-		.build/examples-hosted/contribs/gmf/apps/desktop/js/desktop.js
+		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
+		$(addprefix .build/examples-hosted/contribs/gmf/fonts/gmf-icons., eot ttf woff)
 	mkdir -p $(dir $@)
 	sed -e '/stylesheet\/less" href="..\/..\//d' \
 		-e '/\/node_modules\//d' \
 		-e '/default\.js/d' \
 		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
-		-e 's|/@?main=desktop/js/desktop\.js|../../build/desktop.js|' \
-		-e '/desktop.js/i\    <script src="../../../../lib/Function.prototype.bind.js"></script>' $< > $@
+		-e 's|/@?main=$*/js/controller\.js|../../build/$*.js|' \
+		-e '/$*.js/i\    <script src="../../../../lib/Function.prototype.bind.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
@@ -430,12 +432,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
 
-.build/contribs/gmf/apps/mobile.check.timestamp: .build/examples-hosted/contribs/gmf/apps/mobile/index.html
-	mkdir -p $(dir $@)
-	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
-	touch $@
-
-.build/contribs/gmf/apps/desktop.check.timestamp: .build/examples-hosted/contribs/gmf/apps/desktop/index.html
+.build/contribs/gmf/apps/%.check.timestamp: .build/examples-hosted/contribs/gmf/apps/%/index.html
 	mkdir -p $(dir $@)
 	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
 	touch $@
@@ -445,10 +442,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	touch $@
 
-.build/font_awesome.timestamp:
+node_modules/font-awesome/fonts/fontawesome-webfont.%: .build/node_modules.timestamp
+
+contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontawesome-webfont.%
 	mkdir -p $(dir $@)
-	cp node_modules/font-awesome/fonts/* contribs/gmf/fonts
-	touch $@
+	cp $< $@
 
 .build/closure-compiler/compiler.jar: .build/closure-compiler/compiler-latest.zip
 	unzip $< -d .build/closure-compiler
@@ -459,10 +457,40 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	wget -O $@ http://closure-compiler.googlecode.com/files/compiler-latest.zip
 	touch $@
 
-.PRECIOUS: .build/examples/%.json
-.build/examples/%.json: buildtools/example.json
+.build/examples/%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
 	mkdir -p $(dir $@)
-	sed 's/{{example}}/$*/' $< > $@
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var entry_point=$* \
+		--var js=examples/$*.js \
+		--var source_map=.build/examples/$*.js.map $< > $@
+
+.build/examples-all.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var src=contribs_gmf \
+		--var examples=true \
+		--var js=.build/examples/all.js \
+		--var strict=false \
+		--var source_map=.build/examples/all.js.map $< > $@
+
+.build/ngeo.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var lib=true \
+		--var src=ngeo \
+		--var source_map=dist/ngeo.js.map $< > $@
+
+.build/gmf.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var lib=true \
+		--var src=contribs_gmf \
+		--var source_map=dist/gmf.js.map $< > $@
+
+.build/app-%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var src=contribs_gmf \
+		--var entry_point=app_$* \
+		--var js=contribs/gmf/apps/$*/js/controller.js \
+		--var generate_exports=true \
+		--var source_map=contribs/gmf/build/$*.js.map $< > $@
 
 $(EXTERNS_ANGULAR):
 	mkdir -p $(dir $@)
@@ -546,42 +574,26 @@ $(EXTERNS_JQUERY):
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
 
-contribs/gmf/build/mobile.closure.js: contribs/gmf/apps/mobile/build.json \
+contribs/gmf/build/%.closure.js: .build/app-%.json \
 		$(EXTERNS_FILES) \
-		$(GMF_APPS_MOBILE_JS_FILES) \
+		contribs/gmf/apps/%/js/controller.js \
 		.build/gmftemplatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/openlayers/node_modules/.bin/closure-util build $< $@
+	echo '//# sourceMappingURL=$*.js.map' >> $@
 
-contribs/gmf/build/desktop.closure.js: contribs/gmf/apps/desktop/build.json \
-		$(EXTERNS_FILES) \
-		$(GMF_APPS_DESKTOP_JS_FILES) \
-		.build/gmftemplatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	./node_modules/openlayers/node_modules/.bin/closure-util build $< $@
-
-contribs/gmf/build/mobile.js: contribs/gmf/build/mobile.closure.js $(GMF_APPS_LIBS_JS_FILES)
-	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
-
-contribs/gmf/build/desktop.js: contribs/gmf/build/desktop.closure.js $(GMF_APPS_LIBS_JS_FILES)
+contribs/gmf/build/%.js: contribs/gmf/build/%.closure.js $(GMF_APPS_LIBS_JS_FILES)
 	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
 
 .PHONY: compile-css
 compile-css: contribs/gmf/build/mobile.css contribs/gmf/build/desktop.css
 
-contribs/gmf/build/mobile.css: $(GMF_APPS_MOBILE_LESS_FILES) \
+contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less $(GMF_APPS_LESS_FILES) \
 		.build/node_modules.timestamp \
-		.build/font_awesome.timestamp
+		$(FONTAWESOME_WEBFONT)
 	mkdir -p $(dir $@)
-	./node_modules/.bin/lessc contribs/gmf/apps/mobile/less/mobile.less $@ --autoprefix
-
-contribs/gmf/build/desktop.css: $(GMF_APPS_DESKTOP_LESS_FILES) \
-		.build/node_modules.timestamp \
-		.build/font_awesome.timestamp
-	mkdir -p $(dir $@)
-	./node_modules/.bin/lessc contribs/gmf/apps/desktop/less/desktop.less $@ --autoprefix
+	./node_modules/.bin/lessc $< $@ --autoprefix
 
 
 # i18n
@@ -631,6 +643,7 @@ transifex-init: .build/dev-requirements.timestamp c2cgeoportal/locale/c2cgeoport
 
 .build/locale/%/LC_MESSAGES/gmf.po: .tx/config .build/python-venv/bin/tx
 	.build/python-venv/bin/tx pull -l $* --force
+	$(TOUCHBACK_TXRC)
 
 contribs/gmf/build/gmf-en.json:
 	mkdir -p $(dir $@)
@@ -641,10 +654,16 @@ contribs/gmf/build/gmf-%.json: .build/locale/%/LC_MESSAGES/gmf.po .build/node_mo
 	node buildtools/compile-catalog $< > $@
 
 .PHONY: generate-gmf-fonts
-gmf-icons-generate: package.json
-	node_modules/svg2ttf/svg2ttf.js contribs/gmf/fonts/gmf-icons.svg contribs/gmf/fonts/gmf-icons.ttf
-	node_modules/ttf2eot/ttf2eot.js contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot
-	node_modules/ttf2woff/ttf2woff.js contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.woff
+gmf-icons-generate: contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot contribs/gmf/fonts/gmf-icons.woff
+
+contribs/gmf/fonts/gmf-icons.ttf: contribs/gmf/fonts/gmf-icons.svg .build/node_modules.timestamp
+	node_modules/svg2ttf/svg2ttf.js $< $@
+
+contribs/gmf/fonts/gmf-icons.eot: contribs/gmf/fonts/gmf-icons.ttf .build/node_modules.timestamp
+	node_modules/ttf2eot/ttf2eot.js $< $@
+
+contribs/gmf/fonts/gmf-icons.woff: contribs/gmf/fonts/gmf-icons.ttf .build/node_modules.timestamp
+	node_modules/ttf2woff/ttf2woff.js $< $@
 
 # clean
 
@@ -658,6 +677,10 @@ clean:
 	rm -f .build/ngeo-deps.js
 	rm -f .build/gmf-deps.js
 	rm -f .build/info.json
+	rm -f .build/examples-all.json
+	rm -f .build/ngeo.json
+	rm -f .build/gmf.json
+	rm -f .build/app-*.json
 	rm -f .build/templatecache.js
 	rm -f .build/gmftemplatecache.js
 	rm -f dist/*

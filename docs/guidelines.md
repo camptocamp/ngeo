@@ -648,7 +648,7 @@ See [AnguarJs doc](https://docs.angularjs.org/guide/expression#one-time-binding)
 
 ### Through directive scopes
 
-Be carefull when you use isolate scope and `bindToController` objects to pass
+Be careful when you use isolate scope and `bindToController` objects to pass
 variable through scope inheritance.
 
 ```js
