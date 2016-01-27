@@ -180,7 +180,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages:
-	git clone --branch gh-pages $(GIT_REMOTE_URL) $@
+	git clone --depth=1 --branch gh-pages $(GIT_REMOTE_URL) $@
 
 .build/gjslint.timestamp: .build/python-venv/bin/gjslint $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_JS_FILES)
 	.build/python-venv/bin/gjslint --jslint_error=all --strict --custom_jsdoc_tags=event,fires,function,classdesc,api,observable,example,module,ngdoc,ngname,htmlAttribute $(filter-out .build/python-venv/bin/gjslint, $?)
