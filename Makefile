@@ -156,8 +156,13 @@ examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
 		.build/examples-hosted/contribs/gmf/apps/mobile/index.html \
 		.build/examples-hosted/contribs/gmf/apps/desktop/index.html
 
+.build/python-venv/lib/python2.7/site-packages/requests: .build/python-venv
+	.build/python-venv/bin/pip install requests
+	touch $@
+
 .PHONY: gh-pages
 gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
+		.build/python-venv/lib/python2.7/site-packages/requests \
 		.build/examples-hosted/index.html \
 		.build/examples-hosted/contribs/gmf/index.html \
 		.build/examples-hosted/contribs/gmf/apps/mobile/index.html \
@@ -165,9 +170,15 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 		.build/apidoc
 	cd $<; git fetch origin
 	cd $<; git merge --ff-only origin/gh-pages
-	cd $<; git rm --ignore-unmatch -r --quiet --force $(GIT_BRANCH)
 	cd $<; git clean --force -d
+
+	.build/python-venv/bin/python buildtools/cleanup-ghpages.py $(GITHUB_USERNAME) $<
+	cd $<; git add -A
+	cd $<; test "`git status --porcelain --untracked-files=no`" == "" || git commit -m 'Cleanup GitHub pages'
+
+	cd $<; git rm --ignore-unmatch -r --quiet --force $(GIT_BRANCH)
 	mkdir $</$(GIT_BRANCH)
+
 	cp -r .build/apidoc $</$(GIT_BRANCH)/apidoc
 	mkdir $</$(GIT_BRANCH)/examples
 	cp -r .build/examples-hosted/* $</$(GIT_BRANCH)/examples
@@ -175,7 +186,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 	rm $</$(GIT_BRANCH)/examples/contribs/gmf/build/*.js.map
 	cd $<; git add -A
 	cd $<; git status
-	cd $<; git commit -m 'Update GitHub pages'
+	cd $<; test "`git status --porcelain --untracked-files=no`" == "" || git commit -m 'Update GitHub pages'
 	cd $<; git push $(GIT_REMOTE_NAME) gh-pages
 
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
