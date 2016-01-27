@@ -91,6 +91,7 @@ gmfModule.directive('gmfSearch', gmf.searchDirective);
  * @constructor
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.$compile} $compile Angular compile service.
+ * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.CreateGeoJSONBloodhound} ngeoCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
@@ -101,7 +102,7 @@ gmfModule.directive('gmfSearch', gmf.searchDirective);
  * @ngdoc controller
  * @ngname GmfSearchController
  */
-gmf.SearchController = function($scope, $compile, gettextCatalog,
+gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr) {
 
   /**
@@ -115,6 +116,12 @@ gmf.SearchController = function($scope, $compile, gettextCatalog,
    * @private
    */
   this.compile_ = $compile;
+
+  /**
+   * @type {angular.$timeout}
+   * @private
+   */
+  this.timeout_ = $timeout;
 
   /**
    * @type {angularGettext.Catalog}
@@ -373,6 +380,19 @@ gmf.SearchController.prototype.clear = function() {
 
 
 /**
+ * @export
+ */
+gmf.SearchController.prototype.blur = function() {
+  var typeahead = $('.twitter-typeahead');
+  var inputs = typeahead.children('input');
+  // Blur as soon as possible in digest loops
+  this.timeout_(function() {
+    $(inputs[1]).blur();
+  });
+};
+
+
+/**
  * @param {jQuery.Event} event Event.
  * @param {ol.Feature} feature Feature.
  * @param {TypeaheadDataset} dataset Dataset.
@@ -392,6 +412,7 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
   if (!this.clearButton) {
     this.clear();
   }
+  this.blur();
 };
 
 
