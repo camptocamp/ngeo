@@ -51,6 +51,6 @@
     "walk": "2.3.3"
   },
   "scripts": {
-      "install": "node node_modules/.bin/svg2ttf contribs/gmf/fonts/gmf-icons.svg contribs/gmf/fonts/gmf-icons.ttf && node node_modules/.bin/ttf2eot contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.oet && node node_modules/.bin/ttf2woff contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.woff"
+      "install": "make -f npm.mk install"
   }
 }
