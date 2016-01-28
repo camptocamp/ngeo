@@ -5,8 +5,12 @@ examples:       Add the examples files
 entry_point:    The entry point
 js:             An evantual additional js file
 strict:         Set to false to don't do a strict validation
+ngeo_folder:    The folder where ngeo is intaled, reqired to use it in the project
 source_map:     The source map destination file
 </%doc>
+<%
+_ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
+%>
 {
 % if lib == 'true':
   "exports": ["*"],
@@ -16,17 +20,18 @@ source_map:     The source map destination file
   "src": [
 % if src == 'ngeo':
 % if lib == 'true':
-    "exports/**/*.js",
+    "${_ngeo_folder}exports/**/*.js",
 % endif
 % if examples != 'true':
     ".build/templatecache.js",
 % endif
 % elif src == 'contribs_gmf':
-    "contribs/gmf/src/**/*.js",
+    "${_ngeo_folder}contribs/gmf/src/**/*.js",
 % if lib == 'true':
     "exports/**/*.js",
     "contribs/gmf/exports/**/*.js",
-% else:
+% elif _ngeo_folder == '':
+## only for the demo apps building
     "contribs/gmf/apps/**/*.js",
 % endif
 % if examples != 'true':
@@ -35,7 +40,7 @@ source_map:     The source map destination file
 % endif
     "node_modules/openlayers/src/**/*.js",
     "node_modules/openlayers/build/ol.ext/*.js",
-    "src/**/*.js"
+    "${_ngeo_folder}src/**/*.js"
   ],
   "compile": {
 % if entry_point:
@@ -52,12 +57,12 @@ source_map:     The source map destination file
       "node_modules/openlayers/externs/proj4js.js",
       "node_modules/openlayers/externs/tilejson.js",
       "node_modules/openlayers/externs/topojson.js",
-      "externs/angular-gettext.js",
-      "externs/d3.js",
-      "externs/typeahead.js",
-      "externs/twbootstrap.js",
-      "externs/closure-compiler.js",
-      "externs/jqueryui.js",
+      "${_ngeo_folder}externs/angular-gettext.js",
+      "${_ngeo_folder}externs/d3.js",
+      "${_ngeo_folder}externs/typeahead.js",
+      "${_ngeo_folder}externs/twbootstrap.js",
+      "${_ngeo_folder}externs/closure-compiler.js",
+      "${_ngeo_folder}externs/jqueryui.js",
       ".build/externs/angular-1.4.js",
       ".build/externs/angular-1.4-q_templated.js",
       ".build/externs/angular-1.4-http-promise_templated.js",
@@ -74,11 +79,11 @@ source_map:     The source map destination file
       "node_modules/openlayers/externs/olx.js",
       "node_modules/openlayers/externs/oli.js",
 % if src == 'contribs_gmf':
-      "contribs/gmf/externs/gmfx.js",
-      "contribs/gmf/externs/gmf-themes.js",
+      "${_ngeo_folder}contribs/gmf/externs/gmfx.js",
+      "${_ngeo_folder}contribs/gmf/externs/gmf-themes.js",
 % endif
-      "externs/ngeox.js",
-      "externs/mapfish-print-v3.js"
+      "${_ngeo_folder}externs/ngeox.js",
+      "${_ngeo_folder}externs/mapfish-print-v3.js"
     ],
     "define": [
       "goog.array.ASSUME_NATIVE_FUNCTIONS=true",
