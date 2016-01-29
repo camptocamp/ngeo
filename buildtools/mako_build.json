@@ -1,6 +1,7 @@
 <%doc>
 lib:            Set to true to create the libraries files (ngeo or gmf)
-src:            The used source set (ngeo|contribs_gmf)
+src:            An additional source directory, used by apps
+src_set:        The used source set (ngeo|contribs_gmf)
 examples:       Add the examples files
 entry_point:    The entry point
 js:             An evantual additional js file
@@ -18,21 +19,21 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
   "exports": [],
 % endif
   "src": [
-% if src == 'ngeo':
+% if src is not UNDEFINED:
+    "${src}",
+% endif
+% if src_set == 'ngeo':
 % if lib == 'true':
     "${_ngeo_folder}exports/**/*.js",
 % endif
 % if examples != 'true':
     ".build/templatecache.js",
 % endif
-% elif src == 'contribs_gmf':
+% elif src_set == 'contribs_gmf':
     "${_ngeo_folder}contribs/gmf/src/**/*.js",
 % if lib == 'true':
     "exports/**/*.js",
     "contribs/gmf/exports/**/*.js",
-% elif _ngeo_folder == '':
-## only for the demo apps building
-    "contribs/gmf/apps/**/*.js",
 % endif
 % if examples != 'true':
     ".build/gmftemplatecache.js",
@@ -78,7 +79,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % endif
       "node_modules/openlayers/externs/olx.js",
       "node_modules/openlayers/externs/oli.js",
-% if src == 'contribs_gmf':
+% if src_set == 'contribs_gmf':
       "${_ngeo_folder}contribs/gmf/externs/gmfx.js",
       "${_ngeo_folder}contribs/gmf/externs/gmf-themes.js",
 % endif

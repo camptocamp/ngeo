@@ -477,7 +477,7 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 
 .build/examples-all.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var src=contribs_gmf \
+		--var src_set=contribs_gmf \
 		--var examples=true \
 		--var js=.build/examples/all.js \
 		--var strict=false \
@@ -486,18 +486,19 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 .build/ngeo.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var lib=true \
-		--var src=ngeo \
+		--var src_set=ngeo \
 		--var source_map=dist/ngeo.js.map $< > $@
 
 .build/gmf.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var lib=true \
-		--var src=contribs_gmf \
+		--var src_set=contribs_gmf \
 		--var source_map=dist/gmf.js.map $< > $@
 
 .build/app-%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var src=contribs_gmf \
+		--var 'src=contribs/gmf/apps/**/*.js' \
+		--var src_set=contribs_gmf \
 		--var entry_point=app_$* \
 		--var js=contribs/gmf/apps/$*/js/controller.js \
 		--var generate_exports=true \
