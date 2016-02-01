@@ -7,7 +7,9 @@ goog.require('ngeo.Location');
 
 
 /**
- *
+ * @htmlAttribute {string} gmf-themeselector-defaulttheme The default theme.
+ * @htmlAttribute {string} gmf-themeselector-currenttheme The selected theme.
+ * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -18,6 +20,7 @@ gmf.themeselectorDirective = function() {
     restrict: 'E',
     controller: 'gmfThemeselectorController',
     scope: {
+      'defaultTheme': '@gmfThemeselectorDefaulttheme',
       'currentTheme': '=gmfThemeselectorCurrenttheme',
       'filter': '=gmfThemeselectorFilter'
     },
@@ -55,6 +58,12 @@ gmf.ThemeselectorController = function(ngeoLocation, gmfThemes) {
   this.currentTheme;
 
   /**
+   * @type {string}
+   * @export
+   */
+  this.defaultTheme = this.defaultTheme || 'main';
+
+  /**
    * @type {Function|undefined}
    * @export
    */
@@ -75,13 +84,6 @@ gmf.ThemeselectorController = function(ngeoLocation, gmfThemes) {
 
   this.setThemes_();
 };
-
-
-/**
- * @const
- * @private
- */
-gmf.ThemeselectorController.DEFAULT_THEME_ = 'main';
 
 
 /**
@@ -144,7 +146,7 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
         // fallback to default theme, if theme was not found from the url
         if (!currentTheme) {
           currentTheme = {
-            'name': gmf.ThemeselectorController.DEFAULT_THEME_
+            'name': this.defaultTheme
           };
         }
 
