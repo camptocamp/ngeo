@@ -48,7 +48,8 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/font-awesome.min.css \
 	.build/examples-hosted/fonts \
 	.build/examples-hosted/partials \
-	.build/examples-hosted/data
+	.build/examples-hosted/data \
+	.build/examples-hosted/contribs/gmf/data
 
 # Git
 GITHUB_USERNAME ?= camptocamp
