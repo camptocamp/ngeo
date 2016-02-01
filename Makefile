@@ -1,3 +1,12 @@
+ifeq ($(OSTYPE),darwin14)
+OS ?= Darwin
+endif
+ifeq ($(OS),Darwin) 
+sed ?= /usr/local/Cellar/gnu-sed/4.2.2/bin/sed
+else
+sed ?= sed
+endif
+
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
@@ -63,7 +72,11 @@ TX_GIT_BRANCH ?= master
 ifeq (,$(wildcard $(HOME)/.transifexrc))
 TOUCHBACK_TXRC = touch --date "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
-TOUCHBACK_TXRC = touch --date "$(shell stat -c '%y' $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+ifeq ($(OS),Darwin)
+TOUCHBACK_TXRC = touch -t "$(shell stat -f '%m' -t "%Y%m%dT%H%M.%S" $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+#else
+#TOUCHBACK_TXRC = touch --date "$(shell stat -c '%y' $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+endif
 endif
 
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
@@ -361,7 +374,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .PRECIOUS: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: examples/%.html
 	mkdir -p $(dir $@)
-	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
+	/usr/local/Cellar/gnu-sed/4.2.2/bin/sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
@@ -379,7 +392,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
 .build/examples-hosted/contribs/gmf/%.html: contribs/gmf/examples/%.html
 	mkdir -p $(dir $@)
-	sed -e 's|\.\./node_modules/openlayers/css/ol\.css|lib/ngeo.css|' \
+	/usr/local/Cellar/gnu-sed/4.2.2/bin/sed -e 's|\.\./node_modules/openlayers/css/ol\.css|lib/ngeo.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap\.css|lib/bootstrap.min.css|' \
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery\.js|lib/jquery.min.js|' \
@@ -401,7 +414,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/gmf-icons., eot ttf woff)
 	mkdir -p $(dir $@)
-	sed -e '/stylesheet\/less" href="..\/..\//d' \
+	/usr/local/Cellar/gnu-sed/4.2.2/bin/sed -e '/stylesheet\/less" href="..\/..\//d' \
 		-e '/\/node_modules\//d' \
 		-e '/default\.js/d' \
 		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
@@ -410,12 +423,12 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
 	mkdir -p $(dir $@)
-	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
+	/usr/local/Cellar/gnu-sed/4.2.2/bin/sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.js
 .build/examples-hosted/contribs/gmf/%.js: contribs/gmf/examples/%.js
 	mkdir -p $(dir $@)
-	sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
+	/usr/local/Cellar/gnu-sed/4.2.2/bin/sed -e '/^goog\.provide/d' -e '/^goog\.require/d' $< > $@
 
 .build/examples-hosted/index.html: buildtools/examples-index.mako.html $(EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
 	mkdir -p $(dir $@)
