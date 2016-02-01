@@ -44,7 +44,6 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/watchwatchers.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
 	.build/examples-hosted/lib/proj4.js \
-	.build/examples-hosted/lib/Function.prototype.bind.js \
 	.build/examples-hosted/lib/font-awesome.min.css \
 	.build/examples-hosted/fonts \
 	.build/examples-hosted/partials \
@@ -323,10 +322,6 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/lib/Function.prototype.bind.js: node_modules/polyfill/es5/Function.prototype.bind.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
 .build/examples-hosted/lib/font-awesome.min.css: node_modules/font-awesome/css/font-awesome.min.css
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -379,7 +374,6 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=$*.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
-		-e '/$*.js/i\    <script src="lib/Function.prototype.bind.js"></script>' \
 		-e '/$*.js/i\    <script src="lib/ngeo.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
@@ -398,7 +392,6 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=$*\.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
-		-e '/$*.js/i\    <script src="../../lib/Function.prototype.bind.js"></script>' \
 		-e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/mobile/index.html
@@ -412,8 +405,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e '/\/node_modules\//d' \
 		-e '/default\.js/d' \
 		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
-		-e 's|/@?main=$*/js/controller\.js|../../build/$*.js|' \
-		-e '/$*.js/i\    <script src="../../../../lib/Function.prototype.bind.js"></script>' $< > $@
+		-e 's|/@?main=$*/js/controller\.js|../../build/$*.js|' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
@@ -441,12 +433,12 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		$(EXAMPLE_HOSTED_REQUIREMENTS) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
+	./node_modules/.bin/phantomjs buildtools/check-example.js $<
 	touch $@
 
 .build/contribs/gmf/apps/%.check.timestamp: .build/examples-hosted/contribs/gmf/apps/%/index.html
 	mkdir -p $(dir $@)
-	./node_modules/phantomjs/bin/phantomjs buildtools/check-example.js $<
+	./node_modules/.bin/phantomjs buildtools/check-example.js $<
 	touch $@
 
 .build/node_modules.timestamp: package.json
