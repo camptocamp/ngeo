@@ -20,6 +20,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	contribs/gmf/examples/https.js \
 	node_modules/jquery/dist/jquery.min.js \
 	node_modules/angular/angular.min.js \
+	node_modules/angular-animate/angular-animate.min.js \
 	node_modules/angular-gettext/dist/angular-gettext.min.js \
 	node_modules/bootstrap/dist/js/bootstrap.min.js \
 	node_modules/proj4/dist/proj4.js \
@@ -36,6 +37,7 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/gmf.js \
 	.build/examples-hosted/lib/gmf.js.map \
 	.build/examples-hosted/lib/angular.min.js \
+	.build/examples-hosted/lib/angular-animate.min.js \
 	.build/examples-hosted/lib/angular-gettext.min.js \
 	.build/examples-hosted/lib/bootstrap.min.js \
 	.build/examples-hosted/lib/bootstrap.min.css \
@@ -70,9 +72,9 @@ endif
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
 GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
 
-EXTERNS_ANGULAR = .build/externs/angular-1.4.js
-EXTERNS_ANGULAR_Q = .build/externs/angular-1.4-q_templated.js
-EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.4-http-promise_templated.js
+EXTERNS_ANGULAR = .build/externs/angular-1.5.js
+EXTERNS_ANGULAR_Q = .build/externs/angular-1.5-q_templated.js
+EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.5-http-promise_templated.js
 EXTERNS_JQUERY = .build/externs/jquery-1.9.js
 EXTERNS_FILES = $(EXTERNS_ANGULAR) $(EXTERNS_ANGULAR_Q) $(EXTERNS_ANGULAR_HTTP_PROMISE) $(EXTERNS_JQUERY)
 
@@ -291,6 +293,10 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/angular-animate.min.js: node_modules/angular-animate/angular-animate.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/angular-gettext.min.js: node_modules/angular-gettext/dist/angular-gettext.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -372,6 +378,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
+		-e 's|\.\./node_modules/angular-animate/angular-animate.js|lib/angular-animate.min.js|' \
 		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext.js|lib/angular-gettext.min.js|' \
 		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
@@ -390,6 +397,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/jquery/dist/jquery\.js|lib/jquery.min.js|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap\.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular\.js|lib/angular.min.js|' \
+		-e 's|\.\./node_modules/angular-animate/angular-animate\.js|lib/angular-animate.min.js|' \
 		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext\.js|lib/angular-gettext.min.js|' \
 		-e 's|\.\./node_modules/d3/d3\.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
@@ -505,17 +513,17 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 
 $(EXTERNS_ANGULAR):
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.5.js
 	touch $@
 
 $(EXTERNS_ANGULAR_Q):
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4-q_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.5-q_templated.js
 	touch $@
 
 $(EXTERNS_ANGULAR_HTTP_PROMISE):
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.4-http-promise_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.5-http-promise_templated.js
 	touch $@
 
 $(EXTERNS_JQUERY):
