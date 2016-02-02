@@ -29,7 +29,6 @@ module.exports = function(config) {
       'node_modules/angular/angular.js',
       'node_modules/angular-gettext/dist/angular-gettext.js',
       'node_modules/angular-mocks/angular-mocks.js',
-      'node_modules/polyfill/es5/Function.prototype.bind.js',
       'test/spec/beforeeach.js',
       'test/spec/data/*.js',
       'test/spec/**/*.spec.js',
