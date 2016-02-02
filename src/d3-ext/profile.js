@@ -102,11 +102,6 @@ ngeo.profile = function(options) {
       options.poiLabelAngle : -60;
 
   /**
-   * @type {function(number): number|undefined}
-   */
-  var ratioXYRule = options.ratioXYRule;
-
-  /**
    * @type {ngeox.profile.ProfileFormatter}
    */
   var formatter = {
@@ -139,12 +134,6 @@ ngeo.profile = function(options) {
    */
   var lightXAxis = goog.isDef(options.lightXAxis) ? options.lightXAxis : false;
 
-  /**
-   * @type {number|undefined}
-   */
-  var yLowerBound = options.yLowerBound;
-
-
   // Objects shared with the showPois function
   /**
    * @type {Object}
@@ -161,6 +150,10 @@ ngeo.profile = function(options) {
    */
   var y;
 
+  /**
+   * Scale modifier to allow customizing the x and y scales.
+   */
+  var scaleModifier = options.scaleModifier;
 
   var g;
 
@@ -299,26 +292,15 @@ ngeo.profile = function(options) {
       x.domain(xDomain);
 
       var yDomain = d3.extent(data, function(d) { return extractor.z(d); });
-      var padding = (yDomain[1] - yDomain[0]) * 0.1;
-      y.domain([yDomain[0] - padding, yDomain[1] + padding]);
+      y.domain(yDomain);
 
       // set the ratio according to the horizontal distance
-      if (goog.isDef(ratioXYRule)) {
-        // ratioYOverX = expectedYResolution / xResolution
-        var ratioYOverX = ratioXYRule(xDomain[1]);
-        if (ratioYOverX > 0) {
-          var yMean = (yDomain[1] - yDomain[0]) / 2 + yDomain[0];
-          var xResolution = (xDomain[1] - xDomain[0]) / width;
-          var yHalfDomain = ratioYOverX * xResolution * height / 2;
-          y.domain([yMean - yHalfDomain, yMean + yHalfDomain]);
-        }
-      }
-
-      // Lower bound for y-axis
-      if (goog.isDef(yLowerBound) && y.domain()[0] < yLowerBound) {
-        var shift = yLowerBound - y.domain()[0];
-        // For yLowerBound=0 and y0=-50, y is shifted 50m up
-        y.domain([yLowerBound, y.domain()[1] + shift]);
+      if (goog.isDef(scaleModifier)) {
+        scaleModifier(x, y, width, height);
+      } else {
+        // By default, add a small padding so that it looks nicer
+        var padding = (yDomain[1] - yDomain[0]) * 0.1;
+        y.domain([yDomain[0] - padding, yDomain[1] + padding]);
       }
 
       // Update the area path.

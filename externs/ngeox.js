@@ -115,8 +115,7 @@ ngeox.profile;
  *   poiExtractor: (ngeox.profile.PoiExtractor|undefined),
  *   light: (boolean|undefined),
  *   lightXAxis: (boolean|undefined),
- *   yLowerBound: (number|undefined),
- *   ratioXYRule: (function(number): number|undefined),
+ *   scaleModifier: (function(function(), function(), number, number)|undefined),
  *   hoverCallback: (function(Object)|undefined),
  *   outCallback: (function()|undefined)
  * }} ngeox.profile.ProfileOptions
@@ -174,18 +173,12 @@ ngeox.profile.ProfileOptions.prototype.lightXAxis;
 
 
 /**
- * Lower bound for the y domain.
- * @type {number|undefined}
+ * Allows to modify the raw x and y scales.
+ * Notably, it is possible to modify the y domain according to XY ratio rules,
+ * add padding or enforce y lower bound.
+ * @type {function(function(), function(), number, number)|undefined}
  */
-ngeox.profile.ProfileOptions.prototype.yLowerBound;
-
-
-/**
- * Return a ratio value for constraining the y domain based on the maximum
- * value from the x domain. In the absence of constraint, use a negative value.
- * @type {function(number):number|undefined}
- */
-ngeox.profile.ProfileOptions.prototype.ratioXYRule;
+ngeox.profile.ProfileOptions.prototype.scaleModifier;
 
 
 /**
