@@ -433,12 +433,12 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		$(EXAMPLE_HOSTED_REQUIREMENTS) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	./node_modules/.bin/phantomjs buildtools/check-example.js $<
+	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
 	touch $@
 
 .build/contribs/gmf/apps/%.check.timestamp: .build/examples-hosted/contribs/gmf/apps/%/index.html
 	mkdir -p $(dir $@)
-	./node_modules/.bin/phantomjs buildtools/check-example.js $<
+	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
 	touch $@
 
 .build/node_modules.timestamp: package.json
