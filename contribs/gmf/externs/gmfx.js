@@ -11,6 +11,19 @@
  */
 var gmfx;
 
+/**
+ * A part of the application config.
+ * @typedef {{
+ *    srid: (number),
+ *    positionFeatureStyle: (ol.style.Style|undefined),
+ *    accuracyFeatureStyle: (ol.style.Style|undefined),
+ *    geolocationZoom: (number|undefined),
+ *    mapViewConfig: (olx.ViewOptions|undefined),
+ *    mapControls: (ol.Collection.<ol.control.Control>|Array.<ol.control.Control>|undefined),
+ *    mapInteractions: (ol.Collection.<ol.interaction.Interaction>|Array.<ol.interaction.Interaction>|undefined)
+ * }}
+ */
+gmfx.Config;
 
 /**
  * Datasource configuration options for the search directive.

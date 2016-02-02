@@ -43,8 +43,15 @@ app.MobileController = function(
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
     gmfThemes, fulltextsearchUrl) {
   goog.base(
-      this, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
-      $scope, ngeoStateManager, ngeoFeatureOverlayMgr, 21781,
+      this, {
+        srid: 21781,
+        mapViewConfig: {
+          center: [632464, 185457],
+          minZoom: 3,
+          zoom: 3
+        }
+      }, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
+      $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
       gmfThemes, fulltextsearchUrl);
 };
 goog.inherits(app.MobileController, gmf.AbstractMobileController);

@@ -40,6 +40,7 @@ gmfModule.constant('isMobile', true);
  * This file includes `goog.require`'s for all the components/directives used
  * by the HTML page and the controller to provide the configuration.
  *
+ * @param {gmfx.Config} config A part of the application config.
  * @param {string} defaultLang The default language.
  * @param {Object.<string, string>} langUrls The languages URLs.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
@@ -48,7 +49,6 @@ gmfModule.constant('isMobile', true);
  * @param {ngeo.StateManager} ngeoStateManager the state manager.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {number} srid The used EPSG code.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
  * @constructor
@@ -56,8 +56,8 @@ gmfModule.constant('isMobile', true);
  * @export
  */
 gmf.AbstractMobileController = function(
-    defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
-    $scope, ngeoStateManager, ngeoFeatureOverlayMgr, srid,
+    config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
+    $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
     gmfThemes, fulltextsearchUrl) {
 
   /**
@@ -78,7 +78,7 @@ gmf.AbstractMobileController = function(
     labelKey: 'label',
     groupsKey: 'layer_name',
     groupValues: ['osm'],
-    projection: 'EPSG:' + srid,
+    projection: 'EPSG:' + (config.srid || 21781),
     url: fulltextsearchUrl
   }];
 
@@ -94,7 +94,8 @@ gmf.AbstractMobileController = function(
    */
   this.rightNavVisible = false;
 
-  var positionFeatureStyle = new ol.style.Style({
+
+  var positionFeatureStyle = config.positionFeatureStyle || new ol.style.Style({
     image: new ol.style.Circle({
       radius: 6,
       fill: new ol.style.Fill({color: 'rgba(230, 100, 100, 1)'}),
@@ -102,7 +103,7 @@ gmf.AbstractMobileController = function(
     })
   });
 
-  var accuracyFeatureStyle = new ol.style.Style({
+  var accuracyFeatureStyle = config.accuracyFeatureStyle || new ol.style.Style({
     fill: new ol.style.Fill({color: 'rgba(100, 100, 230, 0.3)'}),
     stroke: new ol.style.Stroke({color: 'rgba(40, 40, 230, 1)', width: 2})
   });
@@ -114,8 +115,13 @@ gmf.AbstractMobileController = function(
   this.mobileGeolocationOptions = {
     positionFeatureStyle: positionFeatureStyle,
     accuracyFeatureStyle: accuracyFeatureStyle,
-    zoom: 9
+    zoom: config.geolocationZoom || 9
   };
+
+  var viewConfig = {
+    projection: ol.proj.get('epsg:' + (config.srid || 21781))
+  };
+  goog.object.extend(viewConfig, config.mapViewConfig || {});
 
   /**
    * @type {ol.Map}
@@ -123,17 +129,14 @@ gmf.AbstractMobileController = function(
    */
   this.map = new ol.Map({
     layers: [],
-    view: new ol.View({
-      center: [632464, 185457],
-      projection: ol.proj.get('epsg:' + 21781),
-      minZoom: 3,
-      zoom: 3
-    }),
-    controls: [
+    view: new ol.View(viewConfig),
+    controls: config.mapControls || [
       new ol.control.ScaleLine(),
       new ol.control.Zoom()
     ],
-    interactions: ol.interaction.defaults({pinchRotate: false})
+    interactions:
+        config.mapInteractions ||
+        ol.interaction.defaults({pinchRotate: false})
   });
 
   /**

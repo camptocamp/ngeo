@@ -34,7 +34,15 @@ appModule.constant(
  */
 app.DesktopController = function(
     ngeoFeatureOverlayMgr, fulltextsearchUrl) {
-  goog.base(this, ngeoFeatureOverlayMgr, fulltextsearchUrl);
+  goog.base(
+      this, {
+        srid: 21781,
+        mapViewConfig: {
+          center: [632464, 185457],
+          minZoom: 3,
+          zoom: 3
+        }
+      }, ngeoFeatureOverlayMgr, fulltextsearchUrl);
 };
 goog.inherits(app.DesktopController, gmf.AbstractDesktopController);
 

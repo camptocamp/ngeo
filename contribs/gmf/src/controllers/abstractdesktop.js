@@ -16,9 +16,13 @@ goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
+// TODO: Remove when we add the base layer switcher
+goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.interaction');
+// TODO: Remove when we add the base layer switcher
 goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+// TODO: Remove when we add the base layer switcher
+goog.require('ol.source.WMTS');
 
 
 gmfModule.constant('isDesktop', true);
@@ -35,6 +39,7 @@ gmfModule.constant('isDesktop', true);
  * This file includes `goog.require`'s for all the components/directives used
  * by the HTML page and the controller to provide the configuration.
  *
+ * @param {gmfx.Config} config A part of the application config.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
@@ -43,7 +48,7 @@ gmfModule.constant('isDesktop', true);
  * @export
  */
 gmf.AbstractDesktopController = function(
-    ngeoFeatureOverlayMgr, fulltextsearchUrl) {
+    config, ngeoFeatureOverlayMgr, fulltextsearchUrl) {
 
   /**
    * @type {Array.<gmfx.SearchDirectiveDatasource>}
@@ -54,32 +59,44 @@ gmf.AbstractDesktopController = function(
     labelKey: 'label',
     groupsKey: 'layer_name',
     groupValues: ['osm'],
-    projection: 'EPSG:21781',
+    projection: 'EPSG:' + (config.srid || 21781),
     url: fulltextsearchUrl
   }];
 
+  var viewConfig = {
+    projection: ol.proj.get('epsg:' + (config.srid || 21781))
+  };
+  goog.object.extend(viewConfig, config.mapViewConfig || {});
+
+  // TODO: Remove when we add the base layer switcher
+  var layer = new ol.layer.Tile();
   /**
    * @type {ol.Map}
    * @export
    */
   this.map = new ol.Map({
-    layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
-      })
-    ],
-    view: new ol.View({
-      center: [0, 0],
-      zoom: 2
-    }),
-    controls: [
+    layers: [layer],
+    view: new ol.View(viewConfig),
+    controls: config.mapControls || [
       new ol.control.ScaleLine(),
       new ol.control.Zoom()
     ],
-    interactions: ol.interaction.defaults({
+    interactions: config.mapInteractions || ol.interaction.defaults({
       pinchRotate: false,
       altShiftDragRotate: false
     })
+  });
+
+  // TODO: Remove when we add the base layer switcher
+  var parser = new ol.format.WMTSCapabilities();
+  $.ajax(
+      'https://geomapfish-demo.camptocamp.net/2.0/tiles/1.0.0/WMTSCapabilities.xml'
+  ).then(function(response) {
+    var result = parser.read(response);
+    var options = ol.source.WMTS.optionsFromCapabilities(result, {
+      layer: 'map', requestEncoding: 'REST'
+    });
+    layer.setSource(new ol.source.WMTS(options));
   });
 
   /**
@@ -97,5 +114,6 @@ gmf.AbstractDesktopController = function(
 };
 
 
-gmfModule.controller('AbstractDesktopController',
+gmfModule.controller(
+    'AbstractDesktopController',
     gmf.AbstractDesktopController);
