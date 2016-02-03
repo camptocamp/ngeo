@@ -296,7 +296,8 @@ gmf.SearchController.prototype.filterLayername_ = function(groupsKey,
        * @return {boolean}
        */
       function(feature) {
-        return (feature['properties'][groupsKey] === groupValue);
+        var properties = feature['properties'];
+        return properties['actions'] || properties[groupsKey] === groupValue;
       });
 };
 
