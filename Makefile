@@ -174,7 +174,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 
 	.build/python-venv/bin/python buildtools/cleanup-ghpages.py $(GITHUB_USERNAME) $<
 	cd $<; git add -A
-	cd $<; test "`git status --porcelain --untracked-files=no`" == "" || git commit -m 'Cleanup GitHub pages'
+	cd $<; git commit -m 'Cleanup GitHub pages' || true
 
 	cd $<; git rm --ignore-unmatch -r --quiet --force $(GIT_BRANCH)
 	mkdir $</$(GIT_BRANCH)
@@ -186,7 +186,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 	rm $</$(GIT_BRANCH)/examples/contribs/gmf/build/*.js.map
 	cd $<; git add -A
 	cd $<; git status
-	cd $<; test "`git status --porcelain --untracked-files=no`" == "" || git commit -m 'Update GitHub pages'
+	cd $<; git commit -m 'Update GitHub pages' || true
 	cd $<; git push $(GIT_REMOTE_NAME) gh-pages
 
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
