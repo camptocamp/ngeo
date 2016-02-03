@@ -122,10 +122,8 @@ gmf.Themes.prototype.getBgLayers = function() {
         var promises = data['background_layers'].map(function(item) {
 
           var callback = function(item, layer) {
-            if (layer) {
-              layer.set('label', item['name']);
-              layer.set('metadata', item['metadata']);
-            }
+            layer.set('label', item['name']);
+            layer.set('metadata', item['metadata']);
             return layer;
           };
 

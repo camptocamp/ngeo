@@ -181,14 +181,11 @@ gmf.LayertreeController.prototype.getLayer = function(node) {
   if (node.type === 'WMTS') {
     var newLayer = new ol.layer.Tile();
     this.layerHelper_.setHelperID(newLayer, layerURL, layerName);
-    var promise = this.layerHelper_.createWMTSLayerFromCapabilitites(layerURL,
-        layerName);
-    promise.then(function(layer) {
-      if (goog.isDef(layer)) {
-        newLayer.setSource(layer.getSource());
-        newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
-      }
-    });
+    this.layerHelper_.createWMTSLayerFromCapabilitites(layerURL, layerName)
+      .then(function(layer) {
+          newLayer.setSource(layer.getSource());
+          newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
+        });
     layer = newLayer;
   } else {
     layer = this.layerHelper_.createBasicWMSLayer(layerURL, layerName);
