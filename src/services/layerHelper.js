@@ -130,7 +130,8 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
 
       return $q.resolve(layer);
     }
-    return $q.reject();
+    return $q.reject('Failed to get WMTS capabilities from ' +
+        capabilitiesURL);
   });
 };
 
