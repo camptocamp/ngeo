@@ -108,10 +108,10 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
     capabilitiesURL, layerName) {
   var parser = new ol.format.WMTSCapabilities();
   var layer = new ol.layer.Tile();
-  var deferred = this.$q_.defer();
   this.setHelperID(layer, capabilitiesURL, layerName);
+  var $q = this.$q_;
 
-  this.$http_.get(capabilitiesURL).then(function(response) {
+  return this.$http_.get(capabilitiesURL).then(function(response) {
     var result;
     if (response.data) {
       result = parser.read(response.data);
@@ -128,15 +128,10 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
       });
       layer.set('capabilitiesStyles', l['Style']);
 
-      deferred.resolve(layer);
-    } else {
-      deferred.resolve();
+      return $q.resolve(layer);
     }
-  }, function(response) {
-    deferred.resolve();
+    return $q.reject();
   });
-
-  return deferred.promise;
 };
 
 
