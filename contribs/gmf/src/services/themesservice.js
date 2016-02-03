@@ -111,6 +111,7 @@ gmf.Themes.findTheme_ = function(themes, themeName) {
  * @return {angular.$q.Promise} Promise.
  */
 gmf.Themes.prototype.getBgLayers = function() {
+  var $q = this.$q_;
 
   goog.asserts.assert(!goog.isNull(this.promise_));
   return this.promise_.then(goog.bind(
@@ -131,10 +132,14 @@ gmf.Themes.prototype.getBgLayers = function() {
             return this.layerHelper_.createWMTSLayerFromCapabilitites(
                 item['url'],
                 item['name']
-            ).then(goog.bind(callback, this, item));
+            ).then(goog.bind(callback, this, item)).then(null, function(error) {
+              console.error(error || 'unknown error');
+              // Continue even if some layers have failed loading.
+              return $q.resolve(undefined);
+            });
           }
         }, this);
-        return this.$q_.all(promises);
+        return $q.all(promises);
       }, this))
 
     .then(goog.bind(function(values) {
