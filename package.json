@@ -2,7 +2,9 @@
   "name": "ngeo",
   "version": "0.0.1",
   "description": "AngularJS OpenLayers 3 Library",
-  "scripts": {},
+  "scripts": {
+    "install": "make -f npm.mk install"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/camptocamp/ngeo.git"
@@ -15,41 +17,38 @@
     "svg2ttf": "2.1.1",
     "ttf2eot": "1.3.0",
     "ttf2woff": "1.3.0",
-    "async": "0.2.10"
+    "async": "1.5.2"
   },
   "devDependencies": {
-    "angular": "1.4.7",
-    "angular-jsdoc": "1.2.1",
-    "angular-mocks": "1.4.7",
-    "angular-gettext": "2.1.0",
-    "angular-gettext-tools": "2.1.2",
-    "bootstrap": "3.3.0",
-    "clean-css": "2.2.7",
+    "angular": "1.4.9",
+    "angular-jsdoc": "1.3.3",
+    "angular-mocks": "1.4.9",
+    "angular-gettext": "2.2.1",
+    "angular-gettext-tools": "2.1.11",
+    "bootstrap": "3.3.6",
+    "clean-css": "3.4.9",
     "coveralls": "2.11.6",
-    "d3": "3.5.5",
+    "d3": "3.5.14",
     "font-awesome": "4.5.0",
-    "fs-extra": "0.8.1",
+    "fs-extra": "0.26.5",
     "gaze": "0.5.2",
-    "graceful-fs": "3.0.2",
-    "jquery": "2.1.4",
+    "graceful-fs": "4.1.3",
+    "jquery": "2.2.0",
     "jsdoc": "3.4.0",
-    "jsdom": "3.1.2",
-    "jshint": "2.5.1",
-    "karma": "0.12.16",
-    "karma-jasmine": "0.1.5",
+    "jsdom": "8.0.2",
+    "jshint": "2.9.1",
+    "karma": "0.13.19",
+    "karma-jasmine": "0.3.7",
     "karma-phantomjs-launcher": "1.0.0",
     "karma-coverage": "0.5.3",
-    "less": "2.5.3",
+    "less": "2.6.0",
     "less-plugin-autoprefix": "1.5.1",
-    "nomnom": "1.6.2",
+    "nomnom": "1.8.1",
     "openlayers": "openlayers/ol3#master",
     "phantomjs-prebuilt": "2.1.3",
-    "proj4": "2.3.6",
-    "temp": "0.7.0",
+    "proj4": "2.3.12",
+    "temp": "0.8.3",
     "typeahead.js": "0.11.1",
-    "walk": "2.3.3"
-  },
-  "scripts": {
-      "install": "make -f npm.mk install"
+    "walk": "2.3.9"
   }
 }
