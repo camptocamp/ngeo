@@ -42,6 +42,7 @@ ngeox.QueryOptions.prototype.sourceIdProperty;
  * @typedef {{
  *     format: (ol.format.Feature|undefined),
  *     id: (number|string),
+ *     identifierAttributeField: (string|undefined),
  *     infoFormat: (string|undefined),
  *     label: (string|undefined),
  *     layer: (ol.layer.Base|undefined),
@@ -66,6 +67,13 @@ ngeox.QuerySource.prototype.format;
  * @type {number|string}
  */
 ngeox.QuerySource.prototype.id;
+
+
+/**
+ * The key that identify the title attribute in features.
+ * @type {string|undefined}
+ */
+ngeox.QuerySource.prototype.identifierAttributeField;
 
 
 /**
