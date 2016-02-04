@@ -1,0 +1,55 @@
+[ngeo-popup] {
+  &.popover {
+    position: fixed;
+    top: 0;
+    left: auto;
+    right: auto;
+    max-width: 96%;
+    width: 96%;
+    height: 96%;
+    max-height: 96%;
+    margin: 2%;
+    border-radius: 0;
+  }
+  .popover-title {
+    background-color: @nav-bg;
+    border-bottom-color: @color2;
+    color: @color2;
+    .close {
+      color: @color2;
+      line-height: 0.8;
+      opacity: 1;
+    }
+  }
+  .popover-content {
+    /*
+     * popup's height - popover-title's height
+     * should be computed using bootstrap variables
+     */
+    max-height: 90%;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (min-width: @screen-sm-min) {
+  [ngeo-popup] {
+    &.popover {
+      top: 20px;
+      max-width: 350px;
+      width: 350px;
+      margin-left: -175px;
+      left: 50%;
+      right: 50%;
+      max-height: 400px;
+      position: fixed;
+    }
+    .popover-content {
+      overflow: auto;
+      /*
+       * popup's height - popover-title's height
+       * should be computed using bootstrap variables
+       */
+      max-height: calc(400px - 38px);
+    }
+  }
+}
