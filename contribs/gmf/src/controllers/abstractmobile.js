@@ -72,10 +72,8 @@ gmf.AbstractMobileController = function(
     var gmfGroupName = entry.group_name;
     gmfGroups.push(gmfGroupName);
   });
-
-
-
   //console.log(gmfGroups);
+  
   /**
    * A reference to the current theme
    * @type {Object}
