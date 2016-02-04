@@ -3,9 +3,9 @@ goog.provide('ngeo.BackgroundEventType');
 goog.provide('ngeo.BackgroundLayerMgr');
 
 goog.require('goog.asserts');
-goog.require('goog.events.Event');
 goog.require('ngeo');
 goog.require('ol.Observable');
+goog.require('ol.events');
 
 
 /**
@@ -22,7 +22,7 @@ ngeo.BackgroundEventType = {
 
 /**
  * @constructor
- * @extends {goog.events.Event}
+ * @extends {ol.events.Event}
  * @param {ngeo.BackgroundEventType} type Type.
  * @param {ol.layer.Base} previous
  * @implements {ngeox.BackgroundEvent}
@@ -37,7 +37,7 @@ ngeo.BackgroundEvent = function(type, previous) {
    */
   this.previous = previous;
 };
-goog.inherits(ngeo.BackgroundEvent, goog.events.Event);
+goog.inherits(ngeo.BackgroundEvent, ol.events.Event);
 
 
 

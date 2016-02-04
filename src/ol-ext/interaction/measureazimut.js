@@ -2,11 +2,11 @@ goog.provide('ngeo.interaction.DrawAzimut');
 goog.provide('ngeo.interaction.MeasureAzimut');
 
 goog.require('goog.asserts');
-goog.require('goog.events');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.MapBrowserEvent.EventType');
+goog.require('ol.events');
 goog.require('ol.geom.Circle');
 goog.require('ol.geom.GeometryCollection');
 goog.require('ol.geom.LineString');
@@ -172,9 +172,9 @@ ngeo.interaction.DrawAzimut = function(options) {
   });
 
 
-  goog.events.listen(this,
+  ol.events.listen(this,
       ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
-      this.updateState_, false, this);
+      this.updateState_, this);
 };
 goog.inherits(ngeo.interaction.DrawAzimut, ol.interaction.Pointer);
 

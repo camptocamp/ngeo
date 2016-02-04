@@ -4,8 +4,8 @@ goog.provide('gmf.ThemesEventType');
 goog.require('gmf');
 goog.require('goog.array');
 goog.require('goog.asserts');
-goog.require('goog.events.EventTarget');
 goog.require('ngeo.LayerHelper');
+goog.require('ol.events.EventTarget');
 goog.require('ol.layer.Tile');
 
 
@@ -33,7 +33,7 @@ gmf.ThemesEventType = {
  * objects in the tree returned by the "themes" web service.
  *
  * @constructor
- * @extends {goog.events.EventTarget}
+ * @extends {ol.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
  * @param {string} gmfTreeUrl URL to "themes" web service.
  * @param {angular.$q} $q Angular q service
@@ -76,7 +76,7 @@ gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper) {
    */
   this.promise_ = null;
 };
-goog.inherits(gmf.Themes, goog.events.EventTarget);
+goog.inherits(gmf.Themes, ol.events.EventTarget);
 
 
 /**

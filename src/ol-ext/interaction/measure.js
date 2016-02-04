@@ -5,10 +5,10 @@ goog.provide('ngeo.interaction.Measure');
 goog.require('goog.asserts');
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
-goog.require('goog.events');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Overlay');
+goog.require('ol.events');
 goog.require('ol.interaction.DrawEvent');
 goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
@@ -49,7 +49,7 @@ ngeo.MeasureEventType = {
  * instances of this type.
  *
  * @constructor
- * @extends {goog.events.Event}
+ * @extends {ol.events.Event}
  * @implements {ngeox.MeasureEvent}
  * @param {ngeo.MeasureEventType} type Type.
  * @param {ol.Feature} feature The feature drawn.
@@ -66,7 +66,7 @@ ngeo.MeasureEvent = function(type, feature) {
   this.feature = feature;
 
 };
-goog.inherits(ngeo.MeasureEvent, goog.events.Event);
+goog.inherits(ngeo.MeasureEvent, ol.events.Event);
 
 
 
@@ -139,7 +139,7 @@ ngeo.interaction.Measure = function(opt_options) {
 
   /**
    * The key for geometry change event.
-   * @type {?goog.events.Key}
+   * @type {?ol.events.Key}
    * @private
    */
   this.changeEventKey_ = null;
@@ -183,14 +183,14 @@ ngeo.interaction.Measure = function(opt_options) {
   this.drawInteraction_ = this.getDrawInteraction(options.sketchStyle,
       this.vectorLayer_.getSource());
 
-  goog.events.listen(this.drawInteraction_,
-      ol.interaction.DrawEventType.DRAWSTART, this.onDrawStart_, false, this);
-  goog.events.listen(this.drawInteraction_,
-      ol.interaction.DrawEventType.DRAWEND, this.onDrawEnd_, false, this);
+  ol.events.listen(this.drawInteraction_,
+      ol.interaction.DrawEventType.DRAWSTART, this.onDrawStart_, this);
+  ol.events.listen(this.drawInteraction_,
+      ol.interaction.DrawEventType.DRAWEND, this.onDrawEnd_, this);
 
-  goog.events.listen(this,
+  ol.events.listen(this,
       ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
-      this.updateState_, false, this);
+      this.updateState_, this);
 };
 goog.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
 
@@ -313,8 +313,8 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
 
   var geometry = this.sketchFeature.getGeometry();
   goog.asserts.assert(goog.isDef(geometry));
-  this.changeEventKey_ = goog.events.listen(geometry,
-      goog.events.EventType.CHANGE,
+  this.changeEventKey_ = ol.events.listen(geometry,
+      ol.events.EventType.CHANGE,
       function() {
         this.handleMeasure(goog.bind(function(measure, coord) {
           if (!goog.isNull(coord)) {
@@ -322,7 +322,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
             this.measureTooltipOverlay_.setPosition(coord);
           }
         }, this));
-      }, false, this);
+      }, this);
 };
 
 
@@ -337,7 +337,9 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
   this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
       this.sketchFeature));
   this.sketchFeature = null;
-  goog.events.unlistenByKey(this.changeEventKey_);
+  if (!goog.isNull(this.changeEventKey_)) {
+    ol.events.unlistenByKey(this.changeEventKey_);
+  }
 };
 
 

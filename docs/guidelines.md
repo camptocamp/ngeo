@@ -758,7 +758,7 @@ guidelines in `ngeo` as well.
 ### Declaring an event
 
 When you declare an event on ol3 object, please use
-- the `goog.events.listen` function
+- the `ol.events.listen` function
 - the ol3 constant to identify the event
 
 This is wrong:
@@ -772,10 +772,11 @@ this.geolocation_.on('change:accuracyGeometry', function() {
 This is the correct syntax:
 
 ```js
-goog.events.listen(this.geolocation_,
+ol.events.listen(this.geolocation_,
   ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
   function() {
-  }, false, this);
+    ...
+  }, this);
 ```
 
 ## Watch your watchers!

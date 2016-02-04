@@ -22,9 +22,9 @@ describe('gmf.Themes', function() {
 
   it('Get background layers', function() {
     var spy = jasmine.createSpy();
-    goog.events.listenOnce(gmfThemes, gmf.ThemesEventType.LOAD, function(evt) {
+    ol.events.listenOnce(gmfThemes, gmf.ThemesEventType.LOAD, function(evt) {
       gmfThemes.getBgLayers().then(spy);
-    }, undefined, this);
+    });
 
     $httpBackend.expectGET(treeUrl);
     themes.background_layers.forEach(function(bgLayer) {
@@ -46,9 +46,9 @@ describe('gmf.Themes', function() {
 
   it('Load themes', function() {
     var spy = jasmine.createSpy();
-    goog.events.listenOnce(gmfThemes, gmf.ThemesEventType.LOAD, function(evt) {
+    ol.events.listenOnce(gmfThemes, gmf.ThemesEventType.LOAD, function(evt) {
       gmfThemes.promise_.then(spy);
-    }, undefined, this);
+    });
 
     $httpBackend.expectGET(treeUrl);
     gmfThemes.loadThemes();
@@ -61,9 +61,9 @@ describe('gmf.Themes', function() {
 
   it('Get themes object', function() {
     var spy = jasmine.createSpy();
-    goog.events.listenOnce(gmfThemes, gmf.ThemesEventType.LOAD, function(evt) {
+    ol.events.listenOnce(gmfThemes, gmf.ThemesEventType.LOAD, function(evt) {
       gmfThemes.getThemesObject().then(spy);
-    }, undefined, this);
+    });
 
     $httpBackend.expectGET(treeUrl);
     gmfThemes.loadThemes();
@@ -79,9 +79,9 @@ describe('gmf.Themes', function() {
   it('Get a theme object (find a specific theme)', function() {
     var themeName = 'Enseignement';
     var spy = jasmine.createSpy();
-    goog.events.listenOnce(gmfThemes, gmf.ThemesEventType.LOAD, function(evt) {
+    ol.events.listenOnce(gmfThemes, gmf.ThemesEventType.LOAD, function(evt) {
       gmfThemes.getThemeObject(themeName).then(spy);
-    }, undefined, this);
+    });
 
     $httpBackend.expectGET(treeUrl);
     gmfThemes.loadThemes();

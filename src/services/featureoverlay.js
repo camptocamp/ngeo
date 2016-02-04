@@ -250,19 +250,19 @@ ngeo.FeatureOverlay.prototype.clear = function() {
 ngeo.FeatureOverlay.prototype.setFeatures = function(features) {
   if (!goog.isNull(this.features_)) {
     this.features_.clear();
-    goog.events.unlisten(this.features_, ol.CollectionEventType.ADD,
-        this.handleFeatureAdd_, false, this);
-    goog.events.unlisten(this.features_, ol.CollectionEventType.REMOVE,
-        this.handleFeatureRemove_, false, this);
+    ol.events.unlisten(this.features_, ol.CollectionEventType.ADD,
+        this.handleFeatureAdd_, this);
+    ol.events.unlisten(this.features_, ol.CollectionEventType.REMOVE,
+        this.handleFeatureRemove_, this);
   }
   if (!goog.isNull(features)) {
     features.forEach(function(feature) {
       this.addFeature(feature);
     }, this);
-    goog.events.listen(features, ol.CollectionEventType.ADD,
-        this.handleFeatureAdd_, false, this);
-    goog.events.listen(features, ol.CollectionEventType.REMOVE,
-        this.handleFeatureRemove_, false, this);
+    ol.events.listen(features, ol.CollectionEventType.ADD,
+        this.handleFeatureAdd_, this);
+    ol.events.listen(features, ol.CollectionEventType.REMOVE,
+        this.handleFeatureRemove_, this);
   }
   this.features_ = features;
 };
