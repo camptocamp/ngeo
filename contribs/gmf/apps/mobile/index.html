@@ -42,32 +42,21 @@
         <ul>
           <li>
             <a href="#background" data-toggle="slide-in">Background</a>
-            <a href="#data" data-toggle="slide-in">Data</a>
           </li>
+          <li>
+            <a href="#themes" data-toggle="slide-in">Themes</a>
+          </li>
+          <gmf-layertree
+              gmf-layertree-source="mainCtrl.theme"
+              gmf-layertree-map="::mainCtrl.map"
+              gmf-layertree-openlinksinnewwindow="true">
+          </gmf-layertree>
         </ul>
-        <hr />
-        <p class="text-center">
-          <b>Put your logo here</b>
-        </p>
       </div>
       <div id="background" class="slide" data-header-title="Background">
         <gmf-mobile-background-layer-selector
           gmf-mobile-background-layer-selector-map="::mainCtrl.map">
         </gmf-mobile-background-layer-selector>
-      </div>
-      <div id="data" class="slide" data-header-title="Data">
-        <ul>
-          <li>
-            <a href="#themes" data-toggle="slide-in">Themes</a>
-          </li>
-          <li>
-            <gmf-layertree
-                gmf-layertree-source="mainCtrl.theme"
-                gmf-layertree-map="::mainCtrl.map"
-                gmf-layertree-openlinksinnewwindow="true">
-            </gmf-layertree>
-          </li>
-        </ul>
       </div>
       <gmf-themeselector
           id="themes"
