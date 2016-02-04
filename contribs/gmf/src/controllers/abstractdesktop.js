@@ -2,11 +2,17 @@ goog.provide('gmf.AbstractDesktopController');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
+goog.require('gmf.Themes');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.mobileBackgroundLayerSelectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.proj.EPSG21781');
 /** @suppress {extraRequire} */
 goog.require('gmf.searchDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.themeselectorDirective');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
@@ -43,12 +49,22 @@ gmfModule.constant('isDesktop', true);
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
+ * @param {gmf.Themes} gmfThemes Themes service.
  * @constructor
  * @ngInject
  * @export
  */
 gmf.AbstractDesktopController = function(
-    config, ngeoFeatureOverlayMgr, fulltextsearchUrl) {
+    config, ngeoFeatureOverlayMgr, fulltextsearchUrl, gmfThemes) {
+
+  /**
+   * A reference to the current theme
+   * @type {Object}
+   * @export
+   */
+  this.theme;
+
+  gmfThemes.loadThemes();
 
   /**
    * @type {Array.<gmfx.SearchDirectiveDatasource>}

@@ -13,8 +13,11 @@ goog.provide('app_desktop');
 
 goog.require('app');
 goog.require('gmf.AbstractDesktopController');
+goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.layertreeDirective');
 
 
 appModule.constant(
@@ -27,13 +30,14 @@ appModule.constant(
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
+ * @param {gmf.Themes} gmfThemes Themes service.
  * @constructor
  * @extends {gmf.AbstractDesktopController}
  * @ngInject
  * @export
  */
 app.DesktopController = function(
-    ngeoFeatureOverlayMgr, fulltextsearchUrl) {
+    ngeoFeatureOverlayMgr, fulltextsearchUrl, gmfThemes) {
   goog.base(
       this, {
         srid: 21781,
@@ -42,7 +46,7 @@ app.DesktopController = function(
           minZoom: 3,
           zoom: 3
         }
-      }, ngeoFeatureOverlayMgr, fulltextsearchUrl);
+      }, ngeoFeatureOverlayMgr, fulltextsearchUrl, gmfThemes);
 };
 goog.inherits(app.DesktopController, gmf.AbstractDesktopController);
 
