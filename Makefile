@@ -689,17 +689,23 @@ clean:
 	rm -f .build/app-*.json
 	rm -f .build/templatecache.js
 	rm -f .build/gmftemplatecache.js
-	rm -f dist/*
-	rm -f $(EXTERNS_FILES)
 	rm -rf .build/apidoc
 	rm -rf .build/examples-hosted
 	rm -rf .build/contribs
-	rm -rf contribs/gmf/build
 	rm -f .build/locale/gmf.pot
+	rm -rf contribs/gmf/build
+	rm -f dist/*
+	rm -f $(EXTERNS_FILES)
+	rm -f contribs/gmf/fonts/FontAwesome.otf
+	rm -f contribs/gmf/fonts/fontawesome-webfont.*
+	rm -f contribs/gmf/fonts/gmf-icons.eot
+	rm -f contribs/gmf/fonts/gmf-icons.ttf
+	rm -f contribs/gmf/fonts/gmf-icons.woff
 
 .PHONY: cleanall
 cleanall: clean
 	rm -rf .build
 	rm -rf dist
 	rm -rf node_modules
+	rm -f .tx/config
 	rm -f $(L10N_PO_FILES)
