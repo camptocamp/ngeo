@@ -61,20 +61,6 @@ gmf.AbstractMobileController = function(
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
     gmfThemes, fulltextsearchUrl, gmfSearchGroups) {
 
-
-  var gmfSearchGroupsData;
-
-  // parse the array -> data from index.html
-  gmfSearchGroupsData = goog.json.parse(gmfSearchGroups);
-
-  // loop through the parsed JSON and create an array
-  var gmfGroups = [];
-  gmfSearchGroupsData.forEach(function(entry) {
-    var gmfGroupName = entry.group_name;
-    gmfGroups.push(gmfGroupName);
-  });
-  //console.log(gmfGroups);
-
   /**
    * A reference to the current theme
    * @type {Object}
@@ -92,7 +78,7 @@ gmf.AbstractMobileController = function(
     datasetTitle: 'Internal',
     labelKey: 'label',
     groupsKey: 'layer_name',
-    groupValues: gmfGroups,
+    groupValues: gmfSearchGroups,
     projection: 'EPSG:' + (config.srid || 21781),
     url: fulltextsearchUrl
   }];
