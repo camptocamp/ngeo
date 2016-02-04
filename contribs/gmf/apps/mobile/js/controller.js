@@ -33,6 +33,7 @@ goog.require('ngeo.mobileGeolocationDirective');
  *     overlay manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
+ * @param {Array<string>} gmfSearchGroups group search.
  * @constructor
  * @extends {gmf.AbstractMobileController}
  * @ngInject
@@ -41,11 +42,11 @@ goog.require('ngeo.mobileGeolocationDirective');
 app.MobileController = function(
     defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-    gmfThemes, fulltextsearchUrl) {
+    gmfThemes, fulltextsearchUrl, gmfSearchGroups) {
   goog.base(
       this, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
       $scope, ngeoStateManager, ngeoFeatureOverlayMgr, 21781,
-      gmfThemes, fulltextsearchUrl);
+      gmfThemes, fulltextsearchUrl, gmfSearchGroups);
 };
 goog.inherits(app.MobileController, gmf.AbstractMobileController);
 

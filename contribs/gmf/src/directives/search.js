@@ -198,6 +198,8 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
         goog.isDef(datasource.groupsKey) ? datasource.groupValues : [];
     var filter;
 
+    console.log('groupValues: ', groupValues);
+
     do {
       var title = datasource.datasetTitle;
 
