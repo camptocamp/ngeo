@@ -120,23 +120,21 @@ ngeo.DesktopGeolocationController = function($scope, $element,
    */
   this.active_ = false;
 
-  goog.events.listen(
+  ol.events.listen(
       this.geolocation_,
       ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
       function() {
         this.accuracyFeature_.setGeometry(
             this.geolocation_.getAccuracyGeometry());
       },
-      false,
       this);
 
-  goog.events.listen(
+  ol.events.listen(
       this.geolocation_,
       ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
       function(e) {
         this.setPosition_(e);
       },
-      false,
       this);
 
   ngeoDecorateGeolocation(this.geolocation_);

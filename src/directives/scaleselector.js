@@ -2,11 +2,10 @@ goog.provide('ngeo.ScaleselectorController');
 goog.provide('ngeo.ScaleselectorOptions');
 goog.provide('ngeo.scaleselectorDirective');
 
-goog.require('goog.events');
-goog.require('goog.events.Key');
 goog.require('ngeo');
 goog.require('ol.Map');
 goog.require('ol.Object');
+goog.require('ol.events');
 
 
 ngeoModule.value('ngeoScaleselectorTemplateUrl',
@@ -143,7 +142,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   this.$scope_ = $scope;
 
   /**
-   * @type {goog.events.Key}
+   * @type {?ol.events.Key}
    * @private
    */
   this.resolutionChangeKey_ = null;
@@ -162,8 +161,8 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
     }
   }
 
-  goog.events.listen(this.map_, ol.Object.getChangeEventType('view'),
-      this.handleViewChange_, false, this);
+  ol.events.listen(this.map_, ol.Object.getChangeEventType('view'),
+      this.handleViewChange_, this);
 
   this.registerResolutionChangeListener_();
 
@@ -252,12 +251,12 @@ ngeo.ScaleselectorController.prototype.handleViewChange_ = function(e) {
 ngeo.ScaleselectorController.prototype.registerResolutionChangeListener_ =
     function() {
   if (!goog.isNull(this.resolutionChangeKey_)) {
-    goog.events.unlistenByKey(this.resolutionChangeKey_);
+    ol.events.unlistenByKey(this.resolutionChangeKey_);
   }
   var view = this.map_.getView();
-  this.resolutionChangeKey_ = goog.events.listen(view,
+  this.resolutionChangeKey_ = ol.events.listen(view,
       ol.Object.getChangeEventType('resolution'), this.handleResolutionChange_,
-      false, this);
+      this);
 };
 
 

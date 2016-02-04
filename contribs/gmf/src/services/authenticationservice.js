@@ -2,8 +2,8 @@ goog.provide('gmf.Authentication');
 goog.provide('gmf.AuthenticationEventType');
 
 goog.require('gmf');
-goog.require('goog.events.EventTarget');
 goog.require('goog.uri.utils');
+goog.require('ol.events.EventTarget');
 
 
 /**
@@ -82,7 +82,7 @@ gmfModule.value('gmfUser', {
  * - resetPassword
  *
  * @constructor
- * @extends {goog.events.EventTarget}
+ * @extends {ol.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
  * @param {string} authenticationBaseUrl URL to "authentication" web service.
  * @param {gmf.User} gmfUser
@@ -112,7 +112,7 @@ gmf.Authentication = function($http, authenticationBaseUrl, gmfUser) {
 
   this.load_();
 };
-goog.inherits(gmf.Authentication, goog.events.EventTarget);
+goog.inherits(gmf.Authentication, ol.events.EventTarget);
 
 
 /**

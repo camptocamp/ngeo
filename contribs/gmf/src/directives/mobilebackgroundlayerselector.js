@@ -104,13 +104,12 @@ gmf.MobileBackgroundLayerSelectorController = function(
         this.setLayer(this.bgLayer);
       }, this));
 
-  goog.events.listen(
+  ol.events.listen(
       this.backgroundLayerMgr_,
       ngeo.BackgroundEventType.CHANGE,
       function() {
         this.bgLayer = this.backgroundLayerMgr_.get(this.map);
       },
-      false,
       this);
 
 };
