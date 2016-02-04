@@ -74,11 +74,6 @@ gmf.AbstractMobileController = function(
     gmfGroups.push(gmfGroupName);
   });
 
-  // $.each(gmfSearchGroupsData, function(index, valueObj) {
-  //   var gmfGroupName = valueObj.group_name;
-  //   gmfGroups.push(gmfGroupName);
-  // });
-
   //console.log(gmfGroups);
 
   /**
