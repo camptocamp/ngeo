@@ -61,6 +61,7 @@ gmf.AbstractMobileController = function(
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
     gmfThemes, fulltextsearchUrl, gmfSearchGroups) {
 
+
   var gmfSearchGroupsData;
 
   // parse the array -> data from index.html
@@ -73,7 +74,7 @@ gmf.AbstractMobileController = function(
     gmfGroups.push(gmfGroupName);
   });
   //console.log(gmfGroups);
-  
+
   /**
    * A reference to the current theme
    * @type {Object}
