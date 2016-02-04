@@ -22,18 +22,6 @@ describe('ngeo.LayerHelper', function() {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('Set a helperID on a layer', function() {
-    layer = ngeoLayerHelper.createBasicWMSLayer('source', 'name');
-    ngeoLayerHelper.setHelperID(layer, 'source', 'name');
-    var param = ngeoLayerHelper.helperID;
-    expect(layer.get(param)).toBe('source_name');
-  });
-
-  it('Make a helperID', function() {
-    var id = ngeoLayerHelper.makeHelperID('source', 'name');
-    expect(id).toBe('source_name');
-  });
-
   it('Create a basic WMS layer', function() {
     layer = ngeoLayerHelper.createBasicWMSLayer('', '');
     expect(layer.constructor).toBe(ol.layer.Image);
@@ -59,43 +47,6 @@ describe('ngeo.LayerHelper', function() {
     collection.push(layer);
     var group = ngeoLayerHelper.createBasicGroup(collection);
     expect(group.getLayersArray().length).toBe(1);
-  });
-
-  it('Get index of a layer', function() {
-    layer = ngeoLayerHelper.createBasicWMSLayer('', 'testLayer');
-    map.addLayer(layer);
-    expect(ngeoLayerHelper.getLayerIndex(map, layer)).toBe(0);
-  });
-
-  it('Find a layer in an array of layers', function() {
-    var layers = [];
-    layer = ngeoLayerHelper.createBasicWMSLayer('', 'testLayer');
-    var layerId = '_testLayer';
-    expect(ngeoLayerHelper.findLayer(layers, layerId)).toBe(null);
-
-    layers.push(layer);
-    expect(ngeoLayerHelper.findLayer(layers, layerId)).toBe(layer);
-  });
-
-  it('Add a layer on the map', function() {
-    layer = ngeoLayerHelper.createBasicWMSLayer('', 'testLayer');
-    expect(ngeoLayerHelper.addLayerToMap(map, layer)).toBe(true);
-    expect(ngeoLayerHelper.addLayerToMap(map, layer)).toBe(false);
-  });
-
-  it('Remove a layer from the map', function() {
-    layer = ngeoLayerHelper.createBasicWMSLayer('', 'testLayer');
-    map.addLayer(layer);
-    expect(ngeoLayerHelper.removeLayerFromMap(map, layer)).toBe(true);
-    expect(ngeoLayerHelper.removeLayerFromMap(map, layer)).toBe(false);
-  });
-
-  it('Add and remove multiple layers', function() {
-    layer = ngeoLayerHelper.createBasicWMSLayer('', 'testLayer');
-    ngeoLayerHelper.moveInOutLayers(map, [layer], true);
-    expect(map.getLayers().array_.length).toBe(1);
-    ngeoLayerHelper.moveInOutLayers(map, [layer], false);
-    expect(map.getLayers().array_.length).toBe(0);
   });
 
   it('Get an array of layer from a group', function() {

@@ -55,6 +55,12 @@ GmfThemesNode.prototype.minResolutionHint;
 
 
 /**
+ * @type {boolean}
+ */
+GmfThemesNode.prototype.mixed;
+
+
+/**
  * @type {string}
  */
 GmfThemesNode.prototype.name;
