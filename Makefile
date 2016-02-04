@@ -13,6 +13,7 @@ FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot t
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
+GMF_APPS += mobile desktop
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 GMF_APPS_LIBS_JS_FILES += \
@@ -27,8 +28,7 @@ GMF_APPS_LIBS_JS_FILES += \
 
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES)) \
-	.build/contribs/gmf/apps/mobile.check.timestamp \
-	.build/contribs/gmf/apps/desktop.check.timestamp
+	$(addprefix .build/contribs/gmf/apps/,$(addsuffix .check.timestamp,$(GMF_APPS)))
 EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/ngeo.js.map \
 	.build/examples-hosted/lib/ngeo-debug.js \
@@ -118,17 +118,13 @@ apidoc: .build/apidoc
 dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
 .PHONY: check
-check: lint dist check-examples test compile-examples build-gmf-mobile-app build-gmf-desktop-app
+check: lint dist check-examples test compile-examples build-gmf-apps
 
 .PHONY: compile-examples
 compile-examples: .build/examples/all.min.js
 
-.PHONY: build-gmf-mobile-app
-build-gmf-mobile-app: $(addprefix contribs/gmf/build/mobile,.js .css) \
-	$(addprefix contribs/gmf/build/gmf-,$(addsuffix .json, $(LANGUAGES)))
-
-.PHONY: build-gmf-desktop-app
-build-gmf-desktop-app: $(addprefix contribs/gmf/build/desktop,.js .css) \
+.PHONY: build-gmf-apps
+build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),.js .css)) \
 	$(addprefix contribs/gmf/build/gmf-,$(addsuffix .json, $(LANGUAGES)))
 
 .PHONY: check-examples
@@ -153,8 +149,7 @@ examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
 		$(patsubst examples/%.html,.build/examples-hosted/%.js,$(EXAMPLES_HTML_FILES)) \
 		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
 		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.js,$(GMF_EXAMPLES_HTML_FILES)) \
-		.build/examples-hosted/contribs/gmf/apps/mobile/index.html \
-		.build/examples-hosted/contribs/gmf/apps/desktop/index.html
+		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
 .build/python-venv/lib/python2.7/site-packages/requests: .build/python-venv
 	.build/python-venv/bin/pip install requests
@@ -165,8 +160,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 		.build/python-venv/lib/python2.7/site-packages/requests \
 		.build/examples-hosted/index.html \
 		.build/examples-hosted/contribs/gmf/index.html \
-		.build/examples-hosted/contribs/gmf/apps/mobile/index.html \
-		.build/examples-hosted/contribs/gmf/apps/desktop/index.html \
+		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS))) \
 		.build/apidoc
 	cd $<; git fetch origin
 	cd $<; git merge --ff-only origin/gh-pages
@@ -352,7 +346,7 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/contribs/gmf/build: build-gmf-mobile-app build-gmf-desktop-app
+.build/examples-hosted/contribs/gmf/build: build-gmf-apps
 	mkdir -p $(dir $@)
 	cp -r contribs/gmf/build $(dir $@)
 
@@ -394,8 +388,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
 		-e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
 
-.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/mobile/index.html
-.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/desktop/index.html
+.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
 		.build/examples-hosted/contribs/gmf/build \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
@@ -593,7 +586,7 @@ contribs/gmf/build/%.js: contribs/gmf/build/%.closure.js $(GMF_APPS_LIBS_JS_FILE
 	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
 
 .PHONY: compile-css
-compile-css: contribs/gmf/build/mobile.css contribs/gmf/build/desktop.css
+compile-css: $(addprefix build/contribs/gmf/,$(addsuffix .css,$(GMF_APPS)))
 
 contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less $(GMF_APPS_LESS_FILES) \
 		.build/node_modules.timestamp \
