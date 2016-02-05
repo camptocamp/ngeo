@@ -1,20 +1,11 @@
 goog.provide('gmf.AbstractMobileController');
 
 goog.require('gmf');
-/** @suppress {extraRequire} */
-goog.require('gmf.Themes');
-/** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
+goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileBackgroundLayerSelectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileNavDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.searchDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.themeselectorDirective');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.GetBrowserLanguage');
 goog.require('ngeo.StateManager');
@@ -22,6 +13,7 @@ goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
+goog.require('ol.interaction');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
@@ -32,12 +24,9 @@ gmfModule.constant('isMobile', true);
 
 
 /**
- * Application entry point.
+ * Mobile application abstract controller.
  *
- * This file defines the "app_mobile" Closure namespace, which is be used as the
- * Closure entry point (see "closure_entry_point" in the "build.json" file).
- *
- * This file includes `goog.require`'s for all the components/directives used
+ * This file includes `goog.require`'s mobile components/directives used
  * by the HTML page and the controller to provide the configuration.
  *
  * @param {gmfx.Config} config A part of the application config.
@@ -52,6 +41,7 @@ gmfModule.constant('isMobile', true);
  * @param {gmf.Themes} gmfThemes Themes service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
  * @constructor
+ * @extends {gmf.AbstractController}
  * @ngInject
  * @export
  */
@@ -59,28 +49,11 @@ gmf.AbstractMobileController = function(
     config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
     gmfThemes, fulltextsearchUrl) {
-
-  /**
-   * A reference to the current theme
-   * @type {Object}
-   * @export
-   */
-  this.theme;
-
-  gmfThemes.loadThemes();
-
-  /**
-   * @type {Array.<gmfx.SearchDirectiveDatasource>}
-   * @export
-   */
-  this.searchDatasources = [{
-    datasetTitle: 'Internal',
-    labelKey: 'label',
-    groupsKey: 'layer_name',
-    groupValues: ['osm'],
-    projection: 'EPSG:' + (config.srid || 21781),
-    url: fulltextsearchUrl
-  }];
+  goog.base(
+      this, config, defaultLang, langUrls, gettextCatalog,
+      ngeoGetBrowserLanguage,
+      $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
+      gmfThemes, fulltextsearchUrl);
 
   /**
    * @type {boolean}
@@ -138,45 +111,8 @@ gmf.AbstractMobileController = function(
         config.mapInteractions ||
         ol.interaction.defaults({pinchRotate: false})
   });
-
-  /**
-   * @type {ngeo.GetBrowserLanguage}
-   */
-  this.getBrowserLanguage = ngeoGetBrowserLanguage;
-
-  /**
-   * @type {ngeo.StateManager}
-   */
-  this.stateManager = ngeoStateManager;
-
-  /**
-   * @type {angular.Scope}
-   */
-  this.scope = $scope;
-
-  /**
-   * Default language
-   * @type {string}
-   */
-  this.defaultLang = defaultLang;
-
-  /**
-   * Languages URL
-   * @type {Object.<string, string>}
-   */
-  this.langUrls = langUrls;
-
-  /**
-   * The gettext catalog
-   * @type {angularGettext.Catalog}
-   */
-  this.gettextCatalog = gettextCatalog;
-
-  this.initLanguage();
-
-  ngeoFeatureOverlayMgr.init(this.map);
-
 };
+goog.inherits(gmf.AbstractMobileController, gmf.AbstractController);
 
 
 /**
@@ -231,52 +167,6 @@ gmf.AbstractMobileController.prototype.leftNavIsVisible = function() {
  */
 gmf.AbstractMobileController.prototype.rightNavIsVisible = function() {
   return this.rightNavVisible;
-};
-
-
-/**
- * @param {string} lang Language code.
- * @export
- */
-gmf.AbstractMobileController.prototype.switchLanguage = function(lang) {
-  goog.asserts.assert(lang in this.langUrls);
-  this.gettextCatalog.setCurrentLanguage(lang);
-  this.gettextCatalog.loadRemote(this.langUrls[lang]);
-  this['lang'] = lang;
-};
-
-
-/**
- */
-gmf.AbstractMobileController.prototype.initLanguage = function() {
-  this.scope.$watch(goog.bind(function() {
-    return this['lang'];
-  }, this), goog.bind(function(newValue) {
-    this.stateManager.updateState({
-      'lang': newValue
-    });
-  }, this));
-
-  var browserLanguage = /** @type {string|undefined} */
-      (this.getBrowserLanguage(goog.object.getKeys(this.langUrls)));
-  var urlLanguage = /** @type {string|undefined} */
-      (this.stateManager.getInitialValue('lang'));
-
-  if (goog.isDef(urlLanguage) &&
-      goog.object.containsKey(this.langUrls, urlLanguage)) {
-    this.switchLanguage(urlLanguage);
-    return;
-  } else if (goog.isDef(browserLanguage) &&
-      goog.object.containsKey(this.langUrls, browserLanguage)) {
-    this.switchLanguage(browserLanguage);
-    return;
-  } else {
-    // if there is no information about language preference,
-    // fallback to default language
-
-    this.switchLanguage(this.defaultLang);
-    return;
-  }
 };
 
 gmfModule.controller('AbstractMobileController', gmf.AbstractMobileController);

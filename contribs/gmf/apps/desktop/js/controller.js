@@ -17,7 +17,7 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
+goog.require('gmf.proj.EPSG21781');
 
 
 appModule.constant(
@@ -27,17 +27,25 @@ appModule.constant(
 
 
 /**
+ * @param {string} defaultLang The default language.
+ * @param {Object.<string, string>} langUrls The languages URLs.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
+ * @param {angular.Scope} $scope Scope.
+ * @param {ngeo.StateManager} ngeoStateManager the state manager.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
  * @param {gmf.Themes} gmfThemes Themes service.
+ * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
  * @constructor
  * @extends {gmf.AbstractDesktopController}
  * @ngInject
  * @export
  */
 app.DesktopController = function(
-    ngeoFeatureOverlayMgr, fulltextsearchUrl, gmfThemes) {
+    defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
+    $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
+    gmfThemes, fulltextsearchUrl) {
   goog.base(
       this, {
         srid: 21781,
@@ -46,7 +54,9 @@ app.DesktopController = function(
           minZoom: 3,
           zoom: 3
         }
-      }, ngeoFeatureOverlayMgr, fulltextsearchUrl, gmfThemes);
+      }, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
+      $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
+      gmfThemes, fulltextsearchUrl);
 };
 goog.inherits(app.DesktopController, gmf.AbstractDesktopController);
 
