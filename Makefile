@@ -182,8 +182,8 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 	cp -r .build/apidoc $</$(GIT_BRANCH)/apidoc
 	mkdir $</$(GIT_BRANCH)/examples
 	cp -r .build/examples-hosted/* $</$(GIT_BRANCH)/examples
-	rm $</$(GIT_BRANCH)/examples/lib/*.js.map
-	rm $</$(GIT_BRANCH)/examples/contribs/gmf/build/*.js.map
+	rm $</$(GIT_BRANCH)/examples/lib/*.js.map || true
+	rm $</$(GIT_BRANCH)/examples/contribs/gmf/build/*.js.map || true
 	cd $<; git add -A
 	cd $<; git status
 	cd $<; git commit -m 'Update GitHub pages' || true
