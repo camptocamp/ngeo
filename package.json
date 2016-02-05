@@ -20,7 +20,7 @@
     "async": "0.2.10"
   },
   "devDependencies": {
-    "angular": "1.4.7",
+    "angular": "1.4.9",
     "angular-jsdoc": "1.2.1",
     "angular-mocks": "1.4.7",
     "angular-gettext": "2.1.0",
