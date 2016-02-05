@@ -160,9 +160,14 @@ examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
 	.build/python-venv/bin/pip install requests
 	touch $@
 
+.build/python-venv/lib/python2.7/site-packages/urllib3: .build/python-venv
+	.build/python-venv/bin/pip install urllib3
+	touch $@
+
 .PHONY: gh-pages
 gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 		.build/python-venv/lib/python2.7/site-packages/requests \
+		.build/python-venv/lib/python2.7/site-packages/urllib3 \
 		.build/examples-hosted/index.html \
 		.build/examples-hosted/contribs/gmf/index.html \
 		.build/examples-hosted/contribs/gmf/apps/mobile/index.html \
