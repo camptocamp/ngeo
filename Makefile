@@ -101,6 +101,7 @@ help:
 	@echo "- test                    Run the test suite"
 	@echo "- clean                   Remove generated files"
 	@echo "- cleanall                Remove all the build artefacts"
+	@echo "- cleanallcache           Remove all the build artefacts and the extra caches (npm and pip)"
 	@echo
 	@echo "Segondary targets:"
 	@echo
@@ -702,3 +703,8 @@ cleanall: clean
 	rm -rf dist
 	rm -rf node_modules
 	rm -f $(L10N_PO_FILES)
+
+.PHONY: cleanallcache
+cleanallcache: cleanall
+	rm -rf $(HOME)/.npm
+	rm -rf $(HOME)/.cache/pip
