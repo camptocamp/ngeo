@@ -22,7 +22,7 @@
   "devDependencies": {
     "angular": "1.4.7",
     "angular-jsdoc": "1.2.1",
-    "angular-mocks": "1.4.7",
+    "angular-mocks": "1.4.9",
     "angular-gettext": "2.1.0",
     "angular-gettext-tools": "2.1.2",
     "bootstrap": "3.3.6",
