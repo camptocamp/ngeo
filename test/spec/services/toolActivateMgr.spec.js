@@ -1,77 +1,98 @@
 goog.require('ngeo.ToolActivateMgr');
 
 describe('ngeo.ToolActivateMgr', function() {
-  var tool;
+  var interaction1, interaction2, interaction3, tool1, tool2, tool3;
   var ngeoToolActivateMgr;
+  var $rootScope;
 
   beforeEach(function() {
-    fnResulT1 = undefined;
-    fnResulT2 = undefined;
-    tool1 = new ngeo.ToolActivate(
-        'testTool',
-        function() {fnResultT1 = 'T1-Activated';},
-        function() {fnResultT1 = 'T1-Deactivated';},
-        true
-    );
-    tool2 = new ngeo.ToolActivate(
-        'testTool',
-        function() {fnResultT2 = 'T2-Activated';},
-        function() {fnResultT2 = 'T2-Deactivated';}
-    );
+    interaction1 = {active: true};
+    tool1 = new ngeo.ToolActivate(interaction1, 'active');
+    interaction2 = {active: false};
+    tool2 = new ngeo.ToolActivate(interaction2, 'active');
+    interaction3 = {active: false};
+    tool3 = new ngeo.ToolActivate(interaction3, 'active');
+
     inject(function($injector) {
       ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+      $rootScope = $injector.get('$rootScope');
     });
   });
 
   it('Register a tool', function() {
-    ngeoToolActivateMgr.registerTool(tool1);
-    expect(ngeoToolActivateMgr.getGroups().testTool[0]).toBe(tool1);
-    ngeoToolActivateMgr.registerTool(tool2);
-    expect(ngeoToolActivateMgr.getGroups().testTool[1]).toBe(tool2);
+    ngeoToolActivateMgr.registerTool('group1', tool1);
+    expect(ngeoToolActivateMgr.groups_.group1[0].tool).toBe(tool1);
+    ngeoToolActivateMgr.registerTool('group1', tool2);
+    expect(ngeoToolActivateMgr.groups_.group1[1].tool).toBe(tool2);
   });
 
   it('Unregister a tool', function() {
-    ngeoToolActivateMgr.registerTool(tool1);
-    ngeoToolActivateMgr.registerTool(tool2);
-    ngeoToolActivateMgr.unregisterTool(tool1);
-    expect(ngeoToolActivateMgr.getGroups().testTool.length).toBe(1);
-    expect(ngeoToolActivateMgr.getGroups().testTool[0]).toBe(tool2);
+    ngeoToolActivateMgr.registerTool('group1', tool1);
+    ngeoToolActivateMgr.registerTool('group1', tool2);
+    $rootScope.$digest();
+
+    ngeoToolActivateMgr.unregisterTool('group1', tool2);
+    expect(ngeoToolActivateMgr.groups_.group1.length).toBe(1);
+
+    // check that the listener on tool2 is removed
+    tool2.setActive(true);
+    $rootScope.$digest();
+    expect(tool1.getActive()).toBe(true);
   });
 
-  it('Unregister a group', function() {
-    ngeoToolActivateMgr.registerTool(tool1);
-    ngeoToolActivateMgr.unregisterGroup(tool1.toolsGroupName);
-    expect(Object.keys(ngeoToolActivateMgr.getGroups()).length).toBe(0);
-  });
+  it('Activate a tool', function() {
+    ngeoToolActivateMgr.registerTool('group1', tool1);
+    ngeoToolActivateMgr.registerTool('group1', tool2);
+    $rootScope.$digest();
 
-  it('Active a tool', function() {
-    ngeoToolActivateMgr.registerTool(tool1);
-    ngeoToolActivateMgr.registerTool(tool2);
+    ngeoToolActivateMgr.activateTool(tool2);
+    $rootScope.$digest();
+    expect(interaction1.active).toBe(false);
+    expect(interaction2.active).toBe(true);
 
     ngeoToolActivateMgr.activateTool(tool1);
-    expect(fnResultT1).toBe('T1-Activated');
-    expect(fnResultT2).toBe('T2-Deactivated');
-
-    fnResultT1 = undefined;
-    fnResultT2 = undefined;
-    ngeoToolActivateMgr.activateTool(tool2);
-    expect(fnResultT1).toBe('T1-Deactivated');
-    expect(fnResultT2).toBe('T2-Activated');
+    $rootScope.$digest();
+    expect(interaction1.active).toBe(true);
+    expect(interaction2.active).toBe(false);
   });
 
-  it('Deactive a tool', function() {
-    ngeoToolActivateMgr.registerTool(tool1);
-    ngeoToolActivateMgr.registerTool(tool2);
+  it('Deactivate a tool', function() {
+    ngeoToolActivateMgr.registerTool('group1', tool1);
+    ngeoToolActivateMgr.registerTool('group1', tool2);
+    $rootScope.$digest();
 
     ngeoToolActivateMgr.deactivateTool(tool1);
-    expect(fnResultT1).toBe('T1-Activated');
-    expect(fnResultT2).toBe('T2-Deactivated');
+    $rootScope.$digest();
+    expect(interaction1.active).toBe(false);
+    expect(interaction2.active).toBe(false);
+  });
 
-    fnResultT1 = undefined;
-    fnResultT2 = undefined;
-    ngeoToolActivateMgr.deactivateTool(tool2);
-    expect(fnResultT1).toBe('T1-Activated');
-    expect(fnResultT2).toBe('T2-Deactivated');
+  it('Deactivate a tool in a group with default tool', function() {
+    ngeoToolActivateMgr.registerTool('group1', tool1);
+    ngeoToolActivateMgr.registerTool('group1', tool2);
+    ngeoToolActivateMgr.registerTool('group1', tool3, true);
+    $rootScope.$digest();
+
+    ngeoToolActivateMgr.deactivateTool(tool1);
+    $rootScope.$digest();
+    expect(interaction1.active).toBe(false);
+    expect(interaction2.active).toBe(false);
+    expect(interaction3.active).toBe(true);
+  });
+
+  it('Unregister group', function() {
+    ngeoToolActivateMgr.registerTool('group1', tool1);
+    ngeoToolActivateMgr.registerTool('group1', tool2);
+    ngeoToolActivateMgr.registerTool('group1', tool3, true);
+    $rootScope.$digest();
+
+    ngeoToolActivateMgr.unregisterGroup('group1');
+    expect(Object.keys(ngeoToolActivateMgr.groups_).length).toBe(0);
+
+    // check that the listeners are removed
+    tool2.setActive(true);
+    $rootScope.$digest();
+    expect(tool1.getActive()).toBe(true);
   });
 
 });

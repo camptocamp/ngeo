@@ -1,5 +1,6 @@
 goog.provide('toolActivate');
 
+goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
@@ -30,10 +31,13 @@ app.module = angular.module('app', ['ngeo']);
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr ToolActivate manager.
+ * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Interaction
+  *    decorator.
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
+app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
+    ngeoDecorateInteraction) {
 
   /**
    * @type {ol.Map}
@@ -82,43 +86,21 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   }));
 
 
-  //Manage click on the map
-  var mapClickIsEnable = true;
+  // manage clicks on the map
+  this.mapClickIsEnabled = true;
   var content = document.getElementById('popup-content');
-  this.map.on('singleclick', function(evt) {
-    if (mapClickIsEnable) {
+  this.map.on('singleclick', (function(evt) {
+    if (this.mapClickIsEnabled) {
       var c = ol.coordinate.toStringXY(evt.coordinate);
       content.innerHTML = '<p>You clicked here: <code>' + c + '</code></p>';
     }
-  });
+  }).bind(this));
 
-  var activeMapClick = function() {
-    mapClickIsEnable = true;
-  };
-  var deactiveMapClick = function() {
-    mapClickIsEnable = false;
-  };
-
-  var mapClickToolActivate = new ngeo.ToolActivate('mapTools', activeMapClick,
-      deactiveMapClick, true);
-
-  ngeoToolActivateMgr.registerTool(mapClickToolActivate);
+  var mapClickTool = new ngeo.ToolActivate(this, 'mapClickIsEnabled');
+  ngeoToolActivateMgr.registerTool('mapTools', mapClickTool, true);
 
 
-  //Create and manage point
-
-  /**
-   * @type {function()}
-   * @export
-   */
-  this.togglePoint = function() {
-    if (drawPoint.getActive()) {
-      ngeoToolActivateMgr.deactivateTool(pointToolActivate);
-    } else {
-      ngeoToolActivateMgr.activateTool(pointToolActivate);
-    }
-  };
-
+  // draw point interaction
   /**
    * @type {ol.interaction.Draw}
    * @export
@@ -128,37 +110,31 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
         type: 'Point',
         features: features
       }));
-  var drawPoint = this.drawPoint;
-  drawPoint.setActive(false);
-  map.addInteraction(drawPoint);
+  this.drawPoint.setActive(false);
+  ngeoDecorateInteraction(this.drawPoint);
+  map.addInteraction(this.drawPoint);
 
-  var activePoint = function() {
-    drawPoint.setActive(true);
-  };
-  var deactivePoint = function() {
-    drawPoint.setActive(false);
-  };
+  var drawPointTool = new ngeo.ToolActivate(this.drawPoint, 'active');
+  ngeoToolActivateMgr.registerTool('mapTools', drawPointTool);
 
-  var pointToolActivate = new ngeo.ToolActivate('mapTools', activePoint,
-      deactivePoint);
-
-  ngeoToolActivateMgr.registerTool(pointToolActivate);
-
-
-  //Create and Manage polygon
-
+  // draw line interaction
   /**
-   * @type {function()}
+   * @type {ol.interaction.Draw}
    * @export
    */
-  this.togglePolygon = function() {
-    if (drawPolygon.getActive()) {
-      ngeoToolActivateMgr.deactivateTool(polygonToolActivate);
-    } else {
-      ngeoToolActivateMgr.activateTool(polygonToolActivate);
-    }
-  };
+  this.drawLine = new ol.interaction.Draw(
+      /** @type {olx.interaction.DrawOptions} */ ({
+        type: 'LineString',
+        features: features
+      }));
+  this.drawLine.setActive(false);
+  ngeoDecorateInteraction(this.drawLine);
+  map.addInteraction(this.drawLine);
 
+  var drawLineTool = new ngeo.ToolActivate(this.drawLine, 'active');
+  ngeoToolActivateMgr.registerTool('mapTools', drawLineTool);
+
+  // draw polygon interaction
   /**
    * @type {ol.interaction.Draw}
    * @export
@@ -168,22 +144,12 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
         type: 'Polygon',
         features: features
       }));
-  var drawPolygon = this.drawPolygon;
-  drawPolygon.setActive(false);
-  map.addInteraction(drawPolygon);
+  this.drawPolygon.setActive(false);
+  ngeoDecorateInteraction(this.drawPolygon);
+  map.addInteraction(this.drawPolygon);
 
-  var activePolygon = function() {
-    drawPolygon.setActive(true);
-  };
-  var deactivePolygon = function() {
-    drawPolygon.setActive(false);
-  };
-
-  var polygonToolActivate = new ngeo.ToolActivate('mapTools', activePolygon,
-      deactivePolygon);
-
-  ngeoToolActivateMgr.registerTool(polygonToolActivate);
-
+  var drawPolygonTool = new ngeo.ToolActivate(this.drawPolygon, 'active');
+  ngeoToolActivateMgr.registerTool('mapTools', drawPolygonTool);
 };
 
 
