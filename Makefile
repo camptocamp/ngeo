@@ -539,17 +539,17 @@ $(EXTERNS_JQUERY):
 
 .build/ol-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-		--root_with_prefix="node_modules/openlayers/src ../../../../../../../../openlayers/src" \
-		--root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../../../openlayers/build/ol.ext" \
+		--root_with_prefix="node_modules/openlayers/src ../../../../../../openlayers/src" \
+		--root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../openlayers/build/ol.ext" \
 		--output_file=$@
 
 .build/ngeo-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-		--root_with_prefix="src ../../../../../../../../../src" --output_file=$@
+		--root_with_prefix="src ../../../../../../../src" --output_file=$@
 
 .build/gmf-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-		--root_with_prefix="contribs/gmf/src ../../../../../../../../../contribs/gmf/src" --output_file=$@
+		--root_with_prefix="contribs/gmf/src ../../../../../../../contribs/gmf/src" --output_file=$@
 
 # The keys in the template cache begin with "../src/directives/partials". This
 # is done so ngeo.js works for the examples on github.io. If another key
@@ -585,7 +585,7 @@ contribs/gmf/build/%.closure.js: .build/app-%.json \
 		.build/gmftemplatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	./node_modules/openlayers/node_modules/.bin/closure-util build $< $@
+	./node_modules/.bin/closure-util build $< $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
 
 contribs/gmf/build/%.js: contribs/gmf/build/%.closure.js $(GMF_APPS_LIBS_JS_FILES)

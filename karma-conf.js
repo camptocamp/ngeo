@@ -2,8 +2,7 @@
 // Generated on Wed Jun 18 2014 14:25:40 GMT+0200 (CEST)
 
 module.exports = function(config) {
-  var closureLibPath = 'node_modules/openlayers/node_modules/' +
-      'closure-util/.deps/library/**/';
+  var closureLibPath = 'node_modules/closure-util/.deps/library/**/';
   var olSrcPath = 'node_modules/openlayers/src/';
   var olExtPath = 'node_modules/openlayers/build/ol.ext/';
 
@@ -38,33 +37,23 @@ module.exports = function(config) {
       'contribs/gmf/src/proj/epsg21781projection.js',
       {
         pattern: closureLibPath + 'closure/**/*.js',
-        included: false,
-        watched: false,
-        served: true
+        included: false
       },
       {
         pattern: olSrcPath + '**/*.js',
-        included: false,
-        watched: false,
-        served: true
+        included: false
       },
       {
         pattern: olExtPath + '**/*.js',
-        included: false,
-        watched: false,
-        served: true
+        included: false
       },
       {
         pattern: 'src/**/*.js',
-        included: false,
-        watched: true,
-        served: true
+        included: false
       },
       {
         pattern: 'contribs/gmf/src/**/*.js',
-        included: false,
-        watched: true,
-        served: true
+        included: false
       },
       '.build/templatecache.js'
     ],

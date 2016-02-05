@@ -1,7 +1,7 @@
 var path = require('path');
 var url = require('url');
 
-var closure = require('openlayers/node_modules/closure-util');
+var closure = require('closure-util');
 var nomnom = require('nomnom');
 var gaze = require('gaze');
 var exec = require('child_process').exec;
