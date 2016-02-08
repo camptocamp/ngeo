@@ -31,6 +31,12 @@ GmfThemesNode.prototype.childLayers;
 
 
 /**
+ * @type {string}
+ */
+GmfThemesNode.prototype.layers;
+
+
+/**
  * @type {number}
  */
 GmfThemesNode.prototype.maxResolutionHint;
@@ -58,3 +64,15 @@ GmfThemesNode.prototype.name;
  * @type {string}
  */
 GmfThemesNode.prototype.type;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesNode.prototype.url;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesNode.prototype.wmsUrl;

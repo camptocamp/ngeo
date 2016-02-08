@@ -48,7 +48,8 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/fonts \
 	.build/examples-hosted/partials \
 	.build/examples-hosted/data \
-	.build/examples-hosted/contribs/gmf/data
+	.build/examples-hosted/contribs/gmf/data \
+	.build/examples-hosted/contribs/gmf/partials \
 
 # Git
 GITHUB_USERNAME ?= camptocamp
@@ -343,6 +344,10 @@ dist/gmf.js.map: dist/gmf.js
 .build/examples-hosted/data: examples/data
 	mkdir -p $@
 	cp examples/data/* $@
+
+.build/examples-hosted/contribs/gmf/partials: contribs/gmf/examples/partials
+	mkdir -p $@
+	cp contribs/gmf/examples/partials/* $@
 
 .build/examples-hosted/contribs/gmf/data: contribs/gmf/examples/data
 	mkdir -p $@
