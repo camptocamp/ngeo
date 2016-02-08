@@ -27,8 +27,3 @@ goog.exportProperty(
     ngeo.ToolActivateMgr.prototype,
     'deactivateTool',
     ngeo.ToolActivateMgr.prototype.deactivateTool);
-
-goog.exportProperty(
-    ngeo.ToolActivateMgr.prototype,
-    'getGroups',
-    ngeo.ToolActivateMgr.prototype.getGroups);
