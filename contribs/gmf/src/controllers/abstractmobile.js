@@ -51,6 +51,7 @@ gmfModule.constant('isMobile', true);
  *     overlay manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
+ * @param {Array<string>} gmfSearchGroups group search.
  * @constructor
  * @ngInject
  * @export
@@ -58,7 +59,7 @@ gmfModule.constant('isMobile', true);
 gmf.AbstractMobileController = function(
     config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-    gmfThemes, fulltextsearchUrl) {
+    gmfThemes, fulltextsearchUrl, gmfSearchGroups) {
 
   /**
    * A reference to the current theme
@@ -77,7 +78,7 @@ gmf.AbstractMobileController = function(
     datasetTitle: 'Internal',
     labelKey: 'label',
     groupsKey: 'layer_name',
-    groupValues: ['osm'],
+    groupValues: gmfSearchGroups,
     projection: 'EPSG:' + (config.srid || 21781),
     url: fulltextsearchUrl
   }];
