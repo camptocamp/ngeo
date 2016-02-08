@@ -190,6 +190,7 @@ gmf.LayertreeController.prototype.getLayer = function(node) {
   } else {
     layer = this.layerHelper_.createBasicWMSLayer(layerURL, layerName);
   }
+  layer.set('querySourceId', node.id);
   this.existingLayers_.push(layer);
 
   // Add the new layer on the map

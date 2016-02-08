@@ -166,6 +166,7 @@ gmf.Themes.prototype.getBgLayers = function() {
  * Get a theme object by its name.
  * @param {string} themeName Theme name.
  * @return {angular.$q.Promise} Promise.
+ * @export
  */
 gmf.Themes.prototype.getThemeObject = function(themeName) {
   goog.asserts.assert(!goog.isNull(this.promise_));
@@ -184,6 +185,7 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
 /**
  * Get an array of theme objects.
  * @return {angular.$q.Promise} Promise.
+ * @export
  */
 gmf.Themes.prototype.getThemesObject = function() {
   goog.asserts.assert(!goog.isNull(this.promise_));
