@@ -171,7 +171,7 @@ gmf.LayertreeController.prototype.getLayer = function(node) {
   }
 
   // If node describes a layer that was already created.
-  layer = this.layerHelper_.findLayer(this.existingLayers_,
+  layer = this.layerHelper_.findLayerById(this.existingLayers_,
       this.layerHelper_.makeHelperID(layerURL, layerName));
   if (goog.isDefAndNotNull(layer)) {
     return layer;

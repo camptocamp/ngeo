@@ -71,10 +71,10 @@ describe('ngeo.LayerHelper', function() {
     var layers = [];
     layer = ngeoLayerHelper.createBasicWMSLayer('', 'testLayer');
     var layerId = '_testLayer';
-    expect(ngeoLayerHelper.findLayer(layers, layerId)).toBe(null);
+    expect(ngeoLayerHelper.findLayerById(layers, layerId)).toBe(null);
 
     layers.push(layer);
-    expect(ngeoLayerHelper.findLayer(layers, layerId)).toBe(layer);
+    expect(ngeoLayerHelper.findLayerById(layers, layerId)).toBe(layer);
   });
 
   it('Add a layer on the map', function() {

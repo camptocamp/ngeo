@@ -27,8 +27,8 @@ goog.exportProperty(
 
 goog.exportProperty(
     ngeo.LayerHelper.prototype,
-    'findLayer',
-    ngeo.LayerHelper.prototype.findLayer);
+    'findLayerById',
+    ngeo.LayerHelper.prototype.findLayerById);
 
 goog.exportProperty(
     ngeo.LayerHelper.prototype,

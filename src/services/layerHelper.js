@@ -188,7 +188,7 @@ ngeo.LayerHelper.prototype.getLayerIndex = function(map, layer) {
  * @return {ol.layer.Layer?} layer or null;
  * @export
  */
-ngeo.LayerHelper.prototype.findLayer = function(layers, layerID) {
+ngeo.LayerHelper.prototype.findLayerById = function(layers, layerID) {
   var i, layer;
   for (i = 0; i < layers.length; i++) {
     layer = layers[i];
