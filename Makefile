@@ -465,7 +465,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 node_modules/font-awesome/fonts/fontawesome-webfont.%: .build/node_modules.timestamp
 	ifeq ($(OS),Darwin)
-		touch --c $@
+		touch -c $@
 	else
 		touch --no-create $@
 	endif
