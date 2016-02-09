@@ -2,6 +2,7 @@ goog.provide('gmf.SearchController');
 goog.provide('gmf.searchDirective');
 
 goog.require('gmf');
+goog.require('gmf.Themes');
 goog.require('ngeo.CreateGeoJSONBloodhound');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
@@ -40,6 +41,7 @@ gmfModule.value('gmfSearchTemplateUrl',
  * @example
  * <gmf-search gmf-search-map="ctrl.map"
  *             gmf-search-datasources="ctrl.searchDatasources"
+ *             gmf-search-currenttheme="ctrl.theme"
  *             gmf-search-clearbutton="true">
  * </gmf-search>
  *
@@ -48,6 +50,7 @@ gmfModule.value('gmfSearchTemplateUrl',
  * @htmlAttribute {gmfx.SearchDirectiveDatasource} gmf-search-datasource
  *      The datasources
  * @htmlAttribute {boolean} gmf-search-clearbutton The clear button
+ * @htmlAttribute {Object} gmf-themeselector-currenttheme The selected theme.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -59,7 +62,8 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
     scope: {
       'getMapFn': '&gmfSearchMap',
       'getDatasourcesFn': '&gmfSearchDatasources',
-      'clearbutton': '=gmfSearchClearbutton'
+      'clearbutton': '=gmfSearchClearbutton',
+      'currentTheme': '=gmfSearchCurrenttheme'
     },
     controller: 'GmfSearchController',
     controllerAs: 'ctrl',
@@ -97,13 +101,15 @@ gmfModule.directive('gmfSearch', gmf.searchDirective);
  *     create GeoJSON Bloodhound service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
+ * @param {gmf.Themes} gmfThemes Themes service.
  * @export
  * @ngInject
  * @ngdoc controller
  * @ngname GmfSearchController
  */
 gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
-    ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr) {
+    ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr, gmfThemes) {
+
 
   /**
    * @type {angular.Scope}
@@ -128,6 +134,12 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
+
+  /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {ngeo.CreateGeoJSONBloodhound}
@@ -357,6 +369,20 @@ gmf.SearchController.prototype.setTTDropdownVisibility_ = function() {
 
 
 /**
+ * @param {string} themeName The name of the theme to set.
+ * @private
+ */
+gmf.SearchController.prototype.setTheme_ = function(themeName) {
+  this.gmfThemes_.getThemesObject().then(function(themes) {
+    var theme = gmf.Themes.findThemeByName(themes, themeName);
+    if (theme) {
+      this.scope_['currentTheme'] = theme;
+    }
+  }.bind(this));
+};
+
+
+/**
  * @export
  */
 gmf.SearchController.prototype.onClearButton = function() {
@@ -401,6 +427,20 @@ gmf.SearchController.prototype.blur = function() {
  * @private
  */
 gmf.SearchController.select_ = function(event, feature, dataset) {
+  var actions = feature.get('actions');
+  if (actions) {
+    for (var i = 0, ii = actions.length; i < ii; i++) {
+      var action = actions[i];
+      var actionName = action['action'];
+      var actionData = action['data'];
+      if (actionName == 'add_theme') {
+        this.setTheme_(actionData);
+      }
+      // FIXME: handle add_layer and add_group actions
+    }
+    return;
+  }
+
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
   this.featureOverlay_.clear();

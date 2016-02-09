@@ -98,9 +98,8 @@ gmf.Themes.findObjectByName_ = function(objects, objectName) {
  * @param {Array.<Object>} themes Array of "theme" objects.
  * @param {string} themeName The theme name.
  * @return {Object} The theme object.
- * @private
  */
-gmf.Themes.findTheme_ = function(themes, themeName) {
+gmf.Themes.findThemeByName = function(themes, themeName) {
   var theme = gmf.Themes.findObjectByName_(themes, themeName);
   return theme;
 };
@@ -177,7 +176,7 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
        */
       function(data) {
         var themes = data['themes'];
-        return gmf.Themes.findTheme_(themes, themeName);
+        return gmf.Themes.findThemeByName(themes, themeName);
       });
 };
 
