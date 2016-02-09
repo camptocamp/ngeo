@@ -401,6 +401,24 @@ gmf.SearchController.prototype.blur = function() {
  * @private
  */
 gmf.SearchController.select_ = function(event, feature, dataset) {
+  var actions = feature.get('actions');
+  if (actions) {
+    // FIXME: multiple actions ?
+    for (var i = 0, ii = actions.length; i < ii; i++) {
+      var action = actions[i];
+      var actionName = action['action'];
+      if (actionName == 'add_layer') {
+        console.log('FIXME: add_layer', action['data']);
+      } else if (actionName == 'add_group') {
+        console.log('FIXME: add_group', action['data']);
+      } else if (actionName == 'add_theme') {
+        console.log('FIXME: add_theme', action['data']);
+      }
+
+    }
+    return;
+  }
+
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
   this.featureOverlay_.clear();
