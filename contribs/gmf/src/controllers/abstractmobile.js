@@ -40,6 +40,7 @@ gmfModule.constant('isMobile', true);
  *     overlay manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
+ * @param {Array<string>} gmfSearchGroups group search.
  * @constructor
  * @extends {gmf.AbstractController}
  * @ngInject
@@ -48,12 +49,12 @@ gmfModule.constant('isMobile', true);
 gmf.AbstractMobileController = function(
     config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-    gmfThemes, fulltextsearchUrl) {
+    gmfThemes, fulltextsearchUrl, gmfSearchGroups) {
   goog.base(
       this, config, defaultLang, langUrls, gettextCatalog,
       ngeoGetBrowserLanguage,
       $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-      gmfThemes, fulltextsearchUrl);
+      gmfThemes, fulltextsearchUrl, gmfSearchGroups);
 
   /**
    * @type {boolean}
