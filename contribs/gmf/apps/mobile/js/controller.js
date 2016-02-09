@@ -21,6 +21,11 @@ goog.require('gmf.proj.EPSG21781');
 goog.require('ngeo.mobileGeolocationDirective');
 
 
+appModule.constant('ngeoQueryOptions', {
+  'limit': 20
+});
+
+
 
 /**
  * @param {string} defaultLang The default language.
@@ -33,6 +38,8 @@ goog.require('ngeo.mobileGeolocationDirective');
  *     overlay manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
  * @param {Array<string>} gmfSearchGroups group search.
  * @constructor
  * @extends {gmf.AbstractMobileController}
@@ -42,7 +49,8 @@ goog.require('ngeo.mobileGeolocationDirective');
 app.MobileController = function(
     defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-    gmfThemes, fulltextsearchUrl, gmfSearchGroups) {
+    gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
+    gmfQueryManager, gmfSearchGroups) {
   goog.base(
       this, {
         srid: 21781,
@@ -53,7 +61,8 @@ app.MobileController = function(
         }
       }, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
       $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-      gmfThemes, fulltextsearchUrl, gmfSearchGroups);
+      gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
+      gmfQueryManager, gmfSearchGroups);
 };
 goog.inherits(app.MobileController, gmf.AbstractMobileController);
 

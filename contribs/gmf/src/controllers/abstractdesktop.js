@@ -38,6 +38,8 @@ gmfModule.constant('isDesktop', true);
  *     overlay manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
  * @constructor
  * @extends {gmf.AbstractController}
  * @ngInject
@@ -46,12 +48,14 @@ gmfModule.constant('isDesktop', true);
 gmf.AbstractDesktopController = function(
     config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-    gmfThemes, fulltextsearchUrl) {
+    gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
+    gmfQueryManager) {
   goog.base(
       this, config, defaultLang, langUrls, gettextCatalog,
       ngeoGetBrowserLanguage,
       $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-      gmfThemes, fulltextsearchUrl);
+      gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
+      gmfQueryManager);
 
   var viewConfig = {
     projection: ol.proj.get('epsg:' + (config.srid || 21781))

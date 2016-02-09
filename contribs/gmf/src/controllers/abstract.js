@@ -1,6 +1,7 @@
 goog.provide('gmf.AbstractController');
 
 goog.require('gmf');
+goog.require('gmf.QueryManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
@@ -14,6 +15,8 @@ goog.require('gmf.themeselectorDirective');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.GetBrowserLanguage');
 goog.require('ngeo.StateManager');
+goog.require('ngeo.ToolActivate');
+goog.require('ngeo.ToolActivateMgr');
 
 
 
@@ -34,6 +37,8 @@ goog.require('ngeo.StateManager');
  *     overlay manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
  * @param {Array<string>} gmfSearchGroups group search.
  * @constructor
  * @ngInject
@@ -42,7 +47,8 @@ goog.require('ngeo.StateManager');
 gmf.AbstractController = function(
     config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-    gmfThemes, fulltextsearchUrl, gmfSearchGroups) {
+    gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
+    gmfQueryManagerl, gmfSearchGroups) {
   /**
    * A reference to the current theme
    * @type {Object}
@@ -76,6 +82,13 @@ gmf.AbstractController = function(
    * @export
    */
   this.rightNavVisible = false;
+
+  /**
+   * The active state of the ngeo query directive.
+   * @type {boolean}
+   * @export
+   */
+  this.queryActive = true;
 
   /**
    * @type {ngeo.GetBrowserLanguage}
@@ -113,6 +126,9 @@ gmf.AbstractController = function(
   this.initLanguage();
 
   ngeoFeatureOverlayMgr.init(this.map);
+
+  var queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+  ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);
 
 };
 
