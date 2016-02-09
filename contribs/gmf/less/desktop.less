@@ -220,8 +220,11 @@ gmf-layertree ul .treenode {
     }
   }
 
+  @border-color: darken(@brand-primary, 10%);
+
   .bar {
     background-color: @brand-primary;
+    border-left: 1px solid @border-color;
     width: @toolbar-width;
 
     float: right;
@@ -229,13 +232,16 @@ gmf-layertree ul .treenode {
     position: relative;
 
     > .btn + .btn {
-      margin-top: 0;
+      margin-top: -1px;
     }
 
     .btn {
       background-color: @brand-primary;
-      border: 0;
+      margin-left: 0;
+      border-right-width: 0;
+      border-left-width: 0;
       border-radius: 0 !important;
+      border-color: @border-color;
 
       &:hover {
         background-color: lighten(@brand-primary, 10%);
@@ -247,6 +253,8 @@ gmf-layertree ul .treenode {
       }
       &.active {
         background-color: @brand-secondary;
+        border-left: 1px solid @brand-secondary;
+        margin-left: -1px;
       }
     }
   }
