@@ -597,7 +597,7 @@ contribs/gmf/build/%.js: contribs/gmf/build/%.closure.js $(GMF_APPS_LIBS_JS_FILE
 	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
 
 .PHONY: compile-css
-compile-css: $(addprefix build/contribs/gmf/,$(addsuffix .css,$(GMF_APPS)))
+compile-css: $(addprefix contribs/gmf/build/,$(addsuffix .css,$(GMF_APPS)))
 
 contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less $(GMF_APPS_LESS_FILES) \
 		.build/node_modules.timestamp \
