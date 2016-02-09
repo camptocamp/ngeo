@@ -9,6 +9,8 @@ goog.require('gmf.mobileNavDirective');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.GetBrowserLanguage');
 goog.require('ngeo.StateManager');
+/** @suppress {extraRequire} */
+goog.require('ngeo.mobileQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
@@ -40,6 +42,8 @@ gmfModule.constant('isMobile', true);
  *     overlay manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
  * @constructor
  * @extends {gmf.AbstractController}
  * @ngInject
@@ -48,12 +52,14 @@ gmfModule.constant('isMobile', true);
 gmf.AbstractMobileController = function(
     config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-    gmfThemes, fulltextsearchUrl) {
+    gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
+    gmfQueryManager) {
   goog.base(
       this, config, defaultLang, langUrls, gettextCatalog,
       ngeoGetBrowserLanguage,
       $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-      gmfThemes, fulltextsearchUrl);
+      gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
+      gmfQueryManager);
 
   /**
    * @type {boolean}
