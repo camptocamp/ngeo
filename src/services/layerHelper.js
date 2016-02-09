@@ -183,7 +183,7 @@ ngeo.LayerHelper.prototype.getLayerIndex = function(map, layer) {
  * Retrieve a layer from the given array of layers and based on the given
  * layers's helperID. Return null if no layer match.
  * @param {Array.<ol.layer.Layer>} layers An array of layers.
- * @param {string} layerID an ID like one created by the setHelperID methode
+ * @param {string} layerID an ID like one created by the setHelperID method
  *   in this service
  * @return {ol.layer.Layer?} layer or null;
  * @export
