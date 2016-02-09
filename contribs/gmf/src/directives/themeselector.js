@@ -8,7 +8,7 @@ goog.require('ngeo.Location');
 
 /**
  * @htmlAttribute {string} gmf-themeselector-defaulttheme The default theme.
- * @htmlAttribute {string} gmf-themeselector-currenttheme The selected theme.
+ * @htmlAttribute {Object} gmf-themeselector-currenttheme The selected theme.
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
  * @return {angular.Directive} The directive specs.
  * @ngInject
