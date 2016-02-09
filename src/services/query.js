@@ -3,6 +3,7 @@ goog.provide('ngeo.Query');
 goog.require('ngeo');
 goog.require('ol.format.WMSGetFeatureInfo');
 goog.require('ol.source.ImageWMS');
+goog.require('ol.source.TileWMS');
 
 
 /**
@@ -160,7 +161,8 @@ ngeo.Query.prototype.addSource = function(source) {
       if (wmsSource &&
           (wmsSource instanceof ol.source.ImageWMS ||
            wmsSource instanceof ol.source.TileWMS)) {
-        source.wmsSource = wmsSource;
+        source.wmsSource =
+            /** @type {ol.source.ImageWMS|ol.source.TileWMS} */ (wmsSource);
       }
     } else {
       var url = source.url;

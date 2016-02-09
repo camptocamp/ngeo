@@ -25,6 +25,11 @@ appModule.constant(
     'https://geomapfish-demo.camptocamp.net/2.0/wsgi');
 
 
+appModule.constant('ngeoQueryOptions', {
+  'limit': 20
+});
+
+
 
 /**
  * @param {string} defaultLang The default language.
@@ -37,6 +42,8 @@ appModule.constant(
  *     overlay manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
  * @constructor
  * @extends {gmf.AbstractDesktopController}
  * @ngInject
@@ -45,7 +52,8 @@ appModule.constant(
 app.DesktopController = function(
     defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-    gmfThemes, fulltextsearchUrl) {
+    gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
+    gmfQueryManager) {
   goog.base(
       this, {
         srid: 21781,
@@ -56,7 +64,8 @@ app.DesktopController = function(
         }
       }, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
       $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-      gmfThemes, fulltextsearchUrl);
+      gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
+      gmfQueryManager);
 };
 goog.inherits(app.DesktopController, gmf.AbstractDesktopController);
 

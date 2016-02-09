@@ -12,6 +12,11 @@
                    'nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
     <main>
       <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
+      <span
+        ngeo-mobile-query=""
+        ngeo-mobile-query-map="::mainCtrl.map"
+        ngeo-mobile-query-active="::mainCtrl.queryActive">
+      </span>
       <button class="nav-trigger nav-left-trigger"
         ng-click="mainCtrl.toggleLeftNavVisibility()">
         <span class="gmf-icon gmf-icon-layers"></span>
