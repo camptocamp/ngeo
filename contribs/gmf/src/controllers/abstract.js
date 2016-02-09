@@ -48,7 +48,7 @@ gmf.AbstractController = function(
     config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
     gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
-    gmfQueryManagerl, gmfSearchGroups) {
+    gmfQueryManager, gmfSearchGroups) {
   /**
    * A reference to the current theme
    * @type {Object}
