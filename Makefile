@@ -1,3 +1,16 @@
+# Check, if OS = Mac OSX
+ifeq ($(OSTYPE),darwin14)
+	# Mac OSX
+	OS ?= Darwin
+endif
+ifeq ($(OS),Darwin)
+	# Mac OSX: Use this path, if SED was installed via homebrew.
+	# Make sure path is correct regarding your local installation!
+	sed ?= /usr/local/Cellar/gnu-/4.2.2/bin/SED
+else
+	sed ?= SED
+endif
+
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
@@ -62,9 +75,13 @@ L10N_PO_FILES = $(addprefix c2cgeoportal/locale/,$(addsuffix /LC_MESSAGES/c2cgeo
 LANGUAGES = en $(L10N_LANGUAGES)
 TX_GIT_BRANCH ?= master
 ifeq (,$(wildcard $(HOME)/.transifexrc))
-TOUCHBACK_TXRC = touch --date "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
+	TOUCHBACK_TXRC = touch --date "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
-TOUCHBACK_TXRC = touch --date "$(shell stat -c '%y' $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+	ifeq ($(OS),Darwin)
+		TOUCHBACK_TXRC = touch -t "$(shell stat -f '%m' -t "%Y%m%dT%H%M.%S" $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+	else
+		TOUCHBACK_TXRC = touch --date "$(shell stat -c '%y' $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+	endif
 endif
 
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
@@ -155,10 +172,6 @@ examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
 
 .build/python-venv/lib/python2.7/site-packages/requests: .build/python-venv
 	.build/python-venv/bin/pip install requests
-	touch $@
-
-.build/python-venv/lib/python2.7/site-packages/urllib3: .build/python-venv
-	.build/python-venv/bin/pip install urllib3
 	touch $@
 
 .PHONY: gh-pages
@@ -451,7 +464,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	touch $@
 
 node_modules/font-awesome/fonts/fontawesome-webfont.%: .build/node_modules.timestamp
-	touch --no-create $@
+	ifeq ($(OS),Darwin)
+		touch --c $@
+	else
+		touch --no-create $@
+	endif
 
 contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontawesome-webfont.%
 	mkdir -p $(dir $@)
@@ -597,7 +614,7 @@ contribs/gmf/build/%.js: contribs/gmf/build/%.closure.js $(GMF_APPS_LIBS_JS_FILE
 	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
 
 .PHONY: compile-css
-compile-css: $(addprefix contribs/gmf/build/,$(addsuffix .css,$(GMF_APPS)))
+compile-css: $(addprefix build/contribs/gmf/,$(addsuffix .css,$(GMF_APPS)))
 
 contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less $(GMF_APPS_LESS_FILES) \
 		.build/node_modules.timestamp \
