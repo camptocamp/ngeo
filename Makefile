@@ -2,6 +2,8 @@
 ifeq ($(OSTYPE),darwin14)
 	# Mac OSX
 	OS ?= Darwin
+else
+	OS ?= $(shell uname -s)
 endif
 ifeq ($(OS),Darwin)
 	# Mac OSX: Use this path, if SED was installed via homebrew.
