@@ -664,7 +664,7 @@ contribs/gmf/build/gmf-%.json: .build/locale/%/LC_MESSAGES/gmf.po .build/node_mo
 	node buildtools/compile-catalog $< > $@
 
 .PHONY: generate-gmf-fonts
-gmf-icons-generate: contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot contribs/gmf/fonts/gmf-icons.woff
+generate-gmf-fonts: contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot contribs/gmf/fonts/gmf-icons.woff
 
 contribs/gmf/fonts/gmf-icons.ttf: contribs/gmf/fonts/gmf-icons.svg .build/node_modules.timestamp
 	node_modules/svg2ttf/svg2ttf.js $< $@
