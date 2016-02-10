@@ -64,9 +64,9 @@ L10N_PO_FILES = $(addprefix c2cgeoportal/locale/,$(addsuffix /LC_MESSAGES/c2cgeo
 LANGUAGES = en $(L10N_LANGUAGES)
 TX_GIT_BRANCH ?= master
 ifeq (,$(wildcard $(HOME)/.transifexrc))
-TOUCHBACK_TXRC = touch --date "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
+TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
-TOUCHBACK_TXRC = touch --date "$(shell stat -c '%y' $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell $(STAT_LAST_MODIFIED) $(HOME)/.transifexrc)" $(HOME)/.transifexrc
 endif
 
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
@@ -81,9 +81,13 @@ EXTERNS_FILES = $(EXTERNS_ANGULAR) $(EXTERNS_ANGULAR_Q) $(EXTERNS_ANGULAR_HTTP_P
 ifeq ($(OS),Darwin)
 	STAT_COMPRESSED = stat -f '  compressed: %z bytes'
 	STAT_UNCOMPRESSED = stat -f 'uncompressed: %z bytes'
+	STAT_LAST_MODIFIED = stat -f '%m'
+	TOUCH_DATE = touch -t
 else
 	STAT_COMPRESSED = stat -c '  compressed: %s bytes'
 	STAT_UNCOMPRESSED = stat -c 'uncompressed: %s bytes'
+	STAT_LAST_MODIFIED = stat -c '%y'
+	TOUCH_DATE = touch --date
 endif
 
 # Disabling Make built-in rules to speed up execution time
