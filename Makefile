@@ -381,7 +381,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=$*.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
-		-e '/$*.js/i\    <script src="lib/ngeo.js"></script>' $< > $@
+		-e '/$*.js/i\'$$'\n    <script src="lib/ngeo.js"></script>'$$'\n' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
 .build/examples-hosted/contribs/gmf/%.html: contribs/gmf/examples/%.html
@@ -399,7 +399,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=$*\.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
-		-e '/$*.js/i\    <script src="../../lib/gmf.js"></script>' $< > $@
+		-e '/$*.js/i\'$$'\n    <script src="../../lib/gmf.js"></script>'$$'\n' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
