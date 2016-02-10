@@ -1,8 +1,6 @@
 goog.provide('gmf.AbstractController');
 
 goog.require('gmf');
-goog.require('gmf.QueryManager');
-/** @suppress {extraRequire} */
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
@@ -27,27 +25,13 @@ goog.require('ngeo.ToolActivateMgr');
  * by the HTML page and the controller to provide the configuration.
  *
  * @param {gmfx.Config} config A part of the application config.
- * @param {string} defaultLang The default language.
- * @param {Object.<string, string>} langUrls The languages URLs.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.StateManager} ngeoStateManager the state manager.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *     overlay manager service.
- * @param {gmf.Themes} gmfThemes Themes service.
- * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
- * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
+ * @param {angular.$injector} $injector Main injector.
  * @constructor
  * @ngInject
  * @export
  */
-gmf.AbstractController = function(
-    config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
-    $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-    gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
-    gmfQueryManager) {
+gmf.AbstractController = function(config, $scope, $injector) {
 
   /**
    * A reference to the current theme
@@ -56,6 +40,11 @@ gmf.AbstractController = function(
    */
   this.theme;
 
+  /**
+   * Themes service
+   * @type {gmf.Themes}
+   */
+  var gmfThemes = $injector.get('gmfThemes');
   gmfThemes.loadThemes();
 
   /**
@@ -68,7 +57,7 @@ gmf.AbstractController = function(
     groupsKey: 'layer_name',
     groupValues: ['osm'],
     projection: 'EPSG:' + (config.srid || 21781),
-    url: fulltextsearchUrl
+    url: /** @type {string} **/ ($injector.get('fulltextsearchUrl'))
   }];
 
   /**
@@ -93,41 +82,52 @@ gmf.AbstractController = function(
   /**
    * @type {ngeo.GetBrowserLanguage}
    */
-  this.getBrowserLanguage = ngeoGetBrowserLanguage;
+  this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
 
   /**
    * @type {ngeo.StateManager}
    */
-  this.stateManager = ngeoStateManager;
+  this.stateManager = $injector.get('ngeoStateManager');
 
   /**
    * @type {angular.Scope}
    */
-  this.scope = $scope;
+  this.$scope = $scope;
 
   /**
    * Default language
    * @type {string}
    */
-  this.defaultLang = defaultLang;
+  this.defaultLang = $injector.get('defaultLang');
 
   /**
    * Languages URL
    * @type {Object.<string, string>}
    */
-  this.langUrls = langUrls;
+  this.langUrls = $injector.get('langUrls');
 
   /**
    * The gettext catalog
    * @type {angularGettext.Catalog}
    */
-  this.gettextCatalog = gettextCatalog;
+  this.gettextCatalog = $injector.get('gettextCatalog');
 
   this.initLanguage();
 
+  /**
+   * The ngeo feature overlay manager service
+   * @type {ngeo.FeatureOverlayMgr}
+   */
+  var ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
   ngeoFeatureOverlayMgr.init(this.map);
 
   var queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+
+  /**
+   * The ngeo ToolActivate manager service.
+   * @type {ngeo.ToolActivateMgr}
+   */
+  var ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);
 
 };
@@ -148,7 +148,7 @@ gmf.AbstractController.prototype.switchLanguage = function(lang) {
 /**
  */
 gmf.AbstractController.prototype.initLanguage = function() {
-  this.scope.$watch(goog.bind(function() {
+  this.$scope.$watch(goog.bind(function() {
     return this['lang'];
   }, this), goog.bind(function(newValue) {
     this.stateManager.updateState({

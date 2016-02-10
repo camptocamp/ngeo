@@ -12,7 +12,6 @@ goog.provide('app_mobile');
 
 goog.require('app');
 goog.require('gmf.AbstractMobileController');
-goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */
@@ -28,28 +27,14 @@ appModule.constant('ngeoQueryOptions', {
 
 
 /**
- * @param {string} defaultLang The default language.
- * @param {Object.<string, string>} langUrls The languages URLs.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.StateManager} ngeoStateManager the state manager.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *     overlay manager service.
- * @param {gmf.Themes} gmfThemes Themes service.
- * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
- * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
+ * @param {angular.$injector} $injector Main injector.
  * @constructor
  * @extends {gmf.AbstractMobileController}
  * @ngInject
  * @export
  */
-app.MobileController = function(
-    defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
-    $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-    gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
-    gmfQueryManager) {
+app.MobileController = function($scope, $injector) {
   goog.base(
       this, {
         srid: 21781,
@@ -58,10 +43,8 @@ app.MobileController = function(
           minZoom: 3,
           zoom: 3
         }
-      }, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
-      $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-      gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
-      gmfQueryManager);
+      },
+      $scope, $injector);
 };
 goog.inherits(app.MobileController, gmf.AbstractMobileController);
 
