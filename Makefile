@@ -77,13 +77,13 @@ L10N_PO_FILES = $(addprefix c2cgeoportal/locale/,$(addsuffix /LC_MESSAGES/c2cgeo
 LANGUAGES = en $(L10N_LANGUAGES)
 TX_GIT_BRANCH ?= master
 ifeq (,$(wildcard $(HOME)/.transifexrc))
-	TOUCHBACK_TXRC = touch --date "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
+TOUCHBACK_TXRC = touch --date "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
-	ifeq ($(OS),Darwin)
-		TOUCHBACK_TXRC = touch -t "$(shell stat -f '%m' -t "%Y%m%dT%H%M.%S" $(HOME)/.transifexrc)" $(HOME)/.transifexrc
-	else
-		TOUCHBACK_TXRC = touch --date "$(shell stat -c '%y' $(HOME)/.transifexrc)" $(HOME)/.transifexrc
-	endif
+ifeq ($(OS),Darwin)
+TOUCHBACK_TXRC = touch -t "$(shell stat -f '%m' -t "%Y%m%dT%H%M.%S" $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+else
+TOUCHBACK_TXRC = touch --date "$(shell stat -c '%y' $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+endif
 endif
 
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
@@ -174,6 +174,10 @@ examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
 
 .build/python-venv/lib/python2.7/site-packages/requests: .build/python-venv
 	.build/python-venv/bin/pip install requests
+	touch $@
+
+.build/python-venv/lib/python2.7/site-packages/urllib3: .build/python-venv
+	.build/python-venv/bin/pip install urllib3
 	touch $@
 
 .PHONY: gh-pages
