@@ -2,6 +2,7 @@ goog.provide('ngeo.MobileQueryController');
 goog.provide('ngeo.mobileQueryDirective');
 
 goog.require('ngeo');
+goog.require('ngeo.Query');
 
 
 /**
