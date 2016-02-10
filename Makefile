@@ -1,3 +1,18 @@
+# Check, if OS = Mac OSX
+ifeq ($(OSTYPE),darwin14)
+	# Mac OSX
+	OS ?= Darwin
+else
+	OS ?= $(shell uname -s)
+endif
+ifeq ($(OS),Darwin)
+	# Mac OSX: Use this path, if SED was installed via homebrew.
+	# Make sure path is correct regarding your local installation!
+	sed ?= /usr/local/Cellar/gnu-/4.2.2/bin/SED
+else
+	sed ?= SED
+endif
+
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
@@ -64,7 +79,11 @@ TX_GIT_BRANCH ?= master
 ifeq (,$(wildcard $(HOME)/.transifexrc))
 TOUCHBACK_TXRC = touch --date "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
+ifeq ($(OS),Darwin)
+TOUCHBACK_TXRC = touch -t "$(shell stat -f '%m' -t "%Y%m%dT%H%M.%S" $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+else
 TOUCHBACK_TXRC = touch --date "$(shell stat -c '%y' $(HOME)/.transifexrc)" $(HOME)/.transifexrc
+endif
 endif
 
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
@@ -451,7 +470,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	touch $@
 
 node_modules/font-awesome/fonts/fontawesome-webfont.%: .build/node_modules.timestamp
-	touch --no-create $@
+	ifeq ($(OS),Darwin)
+		touch -c $@
+	else
+		touch --no-create $@
+	endif
 
 contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontawesome-webfont.%
 	mkdir -p $(dir $@)
