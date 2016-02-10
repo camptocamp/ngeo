@@ -2,6 +2,8 @@ SRC_JS_FILES := $(shell find src -type f -name '*.js')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
 
+OS := $(shell uname)
+
 EXPORTS_JS_FILES := $(shell find exports -type f -name '*.js')
 
 EXAMPLES_JS_FILES := $(shell find examples -maxdepth 1 -type f -name '*.js')
