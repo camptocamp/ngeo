@@ -44,7 +44,14 @@ ngeo.LayerHelper.prototype.helperID = 'helperID';
 
 
 /**
- * Add a HelperID to the given layer. Layers with this ID can be
+ * @const {string}
+ * @export
+ */
+ngeo.LayerHelper.prototype.layerName = 'layerName';
+
+
+/**
+ * Add a HelperID and a layerName to the given layer. Layers with this ID can be
  * managed by this sevice.
  * @param {ol.layer.Layer} layer The layer that needs an ID.
  * @param {string} layerURL Part of the ID.
@@ -53,6 +60,7 @@ ngeo.LayerHelper.prototype.helperID = 'helperID';
  */
 ngeo.LayerHelper.prototype.setHelperID = function(layer, layerURL, layerName) {
   layer.set(this.helperID, this.makeHelperID(layerURL, layerName));
+  layer.set(this.layerName, layerName);
 };
 
 
@@ -188,7 +196,7 @@ ngeo.LayerHelper.prototype.getLayerIndex = function(map, layer) {
  * @return {ol.layer.Layer?} layer or null;
  * @export
  */
-ngeo.LayerHelper.prototype.findLayer = function(layers, layerID) {
+ngeo.LayerHelper.prototype.findLayerById = function(layers, layerID) {
   var i, layer;
   for (i = 0; i < layers.length; i++) {
     layer = layers[i];
