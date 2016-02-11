@@ -28,7 +28,7 @@
     "bootstrap": "3.3.6",
     "clean-css": "2.2.7",
     "coveralls": "2.11.6",
-    "d3": "3.5.14",
+    "d3": "3.5.15",
     "font-awesome": "4.5.0",
     "fs-extra": "0.26.5",
     "gaze": "0.5.2",
