@@ -41,7 +41,7 @@ gmf-map {
  */
 span.twitter-typeahead {
   //left: -2em;
-  &:after {
+  &:after { // magnifying glass in search input
     content: '\f002';
     font-family: FontAwesome;
     color: grey;
@@ -192,7 +192,8 @@ span.twitter-typeahead {
 
 .ol-control button,
 .ol-touch .ol-control button {
-  font-size: 1em;
+  font-size: 2.4rem;//1em;
+  padding-bottom: 0.3rem;
 }
 .ol-zoom {
   top: 5em;
@@ -218,9 +219,26 @@ button[ngeo-mobile-geolocation] {
   }
   button[ngeo-mobile-geolocation] {
     top: auto;
-    bottom: 5.5em;
+    bottom: 4.7em;
     & button:after {
       content: 'b'
     }
+  }
+}
+
+//mobile styles for the theme and background selector
+.gmf-theme-selector,
+.gmf-mobile-background-layer-selector {
+  .gmf-icon-check:after {
+    font-size: 1.2rem;
+    position: relative;
+    bottom: 0.8rem;
+  }
+  .gmf-text {
+      margin: 3% 10px 0 0;
+  }
+  .gmf-thumb {
+    height: auto;
+    width: 25%;
   }
 }
