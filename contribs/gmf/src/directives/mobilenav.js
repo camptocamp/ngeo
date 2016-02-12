@@ -144,7 +144,19 @@ gmf.mobileNavDirective = function() {
             // one is properly deactivated. This prevents weird animation
             // effects.
             window.setTimeout(function() {
-              nav.addClass('active');
+              // fix for safari: the following 3 lines force that the position
+              // of the newly inserted element is calculated.
+              // see http://stackoverflow.com/a/3485654/119937
+              nav.css('display', 'none');
+              nav.offset();
+              nav.css('display', '');
+
+              window.setTimeout(function() {
+                // fix: calling `position()` makes sure that the animation
+                // is always run
+                nav.position();
+                nav.addClass('active');
+              }, 0);
             }, 0);
           }
 
