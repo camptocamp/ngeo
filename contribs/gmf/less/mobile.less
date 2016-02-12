@@ -13,6 +13,7 @@
 @app-margin: 1em;
 
 @search-input-size: 200px;
+@search-input-width: ceil(@search-input-size + 9);
 
 main>* {
   position: absolute;
@@ -43,13 +44,14 @@ span.twitter-typeahead {
     font-family: FontAwesome;
     color: grey;
     position: absolute;
-    top: 0;
-    left: .25em;
-    line-height: 2.8em;
+    top: 0.3em;
+    left: 0;
+    font-size: 1.4em;
   }
 
   input {
-    padding-left: 1.5em;
+    padding-left: 1em;
+    margin-left: 0;
   }
 }
 .tt-menu {
@@ -70,6 +72,7 @@ span.twitter-typeahead {
     border-bottom: solid 1px black;
     margin: 0;
     padding: 10px @app-margin;
+    padding-left: 4rem;
     text-align: left;
     &:hover {
       cursor: pointer;
@@ -122,10 +125,22 @@ span.twitter-typeahead {
       content: '\f00d';
       color: grey;
       font-family: FontAwesome;
-      font-size: 1.5em;
+      font-size: 2em;
     }
     &:hover {
       cursor: pointer;
+    }
+  }
+  .form-control {
+    box-shadow: none;
+    background: initial !important;
+    border: none;
+    outline: none;
+    &:focus {
+      box-shadow: none;
+    }
+    &.ng-pristine.ng-untouched.ng-valid.tt-hint {
+        left: 1em !important;
     }
   }
 }
@@ -178,9 +193,13 @@ gmf-map {
 }
 
 
-//For tablet only
+//For tablet only >= 768px
 @media (min-width: @screen-sm-min) {
   @search-width: 18em;
+
+  span.twitter-typeahead {
+    left: -2.2rem;
+  }
   .tt-menu {
     top: 4em !important;
     width: @search-width;
@@ -197,7 +216,8 @@ gmf-map {
     input {
       margin: 0;
       border: none;
-      width: ~"calc(" @search-width ~" - 2px)";
+      width: @search-width - 4.7em;
+      left: 15px;
     }
     .clear-button {
       right: 0;
