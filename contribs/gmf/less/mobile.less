@@ -2,6 +2,7 @@
  * Entry point for all styles required for the mobile application.
  */
 @import 'font.less';
+@import 'mixins.less';
 @import 'base.less';
 @import 'map.less';
 @import 'layertree.less';
@@ -13,6 +14,7 @@
 @app-margin: 1em;
 
 @search-input-size: 200px;
+@search-input-width: ceil(@search-input-size + 9);
 
 main>* {
   position: absolute;
@@ -38,6 +40,7 @@ gmf-map {
  * Search (typeahead)
  */
 span.twitter-typeahead {
+  //left: -2em;
   &:after {
     content: '\f002';
     font-family: FontAwesome;
@@ -49,7 +52,9 @@ span.twitter-typeahead {
   }
 
   input {
-    padding-left: 1.5em;
+    //padding-left: 1.5em;
+    padding-left: 0.3em;
+    margin-left: 0px;
   }
 }
 .tt-menu {
@@ -70,6 +75,7 @@ span.twitter-typeahead {
     border-bottom: solid 1px black;
     margin: 0;
     padding: 10px @app-margin;
+    padding-left: 2em;
     text-align: left;
     &:hover {
       cursor: pointer;
@@ -124,11 +130,27 @@ span.twitter-typeahead {
       cursor: pointer;
     }
   }
+  .form-control {
+    .noshadow();
+    background: initial !important;
+    border: none;
+    outline: none;
+    &:focus {
+      .noshadow();
+    }
+    &.ng-pristine.ng-untouched.ng-valid.tt-hint {
+        left: 1em !important;
+    }
+  }
 }
 
-//For tablet only
+//For tablet only >= 768px
 @media (min-width: @screen-sm-min) {
   @search-width: 18em;
+
+  span.twitter-typeahead {
+    left: -1.6em;
+  }
   .tt-menu {
     top: 4em !important;
     width: @search-width;
@@ -145,7 +167,8 @@ span.twitter-typeahead {
     input {
       margin: 0;
       border: none;
-      width: ~"calc(" @search-width ~" - 2px)";
+      width: ~"calc(" @search-width ~" - 4.7em)";
+      left: 15px;
     }
     .clear-button {
       right: 0;
