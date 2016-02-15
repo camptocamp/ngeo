@@ -2,6 +2,7 @@ goog.provide('gmf.MobileBackgroundLayerSelectorController');
 goog.provide('gmf.mobileBackgroundLayerSelectorDirective');
 
 goog.require('gmf');
+goog.require('gmf.Permalink');
 goog.require('gmf.Themes');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
@@ -58,6 +59,7 @@ gmf.module.directive('gmfMobileBackgroundLayerSelector',
  * @constructor
  * @param {ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
+ * @param {gmf.Permalink} gmfPermalink The gmf permalink service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @export
  * @ngInject
@@ -65,7 +67,7 @@ gmf.module.directive('gmfMobileBackgroundLayerSelector',
  * @ngname GmfMobileBackgroundLayerSelectorController
  */
 gmf.MobileBackgroundLayerSelectorController = function(
-    ngeoBackgroundLayerMgr, gmfThemes) {
+    ngeoBackgroundLayerMgr, gmfPermalink, gmfThemes) {
 
   /**
    * @type {ol.Map}
@@ -90,6 +92,13 @@ gmf.MobileBackgroundLayerSelectorController = function(
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
+
+  /**
+   * @type {gmf.Permalink}
+   * @private
+   */
+  this.gmfPermalink_ = gmfPermalink;
+
   gmfThemes.getBgLayers().then(goog.bind(
       /**
        * @param {Array.<ol.layer.Base>} bgLayers Array of background
@@ -97,11 +106,15 @@ gmf.MobileBackgroundLayerSelectorController = function(
        */
       function(bgLayers) {
         this.bgLayers = bgLayers;
+        // try to get default bgLayer from permalink service, otherwise
         // set default bgLayer to the second one (if defined), the first
         // being the blank layer
-        this.bgLayer = this.bgLayers[1] !== undefined ?
-            this.bgLayers[1] : this.bgLayers[0];
-        this.setLayer(this.bgLayer);
+        var defaultBgLayer = this.gmfPermalink_.getBackgroundLayer(bgLayers);
+        if (!defaultBgLayer) {
+          defaultBgLayer = this.bgLayers[1] !== undefined ?
+              this.bgLayers[1] : this.bgLayers[0];
+        }
+        this.setLayer(defaultBgLayer);
       }, this));
 
   ol.events.listen(
