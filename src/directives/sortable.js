@@ -176,4 +176,4 @@ ngeo.sortableDirective = function($timeout) {
   };
 };
 
-ngeoModule.directive('ngeoSortable', ngeo.sortableDirective);
+ngeo.module.directive('ngeoSortable', ngeo.sortableDirective);

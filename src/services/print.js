@@ -782,4 +782,4 @@ ngeo.createPrintServiceFactory = function($http) {
 };
 
 
-ngeoModule.factory('ngeoCreatePrint', ngeo.createPrintServiceFactory);
+ngeo.module.factory('ngeoCreatePrint', ngeo.createPrintServiceFactory);

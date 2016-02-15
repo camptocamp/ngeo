@@ -7,7 +7,7 @@ goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 
 
-gmfModule.value('gmfMobileBackgroundLayerSelectorTemplateUrl',
+gmf.module.value('gmfMobileBackgroundLayerSelectorTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -49,7 +49,7 @@ gmf.mobileBackgroundLayerSelectorDirective = function(
 };
 
 
-gmfModule.directive('gmfMobileBackgroundLayerSelector',
+gmf.module.directive('gmfMobileBackgroundLayerSelector',
     gmf.mobileBackgroundLayerSelectorDirective);
 
 
@@ -126,5 +126,5 @@ gmf.MobileBackgroundLayerSelectorController.prototype.setLayer = function(
 };
 
 
-gmfModule.controller('GmfMobileBackgroundLayerSelectorController',
+gmf.module.controller('GmfMobileBackgroundLayerSelectorController',
     gmf.MobileBackgroundLayerSelectorController);

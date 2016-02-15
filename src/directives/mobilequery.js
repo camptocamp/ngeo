@@ -42,7 +42,7 @@ ngeo.mobileQueryDirective = function() {
 };
 
 
-ngeoModule.directive('ngeoMobileQuery', ngeo.mobileQueryDirective);
+ngeo.module.directive('ngeoMobileQuery', ngeo.mobileQueryDirective);
 
 
 
@@ -133,4 +133,4 @@ ngeo.MobileQueryController.prototype.handleMapClick_ = function(evt) {
 };
 
 
-ngeoModule.controller('NgeoMobileQueryController', ngeo.MobileQueryController);
+ngeo.module.controller('NgeoMobileQueryController', ngeo.MobileQueryController);

@@ -298,4 +298,4 @@ ngeo.FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {
 };
 
 
-ngeoModule.service('ngeoFeatureOverlayMgr', ngeo.FeatureOverlayMgr);
+ngeo.module.service('ngeoFeatureOverlayMgr', ngeo.FeatureOverlayMgr);

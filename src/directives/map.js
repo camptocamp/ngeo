@@ -37,4 +37,4 @@ ngeo.mapDirective = function() {
   };
 };
 
-ngeoModule.directive('ngeoMap', ngeo.mapDirective);
+ngeo.module.directive('ngeoMap', ngeo.mapDirective);

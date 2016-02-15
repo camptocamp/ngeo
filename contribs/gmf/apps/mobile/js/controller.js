@@ -20,7 +20,7 @@ goog.require('gmf.proj.EPSG21781');
 goog.require('ngeo.mobileGeolocationDirective');
 
 
-appModule.constant('ngeoQueryOptions', {
+app.module.constant('ngeoQueryOptions', {
   'limit': 20
 });
 
@@ -49,4 +49,4 @@ app.MobileController = function($scope, $injector) {
 goog.inherits(app.MobileController, gmf.AbstractMobileController);
 
 
-appModule.controller('MobileController', app.MobileController);
+app.module.controller('MobileController', app.MobileController);

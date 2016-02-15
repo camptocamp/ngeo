@@ -19,12 +19,12 @@ goog.require('gmf.authenticationDirective');
 goog.require('gmf.proj.EPSG21781');
 
 
-appModule.constant(
+app.module.constant(
     'authenticationBaseUrl',
     'https://geomapfish-demo.camptocamp.net/2.0/wsgi');
 
 
-appModule.constant('ngeoQueryOptions', {
+app.module.constant('ngeoQueryOptions', {
   'limit': 20
 });
 
@@ -52,4 +52,4 @@ app.DesktopController = function($scope, $injector) {
 goog.inherits(app.DesktopController, gmf.AbstractDesktopController);
 
 
-appModule.controller('DesktopController', app.DesktopController);
+app.module.controller('DesktopController', app.DesktopController);

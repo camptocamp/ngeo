@@ -36,7 +36,7 @@ gmf.mapDirective = function() {
   };
 };
 
-gmfModule.directive('gmfMap', gmf.mapDirective);
+gmf.module.directive('gmfMap', gmf.mapDirective);
 
 
 
@@ -85,4 +85,4 @@ gmf.MapController = function($scope, ngeoLocation, ngeoDebounce) {
   }, 300, /* invokeApply */ true));
 };
 
-gmfModule.controller('GmfMapController', gmf.MapController);
+gmf.module.controller('GmfMapController', gmf.MapController);

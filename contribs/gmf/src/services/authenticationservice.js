@@ -59,7 +59,7 @@ gmf.AuthenticationRouteSuffix = {
 gmf.User;
 
 
-gmfModule.value('gmfUser', {
+gmf.module.value('gmfUser', {
   'functionalities': null,
   'is_password_changed': null,
   'role_id': null,
@@ -244,4 +244,4 @@ gmf.Authentication.prototype.resetUser_ = function() {
 
 
 
-gmfModule.service('gmfAuthentication', gmf.Authentication);
+gmf.module.service('gmfAuthentication', gmf.Authentication);

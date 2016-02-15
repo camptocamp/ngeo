@@ -14,7 +14,7 @@ goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
 goog.require('ol.interaction');
 
-gmfModule.constant('isDesktop', true);
+gmf.module.constant('isDesktop', true);
 
 
 
@@ -72,6 +72,6 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
 goog.inherits(gmf.AbstractDesktopController, gmf.AbstractController);
 
 
-gmfModule.controller(
+gmf.module.controller(
     'AbstractDesktopController',
     gmf.AbstractDesktopController);

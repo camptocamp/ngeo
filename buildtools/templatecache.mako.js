@@ -24,10 +24,6 @@
  * GENERATED FILE. DO NOT EDIT.
  */
 
-/**
- * This goog.require is needed because it provides ngeoModule.
- * @suppress {extraRequire}
- */
 goog.require('${app}');
 
 (function() {
@@ -41,5 +37,5 @@ goog.require('${app}');
   %endfor
   };
 
-  ${app}Module.run(runner);
+  ${app}.module.run(runner);
 })();

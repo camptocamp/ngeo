@@ -63,7 +63,7 @@ ngeo.btngroupDirective = function($parse) {
 };
 
 
-ngeoModule.directive('ngeoBtnGroup', ngeo.btngroupDirective);
+ngeo.module.directive('ngeoBtnGroup', ngeo.btngroupDirective);
 
 
 
@@ -111,7 +111,7 @@ ngeo.BtnGroupController.prototype.addButton = function(expressionFn) {
 };
 
 
-ngeoModule.controller('ngeoBtnGroupController', ngeo.BtnGroupController);
+ngeo.module.controller('ngeoBtnGroupController', ngeo.BtnGroupController);
 
 
 /**
@@ -178,4 +178,4 @@ ngeo.btnDirective = function($parse) {
 };
 
 
-ngeoModule.directive('ngeoBtn', ngeo.btnDirective);
+ngeo.module.directive('ngeoBtn', ngeo.btnDirective);

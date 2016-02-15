@@ -109,4 +109,4 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
 };
 
 
-gmfModule.service('gmfQueryManager', gmf.QueryManager);
+gmf.module.service('gmfQueryManager', gmf.QueryManager);

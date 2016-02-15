@@ -100,4 +100,4 @@ ngeo.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
 };
 
 
-ngeoModule.value('ngeoCreateGeoJSONBloodhound', ngeo.createGeoJSONBloodhound);
+ngeo.module.value('ngeoCreateGeoJSONBloodhound', ngeo.createGeoJSONBloodhound);

@@ -47,7 +47,7 @@ ngeo.QueryResultSource;
  * The `ngeoQueryResult` is the value service where the features of the query
  * result are added.
  */
-ngeoModule.value('ngeoQueryResult', {
+ngeo.module.value('ngeoQueryResult', {
   'sources': [],
   'total': 0
 });
@@ -401,4 +401,4 @@ ngeo.Query.prototype.getLayerSourceId_ = function(layer) {
 };
 
 
-ngeoModule.service('ngeoQuery', ngeo.Query);
+ngeo.module.service('ngeoQuery', ngeo.Query);

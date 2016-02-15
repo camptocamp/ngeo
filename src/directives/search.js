@@ -140,4 +140,4 @@ ngeo.searchDirective.adaptListeners_ = function(object) {
 };
 
 
-ngeoModule.directive('ngeoSearch', ngeo.searchDirective);
+ngeo.module.directive('ngeoSearch', ngeo.searchDirective);

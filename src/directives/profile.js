@@ -115,4 +115,4 @@ ngeo.profileDirective = function() {
   };
 };
 
-ngeoModule.directive('ngeoProfile', ngeo.profileDirective);
+ngeo.module.directive('ngeoProfile', ngeo.profileDirective);

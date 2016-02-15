@@ -36,4 +36,4 @@ ngeo.decorateInteraction = function(interaction) {
 };
 
 
-ngeoModule.value('ngeoDecorateInteraction', ngeo.decorateInteraction);
+ngeo.module.value('ngeoDecorateInteraction', ngeo.decorateInteraction);

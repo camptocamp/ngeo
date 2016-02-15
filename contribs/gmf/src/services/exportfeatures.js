@@ -66,4 +66,4 @@ gmf.exportFeaturesFactory_ = function($document, gmfServiceUrls) {
       });
 };
 
-gmfModule.factory('gmfExportFeatures', gmf.exportFeaturesFactory_);
+gmf.module.factory('gmfExportFeatures', gmf.exportFeaturesFactory_);

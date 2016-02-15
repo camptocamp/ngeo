@@ -98,4 +98,4 @@ ngeo.syncArrays = function(arr1, arr2, reverse, scope, filter) {
 };
 
 
-ngeoModule.value('ngeoSyncArrays', ngeo.syncArrays);
+ngeo.module.value('ngeoSyncArrays', ngeo.syncArrays);

@@ -58,4 +58,4 @@ ngeo.filereaderDirective = function($window) {
 };
 
 
-ngeoModule.directive('ngeoFilereader', ngeo.filereaderDirective);
+ngeo.module.directive('ngeoFilereader', ngeo.filereaderDirective);

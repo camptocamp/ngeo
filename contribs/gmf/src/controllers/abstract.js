@@ -178,4 +178,4 @@ gmf.AbstractController.prototype.initLanguage = function() {
   }
 };
 
-gmfModule.controller('AbstractController', gmf.AbstractController);
+gmf.module.controller('AbstractController', gmf.AbstractController);

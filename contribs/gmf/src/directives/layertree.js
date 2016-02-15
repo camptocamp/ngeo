@@ -9,7 +9,7 @@ goog.require('ol.Collection');
 goog.require('ol.layer.Tile');
 
 
-gmfModule.value('gmfLayertreeTemplate',
+gmf.module.value('gmfLayertreeTemplate',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -28,7 +28,7 @@ gmfModule.value('gmfLayertreeTemplate',
 
 // Overrides the path to the layertree template (used by each nodes, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
-ngeoModule.value('ngeoLayertreeTemplateUrl',
+ngeo.module.value('ngeoLayertreeTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -78,7 +78,7 @@ gmf.layertreeDirective = function(gmfLayertreeTemplate) {
   };
 };
 
-gmfModule.directive('gmfLayertree', gmf.layertreeDirective);
+gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
 
 
 
@@ -486,4 +486,4 @@ gmf.LayertreeController.prototype.zoomToResolution = function(node) {
 };
 
 
-gmfModule.controller('GmfLayertreeController', gmf.LayertreeController);
+gmf.module.controller('GmfLayertreeController', gmf.LayertreeController);

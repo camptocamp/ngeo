@@ -3,7 +3,7 @@ goog.provide('ngeo.popupDirective');
 goog.require('ngeo');
 
 
-ngeoModule.value('ngeoPopupTemplateUrl',
+ngeo.module.value('ngeoPopupTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -65,4 +65,4 @@ ngeo.popupDirective = function(ngeoPopupTemplateUrl) {
   };
 };
 
-ngeoModule.directive('ngeoPopup', ngeo.popupDirective);
+ngeo.module.directive('ngeoPopup', ngeo.popupDirective);
