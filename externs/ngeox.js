@@ -560,3 +560,53 @@ ngeox.BackgroundEvent = function() {};
  * @type {ol.layer.Base}
  */
 ngeox.BackgroundEvent.prototype.previous;
+
+
+/**
+ * @typedef {{
+ *   children: (undefined|Array.<ngeox.LayerItem>),
+ *   label: string,
+ *   details: string,
+ *   type: string,
+ *   url: string,
+ *   raw: Object,
+ *   layer: (undefined|ol.layer.Layer)
+ * }}
+ */
+ngeox.LayerItem;
+
+
+/**
+ * @type {string}
+ */
+ngeox.LayerItem.prototype.label;
+
+
+/**
+ * @type {string}
+ */
+ngeox.LayerItem.prototype.details;
+
+
+/**
+ * @type {string}
+ */
+ngeox.LayerItem.prototype.type;
+
+
+/**
+ * @type {string}
+ */
+ngeox.LayerItem.prototype.url;
+
+
+/**
+ * @type {ol.layer.Layer}
+ */
+ngeox.LayerItem.prototype.layer;
+
+
+/**
+ * @type {Object}
+ */
+ngeox.LayerItem.prototype.raw;

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Dialog for loading external sources example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js" type="text/javascript"></script>
+    <style>
+      #map {
+        width: 600px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+    <p id="desc">This example shows how to use the <code>ngeo-source-loader-*</code> directives to load WMTS, WMS, KML, GeoJSON...</p>
+
+    <div ngeo-source-loader="ctrl.map" ngeo-source-ogcproxy="https://api3.geo.admin.ch/ogcproxy?url=">
+
+      <div id="local">
+        <span>local</span>
+        <input type="file" ngeo-filereader ngeo-filereader-change="sourceLoaderCtrl.readFileContent(fileContent)"></input>
+      </div>
+
+      <br /><br />
+      Example KML: data/bikeRide.kml<br />
+      <div id="online">
+        <span>online</span>
+        <input value=""
+          ng-model="search"
+          ng-keypress="$event.keyCode == 13 && sourceLoaderCtrl.retrieveUrlObject({type: 'unknown', url: search})"
+          ng-change="sourceLoaderCtrl.filteredObjects = (ctrl.externalUrls | filter:{url:search})">
+        </input>
+        <button ng-click="sourceLoaderCtrl.retrieveUrlObject({type: 'unknown', url: search})" translate>connect</button>
+        <div ng-repeat="urlobj in sourceLoaderCtrl.filteredObjects">
+          <a href="" ng-click="sourceLoaderCtrl.retrieveUrlObject(urlobj)">{{urlobj.label ? urlobj.label : urlobj.url}}</a>
+        </div>
+        <div style="height:240px; width:330px; border: 2px solid red; overflow-y: scroll; overflow-x: hidden">
+          <div ng-repeat="layer in sourceLoaderCtrl.availableLayers">
+            <a href="" ng-click="sourceLoaderCtrl.selectedLayer=layer">{{layer.label}}</a>
+          </div>
+        </div>
+        <div>{{sourceLoaderCtrl.selectedLayer.details}}</div>
+        <button ng-click="ctrl.addLayerToMap(sourceLoaderCtrl.selectedLayer)">Add to map</button>
+      </div>
+
+    </div>
+
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="/@?main=sourceloader.js"></script>
+    <script src="default.js"></script>
+    <script src="../utils/watchwatchers.js"></script>
+  </body>
+</html>
