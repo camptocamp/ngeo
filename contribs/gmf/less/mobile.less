@@ -131,20 +131,13 @@ span.twitter-typeahead {
     }
   }
   .form-control {
-    .noshadow();
     background: initial !important;
     border: none;
     outline: none;
-    &:focus {
-      .noshadow();
-    }
-    &.ng-pristine.ng-untouched.ng-valid.tt-hint {
-        left: 1em !important;
-    }
   }
 }
 
-//For tablet only >= 768px
+//For view ports >= 768px width
 @media (min-width: @screen-sm-min) {
   @search-width: 18em;
 
@@ -174,6 +167,15 @@ span.twitter-typeahead {
       right: 0;
       left: auto;
     }
+    .form-control {
+      .noshadow();
+      &:focus {
+        .noshadow();
+      }
+      &.ng-pristine.ng-untouched.ng-valid.tt-hint {
+        left: 1em !important;
+      }
+    }
   }
 }
 
@@ -183,9 +185,24 @@ span.twitter-typeahead {
     &:after {
       content: none !important;
     }
-
     input {
       padding: 0 5px !important;
+    }
+    .search {
+      .form-control {
+        //.noshadow();
+        &:focus {
+          .noshadow();
+        }
+        &.ng-pristine.ng-untouched.ng-valid.tt-hint {
+          left: 0 !important;
+        }
+      }
+    }
+  }
+  .tt-menu {
+    .search-datum {
+      padding-left: 1em;
     }
   }
 }
