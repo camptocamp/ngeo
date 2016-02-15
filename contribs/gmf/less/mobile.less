@@ -106,6 +106,10 @@ span.twitter-typeahead {
     border-radius: 0;
     height: @map-tools-size - .2em;
   }
+  // hide the native "clear x" in Edge
+  input::-ms-clear {
+    display: none;
+  }
   .clear-button {
     position: absolute;
     top: 0;
