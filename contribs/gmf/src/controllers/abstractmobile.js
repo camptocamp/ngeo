@@ -6,9 +6,6 @@ goog.require('gmf.AbstractController');
 goog.require('gmf.mobileBackgroundLayerSelectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileNavDirective');
-goog.require('ngeo.FeatureOverlayMgr');
-goog.require('ngeo.GetBrowserLanguage');
-goog.require('ngeo.StateManager');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mobileQueryDirective');
 goog.require('ol.Map');
@@ -32,34 +29,16 @@ gmfModule.constant('isMobile', true);
  * by the HTML page and the controller to provide the configuration.
  *
  * @param {gmfx.Config} config A part of the application config.
- * @param {string} defaultLang The default language.
- * @param {Object.<string, string>} langUrls The languages URLs.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {ngeo.GetBrowserLanguage} ngeoGetBrowserLanguage
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.StateManager} ngeoStateManager the state manager.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *     overlay manager service.
- * @param {gmf.Themes} gmfThemes Themes service.
- * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
- * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
+ * @param {angular.$injector} $injector Main injector.
  * @constructor
  * @extends {gmf.AbstractController}
  * @ngInject
  * @export
  */
-gmf.AbstractMobileController = function(
-    config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
-    $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-    gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
-    gmfQueryManager) {
+gmf.AbstractMobileController = function(config, $scope, $injector) {
   goog.base(
-      this, config, defaultLang, langUrls, gettextCatalog,
-      ngeoGetBrowserLanguage,
-      $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
-      gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
-      gmfQueryManager);
+      this, config, $scope, $injector);
 
   /**
    * @type {boolean}
