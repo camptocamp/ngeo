@@ -44,6 +44,7 @@ gmfModule.constant('isMobile', true);
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
+ * @param {Array<string>} gmfSearchGroups group search.
  * @constructor
  * @extends {gmf.AbstractController}
  * @ngInject
@@ -53,13 +54,13 @@ gmf.AbstractMobileController = function(
     config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
     gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
-    gmfQueryManager) {
+    gmfQueryManager, gmfSearchGroups) {
   goog.base(
       this, config, defaultLang, langUrls, gettextCatalog,
       ngeoGetBrowserLanguage,
       $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
       gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
-      gmfQueryManager);
+      gmfQueryManager, gmfSearchGroups);
 
   /**
    * @type {boolean}

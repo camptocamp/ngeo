@@ -39,6 +39,7 @@ goog.require('ngeo.ToolActivateMgr');
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
+ * @param {Array<string>} gmfSearchGroups group search.
  * @constructor
  * @ngInject
  * @export
@@ -47,8 +48,7 @@ gmf.AbstractController = function(
     config, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
     gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
-    gmfQueryManager) {
-
+    gmfQueryManager, gmfSearchGroups) {
   /**
    * A reference to the current theme
    * @type {Object}
@@ -66,7 +66,7 @@ gmf.AbstractController = function(
     datasetTitle: 'Internal',
     labelKey: 'label',
     groupsKey: 'layer_name',
-    groupValues: ['osm'],
+    groupValues: gmfSearchGroups,
     projection: 'EPSG:' + (config.srid || 21781),
     url: fulltextsearchUrl
   }];

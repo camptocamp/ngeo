@@ -40,6 +40,7 @@ appModule.constant('ngeoQueryOptions', {
  * @param {string} fulltextsearchUrl url to a gmf fulltextsearch service.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
+ * @param {Array<string>} gmfSearchGroups group search.
  * @constructor
  * @extends {gmf.AbstractMobileController}
  * @ngInject
@@ -49,7 +50,7 @@ app.MobileController = function(
     defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
     $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
     gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
-    gmfQueryManager) {
+    gmfQueryManager, gmfSearchGroups) {
   goog.base(
       this, {
         srid: 21781,
@@ -61,7 +62,7 @@ app.MobileController = function(
       }, defaultLang, langUrls, gettextCatalog, ngeoGetBrowserLanguage,
       $scope, ngeoStateManager, ngeoFeatureOverlayMgr,
       gmfThemes, fulltextsearchUrl, ngeoToolActivateMgr,
-      gmfQueryManager);
+      gmfQueryManager, gmfSearchGroups);
 };
 goog.inherits(app.MobileController, gmf.AbstractMobileController);
 
