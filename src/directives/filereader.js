@@ -25,7 +25,7 @@ ngeo.filereaderDirective = function($window) {
     restrict: 'A',
     scope: {
       'fileContent': '=ngeoFilereader',
-      'supported': '=ngeoFilereaderSupported'
+      'supported': '=?ngeoFilereaderSupported'
     },
     link:
         /**

@@ -22,7 +22,6 @@ describe('ngeo.filereaderDirective', function() {
 
     inject(function($rootScope, $compile) {
       $compile(element)($rootScope);
-      $rootScope.$digest();
       rootScope = $rootScope;
     });
   });
