@@ -208,6 +208,8 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     /** @type {Array.<string>} */
     var groupValues = goog.isDef(datasource.groupValues) &&
         goog.isDef(datasource.groupsKey) ? datasource.groupValues : [];
+    var groupActions = datasource.groupActions ? datasource.groupActions : [];
+    groupValues = groupValues.concat(groupActions);
     var filter;
 
     do {
@@ -309,7 +311,16 @@ gmf.SearchController.prototype.filterLayername_ = function(groupsKey,
        */
       function(feature) {
         var properties = feature['properties'];
-        return properties['actions'] || properties[groupsKey] === groupValue;
+        if (properties['actions']) {
+          // result is an action (add_theme, add_group, ...)
+          // add it to the corresponding group
+          return properties['actions'].some(function(action) {
+            return action.action === groupValue;
+          })
+        } else {
+          // result is a geometry
+          return properties[groupsKey] === groupValue;
+        }
       });
 };
 

@@ -33,6 +33,7 @@ gmfx.Config;
  *    labelKey: string,
  *    groupsKey: (string|undefined),
  *    groupValues: (Array.<string>|undefined),
+ *    groupActions: (Array.<string>|undefined),
  *    projection: (string|undefined),
  *    typeaheadDatasetOptions: (TypeaheadDataset|undefined),
  *    url: string
@@ -78,6 +79,14 @@ gmfx.SearchDirectiveDatasource.prototype.groupsKey;
  * @type {Array.<string>|undefined}
  */
 gmfx.SearchDirectiveDatasource.prototype.groupValues;
+
+
+/**
+ * List of allowed actions. The list may contain a combination of
+ * `add_theme`, `add_group` or `add_layer`
+ * @type {Array.<string>|undefined}
+ */
+gmfx.SearchDirectiveDatasource.prototype.groupActions;
 
 
 /**
