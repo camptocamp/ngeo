@@ -37,7 +37,7 @@ goog.inherits(ngeo.interaction.MeasureArea, ngeo.interaction.Measure);
 /**
  * @inheritDoc
  */
-ngeo.interaction.MeasureArea.prototype.getDrawInteraction = function(style,
+ngeo.interaction.MeasureArea.prototype.createDrawInteraction = function(style,
     source) {
 
   return new ol.interaction.Draw(
@@ -57,7 +57,8 @@ ngeo.interaction.MeasureArea.prototype.handleMeasure = function(callback) {
   var geom = /** @type {ol.geom.Polygon} */
       (this.sketchFeature.getGeometry());
   var proj = this.getMap().getView().getProjection();
-  var output = ngeo.interaction.Measure.getFormattedArea(geom, proj);
+  var dec = this.decimals;
+  var output = ngeo.interaction.Measure.getFormattedArea(geom, proj, dec);
   var verticesCount = geom.getCoordinates()[0].length;
   var coord = null;
   if (verticesCount > 2) {

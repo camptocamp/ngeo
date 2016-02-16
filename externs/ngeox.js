@@ -126,6 +126,50 @@ ngeox.QuerySource.prototype.wmsSource;
 
 
 /**
+ * MobileDraw Interaction
+ * @typedef {{
+ *     minPoints: (number|undefined),
+ *     style: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
+ *     type: ol.geom.GeometryType,
+ *     wrapX: (boolean|undefined)
+ * }}
+ */
+ngeox.interaction.MobileDrawOptions;
+
+
+/**
+ * The number of points that must be drawn before a polygon ring or line string
+ * can be finished. Default is `3` for polygon rings and `2` for line strings.
+ * @type {number|undefined}
+ * @api
+ */
+ngeox.interaction.MobileDrawOptions.prototype.minPoints;
+
+
+/**
+ * Style for sketch features.
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ */
+ngeox.interaction.MobileDrawOptions.prototype.style;
+
+
+/**
+ * Drawing type ('Point' or 'LineString'.
+ * @type {ol.geom.GeometryType}
+ * @api
+ */
+ngeox.interaction.MobileDrawOptions.prototype.type;
+
+
+/**
+ * Wrap the world horizontally on the sketch overlay. Default is `false`.
+ * @type {boolean|undefined}
+ * @api
+ */
+ngeox.interaction.MobileDrawOptions.prototype.wrapX;
+
+
+/**
  * Namespace.
  * @type {Object}
  */
@@ -177,6 +221,7 @@ ngeox.interaction;
  * @typedef {{
  *    startMsg: (Element|undefined),
  *    continueMsg: (Element|undefined),
+ *    decimals: (number|undefined),
  *    style: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
  *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined)
  * }}
@@ -198,6 +243,14 @@ ngeox.interaction.MeasureOptions.prototype.startMsg;
  * @type {Element|undefined}
  */
 ngeox.interaction.MeasureOptions.prototype.continueMsg;
+
+
+/**
+ * Defines the number of decimals to keep in the measurement. If not defined,
+ * then the default behaviour occurs depending on the measure type.
+ * @type {number|undefined}
+ */
+ngeox.interaction.MeasureOptions.prototype.decimals;
 
 
 /**

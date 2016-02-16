@@ -129,6 +129,22 @@ ngeo.interaction.Measure = function(opt_options) {
   this.continueMsg = null;
 
   /**
+   * Defines the number of decimals to keep in the measurement. If not defined,
+   * then the default behaviour occurs depending on the measure type.
+   * @type {?number}
+   * @protected
+   */
+  this.decimals = options.decimals !== undefined ? options.decimals : null;
+
+  /**
+   * Whether or not to display any tooltip
+   * @type {boolean}
+   * @private
+   */
+  this.displayHelpTooltip_ = goog.isDef(options.displayHelpTooltip) ?
+      options.displayHelpTooltip : true;
+
+  /**
    * The message to show when user is about to start drawing.
    * @type {Element}
    */
@@ -175,12 +191,21 @@ ngeo.interaction.Measure = function(opt_options) {
 
   /**
    * The draw interaction to be used.
-   * @type {ol.interaction.Draw|ngeo.interaction.DrawAzimut}
+   * @type {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw}
    * @private
    */
-  this.drawInteraction_ = this.getDrawInteraction(options.sketchStyle,
+  this.drawInteraction_ = this.createDrawInteraction(options.sketchStyle,
       this.vectorLayer_.getSource());
 
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.shouldHandleDrawInteractionActiveChange_ = true;
+
+  ol.events.listen(this.drawInteraction_,
+      ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
+      this.handleDrawInteractionActiveChange_, this);
   ol.events.listen(this.drawInteraction_,
       ol.interaction.DrawEventType.DRAWSTART, this.onDrawStart_, this);
   ol.events.listen(this.drawInteraction_,
@@ -198,19 +223,30 @@ goog.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
  * of the area.
  * @param {ol.geom.Polygon} polygon Polygon.
  * @param {ol.proj.Projection} projection Projection of the polygon coords.
+ * @param {?number} decimals Decimals.
  * @return {string} Formatted string of the area.
  */
-ngeo.interaction.Measure.getFormattedArea = function(polygon, projection) {
+ngeo.interaction.Measure.getFormattedArea = function(
+    polygon, projection, decimals) {
   var geom = /** @type {ol.geom.Polygon} */ (
       polygon.clone().transform(projection, 'EPSG:4326'));
   var coordinates = geom.getLinearRing(0).getCoordinates();
   var area = Math.abs(ol.sphere.WGS84.geodesicArea(coordinates));
   var output;
   if (area > 1000000) {
-    output = parseFloat((area / 1000000).toPrecision(3)) +
-        ' ' + 'km<sup>2</sup>';
+    if (decimals !== null) {
+      output = goog.string.padNumber(area / 1000000, 0, decimals);
+    } else {
+      output = parseFloat((area / 1000000).toPrecision(3));
+    }
+    output += ' ' + 'km<sup>2</sup>';
   } else {
-    output = parseFloat(area.toPrecision(3)) + ' ' + 'm<sup>2</sup>';
+    if (decimals !== null) {
+      output = goog.string.padNumber(area, 0, decimals);
+    } else {
+      output = parseFloat(area.toPrecision(3));
+    }
+    output += ' ' + 'm<sup>2</sup>';
   }
   return output;
 };
@@ -221,9 +257,11 @@ ngeo.interaction.Measure.getFormattedArea = function(polygon, projection) {
  * string of the length.
  * @param {ol.geom.LineString} lineString Line string.
  * @param {ol.proj.Projection} projection Projection of the line string coords.
+ * @param {?number} decimals Decimals.
  * @return {string} Formatted string of length.
  */
-ngeo.interaction.Measure.getFormattedLength = function(lineString, projection) {
+ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
+    decimals) {
   var length = 0;
   var coordinates = lineString.getCoordinates();
   for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
@@ -233,13 +271,40 @@ ngeo.interaction.Measure.getFormattedLength = function(lineString, projection) {
   }
   var output;
   if (length > 1000) {
-    output = parseFloat((length / 1000).toPrecision(3)) +
-        ' ' + 'km';
+    if (decimals !== null) {
+      output = goog.string.padNumber(length / 1000, 0, decimals);
+    } else {
+      output = parseFloat((length / 1000).toPrecision(3));
+    }
+    output += ' ' + 'km';
   } else {
-    output = parseFloat(length.toPrecision(3)) +
-        ' ' + 'm';
+    if (decimals !== null) {
+      output = goog.string.padNumber(length, 0, decimals);
+    } else {
+      output = parseFloat(length.toPrecision(3));
+    }
+    output += ' ' + 'm';
   }
   return output;
+};
+
+
+/**
+ * Return a formatted string of the point.
+ * @param {ol.geom.Point} point Point.
+ * @param {ol.proj.Projection} projection Projection of the line string coords.
+ * @param {?number} decimals Decimals.
+ * @return {string} Formatted string of coordinate.
+ */
+ngeo.interaction.Measure.getFormattedPoint = function(
+    point, projection, decimals) {
+  var coordinates = point.getCoordinates();
+  var x = coordinates[0];
+  var y = coordinates[1];
+  decimals = decimals !== null ? decimals : 0;
+  x = goog.string.padNumber(x, 0, decimals);
+  y = goog.string.padNumber(y, 0, decimals);
+  return ['X: ', x, ', Y: ', y].join('');
 };
 
 
@@ -260,11 +325,22 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
     helpMsg = this.continueMsg;
   }
 
-  goog.dom.removeChildren(this.helpTooltipElement_);
-  goog.dom.appendChild(this.helpTooltipElement_, helpMsg);
-  this.helpTooltipOverlay_.setPosition(evt.coordinate);
+  if (this.displayHelpTooltip_) {
+    goog.dom.removeChildren(this.helpTooltipElement_);
+    goog.dom.appendChild(this.helpTooltipElement_, helpMsg);
+    this.helpTooltipOverlay_.setPosition(evt.coordinate);
+  }
 
   return true;
+};
+
+
+/**
+ * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw} The draw interaction.
+ * @export
+ */
+ngeo.interaction.Measure.prototype.getDrawInteraction = function() {
+  return this.drawInteraction_;
 };
 
 
@@ -273,10 +349,10 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
  * @param {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
  *     style The sketchStyle used for the drawing interaction.
  * @param {ol.source.Vector} source Vector source.
- * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut}
+ * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw}
  * @protected
  */
-ngeo.interaction.Measure.prototype.getDrawInteraction = goog.abstractMethod;
+ngeo.interaction.Measure.prototype.createDrawInteraction = goog.abstractMethod;
 
 
 /**
@@ -309,6 +385,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
   this.createMeasureTooltip_();
 
   var geometry = this.sketchFeature.getGeometry();
+
   goog.asserts.assert(goog.isDef(geometry));
   this.changeEventKey_ = ol.events.listen(geometry,
       ol.events.EventType.CHANGE,
@@ -346,14 +423,16 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
  */
 ngeo.interaction.Measure.prototype.createHelpTooltip_ = function() {
   this.removeHelpTooltip_();
-  this.helpTooltipElement_ = goog.dom.createDom(goog.dom.TagName.DIV);
-  goog.dom.classlist.add(this.helpTooltipElement_, 'tooltip');
-  this.helpTooltipOverlay_ = new ol.Overlay({
-    element: this.helpTooltipElement_,
-    offset: [15, 0],
-    positioning: 'center-left'
-  });
-  this.getMap().addOverlay(this.helpTooltipOverlay_);
+  if (this.displayHelpTooltip_) {
+    this.helpTooltipElement_ = goog.dom.createDom(goog.dom.TagName.DIV);
+    goog.dom.classlist.add(this.helpTooltipElement_, 'tooltip');
+    this.helpTooltipOverlay_ = new ol.Overlay({
+      element: this.helpTooltipElement_,
+      offset: [15, 0],
+      positioning: 'center-left'
+    });
+    this.getMap().addOverlay(this.helpTooltipOverlay_);
+  }
 };
 
 
@@ -362,12 +441,14 @@ ngeo.interaction.Measure.prototype.createHelpTooltip_ = function() {
  * @private
  */
 ngeo.interaction.Measure.prototype.removeHelpTooltip_ = function() {
-  this.getMap().removeOverlay(this.helpTooltipOverlay_);
-  if (!goog.isNull(this.helpTooltipElement_)) {
-    this.helpTooltipElement_.parentNode.removeChild(this.helpTooltipElement_);
+  if (this.displayHelpTooltip_) {
+    this.getMap().removeOverlay(this.helpTooltipOverlay_);
+    if (!goog.isNull(this.helpTooltipElement_)) {
+      this.helpTooltipElement_.parentNode.removeChild(this.helpTooltipElement_);
+    }
+    this.helpTooltipElement_ = null;
+    this.helpTooltipOverlay_ = null;
   }
-  this.helpTooltipElement_ = null;
-  this.helpTooltipOverlay_ = null;
 };
 
 
@@ -409,13 +490,17 @@ ngeo.interaction.Measure.prototype.removeMeasureTooltip_ = function() {
  */
 ngeo.interaction.Measure.prototype.updateState_ = function() {
   var active = this.getActive();
+  this.shouldHandleDrawInteractionActiveChange_ = false;
   this.drawInteraction_.setActive(active);
+  this.shouldHandleDrawInteractionActiveChange_ = true;
   if (!this.getMap()) {
     return;
   }
   if (active) {
-    this.createMeasureTooltip_();
-    this.createHelpTooltip_();
+    if (!this.measureTooltipOverlay_) {
+      this.createMeasureTooltip_();
+      this.createHelpTooltip_();
+    }
   } else {
     this.vectorLayer_.getSource().clear(true);
     this.getMap().removeOverlay(this.measureTooltipOverlay_);
@@ -442,3 +527,18 @@ ngeo.interaction.Measure.prototype.handleMeasure = goog.abstractMethod;
 ngeo.interaction.Measure.prototype.getTooltipElement = function() {
   return this.measureTooltipElement_;
 };
+
+
+/**
+ * Called when the draw interaction `active` property changes. If the
+ * change is due to something else than this measure interactino, then
+ * update follow the its active state accordingly.
+ *
+ * @private
+ */
+ngeo.interaction.Measure.prototype.handleDrawInteractionActiveChange_ =
+    function() {
+      if (this.shouldHandleDrawInteractionActiveChange_) {
+        this.setActive(this.drawInteraction_.getActive());
+      }
+    };

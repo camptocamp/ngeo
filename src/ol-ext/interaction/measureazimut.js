@@ -49,7 +49,7 @@ goog.inherits(ngeo.interaction.MeasureAzimut, ngeo.interaction.Measure);
 /**
  * @inheritDoc
  */
-ngeo.interaction.MeasureAzimut.prototype.getDrawInteraction = function(style,
+ngeo.interaction.MeasureAzimut.prototype.createDrawInteraction = function(style,
     source) {
 
   return new ngeo.interaction.DrawAzimut({
@@ -88,7 +88,9 @@ ngeo.interaction.MeasureAzimut.prototype.formatMeasure_ = function(line) {
   var azimut = Math.round(factor * rad * 180 / Math.PI) % 360;
   var output = azimut + '°';
   var proj = this.getMap().getView().getProjection();
-  output += '<br/>' + ngeo.interaction.Measure.getFormattedLength(line, proj);
+  var dec = this.decimals;
+  output += '<br/>' + ngeo.interaction.Measure.getFormattedLength(
+      line, proj, dec);
   return output;
 };
 
