@@ -61,7 +61,8 @@
       </div>
       <div id="background" class="slide" data-header-title="Background">
         <gmf-mobile-background-layer-selector
-          gmf-mobile-background-layer-selector-map="::mainCtrl.map">
+          gmf-mobile-background-layer-selector-map="::mainCtrl.map"
+          gmf-mobile-background-layer-selector-select="mainCtrl.hideNav()">
         </gmf-mobile-background-layer-selector>
       </div>
       <gmf-themeselector
@@ -69,7 +70,8 @@
           class="slide"
           data-header-title="Themes"
           gmf-themeselector-currenttheme="mainCtrl.theme"
-          gmf-themeselector-filter="::mainCtrl.filter">
+          gmf-themeselector-filter="::mainCtrl.filter"
+          gmf-mobile-nav-back="mainCtrl.theme">
       </gmf-themeselector>
     </nav>
     <nav class="nav-right" gmf-mobile-nav>
