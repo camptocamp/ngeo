@@ -456,7 +456,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .PRECIOUS: node_modules/font-awesome/fonts/fontawesome-webfont.%
 node_modules/font-awesome/fonts/fontawesome-webfont.%: .build/node_modules.timestamp
-	touch --no-create $@
+	touch -c $@
 
 contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontawesome-webfont.%
 	mkdir -p $(dir $@)
