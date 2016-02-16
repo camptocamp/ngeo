@@ -1,3 +1,4 @@
+goog.provide('gmf.MobileNavController');
 goog.provide('gmf.mobileNavDirective');
 
 goog.require('gmf');
@@ -44,125 +45,181 @@ goog.require('gmf');
 gmf.mobileNavDirective = function() {
   return {
     restrict: 'A',
+    controller: 'gmfMobileNavController',
+    bindToController: true,
+    controllerAs: 'navCtrl',
+    scope: true,
     link:
         /**
          * @param {angular.Scope} scope Scope.
          * @param {angular.JQLite} element Element.
          * @param {angular.Attributes} attrs Atttributes.
+         * @param {gmf.MobileNavController} navCtrl Controller.
          */
-        function(scope, element, attrs) {
-
-          /**
-           * Stack of slid-in items.
-           * @type {Array.<!jQuery>}
-           */
-          var slid = [];
-          /**
-           * Currently active sliding box.
-           * @type {!jQuery}
-           */
-          var active = $(element.find('.active.slide'));
-
-          /**
-           * The navigation header.
-           * @type {!jQuery}
-           */
-          var header = $(element.find('> header'));
-
-          /**
-           * The back button in the navigation header.
-           * @type {!jQuery}
-           */
-          var backButton = $(element.find('header > .go-back'));
-
-          // watch for clicks on "slide-in" elements
-          element.find('[data-toggle=slide-in]').on('click', function() {
-
-            // the element to slide out is the div.slide parent
-            var slideOut = $(this).parents('.slide');
-
-            // push the item to the selected stack
-            slid.push(slideOut);
-
-            // slide the "old" element out
-            slideOut.addClass('slide-out').removeClass('active');
-
-            // element to slide in
-            var slideIn = $($(this).attr('href'));
-
-            // slide the "new" element in
-            slideIn.addClass('active');
-
-            // update the navigation header
-            updateNavigationHeader(slideIn, false);
-
-            active = slideIn;
-          });
-
-          // watch for clicks on the header "go-back" link
-          backButton.click(function() {
-            // slide active item to the right
-            active.removeClass('active');
-
-            // get the previously active item
-            var slideBack = slid.pop();
-
-            // slide previous item to the right
-            slideBack.addClass('active').removeClass('slide-out');
-
-            // update the navigation header
-            updateNavigationHeader(slideBack, true);
-
-            active = slideBack;
-          });
-
-          /**
-           * @param {!jQuery} active The currently active sliding box.
-           * @param {boolean} back Whether to move back.
-           */
-          function updateNavigationHeader(active, back) {
-            header.toggleClass('back', back);
-
-            // remove any inactive nav
-            header.find('nav:not(.active)').remove();
-
-            // deactivate the currently active nav
-            header.find('nav.active').removeClass('active')
-                .addClass('slide-out');
-
-            // show the back button when relevant
-            backButton.toggleClass('active', slid.length > 0);
-
-            // create a new nav
-            var nav = $('<nav>');
-            nav.append($('<span>', {
-              text: active.attr('data-header-title')
-            }));
-            header.append(nav);
-
-            // Delay the activation of the new navigation so that the previous
-            // one is properly deactivated. This prevents weird animation
-            // effects.
-            window.setTimeout(function() {
-              // fix for safari: the following 3 lines force that the position
-              // of the newly inserted element is calculated.
-              // see http://stackoverflow.com/a/3485654/119937
-              nav.css('display', 'none');
-              nav.offset();
-              nav.css('display', '');
-
-              window.setTimeout(function() {
-                // fix: calling `position()` makes sure that the animation
-                // is always run
-                nav.position();
-                nav.addClass('active');
-              }, 0);
-            }, 0);
-          }
-
+        function(scope, element, attrs, navCtrl) {
+          navCtrl.init(element);
         }
   };
 };
 
-
 gmf.module.directive('gmfMobileNav', gmf.mobileNavDirective);
+
+
+/**
+* @constructor
+* @export
+* @ngInject
+* @ngdoc controller
+* @ngname gmfMobileNavController
+*/
+gmf.MobileNavController = function() {
+  /**
+   * Stack of slid-in items.
+   * @private
+   * @type {Array.<!jQuery>}
+   */
+  this.slid_ = [];
+
+  /**
+   * Currently active sliding box.
+   * @private
+   * @type {jQuery}
+   */
+  this.active_ = null;
+
+  /**
+   * The navigation header.
+   * @private
+   * @type {jQuery}
+   */
+  this.header_ = null;
+
+  /**
+   * The back button in the navigation header.
+   * @private
+   * @type {jQuery}
+   */
+  this.backButton_ = null;
+
+  /**
+   * Export the back function already bound to `this`. This makes sure that
+   * the function is called on the right context, when it is passed to an
+   * attribute in a template
+   * @export
+   */
+  this.back = this.back_.bind(this);
+};
+
+gmf.module.controller('gmfMobileNavController', gmf.MobileNavController);
+
+
+/**
+ * Initialize the directive with the linked element.
+ * @param {angular.JQLite} element Element.
+ */
+gmf.MobileNavController.prototype.init = function(element) {
+  this.active_ = $(element.find('.active.slide'));
+  this.header_ = $(element.find('> header'));
+  this.backButton_ = $(element.find('header > .go-back'));
+
+  // watch for clicks on "slide-in" elements
+  element.find('[data-toggle=slide-in]').on('click', function(evt) {
+
+    // the element to slide out is the div.slide parent
+    var slideOut = $(evt.target).parents('.slide');
+
+    // push the item to the selected stack
+    this.slid_.push(slideOut);
+
+    // slide the "old" element out
+    slideOut.addClass('slide-out').removeClass('active');
+
+    // element to slide in
+    var slideIn = $($(evt.target).attr('href'));
+
+    // slide the "new" element in
+    slideIn.addClass('active');
+
+    // update the navigation header
+    this.updateNavigationHeader_(slideIn, false);
+
+    this.active_ = slideIn;
+  }.bind(this));
+
+  // watch for clicks on the header "go-back" link
+  this.backButton_.click(this.back.bind(this));
+};
+
+
+/**
+ * @param {!jQuery} active The currently active sliding box.
+ * @param {boolean} back Whether to move back.
+ * @private
+ */
+gmf.MobileNavController.prototype.updateNavigationHeader_ = function(
+    active, back) {
+  this.header_.toggleClass('back', back);
+
+  // remove any inactive nav
+  this.header_.find('nav:not(.active)').remove();
+
+  // deactivate the currently active nav
+  this.header_.find('nav.active').removeClass('active')
+      .addClass('slide-out');
+
+  // show the back button when relevant
+  this.backButton_.toggleClass('active', this.slid_.length > 0);
+
+  // create a new nav
+  var nav = $('<nav>');
+  nav.append($('<span>', {
+    text: active.attr('data-header-title')
+  }));
+  this.header_.append(nav);
+
+  // Delay the activation of the new navigation so that the previous
+  // one is properly deactivated. This prevents weird animation
+  // effects.
+  window.setTimeout(function() {
+    // fix for safari: the following 3 lines force that the position
+    // of the newly inserted element is calculated.
+    // see http://stackoverflow.com/a/3485654/119937
+    nav.css('display', 'none');
+    nav.offset();
+    nav.css('display', '');
+
+    window.setTimeout(function() {
+      // fix: calling `position()` makes sure that the animation
+      // is always run
+      nav.position();
+      nav.addClass('active');
+    }, 0);
+  }, 0);
+};
+
+gmf.module.controller('gmfMobileNavController', gmf.MobileNavController);
+
+
+/**
+ * Return to the previous slide.
+ * @private
+ */
+gmf.MobileNavController.prototype.back_ = function() {
+  if (this.slid_.length <= 0) {
+    return;
+  }
+
+  // slide active item to the right
+  this.active_.removeClass('active');
+
+  // get the previously active item
+  var slideBack = this.slid_.pop();
+
+  // slide previous item to the right
+  slideBack.addClass('active').removeClass('slide-out');
+
+  // update the navigation header
+  this.updateNavigationHeader_(slideBack, true);
+
+  this.active_ = slideBack;
+};
