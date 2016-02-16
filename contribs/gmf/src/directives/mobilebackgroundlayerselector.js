@@ -41,7 +41,8 @@ gmf.mobileBackgroundLayerSelectorDirective = function(
   return {
     restrict: 'E',
     scope: {
-      'map': '=gmfMobileBackgroundLayerSelectorMap'
+      'map': '=gmfMobileBackgroundLayerSelectorMap',
+      'select': '&?gmfMobileBackgroundLayerSelectorSelect'
     },
     bindToController: true,
     controller: 'GmfMobileBackgroundLayerSelectorController',
@@ -74,6 +75,13 @@ gmf.MobileBackgroundLayerSelectorController = function(
    * @export
    */
   this.map;
+
+  /**
+   * Function called when a layer was selected by the user.
+   * @type {Function}
+   * @export
+   */
+  this.select;
 
   /**
    * @type {ol.layer.Base}
@@ -114,7 +122,7 @@ gmf.MobileBackgroundLayerSelectorController = function(
           defaultBgLayer = this.bgLayers[1] !== undefined ?
               this.bgLayers[1] : this.bgLayers[0];
         }
-        this.setLayer(defaultBgLayer);
+        this.setLayer(defaultBgLayer, true);
       }, this));
 
   ol.events.listen(
@@ -127,17 +135,20 @@ gmf.MobileBackgroundLayerSelectorController = function(
 
 };
 
+gmf.module.controller('GmfMobileBackgroundLayerSelectorController',
+    gmf.MobileBackgroundLayerSelectorController);
+
 
 /**
  * @param {ol.layer.Base} layer Layer.
+ * @param {boolean=} opt_silent Do not notify listeners.
  * @export
  */
 gmf.MobileBackgroundLayerSelectorController.prototype.setLayer = function(
-    layer) {
+    layer, opt_silent) {
   this.bgLayer = layer;
   this.backgroundLayerMgr_.set(this.map, layer);
+  if (!opt_silent && this.select) {
+    this.select();
+  }
 };
-
-
-gmf.module.controller('GmfMobileBackgroundLayerSelectorController',
-    gmf.MobileBackgroundLayerSelectorController);
