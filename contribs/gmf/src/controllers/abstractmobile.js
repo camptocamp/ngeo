@@ -36,8 +36,6 @@ gmf.module.constant('isMobile', true);
  * @export
  */
 gmf.AbstractMobileController = function(config, $scope, $injector) {
-  goog.base(
-      this, config, $scope, $injector);
 
   /**
    * @type {boolean}
@@ -95,6 +93,10 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
         config.mapInteractions ||
         ol.interaction.defaults({pinchRotate: false})
   });
+
+  goog.base(
+      this, config, $scope, $injector);
+
 };
 goog.inherits(gmf.AbstractMobileController, gmf.AbstractController);
 

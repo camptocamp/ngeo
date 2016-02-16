@@ -32,6 +32,9 @@ goog.require('ngeo.ToolActivateMgr');
  */
 gmf.AbstractController = function(config, $scope, $injector) {
 
+
+  goog.asserts.assertInstanceof(this.map, ol.Map);
+
   /**
    * A reference to the current theme
    * @type {Object}
