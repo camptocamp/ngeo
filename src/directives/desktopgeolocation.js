@@ -12,6 +12,18 @@ goog.require('ol.geom.Point');
 
 
 /**
+ * @enum {string}
+ * @export
+ */
+ngeo.DesktopGeolocationEventType = {
+  /**
+   * Triggered when an error occures.
+   */
+  ERROR: 'desktop-geolocation-error'
+};
+
+
+/**
  * Provide a "desktop geolocation" directive.
  *
  * Example:
@@ -77,6 +89,12 @@ ngeo.DesktopGeolocationController = function($scope, $element,
   goog.asserts.assertObject(options);
 
   /**
+   * @type {!angular.Scope}
+   * @private
+   */
+  this.$scope_ = $scope;
+
+  /**
    * @type {ngeo.FeatureOverlay}
    * @private
    */
@@ -89,6 +107,12 @@ ngeo.DesktopGeolocationController = function($scope, $element,
   this.geolocation_ = new ol.Geolocation({
     projection: map.getView().getProjection()
   });
+
+  // handle geolocation error.
+  this.geolocation_.on('error', function(error) {
+    this.deactivate_();
+    $scope.$emit(ngeo.DesktopGeolocationEventType.ERROR, error);
+  }, this);
 
   /**
    * @type {ol.Feature}
@@ -181,6 +205,16 @@ ngeo.DesktopGeolocationController.prototype.deactivate_ = function() {
  */
 ngeo.DesktopGeolocationController.prototype.setPosition_ = function(event) {
   var position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
+
+  // if user is using Firefox and selects the "not now" option, OL geolocation
+  // doesn't return an error
+  if (!goog.isDef(position)) {
+    this.deactivate_();
+    this.$scope_.$emit(ngeo.DesktopGeolocationEventType.ERROR, null);
+    return;
+  }
+
+  goog.asserts.assert(goog.isDef(position));
   var point = new ol.geom.Point(position);
 
   this.positionFeature_.setGeometry(point);
