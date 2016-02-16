@@ -18,9 +18,9 @@ goog.require('ngeo.ToolActivateMgr');
 
 
 /**
- * Application abstract cntroller.
+ * Application abstract controller.
  *
- * This file includes `goog.require`'for base components/directives used
+ * This file includes `goog.require` for base components/directives used
  * by the HTML page and the controller to provide the configuration.
  *
  * @param {gmfx.Config} config A part of the application config.
