@@ -32,8 +32,6 @@ gmf.module.constant('isDesktop', true);
  * @export
  */
 gmf.AbstractDesktopController = function(config, $scope, $injector) {
-  goog.base(
-      this, config, $scope, $injector);
 
   var viewConfig = {
     projection: ol.proj.get('epsg:' + (config.srid || 21781))
@@ -67,6 +65,10 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   $('[data-toggle="tooltip"]').tooltip({
     container: 'body'
   });
+
+  goog.base(
+      this, config, $scope, $injector);
+
 };
 goog.inherits(gmf.AbstractDesktopController, gmf.AbstractController);
 
