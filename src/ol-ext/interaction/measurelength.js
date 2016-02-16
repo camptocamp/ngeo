@@ -37,7 +37,7 @@ goog.inherits(ngeo.interaction.MeasureLength, ngeo.interaction.Measure);
 /**
  * @inheritDoc
  */
-ngeo.interaction.MeasureLength.prototype.getDrawInteraction = function(style,
+ngeo.interaction.MeasureLength.prototype.createDrawInteraction = function(style,
     source) {
 
   return new ol.interaction.Draw(
@@ -57,7 +57,8 @@ ngeo.interaction.MeasureLength.prototype.handleMeasure = function(callback) {
   var geom = /** @type {ol.geom.LineString} */
       (this.sketchFeature.getGeometry());
   var proj = this.getMap().getView().getProjection();
-  var output = ngeo.interaction.Measure.getFormattedLength(geom, proj);
+  var dec = this.decimals;
+  var output = ngeo.interaction.Measure.getFormattedLength(geom, proj, dec);
   var coord = geom.getLastCoordinate();
   callback(output, coord);
 };

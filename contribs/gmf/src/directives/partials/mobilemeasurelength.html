@@ -1,0 +1,30 @@
+<a class="btn btn-default"
+   ng-if="ctrl.drawing && (!ctrl.valid)"
+   ng-click="ctrl.addPoint()">
+     <span class="fa fa-check"></span>
+     {{ ::ctrl.translate('Set as starting point') }}
+</a>
+<a class="btn btn-default"
+   ng-if="ctrl.dirty"
+   ng-click="ctrl.addPoint()">
+     <span class="fa fa-plus"></span>
+     {{ ::ctrl.translate('Add new point') }}
+</a>
+<a class="btn btn-default"
+   ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"
+   ng-click="ctrl.finish()">
+     <span class="fa fa-check"></span>
+     {{ ::ctrl.translate('Terminate') }}
+</a>
+<a class="btn btn-default"
+   ng-if="ctrl.valid"
+   ng-click="ctrl.clear()">
+     <span class="fa fa-repeat"></span>
+     {{ ::ctrl.translate('Clear') }}
+</a>
+<a class="btn btn-default"
+   ng-if="ctrl.active"
+   ng-click="ctrl.deactivate()">
+     <span class="fa fa-times"></span>
+     {{ ::ctrl.translate('Close') }}
+</a>
