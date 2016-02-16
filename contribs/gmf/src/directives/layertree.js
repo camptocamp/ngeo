@@ -241,6 +241,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
       case gmf.LayertreeController.TYPE_NOTMIXEDGROUP:
         layer = this.getLayerCaseNotMixedGroup_(node);
         break;
+      // no default
     }
     switch (type) {
       case gmf.LayertreeController.TYPE_WMTS:
@@ -252,6 +253,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
         layer = opt_createWMS ?
             this.layerHelper_.createBasicWMSLayer(url, node.name) : null;
         break;
+      // no default
     }
   }
 
@@ -532,6 +534,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
           (firstParentTreeLayer);
       this.updateWMSLayerState_(firstParentTreeLayer, layers);
       break;
+    // no default
   }
 };
 
@@ -609,6 +612,7 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
         style = 'indeterminate';
       }
       break;
+    // no default
   }
   return style || 'off';
 };
