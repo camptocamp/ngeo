@@ -170,6 +170,30 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
   goog.asserts.assert(goog.isDef(map));
 
   /**
+   * @type {ngeo.LayertreeController}
+   * @export
+   */
+  this.parent = $scope.$parent['layertreeCtrl'];
+
+  /**
+   * @type {number}
+   * @export
+   */
+  this.uid = goog.getUid(this);
+
+  /**
+   * @type {number}
+   * @export
+   */
+  this.depth = isRoot ? 0 : this.parent['depth'] + 1;
+
+  // We set 'uid' and 'depth' in the scope as well to access the parent values
+  // in the inherited scopes. This is intended to be used in the javascript not
+  // in the templates.
+  $scope['uid'] = this.uid;
+  $scope['depth'] = this.depth;
+
+  /**
    * @type {ol.Map}
    * @export
    */
@@ -193,31 +217,8 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
    * @export
    */
   this.layer = isRoot ? null : /** @type {ol.layer.Layer} */
-      ($scope.$eval(nodelayerExpr, {'node': this.node}));
+      ($scope.$eval(nodelayerExpr, {'node': this.node, 'depth': this.depth}));
 
-  /**
-   * @type {number}
-   * @export
-   */
-  this.parentUid = $scope.$parent['uid'];
-
-  /**
-   * @type {number}
-   * @export
-   */
-  this.uid = goog.getUid(this);
-
-  /**
-   * @type {number}
-   * @export
-   */
-  this.depth = isRoot ? 0 : $scope.$parent['depth'] + 1;
-
-  // We set 'uid' and 'depth' in the scope as well to access the parent values
-  // in the inherited scopes. This is intended to be used in the javascript not
-  // in the templates.
-  $scope['uid'] = this.uid;
-  $scope['depth'] = this.depth;
 
   var listenersExpr = $attrs['ngeoLayertreeListeners'];
   if (!goog.isDef(listenersExpr)) {

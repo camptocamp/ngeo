@@ -18,7 +18,7 @@ gmf.module.value('gmfLayertreeTemplate',
       var subTemplateUrl = gmf.baseTemplateUrl + '/layertree.html';
       return '<div ngeo-layertree="gmfLayertreeCtrl.tree" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
-          'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(node)" ' +
+          'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(node, depth)" ' +
           'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, ' +
           'treeCtrl)" ' +
           'ngeo-layertree-templateurl="' + subTemplateUrl + '"' +
@@ -122,12 +122,6 @@ gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {Array.<ol.layer.Layer>}
-   * @private
-   */
-  this.existingLayers_ = [];
-
-  /**
    * @private
    * @type {ngeo.Popup}
    */
@@ -140,6 +134,12 @@ gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
   this.promises_ = {};
 
   /**
+   * @type {Object.<number, Array.<string>>}
+   * @private
+   */
+  this.groupNodeStates_ = {};
+
+  /**
    * @type {boolean}
    * @export
    */
@@ -149,58 +149,125 @@ gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
 
 
 /**
- * Create and return a layer corresponding to the ngeo layertree's node.
- * Currently only creates WMS layers (internal or external) and WMTS layers.
+ * @const
+ */
+gmf.LayertreeController.TYPE_MIXEDGROUP = 'MixedGroup';
+
+
+/**
+ * @const
+ */
+gmf.LayertreeController.TYPE_NOTMIXEDGROUP = 'NotMixedGroup';
+
+
+/**
+ * @const
+ */
+gmf.LayertreeController.TYPE_WMTS = 'WMTS';
+
+
+/**
+ * @const
+ */
+gmf.LayertreeController.TYPE_EXTERNALWMS = 'externalWMS';
+
+
+/**
+ * @const
+ */
+gmf.LayertreeController.TYPE_WMS = 'WMS';
+
+
+/**
+ * Return a "type" that defines the node.
  * @param {GmfThemesNode} node Layer tree node.
+ * @return {string} A type.
+ * @private
+ */
+gmf.LayertreeController.prototype.getNodeType_ = function(node) {
+  var children = node.children;
+  var mixed = node.mixed;
+  if (goog.isDef(node.children) && mixed) {
+    return gmf.LayertreeController.TYPE_MIXEDGROUP;
+  }
+  if (goog.isDef(children) && !mixed) {
+    return gmf.LayertreeController.TYPE_NOTMIXEDGROUP;
+  }
+  if (node.type === 'WMTS') {
+    return gmf.LayertreeController.TYPE_WMTS;
+  }
+  if (goog.isDefAndNotNull(node.url)) {
+    return gmf.LayertreeController.TYPE_EXTERNALWMS;
+  }
+  return gmf.LayertreeController.TYPE_WMS;
+};
+
+
+/**
+ * Create and return a layer corresponding to the ngeo layertree's node.
+ * This function will only create a layer for each "top-level" (depth 1) groups.
+ *
+ * On "not mixed" type nodes, the returned layer will be an ol.layer.Image (WMS)
+ * with each name of node's children as LAYERS parameters.
+ *
+ * On "mixed" type node, the returned  layer will be an ol.layer.Group with
+ * a collection of layers that corresponds to each children of the node.
+ *
+ * All layer created will receive:
+ *  - A 'querySourceId' parameter with the node id as value.
+ *  - A 'layerName' parameter with the node name as value.
+ *
+ * All layer created will be added at the top of the map and with a Z Index
+ * value of 1.
+ *
+ * If the node metadata 'isChecked' value is false, the layer visibility will
+ * be set to false.
+ * @param {GmfThemesNode} node Layer tree node.
+ * @param {number=} opt_depth ngeo layertree node depth.
+ * @param {boolean=} opt_createWMS True to allow create wms layer.
  * @return {ol.layer.Base} The OpenLayers layer or group for the node.
  * @export
  */
-gmf.LayertreeController.prototype.getLayer = function(node) {
-  var layer;
-  var layerName = node.name;
-  var layerURL = node.url || this.gmfWmsUrl_;
-  var i, children = node.children;
+gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
+        opt_createWMS) {
+  var type = this.getNodeType_(node);
+  var layer = null;
 
-  // If node is a group.
-  if (goog.isDef(children)) {
-    var layers = new ol.Collection();
-    for (i = 0; i < children.length; i++) {
-      layers.push(this.getLayer(children[i]));
+  if (opt_depth === 1) {
+    switch (type) {
+      case gmf.LayertreeController.TYPE_MIXEDGROUP:
+        return this.getLayerCaseMixedGroup_(node);
+      case gmf.LayertreeController.TYPE_NOTMIXEDGROUP:
+        layer = this.getLayerCaseNotMixedGroup_(node);
+        break;
     }
-    return this.layerHelper_.createBasicGroup(layers);
+    switch (type) {
+      case gmf.LayertreeController.TYPE_WMTS:
+        layer = this.getLayerCaseWMTS_(node);
+        break;
+      case gmf.LayertreeController.TYPE_WMS:
+      case gmf.LayertreeController.TYPE_EXTERNALWMS:
+        var url = node.url || this.gmfWmsUrl_;
+        layer = opt_createWMS ?
+            this.layerHelper_.createBasicWMSLayer(url, node.name) : null;
+        break;
+    }
   }
 
-  // If node describes a layer that was already created.
-  layer = this.layerHelper_.findLayer(this.existingLayers_,
-      this.layerHelper_.makeHelperID(layerURL, layerName));
   if (goog.isDefAndNotNull(layer)) {
-    return layer;
-  }
+    layer.set('querySourceId', node.id);
+    layer.set('layerName', node.name);
+    // The layer must be upper than the background
+    layer.setZIndex(1);
+    // Add the new layer on the map but behind (before) others layers
+    this.map.getLayerGroup().getLayers().insertAt(0, layer);
 
-  // If node describes a layer that was not already created.
-  if (node.type === 'WMTS') {
-    var newLayer = new ol.layer.Tile();
-    this.layerHelper_.setHelperID(newLayer, layerURL, layerName);
-    this.layerHelper_.createWMTSLayerFromCapabilitites(layerURL, layerName)
-      .then(function(layer) {
-          newLayer.setSource(layer.getSource());
-          newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
-        });
-    layer = newLayer;
-  } else {
-    layer = this.layerHelper_.createBasicWMSLayer(layerURL, layerName);
-  }
-  layer.set('querySourceId', node.id);
-  this.existingLayers_.push(layer);
-
-  // Add the new layer on the map
-  this.layerHelper_.addLayerToMap(this.map, layer);
-
-  // If layer is 'unchecked', set it to invisible.
-  var metadata = node.metadata;
-  if (goog.isDefAndNotNull(metadata)) {
-    if (metadata['isChecked'] != 'true') {
-      layer.setVisible(false);
+    // If layer is 'unchecked', set it to invisible.
+    var metadata = node.metadata;
+    if (!goog.isDef(node.children) && goog.isDefAndNotNull(metadata)) {
+      if (metadata['isChecked'] != 'true') {
+        layer.setVisible(false);
+      }
     }
   }
 
@@ -209,27 +276,145 @@ gmf.LayertreeController.prototype.getLayer = function(node) {
 
 
 /**
- * Remove layer from map and from this gmf-layertree's existing layers when the
- * relative layertree of the layer catch an on destroy event.
+ * Create an ol.layer.Group with all node's children as layers except others
+ * groups.
+ * @param {GmfThemesNode} node Layer tree node.
+ * @return {ol.layer.Group}
+ * @private
+ */
+gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
+  var i, child, children = node.children;
+  var layers = new ol.Collection();
+  var layer, subNode;
+  var subNodes = [];
+  var nodeNames = [];
+  this.getFlatNodes_(node, subNodes);
+  for (i = 0; i < subNodes.length; i++) {
+    subNode = subNodes[i];
+    // Create all sublayers include wms layers;
+    layer = this.getLayer(subNode, 1, true);
+    if (goog.isDefAndNotNull(layer)) {
+      layers.push(layer);
+      nodeNames.push(subNode.name);
+    }
+  }
+  var group = this.layerHelper_.createBasicGroup(layers);
+
+  // Keep a reference to this group.
+  this.groupNodeStates_[goog.getUid(group)] = [];
+  return group;
+};
+
+
+/**
+ * Create an ol.layer.Image with all node's children as LAYERS params.
+ * @param {GmfThemesNode} node Layer tree node.
+ * @return {ol.layer.Image}
+ * @private
+ */
+gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
+  var names = this.retrieveNodeNames_(node, true);
+  var url = node.url || this.gmfWmsUrl_;
+  var layer = this.layerHelper_.createBasicWMSLayer(url, '');
+  this.updateWMSLayerState_(layer, names);
+
+  // Keep a reference to this group with all layer name inside.
+  this.groupNodeStates_[goog.getUid(layer)] = [];
+
+  return layer;
+};
+
+
+/**
+ * Create an ol.layer.Tile layer.
+ * @param {GmfThemesNode} node Layertree node.
+ * @return {ol.layer.Tile} The OpenLayers layer or group for the node.
+ * @private
+ */
+gmf.LayertreeController.prototype.getLayerCaseWMTS_ = function(node) {
+  var newLayer = new ol.layer.Tile();
+  this.layerHelper_.createWMTSLayerFromCapabilitites(node.url || '', node.name)
+    .then(function(layer) {
+        newLayer.setSource(layer.getSource());
+        newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
+      });
+  return newLayer;
+};
+
+
+/**
+ * Fill the given "nodes" array with all node in the given node including the
+ * given node itself.
+ * @param {GmfThemesNode} node Layertree node.
+ * @param {Array.<GmfThemesNode>} nodes An array.
+ * @private
+ */
+gmf.LayertreeController.prototype.getFlatNodes_ = function(node, nodes) {
+  var i, child;
+  var children = node.children;
+  if (goog.isDef(children)) {
+    for (i = 0; i < children.length; i++) {
+      this.getFlatNodes_(children[i], nodes);
+    }
+  } else {
+    nodes.push(node);
+  }
+};
+
+
+/**
+ * Return all names existing in a node and in its children.
+ * @param {GmfThemesNode} node Layer tree node.
+ * @param {boolean=} opt_onlyChecked return only 'isChecked' node names.
+ * @return {Array.<string>} An Array of all nodes names.
+ * @private
+ */
+gmf.LayertreeController.prototype.retrieveNodeNames_ = function(node,
+    opt_onlyChecked) {
+  var names = [];
+  var nodes = [];
+  this.getFlatNodes_(node, nodes);
+  var metadata, n, i;
+  for (i = 0; i < nodes.length; i++) {
+    n = nodes[i];
+    metadata = n.metadata;
+    if (!opt_onlyChecked ||
+        (goog.isDefAndNotNull(metadata) && metadata['isChecked'] != 'false')) {
+      names.push(n.name);
+    }
+  }
+  return names;
+};
+
+
+/**
+ * Retrieve the "top level" layertree.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ *     the current node.
+ * @return {ngeo.LayertreeController} the top level layertree.
+ * @private
+ */
+gmf.LayertreeController.prototype.retrieveFirstParentTree_ =
+    function(treeCtrl) {
+  var tree = treeCtrl;
+  while (tree.depth > 1) {
+    tree = tree.parent;
+  }
+  return tree;
+};
+
+
+/**
+ * Remove layer from map on a ngeo layertree destroy event.
  * @param {angular.Scope} scope treeCtrl scope.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
 gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
-  var existingLayers = this.existingLayers_;
   scope.$on('$destroy', angular.bind(treeCtrl, function() {
-    var i, l;
-    // Remove treeCtrl.layer from  map.
+    // Remove treeCtrl.layer from map.
     treeCtrl.map.removeLayer(treeCtrl.layer);
-    // Remove the treeCtrl.layer from gmf layertree's layers.
-    for (i = 0; i < existingLayers.length; i++) {
-      l = existingLayers[i];
-      if (l === treeCtrl.layer) {
-        existingLayers.splice(i, 1);
-        break;
-      }
-    }
   }));
 };
 
@@ -255,26 +440,104 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
 
 
 /**
- * Toggle activation of a node by adding or removing relative(s) layer(s) on
- * the map.
+ * Toggle the state of treeCtrl's node.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
 gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
+  var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
+  var type = this.getNodeType_(node);
   var layer = treeCtrl.layer;
-  var i;
+  var i, layers, nodeNames;
+  var firstParentTree = this.retrieveFirstParentTree_(treeCtrl);
+  var firstParentTreeLayer = firstParentTree.layer;
   // Check if the current node state is 'activated'.
-  var visible = (this.getNodeState(treeCtrl) === 'on') ? false : true;
+  var isActive = (this.getNodeState(treeCtrl) === 'on') ? true : false;
 
-  var layers = this.layerHelper_.getFlatLayers(layer);
-  for (i = 0; i < layers.length; i++) {
-    layers[i].setVisible(visible);
+  // Deactivate/activate the corresponding layer(s).
+  switch (type) {
+    case gmf.LayertreeController.TYPE_WMS:
+    case gmf.LayertreeController.TYPE_WMTS:
+    case gmf.LayertreeController.TYPE_EXTERNALWMS:
+
+      if (firstParentTreeLayer instanceof ol.layer.Group) {
+        layer.setVisible(!isActive);
+
+      } else {
+        // If layer of the group is a wms in a not mixed group:
+        var firstParentTreeSource = /** @type {ol.source.ImageWMS} */
+            (firstParentTreeLayer.getSource());
+        var firstParentTreeNode =  /** @type {GmfThemesNode} */
+            (firstParentTree.node);
+        var currentLayersNames = (firstParentTreeLayer.getVisible()) ?
+            firstParentTreeSource.getParams()['LAYERS'].split(',') : [];
+        var name, newLayersNames = [];
+        nodeNames = this.retrieveNodeNames_(firstParentTreeNode);
+        // Add/remove layer and keep order of layers in layergroup.
+        for (i = 0; i < nodeNames.length; i++) {
+          name = nodeNames[i];
+          if (name === node.name) {
+            if (!isActive) {
+              newLayersNames.push(name);
+            }
+          } else if (currentLayersNames.indexOf(name) >= 0) {
+            newLayersNames.push(name);
+          }
+        }
+        goog.asserts.assertInstanceof(firstParentTreeLayer, ol.layer.Image);
+        this.updateWMSLayerState_(firstParentTreeLayer, newLayersNames);
+      }
+      break;
+
+    case gmf.LayertreeController.TYPE_MIXEDGROUP:
+      var nodeLayers = [];
+      var l, source;
+      nodeNames = this.retrieveNodeNames_(node);
+      layers = this.layerHelper_.getFlatLayers(firstParentTreeLayer);
+      for (i = 0; i < layers.length; i++) {
+        l = layers[i];
+        source = layers[i].getSource();
+        if (source instanceof ol.source.WMTS) {
+          if (nodeNames.indexOf(source.getLayer()) >= 0) {
+            nodeLayers.push(l);
+          }
+        } else if (source instanceof ol.source.ImageWMS) {
+          if (nodeNames.indexOf(source.getParams()['LAYERS']) >= 0) {
+            nodeLayers.push(l);
+          }
+        }
+      }
+      for (i = 0; i < nodeLayers.length; i++) {
+        nodeLayers[i].setVisible(!isActive);
+      }
+      break;
+
+    case gmf.LayertreeController.TYPE_NOTMIXEDGROUP:
+      nodeNames = this.retrieveNodeNames_(node);
+      source = /** @type {ol.source.ImageWMS} */
+          (firstParentTreeLayer.getSource());
+      layers = firstParentTreeLayer.getVisible() ?
+          source.getParams()['LAYERS'].split(',') : [];
+      if (isActive) {
+        for (i = 0; i < nodeNames.length; i++) {
+          goog.array.remove(layers, nodeNames[i]);
+        }
+      } else {
+        for (i = 0; i < nodeNames.length; i++) {
+          goog.array.insert(layers, nodeNames[i]);
+        }
+      }
+      firstParentTreeLayer = /** @type {ol.layer.Image} */
+          (firstParentTreeLayer);
+      this.updateWMSLayerState_(firstParentTreeLayer, layers);
+      break;
   }
 };
 
 
 /**
+ * Return the current state of the given treeCtrl's node.
  * Return a class name that match with the current node activation state.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
@@ -283,31 +546,120 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
   var style;
-  var node = treeCtrl.node;
   var layer = treeCtrl.layer;
+  var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
+  var type = this.getNodeType_(node);
+  var firstParentTree = this.retrieveFirstParentTree_(treeCtrl);
+  var firstParentTreeLayer = firstParentTree.layer;
+  var firstParentTreeSource;
+  var currentLayersNames = this.groupNodeStates_[
+      goog.getUid(firstParentTreeLayer)];
 
-  if (goog.isDef(node.children)) {
-    // Find number of visible layers on the map for this layer group.
-    var i, nbrLayerOnMap = 0;
-    var layers = this.layerHelper_.getFlatLayers(layer);
-    for (i = 0; i < layers.length; i++) {
-      if (layers[i].getVisible()) {
-        nbrLayerOnMap++;
+  switch (type) {
+    case gmf.LayertreeController.TYPE_WMS:
+    case gmf.LayertreeController.TYPE_WMTS:
+    case gmf.LayertreeController.TYPE_EXTERNALWMS:
+      if (firstParentTreeLayer instanceof ol.layer.Group) {
+        // If layer is not define (That occures the first time, because the
+        // layer is just in the first parent group) add it to current tree to
+        // save time next.
+        if (!goog.isDefAndNotNull(layer)) {
+          this.addLayerToLeaf_(treeCtrl);
+          layer = treeCtrl.layer;
+        }
+        // Get style of this node depending if the relative layer is visible.
+        style = goog.isDefAndNotNull(layer) && layer.getVisible() ?
+            'on' : 'off';
+
+      } else {
+        // If layer of the group is a wms in a not mixed group:
+        firstParentTreeSource = /** @type {ol.source.ImageWMS} */
+            (firstParentTreeLayer.getSource());
+        var layersNames =
+            firstParentTreeSource.getParams()['LAYERS'].split(',');
+        // Get style for this layer depending if the layer is on the map or not
+        // and if the layer is visible;
+        style = layersNames.indexOf(node.name) < 0 ||
+            !firstParentTreeLayer.getVisible() ? 'off' : 'on';
       }
-    }
-    // Get style for this layer group node state
-    if (nbrLayerOnMap === layers.length) {
-      style = 'on';
-    } else if (nbrLayerOnMap > 0) {
-      style = 'indeterminate';
-    } else {
-      style = 'off';
-    }
-  } else {
-    // Get style of this node depending if the relative layer is visible.
-    style = layer.getVisible() ? 'on' : 'off';
+
+      // Update group state
+      if (style === 'on') {
+        goog.array.insert(currentLayersNames, node.name);
+      } else {
+        goog.array.remove(currentLayersNames, node.name);
+      }
+
+      break;
+
+    case gmf.LayertreeController.TYPE_MIXEDGROUP:
+    case gmf.LayertreeController.TYPE_NOTMIXEDGROUP:
+      var nodeNames = this.retrieveNodeNames_(node);
+      var i, found = 0;
+      for (i = 0; i < nodeNames.length; i++) {
+        if (currentLayersNames.indexOf(nodeNames[i]) >= 0) {
+          found++;
+        }
+      }
+      if (found === 0) {
+        style = 'off';
+      } else if (found === nodeNames.length) {
+        style = 'on';
+      } else {
+        style = 'indeterminate';
+      }
+      break;
   }
-  return style;
+  return style || 'off';
+};
+
+
+/**
+ * Get the layer corresponding to the given layertree node from the layer
+ * group "top level" layertree and add this layer to the given layertree.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ *     the current node.
+ * @private
+ */
+gmf.LayertreeController.prototype.addLayerToLeaf_ = function(treeCtrl) {
+  var groupTree = this.retrieveFirstParentTree_(treeCtrl);
+  var layers = this.layerHelper_.getFlatLayers(groupTree.layer);
+  var node = treeCtrl.node;
+  var source, l, i;
+  for (i = 0; i < layers.length; i++) {
+    l = layers[i];
+    source = l.getSource();
+    if (source instanceof ol.source.WMTS &&
+        source.getLayer() === node.name) {
+      treeCtrl.layer = l;
+      break;
+    } else if (source instanceof ol.source.ImageWMS &&
+        source.getParams()['LAYERS'] === node.name) {
+      treeCtrl.layer = l;
+      break;
+    }
+  }
+};
+
+
+/**
+ * Update the LAYERS parameter of the source of the given WMS layer.
+ * @param {ol.layer.Image} layer The WMS layer.
+ * @param {Array.<string>} names The array of names that will be used to set
+ * the LAYERS parameter.
+ * @private
+ */
+gmf.LayertreeController.prototype.updateWMSLayerState_ = function(layer,
+    names) {
+  // Don't send layer without parameters, hide layer instead;
+  if (names.length <= 0) {
+    layer.setVisible(false);
+  } else {
+    layer.setVisible(true);
+    names.reverse();
+    var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
+    source.updateParams({'LAYERS': names.join(',')});
+  }
 };
 
 
@@ -320,8 +672,7 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
  * @export
  */
 gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
-  var layer = treeCtrl.layer;
-  var node = treeCtrl.node;
+  var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
   var opt_legendRule = node.metadata['legendRule'];
 
   if (goog.isDef(node.children) ||
@@ -332,32 +683,30 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
     return null;
   }
 
-  goog.asserts.assertInstanceof(layer, ol.layer.Image);
-  return this.getWMSLegendURL_(layer, opt_legendRule);
+  return this.getWMSLegendURL_(node, opt_legendRule);
 };
 
 
 /**
- * Get the complete legend URL for the given treeCtrl's layer.
+ * Get the legend URL for the given treeCtrl.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {?string} The legend URL or null.
  * @export
  */
 gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
-  var layer = treeCtrl.layer;
-  var node = treeCtrl.node;
+  var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
 
   if (goog.isDef(node.children)) {
     return null;
   }
 
-  if (node.type === 'WMTS') {
+  var layer = treeCtrl.layer;
+  if (node.type === 'WMTS' && goog.isDefAndNotNull(layer)) {
     goog.asserts.assertInstanceof(layer, ol.layer.Tile);
     return this.getWMTSLegendURL_(layer);
   } else {
-    goog.asserts.assertInstanceof(layer, ol.layer.Image);
-    return this.getWMSLegendURL_(layer);
+    return this.getWMSLegendURL_(node);
   }
 };
 
@@ -384,25 +733,23 @@ gmf.LayertreeController.prototype.getWMTSLegendURL_ = function(layer) {
 
 
 /**
- * Get the WMS legend URL for the given layer.
- * @param {ol.layer.Image} layer Image layer.
+ * Get the WMS legend URL for the given node.
+ * @param {GmfThemesNode} node Layer tree node.
  * @param {string=} opt_legendRule rule parameters to add to the returned URL.
  * @return {?string} The legend URL or null.
  * @private
  */
-gmf.LayertreeController.prototype.getWMSLegendURL_ = function(layer,
+gmf.LayertreeController.prototype.getWMSLegendURL_ = function(node,
     opt_legendRule) {
-  var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
-  var layerName = source.getParams()['LAYERS'];
   var scale = this.getScale_();
-  var url = source.getUrl();
+  var url = node.url || this.gmfWmsUrl_;
   if (goog.isDef(url)) {
     url = goog.uri.utils.setParam(url, 'FORMAT', 'image/png');
     url = goog.uri.utils.setParam(url, 'TRANSPARENT', true);
     url = goog.uri.utils.setParam(url, 'SERVICE', 'wms');
     url = goog.uri.utils.setParam(url, 'VERSION', '1.1.1');
     url = goog.uri.utils.setParam(url, 'REQUEST', 'GetLegendGraphic');
-    url = goog.uri.utils.setParam(url, 'LAYER', layerName);
+    url = goog.uri.utils.setParam(url, 'LAYER', node.name);
     url = goog.uri.utils.setParam(url, 'SCALE', scale);
     if (goog.isDef(opt_legendRule)) {
       url = goog.uri.utils.setParam(url, 'RULE', opt_legendRule);
@@ -455,7 +802,7 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
 
 
 /**
- * Return 'noSource' if no source is defined in the given treeCtrl's layer.
+ * Return 'noSource' if no source is defined in the given treeCtrl's WMTS layer.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {?string} 'noSource' or null
@@ -463,10 +810,11 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.getNoSourceStyle = function(treeCtrl) {
   var layer = treeCtrl.layer;
-  if (goog.isDef(layer.getSource)) {
-    if (!goog.isDefAndNotNull(layer.getSource())) {
-      return 'noSource';
-    }
+  if (goog.isDef(layer) &&
+      layer instanceof ol.layer.Tile &&
+      goog.isDef(layer.getSource) &&
+      !goog.isDefAndNotNull(layer.getSource())) {
+    return 'noSource';
   }
   return null;
 };

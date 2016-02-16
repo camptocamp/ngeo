@@ -256,6 +256,74 @@
                 "legend": "true",
                 "disclaimer": "<a href=\"http://www.geo.admin.ch/\">Données publiques de l'infrastructure fédérale de données géographiques (IFDG)<\/a>"
               }
+            }, {
+              "mixed": "true",
+              "metadata": {},
+              "children": [
+                {
+                  "layers": "line",
+                  "name": "line",
+                  "url": null,
+                  "isSingleTile": "false",
+                  "serverType": "mapserver",
+                  "queryable": 1,
+                  "childLayers": [],
+                  "wfsSupport": "true",
+                  "urlWfs": null,
+                  "type": "WMS",
+                  "id": 111,
+                  "imageType": "image/png",
+                  "metadata": {
+                    "identifierAttributeField": "name",
+                    "isChecked": "true",
+                    "legend": "true",
+                    "legendRule": "Line"
+                  }
+                },
+                {
+                  "layers": "polygon",
+                  "name": "polygon",
+                  "url": null,
+                  "isSingleTile": "false",
+                  "serverType": "mapserver",
+                  "queryable": 1,
+                  "childLayers": [],
+                  "wfsSupport": "true",
+                  "urlWfs": null,
+                  "type": "WMS",
+                  "id": 112,
+                  "imageType": "image/png",
+                  "metadata": {
+                    "identifierAttributeField": "name",
+                    "isChecked": "true",
+                    "legend": "true",
+                    "legendRule": "Polygon"
+                  }
+                },
+                {
+                  "layers": "point",
+                  "name": "point",
+                  "url": null,
+                  "isSingleTile": "false",
+                  "serverType": "mapserver",
+                  "queryable": 1,
+                  "childLayers": [],
+                  "wfsSupport": "true",
+                  "urlWfs": null,
+                  "type": "WMS",
+                  "id": 113,
+                  "imageType": "image/jpeg",
+                  "metadata": {
+                    "metadataUrl": "data/metadata.html",
+                    "isChecked": "true",
+                    "identifierAttributeField": "name",
+                    "legend": "true",
+                    "legendRule": "Point"
+                  }
+                }
+              ],
+              "id": 72,
+              "name": "Edit"
             }
           ],
           "id": 30,
@@ -585,6 +653,54 @@
                 "legend": "true",
                 "legendRule": "Dans les temps"
               }
+            }, {
+              "mixed": "false",
+              "metadata": {},
+              "children": [
+                {
+                  "layers": "bus_stop",
+                  "name": "bus_stop",
+                  "url": null,
+                  "isSingleTile": "false",
+                  "serverType": "mapserver",
+                  "queryable": 1,
+                  "childLayers": [],
+                  "wfsSupport": "true",
+                  "urlWfs": null,
+                  "type": "WMS",
+                  "id": 101,
+                  "imageType": "image/jpeg",
+                  "metadata": {
+                    "identifierAttributeField": "display_name",
+                    "legendRule": "Arrêts de bus",
+                    "legend": "true",
+                    "disclaimer": "© les contributeurs d’OpenStreetMap"
+                  }
+                },
+                {
+                  "layers": "information",
+                  "name": "information",
+                  "url": null,
+                  "isSingleTile": "false",
+                  "serverType": "mapserver",
+                  "queryable": 1,
+                  "childLayers": [],
+                  "wfsSupport": "true",
+                  "urlWfs": null,
+                  "type": "WMS",
+                  "id": 98,
+                  "imageType": "image/jpeg",
+                  "metadata": {
+                    "identifierAttributeField": "display_name",
+                    "isChecked": "true",
+                    "legendRule": "Informations",
+                    "legend": "true",
+                    "disclaimer": "© les contributeurs d’OpenStreetMap"
+                  }
+                }
+              ],
+              "id": 35,
+              "name": "Enseignement"
             }
           ],
           "id": 63,
