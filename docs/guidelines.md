@@ -272,7 +272,7 @@ the `controller as` syntax. For example:
   <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawPoint.active">Point</button>
 ```
 
-In this way it is clear by reading the HTML that the `drawPoint` interaction is
+In this way it is clear by reading the HTML that the `drawPoint` interaction is
 defined in the `MainController`.
 
 See [this blog

@@ -12,6 +12,7 @@ ngeo.module.value('ngeoScaleselectorTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
+     * @return {string} Template URL.
      */
     function(element, attrs) {
       var templateUrl = attrs['ngeoScaleselectorTemplateurl'];
@@ -82,7 +83,6 @@ ngeo.scaleselectorDirective = function(ngeoScaleselectorTemplateUrl) {
 
 
 ngeo.module.directive('ngeoScaleselector', ngeo.scaleselectorDirective);
-
 
 
 /**
@@ -248,8 +248,7 @@ ngeo.ScaleselectorController.prototype.handleViewChange_ = function(e) {
 /**
  * @private
  */
-ngeo.ScaleselectorController.prototype.registerResolutionChangeListener_ =
-    function() {
+ngeo.ScaleselectorController.prototype.registerResolutionChangeListener_ = function() {
   if (!goog.isNull(this.resolutionChangeKey_)) {
     ol.events.unlistenByKey(this.resolutionChangeKey_);
   }

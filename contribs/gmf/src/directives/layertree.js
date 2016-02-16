@@ -13,6 +13,7 @@ gmf.module.value('gmfLayertreeTemplate',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
+     * @return {string} Template.
      */
     function(element, attrs) {
       var subTemplateUrl = gmf.baseTemplateUrl + '/layertree.html';
@@ -32,6 +33,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
+     * @return {string} Template URL.
      */
     function(element, attrs) {
       return gmf.baseTemplateUrl + '/layertree.html';
@@ -79,7 +81,6 @@ gmf.layertreeDirective = function(gmfLayertreeTemplate) {
 };
 
 gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
-
 
 
 /**
@@ -240,6 +241,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
       case gmf.LayertreeController.TYPE_NOTMIXEDGROUP:
         layer = this.getLayerCaseNotMixedGroup_(node);
         break;
+      // no default
     }
     switch (type) {
       case gmf.LayertreeController.TYPE_WMTS:
@@ -251,6 +253,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
         layer = opt_createWMS ?
             this.layerHelper_.createBasicWMSLayer(url, node.name) : null;
         break;
+      // no default
     }
   }
 
@@ -279,11 +282,11 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
  * Create an ol.layer.Group with all node's children as layers except others
  * groups.
  * @param {GmfThemesNode} node Layer tree node.
- * @return {ol.layer.Group}
+ * @return {ol.layer.Group} Layer group.
  * @private
  */
 gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
-  var i, child, children = node.children;
+  var i;
   var layers = new ol.Collection();
   var layer, subNode;
   var subNodes = [];
@@ -309,7 +312,7 @@ gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
 /**
  * Create an ol.layer.Image with all node's children as LAYERS params.
  * @param {GmfThemesNode} node Layer tree node.
- * @return {ol.layer.Image}
+ * @return {ol.layer.Image} Image layer.
  * @private
  */
 gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
@@ -335,9 +338,9 @@ gmf.LayertreeController.prototype.getLayerCaseWMTS_ = function(node) {
   var newLayer = new ol.layer.Tile();
   this.layerHelper_.createWMTSLayerFromCapabilitites(node.url || '', node.name)
     .then(function(layer) {
-        newLayer.setSource(layer.getSource());
-        newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
-      });
+      newLayer.setSource(layer.getSource());
+      newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
+    });
   return newLayer;
 };
 
@@ -350,7 +353,7 @@ gmf.LayertreeController.prototype.getLayerCaseWMTS_ = function(node) {
  * @private
  */
 gmf.LayertreeController.prototype.getFlatNodes_ = function(node, nodes) {
-  var i, child;
+  var i;
   var children = node.children;
   if (goog.isDef(children)) {
     for (i = 0; i < children.length; i++) {
@@ -394,8 +397,7 @@ gmf.LayertreeController.prototype.retrieveNodeNames_ = function(node,
  * @return {ngeo.LayertreeController} the top level layertree.
  * @private
  */
-gmf.LayertreeController.prototype.retrieveFirstParentTree_ =
-    function(treeCtrl) {
+gmf.LayertreeController.prototype.retrieveFirstParentTree_ = function(treeCtrl) {
   var tree = treeCtrl;
   while (tree.depth > 1) {
     tree = tree.parent;
@@ -532,6 +534,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
           (firstParentTreeLayer);
       this.updateWMSLayerState_(firstParentTreeLayer, layers);
       break;
+    // no default
   }
 };
 
@@ -609,6 +612,7 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
         style = 'indeterminate';
       }
       break;
+    // no default
   }
   return style || 'off';
 };
@@ -761,7 +765,7 @@ gmf.LayertreeController.prototype.getWMSLegendURL_ = function(node,
 
 /**
  * Return the current scale of the map.
- * @return {number}
+ * @return {number} Scale.
  * @private
  */
 gmf.LayertreeController.prototype.getScale_ = function() {

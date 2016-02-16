@@ -6,7 +6,6 @@ goog.require('ngeo');
 goog.require('ngeo.Location');
 
 
-
 /**
  * Provides a service for managing the application state.
  * The application state is written to both the URL and the local storage.
@@ -88,7 +87,7 @@ ngeo.StateManager.prototype.updateState = function(object) {
 
 /**
  * Delete a parameter
- * @param {string} key
+ * @param {string} key Key.
  */
 ngeo.StateManager.prototype.deleteParam = function(key) {
   this.ngeoLocation.deleteParam(key);

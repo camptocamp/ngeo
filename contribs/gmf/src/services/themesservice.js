@@ -26,7 +26,6 @@ gmf.ThemesEventType = {
 };
 
 
-
 /**
  * The Themes service. This service interacts
  * with c2cgeoportal's "themes" web service and exposes functions that return
@@ -116,7 +115,7 @@ gmf.Themes.prototype.getBgLayers = function() {
   return this.promise_.then(goog.bind(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
-       * @return {angular.$q.Promise}
+       * @return {angular.$q.Promise} Promise.
        */
       function(data) {
         var promises = data['background_layers'].map(function(item) {
@@ -142,22 +141,22 @@ gmf.Themes.prototype.getBgLayers = function() {
       }, this))
 
     .then(goog.bind(function(values) {
-        var layers = [];
+      var layers = [];
 
-        // (1) add a blank layer
-        layers.push(new ol.layer.Tile({
-          'label': 'blank',
-          'metadata': {'thumbnail': ''}
-        }));
+      // (1) add a blank layer
+      layers.push(new ol.layer.Tile({
+        'label': 'blank',
+        'metadata': {'thumbnail': ''}
+      }));
 
-        // (2) add layers that were returned
-        values.forEach(function(item) {
-          if (item) {
-            layers.push(item);
-          }
-        });
-        return layers;
-      }, this));
+      // (2) add layers that were returned
+      values.forEach(function(item) {
+        if (item) {
+          layers.push(item);
+        }
+      });
+      return layers;
+    }, this));
 };
 
 

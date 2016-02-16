@@ -66,7 +66,6 @@ ngeo.btngroupDirective = function($parse) {
 ngeo.module.directive('ngeoBtnGroup', ngeo.btngroupDirective);
 
 
-
 /**
  * @param {!angular.Scope} $scope Scope.
  * @constructor

@@ -28,7 +28,6 @@ gmf.source.AsitVDTileGrid_ = new ol.tilegrid.WMTS({
 });
 
 
-
 /**
  * Layer source for the ASIT VD tile server.
  * @see https://www.asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html

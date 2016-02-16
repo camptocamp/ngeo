@@ -17,7 +17,6 @@ goog.require('ol.interaction');
 gmf.module.constant('isDesktop', true);
 
 
-
 /**
  * Desktop application abstract controller.
  *

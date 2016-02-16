@@ -4,7 +4,6 @@ goog.provide('ngeo.ToolActivateMgr');
 goog.require('ngeo');
 
 
-
 /**
  * A simple object that can be managed by `ngeo.ToolActivateMgr`.
  *
@@ -19,7 +18,7 @@ ngeo.ToolActivate = function(toolContext, activePropertyName) {
 
   /**
    * A getter function to get the active state of the tool.
-   * @return {boolean}
+   * @return {boolean} Is active.
    * @export
    */
   this.getActive = function() {
@@ -48,7 +47,6 @@ ngeo.module.value('ngeoToolActivate', ngeo.ToolActivate);
  *    unlisten: (function(): void)}}
  */
 ngeo.ToolMgrEntry;
-
 
 
 /**

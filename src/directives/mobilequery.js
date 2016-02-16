@@ -45,7 +45,6 @@ ngeo.mobileQueryDirective = function() {
 ngeo.module.directive('ngeoMobileQuery', ngeo.mobileQueryDirective);
 
 
-
 /**
  * @constructor
  * @param {angular.Scope} $scope Scope.

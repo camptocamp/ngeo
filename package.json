@@ -1,7 +1,7 @@
 {
   "name": "ngeo",
   "version": "0.0.1",
-  "description": "AngularJS OpenLayers 3 Library",
+  "description": "AngularJS OpenLayers 3 Library",
   "scripts": {
     "install": "make -f npm.mk install"
   },
@@ -38,7 +38,8 @@
     "jquery": "2.2.0",
     "jsdoc": "3.4.0",
     "jsdom": "3.1.2",
-    "jshint": "2.9.1",
+    "eslint": "2.1.0",
+    "eslint-config-openlayers": "4.0.0",
     "karma": "0.12.16",
     "karma-jasmine": "0.1.5",
     "karma-phantomjs-launcher": "1.0.0",

@@ -41,7 +41,6 @@ ngeo.mobileGeolocationDirective = function() {
 ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
 
 
-
 /**
  * @constructor
  * @param {angular.Scope} $scope The directive's scope.

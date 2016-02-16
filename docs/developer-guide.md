@@ -38,7 +38,7 @@ $ make check
 The `check` target runs a number of checks on the code of the library and the
 examples (lint, compile, …). This is the target run on Travis.
 
-Note: this target compiles the examples' code. The examples are combined into
+Note: this target compiles the examples' code. The examples are combined into
 a single file before compilation. See the following section to know how to
 individually compile the examples.
 
@@ -92,7 +92,7 @@ Services that are objects (rather than numbers, strings, or functions) may need
 "exports". Exports are needed for users of the `ngeo.js` standalone build.
 
 For now we don't use the `@api` annotation as in OpenLayers. We explicitly use
-`goog.exportProperty` in separate "exports" files. See the `exports` directory
+`goog.exportProperty` in separate "exports" files. See the `exports` directory
 in the repo.
 
 ### Running examples

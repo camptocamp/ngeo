@@ -19,11 +19,11 @@ goog.require('gmf.proj.EPSG21781');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mobileGeolocationDirective');
 
+/* global app */
 
 app.module.constant('ngeoQueryOptions', {
   'limit': 20
 });
-
 
 
 /**

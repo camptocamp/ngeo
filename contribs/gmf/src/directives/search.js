@@ -20,6 +20,7 @@ gmf.module.value('gmfSearchTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
+     * @return {string} Template URL.
      */
     function(element, attrs) {
       var templateUrl = attrs['gmfSearchTemplateurl'];
@@ -88,7 +89,6 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
 
 
 gmf.module.directive('gmfSearch', gmf.searchDirective);
-
 
 
 /**
@@ -334,7 +334,7 @@ gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
 
 
 /**
- * @return {BloodhoundRemoteOptions}
+ * @return {BloodhoundRemoteOptions} Options.
  * @private
  */
 gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {

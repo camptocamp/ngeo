@@ -53,7 +53,6 @@ ngeo.module.value('ngeoQueryResult', {
 });
 
 
-
 /**
  * The Query service provides a way to send WMS GetFeatureInfo requests from
  * visible layer objects within a map. Those do not necessarily need to have
@@ -336,10 +335,7 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
     var layers = items[0].source.wmsSource.getParams()['LAYERS'].split(',');
 
     wmsGetFeatureInfoUrl = items[0].source.wmsSource.getGetFeatureInfoUrl(
-        coordinate,
-        resolution,
-        projCode,
-        {
+        coordinate, resolution, projCode, {
           'INFO_FORMAT': infoFormat,
           'FEATURE_COUNT': this.limit_
         });

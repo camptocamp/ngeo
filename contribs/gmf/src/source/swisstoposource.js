@@ -28,7 +28,6 @@ gmf.source.SwisstopoTileGrid_ = new ol.tilegrid.WMTS({
 });
 
 
-
 /**
  * Layer source for the Swisstopo tile server.
  * WARNING: This tile server is not publicly available: you have to be

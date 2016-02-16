@@ -3,7 +3,6 @@ goog.provide('ngeo.PrintUtils');
 goog.require('ngeo');
 
 
-
 /**
  * Provides a service with print utility functions.
  *
@@ -39,8 +38,7 @@ ngeo.PrintUtils.DOTS_PER_INCH_ = 72;
  * @return {function(ol.render.Event)} Function to use as a map postcompose
  * listener.
  */
-ngeo.PrintUtils.prototype.createPrintMaskPostcompose =
-    function(getSize, getScale) {
+ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale) {
 
   return (
       /**

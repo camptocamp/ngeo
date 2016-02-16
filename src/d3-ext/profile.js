@@ -3,7 +3,6 @@ goog.provide('ngeo.profile');
 goog.require('goog.object');
 
 
-
 /**
  * Provides a D3js component to be used to draw an elevation
  * profile chart.
@@ -40,8 +39,8 @@ goog.require('goog.object');
  *     ]
  *
  * @constructor
- * @return {Object}
- * @param {ngeox.profile.ProfileOptions} options
+ * @return {Object} D3js component.
+ * @param {ngeox.profile.ProfileOptions} options Profile options.
  * @export
  */
 ngeo.profile = function(options) {
@@ -57,14 +56,6 @@ ngeo.profile = function(options) {
    */
   var margin = light ? {top: 0, right: 0, bottom: 0, left: 0} :
       {top: 10, right: 20, bottom: 30, left: 40};
-
-  /**
-   * Method to get the coordinate in pixels from a distance.
-   */
-  var bisectDistance = d3.bisector(function(d) {
-    return elevationExtractor.dist(d);
-  }).left;
-
 
   /**
    * Hover callback function.
@@ -84,6 +75,13 @@ ngeo.profile = function(options) {
    * Elevation data extractor used to get the dist and elevation values.
    */
   var elevationExtractor = options.elevationExtractor;
+
+  /**
+   * Method to get the coordinate in pixels from a distance.
+   */
+  var bisectDistance = d3.bisector(function(d) {
+    return elevationExtractor.dist(d);
+  }).left;
 
   /**
    * POI data extractor.
@@ -106,23 +104,37 @@ ngeo.profile = function(options) {
    */
   var formatter = {
     /**
-     * @return {string}
+     * @param {number} dist Distance.
+     * @param {string} units Units.
+     * @return {string} Distance.
      */
     xhover: function(dist, units) {
       return parseFloat(dist.toPrecision(3)) + ' ' + units;
     },
     /**
-     * @return {string}
+     * @param {number} ele Elevation.
+     * @param {string} units Units.
+     * @return {string} Elevation.
      */
-    yhover: function(ele, units) { return Math.round(ele) + ' m'; },
+    yhover: function(ele, units) {
+      return Math.round(ele) + ' m';
+    },
     /**
-     * @return {string|number}
+     * @param {number} dist Distance.
+     * @param {string} units Units.
+     * @return {string|number} Distance.
      */
-    xtick: function(dist, units) { return dist; },
+    xtick: function(dist, units) {
+      return dist;
+    },
     /**
-     * @return {string|number}
+     * @param {number} ele Elevation.
+     * @param {string} units Units.
+     * @return {string|number} Elevation.
      */
-    ytick: function(ele, units) { return ele; }
+    ytick: function(ele, units) {
+      return ele;
+    }
   };
 
   if (goog.isDef(options.formatter)) {
@@ -204,12 +216,20 @@ ngeo.profile = function(options) {
           .orient('left');
 
       var area = d3.svg.area()
-          .x(function(d) { return x(extractor.dist(d)); })
+          .x(function(d) {
+            return x(extractor.dist(d));
+          })
           .y0(height)
-          .y1(function(d) { return y(extractor.z(d)); });
+          .y1(function(d) {
+            return y(extractor.z(d));
+          });
       var line = d3.svg.line()
-          .x(function(d) { return x(extractor.dist(d)); })
-          .y(function(d) { return y(extractor.z(d)); });
+          .x(function(d) {
+            return x(extractor.dist(d));
+          })
+          .y(function(d) {
+            return y(extractor.z(d));
+          });
 
       // Select the svg element, if it exists.
       svg = d3.select(this).selectAll('svg').data([data]);
@@ -288,10 +308,14 @@ ngeo.profile = function(options) {
           .attr('transform', 'translate(' + margin.left + ',' +
               margin.top + ')');
 
-      xDomain = d3.extent(data, function(d) { return extractor.dist(d); });
+      xDomain = d3.extent(data, function(d) {
+        return extractor.dist(d);
+      });
       x.domain(xDomain);
 
-      var yDomain = d3.extent(data, function(d) { return extractor.z(d); });
+      var yDomain = d3.extent(data, function(d) {
+        return extractor.z(d);
+      });
       y.domain(yDomain);
 
       // set the ratio according to the horizontal distance
@@ -486,28 +510,36 @@ ngeo.profile = function(options) {
 
     p.selectAll('text')
       .attr('transform', function(d) {
-          if (light) {
-            return ['translate(',
-              x(pe.dist(d)), ',',
-              y(pe.z(d)) - 10, ')'
-            ].join('');
-          } else {
-            return ['translate(',
-              x(pe.dist(d)), ',',
-              y(pe.z(d)) - 20, ') rotate(', poiLabelAngle, ')'
-            ].join('');
-          }
-        })
+        if (light) {
+          return ['translate(',
+            x(pe.dist(d)), ',',
+            y(pe.z(d)) - 10, ')'
+          ].join('');
+        } else {
+          return ['translate(',
+            x(pe.dist(d)), ',',
+            y(pe.z(d)) - 20, ') rotate(', poiLabelAngle, ')'
+          ].join('');
+        }
+      })
       .text(function(d) {
-          return pe.sort(d) + (light ? '' : (' - ' + pe.title(d)));
-        });
+        return pe.sort(d) + (light ? '' : (' - ' + pe.title(d)));
+      });
 
     p.selectAll('line')
        .style('stroke', 'grey')
-       .attr('x1', function(d) { return x(pe.dist(d));})
-       .attr('y1', function(d) { return y(y.domain()[0]);})
-       .attr('x2', function(d) { return x(pe.dist(d));})
-       .attr('y2', function(d) { return y(pe.z(d));});
+       .attr('x1', function(d) {
+         return x(pe.dist(d));
+       })
+       .attr('y1', function(d) {
+         return y(y.domain()[0]);
+       })
+       .attr('x2', function(d) {
+         return x(pe.dist(d));
+       })
+       .attr('y2', function(d) {
+         return y(pe.z(d));
+       });
 
     // remove unused pois
     p.exit().remove();

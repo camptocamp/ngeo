@@ -74,7 +74,6 @@ app.PRINT_DPI_ = 72;
 app.PRINT_PAPER_SIZE_ = [555, 675];
 
 
-
 /**
  * @constructor
  * @param {angular.$timeout} $timeout Angular timeout service.

@@ -21,7 +21,6 @@ goog.require('ol.style.Style');
 gmf.module.constant('isMobile', true);
 
 
-
 /**
  * Mobile application abstract controller.
  *

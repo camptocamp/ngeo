@@ -17,7 +17,6 @@ goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 
 
-
 /**
  * Application abstract cntroller.
  *

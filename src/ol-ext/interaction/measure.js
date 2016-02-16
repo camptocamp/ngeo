@@ -42,7 +42,6 @@ ngeo.MeasureEventType = {
 };
 
 
-
 /**
  * @classdesc
  * Events emitted by {@link ngeo.interaction.Interaction} instances are
@@ -67,7 +66,6 @@ ngeo.MeasureEvent = function(type, feature) {
 
 };
 goog.inherits(ngeo.MeasureEvent, ol.events.Event);
-
 
 
 /**
@@ -225,8 +223,7 @@ ngeo.interaction.Measure.getFormattedArea = function(polygon, projection) {
  * @param {ol.proj.Projection} projection Projection of the line string coords.
  * @return {string} Formatted string of length.
  */
-ngeo.interaction.Measure.getFormattedLength =
-    function(lineString, projection) {
+ngeo.interaction.Measure.getFormattedLength = function(lineString, projection) {
   var length = 0;
   var coordinates = lineString.getCoordinates();
   for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
@@ -303,7 +300,7 @@ ngeo.interaction.Measure.prototype.setMap = function(map) {
 
 /**
  * Handle draw interaction `drawstart` event.
- * @param {ol.interaction.DrawEvent} evt
+ * @param {ol.interaction.DrawEvent} evt Event.
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
@@ -328,7 +325,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
 
 /**
  * Handle draw interaction `drawend` event.
- * @param {ol.interaction.DrawEvent} evt
+ * @param {ol.interaction.DrawEvent} evt Event.
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
@@ -440,7 +437,7 @@ ngeo.interaction.Measure.prototype.handleMeasure = goog.abstractMethod;
 
 /**
  * Get a reference to the tooltip element.
- * @return {Element}
+ * @return {Element} Tooltip Element.
  */
 ngeo.interaction.Measure.prototype.getTooltipElement = function() {
   return this.measureTooltipElement_;

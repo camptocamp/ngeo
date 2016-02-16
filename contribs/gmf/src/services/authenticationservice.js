@@ -68,7 +68,6 @@ gmf.module.value('gmfUser', {
 });
 
 
-
 /**
  * An "authentication" service for a GeoMapFish application. Upon loading, it
  * launches a request to determine whether a user is currently logged in or
@@ -85,7 +84,7 @@ gmf.module.value('gmfUser', {
  * @extends {ol.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
  * @param {string} authenticationBaseUrl URL to "authentication" web service.
- * @param {gmf.User} gmfUser
+ * @param {gmf.User} gmfUser User.
  * @ngInject
  */
 gmf.Authentication = function($http, authenticationBaseUrl, gmfUser) {
@@ -129,9 +128,9 @@ gmf.Authentication.prototype.load_ = function() {
 
 
 /**
- * @param {string} oldPwd
- * @param {string} newPwd
- * @param {string} confPwd
+ * @param {string} oldPwd Old password.
+ * @param {string} newPwd New password.
+ * @param {string} confPwd New password confirmation.
  * @return {angular.$q.Promise} Promise.
  * @export
  */
@@ -153,8 +152,8 @@ gmf.Authentication.prototype.changePassword = function(oldPwd, newPwd,
 
 
 /**
- * @param {string} login
- * @param {string} pwd
+ * @param {string} login Login name.
+ * @param {string} pwd Password.
  * @return {angular.$q.Promise} Promise.
  * @export
  */
@@ -184,7 +183,7 @@ gmf.Authentication.prototype.logout = function() {
 
 
 /**
- * @param {string} login
+ * @param {string} login Login name.
  * @return {angular.$q.Promise} Promise.
  * @export
  */
@@ -198,7 +197,7 @@ gmf.Authentication.prototype.resetPassword = function(login) {
   }).then(goog.bind(
       /**
        * @param {angular.$http.Response} resp Ajax response.
-       * @return {gmf.AuthenticationDefaultResponse}
+       * @return {gmf.AuthenticationDefaultResponse} Response.
        */
       function(resp) {
         var respData = /** @type {gmf.AuthenticationDefaultResponse} */ (
@@ -210,7 +209,7 @@ gmf.Authentication.prototype.resetPassword = function(login) {
 
 /**
  * @param {angular.$http.Response} resp Ajax response.
- * @return  {angular.$http.Response}
+ * @return {angular.$http.Response} Response.
  * @private
  */
 gmf.Authentication.prototype.handleLogin_ = function(resp) {
@@ -221,7 +220,7 @@ gmf.Authentication.prototype.handleLogin_ = function(resp) {
 
 
 /**
- * @param {gmf.AuthenticationLoginResponse} respData
+ * @param {gmf.AuthenticationLoginResponse} respData Response.
  * @private
  */
 gmf.Authentication.prototype.setUser_ = function(respData) {
@@ -241,7 +240,6 @@ gmf.Authentication.prototype.resetUser_ = function() {
     this.user_[key] = null;
   }
 };
-
 
 
 gmf.module.service('gmfAuthentication', gmf.Authentication);

@@ -5,7 +5,6 @@ goog.require('ol.geom.Polygon');
 goog.require('ol.interaction.Draw');
 
 
-
 /**
  * @classdesc
  * Interaction dedicated to measure length.

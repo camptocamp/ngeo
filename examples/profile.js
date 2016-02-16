@@ -27,7 +27,6 @@ var app = {};
 app.module = angular.module('app', ['ngeo']);
 
 
-
 /**
  * @constructor
  * @param {angular.$http} $http The $http angular service.
@@ -154,7 +153,7 @@ app.MainController = function($http, $scope) {
    * @param {string} key Key used for retrieving the value.
    * @param {string=} opt_childKey Key of a child object.
    * @template T
-   * @return {function(Object): T}
+   * @return {function(Object): T} Getter function.
    */
   var typedFunctionsFactory = function(type, key, opt_childKey) {
     return (
@@ -195,9 +194,9 @@ app.MainController = function($http, $scope) {
     dist: typedFunctionsFactory(types.number, 'dist'),
     title: typedFunctionsFactory(types.string, 'title'),
     /**
-      * @param {Object} item
-      * @param {number=} opt_z
-      * @return {number}
+      * @param {Object} item POI.
+      * @param {number=} opt_z Z value.
+      * @return {number} Z value.
       */
     z: function(item, opt_z) {
       if (opt_z !== undefined) {
@@ -208,7 +207,7 @@ app.MainController = function($http, $scope) {
   };
 
   /**
-   * @param {Object} point
+   * @param {Object} point Point.
    */
   var hoverCallback = function(point) {
     // An item in the list of points given to the profile.

@@ -19,7 +19,6 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 
 
-
 /**
  * @classdesc
  * Interaction dedicated to measure length.
@@ -76,8 +75,8 @@ ngeo.interaction.MeasureAzimut.prototype.handleMeasure = function(callback) {
 
 /**
  * Format measure output.
- * @param {ol.geom.LineString} line
- * @return {string}
+ * @param {ol.geom.LineString} line LineString.
+ * @return {string} Formated measure.
  * @private
  */
 ngeo.interaction.MeasureAzimut.prototype.formatMeasure_ = function(line) {
@@ -92,7 +91,6 @@ ngeo.interaction.MeasureAzimut.prototype.formatMeasure_ = function(line) {
   output += '<br/>' + ngeo.interaction.Measure.getFormattedLength(line, proj);
   return output;
 };
-
 
 
 /**
@@ -258,8 +256,7 @@ ngeo.interaction.DrawAzimut.prototype.handlePointerMove_ = function(event) {
  * @param {ol.MapBrowserEvent} event Event.
  * @private
  */
-ngeo.interaction.DrawAzimut.prototype.createOrUpdateSketchPoint_ =
-    function(event) {
+ngeo.interaction.DrawAzimut.prototype.createOrUpdateSketchPoint_ = function(event) {
   var coordinates = event.coordinate.slice();
   if (goog.isNull(this.sketchPoint_)) {
     this.sketchPoint_ = new ol.Feature(new ol.geom.Point(coordinates));

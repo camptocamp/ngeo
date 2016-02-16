@@ -52,7 +52,6 @@ app.mapDirective = function() {
 app.module.directive('appMap', app.mapDirective);
 
 
-
 /**
  * @param {ngeo.Location} ngeoLocation ngeo Location service.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
@@ -134,7 +133,6 @@ app.drawDirective = function() {
 app.module.directive('appDraw', app.drawDirective);
 
 
-
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
@@ -144,8 +142,7 @@ app.module.directive('appDraw', app.drawDirective);
  * @export
  * @ngInject
  */
-app.DrawDirectiveController =
-    function($scope, ngeoDecorateInteraction, ngeoLocation) {
+app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLocation) {
 
   /**
    * @type {ol.Map}
@@ -231,7 +228,6 @@ app.DrawDirectiveController.prototype.clearLayer = function() {
 };
 
 app.module.controller('AppDrawController', app.DrawDirectiveController);
-
 
 
 /**

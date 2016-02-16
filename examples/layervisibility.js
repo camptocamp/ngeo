@@ -17,7 +17,6 @@ var app = {};
 app.module = angular.module('app', ['ngeo']);
 
 
-
 /**
  * @param {ngeo.DecorateLayer} ngeoDecorateLayer Decorate layer service.
  * @constructor

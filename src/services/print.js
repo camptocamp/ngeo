@@ -61,7 +61,6 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
     ngeo.PrintStyleType.POLYGON;
 
 
-
 /**
  * Provides a function to create ngeo.Print objects used to
  * interact with MapFish Print v3 services.
@@ -287,7 +286,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
 
 
 /**
- * @param {string} url
+ * @param {string} url URL.
  * @return {string} Absolute URL.
  * @private
  */
@@ -471,8 +470,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
  * @param {string} featureStyleProp Feature style property name.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStyle_ =
-    function(object, geometryType, style, styleId, featureStyleProp) {
+ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, styleId, featureStyleProp) {
   if (!(geometryType in ngeo.PrintStyleTypes_)) {
     // unsupported geometry type
     return;
@@ -532,8 +530,7 @@ ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
  * @param {!ol.style.Stroke} strokeStyle Stroke style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStyleLine_ =
-    function(symbolizers, strokeStyle) {
+ngeo.Print.prototype.encodeVectorStyleLine_ = function(symbolizers, strokeStyle) {
   var symbolizer = /** @type {MapFishPrintSymbolizerLine} */ ({
     type: 'line'
   });
@@ -548,8 +545,7 @@ ngeo.Print.prototype.encodeVectorStyleLine_ =
  * @param {!ol.style.Image} imageStyle Image style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStylePoint_ =
-    function(symbolizers, imageStyle) {
+ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle) {
   var symbolizer;
   if (imageStyle instanceof ol.style.Circle) {
     symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
@@ -590,8 +586,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ =
  * @param {ol.style.Stroke} strokeStyle Stroke style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStylePolygon_ =
-    function(symbolizers, fillStyle, strokeStyle) {
+ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle, strokeStyle) {
   var symbolizer = /** @type {MapFishPrintSymbolizerPolygon} */ ({
     type: 'polygon'
   });
@@ -608,8 +603,7 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ =
  * @param {!ol.style.Stroke} strokeStyle Stroke style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStyleStroke_ =
-    function(symbolizer, strokeStyle) {
+ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle) {
   var strokeColor = strokeStyle.getColor();
   if (!goog.isNull(strokeColor)) {
     var strokeColorRgba = ol.color.asArray(strokeColor);
@@ -689,7 +683,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
 
 
 /**
- * Return the WMTS URL to use in the print spec.
+ * Return the WMTS URL to use in the print spec.
  * @param {ol.source.WMTS} source The WMTS source.
  * @return {string} URL.
  * @private
@@ -742,7 +736,7 @@ ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
 
 
 /**
- * Get the URL of a report.
+ * Get the URL of a report.
  * @param {string} ref Print report reference.
  * @return {string} The report URL for this ref.
  */

@@ -33,7 +33,6 @@ gmf.themeselectorDirective = function() {
 gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
 
 
-
 /**
  * @param {ngeo.Location} ngeoLocation ngeo Location service.
  * @param {gmf.Themes} gmfThemes Themes service.
@@ -157,7 +156,7 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
 
 
 /**
- * @param {Object} theme
+ * @param {Object} theme Theme.
  * @export
  */
 gmf.ThemeselectorController.prototype.switchTheme = function(theme) {
