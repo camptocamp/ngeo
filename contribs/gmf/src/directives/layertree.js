@@ -284,7 +284,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
  * @private
  */
 gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
-  var i, child, children = node.children;
+  var i;
   var layers = new ol.Collection();
   var layer, subNode;
   var subNodes = [];
@@ -351,7 +351,7 @@ gmf.LayertreeController.prototype.getLayerCaseWMTS_ = function(node) {
  * @private
  */
 gmf.LayertreeController.prototype.getFlatNodes_ = function(node, nodes) {
-  var i, child;
+  var i;
   var children = node.children;
   if (goog.isDef(children)) {
     for (i = 0; i < children.length; i++) {
