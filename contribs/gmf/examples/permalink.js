@@ -1,6 +1,5 @@
 goog.provide('gmf-permalink');
 
-goog.require('gmf.Permalink');
 goog.require('gmf.mapDirective');
 goog.require('gmf.proj.EPSG21781');
 goog.require('ngeo');
@@ -21,15 +20,11 @@ app.module = angular.module('app', ['gmf']);
 
 /**
  * @constructor
- * @param {gmf.Permalink} gmfPermalink The gmf permalink service.
  */
-app.MainController = function(gmfPermalink) {
+app.MainController = function() {
 
   var projection = ol.proj.get('EPSG:21781');
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
-
-  var center = gmfPermalink.getMapCenter() || [537635, 152640];
-  var zoom = gmfPermalink.getMapZoom() || 3;
 
   /**
    * @type {ol.Map}
@@ -44,8 +39,8 @@ app.MainController = function(gmfPermalink) {
     view: new ol.View({
       projection: projection,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
-      center: center,
-      zoom: zoom
+      center: [537635, 152640],
+      zoom: 3
     })
   });
 };

@@ -151,7 +151,23 @@ gmf.Permalink.prototype.setMap = function(map) {
  * @private
  */
 gmf.Permalink.prototype.registerMap_ = function(map) {
+
   var view = map.getView();
+
+  // (1) Initialize the map view with the X, Y and Z available within the
+  //     permalink service, if availables
+  var center = this.getMapCenter();
+  if (center !== null) {
+    view.setCenter(center);
+  }
+  var zoom = this.getMapZoom();
+  if (zoom !== null) {
+    view.setZoom(zoom);
+  }
+
+
+  // (2) Listen to any property changes within the view and apply them to
+  //     the permalink service
   this.mapViewPropertyChangeEventKey_ = ol.events.listen(
       view,
       'propertychange',
