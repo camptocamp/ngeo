@@ -39,12 +39,13 @@ gmf.module.value('gmfSearchTemplateUrl',
  * for drawing features on the map. The application is responsible to
  * initialize the ngeoFeatureOverlayMgr with the map.
  *
- * @example
- * <gmf-search gmf-search-map="ctrl.map"
- *             gmf-search-datasources="ctrl.searchDatasources"
- *             gmf-search-currenttheme="ctrl.theme"
- *             gmf-search-clearbutton="true">
- * </gmf-search>
+ * Example:
+ *
+ *      <gmf-search gmf-search-map="ctrl.map"
+ *        gmf-search-datasources="ctrl.searchDatasources"
+ *        gmf-search-currenttheme="ctrl.theme"
+ *        gmf-search-clearbutton="true">
+ *      </gmf-search>
  *
  * @param {string} gmfSearchTemplateUrl URL to template.
  * @htmlAttribute {ol.Map} gmf-search-map The map

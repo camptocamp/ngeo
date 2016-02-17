@@ -14,11 +14,12 @@ goog.require('ol.geom.Point');
 /**
  * Provide a "desktop geolocation" directive.
  *
- * @example
- * <button ngeo-desktop-geolocation=""
- *   ngeo-desktop-geolocation-map="ctrl.map"
- *   ngeo-desktop-geolocation-options="ctrl.desktopGeolocationOptions">
- * </button>
+ * Example:
+ *
+ *      <button ngeo-desktop-geolocation=""
+ *        ngeo-desktop-geolocation-map="ctrl.map"
+ *        ngeo-desktop-geolocation-options="ctrl.desktopGeolocationOptions">
+ *      </button>
  *
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject

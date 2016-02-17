@@ -49,11 +49,12 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * ngeoLayertreeTemplateUrl value too (to define the children's nodes template
  * path).
  *
- * @example
- * <gmf-layertree
- *   gmf-layertree-source="ctrl.source"
- *   gmf-layertree-map="ctrl.map"
- * </gmf-layertree>
+ * Example:
+ *
+ *      <gmf-layertree
+ *        gmf-layertree-source="ctrl.source"
+ *        gmf-layertree-map="ctrl.map"
+ *      </gmf-layertree>
  *
  * You can add an attribute 'gmf-layertree-openlinksinnewwindow="true"' to open
  * metadata URLs in a new window. By default, and in the default template,

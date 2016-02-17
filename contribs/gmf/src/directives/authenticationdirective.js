@@ -34,8 +34,9 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
  * Once logged in, the "logout" form is shown, which allows the user to either
  * log out or change his or her password.
  *
- * @example
- * <gmf-authentication></gmf-authentication>
+ * Example:
+ *
+ *      <gmf-authentication></gmf-authentication>
  *
  * @param {string} gmfAuthenticationTemplateUrl Url to template.
  * @return {angular.Directive} The Directive Definition Object.

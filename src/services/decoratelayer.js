@@ -9,8 +9,9 @@ goog.require('ngeo');
  * `Object.defineProperty`) to the layer, making it possible to control layer
  * properties with ngModel.
  *
- * @example
- * <input type="checkbox" ngModel="layer.visible" />
+ * Example:
+ *
+ *      <input type="checkbox" ngModel="layer.visible" />
  *
  * @typedef {function(ol.layer.Layer)}
  * @ngdoc service

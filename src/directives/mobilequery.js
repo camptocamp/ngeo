@@ -16,12 +16,13 @@ goog.require('ngeo.Query');
  * it could be used with a ngeo-btn to manage the activation of the directive.
  * See below an example without any use of UI:
  *
- * @example
- * <span
- *   ngeo-mobile-query=""
- *   ngeo-mobile-query-map="::ctrl.map"
- *   ngeo-mobile-query-active="ctrl.queryActive">
- * </span>
+ * Example:
+ *
+ *      <span
+ *        ngeo-mobile-query=""
+ *        ngeo-mobile-query-map="::ctrl.map"
+ *        ngeo-mobile-query-active="ctrl.queryActive">
+ *      </span>
  *
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject

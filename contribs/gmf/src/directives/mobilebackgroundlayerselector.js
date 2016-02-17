@@ -24,10 +24,11 @@ gmf.module.value('gmfMobileBackgroundLayerSelectorTemplateUrl',
 /**
  * Provide a "mobile background layer selector" directive.
  *
- * @example
- * <gmf-mobile-background-layer-selector
- *   gmf-mobile-background-layer-selector-map="::ctrl.map">
- * </gmf-mobile-background-layer-selector>
+ * Example:
+ *
+ *      <gmf-mobile-background-layer-selector
+ *        gmf-mobile-background-layer-selector-map="::ctrl.map">
+ *      </gmf-mobile-background-layer-selector>
  *
  * @param {string} gmfMobileBackgroundLayerSelectorTemplateUrl Url to template.
  * @return {angular.Directive} The Directive Definition Object.

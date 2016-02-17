@@ -10,19 +10,18 @@ goog.require('ngeo');
  *
  * Example:
  *
- *     <div ngeo-recenter ngeo-recenter-map="::ctrl.map">
- *       <a href="#" ngeo-extent="[-1898084, 4676723, 3972279, 8590299]">A</a>
- *       <a href="#" ngeo-extent="[727681, 5784754, 1094579, 6029353]">B</a>
- *       <a href="#" ngeo-zoom="1">Zoom to level 1</a>
- *     </div>
+ *      <div ngeo-recenter ngeo-recenter-map="::ctrl.map">
+ *        <a href="#" ngeo-extent="[-1898084, 4676723, 3972279, 8590299]">A</a>
+ *        <a href="#" ngeo-extent="[727681, 5784754, 1094579, 6029353]">B</a>
+ *        <a href="#" ngeo-zoom="1">Zoom to level 1</a>
+ *      </div>
  *
  * Or with a select:
  *
- *     <select ngeo-recenter ngeo-recenter-map="::ctrl.map">
- *       <option ngeo-extent="[-1898084, 4676723, 3972279, 8590299]">A</option>
- *       <option ngeo-extent="[727681, 5784754, 1094579, 6029353]">B</option>
- *     </select>
- *
+ *      <select ngeo-recenter ngeo-recenter-map="::ctrl.map">
+ *        <option ngeo-extent="[-1898084, 4676723, 3972279, 8590299]">A</option>
+ *        <option ngeo-extent="[727681, 5784754, 1094579, 6029353]">B</option>
+ *      </select>
  *
  * @return {angular.Directive} Directive Definition Object.
  * @ngdoc directive

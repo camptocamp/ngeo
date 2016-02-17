@@ -16,8 +16,9 @@ goog.require('ol.Map');
 /**
  * A "map" directive for a GeoMapFish application.
  *
- * @example
- * <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
+ * Example:
+ *
+ *      <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
  *
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject

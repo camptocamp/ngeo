@@ -14,11 +14,12 @@ goog.require('ol.geom.Point');
 /**
  * Provide a "mobile geolocation" directive.
  *
- * @example
- * <button ngeo-mobile-geolocation=""
- *   ngeo-mobile-geolocation-map="ctrl.map"
- *   ngeo-mobile-geolocation-options="ctrl.mobileGeolocationOptions">
- * </button>
+ * Example:
+ *
+ *      <button ngeo-mobile-geolocation=""
+ *        ngeo-mobile-geolocation-map="ctrl.map"
+ *        ngeo-mobile-geolocation-options="ctrl.mobileGeolocationOptions">
+ *      </button>
  *
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
