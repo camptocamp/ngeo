@@ -213,7 +213,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     var filter;
 
     do {
-      var title = datasource.datasetTitle;
+      var title = datasource.datasetTitle || '';
 
       if (groupValues.length > 0) {
         // Add an optional filter function to keep objects only from one
