@@ -54,7 +54,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @export
    */
   this.searchDatasources = [{
-    datasetTitle: 'Internal',
     labelKey: 'label',
     groupsKey: 'layer_name',
     groupValues: /** @type {Array.<string>} **/ ($injector.get('gmfSearchGroups')),
