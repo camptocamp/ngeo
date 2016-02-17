@@ -43,7 +43,7 @@ ngeo.interaction.MobileDraw = function(options) {
 
   /**
    * The key for view center change event.
-   * @type {?goog.events.Key}
+   * @type {?ol.events.Key}
    * @private
    */
   this.changeEventKey_ = null;
@@ -122,13 +122,15 @@ ngeo.interaction.MobileDraw.prototype.setMap = function(map) {
 
   var currentMap = this.getMap();
   if (currentMap) {
-    goog.events.unlistenByKey(this.changeEventKey_);
+    if (this.changeEventKey_) {
+      ol.events.unlistenByKey(this.changeEventKey_);
+    }
   }
 
   goog.base(this, 'setMap', map);
 
   if (map) {
-    ol.events.listen(map.getView(),
+    this.changeEventKey_ = ol.events.listen(map.getView(),
         ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
         this.handleViewCenterChange_, this);
   }
