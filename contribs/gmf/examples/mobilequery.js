@@ -2,6 +2,7 @@ goog.provide('gmf-mobilequery');
 
 goog.require('gmf.QueryManager');
 goog.require('gmf.Themes');
+goog.require('gmf.mobiledisplayqueriesDirective');
 goog.require('gmf.layertreeDirective');
 goog.require('gmf.mapDirective');
 goog.require('ngeo');
@@ -13,6 +14,10 @@ goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.proj');
 goog.require('ol.source.OSM');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
 
 
 proj4.defs('EPSG:21781',
@@ -26,7 +31,7 @@ var app = {};
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+app.module = angular.module('app', ['gmf', 'ngAnimate']);
 
 
 app.module.constant('ngeoQueryOptions', {
@@ -45,6 +50,7 @@ app.module.value('gmfWmsUrl',
 
 
 /**
+ * Demo, NOT USED.
  * A sample directive to display the result.
  *
  * @return {angular.Directive} The directive specs.
@@ -64,6 +70,7 @@ app.module.directive('appQueryresult', app.queryresultDirective);
 
 
 /**
+ * Demo, NOT USED.
  * @param {ngeo.QueryResult} ngeoQueryResult Query service.
  * @constructor
  * @ngInject
@@ -86,13 +93,30 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
  * @constructor
  * @param {gmf.Themes} gmfThemes The gme themes service.
  * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
+ * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ *   overlay manager service.
  */
-app.MainController = function(gmfThemes, gmfQueryManager) {
+app.MainController = function(gmfThemes, gmfQueryManager,
+    ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
 
   var projection = ol.proj.get('EPSG:21781');
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
+
+  var fill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
+  var stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
+
+  /**
+   * FeatureStyle used by the mobiledisplayqueries directive
+   * @type {ol.style.Style}
+   * @export
+   */
+  this.featureStyle = new ol.style.Style({
+    fill: fill,
+    image: new ol.style.Circle({fill: fill, radius: 5, stroke: stroke}),
+    stroke: stroke
+  });
 
   /**
    * @type {ol.Map}
@@ -130,6 +154,8 @@ app.MainController = function(gmfThemes, gmfQueryManager) {
       this.treeSource = themes[3];
     }
   }.bind(this));
+
+  ngeoFeatureOverlayMgr.init(this.map);
 };
 
 app.module.controller('MainController', app.MainController);

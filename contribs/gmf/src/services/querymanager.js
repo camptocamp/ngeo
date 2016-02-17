@@ -85,6 +85,7 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
   var meta = node.metadata;
   var children = node.children;
   var id = node.id;
+  var identifierAttributeField = meta['identifierAttributeField'];
   var layers = meta['wmsLayers'] || meta['queryLayers'] || node.layers;
   var name = node.name;
   var url = meta['wmsUrl'] || node.url || this.gmfWmsUrl_;
@@ -97,6 +98,7 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
     if (!this.cache_[id]) {
       var source = {
         'id': id,
+        'identifierAttributeField': identifierAttributeField,
         'label': name,
         'params': {'LAYERS': layers},
         'url': url

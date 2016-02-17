@@ -206,9 +206,14 @@ ngeo.Query.prototype.addSource = function(source) {
 
   var sourceLabel = source.label !== undefined ? source.label : sourceId;
 
+  var sourceIdentifierAttributeField =
+      source.identifierAttributeField !== undefined ?
+      source.identifierAttributeField : sourceId;
+
   var resultSource = /** @type {ngeo.QueryResultSource} */ ({
     'features': [],
     'id': sourceId,
+    'identifierAttributeField': sourceIdentifierAttributeField,
     'label': sourceLabel,
     'pending': false
   });
