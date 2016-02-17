@@ -27,6 +27,11 @@ app.module.value('gmfWmsUrl',
     'https://geomapfish-demo.camptocamp.net/2.0/wsgi/mapserv_proxy');
 
 
+app.module.constant('ngeoQueryOptions', {
+  'limit': 20
+});
+
+
 /**
  * @constructor
  * @param {angular.$http} $http Angular's $http service.

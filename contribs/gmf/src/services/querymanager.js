@@ -11,6 +11,15 @@ goog.require('ngeo.Query');
 
 
 /**
+ * DEPRECATED (for now)
+ *
+ * The QueryManager service uses the c2cgeoportal's themes to configure ngeo's
+ * query service with each layer found.
+ *
+ * This is currently no longer used.  The layertree directive has taken over
+ * the responsability to manage the addition of query source configurations
+ * to the query service.
+ *
  * @constructor
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
