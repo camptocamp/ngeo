@@ -5,7 +5,9 @@ goog.require('gmf');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
+goog.require('ngeo.Query');
 goog.require('ol.Collection');
+goog.require('ol.format.WMSGetFeatureInfo');
 goog.require('ol.layer.Tile');
 
 
@@ -88,6 +90,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @param {angular.$sce} $sce Angular sce service.
  * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {ngeo.Query} ngeoQuery Ngeo Query service.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
  * @constructor
  * @export
@@ -96,7 +99,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
-    ngeoLayerHelper, gmfWmsUrl) {
+    ngeoLayerHelper, ngeoQuery, gmfWmsUrl) {
 
   /**
    * @private
@@ -121,6 +124,12 @@ gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {ngeo.Query}
+   * @private
+   */
+  this.ngeoQuery_ = ngeoQuery;
 
   /**
    * @private
@@ -233,6 +242,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
         opt_createWMS) {
   var type = this.getNodeType_(node);
   var layer = null;
+  var url;
 
   if (opt_depth === 1) {
     switch (type) {
@@ -249,7 +259,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
         break;
       case gmf.LayertreeController.TYPE_WMS:
       case gmf.LayertreeController.TYPE_EXTERNALWMS:
-        var url = node.url || this.gmfWmsUrl_;
+        url = node.url || this.gmfWmsUrl_;
         layer = opt_createWMS ?
             this.layerHelper_.createBasicWMSLayer(url, node.name) : null;
         break;
@@ -258,7 +268,41 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
   }
 
   if (goog.isDefAndNotNull(layer)) {
-    layer.set('querySourceId', node.id);
+    // Add the layer to the query source configuration using the layer
+    var id = node.id;
+    var name = node.name;
+    var meta = node.metadata;
+    var identifierAttributeField = meta['identifierAttributeField'];
+
+    layer.set('querySourceId', id);
+
+    var layerNames = this.getAllWmsLayerNames_(node);
+
+    var querySourceConfig = {
+      'format': new ol.format.WMSGetFeatureInfo({
+        layers: layerNames
+      }),
+      'id': id,
+      'identifierAttributeField': identifierAttributeField,
+      'label': name
+    }
+    var source = layer.getSource();
+    if (source && source instanceof ol.source.ImageWMS) {
+      goog.object.extend(querySourceConfig, {
+        'layer': layer,
+        'wmsSource': source
+      });
+      // FIXME - identifierAttributeField is not set at this level...
+    } else {
+      url = meta['wmsUrl'] || node.url || this.gmfWmsUrl_;
+      goog.object.extend(querySourceConfig, {
+        'params': {'LAYERS': layerNames.join(',')},
+        'url': url
+      });
+    }
+    this.ngeoQuery_.addSource(querySourceConfig);
+
+
     layer.set('layerName', node.name);
     // The layer must be upper than the background
     layer.setZIndex(1);
@@ -835,6 +879,36 @@ gmf.LayertreeController.prototype.zoomToResolution = function(node) {
   if (goog.isDef(resolution)) {
     view.setResolution(resolution);
   }
+};
+
+
+/**
+ * Return the list of wms layer names of a node by drilling down to the very
+ * last level of child nodes.
+ * @param {GmfThemesNode} node Layer tree node.
+ * @return {Array.<string>} Layer names.
+ * @private
+ */
+gmf.LayertreeController.prototype.getAllWmsLayerNames_ = function(node) {
+  var layerNames = [];
+  var children = node.children || node.childLayers;
+  var layers;
+
+  if (children && children.length) {
+    children.forEach(function(childNode) {
+      layerNames = layerNames.concat(this.getAllWmsLayerNames_(childNode));
+    }, this);
+  } else {
+    var meta = node.metadata;
+    if (meta) {
+      layers = meta['wmsLayers'] || meta['queryLayers'];
+    }
+    if (!layers) {
+      layers = node.layers || node.name;
+    }
+    layerNames = layerNames.concat(layers.split(','));
+  }
+  return layerNames;
 };
 
 

@@ -1,6 +1,5 @@
 goog.provide('gmf-mobilequery');
 
-goog.require('gmf.QueryManager');
 goog.require('gmf.Themes');
 goog.require('gmf.mobiledisplayqueriesDirective');
 goog.require('gmf.layertreeDirective');
@@ -92,12 +91,10 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
 /**
  * @constructor
  * @param {gmf.Themes} gmfThemes The gme themes service.
- * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  */
-app.MainController = function(gmfThemes, gmfQueryManager,
-    ngeoFeatureOverlayMgr) {
+app.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
 
