@@ -135,7 +135,7 @@ gmf.MobileNavController.prototype.init = function(element) {
     slideOut.addClass('slide-out').removeClass('active');
 
     // element to slide in
-    var slideIn = $($(evt.target).attr('href'));
+    var slideIn = $($(evt.target).attr('data-target'));
 
     // slide the "new" element in
     slideIn.addClass('active');
