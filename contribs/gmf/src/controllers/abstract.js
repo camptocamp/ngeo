@@ -82,6 +82,20 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.queryActive = true;
 
   /**
+   * The active state of the directive responsible of point measurements.
+   * @type {boolean}
+   * @export
+   */
+  this.measurePointActive = false;
+
+  /**
+   * The active state of the directive responsible of length measurements.
+   * @type {boolean}
+   * @export
+   */
+  this.measureLengthActive = false;
+
+  /**
    * @type {ngeo.GetBrowserLanguage}
    */
   this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
@@ -123,14 +137,21 @@ gmf.AbstractController = function(config, $scope, $injector) {
   var ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
   ngeoFeatureOverlayMgr.init(this.map);
 
-  var queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
-
   /**
    * The ngeo ToolActivate manager service.
    * @type {ngeo.ToolActivateMgr}
    */
   var ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+
+  var queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);
+
+  var measurePointActivate = new ngeo.ToolActivate(this, 'measurePointActive');
+  ngeoToolActivateMgr.registerTool('mapTools', measurePointActivate, false);
+
+  var measureLengthActivate = new ngeo.ToolActivate(
+      this, 'measureLengthActive');
+  ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
 
 };
 

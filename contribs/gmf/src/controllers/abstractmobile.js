@@ -5,7 +5,13 @@ goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileBackgroundLayerSelectorDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.mobileMeasureLengthDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.mobileMeasurePointDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mobileNavDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mobileQueryDirective');
 goog.require('ol.Map');
@@ -19,6 +25,10 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 gmf.module.constant('isMobile', true);
+
+gmf.module.constant(
+    'gmfAltitudeUrl',
+    'https://geomapfish-demo.camptocamp.net/2.0/wsgi/raster');
 
 
 /**

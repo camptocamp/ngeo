@@ -17,6 +17,20 @@
         ngeo-mobile-query-map="::mainCtrl.map"
         ngeo-mobile-query-active="::mainCtrl.queryActive">
       </span>
+      <div
+        class="measure-tools-control"
+        gmf-mobile-measure-length
+        gmf-mobile-measure-length-active="mainCtrl.measureLengthActive"
+        gmf-mobile-measure-length-decimals="2"
+        gmf-mobile-measure-length-map="::mainCtrl.map">
+      </div>
+      <div
+        class="measure-tools-control"
+        gmf-mobile-measure-point
+        gmf-mobile-measure-point-active="mainCtrl.measurePointActive"
+        gmf-mobile-measure-point-decimals="2"
+        gmf-mobile-measure-point-map="::mainCtrl.map">
+      </div>
       <button class="nav-trigger nav-left-trigger"
         ng-click="mainCtrl.toggleLeftNavVisibility()">
         <span class="gmf-icon gmf-icon-layers"></span>
@@ -88,12 +102,14 @@
         </ul>
       </div>
       <div id="measure-tools" class="slide" data-header-title="Measure tools">
-        <ul>
-          <li>
-            <a href="#">Length</a>
-            <a href="#">Area</a>
-          </li>
-        </ul>
+        <a ngeo-btn
+          ng-click="mainCtrl.hideNav()"
+          class="btn btn-default measure-tools-button"
+          ng-model="mainCtrl.measurePointActive">Coordinate</a>
+        <a ngeo-btn
+          ng-click="mainCtrl.hideNav()"
+          class="btn btn-default measure-tools-button"
+          ng-model="mainCtrl.measureLengthActive">Length</a>
       </div>
       <gmf-authentication id="login" class="slide" data-header-title="Login">
       </gmf-authentication>
