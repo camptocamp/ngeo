@@ -1,8 +1,3 @@
-/**
- * @fileoverview This file defines the Altitude service, which uses the
- * c2cgeoportal's raster to obtain different kinds of altitude information
- * at a specific coordinate.
- */
 goog.provide('gmf.Altitude');
 
 goog.require('gmf');
@@ -18,6 +13,9 @@ gmf.AltitudeParam = {
 
 
 /**
+ * The Altitude service, uses the
+ * c2cgeoportal's raster to obtain different kinds of altitude information
+ * at a specific coordinate.
  * @constructor
  * @param {angular.$http} $http Angular http service.
  * @param {string} gmfAltitudeUrl URL to the altitude server
