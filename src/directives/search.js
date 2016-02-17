@@ -7,6 +7,8 @@ goog.require('ngeo');
  * Provides the "ngeoSearch" directive, which uses Twitter's
  * typeahead component to change an input text into a search field.
  *
+ * Example:
+ *
  *     <input type="text"
  *       ngeo-search="ctrl.typeaheadOptions"
  *       ngeo-search-datasets="ctrl.typeaheadDatasets"

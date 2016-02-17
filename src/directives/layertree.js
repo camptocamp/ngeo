@@ -26,11 +26,11 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *
  * Example:
  *
- *     <div ngeo-layertree="ctrl.tree"
- *          ngeo-layertree-map="ctrl.map"
- *          ngeo-layertree-nodelayer="ctrl.getLayer(node)"
- *          ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)"
- *     </div>
+ *      <div ngeo-layertree="ctrl.tree"
+ *        ngeo-layertree-map="ctrl.map"
+ *        ngeo-layertree-nodelayer="ctrl.getLayer(node)"
+ *        ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)"
+ *      </div>
  *
  * The "ngeo-layertree", "ngeo-layertree-map" and
  * "ngeo-layertree-nodelayer" attributes are mandatory attributes.
@@ -63,12 +63,12 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *
  * Example:
  *
- *     <div ngeo-layertree="ctrl.tree"
- *          ngeo-layertree-templateurl="path/to/layertree.html"
- *          ngeo-layertree-map="ctrl.map"
- *          ngeo-layertree-nodelayer="ctrl.getLayer(node)"
- *          ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)"
- *     </div>
+ *      <div ngeo-layertree="ctrl.tree"
+ *        ngeo-layertree-templateurl="path/to/layertree.html"
+ *        ngeo-layertree-map="ctrl.map"
+ *        ngeo-layertree-nodelayer="ctrl.getLayer(node)"
+ *        ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)"
+ *      </div>
  *
  * The directive has its own scope, but it is not an isolate scope. That scope
  * has a "layertreeCtrl" property which is a reference to the directive's

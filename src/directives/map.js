@@ -9,7 +9,9 @@ goog.require('ol.Map');
  * Provides a directive used to insert a user-defined OpenLayers
  * map in the DOM. The directive does not create an isolate scope.
  *
- *     <div ngeo-map="ctrl.map"></div>
+ * Example:
+ *
+ *      <div ngeo-map="ctrl.map"></div>
  *
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject

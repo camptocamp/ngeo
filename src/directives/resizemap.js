@@ -12,10 +12,12 @@ goog.require('ol.Map');
  * when changing the size of other elements with a transition leads to a change
  * of the map size.
  *
- * @example
- *   <div ng-class="ctrl.open ? 'open' : 'close' ngeo-resizemap="ctrl.map"
- *        ngeo-resizemap-state="open"><div>
- *   <input type="checkbox" ng-model="ctrl.open" />
+ * Example:
+ *
+ *          <div ng-class="ctrl.open ? 'open' : 'close' ngeo-resizemap="ctrl.map"
+ *            ngeo-resizemap-state="open">
+ *          <div>
+ *          <input type="checkbox" ng-model="ctrl.open" />
  *
  * @param {angular.$window} $window Angular window service.
  * @param {angular.$animate} $animate Angular animate service.

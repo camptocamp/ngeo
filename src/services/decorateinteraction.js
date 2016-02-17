@@ -9,8 +9,9 @@ goog.require('ngeo');
  * `Object.defineProperty`) to an interaction, making it possible to use ngModel
  * to activate/deactivate interactions.
  *
- * @example
- * <input type="checkbox" ngModel="interaction.active" />
+ * Example:
+ *
+ *      <input type="checkbox" ngModel="interaction.active" />
  *
  * @typedef {function(ol.interaction.Interaction)}
  * @ngdoc service

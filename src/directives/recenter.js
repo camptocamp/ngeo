@@ -8,7 +8,7 @@ goog.require('ngeo');
  * to a specific extent (by using `ngeo-extent`) or a specific zoom level
  * (by using `ngeo-zoom`).
  *
- * Example:
+ * Examples:
  *
  *     <div ngeo-recenter ngeo-recenter-map="::ctrl.map">
  *       <a href="#" ngeo-extent="[-1898084, 4676723, 3972279, 8590299]">A</a>
