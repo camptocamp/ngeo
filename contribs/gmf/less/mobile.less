@@ -281,6 +281,19 @@ button[ngeo-mobile-geolocation] {
   left: auto;
 }
 
+//For mobile with wide viewport or landscape mode only (> 375px and < 768px)
+@media (min-width: (@screen-xs-min - 105)) {
+  .twitter-typeahead {
+    width: 100%;
+    margin-left: 2.5em;
+  }
+  .search .clear-button {
+    left: inherit;
+    margin-left: inherit;
+    right: 3em;
+  }
+}
+
 //For tablet only
 @media (min-width: @screen-sm-min) {
   .ol-zoom {
