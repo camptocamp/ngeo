@@ -41,16 +41,16 @@
     </main>
     <nav class="nav-left" gmf-mobile-nav>
       <header>
-        <a class="go-back" href="#"></a>
+        <a class="go-back" href="#" ng-click="$event.preventDefault()"></a>
       </header>
       <!-- main menu -->
       <div class="active slide">
         <ul>
           <li>
-            <a href="#background" data-toggle="slide-in">Background</a>
+            <a href="#background" data-toggle="slide-in" ng-click="$event.preventDefault()">Background</a>
           </li>
           <li>
-            <a href="#themes" data-toggle="slide-in">Themes</a>
+            <a href="#themes" data-toggle="slide-in" ng-click="$event.preventDefault()">Themes</a>
           </li>
           <gmf-layertree
               gmf-layertree-source="mainCtrl.theme"
@@ -76,7 +76,7 @@
     </nav>
     <nav class="nav-right" gmf-mobile-nav>
       <header>
-        <a class="go-back" href="#"></a>
+        <a class="go-back" href="#" ng-click="$event.preventDefault()"></a>
       </header>
       <!-- main menu -->
       <div class="active slide">
