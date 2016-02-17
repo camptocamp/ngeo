@@ -85,11 +85,13 @@ ifeq ($(OS),Darwin)
 	STAT_UNCOMPRESSED = stat -f 'uncompressed: %z bytes'
 	STAT_LAST_MODIFIED = stat -f '%m'
 	TOUCH_DATE = touch -t
+	SED_NEW_LINE = '$$'\n
 else
 	STAT_COMPRESSED = stat -c '  compressed: %s bytes'
 	STAT_UNCOMPRESSED = stat -c 'uncompressed: %s bytes'
 	STAT_LAST_MODIFIED = stat -c '%y'
 	TOUCH_DATE = touch --date
+	SED_NEW_LINE = ''
 endif
 
 # Disabling Make built-in rules to speed up execution time
@@ -388,7 +390,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=$*.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
-		-e '/$*.js/i\'$$'\n    <script src="lib/ngeo.js"></script>'$$'\n' $< > $@
+		-e '/$*.js/i\$(SED_NEW_LINE)    <script src="lib/ngeo.js"></script>$(SED_NEW_LINE)' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
 .build/examples-hosted/contribs/gmf/%.html: contribs/gmf/examples/%.html
@@ -407,7 +409,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=$*\.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
-		-e '/$*.js/i\'$$'\n    <script src="../../lib/gmf.js"></script>'$$'\n' $< > $@
+		-e '/$*.js/i\$(SED_NEW_LINE)    <script src="../../lib/gmf.js"></script>$(SED_NEW_LINE)' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
