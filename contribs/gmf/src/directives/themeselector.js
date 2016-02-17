@@ -34,6 +34,7 @@ gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
 
 
 /**
+ * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.Location} ngeoLocation ngeo Location service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @constructor
@@ -42,7 +43,7 @@ gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
  * @ngdoc controller
  * @ngname gmfThemeselectorController
  */
-gmf.ThemeselectorController = function(ngeoLocation, gmfThemes) {
+gmf.ThemeselectorController = function($scope, ngeoLocation, gmfThemes) {
 
   /**
    * @type {Array.<Object>}
@@ -55,6 +56,14 @@ gmf.ThemeselectorController = function(ngeoLocation, gmfThemes) {
    * @export
    */
   this.currentTheme;
+
+  $scope.$watch(goog.bind(function() {
+    return this.currentTheme;
+  }, this), goog.bind(function(theme) {
+    if (theme) {
+      this.setLocationPath_(theme['name']);
+    }
+  }, this));
 
   /**
    * @type {string}
@@ -160,10 +169,8 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
  * @export
  */
 gmf.ThemeselectorController.prototype.switchTheme = function(theme) {
-  var themeId = theme['name'];
-  if (themeId) {
+  if (theme) {
     this.currentTheme = theme;
-    this.setLocationPath_(themeId);
   }
 };
 
