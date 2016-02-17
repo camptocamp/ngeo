@@ -6,11 +6,11 @@
       <div ng-animate-swap="ctrl.animate" class="slide-animation">
         <div class="header">
           <p class="title">{{ctrl.source.label}}</p>
-          <p class="subtitle">{{ctrl.feature.getProperties()[ctrl.source.identifierAttributeField]}}</p> <!--how to choose subtitle ?-->
+          <p class="subtitle">{{ctrl.getFeatureValues()[ctrl.source.identifierAttributeField]}}</p>
         </div>
         <div class="details">
           <table>
-            <tr ng-repeat="(key, value) in ctrl.feature.getProperties()" ng-if="value.length">
+            <tr ng-repeat="(key, value) in ctrl.getFeatureValues()" ng-if="value.length">
               <td class="key">{{key}}</td>
               <td class="value">{{value}}</td>
             </tr>

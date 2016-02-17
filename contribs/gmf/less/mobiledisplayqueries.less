@@ -1,0 +1,151 @@
+.mobiledisplayqueries {
+  max-height: 400px;
+  width: 350px;
+  max-width: 350px;
+  margin-left: -175px;
+  position: fixed;
+  right: 5px;
+  bottom: 5px;
+  z-index: @above-content-index;
+  .collapse-button {
+    background-color: @nav-bg;
+    border: solid 1px black;
+    border-bottom-width: 0;
+    border-radius: 4px 4px 0 0;
+    line-height: 0.5;
+    height: 28px;
+    width: 48px;
+    &.up:after {
+      content: "\f077";
+    }
+    &.down:after {
+      content: "\f078";
+    }
+  }
+  .displayqueries-container {
+    background-color: @nav-bg;
+    border: solid 1px black;
+  }
+  .animation-container {
+    position: relative;
+    overflow: hidden;
+    height: 60px;
+    margin: 0 15px;
+    transition: 0.3s ease-in all;
+    &.detailed {
+      height: 160px;
+    }
+    .slide-animation {
+      height: 100%;
+      padding: 5px 5px 0;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      &.ng-enter, &.ng-leave {
+        transition: 0.3s ease-in all;
+      }
+    }
+  }
+  .next {
+    .slide-animation {
+      &.ng-enter {
+        left: 100%;
+      }
+      &.ng-enter-active, &.ng-leave {
+        left: 0;
+      }
+      &.ng-leave-active {
+        left: -100%;
+      }
+    }
+  }
+  .previous {
+    .slide-animation {
+      &.ng-enter {
+        left: -100%;
+      }
+      &.ng-enter-active, &.ng-leave {
+        left: 0;
+      }
+      &.ng-leave-active {
+        left: 100%;
+      }
+    }
+  }
+  .header {
+    .title {
+      font-weight: bold;
+    }
+    .subtitle {
+      margin-left: 10px;
+      height: 2ex;
+    }
+  }
+  .details {
+    height: 65%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-left: 10px;
+    padding-bottom: 10px;
+    table {
+      font-size: 0.9em;
+    }
+    .key {
+      padding-right: 25px;
+    }
+    .slide-animation.ng-enter-active .details .value {
+      white-space: nowrap;
+    }
+  }
+  .navigate {
+    border-top: solid 1px black;
+    text-align: center;
+    margin-top: 10px;
+    padding-top: 5px;
+    height: 32px;
+  }
+  button {
+    background-color: @nav-bg;
+    border: none;
+    font-family: FontAwesome;
+    height: initial;
+    width: 32px;
+    &:hover {
+      background-color: @nav-bg;
+    }
+    &.close {
+      padding: 5px 5px 0 0;
+      &:after {
+        content: "\f00d";
+      }
+    }
+  }
+  .navigate {
+    .previous {
+      float: left;
+      &:after {
+        content: "\f053";
+      }
+    }
+    .next {
+      float: right;
+      &:after {
+        content: "\f054";
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .mobiledisplayqueries {
+    width: 100%;
+    max-width: 100%;
+    margin-left: -50%;
+    right: 50%;
+    left: 50%;
+    bottom: 0;
+  }
+}

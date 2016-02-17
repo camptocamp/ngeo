@@ -283,6 +283,17 @@ gmf.MobiledisplayqueriesController.prototype.getResultLength = function() {
 
 
 /**
+ * Get the properties in the current feature.
+ * @return {Object?} properties of the current feature or null.
+ * @export
+ */
+gmf.MobiledisplayqueriesController.prototype.getFeatureValues = function() {
+  return goog.isDefAndNotNull(this.feature) ?
+      this.feature.getProperties() : null;
+};
+
+
+/**
  * Special function that's used to set the "animation" value after to set the
  * "isNext" value. The aim is to wait on Angular to add a class (corresponding
  * to "isNext") on the DOM before to set the "animation" value and do the

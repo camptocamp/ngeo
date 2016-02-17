@@ -1,6 +1,9 @@
 goog.provide('gmf.AbstractController');
 
 goog.require('gmf');
+/** @suppress {extraRequire} */
+goog.require('gmf.QueryManager');
+/** @suppress {extraRequire} */
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
@@ -80,6 +83,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @export
    */
   this.queryActive = true;
+
+  // Not used in this file but the QueryManager must be injected to be watched.
+  $injector.get('gmfQueryManager');
 
   /**
    * The active state of the directive responsible of point measurements.
