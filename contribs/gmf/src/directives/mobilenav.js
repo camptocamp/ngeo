@@ -5,36 +5,37 @@ goog.require('gmf');
 
 
 /**
- * An "gmf-nav" directive defining the behavior of a tree-structured menu.
+ * An "gmf-mobile-nav" directive defining the behavior of a tree-structured menu.
  *
  * The directive is to be placed on a `nav` element, with the following
  * structure:
- * <nav gmf-nav>
+ * <nav gmf-mobile-nav>
  *   <header>
- *     <a class="go-back" href="void(0)"></a>
- *     <span>Categories</span>
+ *     <a class="go-back" href="#"></a>
  *   </header>
- *   <ul>
- *     <li class="has-children">
- *       <a href="void(0)">Devices</a>
- *       <ul class="is-hidden">
- *         <li>
- *           <a href="void(0)">Mobile Phones</a>
- *         </li>
- *         <li>
- *           <a href="void(0)">Televisions</a>
- *         </li>
- *       </ul>
- *     </li>
- *     <li class="has-children">
- *       <a href="void(0)">Cars</a>
- *       <ul class="is-hidden">
- *         <li>
- *           <a href="void(0)">Camping Cars</a>
- *         </li>
- *       </ul>
- *     </li>
- *   </ul>
+ *   <div class="active slide">
+ *     <ul>
+ *       <li>
+ *         <a href data-target="#devices">Devices</a>
+ *       </li>
+ *       <li>
+ *         <a href data-target="#vehicles">Vehicles</a>
+ *       </li>
+ *     </ul>
+ *   </div>
+ *   <div id="devices" class="slide" data-header-title="Devices">
+ *     <ul>
+ *       <li>Mobile Phones</li>
+ *       <li>Televisions</li>
+ *     </ul>
+ *   </div>
+ *   <div id="vehicles" class="slide" data-header-title="Vehicles">
+ *     <ul>
+ *       <li>Cars</li>
+ *       <li>Planes</li>
+ *       <li>Bicycles</li>
+ *     </ul>
+ *   </div>
  * </nav>
  *
  * When an element slides in the directive changes the text in the header.
