@@ -13,7 +13,8 @@ var ngeox;
  * The options for the query service.
  * @typedef {{
  *     limit: (number|undefined),
- *     sourceIdProperty: (string|undefined)
+ *     sourceIdProperty: (string|undefined),
+ *     sourceIdsProperty: (string|undefined)
  * }}
  */
 ngeox.QueryOptions;
@@ -35,6 +36,15 @@ ngeox.QueryOptions.prototype.limit;
  * @type {string|undefined}
  */
 ngeox.QueryOptions.prototype.sourceIdProperty;
+
+
+/**
+ * Defines the name of the layer property that holds the ids of the sources.
+ * Use this if you have more than one source bound to a layer.  Defaults to
+ * `querySourceIds`.
+ * @type {string|undefined}
+ */
+ngeox.QueryOptions.prototype.sourceIdsProperty;
 
 
 /**

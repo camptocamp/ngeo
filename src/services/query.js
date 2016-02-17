@@ -89,6 +89,13 @@ ngeo.Query = function($http, ngeoQueryResult, ngeoQueryOptions) {
       options.sourceIdProperty : ngeo.Query.DEFAULT_SOURCE_ID_PROPERTY_;
 
   /**
+   * @type {string}
+   * @private
+   */
+  this.sourceIdsProperty_ = options.sourceIdsProperty !== undefined ?
+      options.sourceIdsProperty : ngeo.Query.DEFAULT_SOURCE_IDS_PROPERTY_;
+
+  /**
    * @type {angular.$http}
    * @private
    */
@@ -119,6 +126,13 @@ ngeo.Query = function($http, ngeoQueryResult, ngeoQueryOptions) {
  * @private
  */
 ngeo.Query.DEFAULT_SOURCE_ID_PROPERTY_ = 'querySourceId';
+
+
+/**
+ * @const
+ * @private
+ */
+ngeo.Query.DEFAULT_SOURCE_IDS_PROPERTY_ = 'querySourceIds';
 
 
 /**
@@ -291,6 +305,7 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
   var projCode = view.getProjection().getCode();
 
   var id;
+  var ids;
   var infoFormat;
   var url;
   var item;
@@ -308,30 +323,36 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
       return;
     }
 
-    // skip layers that don't have a source configured
+    // skip layers that don't have one or more sources configured
     id = this.getLayerSourceId_(layer);
-    if (!id || !this.cache_[id]) {
+    ids = this.getLayerSourceIds_(layer);
+    if ((!id || !this.cache_[id]) && !ids.length) {
       return;
     }
 
-    item = this.cache_[id];
-    item['resultSource'].pending = true;
-    infoFormat = item.source.infoFormat;
-
-    // sources that use GML as info format are combined together if they
-    // share the same server url
-    if (infoFormat === ngeo.QueryInfoFormatType.GML) {
-      url = item.source.wmsSource.getUrl();
-      goog.asserts.assertString(url);
-      if (!itemsByUrl[url]) {
-        itemsByUrl[url] = [];
-      }
-      itemsByUrl[url].push(item);
-    } else {
-      // TODO - support other kinds of infoFormats
-      item['resultSource'].pending = false;
+    if (id) {
+      ids.push(id);
     }
 
+    ids.forEach(function(id) {
+      item = this.cache_[id];
+      item['resultSource'].pending = true;
+      infoFormat = item.source.infoFormat;
+
+      // sources that use GML as info format are combined together if they
+      // share the same server url
+      if (infoFormat === ngeo.QueryInfoFormatType.GML) {
+        url = item.source.wmsSource.getUrl();
+        goog.asserts.assertString(url);
+        if (!itemsByUrl[url]) {
+          itemsByUrl[url] = [];
+        }
+        itemsByUrl[url].push(item);
+      } else {
+        // TODO - support other kinds of infoFormats
+        item['resultSource'].pending = false;
+      }
+    }, this);
   }, this);
 
   goog.object.forEach(itemsByUrl, function(items) {
@@ -399,6 +420,20 @@ ngeo.Query.prototype.getLayerSourceId_ = function(layer) {
   var id = layer.get(this.sourceIdProperty_);
   id = goog.isNumber(id) || goog.isString(id) ? id : '';
   return id;
+};
+
+
+/**
+ * Returns the source ids from an ol3 layer object.
+ * @param {ol.layer.Base} layer The ol3 layer object.
+ * @return {Array.<number|string>} ids The ids of the sources bound to that
+ *     layer.
+ * @private
+ */
+ngeo.Query.prototype.getLayerSourceIds_ = function(layer) {
+  var ids = layer.get(this.sourceIdsProperty_) || [];
+  goog.asserts.assertArray(ids);
+  return ids;
 };
 
 

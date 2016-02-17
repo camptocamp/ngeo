@@ -94,6 +94,21 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
     }
   } else {
     if (!this.cache_[id]) {
+
+      // Some nodes have child layers, i.e. a list of layer names that are
+      // part of a group.  The name of the group itself can't be used 'as-is'
+      // as an identifier of the layers for this source.  For example, a
+      // group named 'osm' might result in returning 'restaurant' features.
+      // This override makes sure that those layer names are used instead of
+      // the original one.
+      if (node.childLayers) {
+        var childLayerNames = [];
+        node.childLayers.forEach(function(childLayer) {
+          childLayerNames.push(childLayer.name);
+        }, this);
+        layers = childLayerNames.join(',');
+      }
+
       var source = {
         'id': id,
         'identifierAttributeField': identifierAttributeField,
