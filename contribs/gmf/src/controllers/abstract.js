@@ -58,6 +58,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
     labelKey: 'label',
     groupsKey: 'layer_name',
     groupValues: /** @type {Array.<string>} **/ ($injector.get('gmfSearchGroups')),
+    groupActions: /** @type {Array.<string>} **/ ($injector.get('gmfSearchActions')),
     projection: 'EPSG:' + (config.srid || 21781),
     url: /** @type {string} **/ ($injector.get('fulltextsearchUrl'))
   }];
