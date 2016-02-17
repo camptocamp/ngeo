@@ -85,6 +85,13 @@ ngeo.MobileGeolocationController = function($scope, $element,
     projection: map.getView().getProjection()
   });
 
+  // handle geolocation error.
+  this.geolocation_.on('error', function(error) {
+    // TODO disable geolocation button
+    // TODO notify user
+    this.untrack_();
+  }, this);
+
   /**
    * @type {ol.Feature}
    * @private
@@ -174,6 +181,15 @@ ngeo.MobileGeolocationController.prototype.toggleTracking = function() {
   if (this.geolocation_.getTracking()) {
     // if map center is different than geolocation position, then track again
     var currentPosition = this.geolocation_.getPosition();
+    // if user is using Firefox and select the "not now" option, OL geolocation
+    // doesn't return an error
+    if (!goog.isDef(currentPosition)) {
+      // TODO disable geolocation button
+      // TODO notify user
+      this.untrack_();
+      return;
+    }
+    goog.asserts.assert(goog.isDef(currentPosition));
     var center = this.map_.getView().getCenter();
     if (currentPosition[0] === center[0] &&
         currentPosition[1] === center[1]) {
