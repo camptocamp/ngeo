@@ -2,6 +2,7 @@
  * Entry point for all styles required for the mobile application.
  */
 @import 'font.less';
+@import 'mixins.less';
 @import 'base.less';
 @import 'map.less';
 @import 'layertree.less';
@@ -13,6 +14,9 @@
 @app-margin: 1em;
 
 @search-input-size: 200px;
+@search-input-width: ceil(@search-input-size + 9);
+
+@font-size-mobile-icon: 2.4rem;
 
 main>* {
   position: absolute;
@@ -38,7 +42,7 @@ gmf-map {
  * Search (typeahead)
  */
 span.twitter-typeahead {
-  &:after {
+  &:after { // magnifying glass in search input
     content: '\f002';
     font-family: FontAwesome;
     color: grey;
@@ -128,11 +132,20 @@ span.twitter-typeahead {
       cursor: pointer;
     }
   }
+  .form-control {
+    background: initial !important;
+    border: none;
+    outline: none;
+  }
 }
 
-//For tablet only
+//For view ports >= 768px width
 @media (min-width: @screen-sm-min) {
   @search-width: 18em;
+
+  span.twitter-typeahead {
+    left: -2.2rem;
+  }
   .tt-menu {
     top: 4em !important;
     width: @search-width;
@@ -149,11 +162,21 @@ span.twitter-typeahead {
     input {
       margin: 0;
       border: none;
-      width: ~"calc(" @search-width ~" - 2px)";
+      width: ~"calc(" @search-width ~" - 4.7em)";
+      left: 15px;
     }
     .clear-button {
       right: 0;
       left: auto;
+    }
+    .form-control {
+      .noshadow();
+      &:focus {
+        .noshadow();
+      }
+      &.ng-pristine.ng-untouched.ng-valid.tt-hint {
+        left: 1em !important;
+      }
     }
   }
 }
@@ -161,20 +184,89 @@ span.twitter-typeahead {
 //For mobile only
 @media (max-width: @screen-xs-max) {
   span.twitter-typeahead {
-    &:after {
+    &:after { // magnifying glass in search input
       content: none !important;
+      top: 0.3em;
+      left: 0;
+      font-size: 1.4em;
     }
-
     input {
+      margin-left: 0;
+      padding-left: 1em;
       padding: 0 5px !important;
+    }
+    .search {
+      .form-control {
+        &:focus {
+          .noshadow();
+        }
+        &.ng-pristine.ng-untouched.ng-valid.tt-hint {
+          left: 0 !important;
+        }
+      }
+    }
+  }
+
+  .search .clear-button {
+    &:after {
+      font-size: 2em;
+    }
+  }
+
+  .tt-menu {
+    border-top: 1px solid black;
+    border-right: inherit;
+    border-bottom: inherit;
+    border-left: inherit;
+
+    .search-datum {
+      padding-left: 1em;
+    }
+  }
+
+  .ol-zoom {
+    button {
+      width: @map-tools-size - 1.25em;
+      height: @map-tools-size - 1.25em;
+    }
+  }
+
+  .ol-control button,
+  .ol-touch .ol-control button {
+    font-size: @font-size-mobile-icon;
+  }
+
+  //mobile styles for the theme and background selector
+  .gmf-theme-selector,
+  .gmf-mobile-background-layer-selector {
+    .gmf-icon-check:after {
+      font-size: 1.2rem;
+      position: relative;
+      bottom: 0.8rem;
+    }
+    .gmf-text {
+        margin: 3% 10px 0 0;
+    }
+    .gmf-thumb {
+      height: auto;
+      width: 25%;
+    }
+  }
+  .gmf-icon {
+    &:after,
+    &:before {
+      font-size: @font-size-mobile-icon;
+    }
+  }
+  .fa-wrench,
+  .fa-location-arrow {
+    &:after,
+    &:before {
+      font-size: @font-size-mobile-icon;
     }
   }
 }
 
-.ol-control button,
-.ol-touch .ol-control button {
-  font-size: 1em;
-}
 .ol-zoom {
   top: 5em;
   .ol-zoom-in,
@@ -182,6 +274,7 @@ span.twitter-typeahead {
     border-radius: 0;
   }
 }
+
 button[ngeo-mobile-geolocation] {
   right: @app-margin;
   top: 11.5em;
@@ -191,6 +284,20 @@ button[ngeo-mobile-geolocation] {
   right: @app-margin;
   left: auto;
 }
+
+//For mobile with wide viewport or landscape mode only (> 375px and < 768px)
+@media (min-width: (@screen-xs-min - 105)) {
+  .twitter-typeahead {
+    width: 100%;
+    margin-left: 2.5em;
+  }
+  .search .clear-button {
+    left: inherit;
+    margin-left: inherit;
+    right: 3em;
+  }
+}
+
 //For tablet only
 @media (min-width: @screen-sm-min) {
   .ol-zoom {
@@ -199,9 +306,15 @@ button[ngeo-mobile-geolocation] {
   }
   button[ngeo-mobile-geolocation] {
     top: auto;
-    bottom: 5.5em;
+    bottom: 4.7em;
     & button:after {
       content: 'b'
     }
+  }
+  .tt-menu {
+    border-top: inherit;
+    border-right: 1px solid black;
+    border-bottom: inherit;
+    border-left: 1px solid black;
   }
 }
