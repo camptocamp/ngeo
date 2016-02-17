@@ -47,10 +47,10 @@ ngeo.QueryResultSource;
  * The `ngeoQueryResult` is the value service where the features of the query
  * result are added.
  */
-ngeo.module.value('ngeoQueryResult', {
-  'sources': [],
-  'total': 0
-});
+ngeo.module.value('ngeoQueryResult', /** @type {ngeo.QueryResult} */ ({
+  sources: [],
+  total: 0
+}));
 
 
 /**
