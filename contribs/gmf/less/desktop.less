@@ -2,6 +2,7 @@
  * Entry point for all styles required for the desktop application.
  */
 @import 'font.less';
+@import 'mixins.less';
 @import 'base.less';
 @import 'map.less';
 @import 'layertree.less';
@@ -99,6 +100,9 @@ main {
       position: relative;
       padding-right: 20px;
       width: auto;
+      &:focus {
+        .noshadow();
+      }
     }
 
     .tt-menu {
