@@ -36,11 +36,12 @@ ngeo.module.value('gmfMobiledisplayqueriesTemplateUrl',
  * Features displayed on the map use a default style but you can override these
  * styles by passing ol.style.Style objects as attributes of this directive.
  *
- * @example
- * <gmf-mobiledisplayqueries
- *     gmf-mobiledisplayqueries-featuresstyle="ctrl.styleForAllFeatures"
- *     gmf-mobiledisplayqueries-selectedfeaturestyle="ctrl.styleForTheCurrentFeature">
- * </gmf-mobiledisplayqueries>
+ * Example:
+ *
+ *      <gmf-mobiledisplayqueries
+ *        gmf-mobiledisplayqueries-featuresstyle="ctrl.styleForAllFeatures"
+ *        gmf-mobiledisplayqueries-selectedfeaturestyle="ctrl.styleForTheCurrentFeature">
+ *      </gmf-mobiledisplayqueries>
  *
  * @htmlAttribute {ol.style.Style} gmf-mobiledisplayqueries-featuresstyle A style
  *     object for all features from the result of the query.

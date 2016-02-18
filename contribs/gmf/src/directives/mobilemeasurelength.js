@@ -27,11 +27,12 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
 /**
  * Provide a "mobile measure" directive.
  *
- * @example
- * <div gmf-mobile-measure-length=""
- *   gmf-mobile-measure-length-active="ctrl.measureLengthActive"
- *   gmf-mobile-measure-length-map="::ctrl.map">
- * </div>
+ * Example:
+ *
+ *      <div gmf-mobile-measure-length=""
+ *        gmf-mobile-measure-length-active="ctrl.measureLengthActive"
+ *        gmf-mobile-measure-length-map="::ctrl.map">
+ *      </div>
  *
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.
