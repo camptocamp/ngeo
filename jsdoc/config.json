@@ -16,7 +16,10 @@
     ],
     "templates": {
         "cleverLinks": true,
-        "monospaceLinks": true
+        "monospaceLinks": true,
+        "default": {
+            "outputSourceFiles": false
+        }
     },
     "opts": {
         "template": "jsdoc/template",
