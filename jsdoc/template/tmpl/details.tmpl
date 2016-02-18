@@ -111,10 +111,15 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
         </ul></dd>
     <?js } ?>
 
-    <?js if (data.meta && self.outputSourceFiles) {?>
+    <?js if (data.meta) {?>
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <?js= self.linkto(meta.shortpath) ?>, <?js= self.linkto(meta.shortpath, 'line ' + meta.lineno, null, 'line' + meta.lineno) ?>
+    <?js
+    var baseUrl = 'https://github.com/camptocamp/ngeo/blob/' +
+      (process.env.TRAVIS_COMMIT || 'master') + '/';
+    ?>
+        <a href="<?js= baseUrl ?><?js= meta.shortpath ?>"><?js= meta.shortpath ?></a>,
+        <a href="<?js= baseUrl ?><?js= meta.shortpath ?>#L<?js= meta.lineno ?>">line <?js= meta.lineno ?></a>
     </li></ul></dd>
     <?js } ?>
 
