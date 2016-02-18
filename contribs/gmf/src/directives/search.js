@@ -39,13 +39,37 @@ gmf.module.value('gmfSearchTemplateUrl',
  * for drawing features on the map. The application is responsible to
  * initialize the ngeoFeatureOverlayMgr with the map.
  *
- * Example:
+ * Example flat results:
  *
  *      <gmf-search gmf-search-map="ctrl.map"
  *        gmf-search-datasources="ctrl.searchDatasources"
  *        gmf-search-currenttheme="ctrl.theme"
  *        gmf-search-clearbutton="true">
  *      </gmf-search>
+ *      <script>
+ *        (function() {
+ *          var module = angular.module('app');
+ *          module.constant('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 20}) | n}');
+ *          module.constant('gmfSearchGroups', []);
+ *          module.constant('gmfSearchActions', ['add_theme', 'add_group', 'add_layer']);
+ *        })();
+ *      </script>
+ *
+ * Example with categories:
+ *
+ *      <gmf-search gmf-search-map="ctrl.map"
+ *        gmf-search-datasources="ctrl.searchDatasources"
+ *        gmf-search-currenttheme="ctrl.theme"
+ *        gmf-search-clearbutton="true">
+ *      </gmf-search>
+ *      <script>
+ *        (function() {
+ *          var module = angular.module('app');
+ *          module.constant('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 30, "partitionlimit": 5}) | n}');
+ *          module.constant('gmfSearchGroups', ${dumps(fulltextsearch_groups) | n});
+ *          module.constant('gmfSearchActions', []);
+ *        })();
+ *      </script>
  *
  * @param {string} gmfSearchTemplateUrl URL to template.
  * @htmlAttribute {ol.Map} gmf-search-map The map
