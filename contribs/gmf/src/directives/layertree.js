@@ -841,7 +841,7 @@ gmf.LayertreeController.prototype.zoomToResolution = function(node) {
 
 
 /**
- * Collect and return all ids this node and all child nodes as well.
+ * Collect and return all ids of this node and all child nodes as well.
  * @param {GmfThemesNode} node Layer tree node.
  * @return {Array.<number|string>} Layer names.
  * @private

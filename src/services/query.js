@@ -318,12 +318,12 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
 
   map.getLayers().forEach(function(layer) {
 
-    // skip layers that are not visible
+    // Skip layers that are not visible
     if (!layer.getVisible()) {
       return;
     }
 
-    // skip layers that don't have one or more sources configured
+    // Skip layers that don't have one or more sources configured
     id = this.getLayerSourceId_(layer);
     ids = this.getLayerSourceIds_(layer);
     if ((!id || !this.cache_[id]) && !ids.length) {
@@ -339,7 +339,7 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
       item['resultSource'].pending = true;
       infoFormat = item.source.infoFormat;
 
-      // sources that use GML as info format are combined together if they
+      // Sources that use GML as info format are combined together if they
       // share the same server url
       if (infoFormat === ngeo.QueryInfoFormatType.GML) {
         url = item.source.wmsSource.getUrl();
@@ -433,7 +433,8 @@ ngeo.Query.prototype.getLayerSourceId_ = function(layer) {
 ngeo.Query.prototype.getLayerSourceIds_ = function(layer) {
   var ids = layer.get(this.sourceIdsProperty_) || [];
   goog.asserts.assertArray(ids);
-  return ids;
+  var clone = ids.slice()
+  return clone;
 };
 
 
