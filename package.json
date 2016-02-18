@@ -30,7 +30,7 @@
     "clean-css": "2.2.7",
     "closure-util": "1.10.0",
     "coveralls": "2.11.6",
-    "d3": "3.5.15",
+    "d3": "3.5.16",
     "font-awesome": "4.5.0",
     "fs-extra": "0.26.5",
     "gaze": "0.5.2",
