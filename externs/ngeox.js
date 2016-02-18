@@ -59,6 +59,7 @@ ngeox.QueryOptions.prototype.sourceIdsProperty;
  *     params: (Object.<string, *>|undefined),
  *     serverType: (string|undefined),
  *     url: (string|undefined),
+ *     validateLayerParams: (boolean|undefined),
  *     wmsSource: (ol.source.ImageWMS|ol.source.TileWMS|undefined)
  * }}
  */
@@ -131,6 +132,29 @@ ngeox.QuerySource.prototype.serverType;
  * @type {string|undefined}
  */
 ngeox.QuerySource.prototype.url;
+
+
+/**
+ * Whether to validate the LAYERS params of the layer currently being
+ * queried. Useful if the source configuration was not given a direct
+ * reference to the ol3 WMS source object, i.e. it was given an `url` and
+ * `params` properties instead, which resulted in the creation of an
+ * inner `ol.source.ImageWMS` object. If that source configuration is attached
+ * to a layer that also has an ol3 WMS source object, then the latter may
+ * contain more than one layer name within the LAYERS param. In that case,
+ * this `validateLayerParams` property, when enabled, will make the query
+ * service check if the layer name within its LAYERS params is currently inside
+ * the layer source LAYERS params. If it's not there, then the source should
+ * not be queried.
+ *
+ * When setting this option, you must not set the wmsSource or layer if
+ * it has an inner ol3 wms source object.
+ *
+ * Also, when using this option, your config `params` must also only have
+ * one layer name set in the LAYERS property.
+ * @type {boolean|undefined}
+ */
+ngeox.QuerySource.prototype.validateLayerParams;
 
 
 /**

@@ -334,8 +334,34 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
       ids.push(id);
     }
 
-    ids.forEach(function(id) {
+    for (var i = 0, len = ids.length; i < len; i++) {
+      id = ids[i];
       item = this.cache_[id];
+
+      // If `validateLayerParams` is set, then the source config layer in the
+      // LAYERS params must be in the current LAYERS params of the layer
+      // wms source object.
+      if (item.source.validateLayerParams) {
+        goog.asserts.assert(
+            layer instanceof ol.layer.Image ||
+            layer instanceof ol.layer.Tile,
+            'The layer should be an Image or Tile when using the ' +
+            'validateLayerParams option.'
+        );
+        var layerSource = layer.getSource();
+        goog.asserts.assert(
+            layerSource instanceof ol.source.ImageWMS ||
+            layerSource instanceof ol.source.TileWMS,
+            'The layer source should be a WMS one when using the ' +
+            'validateLayerParams option.'
+        );
+        var layerLayers = layerSource.getParams()['LAYERS'].split(',');
+        var cfgLayer = item.source.wmsSource.getParams()['LAYERS'];
+        if (layerLayers.indexOf(cfgLayer) === -1) {
+          continue;
+        }
+      }
+
       item['resultSource'].pending = true;
       infoFormat = item.source.infoFormat;
 
@@ -352,7 +378,7 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
         // TODO - support other kinds of infoFormats
         item['resultSource'].pending = false;
       }
-    }, this);
+    }
   }, this);
 
   goog.object.forEach(itemsByUrl, function(items) {

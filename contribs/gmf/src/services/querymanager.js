@@ -87,6 +87,7 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
   var layers = meta['wmsLayers'] || meta['queryLayers'] || node.layers;
   var name = node.name;
   var url = meta['wmsUrl'] || node.url || this.gmfWmsUrl_;
+  var validateLayerParams = false;
 
   if (children) {
     for (var i = 0, len = children.length; i < len; i++) {
@@ -107,6 +108,8 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
           childLayerNames.push(childLayer.name);
         }, this);
         layers = childLayerNames.join(',');
+      } else if (node.type === 'WMS') {
+        validateLayerParams = true;
       }
 
       var source = {
@@ -114,7 +117,8 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
         'identifierAttributeField': identifierAttributeField,
         'label': name,
         'params': {'LAYERS': layers},
-        'url': url
+        'url': url,
+        'validateLayerParams': validateLayerParams
       };
       this.cache_[id] = source;
       this.sources_.push(source);
