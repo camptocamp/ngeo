@@ -7,6 +7,16 @@ goog.require('ngeo.Location');
 
 
 /**
+ * Example:
+ *
+ *     <gmf-themeselector
+ *         id="themes"
+ *         class="slide"
+ *         data-header-title="Themes"
+ *         gmf-themeselector-currenttheme="mainCtrl.theme"
+ *         gmf-themeselector-filter="::mainCtrl.filter">
+ *     </gmf-themeselector>
+ *
  * @htmlAttribute {string} gmf-themeselector-defaulttheme The default theme.
  * @htmlAttribute {Object} gmf-themeselector-currenttheme The selected theme.
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.

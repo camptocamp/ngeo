@@ -11,10 +11,10 @@ goog.require('ngeo.profile');
  *
  * Example:
  *
- *     <div ngeo-profile="ctrl.profileData"
- *          ngeo-profile-options="ctrl.profileOptions"
- *          ngeo-profile-pois="ctrl.profilePois"
- *     ></div>
+ *      <div ngeo-profile="ctrl.profileData"
+ *        ngeo-profile-options="ctrl.profileOptions"
+ *        ngeo-profile-pois="ctrl.profilePois">
+ *      </div>
  *
  * Where "ctrl.profileOptions" is of type {@link ngeox.profile.ProfileOptions};
  * "ctrl.profileData" and "ctrl.profilePois" are arrays which will be

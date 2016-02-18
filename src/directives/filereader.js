@@ -10,8 +10,9 @@ goog.require('ngeo');
  * Only works for text files (`readAsText` used for reading the file). And does
  * not work in Internet Explorer 9.
  *
- * @example
- * <input type="file" ngeo-filereader="ctrl.fileContent"
+ * Example:
+ *
+ *      <input type="file" ngeo-filereader="ctrl.fileContent"
  *        ngeo-filereader-supported="ctrl.supported"/>
  *
  * @param {angular.$window} $window The Angular $window service.

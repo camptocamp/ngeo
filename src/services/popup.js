@@ -21,6 +21,8 @@ ngeo.CreatePopup;
  * Provides a factory to create a popup in the page.
  * The factory returns a ngeo.Popup object.
  *
+ * Example:
+ *
  *     var popup = ngeoCreatePopup();
  *     popup.setTitle("A title");
  *     popup.setContent("Some content");

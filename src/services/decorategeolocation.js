@@ -9,8 +9,9 @@ goog.require('ngeo');
  * `Object.defineProperty`) to the `ol.Geolocation` instance, making it
  * possible to activate/deactivate the tracking mode.
  *
- * @example
- * <input type="checkbox" ngModel="geolocation.tracking" />
+ * Example:
+ *
+ *      <input type="checkbox" ngModel="geolocation.tracking" />
  *
  * @typedef {function(ol.Geolocation)}
  * @ngdoc service
