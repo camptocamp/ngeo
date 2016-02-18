@@ -26,6 +26,8 @@ before_script:
 
 script:
 - if [ ${TRAVIS_PULL_REQUEST} != "false" ] ; then git diff --check ${TRAVIS_BRANCH} -- ; fi
+- if [ "`git grep @fileoverview src contribs`" != "" ] ; then echo "Using @fileoverview breaks the documentation main page" ; false ; fi
+- if [ "`git grep @example src contribs`" != "" ] ; then echo "We don't use @example to have the example in the description" ; false ; fi
 - make check
 - make .build/examples-hosted/index.html
 - make .build/examples-hosted/contribs/gmf/index.html

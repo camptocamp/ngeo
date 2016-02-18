@@ -29,11 +29,12 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
 /**
  * Provide a "mobile measure" directive.
  *
- * @example
- * <div gmf-mobile-measure-point=""
- *   gmf-mobile-measure-point-active="ctrl.measurePointActive"
- *   gmf-mobile-measure-point-map="::ctrl.map">
- * </div>
+ * Example:
+ *
+ *      <div gmf-mobile-measure-point=""
+ *        gmf-mobile-measure-point-active="ctrl.measurePointActive"
+ *        gmf-mobile-measure-point-map="::ctrl.map">
+ *      </div>
  *
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.

@@ -1,8 +1,3 @@
-/**
- * @fileoverview This file defines the QueryManager service, which uses the
- * c2cgeoportal's themes to configure ngeo's query service with each layer
- * found.
- */
 goog.provide('gmf.QueryManager');
 
 goog.require('gmf');
@@ -11,6 +6,9 @@ goog.require('ngeo.Query');
 
 
 /**
+ * The QueryManager service, uses the
+ * c2cgeoportal's themes to configure ngeo's query service with each layer
+ * found.
  * @constructor
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
