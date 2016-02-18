@@ -36,6 +36,12 @@ ngeo.LayerHelper = function($q, $http) {
 
 
 /**
+ * @const
+ */
+ngeo.LayerHelper.GROUP_KEY = 'groupName';
+
+
+/**
  * Create and return a basic WMS layer with only a source URL and a dot
  * separated layers names (see {@link ol.source.ImageWMS}).
  * @param {string} sourceURL The source URL.
@@ -112,6 +118,30 @@ ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
   if (goog.isDefAndNotNull(opt_layers)) {
     group.setLayers(opt_layers);
   }
+  return group;
+};
+
+
+/**
+ * Retrieve (or create if it doesn't exist) and return a group of layer from
+ * the base array of layers of a map. The given name is used as unique
+ * identifier. If the group is created, it will be automatically added to
+ * the map.
+ * @param {ol.Map} map A map.
+ * @param {string} groupName The name of the group.
+ * @return {ol.layer.Group} The group corresponding to the given name.
+ * @export
+ */
+ngeo.LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
+  var groups = map.getLayerGroup().getLayers();
+  groups.forEach(function(group) {
+    if (group.get(ngeo.LayerHelper.GROUP_KEY) === groupName) {
+      return group;
+    }
+  });
+  var group = this.createBasicGroup();
+  group.set(ngeo.LayerHelper.GROUP_KEY, groupName);
+  map.addLayer(group);
   return group;
 };
 

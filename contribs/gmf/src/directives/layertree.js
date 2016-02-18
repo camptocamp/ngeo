@@ -147,7 +147,20 @@ gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
    */
   this.openLinksInNewWindow = this['openLinksInNewWindowFn']() === true ?
       true : false;
+
+  /**
+   * @type {ol.layer.Group}
+   * @private
+   */
+  this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
+        gmf.LayertreeController.DATALAYERGROUP_NAME);
 };
+
+
+/**
+ * @const
+ */
+gmf.LayertreeController.DATALAYERGROUP_NAME = 'data';
 
 
 /**
@@ -261,10 +274,8 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
   if (goog.isDefAndNotNull(layer)) {
     layer.set('querySourceId', node.id);
     layer.set('layerName', node.name);
-    // The layer must be upper than the background
-    layer.setZIndex(1);
-    // Add the new layer on the map but behind (before) others layers
-    this.map.getLayerGroup().getLayers().insertAt(0, layer);
+
+    this.dataLayerGroup_.getLayers().insertAt(0, layer);
 
     // If layer is 'unchecked', set it to invisible.
     var metadata = node.metadata;
@@ -408,16 +419,18 @@ gmf.LayertreeController.prototype.retrieveFirstParentTree_ = function(treeCtrl) 
 
 
 /**
- * Remove layer from map on a ngeo layertree destroy event.
+ * Remove layer from this component's layergroup (and then, from the map) on
+ * a ngeo layertree destroy event.
  * @param {angular.Scope} scope treeCtrl scope.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
 gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
+  var dataLayerGroup = this.dataLayerGroup_;
   scope.$on('$destroy', angular.bind(treeCtrl, function() {
-    // Remove treeCtrl.layer from map.
-    treeCtrl.map.removeLayer(treeCtrl.layer);
+    // Remove the layer from the map.
+    dataLayerGroup.getLayers().remove(treeCtrl.layer);
   }));
 };
 
