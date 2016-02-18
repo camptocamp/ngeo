@@ -207,36 +207,42 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     var datasource = this.datasources_[i];
 
     /** @type {Array.<string>} */
-    var groupValues = goog.isDef(datasource.groupValues) &&
-        goog.isDef(datasource.groupsKey) ? datasource.groupValues : [];
+    var groupValues = goog.isDef(datasource.groupValues) ? datasource.groupValues : [];
+    /** @type {Array.<string>} */
     var groupActions = datasource.groupActions ? datasource.groupActions : [];
-    groupValues = groupValues.concat(groupActions);
-    var filter;
+    var filters = [];
 
-    do {
-      var title = datasource.datasetTitle || '';
+    if (groupValues.length === 0) {
+      filters.push({
+        'title': undefined,
+        'filter': undefined
+      });
+    } else {
+      groupValues.forEach(function(layerName) {
+        filters.push({
+          'title': layerName,
+          'filter': this.filterLayername_(layerName)
+        });
+      }, this);
+      groupActions.forEach(function(action) {
+        filters.push({
+          'title': action,
+          'filter': this.filterAction_(action)
+        });
+      }, this);
+    }
 
-      if (groupValues.length > 0) {
-        // Add an optional filter function to keep objects only from one
-        // "layername" from a GMF's fulltextsearch service.
-        filter = this.filterLayername_(datasource.groupsKey, groupValues[0]);
-        title = title + groupValues[0];
-        groupValues.shift();
-      } else {
-        filter = undefined;
-      }
-
+    filters.forEach(function(filter) {
       this.datasets.push(this.createDataset_({
         bloodhoundOptions: datasource.bloodhoundOptions,
-        datasetTitle: title,
-        groupsKey: datasource.groupsKey,
+        datasetTitle: filter['title'],
+        groupsKey: 'layer_name',
         labelKey: datasource.labelKey,
         projection: datasource.projection,
         typeaheadDatasetOptions: datasource.typeaheadDatasetOptions,
         url: datasource.url
-      }, filter));
-
-    } while (groupValues.length > 0);
+      }, filter['filter']));
+    }, this);
   }
 
 
@@ -271,7 +277,8 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
     },
     templates: /* TypeaheadTemplates */ ({
       header: function() {
-        return '<div class="search-header">' + config.datasetTitle + '</div>';
+        return config.datasetTitle === undefined ? '' :
+          '<div class="search-header">' + config.datasetTitle + '</div>';
       },
       suggestion: function(suggestion) {
         var feature = /** @type {ol.Feature} */ (suggestion);
@@ -281,10 +288,8 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
 
         var html = '<p class="search-label">' + feature.get(config.labelKey) +
                    '</p>';
-        if (config.groupsKey) {
-          html += '<p class="search-group">' + feature.get(config.groupsKey) +
-                  '</p>';
-        }
+        html += '<p class="search-group">' + feature.get('layer_name') +
+                '</p>';
         html = '<div class="search-datum">' + html + '</div>';
         return compile(html)(scope);
       }
@@ -298,14 +303,12 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
 
 
 /**
- * @param {string} groupsKey key used to group this set of data.
- * @param {string} groupValue The dataset "type" to keep.
+ * @param {string} action The action to keep.
  * @return {(function(GeoJSONFeature): boolean)} A filter function based on a
  *     GeoJSONFeaturesCollection's array.
  * @private
  */
-gmf.SearchController.prototype.filterLayername_ = function(groupsKey,
-    groupValue) {
+gmf.SearchController.prototype.filterAction_ = function(action) {
   return (
       /**
        * @param {GeoJSONFeature} feature
@@ -316,14 +319,34 @@ gmf.SearchController.prototype.filterLayername_ = function(groupsKey,
         if (properties['actions']) {
           // result is an action (add_theme, add_group, ...)
           // add it to the corresponding group
-          return properties['actions'].some(function(action) {
-            return action.action === groupValue;
+          return properties['layer_name'] === '' && properties['actions'].some(function(act) {
+            return act.action === action;
           })
         } else {
-          // result is a geometry
-          return properties[groupsKey] === groupValue;
+          return false;
         }
-      });
+      }
+  );
+};
+
+
+/**
+ * @param {string} layerName The layerName to keep.
+ * @return {(function(GeoJSONFeature): boolean)} A filter function based on a
+ *     GeoJSONFeaturesCollection's array.
+ * @private
+ */
+gmf.SearchController.prototype.filterLayername_ = function(layerName) {
+  return (
+      /**
+       * @param {GeoJSONFeature} feature
+       * @return {boolean}
+       */
+      function(feature) {
+        var properties = feature['properties'];
+        return properties['layer_name'] === layerName;
+      }
+  );
 };
 
 
