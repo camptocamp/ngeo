@@ -263,6 +263,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
   var compile = this.compile_;
   var bloodhoundEngine = this.createAndInitBloodhound_(config, opt_filter);
   var typeaheadDataset = /** @type {TypeaheadDataset} */ ({
+    limit: Infinity,
     source: bloodhoundEngine.ttAdapter(),
     display: function(suggestion) {
       var feature = /** @type {ol.Feature} */ (suggestion);
