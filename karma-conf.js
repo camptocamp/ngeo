@@ -29,6 +29,7 @@ module.exports = function(config) {
       'node_modules/angular-gettext/dist/angular-gettext.js',
       'node_modules/angular-animate/angular-animate.js',
       'node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/angular-touch/angular-touch.js',
       'test/spec/beforeeach.js',
       'test/spec/data/*.js',
       'test/spec/**/*.spec.js',
