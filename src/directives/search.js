@@ -14,6 +14,9 @@ goog.require('ngeo');
  *        ngeo-search-datasets="ctrl.typeaheadDatasets"
  *        ngeo-search-listeners="crtl.typeaheadListeners">
  *
+ * @htmlAttribute {TypeaheadOptions} ngeo-search The options.
+ * @htmlAttribute {Array.<TypeaheadDataset>} ngeo-search-datasets The sources datasets.
+ * @htmlAttribute {ngeox.SearchDirectiveListeners} ngeo-search-listeners The listeners.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  * @ngdoc directive

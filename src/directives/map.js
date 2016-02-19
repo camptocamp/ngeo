@@ -13,6 +13,7 @@ goog.require('ol.Map');
  *
  *      <div ngeo-map="ctrl.map"></div>
  *
+ * @htmlAttribute {ol.Map} ngeo-map The map.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  * @ngdoc directive

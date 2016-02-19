@@ -18,6 +18,7 @@ goog.require('ol.control.Control');
  * instance, and the expression passed to "ngeo-control-map" should
  * evaluate to a map instance.
  *
+ * @htmlAttribute {ol.Map} ngeo-control-map The map.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive

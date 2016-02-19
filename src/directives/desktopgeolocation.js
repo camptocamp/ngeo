@@ -21,6 +21,8 @@ goog.require('ol.geom.Point');
  *        ngeo-desktop-geolocation-options="ctrl.desktopGeolocationOptions">
  *      </button>
  *
+ * @htmlAttribute {ol.Map} gmf-geolocation-map The map.
+ * @htmlAttribute {ngeox.DesktopGeolocationDirectiveOptions} gmf-geolocation-options The options.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive

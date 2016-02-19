@@ -44,6 +44,8 @@ ngeo.SortableOptions;
  * if some outside code adds/removes elements to/from the "sortable" array,
  * the "ngeoSortable" directive will pick it up.
  *
+ * @htmlAttribute {Array.<ol.layer.Base>} ngeo-sortable The layers to sort.
+ * @htmlAttribute {!ngeo.SortableOptions} ngeo-sortable The options.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @return {angular.Directive} The directive specs.
  * @ngInject

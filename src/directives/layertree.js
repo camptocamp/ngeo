@@ -75,6 +75,26 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * controller: "layertreeCtrl". You can refer to that property in a custom
  * template for example.
  *
+ * @htmlAttribute {Object} ngeo-layertree One theme (JSON).
+ * @htmlAttribute {string} ngeo-layertree-templateurl The template URL.
+ * @htmlAttribute {ol.Map} ngeo-layertree-map The map.
+ * @htmlAttribute {string} ngeo-layertree-nodelayer Expression that will be parsed
+ *      to be a {@link Function} that return a {@link ol.layer.Layer}
+ *      with the argument:
+ *      {
+ *          'node': {@link Object}|undefined,
+ *          'depth': {@link number}
+ *      }
+ * @htmlAttribute {string} ngeo-layertree-nodelayerexpr Expression that will be parsed
+ *      to be a {@link ngeo-layertree-nodelayer}.
+ * @htmlAttribute {string} ngeo-layertree-listeners Expression that will be parsed
+ *      to be a {@link Function} with the argument:
+ *      {
+ *          'treeScope': !{@link angular.Scope},
+ *          'treeCtrl': {@link ngeo.LayertreeController}
+ *      }
+ * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
+ *      to be a {@link ngeo-layertree-listeners}.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoLayertreeTemplateUrl Template URL for the directive.

@@ -30,6 +30,7 @@ gmf.module.value('gmfMobileBackgroundLayerSelectorTemplateUrl',
  *        gmf-mobile-background-layer-selector-map="::ctrl.map">
  *      </gmf-mobile-background-layer-selector>
  *
+ * @htmlAttribute {ol.Map=} gmf-mobile-background-layer-selector-map The map.
  * @param {string} gmfMobileBackgroundLayerSelectorTemplateUrl Url to template.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject

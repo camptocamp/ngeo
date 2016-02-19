@@ -20,6 +20,7 @@ goog.require('ol.Map');
  *
  *      <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
  *
+ * @htmlAttribute {ol.Map} gmf-map-map The map.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive

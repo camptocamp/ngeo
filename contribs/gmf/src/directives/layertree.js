@@ -60,6 +60,8 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * metadata URLs in a new window. By default, and in the default template,
  * links will be opened in a popup.
  *
+ * @htmlAttribute {Object} gmf-layertree-source One theme (JSON).
+ * @htmlAttribute {ol.Map} gmf-layertree-map The map.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfLayertreeTemplate Template for the directive.
  * @return {angular.Directive} The directive specs.

@@ -129,13 +129,13 @@ This plugin provides the `@ngdoc <type>` and `@ngname <name>` tags.
 `@ngdoc` is used to define the Angular type (directive, service, controller
 or filter) and `@ngname` defines the name used to register this component.
 
-For directive the HTML attributes are declared with `@htmlAttribute {<type>} <name> <description>`.
+For directive the HTML attributes are declared with `@htmlAttribute {<type>} <name> <description>.`.
 
 For example:
 ```js
 /**
  * @return {angular.Directive} The directive specs.
- * @htmlAttribute {ol.Map} ngeo-control-map The map
+ * @htmlAttribute {ol.Map} ngeo-control-map The map.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoControl

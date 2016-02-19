@@ -21,6 +21,11 @@ goog.require('ngeo.profile');
  * processed by {@link ngeox.profile.ElevationExtractor} and
  * {@link ngeox.profile.PoiExtractor}.
  *
+ * @htmlAttribute {?Object} ngeo-profile The profile data.
+ * @htmlAttribute {ngeox.profile.ProfileOptions} ngeo-profile-options The options.
+ * @htmlAttribute {?Array} ngeo-profile-pois The data for POIs.
+ * @htmlAttribute {*} ngeo-profile-highlight Any property on the scope which
+ * evaluated value may correspond to distance from origin.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
