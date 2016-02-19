@@ -272,7 +272,8 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
   }
 
   if (goog.isDefAndNotNull(layer)) {
-    layer.set('querySourceId', node.id);
+    var ids = this.getNodeIds_(node);
+    layer.set('querySourceIds', ids);
     layer.set('layerName', node.name);
 
     this.dataLayerGroup_.getLayers().insertAt(0, layer);
@@ -849,6 +850,26 @@ gmf.LayertreeController.prototype.zoomToResolution = function(node) {
   if (goog.isDef(resolution)) {
     view.setResolution(resolution);
   }
+};
+
+
+/**
+ * Collect and return all ids of this node and all child nodes as well.
+ * @param {GmfThemesNode} node Layer tree node.
+ * @return {Array.<number|string>} Layer names.
+ * @private
+ */
+gmf.LayertreeController.prototype.getNodeIds_ = function(node) {
+  var ids = [];
+  var children = node.children || node;
+  if (children && children.length) {
+    children.forEach(function(childNode) {
+      ids = ids.concat(this.getNodeIds_(childNode));
+    }, this);
+  } else if (node.id !== undefined) {
+    ids.push(node.id);
+  }
+  return ids;
 };
 
 

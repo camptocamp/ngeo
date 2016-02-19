@@ -87,6 +87,7 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
   var layers = meta['wmsLayers'] || meta['queryLayers'] || node.layers;
   var name = node.name;
   var url = meta['wmsUrl'] || node.url || this.gmfWmsUrl_;
+  var validateLayerParams = false;
 
   if (children) {
     for (var i = 0, len = children.length; i < len; i++) {
@@ -94,12 +95,30 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
     }
   } else {
     if (!this.cache_[id]) {
+
+      // Some nodes have child layers, i.e. a list of layer names that are
+      // part of a group. The name of the group itself can't be used 'as-is'
+      // as an identifier of the layers for this source. For example, a
+      // group named 'osm' might result in returning 'restaurant' features.
+      // This override makes sure that those layer names are used instead of
+      // the original one.
+      if (node.childLayers && node.childLayers.length) {
+        var childLayerNames = [];
+        node.childLayers.forEach(function(childLayer) {
+          childLayerNames.push(childLayer.name);
+        }, this);
+        layers = childLayerNames.join(',');
+      } else if (node.type === 'WMS') {
+        validateLayerParams = true;
+      }
+
       var source = {
         'id': id,
         'identifierAttributeField': identifierAttributeField,
         'label': name,
         'params': {'LAYERS': layers},
-        'url': url
+        'url': url,
+        'validateLayerParams': validateLayerParams
       };
       this.cache_[id] = source;
       this.sources_.push(source);
