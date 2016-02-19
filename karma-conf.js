@@ -27,6 +27,7 @@ module.exports = function(config) {
       '.build/examples-hosted/lib/proj4.js',
       'node_modules/angular/angular.js',
       'node_modules/angular-gettext/dist/angular-gettext.js',
+      'node_modules/angular-animate/angular-animate.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'test/spec/beforeeach.js',
       'test/spec/data/*.js',
