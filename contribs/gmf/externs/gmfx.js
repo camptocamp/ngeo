@@ -29,9 +29,7 @@ gmfx.Config;
  * Datasource configuration options for the search directive.
  * @typedef {{
  *    bloodhoundOptions: (BloodhoundOptions|undefined),
- *    datasetTitle: (string|undefined),
  *    labelKey: string,
- *    groupsKey: (string|undefined),
  *    groupValues: (Array.<string>|undefined),
  *    groupActions: (Array.<string>|undefined),
  *    projection: (string|undefined),
@@ -51,13 +49,6 @@ gmfx.SearchDirectiveDatasource.prototype.bloodhoundOptions;
 
 
 /**
- * The title of this set of data.
- * @type {string|undefined}
- */
-gmfx.SearchDirectiveDatasource.prototype.datasetTitle;
-
-
-/**
  * The name of a corresponding GeoJSON property key in the current dataset.
  * The bound value of this property key will be used as label.
  * @type {string|undefined}
@@ -66,16 +57,8 @@ gmfx.SearchDirectiveDatasource.prototype.labelKey;
 
 
 /**
- * The GeoJSON property key that will be used to group data.
- * If set, the option 'groupValues' must be set too.
- * @type {string}
- */
-gmfx.SearchDirectiveDatasource.prototype.groupsKey;
-
-
-/**
- * Possible values for the 'groupsKey' key. Will be ignored if option
- * 'groupsKey' is not set. Used to define groups of dataset.
+ * Possible values for the 'layer_name' key.
+ * Used to define groups of dataset.
  * @type {Array.<string>|undefined}
  */
 gmfx.SearchDirectiveDatasource.prototype.groupValues;

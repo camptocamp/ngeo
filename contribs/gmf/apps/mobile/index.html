@@ -40,9 +40,9 @@
       </button>
       <div class="search">
         <gmf-search gmf-search-map="mainCtrl.map"
-                    gmf-search-datasources="mainCtrl.searchDatasources"
-                    gmf-search-currenttheme="mainCtrl.theme"
-                    gmf-search-clearbutton="true">
+          gmf-search-datasources="mainCtrl.searchDatasources"
+          gmf-search-currenttheme="mainCtrl.theme"
+          gmf-search-clearbutton="true">
         </gmf-search>
       </div>
       <button class="nav-trigger nav-right-trigger"
@@ -70,9 +70,9 @@
             <a href data-target="#themes" data-toggle="slide-in">Themes</a>
           </li>
           <gmf-layertree
-              gmf-layertree-source="mainCtrl.theme"
-              gmf-layertree-map="::mainCtrl.map"
-              gmf-layertree-openlinksinnewwindow="true">
+            gmf-layertree-source="mainCtrl.theme"
+            gmf-layertree-map="::mainCtrl.map"
+            gmf-layertree-openlinksinnewwindow="true">
           </gmf-layertree>
         </ul>
       </div>
@@ -83,12 +83,12 @@
         </gmf-mobile-background-layer-selector>
       </div>
       <gmf-themeselector
-          id="themes"
-          class="slide"
-          data-header-title="Themes"
-          gmf-themeselector-currenttheme="mainCtrl.theme"
-          gmf-themeselector-filter="::mainCtrl.filter"
-          gmf-mobile-nav-back="mainCtrl.theme">
+        id="themes"
+        class="slide"
+        data-header-title="Themes"
+        gmf-themeselector-currenttheme="mainCtrl.theme"
+        gmf-themeselector-filter="::mainCtrl.filter"
+        gmf-mobile-nav-back="mainCtrl.theme">
       </gmf-themeselector>
     </nav>
     <nav class="nav-right" gmf-mobile-nav>
@@ -141,9 +141,9 @@
          module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?limit=20');
          module.constant('gmfWmsUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/mapserv_proxy');
          module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/themes?version=2&background=background');
-         module.constant('gmfSearchGroups', ['osm','district']);
-         // TODO: add 'add_group' and 'add_layer' when supported
-         module.constant('gmfSearchActions', ['add_theme']);
+         module.constant('gmfSearchGroups', []);
+         // Requires that the gmfSearchGroups is specified
+         module.constant('gmfSearchActions', []);
        })();
     </script>
   </body>
