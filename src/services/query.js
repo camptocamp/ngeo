@@ -67,11 +67,13 @@ ngeo.module.value('ngeoQueryResult', /** @type {ngeo.QueryResult} */ ({
  * @param {ngeo.QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {ngeox.QueryOptions|undefined} ngeoQueryOptions The options to
  *     configure the ngeo query service with.
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @ngdoc service
  * @ngname ngeoQuery
  * @ngInject
  */
-ngeo.Query = function($http, ngeoQueryResult, ngeoQueryOptions) {
+ngeo.Query = function($http, ngeoQueryResult, ngeoQueryOptions,
+    ngeoLayerHelper) {
 
   var options = ngeoQueryOptions !== undefined ? ngeoQueryOptions : {};
 
@@ -94,6 +96,12 @@ ngeo.Query = function($http, ngeoQueryResult, ngeoQueryOptions) {
    */
   this.sourceIdsProperty_ = options.sourceIdsProperty !== undefined ?
       options.sourceIdsProperty : ngeo.Query.DEFAULT_SOURCE_IDS_PROPERTY_;
+
+  /**
+   * @type {ngeo.LayerHelper}
+   * @private
+   */
+  this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {angular.$http}
@@ -316,7 +324,9 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
 
   var resolution = /** @type {number} */ (view.getResolution());
 
-  map.getLayers().forEach(function(layer) {
+  var layers = this.ngeoLayerHelper_.getFlatLayers(map.getLayerGroup());
+
+  layers.forEach(function(layer) {
 
     // Skip layers that are not visible
     if (!layer.getVisible()) {
