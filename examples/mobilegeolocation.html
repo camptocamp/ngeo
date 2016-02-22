@@ -13,7 +13,7 @@
         width: 600px;
         height: 400px;
       }
-      button[ngeo-mobile-geolocation]:after {
+      button[ngeo-mobilegeolocation]:after {
         content: 'Toggle tracking'
       }
     </style>
@@ -21,12 +21,12 @@
   <body ng-controller="MainController as ctrl">
     <div class="container-fluid">
       <div id="map" ngeo-map="::ctrl.map"></div>
-      <button ngeo-mobile-geolocation=""
-        ngeo-mobile-geolocation-map="::ctrl.map"
-        ngeo-mobile-geolocation-options="::ctrl.mobileGeolocationOptions">
+      <button ngeo-mobilegeolocation=""
+        ngeo-mobilegeolocation-map="::ctrl.map"
+        ngeo-mobilegeolocation-options="::ctrl.mobilegeolocationOptions">
       </button>
       <p id="desc">
-        This example shows how to use the <code>ngeo-mobile-geolocation</code>
+        This example shows how to use the <code>ngeo-mobilegeolocation</code>
         directive.
       </p>
     </div>

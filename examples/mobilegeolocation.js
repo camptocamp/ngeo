@@ -2,7 +2,7 @@ goog.provide('ngeo-mobile-geolocation');
 
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.mapDirective');
-goog.require('ngeo.mobileGeolocationDirective');
+goog.require('ngeo.mobilegeolocationDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -39,10 +39,10 @@ app.MainController = function(ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {ngeox.MobileGeolocationDirectiveOptions}
+   * @type {ngeox.MobilegeolocationDirectiveOptions}
    * @export
    */
-  this.mobileGeolocationOptions = {
+  this.mobilegeolocationOptions = {
     positionFeatureStyle: positionFeatureStyle,
     accuracyFeatureStyle: accuracyFeatureStyle,
     zoom: 17

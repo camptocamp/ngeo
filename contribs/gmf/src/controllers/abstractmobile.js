@@ -94,10 +94,10 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   });
 
   /**
-   * @type {ngeox.MobileGeolocationDirectiveOptions}
+   * @type {ngeox.MobilegeolocationDirectiveOptions}
    * @export
    */
-  this.mobileGeolocationOptions = {
+  this.mobilegeolocationOptions = {
     positionFeatureStyle: positionFeatureStyle,
     accuracyFeatureStyle: accuracyFeatureStyle,
     zoom: config.geolocationZoom || 9

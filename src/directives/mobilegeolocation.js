@@ -1,5 +1,5 @@
-goog.provide('ngeo.MobileGeolocationController');
-goog.provide('ngeo.mobileGeolocationDirective');
+goog.provide('ngeo.MobilegeolocationController');
+goog.provide('ngeo.mobilegeolocationDirective');
 
 goog.require('ngeo');
 goog.require('ngeo.DecorateGeolocation');
@@ -16,30 +16,30 @@ goog.require('ol.geom.Point');
  *
  * Example:
  *
- *      <button ngeo-mobile-geolocation=""
- *        ngeo-mobile-geolocation-map="ctrl.map"
- *        ngeo-mobile-geolocation-options="ctrl.mobileGeolocationOptions">
+ *      <button ngeo-mobilegeolocation=""
+ *        ngeo-mobilegeolocation-map="ctrl.map"
+ *        ngeo-mobilegeolocation-options="ctrl.mobilegeolocationOptions">
  *      </button>
  *
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
- * @ngname ngeoMobileGeolocation
+ * @ngname ngeoMobilegeolocation
  */
-ngeo.mobileGeolocationDirective = function() {
+ngeo.mobilegeolocationDirective = function() {
   return {
     restrict: 'A',
     scope: {
-      'getMobileMapFn': '&ngeoMobileGeolocationMap',
-      'getMobileGeolocationOptionsFn': '&ngeoMobileGeolocationOptions'
+      'getMobileMapFn': '&ngeoMobilegeolocationMap',
+      'getMobilegeolocationOptionsFn': '&ngeoMobilegeolocationOptions'
     },
-    controller: 'NgeoMobileGeolocationController',
+    controller: 'NgeoMobilegeolocationController',
     controllerAs: 'ctrl'
   };
 };
 
 
-ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
+ngeo.module.directive('ngeoMobilegeolocation', ngeo.mobilegeolocationDirective);
 
 
 /**
@@ -53,9 +53,9 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
  * @export
  * @ngInject
  * @ngdoc controller
- * @ngname NgeoMobileGeolocationController
+ * @ngname NgeoMobilegeolocationController
  */
-ngeo.MobileGeolocationController = function($scope, $element,
+ngeo.MobilegeolocationController = function($scope, $element,
     ngeoDecorateGeolocation, ngeoFeatureOverlayMgr) {
 
   $element.on('click', goog.bind(this.toggleTracking, this));
@@ -69,7 +69,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
    */
   this.map_ = map;
 
-  var options = $scope['getMobileGeolocationOptionsFn']() || {};
+  var options = $scope['getMobilegeolocationOptionsFn']() || {};
   goog.asserts.assertObject(options);
 
   /**
@@ -171,7 +171,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
 /**
  * @export
  */
-ngeo.MobileGeolocationController.prototype.toggleTracking = function() {
+ngeo.MobilegeolocationController.prototype.toggleTracking = function() {
   if (this.geolocation_.getTracking()) {
     // if map center is different than geolocation position, then track again
     var currentPosition = this.geolocation_.getPosition();
@@ -192,7 +192,7 @@ ngeo.MobileGeolocationController.prototype.toggleTracking = function() {
 /**
  * @private
  */
-ngeo.MobileGeolocationController.prototype.track_ = function() {
+ngeo.MobilegeolocationController.prototype.track_ = function() {
   this.featureOverlay_.addFeature(this.positionFeature_);
   this.featureOverlay_.addFeature(this.accuracyFeature_);
   this.follow_ = true;
@@ -203,7 +203,7 @@ ngeo.MobileGeolocationController.prototype.track_ = function() {
 /**
  * @private
  */
-ngeo.MobileGeolocationController.prototype.untrack_ = function() {
+ngeo.MobilegeolocationController.prototype.untrack_ = function() {
   this.featureOverlay_.clear();
   this.follow_ = false;
   this.geolocation_.setTracking(false);
@@ -214,7 +214,7 @@ ngeo.MobileGeolocationController.prototype.untrack_ = function() {
  * @param {ol.ObjectEvent} event Event.
  * @private
  */
-ngeo.MobileGeolocationController.prototype.setPosition_ = function(event) {
+ngeo.MobilegeolocationController.prototype.setPosition_ = function(event) {
   var position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
   var point = new ol.geom.Point(position);
 
@@ -235,12 +235,12 @@ ngeo.MobileGeolocationController.prototype.setPosition_ = function(event) {
  * @param {ol.ObjectEvent} event Event.
  * @private
  */
-ngeo.MobileGeolocationController.prototype.handleViewChange_ = function(event) {
+ngeo.MobilegeolocationController.prototype.handleViewChange_ = function(event) {
   if (this.follow_ && !this.viewChangedByMe_) {
     this.follow_ = false;
   }
 };
 
 
-ngeo.module.controller('NgeoMobileGeolocationController',
-    ngeo.MobileGeolocationController);
+ngeo.module.controller('NgeoMobilegeolocationController',
+    ngeo.MobilegeolocationController);

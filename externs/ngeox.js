@@ -542,21 +542,21 @@ ngeox.MeasureEvent.prototype.feature;
  *    zoom: (number|undefined)
  * }}
  */
-ngeox.MobileGeolocationDirectiveOptions;
+ngeox.MobilegeolocationDirectiveOptions;
 
 
 /**
  * The style to use to sketch the accuracy feature, which is a regular polygon.
  * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
  */
-ngeox.MobileGeolocationDirectiveOptions.prototype.accuracyFeatureStyle;
+ngeox.MobilegeolocationDirectiveOptions.prototype.accuracyFeatureStyle;
 
 
 /**
  * The style to use to sketch the position feature, which is a point.
  * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
  */
-ngeox.MobileGeolocationDirectiveOptions.prototype.positionFeatureStyle;
+ngeox.MobilegeolocationDirectiveOptions.prototype.positionFeatureStyle;
 
 
 /**
@@ -564,7 +564,7 @@ ngeox.MobileGeolocationDirectiveOptions.prototype.positionFeatureStyle;
  * the zoom level to set when obtaining a new position.
  * @type {number|undefined}
  */
-ngeox.MobileGeolocationDirectiveOptions.prototype.zoom;
+ngeox.MobilegeolocationDirectiveOptions.prototype.zoom;
 
 
 /**
