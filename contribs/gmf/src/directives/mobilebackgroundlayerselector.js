@@ -1,5 +1,5 @@
-goog.provide('gmf.MobileBackgroundLayerSelectorController');
-goog.provide('gmf.mobileBackgroundLayerSelectorDirective');
+goog.provide('gmf.MobileBackgroundlayerselectorController');
+goog.provide('gmf.mobileBackgroundlayerselectorDirective');
 
 goog.require('gmf');
 goog.require('gmf.Permalink');
@@ -8,14 +8,14 @@ goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 
 
-gmf.module.value('gmfMobileBackgroundLayerSelectorTemplateUrl',
+gmf.module.value('gmfMobileBackgroundlayerselectorTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
     function(element, attrs) {
-      var templateUrl = attrs['gmfMobileBackgroundLayerSelectorTemplateurl'];
+      var templateUrl = attrs['gmfMobileBackgroundlayerselectorTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           gmf.baseTemplateUrl + '/mobilebackgroundlayerselector.html';
     });
@@ -26,36 +26,36 @@ gmf.module.value('gmfMobileBackgroundLayerSelectorTemplateUrl',
  *
  * Example:
  *
- *      <gmf-mobile-background-layer-selector
- *        gmf-mobile-background-layer-selector-map="::ctrl.map">
- *      </gmf-mobile-background-layer-selector>
+ *      <gmf-mobile-backgroundlayerselector
+ *        gmf-mobile-backgroundlayerselector-map="::ctrl.map">
+ *      </gmf-mobile-backgroundlayerselector>
  *
  * @htmlAttribute {ol.Map=} gmf-mobile-background-layer-selector-map The map.
- * @param {string} gmfMobileBackgroundLayerSelectorTemplateUrl Url to template.
+ * @param {string} gmfMobileBackgroundlayerselectorTemplateUrl Url to template.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
- * @ngname gmfMobileBackgroundLayerSelector
+ * @ngname gmfMobileBackgroundlayerselector
  */
-gmf.mobileBackgroundLayerSelectorDirective = function(
-    gmfMobileBackgroundLayerSelectorTemplateUrl) {
+gmf.mobileBackgroundlayerselectorDirective = function(
+    gmfMobileBackgroundlayerselectorTemplateUrl) {
 
   return {
     restrict: 'E',
     scope: {
-      'map': '=gmfMobileBackgroundLayerSelectorMap',
-      'select': '&?gmfMobileBackgroundLayerSelectorSelect'
+      'map': '=gmfMobileBackgroundlayerselectorMap',
+      'select': '&?gmfMobileBackgroundlayerselectorSelect'
     },
     bindToController: true,
-    controller: 'GmfMobileBackgroundLayerSelectorController',
+    controller: 'GmfMobileBackgroundlayerselectorController',
     controllerAs: 'ctrl',
-    templateUrl: gmfMobileBackgroundLayerSelectorTemplateUrl
+    templateUrl: gmfMobileBackgroundlayerselectorTemplateUrl
   };
 };
 
 
-gmf.module.directive('gmfMobileBackgroundLayerSelector',
-    gmf.mobileBackgroundLayerSelectorDirective);
+gmf.module.directive('gmfMobileBackgroundlayerselector',
+    gmf.mobileBackgroundlayerselectorDirective);
 
 
 /**
@@ -67,9 +67,9 @@ gmf.module.directive('gmfMobileBackgroundLayerSelector',
  * @export
  * @ngInject
  * @ngdoc controller
- * @ngname GmfMobileBackgroundLayerSelectorController
+ * @ngname GmfMobileBackgroundlayerselectorController
  */
-gmf.MobileBackgroundLayerSelectorController = function(
+gmf.MobileBackgroundlayerselectorController = function(
     ngeoBackgroundLayerMgr, gmfPermalink, gmfThemes) {
 
   /**
@@ -137,8 +137,8 @@ gmf.MobileBackgroundLayerSelectorController = function(
 
 };
 
-gmf.module.controller('GmfMobileBackgroundLayerSelectorController',
-    gmf.MobileBackgroundLayerSelectorController);
+gmf.module.controller('GmfMobileBackgroundlayerselectorController',
+    gmf.MobileBackgroundlayerselectorController);
 
 
 /**
@@ -146,7 +146,7 @@ gmf.module.controller('GmfMobileBackgroundLayerSelectorController',
  * @param {boolean=} opt_silent Do not notify listeners.
  * @export
  */
-gmf.MobileBackgroundLayerSelectorController.prototype.setLayer = function(
+gmf.MobileBackgroundlayerselectorController.prototype.setLayer = function(
     layer, opt_silent) {
   this.bgLayer = layer;
   this.backgroundLayerMgr_.set(this.map, layer);

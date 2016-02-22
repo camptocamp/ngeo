@@ -3,7 +3,7 @@ goog.provide('gmf.AbstractDesktopController');
 goog.require('gmf');
 goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
-goog.require('gmf.mobileBackgroundLayerSelectorDirective');
+goog.require('gmf.mobileBackgroundlayerselectorDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
