@@ -15,6 +15,8 @@ goog.require('ngeo');
  *      <input type="file" ngeo-filereader="ctrl.fileContent"
  *        ngeo-filereader-supported="ctrl.supported"/>
  *
+ * @htmlAttribute {string} ngeo-filereader The content of the file read.
+ * @htmlAttribute {boolean=} ngeo-filereader-supported Whether the FileReader API is supported.
  * @param {angular.$window} $window The Angular $window service.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
