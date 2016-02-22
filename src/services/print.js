@@ -415,16 +415,24 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
     var geometryType = geometry.getType();
     var geojsonFeature = geojsonFormat.writeFeatureObject(feature);
 
-    var styles = null;
+    var styleData = null;
     var styleFunction = feature.getStyleFunction();
     if (goog.isDef(styleFunction)) {
-      styles = styleFunction.call(feature, resolution);
+      styleData = styleFunction.call(feature, resolution);
     } else {
       styleFunction = layer.getStyleFunction();
       if (goog.isDef(styleFunction)) {
-        styles = styleFunction.call(layer, feature, resolution);
+        styleData = styleFunction.call(layer, feature, resolution);
       }
     }
+
+    /**
+     * @type {Array<ol.style.Style>}
+     */
+    var styles = (styleData !== null && !goog.isArray(styleData)) ?
+        [styleData] : styleData;
+    goog.asserts.assert(goog.isArray(styles));
+
     if (!goog.isNull(styles) && styles.length > 0) {
       geojsonFeatures.push(geojsonFeature);
       if (goog.isNull(geojsonFeature.properties)) {
@@ -516,6 +524,7 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
  */
 ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
   var fillColor = fillStyle.getColor();
+  goog.asserts.assert(goog.isArray(fillColor), 'only supporting fill colors');
   if (!goog.isNull(fillColor)) {
     var fillColorRgba = ol.color.asArray(fillColor);
     symbolizer.fillColor = goog.color.rgbArrayToHex(fillColorRgba);
@@ -665,7 +674,10 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
 
     var fillStyle = textStyle.getFill();
     if (!goog.isNull(fillStyle)) {
-      var fillColorRgba = ol.color.asArray(fillStyle.getColor());
+      var fillColor = fillStyle.getColor();
+      goog.asserts.assert(
+          goog.isArray(fillColor), 'only supporting fill colors');
+      var fillColorRgba = ol.color.asArray(fillColor);
       symbolizer.fontColor = goog.color.rgbArrayToHex(fillColorRgba);
     }
 

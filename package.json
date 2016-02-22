@@ -47,7 +47,7 @@
     "less": "2.6.0",
     "less-plugin-autoprefix": "1.5.1",
     "nomnom": "1.8.1",
-    "openlayers": "openlayers/ol3#ff1f447",
+    "openlayers": "openlayers/ol3#82f6fb9",
     "phantomjs-prebuilt": "2.1.4",
     "proj4": "2.3.12",
     "temp": "0.8.3",
