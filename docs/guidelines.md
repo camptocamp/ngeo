@@ -11,6 +11,7 @@ apply when you want to add a new feature.
 - [Google style guide](#google-style-guide)
 - [Property renaming](#property-renaming)
 - [Property renaming and directives](#property-renaming-and-directives)
+- [Directive name or attributes names in the DOM](#directive-name-or-attributes-names-in-the-dom)
 - [API documentation](#api-documentation)
 - [Custom  properties](#custom-olobject-properties)
 - [Service typing](#service-typing)
@@ -100,24 +101,54 @@ the `link` function, the `[]` notation, instead of the `.` notation, must be
 used when accessing these properties. See the example below.
 
 ```js
-module.directive('goDirectiveExample',
-  /**
-   * @return {angular.Directive} The directive specs.
-   */
-  function() {
-    return {
-      restrict: 'A',
-      scope: {
-        'm': '=goDirectiveExampleMap'
-      }
-      controller: function() {
-        var m = this['m'];
-        // …
-      },
-      controllerAs: 'ctrl',
-      bindToController: true,
+ngeo.exampleDirective = function(…) {
+  return {
+    restrict: 'A',
+    scope: {
+      'm': '=ngeoExampleMap'
+    }
+    controller: function() {
+      var m = this['m'];
       // …
-    });
+    },
+    controllerAs: 'ctrl',
+    bindToController: true,
+    // …
+  });
+```
+
+## Directive name or attributes names in the DOM
+
+The naming of a directive or the name of a directive attribute
+as represented in the DOM must follow this rule:
+`base-(platform-)directive(-attribute)`
+
+Where:
+- `Base` can be `ngeo` or a contribs prefix.
+- `platform` is optional and can be for instance `mobile` or `desktop`.
+- `directive` is the name of the directive.
+- `attribute` is the name of your attribute.
+
+So, for a *ngeo* *my example* directive, exclusif for *mobile* and with, for
+example, the existing attribute *title*, you will have a DOM like this:
+
+````html
+<ngeo-mobile-myexample
+  ngeo-mobile-myexample-title="hello">
+<ngeo-mobile-myexample>
+````
+
+And in the directive, a scope like this:
+
+```js
+ngeo.mobileMyexampleDirective = function(…) {
+  return {
+    scope: {
+      't': '=ngeoMobileMyexampleTitle'
+    },
+    // …
+  };
+};
 ```
 
 ## API documentation

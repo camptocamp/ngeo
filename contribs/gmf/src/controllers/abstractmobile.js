@@ -5,7 +5,7 @@ goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobiledisplayqueriesDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.mobileBackgroundLayerSelectorDirective');
+goog.require('gmf.mobileBackgroundlayerselectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileMeasureLengthDirective');
 /** @suppress {extraRequire} */

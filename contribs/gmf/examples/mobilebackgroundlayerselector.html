@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app='app'>
   <head>
-    <title>GeoMapFish's Mobile Background Layer Selector example</title>
+    <title>GeoMapFish's mobile background layer selector example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
@@ -12,53 +12,53 @@
         width: 600px;
         height: 400px;
       }
-      .gmf-mobile-background-layer-selector {
+      .gmf-mobile-backgroundlayerselector {
         list-style: none;
         margin: 0;
         padding: 0;
       }
-      .gmf-mobile-background-layer-selector li {
+      .gmf-mobile-backgroundlayerselector li {
         cursor: pointer;
         margin: 10px;
       }
-      .gmf-mobile-background-layer-selector .gmf-check,
-      .gmf-mobile-background-layer-selector .gmf-text,
-      .gmf-mobile-background-layer-selector .gmf-thumb {
+      .gmf-mobile-backgroundlayerselector .gmf-check,
+      .gmf-mobile-backgroundlayerselector .gmf-text,
+      .gmf-mobile-backgroundlayerselector .gmf-thumb {
         float: left;
       }
-      .gmf-mobile-background-layer-selector .gmf-check {
+      .gmf-mobile-backgroundlayerselector .gmf-check {
         height: 20px;
         margin: 15px 5px 0 0;
         width: 20px;
       }
-      .gmf-mobile-background-layer-selector .gmf-check .gmf-icon.gmf-icon-check:after {
+      .gmf-mobile-backgroundlayerselector .gmf-check .gmf-icon.gmf-icon-check:after {
         content: 'o';
       }
-      .gmf-mobile-background-layer-selector .gmf-text {
+      .gmf-mobile-backgroundlayerselector .gmf-text {
         margin: 15px 10px 0 0;
         overflow: hidden;
         text-overflow: ellipsis;
         width: 120px;
         white-space: nowrap;
       }
-      .gmf-mobile-background-layer-selector .gmf-thumb {
+      .gmf-mobile-backgroundlayerselector .gmf-thumb {
         height: 60px;
         width: 60px;
       }
-      .gmf-mobile-background-layer-selector .gmf-eol {
+      .gmf-mobile-backgroundlayerselector .gmf-eol {
         clear: left;
       }
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
     <p id="desc">This example shows how to use the
-    <code>gmf-mobile-background-layer-selector</code>
+    <code>gmf-mobile-backgroundlayerselector</code>
     directive to select the map background layer.</p>
     <div>
         <span>Select base layer:</span>
-        <gmf-mobile-background-layer-selector
-          gmf-mobile-background-layer-selector-map="::ctrl.map">
-        </gmf-mobile-background-layer-selector>
+        <gmf-mobile-backgroundlayerselector
+          gmf-mobile-backgroundlayerselector-map="::ctrl.map">
+        </gmf-mobile-backgroundlayerselector>
     </div>
     <gmf-map gmf-map-map="ctrl.map"></gmf-map>
     <script src="../../../node_modules/angular/angular.js"></script>
