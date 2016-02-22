@@ -21,8 +21,10 @@ exports.defineTags = function(dictionary) {
           'type': {
               'names': type.type,
           },
-          'description': type.text
-
+          'description': type.text,
+          'optional': type.optional,
+          'nullable': type.nullable,
+          'variable': type.variable
       });
     }
   });
