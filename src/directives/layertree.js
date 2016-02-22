@@ -88,32 +88,8 @@ ngeo.layertreeDirective = function($compile, ngeoLayertreeTemplateUrl) {
     restrict: 'A',
     scope: true,
     templateUrl: ngeoLayertreeTemplateUrl,
-    controller: 'NgeoLayertreeController',
-    compile: function(tElement, tAttrs) {
-      var contents = tElement.contents().remove();
-      var compiledContents;
-      return (
-        /**
-         * Post-link function.
-         * @param {!angular.Scope} scope Scope.
-         * @param {angular.JQLite} iElement Instance element.
-         * @param {angular.Attributes} iAttrs Instance attributes.
-         */
-        function(scope, iElement, iAttrs) {
-          if (!compiledContents) {
-            compiledContents = $compile(contents);
-          }
-          compiledContents(scope,
-            /**
-             * @param {Object} clone Clone element.
-             */
-            function(clone) {
-              var cloneElement = /** @type {angular.JQLite} */ (clone);
-              iElement.append(cloneElement);
-            });
-        });
-    }
-  };
+    controller: 'NgeoLayertreeController'
+  }
 };
 
 
