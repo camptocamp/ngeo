@@ -1,11 +1,12 @@
 .mobiledisplayqueries {
+  width: 100%;
+  max-width: 100%;
+  margin-left: -50%;
+  right: 50%;
+  left: 50%;
+  bottom: 0;
   max-height: 400px;
-  width: 350px;
-  max-width: 350px;
-  margin-left: -175px;
   position: fixed;
-  right: 5px;
-  bottom: 5px;
   z-index: @above-content-index;
   .collapse-button {
     background-color: @nav-bg;
@@ -30,10 +31,10 @@
     position: relative;
     overflow: hidden;
     height: 60px;
-    margin: 0 15px;
+    margin: 0 5px;
     transition: 0.3s ease-in all;
     &.detailed {
-      height: 160px;
+      height: 170px;
     }
     .slide-animation {
       height: 100%;
@@ -81,8 +82,8 @@
       font-weight: bold;
     }
     .subtitle {
-      margin-left: 10px;
-      height: 2ex;
+     margin-left: 10px;
+     height: 2ex;
     }
   }
   .details {
@@ -95,7 +96,17 @@
       font-size: 0.9em;
     }
     .key {
-      padding-right: 25px;
+      padding-right: 5px;
+      /** prevent glitch for swipe animation **/
+      min-width: ~"calc(30vw - 30px)";
+      max-width: ~"calc(30vw - 30px)";
+    }
+    .value {
+      white-space: pre-wrap;
+      word-break: break-all;
+      /** prevent glitch for swipe animation **/
+      min-width: ~"calc(70vw - 30px)";
+      max-width: ~"calc(70vw - 30px)";
     }
     .slide-animation.ng-enter-active .details .value {
       white-space: nowrap;
@@ -104,27 +115,8 @@
   .navigate {
     border-top: solid 1px black;
     text-align: center;
-    margin-top: 10px;
     padding-top: 5px;
     height: 32px;
-  }
-  button {
-    background-color: @nav-bg;
-    border: none;
-    font-family: FontAwesome;
-    height: initial;
-    width: 32px;
-    &:hover {
-      background-color: @nav-bg;
-    }
-    &.close {
-      padding: 5px 5px 0 0;
-      &:after {
-        content: "\f00d";
-      }
-    }
-  }
-  .navigate {
     .previous {
       float: left;
       &:after {
@@ -138,14 +130,44 @@
       }
     }
   }
+  button {
+    background-color: @nav-bg;
+    border: none;
+    font-family: FontAwesome;
+    height: initial;
+    width: 32px;
+    &:hover {
+      background-color: @nav-bg;
+    }
+    &.close {
+      z-index: @above-content-index;
+      position: absolute;
+      top: calc(28px + 1px + 5px);
+      right: 5px;
+      &:after {
+        content: "\f00d";
+      }
+    }
+  }
 }
-@media (max-width: 768px) {
+@media (min-width: @screen-sm-min) {
   .mobiledisplayqueries {
-    width: 100%;
-    max-width: 100%;
-    margin-left: -50%;
-    right: 50%;
-    left: 50%;
-    bottom: 0;
+    width: 350px;
+    max-width: 350px;
+    margin-left: -175px;
+    right: calc(1em + 3.1em + 1em ~"+ 2px");
+    left: initial;
+    bottom: 5px;
+    /** prevent glitch for swipe animation **/
+    .details table {
+      .key {
+        min-width: calc(325px * 0.34);
+        max-width: calc(325px * 0.34);
+      }
+      .value {
+        min-width: calc(325px * 0.67);
+        max-width: calc(335px * 0.67);
+      }
+    }
   }
 }

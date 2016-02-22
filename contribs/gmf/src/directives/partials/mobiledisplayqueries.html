@@ -1,4 +1,4 @@
-<div class="mobiledisplayqueries" ng-class="[ctrl.open === true ? 'show' : 'hide']">
+<div class="mobiledisplayqueries" ng-show="ctrl.open">
   <button class="collapse-button" type="button" ng-init="ctrl.collapse = true" ng-click="ctrl.collapse = !ctrl.collapse" ng-class="[ctrl.collapse ? 'up' : 'down']"></button>
   <div class="displayqueries-container">
     <button type="button" class="close" ng-click="ctrl.close()"></button>
@@ -19,11 +19,11 @@
       </div>
     </div>
     <div class="navigate">
-      <button type="button" class="previous" ng-click="ctrl.previous()"></button>
+      <button type="button" class="previous" ng-show="ctrl.getResultLength() - 1" ng-click="ctrl.previous()"></button>
       <span>{{ctrl.currentResult + 1}}</span>
       <span>/</span>
       <span>{{ctrl.getResultLength()}}</span>
-      <button type="button" class="next" ng-click="ctrl.next()"></button>
+      <button type="button" class="next" ng-show="ctrl.getResultLength() - 1" ng-click="ctrl.next()"></button>
     </div>
   </div>
 </div>
