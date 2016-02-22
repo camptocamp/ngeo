@@ -253,7 +253,7 @@ gmf-map {
 .fa:before,
 .gmf-icon:after,
 .gmf-icon:before {
-  font-size: 2.0rem;
+  font-size: 2rem;
 }
 
 .ol-zoom {
@@ -263,8 +263,8 @@ gmf-map {
     border-radius: 0;
   }
   button {
-    width: 2.1em;
-    height: 2.1em;
+    width: 4.2rem;
+    height: 4.2rem;
   }
 }
 button[ngeo-mobile-geolocation] {
@@ -308,6 +308,41 @@ button[ngeo-mobile-geolocation] {
     border-right: 1px solid black;
     border-bottom: inherit;
     border-left: 1px solid black;
+  }
+  .gmf-icon,
+  .fa-wrench {
+    &.gmf-icon-layers {
+      margin-left: -0.6rem;
+    }
+    &:before,
+    &:after {
+      padding: 1rem;
+      position: relative;
+      border: 1px solid black;
+      background-color: @map-tools-bg-color;
+    }
+    &:hover {
+      &::before,
+      &::after {
+        background-color: @onhover-color;
+      }
+    }
+    &.gmf-icon-check {
+      margin-left: 0;
+      &:before,
+      &:after {
+        padding: inherit;
+        position: relative;
+        border: inherit;
+        background-color: inherit;
+      }
+      &:hover {
+        &::before,
+        &::after {
+          background-color: inherit;
+        }
+      }
+    }
   }
 }
 
