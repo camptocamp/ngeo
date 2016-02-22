@@ -1,0 +1,124 @@
+@search-elements-spacing: 10px;
+
+.search {
+  top: @app-margin;
+  height: @map-tools-size;
+  left: 0;
+  right: 0;
+  margin-left: @app-margin;
+  margin-right: @app-margin;
+  padding: 0 @search-elements-spacing;
+  background-color: @map-tools-bg-color;
+  border: solid 1px @map-tools-color;
+  z-index: @content-index;
+  input {
+    height: @map-tools-size;
+  }
+  // hide the native "clear x" in Edge
+  input::-ms-clear {
+    display: none;
+  }
+  .clear-button {
+    position: absolute;
+    top: 0;
+    right: 3.5em;
+    height: @map-tools-size;
+    &:after {
+      content: '\f00d';
+      color: @color2;
+      font-family: FontAwesome;
+      font-size: 2em;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .twitter-typeahead {
+    width: 100%;
+  }
+  .form-control {
+    box-shadow: none;
+    border: none;
+    &:focus {
+      box-shadow: none;
+    }
+    &.ng-pristine.ng-untouched.ng-valid.tt-hint {
+      display: none;
+    }
+  }
+}
+
+span.twitter-typeahead input {
+  padding-left: 3em;
+}
+
+.tt-menu {
+  position: fixed!important;
+  left: 0;
+  right: 0;
+  top: 5em !important;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: @map-tools-bg-color;
+  border: solid 1px black;
+  .search-header {
+    display: none;
+  }
+  .search-datum {
+    border-bottom: solid 1px black;
+    padding: @search-elements-spacing @app-margin;
+    padding-left: 2.5em;
+    text-align: left;
+    &:hover {
+      cursor: pointer;
+      background-color: @onhover-color;
+    }
+    p {
+      margin: 0;
+    }
+    .search-label {
+      color: @map-tools-color;
+    }
+    .search-group {
+      color: @color2;
+      font-size: 0.8em;
+    }
+  }
+}
+
+// Overrides for tablet devices
+@media (min-width: @screen-sm-min) {
+  .search {
+    left: 4em;
+    width: 18em;
+    .clear-button {
+      margin-right: @search-elements-spacing;
+      right: 0;
+    }
+  }
+  .tt-menu {
+    border-top: inherit;
+    border-bottom: inherit;
+    top: 4em !important;
+    left: 5em !important;
+    bottom: auto;
+    width: 18em;
+  }
+  span.twitter-typeahead {
+    &:after {
+      content: '\f002';
+      font-family: FontAwesome;
+      color: @color2;
+      position: absolute;
+      top: 0.3em;
+      left: 0;
+      font-size: 1.4em;
+    }
+    input {
+      width: 14em;
+      padding-left: @search-elements-spacing;
+      left: 1em;
+    }
+  }
+}
