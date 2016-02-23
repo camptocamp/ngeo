@@ -13,9 +13,9 @@ function main(inputs) {
         fs.readFile(input, {encoding: 'utf-8'}, function(err, content) {
           if (!err) {
             contents.push(content);
-            if (contents.length == inputs.length) {
+            if (contents.length === inputs.length) {
               process.stdout.write(compiler.convertPo(contents.filter(function (content) {
-                return content.length != 0;
+                return content.length !== 0;
               })));
             }
           }
