@@ -13,8 +13,8 @@
 @map-tools-size: 3em;
 @app-margin: 1em;
 
-@search-input-size: 200px;
-@search-input-width: ceil(@search-input-size + 9);
+@search-input-size: calc(~"100% - 7.75em");
+@search-input-size-clear: 200px;
 
 main>* {
   position: absolute;
@@ -118,7 +118,7 @@ span.twitter-typeahead {
     position: absolute;
     top: 0;
     left: 50%;
-    margin-left: ~"calc("@search-input-size / 2 ~" - " @map-tools-size~")";;
+    margin-left: ~"calc("@search-input-size-clear / 2 ~" - " @map-tools-size~")";
     height: @map-tools-size;
     width: @map-tools-size;
     line-height: @map-tools-size;
@@ -139,9 +139,6 @@ span.twitter-typeahead {
     outline: none;
     &:focus {
       box-shadow: none;
-    }
-    &.ng-pristine.ng-untouched.ng-valid.tt-hint {
-        left: 1em !important;
     }
   }
 }
@@ -193,13 +190,12 @@ gmf-map {
   }
 }
 
-
-//For tablet only >= 768px
+// For tablet only >= 768px
 @media (min-width: @screen-sm-min) {
   @search-width: 18em;
 
   span.twitter-typeahead {
-    left: -2.2rem;
+    left: -2rem;
   }
   .tt-menu {
     top: 4em !important;
@@ -207,35 +203,43 @@ gmf-map {
     left: 5em !important;
     bottom: auto;
   }
-
   .search {
-    left: @app-margin + @map-tools-size;
-    right: auto;
-    height: @map-tools-size;
-    width: @search-width;
-    padding: 0;
+      width: @search-width;
+      left: 4em;
     input {
       margin: 0;
-      border: none;
-      width: @search-width - 4.7em;
-      left: 15px;
+      width: 18.4rem;
+      left: 1.5rem;
     }
     .clear-button {
       right: 0;
-      left: auto;
+      left: inherit;
+    }
+  }
+  .form-control {
+    &.ng-pristine.ng-untouched.ng-valid.tt-hint {
+      left: 1em !important;
     }
   }
 }
 
-//For mobile only
+// For tablet (portrait) only
+@media only screen
+and (min-device-width: @screen-sm-min)
+and (max-device-width: @screen-md-min) {
+  span.twitter-typeahead {
+    left: -3.7rem;
+  }
+}
+
+// For mobile only
 @media (max-width: @screen-xs-max) {
   span.twitter-typeahead {
     &:after {
       content: none !important;
     }
-
     input {
-      padding: 0 5px !important;
+      padding: 0 5px;
     }
   }
 
@@ -277,16 +281,19 @@ button[ngeo-mobile-geolocation] {
   left: auto;
 }
 
-//For mobile with wide viewport or landscape mode only (> 375px and < 768px)
-@media (min-width: (@screen-xs-min - 105)) {
+// For mobile width <= 768px)
+@media (max-width: @screen-sm-min) {
   .twitter-typeahead {
     width: 100%;
-    margin-left: 2.5em;
+    margin-left: 2.8em;
   }
   .search .clear-button {
     left: inherit;
     margin-left: inherit;
     right: 3em;
+  }
+  .search input {
+    width: @search-input-size;
   }
 }
 
@@ -302,6 +309,11 @@ button[ngeo-mobile-geolocation] {
     & button:after {
       content: 'b'
     }
+  }
+  .search .clear-button {
+    left: inherit;
+    margin-left: inherit;
+    right: 0;
   }
   .tt-menu {
     border-top: inherit;
