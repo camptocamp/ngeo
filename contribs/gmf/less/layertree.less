@@ -13,32 +13,29 @@ gmf-layertree ul .treenode {
       display:none;
     }
   }
-  .state, .rightButtons *::after {
+  .rightButtons *::after {
     background: none;
     color: black;
     display: inline;
     font-family: FontAwesome;
   }
-  .leaf .state {
-    &.on::after {
-      content: "\f058";
-    }
-    &.off::after {
-      content: "\f1db";
-    }
+  .state {
+    font-family: gmf-icons;
+    color: @color2;
   }
-  .group .state {
-    &.on::after {
-      content: "\f14a";
-    }
-    &.off::after {
-      content: "\f096";
-    }
-    &.indeterminate::after {
-      content: "\f147";
-    }
+  .on .state {
+    color: @special-link;
+  }
+  .off, .off .legend img {
+    opacity: 0.5;
+  }
+  .leaf .state::after {
+    content: "\e603";
   }
   .group {
+    .state::after {
+      content: "\e600";
+    }
     .layerIcon {
       display: none;
     }
@@ -85,7 +82,6 @@ gmf-layertree ul .treenode {
     }
   }
   .outOfResolution {
-    opacity: 0.6;
     .rightButtons {
       .zoom {
         display: inline;
@@ -93,6 +89,9 @@ gmf-layertree ul .treenode {
       .legendButton {
         display: none;
       }
+    }
+    &.leaf .state::after {
+      content: "\e604";
     }
   }
   .legendButton {
