@@ -153,20 +153,14 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
         // Then set current theme by looking first in the URL, otherwise use
         // the default theme and add it to the URL.
         var currentTheme;
+        var themeId = this.defaultTheme;
         var pathElements = this.ngeoLocation_.getPath().split('/');
         if (gmf.ThemeselectorController.themeInUrl(pathElements)) {
-          var themeIdFromUrl = pathElements[pathElements.length - 1];
-          currentTheme = goog.array.find(this.themes, function(object) {
-            return object['name'] === themeIdFromUrl;
-          });
+          themeId = pathElements[pathElements.length - 1];
         }
-
-        // fallback to default theme, if theme was not found from the url
-        if (!currentTheme) {
-          currentTheme = {
-            'name': this.defaultTheme
-          };
-        }
+        currentTheme = goog.array.find(this.themes, function(object) {
+          return object['name'] === themeId;
+        });
 
         this.switchTheme(currentTheme);
 
