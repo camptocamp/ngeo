@@ -23,6 +23,13 @@ cache:
 
 before_script:
 - npm prune
+- if [ ${TRAVIS_REPO_SLUG} = camptocamp/ngeo ] ; then openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in secrets.tar.enc -out secrets.tar -d; fi
+- if [ ${TRAVIS_REPO_SLUG} = camptocamp/ngeo ] ; then tar xvf secrets.tar; fi
+- if [ ${TRAVIS_REPO_SLUG} = camptocamp/ngeo ] ; then cp .transifexrc $HOME/.transifexrc; fi
+- if [ ${TRAVIS_REPO_SLUG} = camptocamp/ngeo ] ; then cp ngeo_deploy_key $HOME/.ssh/id_rsa; fi
+- if [ ${TRAVIS_REPO_SLUG} = camptocamp/ngeo ] ; then chmod 600 $HOME/.ssh/id_rsa; fi
+- git config --global user.name "Travis"
+- git config --global user.email "travis@travis-ci.org"
 
 script:
 - if [ ${TRAVIS_PULL_REQUEST} != "false" ] ; then git diff --check ${TRAVIS_BRANCH} -- ; fi
@@ -34,12 +41,23 @@ script:
 - make apidoc
 
 after_success:
-- openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in deploy_key.enc -out ~/.ssh/id_rsa -d | true
-- chmod 600 ~/.ssh/id_rsa
-- git config --global user.name "Travis"
-- git config --global user.email "travis@travis-ci.org"
-- export GIT_BRANCH=${TRAVIS_BRANCH}
-- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && make gh-pages'
-- openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in .transifexrc.enc -out $HOME/.transifexrc -d
-- '[ "${TRAVIS_BRANCH}" = "master" ] && make transifex-send'
 - 'cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js'
+
+before_deploy:
+- export GIT_BRANCH=${TRAVIS_BRANCH}
+
+deploy:
+- provider: script
+  script: make gh-pages
+  skip_cleanup: true
+  on:
+    repo: camptocamp/ngeo
+    all_branches: true
+    node: "0.10"
+- provider: script
+  script: make transifex-send
+  skip_cleanup: true
+  on:
+    repo: camptocamp/ngeo
+    branch: master
+    node: "0.10"
