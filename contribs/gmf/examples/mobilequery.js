@@ -148,6 +148,12 @@ app.MainController = function(gmfThemes, gmfQueryManager,
    */
   this.treeSource = undefined;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.queryActive = true;
+
   gmfThemes.getThemesObject().then(function(themes) {
     if (themes) {
       this.themes = themes;
