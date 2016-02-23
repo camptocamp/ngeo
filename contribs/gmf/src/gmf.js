@@ -7,7 +7,8 @@ goog.require('ngeo');
 
 
 /** @type {!angular.Module} */
-gmf.module = angular.module('gmf', [ngeo.module.name, 'gettext', 'ngAnimate']);
+gmf.module = angular.module('gmf', [ngeo.module.name, 'gettext',
+    'ngAnimate', 'ngTouch']);
 
 
 /**

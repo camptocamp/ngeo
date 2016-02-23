@@ -26,6 +26,7 @@
     "angular-mocks": "1.5.0",
     "angular-gettext": "2.1.0",
     "angular-gettext-tools": "2.1.2",
+    "angular-touch": "1.5.0",
     "bootstrap": "3.3.6",
     "clean-css": "2.2.7",
     "closure-util": "1.10.0",
