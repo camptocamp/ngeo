@@ -102,6 +102,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "extraRequire",
       "missingProvide",
 % endif
+      "unknownDefines",
       "useOfGoogBase",
       "unnecessaryCasts",
       "lintChecks"
