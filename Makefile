@@ -652,7 +652,9 @@ $(HOME)/.transifexrc:
 	touch $@
 
 .PHONY: transifex-get
-transifex-get: c2cgeoportal/locale/c2cgeoportal.pot $(L10N_PO_FILES)
+transifex-get: $(L10N_PO_FILES)
+	.build/locale/gmf.pot
+	# .build/locale/ngeo.pot \
 
 .PHONY: transifex-send
 transifex-send: .tx/config .build/python-venv/bin/tx \
@@ -661,7 +663,9 @@ transifex-send: .tx/config .build/python-venv/bin/tx \
 	.build/python-venv/bin/tx push --source
 
 .PHONY: transifex-init
-transifex-init: .build/dev-requirements.timestamp c2cgeoportal/locale/c2cgeoportal.pot .tx/config
+transifex-init: .build/dev-requirements.timestamp .tx/config \
+	.build/locale/gmf.pot
+	# .build/locale/ngeo.pot
 	.build/venv/bin/tx push --source
 	.build/venv/bin/tx push --translations --force --no-interactive
 
