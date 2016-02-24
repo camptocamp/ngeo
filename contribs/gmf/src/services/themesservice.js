@@ -79,6 +79,55 @@ goog.inherits(gmf.Themes, ol.events.EventTarget);
 
 
 /**
+ * Find a layer group object by its name. Return null if not found.
+ * @param {Array.<Object>} themes Array of "theme" objects.
+ * @param {string} name The group name.
+ * @return {{theme: Object, group: Object}} The theme and group.
+ */
+gmf.Themes.findGroupByName = function(themes, name) {
+  for (var i = 0, ii = themes.length; i < ii; i++) {
+    var theme = themes[i];
+    for (var j = 0, jj = theme.children.length; j < jj; j++) {
+      var group = theme.children[j];
+      if (group.name == name) {
+        return {
+          theme: theme,
+          group: group
+        };
+      }
+    }
+  }
+  return null;
+};
+
+/**
+ * Find a layer object by its name. Return null if not found.
+ * @param {Array.<Object>} themes Array of "theme" objects.
+ * @param {string} name The layer name.
+ * @return {{theme: Object, group: Object, layer: Object}} The theme, group and layer.
+ */
+gmf.Themes.findLayerByName = function(themes, name) {
+  for (var i = 0, ii = themes.length; i < ii; i++) {
+    var theme = themes[i];
+    for (var j = 0, jj = theme.children.length; j < jj; j++) {
+      var group = theme.children[j];
+      for (var k = 0, kk = group.children.length; k < kk; k++) {
+        var layer = group.children[k];
+        if (layer.layers == name) {
+          return {
+            theme: theme,
+            group: group,
+            layer: layer
+          };
+        }
+      }
+    }
+  }
+  return null;
+};
+
+
+/**
  * Find an object by its name. Return null if not found.
  * @param {Array.<Object>} objects Array of objects.
  * @param {string} objectName The object name.

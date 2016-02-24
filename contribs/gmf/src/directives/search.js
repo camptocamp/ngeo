@@ -488,6 +488,7 @@ gmf.SearchController.prototype.blur = function() {
  */
 gmf.SearchController.select_ = function(event, feature, dataset) {
   var actions = feature.get('actions');
+  var currentTheme = this.scope_['currentTheme'];
   if (actions) {
     for (var i = 0, ii = actions.length; i < ii; i++) {
       var action = actions[i];
@@ -495,6 +496,24 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
       var actionData = action['data'];
       if (actionName == 'add_theme') {
         this.setTheme_(actionData);
+      } else if (actionName == 'add_group') {
+        this.gmfThemes_.getThemesObject().then(function(themes) {
+          var group = gmf.Themes.findGroupByName(themes, actionData);
+          if (group) {
+            if (currentTheme.children.indexOf(group.group) < 0) {
+              currentTheme.children.push(group.group);
+            } else {
+              // FIXME: display "this group is already loaded"
+            }
+          }
+        });
+      } else if (actionName == 'add_layer') {
+        this.gmfThemes_.getThemesObject().then(function(themes) {
+          var layer = gmf.Themes.findLayerByName(themes, actionData);
+          if (layer) {
+            debugger;
+          }
+        }.bind(this));
       }
       // FIXME: handle add_layer and add_group actions
     }
