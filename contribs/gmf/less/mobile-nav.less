@@ -5,7 +5,7 @@
 main {
   position: fixed;
   background-color: @color3;
-  box-shadow: 0px 0px 15px black;
+  box-shadow: 0 0 15px black;
   width: 100%;
   height: 100%;
   z-index: @content-index;
@@ -233,25 +233,21 @@ nav.nav-right {
 
 //For tablet only
 @media (min-width: @screen-sm-min) {
-  main button:hover{
-    background-color: @onhover-color;
-  }
-
   .nav-trigger {
     top: @app-margin;
     margin: 0;
-    background-color: @map-tools-bg-color;
-    border: solid 1px @map-tools-color;
+    background-color: inherit;
     box-shadow: none;
     height: 3em;
   }
 
   .nav-left-trigger {
-    left: @app-margin;
+    left: 0.6rem;
   }
 
   .nav-right-trigger {
     left: auto;
-    right: @app-margin;
+    right: 2.6rem;
+    top: 1.5rem;
   }
 }
