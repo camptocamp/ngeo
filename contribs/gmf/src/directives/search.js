@@ -343,7 +343,7 @@ gmf.SearchController.prototype.filterAction_ = function(action) {
         if (properties['actions']) {
           // result is an action (add_theme, add_group, ...)
           // add it to the corresponding group
-          return properties['layer_name'] === '' && properties['actions'].some(function(act) {
+          return !properties['layer_name'] && properties['actions'].some(function(act) {
             return act.action === action;
           })
         } else {
