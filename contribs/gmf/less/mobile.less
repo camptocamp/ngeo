@@ -87,31 +87,23 @@ gmf-map {
   }
 }
 
-.ol-control button,
-.ol-touch .ol-control button,
-.fa:after,
-.fa:before,
-.gmf-icon:after,
-.gmf-icon:before {
-  font-size: 2.0rem;
-}
-
 .ol-zoom {
   top: 5em;
   right: @app-margin;
   left: auto;
-  .ol-zoom-in,
-  .ol-zoom-out {
+  .ol-zoom-in, .ol-zoom-out {
+    font-size: 1.5em;
     border-radius: 0;
-  }
-  button {
-    width: 2.1em;
-    height: 2.1em;
+    height: 42px;
+    width: 42px;
   }
 }
 button[ngeo-mobile-geolocation] {
   right: @app-margin;
   top: 11.5em;
+  .fa {
+    font-size: 1.5em;
+  }
 }
 
 //mobile styles for the theme and background selector
