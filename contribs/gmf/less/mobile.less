@@ -4,6 +4,7 @@
 @import 'font.less';
 @import 'base.less';
 @import 'map.less';
+@import 'search.less';
 @import 'layertree.less';
 @import 'fullscreenpopup.less';
 @import 'mobile-nav.less';
@@ -12,9 +13,6 @@
 
 @map-tools-size: 3em;
 @app-margin: 1em;
-
-@search-input-size: 200px;
-@search-input-width: ceil(@search-input-size + 9);
 
 main>* {
   position: absolute;
@@ -33,116 +31,6 @@ gmf-map {
     right: 0;
     bottom: 0;
     left: 0;
-  }
-}
-
-/**
- * Search (typeahead)
- */
-span.twitter-typeahead {
-  &:after {
-    content: '\f002';
-    font-family: FontAwesome;
-    color: grey;
-    position: absolute;
-    top: 0.3em;
-    left: 0;
-    font-size: 1.4em;
-  }
-
-  input {
-    padding-left: 1em;
-    margin-left: 0;
-  }
-}
-.tt-menu {
-  position: fixed!important;
-  left: 0;
-  right: 0;
-  top: 5em !important;
-  bottom: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: 100vw;
-  background-color: white;
-  border: solid 1px black;
-  .search-header {
-    display: none;
-  }
-  .search-datum {
-    border-bottom: solid 1px black;
-    margin: 0;
-    padding: 10px @app-margin;
-    padding-left: 4rem;
-    text-align: left;
-    &:hover {
-      cursor: pointer;
-      background-color: @onhover-color;
-    }
-    p {
-      margin: 0;
-    }
-    .search-label {
-      color: @search-result-font-color;
-    }
-    .search-group {
-      color: lighten(@search-result-font-color, 50%);
-      font-size: 0.8em;
-    }
-  }
-}
-
-.search {
-  top: @app-margin;
-  height: @map-tools-size;
-  left: 0;
-  right: 0;
-  margin-left: @app-margin;
-  margin-right: @app-margin;
-  padding: 0 10px;
-  background-color: @map-tools-bg-color;
-  border: solid 1px @map-tools-color;
-  z-index: @content-index;
-  input {
-    width: @search-input-size;
-    padding: 0 5px;
-    border-width: 0;
-    border-radius: 0;
-    height: @map-tools-size - .2em;
-  }
-  // hide the native "clear x" in Edge
-  input::-ms-clear {
-    display: none;
-  }
-  .clear-button {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    margin-left: ~"calc("@search-input-size / 2 ~" - " @map-tools-size~")";;
-    height: @map-tools-size;
-    width: @map-tools-size;
-    line-height: @map-tools-size;
-    &:after {
-      content: '\f00d';
-      color: grey;
-      font-family: FontAwesome;
-      font-size: 2em;
-    }
-    &:hover {
-      cursor: pointer;
-    }
-  }
-  .form-control {
-    box-shadow: none;
-    background: initial !important;
-    border: none;
-    outline: none;
-    &:focus {
-      box-shadow: none;
-    }
-    &.ng-pristine.ng-untouched.ng-valid.tt-hint {
-        left: 1em !important;
-    }
   }
 }
 
@@ -193,60 +81,6 @@ gmf-map {
   }
 }
 
-
-//For tablet only >= 768px
-@media (min-width: @screen-sm-min) {
-  @search-width: 18em;
-
-  span.twitter-typeahead {
-    left: -2.2rem;
-  }
-  .tt-menu {
-    top: 4em !important;
-    width: @search-width;
-    left: 5em !important;
-    bottom: auto;
-  }
-
-  .search {
-    left: @app-margin + @map-tools-size;
-    right: auto;
-    height: @map-tools-size;
-    width: @search-width;
-    padding: 0;
-    input {
-      margin: 0;
-      border: none;
-      width: @search-width - 4.7em;
-      left: 15px;
-    }
-    .clear-button {
-      right: 0;
-      left: auto;
-    }
-  }
-}
-
-//For mobile only
-@media (max-width: @screen-xs-max) {
-  span.twitter-typeahead {
-    &:after {
-      content: none !important;
-    }
-
-    input {
-      padding: 0 5px !important;
-    }
-  }
-
-  .tt-menu {
-    border-top: 1px solid black;
-    border-right: inherit;
-    border-bottom: inherit;
-    border-left: inherit;
-  }
-}
-
 .ol-control button,
 .ol-touch .ol-control button,
 .fa:after,
@@ -258,6 +92,8 @@ gmf-map {
 
 .ol-zoom {
   top: 5em;
+  right: @app-margin;
+  left: auto;
   .ol-zoom-in,
   .ol-zoom-out {
     border-radius: 0;
@@ -270,45 +106,6 @@ gmf-map {
 button[ngeo-mobile-geolocation] {
   right: @app-margin;
   top: 11.5em;
-}
-
-.ol-zoom {
-  right: @app-margin;
-  left: auto;
-}
-
-//For mobile with wide viewport or landscape mode only (> 375px and < 768px)
-@media (min-width: (@screen-xs-min - 105)) {
-  .twitter-typeahead {
-    width: 100%;
-    margin-left: 2.5em;
-  }
-  .search .clear-button {
-    left: inherit;
-    margin-left: inherit;
-    right: 3em;
-  }
-}
-
-//For tablet only
-@media (min-width: @screen-sm-min) {
-  .ol-zoom {
-    top: auto;
-    bottom: 8.5em;
-  }
-  button[ngeo-mobile-geolocation] {
-    top: auto;
-    bottom: 5.5em;
-    & button:after {
-      content: 'b'
-    }
-  }
-  .tt-menu {
-    border-top: inherit;
-    border-right: 1px solid black;
-    border-bottom: inherit;
-    border-left: 1px solid black;
-  }
 }
 
 //mobile styles for the theme and background selector
@@ -325,5 +122,20 @@ button[ngeo-mobile-geolocation] {
   .gmf-thumb {
     height: auto;
     width: 25%;
+  }
+}
+
+// Overrides for tablet devices
+@media (min-width: @screen-sm-min) {
+  .ol-zoom {
+    top: auto;
+    bottom: 8.5em;
+  }
+  button[ngeo-mobile-geolocation] {
+    top: auto;
+    bottom: 5.5em;
+    & button:after {
+      content: 'b'
+    }
   }
 }
