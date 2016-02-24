@@ -545,6 +545,22 @@ gmf.SearchController.prototype.setTheme_ = function(themeName) {
 
 
 /**
+ * Add a group to the current theme.
+ * @param {Object} group The group to add.
+ * @return {boolean} true if the group was added, false if the group is already present.
+ * @private
+ */
+gmf.SearchController.prototype.addGroupToTheme_ = function(group) {
+  var currentTheme = this.scope_['currentTheme'];
+  if (currentTheme.children.indexOf(group) < 0) {
+    currentTheme.children.push(group);
+    return true;
+  }
+  return false;
+};
+
+
+/**
  * @export
  */
 gmf.SearchController.prototype.onClearButton = function() {
@@ -597,8 +613,17 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
       var actionData = action['data'];
       if (actionName == 'add_theme') {
         this.setTheme_(actionData);
+      } else if (actionName == 'add_group') {
+        this.gmfThemes_.getThemesObject().then(function(themes) {
+          var group = gmf.Themes.findGroupByName(themes, actionData);
+          if (group) {
+            if (!this.addGroupToTheme_(group)) {
+              // FIXME: display "this group is already loaded"
+            }
+          }
+        }.bind(this));
       }
-      // FIXME: handle add_layer and add_group actions
+      // FIXME: handle add_layer
     }
   }
 

@@ -86,6 +86,26 @@ goog.inherits(gmf.Themes, ol.events.EventTarget);
 
 
 /**
+ * Find a layer group object by its name. Return null if not found.
+ * @param {Array.<Object>} themes Array of "theme" objects.
+ * @param {string} name The group name.
+ * @return {Object} The group.
+ */
+gmf.Themes.findGroupByName = function(themes, name) {
+  for (var i = 0, ii = themes.length; i < ii; i++) {
+    var theme = themes[i];
+    for (var j = 0, jj = theme.children.length; j < jj; j++) {
+      var group = theme.children[j];
+      if (group.name == name) {
+        return group;
+      }
+    }
+  }
+  return null;
+};
+
+
+/**
  * Find an object by its name. Return null if not found.
  * @param {Array.<Object>} objects Array of objects.
  * @param {string} objectName The object name.
