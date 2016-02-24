@@ -6,7 +6,7 @@
           ng-class="{'gmf-icon-check': ctrl.bgLayer == layer}">
       </span>
     </div>
-    <div class="gmf-text">{{::layer.get("label")}}</div>
+    <div class="gmf-text">{{layer.get("label") | translate}}</div>
     <img class="gmf-thumb"
          ng-src="{{::layer.get('metadata')['thumbnail']}}" />
     <div class="gmf-eol"></div>

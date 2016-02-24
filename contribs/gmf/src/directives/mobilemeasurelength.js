@@ -64,7 +64,6 @@ gmf.module.directive('gmfMobileMeasureLength',
 
 
 /**
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
@@ -73,14 +72,7 @@ gmf.module.directive('gmfMobileMeasureLength',
  * @ngdoc controller
  * @ngname GmfMobileMeasureLengthController
  */
-gmf.MobileMeasureLengthController = function(gettextCatalog, $scope,
-    ngeoDecorateInteraction) {
-
-  /**
-   * @type {angularGettext.Catalog}
-   * @private
-   */
-  this.gettextCatalog_ = gettextCatalog;
+gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction) {
 
   /**
    * @type {ol.Map}
@@ -254,16 +246,6 @@ gmf.MobileMeasureLengthController.prototype.finish = function() {
  */
 gmf.MobileMeasureLengthController.prototype.deactivate = function() {
   this.active = false;
-};
-
-
-/**
- * @param {string} str String to translate.
- * @return {string} The translated text.
- * @export
- */
-gmf.MobileMeasureLengthController.prototype.translate = function(str) {
-  return this.gettextCatalog_.getString(str);
 };
 
 

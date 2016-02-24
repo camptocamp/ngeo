@@ -85,7 +85,7 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
    * @type {angularGettext.Catalog}
    * @private
    */
-  this.gettextCatalog_ = gettextCatalog;
+  this.gettextCatalog = gettextCatalog;
 
   /**
    * @type {gmf.Authentication}
@@ -168,16 +168,16 @@ gmf.AuthenticationController.prototype.changePassword = function() {
   var confPwd = this.newPwdConfVal;
 
   if (oldPwd === newPwd) {
-    this.setError_(this.translate('The old and new passwords are the same.'));
+    this.setError_(this.gettextCatalog.getString('The old and new passwords are the same.'));
     return;
   }
 
   if (newPwd !== confPwd) {
-    this.setError_(this.translate('The passwords don\'t match.'));
+    this.setError_(this.gettextCatalog.getString('The passwords don\'t match.'));
     return;
   }
 
-  var error = this.translate('Could not change password.');
+  var error = this.gettextCatalog.getString('Could not change password.');
   this.gmfAuthentication_.changePassword(oldPwd, newPwd, confPwd).then(
       goog.bind(function() {
         this.changePasswordModalShown = true;
@@ -192,7 +192,7 @@ gmf.AuthenticationController.prototype.changePassword = function() {
  * @export
  */
 gmf.AuthenticationController.prototype.login = function() {
-  var error = this.translate('Could not connect.');
+  var error = this.gettextCatalog.getString('Could not connect.');
   this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
       goog.bind(this.resetError_, this),
       goog.bind(this.setError_, this, error));
@@ -204,7 +204,7 @@ gmf.AuthenticationController.prototype.login = function() {
  * @export
  */
 gmf.AuthenticationController.prototype.logout = function() {
-  var error = this.translate('Could not log out.');
+  var error = this.gettextCatalog.getString('Could not log out.');
   this.gmfAuthentication_.logout().then(
       goog.bind(this.resetError_, this),
       goog.bind(this.setError_, this, error));
@@ -218,11 +218,11 @@ gmf.AuthenticationController.prototype.logout = function() {
 gmf.AuthenticationController.prototype.resetPassword = function() {
 
   if (!this.loginVal) {
-    this.setError_(this.translate('Please, input a login...'));
+    this.setError_(this.gettextCatalog.getString('Please, input a login...'));
     return;
   }
 
-  var error = this.translate('An error occured while reseting the password.');
+  var error = this.gettextCatalog.getString('An error occured while reseting the password.');
 
   this.gmfAuthentication_.resetPassword(this.loginVal).then(
       goog.bind(
@@ -270,16 +270,6 @@ gmf.AuthenticationController.prototype.setError_ = function(error) {
  */
 gmf.AuthenticationController.prototype.resetError_ = function() {
   this.setError_('');
-};
-
-
-/**
- * @param {string} str String to translate.
- * @return {string} Translated string.
- * @export
- */
-gmf.AuthenticationController.prototype.translate = function(str) {
-  return this.gettextCatalog_.getString(str);
 };
 
 
