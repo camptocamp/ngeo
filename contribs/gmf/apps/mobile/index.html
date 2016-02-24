@@ -106,12 +106,18 @@
       <div id="measure-tools" class="slide" data-header-title="Measure tools">
         <a ngeo-btn
           ng-click="mainCtrl.hideNav()"
-          class="btn btn-default measure-tools-button"
-          ng-model="mainCtrl.measurePointActive">Coordinate</a>
+          class="measure-tools-button"
+          ng-model="mainCtrl.measurePointActive">
+          <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measurePointActive}"></span>
+          Coordinate
+        </a>
         <a ngeo-btn
           ng-click="mainCtrl.hideNav()"
-          class="btn btn-default measure-tools-button"
-          ng-model="mainCtrl.measureLengthActive">Length</a>
+          class="measure-tools-button"
+          ng-model="mainCtrl.measureLengthActive">
+          <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measureLengthActive}"></span>
+          Length
+        </a>
       </div>
       <gmf-authentication id="login" class="slide" data-header-title="Login">
       </gmf-authentication>
