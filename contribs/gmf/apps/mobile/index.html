@@ -56,16 +56,16 @@
     </main>
     <nav class="nav-left" gmf-mobile-nav>
       <header>
-        <a class="go-back" href="#"></a>
+        <a class="go-back" href></a>
       </header>
       <!-- main menu -->
       <div class="active slide">
         <ul>
           <li>
-            <a href data-target="#background" data-toggle="slide-in" translate>Background</a>
+            <a href data-target="#background" data-toggle="slide-in">{{'Background' | translate}}</a>
           </li>
           <li>
-            <a href data-target="#themes" data-toggle="slide-in" translate>Themes</a>
+            <a href data-target="#themes" data-toggle="slide-in">{{'Themes'}} | translate</a>
           </li>
           <gmf-layertree
             gmf-layertree-source="mainCtrl.theme"
@@ -74,7 +74,7 @@
           </gmf-layertree>
         </ul>
       </div>
-      <div id="background" class="slide" data-header-title="Background">
+      <div id="background" class="slide" data-header-title="{{'Background' | translate}}">
         <gmf-mobile-backgroundlayerselector
           gmf-mobile-backgroundlayerselector-map="::mainCtrl.map"
           gmf-mobile-backgroundlayerselector-select="mainCtrl.hideNav()">
@@ -83,7 +83,7 @@
       <gmf-themeselector
         id="themes"
         class="slide"
-        data-header-title="Themes"
+        data-header-title="{{'Themes' | translate}}"
         gmf-themeselector-defaulttheme="OSM"
         gmf-themeselector-currenttheme="mainCtrl.theme"
         gmf-themeselector-filter="::mainCtrl.filter"
@@ -92,18 +92,18 @@
     </nav>
     <nav class="nav-right" gmf-mobile-nav>
       <header>
-        <a class="go-back" href="#"></a>
+        <a class="go-back" href></a>
       </header>
       <!-- main menu -->
       <div class="active slide">
         <ul>
           <li>
-            <a href data-target="#measure-tools" data-toggle="slide-in" translate>Measure tools</a>
-            <a href data-target="#login" data-toggle="slide-in" translate>Login</a>
+            <a href data-target="#measure-tools" data-toggle="slide-in">{{'Measure tools' | translate}}</a>
+            <a href data-target="#login" data-toggle="slide-in">{{'Login' | translate}}</a>
           </li>
         </ul>
       </div>
-      <div id="measure-tools" class="slide" data-header-title="Measure tools">
+      <div id="measure-tools" class="slide" data-header-title="{{'Measure tools' | translate}}">
         <a ngeo-btn
           ng-click="mainCtrl.hideNav()"
           class="measure-tools-button"
@@ -119,7 +119,7 @@
           Length
         </a>
       </div>
-      <gmf-authentication id="login" class="slide" data-header-title="Login">
+      <gmf-authentication id="login" class="slide" data-header-title="{{'Login' | translate}}">
       </gmf-authentication>
     </nav>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
