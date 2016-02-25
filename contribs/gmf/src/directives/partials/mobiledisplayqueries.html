@@ -11,7 +11,7 @@
         <div class="details">
           <table>
             <tr ng-repeat="(key, value) in ctrl.getFeatureValues()" ng-if="value.length && key !== 'boundedBy'">
-              <td class="key">{{key}}</td>
+              <td class="key">{{key | translate}}</td>
               <td class="value">{{value}}</td>
             </tr>
           </table>
