@@ -498,20 +498,21 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
       }
       // FIXME: handle add_layer and add_group actions
     }
-    return;
   }
 
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
-  this.featureOverlay_.clear();
-  this.featureOverlay_.addFeature(feature);
-  var fitArray = featureGeometry.getType() === 'GeometryCollection' ?
-      featureGeometry.getExtent() : featureGeometry;
-  var mapSize = /** @type {ol.Size} */ (this.map_.getSize());
-  this.map_.getView().fit(fitArray, mapSize,
-      /** @type {olx.view.FitOptions} */ ({maxZoom: 16}));
-  if (!this.clearButton) {
-    this.clear();
+  if (goog.isDefAndNotNull(featureGeometry)) {
+    this.featureOverlay_.clear();
+    this.featureOverlay_.addFeature(feature);
+    var fitArray = featureGeometry.getType() === 'GeometryCollection' ?
+        featureGeometry.getExtent() : featureGeometry;
+    var mapSize = /** @type {ol.Size} */ (this.map_.getSize());
+    this.map_.getView().fit(fitArray, mapSize,
+        /** @type {olx.view.FitOptions} */ ({maxZoom: 16}));
+    if (!this.clearButton) {
+      this.clear();
+    }
   }
   this.blur();
 };
