@@ -645,8 +645,15 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
             }
           }
         }.bind(this));
+      } else if (actionName == 'add_layer') {
+        this.gmfThemes_.getThemesObject().then(function(themes) {
+          var group = gmf.Themes.findGroupByLayerName(themes, actionData);
+          if (group) {
+            this.addGroupToTheme_(group);
+            // FIXME: set the layer visible
+          }
+        }.bind(this));
       }
-      // FIXME: handle add_layer
     }
   }
 
