@@ -109,14 +109,14 @@
           class="measure-tools-button"
           ng-model="mainCtrl.measurePointActive">
           <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measurePointActive}"></span>
-          Coordinate
+          {{'Coordinate' | translate}}
         </a>
         <a ngeo-btn
           ng-click="mainCtrl.hideNav()"
           class="measure-tools-button"
           ng-model="mainCtrl.measureLengthActive">
           <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measureLengthActive}"></span>
-          Length
+          {{'Length' | translate}}
         </a>
       </div>
       <gmf-authentication id="login" class="slide" data-header-title="{{'Login' | translate}}">
