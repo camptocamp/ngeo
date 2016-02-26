@@ -33,7 +33,7 @@
     "bootstrap": "3.3.6",
     "clean-css": "2.2.7",
     "closure-util": "1.10.0",
-    "coveralls": "2.11.6",
+    "coveralls": "2.11.7",
     "d3": "3.5.16",
     "font-awesome": "4.5.0",
     "fs-extra": "0.26.5",
