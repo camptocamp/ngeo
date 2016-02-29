@@ -10,7 +10,7 @@
         </div>
         <div class="details">
           <table>
-            <tr ng-repeat="(key, value) in ctrl.getFeatureValues()" ng-if="value.length && key !== 'boundedBy'">
+            <tr ng-repeat="(key, value) in ctrl.getFeatureValues()">
               <td class="key">{{key | translate}}</td>
               <td class="value">{{value}}</td>
             </tr>

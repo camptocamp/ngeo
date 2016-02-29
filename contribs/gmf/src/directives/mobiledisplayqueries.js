@@ -283,13 +283,19 @@ gmf.MobiledisplayqueriesController.prototype.getResultLength = function() {
 
 
 /**
- * Get the properties in the current feature.
- * @return {Object?} properties of the current feature or null.
+ * Delete the unwanted ol3 properties from the current feature then return the
+ * properties.
+ * @return {Object?} Filtered properties of the current feature or null.
  * @export
  */
 gmf.MobiledisplayqueriesController.prototype.getFeatureValues = function() {
-  return goog.isDefAndNotNull(this.feature) ?
-      this.feature.getProperties() : null;
+  if (!this.feature) {
+    return null;
+  }
+  var properties = this.feature.getProperties();
+  delete properties['boundedBy'];
+  delete properties[this.feature.getGeometryName()];
+  return properties;
 };
 
 
