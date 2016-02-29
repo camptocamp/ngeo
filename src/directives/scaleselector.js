@@ -156,7 +156,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   this.currentScale = undefined;
 
   var view = this.map_.getView();
-  if (!goog.isNull(view)) {
+  if (view !== null) {
     var currentZoom = this.map_.getView().getZoom();
     if (currentZoom !== undefined) {
       this.currentScale = this.getScale(currentZoom);
@@ -251,7 +251,7 @@ ngeo.ScaleselectorController.prototype.handleViewChange_ = function(e) {
  * @private
  */
 ngeo.ScaleselectorController.prototype.registerResolutionChangeListener_ = function() {
-  if (!goog.isNull(this.resolutionChangeKey_)) {
+  if (this.resolutionChangeKey_ !== null) {
     ol.events.unlistenByKey(this.resolutionChangeKey_);
   }
   var view = this.map_.getView();

@@ -238,7 +238,7 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
 ngeo.LayertreeController.prototype.getSetActive = function(val) {
   var layer = this.layer;
   var map = this.map;
-  goog.asserts.assert(!goog.isNull(this.layer));
+  goog.asserts.assert(this.layer !== null);
   if (val !== undefined) {
     if (!val) {
       map.removeLayer(layer);

@@ -156,7 +156,7 @@ ngeo.btnDirective = function($parse) {
           if (ngModelGet(scope) === undefined) {
             ngModelSet(scope, false);
           }
-          if (!goog.isNull(buttonsCtrl)) {
+          if (buttonsCtrl !== null) {
             indexInGroup = buttonsCtrl.addButton(ngModelGet);
           }
 
@@ -170,7 +170,7 @@ ngeo.btnDirective = function($parse) {
 
           // model -> UI
           ngModelCtrl.$render = function() {
-            if (ngModelCtrl.$viewValue && !goog.isNull(buttonsCtrl)) {
+            if (ngModelCtrl.$viewValue && buttonsCtrl !== null) {
               buttonsCtrl.activate(indexInGroup);
             }
             element.toggleClass('active', ngModelCtrl.$viewValue);

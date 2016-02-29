@@ -321,7 +321,7 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
   }
 
   var helpMsg = this.startMsg;
-  if (!goog.isNull(this.sketchFeature)) {
+  if (this.sketchFeature !== null) {
     helpMsg = this.continueMsg;
   }
 
@@ -364,11 +364,11 @@ ngeo.interaction.Measure.prototype.setMap = function(map) {
   this.vectorLayer_.setMap(map);
 
   var prevMap = this.drawInteraction_.getMap();
-  if (!goog.isNull(prevMap)) {
+  if (prevMap !== null) {
     prevMap.removeInteraction(this.drawInteraction_);
   }
 
-  if (!goog.isNull(map)) {
+  if (map !== null) {
     map.addInteraction(this.drawInteraction_);
   }
 };
@@ -391,7 +391,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
       ol.events.EventType.CHANGE,
       function() {
         this.handleMeasure(goog.bind(function(measure, coord) {
-          if (!goog.isNull(coord)) {
+          if (coord !== null) {
             this.measureTooltipElement_.innerHTML = measure;
             this.measureTooltipOverlay_.setPosition(coord);
           }
@@ -411,7 +411,7 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
   this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
       this.sketchFeature));
   this.sketchFeature = null;
-  if (!goog.isNull(this.changeEventKey_)) {
+  if (this.changeEventKey_ !== null) {
     ol.events.unlistenByKey(this.changeEventKey_);
   }
 };
@@ -443,7 +443,7 @@ ngeo.interaction.Measure.prototype.createHelpTooltip_ = function() {
 ngeo.interaction.Measure.prototype.removeHelpTooltip_ = function() {
   if (this.displayHelpTooltip_) {
     this.getMap().removeOverlay(this.helpTooltipOverlay_);
-    if (!goog.isNull(this.helpTooltipElement_)) {
+    if (this.helpTooltipElement_ !== null) {
       this.helpTooltipElement_.parentNode.removeChild(this.helpTooltipElement_);
     }
     this.helpTooltipElement_ = null;
@@ -476,7 +476,7 @@ ngeo.interaction.Measure.prototype.createMeasureTooltip_ = function() {
  * @private
  */
 ngeo.interaction.Measure.prototype.removeMeasureTooltip_ = function() {
-  if (!goog.isNull(this.measureTooltipElement_)) {
+  if (this.measureTooltipElement_ !== null) {
     this.measureTooltipElement_.parentNode.removeChild(
         this.measureTooltipElement_);
     this.measureTooltipElement_ = null;

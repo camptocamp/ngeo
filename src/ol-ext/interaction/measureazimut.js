@@ -260,7 +260,7 @@ ngeo.interaction.DrawAzimut.prototype.handlePointerMove_ = function(event) {
  */
 ngeo.interaction.DrawAzimut.prototype.createOrUpdateSketchPoint_ = function(event) {
   var coordinates = event.coordinate.slice();
-  if (goog.isNull(this.sketchPoint_)) {
+  if (this.sketchPoint_ === null) {
     this.sketchPoint_ = new ol.Feature(new ol.geom.Point(coordinates));
     this.updateSketchFeatures_();
   } else {
@@ -277,10 +277,10 @@ ngeo.interaction.DrawAzimut.prototype.createOrUpdateSketchPoint_ = function(even
  */
 ngeo.interaction.DrawAzimut.prototype.updateSketchFeatures_ = function() {
   var sketchFeatures = [];
-  if (!goog.isNull(this.sketchFeature_)) {
+  if (this.sketchFeature_ !== null) {
     sketchFeatures.push(this.sketchFeature_);
   }
-  if (!goog.isNull(this.sketchPoint_)) {
+  if (this.sketchPoint_ !== null) {
     sketchFeatures.push(this.sketchPoint_);
   }
   var source = this.sketchLayer_.getSource();
@@ -345,7 +345,7 @@ ngeo.interaction.DrawAzimut.prototype.modifyDrawing_ = function(event) {
 ngeo.interaction.DrawAzimut.prototype.abortDrawing_ = function() {
   this.started_ = false;
   var sketchFeature = this.sketchFeature_;
-  if (!goog.isNull(sketchFeature)) {
+  if (sketchFeature !== null) {
     this.sketchFeature_ = null;
     this.sketchPoint_ = null;
     this.sketchLayer_.getSource().clear(true);
@@ -366,7 +366,7 @@ ngeo.interaction.DrawAzimut.prototype.shouldStopEvent = goog.functions.FALSE;
 ngeo.interaction.DrawAzimut.prototype.updateState_ = function() {
   var map = this.getMap();
   var active = this.getActive();
-  if (goog.isNull(map) || !active) {
+  if (map === null || !active) {
     this.abortDrawing_();
   }
   this.sketchLayer_.setMap(active ? map : null);
@@ -379,9 +379,9 @@ ngeo.interaction.DrawAzimut.prototype.updateState_ = function() {
  */
 ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
   var sketchFeature = this.abortDrawing_();
-  goog.asserts.assert(!goog.isNull(sketchFeature));
+  goog.asserts.assert(sketchFeature !== null);
 
-  if (!goog.isNull(this.source_)) {
+  if (this.source_ !== null) {
     this.source_.addFeature(sketchFeature);
   }
   this.dispatchEvent(new ol.interaction.DrawEvent(

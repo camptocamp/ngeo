@@ -111,7 +111,7 @@ gmf.Themes.findThemeByName = function(themes, themeName) {
 gmf.Themes.prototype.getBgLayers = function() {
   var $q = this.$q_;
 
-  goog.asserts.assert(!goog.isNull(this.promise_));
+  goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(goog.bind(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
@@ -167,7 +167,7 @@ gmf.Themes.prototype.getBgLayers = function() {
  * @export
  */
 gmf.Themes.prototype.getThemeObject = function(themeName) {
-  goog.asserts.assert(!goog.isNull(this.promise_));
+  goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
@@ -186,7 +186,7 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
  * @export
  */
 gmf.Themes.prototype.getThemesObject = function() {
-  goog.asserts.assert(!goog.isNull(this.promise_));
+  goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.

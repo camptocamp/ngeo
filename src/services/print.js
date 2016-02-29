@@ -190,7 +190,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   object.layers = [];
 
   var layersCollection = map.getLayers();
-  goog.asserts.assert(!goog.isNull(layersCollection));
+  goog.asserts.assert(layersCollection !== null);
   var layers = layersCollection.getArray().slice().reverse();
 
   layers.forEach(
@@ -433,9 +433,9 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
         [styleData] : styleData;
     goog.asserts.assert(goog.isArray(styles));
 
-    if (!goog.isNull(styles) && styles.length > 0) {
+    if (styles !== null && styles.length > 0) {
       geojsonFeatures.push(geojsonFeature);
-      if (goog.isNull(geojsonFeature.properties)) {
+      if (geojsonFeature.properties === null) {
         geojsonFeature.properties = {};
       }
       for (var j = 0, jj = styles.length; j < jj; ++j) {
@@ -498,20 +498,20 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
   var strokeStyle = style.getStroke();
   var textStyle = style.getText();
   if (styleType == ngeo.PrintStyleType.POLYGON) {
-    if (!goog.isNull(fillStyle)) {
+    if (fillStyle !== null) {
       this.encodeVectorStylePolygon_(
           styleObject.symbolizers, fillStyle, strokeStyle);
     }
   } else if (styleType == ngeo.PrintStyleType.LINE_STRING) {
-    if (!goog.isNull(strokeStyle)) {
+    if (strokeStyle !== null) {
       this.encodeVectorStyleLine_(styleObject.symbolizers, strokeStyle);
     }
   } else if (styleType == ngeo.PrintStyleType.POINT) {
-    if (!goog.isNull(imageStyle)) {
+    if (imageStyle !== null) {
       this.encodeVectorStylePoint_(styleObject.symbolizers, imageStyle);
     }
   }
-  if (!goog.isNull(textStyle)) {
+  if (textStyle !== null) {
     this.encodeTextStyle_(styleObject.symbolizers, textStyle);
   }
 };
@@ -525,7 +525,7 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
 ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
   var fillColor = fillStyle.getColor();
   goog.asserts.assert(goog.isArray(fillColor), 'only supporting fill colors');
-  if (!goog.isNull(fillColor)) {
+  if (fillColor !== null) {
     var fillColorRgba = ol.color.asArray(fillColor);
     symbolizer.fillColor = goog.color.rgbArrayToHex(fillColorRgba);
     symbolizer.fillOpacity = fillColorRgba[3];
@@ -562,11 +562,11 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
     });
     symbolizer.pointRadius = imageStyle.getRadius();
     var fillStyle = imageStyle.getFill();
-    if (!goog.isNull(fillStyle)) {
+    if (fillStyle !== null) {
       this.encodeVectorStyleFill_(symbolizer, fillStyle);
     }
     var strokeStyle = imageStyle.getStroke();
-    if (!goog.isNull(strokeStyle)) {
+    if (strokeStyle !== null) {
       this.encodeVectorStyleStroke_(symbolizer, strokeStyle);
     }
   } else if (imageStyle instanceof ol.style.Icon) {
@@ -600,7 +600,7 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle
     type: 'polygon'
   });
   this.encodeVectorStyleFill_(symbolizer, fillStyle);
-  if (!goog.isNull(strokeStyle)) {
+  if (strokeStyle !== null) {
     this.encodeVectorStyleStroke_(symbolizer, strokeStyle);
   }
   symbolizers.push(symbolizer);
@@ -614,7 +614,7 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle
  */
 ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle) {
   var strokeColor = strokeStyle.getColor();
-  if (!goog.isNull(strokeColor)) {
+  if (strokeColor !== null) {
     var strokeColorRgba = ol.color.asArray(strokeColor);
     symbolizer.strokeColor = goog.color.rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
@@ -662,7 +662,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     }
 
     var strokeStyle = textStyle.getStroke();
-    if (!goog.isNull(strokeStyle)) {
+    if (strokeStyle !== null) {
       var strokeColorRgba = ol.color.asArray(strokeStyle.getColor());
       symbolizer.haloColor = goog.color.rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
@@ -673,7 +673,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     }
 
     var fillStyle = textStyle.getFill();
-    if (!goog.isNull(fillStyle)) {
+    if (fillStyle !== null) {
       var fillColor = fillStyle.getColor();
       goog.asserts.assert(
           goog.isArray(fillColor), 'only supporting fill colors');

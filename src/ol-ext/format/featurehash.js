@@ -197,20 +197,20 @@ ngeo.format.FeatureHash.encodeStyles_ = function(styles, geometryType, encodedSt
     var strokeStyle = style.getStroke();
     var textStyle = style.getText();
     if (styleType == ngeo.format.FeatureHashStyleType.POLYGON) {
-      if (!goog.isNull(fillStyle)) {
+      if (fillStyle !== null) {
         ngeo.format.FeatureHash.encodeStylePolygon_(
             fillStyle, strokeStyle, encodedStyles);
       }
     } else if (styleType == ngeo.format.FeatureHashStyleType.LINE_STRING) {
-      if (!goog.isNull(strokeStyle)) {
+      if (strokeStyle !== null) {
         ngeo.format.FeatureHash.encodeStyleLine_(strokeStyle, encodedStyles);
       }
     } else if (styleType == ngeo.format.FeatureHashStyleType.POINT) {
-      if (!goog.isNull(imageStyle)) {
+      if (imageStyle !== null) {
         ngeo.format.FeatureHash.encodeStylePoint_(imageStyle, encodedStyles);
       }
     }
-    if (!goog.isNull(textStyle)) {
+    if (textStyle !== null) {
       ngeo.format.FeatureHash.encodeStyleText_(textStyle, encodedStyles);
     }
   }
@@ -244,11 +244,11 @@ ngeo.format.FeatureHash.encodeStylePoint_ = function(imageStyle, encodedStyles) 
     }
     encodedStyles.push(encodeURIComponent('pointRadius*' + radius));
     var fillStyle = imageStyle.getFill();
-    if (!goog.isNull(fillStyle)) {
+    if (fillStyle !== null) {
       ngeo.format.FeatureHash.encodeStyleFill_(fillStyle, encodedStyles);
     }
     var strokeStyle = imageStyle.getStroke();
-    if (!goog.isNull(strokeStyle)) {
+    if (strokeStyle !== null) {
       ngeo.format.FeatureHash.encodeStyleStroke_(strokeStyle, encodedStyles);
     }
   }
@@ -266,7 +266,7 @@ ngeo.format.FeatureHash.encodeStylePoint_ = function(imageStyle, encodedStyles) 
  */
 ngeo.format.FeatureHash.encodeStylePolygon_ = function(fillStyle, strokeStyle, encodedStyles) {
   ngeo.format.FeatureHash.encodeStyleFill_(fillStyle, encodedStyles);
-  if (!goog.isNull(strokeStyle)) {
+  if (strokeStyle !== null) {
     ngeo.format.FeatureHash.encodeStyleStroke_(strokeStyle, encodedStyles);
   }
 };
@@ -285,7 +285,7 @@ ngeo.format.FeatureHash.encodeStyleFill_ = function(fillStyle, encodedStyles, op
   var propertyName = opt_propertyName !== undefined ?
       opt_propertyName : 'fillColor';
   var fillColor = fillStyle.getColor();
-  if (!goog.isNull(fillColor)) {
+  if (fillColor !== null) {
     goog.asserts.assert(goog.isArray(fillColor), 'only supporting fill colors');
     var fillColorRgba = ol.color.asArray(fillColor);
     var fillColorHex = goog.color.rgbArrayToHex(fillColorRgba);
@@ -307,7 +307,7 @@ ngeo.format.FeatureHash.encodeStyleFill_ = function(fillStyle, encodedStyles, op
  */
 ngeo.format.FeatureHash.encodeStyleStroke_ = function(strokeStyle, encodedStyles) {
   var strokeColor = strokeStyle.getColor();
-  if (!goog.isNull(strokeColor)) {
+  if (strokeColor !== null) {
     var strokeColorRgba = ol.color.asArray(strokeColor);
     var strokeColorHex = goog.color.rgbArrayToHex(strokeColorRgba);
     if (encodedStyles.length > 0) {
@@ -344,7 +344,7 @@ ngeo.format.FeatureHash.encodeStyleText_ = function(textStyle, encodedStyles) {
     }
   }
   var fillStyle = textStyle.getFill();
-  if (!goog.isNull(fillStyle)) {
+  if (fillStyle !== null) {
     ngeo.format.FeatureHash.encodeStyleFill_(
         fillStyle, encodedStyles, 'fontColor');
   }
@@ -971,7 +971,7 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
     var styleFunction = feature.getStyleFunction();
     if (styleFunction !== undefined) {
       var styles = styleFunction.call(feature, 0);
-      if (!goog.isNull(styles)) {
+      if (styles !== null) {
         var encodedStyles = [];
         styles = goog.isArray(styles) ? styles : [styles];
         ngeo.format.FeatureHash.encodeStyles_(

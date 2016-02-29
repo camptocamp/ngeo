@@ -44,7 +44,7 @@ ngeo.StateManager = function(ngeoLocation) {
       var count = this.localStorage.getCount();
       for (i = 0; i < count; ++i) {
         key = this.localStorage.key(i);
-        goog.asserts.assert(!goog.isNull(key));
+        goog.asserts.assert(key !== null);
         this.initialState[key] = this.localStorage.get(key);
       }
     }

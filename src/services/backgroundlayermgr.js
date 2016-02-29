@@ -115,15 +115,15 @@ ngeo.BackgroundLayerMgr.prototype.get = function(map) {
 ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
   var mapUid = goog.getUid(map).toString();
   var previous = this.get(map);
-  if (!goog.isNull(previous)) {
+  if (previous !== null) {
     goog.asserts.assert(mapUid in this.mapUids_);
-    if (!goog.isNull(layer)) {
+    if (layer !== null) {
       map.getLayers().setAt(0, layer);
     } else {
       map.getLayers().removeAt(0);
       delete this.mapUids_[mapUid];
     }
-  } else if (!goog.isNull(layer)) {
+  } else if (layer !== null) {
     map.getLayers().insertAt(0, layer);
     this.mapUids_[mapUid] = true;
   }

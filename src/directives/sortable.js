@@ -91,7 +91,7 @@ ngeo.sortableDirective = function($timeout) {
               angular.element(children[i]).data('idx', i);
             }
 
-            if (!goog.isNull(dragListGroup)) {
+            if (dragListGroup !== null) {
               dragListGroup.dispose();
             }
 
@@ -125,7 +125,7 @@ ngeo.sortableDirective = function($timeout) {
 
             goog.events.listen(dragListGroup, 'dragmove', function(e) {
               var next = e.hoverNextItem;
-              hoverNextItemIdx = goog.isNull(next) ? -1 :
+              hoverNextItemIdx = next === null ? -1 :
                   /** @type {number} */ (angular.element(next).data('idx'));
               hoverList = e.hoverList;
             });
@@ -145,7 +145,7 @@ ngeo.sortableDirective = function($timeout) {
                         sortable.splice(idx, 1)[0]);
                   });
                 }
-              } else if (!goog.isNull(hoverList)) {
+              } else if (hoverList !== null) {
                 // there's no next item, so push
                 scope.$apply(function() {
                   sortable.push(sortable.splice(idx, 1)[0]);
