@@ -48,6 +48,20 @@ angular.JQLite.prototype.modal = function(opt_options) {};
 
 
 /**
+ * @param {string|Object.<string,*>=} opt_option
+ * @return {!jQuery}
+ */
+jQuery.prototype.popover = function(opt_option) {};
+
+
+/**
+ * @param {(string|Object.<string,*>)=} opt_options
+ * @return {angular.JQLite}
+ */
+angular.JQLite.prototype.popover = function(opt_options) {};
+
+
+/**
  * @param {string} action
  * @return {!jQuery}
  */

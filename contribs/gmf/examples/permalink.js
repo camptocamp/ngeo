@@ -8,6 +8,9 @@ goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.proj');
 goog.require('ol.source.OSM');
+goog.require('ol.style.RegularShape');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
 
 
 /** @const **/
@@ -17,6 +20,22 @@ var app = {};
 /** @type {!angular.Module} **/
 app.module = angular.module('app', ['gmf']);
 
+
+app.module.constant('gmfPermalinkOptions',
+    /** @type {gmfx.PermalinkOptions} */ ({
+      crosshairStyle: new ol.style.Style({
+        image: new ol.style.RegularShape({
+          stroke: new ol.style.Stroke({
+            color: 'rgba(0, 0, 255, 1)',
+            width: 2
+          }),
+          points: 4,
+          radius: 8,
+          radius2: 0,
+          angle: 0
+        })
+      })
+    }));
 
 /**
  * @constructor

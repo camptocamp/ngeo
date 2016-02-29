@@ -25,6 +25,23 @@ var gmfx;
  */
 gmfx.Config;
 
+
+/**
+ * Configuration options for the permalink service.
+ * @typedef {{
+ *     crosshairStyle: (Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined)
+ * }}
+ */
+gmfx.PermalinkOptions;
+
+
+/**
+ * An alternate style for the crosshair feature added by the permalink service.
+ * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined}
+ */
+gmfx.PermalinkOptions.prototype.crosshairStyle;
+
+
 /**
  * Datasource configuration options for the search directive.
  * @typedef {{
