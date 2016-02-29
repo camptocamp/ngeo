@@ -110,12 +110,12 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, gmfAltitude,
    */
   this.active;
 
-  $scope.$watch(goog.bind(function() {
+  $scope.$watch(function() {
     return this.active;
-  }, this), goog.bind(function(newVal) {
+  }.bind(this), function(newVal) {
     this.measure.setActive(newVal);
     this.handleMeasureActiveChange_();
-  }, this));
+  }.bind(this));
 
   /**
    * @type {number|undefined}

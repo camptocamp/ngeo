@@ -61,14 +61,14 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl) {
  * @private
  */
 gmf.QueryManager.prototype.handleThemesLoad_ = function() {
-  this.gmfThemes_.getThemesObject().then(goog.bind(function(themes) {
+  this.gmfThemes_.getThemesObject().then(function(themes) {
     // create sources for each themes
     for (var i = 0, len = themes.length; i < len; i++) {
       this.createSources_(themes[i]);
     }
     // then add them to the query service
     this.ngeoQuery_.addSources(this.sources_);
-  }, this));
+  }.bind(this));
 };
 
 

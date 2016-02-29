@@ -112,7 +112,7 @@ app.MainController = function($http, $scope) {
    */
   this.profileData = undefined;
 
-  $http.get('data/profile.json').then(angular.bind(this, function(resp) {
+  $http.get('data/profile.json').then(function(resp) {
     var data = resp.data['profile'];
     this.profileData = data;
 
@@ -128,7 +128,7 @@ app.MainController = function($http, $scope) {
 
     map.getView().fit(source.getExtent(),
         /** @type {ol.Size} */ (this.map.getSize()));
-  }));
+  }.bind(this));
 
 
   // Using closures for hoverCallback and outCallback since

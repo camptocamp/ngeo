@@ -174,13 +174,13 @@ gmf.MobiledisplayqueriesController = function($scope, ngeoQueryResult,
       function() {
         return ngeoQueryResult;
       },
-      angular.bind(this, function(newQueryResult, oldQueryResult) {
+      function(newQueryResult, oldQueryResult) {
         if (newQueryResult.total > 0) {
           this.show();
         } else if (oldQueryResult !== newQueryResult) {
           this.close();
         }
-      }));
+      }.bind(this));
 };
 
 
@@ -304,9 +304,9 @@ gmf.MobiledisplayqueriesController.prototype.getFeatureValues = function() {
  */
 gmf.MobiledisplayqueriesController.prototype.animate_ = function(isNext) {
   this.isNext = isNext;
-  this.scope_.$evalAsync(angular.bind(this, function() {
+  this.scope_.$evalAsync(function() {
     this.animate++;
-  }));
+  }.bind(this));
 };
 
 

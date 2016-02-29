@@ -71,7 +71,7 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
 ngeo.MobileGeolocationController = function($scope, $element,
     ngeoDecorateGeolocation, ngeoFeatureOverlayMgr) {
 
-  $element.on('click', goog.bind(this.toggleTracking, this));
+  $element.on('click', this.toggleTracking.bind(this));
 
   var map = $scope['getMobileMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);

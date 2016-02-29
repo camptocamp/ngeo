@@ -130,7 +130,7 @@ app.SearchController = function($rootScope, $compile,
    * @export
    */
   this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    select: angular.bind(this, app.SearchController.select_)
+    select: app.SearchController.select_.bind(this)
   });
 
 };

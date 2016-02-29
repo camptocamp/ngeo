@@ -390,12 +390,12 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
   this.changeEventKey_ = ol.events.listen(geometry,
       ol.events.EventType.CHANGE,
       function() {
-        this.handleMeasure(goog.bind(function(measure, coord) {
+        this.handleMeasure(function(measure, coord) {
           if (coord !== null) {
             this.measureTooltipElement_.innerHTML = measure;
             this.measureTooltipOverlay_.setPosition(coord);
           }
-        }, this));
+        }.bind(this));
       }, this);
 };
 

@@ -431,10 +431,10 @@ gmf.LayertreeController.prototype.retrieveFirstParentTree_ = function(treeCtrl) 
  */
 gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
   var dataLayerGroup = this.dataLayerGroup_;
-  scope.$on('$destroy', angular.bind(treeCtrl, function() {
+  scope.$on('$destroy', function() {
     // Remove the layer from the map.
     dataLayerGroup.getLayers().remove(treeCtrl.layer);
-  }));
+  }.bind(treeCtrl));
 };
 
 
@@ -807,10 +807,10 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
   if (metadataURL !== undefined) {
     if (!(treeUid in this.promises_)) {
       this.promises_[treeUid] = this.$http_.get(metadataURL).then(
-          angular.bind(this, function(resp) {
+          function(resp) {
             var html = this.$sce_.trustAsHtml(resp.data);
             return html;
-          }));
+          }.bind(this));
     }
     var infoPopup = this.infoPopup_;
     this.promises_[treeUid].then(function(html) {

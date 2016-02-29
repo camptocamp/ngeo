@@ -176,13 +176,13 @@ gmf.AbstractController.prototype.switchLanguage = function(lang) {
 /**
  */
 gmf.AbstractController.prototype.initLanguage = function() {
-  this.$scope.$watch(goog.bind(function() {
+  this.$scope.$watch(function() {
     return this['lang'];
-  }, this), goog.bind(function(newValue) {
+  }.bind(this), function(newValue) {
     this.stateManager.updateState({
       'lang': newValue
     });
-  }, this));
+  }.bind(this));
 
   var browserLanguage = /** @type {string|undefined} */
       (this.getBrowserLanguage(goog.object.getKeys(this.langUrls)));

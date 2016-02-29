@@ -123,7 +123,7 @@ gmf.Authentication.prototype.load_ = function() {
   var url = goog.uri.utils.appendPath(
       this.baseUrl_, gmf.AuthenticationRouteSuffix.IS_LOGGED_IN);
   this.$http_.get(url, {withCredentials: true}).then(
-      goog.bind(this.handleLogin_, this));
+      this.handleLogin_.bind(this));
 };
 
 
@@ -166,7 +166,7 @@ gmf.Authentication.prototype.login = function(login, pwd) {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     withCredentials: true
   }).then(
-      goog.bind(this.handleLogin_, this));
+      this.handleLogin_.bind(this));
 };
 
 
@@ -178,7 +178,7 @@ gmf.Authentication.prototype.logout = function() {
   var url = goog.uri.utils.appendPath(
       this.baseUrl_, gmf.AuthenticationRouteSuffix.LOGOUT);
   return this.$http_.get(url, {withCredentials: true}).then(
-      goog.bind(this.resetUser_, this));
+      this.resetUser_.bind(this));
 };
 
 
@@ -192,18 +192,19 @@ gmf.Authentication.prototype.resetPassword = function(login) {
   var url = goog.uri.utils.appendPath(
       this.baseUrl_, gmf.AuthenticationRouteSuffix.RESET_PASSWORD);
 
+  /**
+   * @param {angular.$http.Response} resp Ajax response.
+   * @return {gmf.AuthenticationDefaultResponse} Response.
+   */
+  var successFn = function(resp) {
+    var respData = /** @type {gmf.AuthenticationDefaultResponse} */ (
+        resp.data);
+    return respData;
+  }.bind(this);
+
   return this.$http_.post(url, $.param({'login': login}), {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-  }).then(goog.bind(
-      /**
-       * @param {angular.$http.Response} resp Ajax response.
-       * @return {gmf.AuthenticationDefaultResponse} Response.
-       */
-      function(resp) {
-        var respData = /** @type {gmf.AuthenticationDefaultResponse} */ (
-            resp.data);
-        return respData;
-      }, this));
+  }).then(successFn);
 };
 
 

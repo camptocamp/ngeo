@@ -135,14 +135,14 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
 
   // Watch the "lang" property and update the toolip messages
   // based on the selected language.
-  $scope.$watch(angular.bind(this, function() {
+  $scope.$watch(function() {
     return this.lang;
-  }), angular.bind(this, function(newVal) {
+  }.bind(this), function(newVal) {
     this.measureStartMsg = measureStartMsgs[newVal];
     this.measureLengthContinueMsg = measureLengthContinueMsgs[newVal];
     this.measureAreaContinueMsg = measureAreaContinueMsgs[newVal];
     this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
-  }));
+  }.bind(this));
 
   var style = new ol.style.Style({
     fill: new ol.style.Fill({

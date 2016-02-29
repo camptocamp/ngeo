@@ -74,7 +74,7 @@ ngeo.module.directive('ngeoDesktopGeolocation',
 ngeo.DesktopGeolocationController = function($scope, $element,
     ngeoDecorateGeolocation, ngeoFeatureOverlayMgr) {
 
-  $element.on('click', goog.bind(this.toggle, this));
+  $element.on('click', this.toggle.bind(this));
 
   var map = $scope['getDesktopMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);

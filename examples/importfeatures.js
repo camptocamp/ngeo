@@ -72,9 +72,9 @@ app.MainController = function($scope) {
    */
   this.fileContent = '';
 
-  $scope.$watch(angular.bind(this, function() {
+  $scope.$watch(function() {
     return this.fileContent;
-  }), angular.bind(this, this.importKml_));
+  }.bind(this), this.importKml_.bind(this));
 
 };
 

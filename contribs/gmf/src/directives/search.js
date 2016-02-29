@@ -275,8 +275,8 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @export
    */
   this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    select: goog.bind(gmf.SearchController.select_, this),
-    close: goog.bind(gmf.SearchController.close_, this)
+    select: gmf.SearchController.select_.bind(this),
+    close: gmf.SearchController.close_.bind(this)
   });
 };
 

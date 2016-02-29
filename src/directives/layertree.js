@@ -146,9 +146,9 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
   this.node = undefined;
 
   if (isRoot) {
-    $scope.$watch(nodeExpr, goog.bind(function(newVal, oldVal) {
+    $scope.$watch(nodeExpr, function(newVal, oldVal) {
       this.node = newVal;
-    }, this));
+    }.bind(this));
   } else {
     this.node = /** @type {Object} */ ($scope.$eval(nodeExpr));
     goog.asserts.assert(this.node !== undefined);

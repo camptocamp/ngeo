@@ -203,8 +203,9 @@ app.MainController.prototype.print = function() {
   });
 
   this.print_.createReport(spec).then(
-      angular.bind(this, this.handleCreateReportSuccess_),
-      angular.bind(this, this.handleCreateReportError_));
+      this.handleCreateReportSuccess_.bind(this),
+      this.handleCreateReportError_.bind(this)
+  );
 };
 
 
@@ -224,8 +225,9 @@ app.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
  */
 app.MainController.prototype.getStatus_ = function(ref) {
   this.print_.getStatus(ref).then(
-      angular.bind(this, this.handleGetStatusSuccess_, ref),
-      angular.bind(this, this.handleGetStatusError_));
+      this.handleGetStatusSuccess_.bind(this, ref),
+      this.handleGetStatusError_.bind(this)
+  );
 };
 
 
