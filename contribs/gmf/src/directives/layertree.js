@@ -204,10 +204,10 @@ gmf.LayertreeController.TYPE_WMS = 'WMS';
 gmf.LayertreeController.prototype.getNodeType_ = function(node) {
   var children = node.children;
   var mixed = node.mixed;
-  if (goog.isDef(node.children) && mixed) {
+  if (node.children !== undefined && mixed) {
     return gmf.LayertreeController.TYPE_MIXEDGROUP;
   }
-  if (goog.isDef(children) && !mixed) {
+  if (children !== undefined && !mixed) {
     return gmf.LayertreeController.TYPE_NOTMIXEDGROUP;
   }
   if (node.type === 'WMTS') {
@@ -282,7 +282,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
 
     // If layer is 'unchecked', set it to invisible.
     var metadata = node.metadata;
-    if (!goog.isDef(node.children) && goog.isDefAndNotNull(metadata)) {
+    if (node.children === undefined && goog.isDefAndNotNull(metadata)) {
       if (metadata['isChecked'] != 'true') {
         layer.setVisible(false);
       }
@@ -370,7 +370,7 @@ gmf.LayertreeController.prototype.getLayerCaseWMTS_ = function(node) {
 gmf.LayertreeController.prototype.getFlatNodes_ = function(node, nodes) {
   var i;
   var children = node.children;
-  if (goog.isDef(children)) {
+  if (children !== undefined) {
     for (i = 0; i < children.length; i++) {
       this.getFlatNodes_(children[i], nodes);
     }
@@ -450,8 +450,8 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
   var resolution = this.map.getView().getResolution();
   var maxExtent = node.maxResolutionHint;
   var minExtent = node.minResolutionHint;
-  if (goog.isDef(minExtent) && resolution < minExtent ||
-      goog.isDef(maxExtent) && resolution > maxExtent) {
+  if (minExtent !== undefined && resolution < minExtent ||
+      maxExtent !== undefined && resolution > maxExtent) {
     style = 'outOfResolution';
   }
   return style || null;
@@ -696,11 +696,11 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
   var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
   var opt_legendRule = node.metadata['legendRule'];
 
-  if (goog.isDef(node.children) ||
-      !goog.isDef(opt_legendRule) ||
+  if (node.children !== undefined ||
+      opt_legendRule === undefined ||
       node.type === 'WMTS' ||
       node.type === 'external WMS' ||
-      goog.isDef(node.childLayers) && node.childLayers.length > 1) {
+      node.childLayers !== undefined && node.childLayers.length > 1) {
     return null;
   }
 
@@ -718,7 +718,7 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
 gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
   var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
 
-  if (goog.isDef(node.children)) {
+  if (node.children !== undefined) {
     return null;
   }
 
@@ -743,9 +743,9 @@ gmf.LayertreeController.prototype.getWMTSLegendURL_ = function(layer) {
   // FIXME case of multiple styles ?  case of multiple legendUrl ?
   var url;
   var styles = layer.get('capabilitiesStyles');
-  if (goog.isDef(styles)) {
+  if (styles !== undefined) {
     var legendURL = styles[0]['legendURL'];
-    if (goog.isDef(legendURL)) {
+    if (legendURL !== undefined) {
       url = legendURL[0]['href'];
     }
   }
@@ -764,7 +764,7 @@ gmf.LayertreeController.prototype.getWMSLegendURL_ = function(node,
     opt_legendRule) {
   var scale = this.getScale_();
   var url = node.url || this.gmfWmsUrl_;
-  if (goog.isDef(url)) {
+  if (url !== undefined) {
     url = goog.uri.utils.setParam(url, 'FORMAT', 'image/png');
     url = goog.uri.utils.setParam(url, 'TRANSPARENT', true);
     url = goog.uri.utils.setParam(url, 'SERVICE', 'wms');
@@ -772,7 +772,7 @@ gmf.LayertreeController.prototype.getWMSLegendURL_ = function(node,
     url = goog.uri.utils.setParam(url, 'REQUEST', 'GetLegendGraphic');
     url = goog.uri.utils.setParam(url, 'LAYER', node.name);
     url = goog.uri.utils.setParam(url, 'SCALE', scale);
-    if (goog.isDef(opt_legendRule)) {
+    if (opt_legendRule !== undefined) {
       url = goog.uri.utils.setParam(url, 'RULE', opt_legendRule);
     }
   }
@@ -804,7 +804,7 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
   var treeUid = treeCtrl['uid'].toString();
   var node = treeCtrl.node;
   var metadataURL = node.metadata['metadataUrl'];
-  if (goog.isDef(metadataURL)) {
+  if (metadataURL !== undefined) {
     if (!(treeUid in this.promises_)) {
       this.promises_[treeUid] = this.$http_.get(metadataURL).then(
           angular.bind(this, function(resp) {
@@ -831,9 +831,9 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.getNoSourceStyle = function(treeCtrl) {
   var layer = treeCtrl.layer;
-  if (goog.isDef(layer) &&
+  if (layer !== undefined &&
       layer instanceof ol.layer.Tile &&
-      goog.isDef(layer.getSource) &&
+      layer.getSource !== undefined &&
       !goog.isDefAndNotNull(layer.getSource())) {
     return 'noSource';
   }
@@ -849,7 +849,7 @@ gmf.LayertreeController.prototype.getNoSourceStyle = function(treeCtrl) {
 gmf.LayertreeController.prototype.zoomToResolution = function(node) {
   var view = this.map.getView();
   var resolution = node.minResolutionHint || node.maxResolutionHint;
-  if (goog.isDef(resolution)) {
+  if (resolution !== undefined) {
     view.setResolution(resolution);
   }
 };

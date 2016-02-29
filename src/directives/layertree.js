@@ -129,7 +129,7 @@ ngeo.module.directive('ngeoLayertree', ngeo.layertreeDirective);
  */
 ngeo.LayertreeController = function($scope, $element, $attrs) {
 
-  var isRoot = !goog.isDef($attrs['ngeoLayertreeNotroot']);
+  var isRoot = $attrs['ngeoLayertreeNotroot'] === undefined;
 
   /**
    * @type {boolean}
@@ -151,12 +151,12 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
     }, this));
   } else {
     this.node = /** @type {Object} */ ($scope.$eval(nodeExpr));
-    goog.asserts.assert(goog.isDef(this.node));
+    goog.asserts.assert(this.node !== undefined);
   }
 
   var mapExpr = $attrs['ngeoLayertreeMap'];
   var map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
-  goog.asserts.assert(goog.isDef(map));
+  goog.asserts.assert(map !== undefined);
 
   /**
    * @type {ngeo.LayertreeController}
@@ -189,11 +189,11 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
   this.map = map;
 
   var nodelayerExpr = $attrs['ngeoLayertreeNodelayer'];
-  if (!goog.isDef(nodelayerExpr)) {
+  if (nodelayerExpr === undefined) {
     var nodelayerexprExpr = $attrs['ngeoLayertreeNodelayerexpr'];
     nodelayerExpr = /** @type {string} */ ($scope.$eval(nodelayerexprExpr));
   }
-  goog.asserts.assert(goog.isDef(nodelayerExpr));
+  goog.asserts.assert(nodelayerExpr !== undefined);
 
   /**
    * @type {string}
@@ -210,7 +210,7 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
 
 
   var listenersExpr = $attrs['ngeoLayertreeListeners'];
-  if (!goog.isDef(listenersExpr)) {
+  if (listenersExpr === undefined) {
     var listenersexprExpr = $attrs['ngeoLayertreeListenersexpr'];
     listenersExpr = /** @type {string} */ ($scope.$eval(listenersexprExpr));
   }
@@ -239,7 +239,7 @@ ngeo.LayertreeController.prototype.getSetActive = function(val) {
   var layer = this.layer;
   var map = this.map;
   goog.asserts.assert(!goog.isNull(this.layer));
-  if (goog.isDef(val)) {
+  if (val !== undefined) {
     if (!val) {
       map.removeLayer(layer);
     } else {

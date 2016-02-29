@@ -44,7 +44,7 @@ ngeo.resizemapDirective = function($window, $animate) {
           goog.asserts.assertInstanceof(map, ol.Map);
 
           var stateExpr = attrs['ngeoResizemapState'];
-          goog.asserts.assert(goog.isDef(stateExpr));
+          goog.asserts.assert(stateExpr !== undefined);
 
           var start;
 

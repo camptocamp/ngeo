@@ -108,7 +108,7 @@ gmf.MobiledisplayqueriesController = function($scope, ngeoQueryResult,
 
   var featuresOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   var featuresStyle = this['featuresStyleFn']();
-  if (goog.isDef(featuresStyle)) {
+  if (featuresStyle !== undefined) {
     goog.asserts.assertInstanceof(featuresStyle, ol.style.Style);
     featuresOverlay.setStyle(featuresStyle);
   }
@@ -121,7 +121,7 @@ gmf.MobiledisplayqueriesController = function($scope, ngeoQueryResult,
   this.selectedFeatureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
   var selectedFeatureStyle = this['selectedFeatureStyleFn']();
-  if (goog.isDef(selectedFeatureStyle)) {
+  if (selectedFeatureStyle !== undefined) {
     goog.asserts.assertInstanceof(selectedFeatureStyle, ol.style.Style);
   } else {
     var fill = new ol.style.Fill({color: [255, 0, 0, 0.6]});
@@ -338,7 +338,7 @@ function(opt_lastFeature) {
   this.selectedFeatureOverlay_.clear();
   this.features_.remove(this.feature);
   this.selectedFeatureOverlay_.addFeature(this.feature);
-  if (goog.isDef(opt_lastFeature)) {
+  if (opt_lastFeature !== undefined) {
     this.features_.push(opt_lastFeature);
   }
 };

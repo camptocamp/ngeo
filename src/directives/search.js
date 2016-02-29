@@ -119,7 +119,7 @@ ngeo.searchDirective = function() {
 ngeo.searchDirective.adaptListeners_ = function(object) {
   /** @type {ngeox.SearchDirectiveListeners} */
   var typeaheadListeners;
-  if (!goog.isDef(object)) {
+  if (object === undefined) {
     typeaheadListeners = {
       open: goog.nullFunction,
       close: goog.nullFunction,
@@ -129,15 +129,15 @@ ngeo.searchDirective.adaptListeners_ = function(object) {
     };
   } else {
     typeaheadListeners = {
-      open: goog.isDef(object.open) ?
+      open: object.open !== undefined ?
           object.open : goog.nullFunction,
-      close: goog.isDef(object.close) ?
+      close: object.close !== undefined ?
           object.close : goog.nullFunction,
-      cursorchange: goog.isDef(object.cursorchange) ?
+      cursorchange: object.cursorchange !== undefined ?
           object.cursorchange : goog.nullFunction,
-      select: goog.isDef(object.select) ?
+      select: object.select !== undefined ?
           object.select : goog.nullFunction,
-      autocomplete: goog.isDef(object.autocomplete) ?
+      autocomplete: object.autocomplete !== undefined ?
           object.autocomplete : goog.nullFunction
     };
   }

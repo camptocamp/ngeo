@@ -85,7 +85,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
     if (response.data) {
       result = parser.read(response.data);
     }
-    if (goog.isDef(result)) {
+    if (result !== undefined) {
       var options = ol.source.WMTS.optionsFromCapabilities(result,
           {layer: layerName, requestEncoding: 'REST'});
       layer.setSource(new ol.source.WMTS(options));

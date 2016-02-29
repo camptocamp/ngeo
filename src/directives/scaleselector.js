@@ -108,7 +108,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
    */
   this.scales = /** @type {!Object.<string, string>} */
       ($scope.$eval(scalesExpr));
-  goog.asserts.assert(goog.isDef(this.scales));
+  goog.asserts.assert(this.scales !== undefined);
 
   var zoomLevels = Object.keys(this.scales).map(Number);
   zoomLevels.sort();
@@ -158,7 +158,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   var view = this.map_.getView();
   if (!goog.isNull(view)) {
     var currentZoom = this.map_.getView().getZoom();
-    if (goog.isDef(currentZoom)) {
+    if (currentZoom !== undefined) {
       this.currentScale = this.getScale(currentZoom);
     }
   }
@@ -180,10 +180,10 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
  */
 ngeo.ScaleselectorController.getOptions_ = function(options) {
   var ret;
-  if (!goog.isDef(options)) {
+  if (options === undefined) {
     ret = {'dropup': false};
   } else {
-    if (!goog.isDef(options['dropup'])) {
+    if (options['dropup'] === undefined) {
       options['dropup'] = false;
     }
     ret = /** @type {ngeo.ScaleselectorOptions} */ (options);

@@ -30,7 +30,7 @@ goog.require('ol.source.Vector');
  */
 ngeo.interaction.MeasureAzimut = function(opt_options) {
 
-  var options = goog.isDef(opt_options) ? opt_options : {};
+  var options = opt_options !== undefined ? opt_options : {};
 
   goog.base(this, options);
 
@@ -39,7 +39,7 @@ ngeo.interaction.MeasureAzimut = function(opt_options) {
    * Message to show after the first point is clicked.
    * @type {Element}
    */
-  this.continueMsg = goog.isDef(options.continueMsg) ? options.continueMsg :
+  this.continueMsg = options.continueMsg !== undefined ? options.continueMsg :
       goog.dom.createDom(goog.dom.TagName.SPAN, {}, 'Click to finish.');
 
 };
@@ -123,7 +123,7 @@ ngeo.interaction.DrawAzimut = function(options) {
    * @type {ol.source.Vector}
    * @private
    */
-  this.source_ = goog.isDef(options.source) ? options.source : null;
+  this.source_ = options.source !== undefined ? options.source : null;
 
   /**
    * Tglls whether the drawing has started or not.
@@ -167,7 +167,7 @@ ngeo.interaction.DrawAzimut = function(options) {
       useSpatialIndex: false,
       wrapX: false
     }),
-    style: goog.isDef(options.style) ?
+    style: options.style !== undefined ?
         options.style : ol.interaction.Draw.getDefaultStyleFunction()
   });
 
@@ -300,7 +300,7 @@ ngeo.interaction.DrawAzimut.prototype.startDrawing_ = function(event) {
   var line = new ol.geom.LineString([start.slice(), start.slice()]);
   var circle = new ol.geom.Circle(start, 0);
   var geometry = new ol.geom.GeometryCollection([line, circle]);
-  goog.asserts.assert(goog.isDef(geometry));
+  goog.asserts.assert(geometry !== undefined);
   this.sketchFeature_ = new ol.Feature();
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();

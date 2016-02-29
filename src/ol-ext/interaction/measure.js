@@ -77,7 +77,7 @@ goog.inherits(ngeo.MeasureEvent, ol.events.Event);
  */
 ngeo.interaction.Measure = function(opt_options) {
 
-  var options = goog.isDef(opt_options) ? opt_options : {};
+  var options = opt_options !== undefined ? opt_options : {};
 
   goog.base(this, {
     handleEvent: ngeo.interaction.Measure.handleEvent_
@@ -141,14 +141,14 @@ ngeo.interaction.Measure = function(opt_options) {
    * @type {boolean}
    * @private
    */
-  this.displayHelpTooltip_ = goog.isDef(options.displayHelpTooltip) ?
+  this.displayHelpTooltip_ = options.displayHelpTooltip !== undefined ?
       options.displayHelpTooltip : true;
 
   /**
    * The message to show when user is about to start drawing.
    * @type {Element}
    */
-  this.startMsg = goog.isDef(options.startMsg) ? options.startMsg :
+  this.startMsg = options.startMsg !== undefined ? options.startMsg :
       goog.dom.createDom(goog.dom.TagName.SPAN, {}, 'Click to start drawing.');
 
   /**
@@ -158,7 +158,7 @@ ngeo.interaction.Measure = function(opt_options) {
    */
   this.changeEventKey_ = null;
 
-  var style = goog.isDef(options.style) ? options.style :
+  var style = options.style !== undefined ? options.style :
       [
         new ol.style.Style({
           fill: new ol.style.Fill({
@@ -386,7 +386,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
 
   var geometry = this.sketchFeature.getGeometry();
 
-  goog.asserts.assert(goog.isDef(geometry));
+  goog.asserts.assert(geometry !== undefined);
   this.changeEventKey_ = ol.events.listen(geometry,
       ol.events.EventType.CHANGE,
       function() {

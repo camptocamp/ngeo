@@ -153,7 +153,7 @@ ngeo.btnDirective = function($parse) {
           var ngModelSet = ngModelGet.assign;
 
           // Set ng-model value to false if undefined
-          if (!goog.isDef(ngModelGet(scope))) {
+          if (ngModelGet(scope) === undefined) {
             ngModelSet(scope, false);
           }
           if (!goog.isNull(buttonsCtrl)) {

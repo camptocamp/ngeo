@@ -108,7 +108,7 @@ ngeo.sortableDirective = function($timeout) {
                   return goog.dom.getElementByClass(className, dragItem);
                 });
 
-            if (goog.isDef(options['draggerClassName'])) {
+            if (options['draggerClassName'] !== undefined) {
               dragListGroup.setDraggerElClass(options['draggerClassName']);
             }
 
@@ -163,10 +163,10 @@ ngeo.sortableDirective = function($timeout) {
            */
           function getOptions(options) {
             var ret;
-            if (!goog.isDef(options)) {
+            if (options === undefined) {
               ret = {'handleClassName': 'handle'};
             } else {
-              if (!goog.isDef(options['handleClassName'])) {
+              if (options['handleClassName'] === undefined) {
                 options['handleClassName'] = 'handle';
               }
               ret = /** @type {ngeo.SortableOptions} */ (options);

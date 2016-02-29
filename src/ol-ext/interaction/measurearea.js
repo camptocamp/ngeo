@@ -15,7 +15,7 @@ goog.require('ol.interaction.Draw');
  */
 ngeo.interaction.MeasureArea = function(opt_options) {
 
-  var options = goog.isDef(opt_options) ? opt_options : {};
+  var options = opt_options !== undefined ? opt_options : {};
 
   goog.base(this, options);
 
@@ -24,7 +24,7 @@ ngeo.interaction.MeasureArea = function(opt_options) {
    * Message to show after the first point is clicked.
    * @type {Element}
    */
-  this.continueMsg = goog.isDef(options.continueMsg) ? options.continueMsg :
+  this.continueMsg = options.continueMsg !== undefined ? options.continueMsg :
       goog.dom.createDom(goog.dom.TagName.SPAN, {},
           'Click to continue drawing the polygon.',
           goog.dom.createDom(goog.dom.TagName.BR),

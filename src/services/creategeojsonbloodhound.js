@@ -72,7 +72,7 @@ ngeo.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
         /** @type {GeoJSONFeatureCollection} */
         var featureCollection = /** @type {GeoJSONFeatureCollection} */
             (parsedResponse);
-        if (goog.isDef(opt_filter)) {
+        if (opt_filter !== undefined) {
           featureCollection = /** @type {GeoJSONFeatureCollection} */ ({
             type: 'FeatureCollection',
             features: featureCollection.features.filter(opt_filter)

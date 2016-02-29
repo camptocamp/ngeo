@@ -127,7 +127,7 @@ ngeo.Print.FEAT_STYLE_PROP_PREFIX_ = '_ngeo_style_';
  * @return {angular.$http.HttpPromise} HTTP promise.
  */
 ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
-  var httpConfig = goog.isDef(opt_httpConfig) ? opt_httpConfig :
+  var httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
       /** @type {angular.$http.Config} */ ({});
   var url = this.url_ + '/cancel/' + ref;
   // "delete" is a reserved word, so use ['delete']
@@ -180,8 +180,8 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   var viewResolution = view.getResolution();
   var viewRotation = view.getRotation();
 
-  goog.asserts.assert(goog.isDef(viewCenter));
-  goog.asserts.assert(goog.isDef(viewProjection));
+  goog.asserts.assert(viewCenter !== undefined);
+  goog.asserts.assert(viewProjection !== undefined);
 
   object.center = viewCenter;
   object.projection = viewProjection.getCode();
@@ -201,7 +201,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
        */
       function(layer, idx, layers) {
         if (layer.getVisible()) {
-          goog.asserts.assert(goog.isDef(viewResolution));
+          goog.asserts.assert(viewResolution !== undefined);
           this.encodeLayer(object.layers, layer, viewResolution);
         }
       }, this);
@@ -250,7 +250,7 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(source, ol.source.ImageWMS);
 
   var url = source.getUrl();
-  if (goog.isDef(url)) {
+  if (url !== undefined) {
     this.encodeWmsLayer_(
         arr, layer.getOpacity(), url, source.getParams());
   }
@@ -417,11 +417,11 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
 
     var styleData = null;
     var styleFunction = feature.getStyleFunction();
-    if (goog.isDef(styleFunction)) {
+    if (styleFunction !== undefined) {
       styleData = styleFunction.call(feature, resolution);
     } else {
       styleFunction = layer.getStyleFunction();
-      if (goog.isDef(styleFunction)) {
+      if (styleFunction !== undefined) {
         styleData = styleFunction.call(layer, feature, resolution);
       }
     }
@@ -571,7 +571,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
     }
   } else if (imageStyle instanceof ol.style.Icon) {
     var src = imageStyle.getSrc();
-    if (goog.isDef(src)) {
+    if (src !== undefined) {
       symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
         type: 'point',
         externalGraphic: src
@@ -582,7 +582,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
       }
     }
   }
-  if (goog.isDef(symbolizer)) {
+  if (symbolizer !== undefined) {
     symbolizers.push(symbolizer);
   }
 };
@@ -620,7 +620,7 @@ ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle
     symbolizer.strokeOpacity = strokeColorRgba[3];
   }
   var strokeWidth = strokeStyle.getWidth();
-  if (goog.isDef(strokeWidth)) {
+  if (strokeWidth !== undefined) {
     symbolizer.strokeWidth = strokeWidth;
   }
 };
@@ -637,22 +637,22 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     type: 'Text'
   });
   var label = textStyle.getText();
-  if (goog.isDef(label)) {
+  if (label !== undefined) {
     symbolizer.label = label;
 
     var labelAlign = textStyle.getTextAlign();
-    if (goog.isDef(labelAlign)) {
+    if (labelAlign !== undefined) {
       symbolizer.labelAlign = labelAlign;
     }
 
     var labelRotation = textStyle.getRotation();
-    if (goog.isDef(labelRotation)) {
+    if (labelRotation !== undefined) {
       // Mapfish Print expects a string, not a number to rotate text
       symbolizer.labelRotation = (labelRotation * 180 / Math.PI).toString();
     }
 
     var fontStyle = textStyle.getFont();
-    if (goog.isDef(fontStyle)) {
+    if (fontStyle !== undefined) {
       var font = fontStyle.split(' ');
       if (font.length >= 3) {
         symbolizer.fontWeight = font[0];
@@ -667,7 +667,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
       symbolizer.haloColor = goog.color.rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
       var width = strokeStyle.getWidth();
-      if (goog.isDef(width)) {
+      if (width !== undefined) {
         symbolizer.haloRadius = width;
       }
     }
@@ -682,7 +682,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     }
 
     // Mapfish Print allows offset only if labelAlign is defined.
-    if (goog.isDef(symbolizer.labelAlign)) {
+    if (symbolizer.labelAlign !== undefined) {
       symbolizer.labelXOffset = textStyle.getOffsetX();
       // Mapfish uses the opposite direction of OpenLayers for y axis, so the
       // minus sign is required for the y offset to be identical.
@@ -728,7 +728,7 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
     }
   });
   goog.object.extend(httpConfig,
-      goog.isDef(opt_httpConfig) ? opt_httpConfig : {});
+      opt_httpConfig !== undefined ? opt_httpConfig : {});
   return this.$http_.post(url, printSpec, httpConfig);
 };
 
@@ -740,7 +740,7 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
  * @return {angular.$http.HttpPromise} HTTP promise.
  */
 ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
-  var httpConfig = goog.isDef(opt_httpConfig) ? opt_httpConfig :
+  var httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
       /** @type {angular.$http.Config} */ ({});
   var url = this.url_ + '/status/' + ref + '.json';
   return this.$http_.get(url, httpConfig);
@@ -763,7 +763,7 @@ ngeo.Print.prototype.getReportUrl = function(ref) {
  * @return {angular.$http.HttpPromise} HTTP promise.
  */
 ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
-  var httpConfig = goog.isDef(opt_httpConfig) ? opt_httpConfig :
+  var httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
           /** @type {angular.$http.Config} */ ({});
   var url = this.url_ + '/capabilities.json';
   return this.$http_.get(url, httpConfig);
