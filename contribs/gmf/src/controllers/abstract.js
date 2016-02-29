@@ -123,7 +123,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   /**
    * Languages URL
-   * @type {Object.<string, string>}
+   * @type {!Object.<string, string>}
    */
   this.langUrls = $injector.get('langUrls');
 
@@ -185,7 +185,7 @@ gmf.AbstractController.prototype.initLanguage = function() {
   }.bind(this));
 
   var browserLanguage = /** @type {string|undefined} */
-      (this.getBrowserLanguage(goog.object.getKeys(this.langUrls)));
+      (this.getBrowserLanguage(Object.keys(this.langUrls)));
   var urlLanguage = /** @type {string|undefined} */
       (this.stateManager.getInitialValue('lang'));
 
