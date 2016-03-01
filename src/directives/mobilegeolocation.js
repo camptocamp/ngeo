@@ -71,7 +71,7 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
 ngeo.MobileGeolocationController = function($scope, $element,
     ngeoDecorateGeolocation, ngeoFeatureOverlayMgr) {
 
-  $element.on('click', goog.bind(this.toggleTracking, this));
+  $element.on('click', this.toggleTracking.bind(this));
 
   var map = $scope['getMobileMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
@@ -202,12 +202,12 @@ ngeo.MobileGeolocationController.prototype.toggleTracking = function() {
     var currentPosition = this.geolocation_.getPosition();
     // if user is using Firefox and selects the "not now" option, OL geolocation
     // doesn't return an error
-    if (!goog.isDef(currentPosition)) {
+    if (currentPosition === undefined) {
       this.untrack_();
       this.$scope_.$emit(ngeo.MobileGeolocationEventType.ERROR, null);
       return;
     }
-    goog.asserts.assert(goog.isDef(currentPosition));
+    goog.asserts.assert(currentPosition !== undefined);
     var center = this.map_.getView().getCenter();
     if (currentPosition[0] === center[0] &&
         currentPosition[1] === center[1]) {

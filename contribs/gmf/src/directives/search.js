@@ -231,7 +231,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     var datasource = this.datasources_[i];
 
     /** @type {Array.<string>} */
-    var groupValues = goog.isDef(datasource.groupValues) ? datasource.groupValues : [];
+    var groupValues = datasource.groupValues !== undefined ? datasource.groupValues : [];
     /** @type {Array.<string>} */
     var groupActions = datasource.groupActions ? datasource.groupActions : [];
     var filters = [];
@@ -275,8 +275,8 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @export
    */
   this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    select: goog.bind(gmf.SearchController.select_, this),
-    close: goog.bind(gmf.SearchController.close_, this)
+    select: gmf.SearchController.select_.bind(this),
+    close: gmf.SearchController.close_.bind(this)
   });
 };
 

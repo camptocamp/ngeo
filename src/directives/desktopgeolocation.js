@@ -74,7 +74,7 @@ ngeo.module.directive('ngeoDesktopGeolocation',
 ngeo.DesktopGeolocationController = function($scope, $element,
     ngeoDecorateGeolocation, ngeoFeatureOverlayMgr) {
 
-  $element.on('click', goog.bind(this.toggle, this));
+  $element.on('click', this.toggle.bind(this));
 
   var map = $scope['getDesktopMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
@@ -208,13 +208,13 @@ ngeo.DesktopGeolocationController.prototype.setPosition_ = function(event) {
 
   // if user is using Firefox and selects the "not now" option, OL geolocation
   // doesn't return an error
-  if (!goog.isDef(position)) {
+  if (position === undefined) {
     this.deactivate_();
     this.$scope_.$emit(ngeo.DesktopGeolocationEventType.ERROR, null);
     return;
   }
 
-  goog.asserts.assert(goog.isDef(position));
+  goog.asserts.assert(position !== undefined);
   var point = new ol.geom.Point(position);
 
   this.positionFeature_.setGeometry(point);

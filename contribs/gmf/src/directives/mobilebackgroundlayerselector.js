@@ -109,23 +109,24 @@ gmf.MobileBackgroundlayerselectorController = function(
    */
   this.gmfPermalink_ = gmfPermalink;
 
-  gmfThemes.getBgLayers().then(goog.bind(
-      /**
-       * @param {Array.<ol.layer.Base>} bgLayers Array of background
-       *     layer objects.
-       */
-      function(bgLayers) {
-        this.bgLayers = bgLayers;
-        // try to get default bgLayer from permalink service, otherwise
-        // set default bgLayer to the second one (if defined), the first
-        // being the blank layer
-        var defaultBgLayer = this.gmfPermalink_.getBackgroundLayer(bgLayers);
-        if (!defaultBgLayer) {
-          defaultBgLayer = this.bgLayers[1] !== undefined ?
-              this.bgLayers[1] : this.bgLayers[0];
-        }
-        this.setLayer(defaultBgLayer, true);
-      }, this));
+  /**
+   * @param {Array.<ol.layer.Base>} bgLayers Array of background
+   *     layer objects.
+   */
+  var getBgLayersSuccessFn = function(bgLayers) {
+    this.bgLayers = bgLayers;
+    // try to get default bgLayer from permalink service, otherwise
+    // set default bgLayer to the second one (if defined), the first
+    // being the blank layer
+    var defaultBgLayer = this.gmfPermalink_.getBackgroundLayer(bgLayers);
+    if (!defaultBgLayer) {
+      defaultBgLayer = this.bgLayers[1] !== undefined ?
+          this.bgLayers[1] : this.bgLayers[0];
+    }
+    this.setLayer(defaultBgLayer, true);
+  }.bind(this);
+
+  gmfThemes.getBgLayers().then(getBgLayersSuccessFn);
 
   ol.events.listen(
       this.backgroundLayerMgr_,

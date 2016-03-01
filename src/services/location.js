@@ -76,7 +76,7 @@ ngeo.Location.prototype.getPath = function() {
  */
 ngeo.Location.prototype.getUriString = function(opt_params) {
   var extendedUri;
-  if (goog.isDef(opt_params)) {
+  if (opt_params !== undefined) {
     extendedUri = this.uri_.clone();
     extendedUri.getQueryData().extend(opt_params);
   } else {
@@ -171,7 +171,7 @@ ngeo.LocationFactory = function($rootScope, $window) {
     if (lastUri !== newUri) {
       $rootScope.$evalAsync(function() {
         lastUri = newUri;
-        if (goog.isDef(history) && goog.isDef(history.replaceState)) {
+        if (history !== undefined && history.replaceState !== undefined) {
           history.replaceState(null, '', newUri);
         }
         $rootScope.$broadcast('ngeoLocationChange');
@@ -214,7 +214,7 @@ ngeo.mockLocationProvider = function($locationProvider) {
        * @return {string} Hash.
        */
       hash: function(opt_path) {
-        return goog.isDef(opt_path) ? this : '';
+        return opt_path !== undefined ? this : '';
       },
       /**
        * @return {string} Host.
@@ -227,7 +227,7 @@ ngeo.mockLocationProvider = function($locationProvider) {
        * @return {string} Path.
        */
       path: function(opt_path) {
-        return goog.isDef(opt_path) ? this : '';
+        return opt_path !== undefined ? this : '';
       },
       /**
        * @return {number} Port.
@@ -249,7 +249,7 @@ ngeo.mockLocationProvider = function($locationProvider) {
        * @return {Object} Search.
        */
       search: function(opt_search, opt_paramValue) {
-        return goog.isDef(opt_search) ? this : {};
+        return opt_search !== undefined ? this : {};
       },
       /**
        * @param {string=} opt_url URL.

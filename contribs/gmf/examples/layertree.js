@@ -66,13 +66,13 @@ app.MainController = function($http) {
    */
   this.treeSource = undefined;
 
-  $http.get('data/themes.json').success(angular.bind(this, function(data) {
+  $http.get('data/themes.json').success(function(data) {
     var themes = data['themes'];
     if (themes) {
       this.themes = themes;
       this.treeSource = themes[3];
     }
-  }));
+  }.bind(this));
 };
 
 app.module.controller('MainController', app.MainController);

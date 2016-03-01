@@ -179,11 +179,11 @@ gmf.AuthenticationController.prototype.changePassword = function() {
 
   var error = this.gettextCatalog.getString('Could not change password.');
   this.gmfAuthentication_.changePassword(oldPwd, newPwd, confPwd).then(
-      goog.bind(function() {
+      function() {
         this.changePasswordModalShown = true;
         this.changePasswordReset();
-      }, this),
-      goog.bind(this.setError_, this, error));
+      }.bind(this),
+      this.setError_.bind(this, error));
 };
 
 
@@ -194,8 +194,8 @@ gmf.AuthenticationController.prototype.changePassword = function() {
 gmf.AuthenticationController.prototype.login = function() {
   var error = this.gettextCatalog.getString('Could not connect.');
   this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
-      goog.bind(this.resetError_, this),
-      goog.bind(this.setError_, this, error));
+      this.resetError_.bind(this),
+      this.setError_.bind(this, error));
 };
 
 
@@ -206,8 +206,8 @@ gmf.AuthenticationController.prototype.login = function() {
 gmf.AuthenticationController.prototype.logout = function() {
   var error = this.gettextCatalog.getString('Could not log out.');
   this.gmfAuthentication_.logout().then(
-      goog.bind(this.resetError_, this),
-      goog.bind(this.setError_, this, error));
+      this.resetError_.bind(this),
+      this.setError_.bind(this, error));
 };
 
 
@@ -224,19 +224,18 @@ gmf.AuthenticationController.prototype.resetPassword = function() {
 
   var error = this.gettextCatalog.getString('An error occured while reseting the password.');
 
+  /**
+   * @param {gmf.AuthenticationDefaultResponse} respData Response.
+   */
+  var resetPasswordSuccessFn = function(respData) {
+    this.resetPasswordModalShown = true;
+    this.resetError_();
+  }.bind(this);
+
   this.gmfAuthentication_.resetPassword(this.loginVal).then(
-      goog.bind(
-          /**
-           * @param {gmf.AuthenticationDefaultResponse} respData Response.
-           */
-          function(respData) {
-            this.resetPasswordModalShown = true;
-            this.resetError_();
-          },
-          this
-      ),
-      goog.bind(this.setError_, this, error)
-  );
+      resetPasswordSuccessFn,
+      this.setError_.bind(this, error)
+    );
 };
 
 

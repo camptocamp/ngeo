@@ -67,13 +67,13 @@ gmf.ThemeselectorController = function($scope, ngeoLocation, gmfThemes) {
    */
   this.currentTheme;
 
-  $scope.$watch(goog.bind(function() {
+  $scope.$watch(function() {
     return this.currentTheme;
-  }, this), goog.bind(function(theme) {
+  }.bind(this), function(theme) {
     if (theme) {
       this.setLocationPath_(theme['name']);
     }
-  }, this));
+  }.bind(this));
 
   /**
    * @type {string}
@@ -142,29 +142,31 @@ gmf.ThemeselectorController.prototype.setLocationPath_ = function(themeId) {
  * @private
  */
 gmf.ThemeselectorController.prototype.setThemes_ = function() {
-  this.gmfThemes_.getThemesObject().then(goog.bind(
-      /**
-       * @param {Array.<Object>} themes Array of theme objects.
-       */
-      function(themes) {
-        // Keep only the themes dedicated to the theme switcher
-        this.themes = this.filter ? themes.filter(this.filter) : themes;
 
-        // Then set current theme by looking first in the URL, otherwise use
-        // the default theme and add it to the URL.
-        var currentTheme;
-        var themeId = this.defaultTheme;
-        var pathElements = this.ngeoLocation_.getPath().split('/');
-        if (gmf.ThemeselectorController.themeInUrl(pathElements)) {
-          themeId = pathElements[pathElements.length - 1];
-        }
-        currentTheme = goog.array.find(this.themes, function(object) {
-          return object['name'] === themeId;
-        });
+  /**
+   * @param {Array.<Object>} themes Array of theme objects.
+   */
+  var getThemesObjectSuccessFn = function(themes) {
+    // Keep only the themes dedicated to the theme switcher
+    this.themes = this.filter ? themes.filter(this.filter) : themes;
 
-        this.switchTheme(currentTheme);
+    // Then set current theme by looking first in the URL, otherwise use
+    // the default theme and add it to the URL.
+    var currentTheme;
+    var themeId = this.defaultTheme;
+    var pathElements = this.ngeoLocation_.getPath().split('/');
+    if (gmf.ThemeselectorController.themeInUrl(pathElements)) {
+      themeId = pathElements[pathElements.length - 1];
+    }
+    currentTheme = goog.array.find(this.themes, function(object) {
+      return object['name'] === themeId;
+    });
 
-      }, this));
+    this.switchTheme(currentTheme);
+
+  }.bind(this);
+
+  this.gmfThemes_.getThemesObject().then(getThemesObjectSuccessFn);
 };
 
 

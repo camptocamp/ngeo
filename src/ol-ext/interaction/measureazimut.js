@@ -30,7 +30,7 @@ goog.require('ol.source.Vector');
  */
 ngeo.interaction.MeasureAzimut = function(opt_options) {
 
-  var options = goog.isDef(opt_options) ? opt_options : {};
+  var options = opt_options !== undefined ? opt_options : {};
 
   goog.base(this, options);
 
@@ -39,7 +39,7 @@ ngeo.interaction.MeasureAzimut = function(opt_options) {
    * Message to show after the first point is clicked.
    * @type {Element}
    */
-  this.continueMsg = goog.isDef(options.continueMsg) ? options.continueMsg :
+  this.continueMsg = options.continueMsg !== undefined ? options.continueMsg :
       goog.dom.createDom(goog.dom.TagName.SPAN, {}, 'Click to finish.');
 
 };
@@ -123,7 +123,7 @@ ngeo.interaction.DrawAzimut = function(options) {
    * @type {ol.source.Vector}
    * @private
    */
-  this.source_ = goog.isDef(options.source) ? options.source : null;
+  this.source_ = options.source !== undefined ? options.source : null;
 
   /**
    * Tglls whether the drawing has started or not.
@@ -167,7 +167,7 @@ ngeo.interaction.DrawAzimut = function(options) {
       useSpatialIndex: false,
       wrapX: false
     }),
-    style: goog.isDef(options.style) ?
+    style: options.style !== undefined ?
         options.style : ol.interaction.Draw.getDefaultStyleFunction()
   });
 
@@ -260,7 +260,7 @@ ngeo.interaction.DrawAzimut.prototype.handlePointerMove_ = function(event) {
  */
 ngeo.interaction.DrawAzimut.prototype.createOrUpdateSketchPoint_ = function(event) {
   var coordinates = event.coordinate.slice();
-  if (goog.isNull(this.sketchPoint_)) {
+  if (this.sketchPoint_ === null) {
     this.sketchPoint_ = new ol.Feature(new ol.geom.Point(coordinates));
     this.updateSketchFeatures_();
   } else {
@@ -277,10 +277,10 @@ ngeo.interaction.DrawAzimut.prototype.createOrUpdateSketchPoint_ = function(even
  */
 ngeo.interaction.DrawAzimut.prototype.updateSketchFeatures_ = function() {
   var sketchFeatures = [];
-  if (!goog.isNull(this.sketchFeature_)) {
+  if (this.sketchFeature_ !== null) {
     sketchFeatures.push(this.sketchFeature_);
   }
-  if (!goog.isNull(this.sketchPoint_)) {
+  if (this.sketchPoint_ !== null) {
     sketchFeatures.push(this.sketchPoint_);
   }
   var source = this.sketchLayer_.getSource();
@@ -300,7 +300,7 @@ ngeo.interaction.DrawAzimut.prototype.startDrawing_ = function(event) {
   var line = new ol.geom.LineString([start.slice(), start.slice()]);
   var circle = new ol.geom.Circle(start, 0);
   var geometry = new ol.geom.GeometryCollection([line, circle]);
-  goog.asserts.assert(goog.isDef(geometry));
+  goog.asserts.assert(geometry !== undefined);
   this.sketchFeature_ = new ol.Feature();
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();
@@ -345,7 +345,7 @@ ngeo.interaction.DrawAzimut.prototype.modifyDrawing_ = function(event) {
 ngeo.interaction.DrawAzimut.prototype.abortDrawing_ = function() {
   this.started_ = false;
   var sketchFeature = this.sketchFeature_;
-  if (!goog.isNull(sketchFeature)) {
+  if (sketchFeature !== null) {
     this.sketchFeature_ = null;
     this.sketchPoint_ = null;
     this.sketchLayer_.getSource().clear(true);
@@ -366,7 +366,7 @@ ngeo.interaction.DrawAzimut.prototype.shouldStopEvent = goog.functions.FALSE;
 ngeo.interaction.DrawAzimut.prototype.updateState_ = function() {
   var map = this.getMap();
   var active = this.getActive();
-  if (goog.isNull(map) || !active) {
+  if (map === null || !active) {
     this.abortDrawing_();
   }
   this.sketchLayer_.setMap(active ? map : null);
@@ -379,9 +379,9 @@ ngeo.interaction.DrawAzimut.prototype.updateState_ = function() {
  */
 ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
   var sketchFeature = this.abortDrawing_();
-  goog.asserts.assert(!goog.isNull(sketchFeature));
+  goog.asserts.assert(sketchFeature !== null);
 
-  if (!goog.isNull(this.source_)) {
+  if (this.source_ !== null) {
     this.source_.addFeature(sketchFeature);
   }
   this.dispatchEvent(new ol.interaction.DrawEvent(

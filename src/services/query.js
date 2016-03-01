@@ -417,18 +417,15 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
     wmsGetFeatureInfoUrl =
         goog.uri.utils.setParam(wmsGetFeatureInfoUrl, 'QUERY_LAYERS', lyrStr);
 
-    this.$http_.get(wmsGetFeatureInfoUrl).then(goog.bind(
-        function(items, response) {
-          items.forEach(function(item) {
-            var format = item.source.format;
-            var features = format.readFeatures(response.data);
-            item['resultSource'].pending = false;
-            item['resultSource'].features = features;
-            this.result_.total += features.length;
-          }, this);
-        },
-        this,
-        items));
+    this.$http_.get(wmsGetFeatureInfoUrl).then(function(items, response) {
+      items.forEach(function(item) {
+        var format = item.source.format;
+        var features = format.readFeatures(response.data);
+        item['resultSource'].pending = false;
+        item['resultSource'].features = features;
+        this.result_.total += features.length;
+      }, this);
+    }.bind(this, items));
   }, this);
 };
 

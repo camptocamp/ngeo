@@ -111,52 +111,52 @@ gmf.Themes.findThemeByName = function(themes, themeName) {
 gmf.Themes.prototype.getBgLayers = function() {
   var $q = this.$q_;
 
-  goog.asserts.assert(!goog.isNull(this.promise_));
-  return this.promise_.then(goog.bind(
-      /**
-       * @param {gmf.ThemesResponse} data The "themes" web service response.
-       * @return {angular.$q.Promise} Promise.
-       */
-      function(data) {
-        var promises = data['background_layers'].map(function(item) {
+  /**
+   * @param {gmf.ThemesResponse} data The "themes" web service response.
+   * @return {angular.$q.Promise} Promise.
+   */
+  var promiseSuccessFn = function(data) {
+    var promises = data['background_layers'].map(function(item) {
 
-          var callback = function(item, layer) {
-            layer.set('label', item['name']);
-            layer.set('metadata', item['metadata']);
-            return layer;
-          };
+      var callback = function(item, layer) {
+        layer.set('label', item['name']);
+        layer.set('metadata', item['metadata']);
+        return layer;
+      };
 
-          if (item['type'] === 'WMTS') {
-            return this.layerHelper_.createWMTSLayerFromCapabilitites(
-                item['url'],
-                item['name']
-            ).then(goog.bind(callback, this, item)).then(null, function(error) {
-              console.error(error || 'unknown error');
-              // Continue even if some layers have failed loading.
-              return $q.resolve(undefined);
-            });
-          }
-        }, this);
-        return $q.all(promises);
-      }, this))
+      if (item['type'] === 'WMTS') {
+        return this.layerHelper_.createWMTSLayerFromCapabilitites(
+            item['url'],
+            item['name']
+        ).then(callback.bind(this, item)).then(null, function(error) {
+          console.error(error || 'unknown error');
+          // Continue even if some layers have failed loading.
+          return $q.resolve(undefined);
+        });
+      }
+    }, this);
+    return $q.all(promises);
+  }.bind(this);
 
-    .then(goog.bind(function(values) {
-      var layers = [];
+  goog.asserts.assert(this.promise_ !== null);
 
-      // (1) add a blank layer
-      layers.push(new ol.layer.Tile({
-        'label': 'blank',
-        'metadata': {'thumbnail': ''}
-      }));
+  return this.promise_.then(promiseSuccessFn).then(function(values) {
+    var layers = [];
 
-      // (2) add layers that were returned
-      values.forEach(function(item) {
-        if (item) {
-          layers.push(item);
-        }
-      });
-      return layers;
-    }, this));
+    // (1) add a blank layer
+    layers.push(new ol.layer.Tile({
+      'label': 'blank',
+      'metadata': {'thumbnail': ''}
+    }));
+
+    // (2) add layers that were returned
+    values.forEach(function(item) {
+      if (item) {
+        layers.push(item);
+      }
+    });
+    return layers;
+  }.bind(this));
 };
 
 
@@ -167,7 +167,7 @@ gmf.Themes.prototype.getBgLayers = function() {
  * @export
  */
 gmf.Themes.prototype.getThemeObject = function(themeName) {
-  goog.asserts.assert(!goog.isNull(this.promise_));
+  goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
@@ -186,7 +186,7 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
  * @export
  */
 gmf.Themes.prototype.getThemesObject = function() {
-  goog.asserts.assert(!goog.isNull(this.promise_));
+  goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
@@ -205,19 +205,20 @@ gmf.Themes.prototype.getThemesObject = function() {
  * @export
  */
 gmf.Themes.prototype.loadThemes = function(opt_roleId) {
+  /**
+   * @param {angular.$http.Response} resp Ajax response.
+   * @return {Object} The "themes" web service response.
+   */
+  var promiseSuccessFn = function(resp) {
+    this.dispatchEvent(gmf.ThemesEventType.LOAD);
+    return /** @type {gmf.ThemesResponse} */ (resp.data);
+  }.bind(this);
+
   this.promise_ = this.$http_.get(this.treeUrl_, {
     params: opt_roleId !== undefined ? {'role': opt_roleId} : {},
     cache: false,
     withCredentials: true
-  }).then(goog.bind(
-      /**
-       * @param {angular.$http.Response} resp Ajax response.
-       * @return {Object} The "themes" web service response.
-       */
-      function(resp) {
-        this.dispatchEvent(gmf.ThemesEventType.LOAD);
-        return /** @type {gmf.ThemesResponse} */ (resp.data);
-      }, this));
+  }).then(promiseSuccessFn);
 };
 
 

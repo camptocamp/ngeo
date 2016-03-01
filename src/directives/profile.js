@@ -43,7 +43,7 @@ ngeo.profileDirective = function() {
         function(scope, element, attrs) {
 
           var optionsAttr = attrs['ngeoProfileOptions'];
-          goog.asserts.assert(goog.isDef(optionsAttr));
+          goog.asserts.assert(optionsAttr !== undefined);
 
           var selection = d3.select(element[0]);
           var profile, elevationData, poiData;
@@ -53,7 +53,7 @@ ngeo.profileDirective = function() {
             var options = /** @type {ngeox.profile.ProfileOptions} */
                 (goog.object.clone(newVal));
 
-            if (goog.isDef(options)) {
+            if (options !== undefined) {
 
               // proxy the hoverCallback and outCallbackin order to be able to
               // call $applyAsync
@@ -65,7 +65,7 @@ ngeo.profileDirective = function() {
               //
               // For that reason we use $applyAsync instead of $apply here.
 
-              if (goog.isDef(options.hoverCallback)) {
+              if (options.hoverCallback !== undefined) {
                 var origHoverCallback = options.hoverCallback;
                 options.hoverCallback = function() {
                   origHoverCallback.apply(null, arguments);
@@ -73,7 +73,7 @@ ngeo.profileDirective = function() {
                 };
               }
 
-              if (goog.isDef(options.outCallback)) {
+              if (options.outCallback !== undefined) {
                 var origOutCallback = options.outCallback;
                 options.outCallback = function() {
                   origOutCallback();
@@ -98,7 +98,7 @@ ngeo.profileDirective = function() {
 
           scope.$watch(attrs['ngeoProfileHighlight'],
               function(newVal, oldVal) {
-                if (!goog.isDef(newVal)) {
+                if (newVal === undefined) {
                   return;
                 }
                 if (newVal > 0) {
@@ -109,9 +109,9 @@ ngeo.profileDirective = function() {
               });
 
           function refreshData() {
-            if (goog.isDef(profile)) {
+            if (profile !== undefined) {
               selection.datum(elevationData).call(profile);
-              if (goog.isDef(elevationData)) {
+              if (elevationData !== undefined) {
                 profile.showPois(poiData);
               }
             }

@@ -123,7 +123,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   /**
    * Languages URL
-   * @type {Object.<string, string>}
+   * @type {!Object.<string, string>}
    */
   this.langUrls = $injector.get('langUrls');
 
@@ -176,24 +176,24 @@ gmf.AbstractController.prototype.switchLanguage = function(lang) {
 /**
  */
 gmf.AbstractController.prototype.initLanguage = function() {
-  this.$scope.$watch(goog.bind(function() {
+  this.$scope.$watch(function() {
     return this['lang'];
-  }, this), goog.bind(function(newValue) {
+  }.bind(this), function(newValue) {
     this.stateManager.updateState({
       'lang': newValue
     });
-  }, this));
+  }.bind(this));
 
   var browserLanguage = /** @type {string|undefined} */
-      (this.getBrowserLanguage(goog.object.getKeys(this.langUrls)));
+      (this.getBrowserLanguage(Object.keys(this.langUrls)));
   var urlLanguage = /** @type {string|undefined} */
       (this.stateManager.getInitialValue('lang'));
 
-  if (goog.isDef(urlLanguage) &&
+  if (urlLanguage !== undefined &&
       goog.object.containsKey(this.langUrls, urlLanguage)) {
     this.switchLanguage(urlLanguage);
     return;
-  } else if (goog.isDef(browserLanguage) &&
+  } else if (browserLanguage !== undefined &&
       goog.object.containsKey(this.langUrls, browserLanguage)) {
     this.switchLanguage(browserLanguage);
     return;

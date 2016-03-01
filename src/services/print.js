@@ -127,7 +127,7 @@ ngeo.Print.FEAT_STYLE_PROP_PREFIX_ = '_ngeo_style_';
  * @return {angular.$http.HttpPromise} HTTP promise.
  */
 ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
-  var httpConfig = goog.isDef(opt_httpConfig) ? opt_httpConfig :
+  var httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
       /** @type {angular.$http.Config} */ ({});
   var url = this.url_ + '/cancel/' + ref;
   // "delete" is a reserved word, so use ['delete']
@@ -180,8 +180,8 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   var viewResolution = view.getResolution();
   var viewRotation = view.getRotation();
 
-  goog.asserts.assert(goog.isDef(viewCenter));
-  goog.asserts.assert(goog.isDef(viewProjection));
+  goog.asserts.assert(viewCenter !== undefined);
+  goog.asserts.assert(viewProjection !== undefined);
 
   object.center = viewCenter;
   object.projection = viewProjection.getCode();
@@ -190,7 +190,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   object.layers = [];
 
   var layersCollection = map.getLayers();
-  goog.asserts.assert(!goog.isNull(layersCollection));
+  goog.asserts.assert(layersCollection !== null);
   var layers = layersCollection.getArray().slice().reverse();
 
   layers.forEach(
@@ -201,7 +201,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
        */
       function(layer, idx, layers) {
         if (layer.getVisible()) {
-          goog.asserts.assert(goog.isDef(viewResolution));
+          goog.asserts.assert(viewResolution !== undefined);
           this.encodeLayer(object.layers, layer, viewResolution);
         }
       }, this);
@@ -250,7 +250,7 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(source, ol.source.ImageWMS);
 
   var url = source.getUrl();
-  if (goog.isDef(url)) {
+  if (url !== undefined) {
     this.encodeWmsLayer_(
         arr, layer.getOpacity(), url, source.getParams());
   }
@@ -417,11 +417,11 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
 
     var styleData = null;
     var styleFunction = feature.getStyleFunction();
-    if (goog.isDef(styleFunction)) {
+    if (styleFunction !== undefined) {
       styleData = styleFunction.call(feature, resolution);
     } else {
       styleFunction = layer.getStyleFunction();
-      if (goog.isDef(styleFunction)) {
+      if (styleFunction !== undefined) {
         styleData = styleFunction.call(layer, feature, resolution);
       }
     }
@@ -433,9 +433,9 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
         [styleData] : styleData;
     goog.asserts.assert(goog.isArray(styles));
 
-    if (!goog.isNull(styles) && styles.length > 0) {
+    if (styles !== null && styles.length > 0) {
       geojsonFeatures.push(geojsonFeature);
-      if (goog.isNull(geojsonFeature.properties)) {
+      if (geojsonFeature.properties === null) {
         geojsonFeature.properties = {};
       }
       for (var j = 0, jj = styles.length; j < jj; ++j) {
@@ -498,20 +498,20 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
   var strokeStyle = style.getStroke();
   var textStyle = style.getText();
   if (styleType == ngeo.PrintStyleType.POLYGON) {
-    if (!goog.isNull(fillStyle)) {
+    if (fillStyle !== null) {
       this.encodeVectorStylePolygon_(
           styleObject.symbolizers, fillStyle, strokeStyle);
     }
   } else if (styleType == ngeo.PrintStyleType.LINE_STRING) {
-    if (!goog.isNull(strokeStyle)) {
+    if (strokeStyle !== null) {
       this.encodeVectorStyleLine_(styleObject.symbolizers, strokeStyle);
     }
   } else if (styleType == ngeo.PrintStyleType.POINT) {
-    if (!goog.isNull(imageStyle)) {
+    if (imageStyle !== null) {
       this.encodeVectorStylePoint_(styleObject.symbolizers, imageStyle);
     }
   }
-  if (!goog.isNull(textStyle)) {
+  if (textStyle !== null) {
     this.encodeTextStyle_(styleObject.symbolizers, textStyle);
   }
 };
@@ -525,7 +525,7 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
 ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
   var fillColor = fillStyle.getColor();
   goog.asserts.assert(goog.isArray(fillColor), 'only supporting fill colors');
-  if (!goog.isNull(fillColor)) {
+  if (fillColor !== null) {
     var fillColorRgba = ol.color.asArray(fillColor);
     symbolizer.fillColor = goog.color.rgbArrayToHex(fillColorRgba);
     symbolizer.fillOpacity = fillColorRgba[3];
@@ -562,16 +562,16 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
     });
     symbolizer.pointRadius = imageStyle.getRadius();
     var fillStyle = imageStyle.getFill();
-    if (!goog.isNull(fillStyle)) {
+    if (fillStyle !== null) {
       this.encodeVectorStyleFill_(symbolizer, fillStyle);
     }
     var strokeStyle = imageStyle.getStroke();
-    if (!goog.isNull(strokeStyle)) {
+    if (strokeStyle !== null) {
       this.encodeVectorStyleStroke_(symbolizer, strokeStyle);
     }
   } else if (imageStyle instanceof ol.style.Icon) {
     var src = imageStyle.getSrc();
-    if (goog.isDef(src)) {
+    if (src !== undefined) {
       symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
         type: 'point',
         externalGraphic: src
@@ -582,7 +582,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
       }
     }
   }
-  if (goog.isDef(symbolizer)) {
+  if (symbolizer !== undefined) {
     symbolizers.push(symbolizer);
   }
 };
@@ -600,7 +600,7 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle
     type: 'polygon'
   });
   this.encodeVectorStyleFill_(symbolizer, fillStyle);
-  if (!goog.isNull(strokeStyle)) {
+  if (strokeStyle !== null) {
     this.encodeVectorStyleStroke_(symbolizer, strokeStyle);
   }
   symbolizers.push(symbolizer);
@@ -614,13 +614,13 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle
  */
 ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle) {
   var strokeColor = strokeStyle.getColor();
-  if (!goog.isNull(strokeColor)) {
+  if (strokeColor !== null) {
     var strokeColorRgba = ol.color.asArray(strokeColor);
     symbolizer.strokeColor = goog.color.rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
   }
   var strokeWidth = strokeStyle.getWidth();
-  if (goog.isDef(strokeWidth)) {
+  if (strokeWidth !== undefined) {
     symbolizer.strokeWidth = strokeWidth;
   }
 };
@@ -637,22 +637,22 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     type: 'Text'
   });
   var label = textStyle.getText();
-  if (goog.isDef(label)) {
+  if (label !== undefined) {
     symbolizer.label = label;
 
     var labelAlign = textStyle.getTextAlign();
-    if (goog.isDef(labelAlign)) {
+    if (labelAlign !== undefined) {
       symbolizer.labelAlign = labelAlign;
     }
 
     var labelRotation = textStyle.getRotation();
-    if (goog.isDef(labelRotation)) {
+    if (labelRotation !== undefined) {
       // Mapfish Print expects a string, not a number to rotate text
       symbolizer.labelRotation = (labelRotation * 180 / Math.PI).toString();
     }
 
     var fontStyle = textStyle.getFont();
-    if (goog.isDef(fontStyle)) {
+    if (fontStyle !== undefined) {
       var font = fontStyle.split(' ');
       if (font.length >= 3) {
         symbolizer.fontWeight = font[0];
@@ -662,18 +662,18 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     }
 
     var strokeStyle = textStyle.getStroke();
-    if (!goog.isNull(strokeStyle)) {
+    if (strokeStyle !== null) {
       var strokeColorRgba = ol.color.asArray(strokeStyle.getColor());
       symbolizer.haloColor = goog.color.rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
       var width = strokeStyle.getWidth();
-      if (goog.isDef(width)) {
+      if (width !== undefined) {
         symbolizer.haloRadius = width;
       }
     }
 
     var fillStyle = textStyle.getFill();
-    if (!goog.isNull(fillStyle)) {
+    if (fillStyle !== null) {
       var fillColor = fillStyle.getColor();
       goog.asserts.assert(
           goog.isArray(fillColor), 'only supporting fill colors');
@@ -682,7 +682,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     }
 
     // Mapfish Print allows offset only if labelAlign is defined.
-    if (goog.isDef(symbolizer.labelAlign)) {
+    if (symbolizer.labelAlign !== undefined) {
       symbolizer.labelXOffset = textStyle.getOffsetX();
       // Mapfish uses the opposite direction of OpenLayers for y axis, so the
       // minus sign is required for the y offset to be identical.
@@ -728,7 +728,7 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
     }
   });
   goog.object.extend(httpConfig,
-      goog.isDef(opt_httpConfig) ? opt_httpConfig : {});
+      opt_httpConfig !== undefined ? opt_httpConfig : {});
   return this.$http_.post(url, printSpec, httpConfig);
 };
 
@@ -740,7 +740,7 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
  * @return {angular.$http.HttpPromise} HTTP promise.
  */
 ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
-  var httpConfig = goog.isDef(opt_httpConfig) ? opt_httpConfig :
+  var httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
       /** @type {angular.$http.Config} */ ({});
   var url = this.url_ + '/status/' + ref + '.json';
   return this.$http_.get(url, httpConfig);
@@ -763,7 +763,7 @@ ngeo.Print.prototype.getReportUrl = function(ref) {
  * @return {angular.$http.HttpPromise} HTTP promise.
  */
 ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
-  var httpConfig = goog.isDef(opt_httpConfig) ? opt_httpConfig :
+  var httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
           /** @type {angular.$http.Config} */ ({});
   var url = this.url_ + '/capabilities.json';
   return this.$http_.get(url, httpConfig);

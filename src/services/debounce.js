@@ -43,7 +43,7 @@ ngeo.debounceServiceFactory = function($timeout) {
                 timeout = null;
                 func.apply(context, args);
               };
-              if (!goog.isNull(timeout)) {
+              if (timeout !== null) {
                 $timeout.cancel(timeout);
               }
               timeout = $timeout(later, wait, invokeApply);

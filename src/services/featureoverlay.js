@@ -72,7 +72,7 @@ ngeo.FeatureOverlayMgr = function() {
    */
   this.layer_ = new ol.layer.Vector({
     source: this.source_,
-    style: goog.bind(this.styleFunction_, this),
+    style: this.styleFunction_.bind(this),
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });
@@ -163,7 +163,7 @@ ngeo.FeatureOverlayMgr.prototype.init = function(map) {
 ngeo.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
-  this.groups_[groupIndex].styleFunction = goog.isNull(style) ?
+  this.groups_[groupIndex].styleFunction = style === null ?
       ol.style.defaultStyleFunction : ol.style.createStyleFunction(style);
 };
 
@@ -245,14 +245,14 @@ ngeo.FeatureOverlay.prototype.clear = function() {
  * @param {ol.Collection.<ol.Feature>} features Feature collection.
  */
 ngeo.FeatureOverlay.prototype.setFeatures = function(features) {
-  if (!goog.isNull(this.features_)) {
+  if (this.features_ !== null) {
     this.features_.clear();
     ol.events.unlisten(this.features_, ol.CollectionEventType.ADD,
         this.handleFeatureAdd_, this);
     ol.events.unlisten(this.features_, ol.CollectionEventType.REMOVE,
         this.handleFeatureRemove_, this);
   }
-  if (!goog.isNull(features)) {
+  if (features !== null) {
     features.forEach(function(feature) {
       this.addFeature(feature);
     }, this);

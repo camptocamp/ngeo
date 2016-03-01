@@ -76,27 +76,27 @@ ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
 ngeo.format.FeatureHash = function(opt_options) {
   goog.base(this);
 
-  var options = goog.isDef(opt_options) ? opt_options : {};
+  var options = opt_options !== undefined ? opt_options : {};
 
   /**
    * @type {number}
    * @private
    */
-  this.accuracy_ = goog.isDef(options.accuracy) ?
+  this.accuracy_ = options.accuracy !== undefined ?
       options.accuracy : ngeo.format.FeatureHash.ACCURACY_;
 
   /**
    * @type {boolean}
    * @private
    */
-  this.encodeStyles_ = goog.isDef(options.encodeStyles) ?
+  this.encodeStyles_ = options.encodeStyles !== undefined ?
       options.encodeStyles : true;
 
   /**
    * @type {function(ol.Feature):Object.<string, (string|number)>}
    * @private
    */
-  this.propertiesFunction_ = goog.isDef(options.properties) ?
+  this.propertiesFunction_ = options.properties !== undefined ?
       options.properties : ngeo.format.FeatureHash.defaultPropertiesFunction_;
 
   /**
@@ -189,7 +189,7 @@ ngeo.format.FeatureHash.encodeNumber_ = function(num) {
  */
 ngeo.format.FeatureHash.encodeStyles_ = function(styles, geometryType, encodedStyles) {
   var styleType = ngeo.format.FeatureHashStyleTypes_[geometryType];
-  goog.asserts.assert(goog.isDef(styleType));
+  goog.asserts.assert(styleType !== undefined);
   for (var i = 0; i < styles.length; ++i) {
     var style = styles[i];
     var fillStyle = style.getFill();
@@ -197,20 +197,20 @@ ngeo.format.FeatureHash.encodeStyles_ = function(styles, geometryType, encodedSt
     var strokeStyle = style.getStroke();
     var textStyle = style.getText();
     if (styleType == ngeo.format.FeatureHashStyleType.POLYGON) {
-      if (!goog.isNull(fillStyle)) {
+      if (fillStyle !== null) {
         ngeo.format.FeatureHash.encodeStylePolygon_(
             fillStyle, strokeStyle, encodedStyles);
       }
     } else if (styleType == ngeo.format.FeatureHashStyleType.LINE_STRING) {
-      if (!goog.isNull(strokeStyle)) {
+      if (strokeStyle !== null) {
         ngeo.format.FeatureHash.encodeStyleLine_(strokeStyle, encodedStyles);
       }
     } else if (styleType == ngeo.format.FeatureHashStyleType.POINT) {
-      if (!goog.isNull(imageStyle)) {
+      if (imageStyle !== null) {
         ngeo.format.FeatureHash.encodeStylePoint_(imageStyle, encodedStyles);
       }
     }
-    if (!goog.isNull(textStyle)) {
+    if (textStyle !== null) {
       ngeo.format.FeatureHash.encodeStyleText_(textStyle, encodedStyles);
     }
   }
@@ -244,11 +244,11 @@ ngeo.format.FeatureHash.encodeStylePoint_ = function(imageStyle, encodedStyles) 
     }
     encodedStyles.push(encodeURIComponent('pointRadius*' + radius));
     var fillStyle = imageStyle.getFill();
-    if (!goog.isNull(fillStyle)) {
+    if (fillStyle !== null) {
       ngeo.format.FeatureHash.encodeStyleFill_(fillStyle, encodedStyles);
     }
     var strokeStyle = imageStyle.getStroke();
-    if (!goog.isNull(strokeStyle)) {
+    if (strokeStyle !== null) {
       ngeo.format.FeatureHash.encodeStyleStroke_(strokeStyle, encodedStyles);
     }
   }
@@ -266,7 +266,7 @@ ngeo.format.FeatureHash.encodeStylePoint_ = function(imageStyle, encodedStyles) 
  */
 ngeo.format.FeatureHash.encodeStylePolygon_ = function(fillStyle, strokeStyle, encodedStyles) {
   ngeo.format.FeatureHash.encodeStyleFill_(fillStyle, encodedStyles);
-  if (!goog.isNull(strokeStyle)) {
+  if (strokeStyle !== null) {
     ngeo.format.FeatureHash.encodeStyleStroke_(strokeStyle, encodedStyles);
   }
 };
@@ -282,10 +282,10 @@ ngeo.format.FeatureHash.encodeStylePolygon_ = function(fillStyle, strokeStyle, e
  * @private
  */
 ngeo.format.FeatureHash.encodeStyleFill_ = function(fillStyle, encodedStyles, opt_propertyName) {
-  var propertyName = goog.isDef(opt_propertyName) ?
+  var propertyName = opt_propertyName !== undefined ?
       opt_propertyName : 'fillColor';
   var fillColor = fillStyle.getColor();
-  if (!goog.isNull(fillColor)) {
+  if (fillColor !== null) {
     goog.asserts.assert(goog.isArray(fillColor), 'only supporting fill colors');
     var fillColorRgba = ol.color.asArray(fillColor);
     var fillColorHex = goog.color.rgbArrayToHex(fillColorRgba);
@@ -307,7 +307,7 @@ ngeo.format.FeatureHash.encodeStyleFill_ = function(fillStyle, encodedStyles, op
  */
 ngeo.format.FeatureHash.encodeStyleStroke_ = function(strokeStyle, encodedStyles) {
   var strokeColor = strokeStyle.getColor();
-  if (!goog.isNull(strokeColor)) {
+  if (strokeColor !== null) {
     var strokeColorRgba = ol.color.asArray(strokeColor);
     var strokeColorHex = goog.color.rgbArrayToHex(strokeColorRgba);
     if (encodedStyles.length > 0) {
@@ -316,7 +316,7 @@ ngeo.format.FeatureHash.encodeStyleStroke_ = function(strokeStyle, encodedStyles
     encodedStyles.push(encodeURIComponent('strokeColor*' + strokeColorHex));
   }
   var strokeWidth = strokeStyle.getWidth();
-  if (goog.isDef(strokeWidth)) {
+  if (strokeWidth !== undefined) {
     if (encodedStyles.length > 0) {
       encodedStyles.push('\'');
     }
@@ -334,7 +334,7 @@ ngeo.format.FeatureHash.encodeStyleStroke_ = function(strokeStyle, encodedStyles
  */
 ngeo.format.FeatureHash.encodeStyleText_ = function(textStyle, encodedStyles) {
   var fontStyle = textStyle.getFont();
-  if (goog.isDef(fontStyle)) {
+  if (fontStyle !== undefined) {
     var font = fontStyle.split(' ');
     if (font.length >= 3) {
       if (encodedStyles.length > 0) {
@@ -344,7 +344,7 @@ ngeo.format.FeatureHash.encodeStyleText_ = function(textStyle, encodedStyles) {
     }
   }
   var fillStyle = textStyle.getFill();
-  if (!goog.isNull(fillStyle)) {
+  if (fillStyle !== null) {
     ngeo.format.FeatureHash.encodeStyleFill_(
         fillStyle, encodedStyles, 'fontColor');
   }
@@ -537,20 +537,20 @@ ngeo.format.FeatureHash.setStyleInFeature_ = function(text, feature) {
     }
   }
   var fillStyle = null;
-  if (goog.isDef(fillColor)) {
+  if (fillColor !== undefined) {
     fillStyle = new ol.style.Fill({
       color: fillColor
     });
   }
   var strokeStyle = null;
-  if (goog.isDef(strokeColor) && goog.isDef(strokeWidth)) {
+  if (strokeColor !== undefined && strokeWidth !== undefined) {
     strokeStyle = new ol.style.Stroke({
       color: strokeColor,
       width: strokeWidth
     });
   }
   var imageStyle = null;
-  if (goog.isDef(pointRadius)) {
+  if (pointRadius !== undefined) {
     imageStyle = new ol.style.Circle({
       radius: pointRadius,
       fill: fillStyle,
@@ -559,7 +559,7 @@ ngeo.format.FeatureHash.setStyleInFeature_ = function(text, feature) {
     fillStyle = strokeStyle = null;
   }
   var textStyle = null;
-  if (goog.isDef(fontSize) && goog.isDef(fontColor)) {
+  if (fontSize !== undefined && fontColor !== undefined) {
     textStyle = new ol.style.Text({
       font: fontSize + ' sans-serif',
       fill: new ol.style.Fill({
@@ -777,7 +777,7 @@ ngeo.format.FeatureHash.GEOMETRY_WRITERS_ = {
 ngeo.format.FeatureHash.prototype.decodeCoordinates_ = function(text, opt_flatCoordinates) {
   var len = text.length;
   var index = 0;
-  var flatCoordinates = goog.isDef(opt_flatCoordinates) ?
+  var flatCoordinates = opt_flatCoordinates !== undefined ?
       opt_flatCoordinates : [];
   var i = flatCoordinates.length;
   while (index < len) {
@@ -908,7 +908,7 @@ ngeo.format.FeatureHash.prototype.readFeaturesFromText = function(text, opt_opti
  */
 ngeo.format.FeatureHash.prototype.readGeometryFromText = function(text, opt_options) {
   var geometryReader = ngeo.format.FeatureHash.GEOMETRY_READERS_[text[0]];
-  goog.asserts.assert(goog.isDef(geometryReader));
+  goog.asserts.assert(geometryReader !== undefined);
   this.prevX_ = 0;
   this.prevY_ = 0;
   return geometryReader.call(this, text);
@@ -969,9 +969,9 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
 
   if (this.encodeStyles_) {
     var styleFunction = feature.getStyleFunction();
-    if (goog.isDef(styleFunction)) {
+    if (styleFunction !== undefined) {
       var styles = styleFunction.call(feature, 0);
-      if (!goog.isNull(styles)) {
+      if (styles !== null) {
         var encodedStyles = [];
         styles = goog.isArray(styles) ? styles : [styles];
         ngeo.format.FeatureHash.encodeStyles_(
@@ -1020,7 +1020,7 @@ ngeo.format.FeatureHash.prototype.writeFeaturesText = function(features, opt_opt
 ngeo.format.FeatureHash.prototype.writeGeometryText = function(geometry, opt_options) {
   var geometryWriter = ngeo.format.FeatureHash.GEOMETRY_WRITERS_[
       geometry.getType()];
-  goog.asserts.assert(goog.isDef(geometryWriter));
+  goog.asserts.assert(geometryWriter !== undefined);
   var transformedGeometry = /** @type {ol.geom.Geometry} */
       (ol.format.Feature.transformWithOptions(geometry, true, opt_options));
   this.prevX_ = 0;

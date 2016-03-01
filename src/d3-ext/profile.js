@@ -48,7 +48,7 @@ ngeo.profile = function(options) {
    * Whether the simplified profile should be shown.
    * @type {boolean}
    */
-  var light = goog.isDef(options.light) ? options.light : false;
+  var light = options.light !== undefined ? options.light : false;
 
 
   /**
@@ -61,14 +61,14 @@ ngeo.profile = function(options) {
    * Hover callback function.
    * @type {function(Object, number, string, number, string)}
    */
-  var hoverCallback = goog.isDef(options.hoverCallback) ?
+  var hoverCallback = options.hoverCallback !== undefined ?
       options.hoverCallback : goog.nullFunction;
 
   /**
    * Out callback function.
    * @type {function()}
    */
-  var outCallback = goog.isDef(options.outCallback) ?
+  var outCallback = options.outCallback !== undefined ?
       options.outCallback : goog.nullFunction;
 
   /**
@@ -96,7 +96,7 @@ ngeo.profile = function(options) {
   /**
    * @type {number}
    */
-  var poiLabelAngle = goog.isDef(options.poiLabelAngle) ?
+  var poiLabelAngle = options.poiLabelAngle !== undefined ?
       options.poiLabelAngle : -60;
 
   /**
@@ -137,14 +137,14 @@ ngeo.profile = function(options) {
     }
   };
 
-  if (goog.isDef(options.formatter)) {
+  if (options.formatter !== undefined) {
     goog.object.extend(formatter, options.formatter);
   }
 
   /**
    * @type {boolean}
    */
-  var lightXAxis = goog.isDef(options.lightXAxis) ? options.lightXAxis : false;
+  var lightXAxis = options.lightXAxis !== undefined ? options.lightXAxis : false;
 
   // Objects shared with the showPois function
   /**
@@ -197,7 +197,7 @@ ngeo.profile = function(options) {
 
   var profile = function(selection) {
     selection.each(function(data) {
-      if (!goog.isDef(data)) {
+      if (data === undefined) {
         d3.select(this).selectAll('svg').remove();
         return;
       }
@@ -236,7 +236,7 @@ ngeo.profile = function(options) {
 
       // Otherwise, create the skeletal chart.
       var svgEnter = svg.enter().append('svg');
-      if (goog.isDef(styleDefs)) {
+      if (styleDefs !== undefined) {
         svgEnter.append('defs').append('style')
           .attr('type', 'text/css')
           .text(styleDefs);
@@ -319,7 +319,7 @@ ngeo.profile = function(options) {
       y.domain(yDomain);
 
       // set the ratio according to the horizontal distance
-      if (goog.isDef(scaleModifier)) {
+      if (scaleModifier !== undefined) {
         scaleModifier(x, y, width, height);
       } else {
         // By default, add a small padding so that it looks nicer
@@ -472,8 +472,8 @@ ngeo.profile = function(options) {
 
 
   profile.showPois = function(pois) {
-    pois = goog.isDef(pois) ? pois : [];
-    goog.asserts.assert(pois.length === 0 || goog.isDef(poiExtractor));
+    pois = pois !== undefined ? pois : [];
+    goog.asserts.assert(pois.length === 0 || poiExtractor !== undefined);
 
     var pe = poiExtractor;
     var g = svg.select('g');

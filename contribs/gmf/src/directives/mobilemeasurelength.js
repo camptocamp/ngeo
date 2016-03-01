@@ -86,11 +86,11 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction) {
    */
   this.active;
 
-  $scope.$watch(goog.bind(function() {
+  $scope.$watch(function() {
     return this.active;
-  }, this), goog.bind(function(newVal) {
+  }.bind(this), function(newVal) {
     this.measure.setActive(newVal);
-  }, this));
+  }.bind(this));
 
   /**
    * @type {number|undefined}
@@ -152,7 +152,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction) {
 
   Object.defineProperty(this, 'hasPoints', {
     get: function() {
-      return !goog.isNull(this.drawInteraction.getFeature());
+      return this.drawInteraction.getFeature() !== null;
     }
   });
 

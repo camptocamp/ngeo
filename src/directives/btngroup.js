@@ -153,10 +153,10 @@ ngeo.btnDirective = function($parse) {
           var ngModelSet = ngModelGet.assign;
 
           // Set ng-model value to false if undefined
-          if (!goog.isDef(ngModelGet(scope))) {
+          if (ngModelGet(scope) === undefined) {
             ngModelSet(scope, false);
           }
-          if (!goog.isNull(buttonsCtrl)) {
+          if (buttonsCtrl !== null) {
             indexInGroup = buttonsCtrl.addButton(ngModelGet);
           }
 
@@ -170,7 +170,7 @@ ngeo.btnDirective = function($parse) {
 
           // model -> UI
           ngModelCtrl.$render = function() {
-            if (ngModelCtrl.$viewValue && !goog.isNull(buttonsCtrl)) {
+            if (ngModelCtrl.$viewValue && buttonsCtrl !== null) {
               buttonsCtrl.activate(indexInGroup);
             }
             element.toggleClass('active', ngModelCtrl.$viewValue);
