@@ -37,11 +37,12 @@ gmf.ThemesEventType = {
  * @param {string} gmfTreeUrl URL to "themes" web service.
  * @param {angular.$q} $q Angular q service
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper) {
+gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper, gettextCatalog) {
 
   goog.base(this);
 
@@ -68,6 +69,12 @@ gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper) {
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog = gettextCatalog;
 
   /**
    * @type {?angular.$q.Promise}
@@ -145,7 +152,7 @@ gmf.Themes.prototype.getBgLayers = function() {
 
     // (1) add a blank layer
     layers.push(new ol.layer.Tile({
-      'label': 'blank',
+      'label': this.gettextCatalog.getString('blank'),
       'metadata': {'thumbnail': ''}
     }));
 
