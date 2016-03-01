@@ -15,7 +15,7 @@ goog.require('gmf.AbstractMobileController');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.proj.EPSG21781');
+goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mobileGeolocationDirective');
 
