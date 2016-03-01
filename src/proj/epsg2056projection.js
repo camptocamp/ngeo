@@ -1,4 +1,4 @@
-goog.provide('gmf.proj.EPSG2056');
+goog.provide('ngeo.proj.EPSG2056');
 
 goog.require('ol.proj');
 

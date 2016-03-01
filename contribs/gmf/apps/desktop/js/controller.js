@@ -16,7 +16,7 @@ goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.proj.EPSG21781');
+goog.require('ngeo.proj.EPSG21781');
 
 
 app.module.constant(

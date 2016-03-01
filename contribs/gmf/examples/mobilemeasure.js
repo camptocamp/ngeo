@@ -3,7 +3,7 @@ goog.provide('gmf-mobilemeasure');
 goog.require('gmf.Permalink');
 goog.require('gmf.mobileMeasureLengthDirective');
 goog.require('gmf.mobileMeasurePointDirective');
-goog.require('gmf.proj.EPSG21781');
+goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.MeasureEvent');
 goog.require('ngeo.btngroupDirective');
 goog.require('ngeo.interaction.MeasurePointMobile');

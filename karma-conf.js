@@ -36,7 +36,7 @@ module.exports = function(config) {
       'contribs/gmf/test/spec/beforeeach.js',
       'contribs/gmf/test/spec/data/*.js',
       'contribs/gmf/test/spec/**/*.spec.js',
-      'contribs/gmf/src/proj/epsg21781projection.js',
+      'src/proj/epsg21781projection.js',
       {
         pattern: closureLibPath + 'closure/**/*.js',
         included: false
