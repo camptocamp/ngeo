@@ -158,9 +158,9 @@ app.SearchController.prototype.createVectorLayer_ = function() {
  * @private
  */
 app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateGeoJSONBloodhound) {
-  var url = 'http://devv3.geoportail.lu/main/wsgi/fulltextsearch?query=%QUERY';
-  var bloodhound = ngeoCreateGeoJSONBloodhound(url, undefined,
-                                               ol.proj.get('EPSG:3857'));
+  var url = 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?query=%QUERY';
+  var bloodhound = ngeoCreateGeoJSONBloodhound(
+      url, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
   bloodhound.initialize();
   return bloodhound;
 };
@@ -194,6 +194,11 @@ app.module.controller('AppSearchController', app.SearchController);
  * @constructor
  */
 app.MainController = function() {
+  proj4.defs('EPSG:21781',
+      '+proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +k_0=1 ' +
+      '+x_0=600000 +y_0=200000 +ellps=bessel ' +
+      '+towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs');
+
   /**
    * @type {ol.Map}
    * @export
