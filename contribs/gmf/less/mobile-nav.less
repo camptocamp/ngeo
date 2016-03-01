@@ -24,9 +24,9 @@ main {
   .overlay {
     /* shadow layer visible when navigation is active */
     position: absolute;
-    z-index: @above-content-index;
-    height: 100%;
-    width: 100%;
+    z-index: @above-search-index;
+    height: 100vh;
+    width: 100vw;
     top: 0;
     left: 0;
     cursor: pointer;
@@ -38,6 +38,30 @@ main {
     .backface-visibility(hidden);
 
     .nav-is-visible & {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.search-overlay {
+  /* shadow layer visible when search is active */
+  position: absolute;
+  z-index: @above-menus-index;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  background-color: white;
+  visibility: hidden;
+  opacity: 0;
+
+  .transition(opacity @duration, visibility @duration;);
+  .backface-visibility(hidden);
+
+  @media (max-width: @screen-xs-max) {
+    .search-is-active & {
       visibility: visible;
       opacity: 1;
     }
@@ -214,7 +238,7 @@ nav.nav-right {
 .nav-trigger {
   top: @app-margin;
   background: white;
-  z-index: @above-content-index;
+  z-index: @above-search-index;
   height: ~"calc("@map-tools-size ~" - 3px)";
   margin-top: 2px;
   border: none;
