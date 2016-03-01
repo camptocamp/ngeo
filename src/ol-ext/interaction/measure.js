@@ -23,8 +23,11 @@ goog.require('ol.style.Style');
 /**
  * Interactions for measure tools base class.
  * @typedef {{
+ *    decimals: (number|undefined),
+ *    displayHelpTooltip: (boolean|undefined),
  *    startMsg: (Element|undefined),
- *    style:(ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined)
+ *    style: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
+ *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined)
  * }}
  */
 ngeo.interaction.MeasureBaseOptions;
