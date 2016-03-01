@@ -103,7 +103,8 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % endif
       "useOfGoogBase",
       "unnecessaryCasts",
-      "lintChecks"
+      "lintChecks",
+      "analyzerChecks"
     ],
     "extra_annotation_name": [
       "api", "observable", "ngdoc", "ngname", "htmlAttribute"
