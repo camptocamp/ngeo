@@ -63,8 +63,9 @@ GIT_BRANCH ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
 GIT_REMOTE_NAME ?= origin
 
 # i18n
-L10N_LANGUAGES = fr de it
-L10N_PO_FILES = $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L10N_LANGUAGES))) # \
+L10N_LANGUAGES = fr de
+L10N_PO_FILES = $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L10N_LANGUAGES))) \
+	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/demo.po, $(L10N_LANGUAGES))) # \
 	# $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/ngeo.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
 TX_GIT_BRANCH ?= master
@@ -679,13 +680,20 @@ transifex-init: .build/dev-requirements.timestamp .tx/config \
 	.build/python-venv/bin/tx pull -l $* --force
 	$(TOUCHBACK_TXRC)
 
+.PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po
+.build/locale/%/LC_MESSAGES/demo.po:
+	mkdir -p $(dir $@)
+	wget -O $@ https://raw.githubusercontent.com/camptocamp/demo_geomapfish/master/demo/locale/$*/LC_MESSAGES/demo-client.po
+
 contribs/gmf/build/gmf-en.json:
 	mkdir -p $(dir $@)
 	echo '{}' > $@
 
-contribs/gmf/build/gmf-%.json: .build/locale/%/LC_MESSAGES/gmf.po .build/node_modules.timestamp
+contribs/gmf/build/gmf-%.json: .build/locale/%/LC_MESSAGES/gmf.po \
+		.build/locale/%/LC_MESSAGES/demo.po \
+		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	node buildtools/compile-catalog $< > $@
+	node buildtools/compile-catalog $(filter-out .build/node_modules.timestamp, $^) > $@
 
 .PHONY: generate-gmf-fonts
 generate-gmf-fonts: contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot contribs/gmf/fonts/gmf-icons.woff
