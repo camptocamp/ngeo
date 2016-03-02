@@ -36,8 +36,8 @@ describe('gmf.Themes', function() {
     gmfThemes.loadThemes();
     $httpBackend.flush();
 
-    expect(spy.calls.length).toBe(1);
-    var response = spy.mostRecentCall.args[0];
+    expect(spy.calls.count()).toBe(1);
+    var response = spy.calls.mostRecent().args[0];
     expect(response.length).toBe(4);
     var responseFirstBgName = response[1].get('label');
     var firstBgName = themes.background_layers[0].name;
@@ -54,8 +54,8 @@ describe('gmf.Themes', function() {
     gmfThemes.loadThemes();
     $httpBackend.flush();
 
-    expect(spy.calls.length).toBe(1);
-    var data = spy.mostRecentCall.args[0];
+    expect(spy.calls.count()).toBe(1);
+    var data = spy.calls.mostRecent().args[0];
     expect(Object.keys(data)[0]).toBe(Object.keys(themes)[0]);
   });
 
@@ -69,8 +69,8 @@ describe('gmf.Themes', function() {
     gmfThemes.loadThemes();
     $httpBackend.flush();
 
-    expect(spy.calls.length).toBe(1);
-    var resultThemes = spy.mostRecentCall.args[0];
+    expect(spy.calls.count()).toBe(1);
+    var resultThemes = spy.calls.mostRecent().args[0];
     var dataFirstKey = Object.keys(resultThemes[0])[0];
     var themesThemesFirstKey = Object.keys(themes.themes[0])[0];
     expect(dataFirstKey).toBe(themesThemesFirstKey);
@@ -87,8 +87,8 @@ describe('gmf.Themes', function() {
     gmfThemes.loadThemes();
     $httpBackend.flush();
 
-    expect(spy.calls.length).toBe(1);
-    var resultTheme = spy.mostRecentCall.args[0];
+    expect(spy.calls.count()).toBe(1);
+    var resultTheme = spy.calls.mostRecent().args[0];
     expect(resultTheme.name).toBe(themeName);
   });
 });
