@@ -620,7 +620,7 @@ ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle
     symbolizer.strokeOpacity = strokeColorRgba[3];
   }
   var strokeDashstyle = strokeStyle.getLineDash();
-  if (goog.isDefAndNotNull(strokeDashstyle)) {
+  if (strokeDashstyle !== null) {
     symbolizer.strokeDashstyle = strokeDashstyle.join(' ');
   }
   var strokeWidth = strokeStyle.getWidth();
