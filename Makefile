@@ -514,6 +514,7 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		--var src_set=contribs_gmf \
 		--var source_map=dist/gmf.js.map $< > $@
 
+.PRECIOUS: .build/app-%.json
 .build/app-%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var 'src=contribs/gmf/apps/**/*.js' \
@@ -601,7 +602,8 @@ $(EXTERNS_JQUERY):
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
 
-contribs/gmf/build/%.closure.js: .build/app-%.json \
+.PRECIOUS: .build/%.js
+.build/%.js: .build/app-%.json \
 		$(EXTERNS_FILES) \
 		contribs/gmf/apps/%/js/controller.js \
 		.build/gmftemplatecache.js \
@@ -610,7 +612,7 @@ contribs/gmf/build/%.closure.js: .build/app-%.json \
 	./node_modules/.bin/closure-util build $< $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
 
-contribs/gmf/build/%.js: contribs/gmf/build/%.closure.js $(GMF_APPS_LIBS_JS_FILES)
+contribs/gmf/build/%.js: .build/%.js $(GMF_APPS_LIBS_JS_FILES)
 	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
 
 .PHONY: compile-css
