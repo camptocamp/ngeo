@@ -64,7 +64,8 @@ GIT_REMOTE_NAME ?= origin
 
 # i18n
 L10N_LANGUAGES = fr de it
-L10N_PO_FILES = $(addprefix c2cgeoportal/locale/,$(addsuffix /LC_MESSAGES/c2cgeoportal.po, $(L10N_LANGUAGES)))
+L10N_PO_FILES = $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L10N_LANGUAGES))) # \
+	# $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/ngeo.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
 TX_GIT_BRANCH ?= master
 ifeq (,$(wildcard $(HOME)/.transifexrc))
