@@ -1,14 +1,18 @@
-@app-margin: 13px;
+@app-margin: 1rem;
+@half-app-margin: 0.5rem;
+@micro-app-margin: 0.2rem;
+@standard-variation: 15%;
 @nav-bg: white;
-@color2: #555; // grey
-@color3: #e2e3df; // grey light
+@color: #555;
+@color-light: lighten(@color, @standard-variation);
 @nav-header-bg: darken(@nav-bg, 50%);
-@nav-links: darken(@nav-bg, 50%);
+@nav-links: @special-link;
 @map-tools-bg-color: white;
 @map-tools-color: black;
-@map-tools-size: 29px;
-@onhover-color: darken(@nav-bg, 20%);
+@map-tools-size: 4rem;
+@onhover-color: darken(@nav-bg, @standard-variation);
 @special-link: hsv(hue(@brand-primary), 40%, 60%);
+@main-bg-color: #e2e3df; // grey light
 
 // Z-indexes
 @below-content-index: 1;
@@ -19,10 +23,11 @@
 @above-search-index: 6;
 
 
-@nav-width: 260px;
+@nav-width: 26rem;
 
 @border-radius-base: 0;
-@input-border-focus: darken(@brand-primary, 10%);
+@border-color: black;
+@input-border-focus: darken(@brand-primary, @standard-variation);
 
 @brand-primary: #b1c2b5;
 @brand-secondary: #d3e5d7;
