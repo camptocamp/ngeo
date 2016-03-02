@@ -1,18 +1,17 @@
-@search-elements-spacing: 10px;
-
 .search {
   top: @app-margin;
   height: @map-tools-size;
   left: 0;
   right: 0;
-  margin-left: @app-margin;
-  margin-right: @app-margin;
-  padding: 0 @search-elements-spacing;
+  margin: 0 @app-margin + @map-tools-size;
+  padding: 0 @app-margin;
   background-color: @map-tools-bg-color;
-  border: solid 1px @map-tools-color;
+  border: solid 0 @border-color;
+  border-width: 1px 0;
   z-index: @content-index;
   input {
     height: @map-tools-size;
+    font-size: 1.4rem!important;
   }
   // hide the native "clear x" in Edge
   input::-ms-clear {
@@ -20,16 +19,20 @@
   }
   .clear-button {
     position: absolute;
-    top: 0;
-    right: 3.5em;
+    top: @half-app-margin;
+    right: @app-margin;
     height: @map-tools-size;
+    opacity: 0.5;
     &:after {
+      position: absolute;
       content: '\f00d';
-      color: @color2;
+      color: @map-tools-color;
       font-family: FontAwesome;
-      font-size: 2em;
+      font-size: 2rem;
+      right: 0;
     }
     &:hover {
+      opacity: 1;
       cursor: pointer;
     }
   }
@@ -49,26 +52,27 @@
 }
 
 span.twitter-typeahead input {
-  padding-left: 3em;
+  padding-left: @app-margin;
 }
 
+/** Some "!important" notation because some rules are in typeahead's html */
 .tt-menu {
   position: fixed!important;
   left: 0;
   right: 0;
-  top: 5em !important;
+  top: @app-margin + @map-tools-size + @app-margin !important;
   bottom: 0;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: @map-tools-bg-color;
-  border: solid 1px black;
+  border: solid 1px @border-color;
   .search-header {
     display: none;
   }
   .search-datum {
-    border-bottom: solid 1px black;
-    padding: @search-elements-spacing @app-margin;
-    padding-left: 2.5em;
+    border-bottom: solid 1px @border-color;
+    padding: @app-margin;
+    padding-left: @app-margin + 2rem + @app-margin;
     text-align: left;
     &:hover {
       cursor: pointer;
@@ -78,47 +82,52 @@ span.twitter-typeahead input {
       margin: 0;
     }
     .search-label {
-      color: @map-tools-color;
+      color: @color;
     }
     .search-group {
-      color: @color2;
-      font-size: 0.8em;
+      color: @color-light;
+      font-size: 80%;
     }
   }
 }
 
 // Overrides for tablet devices
 @media (min-width: @screen-sm-min) {
+  @search-width: 6 * @map-tools-size;
   .search {
-    left: 4em;
-    width: 18em;
+    margin: 0;
+    left: calc(2 * @app-margin + @map-tools-size);
+    width: @search-width;
+    border-width: 1px;
     .clear-button {
-      margin-right: @search-elements-spacing;
+      margin-right: @app-margin;
       right: 0;
     }
   }
+
+  /** Some "!important" notation because some rules are in typeahead's html */
   .tt-menu {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     border-top: inherit;
     border-bottom: inherit;
-    top: 4em !important;
-    left: 5em !important;
+    top: @app-margin + @map-tools-size !important;
+    left: @app-margin + @map-tools-size + @app-margin !important;
     bottom: auto;
-    width: 18em;
+    width: @search-width;
   }
   span.twitter-typeahead {
-    &:after {
+    &:before {
       content: '\f002';
       font-family: FontAwesome;
-      color: @color2;
+      color: @color;
       position: absolute;
-      top: 0.3em;
       left: 0;
-      font-size: 1.4em;
+      font-size: 2rem;
+      top: @half-app-margin;
     }
     input {
-      width: 14em;
-      padding-left: @search-elements-spacing;
-      left: 1em;
+      width: @search-width - @app-margin;
+      padding-left: 2rem + @app-margin;
     }
   }
 }

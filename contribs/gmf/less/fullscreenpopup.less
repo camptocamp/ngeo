@@ -4,19 +4,19 @@
     top: 0;
     left: auto;
     right: auto;
-    max-width: 96%;
-    width: 96%;
-    height: 96%;
-    max-height: 96%;
-    margin: 2%;
+    max-width: calc(~"100vw -" 2 * @app-margin);
+    width: calc(~"100vw -" 2 * @app-margin);
+    height: calc(~"100vh -" 2 * @app-margin);
+    max-height: calc(~"100vh -" 2 * @app-margin);
+    margin: @app-margin;
     border-radius: 0;
   }
   .popover-title {
     background-color: @nav-bg;
-    border-bottom-color: @color2;
-    color: @color2;
+    border-bottom-color: @color;
+    color: @color;
     .close {
-      color: @color2;
+      color: @color;
       line-height: 0.8;
       opacity: 1;
     }
@@ -26,21 +26,22 @@
      * popup's height - popover-title's height
      * should be computed using bootstrap variables
      */
-    max-height: 90%;
+    max-height: 90vh;
     -webkit-overflow-scrolling: touch;
   }
 }
 
 @media (min-width: @screen-sm-min) {
+  @fullscreenpopup-tablet-width: 8 * @map-tools-size;
   [ngeo-popup] {
     &.popover {
-      top: 20px;
-      max-width: 350px;
-      width: 350px;
-      margin-left: -175px;
+      top: @app-margin + @map-tools-size;
+      max-width: @fullscreenpopup-tablet-width;
+      width: @fullscreenpopup-tablet-width;
+      margin-left: - @fullscreenpopup-tablet-width / 2;
       left: 50%;
       right: 50%;
-      max-height: 400px;
+      max-height: @fullscreenpopup-tablet-width + @map-tools-size;
       position: fixed;
     }
     .popover-content {
@@ -49,7 +50,7 @@
        * popup's height - popover-title's height
        * should be computed using bootstrap variables
        */
-      max-height: calc(400px - 38px);
+      max-height: @fullscreenpopup-tablet-width;
     }
   }
 }

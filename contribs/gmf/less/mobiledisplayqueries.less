@@ -5,17 +5,17 @@
   right: 50%;
   left: 50%;
   bottom: 0;
-  max-height: 400px;
+  max-height: 10 * @map-tools-size;
   position: fixed;
   z-index: @above-menus-index;
   .collapse-button {
     background-color: @nav-bg;
-    border: solid 1px black;
+    border: solid 1px @border-color;
     border-bottom-width: 0;
-    border-radius: 4px 4px 0 0;
+    border-radius: @half-app-margin @half-app-margin 0 0;
     line-height: 0.5;
-    height: 28px;
-    width: 48px;
+    height: @map-tools-size;
+    width: @map-tools-size + @map-tools-size * 2/3;
     &.up:after {
       content: "\f077";
     }
@@ -25,20 +25,21 @@
   }
   .displayqueries-container {
     background-color: @nav-bg;
-    border: solid 1px black;
+    border: solid 1px @border-color;
   }
   .animation-container {
     position: relative;
     overflow: hidden;
-    height: 60px;
-    margin: 0 5px;
+    // height with 2em: 1em per text (title, subtitle)
+    height: calc(3 * @app-margin + @half-app-margin ~"+ 2em");
+    margin: 0;
     transition: 0.3s ease-in all;
     &.detailed {
-      height: 170px;
+      height: 33vh;
     }
     .slide-animation {
       height: 100%;
-      padding: 5px 5px 0;
+      padding: @app-margin @app-margin 0;
       text-align: left;
       white-space: nowrap;
       overflow: hidden;
@@ -82,24 +83,27 @@
       font-weight: bold;
     }
     .subtitle {
-     margin-left: 10px;
-     height: 2ex;
+     margin-left: @app-margin;
+     min-height: 1em;
+    }
+    p {
+      margin-bottom: @app-margin
     }
   }
   .details {
     height: 65%;
     overflow-x: hidden;
     overflow-y: auto;
-    margin-left: 10px;
-    padding-bottom: 10px;
+    margin-left: @app-margin;
+    padding-bottom: @app-margin;
     table {
-      font-size: 0.9em;
+      font-size: 90%;
     }
     .key {
-      padding-right: 5px;
+      padding-right: @app-margin;
       /** prevent glitch for swipe animation **/
-      min-width: ~"calc(30vw - 30px)";
-      max-width: ~"calc(30vw - 30px)";
+      min-width: calc(~"30vw -" 2 * @app-margin);
+      max-width: calc(~"30vw -" 2 * @app-margin);
       overflow-x: hidden;
       text-overflow: ellipsis;
     }
@@ -107,18 +111,18 @@
       white-space: pre-wrap;
       word-break: break-all;
       /** prevent glitch for swipe animation **/
-      min-width: ~"calc(70vw - 30px)";
-      max-width: ~"calc(70vw - 30px)";
+      min-width: calc(~"70vw -" 2 * @app-margin);
+      max-width: calc(~"70vw -" 2 * @app-margin);
     }
     .slide-animation.ng-enter-active .details .value {
       white-space: nowrap;
     }
   }
   .navigate {
-    border-top: solid 1px black;
+    border-top: solid 1px @border-color;
     text-align: center;
-    padding-top: 5px;
-    height: 32px;
+    padding-top: @app-margin;
+    height: @map-tools-size;
     .previous {
       float: left;
       &:after {
@@ -137,15 +141,15 @@
     border: none;
     font-family: FontAwesome;
     height: initial;
-    width: 32px;
+    width: @map-tools-size;
     &:hover {
       background-color: @nav-bg;
     }
     &.close {
       z-index: @above-content-index;
       position: absolute;
-      top: calc(28px + 1px + 5px);
-      right: 5px;
+      top: @map-tools-size + @app-margin;
+      right: 0;
       &:after {
         content: "\f00d";
       }
@@ -153,22 +157,23 @@
   }
 }
 @media (min-width: @screen-sm-min) {
+  @mobiledisplayqueries-tablet-width: 8 * @map-tools-size;
   .mobiledisplayqueries {
-    width: 350px;
-    max-width: 350px;
-    margin-left: -175px;
-    right: calc(1em + 3.1em + 1em ~"+ 2px");
+    width: @mobiledisplayqueries-tablet-width;
+    max-width: @mobiledisplayqueries-tablet-width;
+    margin-left: -@mobiledisplayqueries-tablet-width / 2;
+    right: @app-margin + @map-tools-size + @app-margin;
     left: initial;
-    bottom: 5px;
+    bottom: @app-margin;
     /** prevent glitch for swipe animation **/
     .details table {
       .key {
-        min-width: calc(325px * 0.34);
-        max-width: calc(325px * 0.34);
+        min-width: @mobiledisplayqueries-tablet-width * 0.3 - @app-margin;
+        max-width: @mobiledisplayqueries-tablet-width * 0.3 - @app-margin;
       }
       .value {
-        min-width: calc(325px * 0.67);
-        max-width: calc(335px * 0.67);
+        min-width: @mobiledisplayqueries-tablet-width * 0.7 - @app-margin;
+        max-width: @mobiledisplayqueries-tablet-width * 0.7 - @app-margin;
       }
     }
   }
