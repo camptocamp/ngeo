@@ -519,7 +519,6 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		--var 'src=contribs/gmf/apps/**/*.js' \
 		--var src_set=contribs_gmf \
 		--var entry_point=app_$* \
-		--var js=contribs/gmf/apps/$*/js/controller.js \
 		--var generate_exports=true \
 		--var source_map=contribs/gmf/build/$*.js.map $< > $@
 
