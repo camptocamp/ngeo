@@ -108,7 +108,8 @@ describe('ngeo.CreatePrint', function() {
                 },
                 layers: ['foo', 'bar'],
                 type: 'wms',
-                opacity: 1
+                opacity: 1,
+                version: undefined
               }]
             },
             foo: 'fooval',
@@ -160,7 +161,8 @@ describe('ngeo.CreatePrint', function() {
                 },
                 layers: ['foo', 'bar'],
                 type: 'wms',
-                opacity: 1
+                opacity: 1,
+                version: undefined
               }]
             },
             foo: 'fooval',
@@ -631,8 +633,8 @@ describe('ngeo.CreatePrint', function() {
 
       $httpBackend.flush();
 
-      expect(spy.calls.length).toBe(1);
-      expect(spy.mostRecentCall.args[0].data).toEqual({
+      expect(spy.calls.count()).toBe(1);
+      expect(spy.calls.mostRecent().args[0].data).toEqual({
         ref: 'deadbeef',
         statusURL: '/print/status/deadbeef.json',
         downloadURL: '/print/report/deadbeef.json'
@@ -711,8 +713,8 @@ describe('ngeo.CreatePrint', function() {
 
       $httpBackend.flush();
 
-      expect(spy.calls.length).toBe(1);
-      expect(spy.mostRecentCall.args[0].data).toEqual({
+      expect(spy.calls.count()).toBe(1);
+      expect(spy.calls.mostRecent().args[0].data).toEqual({
         done: false,
         downloadURL: '/print/report/deadbeef.json'
       });
@@ -790,8 +792,8 @@ describe('ngeo.CreatePrint', function() {
 
       $httpBackend.flush();
 
-      expect(spy.calls.length).toBe(1);
-      expect(spy.mostRecentCall.args[0].status).toEqual(200);
+      expect(spy.calls.count()).toBe(1);
+      expect(spy.calls.mostRecent().args[0].status).toEqual(200);
     });
   });
 });

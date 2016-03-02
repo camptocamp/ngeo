@@ -36,8 +36,8 @@ describe('ngeo.LayerHelper', function() {
     promise.then(spy);
     $httpBackend.flush();
 
-    expect(spy.calls.length).toBe(1);
-    layer = spy.mostRecentCall.args[0];
+    expect(spy.calls.count()).toBe(1);
+    layer = spy.calls.mostRecent().args[0];
     expect(layer.getSource().getLayer()).toBe(wmtsName);
   });
 

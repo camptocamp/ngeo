@@ -171,7 +171,7 @@ describe('ngeo.Query', function() {
       informationLayer.setVisible(false);
       ngeoQuery.issue(map, coordinate);
       var spy = jasmine.createSpy();
-      expect(spy.calls.length).toBe(0);
+      expect(spy.calls.count()).toBe(0);
       expect(ngeoQueryResult.sources[5].features.length).toBe(0);
       expect(ngeoQueryResult.sources[6].features.length).toBe(0);
       expect(ngeoQueryResult.total).toBe(0);
