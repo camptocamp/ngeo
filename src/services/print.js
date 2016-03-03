@@ -590,10 +590,50 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
         symbolizer.graphicWidth = size[0];
         symbolizer.graphicHeight = size[1];
       }
-
       var rotation = imageStyle.getRotation();
       if (rotation !== 0) {
         symbolizer.rotation = goog.math.toDegrees(rotation);
+      }
+    }
+  } else if (imageStyle instanceof ol.style.RegularShape) {
+    /**
+     * Mapfish Print does not support image defined with ol.style.RegularShape.
+     * As a workaround, I try to map the image on a well-known image name.
+     */
+    var points = imageStyle.getPoints();
+    if (points !== null) {
+      symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
+        type: 'point'
+      });
+      if (points === 4) {
+        symbolizer.graphicName = 'square';
+      } else if (points === 3) {
+        symbolizer.graphicName = 'triangle';
+      } else if (points === 5) {
+        symbolizer.graphicName = 'star';
+      } else if (points === 8) {
+        symbolizer.graphicName = 'cross';
+      }
+      var sizeShape = imageStyle.getSize();
+      if (sizeShape !== null) {
+        symbolizer.graphicWidth = sizeShape[0];
+        symbolizer.graphicHeight = sizeShape[1];
+      }
+      var rotationShape = imageStyle.getRotation();
+      if (!isNaN(rotationShape) && rotationShape !== 0) {
+        symbolizer.rotation = goog.math.toDegrees(rotationShape);
+      }
+      var opacityShape = imageStyle.getOpacity();
+      if (opacityShape !== null) {
+        symbolizer.graphicOpacity = opacityShape;
+      }
+      var strokeShape = imageStyle.getStroke();
+      if (strokeShape !== null) {
+        this.encodeVectorStyleStroke_(symbolizer, strokeShape);
+      }
+      var fillShape = imageStyle.getFill();
+      if (fillShape !== null) {
+        this.encodeVectorStyleFill_(symbolizer, fillShape);
       }
     }
   }

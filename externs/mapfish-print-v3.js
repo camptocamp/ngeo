@@ -460,6 +460,12 @@ MapFishPrintSymbolizerPoint.prototype.strokeOpacity;
 MapFishPrintSymbolizerPoint.prototype.strokeWidth;
 
 
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerPoint.prototype.graphicName;
+
+
 
 /**
  * @constructor
