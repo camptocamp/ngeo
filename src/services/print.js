@@ -404,25 +404,16 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
   });
 
   for (var i = 0, ii = features.length; i < ii; ++i) {
-    var feature = features[i];
-    var geometry = feature.getGeometry();
-
-    // no need to encode features with no geometry
-    if (!goog.isDefAndNotNull(geometry)) {
-      continue;
-    }
-
-    var geometryType = geometry.getType();
-    var geojsonFeature = geojsonFormat.writeFeatureObject(feature);
+    var originalFeature = features[i];
 
     var styleData = null;
-    var styleFunction = feature.getStyleFunction();
+    var styleFunction = originalFeature.getStyleFunction();
     if (styleFunction !== undefined) {
-      styleData = styleFunction.call(feature, resolution);
+      styleData = styleFunction.call(originalFeature, resolution);
     } else {
       styleFunction = layer.getStyleFunction();
       if (styleFunction !== undefined) {
-        styleData = styleFunction.call(layer, feature, resolution);
+        styleData = styleFunction.call(layer, originalFeature, resolution);
       }
     }
 
@@ -434,13 +425,27 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
     goog.asserts.assert(goog.isArray(styles));
 
     if (styles !== null && styles.length > 0) {
-      geojsonFeatures.push(geojsonFeature);
-      if (geojsonFeature.properties === null) {
-        geojsonFeature.properties = {};
-      }
       for (var j = 0, jj = styles.length; j < jj; ++j) {
         var style = styles[j];
         var styleId = goog.getUid(style).toString();
+        var styleGeometry = style.getGeometry();
+        var featureToEncode = originalFeature.clone();
+        if (styleGeometry !== null) {
+          featureToEncode.setGeometry(styleGeometry);
+        }
+        var geometry = featureToEncode.getGeometry();
+        // no need to encode features with no geometry
+        if (!goog.isDefAndNotNull(geometry)) {
+          continue;
+        }
+        var geometryType = geometry.getType();
+        var geojsonFeature = geojsonFormat.writeFeatureObject(featureToEncode);
+        featureToEncode = null;
+        if (geojsonFeature.properties === null) {
+          geojsonFeature.properties = {};
+        }
+        geojsonFeatures.push(geojsonFeature);
+
         var featureStyleProp = ngeo.Print.FEAT_STYLE_PROP_PREFIX_ + j;
         this.encodeVectorStyle_(
             mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
