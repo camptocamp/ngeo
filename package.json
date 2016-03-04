@@ -49,7 +49,7 @@
     "karma-jasmine": "0.3.7",
     "karma-phantomjs-launcher": "1.0.0",
     "karma-coverage": "0.5.4",
-    "less": "2.6.0",
+    "less": "2.6.1",
     "less-plugin-autoprefix": "1.5.1",
     "nomnom": "1.8.1",
     "openlayers": "openlayers/ol3#d5fb6dd",
