@@ -45,7 +45,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * source and a {@link ngeo.layertreeDirective}. The controller used by this
  * directive defines some functions for each node that are created by a default
  * template. This default template can be overrided by setting the constant
- * 'gmf.layertreeTemplateUrl' but you will must adapt the
+ * 'gmf.layertreeTemplateUrl' but you will have to adapt the
  * ngeoLayertreeTemplateUrl value too (to define the children's nodes template
  * path).
  *
