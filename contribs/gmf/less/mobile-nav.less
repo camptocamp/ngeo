@@ -1,11 +1,15 @@
 /**
  * Styles for mobile navigation menus (side menus).
  */
-@duration: .3s;
+
+@duration: 0.3s;
+@nav-bar-height: @map-tools-size + @app-margin;
+@menu-item-height: @nav-bar-height;
+
 main {
   position: fixed;
-  background-color: @color3;
-  box-shadow: 0px 0px 15px black;
+  background-color: @main-bg-color;
+  box-shadow: 0 0 @app-margin black;
   width: 100%;
   height: 100%;
   z-index: @content-index;
@@ -30,7 +34,7 @@ main {
     top: 0;
     left: 0;
     cursor: pointer;
-    background-color: fade(@color2, 40%);
+    background-color: fade(@color, 40%);
     visibility: hidden;
     opacity: 0;
 
@@ -43,8 +47,6 @@ main {
     }
   }
 }
-
-@nav-bar-height: 50px;
 
 .nav-left-is-visible nav.nav-right,
 .nav-right-is-visible nav.nav-left  {
@@ -84,7 +86,7 @@ nav.nav-right {
       opacity: 0;
       visibility: hidden;
       height: @nav-bar-height;
-      width: 30px;
+      width: @map-tools-size;
 
       &.active {
         opacity: 1;
@@ -93,7 +95,7 @@ nav.nav-right {
 
       &::before, &::after {
         transform-origin: 1px 50%;
-        left: 10px;
+        left: @app-margin;
       }
     }
 
@@ -134,7 +136,7 @@ nav.nav-right {
 
   a[data-toggle] {
     position: relative;
-    padding-right: 40px;
+    padding-right: @map-tools-size;
 
     &::before, &::after {
       /* arrow goes on the right side - children navigation */
@@ -153,8 +155,8 @@ nav.nav-right {
       margin-top: -1px;
       display: inline-block;
       height: 2px;
-      width: 10px;
-      background: darken(@nav-bg, 20%);
+      width: @app-margin;
+      background: darken(@nav-bg, @standard-variation);
       .backface-visibility(hidden);
     }
 
@@ -166,7 +168,6 @@ nav.nav-right {
     }
   }
 
-  @menu-item-height: @nav-bar-height;
   ul a[data-toggle=slide-in] {
     display: block;
     height: @menu-item-height;
@@ -186,7 +187,7 @@ nav.nav-right {
     will-change: transform, opacity;
     opacity: 0;
     overflow-y: auto;
-    padding: 10px;
+    padding: @app-margin;
 
     &.active {
       transform: translateX(0%);
@@ -215,21 +216,22 @@ nav.nav-right {
   top: @app-margin;
   background: white;
   z-index: @above-content-index;
-  height: ~"calc("@map-tools-size ~" - 3px)";
-  margin-top: 2px;
-  border: none;
+  height: @map-tools-size;
+  border: 1px solid @border-color;
   .fa, .gmf-icon {
-    font-size: 1.5em;
+    font-size: 2rem;
   }
 }
 
 .nav-left-trigger {
-  left: calc(@app-margin ~" + 1px");
+  left: @app-margin;
+  border-right: none;
   box-shadow: 3px 0 5px -2px #bbb;
 }
 
 .nav-right-trigger {
-  right: calc(@app-margin ~" + 1px");
+  right: @app-margin;
+  border-left: none;
   box-shadow: -3px 0 5px -2px #bbb;
 }
 
@@ -244,9 +246,9 @@ nav.nav-right {
     top: @app-margin;
     margin: 0;
     background-color: @map-tools-bg-color;
-    border: solid 1px @map-tools-color;
+    border: solid 1px @border-color;
     box-shadow: none;
-    height: 3em;
+    height: @map-tools-size;
   }
 
   .nav-left-trigger {

@@ -1,10 +1,10 @@
 gmf-layertree div {
-  margin-right: 10px;
+  margin-right: @app-margin;
 }
 gmf-layertree ul .treenode {
-  padding-top: 10px;
+  padding-top: @app-margin;
   a {
-    color: black;
+    color: @color;
     display: inline;
     line-height: inherit;
     padding-left: 0;
@@ -15,13 +15,13 @@ gmf-layertree ul .treenode {
   }
   .rightButtons *::after {
     background: none;
-    color: black;
+    color: @map-tools-color;
     display: inline;
     font-family: FontAwesome;
   }
   .state {
     font-family: gmf-icons;
-    color: @color2;
+    color: @color;
   }
   .on .state {
     color: @special-link;
@@ -42,8 +42,8 @@ gmf-layertree ul .treenode {
   }
   .layerIcon {
     display: inline-flex;
-    height: 10px;
-    width: 20px;
+    height: @app-margin;
+    width: 2 * @app-margin;
   }
   .name {
     white-space: normal;
@@ -108,7 +108,7 @@ gmf-layertree ul .treenode {
      display: none;
     }
     img {
-      padding-left: 15px;
+      padding-left: @app-margin + @half-app-margin;
     }
   }
 }

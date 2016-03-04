@@ -11,8 +11,10 @@
 @import 'icons.less';
 @import 'mobiledisplayqueries.less';
 
-@map-tools-size: 3em;
-@app-margin: 1em;
+/**
+ * Mobile specific css only !
+ * Please, use shared less files to describe desktop-mobile shared css
+ */
 
 main>* {
   position: absolute;
@@ -37,9 +39,9 @@ gmf-map {
 #measure-tools {
   .measure-tools-button {
     display: block;
-    padding: 5px 0;
-    margin: 5px 0;
-    color: @color2;
+    padding: @half-app-margin 0;
+    margin: @half-app-margin 0;
+    color: @color;
     &:hover {
       cursor: pointer;
       text-decoration: none;
@@ -48,17 +50,22 @@ gmf-map {
 }
 
 .measure-tools-control {
-  bottom: 1em;
-  right: 1em;
+  bottom: @app-margin;
+  right: @app-margin;
+  a {
+    display: block;
+    float: left;
+    margin-left: @micro-app-margin;
+  }
 }
 
 gmf-map {
   .tooltip {
     position: relative;
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 4px;
+    border-radius: @half-app-margin;
     color: white;
-    padding: 4px 8px;
+    padding: @half-app-margin @app-margin;
     opacity: 0.7;
     white-space: nowrap;
   }
@@ -68,18 +75,18 @@ gmf-map {
   }
   .tooltip-static {
     background-color: #ffcc33;
-    color: black;
+    color: @color;
     border: 1px solid white;
   }
   .tooltip-measure:before,
   .tooltip-static:before {
-    border-top: 6px solid rgba(0, 0, 0, 0.5);
-    border-right: 6px solid transparent;
-    border-left: 6px solid transparent;
+    border-top: @half-app-margin solid @border-color;
+    border-right: @half-app-margin solid transparent;
+    border-left: @half-app-margin solid transparent;
     content: "";
     position: absolute;
-    bottom: -6px;
-    margin-left: -7px;
+    bottom: -@half-app-margin;
+    margin-left: -@half-app-margin;
     left: 50%;
   }
   .tooltip-static:before {
@@ -88,52 +95,50 @@ gmf-map {
 }
 
 .ol-zoom {
-  top: 5em;
+  top: @app-margin + @map-tools-size + @app-margin;
   right: @app-margin;
   left: auto;
   .ol-zoom-in, .ol-zoom-out {
-    font-size: 1.5em;
+    font-size: 2rem;
     border-radius: 0;
-    height: 42px;
-    width: 42px;
-  }
-}
-button[ngeo-mobile-geolocation] {
-  right: @app-margin;
-  top: 11.5em;
-  .fa {
-    font-size: 1.5em;
   }
 }
 
-//mobile styles for the theme and background selector
+.ol-scale-line {
+  bottom: @app-margin;
+  left: @app-margin;
+}
+
+button[ngeo-mobile-geolocation] {
+  right: @app-margin;
+  top: calc(3 * @map-tools-size + 2 * @app-margin + 2 * @micro-app-margin);
+}
+
 .gmf-theme-selector,
 .gmf-mobile-backgroundlayerselector {
-  .gmf-icon-check:after {
-    font-size: 1.2rem;
-    position: relative;
-    bottom: 0.8rem;
+  .gmf-check {
+    top: 0.5rem;
   }
   .gmf-text {
-    margin: 3% 10px 0 0;
+    margin: @half-app-margin @app-margin 0 0;
+    width: calc(~"100% -" @app-margin + 2 * @map-tools-size);
   }
   .gmf-thumb {
-    height: auto;
     width: 25%;
   }
 }
 
 // Overrides for tablet devices
 @media (min-width: @screen-sm-min) {
+  .measure-tools-control {
+    right: 2 * @app-margin + @map-tools-size;
+  }
   .ol-zoom {
     top: auto;
-    bottom: 8.5em;
+    bottom: @app-margin + @map-tools-size;
   }
   button[ngeo-mobile-geolocation] {
     top: auto;
-    bottom: 5.5em;
-    & button:after {
-      content: 'b'
-    }
+    bottom: @app-margin;
   }
 }

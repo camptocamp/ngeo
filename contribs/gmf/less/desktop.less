@@ -6,12 +6,16 @@
 @import 'map.less';
 @import 'layertree.less';
 @import 'icons.less';
+@import 'search.less';
 
-@data-width: 320px;
-/* size of the links bar */
-@topbar-height: 50px;
-/* width for the vertical toolbar */
-@toolbar-width: 40px;
+@map-tools-size: 3rem;
+@button-size: 4rem;
+@left-panel-width: 32rem;
+@right-panel-width: 25rem;
+@topbar-height: @button-size;
+@toolbar-width: @button-size;
+@border-color: darken(@brand-primary, @standard-variation);
+@search-width: 8 * @map-tools-size;
 
 html, body {
   position: relative;
@@ -29,7 +33,6 @@ header {
   left: 0;
   height: @topbar-height;
   z-index: @zindex-navbar-fixed;
-
   .box-shadow(0px 2px 6px -1px rgba(0, 0, 0, 0.5));
 }
 
@@ -54,98 +57,42 @@ main {
     left: 0;
   }
 }
+
 .search {
   position: absolute;
-  top: @app-margin;
-  left: @app-margin + 50px;
-  z-index: @content-index;
+  width: @search-width;
+
+  .clear-button {
+    top: 0;
+  }
 
   span.twitter-typeahead {
-    &:after {
+    &:before {
       // magnifier
-      content: '\f002';
-      font-family: FontAwesome;
-      color: grey;
-      position: absolute;
-      top: 0;
-      left: .5em;
-      line-height: @input-height-base;
-    }
-
-    input {
-      padding-left: 2em;
-    }
-
-    & + span.clear-button {
-      position: absolute;
-      line-height: @input-height-base;
-      top: 0;
-      right: .5em;;
-      display: block;
-      cursor: pointer;
-      color: white;
-      opacity: 0.5;
-      &:after{
-        // cross
-        content: '\f00d';
-        color: grey;
-        font-family: FontAwesome;
-      }
-      &:hover {
-        opacity: 1;
-      }
-    }
-    .form-control {
-      position: relative;
-      padding-right: 20px;
-      width: auto;
+      font-size: 1.5rem;
     }
 
     .tt-menu {
-      min-width: 250px;
-      margin: 2px 0 0;
-      background-color: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.15);
-      border-radius: 4px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-      background-clip: padding-box;
-      // border radius will clip content
-      overflow: hidden;
+      position: relative!important;
+      top: 0!important;
+      left: -@app-margin!important;
+      border: 1px solid @color;
+      border-radius: @half-app-margin;
+      width: @search-width;
 
       .search-header {
+        padding: @app-margin;
+        padding-left: @app-margin + 2rem + @app-margin;
+        display:block;
         font-size: 0.9em;
         background-color: #eee;
         text-transform: uppercase;
         color: #666;
       }
 
-      .search-header,
-      .search-datum {
-        padding: 8px 10px;
-      }
-      .search-datum:not(:last-child) {
-        border-bottom: solid 1px #eee;
-      }
-      .search-datum {
-        font-weight: 600;
-
-        &.tt-cursor,
-        &:hover,
-        &:focus {
-          cursor: pointer;
-          background-color: @onhover-color;
-        }
-
-        p {
-          margin-bottom: 0;
-        }
-        .search-label {
-          color: @map-tools-color;
-        }
-        .search-group {
+      .search-group {
           display: none;
         }
-      }
     }
   }
 }
@@ -159,7 +106,7 @@ main {
   display: block;
   float: left;
   background-color: @brand-secondary;
-  width: @data-width;
+  width: @left-panel-width;
   height: 100%;
   display: flex;
   flex-flow: column;
@@ -171,19 +118,24 @@ main {
   .content {
     flex: 1 1 auto;
     overflow-y: auto;
-    margin: 5px;
+    margin: @app-margin;
   }
 
   gmf-themeselector {
-    width: 500px;
+    width: 2 * @left-panel-width;
+    margin: 0;
+    padding: @app-margin;
+    padding-right: 0;
     .gmf-theme-selector li {
+      padding-right: @app-margin;
       float: left;
+      width: 50%;
     }
   }
 }
 
 gmf-layertree ul .treenode {
-  padding-top: 5px;
+  padding-top: @app-margin;
 }
 
 
@@ -193,9 +145,9 @@ gmf-layertree ul .treenode {
   background-color: @brand-secondary;
 
   .tools-content {
-    padding: 10px;
-    width: 250px;
-    margin-right: -250px + @toolbar-width;
+    padding: @app-margin;
+    width: @right-panel-width;
+    margin-right: -@right-panel-width + @toolbar-width;
     transition: margin-right 0.2s ease;
 
     &.active {
@@ -204,20 +156,18 @@ gmf-layertree ul .treenode {
 
     .close {
       padding: 0;
-      line-height: 0.5em;
-      margin-bottom: 10px;
+      line-height: @half-app-margin;
+      margin-bottom: @app-margin;
     }
 
     .tools-content-heading {
-      @color: lighten(@text-color, 30%);
+      @color: lighten(@text-color, @standard-variation);
       color: @color;
-      padding-bottom: 10px;
-      margin-bottom: 10px;
+      padding-bottom: @app-margin;
+      margin-bottom: @app-margin;
       border-bottom: 1px solid @color;
     }
   }
-
-  @border-color: darken(@brand-primary, 10%);
 
   .bar {
     background-color: @brand-primary;
@@ -241,7 +191,7 @@ gmf-layertree ul .treenode {
       border-color: @border-color;
 
       &:hover {
-        background-color: lighten(@brand-primary, 10%);
+        background-color: lighten(@brand-primary, @standard-variation);
       }
 
       &.active,
@@ -265,16 +215,16 @@ gmf-layertree ul .treenode {
 
 
 ::-webkit-scrollbar-track {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    background: #eee;
+    -webkit-border-radius: @app-margin;
+    border-radius: @app-margin;
+    background: @main-bg-color;
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
+    width: @half-app-margin;
 }
 ::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-border-radius: @app-margin;
+    border-radius: @app-margin;
     background: @brand-primary;
 }
