@@ -15,10 +15,10 @@ if (typeof proj4 == 'function') {
     '+units=m',
     '+no_defs'
   ].join(' ');
+  var epsg21781extent = [420000, 30000, 900000, 350000];
 
-  var extent = [420000, 30000, 900000, 350000];
   proj4.defs('epsg:21781', epsg21781def);
   proj4.defs('EPSG:21781', epsg21781def);
-  ol.proj.get('epsg:21781').setExtent(extent);
-  ol.proj.get('EPSG:21781').setExtent(extent);
+  ol.proj.get('epsg:21781').setExtent(epsg21781extent);
+  ol.proj.get('EPSG:21781').setExtent(epsg21781extent);
 }
