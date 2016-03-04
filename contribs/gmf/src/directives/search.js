@@ -76,7 +76,9 @@ gmf.module.value('gmfSearchTemplateUrl',
  * @htmlAttribute {gmfx.SearchDirectiveDatasource} gmf-search-datasource
  *      The datasources.
  * @htmlAttribute {boolean} gmf-search-clearbutton The clear button.
- * @htmlAttribute {Object} gmf-themeselector-currenttheme The selected theme.
+ * @htmlAttribute {Object} gmf-search-currenttheme The selected theme.
+ * @htmlAttribute {ngeox.SearchDirectiveListeners} gmf-search-listeners
+ *      The listeners.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -89,7 +91,8 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       'getMapFn': '&gmfSearchMap',
       'getDatasourcesFn': '&gmfSearchDatasources',
       'clearbutton': '=gmfSearchClearbutton',
-      'currentTheme': '=gmfSearchCurrenttheme'
+      'currentTheme': '=gmfSearchCurrenttheme',
+      'additionalListeners': '=gmfSearchListeners'
     },
     controller: 'GmfSearchController',
     controllerAs: 'ctrl',
@@ -274,10 +277,43 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @type {ngeox.SearchDirectiveListeners}
    * @export
    */
-  this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    select: gmf.SearchController.select_.bind(this),
-    close: gmf.SearchController.close_.bind(this)
-  });
+  this.listeners = this.mergeListeners_(
+    this.scope_['additionalListeners'],
+    /** @type {ngeox.SearchDirectiveListeners} */ ({
+      select: gmf.SearchController.select_.bind(this),
+      close: gmf.SearchController.close_.bind(this)
+    }));
+};
+
+
+/**
+ * Merges the custom listeners received via the directive attributes and the
+ * listeners that are needed for this controller to function (close and select).
+ * @param {ngeox.SearchDirectiveListeners} additionalListeners Custom provided
+ *    listeners.
+ * @param {ngeox.SearchDirectiveListeners} listeners Default listeners.
+ * @return {ngeox.SearchDirectiveListeners} Merged listeners.
+ * @private
+ */
+gmf.SearchController.prototype.mergeListeners_ = function(additionalListeners, listeners) {
+  if (additionalListeners === undefined) {
+    return listeners;
+  }
+  return {
+    open: additionalListeners.open,
+    close: additionalListeners.close === undefined ?
+        listeners.close : function() {
+          listeners.close();
+          additionalListeners.close();
+        },
+    cursorchange: additionalListeners.cursorchange,
+    select: additionalListeners.select === undefined ?
+        listeners.select : function(evt, obj, dataset) {
+          listeners.select(evt, obj, dataset);
+          additionalListeners.select(evt, obj, dataset);
+        },
+    autocomplete: additionalListeners.autocomplete
+  };
 };
 
 
