@@ -189,12 +189,10 @@ gmf.AbstractController.prototype.initLanguage = function() {
   var urlLanguage = /** @type {string|undefined} */
       (this.stateManager.getInitialValue('lang'));
 
-  if (urlLanguage !== undefined &&
-      goog.object.containsKey(this.langUrls, urlLanguage)) {
+  if (urlLanguage !== undefined && urlLanguage in this.langUrls) {
     this.switchLanguage(urlLanguage);
     return;
-  } else if (browserLanguage !== undefined &&
-      goog.object.containsKey(this.langUrls, browserLanguage)) {
+  } else if (browserLanguage !== undefined && browserLanguage in this.langUrls) {
     this.switchLanguage(browserLanguage);
     return;
   } else {
