@@ -9,6 +9,14 @@ goog.require('ngeo.Query');
  * The QueryManager service, uses the
  * c2cgeoportal's themes to configure ngeo's query service with each layer
  * found.
+ *
+ * Used UI metadata:
+ *
+ *  * identifierAttributeField: Field used to identify the feature (like a title).
+ *  * queryLayers: The alternate layers used to do the query.
+ *  * wmsLayers: The layers used to do the query, used if queryLayers is not provided.
+ *  * wmsUrl: An alternate wmsUrl used to do the query (essential to query WMTS layer).
+ *
  * @constructor
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
