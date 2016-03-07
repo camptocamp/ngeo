@@ -69,11 +69,11 @@ app.MapDirectiveController = function(ngeoLocation, ngeoDebounce) {
   var view = map.getView();
 
   var zoom = ngeoLocation.getParam('z');
-  zoom = angular.isDefined(zoom) ? +zoom : 4;
+  zoom = zoom !== undefined ? +zoom : 4;
 
   var x = ngeoLocation.getParam('x');
   var y = ngeoLocation.getParam('y');
-  var center = angular.isDefined(x) && angular.isDefined(y) ?
+  var center = (x !== undefined) && (y !== undefined) ?
       [+x, +y] : [0, 0];
 
   view.setCenter(center);
@@ -208,7 +208,7 @@ app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLoca
   });
 
   var encodedFeatures = ngeoLocation.getParam('features');
-  if (angular.isDefined(encodedFeatures)) {
+  if (encodedFeatures !== undefined) {
     var features = fhFormat.readFeatures(encodedFeatures);
     this.featureSeq_ = features.length;
     vectorSource.addFeatures(features);
