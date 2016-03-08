@@ -29,7 +29,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *      <div ngeo-layertree="ctrl.tree"
  *        ngeo-layertree-map="ctrl.map"
  *        ngeo-layertree-nodelayer="ctrl.getLayer(node)"
- *        ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)"
+ *        ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)">
  *      </div>
  *
  * The "ngeo-layertree", "ngeo-layertree-map" and
