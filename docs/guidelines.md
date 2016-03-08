@@ -35,6 +35,7 @@ apply when you want to add a new feature.
   - [Use native javascript object methods instead](#use-native-javascript-object-methods-instead)
   - [Declaring an event](#declaring-an-event)
 - [Watch your watchers!](#watch-your-watchers)
+- [Styling with less](#styling-with-less)
 
 
 ## Main principle
@@ -160,11 +161,25 @@ This plugin provides the `@ngdoc <type>` and `@ngname <name>` tags.
 `@ngdoc` is used to define the Angular type (directive, service, controller
 or filter) and `@ngname` defines the name used to register this component.
 
-For directive the HTML attributes are declared with `@htmlAttribute {<type>} <name> <description>.`.
+For directives the used HTML attributes are declared with `@htmlAttribute {<type>} <name> <description>.`.
+
+The used metadata should be documented.
+
+The usage of a directive should be shown with an example.
 
 For example:
 ```js
 /**
+ * Description.
+ *
+ * Example:
+ *
+ *      <example />
+ *
+ * Used UI metadata:
+ *
+ *  * theMetadata: Description.
+ *
  * @return {angular.Directive} The directive specs.
  * @htmlAttribute {ol.Map} ngeo-control-map The map.
  * @ngInject
@@ -836,3 +851,12 @@ provides a very good overview.
 ngeo [includes](../utils/watchwatchers.js) a JavaScript script that can be used
 to watch the number of watchers in an Angular application. Look at this file to
 know how to use it.
+
+## Styling with less
+
+To be able to do calculations directly with less we encourage to use a subset of the CSS units.
+We choose units that don't depend on parent tags and are relative.
+
+ * rem: 1 rem is the font size of the root element (<html>).
+ * vw: 1 vw is 1/100th of the width of the viewport.
+ * vh: 1 vh is 1/100th of the height of the viewport.

@@ -61,6 +61,12 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
    */
   this.rightNavVisible = false;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.searchOverlayVisible = false;
+
 
   var positionFeatureStyle = config.positionFeatureStyle || new ol.style.Style({
     image: new ol.style.Circle({
@@ -129,6 +135,19 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     alert('Geo-location failed');
   }.bind(this));
 
+  /**
+   * @type {ngeox.SearchDirectiveListeners}
+   * @export
+   */
+  this.searchListeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
+    open: function() {
+      this.searchOverlayVisible = true;
+    }.bind(this),
+    close: function() {
+      this.searchOverlayVisible = false;
+    }.bind(this)
+  });
+
   goog.base(
       this, config, $scope, $injector);
 };
@@ -167,6 +186,15 @@ gmf.AbstractMobileController.prototype.hideNav = function() {
  */
 gmf.AbstractMobileController.prototype.navIsVisible = function() {
   return this.leftNavVisible || this.rightNavVisible;
+};
+
+
+/**
+ * Hide search overlay.
+ * @export
+ */
+gmf.AbstractMobileController.prototype.hideSearchOverlay = function() {
+  this.searchOverlayVisible = false;
 };
 
 

@@ -1,5 +1,6 @@
 #! python
 
+import sys
 import requests
 import urllib3
 from sys import argv
@@ -22,8 +23,10 @@ def main():
             if path not in expected:
                 print("Remove: %s" % path)
                 rmtree("%s/%s" % (argv[2], path))
-    except ValueError:
-        print "WARN %s seems unreachable" % url
+    except:
+        print("WARN %s seems unreachable (%s)." % (
+            url, sys.exc_info()[1]
+        ))
 
 if __name__ == "__main__":
     main()

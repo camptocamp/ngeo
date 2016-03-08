@@ -61,8 +61,10 @@ GIT_BRANCH ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
 GIT_REMOTE_NAME ?= origin
 
 # i18n
-L10N_LANGUAGES = fr de it
-L10N_PO_FILES = $(addprefix c2cgeoportal/locale/,$(addsuffix /LC_MESSAGES/c2cgeoportal.po, $(L10N_LANGUAGES)))
+L10N_LANGUAGES = fr de
+L10N_PO_FILES = $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L10N_LANGUAGES))) \
+	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/demo.po, $(L10N_LANGUAGES))) # \
+	# $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/ngeo.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
 TX_GIT_BRANCH ?= master
 ifeq (,$(wildcard $(HOME)/.transifexrc))
@@ -507,6 +509,7 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		--var src_set=contribs_gmf \
 		--var source_map=dist/gmf.js.map $< > $@
 
+.PRECIOUS: .build/app-%.json
 .build/app-%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var 'src=contribs/gmf/apps/**/*.js' \
@@ -593,7 +596,8 @@ $(EXTERNS_JQUERY):
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
 
-contribs/gmf/build/%.closure.js: .build/app-%.json \
+.PRECIOUS: .build/%.js
+.build/%.js: .build/app-%.json \
 		$(EXTERNS_FILES) \
 		contribs/gmf/apps/%/js/controller.js \
 		.build/gmftemplatecache.js \
@@ -602,7 +606,7 @@ contribs/gmf/build/%.closure.js: .build/app-%.json \
 	./node_modules/.bin/closure-util build $< $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
 
-contribs/gmf/build/%.js: contribs/gmf/build/%.closure.js $(GMF_APPS_LIBS_JS_FILES)
+contribs/gmf/build/%.js: .build/%.js $(GMF_APPS_LIBS_JS_FILES)
 	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
 
 .PHONY: compile-css
@@ -668,13 +672,20 @@ transifex-init: .build/dev-requirements.timestamp .tx/config \
 	.build/python-venv/bin/tx pull -l $* --force
 	$(TOUCHBACK_TXRC)
 
+.PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po
+.build/locale/%/LC_MESSAGES/demo.po:
+	mkdir -p $(dir $@)
+	wget -O $@ https://raw.githubusercontent.com/camptocamp/demo_geomapfish/master/demo/locale/$*/LC_MESSAGES/demo-client.po
+
 contribs/gmf/build/gmf-en.json:
 	mkdir -p $(dir $@)
 	echo '{}' > $@
 
-contribs/gmf/build/gmf-%.json: .build/locale/%/LC_MESSAGES/gmf.po .build/node_modules.timestamp
+contribs/gmf/build/gmf-%.json: .build/locale/%/LC_MESSAGES/gmf.po \
+		.build/locale/%/LC_MESSAGES/demo.po \
+		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	node buildtools/compile-catalog $< > $@
+	node buildtools/compile-catalog $(filter-out .build/node_modules.timestamp, $^) > $@
 
 .PHONY: generate-gmf-fonts
 generate-gmf-fonts: contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot contribs/gmf/fonts/gmf-icons.woff

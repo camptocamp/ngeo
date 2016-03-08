@@ -60,6 +60,14 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * metadata URLs in a new window. By default, and in the default template,
  * links will be opened in a popup.
  *
+ * Used UI metadata:
+ *
+ *  * isChecked: if 'false' the layer visibility will be set to false.
+ *  * legendRule: WMS rule used to get a layer icon.
+ *  * isLegendExpanded: if 'true' the legend is expanded by default.
+ *  * metadataUrl: Display a popup with the content of the given URL if
+ *    possible also open a new window.
+ *
  * @htmlAttribute {Object} gmf-layertree-source One theme (JSON).
  * @htmlAttribute {ol.Map} gmf-layertree-map The map.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
