@@ -37,6 +37,7 @@ gmf.source.SwisstopoTileGrid_ = new ol.tilegrid.WMTS({
  * @constructor
  * @extends {ol.source.WMTS}
  * @param {gmfx.source.SwisstopoOptions} options WMTS options.
+ * @export
  */
 gmf.source.Swisstopo = function(options) {
 

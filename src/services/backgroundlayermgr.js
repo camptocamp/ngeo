@@ -98,6 +98,7 @@ goog.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
  * the map does not have a background layer.
  * @param {ol.Map} map Map.
  * @return {ol.layer.Base} layer The background layer.
+ * @export
  */
 ngeo.BackgroundLayerMgr.prototype.get = function(map) {
   var mapUid = goog.getUid(map).toString();
@@ -111,6 +112,7 @@ ngeo.BackgroundLayerMgr.prototype.get = function(map) {
  * @param {ol.Map} map The map.
  * @param {ol.layer.Base} layer The new background layer.
  * @return {ol.layer.Base} The previous background layer.
+ * @export
  */
 ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
   var mapUid = goog.getUid(map).toString();

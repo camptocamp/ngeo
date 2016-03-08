@@ -12,6 +12,7 @@ goog.require('ol.interaction.Draw');
  * @constructor
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
+ * @export
  */
 ngeo.interaction.MeasureArea = function(opt_options) {
 
