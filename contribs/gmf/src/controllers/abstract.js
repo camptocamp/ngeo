@@ -65,6 +65,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
   }];
 
   /**
+   * @type {Array.<string>}
+   * @export
+   */
+  this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326']
+
+  /**
    * @type {boolean}
    * @export
    */
