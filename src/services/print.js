@@ -431,14 +431,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
         var styleId = goog.getUid(style).toString();
         var geometry = style.getGeometry();
         var geojsonFeature;
-        if (geometry !== null) {
-          var styledFeature = originalFeature.clone()
-          styledFeature.setGeometry(geometry);
-          geojsonFeature = geojsonFormat.writeFeatureObject(styledFeature);
-          geometry = styledFeature.getGeometry();
-          styledFeature = null;
-          geojsonFeatures.push(geojsonFeature);
-        } else {
+        if (!geometry) {
           geojsonFeature = origGeojsonFeature;
           geometry = originalFeature.getGeometry();
           // no need to encode features with no geometry
@@ -449,6 +442,13 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
             geojsonFeatures.push(geojsonFeature);
             isOriginalFeatureAdded = true;
           }
+        } else {
+          var styledFeature = originalFeature.clone()
+          styledFeature.setGeometry(geometry);
+          geojsonFeature = geojsonFormat.writeFeatureObject(styledFeature);
+          geometry = styledFeature.getGeometry();
+          styledFeature = null;
+          geojsonFeatures.push(geojsonFeature);
         }
 
         var geometryType = geometry.getType();
