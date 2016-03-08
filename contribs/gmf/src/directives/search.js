@@ -30,14 +30,15 @@ gmf.module.value('gmfSearchTemplateUrl',
 
 
 /**
- * A "search" directive that allows to search and recenter on a selected
+ * A directive that allows to search and recenter on a selected
  * result's feature.
  * It can search in multiple GeoJSON datasources.
  * It can filter and group results by a feature's property.
  *
- * This directive uses the ngeoFeatureOverlayMgr to create a feature overlay
- * for drawing features on the map. The application is responsible to
- * initialize the ngeoFeatureOverlayMgr with the map.
+ * This directive uses the {@link ngeo.FeatureOverlayMgr} to create a
+ * feature overlay for drawing features on the map. The application
+ * is responsible to initialize the {@link ngeo.FeatureOverlayMgr}
+ * with the map.
  *
  * Example flat results:
  *
