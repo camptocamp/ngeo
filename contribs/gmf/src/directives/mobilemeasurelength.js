@@ -25,7 +25,7 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
 
 
 /**
- * Provide a "mobile measure" directive.
+ * Provide a directive to do a length measure on the mobile devices.
  *
  * Example:
  *
