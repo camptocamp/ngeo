@@ -35,6 +35,7 @@ gmf.source.AsitVDTileGrid_ = new ol.tilegrid.WMTS({
  * @constructor
  * @extends {ol.source.WMTS}
  * @param {gmfx.source.AsitVDOptions} options WMTS options.
+ * @export
  */
 gmf.source.AsitVD = function(options) {
 

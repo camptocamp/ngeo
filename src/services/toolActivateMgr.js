@@ -13,6 +13,7 @@ goog.require('ngeo');
  * @constructor
  * @ngdoc value
  * @ngname ngeoToolActivate
+ * @export
  */
 ngeo.ToolActivate = function(toolContext, activePropertyName) {
 
@@ -95,6 +96,7 @@ ngeo.ToolActivateMgr = function($rootScope) {
  * @param {ngeo.ToolActivate} tool Tool to register.
  * @param {boolean=} opt_defaultActivate If true, this tool will be activated
  *     when all other tools in the group are deactivated.
+ * @export
  */
 ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
     opt_defaultActivate) {

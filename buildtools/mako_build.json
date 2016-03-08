@@ -23,18 +23,11 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "${src}",
 % endif
 % if src_set == 'ngeo':
-% if lib == 'true':
-    "${_ngeo_folder}exports/**/*.js",
-% endif
 % if examples != 'true':
     ".build/templatecache.js",
 % endif
 % elif src_set == 'contribs_gmf':
     "${_ngeo_folder}contribs/gmf/src/**/*.js",
-% if lib == 'true':
-    "exports/**/*.js",
-    "contribs/gmf/exports/**/*.js",
-% endif
 % if examples != 'true':
     ".build/gmftemplatecache.js",
 % endif

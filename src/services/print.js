@@ -125,6 +125,7 @@ ngeo.Print.FEAT_STYLE_PROP_PREFIX_ = '_ngeo_style_';
  * @param {string} ref Print report reference.
  * @param {angular.$http.Config=} opt_httpConfig $http config object.
  * @return {angular.$http.HttpPromise} HTTP promise.
+ * @export
  */
 ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
   var httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
@@ -143,6 +144,7 @@ ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
  * @param {string} layout Layout.
  * @param {Object.<string, *>} customAttributes Custom attributes.
  * @return {MapFishPrintSpec} The print spec.
+ * @export
  */
 ngeo.Print.prototype.createSpec = function(
     map, scale, dpi, layout, customAttributes) {
@@ -723,6 +725,7 @@ ngeo.Print.prototype.getWmtsUrl_ = function(source) {
  * @param {MapFishPrintSpec} printSpec Print specification.
  * @param {angular.$http.Config=} opt_httpConfig $http config object.
  * @return {angular.$http.HttpPromise} HTTP promise.
+ * @export
  */
 ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
   var url = this.url_ + '/report.pdf';
@@ -742,6 +745,7 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
  * @param {string} ref Print report reference.
  * @param {angular.$http.Config=} opt_httpConfig $http config object.
  * @return {angular.$http.HttpPromise} HTTP promise.
+ * @export
  */
 ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
   var httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
@@ -755,6 +759,7 @@ ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
  * Get the URL of a report.
  * @param {string} ref Print report reference.
  * @return {string} The report URL for this ref.
+ * @export
  */
 ngeo.Print.prototype.getReportUrl = function(ref) {
   return this.url_ + '/report/' + ref;
