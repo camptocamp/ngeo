@@ -404,28 +404,19 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
   });
 
   for (var i = 0, ii = features.length; i < ii; ++i) {
-    var feature = features[i];
-    var geometry = feature.getGeometry();
-
-    // no need to encode features with no geometry
-    if (!goog.isDefAndNotNull(geometry)) {
-      continue;
-    }
-
-    var geometryType = geometry.getType();
-    var geojsonFeature = geojsonFormat.writeFeatureObject(feature);
+    var originalFeature = features[i];
 
     var styleData = null;
-    var styleFunction = feature.getStyleFunction();
+    var styleFunction = originalFeature.getStyleFunction();
     if (styleFunction !== undefined) {
-      styleData = styleFunction.call(feature, resolution);
+      styleData = styleFunction.call(originalFeature, resolution);
     } else {
       styleFunction = layer.getStyleFunction();
       if (styleFunction !== undefined) {
-        styleData = styleFunction.call(layer, feature, resolution);
+        styleData = styleFunction.call(layer, originalFeature, resolution);
       }
     }
-
+    var origGeojsonFeature = geojsonFormat.writeFeatureObject(originalFeature);
     /**
      * @type {Array<ol.style.Style>}
      */
@@ -434,13 +425,37 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
     goog.asserts.assert(goog.isArray(styles));
 
     if (styles !== null && styles.length > 0) {
-      geojsonFeatures.push(geojsonFeature);
-      if (geojsonFeature.properties === null) {
-        geojsonFeature.properties = {};
-      }
+      var isOriginalFeatureAdded = false;
       for (var j = 0, jj = styles.length; j < jj; ++j) {
         var style = styles[j];
         var styleId = goog.getUid(style).toString();
+        var geometry = style.getGeometry();
+        var geojsonFeature;
+        if (!geometry) {
+          geojsonFeature = origGeojsonFeature;
+          geometry = originalFeature.getGeometry();
+          // no need to encode features with no geometry
+          if (!goog.isDefAndNotNull(geometry)) {
+            continue;
+          }
+          if (!isOriginalFeatureAdded) {
+            geojsonFeatures.push(geojsonFeature);
+            isOriginalFeatureAdded = true;
+          }
+        } else {
+          var styledFeature = originalFeature.clone()
+          styledFeature.setGeometry(geometry);
+          geojsonFeature = geojsonFormat.writeFeatureObject(styledFeature);
+          geometry = styledFeature.getGeometry();
+          styledFeature = null;
+          geojsonFeatures.push(geojsonFeature);
+        }
+
+        var geometryType = geometry.getType();
+        if (geojsonFeature.properties === null) {
+          geojsonFeature.properties = {};
+        }
+
         var featureStyleProp = ngeo.Print.FEAT_STYLE_PROP_PREFIX_ + j;
         this.encodeVectorStyle_(
             mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
@@ -574,11 +589,66 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
     if (src !== undefined) {
       symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
         type: 'point',
-        externalGraphic: src
+        externalGraphic: src,
+        /**
+         * TODO: Need a way to find the mime type of the image.
+         * Providing a fake mimetype works but it's not the right way to do.
+         */
+        graphicFormat : 'image/png'
       });
+      var opacity = imageStyle.getOpacity();
+      if (opacity !== null) {
+        symbolizer.graphicOpacity = opacity;
+      }
+      var size = imageStyle.getSize();
+      if (size !== null) {
+        symbolizer.graphicWidth = size[0];
+        symbolizer.graphicHeight = size[1];
+      }
       var rotation = imageStyle.getRotation();
       if (rotation !== 0) {
         symbolizer.rotation = goog.math.toDegrees(rotation);
+      }
+    }
+  } else if (imageStyle instanceof ol.style.RegularShape) {
+    /**
+     * Mapfish Print does not support image defined with ol.style.RegularShape.
+     * As a workaround, I try to map the image on a well-known image name.
+     */
+    var points = imageStyle.getPoints();
+    if (points !== null) {
+      symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
+        type: 'point'
+      });
+      if (points === 4) {
+        symbolizer.graphicName = 'square';
+      } else if (points === 3) {
+        symbolizer.graphicName = 'triangle';
+      } else if (points === 5) {
+        symbolizer.graphicName = 'star';
+      } else if (points === 8) {
+        symbolizer.graphicName = 'cross';
+      }
+      var sizeShape = imageStyle.getSize();
+      if (sizeShape !== null) {
+        symbolizer.graphicWidth = sizeShape[0];
+        symbolizer.graphicHeight = sizeShape[1];
+      }
+      var rotationShape = imageStyle.getRotation();
+      if (!isNaN(rotationShape) && rotationShape !== 0) {
+        symbolizer.rotation = goog.math.toDegrees(rotationShape);
+      }
+      var opacityShape = imageStyle.getOpacity();
+      if (opacityShape !== null) {
+        symbolizer.graphicOpacity = opacityShape;
+      }
+      var strokeShape = imageStyle.getStroke();
+      if (strokeShape !== null) {
+        this.encodeVectorStyleStroke_(symbolizer, strokeShape);
+      }
+      var fillShape = imageStyle.getFill();
+      if (fillShape !== null) {
+        this.encodeVectorStyleFill_(symbolizer, fillShape);
       }
     }
   }
