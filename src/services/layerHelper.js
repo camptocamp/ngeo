@@ -134,14 +134,20 @@ ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
  */
 ngeo.LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
   var groups = map.getLayerGroup().getLayers();
-  groups.forEach(function(group) {
-    if (group.get(ngeo.LayerHelper.GROUP_KEY) === groupName) {
-      return group;
+  var group;
+  groups.getArray().some(function(exitingGroup) {
+    if (exitingGroup.get(ngeo.LayerHelper.GROUP_KEY) === groupName) {
+      group = /** @type {ol.layer.Group} */ (exitingGroup);
+      return true;
+    } else {
+      return false;
     }
   });
-  var group = this.createBasicGroup();
-  group.set(ngeo.LayerHelper.GROUP_KEY, groupName);
-  map.addLayer(group);
+  if (!group) {
+    group = this.createBasicGroup();
+    group.set(ngeo.LayerHelper.GROUP_KEY, groupName);
+    map.addLayer(group);
+  }
   return group;
 };
 
