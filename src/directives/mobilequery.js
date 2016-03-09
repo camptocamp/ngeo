@@ -23,6 +23,8 @@ goog.require('ngeo.Query');
  *        ngeo-mobile-query-active="ctrl.queryActive">
  *      </span>
  *
+ * See our live example: {@link ../examples/mobilequery.html}
+ *
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
