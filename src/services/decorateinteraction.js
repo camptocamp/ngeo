@@ -13,6 +13,8 @@ goog.require('ngeo');
  *
  *      <input type="checkbox" ngModel="interaction.active" />
  *
+ * See our live example: {@link ../examples/interactiontoggle.html}
+ *
  * @typedef {function(ol.interaction.Interaction)}
  * @ngdoc service
  * @ngname ngeoDecorateInteraction

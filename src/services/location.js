@@ -30,6 +30,8 @@ ngeo.MockLocationProvider;
  *
  * The ngeo Location type.
  *
+ * See our live example: {@link ../examples/permalink.html}
+ *
  * @param {Location} location Location.
  * @param {History} history History.
  * @constructor
