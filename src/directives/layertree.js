@@ -75,6 +75,8 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * controller: "layertreeCtrl". You can refer to that property in a custom
  * template for example.
  *
+ * See our live example: {@link ../examples/layertree.html}
+ *
  * @htmlAttribute {Object} ngeo-layertree One theme (JSON).
  * @htmlAttribute {string} ngeo-layertree-templateurl The template URL.
  * @htmlAttribute {ol.Map} ngeo-layertree-map The map.

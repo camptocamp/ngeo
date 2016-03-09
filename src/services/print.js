@@ -84,6 +84,8 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  *       'title': 'A title for my report'
  *     });
  *
+ * See our live example: {@link ../examples/mapfishprint.html}
+ *
  * TODO and limitations:
  *
  * - createSpec should also accept a bbox instead of a center and a scale.

@@ -23,6 +23,8 @@ goog.require('ol.source.Vector');
  * @classdesc
  * Interaction dedicated to measure length.
  *
+ * See our live example: {@link ../examples/measure.html}
+ *
  * @constructor
  * @fires ol.interaction.DrawEvent
  * @extends {ngeo.interaction.Measure}

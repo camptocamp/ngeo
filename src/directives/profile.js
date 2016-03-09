@@ -21,6 +21,8 @@ goog.require('ngeo.profile');
  * processed by {@link ngeox.profile.ElevationExtractor} and
  * {@link ngeox.profile.PoiExtractor}.
  *
+ * See our live example: {@link ../examples/profile.html}
+ *
  * @htmlAttribute {?Object} ngeo-profile The profile data.
  * @htmlAttribute {ngeox.profile.ProfileOptions} ngeo-profile-options The options.
  * @htmlAttribute {?Array} ngeo-profile-pois The data for POIs.
