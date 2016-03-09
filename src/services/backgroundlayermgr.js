@@ -73,6 +73,10 @@ goog.inherits(ngeo.BackgroundEvent, ol.events.Event);
  *       var previous = e.previous
  *     });
  *
+ * See our live examples:
+ * {@link ../examples/backgroundlayer.html}
+ * {@link ../examples/backgroundlayerdropdown.html}
+ *
  * @extends {ol.Observable}
  * @constructor
  * @ngdoc service

@@ -13,6 +13,10 @@ goog.require('ngeo');
  *
  *      <input type="checkbox" ngModel="layer.visible" />
  *
+ * See our live examples:
+ * {@link ../examples/layeropacity.html}
+ * {@link ../examples/layervisibility.html}
+ *
  * @typedef {function(ol.layer.Base)}
  * @ngdoc service
  * @ngname ngeoDecorateLayer
