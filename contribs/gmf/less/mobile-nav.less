@@ -29,8 +29,8 @@ main {
     /* shadow layer visible when navigation is active */
     position: absolute;
     z-index: @above-search-index;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     top: 0;
     left: 0;
     cursor: pointer;
@@ -245,7 +245,6 @@ nav.nav-right {
   z-index: @above-content-index;
   height: @map-tools-size;
   border: 1px solid @border-color;
-  // Hide everything when search is active on mobile
   .fa, .gmf-icon {
     font-size: 2rem;
   }
