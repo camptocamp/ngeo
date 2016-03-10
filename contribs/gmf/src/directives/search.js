@@ -14,7 +14,10 @@ goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.searchDirective');
 goog.require('ol.Map');
 goog.require('ol.proj');
-
+/** @suppress {extraRequire} */
+goog.require('gmf.proj.EPSG21781');
+/** @suppress {extraRequire} */
+goog.require('gmf.proj.EPSG2056');
 
 gmf.module.value('gmfSearchTemplateUrl',
     /**
@@ -104,6 +107,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
          * @param {angular.Attributes} attrs Atttributes.
          */
         function(scope, element, attrs) {
+
           if (!scope['clearbutton']) {
             var ctrl = scope['ctrl'];
             // Empty the search field on focus and blur.
@@ -431,25 +435,173 @@ gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
 
 /**
  * @return {BloodhoundRemoteOptions} Options.
+ * @this {gmf.SearchController}
  * @private
  */
 gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
   var gettextCatalog = this.gettextCatalog_;
   return {
     prepare: function(query, settings) {
+      var coordinates;
       var url = settings.url;
       var lang = gettextCatalog.currentLanguage;
       var interfaceName = 'mobile'; // FIXME dynamic interfaces
-      url = goog.uri.utils.setParam(url, 'query', query);
+      var queryParsed = this.parseInput_();
+      if (queryParsed === '') {
+        coordinates = this.returnGeo_(); // Handles the parsed input.
+      }
+      url = goog.uri.utils.setParam(url, 'query', queryParsed);
       url = goog.uri.utils.setParam(url, 'lang', lang);
       url = goog.uri.utils.setParam(url, 'interface', interfaceName);
+      if (coordinates) {
+        url = goog.uri.utils.setParam(url, 'long', coordinates[0]);
+        url = goog.uri.utils.setParam(url, 'lat', coordinates[1]);
+      }
       settings.xhrFields = {
         withCredentials: true
       };
       settings.url = url;
       return settings;
-    }
+    }.bind(this)
   };
+};
+
+
+/**
+ * @param {string} query Get the coordinates.
+ * @return {ol.Coordinate} Return the cleaned coordinates.
+*/
+gmf.SearchController.prototype.matchCoordinate_ = function(query) {
+  var match = query.match(/([\d\.']+)[\s,\/]+([\d\.']+)/);
+  if (match) {
+    var left = parseFloat(match[1].replace(/'/g, ''));
+    var right = parseFloat(match[2].replace(/'/g, ''));
+
+    return [left, right];
+  }
+  return null;
+};
+
+
+/**
+ * @return {string} Either an alpha-numerical string or null.
+ * @private
+ */
+gmf.SearchController.prototype.parseInput_ = function() {
+  var query = this.input_value;
+  var inputAlpha = '^[a-zA-Z]{1}';
+  var regexpAlpha = new RegExp(inputAlpha, 'g');
+  var matchAlpha = query.match(regexpAlpha);
+
+  if (matchAlpha) {
+    return query;
+  } else {
+    return '';
+  }
+};
+
+
+/**
+ * @return {ol.Coordinate} Return the coordinates.
+ * @private
+ */
+gmf.SearchController.prototype.returnGeo_ = function() {
+  var query = this.input_value;
+  var result = null;
+
+  /*
+    Codes to test for Bern:
+    CH1903 / LV03: 598'655.0, 200'470.0
+    CH1903+ / LV95:	2'598'655.00, 1'200'470.00
+    WGS 84 (long/lat):	7.42096, 46.95531
+
+    Inversed Coordinates to test for Bern:
+    CH1903 / LV03: 200'470.0, 598'655.0
+    CH1903+ / LV95:	1'200'470.00, 2'598'655.00
+    WGS 84 (long/lat):	46.95531, 7.42096
+
+    Source: https://map.geo.admin.ch/?topic=swisstopo&lang=en&bgLayer=ch.swisstopo.pixelkarte-farbe&X=200393.28&Y=596671.16&zoom=6
+  */
+
+  // Projection system array. Default is "EPSG:3857"
+  var confProj = ['EPSG:4326','EPSG:2056','EPSG:21781'];
+
+  var DMSCoordinate = '([\\d\\.\']+)[\\s,]+([\\d\\.\']+)+([\\s,]+([\\d\\.\']+)[\\s,]+([\\d\\.\']+))?';
+  var DMSMinutes = '\s*([0-9]{0}[\'|′])';
+
+  var regexpCoordinate = new RegExp(DMSCoordinate);
+  var regexpDMSMinutes = new RegExp(DMSMinutes, 'g');
+
+  // Fire the regex.
+  var matchCoordinate = query.match(regexpCoordinate);
+  var matchDMSMinutes = query.match(regexpDMSMinutes);
+
+  // Set projection system.
+  var projectionSystem = 'none';
+
+  if (matchDMSMinutes) {
+    var matchLength = matchDMSMinutes.length;
+    switch (matchLength) {
+      case 4:
+        projectionSystem = confProj[1];
+        break;
+      case 2:
+        projectionSystem = confProj[2];
+        break;
+      default:
+        projectionSystem = 'none';
+    }
+  } else if (matchCoordinate) {
+    projectionSystem = confProj[0];
+  }
+
+  // FIXME: Do I really need this?
+  //var mapProjectionCode = this.map_.getView().getProjection().getCode();
+
+  // If we have found a projection system, let's move on.
+  if (projectionSystem != 'none') {
+    var coordinate = this.matchCoordinate_(query);
+
+    // Split the coordinates in "left" and "right"
+    var left = coordinate[0];
+    var right = coordinate[1];
+
+    // Get the extent.
+    var extent = [-5271708.772301536, -3713105.8482010243, 6469018.772301536, 4114045.8482010243]; // FIXME: currently static as "make check" leads to an error with the line below:
+    //var extent = this.map_.getView().calculateExtent(this.map_.getSize()); // FIXME: is that right as "make check" leads to an error ???
+    console.log('extent: ', extent);
+
+    // Get the position. We need these values to show the location on the map.
+    var position = '';
+    position = [left > right ? left : right, right < left ? right : left];
+
+    // Let's calculate the position we have to return. CAUTION: This is still not returning geo-coordinates that point to Bern.
+    var valid = false;
+    if (ol.extent.containsCoordinate(extent, position)) {
+      valid = true;
+    } else {
+      position = ol.proj.transform(position, confProj[1], confProj[2]);
+      if (ol.extent.containsCoordinate(extent, position)) {
+        valid = true;
+      } else {
+        position = [left < right ? left : right, right > left ? right : left];
+        position = ol.proj.transform(position, confProj[0], confProj[2]);
+        if (ol.extent.containsCoordinate(extent, position)) {
+          valid = true;
+        }
+      }
+    }
+
+    if (valid) {
+      // Go to the position on the map, set a marker and return the geo-coordinates.
+      this.map_.getView().setCenter(position); // Center the map.
+      // FIXME: Here I want to set the marker, but how???
+
+      // Return the transformed geo-coordinates.
+      result = [Math.round(position[0] * 1000) / 1000, Math.round(position[1] * 1000) / 1000];
+    }
+  }
+  return result;
 };
 
 
