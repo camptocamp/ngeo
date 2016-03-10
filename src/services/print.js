@@ -604,13 +604,18 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
       }
       var size = imageStyle.getSize();
       if (size !== null) {
-        symbolizer.graphicWidth = size[0];
-        symbolizer.graphicHeight = size[1];
+        var scale = imageStyle.getScale();
+        if (isNaN(scale)) {
+          scale = 1;
+        }
+        symbolizer.graphicWidth = size[0] * scale;
+        symbolizer.graphicHeight = size[1] * scale;
       }
       var rotation = imageStyle.getRotation();
-      if (rotation !== 0) {
-        symbolizer.rotation = goog.math.toDegrees(rotation);
+      if (isNaN(rotation)) {
+        rotation = 0;
       }
+      symbolizer.rotation = goog.math.toDegrees(rotation);
     }
   } else if (imageStyle instanceof ol.style.RegularShape) {
     /**
