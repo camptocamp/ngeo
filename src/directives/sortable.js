@@ -17,9 +17,8 @@ ngeo.SortableOptions;
 
 
 /**
- * Provides the "ngeoSortable" directive. This directive allows
- * drag-and-dropping DOM items between them. The directive also changes the
- * order of elements in the array it is given.
+ * Provides a directive that allows drag-and-dropping DOM items between them.
+ * It also changes the order of elements in the given array.
  *
  * It is typically used together with `ng-repeat`, for example for re-ordering
  * layers in a map.
