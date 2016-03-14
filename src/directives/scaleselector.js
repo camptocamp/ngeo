@@ -3,6 +3,7 @@ goog.provide('ngeo.ScaleselectorOptions');
 goog.provide('ngeo.scaleselectorDirective');
 
 goog.require('ngeo');
+goog.require('ol.array');
 goog.require('ol.Map');
 goog.require('ol.Object');
 goog.require('ol.events');
@@ -111,7 +112,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   goog.asserts.assert(this.scales !== undefined);
 
   var zoomLevels = Object.keys(this.scales).map(Number);
-  zoomLevels.sort();
+  zoomLevels.sort(ol.array.numberSafeCompareFunction);
 
   /**
    * @type {Array.<number>}
