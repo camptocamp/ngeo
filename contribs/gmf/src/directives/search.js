@@ -134,21 +134,20 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.$injector} $injector Main injector.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
  * @param {ngeo.CreateGeoJSONBloodhound} ngeoCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {gmf.Themes} gmfThemes Themes service.
  * @export
  * @ngInject
  * @ngdoc controller
  * @ngname GmfSearchController
  */
-gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
-    ngeoAutoProjection, ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
-    gmfThemes) {
+gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCatalog,
+    ngeoAutoProjection, ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr) {
 
 
   /**
@@ -176,10 +175,10 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {gmf.Themes}
+   * @type {angular.$injector}
    * @private
    */
-  this.gmfThemes_ = gmfThemes;
+  this.injector_ = $injector;
 
   /**
    * @type {ngeo.CreateGeoJSONBloodhound}
@@ -533,7 +532,8 @@ gmf.SearchController.prototype.setTTDropdownVisibility_ = function() {
  * @private
  */
 gmf.SearchController.prototype.setTheme_ = function(themeName) {
-  this.gmfThemes_.getThemesObject().then(function(themes) {
+  var gmfThemes = this.injector_.get('gmfThemes');
+  gmfThemes.getThemesObject().then(function(themes) {
     var theme = gmf.Themes.findThemeByName(themes, themeName);
     if (theme) {
       this.scope_['currentTheme'] = theme;
