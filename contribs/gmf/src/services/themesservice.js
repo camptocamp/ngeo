@@ -1,9 +1,7 @@
 goog.provide('gmf.Themes');
-goog.provide('gmf.ThemesEventType');
 
 goog.require('gmf');
 goog.require('goog.array');
-goog.require('goog.asserts');
 goog.require('ngeo.LayerHelper');
 goog.require('ol.events.EventTarget');
 goog.require('ol.layer.Tile');
@@ -16,14 +14,6 @@ goog.require('ol.layer.Tile');
  * }}
  */
 gmf.ThemesResponse;
-
-
-/**
- * @enum {string}
- */
-gmf.ThemesEventType = {
-  LOAD: 'load'
-};
 
 
 /**
@@ -77,10 +67,16 @@ gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper, gettextCatalog) {
   this.gettextCatalog = gettextCatalog;
 
   /**
-   * @type {?angular.$q.Promise}
+   * @type {angular.$q.Deferred}
    * @private
    */
-  this.promise_ = null;
+  this.deferred_ = $q.defer();
+
+  /**
+   * @type {angular.$q.Promise}
+   * @private
+   */
+  this.promise_ = this.deferred_.promise;
 };
 goog.inherits(gmf.Themes, ol.events.EventTarget);
 
@@ -145,8 +141,6 @@ gmf.Themes.prototype.getBgLayers = function() {
     return $q.all(promises);
   }.bind(this);
 
-  goog.asserts.assert(this.promise_ !== null);
-
   return this.promise_.then(promiseSuccessFn).then(function(values) {
     var layers = [];
 
@@ -174,7 +168,6 @@ gmf.Themes.prototype.getBgLayers = function() {
  * @export
  */
 gmf.Themes.prototype.getThemeObject = function(themeName) {
-  goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
@@ -193,7 +186,6 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
  * @export
  */
 gmf.Themes.prototype.getThemesObject = function() {
-  goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
@@ -212,20 +204,18 @@ gmf.Themes.prototype.getThemesObject = function() {
  * @export
  */
 gmf.Themes.prototype.loadThemes = function(opt_roleId) {
-  /**
-   * @param {angular.$http.Response} resp Ajax response.
-   * @return {Object} The "themes" web service response.
-   */
-  var promiseSuccessFn = function(resp) {
-    this.dispatchEvent(gmf.ThemesEventType.LOAD);
-    return /** @type {gmf.ThemesResponse} */ (resp.data);
-  }.bind(this);
 
-  this.promise_ = this.$http_.get(this.treeUrl_, {
+  var deferred = this.deferred_;
+
+  this.$http_.get(this.treeUrl_, {
     params: opt_roleId !== undefined ? {'role': opt_roleId} : {},
     cache: false,
     withCredentials: true
-  }).then(promiseSuccessFn);
+  }).then(function(response) {
+    deferred.resolve(response.data);
+  }, function(response) {
+    deferred.reject(response);
+  })
 };
 
 
