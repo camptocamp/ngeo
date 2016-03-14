@@ -19,11 +19,6 @@ goog.require('gmf.authenticationDirective');
 goog.require('ngeo.proj.EPSG21781');
 
 
-app.module.constant(
-    'authenticationBaseUrl',
-    'https://geomapfish-demo.camptocamp.net/2.0/wsgi');
-
-
 app.module.constant('ngeoQueryOptions', {
   'limit': 20
 });
