@@ -89,7 +89,6 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "define": [
       "goog.array.ASSUME_NATIVE_FUNCTIONS=true",
       "goog.dom.ASSUME_STANDARDS_MODE=true",
-      "goog.json.USE_NATIVE_JSON=true",
       "goog.DEBUG=false",
       "ol.ENABLE_DOM=false",
       "ol.ENABLE_WEBGL=false"
@@ -104,7 +103,8 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % endif
       "useOfGoogBase",
       "unnecessaryCasts",
-      "lintChecks"
+      "lintChecks",
+      "analyzerChecks"
     ],
     "extra_annotation_name": [
       "api", "observable", "ngdoc", "ngname", "htmlAttribute"

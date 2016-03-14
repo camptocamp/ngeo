@@ -29,8 +29,8 @@ main {
     /* shadow layer visible when navigation is active */
     position: absolute;
     z-index: @above-search-index;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     top: 0;
     left: 0;
     cursor: pointer;
@@ -74,6 +74,7 @@ main {
 
 @nav-bar-height: 50px;
 
+// Hide everything when search is active on mobile
 .nav-left-is-visible nav.nav-right,
 .nav-right-is-visible nav.nav-left  {
   display: none;
@@ -241,7 +242,7 @@ nav.nav-right {
 .nav-trigger {
   top: @app-margin;
   background: white;
-  z-index: @above-search-index;
+  z-index: @above-content-index;
   height: @map-tools-size;
   border: 1px solid @border-color;
   .fa, .gmf-icon {
