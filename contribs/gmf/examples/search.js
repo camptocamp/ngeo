@@ -3,7 +3,6 @@ goog.provide('gmf-search');
 goog.require('gmf.mapDirective');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('gmf.searchDirective');
-goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -21,13 +20,11 @@ app.module.constant('gmfTreeUrl', 'data/themes.json');
 
 
 /**
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *     overlay manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoFeatureOverlayMgr, gmfThemes) {
+app.MainController = function(gmfThemes) {
 
   gmfThemes.loadThemes();
 
@@ -57,7 +54,6 @@ app.MainController = function(ngeoFeatureOverlayMgr, gmfThemes) {
     })
   });
 
-  ngeoFeatureOverlayMgr.init(this.map);
 };
 
 
