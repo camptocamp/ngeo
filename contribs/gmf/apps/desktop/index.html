@@ -86,7 +86,6 @@
         <div class="search">
           <gmf-search gmf-search-map="mainCtrl.map"
             gmf-search-datasources="mainCtrl.searchDatasources"
-            gmf-search-currenttheme="mainCtrl.theme"
             gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
             gmf-search-clearbutton="true">
           </gmf-search>
@@ -121,7 +120,7 @@
          module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/themes?version=2&background=background');
          module.constant('gmfSearchGroups', ['osm','district']);
          // Requires that the gmfSearchGroups is specified
-         module.constant('gmfSearchActions', ['add_theme', 'add_group']);
+         module.constant('gmfSearchActions', ['add_theme', 'add_group', 'add_layer']);
        })();
     </script>
   </body>
