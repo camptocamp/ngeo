@@ -33,6 +33,8 @@ app.MainController = function(gmfThemes) {
    * @export
    */
   this.searchDatasources = [{
+    groupValues: ['osm', 'district'],
+    groupActions: [],
     labelKey: 'label',
     projection: 'EPSG:21781',
     url: 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch'
