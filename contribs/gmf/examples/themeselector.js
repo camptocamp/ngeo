@@ -1,7 +1,6 @@
 goog.provide('gmf-themeselector');
 
 goog.require('gmf.Themes');
-goog.require('gmf.ThemesEventType');
 goog.require('gmf.themeselectorDirective');
 
 
