@@ -25,13 +25,11 @@ ngeo.module.value('gmfMobiledisplayqueriesTemplateUrl',
 
 
 /**
- * Provide a "gmf mobile display queries" directive.
+ * Provide a directive to display results of the {@link ngeo.queryResult}
+ * and shows related features on the map using the {@link ngeo.FeatureOverlayMgr}.
  *
- * This directive displays results of the ngeoQueryResult and shows related
- * features on the map using the ngeoFeatureOverlayMgr.
- *
- * You can override the default directive's template by setting the value
- * 'gmfMobiledisplayqueriesTemplateUrl'.
+ * You can override the default directive's template by setting the
+ * value `gmfMobiledisplayqueriesTemplateUrl`.
  *
  * Features displayed on the map use a default style but you can override these
  * styles by passing ol.style.Style objects as attributes of this directive.

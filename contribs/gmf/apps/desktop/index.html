@@ -46,7 +46,7 @@
       <div class="tools" ngeo-resizemap="mainCtrl.map"
         ngeo-resizemap-state="mainCtrl.toolsActive">
         <div ngeo-btn-group class="bar btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
-          <button ngeo-btn class="btn btn-default" ng-model="loginActive"
+          <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
             data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
             <span class="fa fa-user"></span>
           </button>
@@ -60,8 +60,8 @@
           </button>
         </div>
         <div class="tools-content" ng-class="{active: mainCtrl.toolsActive}">
-          <div ng-show="loginActive">
-            <a class="btn close" ng-click="loginActive = false">&times;</a>
+          <div ng-show="mainCtrl.loginActive">
+            <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
             <div class="tools-content-heading">
               Login
             </div>

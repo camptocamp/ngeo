@@ -20,6 +20,7 @@
     </div>
     <div class="navigate">
       <button type="button" class="previous" ng-show="ctrl.getResultLength() - 1" ng-click="ctrl.previous()"></button>
+      <span>{{'Result' | translate}}</span>
       <span>{{ctrl.currentResult + 1}}</span>
       <span>/</span>
       <span>{{ctrl.getResultLength()}}</span>

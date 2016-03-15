@@ -59,6 +59,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @type {boolean}
    * @export
    */
+  this.loginActive = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
   this.toolsActive = false;
 
   // initialize tooltips
@@ -69,6 +75,15 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
 
   goog.base(
       this, config, $scope, $injector);
+
+  // close the login panel on successful login
+  $scope.$watch(function() {
+    return this.gmfUser.username;
+  }.bind(this), function(newVal) {
+    if (newVal !== null && this.loginActive) {
+      this.loginActive = false;
+    }
+  }.bind(this));
 
 };
 goog.inherits(gmf.AbstractDesktopController, gmf.AbstractController);
