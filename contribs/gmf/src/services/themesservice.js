@@ -82,9 +82,9 @@ goog.inherits(gmf.Themes, ol.events.EventTarget);
 
 
 /**
- * @param {Array.<Object>} themes Array of "theme" objects.
+ * @param {Array.<GmfThemesNode>} themes Array of "theme" objects.
  * @param {string} name The layer name.
- * @return {Object} The group.
+ * @return {GmfThemesNode} The group.
  */
 gmf.Themes.findGroupByLayerName = function(themes, name) {
   for (var i = 0, ii = themes.length; i < ii; i++) {
@@ -104,9 +104,9 @@ gmf.Themes.findGroupByLayerName = function(themes, name) {
 
 /**
  * Find a layer group object by its name. Return null if not found.
- * @param {Array.<Object>} themes Array of "theme" objects.
+ * @param {Array.<GmfThemesNode>} themes Array of "theme" objects.
  * @param {string} name The group name.
- * @return {Object} The group.
+ * @return {GmfThemesNode} The group.
  */
 gmf.Themes.findGroupByName = function(themes, name) {
   for (var i = 0, ii = themes.length; i < ii; i++) {
@@ -138,13 +138,13 @@ gmf.Themes.findObjectByName_ = function(objects, objectName) {
 
 /**
  * Find a theme object by its name. Return null if not found.
- * @param {Array.<Object>} themes Array of "theme" objects.
+ * @param {Array.<GmfThemesNode>} themes Array of "theme" objects.
  * @param {string} themeName The theme name.
- * @return {Object} The theme object.
+ * @return {GmfThemesNode} The theme object.
  */
 gmf.Themes.findThemeByName = function(themes, themeName) {
   var theme = gmf.Themes.findObjectByName_(themes, themeName);
-  return theme;
+  return /** @type {GmfThemesNode} */ (theme);
 };
 
 
