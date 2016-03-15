@@ -1,6 +1,6 @@
 <span ng-if="::!layertreeCtrl.isRoot" id="node-{{::layertreeCtrl.uid}}" ng-class="[layertreeCtrl.node.children ? 'group' : 'leaf', 'depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNoSourceStyle(layertreeCtrl), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)">
-    <span class="layerIcon">
+    <span class="layerIcon" ng-if="::!layertreeCtrl.node.children">
       <img ng-src="{{::gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}}"></img>
     </span>
     <span class="state"></span>
