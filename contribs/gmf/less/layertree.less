@@ -3,6 +3,11 @@ gmf-layertree div {
 }
 gmf-layertree ul .treenode {
   padding-top: @app-margin;
+
+  ul ul {
+    padding-left: 20px;
+  }
+
   a {
     color: @color;
     display: inline;
@@ -32,6 +37,7 @@ gmf-layertree ul .treenode {
   .leaf .state::after {
     content: "\e603";
   }
+
   .group {
     .state::after {
       content: "\e600";
@@ -40,6 +46,7 @@ gmf-layertree ul .treenode {
       display: none;
     }
   }
+
   .layerIcon {
     display: inline-flex;
     height: @app-margin;
