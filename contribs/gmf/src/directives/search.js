@@ -321,6 +321,28 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
       select: gmf.SearchController.select_.bind(this),
       close: gmf.SearchController.close_.bind(this)
     }));
+
+  /**
+   * Groups added to the theme with the 'add_group' action.
+   * @type {Array.<Object>}
+   * @private
+   */
+  this.addedGroups_ = [];
+
+  this.scope_.$watch(function() {
+    return this.scope_['currentTheme'];
+  }.bind(this), function(newTheme, previousTheme) {
+    if (previousTheme) {
+      for (var i = 0, ii = this.addedGroups_.length; i < ii; i++) {
+        var index = previousTheme.children.indexOf(this.addedGroups_[i]);
+        if (index >= 0) {
+          previousTheme.children.splice(index, 1);
+        }
+      }
+      this.addedGroups_.length = 0;
+    }
+  }.bind(this));
+
 };
 
 
@@ -545,6 +567,23 @@ gmf.SearchController.prototype.setTheme_ = function(themeName) {
 
 
 /**
+ * Add a group to the current theme.
+ * @param {Object} group The group to add.
+ * @return {boolean} true if the group was added, false if the group is already present.
+ * @private
+ */
+gmf.SearchController.prototype.addGroupToTheme_ = function(group) {
+  var currentTheme = this.scope_['currentTheme'];
+  if (currentTheme.children.indexOf(group) < 0) {
+    this.addedGroups_.push(group);
+    currentTheme.children.push(group);
+    return true;
+  }
+  return false;
+};
+
+
+/**
  * @export
  */
 gmf.SearchController.prototype.onClearButton = function() {
@@ -597,8 +636,24 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
       var actionData = action['data'];
       if (actionName == 'add_theme') {
         this.setTheme_(actionData);
+      } else if (actionName == 'add_group') {
+        this.gmfThemes_.getThemesObject().then(function(themes) {
+          var group = gmf.Themes.findGroupByName(themes, actionData);
+          if (group) {
+            if (!this.addGroupToTheme_(group)) {
+              // FIXME: display "this group is already loaded"
+            }
+          }
+        }.bind(this));
+      } else if (actionName == 'add_layer') {
+        this.gmfThemes_.getThemesObject().then(function(themes) {
+          var group = gmf.Themes.findGroupByLayerName(themes, actionData);
+          if (group) {
+            this.addGroupToTheme_(group);
+            // FIXME: set the layer visible
+          }
+        }.bind(this));
       }
-      // FIXME: handle add_layer and add_group actions
     }
   }
 
