@@ -1,7 +1,7 @@
 <ul class="gmf-theme-selector">
   <li
       ng-repeat="theme in tsCtrl.themes"
-      ng-click="tsCtrl.switchTheme(theme)">
+      ng-click="tsCtrl.setTheme(theme)">
     <div class="gmf-check">
       <span class="gmf-icon"
           ng-class="{'gmf-icon-check': tsCtrl.currentTheme['name'] == theme.name}">

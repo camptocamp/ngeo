@@ -2,6 +2,7 @@ goog.provide('gmf.ThemeselectorController');
 goog.provide('gmf.themeselectorDirective');
 
 goog.require('gmf');
+goog.require('gmf.TreeManager');
 goog.require('gmf.Themes');
 goog.require('ngeo.Location');
 
@@ -18,7 +19,8 @@ goog.require('ngeo.Location');
  *     </gmf-themeselector>
  *
  * @htmlAttribute {string} gmf-themeselector-defaulttheme The default theme.
- * @htmlAttribute {Object} gmf-themeselector-currenttheme The selected theme.
+ * @htmlAttribute {GmfThemesNode} gmf-themeselector-currenttheme The selected
+ *     theme.
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
  * @return {angular.Directive} The directive specs.
  * @ngInject
@@ -46,6 +48,7 @@ gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.Location} ngeoLocation ngeo Location service.
+ * @param {gmf.TreeManager} gmfTreeManager Tree manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @constructor
  * @export
@@ -53,7 +56,26 @@ gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
  * @ngdoc controller
  * @ngname gmfThemeselectorController
  */
-gmf.ThemeselectorController = function($scope, ngeoLocation, gmfThemes) {
+gmf.ThemeselectorController = function($scope, ngeoLocation, gmfTreeManager,
+    gmfThemes) {
+
+  /**
+   * @type {ngeo.Location}
+   * @private
+   */
+  this.ngeoLocation_ = ngeoLocation;
+
+  /**
+   * @type {gmf.TreeManager}
+   * @private
+   */
+  this.gmfTreeManager_ = gmfTreeManager;
+
+  /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {Array.<Object>}
@@ -67,14 +89,6 @@ gmf.ThemeselectorController = function($scope, ngeoLocation, gmfThemes) {
    */
   this.currentTheme;
 
-  $scope.$watch(function() {
-    return this.currentTheme;
-  }.bind(this), function(theme) {
-    if (theme) {
-      this.setLocationPath_(theme['name']);
-    }
-  }.bind(this));
-
   /**
    * @type {string}
    * @export
@@ -87,18 +101,14 @@ gmf.ThemeselectorController = function($scope, ngeoLocation, gmfThemes) {
    */
   this.filter;
 
-  /**
-   * @type {ngeo.Location}
-   * @private
-   */
-  this.ngeoLocation_ = ngeoLocation;
-
-  /**
-   * @type {gmf.Themes}
-   * @private
-   */
-  this.gmfThemes_ = gmfThemes;
-
+  $scope.$watchCollection(function() {
+    return this.currentTheme;
+  }.bind(this), function(newTheme, oldTheme) {
+    if (newTheme && newTheme !== oldTheme &&
+        this.gmfTreeManager_.isModeFlush()) {
+      this.setLocationPath_(newTheme['name']);
+    }
+  }.bind(this));
 
   this.setThemes_();
 };
@@ -144,25 +154,27 @@ gmf.ThemeselectorController.prototype.setLocationPath_ = function(themeId) {
 gmf.ThemeselectorController.prototype.setThemes_ = function() {
 
   /**
-   * @param {Array.<Object>} themes Array of theme objects.
+   * @param {Array.<GmfThemesNode>} themes Array of theme objects.
    */
   var getThemesObjectSuccessFn = function(themes) {
     // Keep only the themes dedicated to the theme switcher
     this.themes = this.filter ? themes.filter(this.filter) : themes;
 
-    // Then set current theme by looking first in the URL, otherwise use
-    // the default theme and add it to the URL.
+    // Then set current theme by looking first in the URL (only in,
+    // otherwise use the default theme and add it to the URL.
     var currentTheme;
-    var themeId = this.defaultTheme;
-    var pathElements = this.ngeoLocation_.getPath().split('/');
-    if (gmf.ThemeselectorController.themeInUrl(pathElements)) {
-      themeId = pathElements[pathElements.length - 1];
+    var themeName = this.defaultTheme;
+    if (this.gmfTreeManager_.isModeFlush()) {
+      var pathElements = this.ngeoLocation_.getPath().split('/');
+      if (gmf.ThemeselectorController.themeInUrl(pathElements)) {
+        themeName = pathElements[pathElements.length - 1];
+      }
     }
     currentTheme = goog.array.find(this.themes, function(object) {
-      return object['name'] === themeId;
+      return object['name'] === themeName;
     });
 
-    this.switchTheme(currentTheme);
+    this.setTheme(/** @type {GmfThemesNode} */ (currentTheme));
 
   }.bind(this);
 
@@ -171,12 +183,12 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
 
 
 /**
- * @param {Object} theme Theme.
+ * @param {GmfThemesNode} theme Theme.
  * @export
  */
-gmf.ThemeselectorController.prototype.switchTheme = function(theme) {
+gmf.ThemeselectorController.prototype.setTheme = function(theme) {
   if (theme) {
-    this.currentTheme = theme;
+    this.gmfTreeManager_.addTheme(theme);
   }
 };
 

@@ -4,6 +4,8 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.QueryManager');
 /** @suppress {extraRequire} */
+goog.require('gmf.TreeManager');
+/** @suppress {extraRequire} */
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
@@ -38,12 +40,13 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   goog.asserts.assertInstanceof(this.map, ol.Map);
 
+  var gmfTreeManager = $injector.get('gmfTreeManager');
   /**
    * A reference to the current theme
-   * @type {Object}
+   * @type {GmfThemesNode}
    * @export
    */
-  this.theme;
+  this.theme = gmfTreeManager.tree;
 
   /**
    * Themes service
