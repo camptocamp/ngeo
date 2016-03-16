@@ -620,11 +620,12 @@ contribs/gmf/build/%.js: .build/%.js $(GMF_APPS_LIBS_JS_FILES)
 .PHONY: compile-css
 compile-css: $(addprefix contribs/gmf/build/,$(addsuffix .css,$(GMF_APPS)))
 
-contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less $(GMF_APPS_LESS_FILES) \
+contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less \
+		$(GMF_APPS_LESS_FILES) \
 		.build/node_modules.timestamp \
 		$(FONTAWESOME_WEBFONT)
 	mkdir -p $(dir $@)
-	./node_modules/.bin/lessc $< $@ --autoprefix
+	./node_modules/.bin/lessc --autoprefix --clean-css="--s0" $< $@
 
 
 # i18n
