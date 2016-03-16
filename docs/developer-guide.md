@@ -194,15 +194,17 @@ run inside [PhantomJS](http://phantomjs.org/).
 When we create a new stabilisation branch we should also duplicate the localisation.
 
 Get the actual localisation:
-`make transifex-get`
+```bash
+make transifex-get
+```
 
 Create the new branch:
 `git checkout -b x.y`
 
 Update the `Makefile`:
 ```diff
-- TX_GIT_BRANCH ?= master
-+ TX_GIT_BRANCH ?= x_y
+- TX_BRANCH ?= master
++ TX_BRANCH ?= x_y
 ```
 
 Commit and push the changes:
@@ -213,12 +215,7 @@ git push origin x.y
 ```
 
 Create the new localisation resource:
-* Go to URL: https://www.transifex.com/camptocamp/ngeo/content/
-* Click on 'Add a resource'
-* The name should be something like “gmf-1_0” (with the right version)
-* Click on 'Create a resource'
-* Run:
-  ```bash
+```bash
 rm .tx/config
 make transifex-init
 ```
