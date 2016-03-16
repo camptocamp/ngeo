@@ -46,7 +46,7 @@
     "eslint": "2.4.0",
     "eslint-config-openlayers": "4.1.0",
     "karma": "0.13.22",
-    "karma-jasmine": "0.3.7",
+    "karma-jasmine": "0.3.8",
     "karma-phantomjs-launcher": "1.0.0",
     "karma-coverage": "0.5.5",
     "less": "2.6.1",
