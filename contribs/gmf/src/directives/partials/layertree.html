@@ -9,15 +9,15 @@
   <span class="rightButtons">
     <span class="metadata" ng-if="::layertreeCtrl.node.metadata.metadataUrl">
       <span ng-if="::gmfLayertreeCtrl.openLinksInNewWindow === true">
-        <a title="More informations" href="{{::layertreeCtrl.node.metadata.metadataUrl}}" target="blank_"></a>
+        <a title="{{'More informations'|translate}}" href="{{::layertreeCtrl.node.metadata.metadataUrl}}" target="blank_"></a>
       </span>
       <span ng-if="::gmfLayertreeCtrl.openLinksInNewWindow !== true">
-        <a title="More informations" href="" ng-click="gmfLayertreeCtrl.displayMetadata(layertreeCtrl)"></a>
+        <a title="{{'More informations'|translate}}" href="" ng-click="gmfLayertreeCtrl.displayMetadata(layertreeCtrl)"></a>
       </span>
     </span>
-    <span class="zoom" title="Zoom to a visible level" ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl.node)"></span>
+    <span class="zoom" title="{{'Zoom to a visible level'|translate}}" ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl.node)"></span>
     <span class="legendButton" ng-if="::(gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true')">
-      <a title="Show/hide legend" data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend"></a>
+      <a title="{{'Show/hide legend'|translate}}" data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend"></a>
     </span>
   </span>
   <span class="legend">
