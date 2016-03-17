@@ -55,10 +55,16 @@ deploy:
     repo: camptocamp/ngeo
     all_branches: true
     node: "0.10"
-- provider: script
+- &transifex
+  provider: script
   script: make transifex-send
   skip_cleanup: true
   on:
     repo: camptocamp/ngeo
     branch: master
+    node: "0.10"
+- <<: *transifex
+  on:
+    repo: camptocamp/ngeo
+    branch: 2.0
     node: "0.10"

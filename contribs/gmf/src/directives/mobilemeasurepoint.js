@@ -27,7 +27,7 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
 
 
 /**
- * Provide a "mobile measure" directive.
+ * Provide a directive to do a point (coordinate and élévation) measure on the mobile devices.
  *
  * Example:
  *

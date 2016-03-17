@@ -110,6 +110,21 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.measureLengthActive = false;
 
   /**
+   * @type {gmf.User}
+   * @export
+   */
+  this.gmfUser = $injector.get('gmfUser');
+
+  // close right nave on successful login
+  $scope.$watch(function() {
+    return this.gmfUser.username;
+  }.bind(this), function(newVal) {
+    if (newVal !== null && this.navIsVisible) {
+      this.rightNavVisible = false;
+    }
+  }.bind(this));
+
+  /**
    * @type {ngeo.GetBrowserLanguage}
    */
   this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');

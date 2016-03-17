@@ -66,7 +66,7 @@ L10N_PO_FILES = $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L1
 	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/demo.po, $(L10N_LANGUAGES))) # \
 	# $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/ngeo.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
-TX_GIT_BRANCH ?= master
+TX_VERSION ?= master
 ifeq (,$(wildcard $(HOME)/.transifexrc))
 TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
@@ -612,11 +612,12 @@ contribs/gmf/build/%.js: .build/%.js $(GMF_APPS_LIBS_JS_FILES)
 .PHONY: compile-css
 compile-css: $(addprefix contribs/gmf/build/,$(addsuffix .css,$(GMF_APPS)))
 
-contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less $(GMF_APPS_LESS_FILES) \
+contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less \
+		$(GMF_APPS_LESS_FILES) \
 		.build/node_modules.timestamp \
 		$(FONTAWESOME_WEBFONT)
 	mkdir -p $(dir $@)
-	./node_modules/.bin/lessc $< $@ --autoprefix
+	./node_modules/.bin/lessc --autoprefix --clean-css="--s0" $< $@
 
 
 # i18n
@@ -631,7 +632,7 @@ $(HOME)/.transifexrc:
 
 .tx/config: .tx/config.mako .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "git_branch=$(TX_GIT_BRANCH)" $< > $@
+		--var "tx_version=$(TX_VERSION)" $< > $@
 
 #.build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
 #		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES)
@@ -662,7 +663,7 @@ transifex-send: .tx/config .build/python-venv/bin/tx \
 transifex-init: .build/dev-requirements.timestamp .tx/config \
 	.build/locale/gmf.pot
 	# .build/locale/ngeo.pot
-	.build/venv/bin/tx push --source
+	.build/venv/bin/tx push --source --force
 	.build/venv/bin/tx push --translations --force --no-interactive
 
 #.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
@@ -676,10 +677,6 @@ transifex-init: .build/dev-requirements.timestamp .tx/config \
 .build/locale/%/LC_MESSAGES/demo.po:
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/camptocamp/demo_geomapfish/master/demo/locale/$*/LC_MESSAGES/demo-client.po
-
-contribs/gmf/build/gmf-en.json:
-	mkdir -p $(dir $@)
-	echo '{}' > $@
 
 contribs/gmf/build/gmf-%.json: .build/locale/%/LC_MESSAGES/gmf.po \
 		.build/locale/%/LC_MESSAGES/demo.po \
