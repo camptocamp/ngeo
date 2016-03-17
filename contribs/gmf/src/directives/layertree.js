@@ -2,6 +2,7 @@ goog.provide('gmf.LayertreeController');
 goog.provide('gmf.layertreeDirective');
 
 goog.require('gmf');
+goog.require('gmf.Permalink');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
@@ -97,8 +98,10 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
 /**
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$sce} $sce Angular sce service.
+ * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {gmf.Permalink} gmfPermalink Gmf Permalink service.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
  * @constructor
  * @export
@@ -106,8 +109,8 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
-    ngeoLayerHelper, gmfWmsUrl) {
+gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
+    ngeoLayerHelper, gmfPermalink, gmfWmsUrl) {
 
   /**
    * @private
@@ -163,14 +166,8 @@ gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
    * @private
    */
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
-        gmf.LayertreeController.DATALAYERGROUP_NAME);
+        gmf.DATALAYERGROUP_NAME);
 };
-
-
-/**
- * @const
- */
-gmf.LayertreeController.DATALAYERGROUP_NAME = 'data';
 
 
 /**
@@ -285,6 +282,9 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
     var ids = this.getNodeIds_(node);
     layer.set('querySourceIds', ids);
     layer.set('layerName', node.name);
+
+    var isMerged = type === gmf.LayertreeController.TYPE_NOTMIXEDGROUP;
+    layer.set('isMerged', isMerged);
 
     this.dataLayerGroup_.getLayers().insertAt(0, layer);
 

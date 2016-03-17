@@ -16,3 +16,9 @@ gmf.module = angular.module('gmf', [ngeo.module.name, 'gettext',
  * @type {string}
  */
 gmf.baseTemplateUrl = 'gmf';
+
+
+/**
+ * @const
+ */
+gmf.DATALAYERGROUP_NAME = 'data';
