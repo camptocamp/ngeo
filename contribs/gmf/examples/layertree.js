@@ -1,5 +1,9 @@
 goog.provide('gmf-layertree');
 
+/** @suppress {extraRequire} */
+goog.require('gmf.Themes');
+/** @suppress {extraRequire} */
+goog.require('gmf.TreeManager');
 goog.require('gmf.layertreeDirective');
 goog.require('gmf.mapDirective');
 goog.require('ngeo.proj.EPSG21781');
