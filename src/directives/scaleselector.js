@@ -117,12 +117,12 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
    */
   this.zoomLevels;
 
-  $scope.$watchCollection(goog.bind(function() {
-    return this.scales;
-  }, this), goog.bind(function(newNames) {
+  $scope.$watch(function() {
+    return Object.keys(this.scales).length;
+  }.bind(this), function(newLength) {
     this.zoomLevels = Object.keys(this.scales).map(Number);
     this.zoomLevels.sort(ol.array.numberSafeCompareFunction);
-  }, this));
+  }.bind(this));
 
   var mapExpr = $attrs['ngeoScaleselectorMap'];
 
