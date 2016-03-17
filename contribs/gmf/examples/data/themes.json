@@ -9,6 +9,7 @@
         {
           "mixed": false,
           "metadata": {},
+          "isExpanded" : true,
           "children": [
             {
               "layers": "bus_stop",
@@ -339,6 +340,7 @@
       "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/osm.png",
       "children": [
         {
+          "isExpanded" : true,
           "mixed": false,
           "metadata": {},
           "children": [
@@ -426,6 +428,7 @@
         {
           "mixed": false,
           "metadata": {},
+          "isExpanded" : false,
           "children": [
             {
               "layers": "osm_time",
