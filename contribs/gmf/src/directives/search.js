@@ -2,7 +2,7 @@ goog.provide('gmf.SearchController');
 goog.provide('gmf.searchDirective');
 
 goog.require('gmf');
-goog.require('gmf.Themes');
+goog.require('gmf.TreeManager');
 goog.require('ngeo.AutoProjection');
 goog.require('ngeo.CreateGeoJSONBloodhound');
 goog.require('ngeo.FeatureOverlay');
@@ -46,7 +46,6 @@ gmf.module.value('gmfSearchTemplateUrl',
  *
  *      <gmf-search gmf-search-map="ctrl.map"
  *        gmf-search-datasources="ctrl.searchDatasources"
- *        gmf-search-currenttheme="ctrl.theme"
  *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
  *        gmf-search-clearbutton="true">
  *      </gmf-search>
@@ -63,7 +62,6 @@ gmf.module.value('gmfSearchTemplateUrl',
  *
  *      <gmf-search gmf-search-map="ctrl.map"
  *        gmf-search-datasources="ctrl.searchDatasources"
- *        gmf-search-currenttheme="ctrl.theme"
  *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
  *        gmf-search-clearbutton="true">
  *      </gmf-search>
@@ -85,7 +83,6 @@ gmf.module.value('gmfSearchTemplateUrl',
  *      defined in ol3). If not provided, only the map's view projection
  *      format will be supported.
  * @htmlAttribute {boolean} gmf-search-clearbutton The clear button.
- * @htmlAttribute {Object} gmf-search-currenttheme The selected theme.
  * @htmlAttribute {ngeox.SearchDirectiveListeners} gmf-search-listeners
  *      The listeners.
  * @return {angular.Directive} The Directive Definition Object.
@@ -101,7 +98,6 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       'getDatasourcesFn': '&gmfSearchDatasources',
       'clearbutton': '=gmfSearchClearbutton',
       'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
-      'currentTheme': '=gmfSearchCurrenttheme',
       'additionalListeners': '=gmfSearchListeners'
     },
     controller: 'GmfSearchController',
@@ -140,7 +136,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  *     create GeoJSON Bloodhound service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {gmf.Themes} gmfThemes Themes service.
+ * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @export
  * @ngInject
  * @ngdoc controller
@@ -148,7 +144,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  */
 gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     ngeoAutoProjection, ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
-    gmfThemes) {
+    gmfTreeManager) {
 
 
   /**
@@ -176,10 +172,10 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {gmf.Themes}
+   * @type {gmf.TreeManager}
    * @private
    */
-  this.gmfThemes_ = gmfThemes;
+  this.gmfTreeManager_ = gmfTreeManager;
 
   /**
    * @type {ngeo.CreateGeoJSONBloodhound}
@@ -321,28 +317,6 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
       select: gmf.SearchController.select_.bind(this),
       close: gmf.SearchController.close_.bind(this)
     }));
-
-  /**
-   * Groups added to the theme with the 'add_group' action.
-   * @type {Array.<Object>}
-   * @private
-   */
-  this.addedGroups_ = [];
-
-  this.scope_.$watch(function() {
-    return this.scope_['currentTheme'];
-  }.bind(this), function(newTheme, previousTheme) {
-    if (previousTheme) {
-      for (var i = 0, ii = this.addedGroups_.length; i < ii; i++) {
-        var index = previousTheme.children.indexOf(this.addedGroups_[i]);
-        if (index >= 0) {
-          previousTheme.children.splice(index, 1);
-        }
-      }
-      this.addedGroups_.length = 0;
-    }
-  }.bind(this));
-
 };
 
 
@@ -553,37 +527,6 @@ gmf.SearchController.prototype.setTTDropdownVisibility_ = function() {
 
 
 /**
- * @param {string} themeName The name of the theme to set.
- * @private
- */
-gmf.SearchController.prototype.setTheme_ = function(themeName) {
-  this.gmfThemes_.getThemesObject().then(function(themes) {
-    var theme = gmf.Themes.findThemeByName(themes, themeName);
-    if (theme) {
-      this.scope_['currentTheme'] = theme;
-    }
-  }.bind(this));
-};
-
-
-/**
- * Add a group to the current theme.
- * @param {Object} group The group to add.
- * @return {boolean} true if the group was added, false if the group is already present.
- * @private
- */
-gmf.SearchController.prototype.addGroupToTheme_ = function(group) {
-  var currentTheme = this.scope_['currentTheme'];
-  if (currentTheme.children.indexOf(group) < 0) {
-    this.addedGroups_.push(group);
-    currentTheme.children.push(group);
-    return true;
-  }
-  return false;
-};
-
-
-/**
  * @export
  */
 gmf.SearchController.prototype.onClearButton = function() {
@@ -635,24 +578,15 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
       var actionName = action['action'];
       var actionData = action['data'];
       if (actionName == 'add_theme') {
-        this.setTheme_(actionData);
+        this.gmfTreeManager_.addThemeByName(actionData);
       } else if (actionName == 'add_group') {
-        this.gmfThemes_.getThemesObject().then(function(themes) {
-          var group = gmf.Themes.findGroupByName(themes, actionData);
-          if (group) {
-            if (!this.addGroupToTheme_(group)) {
-              // FIXME: display "this group is already loaded"
-            }
-          }
-        }.bind(this));
+        // FIXME: Display "this group is already loaded" (Issue also in the
+        // treemanager service).
+        this.gmfTreeManager_.addGroupByName(actionData, true);
       } else if (actionName == 'add_layer') {
-        this.gmfThemes_.getThemesObject().then(function(themes) {
-          var group = gmf.Themes.findGroupByLayerName(themes, actionData);
-          if (group) {
-            this.addGroupToTheme_(group);
-            // FIXME: set the layer visible
-          }
-        }.bind(this));
+        // FIXME: Set the layer visible again (Issue also in the
+        // treemanager service).
+        this.gmfTreeManager_.addGroupByLayerName(actionData, true);
       }
     }
   }
