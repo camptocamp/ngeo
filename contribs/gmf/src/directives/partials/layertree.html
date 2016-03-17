@@ -1,4 +1,9 @@
 <span ng-if="::!layertreeCtrl.isRoot" id="node-{{::layertreeCtrl.uid}}" ng-class="[layertreeCtrl.node.children ? 'group' : 'leaf', 'depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNoSourceStyle(layertreeCtrl), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
+    <a  ng-if="::layertreeCtrl.node.children"
+        data-toggle="collapse"
+        href="#layer-group-{{::layertreeCtrl.uid}}"
+        class="expand-node fa">
+    </a>
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)">
     <span class="layerIcon" ng-if="::!layertreeCtrl.node.children">
       <img ng-src="{{::gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}}"></img>
@@ -28,7 +33,9 @@
     </div>
   </span>
 </span>
-<ul ng-if="::layertreeCtrl.node.children">
+<ul id="layer-group-{{::layertreeCtrl.uid}}"
+    ng-if="::layertreeCtrl.node.children"
+    ng-class="{collapse: !layertreeCtrl.isRoot}">
   <li class="treenode" ng-repeat="node in layertreeCtrl.node.children"
       ngeo-layertree="node"
       ngeo-layertree-notroot

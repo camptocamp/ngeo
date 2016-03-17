@@ -1,8 +1,10 @@
 gmf-layertree div {
   margin-right: @app-margin;
 }
+
 gmf-layertree ul .treenode {
   padding-top: @app-margin;
+
   a {
     color: @color;
     display: inline;
@@ -10,9 +12,19 @@ gmf-layertree ul .treenode {
     padding-left: 0;
     text-decoration: none;
     &::after {
-      display:none;
+      display: none;
+    }
+
+    &.expand-node.fa {
+      &::before {
+        content: "\f054";
+      }
+      &[aria-expanded="true"]::before {
+        content: "\f078";
+      }
     }
   }
+
   .rightButtons *::after {
     background: none;
     color: @map-tools-color;
@@ -105,7 +117,7 @@ gmf-layertree ul .treenode {
   }
   .legend {
     a::before {
-     display: none;
+      display: none;
     }
     img {
       padding-left: @app-margin + @half-app-margin;
