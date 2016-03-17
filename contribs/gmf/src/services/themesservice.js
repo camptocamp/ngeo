@@ -24,7 +24,7 @@ gmf.ThemesResponse;
  * @constructor
  * @extends {ol.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
- * @param {string} gmfTreeUrl URL to "themes" web service.
+ * @param {angular.$injector} $injector Main injector.
  * @param {angular.$q} $q Angular q service
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
@@ -32,7 +32,7 @@ gmf.ThemesResponse;
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper, gettextCatalog) {
+gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
 
   goog.base(this);
 
@@ -49,10 +49,14 @@ gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper, gettextCatalog) {
   this.$http_ = $http;
 
   /**
-   * @type {string}
+   * @type {?string}
    * @private
    */
-  this.treeUrl_ = gmfTreeUrl;
+  this.treeUrl_ = null;
+
+  if ($injector.has('gmfTreeUrl')) {
+    this.treeUrl_ = $injector.get('gmfTreeUrl');
+  }
 
   /**
    * @type {ngeo.LayerHelper}
@@ -245,6 +249,8 @@ gmf.Themes.prototype.getThemesObject = function() {
  * @export
  */
 gmf.Themes.prototype.loadThemes = function(opt_roleId) {
+
+  goog.asserts.assert(this.treeUrl_, 'gmfTreeUrl should be defined.');
 
   var deferred = this.deferred_;
 
