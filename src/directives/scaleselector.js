@@ -65,6 +65,8 @@ ngeo.ScaleselectorOptions;
  * The directive doesn't create any watcher. In particular the object including
  * the scales information is now watched.
  *
+ * See our live example: {@link ../examples/scaleselector.html}
+ *
  * @htmlAttribute {Object.<string, string>} ngeo-scaleselector-scales The available scales (key: scale, value: display text).
  * @htmlAttribute {ol.Map} ngeo-scaleselector-map The map.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}

@@ -33,6 +33,8 @@ ngeo.DesktopGeolocationEventType = {
  *        ngeo-desktop-geolocation-options="ctrl.desktopGeolocationOptions">
  *      </button>
  *
+ * See our live example: {@link ../examples/desktopgeolocation.html}
+ *
  * @htmlAttribute {ol.Map} gmf-geolocation-map The map.
  * @htmlAttribute {ngeox.DesktopGeolocationDirectiveOptions} gmf-geolocation-options The options.
  * @return {angular.Directive} The Directive Definition Object.

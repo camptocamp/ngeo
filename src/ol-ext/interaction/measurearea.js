@@ -9,6 +9,8 @@ goog.require('ol.interaction.Draw');
  * @classdesc
  * Interaction dedicated to measure length.
  *
+ * See our live example: {@link ../examples/measure.html}
+ *
  * @constructor
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options

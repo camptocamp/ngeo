@@ -32,6 +32,8 @@ ngeo.MobileGeolocationEventType = {
  *        ngeo-mobile-geolocation-options="ctrl.mobileGeolocationOptions">
  *      </button>
  *
+ * See our live example: {@link ../examples/mobilegeolocation.html}
+ *
  * @htmlAttribute {ol.Map} ngeo-mobile-geolocation-map The map.
  * @htmlAttribute {ngeox.MobileGeolocationDirectiveOptions} ngeo-mobile-geolocation-options The options.
  * @return {angular.Directive} The Directive Definition Object.
