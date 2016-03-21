@@ -39,6 +39,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   goog.object.extend(viewConfig, config.mapViewConfig || {});
 
   /**
+   * The gettext catalog
+   * @type {angularGettext.Catalog}
+   */
+  this.gettextCatalog = $injector.get('gettextCatalog');
+
+  /**
    * @type {ol.Map}
    * @export
    */
@@ -47,7 +53,10 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
     view: new ol.View(viewConfig),
     controls: config.mapControls || [
       new ol.control.ScaleLine(),
-      new ol.control.Zoom()
+      new ol.control.Zoom({
+        zoomInTipLabel: this.gettextCatalog.getString('Zoom in'),
+        zoomOutTipLabel: this.gettextCatalog.getString('Zoom out')
+      })
     ],
     interactions: config.mapInteractions || ol.interaction.defaults({
       pinchRotate: false,
