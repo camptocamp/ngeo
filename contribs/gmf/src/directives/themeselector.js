@@ -8,19 +8,18 @@ goog.require('ngeo.Location');
 
 
 /**
+ * Note that this directive works with the gmf TreeManager service. Set the
+ * theme will update the "tree" object of this TreeManager service.
  * Example:
  *
  *     <gmf-themeselector
  *         id="themes"
  *         class="slide"
  *         data-header-title="Themes"
- *         gmf-themeselector-currenttheme="mainCtrl.theme"
  *         gmf-themeselector-filter="::mainCtrl.filter">
  *     </gmf-themeselector>
  *
  * @htmlAttribute {string} gmf-themeselector-defaulttheme The default theme.
- * @htmlAttribute {GmfThemesNode} gmf-themeselector-currenttheme The selected
- *     theme.
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
  * @return {angular.Directive} The directive specs.
  * @ngInject
@@ -33,7 +32,6 @@ gmf.themeselectorDirective = function() {
     controller: 'gmfThemeselectorController',
     scope: {
       'defaultTheme': '@gmfThemeselectorDefaulttheme',
-      'currentTheme': '=gmfThemeselectorCurrenttheme',
       'filter': '=gmfThemeselectorFilter'
     },
     bindToController: true,
@@ -87,7 +85,7 @@ gmf.ThemeselectorController = function($scope, ngeoLocation, gmfTreeManager,
    * @type {Object}
    * @export
    */
-  this.currentTheme;
+  this.currentTheme = this.gmfTreeManager_.tree;
 
   /**
    * @type {string}
