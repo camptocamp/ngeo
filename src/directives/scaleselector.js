@@ -111,14 +111,18 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
       ($scope.$eval(scalesExpr));
   goog.asserts.assert(this.scales !== undefined);
 
-  var zoomLevels = Object.keys(this.scales).map(Number);
-  zoomLevels.sort(ol.array.numberSafeCompareFunction);
-
   /**
    * @type {Array.<number>}
    * @export
    */
-  this.zoomLevels = zoomLevels;
+  this.zoomLevels;
+
+  $scope.$watch(function() {
+    return Object.keys(this.scales).length;
+  }.bind(this), function(newLength) {
+    this.zoomLevels = Object.keys(this.scales).map(Number);
+    this.zoomLevels.sort(ol.array.numberSafeCompareFunction);
+  }.bind(this));
 
   var mapExpr = $attrs['ngeoScaleselectorMap'];
 
@@ -243,6 +247,7 @@ ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
  */
 ngeo.ScaleselectorController.prototype.handleViewChange_ = function(e) {
   this.registerResolutionChangeListener_();
+  this.handleResolutionChange_(null);
 };
 
 
