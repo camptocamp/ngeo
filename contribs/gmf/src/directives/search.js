@@ -17,6 +17,11 @@ goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
 goog.require('ol.proj');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.RegularShape');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
 
 
 gmf.module.value('gmfSearchTemplateUrl',
@@ -46,6 +51,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  * Example flat results:
  *
  *      <gmf-search gmf-search-map="ctrl.map"
+ *        gmf-search-styles="ctrl.searchStyles"
  *        gmf-search-datasources="ctrl.searchDatasources"
  *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
  *        gmf-search-clearbutton="true">
@@ -62,6 +68,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  * Example with categories:
  *
  *      <gmf-search gmf-search-map="ctrl.map"
+ *        gmf-search-styles="ctrl.searchStyles"
  *        gmf-search-datasources="ctrl.searchDatasources"
  *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
  *        gmf-search-clearbutton="true">
@@ -79,6 +86,12 @@ gmf.module.value('gmfSearchTemplateUrl',
  * @htmlAttribute {ol.Map} gmf-search-map The map.
  * @htmlAttribute {gmfx.SearchDirectiveDatasource} gmf-search-datasource
  *      The datasources.
+ * @htmlAttribute {Object.<string, ol.style.Style>}
+ *      gmf-search-styles A map of styles to apply on searched features. Keys
+ *      must be the 'layer_name' propertie of features except for coordinates
+ *      where the key ifor its style is the value of the constant
+ *      'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the
+ *      default style.
  * @htmlAttribute {Array.<string>} gmf-search-coordinatesprojections codes
  *      of supported projections for coordinates search (projections must be
  *      defined in ol3). If not provided, only the map's view projection
@@ -97,6 +110,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
     scope: {
       'getMapFn': '&gmfSearchMap',
       'getDatasourcesFn': '&gmfSearchDatasources',
+      'featuresStyles': '=?gmfSearchStyles',
       'clearbutton': '=gmfSearchClearbutton',
       'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
       'additionalListeners': '=gmfSearchListeners'
@@ -227,6 +241,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
 
   var datasources = this.scope_['getDatasourcesFn']();
   goog.asserts.assertArray(datasources);
@@ -303,9 +318,8 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     }, this);
   }
 
+  // For searching coordinates
   this.datasets.push({
-    name: 'coordinates',
-    display: 'label',
     source: this.createSearchCoordinates_(this.map_.getView())
   });
 
@@ -325,7 +339,6 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   gettextCatalog.getString('add_group');
   gettextCatalog.getString('add_layer');
 };
-
 
 /**
  * Merges the custom listeners received via the directive attributes and the
@@ -528,10 +541,49 @@ gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
     }
     var geom = new ol.geom.Point(position);
     this.featureOverlay_.clear();
-    this.featureOverlay_.addFeature(new ol.Feature(geom));
+    this.featureOverlay_.addFeature(new ol.Feature({
+      geometry: geom,
+      'layer_name': gmf.COORDINATES_LAYER_NAME
+    }));
     view.setCenter(position);
     this.leaveSearch_();
   }.bind(this);
+};
+
+
+/**
+ * Style for search results.
+ * @param {null|ol.Feature|ol.render.Feature} feature The searched feature.
+ * @param {number} resolution The current resolution of the map.
+ * @return {ol.style.Style} A style for this kind of features.
+ * @private
+ */
+gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
+  var styles = {};
+  styles[gmf.COORDINATES_LAYER_NAME] = new ol.style.Style({
+    image: new ol.style.RegularShape({
+      stroke: new ol.style.Stroke({color: [0, 0, 0, 0.7], width: 2}),
+      points: 4,
+      radius: 8,
+      radius2: 0,
+      angle: 0
+    })
+  });
+  var fill = new ol.style.Fill({color: [255, 255, 255, 0.6]});
+  var stroke = new ol.style.Stroke({color: [60, 150, 200, 1], width: 2});
+  styles['default'] = new ol.style.Style({
+    fill: fill,
+    stroke: stroke,
+    image: new ol.style.Circle({radius: 5, fill: fill, stroke: stroke})
+  });
+  var customStyles = this.scope_['featuresStyles'] || {};
+  goog.object.extend(styles, customStyles);
+  var defaultStyle = styles['default'];
+  if (feature === null) {
+    return defaultStyle;
+  }
+  var kind = feature.get('layer_name');
+  return styles[kind] || defaultStyle;
 };
 
 

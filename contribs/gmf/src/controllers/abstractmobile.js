@@ -69,6 +69,18 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
    */
   this.searchOverlayVisible = false;
 
+  /**
+   * @type {ngeox.SearchDirectiveListeners}
+   * @export
+   */
+  this.searchListeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
+    open: function() {
+      this.searchOverlayVisible = true;
+    }.bind(this),
+    close: function() {
+      this.searchOverlayVisible = false;
+    }.bind(this)
+  });
 
   var positionFeatureStyle = config.positionFeatureStyle || new ol.style.Style({
     image: new ol.style.Circle({
@@ -132,21 +144,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
         ol.interaction.defaults({pinchRotate: false})
   });
 
-  /**
-   * @type {ngeox.SearchDirectiveListeners}
-   * @export
-   */
-  this.searchListeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    open: function() {
-      this.searchOverlayVisible = true;
-    }.bind(this),
-    close: function() {
-      this.searchOverlayVisible = false;
-    }.bind(this)
-  });
-
-  goog.base(
-      this, config, $scope, $injector);
+  goog.base(this, config, $scope, $injector);
 
 
   var dragEl = document.querySelector('main');

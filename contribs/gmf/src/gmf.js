@@ -29,5 +29,12 @@ gmf.baseTemplateUrl = 'gmf';
 
 /**
  * @const
+ * @export
  */
 gmf.DATALAYERGROUP_NAME = 'data';
+
+/**
+ * @const
+ * @export
+ */
+gmf.COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
