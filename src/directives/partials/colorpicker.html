@@ -1,0 +1,7 @@
+<table class="palette">
+  <tr ng-repeat="colors in ::ctrl.colors">
+    <td ng-repeat="color in ::colors" ng-click="ctrl.setColor(color)" ng-class="{'selected': color == ctrl.color}">
+      <div ng-style="::{'background-color': color}"></div>
+    </td>
+  </tr>
+</table>
