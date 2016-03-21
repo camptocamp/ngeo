@@ -23,7 +23,7 @@
     "async": "1.5.2"
   },
   "devDependencies": {
-    "angular": "1.5.1",
+    "angular": "1.5.2",
     "angular-animate": "1.5.1",
     "angular-gettext": "2.2.1",
     "angular-gettext-tools": "2.1.11",
