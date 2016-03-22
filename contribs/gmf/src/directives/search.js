@@ -199,6 +199,12 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.ngeoCreateGeoJSONBloodhound_ = ngeoCreateGeoJSONBloodhound;
 
   /**
+   * @type {ngeo.FeatureOverlayMgr}
+   * @private
+   */
+  this.ngeoFeatureOverlayMgr = ngeoFeatureOverlayMgr;
+
+  /**
    * @type {ngeo.AutoProjection}
    * @private
    */
@@ -598,6 +604,15 @@ gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
       this.styles_[feature.get('layer_name')] || this.styles_['default'];
 };
 
+/**
+ * Set a new color for the search feature style.
+ * @param {string} color The color to set.
+ * @export
+ */
+gmf.SearchController.prototype.setStyleColor = function(color) {
+  this.styles_['default'].getStroke().setColor(color);
+  this.ngeoFeatureOverlayMgr.getLayer().changed();
+};
 
 /**
  * @private
