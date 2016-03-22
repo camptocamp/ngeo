@@ -110,7 +110,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
     scope: {
       'getMapFn': '&gmfSearchMap',
       'getDatasourcesFn': '&gmfSearchDatasources',
-      'featuresStyles': '=?gmfSearchStyles',
+      'featuresStyles': '<?gmfSearchStyles',
       'clearbutton': '=gmfSearchClearbutton',
       'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
       'additionalListeners': '=gmfSearchListeners'
@@ -214,6 +214,12 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.map_ = map;
 
   /**
+   * @type {Object}
+   * @private
+   */
+  this.styles_ = {};
+
+  /**
    * Whether or not to show a button to clear the search text.
    * Default to false.
    * @type {boolean}
@@ -235,6 +241,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.coordinatesProjections_ = coordProj;
 
   ngeoFeatureOverlayMgr.init(this.map_);
+  this.initStyles_();
 
   /**
    * @type {ngeo.FeatureOverlay}
@@ -552,15 +559,14 @@ gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
 
 
 /**
- * Style for search results.
- * @param {null|ol.Feature|ol.render.Feature} feature The searched feature.
- * @param {number} resolution The current resolution of the map.
- * @return {ol.style.Style} A style for this kind of features.
+ * Init the style object for the search results. It set defaults for the
+ * coordinates and the polygon styles, and both can be overloaded from directive
+ * attributes. The styles from directive attributes can specify custom styles
+ * for each search group.
  * @private
  */
-gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
-  var styles = {};
-  styles[gmf.COORDINATES_LAYER_NAME] = new ol.style.Style({
+gmf.SearchController.prototype.initStyles_ = function() {
+  this.styles_[gmf.COORDINATES_LAYER_NAME] = new ol.style.Style({
     image: new ol.style.RegularShape({
       stroke: new ol.style.Stroke({color: [0, 0, 0, 0.7], width: 2}),
       points: 4,
@@ -571,19 +577,25 @@ gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
   });
   var fill = new ol.style.Fill({color: [255, 255, 255, 0.6]});
   var stroke = new ol.style.Stroke({color: [60, 150, 200, 1], width: 2});
-  styles['default'] = new ol.style.Style({
+  this.styles_['default'] = new ol.style.Style({
     fill: fill,
     stroke: stroke,
     image: new ol.style.Circle({radius: 5, fill: fill, stroke: stroke})
   });
   var customStyles = this.scope_['featuresStyles'] || {};
-  goog.object.extend(styles, customStyles);
-  var defaultStyle = styles['default'];
-  if (feature === null) {
-    return defaultStyle;
-  }
-  var kind = feature.get('layer_name');
-  return styles[kind] || defaultStyle;
+  goog.object.extend(this.styles_, customStyles);
+};
+
+/**
+ * Style for search results.
+ * @param {null|ol.Feature|ol.render.Feature} feature The searched feature.
+ * @param {number} resolution The current resolution of the map.
+ * @return {ol.style.Style} A style for this kind of features.
+ * @private
+ */
+gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
+  return feature && feature.get('layer_name') &&
+      this.styles_[feature.get('layer_name')] || this.styles_['default'];
 };
 
 
