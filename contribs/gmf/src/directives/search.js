@@ -271,8 +271,8 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
 
     if (groupValues.length === 0) {
       filters.push({
-        'title': undefined,
-        'filter': undefined
+        'title': '',
+        'filter': this.filterLayername_(null)
       });
     } else {
       groupValues.forEach(function(layerName) {
@@ -281,13 +281,14 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
           'filter': this.filterLayername_(layerName)
         });
       }, this);
-      groupActions.forEach(function(action) {
-        filters.push({
-          'title': action,
-          'filter': this.filterAction_(action)
-        });
-      }, this);
     }
+
+    groupActions.forEach(function(action) {
+      filters.push({
+        'title': action,
+        'filter': this.filterAction_(action)
+      });
+    }, this);
 
     filters.forEach(function(filter) {
       this.datasets.push(this.createDataset_({
@@ -383,8 +384,8 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
 
         var html = '<p class="search-label">' + feature.get(config.labelKey) +
                    '</p>';
-        html += '<p class="search-group">' + feature.get('layer_name') +
-                '</p>';
+        html += '<p class="search-group">' + (feature.get('layer_name') ||
+                config.datasetTitle) + '</p>';
         html = '<div class="search-datum">' + html + '</div>';
         return compile(html)(scope);
       }
@@ -426,7 +427,8 @@ gmf.SearchController.prototype.filterAction_ = function(action) {
 
 
 /**
- * @param {string} layerName The layerName to keep.
+ * @param {?string} layerName The layerName to keep. If null, keep all layers
+ *     (In all cases, except actions layers).
  * @return {(function(GeoJSONFeature): boolean)} A filter function based on a
  *     GeoJSONFeaturesCollection's array.
  * @private
@@ -438,8 +440,15 @@ gmf.SearchController.prototype.filterLayername_ = function(layerName) {
        * @return {boolean}
        */
       function(feature) {
-        var properties = feature['properties'];
-        return properties['layer_name'] === layerName;
+        var featureLayerName = feature['properties']['layer_name'];
+        // Keep only layers with layer_name (don't keep action layers).
+        if (featureLayerName === undefined) {
+          return false;
+        }
+        if (layerName === null) {
+          return true;
+        }
+        return featureLayerName === layerName;
       }
   );
 };
@@ -574,6 +583,8 @@ gmf.SearchController.prototype.blur = function() {
 gmf.SearchController.select_ = function(event, feature, dataset) {
   var actions = feature.get('actions');
   if (actions) {
+    var groupActions = /** @type {Array.<string>} */ (
+        this.datasources_[0].groupActions);
     for (var i = 0, ii = actions.length; i < ii; i++) {
       var action = actions[i];
       var actionName = action['action'];
@@ -584,7 +595,8 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
         // FIXME: Display "this group is already loaded" (Issue also in the
         // treemanager service).
         this.gmfTreeManager_.addGroupByName(actionData, true);
-      } else if (actionName == 'add_layer') {
+      } else if (actionName == 'add_layer' &&
+            groupActions.indexOf('add_layer') >= 0) {
         // FIXME: Set the layer visible again (Issue also in the
         // treemanager service).
         this.gmfTreeManager_.addGroupByLayerName(actionData, true);
