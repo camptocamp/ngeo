@@ -29,7 +29,6 @@ ngeo.popoverDirective = function() {
     scope : true,
     controller: 'NgeoPopoverController',
     link : function(scope, elem, attrs, ngeoPopoverCtrl) {
-
       ngeoPopoverCtrl.anchorElm.on('hidden.bs.popover', function() {
         /**
          * @type {{inState : Object}}

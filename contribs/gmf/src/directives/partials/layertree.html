@@ -1,4 +1,5 @@
 <div ng-if="::!layertreeCtrl.isRoot" id="node-{{::layertreeCtrl.uid}}" ng-class="[layertreeCtrl.node.children ? 'group' : 'leaf', 'depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNoSourceStyle(layertreeCtrl), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
+  <i ng-if="::layertreeCtrl.depth === 1" class="sortable-handle fa fa-ellipsis-v"></i>
     <a  ng-if="::layertreeCtrl.node.children"
         data-toggle="collapse"
         href="#layer-group-{{::layertreeCtrl.uid}}"
@@ -14,7 +15,7 @@
   </a>
   <span class="rightButtons">
     <a href="" ng-if="::layertreeCtrl.depth == 1" ng-click="gmfLayertreeCtrl.removeNode(layertreeCtrl.node)">
-        <span class="fa fa-trash"></span>
+      <span class="fa fa-trash"></span>
     </a>
     <span class="metadata" ng-if="::layertreeCtrl.node.metadata.metadataUrl">
       <span ng-if="::gmfLayertreeCtrl.openLinksInNewWindow === true">
@@ -39,8 +40,11 @@
 </div>
 <ul id="layer-group-{{::layertreeCtrl.uid}}"
     ng-if="::layertreeCtrl.node.children"
-    ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded === 'true'}">
-  <li class="gmf-layertree-node" ng-repeat="node in layertreeCtrl.node.children" ng-class="'depth-' + layertreeCtrl.depth"
+    ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded === 'true'}"
+    ngeo-sortable="::layertreeCtrl.isRoot && layertreeCtrl.node.children"
+    ngeo-sortable-options="{handleClassName: 'sortable-handle', draggerClassName: 'dragger', currDragItemClassName : 'curr-drag-item'}">
+  <li class="gmf-layertree-node" ng-repeat="node in layertreeCtrl.node.children"
+      ng-class="'depth-' + layertreeCtrl.depth"
       ngeo-layertree="node"
       ngeo-layertree-notroot
       ngeo-layertree-map="layertreeCtrl.map"

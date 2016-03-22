@@ -7,6 +7,7 @@ goog.require('ol.Map');
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Layer');
 goog.require('ol.layer.Image');
+goog.require('ol.Collection');
 
 describe('GmfLayertree', function() {
 
@@ -87,6 +88,52 @@ describe('GmfLayertree', function() {
     expect(layer).toBeDefined();
     expect(layer instanceof ol.layer.Image).toBeTruthy();
     expect(gmfLayertreeCtrl.prepareLayer_).toHaveBeenCalledWith(nonMixedNode, layer);
+  });
+
+  it('Should reorder layers regarding the differences between node arrays', function() {
+    var newNodes, reorderedLayers, tempLayer;
+    var reorderedLayersExpected = new ol.Collection();
+    var layers = new ol.Collection();
+    var oldNodes = osmThemeNode.children;
+    oldNodes.forEach(function(node) {
+      layers.insertAt(0, node.mixed ? new ol.layer.Group() : new ol.layer.Image())
+    });
+
+    // newNodes !== oldNodes should return null
+    expect(gmfLayertreeCtrl.reorderLayer_(oldNodes, [], layers)).toBe(null);
+
+    newNodes = themes['themes'].filter(function(theme) {
+      return theme.name === 'OSM';
+    })[0].children;
+
+    // newNodes === oldNodes should return null
+    expect(gmfLayertreeCtrl.reorderLayer_(oldNodes, newNodes, layers)).toBe(null);
+
+    //reorder nodes by putting first node at the end of the array
+    newNodes = oldNodes.map(function(node, i, nodes) {
+      if (i < nodes.length - 1)
+        return nodes[i + 1];
+      return nodes[0];
+    });
+
+    //reorder layers to reflect newNodes order
+    layers.forEach(function(layer, i) {
+      if (i === 0) {
+        tempLayer = layer;
+      } else {
+        reorderedLayersExpected.push(layer);
+      }
+    });
+    reorderedLayersExpected.push(tempLayer);
+
+    reorderedLayers = gmfLayertreeCtrl.reorderLayer_(oldNodes, newNodes, layers);
+    expect(reorderedLayers).toBeDefined();
+    expect(reorderedLayers.getLength()).toBe(reorderedLayersExpected.getLength());
+
+    reorderedLayers.forEach(function(layer, i) {
+      expect(layer).toBe(reorderedLayersExpected.item(i));
+    })
+
   })
 
 });

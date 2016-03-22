@@ -10,6 +10,7 @@ goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
 goog.require('ol.array');
 goog.require('ol.layer.Tile');
+goog.require('ol.Collection');
 
 
 gmf.module.value('gmfLayertreeTemplate',
@@ -175,6 +176,53 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
    */
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
         gmf.DATALAYERGROUP_NAME);
+
+  $scope.$watchCollection('gmfLayertreeCtrl.tree.children', function(newNodes, oldNodes) {
+    var reorderedLayers = this.reorderLayer_(
+      newNodes,
+      oldNodes,
+      this.dataLayerGroup_.getLayers());
+    if (reorderedLayers) {
+      this.dataLayerGroup_.setLayers(reorderedLayers);
+    }
+  }.bind(this));
+};
+
+/**
+ * Reorder a layer collection regarding changes in the related nodes
+ *
+ * (1) : if newNodes and oldNodes are equals, return null (there is no need to reorder)
+ * (2) : newNodes and oldNodes MUST HAVE the same length,
+ *       avoiding reordering on node insertion/deletion
+ * (3) : newNodes (or oldNodes) and layers MUST HAVE the same length
+ *
+ * @param {Array<Object>} newNodes nodes from the tree
+ * @param {Array<Object>} oldNodes nodes from the tree
+ * @param {ol.Collection} layers a collection of layers
+ * @return {ol.Collection|null} a new (reordered) layer collection
+ * @private
+ */
+gmf.LayertreeController.prototype.reorderLayer_ = function(newNodes, oldNodes, layers) {
+  var sortedLayers, prevIndex, layer;
+  if (newNodes && newNodes.length === oldNodes.length &&
+        newNodes !==  oldNodes && newNodes.length === layers.getLength()) {
+    sortedLayers = new ol.Collection();
+    for (var i = 0; i < newNodes.length; i++) {
+      //get the previous index (in oldNodes array) of the node
+      prevIndex = oldNodes.indexOf(newNodes[i]);
+
+      //Layer collection order is always equal to oldNodes order but reversed
+      layer = layers.item((oldNodes.length - 1) - prevIndex);
+
+      /**
+       * Insert layer as first element of sortedLayer collection
+       * (keeping layer collection order reversed compared to node array)
+       */
+      sortedLayers.insertAt(0, layer);
+    }
+    return sortedLayers;
+  }
+  return null;
 };
 
 
@@ -200,7 +248,7 @@ gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
       layer.setVisible(false);
     }
   }
-}
+};
 
 
 /**
