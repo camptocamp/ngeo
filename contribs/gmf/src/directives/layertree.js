@@ -3,6 +3,7 @@ goog.provide('gmf.layertreeDirective');
 
 goog.require('gmf');
 goog.require('gmf.Permalink');
+goog.require('gmf.TreeManager');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
@@ -103,6 +104,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {gmf.Permalink} gmfPermalink Gmf Permalink service.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
+ * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @constructor
  * @export
  * @ngInject
@@ -110,7 +112,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
-    ngeoLayerHelper, gmfPermalink, gmfWmsUrl) {
+    ngeoLayerHelper, gmfPermalink, gmfWmsUrl, gmfTreeManager) {
 
   /**
    * @private
@@ -135,6 +137,12 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {gmf.TreeManager}
+   * @private
+   */
+  this.gmfTreeManager_ = gmfTreeManager;
 
   /**
    * @private
@@ -846,6 +854,15 @@ gmf.LayertreeController.prototype.getNoSourceStyle = function(treeCtrl) {
     return 'noSource';
   }
   return null;
+};
+
+
+/**
+ * @param {GmfThemesNode} node Layer tree node to remove.
+ * @export
+ */
+gmf.LayertreeController.prototype.removeNode = function(node) {
+  this.gmfTreeManager_.removeGroup(node);
 };
 
 
