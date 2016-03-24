@@ -83,6 +83,14 @@
         </div>
       </div>
       <div class="map-container">
+        <div class="zoom-buttons" ngeo-recenter ngeo-recenter-map="::mainCtrl.map">
+          <button ngeo-zoom-delta="+1" data-toggle="tooltip" data-placement="right" data-original-title="{{'Zoom in'|translate}}">
+            <span class="fa fa-plus"></span>
+          </button>
+          <button ngeo-zoom-delta="-1" data-toggle="tooltip" data-placement="right" data-original-title="{{'Zoom out'|translate}}"
+            <span class="fa fa-minus"></span>
+          </button>
+        </div>
         <div class="search">
           <gmf-search gmf-search-map="mainCtrl.map"
             gmf-search-datasources="mainCtrl.searchDatasources"
