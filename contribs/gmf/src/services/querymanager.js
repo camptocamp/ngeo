@@ -97,6 +97,11 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
   var url = meta['wmsUrl'] || node.url || this.gmfWmsUrl_;
   var validateLayerParams = false;
 
+  // don't create sources for WMTS layers without wmsUrl, they are not queryable.
+  if (node.type === 'WMTS' && !meta['wmsUrl']) {
+    return;
+  }
+
   if (children) {
     for (var i = 0, len = children.length; i < len; i++) {
       this.createSources_(children[i]);
