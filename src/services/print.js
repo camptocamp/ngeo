@@ -195,18 +195,12 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   goog.asserts.assert(layersCollection !== null);
   var layers = layersCollection.getArray().slice().reverse();
 
-  layers.forEach(
-      /**
-       * @param {ol.layer.Layer} layer Layer.
-       * @param {number} idx Index.
-       * @param {Array.<ol.layer.Layer>} layers Layers.
-       */
-      function(layer, idx, layers) {
-        if (layer.getVisible()) {
-          goog.asserts.assert(viewResolution !== undefined);
-          this.encodeLayer(object.layers, layer, viewResolution);
-        }
-      }, this);
+  layers.forEach(function(layer) {
+    if (layer.getVisible()) {
+      goog.asserts.assert(viewResolution !== undefined);
+      this.encodeLayer(object.layers, layer, viewResolution);
+    }
+  }, this);
 };
 
 
