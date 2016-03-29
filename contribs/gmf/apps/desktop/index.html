@@ -18,14 +18,15 @@
         gmf-mobile-backgroundlayerselector-map="::mainCtrl.map"
         style="display: none;">
       </gmf-mobile-backgroundlayerselector>
-      <div class="data-panel">
+      <div class="data-panel" ng-cloak>
         <div class="header">
           <div class="dropdown">
             <a href class="btn btn-default btn-block"
               data-toggle="dropdown">
               <span class="fa fa-grid"></span>
               <span translate>Theme:</span>
-              <b ng-bind="mainCtrl.theme['name']" translate>Loading...</b>
+              <b ng-if="!mainCtrl.theme.name" translate>Loading...</b>
+              <b ng-if="mainCtrl.theme.name">{{mainCtrl.theme.name|translate}}</b>
               <span class="caret"></span>
             </a>
             <gmf-themeselector class="dropdown-menu"
