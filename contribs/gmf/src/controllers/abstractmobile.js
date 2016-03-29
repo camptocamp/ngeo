@@ -67,6 +67,18 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
    */
   this.searchOverlayVisible = false;
 
+  /**
+   * @type {ngeox.SearchDirectiveListeners}
+   * @export
+   */
+  this.searchListeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
+    open: function() {
+      this.searchOverlayVisible = true;
+    }.bind(this),
+    close: function() {
+      this.searchOverlayVisible = false;
+    }.bind(this)
+  });
 
   var positionFeatureStyle = config.positionFeatureStyle || new ol.style.Style({
     image: new ol.style.Circle({
@@ -134,19 +146,6 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     event.stopPropagation();
     alert('Geo-location failed');
   }.bind(this));
-
-  /**
-   * @type {ngeox.SearchDirectiveListeners}
-   * @export
-   */
-  this.searchListeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    open: function() {
-      this.searchOverlayVisible = true;
-    }.bind(this),
-    close: function() {
-      this.searchOverlayVisible = false;
-    }.bind(this)
-  });
 
   goog.base(
       this, config, $scope, $injector);
