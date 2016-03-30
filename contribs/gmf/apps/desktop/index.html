@@ -57,28 +57,37 @@
           </button>
           <button ngeo-btn class="btn btn-default" ng-model="measureActive"
             data-toggle="tooltip" data-placement="left" data-original-title="{{'Measure tools'|translate}}">
-            <span class="fa fa-circle">
+            <span class="fa fa-circle"></span>
           </button>
         </div>
-        <div class="tools-content" ng-class="{active: mainCtrl.toolsActive}">
-          <div ng-show="mainCtrl.loginActive">
-            <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
-            <div class="tools-content-heading">
-              Login
-            </div>
-            <gmf-authentication></gmf-authentication>
-            <br>
-          </div>
-          <div ng-show="printActive">
-            <a class="btn close" ng-click="printActive = false">&times;</a>
-            <div class="tools-content-heading">
-              Print
-            </div>
-          </div>
-          <div ng-show="measureActive">
-            <a class="btn close" ng-click="measureActive = false">&times;</a>
-            <div class="tools-content-heading">
-              Measure
+        <div class="tools-content container-fluid" ng-class="{active: mainCtrl.toolsActive}">
+          <div class="row">
+            <div class="col-sm-12">
+              <div ng-show="mainCtrl.loginActive" class="row">
+                <div class="col-sm-12">
+                  <div class="tools-content-heading">
+                    Login
+                    <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
+                  </div>
+                  <gmf-authentication></gmf-authentication>
+                </div>
+              </div>
+              <div ng-show="printActive" class="row">
+                <div class="col-sm-12">
+                  <div class="tools-content-heading">
+                    Print
+                    <a class="btn close" ng-click="printActive = false">&times;</a>
+                  </div>
+                </div>
+              </div>
+              <div ng-show="measureActive" class="row">
+                <div class="col-sm-12">
+                  <div class="tools-content-heading">
+                    Measure
+                    <a class="btn close" ng-click="measureActive = false">&times;</a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
