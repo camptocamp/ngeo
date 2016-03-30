@@ -1,8 +1,8 @@
 goog.provide('gmf.Themes');
 
 goog.require('gmf');
-goog.require('goog.array');
 goog.require('ngeo.LayerHelper');
+goog.require('ol.array');
 goog.require('ol.events.EventTarget');
 goog.require('ol.layer.Tile');
 
@@ -134,7 +134,7 @@ gmf.Themes.findGroupByName = function(themes, name) {
  * @private
  */
 gmf.Themes.findObjectByName_ = function(objects, objectName) {
-  return goog.array.find(objects, function(object) {
+  return ol.array.find(objects, function(object) {
     return object['name'] === objectName;
   });
 };

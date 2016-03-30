@@ -2,6 +2,7 @@ goog.provide('ngeo.LayerHelper');
 
 goog.require('ngeo');
 goog.require('ol.Collection');
+goog.require('ol.array');
 goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Image');
@@ -92,7 +93,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
 
       // Add styles from capabilities as param of the layer
       var layers = result['Contents']['Layer'];
-      var l = goog.array.find(layers, function(elt, index, array) {
+      var l = ol.array.find(layers, function(elt, index, array) {
         return elt['Identifier'] == layerName;
       });
       layer.set('capabilitiesStyles', l['Style']);
