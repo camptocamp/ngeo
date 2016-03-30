@@ -168,7 +168,7 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
         themeName = pathElements[pathElements.length - 1];
       }
     }
-    currentTheme = goog.array.find(this.themes, function(object) {
+    currentTheme = ol.array.find(this.themes, function(object) {
       return object['name'] === themeName;
     });
 

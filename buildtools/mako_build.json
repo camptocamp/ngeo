@@ -80,7 +80,6 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "${_ngeo_folder}externs/mapfish-print-v3.js"
     ],
     "define": [
-      "goog.array.ASSUME_NATIVE_FUNCTIONS=true",
       "goog.dom.ASSUME_STANDARDS_MODE=true",
       "goog.DEBUG=false",
       "ol.ENABLE_DOM=false",

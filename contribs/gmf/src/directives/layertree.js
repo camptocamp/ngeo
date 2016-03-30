@@ -8,6 +8,7 @@ goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
 goog.require('ol.Collection');
+goog.require('ol.array');
 goog.require('ol.layer.Tile');
 
 
@@ -556,11 +557,13 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
           source.getParams()['LAYERS'].split(',') : [];
       if (isActive) {
         for (i = 0; i < nodeNames.length; i++) {
-          goog.array.remove(layers, nodeNames[i]);
+          ol.array.remove(layers, nodeNames[i]);
         }
       } else {
         for (i = 0; i < nodeNames.length; i++) {
-          goog.array.insert(layers, nodeNames[i]);
+          if (!ol.array.includes(layers, nodeNames[i])) {
+            layers.push(nodeNames[i]);
+          }
         }
       }
       firstParentTreeLayer = /** @type {ol.layer.Image} */
@@ -621,9 +624,11 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
 
       // Update group state
       if (style === 'on') {
-        goog.array.insert(currentLayersNames, node.name);
+        if (!ol.array.includes(currentLayersNames, node.name)) {
+          currentLayersNames.push(node.name);
+        }
       } else {
-        goog.array.remove(currentLayersNames, node.name);
+        ol.array.remove(currentLayersNames, node.name);
       }
 
       break;
