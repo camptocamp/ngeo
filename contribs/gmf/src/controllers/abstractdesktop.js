@@ -69,7 +69,8 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
 
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({
-    container: 'body'
+    container: 'body',
+    trigger: 'hover'
   });
 
   goog.base(

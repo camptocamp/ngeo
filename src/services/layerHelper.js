@@ -2,6 +2,7 @@ goog.provide('ngeo.LayerHelper');
 
 goog.require('ngeo');
 goog.require('ol.Collection');
+goog.require('ol.array');
 goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Image');
@@ -92,7 +93,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
 
       // Add styles from capabilities as param of the layer
       var layers = result['Contents']['Layer'];
-      var l = goog.array.find(layers, function(elt, index, array) {
+      var l = ol.array.find(layers, function(elt, index, array) {
         return elt['Identifier'] == layerName;
       });
       layer.set('capabilitiesStyles', l['Style']);
@@ -134,14 +135,20 @@ ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
  */
 ngeo.LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
   var groups = map.getLayerGroup().getLayers();
-  groups.forEach(function(group) {
-    if (group.get(ngeo.LayerHelper.GROUP_KEY) === groupName) {
-      return group;
+  var group;
+  groups.getArray().some(function(exitingGroup) {
+    if (exitingGroup.get(ngeo.LayerHelper.GROUP_KEY) === groupName) {
+      group = /** @type {ol.layer.Group} */ (exitingGroup);
+      return true;
+    } else {
+      return false;
     }
   });
-  var group = this.createBasicGroup();
-  group.set(ngeo.LayerHelper.GROUP_KEY, groupName);
-  map.addLayer(group);
+  if (!group) {
+    group = this.createBasicGroup();
+    group.set(ngeo.LayerHelper.GROUP_KEY, groupName);
+    map.addLayer(group);
+  }
   return group;
 };
 
@@ -179,5 +186,31 @@ ngeo.LayerHelper.prototype.getFlatLayers_ = function(layer, array) {
   }
   return array;
 };
+
+
+/**
+ * Get a layer that has a `layerName` property equal to a given layer name from
+ * an array of layers. If one of the layers in the array is a group, then the
+ * layers contained in that group are searched as well.
+ * @param {string} layerName The name of the layer we're looking for.
+ * @param {Array.<ol.layer.Base>} layers Layers.
+ * @return {?ol.layer.Base} Layer.
+ * @export
+ */
+ngeo.LayerHelper.prototype.getLayerByName = function(layerName, layers) {
+  var found = null;
+  layers.some(function(layer) {
+    if (layer instanceof ol.layer.Group) {
+      var sublayers = layer.getLayers().getArray();
+      found = this.getLayerByName(layerName, sublayers);
+    } else if (layer.get('layerName') === layerName) {
+      found = layer;
+    }
+    return !!found;
+  }, this);
+
+  return found;
+};
+
 
 ngeo.module.service('ngeoLayerHelper', ngeo.LayerHelper);

@@ -23,18 +23,11 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "${src}",
 % endif
 % if src_set == 'ngeo':
-% if lib == 'true':
-    "${_ngeo_folder}exports/**/*.js",
-% endif
 % if examples != 'true':
     ".build/templatecache.js",
 % endif
 % elif src_set == 'contribs_gmf':
     "${_ngeo_folder}contribs/gmf/src/**/*.js",
-% if lib == 'true':
-    "exports/**/*.js",
-    "contribs/gmf/exports/**/*.js",
-% endif
 % if examples != 'true':
     ".build/gmftemplatecache.js",
 % endif
@@ -87,9 +80,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "${_ngeo_folder}externs/mapfish-print-v3.js"
     ],
     "define": [
-      "goog.array.ASSUME_NATIVE_FUNCTIONS=true",
       "goog.dom.ASSUME_STANDARDS_MODE=true",
-      "goog.json.USE_NATIVE_JSON=true",
       "goog.DEBUG=false",
       "ol.ENABLE_DOM=false",
       "ol.ENABLE_WEBGL=false"
@@ -104,7 +95,8 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % endif
       "useOfGoogBase",
       "unnecessaryCasts",
-      "lintChecks"
+      "lintChecks",
+      "analyzerChecks"
     ],
     "extra_annotation_name": [
       "api", "observable", "ngdoc", "ngname", "htmlAttribute"

@@ -4,6 +4,8 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.QueryManager');
 /** @suppress {extraRequire} */
+goog.require('gmf.TreeManager');
+/** @suppress {extraRequire} */
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
@@ -38,12 +40,13 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   goog.asserts.assertInstanceof(this.map, ol.Map);
 
+  var gmfTreeManager = $injector.get('gmfTreeManager');
   /**
    * A reference to the current theme
-   * @type {Object}
+   * @type {GmfThemesNode}
    * @export
    */
-  this.theme;
+  this.theme = gmfTreeManager.tree;
 
   /**
    * Themes service
@@ -63,6 +66,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
     projection: 'EPSG:' + (config.srid || 21781),
     url: /** @type {string} **/ ($injector.get('fulltextsearchUrl'))
   }];
+
+  /**
+   * @type {Array.<string>}
+   * @export
+   */
+  this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326']
 
   /**
    * @type {boolean}
@@ -204,12 +213,10 @@ gmf.AbstractController.prototype.initLanguage = function() {
   var urlLanguage = /** @type {string|undefined} */
       (this.stateManager.getInitialValue('lang'));
 
-  if (urlLanguage !== undefined &&
-      goog.object.containsKey(this.langUrls, urlLanguage)) {
+  if (urlLanguage !== undefined && urlLanguage in this.langUrls) {
     this.switchLanguage(urlLanguage);
     return;
-  } else if (browserLanguage !== undefined &&
-      goog.object.containsKey(this.langUrls, browserLanguage)) {
+  } else if (browserLanguage !== undefined && browserLanguage in this.langUrls) {
     this.switchLanguage(browserLanguage);
     return;
   } else {

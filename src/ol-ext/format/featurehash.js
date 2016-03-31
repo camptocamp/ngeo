@@ -72,6 +72,7 @@ ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  * @constructor
  * @extends {ol.format.TextFeature}
  * @param {ngeox.format.FeatureHashOptions=} opt_options Options.
+ * @export
  */
 ngeo.format.FeatureHash = function(opt_options) {
   goog.base(this);
@@ -113,6 +114,48 @@ ngeo.format.FeatureHash = function(opt_options) {
 
 };
 goog.inherits(ngeo.format.FeatureHash, ol.format.TextFeature);
+
+
+/**
+ * @inheritDoc
+ * @export
+ */
+ngeo.format.FeatureHash.prototype.readFeature;
+
+
+/**
+ * @inheritDoc
+ * @export
+ */
+ngeo.format.FeatureHash.prototype.readFeatures;
+
+
+/**
+ * @inheritDoc
+ * @export
+ */
+ngeo.format.FeatureHash.prototype.readGeometry;
+
+
+/**
+ * @inheritDoc
+ * @export
+ */
+ngeo.format.FeatureHash.prototype.writeFeature;
+
+
+/**
+ * @inheritDoc
+ * @export
+ */
+ngeo.format.FeatureHash.prototype.writeFeatures;
+
+
+/**
+ * @inheritDoc
+ * @export
+ */
+ngeo.format.FeatureHash.prototype.writeGeometry;
 
 
 /**

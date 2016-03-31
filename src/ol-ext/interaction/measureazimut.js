@@ -29,6 +29,7 @@ goog.require('ol.source.Vector');
  * @fires ol.interaction.DrawEvent
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
+ * @export
  */
 ngeo.interaction.MeasureAzimut = function(opt_options) {
 

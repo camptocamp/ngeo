@@ -23,6 +23,6 @@ describe('ngeo.Debounce', function() {
     expect(spy).not.toHaveBeenCalled();
     $timeout.flush(200);
     expect(spy).toHaveBeenCalledWith(1, 'foo');
-    expect(spy.calls.length).toEqual(1);
+    expect(spy.calls.count()).toEqual(1);
   });
 });

@@ -2,10 +2,13 @@ goog.provide('gmf.LayertreeController');
 goog.provide('gmf.layertreeDirective');
 
 goog.require('gmf');
+goog.require('gmf.Permalink');
+goog.require('gmf.TreeManager');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
 goog.require('ol.Collection');
+goog.require('ol.array');
 goog.require('ol.layer.Tile');
 
 
@@ -43,9 +46,9 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
 /**
  * This directive creates a layertree based on the c2cgeoportal JSON themes
  * source and a {@link ngeo.layertreeDirective}. The controller used by this
- * directive defines some fonctions for each node that are created by a default
+ * directive defines some functions for each node that are created by a default
  * template. This default template can be overrided by setting the constant
- * 'gmf.layertreeTemplateUrl' but you will must adapt the
+ * 'gmf.layertreeTemplateUrl' but you will have to adapt the
  * ngeoLayertreeTemplateUrl value too (to define the children's nodes template
  * path).
  *
@@ -97,17 +100,20 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
 /**
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$sce} $sce Angular sce service.
+ * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {gmf.Permalink} gmfPermalink Gmf Permalink service.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
+ * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @constructor
  * @export
  * @ngInject
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
-    ngeoLayerHelper, gmfWmsUrl) {
+gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
+    ngeoLayerHelper, gmfPermalink, gmfWmsUrl, gmfTreeManager) {
 
   /**
    * @private
@@ -132,6 +138,12 @@ gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {gmf.TreeManager}
+   * @private
+   */
+  this.gmfTreeManager_ = gmfTreeManager;
 
   /**
    * @private
@@ -163,14 +175,8 @@ gmf.LayertreeController = function($http, $sce, ngeoCreatePopup,
    * @private
    */
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
-        gmf.LayertreeController.DATALAYERGROUP_NAME);
+        gmf.DATALAYERGROUP_NAME);
 };
-
-
-/**
- * @const
- */
-gmf.LayertreeController.DATALAYERGROUP_NAME = 'data';
 
 
 /**
@@ -285,6 +291,9 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
     var ids = this.getNodeIds_(node);
     layer.set('querySourceIds', ids);
     layer.set('layerName', node.name);
+
+    var isMerged = type === gmf.LayertreeController.TYPE_NOTMIXEDGROUP;
+    layer.set('isMerged', isMerged);
 
     this.dataLayerGroup_.getLayers().insertAt(0, layer);
 
@@ -548,11 +557,13 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
           source.getParams()['LAYERS'].split(',') : [];
       if (isActive) {
         for (i = 0; i < nodeNames.length; i++) {
-          goog.array.remove(layers, nodeNames[i]);
+          ol.array.remove(layers, nodeNames[i]);
         }
       } else {
         for (i = 0; i < nodeNames.length; i++) {
-          goog.array.insert(layers, nodeNames[i]);
+          if (!ol.array.includes(layers, nodeNames[i])) {
+            layers.push(nodeNames[i]);
+          }
         }
       }
       firstParentTreeLayer = /** @type {ol.layer.Image} */
@@ -613,9 +624,11 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
 
       // Update group state
       if (style === 'on') {
-        goog.array.insert(currentLayersNames, node.name);
+        if (!ol.array.includes(currentLayersNames, node.name)) {
+          currentLayersNames.push(node.name);
+        }
       } else {
-        goog.array.remove(currentLayersNames, node.name);
+        ol.array.remove(currentLayersNames, node.name);
       }
 
       break;
@@ -846,6 +859,15 @@ gmf.LayertreeController.prototype.getNoSourceStyle = function(treeCtrl) {
     return 'noSource';
   }
   return null;
+};
+
+
+/**
+ * @param {GmfThemesNode} node Layer tree node to remove.
+ * @export
+ */
+gmf.LayertreeController.prototype.removeNode = function(node) {
+  this.gmfTreeManager_.removeGroup(node);
 };
 
 

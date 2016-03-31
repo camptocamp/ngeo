@@ -7,8 +7,9 @@
       "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/enseignement.jpeg",
       "children": [
         {
-          "mixed": "false",
+          "mixed": false,
           "metadata": {},
+          "isExpanded" : true,
           "children": [
             {
               "layers": "bus_stop",
@@ -65,7 +66,7 @@
       "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/transports.jpeg",
       "children": [
         {
-          "mixed": "false",
+          "mixed": false,
           "metadata": {},
           "children": [
             {
@@ -143,7 +144,7 @@
       "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/cadastre.jpeg",
       "children": [
         {
-          "mixed": "true",
+          "mixed": true,
           "metadata": {},
           "children": [
             {
@@ -257,7 +258,7 @@
                 "disclaimer": "<a href=\"http://www.geo.admin.ch/\">Données publiques de l'infrastructure fédérale de données géographiques (IFDG)<\/a>"
               }
             }, {
-              "mixed": "true",
+              "mixed": true,
               "metadata": {},
               "children": [
                 {
@@ -339,7 +340,8 @@
       "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/osm.png",
       "children": [
         {
-          "mixed": "false",
+          "isExpanded" : true,
+          "mixed": false,
           "metadata": {},
           "children": [
             {
@@ -424,8 +426,9 @@
           "name": "Group"
         },
         {
-          "mixed": "false",
+          "mixed": false,
           "metadata": {},
+          "isExpanded" : false,
           "children": [
             {
               "layers": "osm_time",
@@ -491,7 +494,7 @@
           "name": "OSM function"
         },
         {
-          "mixed": "false",
+          "mixed": false,
           "metadata": {},
           "children": [
             {
@@ -654,7 +657,7 @@
                 "legendRule": "Dans les temps"
               }
             }, {
-              "mixed": "false",
+              "mixed": false,
               "metadata": {},
               "children": [
                 {
@@ -716,7 +719,7 @@
       "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/edit.png",
       "children": [
         {
-          "mixed": "true",
+          "mixed": true,
           "metadata": {},
           "children": [
             {
@@ -794,7 +797,7 @@
       "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/enseignement2.jpeg",
       "children": [
         {
-          "mixed": "false",
+          "mixed": false,
           "metadata": {},
           "children": [
             {
@@ -852,7 +855,7 @@
       "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/patrimoine.jpeg",
       "children": [
         {
-          "mixed": "false",
+          "mixed": false,
           "metadata": {},
           "children": [
             {
@@ -911,7 +914,7 @@
       "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/gestion_eaux.jpeg",
       "children": [
         {
-          "mixed": "false",
+          "mixed": false,
           "metadata": {},
           "children": [
             {
@@ -970,7 +973,7 @@
       "icon": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/722c806f06024a77858af5f2433a27cc/img/paysage.jpeg",
       "children": [
         {
-          "mixed": "false",
+          "mixed": false,
           "metadata": {},
           "children": [
             {

@@ -4,8 +4,6 @@ GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/parti
 
 OS := $(shell uname)
 
-EXPORTS_JS_FILES := $(shell find exports -type f -name '*.js')
-
 EXAMPLES_JS_FILES := $(shell find examples -maxdepth 1 -type f -name '*.js')
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 
@@ -15,7 +13,7 @@ FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot t
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
-GMF_APPS += mobile desktop
+GMF_APPS += mobile desktop desktop_alt
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 GMF_APPS_LIBS_JS_FILES += \
@@ -68,7 +66,7 @@ L10N_PO_FILES = $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L1
 	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/demo.po, $(L10N_LANGUAGES))) # \
 	# $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/ngeo.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
-TX_VERSION ?= 2_0
+TX_VERSION ?= master
 ifeq (,$(wildcard $(HOME)/.transifexrc))
 TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
@@ -208,7 +206,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages:
 	git clone --depth=1 --branch gh-pages $(GIT_REMOTE_URL) $@
 
-.build/eslint.timestamp: .build/node_modules.timestamp $(SRC_JS_FILES) $(EXPORTS_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES)
+.build/eslint.timestamp: .build/node_modules.timestamp $(SRC_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES)
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp, $?)
 	touch $@
 
@@ -216,7 +214,6 @@ dist/ngeo.js: .build/ngeo.json \
 		$(EXTERNS_FILES) \
 		$(SRC_JS_FILES) \
 		.build/templatecache.js \
-		$(EXPORTS_JS_FILES) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
@@ -233,7 +230,6 @@ dist/ngeo-debug.js: buildtools/ngeo-debug.json \
 		$(EXTERNS_FILES) \
 		$(SRC_JS_FILES) \
 		.build/templatecache.js \
-		$(EXPORTS_JS_FILES) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
@@ -254,7 +250,6 @@ dist/gmf.js: .build/gmf.json \
 		$(SRC_JS_FILES) \
 		$(GMF_SRC_JS_FILES) \
 		.build/gmftemplatecache.js \
-		$(EXPORTS_JS_FILES) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
@@ -269,7 +264,6 @@ dist/gmf.js.map: dist/gmf.js
 
 .build/examples/%.min.js: .build/examples/%.json \
 		$(SRC_JS_FILES) \
-		$(EXPORTS_JS_FILES) \
 		$(EXTERNS_FILES) \
 		examples/%.js \
 		.build/node_modules.timestamp
@@ -280,7 +274,6 @@ dist/gmf.js.map: dist/gmf.js
 .build/examples/all.min.js: .build/examples-all.json \
 		$(SRC_JS_FILES) \
 		$(GMF_SRC_JS_FILES) \
-		$(EXPORTS_JS_FILES) \
 		$(EXTERNS_FILES) \
 		.build/examples/all.js \
 		.build/node_modules.timestamp
@@ -522,7 +515,6 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		--var 'src=contribs/gmf/apps/**/*.js' \
 		--var src_set=contribs_gmf \
 		--var entry_point=app_$* \
-		--var js=contribs/gmf/apps/$*/js/controller.js \
 		--var generate_exports=true \
 		--var source_map=contribs/gmf/build/$*.js.map $< > $@
 

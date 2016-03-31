@@ -2,7 +2,8 @@ goog.provide('gmf.SearchController');
 goog.provide('gmf.searchDirective');
 
 goog.require('gmf');
-goog.require('gmf.Themes');
+goog.require('gmf.TreeManager');
+goog.require('ngeo.AutoProjection');
 goog.require('ngeo.CreateGeoJSONBloodhound');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
@@ -12,7 +13,9 @@ goog.require('ngeo.FeatureOverlayMgr');
  * @suppress {extraRequire}
  */
 goog.require('ngeo.searchDirective');
+goog.require('ol.Feature');
 goog.require('ol.Map');
+goog.require('ol.geom.Point');
 goog.require('ol.proj');
 
 
@@ -44,7 +47,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *
  *      <gmf-search gmf-search-map="ctrl.map"
  *        gmf-search-datasources="ctrl.searchDatasources"
- *        gmf-search-currenttheme="ctrl.theme"
+ *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
  *        gmf-search-clearbutton="true">
  *      </gmf-search>
  *      <script>
@@ -60,7 +63,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *
  *      <gmf-search gmf-search-map="ctrl.map"
  *        gmf-search-datasources="ctrl.searchDatasources"
- *        gmf-search-currenttheme="ctrl.theme"
+ *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
  *        gmf-search-clearbutton="true">
  *      </gmf-search>
  *      <script>
@@ -76,8 +79,11 @@ gmf.module.value('gmfSearchTemplateUrl',
  * @htmlAttribute {ol.Map} gmf-search-map The map.
  * @htmlAttribute {gmfx.SearchDirectiveDatasource} gmf-search-datasource
  *      The datasources.
+ * @htmlAttribute {Array.<string>} gmf-search-coordinatesprojections codes
+ *      of supported projections for coordinates search (projections must be
+ *      defined in ol3). If not provided, only the map's view projection
+ *      format will be supported.
  * @htmlAttribute {boolean} gmf-search-clearbutton The clear button.
- * @htmlAttribute {Object} gmf-search-currenttheme The selected theme.
  * @htmlAttribute {ngeox.SearchDirectiveListeners} gmf-search-listeners
  *      The listeners.
  * @return {angular.Directive} The Directive Definition Object.
@@ -92,7 +98,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       'getMapFn': '&gmfSearchMap',
       'getDatasourcesFn': '&gmfSearchDatasources',
       'clearbutton': '=gmfSearchClearbutton',
-      'currentTheme': '=gmfSearchCurrenttheme',
+      'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
       'additionalListeners': '=gmfSearchListeners'
     },
     controller: 'GmfSearchController',
@@ -126,18 +132,20 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
  * @param {ngeo.CreateGeoJSONBloodhound} ngeoCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {gmf.Themes} gmfThemes Themes service.
+ * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @export
  * @ngInject
  * @ngdoc controller
  * @ngname GmfSearchController
  */
 gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
-    ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr, gmfThemes) {
+    ngeoAutoProjection, ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
+    gmfTreeManager) {
 
 
   /**
@@ -165,16 +173,22 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {gmf.Themes}
+   * @type {gmf.TreeManager}
    * @private
    */
-  this.gmfThemes_ = gmfThemes;
+  this.gmfTreeManager_ = gmfTreeManager;
 
   /**
    * @type {ngeo.CreateGeoJSONBloodhound}
    * @private
    */
   this.ngeoCreateGeoJSONBloodhound_ = ngeoCreateGeoJSONBloodhound;
+
+  /**
+   * @type {ngeo.AutoProjection}
+   * @private
+   */
+  this.ngeoAutoProjection_ = ngeoAutoProjection;
 
   var map = this.scope_['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
@@ -192,6 +206,21 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @export
    */
   this.clearButton = this.scope_['clearbutton'] || false;
+
+  var coordProj = this.scope_['coordinatesProjections'];
+  if (coordProj === undefined) {
+    coordProj = [this.map_.getView().getProjection()];
+  } else {
+    coordProj = this.ngeoAutoProjection_.getProjectionList(coordProj);
+  }
+  /**
+   * Supported projection for coordinates search.
+   * @type {Array.<ol.proj.Projection>}
+   * @private
+   */
+  this.coordinatesProjections_ = coordProj;
+
+  ngeoFeatureOverlayMgr.init(this.map_);
 
   /**
    * @type {ngeo.FeatureOverlay}
@@ -273,6 +302,11 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     }, this);
   }
 
+  this.datasets.push({
+    name: 'coordinates',
+    display: 'label',
+    source: this.createSearchCoordinates_(this.map_.getView())
+  });
 
   /**
    * @type {ngeox.SearchDirectiveListeners}
@@ -455,6 +489,34 @@ gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
 
 
 /**
+ * @param {ol.View} view todo
+ * @return {function(string)} todo
+ * @private
+*/
+gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
+  var viewProjection = view.getProjection();
+  var extent = viewProjection.getExtent();
+  return function(query) {
+    var coordinates = this.ngeoAutoProjection_.stringToCoordinates(query);
+    var position;
+    if (coordinates === null) {
+      return;
+    }
+    position = this.ngeoAutoProjection_.tryProjectionsWithInversion(coordinates,
+        extent, viewProjection, this.coordinatesProjections_);
+    if (position === null) {
+      return;
+    }
+    var geom = new ol.geom.Point(position);
+    this.featureOverlay_.clear();
+    this.featureOverlay_.addFeature(new ol.Feature(geom));
+    view.setCenter(position);
+    this.leaveSearch_();
+  }.bind(this);
+};
+
+
+/**
  * @private
  */
 gmf.SearchController.prototype.setTTDropdownVisibility_ = function() {
@@ -462,20 +524,6 @@ gmf.SearchController.prototype.setTTDropdownVisibility_ = function() {
     var ttDropdown = $('.twitter-typeahead .tt-menu');
     (this.input_value) ? ttDropdown.show() : ttDropdown.hide();
   }
-};
-
-
-/**
- * @param {string} themeName The name of the theme to set.
- * @private
- */
-gmf.SearchController.prototype.setTheme_ = function(themeName) {
-  this.gmfThemes_.getThemesObject().then(function(themes) {
-    var theme = gmf.Themes.findThemeByName(themes, themeName);
-    if (theme) {
-      this.scope_['currentTheme'] = theme;
-    }
-  }.bind(this));
 };
 
 
@@ -531,25 +579,41 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
       var actionName = action['action'];
       var actionData = action['data'];
       if (actionName == 'add_theme') {
-        this.setTheme_(actionData);
+        this.gmfTreeManager_.addThemeByName(actionData);
+      } else if (actionName == 'add_group') {
+        // FIXME: Display "this group is already loaded" (Issue also in the
+        // treemanager service).
+        this.gmfTreeManager_.addGroupByName(actionData, true);
+      } else if (actionName == 'add_layer') {
+        // FIXME: Set the layer visible again (Issue also in the
+        // treemanager service).
+        this.gmfTreeManager_.addGroupByLayerName(actionData, true);
       }
-      // FIXME: handle add_layer and add_group actions
     }
   }
 
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
   if (goog.isDefAndNotNull(featureGeometry)) {
+    var view = this.map_.getView();
     this.featureOverlay_.clear();
     this.featureOverlay_.addFeature(feature);
     var fitArray = featureGeometry.getType() === 'GeometryCollection' ?
         featureGeometry.getExtent() : featureGeometry;
     var mapSize = /** @type {ol.Size} */ (this.map_.getSize());
-    this.map_.getView().fit(fitArray, mapSize,
-        /** @type {olx.view.FitOptions} */ ({maxZoom: 16}));
-    if (!this.clearButton) {
-      this.clear();
-    }
+    view.fit(fitArray, mapSize, /** @type {olx.view.FitOptions} */ ({
+      maxZoom: 16}));
+  }
+  this.leaveSearch_();
+};
+
+
+/**
+ * @private
+ */
+gmf.SearchController.prototype.leaveSearch_ = function() {
+  if (!this.clearButton) {
+    this.clear();
   }
   this.blur();
 };

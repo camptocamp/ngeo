@@ -17,7 +17,7 @@ goog.require('ngeo');
  * {@link ../examples/layeropacity.html}
  * {@link ../examples/layervisibility.html}
  *
- * @typedef {function(ol.layer.Layer)}
+ * @typedef {function(ol.layer.Base)}
  * @ngdoc service
  * @ngname ngeoDecorateLayer
  */
@@ -25,10 +25,10 @@ ngeo.DecorateLayer;
 
 
 /**
- * @param {ol.layer.Layer} layer Layer to decorate.
+ * @param {ol.layer.Base} layer Layer to decorate.
  */
 ngeo.decorateLayer = function(layer) {
-  goog.asserts.assertInstanceof(layer, ol.layer.Layer);
+  goog.asserts.assertInstanceof(layer, ol.layer.Base);
 
   Object.defineProperty(layer, 'visible', {
     configurable: true,
