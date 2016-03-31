@@ -8,8 +8,8 @@
  * This file includes `goog.require`'s for all the components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
-goog.provide('app.DesktopController');
-goog.provide('app_desktop');
+goog.provide('app.AlternativeDesktopController');
+goog.provide('app_desktop_alt');
 
 goog.require('app');
 goog.require('gmf.AbstractDesktopController');
@@ -33,7 +33,7 @@ app.module.constant('ngeoQueryOptions', {
  * @ngInject
  * @export
  */
-app.DesktopController = function($scope, $injector) {
+app.AlternativeDesktopController = function($scope, $injector) {
   goog.base(
       this, {
         srid: 21781,
@@ -44,7 +44,7 @@ app.DesktopController = function($scope, $injector) {
         }
       }, $scope, $injector);
 };
-goog.inherits(app.DesktopController, gmf.AbstractDesktopController);
+goog.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
 
 
-app.module.controller('DesktopController', app.DesktopController);
+app.module.controller('AlternativeDesktopController', app.AlternativeDesktopController);

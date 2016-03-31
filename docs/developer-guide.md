@@ -91,9 +91,21 @@ Google](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style
 Services that are objects (rather than numbers, strings, or functions) may need
 "exports". Exports are needed for users of the `ngeo.js` standalone build.
 
-For now we don't use the `@api` annotation as in OpenLayers. We explicitly use
-`goog.exportProperty` in separate "exports" files. See the `exports` directory
-in the repo.
+To export a symbol, the `@export` annotation can be used:
+
+```js
+/**
+ * Some layer.
+ *
+ * @constructor
+ * @extends {ol.source.WMTS}
+ * @param {gmfx.source.SomeLayerOptions} options Layer options.
+ * @export
+ */
+gmf.source.SomeLayer = function(options) {
+  ...
+};
+```
 
 ### Running examples
 

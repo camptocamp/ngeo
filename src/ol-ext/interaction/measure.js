@@ -161,26 +161,25 @@ ngeo.interaction.Measure = function(opt_options) {
    */
   this.changeEventKey_ = null;
 
-  var style = options.style !== undefined ? options.style :
-      [
-        new ol.style.Style({
-          fill: new ol.style.Fill({
-            color: 'rgba(255, 255, 255, 0.2)'
-          })
-        }),
-        new ol.style.Style({
-          stroke: new ol.style.Stroke({
-            color: 'white',
-            width: 5
-          })
-        }),
-        new ol.style.Style({
-          stroke: new ol.style.Stroke({
-            color: '#ffcc33',
-            width: 3
-          })
-        })
-      ];
+  var style = options.style !== undefined ? options.style : [
+    new ol.style.Style({
+      fill: new ol.style.Fill({
+        color: 'rgba(255, 255, 255, 0.2)'
+      })
+    }),
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: 'white',
+        width: 5
+      })
+    }),
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: '#ffcc33',
+        width: 3
+      })
+    })
+  ];
 
   /**
    * The vector layer used to show final measure features.
@@ -228,6 +227,7 @@ goog.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
  * @param {ol.proj.Projection} projection Projection of the polygon coords.
  * @param {?number} decimals Decimals.
  * @return {string} Formatted string of the area.
+ * @export
  */
 ngeo.interaction.Measure.getFormattedArea = function(
     polygon, projection, decimals) {
@@ -262,6 +262,7 @@ ngeo.interaction.Measure.getFormattedArea = function(
  * @param {ol.proj.Projection} projection Projection of the line string coords.
  * @param {?number} decimals Decimals.
  * @return {string} Formatted string of length.
+ * @export
  */
 ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
     decimals) {
@@ -526,6 +527,7 @@ ngeo.interaction.Measure.prototype.handleMeasure = goog.abstractMethod;
 /**
  * Get a reference to the tooltip element.
  * @return {Element} Tooltip Element.
+ * @export
  */
 ngeo.interaction.Measure.prototype.getTooltipElement = function() {
   return this.measureTooltipElement_;

@@ -374,6 +374,12 @@ MapFishPrintSymbolizerLine.prototype.strokeOpacity;
 MapFishPrintSymbolizerLine.prototype.strokeWidth;
 
 
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerLine.prototype.strokeDashstyle;
+
+
 
 /**
  * @constructor
@@ -386,6 +392,30 @@ var MapFishPrintSymbolizerPoint = function() {};
  * @type {string}
  */
 MapFishPrintSymbolizerPoint.prototype.externalGraphic;
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerPoint.prototype.graphicFormat;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.graphicOpacity;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.graphicHeight;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.graphicWidth;
 
 
 /**
@@ -430,6 +460,12 @@ MapFishPrintSymbolizerPoint.prototype.strokeOpacity;
 MapFishPrintSymbolizerPoint.prototype.strokeWidth;
 
 
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerPoint.prototype.graphicName;
+
+
 
 /**
  * @constructor
@@ -466,6 +502,13 @@ MapFishPrintSymbolizerPolygon.prototype.strokeOpacity;
  * @type {number}
  */
 MapFishPrintSymbolizerPolygon.prototype.strokeWidth;
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerPolygon.prototype.strokeDashstyle;
+
 
 
 /**

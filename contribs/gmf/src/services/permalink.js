@@ -1,15 +1,18 @@
 goog.provide('gmf.Permalink');
 
 goog.require('gmf');
+goog.require('gmf.Themes');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.Debounce');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
+goog.require('ngeo.LayerHelper');
 goog.require('ngeo.Popover');
 goog.require('ngeo.StateManager');
 goog.require('ol.Feature');
 goog.require('ol.geom.Point');
+goog.require('ol.layer.Group');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Style');
@@ -24,7 +27,17 @@ gmf.PermalinkParam = {
   MAP_TOOLTIP: 'map_tooltip',
   MAP_X: 'map_x',
   MAP_Y: 'map_y',
-  MAP_Z: 'map_zoom'
+  MAP_Z: 'map_zoom',
+  TREE_GROUPS: 'tree_groups'
+};
+
+
+/**
+ * @enum {string}
+ */
+gmf.PermalinkParamPrefix = {
+  TREE_ENABLE: 'tree_enable_',
+  TREE_GROUP_LAYERS: 'tree_group_layers_'
 };
 
 
@@ -41,19 +54,23 @@ gmf.module.constant('gmfPermalinkOptions',
  * - whether to add a crosshair feature in the map or not
  *
  * @constructor
+ * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
+ * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {gmfx.PermalinkOptions} gmfPermalinkOptions The options to configure
  *     the gmf permalink service with.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */
-gmf.Permalink = function(ngeoBackgroundLayerMgr, ngeoDebounce,
-    ngeoFeatureOverlayMgr, ngeoStateManager, gmfPermalinkOptions) {
+gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
+    ngeoFeatureOverlayMgr, ngeoLayerHelper, ngeoStateManager, gmfThemes,
+    gmfPermalinkOptions) {
 
   /**
    * @type {ngeo.BackgroundLayerMgr}
@@ -74,16 +91,40 @@ gmf.Permalink = function(ngeoBackgroundLayerMgr, ngeoDebounce,
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
   /**
+   * @type {ngeo.LayerHelper}
+   * @private
+   */
+  this.layerHelper_ = ngeoLayerHelper;
+
+  /**
    * @type {ngeo.StateManager}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
+
+  /**
    * @type {?ol.Map}
    * @private
    */
   this.map_ = null;
+
+  /**
+   * @type {?ol.layer.Group}
+   * @private
+   */
+  this.dataLayerGroup_ = null;
+
+  /**
+   * @type {?Array.<GmfThemesNode>}
+   * @private
+   */
+  this.themes_ = null;
 
   /**
    * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style}
@@ -128,6 +169,14 @@ gmf.Permalink = function(ngeoBackgroundLayerMgr, ngeoDebounce,
       this.handleBackgroundLayerManagerChange_,
       this);
 
+  this.gmfThemes_.getThemesObject().then(function(themes) {
+    this.themes_ = themes;
+    // The theme service has loaded. Wait to allow the layers to be created
+    $timeout(function() {
+      this.initLayers_();
+    }.bind(this));
+  }.bind(this));
+
 
   // == listener keys ==
 
@@ -138,7 +187,69 @@ gmf.Permalink = function(ngeoBackgroundLayerMgr, ngeoDebounce,
    */
   this.mapViewPropertyChangeEventKey_ = null;
 
+  /**
+   * @type {Object.<number, gmf.Permalink.ListenerKeys>}
+   * @private
+   */
+  this.listenerKeys_ = {};
+
 };
+
+
+/**
+ * Utility method that does 2 things:
+ * - initialize the listener keys of a given uid with an array (if that key
+ *   has not array set yet)
+ * - unlisten any events if the array already exists for the given uid and
+ *   empty the array.
+ * @param {number} uid Unique id.
+ * @private
+ */
+gmf.Permalink.prototype.initListenerKey_ = function(uid) {
+  if (!this.listenerKeys_[uid]) {
+    this.listenerKeys_[uid] = {
+      goog: [],
+      ol: []
+    };
+  } else {
+    if (this.listenerKeys_[uid].goog.length) {
+      this.listenerKeys_[uid].goog.forEach(function(key) {
+        goog.events.unlistenByKey(key);
+      }, this);
+      this.listenerKeys_[uid].goog.length = 0;
+    }
+    if (this.listenerKeys_[uid].ol.length) {
+      this.listenerKeys_[uid].ol.forEach(function(key) {
+        ol.events.unlistenByKey(key);
+      }, this);
+      this.listenerKeys_[uid].ol.length = 0;
+    }
+  }
+};
+
+
+/**
+ * Utility method to add a listener key bound to a unique id. The key can
+ * come from an `ol.events` (default) or `goog.events`.
+ * @param {number} uid Unique id.
+ * @param {ol.events.Key|goog.events.Key} key Key.
+ * @param {boolean=} opt_isol Whether it's an OpenLayers event or not. Defaults
+ *     to true.
+ * @private
+ */
+gmf.Permalink.prototype.addListenerKey_ = function(uid, key, opt_isol) {
+  if (!this.listenerKeys_[uid]) {
+    this.initListenerKey_(uid);
+  }
+
+  var isol = opt_isol !== undefined ? opt_isol : true;
+  if (isol) {
+    this.listenerKeys_[uid].ol.push(/** @type {ol.events.Key} */ (key));
+  } else {
+    this.listenerKeys_[uid].goog.push(/** @type {goog.events.Key} */ (key));
+  }
+};
+
 
 // === Map X, Y, Z ===
 
@@ -307,8 +418,10 @@ gmf.Permalink.prototype.registerMap_ = function(map) {
       position: tooltipPosition
     });
     map.addOverlay(popover);
-
   }
+
+  // (5) register 'data' layers
+  this.registerDataLayerGroup_(map);
 };
 
 
@@ -327,6 +440,8 @@ gmf.Permalink.prototype.unregisterMap_ = function() {
     this.crosshairLayer_.getSource().clear();
     this.crosshairLayer_ = null;
   }
+
+  this.unregisterDataLayerGroup_();
 };
 
 
@@ -376,6 +491,282 @@ gmf.Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
   object[gmf.PermalinkParam.BG_LAYER] = layerName;
   this.ngeoStateManager_.updateState(object);
 };
+
+
+// === Layers (layer tree) ===
+
+
+/**
+ * @private
+ */
+gmf.Permalink.prototype.initLayers_ = function() {
+
+  if (!this.themes_) {
+    return;
+  }
+
+  var layers = this.dataLayerGroup_.getLayers();
+  var layer;
+  var param;
+
+  // (1) try to look for any group name from any of the themes in the state
+  //     manager.  If any is found, then apply the found results in the
+  //     appropriate layer.
+  this.themes_.forEach(function(themeNode) {
+    themeNode.children.forEach(function(groupNode) {
+      if (groupNode.mixed) {
+        groupNode.children.forEach(function(layerNode) {
+          var layerName = layerNode.name;
+          layer = this.layerHelper_.getLayerByName(
+            layerName, layers.getArray());
+          if (layer && !layer.get('isMerged')) {
+            param = this.getLayerStateParam_(layer);
+            var enable = this.ngeoStateManager_.getInitialValue(param);
+            if (enable !== undefined) {
+              enable = enable === 'true' ? true : false;
+              layer.setVisible(enable);
+            }
+          }
+        }, this);
+      } else {
+        var groupName = groupNode.name;
+        layer = this.layerHelper_.getLayerByName(
+            groupName, layers.getArray());
+        if (layer && layer.get('isMerged')) {
+          param = gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + groupName;
+          var groupLayers = this.ngeoStateManager_.getInitialValue(param);
+          if (groupLayers !== undefined) {
+            this.initMergedLayer_(layer, groupLayers);
+          }
+        }
+      }
+    }, this);
+  }, this);
+
+  // (2) at this point, the initialization is complete. We now need to listen
+  //     to any change happening to the existing layers and any added or
+  //     removed ones.
+  layers.forEach(function(layer) {
+    this.registerLayer_(layer);
+  }, this);
+
+  var layersUid = goog.getUid(layers);
+
+  this.addListenerKey_(layersUid, ol.events.listen(layers,
+      ol.CollectionEventType.ADD, this.handleLayersAdd_, this));
+  this.addListenerKey_(layersUid, ol.events.listen(layers,
+      ol.CollectionEventType.REMOVE, this.handleLayersRemove_, this));
+};
+
+
+/**
+ * Initializes a WMS layer containing more than one layer names in its source
+ * LAYERS param using a list of layer names that were fetched from the state
+ * manager. The `layerNames` string may be empty.
+ * @param {ol.layer.Base} layer Layer.
+ * @param {string} layerNames A comma separated list of server-side layer names
+ * @private
+ */
+gmf.Permalink.prototype.initMergedLayer_ = function(layer, layerNames) {
+  goog.asserts.assert(
+      layer instanceof ol.layer.Image ||
+      layer instanceof ol.layer.Tile);
+
+  var source = layer.getSource();
+  goog.asserts.assert(
+      source instanceof ol.source.ImageWMS ||
+      source instanceof ol.source.TileWMS);
+
+  source.updateParams({
+    'LAYERS': layerNames
+  });
+};
+
+
+/**
+ * @param {ol.CollectionEvent} evt Event.
+ * @private
+ */
+gmf.Permalink.prototype.handleLayersAdd_ = function(evt) {
+  var layer = evt.element;
+  goog.asserts.assertInstanceof(layer, ol.layer.Base);
+  this.registerLayer_(layer);
+};
+
+
+/**
+ * @param {ol.CollectionEvent} evt Event.
+ * @private
+ */
+gmf.Permalink.prototype.handleLayersRemove_ = function(evt) {
+  var layer = evt.element;
+  goog.asserts.assertInstanceof(layer, ol.layer.Base);
+  this.unregisterLayer_(layer);
+};
+
+
+/**
+ * @param {ol.layer.Base} layer Layer.
+ * @private
+ */
+gmf.Permalink.prototype.registerLayer_ = function(layer) {
+
+  var layerUid = goog.getUid(layer);
+
+  this.addListenerKey_(layerUid, ol.events.listen(layer,
+      ol.Object.getChangeEventType(ol.layer.LayerProperty.VISIBLE),
+      this.handleLayerVisibleChange_, this));
+
+  var isMerged = layer.get('isMerged');
+  if (isMerged) {
+    goog.asserts.assert(
+        layer instanceof ol.layer.Image ||
+        layer instanceof ol.layer.Tile);
+
+    var source = layer.getSource();
+    goog.asserts.assert(
+        source instanceof ol.source.ImageWMS ||
+        source instanceof ol.source.TileWMS);
+
+    var sourceUid = goog.getUid(source);
+    this.addListenerKey_(
+        sourceUid,
+        ol.events.listen(
+            source, ol.events.EventType.CHANGE,
+            this.handleWMSSourceChange_.bind(this, layer, source),
+            this));
+  }
+};
+
+
+/**
+ * @param {ol.layer.Base} layer Layer.
+ * @private
+ */
+gmf.Permalink.prototype.unregisterLayer_ = function(layer) {
+  var layerUid = goog.getUid(layer);
+  this.initListenerKey_(layerUid); // clear event listeners
+
+  var isMerged = layer.get('isMerged');
+  if (isMerged) {
+    goog.asserts.assert(
+        layer instanceof ol.layer.Image ||
+        layer instanceof ol.layer.Tile);
+
+    var source = layer.getSource();
+    goog.asserts.assert(
+        source instanceof ol.source.ImageWMS ||
+        source instanceof ol.source.TileWMS);
+
+    var sourceUid = goog.getUid(source);
+    this.initListenerKey_(sourceUid); // clear event listeners
+  }
+
+  var param = this.getLayerStateParam_(layer);
+  this.ngeoStateManager_.deleteParam(param);
+};
+
+
+/**
+ * Called when a layer `visible` property changes. Update the state manager
+ * if the layer has become hidden. No need to manage when it becomes visible,
+ * since that's managed elsewhere.
+ * @param {ol.ObjectEvent} evt Event.
+ * @private
+ */
+gmf.Permalink.prototype.handleLayerVisibleChange_ = function(evt) {
+
+  var layer = evt.target;
+  goog.asserts.assertInstanceof(layer, ol.layer.Base);
+  var param = this.getLayerStateParam_(layer);
+  var isMerged = layer.get('isMerged');
+  var object = {};
+
+  if (isMerged) {
+    if (evt.oldValue === true) {
+      // TODO - only WMS layers should be managed here... that's not currently
+      //     the case
+      object[param] = '';
+      this.ngeoStateManager_.updateState(object);
+    }
+  } else {
+    object[param] = !evt.oldValue;
+    this.ngeoStateManager_.updateState(object);
+  }
+};
+
+
+/**
+ * @param {ol.layer.Image|ol.layer.Tile} layer Layer.
+ * @param {ol.source.ImageWMS|ol.source.TileWMS} source WMS source.
+ * @private
+ */
+gmf.Permalink.prototype.handleWMSSourceChange_ = function(layer, source) {
+  var layers = source.getParams()['LAYERS'];
+  if (goog.isArray(layers)) {
+    layers = layers.join(',');
+  }
+  var layerName = layer.get('layerName');
+  var param = gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + layerName;
+  var object = {};
+  object[param] = layers;
+  this.ngeoStateManager_.updateState(object);
+};
+
+
+/**
+ * @param {ol.layer.Base} layer Layer.
+ * @return {string} The state param for the layer
+ * @private
+ */
+gmf.Permalink.prototype.getLayerStateParam_ = function(layer) {
+  var param;
+  var layerName = layer.get('layerName');
+  var isMerged = layer.get('isMerged');
+  if (isMerged) {
+    param = gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + layerName;
+  } else {
+    param = gmf.PermalinkParamPrefix.TREE_ENABLE + layerName;
+  }
+  return param;
+};
+
+
+/**
+ * Look in the map layers for a layer group named 'data' and keep a reference
+ * to its layer collection.
+ *
+ * If the themes haven't been loaded yet, that means the map doesn't have
+ * the 'data' layer group created yet.
+ * @param {ol.Map} map The ol3 map object
+ * @private
+ */
+gmf.Permalink.prototype.registerDataLayerGroup_ = function(map) {
+  // FIXME - 'data' should be: gmf.LayertreeController.DATALAYERGROUP_NAME
+  this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(map,
+      gmf.DATALAYERGROUP_NAME);
+  this.initLayers_();
+};
+
+
+/**
+ * @private
+ */
+gmf.Permalink.prototype.unregisterDataLayerGroup_ = function() {
+  var layers = this.dataLayerGroup_.getLayers();
+  var layersUid = goog.getUid(layers);
+  this.initListenerKey_(layersUid); // clear event listeners
+  this.dataLayerGroup_ = null;
+};
+
+
+/**
+ * @typedef {{
+ *     goog: (Array.<goog.events.Key>),
+ *     ol: (Array.<ol.events.Key>)
+ * }}
+ */
+gmf.Permalink.ListenerKeys;
 
 
 gmf.module.service('gmfPermalink', gmf.Permalink);

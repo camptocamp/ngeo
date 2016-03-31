@@ -139,7 +139,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
  * @export
  */
 app.MainController.prototype.toggleRoadsLayer = function(val) {
-  if (!angular.isDefined(val)) {
+  if (val === undefined) {
     return this.map.getLayers().getArray().indexOf(this.roads_) >= 0;
   } else {
     if (val) {

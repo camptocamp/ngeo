@@ -1,10 +1,8 @@
 goog.provide('gmf.Themes');
-goog.provide('gmf.ThemesEventType');
 
 goog.require('gmf');
-goog.require('goog.array');
-goog.require('goog.asserts');
 goog.require('ngeo.LayerHelper');
+goog.require('ol.array');
 goog.require('ol.events.EventTarget');
 goog.require('ol.layer.Tile');
 
@@ -19,14 +17,6 @@ gmf.ThemesResponse;
 
 
 /**
- * @enum {string}
- */
-gmf.ThemesEventType = {
-  LOAD: 'load'
-};
-
-
-/**
  * The Themes service. This service interacts
  * with c2cgeoportal's "themes" web service and exposes functions that return
  * objects in the tree returned by the "themes" web service.
@@ -34,7 +24,7 @@ gmf.ThemesEventType = {
  * @constructor
  * @extends {ol.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
- * @param {string} gmfTreeUrl URL to "themes" web service.
+ * @param {angular.$injector} $injector Main injector.
  * @param {angular.$q} $q Angular q service
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
@@ -42,7 +32,7 @@ gmf.ThemesEventType = {
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper, gettextCatalog) {
+gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
 
   goog.base(this);
 
@@ -59,10 +49,14 @@ gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper, gettextCatalog) {
   this.$http_ = $http;
 
   /**
-   * @type {string}
+   * @type {?string}
    * @private
    */
-  this.treeUrl_ = gmfTreeUrl;
+  this.treeUrl_ = null;
+
+  if ($injector.has('gmfTreeUrl')) {
+    this.treeUrl_ = $injector.get('gmfTreeUrl');
+  }
 
   /**
    * @type {ngeo.LayerHelper}
@@ -77,12 +71,59 @@ gmf.Themes = function($http, gmfTreeUrl, $q, ngeoLayerHelper, gettextCatalog) {
   this.gettextCatalog = gettextCatalog;
 
   /**
-   * @type {?angular.$q.Promise}
+   * @type {angular.$q.Deferred}
    * @private
    */
-  this.promise_ = null;
+  this.deferred_ = $q.defer();
+
+  /**
+   * @type {angular.$q.Promise}
+   * @private
+   */
+  this.promise_ = this.deferred_.promise;
 };
 goog.inherits(gmf.Themes, ol.events.EventTarget);
+
+
+/**
+ * @param {Array.<GmfThemesNode>} themes Array of "theme" objects.
+ * @param {string} name The layer name.
+ * @return {GmfThemesNode} The group.
+ */
+gmf.Themes.findGroupByLayerName = function(themes, name) {
+  for (var i = 0, ii = themes.length; i < ii; i++) {
+    var theme = themes[i];
+    for (var j = 0, jj = theme.children.length; j < jj; j++) {
+      var group = theme.children[j];
+      for (var k = 0, kk = group.children.length; k < kk; k++) {
+        var layer = group.children[k];
+        if (layer.layers == name) {
+          return group;
+        }
+      }
+    }
+  }
+  return null;
+};
+
+/**
+ * Find a layer group object by its name. Return null if not found.
+ * @param {Array.<GmfThemesNode>} themes Array of "theme" objects.
+ * @param {string} name The group name.
+ * @return {GmfThemesNode} The group.
+ */
+gmf.Themes.findGroupByName = function(themes, name) {
+  for (var i = 0, ii = themes.length; i < ii; i++) {
+    var theme = themes[i];
+    for (var j = 0, jj = theme.children.length; j < jj; j++) {
+      var group = theme.children[j];
+      if (group.name == name) {
+        return group;
+      }
+    }
+  }
+  return null;
+};
 
 
 /**
@@ -93,7 +134,7 @@ goog.inherits(gmf.Themes, ol.events.EventTarget);
  * @private
  */
 gmf.Themes.findObjectByName_ = function(objects, objectName) {
-  return goog.array.find(objects, function(object) {
+  return ol.array.find(objects, function(object) {
     return object['name'] === objectName;
   });
 };
@@ -101,13 +142,13 @@ gmf.Themes.findObjectByName_ = function(objects, objectName) {
 
 /**
  * Find a theme object by its name. Return null if not found.
- * @param {Array.<Object>} themes Array of "theme" objects.
+ * @param {Array.<GmfThemesNode>} themes Array of "theme" objects.
  * @param {string} themeName The theme name.
- * @return {Object} The theme object.
+ * @return {GmfThemesNode} The theme object.
  */
 gmf.Themes.findThemeByName = function(themes, themeName) {
   var theme = gmf.Themes.findObjectByName_(themes, themeName);
-  return theme;
+  return /** @type {GmfThemesNode} */ (theme);
 };
 
 
@@ -145,8 +186,6 @@ gmf.Themes.prototype.getBgLayers = function() {
     return $q.all(promises);
   }.bind(this);
 
-  goog.asserts.assert(this.promise_ !== null);
-
   return this.promise_.then(promiseSuccessFn).then(function(values) {
     var layers = [];
 
@@ -174,7 +213,6 @@ gmf.Themes.prototype.getBgLayers = function() {
  * @export
  */
 gmf.Themes.prototype.getThemeObject = function(themeName) {
-  goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
@@ -193,7 +231,6 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
  * @export
  */
 gmf.Themes.prototype.getThemesObject = function() {
-  goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
@@ -212,20 +249,20 @@ gmf.Themes.prototype.getThemesObject = function() {
  * @export
  */
 gmf.Themes.prototype.loadThemes = function(opt_roleId) {
-  /**
-   * @param {angular.$http.Response} resp Ajax response.
-   * @return {Object} The "themes" web service response.
-   */
-  var promiseSuccessFn = function(resp) {
-    this.dispatchEvent(gmf.ThemesEventType.LOAD);
-    return /** @type {gmf.ThemesResponse} */ (resp.data);
-  }.bind(this);
 
-  this.promise_ = this.$http_.get(this.treeUrl_, {
+  goog.asserts.assert(this.treeUrl_, 'gmfTreeUrl should be defined.');
+
+  var deferred = this.deferred_;
+
+  this.$http_.get(this.treeUrl_, {
     params: opt_roleId !== undefined ? {'role': opt_roleId} : {},
     cache: false,
     withCredentials: true
-  }).then(promiseSuccessFn);
+  }).then(function(response) {
+    deferred.resolve(response.data);
+  }, function(response) {
+    deferred.reject(response);
+  })
 };
 
 
