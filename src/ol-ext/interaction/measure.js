@@ -242,14 +242,45 @@ ngeo.interaction.Measure.getFormattedArea = function(
     } else {
       output = parseFloat((area / 1000000).toPrecision(3));
     }
-    output += ' ' + 'km<sup>2</sup>';
+    output += ' ' + 'km²';
   } else {
     if (decimals !== null) {
       output = goog.string.padNumber(area, 0, decimals);
     } else {
       output = parseFloat(area.toPrecision(3));
     }
-    output += ' ' + 'm<sup>2</sup>';
+    output += ' ' + 'm²';
+  }
+  return output;
+};
+
+
+/**
+ * Calculate the area of the passed circle and return a formatted string
+ * of the area.
+ * @param {ol.geom.Circle} circle Circle
+ * @param {?number} decimals Decimals.
+ * @return {string} Formatted string of the area.
+ * @export
+ */
+ngeo.interaction.Measure.getFormattedCircleArea = function(
+    circle, decimals) {
+  var area = Math.PI * Math.pow(circle.getRadius(), 2);
+  var output;
+  if (area > 1000000) {
+    if (decimals !== null) {
+      output = goog.string.padNumber(area / 1000000, 0, decimals);
+    } else {
+      output = parseFloat((area / 1000000).toPrecision(3));
+    }
+    output += ' ' + 'km²';
+  } else {
+    if (decimals !== null) {
+      output = goog.string.padNumber(area, 0, decimals);
+    } else {
+      output = parseFloat(area.toPrecision(3));
+    }
+    output += ' ' + 'm²';
   }
   return output;
 };
