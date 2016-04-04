@@ -56,6 +56,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
 
 /**
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.$q} $q The Angular $q service.
  * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
  * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {string} gmfPrintUrl A MapFishPrint url.
@@ -65,21 +66,20 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @ngdoc Controller
  * @ngname GmfPrintController
  */
-gmf.PrintController = function($timeout, ngeoPrintUtils, ngeoCreatePrint,
+gmf.PrintController = function($timeout, $q, ngeoPrintUtils, ngeoCreatePrint,
     gmfPrintUrl) {
-
-  /**
-   * Text to display a "loading" message while waiting for the report.
-   * @type {string}
-   * @export
-   */
-  this.printState = '';
 
   /**
    * @type {angular.$timeout}
    * @private
    */
   this.$timeout_ = $timeout;
+
+  /**
+   * @type {angular.$q}
+   * @private
+   */
+  this.$q_ = $q;
 
   /**
    * @type {ngeo.PrintUtils}
@@ -92,6 +92,32 @@ gmf.PrintController = function($timeout, ngeoPrintUtils, ngeoCreatePrint,
    * @private
    */
   this.ngeoPrint_ = ngeoCreatePrint(gmfPrintUrl);
+
+  /**
+   * @type {?angular.$q.Deferred}
+   * @private
+   */
+  this.requestCanceler_ = null;
+
+  /**
+   * @type {?angular.$q.Promise}
+   * @private
+   */
+  this.statusTimeoutPromise_ = null;
+
+  /**
+   * Text to display a "loading" message while waiting for the report.
+   * @type {string}
+   * @export
+   */
+  this.printState = '';
+
+  /**
+   * Current report reference id.
+   * @type {string}
+   * @private
+   */
+  this.curRef_ = '';
 
   /**
    * @type {string}
@@ -239,6 +265,7 @@ gmf.PrintController.prototype.setListenCompose = function(listen) {
  * @export
  */
 gmf.PrintController.prototype.print = function() {
+  this.requestCanceler_ = this.$q_.defer();
   this.printState = 'Printing...';
 
   var customAttributes = {
@@ -255,7 +282,9 @@ gmf.PrintController.prototype.print = function() {
   var spec = this.ngeoPrint_.createSpec(this.map, scale, this.dpi,
       this.layout, customAttributes);
 
-  this.ngeoPrint_.createReport(spec).then(
+  this.ngeoPrint_.createReport(spec, /** @type {angular.$http.Config} */ ({
+    timeout: this.requestCanceler_.promise
+  })).then(
       this.handleCreateReportSuccess_.bind(this),
       this.handleCreateReportError_.bind(this)
   );
@@ -266,10 +295,33 @@ gmf.PrintController.prototype.print = function() {
  * TODO
  * @export
  */
-gmf.PrintController.prototype.abort = function() {
-  // Where can I get the ref ? See luxembourg code
-  // this.ngeoPrint_.cancel(ref);
-  console.log('Not implemented yet');
+gmf.PrintController.prototype.cancel = function() {
+  // Cancel the latest request, if it's not finished yet.
+  goog.asserts.assert(!goog.isNull(this.requestCanceler_));
+  this.requestCanceler_.resolve();
+
+  // Cancel the status timeout if there's one set, to make sure no other
+  // status request is sent.
+  if (!goog.isNull(this.statusTimeoutPromise_)) {
+    this.$timeout_.cancel(this.statusTimeoutPromise_);
+  }
+
+  goog.asserts.assert(this.curRef_.length > 0);
+
+  this.ngeoPrint_.cancel(this.curRef_);
+
+  this.resetPrintStates_();
+};
+
+
+/**
+ * TODO
+ * @param {string=} opt_printState the print state.
+ * @private
+ */
+gmf.PrintController.prototype.resetPrintStates_ = function(opt_printState) {
+  this.printState = opt_printState || '';
+  this.curRef_ = '';
 };
 
 
@@ -297,7 +349,10 @@ gmf.PrintController.prototype.getOptimalScale_ = function(mapSize,
  */
 gmf.PrintController.prototype.handleCreateReportSuccess_ = function(resp) {
   var mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
-  this.getStatus_(mfResp.ref);
+  var ref = mfResp.ref;
+  goog.asserts.assert(ref.length > 0);
+  this.curRef_ = ref;
+  this.getStatus_(ref);
 };
 
 
@@ -306,19 +361,13 @@ gmf.PrintController.prototype.handleCreateReportSuccess_ = function(resp) {
  * @private
  */
 gmf.PrintController.prototype.getStatus_ = function(ref) {
-  this.ngeoPrint_.getStatus(ref).then(
+  this.requestCanceler_ = this.$q_.defer();
+  this.ngeoPrint_.getStatus(ref, /** @type {angular.$http.Config} */ ({
+    timeout: this.requestCanceler_.promise
+  })).then(
       this.handleGetStatusSuccess_.bind(this, ref),
-      this.handleGetStatusError_.bind(this)
+      this.handleCreateReportError_.bind(this)
   );
-};
-
-
-/**
- * @param {!angular.$http.Response} resp Response.
- * @private
- */
-gmf.PrintController.prototype.handleCreateReportError_ = function(resp) {
-  this.printState = 'Print error';
 };
 
 
@@ -332,12 +381,12 @@ gmf.PrintController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
   var done = mfResp.done;
   if (done) {
     // The report is ready. Open it by changing the window location.
-    this.printState = '';
     window.location.href = this.ngeoPrint_.getReportUrl(ref);
+    this.resetPrintStates_();
   } else {
     // The report is not ready yet. Check again in 1s.
     var that = this;
-    this.$timeout_(function() {
+    this.statusTimeoutPromise_ = this.$timeout_(function() {
       that.getStatus_(ref);
     }, 1000, false);
   }
@@ -348,8 +397,9 @@ gmf.PrintController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
  * @param {!angular.$http.Response} resp Response.
  * @private
  */
-gmf.PrintController.prototype.handleGetStatusError_ = function(resp) {
-  this.printState = 'Print error';
+gmf.PrintController.prototype.handleCreateReportError_ = function(resp) {
+  this.resetPrintStates_('Print error');
 };
+
 
 gmf.module.controller('GmfPrintController', gmf.PrintController);
