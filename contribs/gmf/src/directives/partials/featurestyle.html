@@ -1,0 +1,144 @@
+<div
+    ng-if="fsCtrl.feature && fsCtrl.type"
+    class="form-horizontal">
+  <div class="form-group">
+    <div class="col-xs-12">
+      <input
+          ng-model="fsCtrl.getSetName"
+          ng-model-options="{getterSetter: true}"
+          class="form-control gmf-featurestyle-name"/>
+    </div>
+  </div>
+
+  <div class="form-group"
+       ng-if="fsCtrl.type !== 'text'">
+    <div class="col-xs-12">
+      <span
+          class="gmf-featurestyle-measure">
+        {{ fsCtrl.measure }}
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div
+        ngeo-colorpicker=""
+        ngeo-colorpicker-color="fsCtrl.color"
+        class="col-xs-12">
+    </div>
+  </div>
+
+  <div
+      ng-if="fsCtrl.type === 'point'"
+      class="form-group">
+    <label class="control-label col-xs-4">{{'Size' | translate}}</label>
+    <div class="col-xs-8">
+      <input
+          type="range"
+          min="3"
+          max="20"
+          step="1"
+          ng-model="fsCtrl.getSetSize"
+          ng-model-options="{getterSetter: true}"
+          />
+    </div>
+  </div>
+
+  <div
+      ng-if="fsCtrl.type === 'text'"
+      class="form-group">
+    <label class="control-label col-xs-4">{{'Size' | translate}}</label>
+    <div class="col-xs-8">
+      <input
+          type="range"
+          min="8"
+          max="30"
+          step="1"
+          ng-model="fsCtrl.getSetSize"
+          ng-model-options="{getterSetter: true}"
+          />
+    </div>
+  </div>
+
+  <div
+      ng-if="fsCtrl.type === 'circle' || fsCtrl.type === 'linestring' || fsCtrl.type === 'polygon' || fsCtrl.type === 'rectangle'"
+      class="form-group">
+    <label class="control-label col-xs-4">{{'Stroke' | translate}}</label>
+    <div class="col-xs-8">
+      <input
+          type="range"
+          min="0.5"
+          max="5"
+          step="0.5"
+          ng-model="fsCtrl.getSetStroke"
+          ng-model-options="{getterSetter: true}"
+          />
+    </div>
+  </div>
+
+  <div
+      ng-if="fsCtrl.type === 'circle' || fsCtrl.type === 'polygon' || fsCtrl.type === 'rectangle'"
+      class="form-group">
+    <label class="control-label col-xs-4">{{'Opacity' | translate}}</label>
+    <div class="col-xs-8">
+      <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          ng-model="fsCtrl.getSetOpacity"
+          ng-model-options="{getterSetter: true}"
+          />
+    </div>
+  </div>
+
+  <div
+      ng-if="fsCtrl.type === 'text'"
+      class="form-group">
+    <label class="control-label col-xs-4">{{'Angle' | translate}}</label>
+    <div class="col-xs-8">
+      <input
+          type="range"
+          min="-180"
+          max="180"
+          step="22.5"
+          ng-model="fsCtrl.getSetAngle"
+          ng-model-options="{getterSetter: true}"
+          />
+    </div>
+  </div>
+
+  <div
+      ng-if="fsCtrl.type !== 'text'"
+      class="form-group">
+    <div class="col-xs-12">
+      <input
+          id="gmf-featurestyle-showmeasure"
+          type="checkbox"
+          ng-model="fsCtrl.getSetShowMeasure"
+          ng-model-options="{getterSetter: true}"/>
+      <label
+          ng-switch="fsCtrl.type"
+          for="gmf-featurestyle-showmeasure"
+          class="control-label">
+        <span ng-switch-when="circle">
+          {{'Display surface' | translate}}
+        </span>
+        <span ng-switch-when="polygon">
+          {{'Display surface' | translate}}
+        </span>
+        <span ng-switch-when="rectangle">
+          {{'Display surface' | translate}}
+        </span>
+        <span ng-switch-when="linestring">
+          {{'Display length' | translate}}
+        </span>
+        <span ng-switch-when="point">
+          {{'Display coordinates' | translate}}
+        </span>
+      </label>
+    </div>
+
+  </div>
+
+</div>
