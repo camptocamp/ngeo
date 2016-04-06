@@ -1,0 +1,31 @@
+@import 'layertree.less';
+
+gmf-layertree {
+  ul {
+    padding-top: @micro-app-margin;
+  }
+  > :first-child{
+    margin-right: @half-app-margin;
+  }
+}
+
+.gmf-layertree-node {
+
+  &.depth-1 {
+    //styling first level node for desktop app
+    background-color: @nav-bg;
+    box-shadow: 0 0 4px 1px @input-border-focus;
+
+    > ul {
+      //adding space after the last li elem of the first level nodes
+      padding-bottom: @half-app-margin;
+    }
+  }
+
+  .group {
+    &.depth-1 {
+      background-color: @main-bg-color;
+      padding: @half-app-margin;
+    }
+  }
+}

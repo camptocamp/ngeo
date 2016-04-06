@@ -1,12 +1,25 @@
-gmf-layertree div {
-  margin-right: @app-margin;
-}
+.gmf-layertree-node {
+  /**
+   * Style rules for treenodes in the layertree
+   */
+  margin-top: @half-app-margin;
 
-gmf-layertree ul .treenode {
-  padding-top: @app-margin;
+  &.depth-1 {
+    margin: 0 @micro-app-margin @app-margin @micro-app-margin;
+  }
 
   ul {
-    padding-left: 20px;
+    padding: 0 @app-margin 0 2*@app-margin; //shifting child nodes
+
+    
+
+    ul {
+      //nested ul (i.e node groups into node groups should not add extra padding)
+      padding-right: 0;
+      li:last-child {
+        padding-bottom: 0;
+      }
+    }
   }
 
   a {
@@ -20,6 +33,7 @@ gmf-layertree ul .treenode {
     }
 
     &.expand-node.fa {
+      color : @color-light;
       display: inline-block;
       &::before {
         content: "\f054";
@@ -30,32 +44,60 @@ gmf-layertree ul .treenode {
     }
   }
 
-  .rightButtons *::after {
-    background: none;
-    color: @map-tools-color;
-    display: inline;
-    font-family: FontAwesome;
+  .rightButtons {
+    float: right;
+
+    *::before,
+    *::after {
+      background: none;
+      position: relative;
+      right: initial;
+    }
+
+    *::after {
+      color: @map-tools-color;
+      display: inline;
+      font-family: FontAwesome;
+    }
+
   }
+
   .state {
     font-family: gmf-icons;
     color: @color;
   }
+
   .on .state {
     color: @special-link;
   }
+
   .off, .off .legend img {
     opacity: 0.5;
   }
-  .leaf .state::after {
-    content: "\e603";
+
+  .leaf {
+    font-size: smaller;
+    .state::after {
+      content: "\e603";
+    }
   }
 
   .group {
+    font-size: smaller;
     .state::after {
       content: "\e600";
     }
     .layerIcon {
       display: none;
+    }
+
+    &.depth-1 {
+      //styling the header of first level groups
+      font-size: small;
+      .name {
+        font-weight: bold;
+        color: black;
+      }
     }
   }
 
@@ -64,17 +106,11 @@ gmf-layertree ul .treenode {
     height: @app-margin;
     width: 2 * @app-margin;
   }
+
   .name {
     white-space: normal;
   }
-  .rightButtons {
-    float: right;
-    *::after, *::before {
-      background: none;
-      position: relative;
-      right: initial;
-    }
-  }
+
   .metadata {
     a {
       padding: 0;
@@ -85,6 +121,7 @@ gmf-layertree ul .treenode {
       }
     }
   }
+
   .zoom {
     display: none;
     &:hover {
@@ -94,12 +131,14 @@ gmf-layertree ul .treenode {
       content: "\f18e";
     }
   }
+
   .noSource {
     opacity: 0.3;
     &::after {
       content: "(source not available)";
     }
   }
+
   .outOfResolution {
     .rightButtons {
       .zoom {
@@ -113,6 +152,7 @@ gmf-layertree ul .treenode {
       content: "\e604";
     }
   }
+
   .legendButton {
     a {
       padding: 0;
@@ -122,6 +162,7 @@ gmf-layertree ul .treenode {
       }
     }
   }
+
   .legend {
     a::before {
       display: none;
@@ -130,4 +171,5 @@ gmf-layertree ul .treenode {
       padding-left: @app-margin + @half-app-margin;
     }
   }
+
 }
