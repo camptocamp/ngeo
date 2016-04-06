@@ -15,6 +15,8 @@ goog.require('gmf.mapDirective');
 goog.require('gmf.searchDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.themeselectorDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.GetBrowserLanguage');
 goog.require('ngeo.StateManager');
@@ -181,6 +183,33 @@ gmf.AbstractController = function(config, $scope, $injector) {
   var measureLengthActivate = new ngeo.ToolActivate(
       this, 'measureLengthActive');
   ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
+
+  gmfThemes.getBgLayers().then(function(layers) {
+    // get the background from the permalink
+    var permalink = $injector.get('gmfPermalink');
+    var background = permalink.getBackgroundLayer(layers);
+    if (!background) {
+      // get the background from the user settings
+      var functionalities = this.gmfUser.functionalities;
+      if (functionalities) {
+        var defaultBasemapArray = functionalities.default_basemap;
+        if (defaultBasemapArray.length > 0) {
+          var defaultBasemapLabel = defaultBasemapArray[0];
+          background = ol.array.find(layers, function(layer) {
+            return layer.get('label') === defaultBasemapLabel;
+          });
+        }
+      }
+    }
+    if (!background) {
+      // fallback to the layers list, use the second one because the first
+      // is the blank layer
+      background = layers[1];
+    }
+
+    var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
+    backgroundLayerMgr.set(this.map, background);
+  }.bind(this));
 
 };
 
