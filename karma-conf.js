@@ -25,6 +25,7 @@ module.exports = function(config) {
       '.build/ngeo-deps.js',
       '.build/gmf-deps.js',
       '.build/examples-hosted/lib/proj4.js',
+      'node_modules/jquery/dist/jquery.js',
       'node_modules/angular/angular.js',
       'node_modules/angular-gettext/dist/angular-gettext.js',
       'node_modules/angular-animate/angular-animate.js',
