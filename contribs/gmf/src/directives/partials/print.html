@@ -1,41 +1,47 @@
 <div class="print-panel">
-  <div class="form-group">
-    <input ng-model="ctrl.title" class="form-control" type="text" placeholder="{{'Title'|translate}}">
+  <div ng-show="ctrl.fields.title !== undefined" class="form-group">
+    <input ng-model="ctrl.fields.title" class="form-control" type="text" placeholder="{{'Title'|translate}}">
   </div>
-  <div class="form-group">
-    <textarea ng-model="ctrl.comment" class="form-control" row="3" placeholder="{{'Comment'|translate}}"></textarea>
+  <div ng-show="ctrl.fields.comments !== undefined" class="form-group">
+    <textarea ng-model="ctrl.fields.comments" class="form-control" row="3" placeholder="{{'Comment'|translate}}"></textarea>
   </div>
-  <div class="checkbox">
+  <div ng-show="ctrl.fields.legend !== undefined" class="checkbox">
     <label>
-      <input ng-model="ctrl.legend" type="checkbox">
+      <input ng-model="ctrl.fields.legend" type="checkbox">
       <span translate>Legend</span>
     </label>
   </div>
+  <div ng-show="ctrl.fields.debug !== undefined" class="checkbox">
+    <label>
+      <input ng-model="ctrl.fields.debug" type="checkbox">
+      <span translate>Debug</span>
+    </label>
+  </div>
   <div class="form-horizontal">
-    <div class="form-group form-group-sm">
+    <div ng-show="ctrl.fields.layouts.length !== 1" class="form-group form-group-sm">
       <label class="control-label col-md-3" translate>Layout</label>
       <div class="col-md-9">
-          <button type="button" class="btn btn-default form-control" data-toggle="dropdown">{{ctrl.layout | translate}}</button>
+          <button type="button" class="btn btn-default form-control" data-toggle="dropdown">{{ctrl.fields.layout | translate}}</button>
         <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="layout in ctrl.layouts"><a href="" ng-click="ctrl.setLayout(layout)">{{layout | translate}}</a></li>
+            <li ng-repeat="layout in ctrl.fields.layouts"><a href="" ng-click="ctrl.setLayout(layout)">{{layout | translate}}</a></li>
         </ul>
       </div>
     </div>
-    <div class="form-group form-group-sm">
-      <label class="control-label col-md-3"translate> Scale</label>
+    <div ng-show="ctrl.fields.scales.length !== 1" class="form-group form-group-sm">
+      <label class="control-label col-md-3"translate>Scale</label>
       <div class="col-md-9">
-          <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.scale | translate}}</button>
+          <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.fields.scale | translate}}</button>
         <ul class="dropdown-menu" role="menu">
-          <li ng-repeat="scale in ctrl.scales"><a href="" ng-click="ctrl.setScale(scale)">{{scale | translate}}</a></li>
+          <li ng-repeat="scale in ctrl.fields.scales"><a href="" ng-click="ctrl.setScale(scale)">{{scale | translate}}</a></li>
         </ul>
       </div>
     </div>
-    <div class="form-group form-group-sm">
+    <div ng-show="ctrl.fields.dpis.length !== 1" class="form-group form-group-sm">
       <label class="control-label col-md-3" translate>DPI</label>
       <div class="col-md-5">
-        <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.dpi}}</button>
+        <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.fields.dpi}}</button>
         <ul class="dropdown-menu" role="menu">
-          <li ng-repeat="dpi in ctrl.dpis"><a href="" ng-click="ctrl.setDpi(dpi)">{{dpi}}</a></li>
+          <li ng-repeat="dpi in ctrl.fields.dpis"><a href="" ng-click="ctrl.setDpi(dpi)">{{dpi}}</a></li>
         </ul>
       </div>
     </div>

@@ -68,8 +68,8 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @ngdoc Controller
  * @ngname GmfPrintController
  */
-gmf.PrintController = function($scope, $timeout, $q, ngeoPrintUtils, ngeoCreatePrint,
-    gmfPrintUrl) {
+gmf.PrintController = function($scope, $timeout, $q, ngeoPrintUtils,
+    ngeoCreatePrint, gmfPrintUrl) {
 
   /**
    * @type {angular.Scope}
@@ -128,77 +128,43 @@ gmf.PrintController = function($scope, $timeout, $q, ngeoPrintUtils, ngeoCreateP
   this.curRef_ = '';
 
   /**
-   * @type {string}
-   * @export
-   */
-  this.title;
-
-  /**
-   * @type {string}
-   * @export
-   */
-  this.comment;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.legend = true;
-
-  /**
+   * Formats availables in capabilities.
    * @type {Array.<string>}
-   * @export
+   * @private
    */
-  this.layouts = ['A4 portrait', 'A4 landscape', 'A3 portrait', 'A3 landscape'];
+  this.formats_ = [];
 
   /**
-   * @type {string}
-   * @export
+   * An array of attributes objects from capabilities.
+   * @type {Array.<Object>}
+   * @private
    */
-  this.layout = this.layouts[0];
+  this.layouts_ = [];
 
   /**
-   * @type {Array.<number>}
-   * @export
+   * An attributes object from capabilities.
+   * @type {Object}
+   * @private
    */
-  this.scales = [100, 250, 500, 2500, 5000, 10000, 25000, 50000, 100000,
-      500000];
-
-  /**
-   * @type {number}
-   * @export
-   */
-  this.scale = this.scales[0];
+  this.layout_ = {};
 
   /**
    * @type {Array.<number>}
-   * @export
+   * @private
    */
-  this.dpis = [72];
+  this.paperSize_ = [];
 
   /**
-   * @type {number}
+   * @type {Object} FIXME precise type
    * @export
    */
-  this.dpi = this.dpis[0];
+  this.fields = {};
 
   /**
    * @type {number}
    * @export
    */
   this.rotation = 0;
-
-  /**
-   * @type {Array.<number>}
-   * @export
-   */
-  this.paperSize = [555, 675];
-
-  /**
-   * @type {Array.<string>}
-   * @export
-   */
-  this.availableOutput = [];
 
   /**
    * @type {Array.<number>|null}
@@ -216,7 +182,7 @@ gmf.PrintController = function($scope, $timeout, $q, ngeoPrintUtils, ngeoCreateP
    * @return {ol.Size} Size in dots of the map to print.
    */
   var getSizeFn = function() {
-    return this.paperSize;
+    return this.paperSize_;
   }.bind(this);
 
   /**
@@ -245,49 +211,106 @@ gmf.PrintController = function($scope, $timeout, $q, ngeoPrintUtils, ngeoCreateP
 
 
 /**
- * TODO
- * @param {string} layout TODO
- * @export
- */
-gmf.PrintController.prototype.setLayout = function(layout) {
-  this.layout = layout;
-};
-
-
-/**
- * TODO
- * @param {number} scale TODO
- * @export
- */
-gmf.PrintController.prototype.setScale = function(scale) {
-  this.scale = scale;
-};
-
-
-/**
- * TODO
- * @param {number} dpi TODO
- * @export
- */
-gmf.PrintController.prototype.setDpi = function(dpi) {
-  this.dpi = dpi;
-};
-
-
-/**
- * @param {boolean} active True to listen events related to the print.
- *     False to stop listen them and set rotation to 0.
+ * @param {boolean} active True to listen events related to the print and get
+ *     capabilities. False to stop listen them and set rotation to 0.
  * @private
  */
 gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
   if (active) {
-    this.map.on('postcompose', this.postcomposeListener_);
-    this.map.on('pointerdrag', this.onPointerDrag_.bind(this));
+    // FIXME handle error
+    this.ngeoPrint_.getCapabilities().then(function(resp) {
+      this.parseCapabilities_(resp);
+      this.map.on('postcompose', this.postcomposeListener_);
+      this.map.on('pointerdrag', this.onPointerDrag_.bind(this));
+    }.bind(this));
   } else {
     this.map.un('postcompose', this.postcomposeListener_);
     this.map.un('pointerdrag', this.onPointerDrag_.bind(this));
     this.setRotation(this.rotation, -this.rotation);
   }
+};
+
+
+/**
+ * Create the list of layouts, get the formats, get the first layout in
+ * gmf print v3 capabilities and then update the print panel fields.
+ * @param {!angular.$http.Response} resp Response.
+ * @private
+ */
+gmf.PrintController.prototype.parseCapabilities_ = function(resp) {
+  var data = resp.data;
+  this.formats = data.formats;
+  this.layouts = data.layouts;
+  this.layout = data.layouts[0];
+
+  this.fields.layouts = [];
+  this.layouts.forEach(function(layout) {
+    this.fields.layouts.push(layout.name);
+  }.bind(this));
+
+  this.updateFields_();
+};
+
+
+/**
+ * Update fields with the user values if there are always available in the
+ * current layout otherwise use the defaults values of the layout.
+ * If a field doesn't exist in the current layout, set it to undefined so the
+ * view can hide it. Update also the paper size.
+ * @private
+ */
+gmf.PrintController.prototype.updateFields_ = function() {
+  this.fields.layout = this.layout.name;
+
+  var mapInfo = this.isAttributeInCurrentLayout_('map');
+  goog.asserts.assertObject(mapInfo);
+  var clientInfo = mapInfo['clientInfo'];
+  goog.asserts.assertObject(clientInfo);
+  this.paperSize_ = [clientInfo['width'], clientInfo['height']];
+
+  var title = this.isAttributeInCurrentLayout_('title');
+  this.fields.title = title !== null ?
+      this.fields.title || title['default'] : undefined;
+
+  var comments = this.isAttributeInCurrentLayout_('comments');
+  this.fields.comments = comments !== null ?
+      this.fields.comments || comments['default'] : undefined;
+
+  var debug = this.isAttributeInCurrentLayout_('debug');
+  this.fields.debug = debug !== null ?
+      this.fields.debug || debug['default'] : undefined;
+
+  var legend = this.isAttributeInCurrentLayout_('legend');
+  this.fields.legend = legend !== null ?
+      this.fields.legend || true : undefined;
+
+  this.fields.scales = clientInfo['scales'] || [];
+  this.fields.dpis = clientInfo['dpiSuggestions'] || [];
+
+  var mapSize = this.map.getSize();
+  var viewResolution = this.map.getView().getResolution();
+  this.fields.scale = this.getOptimalScale_(mapSize, viewResolution);
+
+  this.fields.dpi =
+      (this.fields.dpi && this.fields.dpis.indexOf(this.fields.dpi) > 0) ?
+      this.fields.dpi : this.fields.dpis[0];
+};
+
+
+/**
+ * Return a capabilities 'attribute' object correesponding to the given name.
+ * @param {string} name Name of the attribute to get.
+ * @return {Object|null} corresponding attribute or null.
+ * @private
+ */
+gmf.PrintController.prototype.isAttributeInCurrentLayout_ = function(name) {
+  var attr = null;
+  this.layout.attributes.forEach(function(attribute) {
+    if (attribute.name === name) {
+      return attr = attribute;
+    }
+  });
+  return attr;
 };
 
 
@@ -331,7 +354,7 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
     var pixel = e.pixel;
     var timeStamp = originalEvent.timeStamp;
     // Reset previous position between two differents drag action.
-    if (!this.onDragTimeStamp_ || timeStamp - this.onDragTimeStamp_ > 300) {
+    if (!this.onDragTimeStamp_ || timeStamp - this.onDragTimeStamp_ > 100) {
       this.onDragPreviousMousePosition_ = null;
     } else {
       // Calculate angle and sense of rotation.
@@ -369,9 +392,9 @@ gmf.PrintController.prototype.print = function() {
 
   var customAttributes = {
     'datasource': [],
-    'debug': 0,
-    'comments': this.comment,
-    'title': this.title,
+    'debug': this.fields.debug,
+    'comments': this.fields.comments,
+    'title': this.fields.title,
     'rotation': this.rotation
   }
 
@@ -379,8 +402,8 @@ gmf.PrintController.prototype.print = function() {
   var viewResolution = this.map.getView().getResolution();
   var scale = this.getOptimalScale_(mapSize, viewResolution);
 
-  var spec = this.ngeoPrint_.createSpec(this.map, scale, this.dpi,
-      this.layout, customAttributes);
+  var spec = this.ngeoPrint_.createSpec(this.map, scale, this.fields.dpi,
+      this.fields.layout, customAttributes);
 
   this.ngeoPrint_.createReport(spec, /** @type {angular.$http.Config} */ ({
     timeout: this.requestCanceler_.promise
@@ -435,11 +458,12 @@ gmf.PrintController.prototype.resetPrintStates_ = function(opt_printState) {
  */
 gmf.PrintController.prototype.getOptimalScale_ = function(mapSize,
     viewResolution) {
+  var scales = this.fields.scales.slice();
   if (mapSize !== undefined && viewResolution !== undefined) {
     return this.ngeoPrintUtils_.getOptimalScale(mapSize, viewResolution,
-        this.paperSize, this.scales);
+        this.paperSize_, scales.reverse());
   }
-  return this.scales[0];
+  return this.fields.scales[0];
 };
 
 
@@ -499,6 +523,49 @@ gmf.PrintController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
  */
 gmf.PrintController.prototype.handleCreateReportError_ = function(resp) {
   this.resetPrintStates_('Print error');
+};
+
+
+/**
+ * Set the current layout and update all fields with this new layout parameters.
+ * @param {string!} layoutName A layout name as existing in the list of
+ *     existing layouts.
+ * @export
+ */
+gmf.PrintController.prototype.setLayout = function(layoutName) {
+  var layout;
+  this.layouts_.forEach(function(l) {
+    if (l.name === layoutName) {
+      layout = l;
+      return true // break;
+    }
+  });
+  this.layout_ = layout;
+  this.updateFields_();
+};
+
+
+/**
+ * Set the print scale value and adapt the zoom to match with this new scale.
+ * @param {number} scale A scale value as existing in the scales list field.
+ * @export
+ */
+gmf.PrintController.prototype.setScale = function(scale) {
+  var mapSize = this.map.getSize();
+  var res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_,
+        scale);
+  this.fields.scale = scale;
+  this.map.getView().setResolution(res);
+};
+
+
+/**
+ * Set the print dpi value.
+ * @param {number} dpi A dpi value as existing in the dpis list field.
+ * @export
+ */
+gmf.PrintController.prototype.setDpi = function(dpi) {
+  this.fields.dpi = dpi;
 };
 
 
