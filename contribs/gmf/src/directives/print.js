@@ -41,10 +41,11 @@ gmf.printDirective = function(gmfPrintTemplateUrl) {
     },
     link: function(scope, element, attr) {
       var ctrl = scope['ctrl'];
+
       scope.$watch(function() {
         return ctrl.active;
       }, function(active) {
-        this.setListenCompose(active);
+        this.togglePrintPanel_(active);
       }.bind(ctrl));
     }
   };
@@ -55,6 +56,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
 
 
 /**
+ * @param {angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angular.$q} $q The Angular $q service.
  * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
@@ -66,8 +68,14 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @ngdoc Controller
  * @ngname GmfPrintController
  */
-gmf.PrintController = function($timeout, $q, ngeoPrintUtils, ngeoCreatePrint,
+gmf.PrintController = function($scope, $timeout, $q, ngeoPrintUtils, ngeoCreatePrint,
     gmfPrintUrl) {
+
+  /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.$scope_ = $scope;
 
   /**
    * @type {angular.$timeout}
@@ -192,6 +200,17 @@ gmf.PrintController = function($timeout, $q, ngeoPrintUtils, ngeoCreatePrint,
    */
   this.availableOutput = [];
 
+  /**
+   * @type {Array.<number>|null}
+   * @private
+   */
+  this.onDragPreviousMousePosition_ = null;
+
+  /**
+   * @type {number|null}
+   * @private
+   */
+  this.onDragTimeStamp_ = null;
 
   /**
    * @return {ol.Size} Size in dots of the map to print.
@@ -211,10 +230,17 @@ gmf.PrintController = function($timeout, $q, ngeoPrintUtils, ngeoCreatePrint,
   }.bind(this);
 
   /**
+   * @return {number} rotation to apply.
+   */
+  var getRotationFn = function() {
+    return this.rotation;
+  }.bind(this);
+
+  /**
    * @type {function(ol.render.Event)}
    */
   this.postcomposeListener_ = ngeoPrintUtils.createPrintMaskPostcompose(
-      getSizeFn, getScaleFn);
+      getSizeFn, getScaleFn, getRotationFn);
 };
 
 
@@ -247,21 +273,94 @@ gmf.PrintController.prototype.setDpi = function(dpi) {
   this.dpi = dpi;
 };
 
+
 /**
- * Draw the print window in a map postcompose listener.
- * @param {boolean} listen true To display mask. False to hides it.
- * events.
+ * @param {boolean} active True to listen events related to the print.
+ *     False to stop listen them and set rotation to 0.
  * @private
  */
-gmf.PrintController.prototype.setListenCompose = function(listen) {
-  if (listen) {
+gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
+  if (active) {
     this.map.on('postcompose', this.postcomposeListener_);
+    this.map.on('pointerdrag', this.onPointerDrag_.bind(this));
   } else {
     this.map.un('postcompose', this.postcomposeListener_);
+    this.map.un('pointerdrag', this.onPointerDrag_.bind(this));
+    this.setRotation(this.rotation, -this.rotation);
   }
 };
 
+
 /**
+ * TODO
+ * @param {number|string} opt_val TODO
+ * @param {number} opt_increment TODO
+ * @return {number} The new value of rotation;
+ * @export
+ */
+gmf.PrintController.prototype.setRotation = function(opt_val, opt_increment) {
+  if (opt_val !== undefined) {
+    var rotation = parseInt(opt_val, 10) || this.rotation;
+    if (opt_increment) {
+      rotation = rotation + opt_increment;
+    }
+    if (rotation > 180) {
+      rotation = -180;
+    } else if (rotation < -180) {
+      rotation = 180;
+    }
+    this.rotation = rotation;
+    // Render the map to update the postcompose mask.
+    this.map.render();
+  }
+  return this.rotation;
+};
+
+
+/**
+ * Calculate the angle and the sense of rotation between two lines. One from the
+ * center of the map and the point of the last call to this function and one
+ * from the same center and the point of the current call.
+ * @param {ol.MapBrowserPointerEvent} e An ol map browser pointer event.
+ * @private
+ */
+gmf.PrintController.prototype.onPointerDrag_ = function(e) {
+  var originalEvent = e.originalEvent;
+  if (this.active && originalEvent.ctrlKey && originalEvent.shiftKey) {
+    var center = this.map.getPixelFromCoordinate(this.map.getView().getCenter());
+    var pixel = e.pixel;
+    var timeStamp = originalEvent.timeStamp;
+    // Reset previous position between two differents drag action.
+    if (!this.onDragTimeStamp_ || timeStamp - this.onDragTimeStamp_ > 300) {
+      this.onDragPreviousMousePosition_ = null;
+    } else {
+      // Calculate angle and sense of rotation.
+      var p0x = this.onDragPreviousMousePosition_[0] - center[0];
+      var p0y = this.onDragPreviousMousePosition_[1] - center[1];
+      var p1x = pixel[0] - center[0];
+      var p1y = pixel[1] - center[1];
+      var centerToP0 = Math.sqrt(Math.pow(p0x, 2) + Math.pow(p0y, 2));
+      var centerToP1 = Math.sqrt(Math.pow(p1x, 2) + Math.pow(p1y, 2));
+      var sense = (p0x * p1y - p0y * p1x) > 0 ? 1 : -1;
+      var angle = sense * Math.acos(
+            (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1)
+          );
+      var boost = centerToP1 / 250;
+      var increment = Math.round((angle * 180 / Math.PI) * boost);
+
+      // Set rotation then update the view.
+      this.setRotation(this.rotation, increment);
+      this.$scope_.$digest();
+    }
+    // Keep a reference of the timeStamp and the position of this event.
+    this.onDragTimeStamp_ = timeStamp;
+    this.onDragPreviousMousePosition_ = pixel;
+  }
+};
+
+
+/**
+ * TODO
  * @export
  */
 gmf.PrintController.prototype.print = function() {
@@ -272,7 +371,8 @@ gmf.PrintController.prototype.print = function() {
     'datasource': [],
     'debug': 0,
     'comments': this.comment,
-    'title': this.title
+    'title': this.title,
+    'rotation': this.rotation
   }
 
   var mapSize = this.map.getSize();

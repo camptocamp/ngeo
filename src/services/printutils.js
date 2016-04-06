@@ -32,14 +32,18 @@ ngeo.PrintUtils.DOTS_PER_INCH_ = 72;
  * Return a function to use as map postcompose listener for drawing a print
  * mask on the map.
  * @param {function():ol.Size} getSize User-defined function returning the
- * size in dots of the map to print.
+ *     size in dots of the map to print.
  * @param {function(olx.FrameState):number} getScale User-defined function
+ *     returning the scale of the map to print.
+ * @param {function():number=} opt_rotation User defined function returning the
+ *     inclination of the canevas in degree (-180 to 180).
  * returning the scale of the map to print.
  * @return {function(ol.render.Event)} Function to use as a map postcompose
  * listener.
  * @export
  */
-ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale) {
+ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize,
+    getScale, opt_rotation) {
   var self = this;
 
   return (
@@ -74,11 +78,6 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScal
         self.extentHalfVerticalDistance_ =
             (((size[1] / ppi) / ipm) * scale) / 2;
 
-        var minx = centerX - extentHalfWidth;
-        var miny = centerY - extentHalfHeight;
-        var maxx = centerX + extentHalfWidth;
-        var maxy = centerY + extentHalfHeight;
-
         context.beginPath();
         context.moveTo(0, 0);
         context.lineTo(viewportWidth, 0);
@@ -87,11 +86,29 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScal
         context.lineTo(0, 0);
         context.closePath();
 
-        context.moveTo(minx, miny);
-        context.lineTo(minx, maxy);
-        context.lineTo(maxx, maxy);
-        context.lineTo(maxx, miny);
-        context.lineTo(minx, miny);
+        var rotation = (opt_rotation ? opt_rotation() * Math.PI / 180 : 0);
+        // diagonal = distance p1 to center.
+        var diagonal = Math.sqrt(Math.pow(extentHalfWidth, 2) +
+            Math.pow(extentHalfHeight, 2));
+        // gamma = angle between horizontal and diagonal (with rotation).
+        var gamma = Math.atan(extentHalfHeight / extentHalfWidth) - rotation;
+        // omega = angle between diagonal and vertical (with rotation).
+        var omega = Math.atan(extentHalfWidth / extentHalfHeight) - rotation;
+        // Calculation of each corner.
+        var x1 = centerX - Math.cos(gamma) * diagonal;
+        var y1 = centerY + Math.sin(gamma) * diagonal;
+        var x2 = centerX + Math.sin(omega) * diagonal;
+        var y2 = centerY + Math.cos(omega) * diagonal;
+        var x3 = centerX + Math.cos(gamma) * diagonal;
+        var y3 = centerY - Math.sin(gamma) * diagonal;
+        var x4 = centerX - Math.sin(omega) * diagonal;
+        var y4 = centerY - Math.cos(omega) * diagonal;
+
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.lineTo(x3, y3);
+        context.lineTo(x4, y4);
+        context.lineTo(x1, y1);
         context.closePath();
 
         context.fillStyle = 'rgba(0, 5, 25, 0.5)';

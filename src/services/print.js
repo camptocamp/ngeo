@@ -81,7 +81,8 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  *     var dpi = 72;
  *     var layout = 'A4 portrait';
  *     var reportSpec = print.createSpec(map, scale, dpi, layout, {
- *       'title': 'A title for my report'
+ *       'title': 'A title for my report',
+ *       'rotation': 45
  *     });
  *
  * See our live example: {@link ../examples/mapfishprint.html}
@@ -152,7 +153,8 @@ ngeo.Print.prototype.createSpec = function(
     map, scale, dpi, layout, customAttributes) {
 
   var specMap = /** @type {MapFishPrintMap} */ ({
-    dpi: dpi
+    dpi: dpi,
+    rotation: /** number */ (customAttributes['rotation'])
   });
 
   this.encodeMap_(map, scale, specMap);
@@ -182,7 +184,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   var viewCenter = view.getCenter();
   var viewProjection = view.getProjection();
   var viewResolution = view.getResolution();
-  var viewRotation = view.getRotation();
+  var viewRotation = object.rotation || view.getRotation();
 
   goog.asserts.assert(viewCenter !== undefined);
   goog.asserts.assert(viewProjection !== undefined);

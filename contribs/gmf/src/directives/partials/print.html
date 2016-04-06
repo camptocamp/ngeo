@@ -42,7 +42,7 @@
     <div class="form-group form-group-sm">
       <label class="control-label col-md-3" translate>Rotation</label>
       <div class="col-md-5">
-          <input class="form-control" type="range" ng-model="ctrl.rotation" min="-180" max="180" style="border:0; background-color: transparent; box-shadow: none;" data-toggle="tooltip" title="{{'You can also use Alt+Shift on the map' | translate}}">
+        <input class="form-control" type="range" ng-model="ctrl.setRotation" ng-model-options="{getterSetter: true}" min="-180" max="180" style="border:0; background-color: transparent; box-shadow: none;" data-toggle="tooltip" title="{{'You can also use Alt+Shift on the map' | translate}}">
       </div>
       <div class="col-md-4">
         <input class="form-control" type="text" ng-model="ctrl.rotation">
