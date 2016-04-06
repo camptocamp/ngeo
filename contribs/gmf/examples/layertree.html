@@ -124,6 +124,15 @@
       #desc, #selections {
         margin-bottom: 20px;
       }
+      .treenode a.expand-node.fa {
+        display: inline-block;
+      }
+      .treenode a.expand-node.fa::before {
+          content: "\f054";
+      }
+      .treenode a.expand-node.fa[aria-expanded="true"]::before {
+          content: "\f078";
+      }
     </style>
   </head>
   <body ng-controller="MainController as ctrl">

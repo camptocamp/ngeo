@@ -153,6 +153,30 @@ gmf.Themes.findThemeByName = function(themes, themeName) {
 
 
 /**
+ * Return a "type" that defines the node.
+ * @param {GmfThemesNode} node Layer tree node.
+ * @return {string} A type.
+ */
+gmf.Themes.getNodeType = function(node) {
+  var children = node.children;
+  var mixed = node.mixed;
+  if (node.children !== undefined && mixed) {
+    return gmf.Themes.NodeType.MIXED_GROUP;
+  }
+  if (children !== undefined && !mixed) {
+    return gmf.Themes.NodeType.NOT_MIXED_GROUP;
+  }
+  if (node.type === 'WMTS') {
+    return gmf.Themes.NodeType.WMTS;
+  }
+  if (goog.isDefAndNotNull(node.url)) {
+    return gmf.Themes.NodeType.EXTERNAL_WMS;
+  }
+  return gmf.Themes.NodeType.WMS;
+};
+
+
+/**
  * Get background layers.
  * @return {angular.$q.Promise} Promise.
  */
@@ -267,3 +291,15 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
 
 
 gmf.module.service('gmfThemes', gmf.Themes);
+
+
+/**
+ * @enum {string}
+ */
+gmf.Themes.NodeType = {
+  EXTERNAL_WMS: 'externalWMS',
+  MIXED_GROUP: 'MixedGroup',
+  NOT_MIXED_GROUP: 'NotMixedGroup',
+  WMTS: 'WMTS',
+  WMS: 'WMS'
+};

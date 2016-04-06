@@ -82,3 +82,21 @@ GmfThemesNode.prototype.url;
  * @type {string|undefined}
  */
 GmfThemesNode.prototype.wmsUrl;
+
+
+/**
+ * @constructor
+ */
+var GmfThemesNodeCustom = function() {};
+
+
+/**
+ * @type {Array.<string>}
+ */
+GmfThemesNodeCustom.prototype.layers;
+
+
+/**
+ * @type {GmfThemesNode}
+ */
+GmfThemesNodeCustom.prototype.node;

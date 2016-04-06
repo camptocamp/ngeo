@@ -119,6 +119,24 @@ gmf.TreeManager.prototype.addGroup_ = function(group) {
 
 
 /**
+ * The same as `addGroups`, with the exception
+ * @param{Array.<GmfThemesNodeCustom>} groups An array of object defining
+ *     a theme node and an array of layer names to override.
+ * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
+ * @export
+ */
+gmf.TreeManager.prototype.addCustomGroups = function(groups, opt_add) {
+  if (this.isModeFlush() && opt_add !== true) {
+    this.tree.children.length = 0;
+  }
+  groups.forEach(function(group) {
+    var clone = this.cloneGroupNode_(group.node, group.layers);
+    this.addGroup_(clone);
+  }.bind(this));
+};
+
+
+/**
  * Retrieve a theme (first found) by its name and add in the tree. Do nothing
  * if any corresponding theme is found.
  * @param{string} themeName Name of the theme to add.
@@ -188,6 +206,48 @@ gmf.TreeManager.prototype.removeGroup = function(group) {
   if (found) {
     children.splice(index, 1);
   }
+};
+
+
+/**
+ * Clone a group node and recursively set all child node `isChecked` using
+ * the given list of layer names.
+ * @param {GmfThemesNode} group The original group node.
+ * @param {Array.<string>} names Array of node names to check (i.e. that
+ *     should have their checkbox checked)
+ * @return {GmfThemesNode} Cloned node.
+ * @export
+ */
+gmf.TreeManager.prototype.cloneGroupNode_ = function(group, names) {
+  var clone = /** @type {GmfThemesNode} */ (goog.object.unsafeClone(group));
+  this.toggleNodeCheck_(clone, names);
+  return clone;
+};
+
+
+/**
+ * Set the child nodes metadata `isChecked` if its name is among the list of
+ * given names. If a child node also has children, check those instead.
+ * @param {GmfThemesNode} node The original node.
+ * @param {Array.<string>} names Array of node names to check (i.e. that
+ *     should have their checkbox checked)
+ * @export
+ */
+gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
+  if (!node.children) {
+    return;
+  }
+  node.children.forEach(function(childNode) {
+    if (childNode.children) {
+      this.toggleNodeCheck_(childNode, names);
+    } else if (childNode.metadata) {
+      if (ol.array.includes(names, childNode.name)) {
+        childNode.metadata['isChecked'] = 'true';
+      } else {
+        childNode.metadata['isChecked'] = 'false';
+      }
+    }
+  }, this);
 };
 
 gmf.module.service('gmfTreeManager', gmf.TreeManager);
