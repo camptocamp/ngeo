@@ -93,7 +93,7 @@ app.MainController = function(gmfThemes, gmfTreeManager) {
    * @type {string}
    * @export
    */
-  this.modeFlush = 'flush';
+  this.modeFlush = 'add';
 
   /**
    * @type {function()}
@@ -103,6 +103,8 @@ app.MainController = function(gmfThemes, gmfTreeManager) {
     var isModeFlush = this.modeFlush == 'flush' ? true : false;
     this.gmfTreeManager.setModeFlush(isModeFlush);
   }
+
+  this.setModeFlush();
 
   /**
    * @param {GmfThemesNode|undefined} value A theme or undefined to get Themes.

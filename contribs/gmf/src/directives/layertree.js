@@ -3,6 +3,7 @@ goog.provide('gmf.layertreeDirective');
 
 goog.require('gmf');
 goog.require('gmf.Permalink');
+goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
@@ -180,61 +181,6 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
 
 
 /**
- * @const
- */
-gmf.LayertreeController.TYPE_MIXEDGROUP = 'MixedGroup';
-
-
-/**
- * @const
- */
-gmf.LayertreeController.TYPE_NOTMIXEDGROUP = 'NotMixedGroup';
-
-
-/**
- * @const
- */
-gmf.LayertreeController.TYPE_WMTS = 'WMTS';
-
-
-/**
- * @const
- */
-gmf.LayertreeController.TYPE_EXTERNALWMS = 'externalWMS';
-
-
-/**
- * @const
- */
-gmf.LayertreeController.TYPE_WMS = 'WMS';
-
-
-/**
- * Return a "type" that defines the node.
- * @param {GmfThemesNode} node Layer tree node.
- * @return {string} A type.
- * @private
- */
-gmf.LayertreeController.prototype.getNodeType_ = function(node) {
-  var children = node.children;
-  var mixed = node.mixed;
-  if (node.children !== undefined && mixed) {
-    return gmf.LayertreeController.TYPE_MIXEDGROUP;
-  }
-  if (children !== undefined && !mixed) {
-    return gmf.LayertreeController.TYPE_NOTMIXEDGROUP;
-  }
-  if (node.type === 'WMTS') {
-    return gmf.LayertreeController.TYPE_WMTS;
-  }
-  if (goog.isDefAndNotNull(node.url)) {
-    return gmf.LayertreeController.TYPE_EXTERNALWMS;
-  }
-  return gmf.LayertreeController.TYPE_WMS;
-};
-
-
-/**
  * Create and return a layer corresponding to the ngeo layertree's node.
  * This function will only create a layer for each "top-level" (depth 1) groups.
  *
@@ -261,24 +207,24 @@ gmf.LayertreeController.prototype.getNodeType_ = function(node) {
  */
 gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
         opt_createWMS) {
-  var type = this.getNodeType_(node);
+  var type = gmf.Themes.getNodeType(node);
   var layer = null;
 
   if (opt_depth === 1) {
     switch (type) {
-      case gmf.LayertreeController.TYPE_MIXEDGROUP:
+      case gmf.Themes.NodeType.MIXED_GROUP:
         return this.getLayerCaseMixedGroup_(node);
-      case gmf.LayertreeController.TYPE_NOTMIXEDGROUP:
+      case gmf.Themes.NodeType.NOT_MIXED_GROUP:
         layer = this.getLayerCaseNotMixedGroup_(node);
         break;
       // no default
     }
     switch (type) {
-      case gmf.LayertreeController.TYPE_WMTS:
+      case gmf.Themes.NodeType.WMTS:
         layer = this.getLayerCaseWMTS_(node);
         break;
-      case gmf.LayertreeController.TYPE_WMS:
-      case gmf.LayertreeController.TYPE_EXTERNALWMS:
+      case gmf.Themes.NodeType.WMS:
+      case gmf.Themes.NodeType.EXTERNAL_WMS:
         var url = node.url || this.gmfWmsUrl_;
         layer = opt_createWMS ?
             this.layerHelper_.createBasicWMSLayer(url, node.name) : null;
@@ -292,7 +238,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
     layer.set('querySourceIds', ids);
     layer.set('layerName', node.name);
 
-    var isMerged = type === gmf.LayertreeController.TYPE_NOTMIXEDGROUP;
+    var isMerged = type === gmf.Themes.NodeType.NOT_MIXED_GROUP;
     layer.set('isMerged', isMerged);
 
     this.dataLayerGroup_.getLayers().insertAt(0, layer);
@@ -483,7 +429,7 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
  */
 gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
   var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
-  var type = this.getNodeType_(node);
+  var type = gmf.Themes.getNodeType(node);
   var layer = treeCtrl.layer;
   var i, layers, nodeNames;
   var firstParentTree = this.retrieveFirstParentTree_(treeCtrl);
@@ -493,9 +439,9 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
 
   // Deactivate/activate the corresponding layer(s).
   switch (type) {
-    case gmf.LayertreeController.TYPE_WMS:
-    case gmf.LayertreeController.TYPE_WMTS:
-    case gmf.LayertreeController.TYPE_EXTERNALWMS:
+    case gmf.Themes.NodeType.WMS:
+    case gmf.Themes.NodeType.WMTS:
+    case gmf.Themes.NodeType.EXTERNAL_WMS:
 
       if (firstParentTreeLayer instanceof ol.layer.Group) {
         layer.setVisible(!isActive);
@@ -526,7 +472,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
       }
       break;
 
-    case gmf.LayertreeController.TYPE_MIXEDGROUP:
+    case gmf.Themes.NodeType.MIXED_GROUP:
       var nodeLayers = [];
       var l, source;
       nodeNames = this.retrieveNodeNames_(node);
@@ -549,7 +495,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
       }
       break;
 
-    case gmf.LayertreeController.TYPE_NOTMIXEDGROUP:
+    case gmf.Themes.NodeType.NOT_MIXED_GROUP:
       nodeNames = this.retrieveNodeNames_(node);
       source = /** @type {ol.source.ImageWMS} */
           (firstParentTreeLayer.getSource());
@@ -587,7 +533,7 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
   var style;
   var layer = treeCtrl.layer;
   var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
-  var type = this.getNodeType_(node);
+  var type = gmf.Themes.getNodeType(node);
   var firstParentTree = this.retrieveFirstParentTree_(treeCtrl);
   var firstParentTreeLayer = firstParentTree.layer;
   var firstParentTreeSource;
@@ -595,9 +541,9 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
       goog.getUid(firstParentTreeLayer)];
 
   switch (type) {
-    case gmf.LayertreeController.TYPE_WMS:
-    case gmf.LayertreeController.TYPE_WMTS:
-    case gmf.LayertreeController.TYPE_EXTERNALWMS:
+    case gmf.Themes.NodeType.WMS:
+    case gmf.Themes.NodeType.WMTS:
+    case gmf.Themes.NodeType.EXTERNAL_WMS:
       if (firstParentTreeLayer instanceof ol.layer.Group) {
         // If layer is not define (That occures the first time, because the
         // layer is just in the first parent group) add it to current tree to
@@ -633,8 +579,8 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
 
       break;
 
-    case gmf.LayertreeController.TYPE_MIXEDGROUP:
-    case gmf.LayertreeController.TYPE_NOTMIXEDGROUP:
+    case gmf.Themes.NodeType.MIXED_GROUP:
+    case gmf.Themes.NodeType.NOT_MIXED_GROUP:
       var nodeNames = this.retrieveNodeNames_(node);
       var i, found = 0;
       for (i = 0; i < nodeNames.length; i++) {
