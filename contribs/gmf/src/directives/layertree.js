@@ -24,7 +24,7 @@ gmf.module.value('gmfLayertreeTemplate',
           'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(node, depth)" ' +
           'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, ' +
           'treeCtrl)" ' +
-          'ngeo-layertree-templateurl="' + subTemplateUrl + '"' +
+          'ngeo-layertree-templateurl="' + subTemplateUrl + '">' +
           '</div>';
     });
 
