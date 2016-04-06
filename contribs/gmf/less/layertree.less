@@ -11,8 +11,6 @@
   ul {
     padding: 0 @app-margin 0 2*@app-margin; //shifting child nodes
 
-    
-
     ul {
       //nested ul (i.e node groups into node groups should not add extra padding)
       padding-right: 0;
@@ -72,14 +70,14 @@
   }
 
   .leaf {
-    font-size: smaller;
+    font-size: @font-size-small;
     .state::after {
       content: "\e603";
     }
   }
 
   .group {
-    font-size: smaller;
+    font-size: @font-size-small;
     .state::after {
       content: "\e600";
     }
@@ -89,7 +87,7 @@
 
     &.depth-1 {
       //styling the header of first level groups
-      font-size: small;
+      font-size: @font-size-base;
       .name {
         font-weight: bold;
         color: black;
