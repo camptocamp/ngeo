@@ -130,7 +130,9 @@ gmf.MobileBackgroundlayerselectorController = function(
     this.setLayer(defaultBgLayer, true);
   }.bind(this);
 
-  gmfThemes.getBgLayers().then(getBgLayersSuccessFn);
+  ol.events.listen(gmfThemes, gmf.ThemesEventType.LOAD, function() {
+    gmfThemes.getBgLayers().then(getBgLayersSuccessFn);
+  });
 
   ol.events.listen(
       this.backgroundLayerMgr_,
