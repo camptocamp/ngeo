@@ -81,6 +81,14 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
    * @private
    */
   this.promise_ = this.deferred_.promise;
+
+
+  /**
+   * @type {angular.$q.Promise}
+   * @private
+   */
+  this.bgLayerPromise_ = null;
+
 };
 goog.inherits(gmf.Themes, ol.events.EventTarget);
 
@@ -181,6 +189,9 @@ gmf.Themes.getNodeType = function(node) {
  * @return {angular.$q.Promise} Promise.
  */
 gmf.Themes.prototype.getBgLayers = function() {
+  if (this.bgLayerPromise_) {
+    return this.bgLayerPromise_;
+  }
   var $q = this.$q_;
 
   /**
@@ -210,7 +221,7 @@ gmf.Themes.prototype.getBgLayers = function() {
     return $q.all(promises);
   }.bind(this);
 
-  return this.promise_.then(promiseSuccessFn).then(function(values) {
+  this.bgLayerPromise_ = this.promise_.then(promiseSuccessFn).then(function(values) {
     var layers = [];
 
     // (1) add a blank layer
@@ -227,6 +238,8 @@ gmf.Themes.prototype.getBgLayers = function() {
     });
     return layers;
   }.bind(this));
+
+  return this.bgLayerPromise_;
 };
 
 
