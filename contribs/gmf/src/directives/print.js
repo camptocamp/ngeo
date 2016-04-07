@@ -226,7 +226,7 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
   } else {
     this.map.un('postcompose', this.postcomposeListener_);
     this.map.un('pointerdrag', this.onPointerDrag_.bind(this));
-    this.setRotation(this.rotation, -this.rotation);
+    this.getSetRotation(0);
   }
 };
 
@@ -315,18 +315,15 @@ gmf.PrintController.prototype.isAttributeInCurrentLayout_ = function(name) {
 
 
 /**
- * TODO
- * @param {number|string} opt_val TODO
- * @param {number} opt_increment TODO
+ * Getter setter to update or get the current rotation value. Param and result
+ *     are in degree.
+ * @param {number=} opt_rotation The optional new rotation value.
  * @return {number} The new value of rotation;
  * @export
  */
-gmf.PrintController.prototype.setRotation = function(opt_val, opt_increment) {
-  if (opt_val !== undefined) {
-    var rotation = parseInt(opt_val, 10) || this.rotation;
-    if (opt_increment) {
-      rotation = rotation + opt_increment;
-    }
+gmf.PrintController.prototype.getSetRotation = function(opt_rotation) {
+  if (opt_rotation !== undefined) {
+    var rotation = parseInt(opt_rotation, 10);
     if (rotation > 180) {
       rotation = -180;
     } else if (rotation < -180) {
@@ -372,7 +369,7 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
       var increment = Math.round((angle * 180 / Math.PI) * boost);
 
       // Set rotation then update the view.
-      this.setRotation(this.rotation, increment);
+      this.getSetRotation(this.rotation + increment);
       this.$scope_.$digest();
     }
     // Keep a reference of the timeStamp and the position of this event.
