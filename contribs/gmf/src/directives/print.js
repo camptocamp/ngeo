@@ -59,6 +59,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @param {angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angular.$q} $q The Angular $q service.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
  * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {string} gmfPrintUrl A MapFishPrint url.
@@ -68,8 +69,8 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @ngdoc Controller
  * @ngname GmfPrintController
  */
-gmf.PrintController = function($scope, $timeout, $q, ngeoPrintUtils,
-    ngeoCreatePrint, gmfPrintUrl) {
+gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
+    ngeoPrintUtils, ngeoCreatePrint, gmfPrintUrl) {
 
   /**
    * @type {angular.Scope}
@@ -88,6 +89,12 @@ gmf.PrintController = function($scope, $timeout, $q, ngeoPrintUtils,
    * @private
    */
   this.$q_ = $q;
+
+  /**
+   * @type {angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {ngeo.PrintUtils}
@@ -192,7 +199,7 @@ gmf.PrintController = function($scope, $timeout, $q, ngeoPrintUtils,
   var getScaleFn = function(frameState) {
     var mapSize = frameState.size;
     var viewResolution = frameState.viewState.resolution;
-    return this.getOptimalScale_(mapSize, viewResolution);
+    return this.fields.scale = this.getOptimalScale_(mapSize, viewResolution);
   }.bind(this);
 
   /**
@@ -388,11 +395,14 @@ gmf.PrintController.prototype.print = function() {
   this.printState = 'Printing...';
 
   var customAttributes = {
+    'comments': this.fields.comments,
     'datasource': [],
     'debug': this.fields.debug,
-    'comments': this.fields.comments,
-    'title': this.fields.title,
-    'rotation': this.rotation
+    'lang': this.gettextCatalog_.currentLanguage,
+    //'legend': this.fields.legend,
+    'rotation': this.rotation,
+    'scale': this.fields.scale,
+    'title': this.fields.title
   }
 
   var mapSize = this.map.getSize();

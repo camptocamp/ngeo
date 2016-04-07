@@ -82,7 +82,7 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  *     var layout = 'A4 portrait';
  *     var reportSpec = print.createSpec(map, scale, dpi, layout, {
  *       'title': 'A title for my report',
- *       'rotation': 45
+ *       'rotation': 45 // degree
  *     });
  *
  * See our live example: {@link ../examples/mapfishprint.html}
@@ -100,8 +100,9 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  * @constructor
  * @param {string} url URL to MapFish print web service.
  * @param {angular.$http} $http Angular $http service.
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  */
-ngeo.Print = function(url, $http) {
+ngeo.Print = function(url, $http, ngeoLayerHelper) {
   /**
    * @type {string}
    * @private
@@ -113,6 +114,12 @@ ngeo.Print = function(url, $http) {
    * @private
    */
   this.$http_ = $http;
+
+  /**
+   * @type {ngeo.LayerHelper}
+   * @private
+   */
+  this.ngeoLayerHelper_ = ngeoLayerHelper;
 };
 
 
@@ -184,20 +191,21 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   var viewCenter = view.getCenter();
   var viewProjection = view.getProjection();
   var viewResolution = view.getResolution();
-  var viewRotation = object.rotation || view.getRotation();
+  var viewRotation = object.rotation || view.getRotation() * 180 / Math.PI;
 
   goog.asserts.assert(viewCenter !== undefined);
   goog.asserts.assert(viewProjection !== undefined);
 
   object.center = viewCenter;
   object.projection = viewProjection.getCode();
-  object.rotation = viewRotation * 180 / Math.PI;
+  object.rotation = viewRotation;
   object.scale = scale;
   object.layers = [];
 
-  var layersCollection = map.getLayers();
-  goog.asserts.assert(layersCollection !== null);
-  var layers = layersCollection.getArray().slice().reverse();
+  var mapLayerGroup = map.getLayerGroup();
+  goog.asserts.assert(mapLayerGroup !== null);
+  var layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
+  layers = layers.slice().reverse();
 
   layers.forEach(function(layer) {
     if (layer.getVisible()) {
@@ -854,18 +862,19 @@ ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
 
 /**
  * @param {angular.$http} $http Angular $http service.
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @return {ngeo.CreatePrint} The function to create a print service.
  * @ngInject
  * @ngdoc service
  * @ngname ngeoCreatePrint
  */
-ngeo.createPrintServiceFactory = function($http) {
+ngeo.createPrintServiceFactory = function($http, ngeoLayerHelper) {
   return (
       /**
        * @param {string} url URL to MapFish print service.
        */
       function(url) {
-        return new ngeo.Print(url, $http);
+        return new ngeo.Print(url, $http, ngeoLayerHelper);
       });
 };
 
