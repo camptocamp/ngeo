@@ -77,7 +77,7 @@ ngeo.FeatureHelper.prototype.getStyle = function(feature) {
   var style;
 
   switch (type) {
-    case ngeo.GeometryType.LINESTRING:
+    case ngeo.GeometryType.LINE_STRING:
       style = this.getLineStringStyle_(feature);
       break;
     case ngeo.GeometryType.POINT:
@@ -395,7 +395,7 @@ ngeo.FeatureHelper.prototype.getType = function(feature) {
       type = ngeo.GeometryType.POLYGON;
     }
   } else if (geometry instanceof ol.geom.LineString) {
-    type = ngeo.GeometryType.LINESTRING;
+    type = ngeo.GeometryType.LINE_STRING;
   }
 
   goog.asserts.assert(type, 'Type should be thruthy');

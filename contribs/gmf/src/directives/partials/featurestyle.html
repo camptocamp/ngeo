@@ -11,7 +11,7 @@
   </div>
 
   <div class="form-group"
-       ng-if="fsCtrl.type !== 'text'">
+       ng-if="fsCtrl.type !== 'Text'">
     <div class="col-xs-12">
       <span
           class="gmf-featurestyle-measure">
@@ -29,7 +29,7 @@
   </div>
 
   <div
-      ng-if="fsCtrl.type === 'point'"
+      ng-if="fsCtrl.type === 'Point'"
       class="form-group">
     <label class="control-label col-xs-4">{{'Size' | translate}}</label>
     <div class="col-xs-8">
@@ -45,7 +45,7 @@
   </div>
 
   <div
-      ng-if="fsCtrl.type === 'text'"
+      ng-if="fsCtrl.type === 'Text'"
       class="form-group">
     <label class="control-label col-xs-4">{{'Size' | translate}}</label>
     <div class="col-xs-8">
@@ -61,7 +61,7 @@
   </div>
 
   <div
-      ng-if="fsCtrl.type === 'circle' || fsCtrl.type === 'linestring' || fsCtrl.type === 'polygon' || fsCtrl.type === 'rectangle'"
+      ng-if="fsCtrl.type === 'Circle' || fsCtrl.type === 'LineString' || fsCtrl.type === 'Polygon' || fsCtrl.type === 'Rectangle'"
       class="form-group">
     <label class="control-label col-xs-4">{{'Stroke' | translate}}</label>
     <div class="col-xs-8">
@@ -77,7 +77,7 @@
   </div>
 
   <div
-      ng-if="fsCtrl.type === 'circle' || fsCtrl.type === 'polygon' || fsCtrl.type === 'rectangle'"
+      ng-if="fsCtrl.type === 'Circle' || fsCtrl.type === 'Polygon' || fsCtrl.type === 'Rectangle'"
       class="form-group">
     <label class="control-label col-xs-4">{{'Opacity' | translate}}</label>
     <div class="col-xs-8">
@@ -93,7 +93,7 @@
   </div>
 
   <div
-      ng-if="fsCtrl.type === 'text'"
+      ng-if="fsCtrl.type === 'Text'"
       class="form-group">
     <label class="control-label col-xs-4">{{'Angle' | translate}}</label>
     <div class="col-xs-8">
@@ -109,7 +109,7 @@
   </div>
 
   <div
-      ng-if="fsCtrl.type !== 'text'"
+      ng-if="fsCtrl.type !== 'Text'"
       class="form-group">
     <div class="col-xs-12">
       <input
@@ -121,19 +121,19 @@
           ng-switch="fsCtrl.type"
           for="gmf-featurestyle-showmeasure"
           class="control-label">
-        <span ng-switch-when="circle">
+        <span ng-switch-when="Circle">
           {{'Display surface' | translate}}
         </span>
-        <span ng-switch-when="polygon">
+        <span ng-switch-when="Polygon">
           {{'Display surface' | translate}}
         </span>
-        <span ng-switch-when="rectangle">
+        <span ng-switch-when="Rectangle">
           {{'Display surface' | translate}}
         </span>
-        <span ng-switch-when="linestring">
+        <span ng-switch-when="LineString">
           {{'Display length' | translate}}
         </span>
-        <span ng-switch-when="point">
+        <span ng-switch-when="Point">
           {{'Display coordinates' | translate}}
         </span>
       </label>
