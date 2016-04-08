@@ -2,6 +2,7 @@ goog.provide('gmf.Permalink');
 
 goog.require('gmf');
 goog.require('gmf.Themes');
+goog.require('gmf.TreeManager');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.Debounce');
