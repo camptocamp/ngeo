@@ -103,6 +103,12 @@
     display: inline-flex;
     height: @app-margin;
     width: 2 * @app-margin;
+    &.no-layer-icon::after {
+      font-family: gmf-icons;
+      content: "\e907";
+      width: 100%;
+      text-align: center;
+    }
   }
 
   .name {
