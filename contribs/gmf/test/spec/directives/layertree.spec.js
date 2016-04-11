@@ -1,7 +1,4 @@
 goog.require('gmf.LayertreeController');
-goog.require('gmf.Themes');
-goog.require('gmf.ThemesEventType');
-goog.require('gmf.test.data.themes');
 
 describe('gmf.LayertreeController', function() {
   var layertreeController;
@@ -35,6 +32,75 @@ describe('gmf.LayertreeController', function() {
   describe('#getScale_', function() {
     it('returns the correct scale', function() {
       expect(layertreeController.getScale_()).toBeCloseTo(559081145.864);
+    });
+  });
+
+  describe('#getLayer', function() {
+    it('uses false as default visibility (with medadata)', function() {
+      var layerConfig = {
+        "layers": "bus_stop",
+        "name": "bus_stop",
+        "url": null,
+        "isSingleTile": false,
+        "serverType": "mapserver",
+        "queryable": 1,
+        "childLayers": [],
+        "wfsSupport": true,
+        "urlWfs": null,
+        "type": "WMS",
+        "id": 101,
+        "imageType": "image/jpeg",
+        "metadata": {
+        }
+      };
+      var layer = layertreeController.getLayer(layerConfig, 1, true);
+      expect(layer).not.toBe(null);
+      expect(layer.getVisible()).toBe(false);
+    });
+
+    it('uses false as default visibility (w/o medadata)', function() {
+      // bus_stop layer with no `is_checked` attribute in metadata
+      var layerConfig = {
+        "layers": "bus_stop",
+        "name": "bus_stop",
+        "url": null,
+        "isSingleTile": false,
+        "serverType": "mapserver",
+        "queryable": 1,
+        "childLayers": [],
+        "wfsSupport": true,
+        "urlWfs": null,
+        "type": "WMS",
+        "id": 101,
+        "imageType": "image/jpeg"
+        // no metadata property
+      };
+      var layer = layertreeController.getLayer(layerConfig, 1, true);
+      expect(layer).not.toBe(null);
+      expect(layer.getVisible()).toBe(false);
+    });
+
+    it('uses the visibility given in the metadata', function() {
+      var layerConfig = {
+        "layers": "bus_stop",
+        "name": "bus_stop",
+        "url": null,
+        "isSingleTile": false,
+        "serverType": "mapserver",
+        "queryable": 1,
+        "childLayers": [],
+        "wfsSupport": true,
+        "urlWfs": null,
+        "type": "WMS",
+        "id": 101,
+        "imageType": "image/jpeg",
+        "metadata": {
+          "isChecked": "true"
+        }
+      };
+      var layer = layertreeController.getLayer(layerConfig, 1, true);
+      expect(layer).not.toBe(null);
+      expect(layer.getVisible()).toBe(true);
     });
   });
 });

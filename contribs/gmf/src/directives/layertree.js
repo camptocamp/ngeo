@@ -27,7 +27,7 @@ gmf.module.value('gmfLayertreeTemplate',
     });
 
 
-// Overrides the path to the layertree template (used by each nodes, except
+// Overrides the path to the layertree template (used by each node, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
 ngeo.module.value('ngeoLayertreeTemplateUrl',
     /**
@@ -43,7 +43,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
 /**
  * This directive creates a layertree based on the c2cgeoportal JSON themes
  * source and a {@link ngeo.layertreeDirective}. The controller used by this
- * directive defines some fonctions for each node that are created by a default
+ * directive defines some functions for each node that are created by a default
  * template. This default template can be overrided by setting the constant
  * 'gmf.layertreeTemplateUrl' but you will must adapt the
  * ngeoLayertreeTemplateUrl value too (to define the children's nodes template
@@ -245,8 +245,8 @@ gmf.LayertreeController.prototype.getNodeType_ = function(node) {
  * All layer created will be added at the top of the map and with a Z Index
  * value of 1.
  *
- * If the node metadata 'isChecked' value is false, the layer visibility will
- * be set to false.
+ * If the node metadata 'isChecked' value is 'true', the layer visibility will
+ * be set to true.
  * @param {GmfThemesNode} node Layer tree node.
  * @param {number=} opt_depth ngeo layertree node depth.
  * @param {boolean=} opt_createWMS True to allow create wms layer.
@@ -288,13 +288,15 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
 
     this.dataLayerGroup_.getLayers().insertAt(0, layer);
 
-    // If layer is 'unchecked', set it to invisible.
+    // by default a layer is not visible
+    var visible = false;
     var metadata = node.metadata;
-    if (node.children === undefined && goog.isDefAndNotNull(metadata)) {
-      if (metadata['isChecked'] != 'true') {
-        layer.setVisible(false);
+    if (goog.isDefAndNotNull(metadata)) {
+      if (metadata['isChecked'] == 'true') {
+        visible = true;
       }
     }
+    layer.setVisible(visible);
   }
 
   return layer;
