@@ -3,6 +3,8 @@ goog.provide('gmf.printDirective');
 
 goog.require('gmf');
 goog.require('ngeo.CreatePrint');
+goog.require('ngeo.FeatureOverlayMgr');
+goog.require('ngeo.LayerHelper');
 goog.require('ngeo.PrintUtils');
 
 
@@ -61,6 +63,8 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @param {angular.$q} $q The Angular $q service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
+ * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
+ *     Manager service.
  * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
  * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {string} gmfPrintUrl A MapFishPrint url.
@@ -71,7 +75,8 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @ngname GmfPrintController
  */
 gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
-    ngeoLayerHelper, ngeoPrintUtils, ngeoCreatePrint, gmfPrintUrl) {
+    ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils, ngeoCreatePrint,
+    gmfPrintUrl) {
 
   /**
    * @type {angular.Scope}
@@ -102,6 +107,12 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {ol.layer.Vector}
+   * @private
+   */
+  this.featureOverlayLayer_ = ngeoFeatureOverlayMgr.getLayer();
 
   /**
    * @type {ngeo.PrintUtils}
@@ -252,10 +263,10 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
  * @private
  */
 gmf.PrintController.prototype.parseCapabilities_ = function(resp) {
-  var data = resp.data;
-  this.formats = data.formats;
-  this.layouts = data.layouts;
-  this.layout = data.layouts[0];
+  var data = resp['data'];
+  this.formats = data['formats'];
+  this.layouts = data['layouts'];
+  this.layout = data['layouts'][0];
 
   this.fields.layouts = [];
   this.layouts.forEach(function(layout) {
@@ -424,6 +435,14 @@ gmf.PrintController.prototype.print = function() {
 
   var spec = this.ngeoPrint_.createSpec(this.map, scale, this.fields.dpi,
       this.fields.layout, customAttributes);
+
+  // Add feature overlay layer to print spec.
+  var layers = [];
+  this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_,
+      viewResolution);
+  if (layers.length > 0) {
+    spec.attributes.map.layers.unshift(layers[0]);
+  }
 
   this.ngeoPrint_.createReport(spec, /** @type {angular.$http.Config} */ ({
     timeout: this.requestCanceler_.promise

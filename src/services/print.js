@@ -2,6 +2,7 @@ goog.provide('ngeo.CreatePrint');
 goog.provide('ngeo.Print');
 
 goog.require('goog.color');
+goog.require('goog.color.alpha');
 goog.require('goog.math');
 goog.require('goog.object');
 goog.require('ngeo');
@@ -100,7 +101,7 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  * @constructor
  * @param {string} url URL to MapFish print web service.
  * @param {angular.$http} $http Angular $http service.
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
  */
 ngeo.Print = function(url, $http, ngeoLayerHelper) {
   /**
@@ -547,11 +548,14 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
  */
 ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
   var fillColor = fillStyle.getColor();
-  goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
   if (fillColor !== null) {
-    var fillColorRgba = ol.color.asArray(fillColor);
-    symbolizer.fillColor = goog.color.rgbArrayToHex(fillColorRgba);
-    symbolizer.fillOpacity = fillColorRgba[3];
+    if (typeof (fillColor) === 'string') {
+      var hex = goog.color.alpha.parse(fillColor).hex;
+      fillColor = goog.color.alpha.hexToRgba(hex);
+    }
+    goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
+    symbolizer.fillColor = goog.color.rgbArrayToHex(fillColor);
+    symbolizer.fillOpacity = fillColor[3];
   }
 };
 
