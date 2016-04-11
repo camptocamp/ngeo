@@ -2,7 +2,6 @@ goog.provide('gmf.MobileBackgroundlayerselectorController');
 goog.provide('gmf.mobileBackgroundlayerselectorDirective');
 
 goog.require('gmf');
-goog.require('gmf.Permalink');
 goog.require('gmf.Themes');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
@@ -66,15 +65,13 @@ gmf.module.directive('gmfMobileBackgroundlayerselector',
  * @constructor
  * @param {ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
- * @param {gmf.Permalink} gmfPermalink The gmf permalink service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @export
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileBackgroundlayerselectorController
  */
-gmf.MobileBackgroundlayerselectorController = function(
-    ngeoBackgroundLayerMgr, gmfPermalink, gmfThemes) {
+gmf.MobileBackgroundlayerselectorController = function(ngeoBackgroundLayerMgr, gmfThemes) {
 
   /**
    * @type {ol.Map}
@@ -101,36 +98,15 @@ gmf.MobileBackgroundlayerselectorController = function(
    */
   this.bgLayers;
 
+  gmfThemes.getBgLayers().then(function(layers) {
+    this.bgLayers = layers;
+  }.bind(this));
+
   /**
    * @type {ngeo.BackgroundLayerMgr}
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
-
-  /**
-   * @type {gmf.Permalink}
-   * @private
-   */
-  this.gmfPermalink_ = gmfPermalink;
-
-  /**
-   * @param {Array.<ol.layer.Base>} bgLayers Array of background
-   *     layer objects.
-   */
-  var getBgLayersSuccessFn = function(bgLayers) {
-    this.bgLayers = bgLayers;
-    // try to get default bgLayer from permalink service, otherwise
-    // set default bgLayer to the second one (if defined), the first
-    // being the blank layer
-    var defaultBgLayer = this.gmfPermalink_.getBackgroundLayer(bgLayers);
-    if (!defaultBgLayer) {
-      defaultBgLayer = this.bgLayers[1] !== undefined ?
-          this.bgLayers[1] : this.bgLayers[0];
-    }
-    this.setLayer(defaultBgLayer, true);
-  }.bind(this);
-
-  gmfThemes.getBgLayers().then(getBgLayersSuccessFn);
 
   ol.events.listen(
       this.backgroundLayerMgr_,
