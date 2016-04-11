@@ -5,7 +5,7 @@ goog.provide('ngeo');
 
 
 /** @type {!angular.Module} */
-ngeo.module = angular.module('ngeo', []);
+ngeo.module = angular.module('ngeo', ['gettext']);
 
 
 /**
@@ -36,10 +36,10 @@ ngeo.FeatureProperties = {
  * @enum {string}
  */
 ngeo.GeometryType = {
-  CIRCLE: 'circle',
-  LINESTRING: 'linestring',
-  POINT: 'point',
-  POLYGON: 'polygon',
-  RECTANGLE: 'rectangle',
-  TEXT: 'text'
+  CIRCLE: 'Circle',
+  LINE_STRING: 'LineString',
+  POINT: 'Point',
+  POLYGON: 'Polygon',
+  RECTANGLE: 'Rectangle',
+  TEXT: 'Text'
 };
