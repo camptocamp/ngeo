@@ -57,4 +57,33 @@ describe('ngeo.LayerHelper', function() {
     group.setLayers(collection);
     expect(ngeoLayerHelper.getFlatLayers(group).length).toBe(1);
   });
+
+  it('Get WMS legend url', function() {
+    var url = 'http://test';
+    var layerName = 'wmsLayer';
+    var scale = 0;
+    var legendRule = 'legendRule';
+    var wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale,
+        legendRule)
+    var expectedResult = url + '?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=' +
+      'wms&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + layerName +
+      '&SCALE=' + scale + '&RULE=' +legendRule;
+    expect(expectedResult).toBe(wmsLegendURL);
+  });
+
+  it('Get WMTS legend url', function() {
+    $httpBackend.expectGET(wmtsSrc);
+    var spy = jasmine.createSpy();
+    var promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
+            wmtsName);
+    promise.then(spy);
+    $httpBackend.flush();
+
+    expect(spy.calls.count()).toBe(1);
+    layer = spy.calls.mostRecent().args[0];
+    var capabilitiesStyles = [{legendURL: [{href: 'http://legendURL'}]}];
+    layer.set('capabilitiesStyles', capabilitiesStyles);
+    var legend = ngeoLayerHelper.getWMTSLegendURL(layer);
+    expect(legend).toBe('http://legendURL');
+  });
 });

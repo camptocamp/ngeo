@@ -653,7 +653,9 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
     return null;
   }
 
-  return this.getWMSLegendURL_(node, opt_legendRule);
+  var url = node.url || this.gmfWmsUrl_;
+  return this.layerHelper_.getWMSLegendURL(url, node.name,
+          this.getScale_(), opt_legendRule);
 };
 
 
@@ -674,58 +676,11 @@ gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
   var layer = treeCtrl.layer;
   if (node.type === 'WMTS' && goog.isDefAndNotNull(layer)) {
     goog.asserts.assertInstanceof(layer, ol.layer.Tile);
-    return this.getWMTSLegendURL_(layer);
+    return this.layerHelper_.getWMTSLegendURL(layer);
   } else {
-    return this.getWMSLegendURL_(node);
+    var url = node.url || this.gmfWmsUrl_;
+    return this.layerHelper_.getWMSLegendURL(url, node.name, this.getScale_());
   }
-};
-
-
-/**
- * Get the WMTS legend URL for the given layer.
- * @param {ol.layer.Tile} layer Tile layer as returned by the
- * gmf layerHelper service.
- * @return {?string} The legend URL or null.
- * @private
- */
-gmf.LayertreeController.prototype.getWMTSLegendURL_ = function(layer) {
-  // FIXME case of multiple styles ?  case of multiple legendUrl ?
-  var url;
-  var styles = layer.get('capabilitiesStyles');
-  if (styles !== undefined) {
-    var legendURL = styles[0]['legendURL'];
-    if (legendURL !== undefined) {
-      url = legendURL[0]['href'];
-    }
-  }
-  return url || null;
-};
-
-
-/**
- * Get the WMS legend URL for the given node.
- * @param {GmfThemesNode} node Layer tree node.
- * @param {string=} opt_legendRule rule parameters to add to the returned URL.
- * @return {?string} The legend URL or null.
- * @private
- */
-gmf.LayertreeController.prototype.getWMSLegendURL_ = function(node,
-    opt_legendRule) {
-  var scale = this.getScale_();
-  var url = node.url || this.gmfWmsUrl_;
-  if (url !== undefined) {
-    url = goog.uri.utils.setParam(url, 'FORMAT', 'image/png');
-    url = goog.uri.utils.setParam(url, 'TRANSPARENT', true);
-    url = goog.uri.utils.setParam(url, 'SERVICE', 'wms');
-    url = goog.uri.utils.setParam(url, 'VERSION', '1.1.1');
-    url = goog.uri.utils.setParam(url, 'REQUEST', 'GetLegendGraphic');
-    url = goog.uri.utils.setParam(url, 'LAYER', node.name);
-    url = goog.uri.utils.setParam(url, 'SCALE', scale);
-    if (opt_legendRule !== undefined) {
-      url = goog.uri.utils.setParam(url, 'RULE', opt_legendRule);
-    }
-  }
-  return url || null;
 };
 
 

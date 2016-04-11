@@ -60,6 +60,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angular.$q} $q The Angular $q service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {ngeo.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
  * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
  * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {string} gmfPrintUrl A MapFishPrint url.
@@ -70,7 +71,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @ngname GmfPrintController
  */
 gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
-    ngeoPrintUtils, ngeoCreatePrint, gmfPrintUrl) {
+    ngeoLayerHelper, ngeoPrintUtils, ngeoCreatePrint, gmfPrintUrl) {
 
   /**
    * @type {angular.Scope}
@@ -95,6 +96,12 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
+
+  /**
+   * @type {ngeo.LayerHelper}
+   * @private
+   */
+  this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {ngeo.PrintUtils}
@@ -394,20 +401,26 @@ gmf.PrintController.prototype.print = function() {
   this.requestCanceler_ = this.$q_.defer();
   this.printState = 'Printing...';
 
+  var mapSize = this.map.getSize();
+  var viewResolution = this.map.getView().getResolution();
+  var scale = this.getOptimalScale_(mapSize, viewResolution);
+
   var customAttributes = {
     'comments': this.fields.comments,
     'datasource': [],
     'debug': this.fields.debug,
     'lang': this.gettextCatalog_.currentLanguage,
-    //'legend': this.fields.legend,
     'rotation': this.rotation,
     'scale': this.fields.scale,
     'title': this.fields.title
   }
 
-  var mapSize = this.map.getSize();
-  var viewResolution = this.map.getView().getResolution();
-  var scale = this.getOptimalScale_(mapSize, viewResolution);
+  if (this.fields.legend) {
+    var legend = this.getLegend_(scale);
+    if (legend !== null) {
+      customAttributes['legend'] = this.getLegend_(scale);
+    }
+  }
 
   var spec = this.ngeoPrint_.createSpec(this.map, scale, this.fields.dpi,
       this.fields.layout, customAttributes);
@@ -530,6 +543,52 @@ gmf.PrintController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
  */
 gmf.PrintController.prototype.handleCreateReportError_ = function(resp) {
   this.resetPrintStates_('Print error');
+};
+
+
+/**
+ * @param {number} scale The scale to get the legend (for wms layers only).
+ * @return {Object?} Legend object for print report or null.
+ * @private
+ */
+gmf.PrintController.prototype.getLegend_ = function(scale) {
+  var dataLayerGroup = this.ngeoLayerHelper_.getGroupFromMap(this.map,
+      gmf.DATALAYERGROUP_NAME);
+  var layers = this.ngeoLayerHelper_.getFlatLayers(dataLayerGroup);
+  var legend = {'classes': []};
+  var classes, layerNames, layerName, icons;
+  layers.reverse().forEach(function(layer) {
+    classes = [];
+    var source = layer.getSource();
+    if (layer.getVisible() && source !== undefined) {
+      if (layer instanceof ol.layer.Tile) {
+        layerName = layer.get('layerName');
+        icons = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
+        if (icons !== null) {
+          classes.push({
+            'name': layerName,
+            'icons': [icons]
+          });
+        }
+      } else {
+        layerNames = source.getParams()['LAYERS'].split(',');
+        layerNames.forEach(function(name) {
+          icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
+              scale);
+          if (icons !== null && name.length !== 0) {
+            classes.push({
+              'name': name,
+              'icons': [icons]
+            });
+          }
+        }.bind(this));
+      }
+    }
+    if (classes.length > 0) {
+      legend['classes'].push({'classes': classes});
+    }
+  }.bind(this));
+  return legend['classes'].length > 0 ?  legend : null;
 };
 
 
