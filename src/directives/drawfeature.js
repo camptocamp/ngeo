@@ -20,6 +20,7 @@ goog.require('ngeo.measureazimutDirective');
 goog.require('ngeo.measurelengthDirective');
 goog.require('ol.Feature');
 
+
 /**
  * Directive used to draw vector features on a map.
  * Example:
@@ -282,8 +283,13 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
   var name = this.gettextCatalog_.getString(type);
   feature.set(prop.NAME, name + ' ' + (this.features_.getLength() + 1));
 
+  /**
+   * @type {string}
+   */
+  var color = type !== ngeo.GeometryType.TEXT ? '#DB4436' : '#000000';
+  feature.set(prop.COLOR, color);
+
   feature.set(prop.ANGLE, 0);
-  feature.set(prop.COLOR, '#ed1c24');
   feature.set(prop.OPACITY, 0.2);
   feature.set(prop.SHOW_MEASURE, false);
   feature.set(prop.SIZE, 10);

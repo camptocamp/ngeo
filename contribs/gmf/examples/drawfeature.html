@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Draw Feature Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+
+    <style>
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+
+      /* drawfeature */
+
+      gmf-drawfeature {
+        display: block;
+        margin: 20px;
+        width: 425px;
+      }
+
+      .ngeo-drawfeature-actionbuttons {
+        float: right;
+      }
+
+      .gmf-drawfeature-featurelist li:hover {
+        background-color: #ADD8E6;
+        cursor: pointer;
+      }
+
+      .gmf-eol {
+        clear: both;
+      }
+
+      /* drawfeature */
+
+      ngeo-drawfeature {
+        margin: 10px 0;
+      }
+      .ngeo-drawfeature-circle:before {
+        content: 'Circle'
+      }
+      .ngeo-drawfeature-linestring:before {
+        content: 'LineString'
+      }
+      .ngeo-drawfeature-point:before {
+        content: 'Point'
+      }
+      .ngeo-drawfeature-polygon:before {
+        content: 'Polygon'
+      }
+      .ngeo-drawfeature-rectangle:before {
+        content: 'Rectangle'
+      }
+      .ngeo-drawfeature-text:before {
+        content: 'Text'
+      }
+      .tooltip {
+        position: relative;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        color: white;
+        padding: 4px 8px;
+        opacity: 0.7;
+        white-space: nowrap;
+      }
+      .tooltip-measure {
+        opacity: 1;
+        font-weight: bold;
+      }
+      .tooltip-static {
+        display: none;
+      }
+      .tooltip-measure:before,
+      .tooltip-static:before {
+        border-top: 6px solid rgba(0, 0, 0, 0.5);
+        border-right: 6px solid transparent;
+        border-left: 6px solid transparent;
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        margin-left: -7px;
+        left: 50%;
+      }
+      .tooltip-static:before {
+        border-top-color: #ffcc33;
+      }
+
+      /* featurestyle */
+
+      gmf-featurestyle .form-horizontal .control-label {
+        text-align: left;
+      }
+      .gmf-featurestyle-name {
+        font-weight: bold;
+        font-size: 16pt;
+      }
+      .gmf-featurestyle-name:not(:focus) {
+        border: none;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+        padding: 0;
+      }
+      gmf-featurestyle input[type=range] {
+        padding: 6px 12px;
+      }
+      .palette {
+        border-collapse: separate;
+        border-spacing: 0px;
+      }
+      .palette tr {
+        cursor: default;
+      }
+      .palette td {
+        position: relative;
+        padding: 0px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 1px;
+        cursor: pointer;
+      }
+      .palette td > div {
+        position: relative;
+        height: 12px;
+        width: 12px;
+        border: 1px solid #fff;
+        box-sizing: content-box;
+      }
+      .palette td:hover > div::after {
+        display: block;
+        content: '';
+        background: inherit;
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        top: -10px;
+        left: -10px;
+        border: 2px solid #fff;
+        -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+        -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+        box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+        z-index: 11;
+      }
+      .palette td.selected > div::after {
+        border: 2px solid #444;
+        margin: 0;
+        content: '';
+        display: block;
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        left: -3px;
+        top: -3px;
+        box-sizing: content-box;
+        z-index: 10;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map gmf-map-map="::ctrl.map"></gmf-map>
+
+    <input type="checkbox"
+       id="checkbox-drawfeature"
+       ng-model="ctrl.drawFeatureActive" />
+    <label for="checkbox-drawfeature"> DrawFeature</label>
+
+    <input type="checkbox"
+       id="checkbox-pointermove"
+       ng-model="ctrl.pointerMoveActive" />
+    <label for="checkbox-pointermove"> PointerMove</label>
+    <span id="pointermove-feature"></span>
+
+    <gmf-drawfeature
+      ng-show="ctrl.drawFeatureActive === true"
+      gmf-drawfeature-active="ctrl.drawFeatureActive"
+      gmf-drawfeature-map="::ctrl.map">
+    </gmf-drawfeature>
+
+    <p id="desc">
+      This example shows how to use the <code>gmf-drawfeature</code>
+      directive to create, modify and delete vector features on a map and
+      style them as we please.
+    </p>
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
+    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="/@?main=drawfeature.js"></script>
+    <script src="default.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+  </body>
+</html>
