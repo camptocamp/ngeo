@@ -258,6 +258,43 @@ ngeox.format.FeatureHashOptions.prototype.properties;
  */
 ngeox.interaction;
 
+
+/**
+ * @typedef {{
+ *     pixelTolerance: (number|undefined),
+ *     style: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
+ *     features: ol.Collection.<ol.Feature>,
+ *     wrapX: (boolean|undefined)}}
+ * @api
+ */
+ngeox.interaction.ModifyOptions;
+
+
+/**
+ * Pixel tolerance for considering the pointer close enough to a segment or
+ * vertex for editing.
+ * @type {number|undefined}
+ * @api
+ */
+ngeox.interaction.ModifyOptions.prototype.pixelTolerance;
+
+
+/**
+ * Style used for the features being modified.
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ * @api
+ */
+ngeox.interaction.ModifyOptions.prototype.style;
+
+
+/**
+ * The features the interaction works on.
+ * @type {ol.Collection.<ol.Feature>}
+ * @api
+ */
+ngeox.interaction.ModifyOptions.prototype.features;
+
+
 /**
  * Interactions for measure tools.
  * @typedef {{
