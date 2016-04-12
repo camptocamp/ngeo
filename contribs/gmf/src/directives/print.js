@@ -8,7 +8,25 @@ goog.require('ngeo.LayerHelper');
 goog.require('ngeo.PrintUtils');
 
 
-ngeo.module.value('gmfPrintTemplateUrl',
+/**
+ * @typedef {{
+ *   comments: (string|undefined),
+ *   debug: (boolean|undefined),
+ *   dpi: (number|undefined),
+ *   dpis: (Array.<number>|undefined),
+ *   formats: (Object.<string, boolean>|undefined),
+ *   layout: (string|undefined),
+ *   layouts: (Array.<string>|undefined),
+ *   legend: (boolean|undefined),
+ *   scales: (Array.<number>|undefined),
+ *   scale: (number|undefined),
+ *   title: (string|undefined)
+ * }}
+ */
+gmf.PrintFields;
+
+
+gmf.module.value('gmfPrintTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -22,6 +40,22 @@ ngeo.module.value('gmfPrintTemplateUrl',
 
 
 /**
+ * Provide a directive that display a print panel. This panel is populated with
+ * a form corresponding to the capabilities delivered by a GMF print v3 server.
+ * If you want to use another template for your print panel, you can see the
+ * available fields in the 'gmf.PrintFields' classes.
+ *
+ * Example:
+ *
+ *      <gmf-print
+ *        gmf-print-map="mainCtrl.map"
+ *        gmf-print-active="printActive">
+ *      </gmf-print>
+ *
+ *
+ * @htmlAttribute {ol.Map} gmf-search-map The map.
+ * @htmlAttribute {boolean} gmf-search-active A boolean that informs if the
+ *     panel is open or not.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfPrintTemplateUrl Template url for the directive.
  * @return {angular.Directive} Directive Definition Object.
@@ -180,7 +214,7 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
   this.paperSize_ = [];
 
   /**
-   * @type {Object} FIXME precise type
+   * @type {gmf.PrintFields}
    * @export
    */
   this.fields = {};
@@ -282,7 +316,6 @@ gmf.PrintController.prototype.parseCapabilities_ = function(resp) {
  * current layout otherwise use the defaults values of the layout.
  * If a field doesn't exist in the current layout, set it to undefined so the
  * view can hide it. Update also the paper size.
- * FIXME write somewhere which fields exists (to make easier the creation of
  * custom print templates).
  * @private
  */
@@ -330,7 +363,7 @@ gmf.PrintController.prototype.updateFields_ = function() {
 
 
 /**
- * Return a capabilities 'attribute' object correesponding to the given name.
+ * Return a capabilities 'attribute' object corresponding to the given name.
  * @param {string} name Name of the attribute to get.
  * @return {Object|null} corresponding attribute or null.
  * @private
@@ -412,7 +445,7 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
 
 
 /**
- * TODO
+ * Create a print report based on the values of the 'fields' values.
  * @param {string} format An output format corresponding to one format in the
  *     capabilities document ('pdf', 'png', etc).
  * @export
@@ -442,6 +475,9 @@ gmf.PrintController.prototype.print = function(format) {
     }
   }
 
+  goog.asserts.assertNumber(this.fields.dpi);
+  goog.asserts.assertString(this.fields.layout);
+
   var spec = this.ngeoPrint_.createSpec(this.map, scale, this.fields.dpi,
       this.fields.layout, format, customAttributes);
 
@@ -463,7 +499,7 @@ gmf.PrintController.prototype.print = function(format) {
 
 
 /**
- * TODO
+ * Cancel the current print and reset its state.
  * @export
  */
 gmf.PrintController.prototype.cancel = function() {
@@ -486,7 +522,6 @@ gmf.PrintController.prototype.cancel = function() {
 
 
 /**
- * TODO
  * @param {string=} opt_printState the print state.
  * @private
  */
@@ -497,6 +532,8 @@ gmf.PrintController.prototype.resetPrintStates_ = function(opt_printState) {
 
 
 /**
+ * Get the optimal scale to display the print mask. Return the first scale if
+ * no scale matches.
  * @param {ol.Size} mapSize Size of the map on the screen (px).
  * @param {number} viewResolution Resolution of the map on the screen.
  * @return {number} The best scale. -1 is returned if there is no optimal
@@ -580,18 +617,25 @@ gmf.PrintController.prototype.handleCreateReportError_ = function(resp) {
  * @private
  */
 gmf.PrintController.prototype.getLegend_ = function(scale) {
+  var legend = {'classes': []};
+  var classes, layerNames, layerName, icons;
+
+  // Get layers from layertree only.
   var dataLayerGroup = this.ngeoLayerHelper_.getGroupFromMap(this.map,
       gmf.DATALAYERGROUP_NAME);
   var layers = this.ngeoLayerHelper_.getFlatLayers(dataLayerGroup);
-  var legend = {'classes': []};
-  var classes, layerNames, layerName, icons;
+
+  // For each visible layer in reverse order, get the legend url.
   layers.reverse().forEach(function(layer) {
     classes = [];
     var source = layer.getSource();
+
     if (layer.getVisible() && source !== undefined) {
+      // For WMTS layers.
       if (layer instanceof ol.layer.Tile) {
         layerName = layer.get('layerName');
         icons = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
+        // Don't add classes without legend url.
         if (icons !== null) {
           classes.push({
             'name': layerName,
@@ -599,10 +643,13 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
           });
         }
       } else {
+        // For each name in a WMS layer.
         layerNames = source.getParams()['LAYERS'].split(',');
         layerNames.forEach(function(name) {
           icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
               scale);
+          // Don't add classes without legend url or from layers without any
+          // active name.
           if (icons !== null && name.length !== 0) {
             classes.push({
               'name': name,
@@ -612,10 +659,14 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
         }.bind(this));
       }
     }
+
+    // Add classes object only if it contains something.
     if (classes.length > 0) {
       legend['classes'].push({'classes': classes});
     }
+
   }.bind(this));
+
   return legend['classes'].length > 0 ?  legend : null;
 };
 
