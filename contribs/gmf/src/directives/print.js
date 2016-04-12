@@ -26,6 +26,18 @@ goog.require('ngeo.PrintUtils');
 gmf.PrintFields;
 
 
+/**
+ * @enum {string}
+ */
+gmf.PrintState = {
+  NOT_IN_USE: 'notInUse',
+  PRINTING: 'printing',
+  ERROR_ON_REPORT: 'errorOnReport',
+  CAPABILITIES_NOT_LOADED: 'capabilitiesNotLoaded',
+  ERROR_ON_GETCAPABILITIES: 'errorOnGetCapabilities'
+}
+
+
 gmf.module.value('gmfPrintTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
@@ -173,11 +185,10 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
   this.statusTimeoutPromise_ = null;
 
   /**
-   * Text to display a "loading" message while waiting for the report.
-   * @type {string}
+   * @type {gmf.PrintState}
    * @export
    */
-  this.printState = '';
+  this.printState = gmf.PrintState.CAPABILITIES_NOT_LOADED;
 
   /**
    * Current report reference id.
@@ -276,12 +287,17 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
  */
 gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
   if (active) {
-    // FIXME handle error
     this.ngeoPrint_.getCapabilities().then(function(resp) {
+      this.printState = gmf.PrintState.NOT_IN_USE;
+      // Get capabilities - On success
       this.parseCapabilities_(resp);
       this.map.on('postcompose', this.postcomposeListener_);
       this.map.on('pointerdrag', this.onPointerDrag_.bind(this));
+    }.bind(this), function(resp) {
+      // Get capabilities - On error
+      this.printState = gmf.PrintState.ERROR_ON_GETCAPABILITIES;
     }.bind(this));
+
   } else {
     this.map.un('postcompose', this.postcomposeListener_);
     this.map.un('pointerdrag', this.onPointerDrag_.bind(this));
@@ -452,7 +468,7 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
  */
 gmf.PrintController.prototype.print = function(format) {
   this.requestCanceler_ = this.$q_.defer();
-  this.printState = 'Printing...';
+  this.printState = gmf.PrintState.PRINTING;
 
   var mapSize = this.map.getSize();
   var viewResolution = this.map.getView().getResolution();
@@ -522,11 +538,11 @@ gmf.PrintController.prototype.cancel = function() {
 
 
 /**
- * @param {string=} opt_printState the print state.
+ * @param {gmf.PrintState=} opt_printState the print state.
  * @private
  */
 gmf.PrintController.prototype.resetPrintStates_ = function(opt_printState) {
-  this.printState = opt_printState || '';
+  this.printState = opt_printState || gmf.PrintState.NOT_IN_USE;
   this.curRef_ = '';
 };
 
@@ -607,7 +623,7 @@ gmf.PrintController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
  * @private
  */
 gmf.PrintController.prototype.handleCreateReportError_ = function(resp) {
-  this.resetPrintStates_('Print error');
+  this.resetPrintStates_(gmf.PrintState.ERROR_ON_REPORT);
 };
 
 
@@ -711,6 +727,18 @@ gmf.PrintController.prototype.setScale = function(scale) {
  */
 gmf.PrintController.prototype.setDpi = function(dpi) {
   this.fields.dpi = dpi;
+};
+
+
+/**
+ * Check the current state of the print.
+ * @param {string} stateEnumKey An enum key from gmf.PrintState.
+ * @return {boolean} True if the given state matches with the current print
+ *     state. False otherwise.
+ * @export
+ */
+gmf.PrintController.prototype.isState = function(stateEnumKey) {
+  return this.printState === gmf.PrintState[stateEnumKey];
 };
 
 
