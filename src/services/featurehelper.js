@@ -26,7 +26,7 @@ ngeo.FeatureHelper = function($injector) {
    * @type {?number}
    * @private
    */
-  this.decimals = null;
+  this.decimals_ = null;
 
   if ($injector.has('ngeoMeasureDecimals')) {
     this.decimals_ = $injector.get('ngeoMeasureDecimals');

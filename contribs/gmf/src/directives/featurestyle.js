@@ -54,6 +54,12 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
   this.feature;
 
   /**
+   * @type {!angular.Scope}
+   * @private
+   */
+  this.scope_ = $scope;
+
+  /**
    * @type {ngeo.FeatureHelper}
    * @private
    */
@@ -281,6 +287,8 @@ gmf.FeaturestyleController.prototype.handleGeometryChange_ = function() {
   if (showMeasure) {
     this.handleFeatureChange_();
   }
+
+  this.scope_.$apply();
 };
 
 
