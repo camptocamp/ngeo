@@ -52,6 +52,13 @@ app.PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
  * @const
  * @private
  */
+app.PRINT_FORMAT_ = 'pdf';
+
+
+/**
+ * @const
+ * @private
+ */
 app.PRINT_LAYOUT_ = 'A4 portrait';
 
 
@@ -186,11 +193,12 @@ app.MainController.prototype.print = function() {
       app.PRINT_SCALES_[0];
 
   var dpi = app.PRINT_DPI_;
+  var format = app.PRINT_FORMAT_;
   var layout = app.PRINT_LAYOUT_;
 
   this.printState = 'Printing...';
 
-  var spec = this.print_.createSpec(map, scale, dpi, layout, {
+  var spec = this.print_.createSpec(map, scale, dpi, layout, format, {
     'datasource': [],
     'debug': 0,
     'comments': 'My comments',

@@ -61,9 +61,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
         expect(spec.attributes.map.rotation).toEqual(180);
       });
     });
@@ -87,9 +89,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
 
         expect(spec).toEqual({
           attributes: {
@@ -115,6 +119,7 @@ describe('ngeo.CreatePrint', function() {
             foo: 'fooval',
             bar: 'barval'
           },
+          format: 'pdf',
           layout: 'foo layout'
         });
 
@@ -142,9 +147,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
         expect(spec).toEqual({
           attributes: {
             map: {
@@ -168,6 +175,7 @@ describe('ngeo.CreatePrint', function() {
             foo: 'fooval',
             bar: 'barval'
           },
+          format: 'pdf',
           layout: 'foo layout'
         });
 
@@ -207,9 +215,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
 
         expect(spec).toEqual({
           attributes: {
@@ -259,6 +269,7 @@ describe('ngeo.CreatePrint', function() {
             foo: 'fooval',
             bar: 'barval'
           },
+          format: 'pdf',
           layout: 'foo layout'
         });
 
@@ -390,9 +401,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
 
         var styleId0 = goog.getUid(style0).toString();
         var styleId1 = goog.getUid(style1).toString();
@@ -529,6 +542,7 @@ describe('ngeo.CreatePrint', function() {
             foo: 'fooval',
             bar: 'barval'
           },
+          format: 'pdf',
           layout: 'foo layout'
         });
       });
@@ -565,9 +579,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
 
         var layers = spec.attributes.map.layers;
         expect(layers.length).toBe(2);

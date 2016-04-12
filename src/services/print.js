@@ -81,7 +81,8 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  *     var scale = 5000;
  *     var dpi = 72;
  *     var layout = 'A4 portrait';
- *     var reportSpec = print.createSpec(map, scale, dpi, layout, {
+ *     var format = 'pdf';
+ *     var reportSpec = print.createSpec(map, scale, dpi, layout, format {
  *       'title': 'A title for my report',
  *       'rotation': 45 // degree
  *     });
@@ -153,12 +154,13 @@ ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
  * @param {number} scale Scale.
  * @param {number} dpi DPI.
  * @param {string} layout Layout.
+ * @param {string} format Formats.
  * @param {Object.<string, *>} customAttributes Custom attributes.
  * @return {MapFishPrintSpec} The print spec.
  * @export
  */
 ngeo.Print.prototype.createSpec = function(
-    map, scale, dpi, layout, customAttributes) {
+    map, scale, dpi, layout, format, customAttributes) {
 
   var specMap = /** @type {MapFishPrintMap} */ ({
     dpi: dpi,
@@ -174,6 +176,7 @@ ngeo.Print.prototype.createSpec = function(
 
   var spec = /** @type {MapFishPrintSpec} */ ({
     attributes: attributes,
+    format: format,
     layout: layout
   });
 
@@ -813,7 +816,8 @@ ngeo.Print.prototype.getWmtsUrl_ = function(source) {
  * @export
  */
 ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
-  var url = this.url_ + '/report.pdf';
+  var format = printSpec.format || 'pdf';
+  var url = this.url_ + '/report.' + format;
   var httpConfig = /** @type {angular.$http.Config} */ ({
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'

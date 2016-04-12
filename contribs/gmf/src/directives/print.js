@@ -264,12 +264,12 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
  */
 gmf.PrintController.prototype.parseCapabilities_ = function(resp) {
   var data = resp['data'];
-  this.formats = data['formats'];
-  this.layouts = data['layouts'];
-  this.layout = data['layouts'][0];
+  this.formats_ = data['formats'] || [];
+  this.layouts_ = data['layouts'];
+  this.layout_ = data['layouts'][0];
 
   this.fields.layouts = [];
-  this.layouts.forEach(function(layout) {
+  this.layouts_.forEach(function(layout) {
     this.fields.layouts.push(layout.name);
   }.bind(this));
 
@@ -282,10 +282,12 @@ gmf.PrintController.prototype.parseCapabilities_ = function(resp) {
  * current layout otherwise use the defaults values of the layout.
  * If a field doesn't exist in the current layout, set it to undefined so the
  * view can hide it. Update also the paper size.
+ * FIXME write somewhere which fields exists (to make easier the creation of
+ * custom print templates).
  * @private
  */
 gmf.PrintController.prototype.updateFields_ = function() {
-  this.fields.layout = this.layout.name;
+  this.fields.layout = this.layout_.name;
 
   var mapInfo = this.isAttributeInCurrentLayout_('map');
   goog.asserts.assertObject(mapInfo);
@@ -319,6 +321,11 @@ gmf.PrintController.prototype.updateFields_ = function() {
   this.fields.dpi =
       (this.fields.dpi && this.fields.dpis.indexOf(this.fields.dpi) > 0) ?
       this.fields.dpi : this.fields.dpis[0];
+
+  this.fields.formats = {};
+  this.formats_.forEach(function(format) {
+    this.fields.formats[format] = true;
+  }.bind(this));
 };
 
 
@@ -330,7 +337,7 @@ gmf.PrintController.prototype.updateFields_ = function() {
  */
 gmf.PrintController.prototype.isAttributeInCurrentLayout_ = function(name) {
   var attr = null;
-  this.layout.attributes.forEach(function(attribute) {
+  this.layout_.attributes.forEach(function(attribute) {
     if (attribute.name === name) {
       return attr = attribute;
     }
@@ -406,9 +413,11 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
 
 /**
  * TODO
+ * @param {string} format An output format corresponding to one format in the
+ *     capabilities document ('pdf', 'png', etc).
  * @export
  */
-gmf.PrintController.prototype.print = function() {
+gmf.PrintController.prototype.print = function(format) {
   this.requestCanceler_ = this.$q_.defer();
   this.printState = 'Printing...';
 
@@ -434,7 +443,7 @@ gmf.PrintController.prototype.print = function() {
   }
 
   var spec = this.ngeoPrint_.createSpec(this.map, scale, this.fields.dpi,
-      this.fields.layout, customAttributes);
+      this.fields.layout, format, customAttributes);
 
   // Add feature overlay layer to print spec.
   var layers = [];

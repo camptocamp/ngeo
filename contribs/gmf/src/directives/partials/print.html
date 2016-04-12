@@ -58,8 +58,8 @@
   <div class="form-group pull-right">
     <div class="col-md-1" ng-show="ctrl.printState === 'Printing...'"><i class="fa fa-refresh fa-spin"></i></div>
     <a ng-show="ctrl.printState === 'Printing...'" class="btn btn-link" href="" ng-click="ctrl.cancel()" translate>Abort</a>
-    <button class="btn btn-primary" ng-click="ctrl.print()" disabled>Image</button>
-    <button class="btn btn-primary" ng-click="ctrl.print()">PDF</button>
+    <button ng-show="ctrl.fields.formats.png" class="btn btn-primary" ng-click="ctrl.print('png')">Image</button>
+    <button ng-show="ctrl.fields.formats.pdf" class="btn btn-primary" ng-click="ctrl.print('pdf')">PDF</button>
   </div>
   <div ng-show="ctrl.printState !== 'Printing...'" class="form-group pull-left">
     <p>{{ctrl.printState | translate}}</p>
