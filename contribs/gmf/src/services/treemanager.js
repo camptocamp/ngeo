@@ -3,20 +3,33 @@ goog.provide('gmf.TreeManager');
 goog.require('gmf');
 goog.require('gmf.Themes');
 
+
 /**
- * Manage a tree with children. This service can be used in mode 'flush' or
+ * The default value for `modeFlush` that `gmf.TreeManager` is initialized with.
+ */
+gmf.module.value('gmfTreeManagerModeFlush', true);
+
+
+/**
+ * Manage a tree with children. This service can be used in mode 'flush' (default) or
  * not (mode 'add'). In mode 'flush', each theme, group or group by layer that
  * you add will replace the previous children's array. In mode 'add', children
- * will be just pushed in this array.
+ * will be just pushed in this array. The default state can be changed by setting
+ * the value `gmfTreeManagerModeFlush`, e.g.:
+ *
+ *    var module = angular.module('app');
+ *    module.value('gmfTreeManagerModeFlush', false);
+ *
  * This service's theme is a GmfThemesNode with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
  * @param {gmf.Themes} gmfThemes gmf Themes service.
+ * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
  */
-gmf.TreeManager = function(gmfThemes) {
+gmf.TreeManager = function(gmfThemes, gmfTreeManagerModeFlush) {
 
   /**
    * @type {gmf.Themes}
@@ -28,7 +41,7 @@ gmf.TreeManager = function(gmfThemes) {
    * @type {boolean}
    * @private
    */
-  this.modeFlush_ = true;
+  this.modeFlush_ = gmfTreeManagerModeFlush;
 
   /**
    * @type {GmfThemesNode}
@@ -108,7 +121,8 @@ gmf.TreeManager.prototype.addGroup_ = function(group) {
   var alreadyAdded = false;
   children.some(function(child) {
     if (group.id === child.id) {
-      // FIXME: display "this group is already loaded"
+      // FIXME: display "this group is already loaded" with yet to develop
+      // alert system
       return alreadyAdded = true;
     }
   });
