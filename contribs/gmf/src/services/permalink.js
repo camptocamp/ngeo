@@ -622,7 +622,13 @@ gmf.Permalink.prototype.initMergedLayer_ = function(layer, layerNames) {
 gmf.Permalink.prototype.handleLayersAdd_ = function(evt) {
   var layer = evt.element;
   goog.asserts.assertInstanceof(layer, ol.layer.Base);
-  this.registerLayer_(layer);
+  if (layer instanceof ol.layer.Group) {
+    layer.getLayers().forEach(function(l) {
+      this.registerLayer_(l, true);
+    }, this);
+  } else {
+    this.registerLayer_(layer, true);
+  }
 };
 
 
@@ -644,6 +650,12 @@ gmf.Permalink.prototype.handleLayersRemove_ = function(evt) {
  * @private
  */
 gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
+
+  if (layer instanceof ol.layer.Group) {
+    layer.getLayers().forEach(function(layer) {
+      this.registerLayer_(layer, opt_init);
+    }, this)
+  }
 
   var init = opt_init !== undefined ? opt_init : false;
   var layerUid = goog.getUid(layer);
@@ -692,6 +704,11 @@ gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
  * @private
  */
 gmf.Permalink.prototype.unregisterLayer_ = function(layer) {
+
+  if (layer instanceof ol.layer.Group) {
+    layer.getLayers().forEach(this.unregisterLayer_, this);
+  }
+
   var layerUid = goog.getUid(layer);
   this.initListenerKey_(layerUid); // clear event listeners
 

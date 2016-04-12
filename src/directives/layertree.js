@@ -208,7 +208,7 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
    * @export
    */
   this.layer = isRoot ? null : /** @type {ol.layer.Layer} */
-      ($scope.$eval(nodelayerExpr, {'node': this.node, 'depth': this.depth}));
+      ($scope.$eval(nodelayerExpr, {'node': this.node, 'depth': this.depth, 'parentCtrl' : this.parent}));
 
 
   var listenersExpr = $attrs['ngeoLayertreeListeners'];

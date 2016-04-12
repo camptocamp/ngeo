@@ -8,7 +8,6 @@ goog.require('gmf.TreeManager');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
-goog.require('ol.Collection');
 goog.require('ol.array');
 goog.require('ol.layer.Tile');
 
@@ -23,9 +22,8 @@ gmf.module.value('gmfLayertreeTemplate',
       var subTemplateUrl = gmf.baseTemplateUrl + '/layertree.html';
       return '<div ngeo-layertree="gmfLayertreeCtrl.tree" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
-          'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(node, depth)" ' +
-          'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, ' +
-          'treeCtrl)" ' +
+          'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(node, parentCtrl, depth)" ' +
+          'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
           'ngeo-layertree-templateurl="' + subTemplateUrl + '">' +
           '</div>';
     });
@@ -181,14 +179,40 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
 
 
 /**
+ * LayertreeController.prototype.prepareLayer_ - inject metadata into the layer
+ * @private
+ * @param {GmfThemesNode} node Layer tree node.
+ * @param {ol.layer.Base} layer The OpenLayers layer or group for the node.
+ */
+gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
+  var type = gmf.Themes.getNodeType(node);
+  var ids = this.getNodeIds_(node);
+  layer.set('querySourceIds', ids);
+  layer.set('layerName', node.name);
+
+  var isMerged = type === gmf.Themes.NodeType.NOT_MIXED_GROUP;
+  layer.set('isMerged', isMerged);
+
+  // If layer is 'unchecked', set it to invisible.
+  var metadata = node.metadata;
+  if (node.children === undefined && goog.isDefAndNotNull(metadata)) {
+    if (metadata['isChecked'] != 'true') {
+      layer.setVisible(false);
+    }
+  }
+}
+
+
+/**
  * Create and return a layer corresponding to the ngeo layertree's node.
  * This function will only create a layer for each "top-level" (depth 1) groups.
  *
  * On "not mixed" type nodes, the returned layer will be an ol.layer.Image (WMS)
  * with each name of node's children as LAYERS parameters.
  *
- * On "mixed" type node, the returned  layer will be an ol.layer.Group with
- * a collection of layers that corresponds to each children of the node.
+ * On "mixed" type node, the returned  layer will be an ol.layer.Group
+ *
+ * If the parent node is "mixed", the child layer freshly created will be added to it
  *
  * All layer created will receive:
  *  - A 'querySourceId' parameter with the node id as value.
@@ -200,58 +224,47 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
  * If the node metadata 'isChecked' value is false, the layer visibility will
  * be set to false.
  * @param {GmfThemesNode} node Layer tree node.
- * @param {number=} opt_depth ngeo layertree node depth.
- * @param {boolean=} opt_createWMS True to allow create wms layer.
+ * @param {ngeo.LayertreeController} parentCtrl parent controller of the node
+ * @param {number} depth ngeo layertree node depth.
  * @return {ol.layer.Base} The OpenLayers layer or group for the node.
  * @export
  */
-gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
-        opt_createWMS) {
+gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
   var type = gmf.Themes.getNodeType(node);
   var layer = null;
 
-  if (opt_depth === 1) {
+  if (depth === 1) {
     switch (type) {
       case gmf.Themes.NodeType.MIXED_GROUP:
-        return this.getLayerCaseMixedGroup_(node);
+        layer = this.getLayerCaseMixedGroup_(node);
+        break;
       case gmf.Themes.NodeType.NOT_MIXED_GROUP:
         layer = this.getLayerCaseNotMixedGroup_(node);
+        this.prepareLayer_(node, layer);
         break;
       // no default
     }
-    switch (type) {
-      case gmf.Themes.NodeType.WMTS:
-        layer = this.getLayerCaseWMTS_(node);
-        break;
-      case gmf.Themes.NodeType.WMS:
-      case gmf.Themes.NodeType.EXTERNAL_WMS:
-        var url = node.url || this.gmfWmsUrl_;
-        layer = opt_createWMS ?
-            this.layerHelper_.createBasicWMSLayer(url, node.name) : null;
-        break;
-      // no default
-    }
-  }
-
-  if (goog.isDefAndNotNull(layer)) {
-    var ids = this.getNodeIds_(node);
-    layer.set('querySourceIds', ids);
-    layer.set('layerName', node.name);
-
-    var isMerged = type === gmf.Themes.NodeType.NOT_MIXED_GROUP;
-    layer.set('isMerged', isMerged);
-
     this.dataLayerGroup_.getLayers().insertAt(0, layer);
-
-    // If layer is 'unchecked', set it to invisible.
-    var metadata = node.metadata;
-    if (node.children === undefined && goog.isDefAndNotNull(metadata)) {
-      if (metadata['isChecked'] != 'true') {
-        layer.setVisible(false);
-      }
-    }
+    return layer;
   }
-
+  //depth > 1 && parent is not a MIXED_GROUP;
+  if (!parentCtrl || gmf.Themes.getNodeType(parentCtrl['node']) !== gmf.Themes.NodeType.MIXED_GROUP) {
+    return null;
+  }
+  //depth > 1 && parent is a MIXED group
+  switch (type) {
+    case gmf.Themes.NodeType.WMTS:
+      layer = this.getLayerCaseWMTS_(node);
+      break;
+    case gmf.Themes.NodeType.WMS:
+    case gmf.Themes.NodeType.EXTERNAL_WMS:
+      var url = node.url || this.gmfWmsUrl_;
+      layer = this.layerHelper_.createBasicWMSLayer(url, node.name);
+      break;
+    // no default
+  }
+  this.prepareLayer_(node, layer);
+  parentCtrl['layer'].getLayers().push(layer);
   return layer;
 };
 
@@ -264,23 +277,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
  * @private
  */
 gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
-  var i;
-  var layers = new ol.Collection();
-  var layer, subNode;
-  var subNodes = [];
-  var nodeNames = [];
-  this.getFlatNodes_(node, subNodes);
-  for (i = 0; i < subNodes.length; i++) {
-    subNode = subNodes[i];
-    // Create all sublayers include wms layers;
-    layer = this.getLayer(subNode, 1, true);
-    if (goog.isDefAndNotNull(layer)) {
-      layers.push(layer);
-      nodeNames.push(subNode.name);
-    }
-  }
-  var group = this.layerHelper_.createBasicGroup(layers);
-
+  var group = this.layerHelper_.createBasicGroup();
   // Keep a reference to this group.
   this.groupNodeStates_[goog.getUid(group)] = [];
   return group;
@@ -545,13 +542,6 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
     case gmf.Themes.NodeType.WMTS:
     case gmf.Themes.NodeType.EXTERNAL_WMS:
       if (firstParentTreeLayer instanceof ol.layer.Group) {
-        // If layer is not define (That occures the first time, because the
-        // layer is just in the first parent group) add it to current tree to
-        // save time next.
-        if (!goog.isDefAndNotNull(layer)) {
-          this.addLayerToLeaf_(treeCtrl);
-          layer = treeCtrl.layer;
-        }
         // Get style of this node depending if the relative layer is visible.
         style = goog.isDefAndNotNull(layer) && layer.getVisible() ?
             'on' : 'off';
@@ -599,34 +589,6 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
     // no default
   }
   return style || 'off';
-};
-
-
-/**
- * Get the layer corresponding to the given layertree node from the layer
- * group "top level" layertree and add this layer to the given layertree.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
- * @private
- */
-gmf.LayertreeController.prototype.addLayerToLeaf_ = function(treeCtrl) {
-  var groupTree = this.retrieveFirstParentTree_(treeCtrl);
-  var layers = this.layerHelper_.getFlatLayers(groupTree.layer);
-  var node = treeCtrl.node;
-  var source, l, i;
-  for (i = 0; i < layers.length; i++) {
-    l = layers[i];
-    source = l.getSource();
-    if (source instanceof ol.source.WMTS &&
-        source.getLayer() === node.name) {
-      treeCtrl.layer = l;
-      break;
-    } else if (source instanceof ol.source.ImageWMS &&
-        source.getParams()['LAYERS'] === node.name) {
-      treeCtrl.layer = l;
-      break;
-    }
-  }
 };
 
 
