@@ -106,7 +106,14 @@
   }
 
   .name {
-    white-space: normal;
+    // take the full width minus the width for a layer icon, visibility checkbox,
+    // and legend icon
+    width: calc(~'100%' - 6 * @app-margin);
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: -4px;
   }
 
   .metadata {

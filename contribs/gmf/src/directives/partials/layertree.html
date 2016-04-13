@@ -10,7 +10,7 @@
       <img ng-src="{{::gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}}"></img>
     </span>
     <span class="state"></span>
-    <span class="name">{{layertreeCtrl.node.name | translate}}</span>
+    <span class="name" title="{{layertreeCtrl.node.name | translate}}">{{layertreeCtrl.node.name | translate}}</span>
   </a>
   <span class="rightButtons">
     <span class="metadata" ng-if="::layertreeCtrl.node.metadata.metadataUrl">
