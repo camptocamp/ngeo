@@ -39,7 +39,7 @@ ol.interaction.SegmentDataType;
  *
  * @constructor
  * @extends {ol.interaction.Pointer}
- * @param {ngeox.interaction.ModifyOptions} options Options.
+ * @param {olx.interaction.ModifyOptions} options Options.
  * @fires ngeo.interaction.ModifyCircleEvent
  * @export
  * @api
