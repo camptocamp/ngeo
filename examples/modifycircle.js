@@ -76,7 +76,7 @@ app.MainController = function() {
    * @export
    */
   this.interaction = new ngeo.interaction.ModifyCircle(
-    /** @type {ngeox.interaction.ModifyOptions} */({
+    /** @type {olx.interaction.ModifyOptions} */({
       features: this.features
     }));
 
