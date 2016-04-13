@@ -75,9 +75,10 @@ app.MainController = function() {
    * @type {ngeo.interaction.ModifyCircle}
    * @export
    */
-  this.interaction = new ngeo.interaction.ModifyCircle({
-    features: this.features
-  });
+  this.interaction = new ngeo.interaction.ModifyCircle(
+    /** @type {ngeox.interaction.ModifyOptions} */({
+      features: this.features
+    }));
 
   var interaction = this.interaction;
   interaction.setActive(true);
