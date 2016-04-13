@@ -201,6 +201,21 @@ how to write unit tests.
 To run the unit tests on the command line, just run `make test`. All the tests will be
 run inside [PhantomJS](http://phantomjs.org/).
 
+#### Running tests in debug mode
+
+For debugging purposes it is useful to run the unit tests in an actual browser with
+`make test-debug`. This task starts the Karma server and opens Chrome/Chromium. Click on
+`Debug` to open a new page that runs all unit tests. Now you can start the debugger.
+
+To run only a single test or test group, use `fdescribe` or `fit` to **f**ocus
+on a test:
+
+```javascript
+fdescribe('...', function() {
+
+  fit('...', function() {
+```
+
 ### Create a new stabilisation branch
 
 When we create a new stabilisation branch we should also duplicate the localisation.

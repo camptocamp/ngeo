@@ -1,6 +1,11 @@
 // Karma configuration
 // Generated on Wed Jun 18 2014 14:25:40 GMT+0200 (CEST)
 
+
+var isDebug = process.argv.some(function(argument) {
+    return argument === '--debug';
+});
+
 module.exports = function(config) {
   var closureLibPath = 'node_modules/closure-util/.deps/library/**/';
   var olSrcPath = 'node_modules/openlayers/src/';
@@ -70,15 +75,15 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src/**/*.js': ['coverage'],
-      'contribs/gmf/src/**/*.js': ['coverage']
+      'src/**/*.js': isDebug ? [] : ['coverage'],
+      'contribs/gmf/src/**/*.js': isDebug ? [] : ['coverage']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage'],
+    reporters: isDebug ? ['progress'] : ['progress', 'coverage'],
 
 
     // web server port
