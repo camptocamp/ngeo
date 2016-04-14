@@ -49,7 +49,10 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
 	.build/examples-hosted/lib/proj4.js \
 	.build/examples-hosted/lib/font-awesome.min.css \
-	.build/examples-hosted/fonts \
+	.build/examples-hosted/fonts/fontawesome-webfont.eot \
+	.build/examples-hosted/fonts/fontawesome-webfont.ttf \
+	.build/examples-hosted/fonts/fontawesome-webfont.woff \
+	.build/examples-hosted/fonts/fontawesome-webfont.woff2 \
 	.build/examples-hosted/partials \
 	.build/examples-hosted/data \
 	.build/examples-hosted/contribs/gmf/data \
@@ -347,9 +350,9 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/fonts: node_modules/font-awesome/fonts
+.build/examples-hosted/fonts/%: node_modules/font-awesome/fonts/%
 	mkdir -p $@
-	cp node_modules/font-awesome/fonts/* $@
+	cp $< $@
 
 .build/examples-hosted/partials: examples/partials
 	mkdir -p $@
