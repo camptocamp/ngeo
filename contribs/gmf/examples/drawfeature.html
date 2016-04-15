@@ -8,6 +8,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
     <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css">
 
     <style>
       gmf-map > div {
@@ -20,7 +21,7 @@
       gmf-drawfeature {
         display: block;
         margin: 20px;
-        width: 425px;
+        width: 400px;
       }
 
       .ngeo-drawfeature-actionbuttons {
@@ -36,29 +37,42 @@
         clear: both;
       }
 
+      gmf-featurestyle {
+        display: block;
+        margin: 10px 0 0 0;
+      }
+
+      .gmf-drawfeature-featurelist {
+        margin: 10px 0 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
       /* drawfeature */
 
       ngeo-drawfeature {
         margin: 10px 0;
       }
-      .ngeo-drawfeature-circle:before {
-        content: 'Circle'
+
+      .gmf-icon-circle:before {
+        content: "Circle";
       }
-      .ngeo-drawfeature-linestring:before {
-        content: 'LineString'
+      .gmf-icon-line:after {
+        content: 'Line';
       }
-      .ngeo-drawfeature-point:before {
-        content: 'Point'
+      .gmf-icon-point:after {
+        content: 'Point';
       }
-      .ngeo-drawfeature-polygon:before {
-        content: 'Polygon'
+      .gmf-icon-polygon:after {
+        content: 'Polygon';
       }
-      .ngeo-drawfeature-rectangle:before {
-        content: 'Rectangle'
+      .gmf-icon-rectangle:after {
+        content: 'Rectangle';
       }
-      .ngeo-drawfeature-text:before {
-        content: 'Text'
+      .gmf-icon-text:after {
+        content: 'Text';
       }
+
       .tooltip {
         position: relative;
         background: rgba(0, 0, 0, 0.5);

@@ -99,6 +99,11 @@ app.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
     }.bind(this)
   );
 
+  // initialize tooltips
+  $('[data-toggle="tooltip"]').tooltip({
+    container: 'body',
+    trigger: 'hover'
+  });
 };
 
 
