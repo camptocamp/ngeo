@@ -2,8 +2,12 @@ goog.provide('ngeo.FeatureHelper')
 
 goog.require('ngeo');
 goog.require('ngeo.interaction.Measure');
+goog.require('ol.geom.LineString');
+goog.require('ol.geom.MultiPoint');
+goog.require('ol.geom.Polygon');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
+goog.require('ol.style.RegularShape');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
@@ -57,11 +61,19 @@ ngeo.FeatureHelper.prototype.setProjection = function(projection) {
  * Set the style of a feature using its inner properties and depending on
  * its geometry type.
  * @param {ol.Feature} feature Feature.
+ * @param {boolean=} opt_select Whether the feature should be rendered as
+ *     selected, which includes additional vertex and halo styles.
  * @export
  */
-ngeo.FeatureHelper.prototype.setStyle = function(feature) {
-  var style = this.getStyle(feature);
-  feature.setStyle(style);
+ngeo.FeatureHelper.prototype.setStyle = function(feature, opt_select) {
+  var styles = [this.getStyle(feature)];
+  if (opt_select) {
+    if (this.supportsVertex_(feature)) {
+      styles.push(this.getVertexStyle());
+    }
+    styles.unshift(this.getHaloStyle_(feature));
+  }
+  feature.setStyle(styles);
 };
 
 
@@ -214,6 +226,129 @@ ngeo.FeatureHelper.prototype.getTextStyle_ = function(feature) {
 };
 
 
+/**
+ * Create and return a style object to be used for vertex.
+ * @param {boolean=} opt_incGeomFunc Whether to include the geometry function
+ *     or not. One wants to use the geometry function when you want to draw
+ *     the vertex of features that don't have point geometries. One doesn't
+ *     want to include the geometry function if you just want to have the
+ *     style object itself to be used to draw features that have point
+ *     geometries. Defaults to `true`.
+ * @return {ol.style.Style} Style.
+ * @export
+ */
+ngeo.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
+  var incGeomFunc = opt_incGeomFunc !== undefined ? opt_incGeomFunc : true;
+
+  var options = {
+    image: new ol.style.RegularShape({
+      radius: 6,
+      points: 4,
+      angle: Math.PI / 4,
+      fill: new ol.style.Fill({
+        color: [255, 255, 255, 0.5]
+      }),
+      stroke: new ol.style.Stroke({
+        color: [0, 0, 0, 1]
+      })
+    })
+  };
+
+  if (incGeomFunc) {
+    options.geometry = function(feature) {
+      var geom = feature.getGeometry();
+
+      if (geom.getType() == ol.geom.GeometryType.POINT) {
+        return;
+      }
+
+      var coordinates;
+      if (geom instanceof ol.geom.LineString) {
+        coordinates = feature.getGeometry().getCoordinates();
+        return new ol.geom.MultiPoint(coordinates);
+      } else if (geom instanceof ol.geom.Polygon) {
+        coordinates = feature.getGeometry().getCoordinates()[0];
+        return new ol.geom.MultiPoint(coordinates);
+      } else {
+        return feature.getGeometry();
+      }
+    }
+  }
+
+  return new ol.style.Style(options);
+};
+
+
+/**
+ * @param {ol.Feature} feature Feature.
+ * @return {boolean} Whether the feature supports vertex or not.
+ * @private
+ */
+ngeo.FeatureHelper.prototype.supportsVertex_ = function(feature) {
+  var supported = [
+    ngeo.GeometryType.LINE_STRING,
+    ngeo.GeometryType.POLYGON,
+    ngeo.GeometryType.RECTANGLE
+  ];
+  var type = this.getType(feature);
+  return ol.array.includes(supported, type);
+};
+
+
+/**
+ * @param {ol.Feature} feature Feature.
+ * @return {ol.style.Style} Style.
+ * @private
+ */
+ngeo.FeatureHelper.prototype.getHaloStyle_ = function(feature) {
+  var type = this.getType(feature);
+  var style;
+  var haloSize = 3;
+  var size;
+
+  switch (type) {
+    case ngeo.GeometryType.POINT:
+      size = this.getSizeProperty(feature);
+      style = new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: size + haloSize,
+          fill: new ol.style.Fill({
+            color: 'white'
+          })
+        })
+      });
+      break;
+    case ngeo.GeometryType.LINE_STRING:
+    case ngeo.GeometryType.CIRCLE:
+    case ngeo.GeometryType.POLYGON:
+    case ngeo.GeometryType.RECTANGLE:
+      var strokeWidth = this.getStrokeProperty(feature);
+      style = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          color: 'white',
+          width: strokeWidth + haloSize * 2
+        })
+      });
+      break;
+    case ngeo.GeometryType.TEXT:
+      var label = this.getNameProperty(feature);
+      size = this.getSizeProperty(feature);
+      var angle = this.getAngleProperty(feature);
+      var color = 'white';
+      style = new ol.style.Style({
+        text: this.createTextStyle_(label, size, angle, color, haloSize * 2)
+      })
+      break;
+    default:
+      break;
+  }
+
+  goog.asserts.assert(style, 'Style should be thruthy');
+
+  return style;
+};
+
+
 // === PROPERTY GETTERS ===
 
 
@@ -318,23 +453,25 @@ ngeo.FeatureHelper.prototype.getStrokeProperty = function(feature) {
  * @param {string} text The text to display.
  * @param {number} size The size in `pt` of the text font.
  * @param {number=} opt_angle The angle in degrees of the text.
- * @param {string=} opt_color The color of the text
+ * @param {string=} opt_color The color of the text.
+ * @param {number=} opt_width The width of the outline color.
  * @return {ol.style.Text} Style.
  * @private
  */
 ngeo.FeatureHelper.prototype.createTextStyle_ = function(text, size,
-                                                        opt_angle, opt_color) {
+    opt_angle, opt_color, opt_width) {
 
   var angle = opt_angle !== undefined ? opt_angle : 0;
   var rotation = angle * Math.PI / 180;
   var font = ['normal', size + 'pt', 'Arial'].join(' ');
   var color = opt_color !== undefined ? opt_color : '#000000';
+  var width = opt_width !== undefined ? opt_width : 3;
 
   return new ol.style.Text({
     font: font,
     text: text,
     fill: new ol.style.Fill({color: color}),
-    stroke: new ol.style.Stroke({color: '#ffffff', width: 3}),
+    stroke: new ol.style.Stroke({color: '#ffffff', width: width}),
     rotation: rotation
   });
 };
