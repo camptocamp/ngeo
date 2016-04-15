@@ -38,7 +38,7 @@
     "eslint": "2.7.0",
     "eslint-config-openlayers": "4.1.0",
     "font-awesome": "4.5.0",
-    "fs-extra": "0.26.7",
+    "fs-extra": "0.27.0",
     "gaze": "1.0.0",
     "graceful-fs": "4.1.3",
     "jasmine-core": "2.4.1",
