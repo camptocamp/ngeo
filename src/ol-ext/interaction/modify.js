@@ -1,5 +1,6 @@
 goog.provide('ngeo.interaction.Modify');
 
+goog.require('ngeo.interaction.ModifyCircle');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.Collection');
 goog.require('ol.interaction.Modify');
@@ -23,7 +24,7 @@ goog.require('ol.interaction.Modify');
  *
  * @constructor
  * @extends {ol.interaction.Interaction}
- * @param {ngeo.interaction.MeasureBaseOptions} options Options.
+ * @param {olx.interaction.ModifyOptions} options Options.
  * @export
  */
 ngeo.interaction.Modify = function(options) {
@@ -53,7 +54,23 @@ ngeo.interaction.Modify = function(options) {
   this.otherFeatures_ = new ol.Collection();
 
   this.interactions_.push(new ol.interaction.Modify({
-    features: this.otherFeatures_
+    features: this.otherFeatures_,
+    pixelTolerance: options.pixelTolerance,
+    style: options.style,
+    wrapX: options.wrapX
+  }));
+
+  /**
+   * @type {ol.Collection.<ol.Feature>}
+   * @private
+   */
+  this.circleFeatures_ = new ol.Collection();
+
+  this.interactions_.push(new ngeo.interaction.ModifyCircle({
+    features: this.circleFeatures_,
+    pixelTolerance: options.pixelTolerance,
+    style: options.style,
+    wrapX: options.wrapX
   }));
 
   goog.base(this, {
@@ -181,6 +198,11 @@ ngeo.interaction.Modify.prototype.removeFeature_ = function(feature) {
  * @private
  */
 ngeo.interaction.Modify.prototype.getFeatureCollection_ = function(feature) {
-  // FIXME - update when more than one interaction is supported here
-  return this.otherFeatures_;
+  var features;
+  if (feature.get(ngeo.FeatureProperties.IS_CIRCLE) === true) {
+    features = this.circleFeatures_;
+  } else {
+    features = this.otherFeatures_;
+  }
+  return features;
 };

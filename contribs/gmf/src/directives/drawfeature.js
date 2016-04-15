@@ -53,6 +53,7 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
+ * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
@@ -62,7 +63,7 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @ngname GmfDrawfeatureController
  */
 gmf.DrawfeatureController = function($scope, $timeout, ngeoDecorateInteraction,
-    ngeoFeatures, ngeoToolActivateMgr) {
+    ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
    * @type {ol.Map}
@@ -117,6 +118,12 @@ gmf.DrawfeatureController = function($scope, $timeout, ngeoDecorateInteraction,
   this.timeout_ = $timeout;
 
   /**
+   * @type {ngeo.FeatureHelper}
+   * @private
+   */
+  this.featureHelper_ = ngeoFeatureHelper;
+
+  /**
    * @type {ol.Collection.<ol.Feature>}
    * @export
    */
@@ -157,7 +164,8 @@ gmf.DrawfeatureController = function($scope, $timeout, ngeoDecorateInteraction,
    * @private
    */
   this.modify_ = new ngeo.interaction.Modify({
-    features: this.selectedFeatures_
+    features: this.selectedFeatures_,
+    style: ngeoFeatureHelper.getVertexStyle(false)
   });
   var modify = this.modify_;
   modify.setActive(false);
@@ -194,9 +202,11 @@ gmf.DrawfeatureController = function($scope, $timeout, ngeoDecorateInteraction,
     }.bind(this),
     function(newFeature, previousFeature) {
       if (previousFeature) {
+        this.featureHelper_.setStyle(previousFeature);
         this.selectedFeatures_.clear();
       }
       if (newFeature) {
+        this.featureHelper_.setStyle(newFeature, true);
         this.selectedFeatures_.push(newFeature);
       }
     }.bind(this)

@@ -272,7 +272,7 @@ gmf.FeaturestyleController.prototype.handleFeatureChange_ = function() {
     return;
   }
 
-  this.featureHelper_.setStyle(feature);
+  this.featureHelper_.setStyle(feature, true);
 };
 
 

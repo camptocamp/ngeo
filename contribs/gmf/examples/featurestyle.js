@@ -35,6 +35,12 @@ app.MainController = function($scope, ngeoFeatureHelper) {
    */
   this.scope_ = $scope;
 
+  /**
+   * @type {ngeo.FeatureHelper}
+   * @private
+   */
+  this.featureHelper_ = ngeoFeatureHelper;
+
   // create features
   var features = new ol.format.GeoJSON().readFeatures({
     'type': 'FeatureCollection',
@@ -205,9 +211,14 @@ app.MainController.prototype.handleMapSingleClick_ = function(evt) {
     return feature;
   });
 
+  if (this.selectedFeature) {
+    this.featureHelper_.setStyle(this.selectedFeature);
+  }
+
   if (feature) {
     if (this.selectedFeature !== feature) {
       this.selectedFeature = feature;
+      this.featureHelper_.setStyle(feature, true);
     }
   } else {
     this.selectedFeature = null;
