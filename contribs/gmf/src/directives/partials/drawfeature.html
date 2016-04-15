@@ -10,53 +10,77 @@
       ngeo-drawfeature-active="efCtrl.drawActive"
       ngeo-drawfeature-map="efCtrl.map">
     <a
+      data-toggle="tooltip"
+      title="{{'Draw a point on the map' | translate}}"
       href
       translate
       ngeo-btn
       ngeo-drawpoint
       class="btn btn-default ngeo-drawfeature-point"
       ng-class="{active: dfCtrl.drawPoint.active}"
-      ng-model="dfCtrl.drawPoint.active"></a>
+      ng-model="dfCtrl.drawPoint.active">
+      <span class="gmf-icon gmf-icon-point"></span>
+    </a>
     <a
+      data-toggle="tooltip"
+      title="{{'Draw a line on the map' | translate}}"
       href
       translate
       ngeo-btn
       ngeo-measurelength
       class="btn btn-default ngeo-drawfeature-linestring"
       ng-class="{active: dfCtrl.measureLength.active}"
-      ng-model="dfCtrl.measureLength.active"></a>
+      ng-model="dfCtrl.measureLength.active">
+      <span class="gmf-icon gmf-icon-line"></span>
+    </a>
     <a
+      data-toggle="tooltip"
+      title="{{'Draw a polygon on the map' | translate}}"
       href
       translate
       ngeo-btn
       ngeo-measurearea
       class="btn btn-default ngeo-drawfeature-polygon"
       ng-class="{active: dfCtrl.measureArea.active}"
-      ng-model="dfCtrl.measureArea.active"></a>
+      ng-model="dfCtrl.measureArea.active">
+      <span class="gmf-icon gmf-icon-polygon"></span>
+    </a>
     <a
+      data-toggle="tooltip"
+      title="{{'Draw a circle on the map' | translate}}"
       href
       translate
       ngeo-btn
       ngeo-measureazimut
       class="btn btn-default ngeo-drawfeature-circle"
       ng-class="{active: dfCtrl.measureAzimut.active}"
-      ng-model="dfCtrl.measureAzimut.active"></a>
+      ng-model="dfCtrl.measureAzimut.active">
+      <span class="gmf-icon gmf-icon-circle"></span>
+    </a>
     <a
+      data-toggle="tooltip"
+      title="{{'Draw a rectangle on the map' | translate}}"
       href
       translate
       ngeo-btn
       ngeo-drawrectangle
       class="btn btn-default ngeo-drawfeature-rectangle"
       ng-class="{active: dfCtrl.drawRectangle.active}"
-      ng-model="dfCtrl.drawRectangle.active"></a>
+      ng-model="dfCtrl.drawRectangle.active">
+      <span class="gmf-icon gmf-icon-rectangle"></span>
+    </a>
     <a
+      data-toggle="tooltip"
+      title="{{'Draw a text label on the map' | translate}}"
       href
       translate
       ngeo-btn
       ngeo-drawtext
       class="btn btn-default ngeo-drawfeature-text"
       ng-class="{active: dfCtrl.drawText.active}"
-      ng-model="dfCtrl.drawText.active"></a>
+      ng-model="dfCtrl.drawText.active">
+      <span class="gmf-icon gmf-icon-text"></span>
+    </a>
   </ngeo-drawfeature>
 
   <hr />
@@ -64,48 +88,58 @@
   <div ng-switch="efCtrl.selectedFeature">
 
     <div ng-switch-when="null">
-      <div class="ngeo-drawfeature-actionbuttons">
-        <button
-            class="btn btn-default">
-          {{'Export' | translate}}
-        </button>
-        <button
-            ng-click="efCtrl.features.clear();"
-            class="btn btn-default">
-          {{'Delete All' | translate}}
-        </button>
+      <div ng-show="efCtrl.features.getLength()">
+        <div class="ngeo-drawfeature-actionbuttons">
+          <button
+              class="btn btn-link">
+            <span class="fa fa-mail-forward"></span>
+            {{'Export' | translate}}
+          </button>
+          <button
+              ng-click="efCtrl.features.clear();"
+              class="btn btn-link">
+            <span class="fa fa-trash"></span>
+            {{'Delete All' | translate}}
+          </button>
+        </div>
+
+        <div class="gmf-eol"></div>
+
+        <ul class="list-group gmf-drawfeature-featurelist">
+          <li
+              class="list-group-item"
+              ng-repeat="feature in efCtrl.features.getArray()"
+              ng-click="efCtrl.selectedFeature = feature;">
+            {{ feature.get(efCtrl.nameProperty) }}
+          </li>
+        </ul>
       </div>
-
-      <div class="gmf-eol"></div>
-
-      <ul class="gmf-drawfeature-featurelist">
-        <li
-            ng-repeat="feature in efCtrl.features.getArray()"
-            ng-click="efCtrl.selectedFeature = feature;">
-          {{ feature.get(efCtrl.nameProperty) }}
-        </li>
-      </ul>
 
     </div>
 
     <div ng-switch-default>
 
+      <button
+          ng-click="efCtrl.selectedFeature = null;"
+          class="btn btn-link">
+        <span class="fa fa-arrow-left"></span>
+        {{'List' | translate}}
+      </button>
       <div class="ngeo-drawfeature-actionbuttons">
         <button
-            ng-click="efCtrl.selectedFeature = null;"
-            class="btn btn-default">
-          {{'<- List' | translate}}
-        </button>
-        <button
-            class="btn btn-default">
+            class="btn btn-link">
+          <span class="fa fa-mail-forward"></span>
           {{'Export' | translate}}
         </button>
         <button
             ng-click="efCtrl.features.remove(efCtrl.selectedFeature);"
-            class="btn btn-default">
+            class="btn btn-link">
+          <span class="fa fa-trash"></span>
           {{'Delete' | translate}}
         </button>
       </div>
+
+      <div class="gmf-eol"></div>
 
       <gmf-featurestyle
         gmf-featurestyle-feature="efCtrl.selectedFeature">
