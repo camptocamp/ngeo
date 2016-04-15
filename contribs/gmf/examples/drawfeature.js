@@ -45,6 +45,17 @@ app.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
   ngeoFeatureHelper.setProjection(view.getProjection());
 
   /**
+   * @type {ol.layer.Vector}
+   * @export
+   */
+  this.vectorLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+      wrapX: false,
+      features: ngeoFeatures
+    })
+  });
+
+  /**
    * @type {ol.Map}
    * @export
    */
@@ -53,12 +64,7 @@ app.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
       new ol.layer.Tile({
         source: new ol.source.OSM()
       }),
-      new ol.layer.Vector({
-        source: new ol.source.Vector({
-          wrapX: false,
-          features: ngeoFeatures
-        })
-      })
+      this.vectorLayer
     ],
     view: view
   });

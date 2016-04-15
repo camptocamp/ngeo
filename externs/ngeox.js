@@ -10,6 +10,83 @@ var ngeox;
 
 
 /**
+ * @interface
+ */
+ngeox.MenuEvent = function() {};
+
+
+/**
+ * @type {string}
+ */
+ngeox.MenuEvent.prototype.action;
+
+
+/**
+ * The options for the contextual menu overlay.
+ * @typedef {{
+ *     actions: (Array.<ngeox.MenuActionOptions>),
+ *     autoClose: (boolean|undefined)
+ * }}
+ */
+ngeox.MenuOptions;
+
+
+/**
+ * A list of menu actions.
+ * @type {Array.<ngeox.MenuActionOptions>}
+ */
+ngeox.MenuOptions.prototype.actions;
+
+
+/**
+ * Whether to automatically close the contextual menu when an action is
+ * clicked or not. Defaults to `true`.
+ * @type {boolean|undefined}
+ */
+ngeox.MenuOptions.prototype.autoClose;
+
+
+/**
+ * A title to display as header of the contextual menu.
+ * @type {string|undefined}
+ */
+ngeox.MenuOptions.prototype.title;
+
+
+/**
+ * The options for an action item for the contextual menu overlay.
+ * @typedef {{
+ *     cls: (string|undefined),
+ *     label: (string|undefined),
+ *     name: (string)
+ * }}
+ */
+ngeox.MenuActionOptions;
+
+
+/**
+ * CSS class name(s) to use for the icon of the action item.
+ * @type {string|undefined}
+ */
+ngeox.MenuActionOptions.prototype.cls;
+
+
+/**
+ * The label to display for the action item. If not defined, the name is used.
+ * @type {string|undefined}
+ */
+ngeox.MenuActionOptions.prototype.label;
+
+
+/**
+ * A unique name for the menu action, which is used in the event fired when
+ * the action is clicked.
+ * @type {string}
+ */
+ngeox.MenuActionOptions.prototype.name;
+
+
+/**
  * The options for the query service.
  * @typedef {{
  *     limit: (number|undefined),
@@ -307,6 +384,31 @@ ngeox.interaction.MeasureOptions.prototype.style;
  * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
  */
 ngeox.interaction.MeasureOptions.prototype.sketchStyle;
+
+
+/**
+ * @typedef {{
+ *     features: (ol.Collection.<ol.Feature>|undefined),
+ *     style: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined)
+ * }}
+ */
+ngeox.interaction.TranslateOptions;
+
+
+/**
+ * Only features contained in this collection will be able to be translated. If
+ * not specified, all features on the map will be able to be translated.
+ * @type {ol.Collection.<ol.Feature>|undefined}
+ */
+ngeox.interaction.TranslateOptions.prototype.features;
+
+
+/**
+ * Style for the center features added by the translate interaction to
+ * to show that features can be moved.
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ */
+ngeox.interaction.TranslateOptions.prototype.style;
 
 
 /**
