@@ -4,6 +4,7 @@ goog.provide('gmf.drawfeatureDirective');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.featurestyleDirective');
+goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
@@ -11,7 +12,11 @@ goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.drawfeatureDirective');
 goog.require('ngeo.interaction.Modify');
+goog.require('ngeo.interaction.Translate');
 goog.require('ol.Collection');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Style');
+goog.require('ol.style.Text');
 
 
 /**
@@ -20,12 +25,14 @@ goog.require('ol.Collection');
  * Example:
  *
  *     <gmf-drawfeature
- *         gmf-drawfeature-active="ctrl.drawFeatureActive">
+ *         gmf-drawfeature-active="ctrl.drawFeatureActive"
+ *         gmf-drawfeature-layer="::ctrl.vectorLayer"
  *         gmf-drawfeature-map="::ctrl.map">
  *     </gmf-drawfeature>
  *
  * @htmlAttribute {boolean} gmf-drawfeature-active Whether the directive is
  *     active or not.
+ * @htmlAttribute {ol.layer.Vector} gmf-drawfeature-layer The vector layer.
  * @htmlAttribute {ol.Map} gmf-drawfeature-map The map.
  * @return {angular.Directive} The directive specs.
  * @ngInject
@@ -37,6 +44,7 @@ gmf.drawfeatureDirective = function() {
     controller: 'GmfDrawfeatureController',
     scope: {
       'active': '=gmfDrawfeatureActive',
+      'layer': '<gmfDrawfeatureLayer',
       'map': '<gmfDrawfeatureMap'
     },
     bindToController: true,
@@ -51,9 +59,10 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
@@ -62,8 +71,15 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @ngdoc controller
  * @ngname GmfDrawfeatureController
  */
-gmf.DrawfeatureController = function($scope, $timeout, ngeoDecorateInteraction,
-    ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
+gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
+    ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures,
+    ngeoToolActivateMgr) {
+
+  /**
+   * @type {ol.layer.Vector}
+   * @export
+   */
+  this.layer;
 
   /**
    * @type {ol.Map}
@@ -118,6 +134,12 @@ gmf.DrawfeatureController = function($scope, $timeout, ngeoDecorateInteraction,
   this.timeout_ = $timeout;
 
   /**
+   * @type {ngeo.DecorateInteraction}
+   * @private
+   */
+  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
+
+  /**
    * @type {ngeo.FeatureHelper}
    * @private
    */
@@ -148,18 +170,6 @@ gmf.DrawfeatureController = function($scope, $timeout, ngeoDecorateInteraction,
   this.selectedFeatures_ = new ol.Collection();
 
   /**
-   * @type {boolean}
-   * @export
-   */
-  this.otherActive = true;
-
-  /**
-   * @type {ngeo.ToolActivate}
-   * @export
-   */
-  this.otherToolActivate = new ngeo.ToolActivate(this, 'otherActive');
-
-  /**
    * @type {ngeo.interaction.Modify}
    * @private
    */
@@ -167,10 +177,60 @@ gmf.DrawfeatureController = function($scope, $timeout, ngeoDecorateInteraction,
     features: this.selectedFeatures_,
     style: ngeoFeatureHelper.getVertexStyle(false)
   });
-  var modify = this.modify_;
-  modify.setActive(false);
-  ngeoDecorateInteraction(modify);
-  this.map.addInteraction(modify);
+  this.registerInteraction_(this.modify_);
+
+  /**
+   * @type {ngeo.Menu}
+   * @private
+   */
+  this.menu_ = new ngeo.Menu({
+    actions: [{
+      cls: 'fa fa-arrows',
+      label: gettextCatalog.getString('Move'),
+      name: gmf.DrawfeatureController.MenuActionType.MOVE
+    }, {
+      cls: 'fa fa-rotate-right',
+      label: gettextCatalog.getString('Rotate'),
+      name: gmf.DrawfeatureController.MenuActionType.ROTATE
+    }, {
+      cls: 'fa fa-trash-o',
+      label: gettextCatalog.getString('Delete'),
+      name: gmf.DrawfeatureController.MenuActionType.DELETE
+    }],
+    title: gettextCatalog.getString('Actions')
+  });
+  this.map.addOverlay(this.menu_);
+
+  /**
+   * @type {ngeo.ToolActivate}
+   * @export
+   */
+  this.modifyToolActivate = new ngeo.ToolActivate(this.modify_, 'active');
+
+  /**
+   * @type {ngeo.interaction.Translate}
+   * @private
+   */
+  this.translate_ = new ngeo.interaction.Translate({
+    features: this.selectedFeatures_,
+    layers: [this.layer],
+    style: new ol.style.Style({
+      text: new ol.style.Text({
+        text: '\uf047',
+        font: 'normal 18px FontAwesome',
+        fill: new ol.style.Fill({
+          color: '#7a7a7a'
+        })
+      })
+    })
+  });
+  this.registerInteraction_(this.translate_);
+
+  /**
+   * @type {ngeo.ToolActivate}
+   * @export
+   */
+  this.translateToolActivate = new ngeo.ToolActivate(this.translate_, 'active');
 
   /**
    * @type {Array.<ol.events.Key>}
@@ -208,6 +268,8 @@ gmf.DrawfeatureController = function($scope, $timeout, ngeoDecorateInteraction,
       if (newFeature) {
         this.featureHelper_.setStyle(newFeature, true);
         this.selectedFeatures_.push(newFeature);
+      } else {
+        this.menu_.close();
       }
     }.bind(this)
   );
@@ -225,6 +287,30 @@ gmf.DrawfeatureController = function($scope, $timeout, ngeoDecorateInteraction,
    */
   this.nameProperty = ngeo.FeatureProperties.NAME;
 
+};
+
+
+/**
+ * @enum {string}
+ */
+gmf.DrawfeatureController.MenuActionType = {
+  DELETE: 'delete',
+  MOVE: 'move',
+  ROTATE: 'rotate'
+};
+
+
+/**
+ * Register an interaction by setting it inactive, decorating it and adding it
+ * to the map
+ * @param {ol.interaction.Interaction} interaction Interaction to register.
+ * @private
+ */
+gmf.DrawfeatureController.prototype.registerInteraction_ = function(
+    interaction) {
+  interaction.setActive(false);
+  this.ngeoDecorateInteraction_(interaction);
+  this.map.addInteraction(interaction);
 };
 
 
@@ -249,11 +335,19 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
     keys.push(ol.events.listen(this.features, ol.CollectionEventType.REMOVE,
         this.handleFeaturesRemove_, this));
 
+    keys.push(ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
+        this.handleMenuActionClick_, this));
+
+    keys.push(ol.events.listen(this.translate_,
+        ol.interaction.TranslateEventType.TRANSLATEEND,
+        this.handleTranslateEnd_, this));
+
     toolMgr.registerTool(drawUid, this.drawToolActivate, false);
     toolMgr.registerTool(drawUid, this.mapSelectToolActivate, true);
 
     toolMgr.registerTool(otherUid, this.drawToolActivate, false);
-    toolMgr.registerTool(otherUid, this.otherToolActivate, true);
+    toolMgr.registerTool(otherUid, this.modifyToolActivate, true);
+    toolMgr.registerTool(otherUid, this.translateToolActivate, false);
 
     this.mapSelectActive = true;
     this.modify_.setActive(true);
@@ -268,12 +362,15 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
     toolMgr.unregisterTool(drawUid, this.mapSelectToolActivate);
 
     toolMgr.unregisterTool(otherUid, this.drawToolActivate);
-    toolMgr.unregisterTool(otherUid, this.otherToolActivate);
+    toolMgr.unregisterTool(otherUid, this.modifyToolActivate);
+    toolMgr.unregisterTool(otherUid, this.translateToolActivate);
 
     this.drawActive = false;
     this.modify_.setActive(false);
     this.mapSelectActive = false;
     this.selectedFeature = null;
+
+    this.menu_.close();
   }
 
 };
@@ -328,16 +425,79 @@ gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
 gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
 
   var pixel = evt.pixel;
+  var coordinate = evt.coordinate;
 
-  var feature = this.map.forEachFeatureAtPixel(pixel, function(feature) {
-    var ret = false;
-    if (ol.array.includes(this.features.getArray(), feature)) {
-      ret = feature;
+  var feature = this.map.forEachFeatureAtPixel(
+    pixel,
+    function(feature) {
+      var ret = false;
+      if (ol.array.includes(this.features.getArray(), feature)) {
+        ret = feature;
+      }
+      return ret;
+    }.bind(this),
+    null,
+    function(layer) {
+      return layer === this.layer;
+    }.bind(this)
+  );
+
+  feature = feature ? feature : null;
+
+  this.modify_.setActive(true);
+
+  this.selectedFeature = feature;
+
+  // show contextual menu when clicking on certain types of features
+  if (feature) {
+    var supportedTypes = [
+      ngeo.GeometryType.CIRCLE,
+      ngeo.GeometryType.LINE_STRING,
+      ngeo.GeometryType.POLYGON,
+      ngeo.GeometryType.RECTANGLE
+    ];
+    var type = this.featureHelper_.getType(feature);
+    if (ol.array.includes(supportedTypes, type)) {
+      this.menu_.setPosition(coordinate);
     }
-    return ret;
-  }.bind(this));
+  }
 
-  this.selectedFeature = feature ? feature : null;
+  this.scope_.$apply();
+};
+
+
+/**
+ * @param {ngeo.MenuEvent} evt Event.
+ * @private
+ */
+gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
+  var action = evt.action;
+
+  switch (action) {
+    case gmf.DrawfeatureController.MenuActionType.DELETE:
+      goog.asserts.assert(
+          this.selectedFeature, 'Selected feature should be truthy');
+      this.features.remove(this.selectedFeature);
+      this.scope_.$apply();
+      break;
+    case gmf.DrawfeatureController.MenuActionType.MOVE:
+      this.translate_.setActive(true);
+      this.scope_.$apply();
+      break;
+    default:
+      // FIXME
+      console.log('FIXME - support: ' + action);
+      break;
+  }
+};
+
+
+/**
+ * @param {ol.interaction.TranslateEvent} evt Event.
+ * @private
+ */
+gmf.DrawfeatureController.prototype.handleTranslateEnd_ = function(evt) {
+  this.translate_.setActive(false);
   this.scope_.$apply();
 };
 
