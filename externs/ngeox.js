@@ -330,6 +330,23 @@ ngeox.format.FeatureHashOptions.prototype.properties;
 
 
 /**
+ * @typedef {{
+ *     style: (undefined|Object.<ol.geom.GeometryType, Array.<ol.style.Style>>)
+ * }}
+ * @api
+ */
+ngeox.interaction.ModifyRectangleOptions;
+
+
+/**
+ * Styles for the vectex points and the rectangle polygon.
+ * @type {undefined|Object.<ol.geom.GeometryType, Array.<ol.style.Style>>}
+ * @api
+ */
+ngeox.interaction.ModifyRectangleOptions.prototype.style;
+
+
+/**
  * Namespace.
  * @type {Object}
  */
