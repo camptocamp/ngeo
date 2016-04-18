@@ -9,31 +9,39 @@ goog.require('ngeo.PrintUtils');
 
 
 /**
- * @typedef {{
- *   comments: (string|undefined),
- *   debug: (boolean|undefined),
- *   dpi: (number|undefined),
- *   dpis: (Array.<number>|undefined),
- *   formats: (Object.<string, boolean>|undefined),
- *   layout: (string|undefined),
- *   layouts: (Array.<string>|undefined),
- *   legend: (boolean|undefined),
- *   scales: (Array.<number>|undefined),
- *   scale: (number|undefined),
- *   title: (string|undefined)
- * }}
- */
-gmf.PrintFields;
-
-
-/**
  * @enum {string}
+ * @export
  */
 gmf.PrintState = {
+
+  /**
+   * @type {string}
+   * @export
+   */
   NOT_IN_USE: 'notInUse',
+
+  /**
+   * @type {string}
+   * @export
+   */
   PRINTING: 'printing',
+
+  /**
+   * @type {string}
+   * @export
+   */
   ERROR_ON_REPORT: 'errorOnReport',
+
+  /**
+   * @type {string}
+   * @export
+   */
   CAPABILITIES_NOT_LOADED: 'capabilitiesNotLoaded',
+
+  /**
+   * @type {string}
+   * @export
+   */
   ERROR_ON_GETCAPABILITIES: 'errorOnGetCapabilities'
 }
 
@@ -55,7 +63,7 @@ gmf.module.value('gmfPrintTemplateUrl',
  * Provide a directive that display a print panel. This panel is populated with
  * a form corresponding to the capabilities delivered by a GMF print v3 server.
  * If you want to use another template for your print panel, you can see the
- * available fields in the 'gmf.PrintFields' classes.
+ * available fields in the 'gmfx.PrintFields' classes.
  *
  * Example:
  *
@@ -225,7 +233,7 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
   this.paperSize_ = [];
 
   /**
-   * @type {gmf.PrintFields}
+   * @type {gmfx.PrintFields}
    * @export
    */
   this.fields = {};

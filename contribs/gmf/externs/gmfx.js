@@ -43,6 +43,102 @@ gmfx.PermalinkOptions.prototype.crosshairStyle;
 
 
 /**
+ * Fields that can exist in the gmf print panel.
+ * @typedef {{
+ *   comments: (string|undefined),
+ *   debug: (boolean|undefined),
+ *   dpi: (number|undefined),
+ *   dpis: (Array.<number>|undefined),
+ *   formats: (Object.<string, boolean>|undefined),
+ *   layout: (string|undefined),
+ *   layouts: (Array.<string>|undefined),
+ *   legend: (boolean|undefined),
+ *   scale: (number|undefined),
+ *   scales: (Array.<number>|undefined),
+ *   title: (string|undefined)
+ * }}
+ */
+gmfx.PrintFields;
+
+
+/**
+ * The 'comments' field.
+ * @type {string|undefined}
+ */
+gmfx.PrintFields.prototype.comments
+
+
+/**
+ * The 'debug' field.
+ * @type {boolean|undefined}
+ */
+gmfx.PrintFields.prototype.debug
+
+
+/**
+ * The selected 'dpi'.
+ * @type {number|undefined}
+ */
+gmfx.PrintFields.prototype.dpi
+
+
+/**
+ * The list of 'dpis'.
+ * @type {Array.<number>|undefined}
+ */
+gmfx.PrintFields.prototype.dpis
+
+
+/**
+ * The list of active 'formats' (png, pdf, ...).
+ * @type {Object.<string, boolean>|undefined}
+ */
+gmfx.PrintFields.prototype.formats
+
+
+/**
+ * The selected 'layout'.
+ * @type {string|undefined}
+ */
+gmfx.PrintFields.prototype.layout
+
+
+/**
+ * The list of 'layouts'.
+ * @type {Array.<string>|undefined}
+ */
+gmfx.PrintFields.prototype.layouts
+
+
+/**
+ * The list of 'scales'.
+ * @type {boolean|undefined}
+ */
+gmfx.PrintFields.prototype.legend
+
+
+/**
+ * The selected 'scale'.
+ * @type {number|undefined}
+ */
+gmfx.PrintFields.prototype.scale
+
+
+/**
+ * The 'debug' field.
+ * @type {Array.<number>|undefined}
+ */
+gmfx.PrintFields.prototype.scales
+
+
+/**
+ * The 'title' field.
+ * @type {string|undefined}
+ */
+gmfx.PrintFields.prototype.title
+
+
+/**
  * Datasource configuration options for the search directive.
  * @typedef {{
  *    bloodhoundOptions: (BloodhoundOptions|undefined),
