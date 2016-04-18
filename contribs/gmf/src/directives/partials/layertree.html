@@ -2,7 +2,7 @@
     <a  ng-if="::layertreeCtrl.node.children"
         data-toggle="collapse"
         href="#layer-group-{{::layertreeCtrl.uid}}"
-        aria-expanded="{{::layertreeCtrl.node.isExpanded || false}}"
+        aria-expanded="{{::layertreeCtrl.node.metadata.isExpanded === 'true' || false}}"
         class="fa expand-node fa-fw">
     </a>
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)">
@@ -36,7 +36,7 @@
 </div>
 <ul id="layer-group-{{::layertreeCtrl.uid}}"
     ng-if="::layertreeCtrl.node.children"
-    ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.isExpanded}">
+    ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded === 'true'}">
   <li class="gmf-layertree-node" ng-repeat="node in layertreeCtrl.node.children" ng-class="'depth-' + layertreeCtrl.depth"
       ngeo-layertree="node"
       ngeo-layertree-notroot
