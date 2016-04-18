@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+<head>
+    <title>Popover example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .ngeo-popover {
+            margin : 30px
+        }
+        .popover {
+            border-radius : 0;
+        }
+    </style>
+</head>
+<body>
+<p id="desc">This example shows how to use the <code>ngeo-popover</code> directive to open a popover</p>
+<div ngeo-popover class="ngeo-popover">
+    <a ngeo-popover-anchor class="btn btn-info">anchor 1</a>
+    <div ngeo-popover-content>
+        <ul>
+            <li>action 1:
+                <input type="range"/>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div ngeo-popover class="ngeo-popover">
+    <a ngeo-popover-anchor class="btn btn-info">anchor 2</a>
+    <div ngeo-popover-content>
+        <ul>
+            <li>action 2:
+                <input type="range"/>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div ngeo-popover class="ngeo-popover">
+    <a ngeo-popover-anchor class="btn btn-info">anchor 3</a>
+    <div ngeo-popover-content>
+        <ul>
+            <li>action 3:
+                <input type="range"/>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script src="../node_modules/jquery/dist/jquery.js"></script>
+<script src="../node_modules/angular/angular.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+<script src="/@?main=popover.js"></script>
+<script src="default.js"></script>
+<script src="../utils/watchwatchers.js"></script>
+</body>
+</html>
