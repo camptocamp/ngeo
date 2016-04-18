@@ -301,6 +301,7 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
       this.parseCapabilities_(resp);
       this.map.on('postcompose', this.postcomposeListener_);
       this.map.on('pointerdrag', this.onPointerDrag_.bind(this));
+      this.map.render();
     }.bind(this), function(resp) {
       // Get capabilities - On error
       this.printState = gmf.PrintState.ERROR_ON_GETCAPABILITIES;
@@ -451,9 +452,8 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
       var centerToP0 = Math.sqrt(Math.pow(p0x, 2) + Math.pow(p0y, 2));
       var centerToP1 = Math.sqrt(Math.pow(p1x, 2) + Math.pow(p1y, 2));
       var sense = (p0x * p1y - p0y * p1x) > 0 ? 1 : -1;
-      var angle = sense * Math.acos(
-            (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1)
-          );
+      var angle = (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1);
+      angle = angle <= 1 ? sense * Math.acos(angle) : 0;
       var boost = centerToP1 / 250;
       var increment = Math.round((angle * 180 / Math.PI) * boost);
 
