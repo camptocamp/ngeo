@@ -397,7 +397,7 @@ ngeo.interaction.ModifyRectangle.handleUpEvent_ = function(evt) {
 
 
 /**
- * @param {string} featureType What geom type's style to get
+ * @param {ol.geom.GeometryType<string>} featureType What geom type's style to get
  * @return {ol.style.StyleFunction} Styles.
  */
 ngeo.interaction.ModifyRectangle.getDefaultStyleFunction = function(featureType) {
