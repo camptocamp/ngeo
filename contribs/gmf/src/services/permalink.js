@@ -533,15 +533,13 @@ gmf.Permalink.prototype.initLayers_ = function() {
           var enable = this.ngeoStateManager_.getInitialValue(param);
           if (enable !== undefined) {
             enable = enable === 'true' ? true : false;
-            if (enable) {
-              var layerName = layerNode.name;
-              layer = this.layerHelper_.getLayerByName(
-                  layerName, layers.getArray());
-              if (layer) {
-                layer.setVisible(enable);
-              } else {
-                layerNames.push(layerName);
-              }
+            var layerName = layerNode.name;
+            layer = this.layerHelper_.getLayerByName(
+              layerName, layers.getArray());
+            if (layer) {
+              layer.setVisible(enable);
+            } else {
+              layerNames.push(layerName);
             }
           }
         }, this);
