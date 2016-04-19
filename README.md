@@ -1,8 +1,5 @@
 # ngeo
 
-[![Travis CI
-Status](https://api.travis-ci.org/camptocamp/ngeo.svg?branch=master)](https://travis-ci.org/camptocamp/ngeo)
-
 ngeo is a JS library that aims to ease the development of applications based on
 [AngularJS](https://angularjs.org/) and [OpenLayers 3](http://openlayers.org).
 
@@ -38,4 +35,7 @@ Other docs:
   developers.
 * [Application development guidelines](docs/guidelines.md) – This guide is for
   application developers using ngeo.
-* [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform
+* [npm](https://www.npmjs.com/package/ngeo) – Package on npm.
+* [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform.
+* [Travis](https://travis-ci.org/camptocamp/ngeo) – Continuous integration.
+* [coveralls](https://coveralls.io/github/camptocamp/ngeo) – Test coverage.
