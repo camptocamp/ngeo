@@ -64,7 +64,7 @@ deploy:
   on:
     node: "0.10"
     repo: camptocamp/ngeo
-#    tags: true
+    tags: true
 #    condition: "`.build/python-venv/bin/jsongrep -e version package.json`" == "${TRAVIS_TAG}"
 - &transifex
   provider: script
