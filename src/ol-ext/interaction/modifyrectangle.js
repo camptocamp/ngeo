@@ -8,7 +8,6 @@ goog.require('ol.Feature');
 goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.events');
 goog.require('ol.extent');
-goog.require('ol.geom.GeometryType');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
 goog.require('ol.interaction.ModifyEvent');
@@ -33,7 +32,7 @@ ol.interaction.SegmentDataType;
  *
  * @constructor
  * @extends {ol.interaction.Pointer}
- * @param {ngeox.interaction.ModifyRectangleOptions} options Options.
+ * @param {olx.interaction.ModifyOptions} options Options.
  * @fires ngeo.interaction.ModifyCircleEvent
  * @export
  * @api
@@ -41,9 +40,10 @@ ol.interaction.SegmentDataType;
 ngeo.interaction.ModifyRectangle = function(options) {
 
   goog.base(this, {
-    handleDownEvent: ngeo.interaction.ModifyRectangle.handleDownEvent_,
-    handleDragEvent: ngeo.interaction.ModifyRectangle.handleDragEvent_,
-    handleUpEvent: ngeo.interaction.ModifyRectangle.handleUpEvent_
+    handleDownEvent: this.handleDown_,
+    handleMoveEvent: this.handleMove_,
+    handleDragEvent: this.handleDrag_,
+    handleUpEvent: this.handleUp_
   });
 
   /**
@@ -59,7 +59,6 @@ ngeo.interaction.ModifyRectangle = function(options) {
    * @private
    */
   this.changingFeature_ = false;
-  // actionInProgress_
 
   /**
    * @type {number}
@@ -69,17 +68,7 @@ ngeo.interaction.ModifyRectangle = function(options) {
       options.pixelTolerance : 10;
 
   // Get the style for the box and the points
-  var stylePolygon = null;
-  var stylePoint = null;
-  if (options.style) {
-    stylePolygon = options.style[ol.geom.GeometryType.POLYGON];
-    stylePoint = options.style[ol.geom.GeometryType.POINT];
-  } else {
-    stylePolygon = ngeo.interaction.ModifyRectangle.getDefaultStyleFunction(ol.geom.GeometryType.POLYGON);
-
-    stylePoint = ngeo.interaction.ModifyRectangle.getDefaultStyleFunction(ol.geom.GeometryType.POINT);
-
-  }
+  var style = options.style ? options.style : ol.interaction.Modify.getDefaultStyleFunction();
 
   /**
    * @type {ol.layer.Vector}
@@ -89,7 +78,7 @@ ngeo.interaction.ModifyRectangle = function(options) {
     source: new ol.source.Vector({
       wrapX: !!options.wrapX
     }),
-    style: stylePolygon,
+    style: style,
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });
@@ -102,7 +91,7 @@ ngeo.interaction.ModifyRectangle = function(options) {
     source: new ol.source.Vector({
       wrapX: !!options.wrapX
     }),
-    style: stylePoint,
+    style: style,
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });
@@ -126,11 +115,12 @@ ngeo.interaction.ModifyRectangle = function(options) {
    */
   this.coordinate_ = null;
 
-  this.features_.forEach(this.addFeature_, this);
   ol.events.listen(this.features_, ol.CollectionEventType.ADD,
       this.handleFeatureAdd_, this);
   ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
       this.handleFeatureRemove_, this);
+
+  this.features_.forEach(this.addFeature_, this);
 
 };
 goog.inherits(ngeo.interaction.ModifyRectangle, ol.interaction.Pointer);
@@ -293,6 +283,7 @@ ngeo.interaction.ModifyRectangle.prototype.removeFeature_ = function(feature) {
 ngeo.interaction.ModifyRectangle.prototype.setMap = function(map) {
   this.vectorBoxes_.setMap(map);
   this.vectorPoints_.setMap(map);
+  this.vectorPoints_.setVisible(false);
   goog.base(this, 'setMap', map);
 };
 
@@ -333,12 +324,35 @@ ngeo.interaction.ModifyRectangle.prototype.handleFeatureRemove_ = function(evt) 
 
 
 /**
+ * Show/hide the points when hovering the polygon
+ * @param {ol.MapBrowserEvent} evt Event.
+ * @private
+ */
+ngeo.interaction.ModifyRectangle.prototype.handleMove_ = function(evt) {
+  var map = evt.map;
+  var feature = map.forEachFeatureAtPixel(evt.pixel,
+        function(feature, layer) {
+          return feature;
+        });
+
+  if (this.vectorPoints_.getVisible() != !!feature) {
+    if (feature) {
+      this.vectorPoints_.setVisible(true);
+    } else {
+      this.vectorPoints_.setVisible(false);
+    }
+    this.vectorPoints_.changed();
+  }
+};
+
+
+/**
  * @param {ol.MapBrowserPointerEvent} evt Event.
  * @return {boolean} Start drag sequence?
  * @this {ngeo.interaction.ModifyRectangle}
  * @private
  */
-ngeo.interaction.ModifyRectangle.handleDownEvent_ = function(evt) {
+ngeo.interaction.ModifyRectangle.prototype.handleDown_ = function(evt) {
   var map = evt.map;
 
   var feature = map.forEachFeatureAtPixel(evt.pixel,
@@ -349,6 +363,8 @@ ngeo.interaction.ModifyRectangle.handleDownEvent_ = function(evt) {
   if (feature && feature.getGeometry() instanceof ol.geom.Point) {
     this.coordinate_ = evt.coordinate;
     this.feature_ = feature;
+
+    this.vectorPoints_.setVisible(true);
 
     return true;
   }
@@ -362,13 +378,14 @@ ngeo.interaction.ModifyRectangle.handleDownEvent_ = function(evt) {
  * @this {ngeo.interaction.ModifyRectangle}
  * @private
  */
-ngeo.interaction.ModifyRectangle.handleDragEvent_ = function(evt) {
+ngeo.interaction.ModifyRectangle.prototype.handleDrag_ = function(evt) {
   this.willModifyFeatures_(evt);
 
   var geometry = /** @type {ol.geom.SimpleGeometry} */
       (this.feature_.getGeometry());
 
   if (geometry instanceof ol.geom.Point) {
+    this.vectorPoints_.setVisible(true);
     var deltaX = evt.coordinate[0] - this.coordinate_[0];
     var deltaY = evt.coordinate[1] - this.coordinate_[1];
 
@@ -386,7 +403,7 @@ ngeo.interaction.ModifyRectangle.handleDragEvent_ = function(evt) {
  * @this {ngeo.interaction.ModifyRectangle}
  * @private
  */
-ngeo.interaction.ModifyRectangle.handleUpEvent_ = function(evt) {
+ngeo.interaction.ModifyRectangle.prototype.handleUp_ = function(evt) {
   if (this.modified_) {
     this.dispatchEvent(new ol.interaction.ModifyEvent(
         ol.ModifyEventType.MODIFYEND, this.features_, evt));
@@ -396,13 +413,3 @@ ngeo.interaction.ModifyRectangle.handleUpEvent_ = function(evt) {
 };
 
 
-/**
- * @param {ol.geom.GeometryType<string>} featureType What geom type's style to get
- * @return {ol.style.StyleFunction} Styles.
- */
-ngeo.interaction.ModifyRectangle.getDefaultStyleFunction = function(featureType) {
-  var style = ol.style.createDefaultEditingStyles();
-  return function(feature, resolution) {
-    return style[featureType];
-  };
-};

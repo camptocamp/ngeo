@@ -54,11 +54,52 @@ app.MainController = function() {
   this.features = new ol.Collection();
 
   this.features.push(new ol.Feature({
-    geometry: rectangle,
-    color: '#000000',
-    opacity: '0.5',
-    stroke: '2'
+    geometry: rectangle
   }));
+
+  var style = (function() {
+    var styles = {};
+    styles['Polygon'] = [
+      new ol.style.Style({
+        fill: new ol.style.Fill({
+          color: [255, 255, 255, 0.5]
+        })
+      }),
+      new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          color: [255, 255, 255, 1],
+          width: 5
+        })
+      }),
+      new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          color: [0, 153, 255, 1],
+          width: 3
+        })
+      })
+    ];
+
+    styles['Point'] = [
+      new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: 7,
+          fill: new ol.style.Fill({
+            color: [0, 153, 255, 1]
+          }),
+          stroke: new ol.style.Stroke({
+            color: [255, 255, 255, 0.75],
+            width: 1.5
+          })
+        }),
+        zIndex: 100000
+      })
+    ];
+    styles['GeometryCollection'] = styles['Polygon'].concat(styles['Point']);
+
+    return function(feature, resolution) {
+      return styles[feature.getGeometry().getType()];
+    };
+  })();
 
   /**
    * @type {ngeo.interaction.ModifyRectangle}
@@ -66,7 +107,8 @@ app.MainController = function() {
    */
   this.interaction = new ngeo.interaction.ModifyRectangle(
     /** @type {olx.interaction.ModifyOptions} */({
-      features: this.features
+      features: this.features,
+      style: style
     }));
 
   var interaction = this.interaction;
