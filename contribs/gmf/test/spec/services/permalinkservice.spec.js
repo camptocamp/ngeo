@@ -5,6 +5,7 @@ goog.require('gmf');
 goog.require('ngeo.LayerHelper');
 goog.require('ol.Map');
 goog.require('ol.Collection');
+goog.require('ol.layer.Group');
 
 
 describe('Permalink service', function() {
@@ -40,7 +41,7 @@ describe('Permalink service', function() {
 
   }));
 
-  it('Should registerLayer/unregisterLayer recursively', function() {
+  it('Should registerLayer/unregisterLayer recursively but not ol.layer.Group', function() {
     expect(PermalinkService).toBeDefined();
     expect(Object.keys(PermalinkService.listenerKeys_).length).toBe(0);
 
@@ -53,14 +54,24 @@ describe('Permalink service', function() {
     secondLevelGroup.getLayers().forEach(shouldHaveBeenUnRegistered);
 
     function shouldHaveBeenRegistered(layer) {
-      var uid = goog.getUid(layer);
-      expect(PermalinkService.listenerKeys_[uid]).toBeDefined();
+      var uid = goog.getUid(layer),
+          listeners = PermalinkService.listenerKeys_[uid];
+      if (layer instanceof ol.layer.Group) {
+        expect(listeners).toBeUndefined();
+      } else {
+        expect(listeners).toBeDefined();
+      }
     }
 
     function shouldHaveBeenUnRegistered(layer) {
-      var uid = goog.getUid(layer);
-      expect(PermalinkService.listenerKeys_[uid].ol.length).toBe(0);
-      expect(PermalinkService.listenerKeys_[uid].goog.length).toBe(0);
+      var uid = goog.getUid(layer),
+          listeners = PermalinkService.listenerKeys_[uid];
+      if (layer instanceof ol.layer.Group) {
+        expect(listeners).toBeUndefined();
+      } else {
+        expect(PermalinkService.listenerKeys_[uid].ol.length).toBe(0);
+        expect(PermalinkService.listenerKeys_[uid].goog.length).toBe(0);
+      }
     }
 
   })

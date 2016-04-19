@@ -622,13 +622,7 @@ gmf.Permalink.prototype.initMergedLayer_ = function(layer, layerNames) {
 gmf.Permalink.prototype.handleLayersAdd_ = function(evt) {
   var layer = evt.element;
   goog.asserts.assertInstanceof(layer, ol.layer.Base);
-  if (layer instanceof ol.layer.Group) {
-    layer.getLayers().forEach(function(l) {
-      this.registerLayer_(l, true);
-    }, this);
-  } else {
-    this.registerLayer_(layer, true);
-  }
+  this.registerLayer_(layer, true);
 };
 
 
@@ -651,51 +645,52 @@ gmf.Permalink.prototype.handleLayersRemove_ = function(evt) {
  */
 gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
 
+  var init = opt_init !== undefined ? opt_init : false;
+  var layerUid = goog.getUid(layer);
+
   if (layer instanceof ol.layer.Group) {
     layer.getLayers().forEach(function(layer) {
       this.registerLayer_(layer, opt_init);
     }, this)
-  }
-
-  var init = opt_init !== undefined ? opt_init : false;
-  var layerUid = goog.getUid(layer);
-
-  this.addListenerKey_(layerUid, ol.events.listen(layer,
+  } else {
+    this.addListenerKey_(layerUid, ol.events.listen(layer,
       ol.Object.getChangeEventType(ol.layer.LayerProperty.VISIBLE),
       this.handleLayerVisibleChange_, this));
 
-  var isMerged = layer.get('isMerged');
-  if (isMerged) {
-    goog.asserts.assert(
+    var isMerged = layer.get('isMerged');
+    if (isMerged) {
+      goog.asserts.assert(
         layer instanceof ol.layer.Image ||
         layer instanceof ol.layer.Tile);
 
-    var source = layer.getSource();
-    goog.asserts.assert(
+      var source = layer.getSource();
+      goog.asserts.assert(
         source instanceof ol.source.ImageWMS ||
         source instanceof ol.source.TileWMS);
 
-    var sourceUid = goog.getUid(source);
-    this.addListenerKey_(
+      var sourceUid = goog.getUid(source);
+      this.addListenerKey_(
         sourceUid,
         ol.events.listen(
-            source, ol.events.EventType.CHANGE,
-            this.handleWMSSourceChange_.bind(this, layer, source),
-            this));
+          source, ol.events.EventType.CHANGE,
+          this.handleWMSSourceChange_.bind(this, layer, source),
+          this));
 
-    if (!init) {
-      // if registering a layer after initialization, then we need to update
-      // the state manager properties using the current state of the layer.
-      // Emulating a source 'change' does the trick.
-      source.changed(); // forces `this.handleWMSSourceChange_` to be called
-    }
-  } else {
-    if (!init) {
-      // if registering a layer after initialization, then we need to update
-      // the state manager properties using the current state of the layer
-      this.updateLayerStateByVisibility_(layer);
+      if (!init) {
+        // if registering a layer after initialization, then we need to update
+        // the state manager properties using the current state of the layer.
+        // Emulating a source 'change' does the trick.
+        source.changed(); // forces `this.handleWMSSourceChange_` to be called
+      }
+    } else {
+      if (!init) {
+        // if registering a layer after initialization, then we need to update
+        // the state manager properties using the current state of the layer
+        this.updateLayerStateByVisibility_(layer);
+      }
     }
   }
+
 };
 
 
@@ -705,30 +700,30 @@ gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
  */
 gmf.Permalink.prototype.unregisterLayer_ = function(layer) {
 
+  var layerUid = goog.getUid(layer);
+
   if (layer instanceof ol.layer.Group) {
     layer.getLayers().forEach(this.unregisterLayer_, this);
-  }
-
-  var layerUid = goog.getUid(layer);
-  this.initListenerKey_(layerUid); // clear event listeners
-
-  var isMerged = layer.get('isMerged');
-  if (isMerged) {
-    goog.asserts.assert(
+  } else {
+    this.initListenerKey_(layerUid); // clear event listeners
+    var isMerged = layer.get('isMerged');
+    if (isMerged) {
+      goog.asserts.assert(
         layer instanceof ol.layer.Image ||
         layer instanceof ol.layer.Tile);
 
-    var source = layer.getSource();
-    goog.asserts.assert(
+      var source = layer.getSource();
+      goog.asserts.assert(
         source instanceof ol.source.ImageWMS ||
         source instanceof ol.source.TileWMS);
 
-    var sourceUid = goog.getUid(source);
-    this.initListenerKey_(sourceUid); // clear event listeners
-  }
+      var sourceUid = goog.getUid(source);
+      this.initListenerKey_(sourceUid); // clear event listeners
+    }
 
-  var param = this.getLayerStateParamFromLayer_(layer);
-  this.ngeoStateManager_.deleteParam(param);
+    var param = this.getLayerStateParamFromLayer_(layer);
+    this.ngeoStateManager_.deleteParam(param);
+  }
 };
 
 
