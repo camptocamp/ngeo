@@ -411,5 +411,3 @@ ngeo.interaction.ModifyRectangle.prototype.handleUp_ = function(evt) {
   }
   return false;
 };
-
-
