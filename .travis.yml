@@ -63,7 +63,7 @@ deploy:
     secure: "btIivQ2kZitPSYyIrS1LP6JJMDQnFr9UM954SStcG81IUTIIMZi2TgeaUtZOivx2JF7cq6SQRK0pSPtA3WYtFUryWkiESY0iQSZg8S2llxA8seLLI7drW3yQZ8EpTyjnqhAGDUgQPPFBwBhk7Khx7Cnwb4iGpUKCx/+RYc0hq5g="
   on:
     node: "0.10"
-#    repo: camptocamp/ngeo
+    repo: camptocamp/ngeo
 #    tags: true
 #    condition: "`.build/python-venv/bin/jsongrep -e version package.json`" == "${TRAVIS_TAG}"
 - &transifex
