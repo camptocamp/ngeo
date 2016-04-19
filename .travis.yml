@@ -3,7 +3,10 @@ sudo: false
 language: node_js
 
 env:
-  - CXX=g++-4.8
+  global:
+    - CXX=g++-4.8
+    - secure: "l/McmiK4djffT04/+5MxW9sy4yO80Rf6vq+nZb5P647A6pXpPLdoRLGo50CtYRiKnFLiChHk2QxUOspeKuIKE+UQAm9dGmyMgfYkj/jwxIBd0YQqavaGzoWo5U1ZSGKeVd3kJlIaUJyLlnKbBOmFCY00c4JLveAagsV53lbephY="
+
 addons:
   apt:
     sources:
@@ -46,6 +49,11 @@ after_success:
 
 before_deploy:
 - export GIT_BRANCH=${TRAVIS_BRANCH}
+- .build/python-venv/bin/pip install jsongrep
+- echo "_auth = ${NPM_AUTH}" > ~/.npmrc
+- echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
+- ls -l ~/.npmrc
+- cat ~/.npmrc
 
 deploy:
 - provider: script
@@ -55,6 +63,14 @@ deploy:
     repo: camptocamp/ngeo
     all_branches: true
     node: "0.10"
+- provider: script
+  script: npm publish
+  skip_cleanup: true
+  on:
+    node: "0.10"
+    repo: camptocamp/ngeo
+    tags: true
+    condition: '"`.build/python-venv/bin/jsongrep -e version package.json`" == "${TRAVIS_TAG}"'
 - &transifex
   provider: script
   script: make transifex-send
