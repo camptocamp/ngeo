@@ -46,6 +46,7 @@ after_success:
 
 before_deploy:
 - export GIT_BRANCH=${TRAVIS_BRANCH}
+- .build/python-venv/bin/pip install jsongrep
 
 deploy:
 - provider: script
@@ -67,4 +68,13 @@ deploy:
   on:
     repo: camptocamp/ngeo
     branch: 2.0
+    node: "0.10"
+- provider: npm
+  skip_cleanup: true
+  email: stephane.brunner@camptocamp.com
+  api_key:
+    secure: "btIivQ2kZitPSYyIrS1LP6JJMDQnFr9UM954SStcG81IUTIIMZi2TgeaUtZOivx2JF7cq6SQRK0pSPtA3WYtFUryWkiESY0iQSZg8S2llxA8seLLI7drW3yQZ8EpTyjnqhAGDUgQPPFBwBhk7Khx7Cnwb4iGpUKCx/+RYc0hq5g="
+  on:
+    repo: camptocamp/ngeo
+    condition: "`.build/python-venv/bin/jsongrep -e version package.json`" == "${TRAVIS_TAG}"
     node: "0.10"
