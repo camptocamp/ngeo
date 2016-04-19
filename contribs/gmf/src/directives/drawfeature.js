@@ -11,6 +11,8 @@ goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.drawfeatureDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.exportfeaturesDirective');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Translate');
 goog.require('ol.Collection');
@@ -165,16 +167,16 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
 
   /**
    * @type {ol.Collection.<ol.Feature>}
-   * @private
+   * @export
    */
-  this.selectedFeatures_ = new ol.Collection();
+  this.selectedFeatures = new ol.Collection();
 
   /**
    * @type {ngeo.interaction.Modify}
    * @private
    */
   this.modify_ = new ngeo.interaction.Modify({
-    features: this.selectedFeatures_,
+    features: this.selectedFeatures,
     style: ngeoFeatureHelper.getVertexStyle(false)
   });
   this.registerInteraction_(this.modify_);
@@ -212,7 +214,7 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
    * @private
    */
   this.translate_ = new ngeo.interaction.Translate({
-    features: this.selectedFeatures_,
+    features: this.selectedFeatures,
     layers: [this.layer],
     style: new ol.style.Style({
       text: new ol.style.Text({
@@ -263,11 +265,11 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
     function(newFeature, previousFeature) {
       if (previousFeature) {
         this.featureHelper_.setStyle(previousFeature);
-        this.selectedFeatures_.clear();
+        this.selectedFeatures.clear();
       }
       if (newFeature) {
         this.featureHelper_.setStyle(newFeature, true);
-        this.selectedFeatures_.push(newFeature);
+        this.selectedFeatures.push(newFeature);
       } else {
         this.menu_.close();
       }
