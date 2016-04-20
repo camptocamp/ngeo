@@ -2,9 +2,12 @@ goog.provide('ngeo.FeatureHelper')
 
 goog.require('ngeo');
 goog.require('ngeo.interaction.Measure');
+goog.require('ol.Feature');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.MultiPoint');
 goog.require('ol.geom.Polygon');
+goog.require('ol.format.GPX');
+goog.require('ol.format.KML');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.RegularShape');
@@ -17,6 +20,7 @@ goog.require('ol.style.Text');
  * Provides methods for features, such as:
  *  - style setting / getting
  *  - measurement
+ *  - export
  *
  * @constructor
  * @param {angular.$injector} $injector Main injector.
@@ -446,6 +450,102 @@ ngeo.FeatureHelper.prototype.getStrokeProperty = function(feature) {
 };
 
 
+// === EXPORT ===
+
+
+/**
+ * Export features in the given format. The projection of the exported features
+ * is: `EPSG:4326`.
+ * @param {Array.<ol.Feature>} features Array of vector features.
+ * @param {string} formatType Format type to export the features.
+ * @export
+ */
+ngeo.FeatureHelper.prototype.export = function(features, formatType) {
+  switch (formatType) {
+    case ngeo.FeatureHelper.FormatType.GPX:
+      this.exportGPX(features)
+      break;
+    case ngeo.FeatureHelper.FormatType.KML:
+      this.exportKML(features)
+      break;
+    default:
+      break;
+  }
+};
+
+
+/**
+ * Export features in GPX and download the result to the browser. The
+ * projection of the exported features is: `EPSG:4326`.
+ * @param {Array.<ol.Feature>} features Array of vector features.
+ * @export
+ */
+ngeo.FeatureHelper.prototype.exportGPX = function(features) {
+  var format = new ol.format.GPX();
+  var mimeType = 'application/gpx+xml';
+  var fileName = 'export.gpx';
+  this.export_(features, format, fileName, mimeType);
+};
+
+
+/**
+ * Export features in KML and download the result to the browser. The
+ * projection of the exported features is: `EPSG:4326`.
+ * @param {Array.<ol.Feature>} features Array of vector features.
+ * @export
+ */
+ngeo.FeatureHelper.prototype.exportKML = function(features) {
+  var format = new ol.format.KML();
+  var mimeType = 'application/vnd.google-earth.kml+xml';
+  var fileName = 'export.kml';
+  this.export_(features, format, fileName, mimeType);
+};
+
+
+/**
+ * Export features using a given format to a specific filename and download
+ * the result to the browser. The projection of the exported features is:
+ * `EPSG:4326`.
+ * @param {Array.<ol.Feature>} features Array of vector features.
+ * @param {ol.format.Feature} format Format
+ * @param {string} fileName Name of the file.
+ * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
+ * @private
+ */
+ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
+    opt_mimeType) {
+  var mimeType = opt_mimeType !== undefined ? opt_mimeType : 'text/plain';
+
+  // clone the features to apply the original style to the clone
+  // (the original may have select style active)
+  var clones = [];
+  var clone;
+  features.forEach(function(feature) {
+    clone = new ol.Feature(feature.getProperties());
+    this.setStyle(clone, false);
+    clones.push(clone);
+  }, this);
+
+  var writeOptions = this.projection_ ? {
+    dataProjection: 'EPSG:4326',
+    featureProjection: this.projection_
+  } : {};
+
+  var data = format.writeFeatures(clones, writeOptions);
+
+  $('<a />', {
+    'download': fileName,
+    'href': [
+      'data:',
+      mimeType,
+      ';charset=utf-8,',
+      encodeURIComponent(data)
+    ].join(''),
+    'mimeType': mimeType
+  })[0].click();
+};
+
+
 // === OTHER UTILITY METHODS ===
 
 
@@ -542,3 +642,24 @@ ngeo.FeatureHelper.prototype.getType = function(feature) {
 
 
 ngeo.module.service('ngeoFeatureHelper', ngeo.FeatureHelper);
+
+
+// === FORMAT TYPES ===
+
+
+/**
+ * @enum {string}
+ * @export
+ */
+ngeo.FeatureHelper.FormatType = {
+  /**
+   * @type {string}
+   * @export
+   */
+  GPX: 'GPX',
+  /**
+   * @type {string}
+   * @export
+   */
+  KML: 'KML'
+};

@@ -91,6 +91,12 @@
       <div ng-show="efCtrl.features.getLength()">
         <div class="ngeo-drawfeature-actionbuttons">
           <button
+              type="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              ngeo-exportfeatures
+              ngeo-exportfeatures-features="efCtrl.features"
               class="btn btn-link">
             <span class="fa fa-mail-forward"></span>
             {{'Export' | translate}}
@@ -127,6 +133,12 @@
       </button>
       <div class="ngeo-drawfeature-actionbuttons">
         <button
+            type="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            ngeo-exportfeatures
+            ngeo-exportfeatures-features="efCtrl.selectedFeatures"
             class="btn btn-link">
           <span class="fa fa-mail-forward"></span>
           {{'Export' | translate}}

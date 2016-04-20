@@ -20,6 +20,12 @@ var app = {};
 app.module = angular.module('app', ['gmf']);
 
 
+app.module.constant('ngeoExportFeatureFormats', [
+  ngeo.FeatureHelper.FormatType.KML,
+  ngeo.FeatureHelper.FormatType.GPX
+]);
+
+
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
