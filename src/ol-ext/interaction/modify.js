@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.Modify');
 
 goog.require('ngeo.interaction.ModifyCircle');
+goog.require('ngeo.interaction.ModifyRectangle');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.Collection');
 goog.require('ol.interaction.Modify');
@@ -13,7 +14,7 @@ goog.require('ol.interaction.Modify');
  *
  * - `ol.interaction.Modify`
  * - `ngeo.interaction.ModifyCircle`
- * - `ngeo.interaction.ModifyCircle`
+ * - `ngeo.interaction.ModifyRectangle`
  *
  * This interaction receives a collection of features. Its job is to listen
  * to added/removed features to and from it and add them in the proper
@@ -72,6 +73,20 @@ ngeo.interaction.Modify = function(options) {
     style: options.style,
     wrapX: options.wrapX
   }));
+
+  /**
+   * @type {ol.Collection.<ol.Feature>}
+   * @private
+   */
+  this.rectangleFeatures_ = new ol.Collection();
+
+  this.interactions_.push(new ngeo.interaction.ModifyRectangle({
+    features: this.rectangleFeatures_,
+    pixelTolerance: options.pixelTolerance,
+    style: options.style,
+    wrapX: options.wrapX
+  }));
+
 
   goog.base(this, {
     handleEvent: goog.functions.TRUE
@@ -201,6 +216,8 @@ ngeo.interaction.Modify.prototype.getFeatureCollection_ = function(feature) {
   var features;
   if (feature.get(ngeo.FeatureProperties.IS_CIRCLE) === true) {
     features = this.circleFeatures_;
+  } else if (feature.get(ngeo.FeatureProperties.IS_RECTANGLE) === true) {
+    features = this.rectangleFeatures_;
   } else {
     features = this.otherFeatures_;
   }

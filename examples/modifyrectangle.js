@@ -54,7 +54,8 @@ app.MainController = function() {
   this.features = new ol.Collection();
 
   this.features.push(new ol.Feature({
-    geometry: rectangle
+    geometry: rectangle,
+    'isRectangle': true
   }));
 
   var style = (function() {

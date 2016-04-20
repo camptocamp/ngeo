@@ -135,13 +135,27 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
   if (featureGeom instanceof ol.geom.Polygon) {
     var boxSource = this.vectorBoxes_.getSource();
     var pointSource = this.vectorPoints_.getSource();
-    boxSource.addFeature(feature);
+
+    try {
+      boxSource.addFeature(feature);
+    } catch (e) {
+      // If the feature is in the source already, its corners were already
+      // created, no need to create them again.
+      return;
+    }
 
     // from each corners, create a point feature and add it to the point layer.
     // each point is then associated with 2 siblings in order to update the
     // siblings geometry at the same time when a point gets dragged around.
     // mark each one as 'corner'
     var corners = featureGeom.getCoordinates()[0];
+    while (corners.length > 4) {
+      if (corners[0][0] < corners[1][0] && corners[0][1] <= corners[1][1]) {
+        corners.pop();
+      } else {
+        corners.shift();
+      }
+    }
     var pointFeatures = [];
     var cornerPoint;
     var cornerFeature;
@@ -158,6 +172,7 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
 
       pointFeatures.push(cornerFeature);
     }, this);
+    feature.set('corners', pointFeatures);
 
     var previousFeature;
     var nextFeature;
@@ -183,6 +198,7 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
     }, this);
     pointSource.addFeatures(pointFeatures);
   }
+
 };
 
 
@@ -272,8 +288,15 @@ ngeo.interaction.ModifyRectangle.prototype.willModifyFeatures_ = function(evt) {
  * @private
  */
 ngeo.interaction.ModifyRectangle.prototype.removeFeature_ = function(feature) {
-  ol.events.unlisten(feature, ol.events.EventType.CHANGE,
-      this.handleFeatureChange_, this);
+  var corners = feature.get('corners');
+  for (var i = 0; i < corners.length; i++) {
+    ol.events.unlisten(corners[i], ol.events.EventType.CHANGE,
+        this.handleCornerGeometryChange_);
+
+    this.vectorPoints_.getSource().removeFeature(corners[i]);
+  }
+  this.vectorBoxes_.getSource().removeFeature(feature);
+  this.feature_ = null;
 };
 
 
@@ -297,19 +320,6 @@ ngeo.interaction.ModifyRectangle.prototype.handleFeatureAdd_ = function(evt) {
   goog.asserts.assertInstanceof(feature, ol.Feature,
       'feature should be an ol.Feature');
   this.addFeature_(feature);
-};
-
-
-/**
- * @param {ol.events.Event} evt Event.
- * @private
- */
-ngeo.interaction.ModifyRectangle.prototype.handleFeatureChange_ = function(evt) {
-  if (!this.changingFeature_) {
-    var feature = /** @type {ol.Feature} */ (evt.target);
-    this.removeFeature_(feature);
-    this.addFeature_(feature);
-  }
 };
 
 
@@ -360,7 +370,8 @@ ngeo.interaction.ModifyRectangle.prototype.handleDown_ = function(evt) {
         return feature;
       }, undefined);
 
-  if (feature && feature.getGeometry() instanceof ol.geom.Point) {
+  if (feature && feature.getGeometry() instanceof ol.geom.Point &&
+      feature.get('siblingX') && feature.get('siblingY')) {
     this.coordinate_ = evt.coordinate;
     this.feature_ = feature;
 
