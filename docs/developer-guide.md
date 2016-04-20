@@ -216,6 +216,14 @@ fdescribe('...', function() {
   fit('...', function() {
 ```
 
+### Create a package on npm
+
+Set the version in the `package.json` file.
+
+Create a tag named the same as the version.
+
+Travis will create a new package on npm.
+
 ### Create a new stabilisation branch
 
 When we create a new stabilisation branch we should also duplicate the localisation.
