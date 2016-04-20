@@ -496,8 +496,9 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
       nodeNames = this.retrieveNodeNames_(node);
       source = /** @type {ol.source.ImageWMS} */
           (firstParentTreeLayer.getSource());
-      layers = firstParentTreeLayer.getVisible() ?
-          source.getParams()['LAYERS'].split(',') : [];
+      layers = (firstParentTreeLayer.getVisible() &&
+          source.getParams()['LAYERS'].trim() !== '' &&
+          source.getParams()['LAYERS'].split(','))  || [];
       if (isActive) {
         for (i = 0; i < nodeNames.length; i++) {
           ol.array.remove(layers, nodeNames[i]);
