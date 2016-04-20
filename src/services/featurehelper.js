@@ -516,24 +516,22 @@ ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
     opt_mimeType) {
   var mimeType = opt_mimeType !== undefined ? opt_mimeType : 'text/plain';
 
-  // clone the features to:
-  //  - transform the exported features to EPSG:4326
-  //  - apply the original style to the clone (the original may have select
-  //    style active)
+  // clone the features to apply the original style to the clone
+  // (the original may have select style active)
   var clones = [];
   var clone;
   features.forEach(function(feature) {
-    clone = new ol.Feature();
-    clone.setProperties(feature.getProperties());
-    clone.setGeometry(clone.getGeometry().clone());
-    if (this.projection_) {
-      clone.getGeometry().transform(this.projection_, ol.proj.get('EPSG:4326'));
-    }
+    clone = new ol.Feature(feature.getProperties());
     this.setStyle(clone, false);
     clones.push(clone);
   }, this);
 
-  var data = format.writeFeatures(clones);
+  var writeOptions = this.projection_ ? {
+    dataProjection: 'EPSG:4326',
+    featureProjection: this.projection_
+  } : {};
+
+  var data = format.writeFeatures(clones, writeOptions);
 
   $('<a />', {
     'download': fileName,

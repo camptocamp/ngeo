@@ -102,7 +102,7 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
    */
   this.items_ = [];
 
-  // build the drop-down menu and items of there's more than one format
+  // build the drop-down menu and items if there's more than one format
   if (formats.length > 1) {
     $element.attr('id', id);
     var $menu = $('<ul />', {
