@@ -136,13 +136,26 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
     var boxSource = this.vectorBoxes_.getSource();
     var pointSource = this.vectorPoints_.getSource();
 
-    try {
-      boxSource.addFeature(feature);
-    } catch (e) {
-      // If the feature is in the source already, its corners were already
-      // created, no need to create them again.
+    // If the feature is in the source already, its corners were already
+    // created, no need to create them again.
+    var featureExists = false;
+    var featureId = feature.getId();
+    if (featureId) {
+      featureExists = !!boxSource.getFeatureById(featureId);
+    } else {
+      featureId = goog.getUid(feature).toString();
+      var features = boxSource.getFeatures();
+      for (var i = 0; i < features.length; i++) {
+        if (goog.getUid(features[i]).toString() == featureId) {
+          featureExists = true;
+          break;
+        }
+      }
+    }
+    if (featureExists) {
       return;
     }
+    boxSource.addFeature(feature);
 
     // from each corners, create a point feature and add it to the point layer.
     // each point is then associated with 2 siblings in order to update the
