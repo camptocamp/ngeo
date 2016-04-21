@@ -13,6 +13,9 @@
     <span class="name" title="{{layertreeCtrl.node.name | translate}}">{{layertreeCtrl.node.name | translate}}</span>
   </a>
   <span class="rightButtons">
+    <a href="" ng-if="::layertreeCtrl.depth == 1" ng-click="gmfLayertreeCtrl.removeNode(layertreeCtrl.node)">
+        <span class="fa fa-trash"></span>
+    </a>
     <span class="metadata" ng-if="::layertreeCtrl.node.metadata.metadataUrl">
       <span ng-if="::gmfLayertreeCtrl.openLinksInNewWindow === true">
         <a title="{{'More informations'|translate}}" href="{{::layertreeCtrl.node.metadata.metadataUrl}}" target="blank_"></a>
