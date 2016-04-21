@@ -13,12 +13,15 @@ goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.resizemapDirective');
 goog.require('ngeo.FeatureHelper');
+/** @suppress {extraRequire} */
 goog.require('ngeo.Features');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
 goog.require('ol.interaction');
+goog.require('ol.layer.Vector');
+goog.require('ol.source.Vector');
 
 gmf.module.constant('isDesktop', true);
 
