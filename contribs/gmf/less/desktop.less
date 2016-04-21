@@ -233,3 +233,42 @@ main {
     border-radius: @app-margin;
     background: @brand-primary;
 }
+
+
+/**
+ * DrawFeature directive
+ */
+
+gmf-drawfeature h2 {
+  display: none;
+}
+
+
+.ngeo-drawfeature-actionbuttons {
+  float: right;
+  position: relative;
+}
+
+
+
+.gmf-eol {
+  clear: both;
+}
+
+gmf-featurestyle {
+  display: block;
+  margin: 10px 0 0 0;
+}
+
+.gmf-drawfeature-featurelist {
+  margin: 10px 0 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    &:hover {
+      background-color: #ADD8E6;
+      cursor: pointer;
+    }
+  }
+}
