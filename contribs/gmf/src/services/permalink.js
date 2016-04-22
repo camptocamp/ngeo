@@ -835,7 +835,6 @@ gmf.Permalink.prototype.getLayerStateParam_ = function(layerName,
  * @private
  */
 gmf.Permalink.prototype.registerDataLayerGroup_ = function(map) {
-  // FIXME - 'data' should be: gmf.LayertreeController.DATALAYERGROUP_NAME
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(map,
       gmf.DATALAYERGROUP_NAME);
   this.initLayers_();
