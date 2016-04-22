@@ -25,11 +25,11 @@
       </span>
     </span>
     <span class="zoom" title="{{'Zoom to a visible level'|translate}}" ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl.node)"></span>
-    <span class="legendButton" ng-if="::(gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true')">
+    <span class="legendButton" ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true'">
       <a title="{{'Show/hide legend'|translate}}" data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend"></a>
     </span>
   </span>
-  <span class="legend">
+  <span class="legend" ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true'">
     <div id="node-{{::layertreeCtrl.uid}}-legend" class="collapse" ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded == 'true' ? 'in' : '']">
       <a data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend">
         <img ng-src="{{gmfLayertreeCtrl.getLegendURL(layertreeCtrl)}}"></img>
