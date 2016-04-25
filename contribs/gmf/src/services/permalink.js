@@ -213,7 +213,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @private
    */
   this.featureHashFormat_ = new ngeo.format.FeatureHash({
-    setStyles: false,
+    setStyle: false,
     encodeStyles: false
   });
 
