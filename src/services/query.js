@@ -1,6 +1,7 @@
 goog.provide('ngeo.Query');
 
 goog.require('ngeo');
+goog.require('ngeo.LayerHelper');
 goog.require('ol.format.WMSGetFeatureInfo');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
