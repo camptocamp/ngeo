@@ -333,10 +333,10 @@ ngeox.format.FeatureHashOptions.prototype.properties;
 /**
  * Determines whether the style defined for each feature is read and converted
  * into:
- *   A) an `ol.style.Style` object set in the feature, or 
- *   B) an object with key:values that defines the style propertiesset in
- *      the feature and for the `ngeo.FeatureHelper` to use to style the feature
- *      with.
+ *   A) an `ol.style.Style` object set in the feature, or
+ *   B) an object with key:values that defines the style properties set in
+ *      the feature and for the `ngeo.FeatureHelper` to use to style the
+ *      feature with.
  * Default is `true`, i.e. A).
  * @type {boolean|undefined}
  */
