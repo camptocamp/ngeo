@@ -214,9 +214,11 @@ ngeo.interaction.Modify.prototype.removeFeature_ = function(feature) {
  */
 ngeo.interaction.Modify.prototype.getFeatureCollection_ = function(feature) {
   var features;
-  if (feature.get(ngeo.FeatureProperties.IS_CIRCLE) === true) {
+  var isCircle = feature.get(ngeo.FeatureProperties.IS_CIRCLE);
+  var isRectangle = feature.get(ngeo.FeatureProperties.IS_RECTANGLE);
+  if (isCircle === true || isCircle === 'true') {
     features = this.circleFeatures_;
-  } else if (feature.get(ngeo.FeatureProperties.IS_RECTANGLE) === true) {
+  } else if (isRectangle === true || isRectangle === 'true') {
     features = this.rectangleFeatures_;
   } else {
     features = this.otherFeatures_;

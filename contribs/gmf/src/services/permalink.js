@@ -6,11 +6,15 @@ goog.require('gmf.TreeManager');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.Debounce');
+goog.require('ngeo.FeatureHelper');
+/** @suppress {extraRequire} */
+goog.require('ngeo.Features');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.Popover');
 goog.require('ngeo.StateManager');
+goog.require('ngeo.format.FeatureHash');
 goog.require('ol.Feature');
 goog.require('ol.geom.Point');
 goog.require('ol.layer.Group');
@@ -24,6 +28,7 @@ goog.require('ol.style.Style');
  */
 gmf.PermalinkParam = {
   BG_LAYER: 'baselayer_ref',
+  FEATURES: 'rl_features',
   MAP_CROSSHAIR: 'map_crosshair',
   MAP_TOOLTIP: 'map_tooltip',
   MAP_X: 'map_x',
@@ -60,6 +65,8 @@ gmf.module.constant('gmfPermalinkOptions',
  *     manager.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
@@ -71,8 +78,25 @@ gmf.module.constant('gmfPermalinkOptions',
  * @ngname gmfPermalink
  */
 gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
-    ngeoFeatureOverlayMgr, ngeoLayerHelper, ngeoStateManager, gmfThemes,
-    gmfTreeManager, gmfPermalinkOptions) {
+    ngeoFeatureOverlayMgr, ngeoFeatureHelper, ngeoFeatures, ngeoLayerHelper,
+    ngeoStateManager, gmfThemes, gmfTreeManager, gmfPermalinkOptions) {
+
+  // == listener keys ==
+
+  /**
+   * The key for map view 'propertychange' event.
+   * @type {?ol.events.Key}
+   * @private
+   */
+  this.mapViewPropertyChangeEventKey_ = null;
+
+  /**
+   * @type {Object.<number, gmf.Permalink.ListenerKeys>}
+   * @private
+   */
+  this.listenerKeys_ = {};
+
+  // == properties from params ==
 
   /**
    * @type {ngeo.BackgroundLayerMgr}
@@ -91,6 +115,18 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+
+  /**
+   * @type {ngeo.FeatureHelper}
+   * @private
+   */
+  this.featureHelper_ = ngeoFeatureHelper;
+
+  /**
+   * @type {ol.Collection.<ol.Feature>}
+   * @private
+   */
+  this.ngeoFeatures_ = ngeoFeatures;
 
   /**
    * @type {ngeo.LayerHelper}
@@ -115,6 +151,9 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
+
+
+  // == other properties ==
 
   /**
    * @type {?ol.Map}
@@ -169,6 +208,14 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   }
 
 
+  /**
+   * @type {ngeo.format.FeatureHash}
+   * @private
+   */
+  this.featureHashFormat_ = new ngeo.format.FeatureHash({
+    encodeStyles: false
+  });
+
   // == event listeners ==
 
   ol.events.listen(
@@ -185,21 +232,19 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     }.bind(this));
   }.bind(this));
 
-
-  // == listener keys ==
-
-  /**
-   * The key for map view 'propertychange' event.
-   * @type {?ol.events.Key}
-   * @private
-   */
-  this.mapViewPropertyChangeEventKey_ = null;
-
-  /**
-   * @type {Object.<number, gmf.Permalink.ListenerKeys>}
-   * @private
-   */
-  this.listenerKeys_ = {};
+  // ngeoFeatures
+  //   (1) read from features from the state manager first, add them
+  //   (2) listen for further features added/removed
+  var features = this.getFeatures();
+  features.forEach(function(feature) {
+    this.featureHelper_.setStyle(feature);
+    this.addNgeoFeature_(feature);
+  }, this);
+  this.ngeoFeatures_.extend(features);
+  ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.ADD,
+    this.handleNgeoFeaturesAdd_, this);
+  ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.REMOVE,
+    this.handleNgeoFeaturesRemove_, this);
 
 };
 
@@ -320,6 +365,24 @@ gmf.Permalink.prototype.getMapCrosshair = function() {
 gmf.Permalink.prototype.getMapTooltip = function() {
   return this.ngeoStateManager_.getInitialValue(
       gmf.PermalinkParam.MAP_TOOLTIP) || null;
+};
+
+
+// === NgeoFeatures (A.K.A. DrawFeature, RedLining) ===
+
+
+/**
+ * Get the ngeo features from the state manager for initialization purpose
+ * @return {Array.<ol.Feature>} The features read from the state manager.
+ * @export
+ */
+gmf.Permalink.prototype.getFeatures = function() {
+  var features = [];
+  var f = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.FEATURES);
+  if (f !== undefined && f !== '') {
+    features = this.featureHashFormat_.readFeatures(f);
+  }
+  return features;
 };
 
 
@@ -849,6 +912,75 @@ gmf.Permalink.prototype.unregisterDataLayerGroup_ = function() {
   var layersUid = goog.getUid(layers);
   this.initListenerKey_(layersUid); // clear event listeners
   this.dataLayerGroup_ = null;
+};
+
+
+// === ngeoFeatures, A.K.A features from the DrawFeature, RedLining  ===
+
+
+/**
+ * @param {ol.CollectionEvent} event Collection event.
+ * @private
+ */
+gmf.Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
+  var feature = event.element;
+  goog.asserts.assertInstanceof(feature, ol.Feature);
+  this.addNgeoFeature_(feature);
+};
+
+
+/**
+ * @param {ol.CollectionEvent} event Collection event.
+ * @private
+ */
+gmf.Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {
+  var feature = event.element;
+  goog.asserts.assertInstanceof(feature, ol.Feature);
+  this.removeNgeoFeature_(feature);
+};
+
+
+/**
+ * Listen to any changes that may occur within the feature in order to
+ * update the state of the permalink accordingly.
+ * @param {ol.Feature} feature Feature.
+ * @private
+ */
+gmf.Permalink.prototype.addNgeoFeature_ = function(feature) {
+  var uid = goog.getUid(feature);
+  this.addListenerKey_(
+    uid,
+    ol.events.listen(feature, ol.events.EventType.CHANGE,
+      this.handleNgeoFeaturesChange_, this),
+    true
+  );
+};
+
+
+/**
+ * Unregister any event listener from the feature.
+ * @param {ol.Feature} feature Feature.
+ * @private
+ */
+gmf.Permalink.prototype.removeNgeoFeature_ = function(feature) {
+  var uid = goog.getUid(feature);
+  this.initListenerKey_(uid); // clear event listeners
+};
+
+
+/**
+ * Called once upon initialization of the permalink service if there's at
+ * least one feature in the ngeoFeatures collection, then called everytime
+ * the collection changes or any of the features within the collection changes.
+ * @private
+ */
+gmf.Permalink.prototype.handleNgeoFeaturesChange_ = function() {
+  var features = this.ngeoFeatures_.getArray();
+  var data = this.featureHashFormat_.writeFeatures(features);
+
+  var object = {};
+  object[gmf.PermalinkParam.FEATURES] = data;
+  this.ngeoStateManager_.updateState(object);
 };
 
 
