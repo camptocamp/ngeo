@@ -965,6 +965,7 @@ gmf.Permalink.prototype.addNgeoFeature_ = function(feature) {
 gmf.Permalink.prototype.removeNgeoFeature_ = function(feature) {
   var uid = goog.getUid(feature);
   this.initListenerKey_(uid); // clear event listeners
+  this.handleNgeoFeaturesChange_();
 };
 
 
