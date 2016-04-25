@@ -650,9 +650,28 @@ ngeo.format.FeatureHash.setStyleInFeature_ = function(text, feature) {
 ngeo.format.FeatureHash.setStyleProperties_ = function(text, feature) {
 
   var properties = ngeo.format.FeatureHash.getStyleProperties_(text, feature);
+  var geometry = feature.getGeometry();
   var clone = {};
 
-  // convert legacy properties
+  // Deal with legacy properties
+  if (geometry instanceof ol.geom.Point) {
+    if (properties['isLabel'] ||
+        properties[ngeo.FeatureProperties.IS_TEXT]) {
+      delete properties['strokeColor'];
+      delete properties['fillColor'];
+    } else {
+      delete properties['fontColor'];
+    }
+  } else {
+    delete properties['fontColor'];
+
+    if (geometry instanceof ol.geom.LineString) {
+      delete properties['fillColor'];
+      delete properties['fillOpacity'];
+    }
+  }
+
+  // Convert legacy properties
   for (var key in properties) {
     var value = properties[key];
     if (ngeo.format.FeatureHashLegacyProperties_[key]) {
@@ -663,7 +682,6 @@ ngeo.format.FeatureHash.setStyleProperties_ = function(text, feature) {
   }
 
   feature.setProperties(clone);
-
 };
 
 
@@ -681,7 +699,6 @@ ngeo.format.FeatureHash.setStyleProperties_ = function(text, feature) {
 ngeo.format.FeatureHash.getStyleProperties_ = function(text, feature) {
   var parts = text.split('\'');
   var properties = {};
-  var geometry = feature.getGeometry();
 
   var numProperties = [
     ngeo.FeatureProperties.ANGLE,
@@ -716,18 +733,6 @@ ngeo.format.FeatureHash.getStyleProperties_ = function(text, feature) {
     } else {
       properties[key] = val;
     }
-  }
-
-  if (geometry instanceof ol.geom.Point) {
-    if (properties['isLabel'] ||
-        properties[ngeo.FeatureProperties.IS_TEXT]) {
-      delete properties['strokeColor'];
-      delete properties['fillColor'];
-    } else {
-      delete properties['fontColor'];
-    }
-  } else {
-    delete properties['fontColor'];
   }
 
   return properties;
