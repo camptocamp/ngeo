@@ -169,9 +169,9 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
       pointFeatures.push(cornerFeature);
     }, this);
     var uid = goog.getUid(feature);
-    var item = {
+    var item = /** @type {ngeo.interaction.ModifyRectangle.CacheItem} */ ({
       corners: pointFeatures
-    }
+    });
     this.cache_[uid] = item;
 
     var previousFeature;
