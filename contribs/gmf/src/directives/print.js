@@ -251,10 +251,10 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
   this.onDragPreviousMousePosition_ = null;
 
   /**
-   * @type {number|null}
+   * @type {?angular.$q.Promise|null}
    * @private
    */
-  this.onDragTimeStamp_ = null;
+  this.rotationTimeoutPromise_ = null;
 
   /**
    * @return {ol.Size} Size in dots of the map to print.
@@ -436,14 +436,15 @@ gmf.PrintController.prototype.getSetRotation = function(opt_rotation) {
  */
 gmf.PrintController.prototype.onPointerDrag_ = function(e) {
   var originalEvent = e.originalEvent;
-  if (this.active && originalEvent.ctrlKey && originalEvent.shiftKey) {
+  if (this.active && originalEvent.altKey && originalEvent.shiftKey) {
     var center = this.map.getPixelFromCoordinate(this.map.getView().getCenter());
     var pixel = e.pixel;
-    var timeStamp = originalEvent.timeStamp;
-    // Reset previous position between two differents drag action.
-    if (!this.onDragTimeStamp_ || timeStamp - this.onDragTimeStamp_ > 100) {
+    // Reset previous position between two differents sessions of drags events.
+    if (this.rotationTimeoutPromise_ === null) {
       this.onDragPreviousMousePosition_ = null;
     } else {
+      // Cancel the timeout to keep this session of drags event
+      this.$timeout_.cancel(this.rotationTimeoutPromise_);
       // Calculate angle and sense of rotation.
       var p0x = this.onDragPreviousMousePosition_[0] - center[0];
       var p0y = this.onDragPreviousMousePosition_[1] - center[1];
@@ -454,15 +455,18 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
       var sense = (p0x * p1y - p0y * p1x) > 0 ? 1 : -1;
       var angle = (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1);
       angle = angle <= 1 ? sense * Math.acos(angle) : 0;
-      var boost = centerToP1 / 250;
+      var boost = centerToP1 / 200;
       var increment = Math.round((angle * 180 / Math.PI) * boost);
 
       // Set rotation then update the view.
       this.getSetRotation(this.rotation + increment);
       this.$scope_.$digest();
     }
-    // Keep a reference of the timeStamp and the position of this event.
-    this.onDragTimeStamp_ = timeStamp;
+    // Prepare the removal of this session of drags events
+    this.rotationTimeoutPromise_ = this.$timeout_(function() {
+      this.rotationTimeoutPromise_ = null;
+    }.bind(this), 500);
+    // Keep the current position for the next calculation.
     this.onDragPreviousMousePosition_ = pixel;
   }
 };
