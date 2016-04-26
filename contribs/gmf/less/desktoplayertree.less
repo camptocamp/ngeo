@@ -11,6 +11,10 @@ gmf-layertree {
 
 .gmf-layertree-node {
 
+  .rightButtons {
+    visibility: hidden;
+  }
+
   &.depth-1 {
     //styling first level node for desktop app
     background-color: @nav-bg;
@@ -26,4 +30,12 @@ gmf-layertree {
       background-color: @main-bg-color;
       padding: @half-app-margin;
   }
+
+  .group:hover,
+  .leaf:hover {
+    .rightButtons {
+      visibility: visible;
+    }
+  }
+
 }
