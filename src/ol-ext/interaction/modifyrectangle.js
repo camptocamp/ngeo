@@ -7,7 +7,6 @@ goog.require('ol.CollectionEventType');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.events');
-goog.require('ol.extent');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
 goog.require('ol.interaction.ModifyEvent');
@@ -147,10 +146,9 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
         'corner': true,
         'geometry': cornerPoint,
         'siblingX': null,
-        'siblingY': null
+        'siblingY': null,
+        'boxFeature': feature
       });
-      ol.events.listen(cornerPoint, ol.events.EventType.CHANGE,
-          goog.bind(this.handleCornerGeometryChange_, this, cornerFeature), this);
 
       pointFeatures.push(cornerFeature);
     }, this);
@@ -188,73 +186,6 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
 
 
 /**
- * Callback method fired when the geometry of one of the corner features is
- * changed.  Change the siblings geometry accordingly.  Prevent handling
- * corner geometry change if an other action is already in progress,
- * i.e. an other feature (corner or center) is already being dragged.
- *
- * @param {ol.Feature} feature the corner feature
- * @param {goog.events.Event} event event
- * @private
- */
-ngeo.interaction.ModifyRectangle.prototype.handleCornerGeometryChange_ = function(
-    feature, event) {
-
-  if (this.changingFeature_) {
-    return;
-  }
-
-  this.changingFeature_ = true;
-
-  // update the siblings coordinates
-  var point = feature.getGeometry();
-  goog.asserts.assertInstanceof(point, ol.geom.Point);
-  var coordinates = /** @type {ol.geom.Point} */ (point).getCoordinates();
-
-  var siblingX = feature.get('siblingX');
-  goog.asserts.assertInstanceof(siblingX, ol.Feature);
-  var siblingXPoint = siblingX.getGeometry();
-  goog.asserts.assertInstanceof(siblingXPoint, ol.geom.Point);
-  siblingXPoint.setCoordinates([
-    siblingXPoint.getCoordinates()[0],
-    coordinates[1]
-  ]);
-
-  var siblingY = feature.get('siblingY');
-  goog.asserts.assertInstanceof(siblingY, ol.Feature);
-  var siblingYPoint = siblingY.getGeometry();
-  goog.asserts.assertInstanceof(siblingYPoint, ol.geom.Point);
-  siblingYPoint.setCoordinates([
-    coordinates[0],
-    siblingYPoint.getCoordinates()[1]
-  ]);
-
-  // update box
-  var boxExtent = ol.extent.createEmpty();
-  var pointFeatures = this.vectorPoints_.getSource().getFeatures();
-  pointFeatures.forEach(function(pointFeature) {
-    point = pointFeature.getGeometry();
-    ol.extent.extendCoordinate(boxExtent, /** @type {ol.geom.Point} */ (point).getCoordinates());
-  });
-
-  var corners = [];
-  ol.extent.forEachCorner(boxExtent, function(corner) {
-    corners.push(corner);
-  }, this);
-  var boxCoordinates = goog.array.concat(corners, [corners[0]]);
-
-  this.features_.forEach(function(boxFeature) {
-    var geom = boxFeature.getGeometry();
-    goog.asserts.assertInstanceof(geom, ol.geom.Polygon);
-    geom.setCoordinates([boxCoordinates]);
-  }, this);
-
-
-  this.changingFeature_ = false;
-};
-
-
-/**
  * @param {ol.MapBrowserPointerEvent} evt Map browser event
  * @private
  */
@@ -276,9 +207,6 @@ ngeo.interaction.ModifyRectangle.prototype.removeFeature_ = function(feature) {
   var item = this.cache_[uid];
   var corners = item.corners;
   for (var i = 0; i < corners.length; i++) {
-    ol.events.unlisten(corners[i], ol.events.EventType.CHANGE,
-        this.handleCornerGeometryChange_);
-
     this.vectorPoints_.getSource().removeFeature(corners[i]);
   }
   this.feature_ = null;
@@ -377,20 +305,96 @@ ngeo.interaction.ModifyRectangle.prototype.handleDown_ = function(evt) {
  */
 ngeo.interaction.ModifyRectangle.prototype.handleDrag_ = function(evt) {
   this.willModifyFeatures_(evt);
+  var feature = this.feature_;
 
   var geometry = /** @type {ol.geom.SimpleGeometry} */
-      (this.feature_.getGeometry());
+      (feature.getGeometry());
 
   if (geometry instanceof ol.geom.Point) {
     this.vectorPoints_.setVisible(true);
-    var deltaX = evt.coordinate[0] - this.coordinate_[0];
-    var deltaY = evt.coordinate[1] - this.coordinate_[1];
 
-    geometry.translate(deltaX, deltaY);
+    geometry.setCoordinates(evt.coordinate);
+
+    // Get all four corners' coordinates
+
+    // 1 - The pixel of the handle we dragged
+    var destinationPixel = evt.pixel;
+
+    // 2 - One of our siblings
+    var siblingX = feature.get('siblingX');
+    goog.asserts.assertInstanceof(siblingX, ol.Feature);
+    var siblingXPoint = siblingX.getGeometry();
+    goog.asserts.assertInstanceof(siblingXPoint, ol.geom.Point);
+    var siblingXCoordinate = siblingXPoint.getCoordinates();
+    var siblingXPixel = this.getMap().getPixelFromCoordinate(siblingXCoordinate);
+
+    // 3 - The second sibling
+    var siblingY = feature.get('siblingY');
+    goog.asserts.assertInstanceof(siblingY, ol.Feature);
+    var siblingYPoint = siblingY.getGeometry();
+    goog.asserts.assertInstanceof(siblingYPoint, ol.geom.Point);
+    var siblingYCoordinate = siblingYPoint.getCoordinates();
+    var siblingYPixel = this.getMap().getPixelFromCoordinate(siblingYCoordinate);
+
+    // 4 - The point opposite of the handle we dragged
+    var opposite = siblingY.get('siblingY');
+    goog.asserts.assertInstanceof(opposite, ol.Feature);
+    if (goog.getUid(feature) == goog.getUid(opposite)) {
+      opposite = siblingY.get('siblingX');
+    }
+
+    goog.asserts.assertInstanceof(opposite, ol.Feature);
+    var oppositePoint = opposite.getGeometry();
+    goog.asserts.assertInstanceof(oppositePoint, ol.geom.Point);
+    var origin = oppositePoint.getCoordinates();
+    var originPixel = this.getMap().getPixelFromCoordinate(origin);
+
+    // Calculate new positions of siblings
+    var b2Pixel = this.calculateNewPixel_(originPixel, destinationPixel, siblingXPixel);
+    var b2Coordinate = this.getMap().getCoordinateFromPixel(b2Pixel);
+    siblingXPoint.setCoordinates(b2Coordinate);
+
+    var c2Pixel = this.calculateNewPixel_(originPixel, destinationPixel, siblingYPixel);
+    var c2Coordinate = this.getMap().getCoordinateFromPixel(c2Pixel);
+
+    siblingYPoint.setCoordinates(c2Coordinate);
+
+
+    // Resize the box
+    var boxFeature = feature.get('boxFeature');
+    var geom = boxFeature.getGeometry();
+    goog.asserts.assertInstanceof(geom, ol.geom.Polygon);
+    geom.setCoordinates([[evt.coordinate, b2Coordinate, origin, c2Coordinate]]);
 
     this.coordinate_[0] = evt.coordinate[0];
     this.coordinate_[1] = evt.coordinate[1];
   }
+};
+
+
+/**
+ * Calculate the new position of a point as projected on a vector from origin to
+ * destination.
+ * @param {ol.Pixel} origin Pixel of origin (opposite of the drag handle)
+ * @param {ol.Pixel} destination Pixel of destination (the handle we dragged)
+ * @param {ol.Pixel} point The point to transform.
+ * @return {ol.Pixel} The new pixel of the point
+ * @private
+ */
+ngeo.interaction.ModifyRectangle.prototype.calculateNewPixel_ = function(
+  origin, destination, point) {
+
+  var aVector = [destination[0] - origin[0], destination[1] - origin[1]];
+  var bVector = [point[0] - origin[0],
+                 point[1] - origin[1]];
+
+  var abScalarProduct = aVector[0] * bVector[0] + aVector[1] * bVector[1];
+  var bDivisor = Math.pow(bVector[0], 2) + Math.pow(bVector[1], 2);
+
+  var b2Vector = [(bVector[0] * abScalarProduct) / bDivisor,
+                  (bVector[1] * abScalarProduct) / bDivisor];
+
+  return [b2Vector[0] + origin[0], b2Vector[1] + origin[1]];
 };
 
 

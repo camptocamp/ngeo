@@ -14,6 +14,7 @@ goog.require('ngeo.drawfeatureDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.exportfeaturesDirective');
 goog.require('ngeo.interaction.Modify');
+goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 goog.require('ol.Collection');
 goog.require('ol.style.Fill');
@@ -229,6 +230,31 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
   this.registerInteraction_(this.translate_);
 
   /**
+   * @type {ngeo.interaction.Rotate}
+   * @private
+   */
+  this.rotate_ = new ngeo.interaction.Rotate({
+    features: this.selectedFeatures,
+    layers: [this.layer],
+    style: new ol.style.Style({
+      text: new ol.style.Text({
+        text: '\uf01e',
+        font: 'normal 18px FontAwesome',
+        fill: new ol.style.Fill({
+          color: '#7a7a7a'
+        })
+      })
+    })
+  });
+  this.registerInteraction_(this.rotate_);
+
+  /**
+   * @type {ngeo.ToolActivate}
+   * @export
+   */
+  this.rotateToolActivate = new ngeo.ToolActivate(this.rotate_, 'active');
+
+  /**
    * @type {ngeo.ToolActivate}
    * @export
    */
@@ -350,6 +376,7 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
     toolMgr.registerTool(otherUid, this.drawToolActivate, false);
     toolMgr.registerTool(otherUid, this.modifyToolActivate, true);
     toolMgr.registerTool(otherUid, this.translateToolActivate, false);
+    toolMgr.registerTool(otherUid, this.rotateToolActivate, false);
 
     this.mapSelectActive = true;
     this.modify_.setActive(true);
@@ -366,6 +393,7 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
     toolMgr.unregisterTool(otherUid, this.drawToolActivate);
     toolMgr.unregisterTool(otherUid, this.modifyToolActivate);
     toolMgr.unregisterTool(otherUid, this.translateToolActivate);
+    toolMgr.unregisterTool(otherUid, this.rotateToolActivate);
 
     this.drawActive = false;
     this.modify_.setActive(false);
@@ -489,6 +517,10 @@ gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
       break;
     case gmf.DrawfeatureController.MenuActionType.MOVE:
       this.translate_.setActive(true);
+      this.scope_.$apply();
+      break;
+    case gmf.DrawfeatureController.MenuActionType.ROTATE:
+      this.rotate_.setActive(true);
       this.scope_.$apply();
       break;
     default:
