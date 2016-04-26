@@ -2,7 +2,6 @@ goog.provide('gmf.LayertreeController');
 goog.provide('gmf.layertreeDirective');
 
 goog.require('gmf');
-goog.require('gmf.Permalink');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.CreatePopup');
@@ -102,7 +101,6 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {gmf.Permalink} gmfPermalink Gmf Permalink service.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @constructor
@@ -112,7 +110,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
-    ngeoLayerHelper, gmfPermalink, gmfWmsUrl, gmfTreeManager) {
+    ngeoLayerHelper, gmfWmsUrl, gmfTreeManager) {
 
   /**
    * @private
