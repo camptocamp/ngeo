@@ -282,6 +282,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
 
   delete customParams['LAYERS'];
   delete customParams['FORMAT'];
+  delete customParams['SERVERTYPE'];
   delete customParams['VERSION'];
 
   var object = /** @type {MapFishPrintWmsLayer} */ ({
@@ -289,6 +290,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
     customParams: customParams,
+    serverType: params['SERVERTYPE'],
     type: 'wms',
     opacity: opacity,
     version: params['VERSION']

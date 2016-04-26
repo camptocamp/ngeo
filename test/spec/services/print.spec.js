@@ -113,6 +113,7 @@ describe('ngeo.CreatePrint', function() {
                 layers: ['foo', 'bar'],
                 type: 'wms',
                 opacity: 1,
+                serverType: undefined,
                 version: undefined
               }]
             },
@@ -169,6 +170,7 @@ describe('ngeo.CreatePrint', function() {
                 layers: ['foo', 'bar'],
                 type: 'wms',
                 opacity: 1,
+                serverType: undefined,
                 version: undefined
               }]
             },

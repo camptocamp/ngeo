@@ -279,7 +279,8 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
       break;
     case gmf.Themes.NodeType.WMS:
       var url = node.url || this.gmfWmsUrl_;
-      layer = this.layerHelper_.createBasicWMSLayer(url, node.name);
+      layer = this.layerHelper_.createBasicWMSLayer(url, node.name,
+              node.serverType);
       break;
     default:
       throw new Error('node wrong type: ' + type);
@@ -314,7 +315,8 @@ gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
 gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
   var names = this.retrieveNodeNames_(node, true);
   var url = node.url || this.gmfWmsUrl_;
-  var layer = this.layerHelper_.createBasicWMSLayer(url, '');
+  var serverType = node.children[0]['serverType'];
+  var layer = this.layerHelper_.createBasicWMSLayer(url, '', serverType);
   this.updateWMSLayerState_(layer, names);
 
   // Keep a reference to this group with all layer name inside.
