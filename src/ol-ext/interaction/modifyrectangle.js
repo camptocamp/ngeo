@@ -17,16 +17,6 @@ goog.require('ol.source.Vector');
 
 
 /**
- * @typedef {{depth: (Array.<number>|undefined),
- *            feature: ol.Feature,
- *            geometry: ol.geom.SimpleGeometry,
- *            index: (number|undefined),
- *            segment: Array.<ol.Extent>}}
- */
-ol.interaction.SegmentDataType;
-
-
-/**
  * @classdesc
  * Interaction for modifying feature geometries.
  *
@@ -115,6 +105,12 @@ ngeo.interaction.ModifyRectangle = function(options) {
    */
   this.coordinate_ = null;
 
+  /**
+   * @type {Object.<number, ngeo.interaction.ModifyRectangle.CacheItem>}
+   * @private
+   */
+  this.cache_ = {}
+
   ol.events.listen(this.features_, ol.CollectionEventType.ADD,
       this.handleFeatureAdd_, this);
   ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
@@ -172,7 +168,11 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
 
       pointFeatures.push(cornerFeature);
     }, this);
-    feature.set('corners', pointFeatures);
+    var uid = goog.getUid(feature);
+    var item = {
+      corners: pointFeatures
+    }
+    this.cache_[uid] = item;
 
     var previousFeature;
     var nextFeature;
@@ -288,7 +288,9 @@ ngeo.interaction.ModifyRectangle.prototype.willModifyFeatures_ = function(evt) {
  * @private
  */
 ngeo.interaction.ModifyRectangle.prototype.removeFeature_ = function(feature) {
-  var corners = feature.get('corners');
+  var uid = goog.getUid(feature);
+  var item = this.cache_[uid];
+  var corners = item.corners;
   for (var i = 0; i < corners.length; i++) {
     ol.events.unlisten(corners[i], ol.events.EventType.CHANGE,
         this.handleCornerGeometryChange_);
@@ -297,6 +299,8 @@ ngeo.interaction.ModifyRectangle.prototype.removeFeature_ = function(feature) {
   }
   this.vectorBoxes_.getSource().removeFeature(feature);
   this.feature_ = null;
+  corners.length = 0;
+  delete this.cache_[uid];
 };
 
 
@@ -422,3 +426,11 @@ ngeo.interaction.ModifyRectangle.prototype.handleUp_ = function(evt) {
   }
   return false;
 };
+
+
+/**
+ * @typedef {{
+ *     corners: Array.<ol.Feature>
+ * }}
+ */
+ngeo.interaction.ModifyRectangle.CacheItem;
