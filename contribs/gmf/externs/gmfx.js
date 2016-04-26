@@ -43,10 +43,10 @@ gmfx.PermalinkOptions.prototype.crosshairStyle;
 
 
 /**
- * Fields that can exist in the gmf print panel.
+ * Fields that can come from a print v3 server and can be used in the partial
+ * of the gmf print panel.
  * @typedef {{
- *   comments: (string|undefined),
- *   debug: (boolean|undefined),
+ *   customs: (Array.<gmfx.CustomField>|undefined),
  *   dpi: (number|undefined),
  *   dpis: (Array.<number>|undefined),
  *   formats: (Object.<string, boolean>|undefined),
@@ -54,88 +54,105 @@ gmfx.PermalinkOptions.prototype.crosshairStyle;
  *   layouts: (Array.<string>|undefined),
  *   legend: (boolean|undefined),
  *   scale: (number|undefined),
- *   scales: (Array.<number>|undefined),
- *   title: (string|undefined)
+ *   scales: (Array.<number>|undefined)
  * }}
  */
 gmfx.PrintFields;
 
-
 /**
- * The 'comments' field.
- * @type {string|undefined}
+ * Custom print fields.
+ * @type {Array.<gmfx.CustomField>|undefined}
  */
-gmfx.PrintFields.prototype.comments
-
-
-/**
- * The 'debug' field.
- * @type {boolean|undefined}
- */
-gmfx.PrintFields.prototype.debug
+gmfx.PrintFields.prototype.customs;
 
 
 /**
  * The selected 'dpi'.
  * @type {number|undefined}
  */
-gmfx.PrintFields.prototype.dpi
+gmfx.PrintFields.prototype.dpi;
 
 
 /**
  * The list of 'dpis'.
  * @type {Array.<number>|undefined}
  */
-gmfx.PrintFields.prototype.dpis
+gmfx.PrintFields.prototype.dpis;
 
 
 /**
  * The list of active 'formats' (png, pdf, ...).
  * @type {Object.<string, boolean>|undefined}
  */
-gmfx.PrintFields.prototype.formats
+gmfx.PrintFields.prototype.formats;
 
 
 /**
  * The selected 'layout'.
  * @type {string|undefined}
  */
-gmfx.PrintFields.prototype.layout
+gmfx.PrintFields.prototype.layout;
 
 
 /**
  * The list of 'layouts'.
  * @type {Array.<string>|undefined}
  */
-gmfx.PrintFields.prototype.layouts
+gmfx.PrintFields.prototype.layouts;
 
 
 /**
  * The list of 'scales'.
  * @type {boolean|undefined}
  */
-gmfx.PrintFields.prototype.legend
+gmfx.PrintFields.prototype.legend;
 
 
 /**
  * The selected 'scale'.
  * @type {number|undefined}
  */
-gmfx.PrintFields.prototype.scale
+gmfx.PrintFields.prototype.scale;
 
 
 /**
  * The 'debug' field.
  * @type {Array.<number>|undefined}
  */
-gmfx.PrintFields.prototype.scales
+gmfx.PrintFields.prototype.scales;
 
 
 /**
- * The 'title' field.
- * @type {string|undefined}
+ * Object that can be used to generate a form field.
+ * @typedef {{
+ *   default: (string|boolean|number|undefined),
+ *   name: string,
+ *   type: string
+ * }}
  */
-gmfx.PrintFields.prototype.title
+gmfx.CustomField;
+
+
+/**
+ * Default value of the form field.
+ * @type {(string|boolean|number|undefined)}
+ */
+gmfx.CustomField.prototype.default;
+
+
+/**
+ * Name of the form field.
+ * @type {string}
+ */
+gmfx.CustomField.prototype.name;
+
+
+/**
+ * Type of the field.
+ * Can be 'String', 'Boolean' or 'Number'.
+ * @type {string}
+ */
+gmfx.CustomField.prototype.type;
 
 
 /**

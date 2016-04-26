@@ -353,17 +353,7 @@ gmf.PrintController.prototype.updateFields_ = function() {
   goog.asserts.assertObject(clientInfo);
   this.paperSize_ = [clientInfo['width'], clientInfo['height']];
 
-  var title = this.isAttributeInCurrentLayout_('title');
-  this.fields.title = title !== null ?
-      this.fields.title || title['default'] : undefined;
-
-  var comments = this.isAttributeInCurrentLayout_('comments');
-  this.fields.comments = comments !== null ?
-      this.fields.comments || comments['default'] : undefined;
-
-  var debug = this.isAttributeInCurrentLayout_('debug');
-  this.fields.debug = debug !== null ?
-      this.fields.debug || debug['default'] : undefined;
+  this.updateCustomFields_();
 
   var legend = this.isAttributeInCurrentLayout_('legend');
   this.fields.legend = legend !== null ?
@@ -383,6 +373,58 @@ gmf.PrintController.prototype.updateFields_ = function() {
   this.fields.formats = {};
   this.formats_.forEach(function(format) {
     this.fields.formats[format] = true;
+  }.bind(this));
+};
+
+
+/**
+ * Update customs fields with gmfx.Customfield to be able to generate a form
+ * from a custom GMF print v3 configuration.
+ * @private
+ */
+gmf.PrintController.prototype.updateCustomFields_ = function() {
+  var name, rawType, value, type;
+  if (!this.fields.customs) {
+    this.fields.customs = [];
+  }
+  var customs = this.fields.customs
+  var previousCustoms = customs.splice(0, customs.length);
+
+  // The attributes without 'clientParams' are the custom fields (user-defined).
+  this.layout_.attributes.forEach(function(attribute) {
+    if (!attribute['clientParams']) {
+      name = '' + attribute.name;
+      value = attribute.default;
+
+      // Try to use existing form field type
+      rawType = '' + attribute.type;
+      switch (rawType) {
+        case 'String':
+          type = (name === 'comments') ? 'textarea' : 'text';
+          break;
+        case 'Boolean':
+          type = 'checkbox';
+          break;
+        case 'Number':
+          type = 'number';
+          break;
+        default:
+          type = rawType;
+      }
+
+      // If it exists use the value of previous same field.
+      previousCustoms.forEach(function(c) {
+        if (c.name === name && c.type === type) {
+          return value = c.value;
+        }
+      });
+
+      this.fields.customs.push(/** gmfx.CustomField */ ({
+        name: name,
+        type: type,
+        value: value
+      }));
+    }
   }.bind(this));
 };
 
@@ -487,13 +529,16 @@ gmf.PrintController.prototype.print = function(format) {
   var scale = this.getOptimalScale_(mapSize, viewResolution);
 
   var customAttributes = {
-    'comments': this.fields.comments,
     'datasource': [],
-    'debug': this.fields.debug,
     'lang': this.gettextCatalog_.currentLanguage,
     'rotation': this.rotation,
-    'scale': this.fields.scale,
-    'title': this.fields.title
+    'scale': this.fields.scale
+  }
+
+  if (this.fields.customs) {
+    this.fields.customs.forEach(function(field) {
+      customAttributes[field.name] = field.value
+    });
   }
 
   if (this.fields.legend) {
