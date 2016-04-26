@@ -10,7 +10,7 @@ goog.require('ngeo');
  *
  *<div ngeo-popover>
  *  <a ngeo-popover-anchor class="btn btn-info">anchor 1</a>
- *  <div ngeo-popover-content="">
+ *  <div ngeo-popover-content>
  *    <ul>
  *      <li>action 1:
  *        <input type="range"/>
@@ -84,11 +84,11 @@ ngeo.popoverAnchorDirective = function() {
 ngeo.popoverContentDirective = function() {
   return {
     restrict: 'A',
-    transclude: true,
+    transclude: 'element',
     require: '^^ngeoPopover',
     link: function(scope, elem, attrs, ngeoPopoverCtrl, transclude) {
       transclude(scope, function(transcludedElm, scope) {
-        ngeoPopoverCtrl.bodyElm = transcludedElm;
+        ngeoPopoverCtrl.bodyElm = transcludedElm.contents();
       });
     }
   };

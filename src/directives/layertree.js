@@ -2,7 +2,7 @@ goog.provide('ngeo.LayertreeController');
 goog.provide('ngeo.layertreeDirective');
 
 goog.require('ngeo');
-
+goog.require('ngeo.DecorateLayer');
 
 ngeo.module.value('ngeoLayertreeTemplateUrl',
     /**
@@ -123,13 +123,14 @@ ngeo.module.directive('ngeoLayertree', ngeo.layertreeDirective);
  * @param {angular.Scope} $scope Scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.
+ * @param {ngeo.DecorateLayer} ngeoDecorateLayer layer decorator service.
  * @constructor
  * @ngInject
  * @export
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */
-ngeo.LayertreeController = function($scope, $element, $attrs) {
+ngeo.LayertreeController = function($scope, $element, $attrs, ngeoDecorateLayer) {
 
   var isRoot = $attrs['ngeoLayertreeNotroot'] === undefined;
 
@@ -209,6 +210,10 @@ ngeo.LayertreeController = function($scope, $element, $attrs) {
    */
   this.layer = isRoot ? null : /** @type {ol.layer.Layer} */
       ($scope.$eval(nodelayerExpr, {'node': this.node, 'depth': this.depth, 'parentCtrl' : this.parent}));
+
+  if (this.layer) {
+    ngeoDecorateLayer(this.layer);
+  }
 
 
   var listenersExpr = $attrs['ngeoLayertreeListeners'];
