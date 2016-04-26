@@ -5,8 +5,9 @@ goog.require('gmf.mapDirective');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
-goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.Circle');
+goog.require('ol.geom.LineString');
+goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
@@ -42,122 +43,94 @@ app.MainController = function($scope, ngeoFeatureHelper) {
   this.featureHelper_ = ngeoFeatureHelper;
 
   // create features
-  var features = new ol.format.GeoJSON().readFeatures({
-    'type': 'FeatureCollection',
-    'features': [{
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-8458215, 6672646]
-      },
-      'properties': {
-        'color': '#009D57',
-        'name': 'Point 1',
-        'size': '6'
-      }
-    }, {
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Point',
-        'coordinates': [-8007848, 6209744]
-      },
-      'properties': {
-        'angle': '0',
-        'color': '#000000',
-        'isText': true,
-        'name': 'Text 1',
-        'size': '16'
-      }
-    }, {
-      'type': 'Feature',
-      'geometry': {
-        'type': 'LineString',
-        'coordinates': [
-          [-8321240, 6523441],
-          [-8103547, 6726458],
-          [-8091318, 6408480],
-          [-7973910, 6631065]
-        ]
-      },
-      'properties': {
-        'color': '#0BA9CC',
-        'name': 'LineString 1',
-        'stroke': '4'
-      }
-    }, {
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Polygon',
-        'coordinates': [
-          [
-            [-8512027, 6359560],
-            [-8531595, 6080718],
-            [-8267428, 6031798],
-            [-8238077, 6247045],
-            [-8512027, 6359560]
-          ]
-        ]
-      },
-      'properties': {
-        'color': '#4186F0',
-        'name': 'Polygon 1',
-        'opacity': '0.5',
-        'showMeasure': true,
-        'stroke': '1'
-      }
-    }, {
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Polygon',
-        'coordinates': [
-          [
-            [-7952508, 6096617],
-            [-8051570, 5959642],
-            [-7848554, 5926621],
-            [-7754383, 6025683],
-            [-7952508, 6096617]
-          ]
-        ]
-      },
-      'properties': {
-        'color': '#CCCCCC',
-        'name': 'Polygon 2',
-        'opacity': '1',
-        'stroke': '3'
-      }
-    }, {
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Polygon',
-        'coordinates': [
-          [
-            [-7874848, 6496535],
-            [-7874848, 6384020],
-            [-7730535, 6384020],
-            [-7730535, 6496535],
-            [-7874848, 6496535]
-          ]
-        ]
-      },
-      'properties': {
-        'color': '#000000',
-        'isRectangle': true,
-        'name': 'Rectangle 1',
-        'opacity': '0.5',
-        'stroke': '2'
-      }
-    }]
-  });
+  var features = [];
 
-  features.push(new ol.Feature({
+  var pointProperties = {
+    geometry: new ol.geom.Point([-8458215, 6672646])
+  };
+  pointProperties[ngeo.FeatureProperties.COLOR] = '#009D57';
+  pointProperties[ngeo.FeatureProperties.NAME] = 'Point1';
+  pointProperties[ngeo.FeatureProperties.SIZE] = '6';
+  features.push(new ol.Feature(pointProperties));
+
+  var textProperties = {
+    geometry: new ol.geom.Point([-8007848, 6209744])
+  };
+  textProperties[ngeo.FeatureProperties.ANGLE] = '0';
+  textProperties[ngeo.FeatureProperties.COLOR] = '#000000';
+  textProperties[ngeo.FeatureProperties.IS_TEXT] = true;
+  textProperties[ngeo.FeatureProperties.NAME] = 'Text 1';
+  textProperties[ngeo.FeatureProperties.SIZE] = '16';
+  features.push(new ol.Feature(textProperties));
+
+  var lineProperties = {
+    geometry: new ol.geom.LineString([
+      [-8321240, 6523441],
+      [-8103547, 6726458],
+      [-8091318, 6408480],
+      [-7973910, 6631065]
+    ])
+  };
+  lineProperties[ngeo.FeatureProperties.COLOR] = '#0BA9CC';
+  lineProperties[ngeo.FeatureProperties.NAME] = 'LineString 1';
+  lineProperties[ngeo.FeatureProperties.STROKE] = '4';
+  features.push(new ol.Feature(lineProperties));
+
+  var poly1Properties = {
+    geometry: new ol.geom.Polygon([
+      [
+        [-8512027, 6359560],
+        [-8531595, 6080718],
+        [-8267428, 6031798],
+        [-8238077, 6247045],
+        [-8512027, 6359560]
+      ]
+    ])
+  };
+  poly1Properties[ngeo.FeatureProperties.COLOR] = '#4186F0';
+  poly1Properties[ngeo.FeatureProperties.NAME] = 'Polygon 1';
+  poly1Properties[ngeo.FeatureProperties.OPACITY] = '0.5';
+  poly1Properties[ngeo.FeatureProperties.SHOW_MEASURE] = true;
+  poly1Properties[ngeo.FeatureProperties.STROKE] = '1';
+  features.push(new ol.Feature(poly1Properties));
+
+  var poly2Properties = {
+    geometry: new ol.geom.Polygon([
+      [
+        [-7952508, 6096617],
+        [-8051570, 5959642],
+        [-7848554, 5926621],
+        [-7754383, 6025683],
+        [-7952508, 6096617]
+      ]
+    ])
+  };
+  poly2Properties[ngeo.FeatureProperties.COLOR] = '#CCCCCC';
+  poly2Properties[ngeo.FeatureProperties.NAME] = 'Polygon 2';
+  poly2Properties[ngeo.FeatureProperties.OPACITY] = '1';
+  poly2Properties[ngeo.FeatureProperties.STROKE] = '3';
+  features.push(new ol.Feature(poly2Properties));
+
+  var rectProperties = {
+    geometry: ol.geom.Polygon.fromExtent([-7874848, 6496535, -7730535, 6384020])
+  };
+  rectProperties[ngeo.FeatureProperties.COLOR] = '#000000';
+  rectProperties[ngeo.FeatureProperties.IS_RECTANGLE] = true;
+  rectProperties[ngeo.FeatureProperties.NAME] = 'Rectangle 1';
+  rectProperties[ngeo.FeatureProperties.OPACITY] = '0.5';
+  rectProperties[ngeo.FeatureProperties.STROKE] = '2';
+  features.push(new ol.Feature(rectProperties));
+
+  var circleProperties = {
     geometry: ol.geom.Polygon.fromCircle(
-        new ol.geom.Circle([-7691093, 6166327], 35000), 64),
-    color: '#000000',
-    isCircle: true,
-    name: 'Circle 1',
-    opacity: '0.5',
-    stroke: '2'
-  }));
+        new ol.geom.Circle([-7691093, 6166327], 35000), 64)
+  };
+  circleProperties[ngeo.FeatureProperties.COLOR] = '#000000';
+  circleProperties[ngeo.FeatureProperties.IS_CIRCLE] = true;
+  circleProperties[ngeo.FeatureProperties.NAME] = 'Circle 1';
+  circleProperties[ngeo.FeatureProperties.OPACITY] = '0.5';
+  circleProperties[ngeo.FeatureProperties.STROKE] = '2';
+  features.push(new ol.Feature(circleProperties));
 
   var view = new ol.View({
     center: [-8174482, 6288627],

@@ -24,52 +24,52 @@ ngeo.FeatureProperties = {
    * @type {string}
    * @export
    */
-  ANGLE: 'angle',
+  ANGLE: 'a',
   /**
    * @type {string}
    * @export
    */
-  COLOR: 'color',
+  COLOR: 'c',
   /**
    * @type {string}
    * @export
    */
-  IS_CIRCLE: 'isCircle',
+  IS_CIRCLE: 'l',
   /**
    * @type {string}
    * @export
    */
-  IS_RECTANGLE: 'isRectangle',
+  IS_RECTANGLE: 'r',
   /**
    * @type {string}
    * @export
    */
-  IS_TEXT: 'isText',
+  IS_TEXT: 't',
   /**
    * @type {string}
    * @export
    */
-  NAME: 'name',
+  NAME: 'n',
   /**
    * @type {string}
    * @export
    */
-  OPACITY: 'opacity',
+  OPACITY: 'o',
   /**
    * @type {string}
    * @export
    */
-  SHOW_MEASURE: 'showMeasure',
+  SHOW_MEASURE: 'm',
   /**
    * @type {string}
    * @export
    */
-  SIZE: 'size',
+  SIZE: 's',
   /**
    * @type {string}
    * @export
    */
-  STROKE: 'stroke'
+  STROKE: 'k'
 };
 
 
