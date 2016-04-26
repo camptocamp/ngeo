@@ -692,6 +692,7 @@ gmf.PrintController.prototype.handleCreateReportError_ = function(resp) {
 gmf.PrintController.prototype.getLegend_ = function(scale) {
   var legend = {'classes': []};
   var classes, layerNames, layerName, icons;
+  var gettextCatalog_ = this.gettextCatalog_;
 
   // Get layers from layertree only.
   var dataLayerGroup = this.ngeoLayerHelper_.getGroupFromMap(this.map,
@@ -711,7 +712,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
         // Don't add classes without legend url.
         if (icons !== null) {
           classes.push({
-            'name': layerName,
+            'name': gettextCatalog_.getString('' + layerName),
             'icons': [icons]
           });
         }
@@ -725,7 +726,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
           // active name.
           if (icons !== null && name.length !== 0) {
             classes.push({
-              'name': name,
+              'name': gettextCatalog_.getString('' + name),
               'icons': [icons]
             });
           }
