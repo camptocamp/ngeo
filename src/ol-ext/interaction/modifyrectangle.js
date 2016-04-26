@@ -74,19 +74,6 @@ ngeo.interaction.ModifyRectangle = function(options) {
    * @type {ol.layer.Vector}
    * @private
    */
-  this.vectorBoxes_ = new ol.layer.Vector({
-    source: new ol.source.Vector({
-      wrapX: !!options.wrapX
-    }),
-    style: style,
-    updateWhileAnimating: true,
-    updateWhileInteracting: true
-  });
-
-  /**
-   * @type {ol.layer.Vector}
-   * @private
-   */
   this.vectorPoints_ = new ol.layer.Vector({
     source: new ol.source.Vector({
       wrapX: !!options.wrapX
@@ -133,16 +120,12 @@ goog.inherits(ngeo.interaction.ModifyRectangle, ol.interaction.Pointer);
 ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
   var featureGeom = feature.getGeometry();
   if (featureGeom instanceof ol.geom.Polygon) {
-    var boxSource = this.vectorBoxes_.getSource();
-    var pointSource = this.vectorPoints_.getSource();
 
-    try {
-      boxSource.addFeature(feature);
-    } catch (e) {
-      // If the feature is in the source already, its corners were already
-      // created, no need to create them again.
+    // If the feature's corners are already set, no need to set them again
+    if (feature.get('corners')) {
       return;
     }
+    var pointSource = this.vectorPoints_.getSource();
 
     // from each corners, create a point feature and add it to the point layer.
     // each point is then associated with 2 siblings in order to update the
@@ -258,8 +241,7 @@ ngeo.interaction.ModifyRectangle.prototype.handleCornerGeometryChange_ = functio
   }, this);
   var boxCoordinates = goog.array.concat(corners, [corners[0]]);
 
-  var boxFeatures = this.vectorBoxes_.getSource().getFeatures();
-  goog.array.forEach(boxFeatures, function(boxFeature) {
+  this.features_.forEach(function(boxFeature) {
     var geom = boxFeature.getGeometry();
     goog.asserts.assertInstanceof(geom, ol.geom.Polygon);
     geom.setCoordinates([boxCoordinates]);
@@ -295,7 +277,7 @@ ngeo.interaction.ModifyRectangle.prototype.removeFeature_ = function(feature) {
 
     this.vectorPoints_.getSource().removeFeature(corners[i]);
   }
-  this.vectorBoxes_.getSource().removeFeature(feature);
+  feature.set('corners', undefined);
   this.feature_ = null;
 };
 
@@ -304,7 +286,6 @@ ngeo.interaction.ModifyRectangle.prototype.removeFeature_ = function(feature) {
  * @inheritDoc
  */
 ngeo.interaction.ModifyRectangle.prototype.setMap = function(map) {
-  this.vectorBoxes_.setMap(map);
   this.vectorPoints_.setMap(map);
   this.vectorPoints_.setVisible(false);
   goog.base(this, 'setMap', map);
