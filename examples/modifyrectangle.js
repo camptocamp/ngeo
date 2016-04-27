@@ -102,6 +102,17 @@ app.MainController = function() {
     };
   })();
 
+  var vectorSource = new ol.source.Vector({
+    features: this.features
+  });
+  var vectorLayer = new ol.layer.Vector({
+    source: vectorSource
+  });
+
+  // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
+  // makes the vector layer "unmanaged", meaning that it is always on top.
+  vectorLayer.setMap(map);
+
   /**
    * @type {ngeo.interaction.ModifyRectangle}
    * @export
