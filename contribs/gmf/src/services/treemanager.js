@@ -60,7 +60,7 @@ gmf.TreeManager = function(gmfThemes, gmfTreeManagerModeFlush) {
  * @export
  */
 gmf.TreeManager.prototype.isModeFlush = function() {
-  return this.modeFlush_
+  return this.modeFlush_;
 };
 
 

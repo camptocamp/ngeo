@@ -28,7 +28,7 @@ ngeo.AutoProjection.prototype.stringToCoordinates = function(str) {
       return [x, y];
     }
   }
-  return null
+  return null;
 };
 
 

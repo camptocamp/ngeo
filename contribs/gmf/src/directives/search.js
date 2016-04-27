@@ -417,7 +417,7 @@ gmf.SearchController.prototype.filterAction_ = function(action) {
           // add it to the corresponding group
           return !properties['layer_name'] && properties['actions'].some(function(act) {
             return act.action === action;
-          })
+          });
         } else {
           return false;
         }

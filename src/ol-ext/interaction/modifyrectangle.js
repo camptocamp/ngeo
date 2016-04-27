@@ -96,7 +96,7 @@ ngeo.interaction.ModifyRectangle = function(options) {
    * @type {Object.<number, ngeo.interaction.ModifyRectangle.CacheItem>}
    * @private
    */
-  this.cache_ = {}
+  this.cache_ = {};
 
   ol.events.listen(this.features_, ol.CollectionEventType.ADD,
       this.handleFeatureAdd_, this);

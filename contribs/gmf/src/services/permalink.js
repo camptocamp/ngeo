@@ -463,7 +463,7 @@ gmf.Permalink.prototype.registerMap_ = function(map) {
     goog.asserts.assertArray(crosshairCoordinate);
 
     var crosshairFeature = new ol.Feature(
-        new ol.geom.Point(crosshairCoordinate))
+        new ol.geom.Point(crosshairCoordinate));
     crosshairFeature.setStyle(this.crosshairStyle_);
     this.featureOverlay_.addFeature(crosshairFeature);
   }
@@ -712,7 +712,7 @@ gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
   if (layer instanceof ol.layer.Group) {
     layer.getLayers().forEach(function(layer) {
       this.registerLayer_(layer, opt_init);
-    }, this)
+    }, this);
   } else {
     this.addListenerKey_(layerUid, ol.events.listen(layer,
       ol.Object.getChangeEventType(ol.layer.LayerProperty.VISIBLE),

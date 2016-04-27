@@ -299,7 +299,7 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
     deferred.resolve(response.data);
   }, function(response) {
     deferred.reject(response);
-  })
+  });
 };
 
 

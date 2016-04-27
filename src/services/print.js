@@ -441,7 +441,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
             isOriginalFeatureAdded = true;
           }
         } else {
-          var styledFeature = originalFeature.clone()
+          var styledFeature = originalFeature.clone();
           styledFeature.setGeometry(geometry);
           geojsonFeature = geojsonFormat.writeFeatureObject(styledFeature);
           geometry = styledFeature.getGeometry();

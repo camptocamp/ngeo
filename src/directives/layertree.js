@@ -111,7 +111,7 @@ ngeo.layertreeDirective = function($compile, ngeoLayertreeTemplateUrl) {
     scope: true,
     templateUrl: ngeoLayertreeTemplateUrl,
     controller: 'NgeoLayertreeController'
-  }
+  };
 };
 
 

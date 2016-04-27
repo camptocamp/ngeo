@@ -1,4 +1,4 @@
-goog.provide('ngeo.FeatureHelper')
+goog.provide('ngeo.FeatureHelper');
 
 goog.require('ngeo');
 goog.require('ngeo.interaction.Measure');
@@ -274,7 +274,7 @@ ngeo.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
       } else {
         return feature.getGeometry();
       }
-    }
+    };
   }
 
   return new ol.style.Style(options);
@@ -339,7 +339,7 @@ ngeo.FeatureHelper.prototype.getHaloStyle_ = function(feature) {
       var color = [255, 255, 255, 1];
       style = new ol.style.Style({
         text: this.createTextStyle_(label, size, angle, color, haloSize * 2)
-      })
+      });
       break;
     default:
       break;
@@ -472,10 +472,10 @@ ngeo.FeatureHelper.prototype.getStrokeProperty = function(feature) {
 ngeo.FeatureHelper.prototype.export = function(features, formatType) {
   switch (formatType) {
     case ngeo.FeatureHelper.FormatType.GPX:
-      this.exportGPX(features)
+      this.exportGPX(features);
       break;
     case ngeo.FeatureHelper.FormatType.KML:
-      this.exportKML(features)
+      this.exportKML(features);
       break;
     default:
       break;
