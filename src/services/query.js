@@ -467,7 +467,7 @@ ngeo.Query.prototype.getLayerSourceId_ = function(layer) {
 ngeo.Query.prototype.getLayerSourceIds_ = function(layer) {
   var ids = layer.get(this.sourceIdsProperty_) || [];
   goog.asserts.assertArray(ids);
-  var clone = ids.slice()
+  var clone = ids.slice();
   return clone;
 };
 

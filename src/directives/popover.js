@@ -41,7 +41,7 @@ ngeo.popoverDirective = function() {
         ngeoPopoverCtrl.shown = true;
         ngeoPopoverCtrl.bodyElm.parent().on('click', function(e) {
           e.stopPropagation();
-        })
+        });
       });
 
       ngeoPopoverCtrl.anchorElm.popover({
@@ -54,9 +54,9 @@ ngeo.popoverDirective = function() {
         ngeoPopoverCtrl.anchorElm.popover('destroy');
         ngeoPopoverCtrl.anchorElm.unbind('inserted.bs.popover');
         ngeoPopoverCtrl.anchorElm.unbind('hidden.bs.popover');
-      })
+      });
     }
-  }
+  };
 };
 
 /**
@@ -72,7 +72,7 @@ ngeo.popoverAnchorDirective = function() {
     link: function(scope, elem, attrs, ngeoPopoverCtrl) {
       ngeoPopoverCtrl.anchorElm = elem;
     }
-  }
+  };
 };
 
 /**
@@ -91,7 +91,7 @@ ngeo.popoverContentDirective = function() {
         ngeoPopoverCtrl.bodyElm = transcludedElm;
       });
     }
-  }
+  };
 };
 
 /**
@@ -137,7 +137,7 @@ ngeo.PopoverController = function($scope) {
 
   $scope.$on('$destroy', function() {
     angular.element('body').off('click', onClick);
-  })
+  });
 };
 
 ngeo.module.controller('NgeoPopoverController', ngeo.PopoverController);

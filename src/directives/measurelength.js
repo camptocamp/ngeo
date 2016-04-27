@@ -36,7 +36,7 @@ ngeo.measurelengthDirective = function($compile, gettext) {
       });
 
       drawFeatureCtrl.registerInteraction(measureLength);
-      drawFeatureCtrl.measureLength = measureLength
+      drawFeatureCtrl.measureLength = measureLength;
 
       ol.events.listen(
           measureLength,

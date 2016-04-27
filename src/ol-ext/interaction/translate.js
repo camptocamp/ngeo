@@ -249,7 +249,7 @@ ngeo.interaction.Translate.prototype.getGeometryCenterPoint_ = function(
   var point;
 
   if (geometry instanceof ol.geom.Polygon) {
-    point = geometry.getInteriorPoint()
+    point = geometry.getInteriorPoint();
   } else if (geometry instanceof ol.geom.LineString) {
     center = geometry.getCoordinateAt(0.5);
   } else {

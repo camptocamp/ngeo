@@ -1,4 +1,4 @@
-goog.provide('ngeo.Features')
+goog.provide('ngeo.Features');
 goog.require('ngeo');
 
 goog.require('ol.Collection');
