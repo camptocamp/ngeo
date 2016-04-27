@@ -651,7 +651,6 @@ ngeo.format.FeatureHash.setStyleProperties_ = function(text, feature) {
 
   var properties = ngeo.format.FeatureHash.getStyleProperties_(text, feature);
   var geometry = feature.getGeometry();
-  var clone = {};
 
   // Deal with legacy properties
   if (geometry instanceof ol.geom.Point) {
@@ -661,6 +660,7 @@ ngeo.format.FeatureHash.setStyleProperties_ = function(text, feature) {
       delete properties['fillColor'];
     } else {
       delete properties['fontColor'];
+      delete properties['fontSize'];
     }
   } else {
     delete properties['fontColor'];
@@ -671,7 +671,17 @@ ngeo.format.FeatureHash.setStyleProperties_ = function(text, feature) {
     }
   }
 
+  // Convert font size from px to pt
+  if (properties['fontSize']) {
+    var fontSize = parseFloat(properties['fontSize']);
+    if (properties['fontSize'].indexOf('px') !== -1) {
+      fontSize = Math.round(fontSize / 1.333333);
+    }
+    properties['fontSize'] = fontSize;
+  }
+
   // Convert legacy properties
+  var clone = {};
   for (var key in properties) {
     var value = properties[key];
     if (ngeo.format.FeatureHashLegacyProperties_[key]) {
