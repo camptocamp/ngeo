@@ -1,10 +1,15 @@
 <div class="print-panel">
   <div ng-show="ctrl.isState('CAPABILITIES_NOT_LOADED') !== true && ctrl.isState('ERROR_ON_GETCAPABILITIES') !== true">
     <div ng-repeat="customField in ctrl.fields.customs" class="form-group">
-      <input ng-if="customField.type === 'text'" ng-model="customField.value" class="form-control" type="text" placeholder="{{customField.name|translate}}">
-      <textarea ng-if="customField.type === 'textarea'" ng-model="customField.value" class="form-control" row="3" placeholder="{{customField.name|translate}}"></textarea>
-      <p ng-if="customField.type === 'checkbox'"><input ng-model="customField.value" type="checkbox"> <span>{{customField.name|translate}}</span></p>
-      <input ng-if="customField.type === 'number'" ng-model="customField.value" class="form-control" type="number" placeholder="{{customField.name|translate}}">
+      <input ng-if="customField.type === 'number'" ng-model="customField.value" class="form-control" type="number" placeholder="{{customField.name | translate}}">
+      <input ng-if="customField.type === 'text'" ng-model="customField.value" class="form-control" type="text" placeholder="{{customField.name | translate}}">
+      <textarea ng-if="customField.type === 'textarea'" ng-model="customField.value" class="form-control" row="3" placeholder="{{customField.name | translate}}"></textarea>
+      <div ng-if="customField.type === 'checkbox'" class="checkbox">
+        <label>
+          <input ng-model="customField.value" type="checkbox">
+          <span>{{customField.name | translate}}</span>
+        </label>
+      </div>
     </div>
     <div ng-show="ctrl.fields.legend !== undefined" class="checkbox">
       <label>
@@ -16,7 +21,7 @@
       <div ng-show="ctrl.fields.layouts.length !== 1" class="form-group form-group-sm">
         <label class="control-label col-md-3" translate>Layout</label>
         <div class="col-md-9">
-          <button type="button" class="btn btn-default form-control" data-toggle="dropdown">{{ctrl.fields.layout | translate}}</button>
+          <button type="button" class="btn btn-default form-control" data-toggle="dropdown">{{ctrl.fields.layout | translate}}&nbsp;<i class="fa fa-caret-down"></i></button>
           <ul class="dropdown-menu" role="menu">
             <li ng-repeat="layout in ctrl.fields.layouts"><a href="" ng-click="ctrl.setLayout(layout)">{{layout | translate}}</a></li>
           </ul>
@@ -25,7 +30,7 @@
       <div ng-show="ctrl.fields.scales.length !== 1" class="form-group form-group-sm">
         <label class="control-label col-md-3"translate>Scale</label>
         <div class="col-md-9">
-          <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.fields.scale | scalify}}</button>
+          <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.fields.scale | scalify}}&nbsp;<i class="fa fa-caret-down"></i></button>
           <ul class="dropdown-menu" role="menu">
             <li ng-repeat="scale in ctrl.fields.scales"><a href="" ng-click="ctrl.setScale(scale)">{{scale | scalify}}</a></li>
           </ul>
@@ -34,7 +39,7 @@
       <div ng-show="ctrl.fields.dpis.length !== 1" class="form-group form-group-sm">
         <label class="control-label col-md-3" translate>DPI</label>
         <div class="col-md-5">
-          <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.fields.dpi}}</button>
+          <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.fields.dpi}}&nbsp;<i class="fa fa-caret-down"></i></button>
           <ul class="dropdown-menu" role="menu">
             <li ng-repeat="dpi in ctrl.fields.dpis"><a href="" ng-click="ctrl.setDpi(dpi)">{{dpi}}</a></li>
           </ul>
@@ -51,7 +56,7 @@
       </div>
     </div>
     <div class="form-group pull-right">
-      <div class="col-md-1" ng-show="ctrl.isState('PRINTING')"><i class="fa fa-refresh fa-spin"></i></div>
+      <span ng-show="ctrl.isState('PRINTING')"><i class="fa fa-refresh fa-spin"></i></span>
       <a ng-show="ctrl.isState('PRINTING')" class="btn btn-link" href="" ng-click="ctrl.cancel()" translate>Abort</a>
       <button ng-show="ctrl.fields.formats.png" class="btn btn-primary" ng-click="ctrl.print('png')">Image</button>
       <button ng-show="ctrl.fields.formats.pdf" class="btn btn-primary" ng-click="ctrl.print('pdf')">PDF</button>
