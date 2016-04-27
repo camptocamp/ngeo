@@ -110,7 +110,7 @@ app.MainController = function() {
   })();
 
   /**
-   * @type {ngeo.interaction.ModifyRectangle}
+   * @type {ngeo.interaction.Rotate}
    * @export
    */
   this.interaction = new ngeo.interaction.Rotate(
