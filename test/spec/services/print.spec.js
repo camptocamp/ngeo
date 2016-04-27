@@ -189,6 +189,7 @@ describe('ngeo.CreatePrint', function() {
 
       beforeEach(function() {
         var projection = ol.proj.get('EPSG:3857');
+        var extent = projection.getExtent();
         map.addLayer(new ol.layer.Tile({
           opacity: 0.5,
           source: new ol.source.WMTS({
@@ -201,7 +202,8 @@ describe('ngeo.CreatePrint', function() {
             style: 'style',
             tileGrid: new ol.tilegrid.WMTS({
               matrixIds: ['00', '01', '02'],
-              origin: ol.extent.getTopLeft(projection.getExtent()),
+              extent: extent,
+              origin: ol.extent.getTopLeft(extent),
               resolutions: [2000, 1000, 500],
               tileSize: 512
             }),
@@ -244,21 +246,21 @@ describe('ngeo.CreatePrint', function() {
                   tileSize: [512, 512],
                   topLeftCorner: ol.extent.getTopLeft(
                       ol.proj.get('EPSG:3857').getExtent()),
-                  matrixSize: [1, 1]
+                  matrixSize: [39, 39]
                 }, {
                   identifier: '01',
                   scaleDenominator: 3571428.571428572,
                   tileSize: [512, 512],
                   topLeftCorner: ol.extent.getTopLeft(
                       ol.proj.get('EPSG:3857').getExtent()),
-                  matrixSize: [2, 2]
+                  matrixSize: [78, 78]
                 }, {
                   identifier: '02',
                   scaleDenominator: 1785714.285714286,
                   tileSize: [512, 512],
                   topLeftCorner: ol.extent.getTopLeft(
                       ol.proj.get('EPSG:3857').getExtent()),
-                  matrixSize: [4, 4]
+                  matrixSize: [156, 156]
                 }],
                 matrixSet: 'matrixset',
                 opacity: 0.5,

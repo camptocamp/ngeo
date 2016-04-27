@@ -342,21 +342,21 @@ ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(tileGrid, ol.tilegrid.WMTS);
   var matrixIds = tileGrid.getMatrixIds();
 
-  // FIXME:
-  // matrixSize assumes a regular grid
-
   /** @type {Array.<MapFishPrintWmtsMatrix>} */
   var matrices = [];
 
   for (var i = 0, ii = matrixIds.length; i < ii; ++i) {
-    var sqrZ = Math.pow(2, i);
+    var tileRange = tileGrid.getFullTileRange(i);
     matrices.push(/** @type {MapFishPrintWmtsMatrix} */ ({
       identifier: matrixIds[i],
       scaleDenominator: tileGrid.getResolution(i) *
           projection.getMetersPerUnit() / 0.28E-3,
       tileSize: ol.size.toSize(tileGrid.getTileSize(i)),
       topLeftCorner: tileGrid.getOrigin(i),
-      matrixSize: [sqrZ, sqrZ]
+      matrixSize: [
+        tileRange.maxX - tileRange.minX,
+        tileRange.maxY - tileRange.minY
+      ]
     }));
   }
 
