@@ -86,7 +86,7 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize,
         context.lineTo(0, 0);
         context.closePath();
 
-        var rotation = (opt_rotation ? opt_rotation() * Math.PI / 180 : 0);
+        var rotation = (opt_rotation ? ol.math.toRadians(opt_rotation()) : 0);
         // diagonal = distance p1 to center.
         var diagonal = Math.sqrt(Math.pow(extentHalfWidth, 2) +
             Math.pow(extentHalfHeight, 2));

@@ -102,7 +102,7 @@ gmfx.PrintFields.prototype.layouts;
 
 
 /**
- * The list of 'scales'.
+ * The legend checkbox.
  * @type {boolean|undefined}
  */
 gmfx.PrintFields.prototype.legend;
@@ -116,7 +116,7 @@ gmfx.PrintFields.prototype.scale;
 
 
 /**
- * The 'debug' field.
+ * The list of 'scales'
  * @type {Array.<number>|undefined}
  */
 gmfx.PrintFields.prototype.scales;

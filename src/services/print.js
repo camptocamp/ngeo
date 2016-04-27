@@ -195,7 +195,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   var viewCenter = view.getCenter();
   var viewProjection = view.getProjection();
   var viewResolution = view.getResolution();
-  var viewRotation = object.rotation || view.getRotation() * 180 / Math.PI;
+  var viewRotation = object.rotation || ol.math.toDegrees(view.getRotation());
 
   goog.asserts.assert(viewCenter !== undefined);
   goog.asserts.assert(viewProjection !== undefined);

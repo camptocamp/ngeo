@@ -43,7 +43,7 @@ gmf.PrintState = {
    * @export
    */
   ERROR_ON_GETCAPABILITIES: 'errorOnGetCapabilities'
-}
+};
 
 
 gmf.module.value('gmfPrintTemplateUrl',
@@ -387,7 +387,7 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
   if (!this.fields.customs) {
     this.fields.customs = [];
   }
-  var customs = this.fields.customs
+  var customs = this.fields.customs;
   var previousCustoms = customs.splice(0, customs.length);
 
   // The attributes without 'clientParams' are the custom fields (user-defined).
@@ -533,11 +533,11 @@ gmf.PrintController.prototype.print = function(format) {
     'lang': this.gettextCatalog_.currentLanguage,
     'rotation': this.rotation,
     'scale': this.fields.scale
-  }
+  };
 
   if (this.fields.customs) {
     this.fields.customs.forEach(function(field) {
-      customAttributes[field.name] = field.value
+      customAttributes[field.name] = field.value;
     });
   }
 
@@ -692,7 +692,7 @@ gmf.PrintController.prototype.handleCreateReportError_ = function(resp) {
 gmf.PrintController.prototype.getLegend_ = function(scale) {
   var legend = {'classes': []};
   var classes, layerNames, layerName, icons;
-  var gettextCatalog_ = this.gettextCatalog_;
+  var gettextCatalog = this.gettextCatalog_;
 
   // Get layers from layertree only.
   var dataLayerGroup = this.ngeoLayerHelper_.getGroupFromMap(this.map,
@@ -712,7 +712,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
         // Don't add classes without legend url.
         if (icons !== null) {
           classes.push({
-            'name': gettextCatalog_.getString('' + layerName),
+            'name': gettextCatalog.getString('' + layerName),
             'icons': [icons]
           });
         }
@@ -726,7 +726,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
           // active name.
           if (icons !== null && name.length !== 0) {
             classes.push({
-              'name': gettextCatalog_.getString('' + name),
+              'name': gettextCatalog.getString('' + name),
               'icons': [icons]
             });
           }
@@ -756,7 +756,7 @@ gmf.PrintController.prototype.setLayout = function(layoutName) {
   this.layouts_.forEach(function(l) {
     if (l.name === layoutName) {
       layout = l;
-      return true // break;
+      return true; // break;
     }
   });
   this.layout_ = layout;
