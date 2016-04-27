@@ -17,6 +17,8 @@ goog.require('gmf.searchDirective');
 goog.require('gmf.themeselectorDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.BackgroundLayerMgr');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filters');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.GetBrowserLanguage');
 goog.require('ngeo.StateManager');
