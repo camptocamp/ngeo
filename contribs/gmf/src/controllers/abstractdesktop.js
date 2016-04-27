@@ -16,7 +16,10 @@ goog.require('ol.interaction');
 
 gmf.module.constant('isDesktop', true);
 
-
+/** @suppress {extraRequire} */
+goog.require('ngeo.sortableDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.SortableOptions');
 /**
  * Desktop application abstract controller.
  *

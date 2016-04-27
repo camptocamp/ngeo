@@ -24,6 +24,32 @@ gmf-layertree {
       //adding space after the last li elem of the first level nodes
       padding-bottom: @half-app-margin;
     }
+
+    &:hover {
+      .sortable-handle {
+        visibility: visible;
+      }
+    }
+  }
+
+  &.dragger {
+    * {
+      cursor: grabbing;
+      cursor: -webkit-grabbing;
+    }
+    ul {
+      display: none;
+    }
+  }
+  &.curr-drag-item {
+    * {
+      visibility: hidden;
+    }
+    background-color: transparent;
+    border: 1px dashed black;
+    ul {
+      display: none;
+    }
   }
 
   .group.depth-1 {
@@ -38,4 +64,10 @@ gmf-layertree {
     }
   }
 
+  .sortable-handle {
+    color:#555;
+    cursor: -webkit-grab;
+    cursor: grab;
+    visibility: hidden;
+  }
 }
