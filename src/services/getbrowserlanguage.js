@@ -32,7 +32,7 @@ ngeo.getBrowserLanguageFactory = function($window) {
         var nav = $window.navigator;
         var browserLanguages = nav.languages || nav.language ||
             nav.browserLanguage || nav.systemLanguage || nav.userLanguage;
-        if (!goog.isArray(browserLanguages)) {
+        if (!Array.isArray(browserLanguages)) {
           browserLanguages = [browserLanguages];
         }
         browserLanguages = browserLanguages.map(function(item) {

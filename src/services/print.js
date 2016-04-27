@@ -418,9 +418,9 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
     /**
      * @type {Array<ol.style.Style>}
      */
-    var styles = (styleData !== null && !goog.isArray(styleData)) ?
+    var styles = (styleData !== null && !Array.isArray(styleData)) ?
         [styleData] : styleData;
-    goog.asserts.assert(goog.isArray(styles));
+    goog.asserts.assert(Array.isArray(styles));
 
     if (styles !== null && styles.length > 0) {
       var isOriginalFeatureAdded = false;
@@ -537,7 +537,7 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
  */
 ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
   var fillColor = fillStyle.getColor();
-  goog.asserts.assert(goog.isArray(fillColor), 'only supporting fill colors');
+  goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
   if (fillColor !== null) {
     var fillColorRgba = ol.color.asArray(fillColor);
     symbolizer.fillColor = goog.color.rgbArrayToHex(fillColorRgba);
@@ -753,7 +753,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     if (fillStyle !== null) {
       var fillColor = fillStyle.getColor();
       goog.asserts.assert(
-          goog.isArray(fillColor), 'only supporting fill colors');
+          Array.isArray(fillColor), 'only supporting fill colors');
       var fillColorRgba = ol.color.asArray(fillColor);
       symbolizer.fontColor = goog.color.rgbArrayToHex(fillColorRgba);
     }

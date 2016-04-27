@@ -329,7 +329,7 @@ ngeo.format.FeatureHash.encodeStyleFill_ = function(fillStyle, encodedStyles, op
       opt_propertyName : 'fillColor';
   var fillColor = fillStyle.getColor();
   if (fillColor !== null) {
-    goog.asserts.assert(goog.isArray(fillColor), 'only supporting fill colors');
+    goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
     var fillColorRgba = ol.color.asArray(fillColor);
     var fillColorHex = goog.color.rgbArrayToHex(fillColorRgba);
     if (encodedStyles.length > 0) {
@@ -1016,7 +1016,7 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
       var styles = styleFunction.call(feature, 0);
       if (styles !== null) {
         var encodedStyles = [];
-        styles = goog.isArray(styles) ? styles : [styles];
+        styles = Array.isArray(styles) ? styles : [styles];
         ngeo.format.FeatureHash.encodeStyles_(
             styles, geometry.getType(), encodedStyles);
         if (encodedStyles.length > 0) {
