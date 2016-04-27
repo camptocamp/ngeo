@@ -66,7 +66,7 @@ ngeo.sortableDirective = function($timeout) {
 
           var sortable = /** @type {Array} */
               (scope.$eval(attrs['ngeoSortable'])) || [];
-          goog.asserts.assert(goog.isArray(sortable));
+          goog.asserts.assert(Array.isArray(sortable));
 
           var optionsObject = scope.$eval(attrs['ngeoSortableOptions']);
           var options = getOptions(optionsObject);

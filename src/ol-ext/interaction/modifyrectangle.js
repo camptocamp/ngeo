@@ -138,7 +138,7 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
     var pointFeatures = [];
     var cornerPoint;
     var cornerFeature;
-    goog.array.forEach(corners, function(corner) {
+    corners.forEach(function(corner) {
       cornerPoint = new ol.geom.Point(corner);
       cornerFeature = new ol.Feature({
         'corner': true,
@@ -159,7 +159,7 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
 
     var previousFeature;
     var nextFeature;
-    goog.array.forEach(pointFeatures, function(cornerFeature, index) {
+    pointFeatures.forEach(function(cornerFeature, index) {
       previousFeature = pointFeatures[index - 1];
       if (!previousFeature) {
         previousFeature = pointFeatures[pointFeatures.length - 1];
@@ -230,7 +230,7 @@ ngeo.interaction.ModifyRectangle.prototype.handleCornerGeometryChange_ = functio
   // update box
   var boxExtent = ol.extent.createEmpty();
   var pointFeatures = this.vectorPoints_.getSource().getFeatures();
-  goog.array.forEach(pointFeatures, function(pointFeature) {
+  pointFeatures.forEach(function(pointFeature) {
     point = pointFeature.getGeometry();
     ol.extent.extendCoordinate(boxExtent, /** @type {ol.geom.Point} */ (point).getCoordinates());
   });

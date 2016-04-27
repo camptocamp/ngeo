@@ -834,7 +834,7 @@ gmf.Permalink.prototype.updateLayerStateByVisibility_ = function(layer) {
  */
 gmf.Permalink.prototype.handleWMSSourceChange_ = function(layer, source) {
   var layers = source.getParams()['LAYERS'];
-  if (goog.isArray(layers)) {
+  if (Array.isArray(layers)) {
     layers = layers.join(',');
   }
   var layerName = layer.get('layerName');
