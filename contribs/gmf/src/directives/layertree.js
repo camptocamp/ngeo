@@ -1,6 +1,7 @@
 goog.provide('gmf.LayertreeController');
 goog.provide('gmf.layertreeDirective');
 
+goog.require('ngeo.SyncArrays');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
@@ -9,8 +10,6 @@ goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
 goog.require('ol.array');
 goog.require('ol.layer.Tile');
-goog.require('ol.Collection');
-
 
 gmf.module.value('gmfLayertreeTemplate',
     /**
@@ -104,6 +103,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
  * @constructor
  * @export
  * @ngInject
@@ -111,7 +111,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
-    ngeoLayerHelper, gmfWmsUrl, gmfTreeManager) {
+    ngeoLayerHelper, gmfWmsUrl, gmfTreeManager, ngeoSyncArrays) {
 
   /**
    * @private
@@ -175,54 +175,24 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
         gmf.DATALAYERGROUP_NAME);
 
-  $scope.$watchCollection('gmfLayertreeCtrl.tree.children', function(newNodes, oldNodes) {
-    var reorderedLayers = this.reorderLayer_(
-      newNodes,
-      oldNodes,
-      this.dataLayerGroup_.getLayers());
-    if (reorderedLayers) {
-      this.dataLayerGroup_.setLayers(reorderedLayers);
-    }
+  /**
+   * @type Array.<ol.layer.Base>
+   * @export
+   */
+  this.layers = [];
+
+  ngeoSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, $scope, function() {
+    return true;
+  });
+
+  // watch any change on layers array to refresh the map
+  $scope.$watchCollection(function() {
+    return this.layers;
+  }.bind(this),
+  function() {
+    this.map.render();
   }.bind(this));
 };
-
-/**
- * Reorder a layer collection regarding changes in the related nodes
- *
- * (1) : if newNodes and oldNodes are equals, return null (there is no need to reorder)
- * (2) : newNodes and oldNodes MUST HAVE the same length,
- *       avoiding reordering on node insertion/deletion
- * (3) : newNodes (or oldNodes) and layers MUST HAVE the same length
- *
- * @param {Array<Object>} newNodes nodes from the tree
- * @param {Array<Object>} oldNodes nodes from the tree
- * @param {ol.Collection} layers a collection of layers
- * @return {ol.Collection|null} a new (reordered) layer collection
- * @private
- */
-gmf.LayertreeController.prototype.reorderLayer_ = function(newNodes, oldNodes, layers) {
-  var sortedLayers, prevIndex, layer;
-  if (newNodes && newNodes.length === oldNodes.length &&
-        newNodes !==  oldNodes && newNodes.length === layers.getLength()) {
-    sortedLayers = new ol.Collection();
-    for (var i = 0; i < newNodes.length; i++) {
-      //get the previous index (in oldNodes array) of the node
-      prevIndex = oldNodes.indexOf(newNodes[i]);
-
-      //Layer collection order is always equal to oldNodes order but reversed
-      layer = layers.item((oldNodes.length - 1) - prevIndex);
-
-      /**
-       * Insert layer as first element of sortedLayer collection
-       * (keeping layer collection order reversed compared to node array)
-       */
-      sortedLayers.insertAt(0, layer);
-    }
-    return sortedLayers;
-  }
-  return null;
-};
-
 
 /**
  * LayertreeController.prototype.prepareLayer_ - inject metadata into the layer
