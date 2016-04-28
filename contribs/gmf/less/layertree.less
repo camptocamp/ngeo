@@ -43,7 +43,8 @@
   }
 
   .rightButtons {
-    float: right;
+    position: absolute;
+    right: 0;
 
     *::before,
     *::after {
@@ -65,19 +66,22 @@
     color: @color;
   }
 
-  .off, .off .legend img {
+  .off,
+  .off .legend img {
     opacity: 0.5;
   }
 
-  .leaf {
+  .leaf,
+  .group {
     font-size: @font-size-small;
-    .state::after {
+    position: relative;
+  }
+
+  .leaf .state::after {
       content: "\e603";
-    }
   }
 
   .group {
-    font-size: @font-size-small;
     .state::after {
       content: "\e600";
     }
@@ -91,6 +95,9 @@
       .name {
         font-weight: bold;
         color: black;
+      }
+      .rightButtons {
+        right: @app-margin;
       }
     }
 
