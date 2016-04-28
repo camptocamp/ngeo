@@ -195,6 +195,40 @@ describe('ngeo.format.FeatureHash', function() {
       });
     });
 
+    describe('feature decoding with style, witout attributes', function() {
+      it('correctly decodes a feature with style, witout attributes', function() {
+        var feature = fhFormat.readFeature(
+            'p(__~~fillColor*%23ff0101\'' +
+            'strokeColor*%2301ff01\'strokeWidth*3\'' +
+            'pointRadius*4)');
+        expect(feature instanceof ol.Feature).toBeTruthy();
+        var geometry = feature.getGeometry();
+        expect(geometry instanceof ol.geom.Point).toBeTruthy();
+        var coordinate = geometry.getCoordinates();
+        expect(coordinate).toEqual([1, 1]);
+        var style = feature.getStyle();
+        expect(style instanceof ol.style.Style).toBeTruthy();
+        var fillStyle = style.getFill();
+        expect(fillStyle).toBe(null);
+        var strokeStyle = style.getStroke();
+        expect(strokeStyle).toBe(null);
+        var imageStyle = style.getImage();
+        expect(imageStyle instanceof ol.style.Image).toBeTruthy();
+        var radius = imageStyle.getRadius();
+        expect(radius).toBe(4);
+        fillStyle = imageStyle.getFill();
+        expect(fillStyle instanceof ol.style.Fill).toBeTruthy();
+        var fillColor = fillStyle.getColor();
+        expect(fillColor).toBe('#ff0101');
+        strokeStyle = imageStyle.getStroke();
+        expect(strokeStyle instanceof ol.style.Stroke).toBeTruthy();
+        var strokeColor = strokeStyle.getColor();
+        expect(strokeColor).toBe('#01ff01');
+        var strokeWidth = strokeStyle.getWidth();
+        expect(strokeWidth).toBe(3);
+      });
+    });
+
     describe('features decoding', function() {
 
       it('correctly decodes features', function() {
