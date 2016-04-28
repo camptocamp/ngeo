@@ -41,7 +41,7 @@
 <ul id="layer-group-{{::layertreeCtrl.uid}}"
     ng-if="::layertreeCtrl.node.children"
     ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded === 'true'}"
-    ngeo-sortable="::layertreeCtrl.isRoot && layertreeCtrl.node.children"
+    ngeo-sortable="::layertreeCtrl.isRoot && gmfLayertreeCtrl.layers"
     ngeo-sortable-options="{handleClassName: 'sortable-handle', draggerClassName: 'dragger', currDragItemClassName : 'curr-drag-item'}">
   <li class="gmf-layertree-node" ng-repeat="node in layertreeCtrl.node.children"
       ng-class="'depth-' + layertreeCtrl.depth"
