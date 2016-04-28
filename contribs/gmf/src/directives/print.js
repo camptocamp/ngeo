@@ -193,10 +193,28 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
   this.statusTimeoutPromise_ = null;
 
   /**
-   * @type {gmf.PrintState}
-   * @export
+   * @type {Array.<number>|null}
+   * @private
    */
-  this.printState = gmf.PrintState.CAPABILITIES_NOT_LOADED;
+  this.onDragPreviousMousePosition_ = null;
+
+  /**
+   * @type {?angular.$q.Promise|null}
+   * @private
+   */
+  this.rotationTimeoutPromise_ = null;
+
+  /**
+   * @type {goog.events.Key}
+   * @private
+   */
+  this.postComposeListenerKey_;
+
+  /**
+   * @type {goog.events.Key}
+   * @private
+   */
+  this.pointerDragListenerKey_;
 
   /**
    * Current report reference id.
@@ -245,16 +263,10 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
   this.rotation = 0;
 
   /**
-   * @type {Array.<number>|null}
-   * @private
+   * @type {gmf.PrintState}
+   * @export
    */
-  this.onDragPreviousMousePosition_ = null;
-
-  /**
-   * @type {?angular.$q.Promise|null}
-   * @private
-   */
-  this.rotationTimeoutPromise_ = null;
+  this.printState = gmf.PrintState.CAPABILITIES_NOT_LOADED;
 
   /**
    * @return {ol.Size} Size in dots of the map to print.
@@ -299,8 +311,10 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
       this.printState = gmf.PrintState.NOT_IN_USE;
       // Get capabilities - On success
       this.parseCapabilities_(resp);
-      this.map.on('postcompose', this.postcomposeListener_);
-      this.map.on('pointerdrag', this.onPointerDrag_.bind(this));
+      this.postComposeListenerKey_ = this.map.on('postcompose',
+          this.postcomposeListener_);
+      this.pointerDragListenerKey_ = this.map.on('pointerdrag',
+          this.onPointerDrag_.bind(this));
       this.map.render();
     }.bind(this), function(resp) {
       // Get capabilities - On error
@@ -308,8 +322,8 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
     }.bind(this));
 
   } else {
-    this.map.un('postcompose', this.postcomposeListener_);
-    this.map.un('pointerdrag', this.onPointerDrag_.bind(this));
+    this.map.unByKey(this.postComposeListenerKey_);
+    this.map.unByKey(this.pointerDragListenerKey_);
     this.getSetRotation(0);
   }
 };
@@ -667,10 +681,9 @@ gmf.PrintController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
     this.resetPrintStates_();
   } else {
     // The report is not ready yet. Check again in 1s.
-    var that = this;
     this.statusTimeoutPromise_ = this.$timeout_(function() {
-      that.getStatus_(ref);
-    }, 1000, false);
+      this.getStatus_(ref);
+    }.bind(this), 1000, false);
   }
 };
 
