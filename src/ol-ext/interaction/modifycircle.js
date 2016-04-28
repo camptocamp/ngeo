@@ -144,7 +144,7 @@ goog.inherits(ngeo.interaction.ModifyCircle, ol.interaction.Pointer);
  */
 ngeo.interaction.ModifyCircle.prototype.addFeature_ = function(feature) {
   if (feature.getGeometry().getType() === ol.geom.GeometryType.POLYGON &&
-      !!feature.get('isCircle')) {
+      !!feature.get(ngeo.FeatureProperties.IS_CIRCLE)) {
     var geometry = /** @type {ol.geom.Polygon}*/ (feature.getGeometry());
     this.writeCircleGeometry_(feature, geometry);
 

@@ -51,14 +51,16 @@ app.MainController = function() {
    */
   this.features = new ol.Collection();
 
-  this.features.push(new ol.Feature({
+  var circleFeature = new ol.Feature({
     geometry: ol.geom.Polygon.fromCircle(circle),
     color: '#000000',
     label: 'Circle 1',
     opacity: '0.5',
-    stroke: '2',
-    isCircle: true
-  }));
+    stroke: '2'
+  });
+
+  circleFeature.set(ngeo.FeatureProperties.IS_CIRCLE, true);
+  this.features.push(circleFeature);
 
   var vectorSource = new ol.source.Vector({
     features: this.features
