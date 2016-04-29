@@ -28,7 +28,7 @@ gmf.module.value('gmfLayertreeTemplate',
     });
 
 
-// Overrides the path to the layertree template (used by each nodes, except
+// Overrides the path to the layertree template (used by each node, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
 ngeo.module.value('ngeoLayertreeTemplateUrl',
     /**
@@ -237,8 +237,8 @@ gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
  * All layer created will be added at the top of the map and with a Z Index
  * value of 1.
  *
- * If the node metadata 'isChecked' value is false, the layer visibility will
- * be set to false.
+ * If the node metadata 'isChecked' value is 'true', the layer visibility will
+ * be set to true.
  * @param {GmfThemesNode} node Layer tree node.
  * @param {ngeo.LayertreeController} parentCtrl parent controller of the node
  * @param {number} depth ngeo layertree node depth.

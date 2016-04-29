@@ -12,7 +12,7 @@
           <table>
             <tr ng-repeat="(key, value) in ctrl.getFeatureValues()">
               <td class="key">{{key | translate}}</td>
-              <td class="value">{{value}}</td>
+              <td class="value" ng-bind-html="value"></td>
             </tr>
           </table>
         </div>

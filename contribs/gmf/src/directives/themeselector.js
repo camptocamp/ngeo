@@ -168,15 +168,20 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
         themeName = pathElements[pathElements.length - 1];
       }
     }
-    currentTheme = ol.array.find(this.themes, function(object) {
-      return object['name'] === themeName;
-    });
+    currentTheme = gmf.Themes.findThemeByName(this.themes, themeId);
+    if (currentTheme === null) {
+      // if the current theme is not available (e.g. a restricted theme is no
+      // longer available after a logout), use the default
+      currentTheme = gmf.Themes.findThemeByName(this.themes, this.defaultTheme);
+    }
 
     this.setTheme(/** @type {GmfThemesNode} */ (currentTheme));
 
   }.bind(this);
 
-  this.gmfThemes_.getThemesObject().then(getThemesObjectSuccessFn);
+  ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.LOAD, function() {
+    this.gmfThemes_.getThemesObject().then(getThemesObjectSuccessFn);
+  }.bind(this));
 };
 
 

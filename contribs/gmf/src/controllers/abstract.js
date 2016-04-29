@@ -55,7 +55,20 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @type {gmf.Themes}
    */
   var gmfThemes = $injector.get('gmfThemes');
-  gmfThemes.loadThemes();
+
+  /**
+   * Authentication service
+   * @type {gmf.Authentication}
+   */
+  var gmfAuthentication = $injector.get('gmfAuthentication');
+  var loadThemes = function(evt) {
+    // reload themes when login status changes
+    var roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
+    gmfThemes.loadThemes(roleId);
+  };
+  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.READY, loadThemes);
+  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.LOGIN, loadThemes);
+  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.LOGOUT, loadThemes);
 
   /**
    * @type {Array.<gmfx.SearchDirectiveDatasource>}
