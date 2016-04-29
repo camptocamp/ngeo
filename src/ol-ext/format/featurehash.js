@@ -557,6 +557,9 @@ ngeo.format.FeatureHash.readMultiPolygonGeometry_ = function(text) {
  * @private
  */
 ngeo.format.FeatureHash.setStyleInFeature_ = function(text, feature) {
+  if (text == '') {
+    return;
+  }
   var fillColor, fontSize, fontColor, pointRadius, strokeColor, strokeWidth;
   var parts = text.split('\'');
   for (var i = 0; i < parts.length; ++i) {
@@ -903,13 +906,13 @@ ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_optio
         attributesAndStylesText.substring(0, splitIndex) :
         attributesAndStylesText;
     if (attributesText != '') {
-        var parts = attributesText.split('\'');
-        for (var i = 0; i < parts.length; ++i) {
-          var part = decodeURIComponent(parts[i]);
-          var keyVal = part.split('*');
-          goog.asserts.assert(keyVal.length === 2);
-          feature.set(keyVal[0], keyVal[1]);
-        }
+      var parts = attributesText.split('\'');
+      for (var i = 0; i < parts.length; ++i) {
+        var part = decodeURIComponent(parts[i]);
+        var keyVal = part.split('*');
+        goog.asserts.assert(keyVal.length === 2);
+        feature.set(keyVal[0], keyVal[1]);
+      }
     }
     if (splitIndex >= 0) {
       var stylesText = attributesAndStylesText.substring(splitIndex + 1);

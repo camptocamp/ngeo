@@ -229,6 +229,19 @@ describe('ngeo.format.FeatureHash', function() {
       });
     });
 
+    describe('feature decoding with attributes, witout style', function() {
+      it('correctly decodes a feature with attributes, witout style', function() {
+        var feature = fhFormat.readFeature('p(__~foo*foo\'bar*bar~)');
+        expect(feature instanceof ol.Feature).toBeTruthy();
+        var geometry = feature.getGeometry();
+        expect(geometry instanceof ol.geom.Point).toBeTruthy();
+        var coordinate = geometry.getCoordinates();
+        expect(coordinate).toEqual([1, 1]);
+        expect(feature.get('foo')).toBe('foo');
+        expect(feature.get('bar')).toBe('bar');
+      });
+    });
+
     describe('features decoding', function() {
 
       it('correctly decodes features', function() {
