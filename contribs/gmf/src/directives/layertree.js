@@ -258,11 +258,13 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
         layer = this.getLayerCaseNotMixedGroup_(node);
         this.prepareLayer_(node, layer);
         break;
-      // no default
+      default:
+        throw new Error('node wrong type: ' + type);
     }
     this.dataLayerGroup_.getLayers().insertAt(0, layer);
     return layer;
   }
+
   //depth > 1 && parent is not a MIXED_GROUP;
   if (!parentCtrl || gmf.Themes.getNodeType(parentCtrl['node']) !== gmf.Themes.NodeType.MIXED_GROUP) {
     return null;
@@ -277,7 +279,8 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
       var url = node.url || this.gmfWmsUrl_;
       layer = this.layerHelper_.createBasicWMSLayer(url, node.name);
       break;
-    // no default
+    default:
+      throw new Error('node wrong type: ' + type);
   }
   this.prepareLayer_(node, layer);
   parentCtrl['layer'].getLayers().push(layer);
