@@ -69,13 +69,16 @@ gmf.module.value('gmfPrintTemplateUrl',
  *
  *      <gmf-print
  *        gmf-print-map="mainCtrl.map"
- *        gmf-print-active="printActive">
+ *        gmf-print-active="printActive"
+ *        gmf-print-rotatemask="true">
  *      </gmf-print>
  *
  *
- * @htmlAttribute {ol.Map} gmf-search-map The map.
- * @htmlAttribute {boolean} gmf-search-active A boolean that informs if the
+ * @htmlAttribute {ol.Map} gmf-print-map The map.
+ * @htmlAttribute {boolean} gmf-print-active A boolean that informs if the
  *     panel is open or not.
+ * @htmlAttribute {boolean} gmf-print-rotatemask Optionnal. True to rotate the
+ *     mask instead of the map on rotation. By default, the map rotates.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfPrintTemplateUrl Template url for the directive.
  * @return {angular.Directive} Directive Definition Object.
@@ -93,7 +96,8 @@ gmf.printDirective = function(gmfPrintTemplateUrl) {
     restrict: 'E',
     scope: {
       'map': '=gmfPrintMap',
-      'active': '=gmfPrintActive'
+      'active': '=gmfPrintActive',
+      'rotateMask': '&?gmfPrintRotatemask'
     },
     link: function(scope, element, attr) {
       var ctrl = scope['ctrl'];
@@ -131,6 +135,11 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
 gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
     ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils, ngeoCreatePrint,
     gmfPrintUrl) {
+  /**
+   * @type{boolean}
+   * @private
+   */
+  this.rotateMask_ = this['rotateMask'] ? this['rotateMask']() : false;
 
   /**
    * @type {angular.Scope}
@@ -285,12 +294,15 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
     return this.fields.scale = this.getOptimalScale_(mapSize, viewResolution);
   }.bind(this);
 
-  /**
-   * @return {number} rotation to apply.
-   */
-  var getRotationFn = function() {
-    return this.rotation;
-  }.bind(this);
+  var getRotationFn;
+  if (this.rotateMask_) {
+    /**
+     * @return {number} rotation to apply.
+     */
+    getRotationFn =  function() {
+      return this.rotation;
+    }.bind(this);
+  }
 
   /**
    * @type {function(ol.render.Event)}
@@ -462,7 +474,8 @@ gmf.PrintController.prototype.isAttributeInCurrentLayout_ = function(name) {
 
 /**
  * Getter setter to update or get the current rotation value. Param and result
- *     are in degree.
+ *     are in degree. Updating the rotation will redraw the mask or rorate the
+ *     map (depending on the configuration);
  * @param {number=} opt_rotation The optional new rotation value.
  * @return {number} The new value of rotation;
  * @export
@@ -476,8 +489,14 @@ gmf.PrintController.prototype.getSetRotation = function(opt_rotation) {
       rotation = 180;
     }
     this.rotation = rotation;
-    // Render the map to update the postcompose mask.
-    this.map.render();
+
+    // Render the map to update the postcompose mask or rotate the map.
+    if (this.rotateMask_) {
+      this.map.render();
+    } else {
+      this.map.getView().setRotation(ol.math.toRadians(this.rotation));
+    }
+
   }
   return this.rotation;
 };
@@ -512,7 +531,7 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
       var angle = (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1);
       angle = angle <= 1 ? sense * Math.acos(angle) : 0;
       var boost = centerToP1 / 200;
-      var increment = Math.round((angle * 180 / Math.PI) * boost);
+      var increment = Math.round(ol.math.toDegrees(angle) * boost);
 
       // Set rotation then update the view.
       this.getSetRotation(this.rotation + increment);
@@ -542,10 +561,12 @@ gmf.PrintController.prototype.print = function(format) {
   var viewResolution = this.map.getView().getResolution();
   var scale = this.getOptimalScale_(mapSize, viewResolution);
 
+  var rotation = this.rotateMask_ ? -this.rotation : this.rotation;
+
   var customAttributes = {
     'datasource': [],
     'lang': this.gettextCatalog_.currentLanguage,
-    'rotation': this.rotation,
+    'rotation': rotation,
     'scale': this.fields.scale
   };
 
