@@ -48,7 +48,7 @@ describe('gmf.Authentication', function() {
     gmfAuthentication.load_();
     $httpBackend.flush();
 
-    expect(spy.calls.length).toBe(1);
+    expect(spy.calls.count()).toBe(1);
     expect(event).toBeDefined();
     expect(event.type).toBe(gmf.AuthenticationEventType.READY);
     expect(event.user.username).toBe(null);
@@ -68,7 +68,7 @@ describe('gmf.Authentication', function() {
     gmfAuthentication.login('user', 'pwd');
     $httpBackend.flush();
 
-    expect(spy.calls.length).toBe(1);
+    expect(spy.calls.count()).toBe(1);
     expect(event).toBeDefined();
     expect(event.type).toBe(gmf.AuthenticationEventType.LOGIN);
     expect(event.user.username).toBe('user');
@@ -84,7 +84,7 @@ describe('gmf.Authentication', function() {
     gmfAuthentication.login('user', 'wrong-pwd');
     $httpBackend.flush();
 
-    expect(spy.calls.length).toBe(0);
+    expect(spy.calls.count()).toBe(0);
   });
 
   it('logs out', function() {
@@ -97,6 +97,6 @@ describe('gmf.Authentication', function() {
     gmfAuthentication.logout();
     $httpBackend.flush();
 
-    expect(spy.calls.length).toBe(1);
+    expect(spy.calls.count()).toBe(1);
   });
 });
