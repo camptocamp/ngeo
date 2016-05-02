@@ -1,6 +1,6 @@
 {
   "name": "ngeo",
-  "version": "0.0.2",
+  "version": "2.1.0.dev3",
   "description": "AngularJS OpenLayers 3 Library",
   "scripts": {
     "prepublish": "make -f npm.mk install"
