@@ -11,6 +11,9 @@ goog.require('ngeo.LayertreeController');
 goog.require('ol.array');
 goog.require('ol.layer.Tile');
 
+/** @suppress {extraRequire} */
+goog.require('ngeo.popoverDirective');
+
 gmf.module.value('gmfLayertreeTemplate',
     /**
      * @param {angular.JQLite} element Element.
