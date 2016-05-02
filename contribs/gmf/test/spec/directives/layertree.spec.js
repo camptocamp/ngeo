@@ -81,8 +81,10 @@ describe('gmf.LayertreeController', function() {
         "urlWfs": null,
         "type": "WMS",
         "id": 101,
-        "imageType": "image/jpeg"
-        // no metadata property
+        "imageType": "image/jpeg",
+        "metadata": {
+          "isChecked": "false"
+        }
       };
       var layer = layertreeController.getLayer(layerConfig, fakeParentController, 2);
       expect(layer).not.toBe(null);
