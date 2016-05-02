@@ -1,5 +1,14 @@
 goog.require('gmf.LayertreeController');
 
+var fakeParentController = null;
+var fakeParentController = {
+    'node': {},
+    'layer': {}
+};
+fakeParentController['node'].children = []
+fakeParentController['node'].mixed = true
+fakeParentController['layer'].getLayers = function() { return [] };
+
 describe('gmf.LayertreeController', function() {
   var layertreeController;
 
@@ -53,7 +62,7 @@ describe('gmf.LayertreeController', function() {
         "metadata": {
         }
       };
-      var layer = layertreeController.getLayer(layerConfig, 1, true);
+      var layer = layertreeController.getLayer(layerConfig, fakeParentController, 2);
       expect(layer).not.toBe(null);
       expect(layer.getVisible()).toBe(false);
     });
@@ -72,10 +81,12 @@ describe('gmf.LayertreeController', function() {
         "urlWfs": null,
         "type": "WMS",
         "id": 101,
-        "imageType": "image/jpeg"
-        // no metadata property
+        "imageType": "image/jpeg",
+        "metadata": {
+          "isChecked": "false"
+        }
       };
-      var layer = layertreeController.getLayer(layerConfig, 1, true);
+      var layer = layertreeController.getLayer(layerConfig, fakeParentController, 2);
       expect(layer).not.toBe(null);
       expect(layer.getVisible()).toBe(false);
     });
@@ -98,7 +109,7 @@ describe('gmf.LayertreeController', function() {
           "isChecked": "true"
         }
       };
-      var layer = layertreeController.getLayer(layerConfig, 1, true);
+      var layer = layertreeController.getLayer(layerConfig, fakeParentController, 2);
       expect(layer).not.toBe(null);
       expect(layer.getVisible()).toBe(true);
     });

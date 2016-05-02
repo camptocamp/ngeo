@@ -177,9 +177,6 @@ gmf.Themes.getNodeType = function(node) {
   if (node.type === 'WMTS') {
     return gmf.Themes.NodeType.WMTS;
   }
-  if (goog.isDefAndNotNull(node.url)) {
-    return gmf.Themes.NodeType.EXTERNAL_WMS;
-  }
   return gmf.Themes.NodeType.WMS;
 };
 
@@ -310,7 +307,6 @@ gmf.module.service('gmfThemes', gmf.Themes);
  * @enum {string}
  */
 gmf.Themes.NodeType = {
-  EXTERNAL_WMS: 'externalWMS',
   MIXED_GROUP: 'MixedGroup',
   NOT_MIXED_GROUP: 'NotMixedGroup',
   WMTS: 'WMTS',

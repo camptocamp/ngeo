@@ -168,7 +168,7 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
         themeName = pathElements[pathElements.length - 1];
       }
     }
-    currentTheme = gmf.Themes.findThemeByName(this.themes, themeId);
+    currentTheme = gmf.Themes.findThemeByName(this.themes, themeName);
     if (currentTheme === null) {
       // if the current theme is not available (e.g. a restricted theme is no
       // longer available after a logout), use the default
@@ -179,9 +179,7 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
 
   }.bind(this);
 
-  ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.LOAD, function() {
-    this.gmfThemes_.getThemesObject().then(getThemesObjectSuccessFn);
-  }.bind(this));
+  this.gmfThemes_.getThemesObject().then(getThemesObjectSuccessFn);
 };
 
 

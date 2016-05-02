@@ -258,11 +258,13 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
         layer = this.getLayerCaseNotMixedGroup_(node);
         this.prepareLayer_(node, layer);
         break;
-      // no default
+      default:
+        throw new Error('node wrong type: ' + type);
     }
     this.dataLayerGroup_.getLayers().insertAt(0, layer);
     return layer;
   }
+
   //depth > 1 && parent is not a MIXED_GROUP;
   if (!parentCtrl || gmf.Themes.getNodeType(parentCtrl['node']) !== gmf.Themes.NodeType.MIXED_GROUP) {
     return null;
@@ -273,11 +275,11 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
       layer = this.getLayerCaseWMTS_(node);
       break;
     case gmf.Themes.NodeType.WMS:
-    case gmf.Themes.NodeType.EXTERNAL_WMS:
       var url = node.url || this.gmfWmsUrl_;
       layer = this.layerHelper_.createBasicWMSLayer(url, node.name);
       break;
-    // no default
+    default:
+      throw new Error('node wrong type: ' + type);
   }
   this.prepareLayer_(node, layer);
   parentCtrl['layer'].getLayers().push(layer);
@@ -454,7 +456,6 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
   switch (type) {
     case gmf.Themes.NodeType.WMS:
     case gmf.Themes.NodeType.WMTS:
-    case gmf.Themes.NodeType.EXTERNAL_WMS:
 
       if (firstParentTreeLayer instanceof ol.layer.Group) {
         layer.setVisible(!isActive);
@@ -557,7 +558,6 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
   switch (type) {
     case gmf.Themes.NodeType.WMS:
     case gmf.Themes.NodeType.WMTS:
-    case gmf.Themes.NodeType.EXTERNAL_WMS:
       if (firstParentTreeLayer instanceof ol.layer.Group) {
         // Get style of this node depending if the relative layer is visible.
         style = goog.isDefAndNotNull(layer) && layer.getVisible() ?
