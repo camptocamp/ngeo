@@ -370,6 +370,10 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
         ol.interaction.TranslateEventType.TRANSLATEEND,
         this.handleTranslateEnd_, this));
 
+    keys.push(ol.events.listen(this.rotate_,
+        ngeo.RotateEventType.ROTATEEND,
+        this.handleRotateEnd_, this));
+
     toolMgr.registerTool(drawUid, this.drawToolActivate, false);
     toolMgr.registerTool(drawUid, this.mapSelectToolActivate, true);
 
@@ -537,6 +541,16 @@ gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
  */
 gmf.DrawfeatureController.prototype.handleTranslateEnd_ = function(evt) {
   this.translate_.setActive(false);
+  this.scope_.$apply();
+};
+
+
+/**
+ * @param {ngeo.RotateEvent} evt Event.
+ * @private
+ */
+gmf.DrawfeatureController.prototype.handleRotateEnd_ = function(evt) {
+  this.rotate_.setActive(false);
   this.scope_.$apply();
 };
 

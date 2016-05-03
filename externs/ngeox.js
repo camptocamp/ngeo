@@ -753,6 +753,18 @@ ngeox.MeasureEvent.prototype.feature;
 
 
 /**
+ * @interface
+ */
+ngeox.RotateEvent = function() {};
+
+
+/**
+ * @type {ol.Feature}
+ */
+ngeox.RotateEvent.prototype.feature;
+
+
+/**
  * Options for the mobile geolocations directive.
  * @typedef {{
  *    accuracyFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),

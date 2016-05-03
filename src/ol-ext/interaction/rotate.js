@@ -1,3 +1,5 @@
+goog.provide('ngeo.RotateEvent');
+goog.provide('ngeo.RotateEventType');
 goog.provide('ngeo.interaction.Rotate');
 
 goog.require('goog.asserts');
@@ -14,6 +16,45 @@ goog.require('ol.interaction.Pointer');
 goog.require('ol.geom.Point');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
+
+
+/**
+ * @enum {string}
+ */
+ngeo.RotateEventType = {
+  /**
+   * Triggered upon rotate draw end
+   * @event ngeo.RotateEvent#rotateend
+   */
+  ROTATEEND: 'rotateend'
+
+};
+
+
+/**
+ * @classdesc
+ * Events emitted by {@link ngeo.interaction.Rotate} instances are
+ * instances of this type.
+ *
+ * @constructor
+ * @extends {ol.events.Event}
+ * @implements {ngeox.RotateEvent}
+ * @param {ngeo.RotateEventType} type Type.
+ * @param {ol.Feature} feature The feature rotated.
+ */
+ngeo.RotateEvent = function(type, feature) {
+
+  goog.base(this, type);
+
+  /**
+   * The feature being rotated.
+   * @type {ol.Feature}
+   * @api stable
+   */
+  this.feature = feature;
+
+};
+goog.inherits(ngeo.RotateEvent, ol.events.Event);
 
 
 /**
@@ -341,8 +382,8 @@ ngeo.interaction.Rotate.prototype.handleDrag_ = function(evt) {
  */
 ngeo.interaction.Rotate.prototype.handleUp_ = function(evt) {
   if (this.modified_) {
-    this.dispatchEvent(new ol.interaction.ModifyEvent(
-        ol.ModifyEventType.MODIFYEND, this.features_, evt));
+    this.dispatchEvent(new ngeo.RotateEvent(ngeo.RotateEventType.ROTATEEND,
+      this.feature_));
     this.modified_ = false;
     this.setActive(false);
   }

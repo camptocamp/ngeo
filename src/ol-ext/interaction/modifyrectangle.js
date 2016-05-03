@@ -364,7 +364,7 @@ ngeo.interaction.ModifyRectangle.prototype.handleDrag_ = function(evt) {
     var boxFeature = feature.get('boxFeature');
     var geom = boxFeature.getGeometry();
     goog.asserts.assertInstanceof(geom, ol.geom.Polygon);
-    geom.setCoordinates([[evt.coordinate, b2Coordinate, origin, c2Coordinate]]);
+    geom.setCoordinates([[evt.coordinate, b2Coordinate, origin, c2Coordinate, evt.coordinate]]);
 
     this.coordinate_[0] = evt.coordinate[0];
     this.coordinate_[1] = evt.coordinate[1];
