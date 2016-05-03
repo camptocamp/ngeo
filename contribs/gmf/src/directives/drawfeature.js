@@ -446,10 +446,6 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
 
   feature = feature ? feature : null;
 
-  this.modify_.setActive(true);
-
-  this.selectedFeature = feature;
-
   // show contextual menu when clicking on certain types of features
   if (feature) {
     var supportedTypes = [
@@ -463,6 +459,15 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
       this.menu_.setPosition(coordinate);
     }
   }
+
+  // do not do any further action if feature is null or already selected
+  if (feature === this.selectedFeature) {
+    return;
+  }
+
+  this.modify_.setActive(true);
+
+  this.selectedFeature = feature;
 
   this.scope_.$apply();
 };
