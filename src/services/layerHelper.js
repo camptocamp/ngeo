@@ -47,15 +47,21 @@ ngeo.LayerHelper.GROUP_KEY = 'groupName';
  * separated layers names (see {@link ol.source.ImageWMS}).
  * @param {string} sourceURL The source URL.
  * @param {string} sourceLayersName A dot separated names string.
+ * @param {string=} opt_serverType Type of the server ("mapserver",
+ *     "geoserver", qgisserver, …).
  * @return {ol.layer.Image} WMS Layer.
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
-    sourceLayersName) {
+    sourceLayersName, opt_serverType) {
+  var params = {'LAYERS': sourceLayersName};
+  if (opt_serverType) {
+    params['SERVERTYPE'] = opt_serverType;
+  }
   var layer = new ol.layer.Image({
     source: new ol.source.ImageWMS({
       url: sourceURL,
-      params: {'LAYERS': sourceLayersName}
+      params: params
     })
   });
   return layer;
@@ -210,6 +216,55 @@ ngeo.LayerHelper.prototype.getLayerByName = function(layerName, layers) {
   }, this);
 
   return found;
+};
+
+
+/**
+ * Get the WMTS legend URL for the given layer.
+ * @param {ol.layer.Tile} layer Tile layer as returned by the
+ * ngeo layerHelper service.
+ * @return {?string} The legend URL or null.
+ * @export
+ */
+ngeo.LayerHelper.prototype.getWMTSLegendURL = function(layer) {
+  // FIXME case of multiple styles ?  case of multiple legendUrl ?
+  var url;
+  var styles = layer.get('capabilitiesStyles');
+  if (styles !== undefined) {
+    var legendURL = styles[0]['legendURL'];
+    if (legendURL !== undefined) {
+      url = legendURL[0]['href'];
+    }
+  }
+  return url || null;
+};
+
+
+/**
+ * Get the WMS legend URL for the given node.
+ * @param {string} url The base url of the wms service.
+ * @param {string} layerName The name of a wms layer.
+ * @param {number} scale A scale.
+ * @param {string=} opt_legendRule rule parameters to add to the returned URL.
+ * @return {?string} The legend URL or null.
+ * @export
+ */
+ngeo.LayerHelper.prototype.getWMSLegendURL = function(url,
+    layerName, scale, opt_legendRule) {
+  if (!url) {
+    return null;
+  }
+  url = goog.uri.utils.setParam(url, 'FORMAT', 'image/png');
+  url = goog.uri.utils.setParam(url, 'TRANSPARENT', true);
+  url = goog.uri.utils.setParam(url, 'SERVICE', 'wms');
+  url = goog.uri.utils.setParam(url, 'VERSION', '1.1.1');
+  url = goog.uri.utils.setParam(url, 'REQUEST', 'GetLegendGraphic');
+  url = goog.uri.utils.setParam(url, 'LAYER', layerName);
+  url = goog.uri.utils.setParam(url, 'SCALE', scale);
+  if (opt_legendRule !== undefined) {
+    url = goog.uri.utils.setParam(url, 'RULE', opt_legendRule);
+  }
+  return url;
 };
 
 

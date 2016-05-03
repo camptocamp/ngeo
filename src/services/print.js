@@ -2,6 +2,7 @@ goog.provide('ngeo.CreatePrint');
 goog.provide('ngeo.Print');
 
 goog.require('goog.color');
+goog.require('goog.color.alpha');
 goog.require('goog.math');
 goog.require('goog.object');
 goog.require('ngeo');
@@ -80,8 +81,10 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  *     var scale = 5000;
  *     var dpi = 72;
  *     var layout = 'A4 portrait';
- *     var reportSpec = print.createSpec(map, scale, dpi, layout, {
- *       'title': 'A title for my report'
+ *     var format = 'pdf';
+ *     var reportSpec = print.createSpec(map, scale, dpi, layout, format {
+ *       'title': 'A title for my report',
+ *       'rotation': 45 // degree
  *     });
  *
  * See our live example: {@link ../examples/mapfishprint.html}
@@ -99,8 +102,9 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  * @constructor
  * @param {string} url URL to MapFish print web service.
  * @param {angular.$http} $http Angular $http service.
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
  */
-ngeo.Print = function(url, $http) {
+ngeo.Print = function(url, $http, ngeoLayerHelper) {
   /**
    * @type {string}
    * @private
@@ -112,6 +116,12 @@ ngeo.Print = function(url, $http) {
    * @private
    */
   this.$http_ = $http;
+
+  /**
+   * @type {ngeo.LayerHelper}
+   * @private
+   */
+  this.ngeoLayerHelper_ = ngeoLayerHelper;
 };
 
 
@@ -144,15 +154,17 @@ ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
  * @param {number} scale Scale.
  * @param {number} dpi DPI.
  * @param {string} layout Layout.
+ * @param {string} format Formats.
  * @param {Object.<string, *>} customAttributes Custom attributes.
  * @return {MapFishPrintSpec} The print spec.
  * @export
  */
 ngeo.Print.prototype.createSpec = function(
-    map, scale, dpi, layout, customAttributes) {
+    map, scale, dpi, layout, format, customAttributes) {
 
   var specMap = /** @type {MapFishPrintMap} */ ({
-    dpi: dpi
+    dpi: dpi,
+    rotation: /** number */ (customAttributes['rotation'])
   });
 
   this.encodeMap_(map, scale, specMap);
@@ -164,6 +176,7 @@ ngeo.Print.prototype.createSpec = function(
 
   var spec = /** @type {MapFishPrintSpec} */ ({
     attributes: attributes,
+    format: format,
     layout: layout
   });
 
@@ -182,20 +195,21 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   var viewCenter = view.getCenter();
   var viewProjection = view.getProjection();
   var viewResolution = view.getResolution();
-  var viewRotation = view.getRotation();
+  var viewRotation = object.rotation || ol.math.toDegrees(view.getRotation());
 
   goog.asserts.assert(viewCenter !== undefined);
   goog.asserts.assert(viewProjection !== undefined);
 
   object.center = viewCenter;
   object.projection = viewProjection.getCode();
-  object.rotation = viewRotation * 180 / Math.PI;
+  object.rotation = viewRotation;
   object.scale = scale;
   object.layers = [];
 
-  var layersCollection = map.getLayers();
-  goog.asserts.assert(layersCollection !== null);
-  var layers = layersCollection.getArray().slice().reverse();
+  var mapLayerGroup = map.getLayerGroup();
+  goog.asserts.assert(mapLayerGroup !== null);
+  var layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
+  layers = layers.slice().reverse();
 
   layers.forEach(function(layer) {
     if (layer.getVisible()) {
@@ -268,6 +282,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
 
   delete customParams['LAYERS'];
   delete customParams['FORMAT'];
+  delete customParams['SERVERTYPE'];
   delete customParams['VERSION'];
 
   var object = /** @type {MapFishPrintWmsLayer} */ ({
@@ -275,6 +290,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
     customParams: customParams,
+    serverType: params['SERVERTYPE'],
     type: 'wms',
     opacity: opacity,
     version: params['VERSION']
@@ -326,21 +342,21 @@ ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(tileGrid, ol.tilegrid.WMTS);
   var matrixIds = tileGrid.getMatrixIds();
 
-  // FIXME:
-  // matrixSize assumes a regular grid
-
   /** @type {Array.<MapFishPrintWmtsMatrix>} */
   var matrices = [];
 
   for (var i = 0, ii = matrixIds.length; i < ii; ++i) {
-    var sqrZ = Math.pow(2, i);
+    var tileRange = tileGrid.getFullTileRange(i);
     matrices.push(/** @type {MapFishPrintWmtsMatrix} */ ({
       identifier: matrixIds[i],
       scaleDenominator: tileGrid.getResolution(i) *
           projection.getMetersPerUnit() / 0.28E-3,
       tileSize: ol.size.toSize(tileGrid.getTileSize(i)),
       topLeftCorner: tileGrid.getOrigin(i),
-      matrixSize: [sqrZ, sqrZ]
+      matrixSize: [
+        tileRange.maxX - tileRange.minX,
+        tileRange.maxY - tileRange.minY
+      ]
     }));
   }
 
@@ -537,11 +553,14 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
  */
 ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
   var fillColor = fillStyle.getColor();
-  goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
   if (fillColor !== null) {
-    var fillColorRgba = ol.color.asArray(fillColor);
-    symbolizer.fillColor = goog.color.rgbArrayToHex(fillColorRgba);
-    symbolizer.fillOpacity = fillColorRgba[3];
+    if (typeof (fillColor) === 'string') {
+      var hex = goog.color.alpha.parse(fillColor).hex;
+      fillColor = goog.color.alpha.hexToRgba(hex);
+    }
+    goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
+    symbolizer.fillColor = goog.color.rgbArrayToHex(fillColor);
+    symbolizer.fillOpacity = fillColor[3];
   }
 };
 
@@ -799,7 +818,8 @@ ngeo.Print.prototype.getWmtsUrl_ = function(source) {
  * @export
  */
 ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
-  var url = this.url_ + '/report.pdf';
+  var format = printSpec.format || 'pdf';
+  var url = this.url_ + '/report.' + format;
   var httpConfig = /** @type {angular.$http.Config} */ ({
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'
@@ -852,18 +872,19 @@ ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
 
 /**
  * @param {angular.$http} $http Angular $http service.
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @return {ngeo.CreatePrint} The function to create a print service.
  * @ngInject
  * @ngdoc service
  * @ngname ngeoCreatePrint
  */
-ngeo.createPrintServiceFactory = function($http) {
+ngeo.createPrintServiceFactory = function($http, ngeoLayerHelper) {
   return (
       /**
        * @param {string} url URL to MapFish print service.
        */
       function(url) {
-        return new ngeo.Print(url, $http);
+        return new ngeo.Print(url, $http, ngeoLayerHelper);
       });
 };
 

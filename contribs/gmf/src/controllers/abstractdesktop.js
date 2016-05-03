@@ -5,6 +5,8 @@ goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileBackgroundlayerselectorDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.printDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.resizemapDirective');

@@ -61,9 +61,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
         expect(spec.attributes.map.rotation).toEqual(180);
       });
     });
@@ -87,9 +89,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
 
         expect(spec).toEqual({
           attributes: {
@@ -109,12 +113,14 @@ describe('ngeo.CreatePrint', function() {
                 layers: ['foo', 'bar'],
                 type: 'wms',
                 opacity: 1,
+                serverType: undefined,
                 version: undefined
               }]
             },
             foo: 'fooval',
             bar: 'barval'
           },
+          format: 'pdf',
           layout: 'foo layout'
         });
 
@@ -142,9 +148,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
         expect(spec).toEqual({
           attributes: {
             map: {
@@ -162,12 +170,14 @@ describe('ngeo.CreatePrint', function() {
                 layers: ['foo', 'bar'],
                 type: 'wms',
                 opacity: 1,
+                serverType: undefined,
                 version: undefined
               }]
             },
             foo: 'fooval',
             bar: 'barval'
           },
+          format: 'pdf',
           layout: 'foo layout'
         });
 
@@ -179,6 +189,7 @@ describe('ngeo.CreatePrint', function() {
 
       beforeEach(function() {
         var projection = ol.proj.get('EPSG:3857');
+        var extent = projection.getExtent();
         map.addLayer(new ol.layer.Tile({
           opacity: 0.5,
           source: new ol.source.WMTS({
@@ -191,7 +202,8 @@ describe('ngeo.CreatePrint', function() {
             style: 'style',
             tileGrid: new ol.tilegrid.WMTS({
               matrixIds: ['00', '01', '02'],
-              origin: ol.extent.getTopLeft(projection.getExtent()),
+              extent: extent,
+              origin: ol.extent.getTopLeft(extent),
               resolutions: [2000, 1000, 500],
               tileSize: 512
             }),
@@ -207,9 +219,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
 
         expect(spec).toEqual({
           attributes: {
@@ -232,21 +246,21 @@ describe('ngeo.CreatePrint', function() {
                   tileSize: [512, 512],
                   topLeftCorner: ol.extent.getTopLeft(
                       ol.proj.get('EPSG:3857').getExtent()),
-                  matrixSize: [1, 1]
+                  matrixSize: [39, 39]
                 }, {
                   identifier: '01',
                   scaleDenominator: 3571428.571428572,
                   tileSize: [512, 512],
                   topLeftCorner: ol.extent.getTopLeft(
                       ol.proj.get('EPSG:3857').getExtent()),
-                  matrixSize: [2, 2]
+                  matrixSize: [78, 78]
                 }, {
                   identifier: '02',
                   scaleDenominator: 1785714.285714286,
                   tileSize: [512, 512],
                   topLeftCorner: ol.extent.getTopLeft(
                       ol.proj.get('EPSG:3857').getExtent()),
-                  matrixSize: [4, 4]
+                  matrixSize: [156, 156]
                 }],
                 matrixSet: 'matrixset',
                 opacity: 0.5,
@@ -259,6 +273,7 @@ describe('ngeo.CreatePrint', function() {
             foo: 'fooval',
             bar: 'barval'
           },
+          format: 'pdf',
           layout: 'foo layout'
         });
 
@@ -390,9 +405,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
 
         var styleId0 = goog.getUid(style0).toString();
         var styleId1 = goog.getUid(style1).toString();
@@ -529,6 +546,7 @@ describe('ngeo.CreatePrint', function() {
             foo: 'fooval',
             bar: 'barval'
           },
+          format: 'pdf',
           layout: 'foo layout'
         });
       });
@@ -565,9 +583,11 @@ describe('ngeo.CreatePrint', function() {
         var scale = 500;
         var dpi = 72;
         var layout = 'foo layout';
+        var format = 'pdf';
         var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, customAttributes);
+        var spec = print.createSpec(map, scale, dpi, layout, format,
+            customAttributes);
 
         var layers = spec.attributes.map.layers;
         expect(layers.length).toBe(2);

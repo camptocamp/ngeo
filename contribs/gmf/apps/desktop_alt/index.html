@@ -52,25 +52,39 @@
             <span class="fa fa-circle">
           </button>
         </div>
-        <div class="tools-content" ng-class="{active: mainCtrl.toolsActive}">
-          <div ng-show="loginActive">
-            <a class="btn close" ng-click="loginActive = false">&times;</a>
-            <div class="tools-content-heading">
-              Login
-            </div>
-            <gmf-authentication></gmf-authentication>
-            <br>
-          </div>
-          <div ng-show="printActive">
-            <a class="btn close" ng-click="printActive = false">&times;</a>
-            <div class="tools-content-heading">
-              Print
-            </div>
-          </div>
-          <div ng-show="measureActive">
-            <a class="btn close" ng-click="measureActive = false">&times;</a>
-            <div class="tools-content-heading">
-              Measure
+        <div class="tools-content container-fluid" ng-class="{active: mainCtrl.toolsActive}">
+          <div class="row">
+            <div class="col-sm-12">
+              <div ng-show="mainCtrl.loginActive" class="row">
+                <div class="col-sm-12">
+                  <div class="tools-content-heading">
+                    Login
+                    <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
+                  </div>
+                  <gmf-authentication></gmf-authentication>
+                </div>
+              </div>
+              <div ng-show="printActive" class="row">
+                <div class="col-sm-12">
+                  <div class="tools-content-heading">
+                    Print
+                    <a class="btn close" ng-click="printActive = false">&times;</a>
+                  </div>
+                  <gmf-print
+                    gmf-print-map="mainCtrl.map"
+                    gmf-print-active="printActive"
+                    gmf-print-rotatemask="true">
+                  </gmf-print>
+                </div>
+              </div>
+              <div ng-show="measureActive" class="row">
+                <div class="col-sm-12">
+                  <div class="tools-content-heading">
+                    Measure
+                    <a class="btn close" ng-click="measureActive = false">&times;</a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -110,6 +124,7 @@
          });
          module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi');
          module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?limit=30&partitionlimit=5');
+         module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/printproxy');
          module.constant('gmfWmsUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/mapserv_proxy');
          module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/themes?version=2&background=background');
          module.constant('gmfSearchGroups', ['osm','district']);
