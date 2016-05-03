@@ -48,8 +48,8 @@
             <span class="fa fa-print"></span>
           </button>
           <button ngeo-btn class="btn btn-default" ng-model="measureActive"
-            data-toggle="tooltip" data-placement="left" data-original-title="{{'Measure tools'|translate}}">
-            <span class="fa fa-circle">
+            data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw & Measure tools'|translate}}">
+            <span class="fa fa-pencil">
           </button>
         </div>
         <div class="tools-content container-fluid" ng-class="{active: mainCtrl.toolsActive}">
@@ -80,9 +80,14 @@
               <div ng-show="measureActive" class="row">
                 <div class="col-sm-12">
                   <div class="tools-content-heading">
-                    Measure
+                    <span>{{'Draw & Measure'|translate}}</span>
                     <a class="btn close" ng-click="measureActive = false">&times;</a>
                   </div>
+                  <gmf-drawfeature
+                      gmf-drawfeature-active="measureActive"
+                      gmf-drawfeature-layer="::mainCtrl.drawFeatureLayer"
+                      gmf-drawfeature-map="::mainCtrl.map">
+                  </gmf-drawfeature>
                 </div>
               </div>
             </div>
