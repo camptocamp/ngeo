@@ -157,6 +157,11 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.stateManager = $injector.get('ngeoStateManager');
 
   /**
+   * @type {tmhDynamicLocale}
+   */
+  this.tmhDynamicLocale = $injector.get('tmhDynamicLocale');
+
+  /**
    * @type {angular.Scope}
    */
   this.$scope = $scope;
@@ -241,6 +246,7 @@ gmf.AbstractController.prototype.switchLanguage = function(lang) {
   goog.asserts.assert(lang in this.langUrls);
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
+  this.tmhDynamicLocale.set(lang);
   this['lang'] = lang;
 };
 
