@@ -118,9 +118,12 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
   if (featureGeom instanceof ol.geom.Polygon) {
 
     // If the feature's corners are already set, no need to set them again
-    if (feature.get('corners')) {
+    var uid = goog.getUid(feature);
+    var item = this.cache_[uid];
+    if (item) {
       return;
     }
+
     var pointSource = this.vectorPoints_.getSource();
 
     // from each corners, create a point feature and add it to the point layer.
@@ -151,8 +154,7 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
 
       pointFeatures.push(cornerFeature);
     }, this);
-    var uid = goog.getUid(feature);
-    var item = /** @type {ngeo.interaction.ModifyRectangle.CacheItem} */ ({
+    item = /** @type {ngeo.interaction.ModifyRectangle.CacheItem} */ ({
       corners: pointFeatures
     });
     this.cache_[uid] = item;
@@ -279,7 +281,6 @@ ngeo.interaction.ModifyRectangle.prototype.removeFeature_ = function(feature) {
 
     this.vectorPoints_.getSource().removeFeature(corners[i]);
   }
-  feature.set('corners', undefined);
   this.feature_ = null;
   corners.length = 0;
   delete this.cache_[uid];
