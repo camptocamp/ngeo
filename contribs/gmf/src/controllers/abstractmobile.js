@@ -30,7 +30,7 @@ gmf.module.constant('isMobile', true);
 
 gmf.module.constant(
     'gmfAltitudeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.0/wsgi/raster');
+    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
 
 
 /**

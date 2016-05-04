@@ -13,7 +13,7 @@ app.module = angular.module('app', ['gmf']);
 
 app.module.constant(
     'authenticationBaseUrl',
-    'https://geomapfish-demo.camptocamp.net/2.0/wsgi');
+    'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
 
 
 /**

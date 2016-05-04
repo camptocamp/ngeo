@@ -159,7 +159,7 @@ app.SearchController.prototype.createVectorLayer_ = function() {
  * @private
  */
 app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateGeoJSONBloodhound) {
-  var url = 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch?query=%QUERY';
+  var url = 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch?query=%QUERY';
   var bloodhound = ngeoCreateGeoJSONBloodhound(
       url, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
   bloodhound.initialize();

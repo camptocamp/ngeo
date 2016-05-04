@@ -37,7 +37,7 @@ app.MainController = function(gmfThemes) {
     groupActions: [],
     labelKey: 'label',
     projection: 'EPSG:21781',
-    url: 'https://geomapfish-demo.camptocamp.net/2.0/wsgi/fulltextsearch'
+    url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch'
   }];
 
   /**

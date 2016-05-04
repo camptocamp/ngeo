@@ -20,7 +20,7 @@ app.module = angular.module('app', ['gmf']);
 
 app.module.constant(
     'gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.0/wsgi/themes?' +
+    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
         'version=2&background=background');
 
 
