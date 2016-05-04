@@ -21,28 +21,34 @@
       <div ng-show="ctrl.fields.layouts.length !== 1" class="form-group form-group-sm">
         <label class="control-label col-md-3" translate>Layout</label>
         <div class="col-md-9">
-          <button type="button" class="btn btn-default form-control" data-toggle="dropdown">{{ctrl.fields.layout | translate}}&nbsp;<i class="fa fa-caret-down"></i></button>
-          <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="layout in ctrl.fields.layouts"><a href="" ng-click="ctrl.setLayout(layout)">{{layout | translate}}</a></li>
-          </ul>
+          <div class="btn-group btn-block">
+            <button type="button" class="btn btn-default form-control" data-toggle="dropdown">{{ctrl.fields.layout | translate}}&nbsp;<i class="fa fa-caret-down"></i></button>
+            <ul class="dropdown-menu btn-block" role="menu">
+              <li ng-repeat="layout in ctrl.fields.layouts"><a href="" ng-click="ctrl.setLayout(layout)">{{layout | translate}}</a></li>
+            </ul>
+          </div>
         </div>
       </div>
       <div ng-show="ctrl.fields.scales.length !== 1" class="form-group form-group-sm">
         <label class="control-label col-md-3"translate>Scale</label>
         <div class="col-md-9">
-          <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.fields.scale | scalify}}&nbsp;<i class="fa fa-caret-down"></i></button>
-          <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="scale in ctrl.fields.scales"><a href="" ng-click="ctrl.setScale(scale)">{{scale | scalify}}</a></li>
-          </ul>
+          <div class="btn-group btn-block">
+            <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.fields.scale | scalify}}&nbsp;<i class="fa fa-caret-down"></i></button>
+            <ul class="dropdown-menu btn-block" role="menu">
+              <li ng-repeat="scale in ctrl.fields.scales"><a href="" ng-click="ctrl.setScale(scale)">{{scale | scalify}}</a></li>
+            </ul>
+          </div>
         </div>
       </div>
       <div ng-show="ctrl.fields.dpis.length !== 1" class="form-group form-group-sm">
         <label class="control-label col-md-3" translate>DPI</label>
         <div class="col-md-5">
-          <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.fields.dpi}}&nbsp;<i class="fa fa-caret-down"></i></button>
-          <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="dpi in ctrl.fields.dpis"><a href="" ng-click="ctrl.setDpi(dpi)">{{dpi}}</a></li>
-          </ul>
+          <div class="btn-group btn-block">
+            <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">{{ctrl.fields.dpi}}&nbsp;<i class="fa fa-caret-down"></i></button>
+            <ul class="dropdown-menu btn-block" role="menu">
+              <li ng-repeat="dpi in ctrl.fields.dpis"><a href="" ng-click="ctrl.setDpi(dpi)">{{dpi}}</a></li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="form-group form-group-sm">
