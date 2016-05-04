@@ -148,7 +148,7 @@ ngeo.Query.DEFAULT_SOURCE_IDS_PROPERTY_ = 'querySourceIds';
  * Adds a new source to the query service.
  *
  * A source must at least have an `id` configured.  That id is then used to
- * associate the the corresponding layer object within a map.
+ * associate the corresponding layer object within a map.
  *
  * A source will require a `ol.source.ImageWMS` or `ol.source.TileWMS` object.
  * You can either set it directly in the config, or use the one from a given
