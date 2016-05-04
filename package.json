@@ -45,7 +45,7 @@
     "jsdoc": "3.4.0",
     "jsdom": "3.1.2",
     "karma": "0.13.22",
-    "karma-coverage": "0.5.5",
+    "karma-coverage": "1.0.0",
     "karma-jasmine": "0.3.8",
     "karma-phantomjs-launcher": "1.0.0",
     "less": "2.6.1",
