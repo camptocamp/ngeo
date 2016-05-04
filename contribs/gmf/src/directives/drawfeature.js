@@ -198,8 +198,7 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
       cls: 'fa fa-trash-o',
       label: gettextCatalog.getString('Delete'),
       name: gmf.DrawfeatureController.MenuActionType.DELETE
-    }],
-    title: gettextCatalog.getString('Actions')
+    }]
   });
   this.map.addOverlay(this.menu_);
 
@@ -409,14 +408,21 @@ gmf.DrawfeatureController.prototype.handleFeaturesRemove_ = function(evt) {
 gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
     active) {
 
+  var mapDiv = $(this.map.getTarget())[0];
   if (active) {
     ol.events.listen(this.map, ol.MapBrowserEvent.EventType.CLICK,
         this.handleMapClick_, this);
+
+    goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
+        this.handleMapRightClick_, false, this);
+
   } else {
     ol.events.unlisten(this.map, ol.MapBrowserEvent.EventType.CLICK,
         this.handleMapClick_, this);
-  }
 
+    goog.events.unlisten(mapDiv, goog.events.EventType.CONTEXTMENU,
+        this.handleMapRightClick_);
+  }
 };
 
 
@@ -427,7 +433,46 @@ gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
 gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
 
   var pixel = evt.pixel;
-  var coordinate = evt.coordinate;
+
+  var feature = this.map.forEachFeatureAtPixel(
+    pixel,
+    function(feature) {
+      var ret = false;
+      if (ol.array.includes(this.features.getArray(), feature)) {
+        ret = feature;
+      }
+      return ret;
+    }.bind(this),
+    null,
+    function(layer) {
+      return layer === this.layer;
+    }.bind(this)
+  );
+
+  feature = feature ? feature : null;
+
+  // do not do any further action if feature is null or already selected
+  if (feature === this.selectedFeature) {
+    return;
+  }
+
+  this.modify_.setActive(true);
+
+  this.selectedFeature = feature;
+
+  this.scope_.$apply();
+};
+
+
+/**
+ * @param {Event} evt Event.
+ * @private
+ */
+gmf.DrawfeatureController.prototype.handleMapRightClick_ = function(evt) {
+  evt.preventDefault();
+
+  var pixel = this.map.getEventPixel(evt);
+  var coordinate = this.map.getCoordinateFromPixel(pixel);
 
   var feature = this.map.forEachFeatureAtPixel(
     pixel,
@@ -456,7 +501,7 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
     ];
     var type = this.featureHelper_.getType(feature);
     if (ol.array.includes(supportedTypes, type)) {
-      this.menu_.setPosition(coordinate);
+      this.menu_.open(coordinate);
     }
   }
 

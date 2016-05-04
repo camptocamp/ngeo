@@ -47,8 +47,7 @@ goog.inherits(ngeo.MenuEvent, ol.events.Event);
  * @classdesc
  * An OpenLayers overlay that shows a contextual menu with configurable actions
  * anchored from its top left to a specific location. An event is fired when
- * any of the action is clicked. It can be closed using the close button, or
- * can be automatically closed when any action is clicked.
+ * any of the action is clicked.
  *
  * @constructor
  * @extends {ol.Overlay}
@@ -68,6 +67,12 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
   this.listenerKeys_ = [];
 
   /**
+   * @type {goog.events.Key}
+   * @private
+   */
+  this.clickOutListenerKey_ = null;
+
+  /**
    * @type {Array.<ol.events.Key>}
    * @private
    */
@@ -84,27 +89,16 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
   this.autoClose_ = menuOptions.autoClose !== undefined ?
       menuOptions.autoClose : true;
 
-  var headerEl = $('<div>', {
-    'class': 'panel-heading'
-  }).appendTo(contentEl);
-
   // titleEl
   if (menuOptions.title) {
+    var headerEl = $('<div>', {
+      'class': 'panel-heading'
+    }).appendTo(contentEl);
+
     $('<span>', {
       text: menuOptions.title
     }).appendTo(headerEl);
   }
-
-  /**
-   * @type {jQuery}
-   * @private
-   */
-  this.closeEl_ = $('<button>', {
-    'type': 'button',
-    'class': 'close',
-    'aria-hidden': true,
-    'html': '&times;'
-  }).appendTo(headerEl);
 
   // actionsEl
   var actionsEl = $('<div>', {
@@ -166,8 +160,6 @@ ngeo.Menu.prototype.setMap = function(map) {
   goog.base(this, 'setMap', map);
 
   if (map) {
-    keys.push(goog.events.listen(this.closeEl_[0],
-        goog.events.EventType.CLICK, this.close, false, this));
     this.actions_.forEach(function(action) {
       var data = action.data();
       keys.push(
@@ -180,6 +172,8 @@ ngeo.Menu.prototype.setMap = function(map) {
         )
       );
     }, this);
+
+    // Autoclose the menu when clicking anywhere else than the menu
     olKeys.push(
       ol.events.listen(
         map,
@@ -194,23 +188,64 @@ ngeo.Menu.prototype.setMap = function(map) {
 
 
 /**
+ * Opens the menu at the desited coordinate. Also starts listening for the
+ * clickout if autoClose is enabled.
+ * @param {ol.Coordinate} coordinate Where to open the menu.
+ * @export
+ */
+ngeo.Menu.prototype.open = function(coordinate) {
+  this.setPosition(coordinate);
+  if (this.autoClose_) {
+    this.clickOutListenerKey_ =  goog.events.listen(
+      document.documentElement,
+      goog.events.EventType.MOUSEDOWN,
+      this.handleClickOut_,
+      false,
+      this
+    );
+  }
+
+};
+
+
+/**
  * @export
  */
 ngeo.Menu.prototype.close = function() {
   this.setPosition(undefined);
+
+  if (this.clickOutListenerKey_ !== null) {
+    goog.events.unlistenByKey(this.clickOutListenerKey_);
+  }
 };
 
 
 /**
  * @param {string} action The action name that was clicked.
+ * @param {Event} evt Event.
  * @private
  */
-ngeo.Menu.prototype.handleActionClick_ = function(action) {
+ngeo.Menu.prototype.handleActionClick_ = function(action, evt) {
 
   this.dispatchEvent(
       new ngeo.MenuEvent(ngeo.MenuEventType.ACTION_CLICK, action));
 
   if (this.autoClose_) {
+    this.close();
+  }
+
+  evt.stopPropagation();
+};
+
+
+/**
+ * Handles clicks out of the menu. If the menu is visible, close it.
+ * @param {Event} evt Event.
+ * @private
+ */
+ngeo.Menu.prototype.handleClickOut_ = function(evt) {
+  var element = this.getElement();
+  if (element && $(evt.target).closest(element).length === 0) {
     this.close();
   }
 };
