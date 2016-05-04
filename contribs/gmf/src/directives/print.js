@@ -337,6 +337,7 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
     this.map.unByKey(this.postComposeListenerKey_);
     this.map.unByKey(this.pointerDragListenerKey_);
     this.getSetRotation(0);
+    this.map.render(); // Redraw (remove) post compose mask;
   }
 };
 
