@@ -13,7 +13,7 @@ ngeo.AutoProjection = function() {};
 
 
 /**
- * Parse a tring and return a coordinate if the result is valid. Given string
+ * Parse a string and return a coordinate if the result is valid. Given string
  * must be a two numbers separated by a space.
  * @param {string} str the string to parse.
  * @return {?ol.Coordinate} A coordinate or null if the format is not valid.

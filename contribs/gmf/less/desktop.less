@@ -64,6 +64,70 @@ main {
     bottom: 0;
     left: 0;
   }
+
+  .footer {
+    position: absolute;
+    bottom:  -@height;
+    background-color: rgba(192, 192, 192, 0.9);
+    width: 100%;
+    /* cancel default navbar bottom margin */
+    margin-bottom: 0;
+    /* buttons or inputs in bar are supposed to be '-sm' */
+    @height: @line-height-computed + 2 * @padding-small-vertical;
+    min-height: @height;
+
+    transition: 0.2s ease-out all;
+    &.active {
+      bottom: 0;
+    }
+    > div {
+      display: inline-block;
+    }
+
+    .text  {
+      line-height: @height;
+      padding-right: 10px;
+      margin-top: 1px;
+    }
+    button {
+      margin-top: 1px;
+    }
+
+    button.map-info {
+      position: absolute;
+      /* button is supposed to be .btn-sm */
+      top: -( @line-height-computed + 2 * @padding-small-vertical);
+      background-color: rgba(192, 192, 192, 0.9);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      right: @app-margin;
+      border-bottom: 0;
+    }
+    .btn {
+      background-color: @main-bg-color;
+    }
+  }
+  #scaleline {
+    display: inline-block;
+    padding-right: 5px;
+  }
+  .ol-scale-line {
+    bottom: auto;
+    left: 5px;
+  }
+  [ngeo-scaleselector] {
+    [data-toggle="dropdown"] {
+      .btn-sm
+    }
+  }
+  .ol-scale-line, .ol-scale-line-inner {
+    position: relative;
+    background-color: transparent;
+  }
+  #mouse-position {
+    text-align: right;
+    min-width: 210px;
+  }
 }
 
 .search {
