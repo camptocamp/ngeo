@@ -51,6 +51,26 @@ ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
 
 
 /**
+ * @type {Object.<string, string>}
+ * @private
+ */
+ngeo.format.FeatureHashLegacyProperties_ = {
+  'fillColor': ngeo.FeatureProperties.COLOR,
+  'fillOpacity': ngeo.FeatureProperties.OPACITY,
+  'fontColor': ngeo.FeatureProperties.COLOR,
+  'fontSize': ngeo.FeatureProperties.SIZE,
+  'isBox': ngeo.FeatureProperties.IS_RECTANGLE,
+  'isCircle': ngeo.FeatureProperties.IS_CIRCLE,
+  'isLabel': ngeo.FeatureProperties.IS_TEXT,
+  'name': ngeo.FeatureProperties.NAME,
+  'pointRadius': ngeo.FeatureProperties.SIZE,
+  'showMeasure': ngeo.FeatureProperties.SHOW_MEASURE,
+  'strokeColor': ngeo.FeatureProperties.COLOR,
+  'strokeWidth': ngeo.FeatureProperties.STROKE
+};
+
+
+/**
  * @classdesc
  * Provide an OpenLayers format for encoding and decoding features for use
  * in permalinks.
@@ -99,6 +119,12 @@ ngeo.format.FeatureHash = function(opt_options) {
    */
   this.propertiesFunction_ = options.properties !== undefined ?
       options.properties : ngeo.format.FeatureHash.defaultPropertiesFunction_;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.setStyle_ = options.setStyle !== undefined ? options.setStyle : true;
 
   /**
    * @type {number}
@@ -550,6 +576,9 @@ ngeo.format.FeatureHash.readMultiPolygonGeometry_ = function(text) {
 
 
 /**
+ * DEPRECATED - Use the `ngeo.FeatureHelper` instead in combination with the
+ * `setStyle: false` option.
+ *
  * Read a logical sequence of characters and apply the decoded style on the
  * given feature.
  * @param {string} text Text.
@@ -561,27 +590,14 @@ ngeo.format.FeatureHash.setStyleInFeature_ = function(text, feature) {
     return;
   }
   var fillColor, fontSize, fontColor, pointRadius, strokeColor, strokeWidth;
-  var parts = text.split('\'');
-  for (var i = 0; i < parts.length; ++i) {
-    var part = decodeURIComponent(parts[i]);
-    var keyVal = part.split('*');
-    goog.asserts.assert(keyVal.length === 2);
-    var key = keyVal[0];
-    var val = keyVal[1];
-    if (key === 'fillColor') {
-      fillColor = val;
-    } else if (key == 'fontSize') {
-      fontSize = val;
-    } else if (key == 'fontColor') {
-      fontColor = val;
-    } else if (key == 'pointRadius') {
-      pointRadius = +val;
-    } else if (key == 'strokeColor') {
-      strokeColor = val;
-    } else if (key == 'strokeWidth') {
-      strokeWidth = +val;
-    }
-  }
+  var properties = ngeo.format.FeatureHash.getStyleProperties_(text, feature);
+  fillColor = properties.fillColor;
+  fontSize = properties.fontSize;
+  fontColor = properties.fontColor;
+  pointRadius = properties.pointRadius;
+  strokeColor = properties.strokeColor;
+  strokeWidth = properties.strokeWidth;
+
   var fillStyle = null;
   if (fillColor !== undefined) {
     fillStyle = new ol.style.Fill({
@@ -620,6 +636,116 @@ ngeo.format.FeatureHash.setStyleInFeature_ = function(text, feature) {
     text: textStyle
   });
   feature.setStyle(style);
+};
+
+
+/**
+ * Read a logical sequence of characters and apply the decoded result as
+ * style properties for the feature. Legacy keys are converted to the new ones
+ * for compatibility.
+ * @param {string} text Text.
+ * @param {ol.Feature} feature Feature.
+ * @private
+ */
+ngeo.format.FeatureHash.setStyleProperties_ = function(text, feature) {
+
+  var properties = ngeo.format.FeatureHash.getStyleProperties_(text, feature);
+  var geometry = feature.getGeometry();
+
+  // Deal with legacy properties
+  if (geometry instanceof ol.geom.Point) {
+    if (properties['isLabel'] ||
+        properties[ngeo.FeatureProperties.IS_TEXT]) {
+      delete properties['strokeColor'];
+      delete properties['fillColor'];
+    } else {
+      delete properties['fontColor'];
+      delete properties['fontSize'];
+    }
+  } else {
+    delete properties['fontColor'];
+
+    if (geometry instanceof ol.geom.LineString) {
+      delete properties['fillColor'];
+      delete properties['fillOpacity'];
+    }
+  }
+
+  // Convert font size from px to pt
+  if (properties['fontSize']) {
+    var fontSize = parseFloat(properties['fontSize']);
+    if (properties['fontSize'].indexOf('px') !== -1) {
+      fontSize = Math.round(fontSize / 1.333333);
+    }
+    properties['fontSize'] = fontSize;
+  }
+
+  // Convert legacy properties
+  var clone = {};
+  for (var key in properties) {
+    var value = properties[key];
+    if (ngeo.format.FeatureHashLegacyProperties_[key]) {
+      clone[ngeo.format.FeatureHashLegacyProperties_[key]] = value;
+    } else {
+      clone[key] = value;
+    }
+  }
+
+  feature.setProperties(clone);
+};
+
+
+/**
+ * From a logical sequence of characters, create and return an object of
+ * style properties for a feature. The values are cast in the correct type
+ * depending on the property. Some properties are also deleted when they don't
+ * match the geometry of the feature.
+ * @param {string} text Text.
+ * @param {ol.Feature} feature Feature.
+ * @return {Object.<string, boolean|number|string>} The style properties for
+ *     the feature.
+ * @private
+ */
+ngeo.format.FeatureHash.getStyleProperties_ = function(text, feature) {
+  var parts = text.split('\'');
+  var properties = {};
+
+  var numProperties = [
+    ngeo.FeatureProperties.ANGLE,
+    ngeo.FeatureProperties.OPACITY,
+    ngeo.FeatureProperties.SIZE,
+    ngeo.FeatureProperties.STROKE,
+    'pointRadius',
+    'strokeWidth'
+  ];
+  var boolProperties = [
+    ngeo.FeatureProperties.IS_CIRCLE,
+    ngeo.FeatureProperties.IS_RECTANGLE,
+    ngeo.FeatureProperties.IS_TEXT,
+    ngeo.FeatureProperties.SHOW_MEASURE,
+    'isCircle',
+    'isRectangle',
+    'isLabel',
+    'showMeasure'
+  ];
+
+  for (var i = 0; i < parts.length; ++i) {
+    var part = decodeURIComponent(parts[i]);
+    var keyVal = part.split('*');
+    goog.asserts.assert(keyVal.length === 2);
+    var key = keyVal[0];
+    var val = keyVal[1];
+
+    if (ol.array.includes(numProperties, key)) {
+      properties[key] = +val;
+    } else if (ol.array.includes(boolProperties, key)) {
+      properties[key] = (val === 'true') ? true : false;
+    } else {
+      properties[key] = val;
+    }
+  }
+
+  return properties;
 };
 
 
@@ -911,12 +1037,21 @@ ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_optio
         var part = decodeURIComponent(parts[i]);
         var keyVal = part.split('*');
         goog.asserts.assert(keyVal.length === 2);
-        feature.set(keyVal[0], keyVal[1]);
+        var key = keyVal[0];
+        var value = keyVal[1];
+        if (!this.setStyle_ && ngeo.format.FeatureHashLegacyProperties_[key]) {
+          key = ngeo.format.FeatureHashLegacyProperties_[key];
+        }
+        feature.set(key, value);
       }
     }
     if (splitIndex >= 0) {
       var stylesText = attributesAndStylesText.substring(splitIndex + 1);
-      ngeo.format.FeatureHash.setStyleInFeature_(stylesText, feature);
+      if (this.setStyle_) {
+        ngeo.format.FeatureHash.setStyleInFeature_(stylesText, feature);
+      } else {
+        ngeo.format.FeatureHash.setStyleProperties_(stylesText, feature);
+      }
     }
   }
   return feature;

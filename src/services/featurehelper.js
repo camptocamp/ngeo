@@ -410,8 +410,9 @@ ngeo.FeatureHelper.prototype.getNameProperty = function(feature) {
  * @export
  */
 ngeo.FeatureHelper.prototype.getOpacityProperty = function(feature) {
-  var opacity = +(/** @type {string} */ (
+  var opacityStr = (/** @type {string} */ (
       feature.get(ngeo.FeatureProperties.OPACITY)));
+  var opacity = opacityStr !== undefined ? +opacityStr : 1;
   goog.asserts.assertNumber(opacity);
   return opacity;
 };
