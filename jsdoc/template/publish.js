@@ -356,6 +356,7 @@ function buildNav(members) {
     var directives = []
     var services = []
     var controllers = []
+    var filters = []
     members.classes.forEach(function(item) {
         if (item.ngdoc == 'directive') {
             directives.push(item);
@@ -365,6 +366,9 @@ function buildNav(members) {
         }
         else if (item.ngdoc == 'controller') {
             controllers.push(item);
+        }
+        else if (item.ngdoc == 'filter') {
+            filters.push(item);
         }
     });
 
@@ -379,6 +383,7 @@ function buildNav(members) {
         _nav += buildMemberNav(directives, 'Directives', seen, linkto, module);
         _nav += buildMemberNav(services, 'Services', seen, linkto, module);
         _nav += buildMemberNav(controllers, 'Controllers', seen, linkto, module);
+        _nav += buildMemberNav(filters, 'Filters', seen, linkto, module);
 
         _nav += buildMemberNav(members.externals, '', {}, linkto, module);
         _nav += buildMemberNav(members.externals, 'Externals', seen, linktoExternal, module);
