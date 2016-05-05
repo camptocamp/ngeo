@@ -33,7 +33,7 @@
     "clean-css": "3.4.12",
     "closure-util": "1.13.0",
     "coveralls": "2.11.9",
-    "d3": "3.5.16",
+    "d3": "3.5.17",
     "eslint": "2.9.0",
     "eslint-config-openlayers": "4.1.0",
     "font-awesome": "4.6.1",
