@@ -118,6 +118,12 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
   this.mapSelectActive = true;
 
   /**
+   * @type {number?}
+   * @private
+   */
+  this.longPressTimeout_ = null;
+
+  /**
    * @type {ngeo.ToolActivate}
    * @export
    */
@@ -408,20 +414,40 @@ gmf.DrawfeatureController.prototype.handleFeaturesRemove_ = function(evt) {
 gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
     active) {
 
-  var mapDiv = $(this.map.getTarget())[0];
+  var mapDiv = this.map.getTarget();
+  goog.asserts.assertElement(mapDiv);
+
   if (active) {
     ol.events.listen(this.map, ol.MapBrowserEvent.EventType.CLICK,
         this.handleMapClick_, this);
 
     goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
-        this.handleMapRightClick_, false, this);
+        this.handleMapContextMenu_, false, this);
+
+    goog.events.listen(mapDiv, goog.events.EventType.TOUCHSTART,
+        this.handleMapTouchStart_, false, this);
+
+    goog.events.listen(mapDiv, goog.events.EventType.TOUCHMOVE,
+        this.handleMapTouchEnd_, false, this);
+
+    goog.events.listen(mapDiv, goog.events.EventType.TOUCHEND,
+        this.handleMapTouchEnd_, false, this);
 
   } else {
     ol.events.unlisten(this.map, ol.MapBrowserEvent.EventType.CLICK,
         this.handleMapClick_, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.CONTEXTMENU,
-        this.handleMapRightClick_);
+        this.handleMapContextMenu_);
+
+    goog.events.unlisten(mapDiv, goog.events.EventType.TOUCHSTART,
+        this.handleMapTouchStart_);
+
+    goog.events.unlisten(mapDiv, goog.events.EventType.TOUCHMOVE,
+        this.handleMapTouchEnd_);
+
+    goog.events.unlisten(mapDiv, goog.events.EventType.TOUCHEND,
+        this.handleMapTouchEnd_);
   }
 };
 
@@ -468,7 +494,27 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
  * @param {Event} evt Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleMapRightClick_ = function(evt) {
+gmf.DrawfeatureController.prototype.handleMapTouchStart_ = function(evt) {
+  this.longPressTimeout_ = setTimeout(
+      goog.partial(this.handleMapContextMenu_.bind(this), evt),
+      500);
+};
+
+
+/**
+ * @param {Event} evt Event.
+ * @private
+ */
+gmf.DrawfeatureController.prototype.handleMapTouchEnd_ = function(evt) {
+  clearTimeout(this.longPressTimeout_);
+};
+
+
+/**
+ * @param {Event} evt Event.
+ * @private
+ */
+gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
   evt.preventDefault();
 
   var pixel = this.map.getEventPixel(evt);
