@@ -41,6 +41,11 @@ goog.require('ngeo.ToolActivateMgr');
  */
 gmf.AbstractController = function(config, $scope, $injector) {
 
+  var ngeoLocation = $injector.get('ngeoLocation');
+  if (ngeoLocation.hasParam('debug')) {
+    // make the injector globally available
+    window.injector = $injector;
+  }
 
   goog.asserts.assertInstanceof(this.map, ol.Map);
 
@@ -225,7 +230,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
     var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
     backgroundLayerMgr.set(this.map, background);
   }.bind(this));
-
 };
 
 
