@@ -14,8 +14,8 @@
 @button-size: 4rem;
 @left-panel-width: 32rem;
 @right-panel-width: 28rem;
-@topbar-height: @button-size;
-@toolbar-width: @button-size;
+@topbar-height: 4.5rem;
+@toolbar-width: 4.5rem;
 @border-color: darken(@brand-primary, @standard-variation);
 @search-width: 8 * @map-tools-size;
 
@@ -38,7 +38,6 @@ header {
   left: 0;
   height: @topbar-height;
   z-index: @zindex-navbar-fixed;
-  .box-shadow(0px 2px 6px -1px rgba(0, 0, 0, 0.5));
 }
 
 main {
@@ -53,6 +52,9 @@ main {
   overflow: hidden;
   position: relative;
   display: block;
+  border-top-color: @btn-default-border;
+  border-top-width: 1px;
+  border-top-style: solid;
   .gmf-map,
   .gmf-map > div {
     position: absolute;
