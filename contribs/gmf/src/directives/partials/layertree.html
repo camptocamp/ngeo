@@ -3,7 +3,7 @@
     <a  ng-if="::layertreeCtrl.node.children"
         data-toggle="collapse"
         href="#layer-group-{{::layertreeCtrl.uid}}"
-        aria-expanded="{{::layertreeCtrl.node.metadata.isExpanded === 'true' || false}}"
+        aria-expanded="{{::layertreeCtrl.node.metadata.isExpanded}}"
         class="fa expand-node fa-fw">
     </a>
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)">
@@ -41,7 +41,7 @@
     </span>
   </span>
   <span class="legend" ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true'">
-    <div id="node-{{::layertreeCtrl.uid}}-legend" class="collapse" ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded == 'true' ? 'in' : '']">
+    <div id="node-{{::layertreeCtrl.uid}}-legend" class="collapse" ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded ? 'in' : '']">
       <a data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend">
         <img ng-src="{{gmfLayertreeCtrl.getLegendURL(layertreeCtrl)}}"></img>
       </a>
@@ -50,7 +50,7 @@
 </div>
 <ul id="layer-group-{{::layertreeCtrl.uid}}"
     ng-if="::layertreeCtrl.node.children"
-    ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded === 'true'}"
+    ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded}"
     ngeo-sortable="::layertreeCtrl.isRoot && gmfLayertreeCtrl.layers"
     ngeo-sortable-options="{handleClassName: 'sortable-handle', draggerClassName: 'dragger', currDragItemClassName : 'curr-drag-item'}">
   <li class="gmf-layertree-node" ng-repeat="node in layertreeCtrl.node.children"
