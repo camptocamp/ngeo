@@ -99,6 +99,21 @@
           </gmf-search>
         </div>
         <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"></gmf-map>
+        <div class="footer" ng-class="{'active': mainCtrl.info}">
+          <button class="btn btn-sm fa map-info ng-cloak" ng-click="mainCtrl.info = !mainCtrl.info"
+                  ng-class="{'fa-angle-double-up': !mainCtrl.info, 'fa-angle-double-down': mainCtrl.info}"></button>
+
+          <div ngeo-scaleselector="mainCtrl.scaleSelectorValues"
+               ngeo-scaleselector-map="mainCtrl.map"
+               ngeo-scaleselector-options="mainCtrl.scaleSelectorOptions"></div>
+
+          <div id="scaleline"></div>
+          <gmf-mouseposition gmf-mouseposition-map="mainCtrl.map"></gmf-mouseposition>
+          <div class="pull-right small text">
+            <span class="fa fa-arrows-v"></span>
+            235m
+          </div>
+        </div>
       </div>
     </main>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>

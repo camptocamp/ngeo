@@ -5,11 +5,16 @@ goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileBackgroundlayerselectorDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.mousepositionDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.printDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.resizemapDirective');
+goog.require('ngeo.ScaleselectorOptions');
+/** @suppress {extraRequire} */
+goog.require('ngeo.scaleselectorDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
@@ -51,7 +56,9 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
     layers: [],
     view: new ol.View(viewConfig),
     controls: config.mapControls || [
-      new ol.control.ScaleLine(),
+      new ol.control.ScaleLine({
+        target: document.getElementById('scaleline')
+      }),
       new ol.control.Zoom()
     ],
     interactions: config.mapInteractions || ol.interaction.defaults({
@@ -78,6 +85,28 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
     trigger: 'hover',
     selector: '[data-toggle="tooltip"]'
   });
+
+  var $sce = $injector.get('$sce');
+
+  /**
+   * @type {ngeo.ScaleselectorOptions}
+   * @export
+   */
+  this.scaleSelectorOptions = {
+    'dropup': true
+  };
+
+  /**
+   * @type {!Object.<string, string>}
+   * @export
+   */
+  this.scaleSelectorValues = {
+    '0': $sce.trustAsHtml('1&nbsp;:&nbsp;200\'000\'000'),
+    '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000\'000'),
+    '2': $sce.trustAsHtml('1&nbsp;:&nbsp;50\'000\'000'),
+    '3': $sce.trustAsHtml('1&nbsp;:&nbsp;25\'000\'000'),
+    '4': $sce.trustAsHtml('1&nbsp;:&nbsp;12\'000\'000')
+  };
 
   goog.base(
       this, config, $scope, $injector);
