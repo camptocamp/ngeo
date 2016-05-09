@@ -1,6 +1,7 @@
 goog.provide('ngeo.LayertreeController');
 goog.provide('ngeo.layertreeDirective');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.DecorateLayer');
 goog.require('ngeo.DecorateLayerLoading');
@@ -216,8 +217,8 @@ ngeo.LayertreeController = function($scope, $element, $attrs, ngeoDecorateLayer,
   if (this.layer) {
     ngeoDecorateLayerLoading(this.layer, $scope);
     ngeoDecorateLayer(this.layer);
+    ngeoDecorateLayerLoading(this.layer, $scope);
   }
-
 
   var listenersExpr = $attrs['ngeoLayertreeListeners'];
   if (listenersExpr === undefined) {
