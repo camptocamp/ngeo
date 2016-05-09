@@ -10,7 +10,7 @@
     <span class="layerIcon" ng-if="::!layertreeCtrl.node.children" ng-class="::{'no-layer-icon' : !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}">
       <img ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))" ng-src="{{::legendIconUrl}}"></img>
     </span>
-    <span ng-if="::layertreeCtrl.node.children" class="state"></span>
+    <span ng-if="::layertreeCtrl.node.children" ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'state' : 'fa-refresh fa-spin']"></span>
     <span class="name" title="{{layertreeCtrl.node.name | translate}}">{{layertreeCtrl.node.name | translate}}</span>
   </a>
   <span class="rightButtons">

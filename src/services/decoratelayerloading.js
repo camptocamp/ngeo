@@ -26,23 +26,42 @@ ngeo.DecorateLayerLoading;
  * @param {angular.Scope} $scope Scope.
  */
 ngeo.decorateLayerLoading = function(layer, $scope) {
-  goog.asserts.assertInstanceof(layer, ol.layer.Base);
 
-  var sources = [];
-  if (layer instanceof ol.layer.Group) {
-    // layer group
-    sources = layer.getLayersArray().map(function(layer) {
-      goog.asserts.assert(layer instanceof ol.layer.Layer);
-      return layer.getSource();
-    });
-  } else {
-    goog.asserts.assert(layer instanceof ol.layer.Layer);
-    sources = [layer.getSource()];
-  }
+  var source;
+
+  /**
+   * @type {Array<string>|null}
+   */
+  var incrementEvents = null;
+
+  /**
+   * @type {Array<string>|null}
+   */
+  var decrementEvents = null;
+
+  /**
+   * @function
+   * @private
+   */
+  var incrementLoadCount_ = increment_;
+
+  /**
+   * @function
+   * @private
+   */
+  var decrementLoadCount_ = decrement_;
 
   layer.set('load_count', 0, true);
-  sources.forEach(function(source) {
-    var incrementEvents, decrementEvents;
+
+  if (layer instanceof ol.layer.Group) {
+    layer.getLayers().on('add', function(olEvent) {
+      var newLayer = olEvent.element;
+      newLayer.set('parent_group', layer);
+    });
+  }
+
+  if (layer instanceof ol.layer.Layer) {
+    source = layer.getSource();
     if (source instanceof ol.source.Tile) {
       incrementEvents = ['tileloadstart'];
       decrementEvents = ['tileloadend', 'tileloaderror'];
@@ -52,18 +71,17 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
     } else {
       goog.asserts.fail('unsupported source type');
     }
+
     source.on(incrementEvents, function() {
-      var load_count = /** @type {number} */ (layer.get('load_count'));
-      layer.set('load_count', ++load_count, true);
-      $scope.$applyAsync();
-    });
-    source.on(decrementEvents, function() {
-      var load_count = /** @type {number} */ (layer.get('load_count'));
-      layer.set('load_count', --load_count, true);
+      incrementLoadCount_(layer);
       $scope.$applyAsync();
     });
 
-  });
+    source.on(decrementEvents, function() {
+      decrementLoadCount_(layer);
+      $scope.$applyAsync();
+    });
+  }
 
   Object.defineProperty(layer, 'loading', {
     configurable: true,
@@ -75,6 +93,34 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
           return /** @type {number} */ (layer.get('load_count')) > 0;
         }
   });
+
+  /**
+   * @function
+   * @param {ol.layer.Base} layer Layer
+   * @private
+   */
+  function increment_(layer) {
+    var load_count = /** @type {number} */ (layer.get('load_count'));
+    var parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
+    layer.set('load_count', ++load_count, true);
+    if (parent) {
+      increment_(parent);
+    }
+  }
+
+  /**
+   * @function
+   * @param {ol.layer.Base} layer Layer
+   * @private
+   */
+  function decrement_(layer) {
+    var load_count = /** @type {number} */ (layer.get('load_count'));
+    var parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
+    layer.set('load_count', --load_count, true);
+    if (parent) {
+      decrement_(parent);
+    }
+  }
 
 };
 
