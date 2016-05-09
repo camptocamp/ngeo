@@ -77,8 +77,8 @@ gmf.module.value('gmfPrintTemplateUrl',
  * @htmlAttribute {ol.Map} gmf-print-map The map.
  * @htmlAttribute {boolean} gmf-print-active A boolean that informs if the
  *     panel is open or not.
- * @htmlAttribute {boolean} gmf-print-rotatemask Optionnal. True to rotate the
- *     mask instead of the map on rotation. By default, the map rotates.
+ * @htmlAttribute {boolean} gmf-print-rotatemask Optional. True to apply
+ *     rotation on the mask instead of the map. By default, the map rotates.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfPrintTemplateUrl Template url for the directive.
  * @return {angular.Directive} Directive Definition Object.
