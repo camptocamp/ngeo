@@ -414,7 +414,7 @@ gmf.DrawfeatureController.prototype.handleFeaturesRemove_ = function(evt) {
 gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
     active) {
 
-  var mapDiv = this.map.getTarget();
+  var mapDiv = this.map.getTargetElement();
   goog.asserts.assertElement(mapDiv);
 
   if (active) {
@@ -515,8 +515,6 @@ gmf.DrawfeatureController.prototype.handleMapTouchEnd_ = function(evt) {
  * @private
  */
 gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
-  evt.preventDefault();
-
   var pixel = this.map.getEventPixel(evt);
   var coordinate = this.map.getCoordinateFromPixel(pixel);
 
@@ -549,6 +547,8 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
     if (ol.array.includes(supportedTypes, type)) {
       this.menu_.open(coordinate);
     }
+
+    evt.preventDefault();
   }
 
   // do not do any further action if feature is null or already selected
