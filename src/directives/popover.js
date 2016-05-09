@@ -26,9 +26,9 @@ goog.require('ngeo');
 ngeo.popoverDirective = function() {
   return {
     restrict: 'A',
-    scope : true,
+    scope: true,
     controller: 'NgeoPopoverController',
-    link : function(scope, elem, attrs, ngeoPopoverCtrl) {
+    link: function(scope, elem, attrs, ngeoPopoverCtrl) {
       ngeoPopoverCtrl.anchorElm.on('hidden.bs.popover', function() {
         /**
          * @type {{inState : Object}}
