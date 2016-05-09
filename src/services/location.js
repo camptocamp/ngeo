@@ -114,12 +114,43 @@ ngeo.Location.prototype.getParam = function(key) {
 
 
 /**
+ * Get a param in the location's URI as integer. If the entry does not exist,
+ * or if the value can not be parsed as integer, `undefined` is returned.
+ * @param {string} key Param key.
+ * @return {number|undefined} Param value.
+ * @export
+ */
+ngeo.Location.prototype.getParamAsInt = function(key) {
+  if (!this.hasParam(key)) {
+    return undefined;
+  }
+  var value = /** @type {string} */ (this.uri_.getQueryData().get(key));
+  var valueAsInt = parseInt(value, 10);
+  return (isNaN(valueAsInt)) ? undefined : valueAsInt;
+};
+
+
+/**
  * Get an array with all existing param's keys in the location's URI.
  * @return {Array.<string>} Param keys.
  * @export
  */
 ngeo.Location.prototype.getParamKeys = function() {
   return this.uri_.getQueryData().getKeys();
+};
+
+
+/**
+ * Get an array with all existing param's keys in the location's URI that start
+ * with the given prefix.
+ * @param {string} prefix Key prefix.
+ * @return {Array.<string>} Param keys.
+ * @export
+ */
+ngeo.Location.prototype.getParamKeysWithPrefix = function(prefix) {
+  return this.uri_.getQueryData().getKeys().filter(function(key) {
+    return key.indexOf(prefix) == 0;
+  });
 };
 
 

@@ -4,13 +4,15 @@ goog.require('gmf.Permalink');
 goog.require('gmf');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.StateManager');
+goog.require('ngeo.Location');
 goog.require('ol.Map');
 goog.require('ol.Collection');
 goog.require('ol.layer.Group');
 
 
 describe('Permalink service', function() {
-  var PermalinkService, map, LayerHelper, firstLevelGroup, secondLevelGroup, dataGroup, StateManagerService, osmThemeNode;
+  var PermalinkService, map, LayerHelper, firstLevelGroup, secondLevelGroup, dataGroup,
+      StateManagerService, osmThemeNode, ngeoLocation;
   var $injector;
 
   beforeEach(inject(function(_$injector_) {
@@ -18,6 +20,7 @@ describe('Permalink service', function() {
     $injector = _$injector_;
     StateManagerService = $injector.get('ngeoStateManager');
     PermalinkService = $injector.get('gmfPermalink');
+    ngeoLocation = $injector.get('ngeoLocation');
     map = new ol.Map({layers : []});
     PermalinkService.setMap(map);
     PermalinkService.themes_ = themes['themes'];
@@ -110,4 +113,136 @@ describe('Permalink service', function() {
     });
   });
 
+  describe('#getWfsPermalinkData_', function() {
+    it('returns null if no query params', function() {
+      ngeoLocation.updateParams({});
+      expect(PermalinkService.getWfsPermalinkData_()).toBe(null);
+    });
+
+    it('return null when no filters', function() {
+      // ?wfs_layer=fuel&wfs_osm_id=
+      ngeoLocation.updateParams({wfs_layer: 'fuel', wfs_osm_id: ''});
+      expect(PermalinkService.getWfsPermalinkData_()).toBe(null);
+    });
+
+    it('works with a single filter', function() {
+      // ?wfs_layer=fuel&wfs_osm_id=1420918679
+      ngeoLocation.updateParams({wfs_layer: 'fuel', wfs_osm_id: '1420918679'});
+      var expectedQueryParams = {
+        wfsType: 'fuel',
+        showFeatures: true,
+        filterGroups: [
+          {
+            filters: [
+              {
+                property: 'osm_id',
+                condition: '1420918679'
+              }
+            ]
+          }
+        ]
+      };
+      expect(PermalinkService.getWfsPermalinkData_()).toEqual(expectedQueryParams);
+    });
+
+    it('works with a single filter with multiple conditions', function() {
+      // ?wfs_layer=fuel&wfs_osm_id=1420918679,441134960&wfs_showFeatures=0
+      ngeoLocation.updateParams({
+        wfs_layer: 'fuel', wfs_osm_id: '1420918679,441134960', wfs_showFeatures: '0'});
+      var expectedQueryParams = {
+        wfsType: 'fuel',
+        showFeatures: false,
+        filterGroups: [
+          {
+            filters: [
+              {
+                property: 'osm_id',
+                condition: ['1420918679', '441134960']
+              }
+            ]
+          }
+        ]
+      };
+      expect(PermalinkService.getWfsPermalinkData_()).toEqual(expectedQueryParams);
+    });
+
+    it('works with multiple filters', function() {
+      // ?wfs_layer=osm_scale&wfs_highway=bus_stop&wfs_name=Grand-Pont&wfs_operator=TL
+      ngeoLocation.updateParams({
+        wfs_layer: 'osm_scale', wfs_highway: 'bus_stop', wfs_name: 'Grand-Pont',
+        wfs_operator: 'TL'});
+      var expectedQueryParams = {
+        wfsType: 'osm_scale',
+        showFeatures: true,
+        filterGroups: [
+          {
+            filters: [
+              {
+                property: 'highway',
+                condition: 'bus_stop'
+              },
+              {
+                property: 'name',
+                condition: 'Grand-Pont'
+              },
+              {
+                property: 'operator',
+                condition: 'TL'
+              }
+            ]
+          }
+        ]
+      };
+      expect(PermalinkService.getWfsPermalinkData_()).toEqual(expectedQueryParams);
+    });
+
+    it('works with multipe filter groups', function() {
+      // ?wfs_layer=osm_scale&wfs_ngroups=2&wfs_0_ele=380&wfs_0_highway=bus_stop&
+      // wfs_0_operator=TL&wfs_1_highway=bus_stop&wfs_1_name=Grand-Pont&wfs_1_operator=TL
+      ngeoLocation.updateParams({
+        wfs_layer: 'osm_scale', wfs_ngroups: '2',
+        wfs_0_ele: '380', wfs_0_highway: 'bus_stop', wfs_0_operator: 'TL',
+        wfs_1_highway: 'bus_stop', wfs_1_name: 'Grand-Pont', wfs_1_operator: 'TL'
+      });
+      var expectedQueryParams = {
+        wfsType: 'osm_scale',
+        showFeatures: true,
+        filterGroups: [
+          {
+            filters: [
+              {
+                property: 'ele',
+                condition: '380'
+              },
+              {
+                property: 'highway',
+                condition: 'bus_stop'
+              },
+              {
+                property: 'operator',
+                condition: 'TL'
+              }
+            ]
+          },
+          {
+            filters: [
+              {
+                property: 'highway',
+                condition: 'bus_stop'
+              },
+              {
+                property: 'name',
+                condition: 'Grand-Pont'
+              },
+              {
+                property: 'operator',
+                condition: 'TL'
+              }
+            ]
+          }
+        ]
+      };
+      expect(PermalinkService.getWfsPermalinkData_()).toEqual(expectedQueryParams);
+    });
+  });
 });

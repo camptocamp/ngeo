@@ -245,6 +245,108 @@ ngeox.QuerySource.prototype.wmsSource;
 
 
 /**
+ * A WFS type. To be used with {@link ngeox.WfsPermalinkOptions}.
+ * @typedef {{
+ *     featureType: (string),
+ *     label: (string|undefined),
+ *     featureNS: (string|undefined),
+ *     featurePrefix: (string|undefined)
+ * }}
+ */
+ngeox.WfsType;
+
+
+/**
+ * The feature type name. Required.
+ * @type {string}
+ */
+ngeox.WfsType.prototype.featureType;
+
+
+/**
+ * The field of a feature used as label.
+ * @type {string|undefined}
+ */
+ngeox.WfsType.prototype.label;
+
+
+/**
+ * The namespace URI used for features. If not given, the default namespace set
+ * in {@link ngeox.WfsPermalinkOptions} will be used.
+ * @type {string|undefined}
+ */
+ngeox.WfsType.prototype.featureNS;
+
+
+/**
+ * The prefix for the feature namespace. If not given, the default prefix set
+ * in {@link ngeox.WfsPermalinkOptions} will be used.
+ * @type {string|undefined}
+ */
+ngeox.WfsType.prototype.featurePrefix;
+
+
+/**
+ * The options for the wfs query service (permalink).
+ * @typedef {{
+ *     url: (string),
+ *     wfsTypes: (!Array.<ngeox.WfsType>),
+ *     pointRecenterZoom: (number|undefined),
+ *     defaultFeatureNS: (string),
+ *     defaultFeaturePrefix: (string),
+ *     maxFeatures: (number|undefined)
+ * }}
+ */
+ngeox.WfsPermalinkOptions;
+
+
+/**
+ * URL to the WFS server.
+ * @type {string}
+ */
+ngeox.WfsPermalinkOptions.prototype.url;
+
+
+/**
+ * The queryable WFS types.
+ * @type {!Array.<ngeox.WfsType>}
+ */
+ngeox.WfsPermalinkOptions.prototype.wfsTypes;
+
+
+/**
+ * Zoom level to use when result is a single point feature. If not set the map
+ * is not zoomed to a specific zoom level.
+ * @type {number|undefined}
+ */
+ngeox.WfsPermalinkOptions.prototype.pointRecenterZoom;
+
+
+/**
+ * The default namespace URI used for features. This will be used if no custom
+ * namespace is given for a WFS type.
+ * @type {string}
+ */
+ngeox.WfsType.prototype.defaultFeatureNS;
+
+
+/**
+ * The default prefix for the feature namespace. This will be used if no custom
+ * prefix is given for a WFS type.
+ * @type {string}
+ */
+ngeox.WfsType.prototype.defaultFeaturePrefix;
+
+
+/**
+ * The maximum number of records per request the query service should ask.
+ * Defaults to `50`.
+ * @type {number|undefined}
+ */
+ngeox.WfsPermalinkOptions.prototype.maxFeatures;
+
+
+/**
  * MobileDraw Interaction
  * @typedef {{
  *     minPoints: (number|undefined),

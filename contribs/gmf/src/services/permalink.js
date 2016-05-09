@@ -15,6 +15,7 @@ goog.require('ngeo.LayerHelper');
 goog.require('ngeo.Popover');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.format.FeatureHash');
+goog.require('ngeo.WfsPermalink');
 goog.require('ol.Feature');
 goog.require('ol.geom.Point');
 goog.require('ol.layer.Group');
@@ -34,7 +35,10 @@ gmf.PermalinkParam = {
   MAP_X: 'map_x',
   MAP_Y: 'map_y',
   MAP_Z: 'map_zoom',
-  TREE_GROUPS: 'tree_groups'
+  TREE_GROUPS: 'tree_groups',
+  WFS_LAYER: 'wfs_layer',
+  WFS_NGROUPS: 'wfs_ngroups',
+  WFS_SHOW_FEATURES: 'wfs_showFeatures'
 };
 
 
@@ -43,7 +47,8 @@ gmf.PermalinkParam = {
  */
 gmf.PermalinkParamPrefix = {
   TREE_ENABLE: 'tree_enable_',
-  TREE_GROUP_LAYERS: 'tree_group_layers_'
+  TREE_GROUP_LAYERS: 'tree_group_layers_',
+  WFS: 'wfs_'
 };
 
 
@@ -73,13 +78,16 @@ gmf.module.constant('gmfPermalinkOptions',
  * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @param {gmfx.PermalinkOptions} gmfPermalinkOptions The options to configure
  *     the gmf permalink service with.
+ * @param {ngeo.Location} ngeoLocation ngeo location service.
+ * @param {ngeo.WfsPermalink} ngeoWfsPermalink ngeo WFS query service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */
 gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     ngeoFeatureOverlayMgr, ngeoFeatureHelper, ngeoFeatures, ngeoLayerHelper,
-    ngeoStateManager, gmfThemes, gmfTreeManager, gmfPermalinkOptions) {
+    ngeoStateManager, gmfThemes, gmfTreeManager, gmfPermalinkOptions,
+    ngeoLocation, ngeoWfsPermalink) {
 
   // == listener keys ==
 
@@ -154,6 +162,18 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
 
 
   // == other properties ==
+
+  /**
+   * @type {ngeo.Location}
+   * @private
+   */
+  this.ngeoLocation_ = ngeoLocation;
+
+  /**
+   * @type {ngeo.WfsPermalink}
+   * @private
+   */
+  this.ngeoWfsPermalink_ = ngeoWfsPermalink;
 
   /**
    * @type {?ol.Map}
@@ -426,7 +446,7 @@ gmf.Permalink.prototype.registerMap_ = function(map) {
   var view = map.getView();
 
   // (1) Initialize the map view with the X, Y and Z available within the
-  //     permalink service, if availables
+  //     permalink service, if available
   var center = this.getMapCenter();
   if (center !== null) {
     view.setCenter(center);
@@ -494,6 +514,12 @@ gmf.Permalink.prototype.registerMap_ = function(map) {
 
   // (5) register 'data' layers
   this.registerDataLayerGroup_(map);
+
+  // (6) check for a wfs permalink
+  var wfsPermalinkData = this.getWfsPermalinkData_();
+  if (wfsPermalinkData !== null) {
+    this.ngeoWfsPermalink_.issue(wfsPermalinkData, map);
+  }
 };
 
 
@@ -983,6 +1009,93 @@ gmf.Permalink.prototype.handleNgeoFeaturesChange_ = function() {
   var object = {};
   object[gmf.PermalinkParam.FEATURES] = data;
   this.ngeoStateManager_.updateState(object);
+};
+
+
+/**
+ * Get the query data for a WFS permalink.
+ * @return {ngeo.WfsPermalinkData|null} The query data.
+ * @private
+ */
+gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
+  var wfsLayer = this.ngeoLocation_.getParam(gmf.PermalinkParam.WFS_LAYER);
+  if (!wfsLayer) {
+    return null;
+  }
+
+  var numGroups = this.ngeoLocation_.getParamAsInt(gmf.PermalinkParam.WFS_NGROUPS);
+  var paramKeys = this.ngeoLocation_.getParamKeysWithPrefix(gmf.PermalinkParamPrefix.WFS);
+
+  var filterGroups = [];
+  var filterGroup;
+  if (numGroups === undefined) {
+    // no groups are used, e.g. '?wfs_layer=fuel&wfs_osm_id=123
+    filterGroup = this.createFilterGroup_(gmf.PermalinkParamPrefix.WFS, paramKeys);
+    if (filterGroup !== null) {
+      filterGroups.push(filterGroup);
+    }
+  } else {
+    // filter groups are used, e.g. '?wfs_layer=osm_scale&wfs_ngroups=2&wfs_0_ele=380&
+    // wfs_0_highway=bus_stop&&wfs_1_name=Grand-Pont'
+    for (var i = 0; i < numGroups; i++) {
+      filterGroup = this.createFilterGroup_(gmf.PermalinkParamPrefix.WFS + i + '_', paramKeys);
+      if (filterGroup !== null) {
+        filterGroups.push(filterGroup);
+      }
+    }
+  }
+
+  if (filterGroups.length == 0) {
+    return null;
+  }
+
+  var showFeaturesParam = this.ngeoLocation_.getParam(gmf.PermalinkParam.WFS_SHOW_FEATURES);
+  var showFeatures = !(showFeaturesParam === '0' || showFeaturesParam === 'false');
+
+  return {
+    wfsType: wfsLayer,
+    showFeatures: showFeatures,
+    filterGroups: filterGroups
+  };
+};
+
+
+/**
+ * Create a filter group for a given prefix from the query params.
+ * @param {string} prefix E.g. `wfs_` or `wfs_0_`.
+ * @param {Array.<string>} paramKeys All param keys starting with `wfs_`.
+ * @return {ngeo.WfsPermalinkFilterGroup|null} A filter group.
+ * @private
+ */
+gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
+  /**
+   * @type {Array.<ngeo.WfsPermalinkFilter>}
+   */
+  var filters = [];
+
+  paramKeys.forEach(function(paramKey) {
+    if (paramKey == gmf.PermalinkParam.WFS_LAYER || paramKey == gmf.PermalinkParam.WFS_SHOW_FEATURES ||
+        paramKey == gmf.PermalinkParam.WFS_NGROUPS || paramKey.indexOf(prefix) != 0) {
+      return;
+    }
+    var value = this.ngeoLocation_.getParam(paramKey);
+    if (!value) {
+      return;
+    }
+
+    var condition = value;
+    if (value.indexOf(',') > -1) {
+      condition = value.split(',');
+    }
+
+    var filter = {
+      property: paramKey.replace(prefix, ''),
+      condition: condition
+    };
+    filters.push(filter);
+  }.bind(this));
+
+  return (filters.length > 0) ? {filters: filters} : null;
 };
 
 
