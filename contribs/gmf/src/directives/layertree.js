@@ -790,4 +790,16 @@ gmf.LayertreeController.prototype.getNodeIds_ = function(node) {
 };
 
 
+/**
+ * Toggle the legend for a node
+ * @param {string} legendNodeId The DOM node legend id to toggle
+ * @export
+ */
+gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
+  $(legendNodeId).toggle({
+    toggle : true
+  });
+};
+
+
 gmf.module.controller('GmfLayertreeController', gmf.LayertreeController);
