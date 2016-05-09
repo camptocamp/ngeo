@@ -3,6 +3,8 @@ goog.provide('gmf.AbstractDesktopController');
 goog.require('gmf');
 goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
+goog.require('gmf.drawfeatureDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mobileBackgroundlayerselectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.printDirective');
@@ -10,11 +12,16 @@ goog.require('gmf.printDirective');
 goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.resizemapDirective');
+goog.require('ngeo.FeatureHelper');
+/** @suppress {extraRequire} */
+goog.require('ngeo.Features');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
 goog.require('ol.interaction');
+goog.require('ol.layer.Vector');
+goog.require('ol.source.Vector');
 
 gmf.module.constant('isDesktop', true);
 
@@ -78,6 +85,31 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
     trigger: 'hover',
     selector: '[data-toggle="tooltip"]'
   });
+
+  /**
+   * Ngeo FeatureHelper service
+   * @type {ngeo.FeatureHelper}
+   */
+  var ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
+  ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
+
+  /**
+   * Collection of features for the draw interaction
+   * @type {ol.Collection.<ol.Feature>}
+   */
+  var ngeoFeatures = $injector.get('ngeoFeatures');
+
+  /**
+   * @type {ol.layer.Vector}
+   * @export
+   */
+  this.drawFeatureLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+      wrapX: false,
+      features: ngeoFeatures
+    })
+  });
+  this.drawFeatureLayer.setMap(this.map);
 
   goog.base(
       this, config, $scope, $injector);

@@ -52,7 +52,9 @@
       /* drawfeature */
 
       ngeo-drawfeature {
-        margin: 10px 0;
+        border-bottom: 1px solid #333;
+        margin: 0 0 10px 0;
+        padding: 0 0 20px 0;
       }
 
       .gmf-icon-circle:before {
@@ -188,6 +190,8 @@
        ng-model="ctrl.pointerMoveActive" />
     <label for="checkbox-pointermove"> PointerMove</label>
     <span id="pointermove-feature"></span>
+
+    <h2>Draw & Measure</h2>
 
     <gmf-drawfeature
       ng-show="ctrl.drawFeatureActive === true"

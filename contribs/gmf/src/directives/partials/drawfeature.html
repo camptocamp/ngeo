@@ -1,9 +1,5 @@
 <div>
 
-  <h2>{{'Draw & Measure' | translate}}</h2>
-
-  <hr />
-
   <ngeo-drawfeature
       ngeo-btn-group
       class="btn-group"
@@ -83,9 +79,9 @@
     </a>
   </ngeo-drawfeature>
 
-  <hr />
-
-  <div ng-switch="efCtrl.selectedFeature">
+  <div
+      ng-switch="efCtrl.selectedFeature"
+      class="gmf-drawfeature-featurelistctn">
 
     <div ng-switch-when="null">
       <div ng-show="efCtrl.features.getLength()">
