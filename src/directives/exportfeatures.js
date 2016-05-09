@@ -181,12 +181,14 @@ ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
  * Called when a menu item is clicked. Export the features to the selected
  * format.
  * @param {string} format Format.
+ * @param {jQuery.Event} event Event.
  * @private
  */
-ngeo.ExportfeaturesController.prototype.handleMenuItemClick_ = function(
-    format) {
-  var features = this.features.getArray();
-  this.featureHelper_.export(features, format);
+ngeo.ExportfeaturesController.prototype.handleMenuItemClick_ = function(format, event) {
+  if (!$(event.target.parentElement).hasClass('disabled')) {
+    var features = this.features.getArray();
+    this.featureHelper_.export(features, format);
+  }
 };
 
 
