@@ -40,7 +40,7 @@
       <div class="tools" ngeo-resizemap="mainCtrl.map"
         ngeo-resizemap-state="mainCtrl.toolsActive">
         <div ngeo-btn-group class="bar btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
-          <button ngeo-btn class="btn btn-default" ng-model="loginActive"
+          <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
             data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
             <span class="fa fa-user"></span>
           </button>
@@ -50,7 +50,7 @@
           </button>
           <button ngeo-btn class="btn btn-default" ng-model="measureActive"
             data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw & Measure'|translate}}">
-            <span class="fa fa-pencil">
+            <span class="fa fa-pencil"></span>
           </button>
         </div>
         <div class="tools-content container-fluid" ng-class="{active: mainCtrl.toolsActive}">
@@ -99,7 +99,7 @@
         <div class="search">
           <gmf-search gmf-search-map="mainCtrl.map"
             gmf-search-datasources="mainCtrl.searchDatasources"
-            gmf-search-currenttheme="mainCtrl.theme"
+            gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
             gmf-search-clearbutton="true">
           </gmf-search>
         </div>
