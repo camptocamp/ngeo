@@ -416,6 +416,32 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
 
 
 /**
+ * @return {!Array.<ol.Feature>} Array.
+ * @export
+ */
+gmf.DrawfeatureController.prototype.getFeaturesArray = function() {
+  return this.features.getArray();
+};
+
+
+/**
+ * @export
+ */
+gmf.DrawfeatureController.prototype.clearFeatures = function() {
+  this.features.clear();
+};
+
+
+/**
+ * @param {ol.Feature} feature The feature to remove from the selection.
+ * @export
+ */
+gmf.DrawfeatureController.prototype.removeFeature = function(feature) {
+  this.features.remove(feature);
+};
+
+
+/**
  * @param {ol.CollectionEvent} evt Event.
  * @private
  */

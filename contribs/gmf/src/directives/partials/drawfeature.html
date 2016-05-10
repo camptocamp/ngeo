@@ -78,7 +78,7 @@
       class="gmf-drawfeature-featurelistctn">
 
     <div ng-switch-when="null">
-      <div ng-show="efCtrl.features.getLength()">
+      <div ng-show="efCtrl.getFeaturesArray().length > 0">
         <div class="ngeo-drawfeature-actionbuttons">
           <button
               type="button"
@@ -92,7 +92,7 @@
             {{'Export' | translate}}
           </button>
           <button
-              ng-click="efCtrl.features.clear();"
+              ng-click="efCtrl.clearFeatures()"
               class="btn btn-link">
             <span class="fa fa-trash"></span>
             {{'Delete All' | translate}}
@@ -104,7 +104,7 @@
         <ul class="list-group gmf-drawfeature-featurelist">
           <li
               class="list-group-item"
-              ng-repeat="feature in efCtrl.features.getArray()"
+              ng-repeat="feature in efCtrl.getFeaturesArray()"
               ng-click="efCtrl.selectedFeature = feature;">
             {{ feature.get(efCtrl.nameProperty) }}
           </li>
@@ -134,7 +134,7 @@
           {{'Export' | translate}}
         </button>
         <button
-            ng-click="efCtrl.features.remove(efCtrl.selectedFeature);"
+            ng-click="efCtrl.removeFeature(efCtrl.selectedFeature);"
             class="btn btn-link">
           <span class="fa fa-trash"></span>
           {{'Delete' | translate}}
