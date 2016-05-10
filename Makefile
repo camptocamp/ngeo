@@ -435,6 +435,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
+		.build/examples-hosted/contribs/gmf/apps/%/image/logo.png \
 		.build/examples-hosted/contribs/gmf/build \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/gmf-icons., eot ttf woff)
@@ -444,6 +445,14 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e '/default\.js/d' \
 		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
 		-e 's|/@?main=$*/js/controller\.js|../../build/$*.js|' $< > $@
+
+.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/image/logo.png
+.build/examples-hosted/contribs/gmf/apps/%/image/logo.png: contribs/gmf/apps/%/image/logo.png
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.build/examples-hosted/contribs/gmf/apps/mobile/image/logo.png:
+	# no logo for the mobile
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
