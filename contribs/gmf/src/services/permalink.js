@@ -737,6 +737,13 @@ gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
   var layerUid = goog.getUid(layer);
 
   if (layer instanceof ol.layer.Group) {
+    // set up a listener on group layers because layers can also later be added
+    // to a group
+    this.addListenerKey_(layerUid, ol.events.listen(layer.getLayers(),
+        ol.CollectionEventType.ADD, this.handleLayersAdd_, this));
+    this.addListenerKey_(layerUid, ol.events.listen(layer.getLayers(),
+        ol.CollectionEventType.REMOVE, this.handleLayersRemove_, this));
+
     layer.getLayers().forEach(function(layer) {
       this.registerLayer_(layer, opt_init);
     }, this);
@@ -790,10 +797,10 @@ gmf.Permalink.prototype.unregisterLayer_ = function(layer) {
 
   var layerUid = goog.getUid(layer);
 
+  this.initListenerKey_(layerUid); // clear event listeners
   if (layer instanceof ol.layer.Group) {
     layer.getLayers().forEach(this.unregisterLayer_, this);
   } else {
-    this.initListenerKey_(layerUid); // clear event listeners
     var isMerged = layer.get('isMerged');
     if (isMerged) {
       goog.asserts.assert(
