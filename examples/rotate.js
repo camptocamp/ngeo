@@ -1,6 +1,6 @@
-goog.provide('modifyrectangle');
+goog.provide('rotate');
 
-goog.require('ngeo.interaction.ModifyRectangle');
+goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -8,6 +8,7 @@ goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.MapQuest');
 goog.require('ol.source.Vector');
+goog.require('ol.style.Text');
 goog.require('ol.geom.Polygon');
 
 
@@ -43,7 +44,7 @@ app.MainController = function() {
 
   var map = this.map;
 
-  var rectangle = new ol.geom.Polygon([[
+  var polygon = new ol.geom.Polygon([[
               [-9e6, 4e6], [-11e6, 4e6], [-11e6, 6e6], [-9e6, 6e6]
   ]]);
 
@@ -54,9 +55,20 @@ app.MainController = function() {
   this.features = new ol.Collection();
 
   this.features.push(new ol.Feature({
-    geometry: rectangle,
-    'isRectangle': true
+    geometry: polygon
   }));
+
+  var vectorSource = new ol.source.Vector({
+    features: this.features
+  });
+  var vectorLayer = new ol.layer.Vector({
+    source: vectorSource
+  });
+
+  // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
+  // makes the vector layer "unmanaged", meaning that it is always on top.
+  vectorLayer.setMap(map);
+
 
   var style = (function() {
     var styles = {};
@@ -79,22 +91,17 @@ app.MainController = function() {
         })
       })
     ];
-
-    styles['Point'] = [
-      new ol.style.Style({
-        image: new ol.style.Circle({
-          radius: 7,
-          fill: new ol.style.Fill({
-            color: [0, 153, 255, 1]
-          }),
-          stroke: new ol.style.Stroke({
-            color: [255, 255, 255, 0.75],
-            width: 1.5
-          })
-        }),
-        zIndex: 100000
+    styles['Point'] = new ol.style.Style({
+      image: new ol.style.Circle(),
+      text: new ol.style.Text({
+        text: '\uf01e',
+        font: 'normal 18px FontAwesome',
+        fill: new ol.style.Fill({
+          color: '#ffffff'
+        })
       })
-    ];
+    });
+
     styles['GeometryCollection'] = styles['Polygon'].concat(styles['Point']);
 
     return function(feature, resolution) {
@@ -102,31 +109,30 @@ app.MainController = function() {
     };
   })();
 
-  var vectorSource = new ol.source.Vector({
-    features: this.features
-  });
-  var vectorLayer = new ol.layer.Vector({
-    source: vectorSource
-  });
-
-  // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
-  // makes the vector layer "unmanaged", meaning that it is always on top.
-  vectorLayer.setMap(map);
-
   /**
-   * @type {ngeo.interaction.ModifyRectangle}
+   * @type {ngeo.interaction.Rotate}
    * @export
    */
-  this.interaction = new ngeo.interaction.ModifyRectangle(
+  this.interaction = new ngeo.interaction.Rotate(
     /** @type {olx.interaction.ModifyOptions} */({
       features: this.features,
+      layers: [this.vectorLayer],
       style: style
     }));
 
   var interaction = this.interaction;
+  interaction.setActive(false);
   map.addInteraction(interaction);
-  interaction.setActive(true);
 
+  map.on('singleclick', function(evt) {
+    var feature = this.map.forEachFeatureAtPixel(evt.pixel,
+      function(feature) {
+        return feature;
+      });
+    if (feature) {
+      this.interaction.setActive(true);
+    }
+  }, this);
 };
 
 
