@@ -27,7 +27,7 @@ gmf-layertree {
     }
 
     &:hover {
-      .sortable-handle {
+      .sortable-handle-icon {
         visibility: visible;
       }
     }
@@ -77,9 +77,17 @@ gmf-layertree {
   }
 
   .sortable-handle {
-    color:#555;
     cursor: -webkit-grab;
     cursor: grab;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width : @app-margin;
+  }
+
+  .sortable-handle-icon {
+    color:#555;
     visibility: hidden;
   }
 }

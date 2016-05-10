@@ -1,5 +1,6 @@
 <div ng-if="::!layertreeCtrl.isRoot" id="node-{{::layertreeCtrl.uid}}" ng-class="[layertreeCtrl.node.children ? 'group' : 'leaf', 'depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNoSourceStyle(layertreeCtrl), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
-  <i ng-if="layertreeCtrl.depth === 1 && gmfLayertreeCtrl.layers.length > 1" class="sortable-handle fa fa-ellipsis-v"></i>
+  <div class="sortable-handle" ng-if="layertreeCtrl.depth === 1 && gmfLayertreeCtrl.layers.length > 1"></div>
+  <i class="sortable-handle-icon fa fa-ellipsis-v" ng-if="layertreeCtrl.depth === 1 && gmfLayertreeCtrl.layers.length > 1"></i>
     <a  ng-if="::layertreeCtrl.node.children"
         data-toggle="collapse"
         href="#layer-group-{{::layertreeCtrl.uid}}"
