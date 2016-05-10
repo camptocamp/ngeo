@@ -11,7 +11,14 @@
       <img ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))" ng-src="{{::legendIconUrl}}"></img>
     </span>
     <span ng-if="::layertreeCtrl.node.children" ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'state' : 'fa-refresh fa-spin']"></span>
-    <span class="name" title="{{layertreeCtrl.node.name | translate}}">{{layertreeCtrl.node.name | translate}}</span>
+    <span class="name" title="{{layertreeCtrl.node.name | translate}}">
+      <em>{{layertreeCtrl.node.name | translate}}</em>
+      <i class="gmf-icon gmf-icon-search-go zoom"
+         data-toggle="tooltip"
+         data-title="{{'Not visible at current scale. Click to zoom.'|translate}}"
+         ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
+         ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) == 'on'"></i>
+    </span>
   </a>
   <span class="rightButtons">
     <a href="" ng-if="::layertreeCtrl.depth == 1" ng-click="gmfLayertreeCtrl.removeNode(layertreeCtrl.node)">
@@ -42,7 +49,6 @@
         <a title="{{'More informations'|translate}}" href="" ng-click="gmfLayertreeCtrl.displayMetadata(layertreeCtrl)"></a>
       </span>
     </span>
-    <span class="zoom" title="{{'Zoom to a visible level'|translate}}" ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl.node)"></span>
     <span class="legendButton" ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend">
       <a title="{{'Show/hide legend'|translate}}" data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend"></a>
     </span>

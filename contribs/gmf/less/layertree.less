@@ -142,11 +142,10 @@
 
   .zoom {
     display: none;
+    // leave space after text label
+    padding-left: 4px;
     &:hover {
       cursor: pointer;
-    }
-    &::after {
-      content: "\f18e";
     }
   }
 
@@ -158,10 +157,13 @@
   }
 
   .outOfResolution {
+    .name em {
+      font-style: italic;
+    }
+    .zoom {
+      display: inline;
+    }
     .rightButtons {
-      .zoom {
-        display: inline;
-      }
       .legendButton {
         display: none;
       }

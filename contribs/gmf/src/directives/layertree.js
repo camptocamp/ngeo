@@ -758,10 +758,12 @@ gmf.LayertreeController.prototype.removeNode = function(node) {
 
 /**
  * Set the resolution of the map with the max or min resolution of the node.
- * @param {GmfThemesNode} node Layer tree node.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ *     the current node.
  * @export
  */
-gmf.LayertreeController.prototype.zoomToResolution = function(node) {
+gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
+  var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
   var view = this.map.getView();
   var resolution = node.minResolutionHint || node.maxResolutionHint;
   if (resolution !== undefined) {
