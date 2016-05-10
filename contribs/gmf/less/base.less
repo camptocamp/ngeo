@@ -22,3 +22,11 @@ a {
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
 }
+
+/**
+ * The blur filter is used to avoid the loading icon to shake on firefox.
+ * See: https://github.com/FortAwesome/Font-Awesome/issues/671
+ */
+.fa-refresh {
+  filter: blur(0);
+}
