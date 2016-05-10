@@ -32,7 +32,6 @@ app.module.constant('ngeoQueryOptions', {
 });
 
 
-
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
