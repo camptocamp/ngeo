@@ -863,8 +863,10 @@ ngeo.Print.prototype.getReportUrl = function(ref) {
  * @return {angular.$http.HttpPromise} HTTP promise.
  */
 ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
-  var httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
-          /** @type {angular.$http.Config} */ ({});
+  var httpConfig =
+    opt_httpConfig !== undefined ? opt_httpConfig : /** @type {angular.$http.Config} */ ({
+      withCredentials: true
+    });
   var url = this.url_ + '/capabilities.json';
   return this.$http_.get(url, httpConfig);
 };
