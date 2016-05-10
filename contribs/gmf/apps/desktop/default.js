@@ -1,10 +1,10 @@
 var urlElements = window.location.pathname.split('/');
 
 var gmfUrlElements = urlElements.slice(0, urlElements.length - 3);
-gmfUrlElements.push('src', 'directives', 'partials')
+gmfUrlElements.push('src', 'directives', 'partials');
 
 var ngeoUrlElements = urlElements.slice(0, urlElements.length - 5);
-ngeoUrlElements.push('src', 'directives', 'partials')
+ngeoUrlElements.push('src', 'directives', 'partials');
 
 
 /**
