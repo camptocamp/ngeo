@@ -62,7 +62,9 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
 
   if (layer instanceof ol.layer.Layer) {
     source = layer.getSource();
-    if (source instanceof ol.source.Tile) {
+    if (source === null) {
+      return;
+    } else if (source instanceof ol.source.Tile) {
       incrementEvents = ['tileloadstart'];
       decrementEvents = ['tileloadend', 'tileloaderror'];
     } else if (source instanceof ol.source.Image) {
