@@ -27,7 +27,7 @@
             <span for="layer-opactity">Opacity</span>
             <input class="input-action" name="layer-opactity" type="range" min="0" max="1" step="0.01" ng-model="layertreeCtrl.layer.opacity">
           </li>
-          <li ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true'">
+          <li ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend">
             <i class="fa fa-th-list fa-fw"></i>
             <a title="{{'Show/hide legend'|translate}}" ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#node-' + layertreeCtrl.uid + '-legend')" data-toggle="collapse" href="">{{'Show/hide legend'|translate}}</a>
           </li>
@@ -43,11 +43,11 @@
       </span>
     </span>
     <span class="zoom" title="{{'Zoom to a visible level'|translate}}" ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl.node)"></span>
-    <span class="legendButton" ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true'">
+    <span class="legendButton" ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend">
       <a title="{{'Show/hide legend'|translate}}" data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend"></a>
     </span>
   </span>
-    <div ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true'" id="node-{{::layertreeCtrl.uid}}-legend" class="collapse legend" ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded == 'true' ? 'in' : '']">
+    <div ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend" id="node-{{::layertreeCtrl.uid}}-legend" class="collapse legend" ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded ? 'in' : '']">
       <a title="{{'Hide legend'|translate}}" data-toggle="collapse" ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#node-' + layertreeCtrl.uid + '-legend')" href="">{{'Hide legend'|translate}}</a>
       <img ng-src="{{gmfLayertreeCtrl.getLegendURL(layertreeCtrl)}}"></img>
     </div>
