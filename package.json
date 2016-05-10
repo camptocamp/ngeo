@@ -52,7 +52,7 @@
     "less-plugin-autoprefix": "1.5.1",
     "less-plugin-clean-css": "1.5.1",
     "nomnom": "1.8.1",
-    "openlayers": "fredj/ol3#afb2084",
+    "openlayers": "fredj/ol3#b49546d2af8e665c35cda5e3563aaa13295b8cb7",
     "phantomjs-prebuilt": "2.1.7",
     "proj4": "2.3.14",
     "temp": "0.8.3",
