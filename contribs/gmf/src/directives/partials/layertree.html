@@ -17,14 +17,21 @@
     <a href="" ng-if="::layertreeCtrl.depth == 1" ng-click="gmfLayertreeCtrl.removeNode(layertreeCtrl.node)">
       <span class="fa fa-trash"></span>
     </a>
-    <span ngeo-popover ng-if="::layertreeCtrl.layer && !layertreeCtrl.node.mixed">
+    <span ngeo-popover ng-if="!layertreeCtrl.node.mixed">
       <span ngeo-popover-anchor class="extra-actions fa fa-cog"></span>
       <div ngeo-popover-content>
-        <li>
-          <i class="fa fa-tint"></i>
-          <span for="layer-opactity">{{'Opacity' | translate}}</span>
-          <input name="layer-opactity" type="range" min="0" max="1" step="0.01" ng-model="layertreeCtrl.layer.opacity">
-        </li>
+        <ul>
+          <li>
+            <i class="fa fa-tint fa-fw"></i>
+            <!-- TODO : use filter to translate Opacity -->
+            <span for="layer-opactity">Opacity</span>
+            <input class="input-action" name="layer-opactity" type="range" min="0" max="1" step="0.01" ng-model="layertreeCtrl.layer.opacity">
+          </li>
+          <li ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true'">
+            <i class="fa fa-th-list fa-fw"></i>
+            <a title="{{'Show/hide legend'|translate}}" ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#node-' + layertreeCtrl.uid + '-legend')" data-toggle="collapse" href="">{{'Show/hide legend'|translate}}</a>
+          </li>
+        </ul>
       </div>
     </span>
     <span class="metadata" ng-if="::layertreeCtrl.node.metadata.metadataUrl">
@@ -40,13 +47,10 @@
       <a title="{{'Show/hide legend'|translate}}" data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend"></a>
     </span>
   </span>
-  <span class="legend" ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true'">
-    <div id="node-{{::layertreeCtrl.uid}}-legend" class="collapse" ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded ? 'in' : '']">
-      <a data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend">
-        <img ng-src="{{gmfLayertreeCtrl.getLegendURL(layertreeCtrl)}}"></img>
-      </a>
+    <div ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend == 'true'" id="node-{{::layertreeCtrl.uid}}-legend" class="collapse legend" ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded == 'true' ? 'in' : '']">
+      <a title="{{'Hide legend'|translate}}" data-toggle="collapse" ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#node-' + layertreeCtrl.uid + '-legend')" href="">{{'Hide legend'|translate}}</a>
+      <img ng-src="{{gmfLayertreeCtrl.getLegendURL(layertreeCtrl)}}"></img>
     </div>
-  </span>
 </div>
 <ul id="layer-group-{{::layertreeCtrl.uid}}"
     ng-if="::layertreeCtrl.node.children"

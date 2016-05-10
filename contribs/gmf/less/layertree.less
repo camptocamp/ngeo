@@ -182,11 +182,20 @@
   }
 
   .legend {
-    a::before {
+    margin-left: @app-margin + @half-app-margin;
+    position: relative;
+    background-color: lighten(@main-bg-color, 8%);
+    a {
       display: none;
-    }
-    img {
-      padding-left: @app-margin + @half-app-margin;
+      position: absolute;
+      color: @brand-info;
+      right: @half-app-margin;
+      text-decoration: underline;
+      font-size: 10;
+
+      &::before {
+        display: none;
+      }
     }
   }
 }
