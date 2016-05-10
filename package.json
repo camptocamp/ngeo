@@ -31,7 +31,7 @@
     "angular-sanitize": "1.5.5",
     "bootstrap": "3.3.6",
     "clean-css": "3.4.12",
-    "closure-util": "1.13.0",
+    "closure-util": "1.13.1",
     "coveralls": "2.11.9",
     "d3": "3.5.17",
     "eslint": "2.9.0",
