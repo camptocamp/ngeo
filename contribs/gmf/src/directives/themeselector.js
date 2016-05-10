@@ -141,6 +141,12 @@ gmf.ThemeselectorController.prototype.setLocationPath_ = function(themeId) {
     pathElements.push('theme', themeId);
   }
   this.ngeoLocation_.setPath(pathElements.join('/'));
+  if (ngeo.baseTemplateUrl != 'ngeo') {
+    ngeo.baseTemplateUrl = '../../' + ngeo.baseTemplateUrl;
+  }
+  if (gmf.baseTemplateUrl != 'gmf') {
+    gmf.baseTemplateUrl = '../../' + gmf.baseTemplateUrl;
+  }
 };
 
 
