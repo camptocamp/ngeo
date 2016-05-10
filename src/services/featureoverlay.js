@@ -10,7 +10,6 @@ goog.require('ol.Feature');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 goog.require('ol.style.Style');
-goog.require('ol.style.StyleFunction');
 
 
 /**
