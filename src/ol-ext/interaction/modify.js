@@ -55,6 +55,7 @@ ngeo.interaction.Modify = function(options) {
   this.otherFeatures_ = new ol.Collection();
 
   this.interactions_.push(new ol.interaction.Modify({
+    condition: ol.events.condition.mouseActionButton,
     features: this.otherFeatures_,
     pixelTolerance: options.pixelTolerance,
     style: options.style,
