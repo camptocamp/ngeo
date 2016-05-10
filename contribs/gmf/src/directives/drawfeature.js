@@ -496,16 +496,16 @@ gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
         this.handleMapClick_, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.CONTEXTMENU,
-        this.handleMapContextMenu_);
+        this.handleMapContextMenu_, false, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.TOUCHSTART,
-        this.handleMapTouchStart_);
+        this.handleMapTouchStart_, false, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.TOUCHMOVE,
-        this.handleMapTouchEnd_);
+        this.handleMapTouchEnd_, false, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.TOUCHEND,
-        this.handleMapTouchEnd_);
+        this.handleMapTouchEnd_, false, this);
   }
 };
 
