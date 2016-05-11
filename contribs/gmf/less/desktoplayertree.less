@@ -76,6 +76,10 @@ gmf-layertree {
     display: none;
   }
 
+  a.expand-node.fa {
+    margin-left: @half-app-margin;
+  }
+
   .sortable-handle {
     cursor: -webkit-grab;
     cursor: grab;
@@ -89,5 +93,9 @@ gmf-layertree {
   .sortable-handle-icon {
     color:#555;
     visibility: hidden;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(-50%, -50%);
   }
 }
