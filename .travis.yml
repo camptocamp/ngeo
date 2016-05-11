@@ -77,8 +77,3 @@ deploy:
     repo: camptocamp/ngeo
     branch: master
     node: "0.10"
-- <<: *transifex
-  on:
-    repo: camptocamp/ngeo
-    branch: 2.0
-    node: "0.10"
