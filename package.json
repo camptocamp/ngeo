@@ -24,7 +24,7 @@
     "angular": "1.5.5",
     "angular-animate": "1.5.5",
     "angular-gettext": "2.2.1",
-    "angular-gettext-tools": "2.1.13",
+    "angular-gettext-tools": "2.1.15",
     "angular-jsdoc": "1.4.1",
     "angular-mocks": "1.5.5",
     "angular-touch": "1.5.5",
