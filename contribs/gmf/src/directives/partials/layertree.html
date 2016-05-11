@@ -25,7 +25,7 @@
     <a href="" ng-if="::layertreeCtrl.depth == 1" ng-click="gmfLayertreeCtrl.removeNode(layertreeCtrl.node)">
       <span class="fa fa-trash"></span>
     </a>
-    <span ngeo-popover ng-if="!layertreeCtrl.node.mixed">
+    <span ngeo-popover ng-if="!layertreeCtrl.node.mixed" ngeo-popover-dismiss=".content">
       <span ngeo-popover-anchor class="extra-actions fa fa-cog"></span>
       <div ngeo-popover-content>
         <ul>
