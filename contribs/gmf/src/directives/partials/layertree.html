@@ -37,7 +37,7 @@
           </li>
           <li ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend">
             <i class="fa fa-th-list fa-fw"></i>
-            <a title="{{'Show/hide legend'|translate}}" ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#node-' + layertreeCtrl.uid + '-legend')" data-toggle="collapse" href="">{{'Show/hide legend'|translate}}</a>
+            <a title="{{'Show/hide legend'|translate}}" ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#node-' + layertreeCtrl.uid + '-legend'); popoverCtrl.dismissPopover()" data-toggle="collapse" href="">{{'Show/hide legend'|translate}}</a>
           </li>
         </ul>
       </div>
