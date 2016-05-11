@@ -117,13 +117,13 @@ ngeo.interaction.Translate.prototype.setMap = function(map) {
 
   var currentMap = this.getMap();
   if (currentMap) {
-    currentMap.removeLayer(this.vectorLayer_);
+    this.vectorLayer_.setMap(null);
   }
 
   goog.base(this, 'setMap', map);
 
   if (map) {
-    map.addLayer(this.vectorLayer_);
+    this.vectorLayer_.setMap(map);
   }
 
   this.setState_();
