@@ -255,11 +255,7 @@ gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
     if (childNode.children) {
       this.toggleNodeCheck_(childNode, names);
     } else if (childNode.metadata) {
-      if (ol.array.includes(names, childNode.name)) {
-        childNode.metadata['isChecked'] = 'true';
-      } else {
-        childNode.metadata['isChecked'] = 'false';
-      }
+      childNode.metadata['isChecked'] = ol.array.includes(names, childNode.name);
     }
   }, this);
 };

@@ -43,7 +43,7 @@ GmfThemesNode.prototype.maxResolutionHint;
 
 
 /**
- * @type {Object.<string, string>}
+ * @type {Object.<string, ?>}
  */
 GmfThemesNode.prototype.metadata;
 
