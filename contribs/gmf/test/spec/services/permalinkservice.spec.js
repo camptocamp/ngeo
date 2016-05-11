@@ -49,13 +49,17 @@ describe('Permalink service', function() {
 
   }));
 
-  it('Should registerLayer/unregisterLayer recursively but not ol.layer.Group', function() {
+  it('Should registerLayer/unregisterLayer recursively', function() {
     expect(PermalinkService).toBeDefined();
     expect(Object.keys(PermalinkService.listenerKeys_).length).toBe(0);
 
     PermalinkService.registerDataLayerGroup_(map);
     firstLevelGroup.getLayers().forEach(shouldHaveBeenRegistered);
     secondLevelGroup.getLayers().forEach(shouldHaveBeenRegistered);
+
+    // try to add a new layer to a group and check that the new one is registered
+    firstLevelGroup.getLayers().push(LayerHelper.createBasicWMSLayer('', 'l_g1_3'));
+    firstLevelGroup.getLayers().forEach(shouldHaveBeenRegistered);
 
     PermalinkService.unregisterLayer_(dataGroup);
     firstLevelGroup.getLayers().forEach(shouldHaveBeenUnRegistered);
@@ -64,22 +68,14 @@ describe('Permalink service', function() {
     function shouldHaveBeenRegistered(layer) {
       var uid = goog.getUid(layer),
           listeners = PermalinkService.listenerKeys_[uid];
-      if (layer instanceof ol.layer.Group) {
-        expect(listeners).toBeUndefined();
-      } else {
-        expect(listeners).toBeDefined();
-      }
+      expect(listeners).toBeDefined();
     }
 
     function shouldHaveBeenUnRegistered(layer) {
       var uid = goog.getUid(layer),
           listeners = PermalinkService.listenerKeys_[uid];
-      if (layer instanceof ol.layer.Group) {
-        expect(listeners).toBeUndefined();
-      } else {
-        expect(PermalinkService.listenerKeys_[uid].ol.length).toBe(0);
-        expect(PermalinkService.listenerKeys_[uid].goog.length).toBe(0);
-      }
+      expect(PermalinkService.listenerKeys_[uid].ol.length).toBe(0);
+      expect(PermalinkService.listenerKeys_[uid].goog.length).toBe(0);
     }
 
   });
