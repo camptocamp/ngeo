@@ -767,7 +767,7 @@ gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
   var view = this.map.getView();
   var resolution = node.minResolutionHint || node.maxResolutionHint;
   if (resolution !== undefined) {
-    view.setResolution(resolution);
+    view.setResolution(view.constrainResolution(resolution, 0, 1));
   }
 };
 
