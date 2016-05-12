@@ -104,8 +104,6 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     ],
 % if lib == "true" or generate_exports == 'true':
     "generate_exports": true,
-% else:
-    "manage_closure_dependencies": true,
 % endif
 % if source_map is not UNDEFINED:
     "create_source_map": "${source_map}",
