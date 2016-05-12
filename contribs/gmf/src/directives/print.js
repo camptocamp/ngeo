@@ -299,7 +299,7 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
     /**
      * @return {number} rotation to apply.
      */
-    getRotationFn =  function() {
+    getRotationFn = function() {
       return this.rotation;
     }.bind(this);
   }
@@ -806,10 +806,11 @@ gmf.PrintController.prototype.setLayout = function(layoutName) {
  */
 gmf.PrintController.prototype.setScale = function(scale) {
   var mapSize = this.map.getSize();
+  this.fields.scale = scale;
   var res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_,
         scale);
-  this.fields.scale = scale;
-  this.map.getView().setResolution(res);
+  var contrainRes = this.map.getView().constrainResolution(res, 0, 1);
+  this.map.getView().setResolution(contrainRes);
 };
 
 
