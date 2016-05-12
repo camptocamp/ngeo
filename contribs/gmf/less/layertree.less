@@ -186,17 +186,20 @@
   .legend {
     margin-left: @app-margin + @half-app-margin;
     position: relative;
+    border: 1px solid @main-bg-color;
     background-color: lighten(@main-bg-color, 8%);
     a {
       display: none;
       position: absolute;
-      color: @brand-info;
       right: @half-app-margin;
-      text-decoration: underline;
-      font-size: 10;
+      font-size: 1.1rem;
 
       &::before {
         display: none;
+      }
+
+      &:hover {
+        text-decoration: underline;
       }
     }
   }
