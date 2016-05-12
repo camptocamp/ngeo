@@ -15,6 +15,7 @@
     "ol": false,
     "proj4": false,
     "ngeo": false,
-    "gmf": false
+    "gmf": false,
+    "app": false
   }
 }

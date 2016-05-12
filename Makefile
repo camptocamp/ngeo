@@ -220,7 +220,12 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages:
 	git clone --depth=1 --branch gh-pages $(GIT_REMOTE_URL) $@
 
-.build/eslint.timestamp: .build/node_modules.timestamp $(SRC_JS_FILES) $(EXAMPLES_JS_FILES) $(GMF_SRC_JS_FILES) $(GMF_EXAMPLES_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES) $(GMF_APPS_MOBILE_JS_FILES)
+.build/eslint.timestamp: .build/node_modules.timestamp \
+		$(SRC_JS_FILES) \
+		$(EXAMPLES_JS_FILES) \
+		$(GMF_SRC_JS_FILES) \
+		$(GMF_EXAMPLES_JS_FILES) \
+		$(GMF_APPS_JS_FILES)
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp, $?)
 	touch $@
 
