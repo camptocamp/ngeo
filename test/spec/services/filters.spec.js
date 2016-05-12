@@ -10,6 +10,6 @@ describe('ngeo.Filters', function() {
 
   it('ngeo scalify', function() {
       var ngeoScalify = $filter('ngeoScalify')
-      expect(ngeoScalify(25000)).toBe('1 : 25,000');
+      expect(ngeoScalify(25000)).toBe('1\u00a0:\u00a025,000');
   });
 });

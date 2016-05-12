@@ -24,7 +24,7 @@ ngeo.Scalify = function($filter) {
   var number = $filter('number');
   return function(scale) {
     var text = number(scale, 0);
-    return text ? '1 : ' + text : '';
+    return text ? '1\u00a0:\u00a0' + text : '';
   };
 };
 
