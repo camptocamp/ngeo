@@ -675,6 +675,10 @@ gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
     return null;
   }
 
+  if (node.metadata['legendImage']) {
+    return node.metadata['legendImage'];
+  }
+
   var layer = treeCtrl.layer;
   if (node.type === 'WMTS' && goog.isDefAndNotNull(layer)) {
     goog.asserts.assertInstanceof(layer, ol.layer.Tile);
