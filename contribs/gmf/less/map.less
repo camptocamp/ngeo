@@ -1,10 +1,11 @@
 /**
  * Styles for the map and OL3 controls.
  */
-.ol-zoom {
-  background-color: transparent;
-  padding: 0;
+.zoom-buttons {
+  position: absolute;
+  z-index: @content-index;
   button {
+    display: block;
     margin: 0;
     margin-bottom: @micro-app-margin;
     height: @map-tools-size;
@@ -32,7 +33,7 @@
  * Only affects webkit desktop browsers
  */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-  .ol-zoom {
+  .zoom-buttons {
     button {
       &:active {
         background-color: @onhover-color;
