@@ -37,19 +37,12 @@ ngeo.NotificationType = {
  * etc.
  *
  * @constructor
- * @param {angular.$q} $q The Angular $q service.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @ngdoc service
  * @ngname ngeoNotification
  * @ngInject
  */
-ngeo.Notification = function($q, $timeout) {
-
-  /**
-   * @type {angular.$q}
-   * @private
-   */
-  this.q_ = $q;
+ngeo.Notification = function($timeout) {
 
   /**
    * @type {angular.$timeout}
