@@ -1,6 +1,7 @@
 goog.provide('gmf.MobileNavController');
 goog.provide('gmf.mobileNavDirective');
 
+goog.require('goog.asserts');
 goog.require('gmf');
 
 
@@ -128,6 +129,7 @@ gmf.MobileNavController.prototype.init = function(element) {
 
     // the element to slide out is the div.slide parent
     var slideOut = $(evt.target).parents('.slide');
+    goog.asserts.assert(slideOut.length === 1);
 
     // push the item to the selected stack
     this.slid_.push(slideOut);
@@ -137,6 +139,7 @@ gmf.MobileNavController.prototype.init = function(element) {
 
     // element to slide in
     var slideIn = $($(evt.target).attr('data-target'));
+    goog.asserts.assert(slideIn.length === 1);
 
     // slide the "new" element in
     slideIn.addClass('active');
