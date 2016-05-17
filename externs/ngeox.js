@@ -87,6 +87,48 @@ ngeox.MenuActionOptions.prototype.name;
 
 
 /**
+ * A message to display by the Ngeo notification service.
+ * @typedef {{
+ *     delay: (number|undefined),
+ *     msg: (string),
+ *     target: (angular.JQLite|Element|string|undefined),
+ *     type: (string|undefined)
+ * }}
+ */
+ngeox.Message;
+
+
+/**
+ * The delay in milliseconds the message is shown. Defaults to `7000`.
+ * @type {number|undefined}
+ */
+ngeox.Message.prototype.delay;
+
+
+/**
+ * The message text to display
+ * @type {string}
+ */
+ngeox.Message.prototype.msg;
+
+
+/**
+ * The target element (or selector to get the element) in which to display the
+ * message. If not defined, then the default target of the notification service
+ * is used.
+ * @type {angular.JQLite|Element|string|undefined}
+ */
+ngeox.Message.prototype.target;
+
+
+/**
+ * The type of message. Defaults to `info`.
+ * @type {string|undefined}
+ */
+ngeox.Message.prototype.type;
+
+
+/**
  * The options for the query service.
  * @typedef {{
  *     limit: (number|undefined),
