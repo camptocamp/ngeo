@@ -76,12 +76,13 @@
           </gmf-layertree>
         </ul>
       </div>
-      <div id="background" class="slide" data-header-title="{{'Background' | translate}}">
-        <gmf-mobile-backgroundlayerselector
-          gmf-mobile-backgroundlayerselector-map="::mainCtrl.map"
-          gmf-mobile-backgroundlayerselector-select="mainCtrl.hideNav()">
-        </gmf-mobile-backgroundlayerselector>
-      </div>
+      <gmf-mobile-backgroundlayerselector
+        id="background"
+        class="slide"
+        data-header-title="{{'Background' | translate}}"
+        gmf-mobile-backgroundlayerselector-map="::mainCtrl.map"
+        gmf-mobile-backgroundlayerselector-select="mainCtrl.hideNav()">
+      </gmf-mobile-backgroundlayerselector>
       <gmf-themeselector
         id="themes"
         class="slide"
