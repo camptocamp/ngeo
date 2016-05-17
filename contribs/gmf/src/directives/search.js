@@ -319,6 +319,11 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
       select: gmf.SearchController.select_.bind(this),
       close: gmf.SearchController.close_.bind(this)
     }));
+
+  // allow angular-gettext-tools to collect the strings to translate
+  gettextCatalog.getString('add_theme');
+  gettextCatalog.getString('add_group');
+  gettextCatalog.getString('add_layer');
 };
 
 
@@ -361,6 +366,7 @@ gmf.SearchController.prototype.mergeListeners_ = function(additionalListeners, l
  * @private
  */
 gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
+  var gettextCatalog = this.gettextCatalog_;
   var directiveScope = this.scope_;
   var compile = this.compile_;
   var bloodhoundEngine = this.createAndInitBloodhound_(config, opt_filter);
@@ -373,8 +379,12 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
     },
     templates: /* TypeaheadTemplates */ ({
       header: function() {
-        return config.datasetTitle === undefined ? '' :
-          '<div class="search-header">' + config.datasetTitle + '</div>';
+        if (config.datasetTitle === undefined) {
+          return '';
+        } else {
+          var header = gettextCatalog.getString(config.datasetTitle);
+          return '<div class="search-header">' + header + '</div>';
+        }
       },
       suggestion: function(suggestion) {
         var feature = /** @type {ol.Feature} */ (suggestion);
