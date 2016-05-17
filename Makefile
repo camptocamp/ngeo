@@ -677,7 +677,7 @@ $(HOME)/.transifexrc:
 	touch $@
 
 .PHONY: transifex-get
-transifex-get: $(L10N_PO_FILES)
+transifex-get: $(L10N_PO_FILES) \
 	.build/locale/gmf.pot
 	# .build/locale/ngeo.pot \
 
