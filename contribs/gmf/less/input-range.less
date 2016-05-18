@@ -35,9 +35,13 @@ input[type=range]::-moz-range-track {
   height: 5px;
   cursor: pointer;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
-  background: @brand-primary;
+  background: @brand-secondary;
   border-radius: 1px;
   border: 0.2px solid rgba(1, 1, 1, 0.2);
+}
+input[type=range]::-moz-range-progress {
+  background: @brand-primary;
+  height: 5px;
 }
 input[type=range]::-moz-range-thumb {
   box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
