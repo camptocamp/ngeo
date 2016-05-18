@@ -66,11 +66,6 @@ app.MainController = function($scope, ngeoFeatureOverlayMgr) {
   });
 
   ngeoFeatureOverlayMgr.init(this.map);
-
-  $scope.$on(ngeo.DesktopGeolocationEventType.ERROR, function(event, error) {
-    event.stopPropagation();
-    alert('Geo-location failed');
-  }.bind(this));
 };
 
 

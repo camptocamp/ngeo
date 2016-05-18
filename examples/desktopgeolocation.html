@@ -16,6 +16,13 @@
       button[ngeo-desktop-geolocation]:after {
         content: 'Toggle'
       }
+      .ngeo-notification {
+        left: 50%;
+        margin: 0 0 0 -100px;
+        position: absolute;
+        top: 0;
+        width: 200px;
+      }
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
@@ -32,6 +39,7 @@
     </div>
     <script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
     <script src="/@?main=desktopgeolocation.js"></script>
     <script src="../utils/watchwatchers.js"></script>
