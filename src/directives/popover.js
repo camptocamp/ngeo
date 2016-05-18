@@ -49,7 +49,8 @@ ngeo.popoverDirective = function() {
       ngeoPopoverCtrl.anchorElm.popover({
         container: 'body',
         html: true,
-        content: ngeoPopoverCtrl.bodyElm
+        content: ngeoPopoverCtrl.bodyElm,
+        placement : attrs['ngeoPopoverPlacement'] || 'right'
       });
 
       if (attrs['ngeoPopoverDismiss']) {
