@@ -64,7 +64,6 @@ ngeo.module.directive('ngeoDesktopGeolocation',
  * @constructor
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
- * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.DecorateGeolocation} ngeoDecorateGeolocation Decorate
  *     Geolocation service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
@@ -75,7 +74,7 @@ ngeo.module.directive('ngeoDesktopGeolocation',
  * @ngdoc controller
  * @ngname NgeoDesktopGeolocationController
  */
-ngeo.DesktopGeolocationController = function($scope, $element, gettextCatalog,
+ngeo.DesktopGeolocationController = function($scope, $element,
     ngeoDecorateGeolocation, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggle.bind(this));
@@ -97,12 +96,6 @@ ngeo.DesktopGeolocationController = function($scope, $element, gettextCatalog,
    * @private
    */
   this.$scope_ = $scope;
-
-  /**
-   * @type {angularGettext.Catalog}
-   * @private
-   */
-  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {ngeo.Notification}
@@ -223,20 +216,6 @@ ngeo.DesktopGeolocationController.prototype.deactivate_ = function() {
  */
 ngeo.DesktopGeolocationController.prototype.setPosition_ = function(event) {
   var position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
-
-  // if user is using Firefox and selects the "not now" option, OL geolocation
-  // doesn't return an error
-  if (position === undefined) {
-    this.deactivate_();
-    this.notification_.error(
-      this.gettextCatalog_.getString(
-          'User chose not to share his or her location for now.')
-    );
-    this.$scope_.$emit(ngeo.DesktopGeolocationEventType.ERROR, null);
-    return;
-  }
-
-  goog.asserts.assert(position !== undefined);
   var point = new ol.geom.Point(position);
 
   this.positionFeature_.setGeometry(point);
