@@ -9,7 +9,13 @@ describe('ngeo.Query', function() {
 
   beforeEach(function() {
     module('ngeo', function($provide) {
+      // reset services and values
       $provide.value('ngeoQueryOptions', {});
+      $provide.service('ngeoQuery', ngeo.Query);
+      $provide.value('ngeoQueryResult', {
+        sources: [],
+        total: 0
+      });
     });
 
     inject(function($injector) {
@@ -58,7 +64,7 @@ describe('ngeo.Query', function() {
     expect(source.wmsSource).toBe(wmsSource);
   });
 
-  describe('Issue request', function() {
+  describe('Issue identity feature request', function() {
 
     var map;
     var busStopLayer;
@@ -133,10 +139,10 @@ describe('ngeo.Query', function() {
       });
       ngeoQuery.issue(map, coordinate);
       $httpBackend.flush();
-      expect(ngeoQueryResult.sources[2].features.length).toBe(1);
+      expect(ngeoQueryResult.sources[0].features.length).toBe(1);
       expect(ngeoQueryResult.total).toBe(1);
       ngeoQuery.clear();
-      expect(ngeoQueryResult.sources[2].features.length).toBe(0);
+      expect(ngeoQueryResult.sources[0].features.length).toBe(0);
       expect(ngeoQueryResult.total).toBe(0);
     });
 
@@ -152,8 +158,8 @@ describe('ngeo.Query', function() {
       });
       ngeoQuery.issue(map, coordinate);
       $httpBackend.flush();
-      expect(ngeoQueryResult.sources[3].features.length).toBe(4);
-      expect(ngeoQueryResult.sources[4].features.length).toBe(3);
+      expect(ngeoQueryResult.sources[0].features.length).toBe(4);
+      expect(ngeoQueryResult.sources[1].features.length).toBe(3);
       expect(ngeoQueryResult.total).toBe(7);
     });
 
@@ -172,8 +178,8 @@ describe('ngeo.Query', function() {
       ngeoQuery.issue(map, coordinate);
       var spy = jasmine.createSpy();
       expect(spy.calls.count()).toBe(0);
-      expect(ngeoQueryResult.sources[5].features.length).toBe(0);
-      expect(ngeoQueryResult.sources[6].features.length).toBe(0);
+      expect(ngeoQueryResult.sources[0].features.length).toBe(0);
+      expect(ngeoQueryResult.sources[1].features.length).toBe(0);
       expect(ngeoQueryResult.total).toBe(0);
     });
   });
