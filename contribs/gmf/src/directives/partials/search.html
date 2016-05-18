@@ -1,13 +1,18 @@
 <div class="gmf-search">
-<input type="text" placeholder="{{'Search…' | translate}}"
-        class="form-control"
-        ng-model="ctrl.input_value"
-        ngeo-search="ctrl.options"
-        ngeo-search-datasets="ctrl.datasets"
-        ngeo-search-listeners="ctrl.listeners">
-<span class="clear-button ng-hide"
-        ng-hide="!ctrl.clearButton || ctrl.input_value == ''"
-        ng-click="ctrl.onClearButton()">
-</span>
-<!-- <input data-ng-model="color" data-ng-change="ctrl.setStyleColor(color)"></input> Will be used later -->
+  <input type="text" placeholder="{{'Search…' | translate}}"
+    class="form-control"
+    ng-model="ctrl.input_value"
+    ngeo-search="ctrl.options"
+    ngeo-search-datasets="ctrl.datasets"
+    ngeo-search-listeners="ctrl.listeners">
+  <span class="clear-button ng-hide"
+    ng-hide="!ctrl.clearButton || ctrl.input_value == ''"
+    ng-click="ctrl.onClearButton()">
+  </span>
+  <span ng-show="ctrl.colorchooser && ctrl.displayColorPicker" ngeo-popover ngeo-popover-placement="bottom">
+    <button class="color-button fa fa-tint" ngeo-popover-anchor></button>
+    <div ngeo-popover-content>
+      <div ngeo-colorpicker ngeo-colorpicker-color="ctrl.color"></div>
+    </div>
+  </span>
 </div>

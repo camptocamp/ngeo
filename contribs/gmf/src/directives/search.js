@@ -7,6 +7,10 @@ goog.require('ngeo.AutoProjection');
 goog.require('ngeo.CreateGeoJSONBloodhound');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
+/** @suppress {extraRequire} */
+goog.require('ngeo.colorpickerDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.popoverDirective');
 /**
  * This goog.require is needed because it provides 'ngeo-search' used in
  * the template.
@@ -72,6 +76,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *        gmf-search-datasources="ctrl.searchDatasources"
  *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
  *        gmf-search-clearbutton="true">
+ *        gmf-search-colorchooser="true">
  *      </gmf-search>
  *      <script>
  *        (function() {
@@ -97,6 +102,8 @@ gmf.module.value('gmfSearchTemplateUrl',
  *      defined in ol3). If not provided, only the map's view projection
  *      format will be supported.
  * @htmlAttribute {boolean} gmf-search-clearbutton The clear button.
+ * @htmlAttribute {boolean} gmf-search-colorchooser Whether to let the user
+ *      change the style of the feature on the map. Default is false.
  * @htmlAttribute {ngeox.SearchDirectiveListeners} gmf-search-listeners
  *      The listeners.
  * @return {angular.Directive} The Directive Definition Object.
@@ -112,6 +119,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       'getDatasourcesFn': '&gmfSearchDatasources',
       'featuresStyles': '<?gmfSearchStyles',
       'clearbutton': '=gmfSearchClearbutton',
+      'colorchooser': '=gmfSearchColorchooser',
       'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
       'additionalListeners': '=gmfSearchListeners'
     },
@@ -233,6 +241,12 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    */
   this.clearButton = this.scope_['clearbutton'] || false;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.colorchooser = this.scope_['colorchooser'] || false;
+
   var coordProj = this.scope_['coordinatesProjections'];
   if (coordProj === undefined) {
     coordProj = [this.map_.getView().getProjection()];
@@ -335,6 +349,25 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.datasets.push({
     source: this.createSearchCoordinates_(this.map_.getView())
   });
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.color;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.displayColorPicker = false;
+
+  $scope.$watch(
+    function() {
+      return this.color;
+    }.bind(this),
+    this.setStyleColor.bind(this)
+  );
 
   /**
    * @type {ngeox.SearchDirectiveListeners}
@@ -581,12 +614,21 @@ gmf.SearchController.prototype.initStyles_ = function() {
       angle: 0
     })
   });
-  var fill = new ol.style.Fill({color: [255, 255, 255, 0.6]});
-  var stroke = new ol.style.Stroke({color: [60, 150, 200, 1], width: 2});
+  var fill = new ol.style.Fill({
+    color: [65, 134, 240, 0.5]
+  });
+  var stroke = new ol.style.Stroke({
+    color: [65, 134, 240, 1],
+    width: 2
+  });
   this.styles_['default'] = new ol.style.Style({
     fill: fill,
     stroke: stroke,
-    image: new ol.style.Circle({radius: 5, fill: fill, stroke: stroke})
+    image: new ol.style.Circle({
+      radius: 5,
+      fill: fill,
+      stroke: stroke
+    })
   });
   var customStyles = this.scope_['featuresStyles'] || {};
   goog.object.extend(this.styles_, customStyles);
@@ -600,8 +642,28 @@ gmf.SearchController.prototype.initStyles_ = function() {
  * @private
  */
 gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
-  return feature && feature.get('layer_name') &&
-      this.styles_[feature.get('layer_name')] || this.styles_['default'];
+  goog.asserts.assert(feature);
+  var style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
+  if (this.color) {
+    var color = ol.color.asArray(this.color);
+    goog.asserts.assert(ol.color.isValid(color));
+    var strokeStyle = style.getStroke();
+    if (strokeStyle) {
+      // 100% opacity for the stroke color
+      var strokeColor = color.slice();
+      strokeColor[3] = 1;
+      strokeStyle.setColor(strokeColor);
+
+      var fillStyle = style.getFill();
+      if (fillStyle) {
+        // 50% opacity for the fill color
+        var fillColor = color.slice();
+        fillColor[3] = 0.5;
+        fillStyle.setColor(fillColor);
+      }
+    }
+  }
+  return style;
 };
 
 /**
@@ -610,8 +672,10 @@ gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
  * @export
  */
 gmf.SearchController.prototype.setStyleColor = function(color) {
-  this.styles_['default'].getStroke().setColor(color);
-  this.ngeoFeatureOverlayMgr.getLayer().changed();
+  if (color && ol.color.isValid(ol.color.asArray(color))) {
+    this.color = color;
+    this.ngeoFeatureOverlayMgr.getLayer().changed();
+  }
 };
 
 /**
@@ -646,6 +710,7 @@ gmf.SearchController.prototype.clear = function() {
   $(inputs[1]).typeahead('val', '');
   ttmenu.children('.tt-dataset').empty();
   this.setTTDropdownVisibility_();
+  this.displayColorPicker = false;
 };
 
 
@@ -697,6 +762,7 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
     var view = this.map_.getView();
     this.featureOverlay_.clear();
     this.featureOverlay_.addFeature(feature);
+    this.displayColorPicker = true;
     var fitArray = featureGeometry.getType() === 'GeometryCollection' ?
         featureGeometry.getExtent() : featureGeometry;
     var mapSize = /** @type {ol.Size} */ (this.map_.getSize());
