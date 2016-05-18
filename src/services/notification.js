@@ -34,7 +34,8 @@ ngeo.NotificationType = {
 
 /**
  * Provides methods to display any sort of messages, notifications, errors,
- * etc.
+ * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
+ * properly.
  *
  * @constructor
  * @param {angular.$timeout} $timeout Angular timeout service.

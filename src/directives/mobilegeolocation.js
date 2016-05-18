@@ -5,6 +5,7 @@ goog.require('ngeo');
 goog.require('ngeo.DecorateGeolocation');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
+goog.require('ngeo.Notification');
 goog.require('ol.Feature');
 goog.require('ol.Geolocation');
 goog.require('ol.Map');
@@ -65,13 +66,14 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
  *     Geolocation service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
+ * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @export
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoMobileGeolocationController
  */
 ngeo.MobileGeolocationController = function($scope, $element,
-    ngeoDecorateGeolocation, ngeoFeatureOverlayMgr) {
+    ngeoDecorateGeolocation, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggleTracking.bind(this));
 
@@ -94,6 +96,12 @@ ngeo.MobileGeolocationController = function($scope, $element,
   goog.asserts.assertObject(options);
 
   /**
+   * @type {ngeo.Notification}
+   * @private
+   */
+  this.notification_ = ngeoNotification;
+
+  /**
    * @type {ngeo.FeatureOverlay}
    * @private
    */
@@ -110,6 +118,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
   // handle geolocation error.
   this.geolocation_.on('error', function(error) {
     this.untrack_();
+    this.notification_.error(error.message);
     $scope.$emit(ngeo.MobileGeolocationEventType.ERROR, error);
   }, this);
 
@@ -242,6 +251,7 @@ ngeo.MobileGeolocationController.prototype.untrack_ = function() {
   this.featureOverlay_.clear();
   this.follow_ = false;
   this.geolocation_.setTracking(false);
+  this.notification_.clear();
 };
 
 
