@@ -170,13 +170,13 @@ git-attributes:
 	git --no-pager diff --check HEAD~40
 
 .PHONY: test
-test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp
+test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 	@cat .build/coverage/coverage.txt
 	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: test-debug
-test-debug: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/node_modules_karma-chrome-launcher.timestamp
+test-debug: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js .build/node_modules_karma-chrome-launcher.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true --debug
 
 .build/node_modules_karma-chrome-launcher.timestamp:
