@@ -274,6 +274,13 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
   }
   //depth > 1 && parent is a MIXED group
   switch (type) {
+    case gmf.Themes.NodeType.MIXED_GROUP:
+      layer = this.getLayerCaseMixedGroup_(node);
+      break;
+    case gmf.Themes.NodeType.NOT_MIXED_GROUP:
+      layer = this.getLayerCaseNotMixedGroup_(node);
+      this.prepareLayer_(node, layer);
+      break;
     case gmf.Themes.NodeType.WMTS:
       layer = this.getLayerCaseWMTS_(node);
       break;
