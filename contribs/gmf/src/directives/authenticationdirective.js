@@ -174,24 +174,45 @@ gmf.AuthenticationController.prototype.changePassword = function() {
   var oldPwd = this.oldPwdVal;
   var newPwd = this.newPwdVal;
   var confPwd = this.newPwdConfVal;
+  var cat = this.gettextCatalog;
 
-  if (oldPwd === newPwd) {
-    this.setError_(this.gettextCatalog.getString('The old and new passwords are the same.'));
-    return;
+  var errors = [];
+  // (1) validation - passwords are required
+  if (oldPwd === '') {
+    errors.push(cat.getString('The old password is required.'));
+  }
+  if (newPwd === '') {
+    errors.push(cat.getString('The new password is required.'));
+  }
+  if (confPwd === '') {
+    errors.push(cat.getString('The password confirmation is required.'));
   }
 
-  if (newPwd !== confPwd) {
-    this.setError_(this.gettextCatalog.getString('The passwords don\'t match.'));
-    return;
-  }
+  if (errors.length) {
+    this.setError_(errors);
+  } else {
+    // (2) validation - passwords must be new and must also match
+    if (oldPwd === newPwd) {
+      errors.push(cat.getString('The old and new passwords are the same.'));
+    }
+    if (newPwd !== confPwd) {
+      errors.push(cat.getString('The passwords don\'t match.'));
+    }
 
-  var error = this.gettextCatalog.getString('Could not change password.');
-  this.gmfAuthentication_.changePassword(oldPwd, newPwd, confPwd).then(
-      function() {
-        this.changePasswordModalShown = true;
-        this.changePasswordReset();
-      }.bind(this),
-      this.setError_.bind(this, error));
+    if (errors.length) {
+      this.setError_(errors);
+    } else {
+      // (3) send request with current credentials, which may fail if
+      //     the old password given is incorrect.
+      var error = cat.getString('Incorrect old password.');
+      this.gmfAuthentication_.changePassword(oldPwd, newPwd, confPwd).then(
+          function() {
+            this.changePasswordModalShown = true;
+            this.changePasswordReset();
+          }.bind(this),
+          this.setError_.bind(this, error));
+    }
+  }
 };
 
 
@@ -200,10 +221,22 @@ gmf.AuthenticationController.prototype.changePassword = function() {
  * @export
  */
 gmf.AuthenticationController.prototype.login = function() {
-  var error = this.gettextCatalog.getString('Incorrect username or password.');
-  this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
-      this.resetError_.bind(this),
-      this.setError_.bind(this, error));
+  var cat = this.gettextCatalog;
+  var errors = [];
+  if (this.loginVal === '') {
+    errors.push(cat.getString('The username is required.'));
+  }
+  if (this.pwdVal === '') {
+    errors.push(cat.getString('The password is required.'));
+  }
+  if (errors.length) {
+    this.setError_(errors);
+  } else {
+    var error = cat.getString('Incorrect username or password.');
+    this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
+        this.resetError_.bind(this),
+        this.setError_.bind(this, error));
+  }
 };
 
 
@@ -264,10 +297,10 @@ gmf.AuthenticationController.prototype.changePasswordReset = function() {
 
 
 /**
- * @param {string} error Error.
+ * @param {string|Array.<string>} errors Errors.
  * @private
  */
-gmf.AuthenticationController.prototype.setError_ = function(error) {
+gmf.AuthenticationController.prototype.setError_ = function(errors) {
   if (this.error) {
     this.resetError_();
   }
@@ -276,11 +309,17 @@ gmf.AuthenticationController.prototype.setError_ = function(error) {
 
   var container = angular.element('.gmf-authentication-error');
 
-  this.notification_.notify({
-    msg: error,
-    target: container,
-    type: ngeo.NotificationType.ERROR
-  });
+  if (!Array.isArray(errors)) {
+    errors = [errors];
+  }
+
+  errors.forEach(function(error) {
+    this.notification_.notify({
+      msg: error,
+      target: container,
+      type: ngeo.NotificationType.ERROR
+    });
+  }, this);
 };
 
 
