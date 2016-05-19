@@ -79,6 +79,12 @@ GmfThemesNode.prototype.url;
 
 
 /**
+ * @type {Object|undefined}
+ */
+GmfThemesNode.prototype.time;
+
+
+/**
  * @type {string|undefined}
  */
 GmfThemesNode.prototype.wmsUrl;

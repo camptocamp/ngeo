@@ -81,6 +81,11 @@ angularGettext.Catalog.loadRemote = function(url) {};
  */
 angularGettext.Catalog.setCurrentLanguage = function(lang) {};
 
+/**
+ * @return {string} lang
+ */
+angularGettext.Catalog.getCurrentLanguage = function() {};
+
 
 /**
  * @param {string} language
