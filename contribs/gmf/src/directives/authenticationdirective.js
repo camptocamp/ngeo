@@ -200,7 +200,7 @@ gmf.AuthenticationController.prototype.changePassword = function() {
  * @export
  */
 gmf.AuthenticationController.prototype.login = function() {
-  var error = this.gettextCatalog.getString('Could not connect.');
+  var error = this.gettextCatalog.getString('Incorrect username or password.');
   this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
       this.resetError_.bind(this),
       this.setError_.bind(this, error));
