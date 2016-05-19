@@ -7,6 +7,11 @@ goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.RegularShape');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
 
 
 /** @const **/
@@ -40,6 +45,21 @@ app.MainController = function(gmfThemes) {
     projection: 'EPSG:21781',
     url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch'
   }];
+
+  var fill = new ol.style.Fill({color: [255, 255, 255, 0.6]});
+  var stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
+  /**
+   * @type {Object.<string, ol.style.Style>} Map of styles for search overlay.
+   * @export
+   */
+  this.searchStyles = {
+    'osm': new ol.style.Style({
+      fill: fill,
+      image: new ol.style.Circle({fill: fill, radius: 5, stroke: stroke}),
+      stroke: stroke
+    })
+  };
+
 
   /**
    * @type {ol.Map}
