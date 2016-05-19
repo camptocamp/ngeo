@@ -5,6 +5,7 @@ goog.require('ngeo');
 goog.require('ngeo.DecorateGeolocation');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
+goog.require('ngeo.Notification');
 goog.require('ol.Feature');
 goog.require('ol.Geolocation');
 goog.require('ol.Map');
@@ -63,18 +64,18 @@ ngeo.module.directive('ngeoDesktopGeolocation',
  * @constructor
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
-
  * @param {ngeo.DecorateGeolocation} ngeoDecorateGeolocation Decorate
  *     Geolocation service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
+ * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @export
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoDesktopGeolocationController
  */
 ngeo.DesktopGeolocationController = function($scope, $element,
-    ngeoDecorateGeolocation, ngeoFeatureOverlayMgr) {
+    ngeoDecorateGeolocation, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggle.bind(this));
 
@@ -97,6 +98,12 @@ ngeo.DesktopGeolocationController = function($scope, $element,
   this.$scope_ = $scope;
 
   /**
+   * @type {ngeo.Notification}
+   * @private
+   */
+  this.notification_ = ngeoNotification;
+
+  /**
    * @type {ngeo.FeatureOverlay}
    * @private
    */
@@ -113,6 +120,7 @@ ngeo.DesktopGeolocationController = function($scope, $element,
   // handle geolocation error.
   this.geolocation_.on('error', function(error) {
     this.deactivate_();
+    this.notification_.error(error.message);
     $scope.$emit(ngeo.DesktopGeolocationEventType.ERROR, error);
   }, this);
 
@@ -198,6 +206,7 @@ ngeo.DesktopGeolocationController.prototype.activate_ = function() {
 ngeo.DesktopGeolocationController.prototype.deactivate_ = function() {
   this.featureOverlay_.clear();
   this.active_ = false;
+  this.notification_.clear();
 };
 
 
@@ -207,16 +216,6 @@ ngeo.DesktopGeolocationController.prototype.deactivate_ = function() {
  */
 ngeo.DesktopGeolocationController.prototype.setPosition_ = function(event) {
   var position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
-
-  // if user is using Firefox and selects the "not now" option, OL geolocation
-  // doesn't return an error
-  if (position === undefined) {
-    this.deactivate_();
-    this.$scope_.$emit(ngeo.DesktopGeolocationEventType.ERROR, null);
-    return;
-  }
-
-  goog.asserts.assert(position !== undefined);
   var point = new ol.geom.Point(position);
 
   this.positionFeature_.setGeometry(point);
