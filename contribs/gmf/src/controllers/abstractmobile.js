@@ -130,11 +130,6 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
         ol.interaction.defaults({pinchRotate: false})
   });
 
-  $scope.$on(ngeo.MobileGeolocationEventType.ERROR, function(event, error) {
-    event.stopPropagation();
-    alert('Geo-location failed');
-  }.bind(this));
-
   /**
    * @type {ngeox.SearchDirectiveListeners}
    * @export
