@@ -3,6 +3,7 @@ goog.provide('gmf.authenticationDirective');
 
 goog.require('gmf');
 goog.require('gmf.Authentication');
+goog.require('ngeo.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.modalDirective');
 
@@ -61,13 +62,14 @@ gmf.module.directive('gmfAuthentication', gmf.authenticationDirective);
  * @param {angular.Scope} $scope The directive's scope.
  * @param {gmf.Authentication} gmfAuthentication GMF Authentication service
  * @param {gmf.User} gmfUser User.
+ * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @constructor
  * @ngInject
  * @ngdoc controller
  * @ngname GmfAuthenticationController
  */
 gmf.AuthenticationController = function(gettextCatalog, $scope,
-    gmfAuthentication, gmfUser) {
+    gmfAuthentication, gmfUser, ngeoNotification) {
 
   /**
    * @type {gmf.User}
@@ -94,6 +96,12 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
   this.gmfAuthentication_ = gmfAuthentication;
 
   /**
+   * @type {ngeo.Notification}
+   * @private
+   */
+  this.notification_ = ngeoNotification;
+
+  /**
    * @type {boolean}
    * @export
    */
@@ -112,10 +120,10 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
   this.resetPasswordModalShown = false;
 
   /**
-   * @type {string}
+   * @type {boolean}
    * @export
    */
-  this.error = '';
+  this.error = false;
 
   // LOGIN form values
 
@@ -260,7 +268,19 @@ gmf.AuthenticationController.prototype.changePasswordReset = function() {
  * @private
  */
 gmf.AuthenticationController.prototype.setError_ = function(error) {
-  this.error = error;
+  if (this.error) {
+    this.resetError_();
+  }
+
+  this.error = true;
+
+  var container = angular.element('.gmf-authentication-error');
+
+  this.notification_.notify({
+    msg: error,
+    target: container,
+    type: ngeo.NotificationType.ERROR
+  });
 };
 
 
@@ -268,7 +288,8 @@ gmf.AuthenticationController.prototype.setError_ = function(error) {
  * @private
  */
 gmf.AuthenticationController.prototype.resetError_ = function() {
-  this.setError_('');
+  this.notification_.clear();
+  this.error = false;
 };
 
 
