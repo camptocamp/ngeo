@@ -41,7 +41,7 @@
     "gaze": "1.0.0",
     "graceful-fs": "4.1.4",
     "jasmine-core": "2.4.1",
-    "jquery": "2.2.3",
+    "jquery": "2.2.4",
     "jsdoc": "3.4.0",
     "jsdom": "3.1.2",
     "karma": "0.13.22",
