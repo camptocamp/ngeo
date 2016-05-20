@@ -41,6 +41,26 @@ ngeo.FeatureHelper = function($injector) {
   }
 
   /**
+   * @type {?string}
+   * @private
+   */
+  this.measureLabelX_ = null;
+
+  if ($injector.has('ngeoMeasureLabelX')) {
+    this.measureLabelX_ = $injector.get('ngeoMeasureLabelX');
+  }
+
+  /**
+   * @type {?string}
+   * @private
+   */
+  this.measureLabelY_ = null;
+
+  if ($injector.has('ngeoMeasureLabelY')) {
+    this.measureLabelY_ = $injector.get('ngeoMeasureLabelY');
+  }
+
+  /**
    * @type {ol.proj.Projection}
    * @private
    */
@@ -606,8 +626,12 @@ ngeo.FeatureHelper.prototype.getMeasure = function(feature) {
     measure = ngeo.interaction.Measure.getFormattedLength(
       geometry, this.projection_, this.decimals_);
   } else if (geometry instanceof ol.geom.Point) {
+    var xyLabels;
+    if (this.measureLabelX_ && this.measureLabelY_) {
+      xyLabels = [this.measureLabelX_, this.measureLabelY_];
+    }
     measure = ngeo.interaction.Measure.getFormattedPoint(
-      geometry, this.projection_, this.decimals_);
+      geometry, this.projection_, this.decimals_, xyLabels);
   }
 
   return measure;
