@@ -33,8 +33,7 @@
         <ul>
           <li>
             <i class="fa fa-tint fa-fw"></i>
-            <!-- TODO : use filter to translate Opacity -->
-            <span for="layer-opactity">Opacity</span>
+            <span for="layer-opactity">{{'Opacity'|translate}}</span>
             <input class="input-action" name="layer-opactity" type="range" min="0" max="1" step="0.01" ng-model="layertreeCtrl.layer.opacity">
           </li>
           <li ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend">

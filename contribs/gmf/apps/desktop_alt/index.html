@@ -59,7 +59,7 @@
               <div ng-show="mainCtrl.loginActive" class="row">
                 <div class="col-sm-12">
                   <div class="tools-content-heading">
-                    Login
+                    {{'Login' | translate}}
                     <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
                   </div>
                   <gmf-authentication></gmf-authentication>
@@ -68,7 +68,7 @@
               <div ng-show="printActive" class="row">
                 <div class="col-sm-12">
                   <div class="tools-content-heading">
-                    Print
+                    {{'Print' | translate}}
                     <a class="btn close" ng-click="printActive = false">&times;</a>
                   </div>
                   <gmf-print
@@ -81,7 +81,7 @@
               <div ng-show="measureActive" class="row">
                 <div class="col-sm-12">
                   <div class="tools-content-heading">
-                    <span>{{'Draw & Measure'|translate}}</span>
+                    {{'Draw & Measure'|translate}}
                     <a class="btn close" ng-click="measureActive = false">&times;</a>
                   </div>
                   <gmf-drawfeature
