@@ -166,8 +166,17 @@ ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
   var showMeasure = this.getShowMeasureProperty(feature);
 
   if (showMeasure) {
+    var fontSize = 10;
     var measure = this.getMeasure(feature);
-    options.text = this.createTextStyle_(measure, 10);
+    options.text = this.createTextStyle_(
+        measure,
+        fontSize,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        -(size + fontSize / 2 + 4)
+    );
   }
 
   return new ol.style.Style(options);
@@ -565,24 +574,30 @@ ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
  * @param {number=} opt_angle The angle in degrees of the text.
  * @param {ol.Color=} opt_color The color of the text.
  * @param {number=} opt_width The width of the outline color.
+ * @param {number=} opt_offsetX The offset in pixels.
+ * @param {number=} opt_offsetY The offset in pixels.
  * @return {ol.style.Text} Style.
  * @private
  */
 ngeo.FeatureHelper.prototype.createTextStyle_ = function(text, size,
-    opt_angle, opt_color, opt_width) {
+    opt_angle, opt_color, opt_width, opt_offsetX, opt_offsetY) {
 
   var angle = opt_angle !== undefined ? opt_angle : 0;
   var rotation = angle * Math.PI / 180;
   var font = ['normal', size + 'pt', 'Arial'].join(' ');
   var color = opt_color !== undefined ? opt_color : [0, 0, 0, 1];
   var width = opt_width !== undefined ? opt_width : 3;
+  var offsetX = opt_offsetX !== undefined ? opt_offsetX : 0;
+  var offsetY = opt_offsetY !== undefined ? opt_offsetY : 0;
 
   return new ol.style.Text({
     font: font,
     text: text,
     fill: new ol.style.Fill({color: color}),
     stroke: new ol.style.Stroke({color: [255, 255, 255, 1], width: width}),
-    rotation: rotation
+    rotation: rotation,
+    offsetX: offsetX,
+    offsetY: offsetY
   });
 };
 
