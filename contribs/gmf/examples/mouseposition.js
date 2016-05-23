@@ -2,12 +2,9 @@ goog.provide('gmf-mouseposition');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.CoordinateFormat');
-goog.require('ngeo.CoordinateFormatConfig');
 goog.require('gmf.mousepositionDirective');
-goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.proj.EPSG2056');
+goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -23,28 +20,30 @@ app.module = angular.module('app', ['gmf']);
 
 
 /**
- *
- * @param {ngeo.CoordinateFormat} ngeoCoordinateFormat Coordinates format
- *     projection config.
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoCoordinateFormat) {
+app.MainController = function() {
+
+  var epsg2056FilterLabel = 'Coordinates';
 
   /**
-   * @type {Array.<string>}
+   * @type {Array.<gmfx.MousePositionProjection>}
    * @export
    */
-  this.projections = ['EPSG:4326', 'EPSG:4326:DMS', 'EPSG:4326:UTM3132'];
-
-  /**
-   *
-   * @type {ngeo.CoordinateFormatConfig|undefined}
-   */
-  var projWgs84Dms = ngeoCoordinateFormat.getProjection('EPSG:4326:DMS');
-  if (projWgs84Dms) {
-    projWgs84Dms.label = 'Custom DMS label';
-  }
+  this.projections = [{
+    code: 'EPSG:2056',
+    label: 'CH1903+ / LV03',
+    filter: 'ngeoSwissCoordinates:' + epsg2056FilterLabel + ' (m) : '
+  }, {
+    code: 'EPSG:21781',
+    label: 'CH1903 / LV03',
+    filter: 'ngeoEastNorthCoordinates:2:[ :; : ]'
+  }, {
+    code: 'EPSG:4326',
+    label: 'WGS84',
+    filter: 'ngeoDMSCoordinates'
+  }];
 
   /**
    * @type {ol.Map}
@@ -57,8 +56,8 @@ app.MainController = function(ngeoCoordinateFormat) {
       })
     ],
     view: new ol.View({
-      center: [0, 0],
-      zoom: 4
+      center: [828042, 5933739],
+      zoom: 8
     })
   });
 };
