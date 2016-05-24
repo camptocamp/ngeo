@@ -36,14 +36,13 @@
         ng-click="mainCtrl.toggleLeftNavVisibility()">
         <span class="gmf-icon gmf-icon-layers"></span>
       </button>
-      <div class="search">
-        <gmf-search gmf-search-map="mainCtrl.map"
-          gmf-search-datasources="mainCtrl.searchDatasources"
-          gmf-search-clearbutton="true"
-          gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
-          gmf-search-listeners="::mainCtrl.searchListeners">
-        </gmf-search>
-      </div>
+      <gmf-search gmf-search-map="mainCtrl.map"
+        class="search"
+        gmf-search-datasources="mainCtrl.searchDatasources"
+        gmf-search-clearbutton="true"
+        gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
+        gmf-search-listeners="::mainCtrl.searchListeners">
+      </gmf-search>
       <button class="nav-trigger nav-right-trigger"
         ng-click="mainCtrl.toggleRightNavVisibility()">
         <i class="fa fa-wrench"></i>

@@ -92,13 +92,12 @@
         </div>
       </div>
       <div class="map-container">
-        <div class="search">
-          <gmf-search gmf-search-map="mainCtrl.map"
-            gmf-search-datasources="mainCtrl.searchDatasources"
-            gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
-            gmf-search-clearbutton="true">
-          </gmf-search>
-        </div>
+        <gmf-search gmf-search-map="mainCtrl.map"
+          class="search"
+          gmf-search-datasources="mainCtrl.searchDatasources"
+          gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
+          gmf-search-clearbutton="true">
+        </gmf-search>
         <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"></gmf-map>
       </div>
     </main>
