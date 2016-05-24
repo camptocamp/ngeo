@@ -29,10 +29,11 @@ module.exports = function(config) {
       '.build/ol-deps.js',
       '.build/ngeo-deps.js',
       '.build/gmf-deps.js',
-      '.build/examples-hosted/lib/proj4.js',
+      'node_modules/proj4/dist/proj4.js',
       'node_modules/jquery/dist/jquery.js',
       'node_modules/angular/angular.js',
       'node_modules/angular-gettext/dist/angular-gettext.js',
+      'node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js',
       'node_modules/angular-animate/angular-animate.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'node_modules/angular-sanitize/angular-sanitize.js',
@@ -43,7 +44,6 @@ module.exports = function(config) {
       'contribs/gmf/test/spec/beforeeach.js',
       'contribs/gmf/test/spec/data/*.js',
       'contribs/gmf/test/spec/**/*.spec.js',
-      'src/proj/epsg21781projection.js',
       {
         pattern: closureLibPath + 'closure/**/*.js',
         included: false

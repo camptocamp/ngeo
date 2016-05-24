@@ -24,6 +24,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/angular-gettext/dist/angular-gettext.min.js \
 	node_modules/angular-sanitize/angular-sanitize.min.js \
 	node_modules/angular-touch/angular-touch.min.js \
+	node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.min.js \
 	node_modules/bootstrap/dist/js/bootstrap.min.js \
 	node_modules/proj4/dist/proj4.js \
 	node_modules/d3/d3.min.js \
@@ -43,6 +44,7 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/angular-gettext.min.js \
 	.build/examples-hosted/lib/angular-sanitize.min.js \
 	.build/examples-hosted/lib/angular-touch.min.js \
+	.build/examples-hosted/lib/tmhDynamicLocale.min.js \
 	.build/examples-hosted/lib/bootstrap.min.js \
 	.build/examples-hosted/lib/bootstrap.min.css \
 	.build/examples-hosted/lib/jquery.min.js \
@@ -71,6 +73,8 @@ L10N_PO_FILES = $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L1
 	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/demo.po, $(L10N_LANGUAGES))) # \
 	# $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/ngeo.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
+ANGULAR_LOCALES_FILES = $(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
+
 TX_VERSION ?= master
 ifeq (,$(wildcard $(HOME)/.transifexrc))
 TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
@@ -168,7 +172,7 @@ test-debug: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/temp
 	touch $@
 
 .PHONY: serve
-serve: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT)
+serve: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
 	node buildtools/serve.js
 
 .PHONY: examples-hosted
@@ -329,6 +333,10 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/tmhDynamicLocale.min.js: node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/bootstrap.min.js: node_modules/bootstrap/dist/js/bootstrap.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -409,6 +417,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/angular-animate/angular-animate.js|lib/angular-animate.min.js|' \
 		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext.js|lib/angular-gettext.min.js|' \
 		-e 's|\.\./node_modules/angular-touch/angular-touch.js|lib/angular-touch.min.js|' \
+		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
 		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
@@ -430,6 +439,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext\.js|lib/angular-gettext.min.js|' \
 		-e 's|\.\./node_modules/angular-sanitize/angular-sanitize\.js|lib/angular-sanitize.min.js|' \
 		-e 's|\.\./node_modules/angular-touch/angular-touch\.js|lib/angular-touch.min.js|' \
+		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
 		-e 's|\.\./node_modules/d3/d3\.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
@@ -551,6 +561,10 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		--var entry_point=app_$* \
 		--var generate_exports=true \
 		--var source_map=contribs/gmf/build/$*.js.map $< > $@
+
+contribs/gmf/build/angular-locale_%.js:
+	mkdir -p $(dir $@)
+	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/master/src/ngLocale/angular-locale_$*.js
 
 $(EXTERNS_ANGULAR):
 	mkdir -p $(dir $@)
@@ -754,6 +768,7 @@ clean:
 	rm -rf contribs/gmf/build
 	rm -f dist/*
 	rm -f $(EXTERNS_FILES)
+	rm -f $(ANGULAR_LOCALES_FILES)
 	rm -f contribs/gmf/fonts/FontAwesome.otf
 	rm -f contribs/gmf/fonts/fontawesome-webfont.*
 	rm -f contribs/gmf/fonts/gmf-icons.eot

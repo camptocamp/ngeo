@@ -114,6 +114,7 @@
     <script src="../../../../node_modules/typeahead.js/dist/typeahead.bundle.js"></script>
     <script src="../../../../node_modules/proj4/dist/proj4-src.js" type="text/javascript"></script>
     <script src="../../../../node_modules/angular-gettext/dist/angular-gettext.js" type="text/javascript"></script>
+    <script src="../../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js" type="text/javascript"></script>
     <script src="../../../../node_modules/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>
     <script src="../../../../node_modules/d3/d3.min.js" type="text/javascript"></script>
     <script src="/@?main=desktop_alt/js/controller.js"></script>
@@ -121,23 +122,34 @@
     <script src="../../../../utils/watchwatchers.js"></script>
     <script>
       (function() {
-         var module = angular.module('app');
-         module.constant('defaultLang', 'en');
-         module.constant('langUrls', {
-           'en': '../../build/gmf-en.json',
-           'fr': '../../build/gmf-fr.json',
-           'de': '../../build/gmf-de.json'
-         });
-         module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
-         module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch?limit=30&partitionlimit=5');
-         module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
-         module.constant('gmfWmsUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy');
-         module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
-         module.constant('gmfSearchGroups', ['osm','district']);
-         // Requires that the gmfSearchGroups is specified
-         module.constant('gmfSearchActions', ['add_theme', 'add_group', 'add_layer']);
-         module.constant('gmfTreeManagerModeFlush', false);
-       })();
+        var urlElements = window.location.pathname.split('/');
+
+        var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
+        angularLocaleScriptUrlElements.push('build', 'angular-locale_{{locale}}.js');
+
+        var gmfModule = angular.module('gmf');
+        gmfModule.constant('angularLocaleScript', angularLocaleScriptUrlElements.join('/'));
+
+        var langUrls = {};
+        ['en', 'fr', 'de'].forEach(function(lang) {
+            var langUrlElements = urlElements.slice(0, urlElements.length - 3);
+            langUrlElements.push('build', 'gmf-' + lang + '.json')
+            langUrls[lang] = langUrlElements.join('/')
+        });
+
+        var module = angular.module('app');
+        module.constant('defaultLang', 'en');
+        module.constant('langUrls', langUrls);
+        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
+        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch?limit=30&partitionlimit=5');
+        module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
+        module.constant('gmfWmsUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy');
+        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
+        module.constant('gmfSearchGroups', ['osm','district']);
+        // Requires that the gmfSearchGroups is specified
+        module.constant('gmfSearchActions', ['add_theme', 'add_group', 'add_layer']);
+        module.constant('gmfTreeManagerModeFlush', false);
+      })();
     </script>
   </body>
 </html>

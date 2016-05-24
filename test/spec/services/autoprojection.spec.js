@@ -1,4 +1,5 @@
 goog.require('ngeo.AutoProjection');
+goog.require('ngeo.proj.EPSG21781');
 
 describe('ngeo.AutoProjection', function() {
   var ngeoAutoProjection;

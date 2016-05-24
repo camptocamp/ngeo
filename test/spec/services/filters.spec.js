@@ -4,7 +4,7 @@ describe('ngeo.Filters', function() {
 
   var $filter;
 
-  beforeEach(inject(function(_$filter_){
+  beforeEach(inject(function(_$filter_) {
     $filter = _$filter_;
   }));
 
