@@ -106,7 +106,7 @@ describe('gmf.LayertreeController', function() {
         "id": 101,
         "imageType": "image/jpeg",
         "metadata": {
-          "isChecked": "true"
+          "isChecked": true
         }
       };
       var layer = layertreeController.getLayer(layerConfig, fakeParentController, 2);
