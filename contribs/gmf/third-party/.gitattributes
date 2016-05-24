@@ -1,0 +1,3 @@
+# disable git attributes in third-party
+*.js text whitespace=-indent-with-non-tab
+*.css text whitespace=-indent-with-non-tab
