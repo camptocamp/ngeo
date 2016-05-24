@@ -438,7 +438,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e '/\/node_modules\//d' \
 		-e '/default\.js/d' \
 		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
-		-e 's|/@?main=js/controller\.js|../../build/$*.js|' $< > $@
+		-e 's|/@?main=$*/js/controller\.js|../../build/$*.js|' $< > $@
 
 .PRECIOUS: .build/examples-hosted/%.js
 .build/examples-hosted/%.js: examples/%.js
