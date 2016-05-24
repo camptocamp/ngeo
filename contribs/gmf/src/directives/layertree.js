@@ -286,7 +286,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
       break;
     case gmf.Themes.NodeType.WMS:
       var url = node.url || this.gmfWmsUrl_;
-      layer = this.layerHelper_.createBasicWMSLayer(url, node.name,
+      layer = this.layerHelper_.createBasicWMSLayer(url, node.layers,
               node.serverType);
       break;
     default:
@@ -456,9 +456,10 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
  */
 gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
   var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
+  var childNodes = [];
   var type = gmf.Themes.getNodeType(node);
   var layer = treeCtrl.layer;
-  var i, layers, nodeNames;
+  var i, layers, layersNames;
   var firstParentTree = this.retrieveFirstParentTree_(treeCtrl);
   var firstParentTreeLayer = firstParentTree.layer;
   // Check if the current node state is 'activated'.
@@ -469,6 +470,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
     case gmf.Themes.NodeType.WMS:
     case gmf.Themes.NodeType.WMTS:
 
+      // If layer is in a mixed group
       if (firstParentTreeLayer instanceof ol.layer.Group) {
         layer.setVisible(!isActive);
 
@@ -479,18 +481,18 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
         var firstParentTreeNode =  /** @type {GmfThemesNode} */
             (firstParentTree.node);
         var currentLayersNames = (firstParentTreeLayer.getVisible()) ?
-            firstParentTreeSource.getParams()['LAYERS'].split(',') : [];
-        var name, newLayersNames = [];
-        nodeNames = this.retrieveNodeNames_(firstParentTreeNode);
+            firstParentTreeSource.getParams()['LAYERS'] : '';
+        var newLayersNames = [];
+        this.getFlatNodes_(firstParentTreeNode, childNodes);
         // Add/remove layer and keep order of layers in layergroup.
-        for (i = 0; i < nodeNames.length; i++) {
-          name = nodeNames[i];
-          if (name === node.name) {
+        for (i = 0; i < childNodes.length; i++) {
+          layersNames = childNodes[i].layers;
+          if (layersNames === node.layers) {
             if (!isActive) {
-              newLayersNames.push(name);
+              newLayersNames.push(layersNames);
             }
-          } else if (currentLayersNames.indexOf(name) >= 0) {
-            newLayersNames.push(name);
+          } else if (currentLayersNames.search(new RegExp(layersNames)) >= 0) {
+            newLayersNames.push(layersNames);
           }
         }
         goog.asserts.assertInstanceof(firstParentTreeLayer, ol.layer.Image);
@@ -501,17 +503,20 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
     case gmf.Themes.NodeType.MIXED_GROUP:
       var nodeLayers = [];
       var l, source;
-      nodeNames = this.retrieveNodeNames_(node);
+      this.getFlatNodes_(node, childNodes);
+      layersNames = childNodes.map(function(node) {
+        return node.layers;
+      }).join(',');
       layers = this.layerHelper_.getFlatLayers(firstParentTreeLayer);
       for (i = 0; i < layers.length; i++) {
         l = layers[i];
         source = layers[i].getSource();
         if (source instanceof ol.source.WMTS) {
-          if (nodeNames.indexOf(source.getLayer()) >= 0) {
+          if (layersNames.search(source.getLayer()) >= 0) {
             nodeLayers.push(l);
           }
         } else if (source instanceof ol.source.ImageWMS) {
-          if (nodeNames.indexOf(source.getParams()['LAYERS']) >= 0) {
+          if (layersNames.search(source.getParams()['LAYERS']) >= 0) {
             nodeLayers.push(l);
           }
         }
@@ -522,20 +527,23 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
       break;
 
     case gmf.Themes.NodeType.NOT_MIXED_GROUP:
-      nodeNames = this.retrieveNodeNames_(node);
+      this.getFlatNodes_(node, childNodes);
+      layersNames = childNodes.map(function(node) {
+        return node.layers;
+      });
       source = /** @type {ol.source.ImageWMS} */
           (firstParentTreeLayer.getSource());
       layers = (firstParentTreeLayer.getVisible() &&
           source.getParams()['LAYERS'].trim() !== '' &&
           source.getParams()['LAYERS'].split(','))  || [];
       if (isActive) {
-        for (i = 0; i < nodeNames.length; i++) {
-          ol.array.remove(layers, nodeNames[i]);
+        for (i = 0; i < layersNames.length; i++) {
+          ol.array.remove(layers, layersNames[i]);
         }
       } else {
-        for (i = 0; i < nodeNames.length; i++) {
-          if (!ol.array.includes(layers, nodeNames[i])) {
-            layers.push(nodeNames[i]);
+        for (i = 0; i < layersNames.length; i++) {
+          if (!ol.array.includes(layers, layersNames[i])) {
+            layers.push(layersNames[i]);
           }
         }
       }

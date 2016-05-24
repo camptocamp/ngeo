@@ -106,7 +106,7 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
       if (node.childLayers && node.childLayers.length) {
         var childLayerNames = [];
         node.childLayers.forEach(function(childLayer) {
-          childLayerNames.push(childLayer.name);
+          childLayerNames.push(childLayer.layers);
         }, this);
         layers = childLayerNames.join(',');
       } else if (node.type === 'WMS') {
