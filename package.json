@@ -34,7 +34,7 @@
     "d3": "3.5.17",
     "eslint": "2.10.2",
     "eslint-config-openlayers": "4.1.0",
-    "font-awesome": "4.6.1",
+    "font-awesome": "4.6.3",
     "fs-extra": "0.30.0",
     "gaze": "1.0.0",
     "graceful-fs": "4.1.4",
