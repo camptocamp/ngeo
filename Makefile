@@ -148,7 +148,8 @@ compile-examples: .build/examples/all.min.js
 
 .PHONY: build-gmf-apps
 build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),.js .css)) \
-	$(addprefix contribs/gmf/build/gmf-,$(addsuffix .json, $(LANGUAGES)))
+	$(addprefix contribs/gmf/build/gmf-,$(addsuffix .json, $(LANGUAGES))) \
+	$(ANGULAR_LOCALES_FILES)
 
 .PHONY: check-examples
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
