@@ -1,3 +1,5 @@
+@import "../../../node_modules/font-awesome/less/variables.less";
+
 .gmf-layertree-node {
   /**
    * Style rules for treenodes in the layertree
@@ -34,10 +36,10 @@
       color : @color-light;
       display: inline-block;
       &::before {
-        content: "\f054";
+        content: @fa-var-chevron-right;
       }
       &[aria-expanded="true"]::before {
-        content: "\f078";
+        content: @fa-var-chevron-down;
       }
     }
   }
@@ -133,7 +135,7 @@
     a {
       padding: 0;
       &::after {
-        content: "\f129";
+        content: @fa-var-info;
         display: inline;
         font-family: FontAwesome;
       }
@@ -177,7 +179,7 @@
     a {
       padding: 0;
       &::after {
-        content: "\f036";
+        content: @fa-var-align-left;
         transform: initial;
       }
     }
