@@ -1,8 +1,8 @@
 goog.provide('gmf-mobileBackgroundlayerselector');
 
 goog.require('gmf.Themes');
+goog.require('gmf.backgroundlayerselectorDirective');
 goog.require('gmf.mapDirective');
-goog.require('gmf.mobileBackgroundlayerselectorDirective');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');

@@ -3,9 +3,9 @@ goog.provide('gmf.AbstractMobileController');
 goog.require('gmf');
 goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
-goog.require('gmf.mobiledisplayqueriesDirective');
+goog.require('gmf.backgroundlayerselectorDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.mobileBackgroundlayerselectorDirective');
+goog.require('gmf.mobiledisplayqueriesDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileMeasureLengthDirective');
 /** @suppress {extraRequire} */
