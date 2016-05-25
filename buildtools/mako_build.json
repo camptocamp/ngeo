@@ -96,7 +96,6 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "missingProvide",
 % endif
       "useOfGoogBase",
-      "unnecessaryCasts",
       "lintChecks",
       "analyzerChecks"
     ],
