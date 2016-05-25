@@ -1,4 +1,4 @@
-goog.provide('gmf-mobileBackgroundlayerselector');
+goog.provide('gmf-backgroundlayerselector');
 
 goog.require('gmf.Themes');
 goog.require('gmf.backgroundlayerselectorDirective');
