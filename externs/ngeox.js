@@ -137,7 +137,7 @@ ngeox.Message.prototype.type;
  *     height: (string|undefined),
  *     title: (string|undefined),
  *     url: (string|undefined),
- *     width: (string|undefined),
+ *     width: (string|undefined)
  * }}
  */
 ngeox.PopupOptions;
