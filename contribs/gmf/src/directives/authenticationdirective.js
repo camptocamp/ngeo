@@ -60,7 +60,7 @@ gmf.module.directive('gmfAuthentication', gmf.authenticationDirective);
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {angular.Scope} $scope The directive's scope.
  * @param {gmf.Authentication} gmfAuthentication GMF Authentication service
- * @param {gmf.User} gmfUser User.
+ * @param {gmfx.User} gmfUser User.
  * @constructor
  * @ngInject
  * @ngdoc controller
@@ -70,7 +70,7 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
     gmfAuthentication, gmfUser) {
 
   /**
-   * @type {gmf.User}
+   * @type {gmfx.User}
    * @export
    */
   this.gmfUser = gmfUser;

@@ -10,7 +10,7 @@ goog.require('ol.events.EventTarget');
 
 /**
  * @typedef {{
- *     functionalities: (gmf.AuthenticationFunctionalities|undefined),
+ *     functionalities: (gmfx.AuthenticationFunctionalities|undefined),
  *     is_password_changed: (boolean|undefined),
  *     role_id: (number|undefined),
  *     role_name: (string|undefined),
@@ -18,15 +18,6 @@ goog.require('ol.events.EventTarget');
  * }}
  */
 gmf.AuthenticationLoginResponse;
-
-
-/**
- * @typedef {{
- *     default_basemap: Array.<string>,
- *     location: Array
- * }}
- */
-gmf.AuthenticationFunctionalities;
 
 
 /**
@@ -47,18 +38,6 @@ gmf.AuthenticationRouteSuffix = {
   LOGOUT: 'logout',
   RESET_PASSWORD: 'loginresetpassword'
 };
-
-
-/**
- * @typedef {{
- *     functionalities: (gmf.AuthenticationFunctionalities|null),
- *     is_password_changed: (boolean|null),
- *     role_id: (number|null),
- *     role_name: (string|null),
- *     username: (string|null)
- * }}
- */
-gmf.User;
 
 
 gmf.module.value('gmfUser', {
@@ -95,7 +74,7 @@ gmf.AuthenticationEventType = {
  * @constructor
  * @extends {ol.events.Event}
  * @param {gmf.AuthenticationEventType} type Event type.
- * @param {gmf.User} user The current user.
+ * @param {gmfx.User} user The current user.
  */
 gmf.AuthenticationEvent = function(type, user) {
 
@@ -103,7 +82,7 @@ gmf.AuthenticationEvent = function(type, user) {
 
   /**
    * The logged-in user.
-   * @type {gmf.User}
+   * @type {gmfx.User}
    */
   this.user = user;
 
@@ -127,7 +106,7 @@ goog.inherits(gmf.AuthenticationEvent, ol.events.Event);
  * @extends {ol.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
  * @param {string} authenticationBaseUrl URL to "authentication" web service.
- * @param {gmf.User} gmfUser User.
+ * @param {gmfx.User} gmfUser User.
  * @ngInject
  */
 gmf.Authentication = function($http, authenticationBaseUrl, gmfUser) {
@@ -147,7 +126,7 @@ gmf.Authentication = function($http, authenticationBaseUrl, gmfUser) {
   this.baseUrl_ = authenticationBaseUrl;
 
   /**
-   * @type {gmf.User}
+   * @type {gmfx.User}
    * @private
    */
   this.user_ = gmfUser;
