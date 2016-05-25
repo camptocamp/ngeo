@@ -129,6 +129,71 @@ ngeox.Message.prototype.type;
 
 
 /**
+ * The options for a popup created by the popup factory.
+ * @typedef {{
+ *     autoDestroy: (boolean|undefined),
+ *     cls: (string|undefined),
+ *     content: (*|undefined),
+ *     height: (string|undefined),
+ *     title: (string|undefined),
+ *     url: (string|undefined),
+ *     width: (string|undefined),
+ * }}
+ */
+ngeox.PopupOptions;
+
+
+/**
+ * Whether the popup should be automatically destroyed when hidden or not.
+ * Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.PopupOptions.prototype.autoDestroy;
+
+
+/**
+ * Extra class name to add to the popup.
+ * @type {string|undefined}
+ */
+ngeox.PopupOptions.prototype.cls;
+
+
+/**
+ * The content of the popup. Either the content or url must be set.
+ * @type {*|undefined}
+ */
+ngeox.PopupOptions.prototype.content;
+
+
+/**
+ * The height of the popup.
+ * @type {string|undefined}
+ */
+ngeox.PopupOptions.prototype.height;
+
+
+/**
+ * The title of the popup.
+ * @type {string|undefined}
+ */
+ngeox.PopupOptions.prototype.title;
+
+
+/**
+ * The url to use for the iframe to include as content for the popup.
+ * @type {string|undefined}
+ */
+ngeox.PopupOptions.prototype.url;
+
+
+/**
+ * The width of the popup.
+ * @type {string|undefined}
+ */
+ngeox.PopupOptions.prototype.width;
+
+
+/**
  * The options for the query service.
  * @typedef {{
  *     limit: (number|undefined),
