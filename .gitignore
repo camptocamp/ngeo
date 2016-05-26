@@ -8,8 +8,8 @@
 /contribs/gmf/fonts/gmf-icons.ttf
 /contribs/gmf/fonts/gmf-icons.woff
 /.tx/config
-/.tx/.tx/ngeo.ngeo-*
-/.tx/.tx/ngeo.gmf-*
+/.tx/ngeo.ngeo-*
+/.tx/ngeo.gmf-*
 /examples/simple.min.js
 contribs/gmf/fonts/FontAwesome*
 contribs/gmf/fonts/fontawesome*
