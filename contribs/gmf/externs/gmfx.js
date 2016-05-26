@@ -27,6 +27,40 @@ gmfx.Config;
 
 
 /**
+ * Projection object for the MousePositionDirective. Define a label and a filter
+ * to use to display coordinates for a projection.
+ * @typedef {{
+ *   code: string,
+ *   label: string,
+ *   filter: string
+ * }}
+ */
+gmfx.MousePositionProjection;
+
+
+/**
+ * The epsg name of a projection.
+ * @type {string}
+ */
+gmfx.MousePositionProjection.prototype.code;
+
+
+/**
+ * The label to diplay with this projection.
+ * @type {string}
+ */
+gmfx.MousePositionProjection.prototype.label;
+
+
+/**
+ * The filter function to use to format this projection. Arguments can be passed
+ * with colon as separator (example: MyFilter:args1:args2:...)
+ * @type {string}
+ */
+gmfx.MousePositionProjection.prototype.filter;
+
+
+/**
  * Configuration options for the permalink service.
  * @typedef {{
  *     crosshairStyle: (Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined)

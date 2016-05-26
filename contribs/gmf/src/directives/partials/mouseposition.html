@@ -1,0 +1,14 @@
+<div class="btn-group dropup dropdown-menu-right">
+  <small id="mouse-position" class="pull-left"></small>
+  <div class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-fw fa-ellipsis-v"></span>
+  </div>
+  <ul class="dropdown-menu" role="menu">
+    <li ng-repeat="projitem in ::ctrl.projections">
+      <a href ng-click="ctrl.setProjection(projitem)">
+        <span class="fa fa-fw" ng-class="{'fa-check': ctrl.projection == projitem}"></span>
+        {{::projitem.label}}
+      </a>
+    </li>
+  </ul>
+</div>
