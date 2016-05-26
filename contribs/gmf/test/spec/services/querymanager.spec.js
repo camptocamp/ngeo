@@ -31,5 +31,26 @@ describe('gmf.QueryManager', function() {
           'police,post_office,restaurant,bank,place_of_worship';
       expect(osmSource.params.LAYERS).toBe(expectedLayers);
     });
+
+    it('creates a source for queryable WMTS overlay layers', function () {
+      queryManager.sources_.length = 0;
+      var cadasterTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
+      queryManager.createSources_(cadasterTheme);
+
+      // layer 'non-queryable-wmts-layer' without `wmsUrl`
+      var sourceNonQueryable = getSourceById(queryManager.sources_, 91346);
+      expect(sourceNonQueryable).toBeNull();
+
+      // layer 'ch.are.alpenkonvention' with `wmsUrl` and `wmsLayers` and `queryLayers`
+      // (`wmsLayers` takes precedence over `queryLayers`)
+      var sourceAlpConvention = getSourceById(queryManager.sources_, 119);
+      expect(sourceAlpConvention).toBeDefined();
+      expect(sourceAlpConvention.params.LAYERS).toBe('ch.are.alpenkonvention');
+
+      // layer 'ch.astra.ausnahmetransportrouten' with `wmsUrl` and `queryLayers`
+      var sourceRoutes = getSourceById(queryManager.sources_, 120);
+      expect(sourceRoutes).toBeDefined();
+      expect(sourceRoutes.params.LAYERS).toBe('ch.astra.ausnahmetransportrouten');
+    });
   });
 });
