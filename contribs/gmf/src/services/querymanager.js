@@ -118,7 +118,9 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
       if (node.childLayers && node.childLayers.length) {
         var childLayerNames = [];
         node.childLayers.forEach(function(childLayer) {
-          childLayerNames.push(childLayer.name);
+          if (childLayer.queryable) {
+            childLayerNames.push(childLayer.name);
+          }
         }, this);
         layers = childLayerNames.join(',');
       } else if (node.type === 'WMS') {
