@@ -282,7 +282,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
   }
 
   if (goog.isDefAndNotNull(layer)) {
-    var ids = this.getNodeIds_(node);
+    var ids = gmf.LayertreeController.getLayerNodeIds(node);
     layer.set('querySourceIds', ids);
     layer.set('layerName', node.name);
 
@@ -866,18 +866,17 @@ gmf.LayertreeController.prototype.zoomToResolution = function(node) {
 
 
 /**
- * Collect and return all ids of this node and all child nodes as well.
+ * Collect and return all ids of this layer node and all child nodes as well.
  * @param {GmfThemesNode} node Layer tree node.
  * @return {Array.<number|string>} Layer names.
- * @private
  */
-gmf.LayertreeController.prototype.getNodeIds_ = function(node) {
+gmf.LayertreeController.getLayerNodeIds = function(node) {
   var ids = [];
   var children = node.children || node;
   if (children && children.length) {
     children.forEach(function(childNode) {
-      ids = ids.concat(this.getNodeIds_(childNode));
-    }, this);
+      ids = ids.concat(gmf.LayertreeController.getLayerNodeIds(childNode));
+    });
   } else if (node.id !== undefined) {
     ids.push(node.id);
   }

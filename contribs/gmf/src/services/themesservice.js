@@ -128,6 +128,8 @@ gmf.Themes.prototype.getBgLayers = function() {
       var callback = function(item, layer) {
         layer.set('label', item['name']);
         layer.set('metadata', item['metadata']);
+        var ids = gmf.LayertreeController.getLayerNodeIds(item);
+        layer.set('querySourceIds', ids);
         return layer;
       };
 
@@ -157,9 +159,9 @@ gmf.Themes.prototype.getBgLayers = function() {
     }));
 
     // (2) add layers that were returned
-    values.forEach(function(item) {
-      if (item) {
-        layers.push(item);
+    values.forEach(function(layer) {
+      if (layer) {
+        layers.push(layer);
       }
     });
     return layers;
@@ -202,6 +204,24 @@ gmf.Themes.prototype.getThemesObject = function() {
       function(data) {
         var themes = data['themes'];
         return themes;
+      });
+};
+
+
+/**
+ * Get an array of background layer objects.
+ * @return {angular.$q.Promise} Promise.
+ */
+gmf.Themes.prototype.getBackgroundLayersObject = function() {
+  goog.asserts.assert(this.promise_ !== null);
+  return this.promise_.then(
+      /**
+       * @param {gmf.ThemesResponse} data The "themes" web service response.
+       * @return {Array.<Object>} The background layers object.
+       */
+      function(data) {
+        var backgroundLayers = data['background_layers'];
+        return backgroundLayers;
       });
 };
 

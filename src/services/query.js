@@ -347,6 +347,9 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
     for (var i = 0, len = ids.length; i < len; i++) {
       id = ids[i];
       item = this.cache_[id];
+      if (!item) {
+        continue;
+      }
 
       // If `validateLayerParams` is set, then the source config layer in the
       // LAYERS params must be in the current LAYERS params of the layer

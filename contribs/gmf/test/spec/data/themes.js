@@ -914,6 +914,18 @@ var themes = {
     "id": 134,
     "imageType": "image/jpeg",
     "metadata": {
+      "thumbnail": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/-/img/cadastre.jpeg",
+      "wmsUrl": "https://wms.geo.admin.ch/",
+      "wmsLayers": "ch.are.alpenkonvention"
+    }
+  }, {
+    "name": "asitvd.fond_couleur",
+    "url": "https://geomapfish-demo.camptocamp.net/2.0/tiles-asitvd/1.0.0/WMTSCapabilities.xml",
+    "dimensions": {},
+    "type": "WMTS",
+    "id": 135,
+    "imageType": "image/jpeg",
+    "metadata": {
       "thumbnail": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/-/img/cadastre.jpeg"
     }
   }],

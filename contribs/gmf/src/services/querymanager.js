@@ -21,11 +21,12 @@ goog.require('ngeo.Query');
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
+ * @param {angular.$q} $q Angular q service
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl) {
+gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
 
   /**
    * @type {ngeo.Query}
@@ -44,6 +45,12 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl) {
    * @private
    */
   this.gmfWmsUrl_ = gmfWmsUrl;
+
+  /**
+   * @type {angular.$q}
+   * @private
+   */
+  this.$q_ = $q;
 
   /**
    * @type {Array.<ngeox.QuerySource>}
@@ -69,12 +76,22 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl) {
  * @private
  */
 gmf.QueryManager.prototype.handleThemesLoad_ = function() {
-  this.gmfThemes_.getThemesObject().then(function(themes) {
+  var promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
     // create sources for each themes
     for (var i = 0, len = themes.length; i < len; i++) {
       this.createSources_(themes[i]);
     }
-    // then add them to the query service
+  }.bind(this));
+
+  var promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(function(backgroundLayers) {
+    // create a source for each background layer
+    for (var i = 0, len = backgroundLayers.length; i < len; i++) {
+      this.createSources_(backgroundLayers[i]);
+    }
+  }.bind(this));
+
+  // then add all sources to the query service
+  this.$q_.all([promiseThemes, promiseBgLayers]).then(function() {
     this.ngeoQuery_.addSources(this.sources_);
   }.bind(this));
 };
