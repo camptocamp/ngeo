@@ -149,11 +149,12 @@ main {
 
   .tools-content {
     width: @right-panel-width;
-    margin-right: -@right-panel-width + @toolbar-width;
+    margin-right: -@right-panel-width;
     transition: margin-right 0.2s ease;
+    float: right;
 
     &.active {
-      margin-right: @toolbar-width;
+      margin-right: 0;
     }
 
     .close {
@@ -184,6 +185,7 @@ main {
     float: right;
     height: 100%;
     position: relative;
+    z-index: 2;
 
     > .btn + .btn {
       margin-top: -1px;
