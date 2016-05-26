@@ -66,16 +66,14 @@ main {
   }
 
   .footer {
+    @height: @line-height-computed + 2 * @padding-small-vertical;
     position: absolute;
     bottom:  -@height;
-    background-color: rgba(192, 192, 192, 0.9);
+    background-color: fade(@main-bg-color, 80%);
     width: 100%;
     /* cancel default navbar bottom margin */
     margin-bottom: 0;
     /* buttons or inputs in bar are supposed to be '-sm' */
-    @height: @line-height-computed + 2 * @padding-small-vertical;
-    min-height: @height;
-
     transition: 0.2s ease-out all;
     &.active {
       bottom: 0;
@@ -84,49 +82,53 @@ main {
       display: inline-block;
     }
 
-    .text  {
-      line-height: @height;
-      padding-right: 10px;
-      margin-top: 1px;
-    }
-    button {
-      margin-top: 1px;
-    }
-
     button.map-info {
       position: absolute;
       /* button is supposed to be .btn-sm */
-      top: -( @line-height-computed + 2 * @padding-small-vertical);
-      background-color: rgba(192, 192, 192, 0.9);
+      bottom: @line-height-computed + 2 * @padding-small-vertical;
+      background-color: fade(@main-bg-color, 80%);
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       right: @app-margin;
       border-bottom: 0;
+      padding: @half-app-margin @app-margin;
     }
     .btn {
-      background-color: @main-bg-color;
+      background-color: lighten(@main-bg-color, 20%);
+      padding: @half-app-margin 0;
+    }
+  }
+
+  [ngeo-scaleselector] {
+    .dropdown {
+      button {
+        min-width:13rem;
+        font-size: @font-size-small
+      }
     }
   }
   #scaleline {
-    display: inline-block;
-    padding-right: 5px;
-  }
-  .ol-scale-line {
-    bottom: auto;
-    left: 5px;
-  }
-  [ngeo-scaleselector] {
-    [data-toggle="dropdown"] {
-      .btn-sm
+    vertical-align: middle;
+    .ol-scale-line, .ol-scale-line-inner {
+      background-color: transparent;
+      bottom: auto;
+      position: relative;
     }
   }
-  .ol-scale-line, .ol-scale-line-inner {
-    position: relative;
-    background-color: transparent;
-  }
   #mouse-position {
+    font-size: @font-size-small;
+    .custom-mouse-position {
+      display: inline-block;
+      min-width: 18rem;
+      text-align: right;
+    }
+  }
+  .elevation {
     text-align: right;
-    min-width: 210px;
+    font-size: @font-size-small;
+    gmf-elevation {
+      min-width: 10rem;
+    }
   }
 }
 

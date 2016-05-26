@@ -111,6 +111,8 @@
           </gmf-backgroundlayerselector>
         </div>
         <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"></gmf-map>
+        
+        <!--infobar-->
         <div class="footer" ng-class="{'active': mainCtrl.info}">
           <button class="btn btn-sm fa map-info ng-cloak" ng-click="mainCtrl.info = !mainCtrl.info"
                   ng-class="{'fa-angle-double-up': !mainCtrl.info, 'fa-angle-double-down': mainCtrl.info}"></button>
@@ -118,12 +120,36 @@
           <div ngeo-scaleselector="mainCtrl.scaleSelectorValues"
                ngeo-scaleselector-map="mainCtrl.map"
                ngeo-scaleselector-options="mainCtrl.scaleSelectorOptions"></div>
-
           <div id="scaleline"></div>
-          <gmf-mouseposition gmf-mouseposition-map="mainCtrl.map"></gmf-mouseposition>
-          <div class="pull-right small text">
-            <span class="fa fa-arrows-v"></span>
-            235m
+          <div class="pull-right">
+            <span ng-show="elevationValue" class="fa fa-arrows-v"></span>
+            <span class="elevation" ng-show="elevationValue"
+              gmf-elevation
+              gmf-elevation-active="mainCtrl.info"
+              gmf-elevation-elevation="elevationValue"
+              gmf-elevation-layer="mainCtrl.elevationLayer"
+              gmf-elevation-layers="::mainCtrl.elevationLayers"
+              gmf-elevation-map="mainCtrl.map">
+              {{elevationValue | number:2}} m
+            </span>
+            <div class="btn-group dropup">
+              <div class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="fa fa-fw fa-ellipsis-v"></span>
+              </div>
+              <ul class="dropdown-menu">
+                <li ng-repeat="elevationItem in ::mainCtrl.elevationLayers">
+                  <a href ng-click="mainCtrl.elevationLayer = elevationItem">
+                    <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.elevationLayer === elevationItem}"></span>
+                    {{::elevationItem}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <span class="fa fa-fw fa-location-arrow"></span>
+            <gmf-mouseposition
+                 gmf-mouseposition-map="mainCtrl.map"
+                 gmf-mouseposition-projections="::mainCtrl.mousePositionProjections">
+            </gmf-mouseposition>
           </div>
         </div>
       </div>
@@ -167,6 +193,7 @@
         module.constant('langUrls', langUrls);
         module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
         module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch?limit=30&partitionlimit=5');
+        module.constant('gmfAltitudeUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
         module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
         module.constant('gmfWmsUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy');
         module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
