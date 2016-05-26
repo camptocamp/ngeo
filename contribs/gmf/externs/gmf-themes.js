@@ -25,7 +25,7 @@ GmfThemesNode.prototype.children;
 
 
 /**
- * @type {Object.<string, string>}
+ * @type {Array.<GmfChildLayerNode>}
  */
 GmfThemesNode.prototype.childLayers;
 
@@ -82,3 +82,22 @@ GmfThemesNode.prototype.url;
  * @type {string|undefined}
  */
 GmfThemesNode.prototype.wmsUrl;
+
+
+
+/**
+ * @constructor
+ */
+var GmfChildLayerNode = function() {};
+
+
+/**
+ * @type {string}
+ */
+GmfChildLayerNode.prototype.name;
+
+
+/**
+ * @type {number|boolean|undefined}
+ */
+GmfChildLayerNode.prototype.queryable;

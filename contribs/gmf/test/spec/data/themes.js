@@ -586,7 +586,7 @@ var themes = {
           "queryable": true
         }, {
           "name": "hotel",
-          "queryable": true
+          "queryable": false
         }, {
           "name": "information",
           "queryable": true
