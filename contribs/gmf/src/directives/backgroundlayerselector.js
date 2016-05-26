@@ -1,5 +1,5 @@
-goog.provide('gmf.MobileBackgroundlayerselectorController');
-goog.provide('gmf.mobileBackgroundlayerselectorDirective');
+goog.provide('gmf.BackgroundlayerselectorController');
+goog.provide('gmf.backgroundlayerselectorDirective');
 
 goog.require('gmf');
 goog.require('gmf.Themes');
@@ -7,58 +7,58 @@ goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 
 
-gmf.module.value('gmfMobileBackgroundlayerselectorTemplateUrl',
+gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
     function(element, attrs) {
-      var templateUrl = attrs['gmfMobileBackgroundlayerselectorTemplateurl'];
+      var templateUrl = attrs['gmfBackgroundlayerselectorTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/mobilebackgroundlayerselector.html';
+          gmf.baseTemplateUrl + '/backgroundlayerselector.html';
     });
 
 
 /**
- * Provide a "mobile background layer selector" directive.
+ * Provide a "background layer selector" directive.
  *
  * Example:
  *
- *      <gmf-mobile-backgroundlayerselector
- *        gmf-mobile-backgroundlayerselector-map="::ctrl.map">
- *      </gmf-mobile-backgroundlayerselector>
+ *      <gmf-backgroundlayerselector
+ *        gmf-backgroundlayerselector-map="::ctrl.map">
+ *      </gmf-backgroundlayerselector>
  *
  * Used UI metadata:
  *
  *  * thumbnail: The URL used for the icon.
  *
- * @htmlAttribute {ol.Map=} gmf-mobile-backgroundlayerselector-map The map.
- * @param {string} gmfMobileBackgroundlayerselectorTemplateUrl Url to template.
+ * @htmlAttribute {ol.Map=} gmf-backgroundlayerselector-map The map.
+ * @param {string} gmfBackgroundlayerselectorTemplateUrl Url to template.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
- * @ngname gmfMobileBackgroundlayerselector
+ * @ngname gmfBackgroundlayerselector
  */
-gmf.mobileBackgroundlayerselectorDirective = function(
-    gmfMobileBackgroundlayerselectorTemplateUrl) {
+gmf.backgroundlayerselectorDirective = function(
+    gmfBackgroundlayerselectorTemplateUrl) {
 
   return {
     restrict: 'E',
     scope: {
-      'map': '=gmfMobileBackgroundlayerselectorMap',
-      'select': '&?gmfMobileBackgroundlayerselectorSelect'
+      'map': '=gmfBackgroundlayerselectorMap',
+      'select': '&?gmfBackgroundlayerselectorSelect'
     },
     bindToController: true,
-    controller: 'GmfMobileBackgroundlayerselectorController',
+    controller: 'GmfBackgroundlayerselectorController',
     controllerAs: 'ctrl',
-    templateUrl: gmfMobileBackgroundlayerselectorTemplateUrl
+    templateUrl: gmfBackgroundlayerselectorTemplateUrl
   };
 };
 
 
-gmf.module.directive('gmfMobileBackgroundlayerselector',
-    gmf.mobileBackgroundlayerselectorDirective);
+gmf.module.directive('gmfBackgroundlayerselector',
+    gmf.backgroundlayerselectorDirective);
 
 
 /**
@@ -69,9 +69,9 @@ gmf.module.directive('gmfMobileBackgroundlayerselector',
  * @export
  * @ngInject
  * @ngdoc controller
- * @ngname GmfMobileBackgroundlayerselectorController
+ * @ngname GmfBackgroundlayerselectorController
  */
-gmf.MobileBackgroundlayerselectorController = function(ngeoBackgroundLayerMgr, gmfThemes) {
+gmf.BackgroundlayerselectorController = function(ngeoBackgroundLayerMgr, gmfThemes) {
 
   /**
    * @type {ol.Map}
@@ -118,8 +118,8 @@ gmf.MobileBackgroundlayerselectorController = function(ngeoBackgroundLayerMgr, g
 
 };
 
-gmf.module.controller('GmfMobileBackgroundlayerselectorController',
-    gmf.MobileBackgroundlayerselectorController);
+gmf.module.controller('GmfBackgroundlayerselectorController',
+    gmf.BackgroundlayerselectorController);
 
 
 /**
@@ -127,7 +127,7 @@ gmf.module.controller('GmfMobileBackgroundlayerselectorController',
  * @param {boolean=} opt_silent Do not notify listeners.
  * @export
  */
-gmf.MobileBackgroundlayerselectorController.prototype.setLayer = function(
+gmf.BackgroundlayerselectorController.prototype.setLayer = function(
     layer, opt_silent) {
   this.bgLayer = layer;
   this.backgroundLayerMgr_.set(this.map, layer);
