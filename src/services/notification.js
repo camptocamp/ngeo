@@ -2,34 +2,7 @@ goog.provide('ngeo.Notification');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
-
-
-/**
- * @enum {string}
- * @export
- */
-ngeo.NotificationType = {
-  /**
-   * @type {string}
-   * @export
-   */
-  ERROR: 'error',
-  /**
-   * @type {string}
-   * @export
-   */
-  INFORMATION: 'information',
-  /**
-   * @type {string}
-   * @export
-   */
-  SUCCESS: 'success',
-  /**
-   * @type {string}
-   * @export
-   */
-  WARNING: 'warning'
-};
+goog.require('ngeo.Message');
 
 
 /**
@@ -38,12 +11,15 @@ ngeo.NotificationType = {
  * properly.
  *
  * @constructor
+ * @extends {ngeo.Message}
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @ngdoc service
  * @ngname ngeoNotification
  * @ngInject
  */
 ngeo.Notification = function($timeout) {
+
+  goog.base(this);
 
   /**
    * @type {angular.$timeout}
@@ -67,6 +43,7 @@ ngeo.Notification = function($timeout) {
   this.cache_ = {};
 
 };
+goog.inherits(ngeo.Notification, ngeo.Message);
 
 
 /**
@@ -88,8 +65,7 @@ ngeo.Notification.DEFAULT_DELAY_ = 7000;
  * @export
  */
 ngeo.Notification.prototype.notify = function(object) {
-  var msgObjects = this.getMessageObjects_(object);
-  msgObjects.forEach(this.notifyMessage_, this);
+  this.show(object);
 };
 
 
@@ -104,77 +80,27 @@ ngeo.Notification.prototype.clear = function() {
 };
 
 
-// SHORTCUT METHODS
-
-
 /**
- * Display the given error message or list of error messages.
- * @param {string|Array.<string>} message Message or list of messages.
- * @export
- */
-ngeo.Notification.prototype.error = function(message) {
-  this.notify(this.getMessageObjects_(
-      message, ngeo.NotificationType.ERROR));
-};
-
-
-/**
- * Display the given info message or list of info messages.
- * @param {string|Array.<string>} message Message or list of messages.
- * @export
- */
-ngeo.Notification.prototype.info = function(message) {
-  this.notify(this.getMessageObjects_(
-      message, ngeo.NotificationType.INFORMATION));
-};
-
-
-/**
- * Display the given success message or list of success messages.
- * @param {string|Array.<string>} message Message or list of messages.
- * @export
- */
-ngeo.Notification.prototype.success = function(message) {
-  this.notify(this.getMessageObjects_(
-      message, ngeo.NotificationType.SUCCESS));
-};
-
-
-/**
- * Display the given warning message or list of warning messages.
- * @param {string|Array.<string>} message Message or list of messages.
- * @export
- */
-ngeo.Notification.prototype.warn = function(message) {
-  this.notify(this.getMessageObjects_(
-      message, ngeo.NotificationType.WARNING));
-};
-
-
-// UTILITY METHODS
-
-
-/**
- * Display the message.
+ * Show the message.
  * @param {ngeox.Message} message Message.
- * @private
+ * @protected
  */
-ngeo.Notification.prototype.notifyMessage_ = function(message) {
+ngeo.Notification.prototype.showMessage = function(message) {
   var type = message.type;
   goog.asserts.assertString(type, 'Type should be set.');
 
   var classNames = ['alert', 'fade'];
   switch (type) {
-    case ngeo.NotificationType.ERROR:
+    case ngeo.MessageType.ERROR:
       classNames.push('alert-danger');
       break;
-    case ngeo.NotificationType.INFORMATION:
+    case ngeo.MessageType.INFORMATION:
       classNames.push('alert-info');
       break;
-    case ngeo.NotificationType.SUCCESS:
+    case ngeo.MessageType.SUCCESS:
       classNames.push('alert-success');
       break;
-    case ngeo.NotificationType.WARNING:
+    case ngeo.MessageType.WARNING:
       classNames.push('alert-warning');
       break;
     default:
@@ -231,54 +157,6 @@ ngeo.Notification.prototype.clearMessageByCacheItem_ = function(item) {
 
   // Delete the cache item
   delete this.cache_[uid];
-};
-
-
-/**
- * Returns an array of message object from any given message string, list of
- * message strings, message object or list message objects. The type can be
- * overriden here as well OR defined (if the message(s) is/are string(s),
- * defaults to 'information').
- * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
- *     object A message or list of messages as text or configuration objects.
- * @param {string=} opt_type The type of message to override the messages with.
- * @return {Array.<ngeox.Message>} List of message objects.
- * @private
- */
-ngeo.Notification.prototype.getMessageObjects_ = function(object, opt_type) {
-  var msgObjects = [];
-  var msgObject = null;
-  var defaultType = ngeo.NotificationType.INFORMATION;
-
-  if (typeof object === 'string') {
-    msgObjects.push({
-      msg: object,
-      type: opt_type !== undefined ? opt_type : defaultType
-    });
-  } else if (goog.isArray(object)) {
-    object.forEach(function(msg) {
-      if (typeof object === 'string') {
-        msgObject = {
-          msg: msg,
-          type: opt_type !== undefined ? opt_type : defaultType
-        };
-      } else {
-        msgObject = msg;
-        if (opt_type !== undefined) {
-          msgObject.type = opt_type;
-        }
-      }
-      msgObjects.push(msgObject);
-    }, this);
-  } else {
-    msgObject = object;
-    if (opt_type !== undefined) {
-      msgObject.type = opt_type;
-    }
-    msgObjects.push(msgObject);
-  }
-
-  return msgObjects;
 };
 
 
