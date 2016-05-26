@@ -21,7 +21,7 @@ gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
 
 
 /**
- * Provide a "mobile background layer selector" directive.
+ * Provide a "background layer selector" directive.
  *
  * Example:
  *
