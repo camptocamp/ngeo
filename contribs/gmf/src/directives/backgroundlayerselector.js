@@ -25,15 +25,15 @@ gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
  *
  * Example:
  *
- *      <gmf-mobile-backgroundlayerselector
- *        gmf-mobile-backgroundlayerselector-map="::ctrl.map">
- *      </gmf-mobile-backgroundlayerselector>
+ *      <gmf-backgroundlayerselector
+ *        gmf-backgroundlayerselector-map="::ctrl.map">
+ *      </gmf-backgroundlayerselector>
  *
  * Used UI metadata:
  *
  *  * thumbnail: The URL used for the icon.
  *
- * @htmlAttribute {ol.Map=} gmf-mobile-backgroundlayerselector-map The map.
+ * @htmlAttribute {ol.Map=} gmf-backgroundlayerselector-map The map.
  * @param {string} gmfBackgroundlayerselectorTemplateUrl Url to template.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
