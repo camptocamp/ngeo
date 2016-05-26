@@ -81,8 +81,7 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
  *     no layer else.
  * @export
  */
-ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
-    capabilitiesURL, layerName) {
+ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName) {
   var parser = new ol.format.WMTSCapabilities();
   var layer = new ol.layer.Tile();
   var $q = this.$q_;
@@ -93,8 +92,9 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(
       result = parser.read(response.data);
     }
     if (result !== undefined) {
-      var options = ol.source.WMTS.optionsFromCapabilities(result,
-          {layer: layerName, requestEncoding: 'REST'});
+      var options = ol.source.WMTS.optionsFromCapabilities(result, {
+        layer: layerName
+      });
       layer.setSource(new ol.source.WMTS(options));
 
       // Add styles from capabilities as param of the layer
