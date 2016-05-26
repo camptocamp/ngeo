@@ -38,7 +38,7 @@ describe('gmf.Themes', function() {
 
     expect(spy.calls.length).toBe(1);
     var response = spy.mostRecentCall.args[0];
-    expect(response.length).toBe(4);
+    expect(response.length).toBe(2);
     var responseFirstBgName = response[1].get('label');
     var firstBgName = themes.background_layers[0].name;
     expect(responseFirstBgName).toBe(firstBgName);
