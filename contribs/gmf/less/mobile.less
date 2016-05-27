@@ -79,8 +79,8 @@ gmf-map {
     color: @color;
     border: 1px solid white;
   }
-  .tooltip-measure:before,
-  .tooltip-static:before {
+  .tooltip-measure::before,
+  .tooltip-static::before {
     border-top: @half-app-margin solid @border-color;
     border-right: @half-app-margin solid transparent;
     border-left: @half-app-margin solid transparent;
@@ -90,7 +90,7 @@ gmf-map {
     margin-left: -@half-app-margin;
     left: 50%;
   }
-  .tooltip-static:before {
+  .tooltip-static::before {
     border-top-color: #ffcc33;
   }
 }
