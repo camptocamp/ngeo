@@ -99,6 +99,17 @@
           gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
           gmf-search-clearbutton="true">
         </gmf-search>
+        <div class="gmf-backgroundlayerbutton btn-group dropup">
+          <button
+              class="btn btn-default"
+              data-toggle="dropdown">
+            <img src="image/background-layer-button.png" alt="" />
+          </button>
+          <gmf-backgroundlayerselector
+            gmf-backgroundlayerselector-map="::mainCtrl.map"
+            class="dropdown-menu">
+          </gmf-backgroundlayerselector>
+        </div>
         <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"></gmf-map>
       </div>
     </main>
