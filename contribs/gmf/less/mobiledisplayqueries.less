@@ -16,10 +16,10 @@
     line-height: 0.5;
     height: @map-tools-size;
     width: @map-tools-size + @map-tools-size * 2/3;
-    &.up:after {
+    &.up::after {
       content: "\f077";
     }
-    &.down:after {
+    &.down::after {
       content: "\f078";
     }
   }
@@ -125,13 +125,13 @@
     height: @map-tools-size;
     .previous {
       float: left;
-      &:after {
+      &::after {
         content: "\f053";
       }
     }
     .next {
       float: right;
-      &:after {
+      &::after {
         content: "\f054";
       }
     }
@@ -150,7 +150,7 @@
       position: absolute;
       top: @map-tools-size + @app-margin;
       right: 0;
-      &:after {
+      &::after {
         content: "\f00d";
       }
     }

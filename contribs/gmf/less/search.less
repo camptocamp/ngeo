@@ -23,7 +23,7 @@
     right: @app-margin;
     height: @map-tools-size;
     opacity: 0.5;
-    &:after {
+    &::after {
       position: absolute;
       content: '\f00d';
       color: @map-tools-color;
@@ -120,7 +120,7 @@ span.twitter-typeahead input {
     width: @search-width;
   }
   span.twitter-typeahead {
-    &:before {
+    &::before {
       content: '\f002';
       font-family: FontAwesome;
       color: @color;
