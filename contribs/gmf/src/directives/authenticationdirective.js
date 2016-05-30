@@ -317,7 +317,7 @@ gmf.AuthenticationController.prototype.setError_ = function(errors) {
     this.notification_.notify({
       msg: error,
       target: container,
-      type: ngeo.NotificationType.ERROR
+      type: ngeo.MessageType.ERROR
     });
   }, this);
 };
