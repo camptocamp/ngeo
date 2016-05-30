@@ -572,7 +572,7 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
   var firstParentTree = this.retrieveFirstParentTree_(treeCtrl);
   var firstParentTreeLayer = firstParentTree.layer;
   var firstParentTreeSource;
-  var currentLayersNames = this.groupNodeStates_[
+  var currentNodeState = this.groupNodeStates_[
       goog.getUid(firstParentTreeLayer)];
 
   switch (type) {
@@ -588,20 +588,20 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
         firstParentTreeSource = /** @type {ol.source.ImageWMS} */
             (firstParentTreeLayer.getSource());
         var layersNames =
-            firstParentTreeSource.getParams()['LAYERS'].split(',');
+            firstParentTreeSource.getParams()['LAYERS'];
         // Get style for this layer depending if the layer is on the map or not
         // and if the layer is visible;
-        style = layersNames.indexOf(node.name) < 0 ||
+        style = layersNames.search(node.layers) < 0 ||
             !firstParentTreeLayer.getVisible() ? 'off' : 'on';
       }
 
       // Update group state
       if (style === 'on') {
-        if (!ol.array.includes(currentLayersNames, node.name)) {
-          currentLayersNames.push(node.name);
+        if (!ol.array.includes(currentNodeState, node.name)) {
+          currentNodeState.push(node.name);
         }
       } else {
-        ol.array.remove(currentLayersNames, node.name);
+        ol.array.remove(currentNodeState, node.name);
       }
 
       break;
@@ -611,7 +611,7 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
       var nodeNames = this.retrieveNodeNames_(node);
       var i, found = 0;
       for (i = 0; i < nodeNames.length; i++) {
-        if (currentLayersNames.indexOf(nodeNames[i]) >= 0) {
+        if (currentNodeState.indexOf(nodeNames[i]) >= 0) {
           found++;
         }
       }
