@@ -318,3 +318,73 @@ gmfx.ServiceUrls;
  * @type {string}
  */
 gmfx.ServiceUrls.prototype.exportgpxkml;
+
+
+/**
+ * Availables functionalities.
+ * @typedef {{
+ *     default_basemap: Array.<string>,
+ *     location: Array.<string>
+ * }}
+ */
+gmfx.AuthenticationFunctionalities;
+
+
+/**
+ * Base maps to use by default.
+ * @type {Array.<string>}
+ */
+gmfx.AuthenticationFunctionalities.prototype.default_basemap;
+
+
+/**
+ * Availables locations.
+ * @type {Array.<string>}
+ */
+gmfx.AuthenticationFunctionalities.prototype.location;
+
+/**
+ * @typedef {{
+ *     functionalities: (gmfx.AuthenticationFunctionalities|null),
+ *     is_password_changed: (boolean|null),
+ *     role_id: (number|null),
+ *     role_name: (string|null),
+ *     username: (string|null)
+ * }}
+ */
+gmfx.User;
+
+
+/**
+ * Configured functionalities of the user.
+ * @type {gmfx.AuthenticationFunctionalities|null}
+ */
+gmfx.User.prototype.functionalities;
+
+
+/**
+ * True if the password of the user has been changed. False otherwise.
+ * @type {boolean|null}
+ */
+gmfx.User.prototype.is_password_changed;
+
+
+/**
+ * the role id of the user.
+ * @type {number|null}
+ */
+gmfx.User.prototype.role_id;
+
+
+/**
+ * The role name of the user.
+ * @type {string|null}
+ */
+gmfx.User.prototype.role_name;
+
+
+/**
+ * The name of the user.
+ * @type {string|null}
+ */
+gmfx.User.prototype.username;
