@@ -24,11 +24,18 @@ goog.require('ol.style.Text');
  *
  * @constructor
  * @param {angular.$injector} $injector Main injector.
+ * @param {angular.$filter} $filter Angular filter
  * @ngdoc service
  * @ngname ngeoFeatureHelper
  * @ngInject
  */
-ngeo.FeatureHelper = function($injector) {
+ngeo.FeatureHelper = function($injector, $filter) {
+
+  /**
+   * @type {angular.$filter}
+   * @private
+   */
+  this.$filter_ = $filter;
 
   /**
    * @type {?number}
@@ -38,6 +45,32 @@ ngeo.FeatureHelper = function($injector) {
 
   if ($injector.has('ngeoMeasureDecimals')) {
     this.decimals_ = $injector.get('ngeoMeasureDecimals');
+  }
+
+  /**
+   * Filter function to display point coordinates or null to don't use any
+   * filter.
+   * @type {function(*):string|null}
+   * @private
+   */
+  this.pointFilterFn_ = null;
+
+  /**
+   * Arguments to apply to the the point filter function.
+   * @type {Array.<*>}
+   * @private
+   */
+  this.pointFilterArgs_ = [];
+
+  if ($injector.has('ngeoPointfilter')) {
+    var filterElements = $injector.get('ngeoPointfilter').split(':');
+    var filterName = filterElements.shift();
+    var filter = this.$filter_(filterName);
+    goog.asserts.assertFunction(filter);
+    this.pointFilterFn_ = filter;
+    this.pointFilterArgs_ = filterElements;
+  } else {
+    this.pointFilterFn_ = null;
   }
 
   /**
@@ -603,6 +636,9 @@ ngeo.FeatureHelper.prototype.createTextStyle_ = function(text, size,
 
 
 /**
+ * Get the measure of the given feature as a string. For points, you can format
+ * the result by setting a filter to apply on the coordinate with the function
+ * {@link ngeo.FeatureHelper.prototype.setPointFilterFn}.
  * @param {ol.Feature} feature Feature.
  * @return {string} Measure.
  * @export
@@ -621,8 +657,15 @@ ngeo.FeatureHelper.prototype.getMeasure = function(feature) {
     measure = ngeo.interaction.Measure.getFormattedLength(
       geometry, this.projection_, this.decimals_);
   } else if (geometry instanceof ol.geom.Point) {
-    measure = ngeo.interaction.Measure.getFormattedPoint(
+    if (this.pointFilterFn_ === null) {
+      measure = ngeo.interaction.Measure.getFormattedPoint(
       geometry, this.projection_, this.decimals_);
+    } else {
+      var coordinates = geometry.getCoordinates();
+      var args = this.pointFilterArgs_.slice(0);
+      args.unshift(coordinates);
+      measure = this.pointFilterFn_.apply(this, args);
+    }
   }
 
   return measure;
