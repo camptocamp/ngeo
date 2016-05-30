@@ -329,17 +329,19 @@ ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
  * @param {ol.geom.Point} point Point.
  * @param {ol.proj.Projection} projection Projection of the line string coords.
  * @param {?number} decimals Decimals.
+ * @param {Array.<string>=} opt_labels Labels for the X and Y coordinates
  * @return {string} Formatted string of coordinate.
  */
 ngeo.interaction.Measure.getFormattedPoint = function(
-    point, projection, decimals) {
+    point, projection, decimals, opt_labels) {
+  var labels = opt_labels !== undefined ? opt_labels : ['X', 'Y'];
   var coordinates = point.getCoordinates();
   var x = coordinates[0];
   var y = coordinates[1];
   decimals = decimals !== null ? decimals : 0;
   x = goog.string.padNumber(x, 0, decimals);
   y = goog.string.padNumber(y, 0, decimals);
-  return ['X: ', x, ', Y: ', y].join('');
+  return [labels[0], ': ', x, ', ', labels[1], ': ', y].join('');
 };
 
 

@@ -23,6 +23,10 @@ goog.require('ngeo.mobileGeolocationDirective');
 
 /* global app */
 
+app.module.constant('ngeoMeasureLabelX', 'E');
+
+app.module.constant('ngeoMeasureLabelY', 'N');
+
 app.module.constant('ngeoQueryOptions', {
   'limit': 20
 });

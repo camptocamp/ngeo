@@ -26,6 +26,9 @@ app.module.constant('ngeoExportFeatureFormats', [
   ngeo.FeatureHelper.FormatType.GPX
 ]);
 
+app.module.constant('ngeoMeasureLabelX', 'E');
+
+app.module.constant('ngeoMeasureLabelY', 'N');
 
 app.module.constant('ngeoQueryOptions', {
   'limit': 20
