@@ -114,7 +114,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.measureLengthActive = false;
 
   /**
-   * @type {gmf.User}
+   * @type {gmfx.User}
    * @export
    */
   this.gmfUser = $injector.get('gmfUser');
