@@ -244,7 +244,7 @@ nav.nav-right {
  */
 .nav-trigger {
   top: @app-margin;
-  background: white;
+  background-color: @map-tools-bg-color;
   z-index: @above-search-index;
   height: @map-tools-size;
   border: 1px solid @border-color;
@@ -273,20 +273,12 @@ nav.nav-right {
   }
 
   .nav-trigger {
-    top: @app-margin;
     margin: 0;
-    background-color: @map-tools-bg-color;
     border: solid 1px @border-color;
     box-shadow: none;
-    height: @map-tools-size;
-  }
-
-  .nav-left-trigger {
-    left: @app-margin;
   }
 
   .nav-right-trigger {
     left: auto;
-    right: @app-margin;
   }
 }

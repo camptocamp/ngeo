@@ -1,3 +1,5 @@
+@import "../../../node_modules/font-awesome/less/variables.less";
+
 .search {
   top: @app-margin;
   height: @map-tools-size;
@@ -25,7 +27,7 @@
     opacity: 0.5;
     &::after {
       position: absolute;
-      content: '\f00d';
+      content: @fa-var-close;
       color: @map-tools-color;
       font-family: FontAwesome;
       font-size: 2rem;
@@ -100,7 +102,7 @@ span.twitter-typeahead input {
   @search-width: 6 * @map-tools-size;
   .search {
     margin: 0;
-    left: calc(2 * @app-margin + @map-tools-size);
+    left: 2 * @app-margin + @map-tools-size;
     width: @search-width;
     border-width: 1px;
     .clear-button {
@@ -121,7 +123,7 @@ span.twitter-typeahead input {
   }
   span.twitter-typeahead {
     &::before {
-      content: '\f002';
+      content: @fa-var-search;
       font-family: FontAwesome;
       color: @color;
       position: absolute;
