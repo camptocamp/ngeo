@@ -413,3 +413,28 @@ gmf-featurestyle {
   top: 0;
   width: 20rem;
 }
+
+
+/**
+ * Background layer button (selector)
+ */
+.gmf-backgroundlayerbutton {
+  bottom: 4rem;
+  left: @app-margin;
+  position: absolute;
+  z-index: 2;
+
+  button {
+    padding: 3px;
+  }
+
+  button,
+  gmf-backgroundlayerselector {
+    border-radius: 3px !important;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  }
+
+  ul.gmf-backgroundlayerselector {
+    margin: 0 0.5rem;
+  }
+}
