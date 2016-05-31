@@ -27,11 +27,11 @@
     <a href="" ng-if="::layertreeCtrl.depth == 1" ng-click="gmfLayertreeCtrl.removeNode(layertreeCtrl.node)">
       <span class="fa fa-trash"></span>
     </a>
-    <span ngeo-popover ng-if="!layertreeCtrl.node.mixed" ngeo-popover-dismiss=".content">
+    <span ngeo-popover ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed) || (gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend)" ngeo-popover-dismiss=".content">
       <span ngeo-popover-anchor class="extra-actions fa fa-cog"></span>
       <div ngeo-popover-content>
         <ul>
-          <li>
+          <li ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed)">
             <i class="fa fa-tint fa-fw"></i>
             <span for="layer-opactity">{{'Opacity'|translate}}</span>
             <input class="input-action" name="layer-opactity" type="range" min="0" max="1" step="0.01" ng-model="layertreeCtrl.layer.opacity">
