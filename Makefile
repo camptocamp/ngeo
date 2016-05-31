@@ -19,12 +19,15 @@ GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 GMF_APPS_LIBS_JS_FILES += \
 	contribs/gmf/examples/https.js \
 	node_modules/jquery/dist/jquery.min.js \
+	contribs/gmf/third-party/jquery-ui/jquery-ui.min.js \
 	node_modules/angular/angular.min.js \
 	node_modules/angular-animate/angular-animate.min.js \
 	node_modules/angular-gettext/dist/angular-gettext.min.js \
 	node_modules/angular-sanitize/angular-sanitize.min.js \
 	node_modules/angular-touch/angular-touch.min.js \
 	node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.min.js \
+	node_modules/angular-ui-slider/src/slider.js \
+	node_modules/angular-ui-date/dist/date.js \
 	node_modules/bootstrap/dist/js/bootstrap.min.js \
 	node_modules/proj4/dist/proj4.js \
 	node_modules/d3/d3.min.js \
@@ -44,10 +47,13 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/angular-gettext.min.js \
 	.build/examples-hosted/lib/angular-sanitize.min.js \
 	.build/examples-hosted/lib/angular-touch.min.js \
+	.build/examples-hosted/lib/date.min.js \
+	.build/examples-hosted/lib/slider.min.js \
 	.build/examples-hosted/lib/tmhDynamicLocale.min.js \
 	.build/examples-hosted/lib/bootstrap.min.js \
 	.build/examples-hosted/lib/bootstrap.min.css \
 	.build/examples-hosted/lib/jquery.min.js \
+	.build/examples-hosted/lib/jquery-ui.min.js \
 	.build/examples-hosted/lib/d3.min.js \
 	.build/examples-hosted/lib/watchwatchers.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
@@ -338,6 +344,14 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/date.min.js: node_modules/angular-ui-date/dist/date.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.build/examples-hosted/lib/slider.min.js: node_modules/angular-ui-slider/src/slider.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/bootstrap.min.js: node_modules/bootstrap/dist/js/bootstrap.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -347,6 +361,10 @@ dist/gmf.js.map: dist/gmf.js
 	cp $< $@
 
 .build/examples-hosted/lib/jquery.min.js: node_modules/jquery/dist/jquery.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.build/examples-hosted/lib/jquery-ui.min.js: contribs/gmf/third-party/jquery-ui/jquery-ui.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
@@ -413,12 +431,15 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
+		-e 's|\.\./contribs/gmf/third-party/jquery-ui/jquery-ui.min.js|lib/jquery-ui.min.js|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
 		-e 's|\.\./node_modules/angular-animate/angular-animate.js|lib/angular-animate.min.js|' \
 		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext.js|lib/angular-gettext.min.js|' \
 		-e 's|\.\./node_modules/angular-touch/angular-touch.js|lib/angular-touch.min.js|' \
 		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
+		-e 's|\.\./node_modules/angular-ui-slider/src/slider.js|lib/slider.min.js|' \
+		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
 		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
@@ -434,6 +455,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap\.css|lib/bootstrap.min.css|' \
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery\.js|lib/jquery.min.js|' \
+		-e 's|\.\./contribs/gmf/third-party/jquery-ui/jquery-ui.min\.js|lib/jquery-ui.min.js|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap\.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular\.js|lib/angular.min.js|' \
 		-e 's|\.\./node_modules/angular-animate/angular-animate\.js|lib/angular-animate.min.js|' \
@@ -441,6 +463,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/angular-sanitize/angular-sanitize\.js|lib/angular-sanitize.min.js|' \
 		-e 's|\.\./node_modules/angular-touch/angular-touch\.js|lib/angular-touch.min.js|' \
 		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
+		-e 's|\.\./node_modules/angular-ui-slider/src/slider.js|lib/slider.min.js|' \
+		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
 		-e 's|\.\./node_modules/d3/d3\.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
