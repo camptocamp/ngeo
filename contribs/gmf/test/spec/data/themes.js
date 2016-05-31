@@ -248,6 +248,18 @@ var themes = {
           "disclaimer": "<a href=\"http://www.geo.admin.ch/\">Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>"
         }
       }, {
+        "name": "non-queryable-wmts-layer",
+        "url": "http://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr",
+        "dimensions": {},
+        "type": "WMTS",
+        "id": 91346,
+        "imageType": "image/jpeg",
+        "metadata": {
+            "max_resolution": "1000.0",
+            "legend": "true",
+            "min_resolution": "100.0"
+        }
+      }, {
         "name": "ch.are.alpenkonvention",
         "url": "https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr",
         "type": "WMTS",
@@ -258,6 +270,7 @@ var themes = {
         "metadata": {
           "wmsUrl": "https://wms.geo.admin.ch/",
           "wmsLayers": "ch.are.alpenkonvention",
+          "queryLayers": "ch.astra.ausnahmetransportrouten.queryLayers",
           "minResolutionHint": "10",
           "maxResolutionHint": "1000",
           "maxResolution": "1000.0",
@@ -899,6 +912,18 @@ var themes = {
     "dimensions": {},
     "type": "WMTS",
     "id": 134,
+    "imageType": "image/jpeg",
+    "metadata": {
+      "thumbnail": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/-/img/cadastre.jpeg",
+      "wmsUrl": "https://wms.geo.admin.ch/",
+      "wmsLayers": "ch.are.alpenkonvention"
+    }
+  }, {
+    "name": "asitvd.fond_couleur",
+    "url": "https://geomapfish-demo.camptocamp.net/2.0/tiles-asitvd/1.0.0/WMTSCapabilities.xml",
+    "dimensions": {},
+    "type": "WMTS",
+    "id": 135,
     "imageType": "image/jpeg",
     "metadata": {
       "thumbnail": "https://geomapfish-demo.camptocamp.net/2.0/wsgi/project/-/img/cadastre.jpeg"
