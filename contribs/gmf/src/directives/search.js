@@ -602,8 +602,6 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
       if (actionName == 'add_theme') {
         this.gmfTreeManager_.addThemeByName(actionData);
       } else if (actionName == 'add_group') {
-        // FIXME: Display "this group is already loaded" (Issue also in the
-        // treemanager service).
         this.gmfTreeManager_.addGroupByName(actionData, true);
       } else if (actionName == 'add_layer' &&
             groupActions.indexOf('add_layer') >= 0) {

@@ -2,6 +2,7 @@ goog.provide('gmf.TreeManager');
 
 goog.require('gmf');
 goog.require('gmf.Themes');
+goog.require('ngeo.Notification');
 
 
 /**
@@ -23,13 +24,28 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * This service's theme is a GmfThemesNode with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
  */
-gmf.TreeManager = function(gmfThemes, gmfTreeManagerModeFlush) {
+gmf.TreeManager = function(gettextCatalog, ngeoNotification, gmfThemes,
+    gmfTreeManagerModeFlush) {
+
+  /**
+   * @type {angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
+
+  /**
+   * @type {ngeo.Notification}
+   * @private
+   */
+  this.ngeoNotification_ = ngeoNotification;
 
   /**
    * @type {gmf.Themes}
@@ -101,12 +117,18 @@ gmf.TreeManager.prototype.addTheme = function(theme) {
  * @export
  */
 gmf.TreeManager.prototype.addGroups = function(groups, opt_add) {
+  var groupNotAdded = [];
   if (this.isModeFlush() && opt_add !== true) {
     this.tree.children.length = 0;
   }
   groups.forEach(function(group) {
-    this.addGroup_(group);
+    if (!this.addGroup_(group)) {
+      groupNotAdded.push(group);
+    }
   }.bind(this));
+  if (groupNotAdded.length > 0) {
+    this.notifyCantAddGroups_(groupNotAdded);
+  }
 };
 
 
@@ -114,6 +136,7 @@ gmf.TreeManager.prototype.addGroups = function(groups, opt_add) {
  * Add a group as tree's children without consideration of this service 'mode'.
  * Add it only if it's not already in the tree.
  * @param{GmfThemesNode} group The group to add.
+ * @return {boolean} true if the group has been added.
  * @private
  */
 gmf.TreeManager.prototype.addGroup_ = function(group) {
@@ -121,32 +144,39 @@ gmf.TreeManager.prototype.addGroup_ = function(group) {
   var alreadyAdded = false;
   children.some(function(child) {
     if (group.id === child.id) {
-      // FIXME: display "this group is already loaded" with yet to develop
-      // alert system
       return alreadyAdded = true;
     }
   });
-  if (!alreadyAdded) {
-    children.push(group);
+  if (alreadyAdded) {
+    return false;
   }
+  children.push(group);
+  return true;
 };
 
 
 /**
- * The same as `addGroups`, with the exception
+ * The same as `addGroups`, with the exception that the given group will be
+ * deep cloned. Only the clone will be added to the tree.
  * @param{Array.<GmfThemesNodeCustom>} groups An array of object defining
  *     a theme node and an array of layer names to override.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
  * @export
  */
 gmf.TreeManager.prototype.addCustomGroups = function(groups, opt_add) {
+  var groupNotAdded = [];
   if (this.isModeFlush() && opt_add !== true) {
     this.tree.children.length = 0;
   }
   groups.forEach(function(group) {
     var clone = this.cloneGroupNode_(group.node, group.layers);
-    this.addGroup_(clone);
+    if (!this.addGroup_(clone)) {
+      groupNotAdded.push(clone);
+    }
   }.bind(this));
+  if (groupNotAdded.length > 0) {
+    this.notifyCantAddGroups_(groupNotAdded);
+  }
 };
 
 
@@ -258,6 +288,29 @@ gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
       childNode.metadata['isChecked'] = ol.array.includes(names, childNode.name);
     }
   }, this);
+};
+
+
+/**
+ * Display a notification that informs that the given groups are already in the
+ * tree.
+ * @param{Array.<GmfThemesNodeCustom>} groups An array of groups that already in
+ *   the tree.
+ * @private
+ */
+gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
+  var names = [];
+  var gettextCatalog = this.gettextCatalog_;
+  groups.forEach(function(group) {
+    names.push(group.name);
+  });
+  var msg = (names.length < 2) ?
+      gettextCatalog.getString('group is already loaded.') :
+      gettextCatalog.getString('groups are already loaded.');
+  this.ngeoNotification_.notify({
+    msg: names.join(', ') + ' ' + msg,
+    type: ngeo.NotificationType.INFORMATION
+  });
 };
 
 gmf.module.service('gmfTreeManager', gmf.TreeManager);
