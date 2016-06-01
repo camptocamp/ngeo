@@ -288,15 +288,16 @@ gmf.LayertreeController.prototype.getLayer = function(node, opt_depth,
 
     this.dataLayerGroup_.getLayers().insertAt(0, layer);
 
-    // by default a layer is not visible
-    var visible = false;
-    var metadata = node.metadata;
-    if (goog.isDefAndNotNull(metadata)) {
-      if (metadata['isChecked'] == 'true') {
+    // Set visiblity for not mixed group (mixed groups depends on its children)
+    if (type !== gmf.LayertreeController.TYPE_NOTMIXEDGROUP) {
+      // by default a layer is not visible
+      var visible = false;
+      var metadata = node.metadata;
+      if (metadata && metadata['isChecked'] === 'true') {
         visible = true;
       }
+      layer.setVisible(visible);
     }
-    layer.setVisible(visible);
   }
 
   return layer;
@@ -407,7 +408,7 @@ gmf.LayertreeController.prototype.retrieveNodeNames_ = function(node,
     n = nodes[i];
     metadata = n.metadata;
     if (!opt_onlyChecked ||
-        (goog.isDefAndNotNull(metadata) && metadata['isChecked'] != 'false')) {
+        (goog.isDefAndNotNull(metadata) && metadata['isChecked'] === 'true')) {
       names.push(n.name);
     }
   }
