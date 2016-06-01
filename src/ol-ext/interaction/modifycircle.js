@@ -24,16 +24,6 @@ goog.require('ol.structs.RBush');
 
 
 /**
- * @typedef {{depth: (Array.<number>|undefined),
- *            feature: ol.Feature,
- *            geometry: ol.geom.SimpleGeometry,
- *            index: (number|undefined),
- *            segment: Array.<ol.Extent>}}
- */
-ol.interaction.SegmentDataType;
-
-
-/**
  * @classdesc
  * Interaction for modifying feature geometries.
  *
