@@ -271,6 +271,15 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
    */
   this.listenerKeys_ = [];
 
+  /**
+   * Flag used to determine whether the selection of a feature was made
+   * from the selection of an item from the list or not (the map, contextual
+   * menu, etc.)
+   * @type {boolean}
+   * @private
+   */
+  this.listSelectionInProgress_ = false;
+
   $scope.$watch(
     function() {
       return this.active;
