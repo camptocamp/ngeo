@@ -26,6 +26,8 @@ app.module.constant('ngeoExportFeatureFormats', [
   ngeo.FeatureHelper.FormatType.GPX
 ]);
 
+// Filter to apply by default on all coordinates.
+app.module.constant('ngeoPointfilter', 'ngeoNumberCoordinates:0:{x} E, {y} N');
 
 app.module.constant('ngeoQueryOptions', {
   'limit': 20
