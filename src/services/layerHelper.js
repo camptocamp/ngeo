@@ -48,20 +48,24 @@ ngeo.LayerHelper.GROUP_KEY = 'groupName';
  * @param {string} sourceURL The source URL.
  * @param {string} sourceLayersName A dot separated names string.
  * @param {string=} opt_serverType Type of the server ("mapserver",
- *     "geoserver", qgisserver, …).
+ *     "geoserver", "qgisserver", …).
  * @return {ol.layer.Image} WMS Layer.
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
     sourceLayersName, opt_serverType) {
   var params = {'LAYERS': sourceLayersName};
+  var olServerType;
   if (opt_serverType) {
     params['SERVERTYPE'] = opt_serverType;
+    // OpenLayers expects 'qgis' insteads of 'qgisserver'
+    olServerType = opt_serverType.replace('qgisserver', 'qgis');
   }
   var layer = new ol.layer.Image({
     source: new ol.source.ImageWMS({
       url: sourceURL,
-      params: params
+      params: params,
+      serverType: olServerType
     })
   });
   return layer;
