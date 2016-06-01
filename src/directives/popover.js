@@ -41,7 +41,7 @@ ngeo.popoverDirective = function() {
       ngeoPopoverCtrl.anchorElm.on('inserted.bs.popover', function() {
         ngeoPopoverCtrl.bodyElm.show();
         ngeoPopoverCtrl.shown = true;
-        ngeoPopoverCtrl.bodyElm.parent().on('click', function(e) {
+        ngeoPopoverCtrl.bodyElm.parent().on('mousedown', function(e) {
           e.stopPropagation();
         });
       });
@@ -130,16 +130,16 @@ ngeo.PopoverController = function($scope) {
    */
   this.bodyElm = undefined;
 
-  function onClick(clickEvent) {
+  function onMouseDown(clickEvent) {
     if (this.anchorElm[0] !== clickEvent.target && this.shown) {
       this.dismissPopover();
     }
   }
 
-  angular.element('body').on('click', onClick.bind(this));
+  angular.element('body').on('mousedown', onMouseDown.bind(this));
 
   $scope.$on('$destroy', function() {
-    angular.element('body').off('click', onClick);
+    angular.element('body').off('mousedown', onMouseDown);
   });
 };
 
