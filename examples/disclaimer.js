@@ -148,7 +148,7 @@ app.MainController.prototype.closeAll = function() {
 
   this.disclaimer.close({
     msg: this.infoMsg_,
-    type: ngeo.MessageType.INFO
+    type: ngeo.MessageType.INFORMATION
   });
 
   this.disclaimer.close({
