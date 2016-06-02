@@ -143,9 +143,19 @@ ngeo.Disclaimer.prototype.getMessageUid_ = function(message) {
  */
 ngeo.Disclaimer.prototype.closeMessage_ = function(message) {
   var uid = this.getMessageUid_(message);
+
+  // (1) No need to do anything if message doesn't exist
   if (this.messages_[uid] === undefined) {
     return;
   }
+
+  // (2) Check if the message hasn't been closed using the UI, i.e. by
+  //     clicking the close button. If not, then close it.
+  if (this.messages_[uid].hasClass('in')) {
+    this.messages_[uid].alert('close');
+  }
+
+  // (3) Remove message from cache since it's closed now.
   delete this.messages_[uid];
 };
 
