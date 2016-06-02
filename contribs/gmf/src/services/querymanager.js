@@ -64,18 +64,6 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
    */
   this.cache_ = {};
 
-  // event listeners
-  ol.events.listenOnce(gmfThemes, gmf.ThemesEventType.LOAD,
-      this.handleThemesLoad_, this);
-};
-
-
-/**
- * Called when the theme service has loaded the themes. Create a source for
- * each theme and add them to the query service.
- * @private
- */
-gmf.QueryManager.prototype.handleThemesLoad_ = function() {
   var promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
     // create sources for each themes
     for (var i = 0, len = themes.length; i < len; i++) {
