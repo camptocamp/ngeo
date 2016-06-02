@@ -105,7 +105,7 @@
           <li
               class="list-group-item"
               ng-repeat="feature in efCtrl.getFeaturesArray()"
-              ng-click="efCtrl.selectedFeature = feature;">
+              ng-click="efCtrl.selectFeatureFromList(feature);">
             {{ feature.get(efCtrl.nameProperty) }}
           </li>
         </ul>

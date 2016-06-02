@@ -709,6 +709,49 @@ ngeo.FeatureHelper.prototype.getType = function(feature) {
 };
 
 
+/**
+ * This method first checks if a feature's extent intersects with the map view
+ * extent. If it doesn't, then the view gets recentered with an animation to
+ * the center of the feature.
+ * @param {ol.Feature} feature Feature.
+ * @param {ol.Map} map Map.
+ * @param {number=} opt_panDuration Pan animation duration. Defaults to `250`.
+ * @export
+ */
+ngeo.FeatureHelper.prototype.panMapToFeature = function(feature, map,
+    opt_panDuration) {
+
+  var panDuration = opt_panDuration !== undefined ? opt_panDuration : 250;
+  var size = map.getSize();
+  goog.asserts.assertArray(size);
+  var view = map.getView();
+  var extent = view.calculateExtent(size);
+  var geometry = feature.getGeometry();
+
+  if (!geometry.intersectsExtent(extent)) {
+    var mapCenter = view.getCenter();
+    goog.asserts.assertArray(mapCenter);
+
+    map.beforeRender(ol.animation.pan({
+      source: mapCenter,
+      duration: panDuration
+    }));
+
+    var featureCenter;
+    if (geometry instanceof ol.geom.LineString) {
+      featureCenter = geometry.getCoordinateAt(0.5);
+    } else if (geometry instanceof ol.geom.Polygon) {
+      featureCenter = geometry.getInteriorPoint().getCoordinates();
+    } else if (geometry instanceof ol.geom.Point) {
+      featureCenter = geometry.getCoordinates();
+    } else {
+      featureCenter = ol.extent.getCenter(geometry.getExtent());
+    }
+    map.getView().setCenter(featureCenter);
+  }
+};
+
+
 ngeo.module.service('ngeoFeatureHelper', ngeo.FeatureHelper);
 
 

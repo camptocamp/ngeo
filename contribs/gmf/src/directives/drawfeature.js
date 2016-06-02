@@ -271,6 +271,15 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
    */
   this.listenerKeys_ = [];
 
+  /**
+   * Flag used to determine whether the selection of a feature was made
+   * from the selection of an item from the list or not (the map, contextual
+   * menu, etc.)
+   * @type {boolean}
+   * @private
+   */
+  this.listSelectionInProgress_ = false;
+
   $scope.$watch(
     function() {
       return this.active;
@@ -301,6 +310,10 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
       if (newFeature) {
         this.featureHelper_.setStyle(newFeature, true);
         this.selectedFeatures.push(newFeature);
+        if (this.listSelectionInProgress_) {
+          this.featureHelper_.panMapToFeature(newFeature, this.map);
+          this.listSelectionInProgress_ = false;
+        }
       } else {
         this.menu_.close();
       }
@@ -412,6 +425,19 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
     this.menu_.close();
   }
 
+};
+
+
+/**
+ * Method called when a selection occurs from the list, i.e. when an item in
+ * the list of features is clicked. Called from the template, so no need to
+ * update Angular's scope.
+ * @param {ol.Feature} feature Feature to select.
+ * @export
+ */
+gmf.DrawfeatureController.prototype.selectFeatureFromList = function(feature) {
+  this.listSelectionInProgress_ = true;
+  this.selectedFeature = feature;
 };
 
 
