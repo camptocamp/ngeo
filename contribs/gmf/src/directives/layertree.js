@@ -205,7 +205,7 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
  */
 gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
   var type = gmf.Themes.getNodeType(node);
-  var ids = this.getNodeIds_(node);
+  var ids =  gmf.LayertreeController.getLayerNodeIds(node);
   layer.set('querySourceIds', ids);
   layer.set('layerName', node.name);
 
