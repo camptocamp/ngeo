@@ -119,7 +119,7 @@ ngeo.Message.prototype.getMessageObjects = function(object, opt_type) {
       msg: object,
       type: opt_type !== undefined ? opt_type : defaultType
     });
-  } else if (goog.isArray(object)) {
+  } else if (Array.isArray(object)) {
     object.forEach(function(msg) {
       if (typeof object === 'string') {
         msgObject = {

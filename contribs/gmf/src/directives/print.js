@@ -613,12 +613,12 @@ gmf.PrintController.prototype.print = function(format) {
  */
 gmf.PrintController.prototype.cancel = function() {
   // Cancel the latest request, if it's not finished yet.
-  goog.asserts.assert(!goog.isNull(this.requestCanceler_));
+  goog.asserts.assert(this.requestCanceler_ !== null);
   this.requestCanceler_.resolve();
 
   // Cancel the status timeout if there's one set, to make sure no other
   // status request is sent.
-  if (!goog.isNull(this.statusTimeoutPromise_)) {
+  if (this.statusTimeoutPromise_ !== null) {
     this.$timeout_.cancel(this.statusTimeoutPromise_);
   }
 
