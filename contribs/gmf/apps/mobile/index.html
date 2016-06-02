@@ -63,17 +63,17 @@
       <div class="active slide">
         <ul>
           <li>
-            <a href data-target="#background" data-toggle="slide-in">{{'Background' | translate}}</a>
+            <a href data-target="#background" data-toggle="slide-in" class="nav-button">{{'Background' | translate}}</a>
           </li>
           <li>
-            <a href data-target="#themes" data-toggle="slide-in">{{'Themes' | translate}}</a>
+            <a href data-target="#themes" data-toggle="slide-in" class="nav-button">{{'Themes' | translate}}</a>
           </li>
-          <gmf-layertree
-            gmf-layertree-source="mainCtrl.theme"
-            gmf-layertree-map="::mainCtrl.map"
-            gmf-layertree-openlinksinnewwindow="true">
-          </gmf-layertree>
         </ul>
+        <gmf-layertree
+          gmf-layertree-source="mainCtrl.theme"
+          gmf-layertree-map="::mainCtrl.map"
+          gmf-layertree-openlinksinnewwindow="true">
+        </gmf-layertree>
       </div>
       <gmf-backgroundlayerselector
         id="background"
@@ -100,26 +100,32 @@
       <div class="active slide">
         <ul>
           <li>
-            <a href data-target="#measure-tools" data-toggle="slide-in">{{'Measure tools' | translate}}</a>
-            <a href data-target="#login" data-toggle="slide-in">{{'Login' | translate}}</a>
+            <a href data-target="#measure-tools" data-toggle="slide-in" class="nav-button">{{'Measure tools' | translate}}</a>
+            <a href data-target="#login" data-toggle="slide-in" class="nav-button">{{'Login' | translate}}</a>
           </li>
         </ul>
       </div>
       <div id="measure-tools" class="slide" data-header-title="{{'Measure tools' | translate}}">
-        <a ngeo-btn
-          ng-click="mainCtrl.hideNav()"
-          class="measure-tools-button"
-          ng-model="mainCtrl.measurePointActive">
-          <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measurePointActive}"></span>
-          {{'Coordinate' | translate}}
-        </a>
-        <a ngeo-btn
-          ng-click="mainCtrl.hideNav()"
-          class="measure-tools-button"
-          ng-model="mainCtrl.measureLengthActive">
-          <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measureLengthActive}"></span>
-          {{'Length' | translate}}
-        </a>
+        <ul>
+          <li>
+            <a ngeo-btn
+              ng-click="mainCtrl.hideNav()"
+              class="nav-button"
+              ng-model="mainCtrl.measurePointActive">
+              <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measurePointActive}"></span>
+              {{'Coordinate' | translate}}
+            </a>
+          </li>
+          <li>
+            <a ngeo-btn
+              ng-click="mainCtrl.hideNav()"
+              class="nav-button"
+              ng-model="mainCtrl.measureLengthActive">
+              <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measureLengthActive}"></span>
+              {{'Length' | translate}}
+            </a>
+          </li>
+        </ul>
       </div>
       <gmf-authentication id="login" class="slide" data-header-title="{{'Login' | translate}}">
       </gmf-authentication>

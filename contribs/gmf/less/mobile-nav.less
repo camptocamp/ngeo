@@ -202,16 +202,6 @@ nav.nav-right {
     }
   }
 
-  ul a[data-toggle=slide-in] {
-    display: block;
-    height: @menu-item-height;
-    line-height: @menu-item-height;
-    color: @link-color;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
   .slide {
     position: fixed;
     height: ~"calc(100% - @{nav-bar-height})";
@@ -221,7 +211,13 @@ nav.nav-right {
     will-change: transform, opacity;
     opacity: 0;
     overflow-y: auto;
-    padding: @app-margin;
+    & > * {
+      padding: @app-margin;
+      margin: 0;
+      // make it so tags like "gmf-layertree" are correctly displayed
+      //  (ie. that padding and margin correctly apply)
+      display: block;
+    }
 
     &.active {
       transform: translateX(0%);
@@ -268,6 +264,20 @@ nav.nav-right {
   right: @app-margin;
   border-left: none;
   box-shadow: -3px 0 5px -2px #bbb;
+}
+
+/**
+ * Buttons for tool buttons (for example measure tools)
+ */
+.nav-button {
+  display: block;
+  padding: @app-margin 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 
