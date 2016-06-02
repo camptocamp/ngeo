@@ -63,14 +63,12 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
 	.build/examples-hosted/lib/proj4.js \
 	.build/examples-hosted/lib/font-awesome.min.css \
-	.build/examples-hosted/fonts/fontawesome-webfont.eot \
-	.build/examples-hosted/fonts/fontawesome-webfont.ttf \
-	.build/examples-hosted/fonts/fontawesome-webfont.woff \
-	.build/examples-hosted/fonts/fontawesome-webfont.woff2 \
+	$(addprefix .build/examples-hosted/fonts/fontawesome-webfont.,eot ttf woff woff2) \
+	$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur) \
 	.build/examples-hosted/partials \
 	.build/examples-hosted/data \
 	.build/examples-hosted/contribs/gmf/data \
-	.build/examples-hosted/contribs/gmf/partials \
+	.build/examples-hosted/contribs/gmf/partials
 
 # Git
 GITHUB_USERNAME ?= camptocamp
@@ -408,6 +406,10 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $@
 	cp $< $@
 
+.build/examples-hosted/contribs/gmf/cursors/%: contribs/gmf/cursors/%
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/partials: examples/partials
 	mkdir -p $@
 	cp $</* $@
@@ -693,6 +695,10 @@ $(EXTERNS_JQUERY):
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
 
+.PRECIOUS: contribs/gmf/cursors/%.cur
+contribs/gmf/cursors/%.cur: contribs/gmf/cursors/%.png
+	convert $< $@
+
 .PRECIOUS: .build/%.js
 .build/%.js: .build/app-%.json \
 		$(EXTERNS_FILES) \
@@ -712,10 +718,10 @@ compile-css: $(addprefix contribs/gmf/build/,$(addsuffix .css,$(GMF_APPS)))
 contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less \
 		$(GMF_APPS_LESS_FILES) \
 		.build/node_modules.timestamp \
-		$(FONTAWESOME_WEBFONT)
+		$(FONTAWESOME_WEBFONT) \
+		$(addprefix contribs/gmf/cursors/,grab.cur grabbing.cur)
 	mkdir -p $(dir $@)
 	./node_modules/.bin/lessc --autoprefix --clean-css="--s0" $< $@
-
 
 # i18n
 

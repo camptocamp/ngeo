@@ -35,8 +35,9 @@ gmf-layertree {
 
   &.dragger {
     * {
-      cursor: grabbing;
+      cursor: url(../cursors/grabbing.cur), default;
       cursor: -webkit-grabbing;
+      cursor: grabbing;
     }
     ul {
       display: none;
@@ -81,6 +82,7 @@ gmf-layertree {
   }
 
   .sortable-handle {
+    cursor: url(../cursors/grab.cur), default;
     cursor: -webkit-grab;
     cursor: grab;
     position: absolute;
