@@ -9,6 +9,7 @@ EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 
 
 FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2)
+JQUERY_UI = contribs/gmf/build/images/
 
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
@@ -54,6 +55,9 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/bootstrap.min.css \
 	.build/examples-hosted/lib/jquery.min.js \
 	.build/examples-hosted/lib/jquery-ui.min.js \
+	.build/examples-hosted/lib/jquery-ui.min.css \
+	.build/examples-hosted/contribs/gmf/build/images/ \
+	.build/examples-hosted/lib/images/ \
 	.build/examples-hosted/lib/d3.min.js \
 	.build/examples-hosted/lib/watchwatchers.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
@@ -179,7 +183,7 @@ test-debug: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/temp
 	touch $@
 
 .PHONY: serve
-serve: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
 	node buildtools/serve.js
 
 .PHONY: examples-hosted
@@ -368,6 +372,18 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/jquery-ui.min.css: contribs/gmf/third-party/jquery-ui/jquery-ui.min.css
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.build/examples-hosted/contribs/gmf/build/images/: contribs/gmf/third-party/jquery-ui/images/
+	mkdir -p $@
+	cp -r $< $@
+
+.build/examples-hosted/lib/images/: contribs/gmf/third-party/jquery-ui/images/
+	mkdir -p $@
+	cp -r $< $@
+
 .build/examples-hosted/lib/d3.min.js: node_modules/d3/d3.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -431,15 +447,12 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
-		-e 's|\.\./contribs/gmf/third-party/jquery-ui/jquery-ui.min.js|lib/jquery-ui.min.js|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
 		-e 's|\.\./node_modules/angular-animate/angular-animate.js|lib/angular-animate.min.js|' \
 		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext.js|lib/angular-gettext.min.js|' \
 		-e 's|\.\./node_modules/angular-touch/angular-touch.js|lib/angular-touch.min.js|' \
 		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
-		-e 's|\.\./node_modules/angular-ui-slider/src/slider.js|lib/slider.min.js|' \
-		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
 		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
@@ -455,7 +468,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap\.css|lib/bootstrap.min.css|' \
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery\.js|lib/jquery.min.js|' \
-		-e 's|\.\./contribs/gmf/third-party/jquery-ui/jquery-ui.min\.js|lib/jquery-ui.min.js|' \
+		-e 's|third-party/jquery-ui/jquery-ui.min\.js|\.\./lib/jquery-ui.min.js|' \
+		-e 's|third-party/jquery-ui/jquery-ui.min\.css|\.\./lib/jquery-ui.min.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap\.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular\.js|lib/angular.min.js|' \
 		-e 's|\.\./node_modules/angular-animate/angular-animate\.js|lib/angular-animate.min.js|' \
@@ -483,6 +497,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	sed -e '/stylesheet\/less" href="..\/..\//d' \
 		-e '/\/node_modules\//d' \
+		-e '/\/third-party\//d' \
 		-e '/default\.js/d' \
 		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
 		-e 's|/@?main=$*/js/controller\.js|../../build/$*.js|' $< > $@
@@ -777,6 +792,10 @@ contribs/gmf/fonts/gmf-icons.eot: contribs/gmf/fonts/gmf-icons.ttf .build/node_m
 
 contribs/gmf/fonts/gmf-icons.woff: contribs/gmf/fonts/gmf-icons.ttf .build/node_modules.timestamp
 	node_modules/ttf2woff/ttf2woff.js $< $@
+
+contribs/gmf/build/images/: contribs/gmf/third-party/jquery-ui/images
+	mkdir -p $@
+	cp $</*.png $@
 
 # clean
 
