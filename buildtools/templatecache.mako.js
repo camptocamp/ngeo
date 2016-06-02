@@ -16,7 +16,7 @@
       content = unicode(f.read().decode('utf8'))
       content = re.sub(r"'", "\\'", content)
       content = htmlmin.minify(content, remove_comments=True)
-      _partials[os.path.join(dest_folder, os.path.basename(filename))] = content
+      _partials[os.path.join(dest_folder, os.path.basename(filename)).replace("\\", "/")] = content
 %>\
 /**
  * ngeo template cache.

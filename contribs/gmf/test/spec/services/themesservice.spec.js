@@ -39,6 +39,7 @@ describe('gmf.Themes', function() {
     var responseFirstBgName = response[1].get('label');
     var firstBgName = themes.background_layers[0].name;
     expect(responseFirstBgName).toBe(firstBgName);
+    expect(response[1].get('querySourceIds')).toBeDefined();
   });
 
   it('Load themes', function() {

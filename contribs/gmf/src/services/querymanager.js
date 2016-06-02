@@ -21,11 +21,12 @@ goog.require('ngeo.Query');
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
+ * @param {angular.$q} $q Angular q service
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl) {
+gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
 
   /**
    * @type {ngeo.Query}
@@ -46,6 +47,12 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl) {
   this.gmfWmsUrl_ = gmfWmsUrl;
 
   /**
+   * @type {angular.$q}
+   * @private
+   */
+  this.$q_ = $q;
+
+  /**
    * @type {Array.<ngeox.QuerySource>}
    * @private
    */
@@ -57,12 +64,34 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl) {
    */
   this.cache_ = {};
 
-  this.gmfThemes_.getThemesObject().then(function(themes) {
+  // event listeners
+  ol.events.listenOnce(gmfThemes, gmf.ThemesEventType.LOAD,
+      this.handleThemesLoad_, this);
+};
+
+
+/**
+ * Called when the theme service has loaded the themes. Create a source for
+ * each theme and add them to the query service.
+ * @private
+ */
+gmf.QueryManager.prototype.handleThemesLoad_ = function() {
+  var promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
     // create sources for each themes
     for (var i = 0, len = themes.length; i < len; i++) {
       this.createSources_(themes[i]);
     }
-    // then add them to the query service
+  }.bind(this));
+
+  var promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(function(backgroundLayers) {
+    // create a source for each background layer
+    for (var i = 0, len = backgroundLayers.length; i < len; i++) {
+      this.createSources_(backgroundLayers[i]);
+    }
+  }.bind(this));
+
+  // then add all sources to the query service
+  this.$q_.all([promiseThemes, promiseBgLayers]).then(function() {
     this.ngeoQuery_.addSources(this.sources_);
   }.bind(this));
 };
@@ -106,7 +135,9 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
       if (node.childLayers && node.childLayers.length) {
         var childLayerNames = [];
         node.childLayers.forEach(function(childLayer) {
-          childLayerNames.push(childLayer.layers);
+          if (childLayer.queryable) {
+            childLayerNames.push(childLayer.layers);
+          }
         }, this);
         layers = childLayerNames.join(',');
       } else if (node.type === 'WMS') {
