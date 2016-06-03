@@ -96,14 +96,20 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
   var meta = node.metadata;
   var children = node.children;
   var id = node.id;
-  var identifierAttributeField = meta['identifierAttributeField'];
-  var layers = meta['wmsLayers'] || meta['queryLayers'] || node.layers;
+  var identifierAttributeField = meta.identifierAttributeField;
+  var layers = meta.wmsLayers || meta.queryLayers || node.layers;
   var name = node.name;
-  var url = meta['wmsUrl'] || node.url || this.gmfWmsUrl_;
+  var url = meta.wmsUrl || node.url || this.gmfWmsUrl_;
   var validateLayerParams = false;
+  var wfsQuery = node.wfsSupport;
+
+  // skip non-querable layers that have no child layers
+  if (node.queryable === 0 && !(node.childLayers && node.childLayers.length)) {
+    return;
+  }
 
   // don't create sources for WMTS layers without wmsUrl, they are not queryable.
-  if (node.type === 'WMTS' && !meta['wmsUrl']) {
+  if (node.type === 'WMTS' && !meta.wmsUrl) {
     return;
   }
 
@@ -138,7 +144,8 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
         'label': name,
         'params': {'LAYERS': layers},
         'url': url,
-        'validateLayerParams': validateLayerParams
+        'validateLayerParams': validateLayerParams,
+        'wfsQuery': wfsQuery
       };
       this.cache_[id] = source;
       this.sources_.push(source);

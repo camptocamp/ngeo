@@ -356,7 +356,8 @@ ngeox.QueryOptions.prototype.sourceIdsProperty;
  *     serverType: (string|undefined),
  *     url: (string|undefined),
  *     validateLayerParams: (boolean|undefined),
- *     wmsSource: (ol.source.ImageWMS|ol.source.TileWMS|undefined)
+ *     wmsSource: (ol.source.ImageWMS|ol.source.TileWMS|undefined),
+ *     wfsQuery: (boolean|undefined)
  * }}
  */
 ngeox.QuerySource;
@@ -461,6 +462,13 @@ ngeox.QuerySource.prototype.validateLayerParams;
  * @type {ol.source.ImageWMS|ol.source.TileWMS|undefined}
  */
 ngeox.QuerySource.prototype.wmsSource;
+
+
+/**
+ * If this source supports WFS requests.
+ * @type {boolean|undefined}
+ */
+ngeox.QuerySource.prototype.wfsQuery;
 
 
 /**

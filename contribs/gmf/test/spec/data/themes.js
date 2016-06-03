@@ -343,7 +343,7 @@ var themes = {
                 "serverType": "mapserver",
                 "queryable": 1,
                 "childLayers": [],
-                "wfsSupport": true,
+                "wfsSupport": false,
                 "time": {
                     "widget": "slider",
                     "interval": [0, 1, 0, 0],
@@ -372,7 +372,7 @@ var themes = {
                 "url": null,
                 "isSingleTile": false,
                 "serverType": "mapserver",
-                "queryable": 1,
+                "queryable": 0,
                 "childLayers": [],
                 "wfsSupport": true,
                 "maxResolutionHint": 1.41,

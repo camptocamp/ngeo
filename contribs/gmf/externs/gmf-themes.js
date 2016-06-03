@@ -42,7 +42,7 @@ GmfThemesNode.prototype.maxResolutionHint;
 
 
 /**
- * @type {Object.<string, ?>}
+ * @type {GmfMetaData}
  */
 GmfThemesNode.prototype.metadata;
 
@@ -89,6 +89,24 @@ GmfThemesNode.prototype.wmsUrl;
 
 
 /**
+ * @type {number|undefined}
+ */
+GmfThemesNode.prototype.queryable;
+
+
+/**
+ * @type {boolean|undefined}
+ */
+GmfThemesNode.prototype.wfsSupport;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesNode.prototype.urlWfs;
+
+
+/**
  * @constructor
  */
 var GmfThemesNodeCustom = function() {};
@@ -122,3 +140,33 @@ GmfChildLayerNode.prototype.name;
  * @type {number|boolean|undefined}
  */
 GmfChildLayerNode.prototype.queryable;
+
+
+/**
+ * @constructor
+ */
+var GmfMetaData = function() {};
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfMetaData.prototype.identifierAttributeField;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfMetaData.prototype.queryLayers;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfMetaData.prototype.wmsLayers;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfMetaData.prototype.wmsUrl;

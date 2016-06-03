@@ -61,6 +61,24 @@ describe('gmf.QueryManager', function() {
           'fuel,information,cinema,alpine_hut,bank,bus_stop,cafe,parking,' +
           'place_of_worship,police,post_office,restaurant,zoo';
       expect(osmSource.params.LAYERS).toBe(expectedLayers);
+      expect(osmSource.wfsQuery).toBe(true);
+    });
+
+    it('does not create sources for non-queryable layers', function() {
+      var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
+      queryManager.createSources_(osmTheme);
+      var osmScaleSource = getSourceById(queryManager.sources_, 114);
+      // layer is ignored because `queryable` is `0`
+      expect(osmScaleSource).toBeNull();
+    });
+
+    it('handles layers w/o WFS support', function() {
+      var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
+      queryManager.createSources_(osmTheme);
+      var osmTimeSource = getSourceById(queryManager.sources_, 110);
+      expect(osmTimeSource).not.toBeNull();
+      // layer does not support wfs ("wfsSupport": false)
+      expect(osmTimeSource.wfsQuery).toBe(false);
     });
 
     it('creates a source for queryable WMTS overlay layers', function() {
