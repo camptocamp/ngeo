@@ -9,11 +9,13 @@
         aria-expanded="{{::layertreeCtrl.node.metadata.isExpanded}}"
         class="fa expand-node fa-fw">
     </a>
-  <span class="layer-icon" ng-if="::!layertreeCtrl.node.children" ng-class="::{'no-layer-icon' : !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}"
-        ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)">
+  <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
+     ng-if="::!layertreeCtrl.node.children" ng-class="::{'no-layer-icon' : !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}"
+     class="layer-icon">
     <img ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))" ng-src="{{::legendIconUrl}}"></img>
-  </span>
-  <span ng-if="::layertreeCtrl.node.children" ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'state' : 'fa-refresh fa-spin']"></span>
+  </a>
+  <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
+     ng-if="::layertreeCtrl.node.children" ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'state' : 'fa-refresh fa-spin']"></a>
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
      class="name" title="{{layertreeCtrl.node.name | translate}}">
     <em>{{layertreeCtrl.node.name | translate}}</em>
