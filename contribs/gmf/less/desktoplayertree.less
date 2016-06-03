@@ -16,6 +16,7 @@ gmf-layertree {
   .rightButtons {
     visibility: hidden;
     cursor: pointer;
+    right: @app-margin;
   }
 
   &.depth-1 {
@@ -26,6 +27,9 @@ gmf-layertree {
     > ul {
       //adding space after the last li elem of the first level nodes
       padding-bottom: @half-app-margin;
+
+      // no padding for the first list in first level nodes
+      padding-left: 0;
     }
 
     &:hover {

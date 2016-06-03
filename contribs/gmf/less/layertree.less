@@ -4,15 +4,13 @@
   /**
    * Style rules for treenodes in the layertree
    */
-  margin-top: @half-app-margin;
+  margin-left: @app-margin; // left shifting (indentation)
 
   &.depth-1 {
     margin: 0 @micro-app-margin @app-margin @micro-app-margin;
   }
 
   ul {
-    padding: 0 @app-margin 0 2*@app-margin; //shifting child nodes
-
     ul {
       //nested ul (i.e node groups into node groups should not add extra padding)
       padding-right: 0;
@@ -46,7 +44,6 @@
 
   .rightButtons {
     position: absolute;
-    right: 0;
 
     *::before,
     *::after {
@@ -77,6 +74,7 @@
   .group {
     font-size: ceil(@font-size-base * 0.9);
     position: relative;
+    padding: @micro-app-margin;
   }
 
   .leaf .state::after {
@@ -97,9 +95,6 @@
       .name {
         font-weight: bold;
         color: black;
-      }
-      .rightButtons {
-        right: @app-margin;
       }
     }
 
