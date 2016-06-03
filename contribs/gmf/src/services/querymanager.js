@@ -124,7 +124,7 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
         var childLayerNames = [];
         node.childLayers.forEach(function(childLayer) {
           if (childLayer.queryable) {
-            childLayerNames.push(childLayer.layers);
+            childLayerNames.push(childLayer.name);
           }
         }, this);
         layers = childLayerNames.join(',');

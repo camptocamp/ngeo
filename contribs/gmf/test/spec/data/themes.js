@@ -230,6 +230,9 @@ var themes = {
                 "imageType": "image/jpeg",
                 "metadata": {
                     "max_resolution": "1000.0",
+                    "wmsUrl": "https://wms.geo.admin.ch/",
+                    "wmsLayers": "ch.are.alpenkonvention",
+                    "queryLayers": "ch.astra.ausnahmetransportrouten.queryLayers",
                     "legend": "true",
                     "disclaimer": "<a href=\"http://www.geo.admin.ch/\">Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
                     "queryLayers": "ch.astra.ausnahmetransportrouten.queryLayers",
@@ -248,6 +251,8 @@ var themes = {
                 "imageType": "image/jpeg",
                 "metadata": {
                     "legend": "true",
+                    "wmsUrl": "https://wms.geo.admin.ch/",
+                    "queryLayers": "ch.astra.ausnahmetransportrouten",
                     "disclaimer": "<a href=\"http://www.geo.admin.ch/\">Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>"
                 }
             }],
@@ -275,7 +280,7 @@ var themes = {
                     "queryable": 1
                 }, {
                     "name": "hotel",
-                    "queryable": 1
+                    "queryable": 0
                 }, {
                     "name": "information",
                     "queryable": 1
@@ -850,19 +855,6 @@ var themes = {
             "thumbnail": "https://geomapfish-demo.camptocamp.net/2.1/wsgi/project/-/img/cadastre.jpeg"
         }
     }, {
-        "name": "asitvd.fond_couleur",
-        "url": "http://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml",
-        "dimensions": {
-            "DIM1": "default",
-            "ELEVATION": "0"
-        },
-        "type": "WMTS",
-        "id": 133,
-        "imageType": "image/jpeg",
-        "metadata": {
-            "thumbnail": "https://geomapfish-demo.camptocamp.net/2.1/wsgi/project/-/img/cadastre.jpeg"
-        }
-    }, {
         "name": "map",
         "url": "https://geomapfish-demo.camptocamp.net/2.1/tiles/1.0.0/WMTSCapabilities.xml",
         "dimensions": {},
@@ -870,7 +862,9 @@ var themes = {
         "id": 134,
         "imageType": "image/jpeg",
         "metadata": {
-            "thumbnail": "https://geomapfish-demo.camptocamp.net/2.1/wsgi/project/-/img/cadastre.jpeg"
+            "thumbnail": "https://geomapfish-demo.camptocamp.net/2.1/wsgi/project/-/img/cadastre.jpeg",
+            "wmsUrl": "https://wms.geo.admin.ch/",
+            "wmsLayers": "ch.are.alpenkonvention"
         }
     }],
     "errors": []

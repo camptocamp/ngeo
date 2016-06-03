@@ -14,6 +14,7 @@ describe('Permalink service', function() {
   var PermalinkService, map, LayerHelper, firstLevelGroup, secondLevelGroup, dataGroup,
       StateManagerService, osmThemeNode, ngeoLocation;
   var $injector;
+  var themesClone;
 
   beforeEach(inject(function(_$injector_) {
 
@@ -23,7 +24,10 @@ describe('Permalink service', function() {
     ngeoLocation = $injector.get('ngeoLocation');
     map = new ol.Map({layers : []});
     PermalinkService.setMap(map);
-    PermalinkService.themes_ = themes['themes'];
+    // need to work on a clone of themes, because the permalink service
+    // seems to change the original object?!
+    themesClone = goog.object.unsafeClone(themes);
+    PermalinkService.themes_ = themesClone['themes'];
 
 
     //create fake layerTree
@@ -43,7 +47,7 @@ describe('Permalink service', function() {
     firstLevelGroup.getLayers().insertAt(0, secondLevelGroup);
     dataGroup.getLayers().insertAt(0, firstLevelGroup);
 
-    osmThemeNode = themes['themes'].filter(function(theme) {
+    osmThemeNode = themesClone['themes'].filter(function(theme) {
       return theme.name === 'OSM';
     })[0];
 

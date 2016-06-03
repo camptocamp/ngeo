@@ -58,8 +58,8 @@ describe('gmf.QueryManager', function() {
       var osmSource = getSourceById(queryManager.sources_, 109);
       // hotel is ignored because `queryable` is `0`
       var expectedLayers =
-          'fuel,information,cinema,alpine_hut,bus_stop,cafe,parking,' +
-          'police,post_office,restaurant,bank,place_of_worship';
+          'fuel,information,cinema,alpine_hut,bank,bus_stop,cafe,parking,' +
+          'place_of_worship,police,post_office,restaurant,zoo';
       expect(osmSource.params.LAYERS).toBe(expectedLayers);
     });
 
