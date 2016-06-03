@@ -51,9 +51,11 @@
         <a title="{{'More informations'|translate}}" href="" ng-click="gmfLayertreeCtrl.displayMetadata(layertreeCtrl)"></a>
       </span>
     </span>
-    <span class="legend-button" ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend">
-      <a title="{{'Show/hide legend'|translate}}" data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend"></a>
-    </span>
+    <a class="fa fa-align-left legend-button"
+       ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend"
+       title="{{'Show/hide legend'|translate}}"
+       data-toggle="collapse"
+       href="#node-{{::layertreeCtrl.uid}}-legend"></a>
   </span>
     <div ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend" id="node-{{::layertreeCtrl.uid}}-legend" class="collapse legend" ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded ? 'in' : '']">
       <a title="{{'Hide legend'|translate}}" data-toggle="collapse" ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#node-' + layertreeCtrl.uid + '-legend')" href="">{{'Hide legend'|translate}}</a>
