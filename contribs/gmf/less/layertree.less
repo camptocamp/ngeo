@@ -42,7 +42,7 @@
     }
   }
 
-  .rightButtons {
+  .right-buttons {
     position: absolute;
 
     *::before,
@@ -85,7 +85,7 @@
     .state::after {
       content: "\e600";
     }
-    .layerIcon {
+    .layer-icon {
       display: none;
     }
 
@@ -103,7 +103,7 @@
     }
   }
 
-  .layerIcon {
+  .layer-icon {
     display: inline-flex;
     height: @app-margin;
     width: 2 * @app-margin;
@@ -146,22 +146,22 @@
     }
   }
 
-  .noSource {
+  .no-source {
     opacity: 0.3;
     &::after {
       content: "(source not available)";
     }
   }
 
-  .outOfResolution {
+  .out-of-resolution {
     .name em {
       font-style: italic;
     }
     .zoom {
       display: inline;
     }
-    .rightButtons {
-      .legendButton {
+    .right-buttons {
+      .legend-button {
         display: none;
       }
     }
@@ -170,7 +170,7 @@
     }
   }
 
-  .legendButton {
+  .legend-button {
     a {
       padding: 0;
       &::after {

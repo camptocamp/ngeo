@@ -10,7 +10,7 @@
         class="fa expand-node fa-fw">
     </a>
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)">
-    <span class="layerIcon" ng-if="::!layertreeCtrl.node.children" ng-class="::{'no-layer-icon' : !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}">
+    <span class="layer-icon" ng-if="::!layertreeCtrl.node.children" ng-class="::{'no-layer-icon' : !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}">
       <img ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))" ng-src="{{::legendIconUrl}}"></img>
     </span>
     <span ng-if="::layertreeCtrl.node.children" ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'state' : 'fa-refresh fa-spin']"></span>
@@ -23,7 +23,7 @@
          ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) == 'on'"></i>
     </span>
   </a>
-  <span class="rightButtons">
+  <span class="right-buttons">
     <a href="" ng-if="::layertreeCtrl.depth == 1" ng-click="gmfLayertreeCtrl.removeNode(layertreeCtrl.node)">
       <span class="fa fa-trash"></span>
     </a>
@@ -51,7 +51,7 @@
         <a title="{{'More informations'|translate}}" href="" ng-click="gmfLayertreeCtrl.displayMetadata(layertreeCtrl)"></a>
       </span>
     </span>
-    <span class="legendButton" ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend">
+    <span class="legend-button" ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend">
       <a title="{{'Show/hide legend'|translate}}" data-toggle="collapse" href="#node-{{::layertreeCtrl.uid}}-legend"></a>
     </span>
   </span>
