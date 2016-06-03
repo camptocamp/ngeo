@@ -1,6 +1,8 @@
 goog.require('ngeo.Query');
 goog.require('ngeo.test.data.msGMLOutputBusStop');
 goog.require('ngeo.test.data.msGMLOutputBusStopAndInformation');
+goog.require('ngeo.test.data.msGMLOutputBusStopWfs');
+goog.require('ngeo.test.data.msGMLOutputInformationWfs');
 
 describe('ngeo.Query', function() {
 
@@ -64,7 +66,7 @@ describe('ngeo.Query', function() {
     expect(source.wmsSource).toBe(wmsSource);
   });
 
-  describe('Issue identity feature request', function() {
+  describe('Issue requests', function() {
 
     var map;
     var busStopLayer;
@@ -74,19 +76,17 @@ describe('ngeo.Query', function() {
     var coordinate;
     var $httpBackend;
 
+    var url = 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy';
+    var requestUrlBusStop = url + '?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=489100%2C119900.00000000003%2C509300%2C140100.00000000003&LAYERS=bus_stop&QUERY_LAYERS=bus_stop';
+    var requestUrlBusStopAndInformation = url + '?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=523700%2C142900.00000000003%2C543900%2C163100.00000000003&LAYERS=information%2Cbus_stop&QUERY_LAYERS=information%2Cbus_stop';
+
     beforeEach(function() {
-
-      var url = 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy';
-
-      var requestUrlBusStop = url + '?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=489100%2C119900.00000000003%2C509300%2C140100.00000000003&LAYERS=bus_stop&QUERY_LAYERS=bus_stop';
-      var requestUrlBusStopAndInformation = url + '?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=523700%2C142900.00000000003%2C543900%2C163100.00000000003&LAYERS=information%2Cbus_stop&QUERY_LAYERS=information%2Cbus_stop';
 
       inject(function($injector) {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('GET', requestUrlBusStop).respond(gmlResponseBusStop);
         $httpBackend.when('GET', requestUrlBusStopAndInformation).respond(
             gmlResponseBusStopAndInformation);
-        $httpBackend = $injector.get('$httpBackend');
       });
 
       busStopLayer = new ol.layer.Image({
@@ -181,6 +181,107 @@ describe('ngeo.Query', function() {
       expect(ngeoQueryResult.sources[0].features.length).toBe(0);
       expect(ngeoQueryResult.sources[1].features.length).toBe(0);
       expect(ngeoQueryResult.total).toBe(0);
+    });
+
+    it('Issues WFS request for one source', function() {
+      $httpBackend.when('POST', url).respond(gmlResponseInformationWfs);
+
+      var coordinate = [499200, 130000.00000000003];
+      // make a GetFeatureInfo request for this source
+      ngeoQuery.addSource({
+        id: busStopSourceId,
+        layer: busStopLayer
+      });
+      // and a WFS GetFeature request for this one
+      ngeoQuery.addSource({
+        id: informationSourceId,
+        layer: informationLayer,
+        wfsQuery: true
+      });
+      ngeoQuery.issue(map, coordinate);
+      $httpBackend.flush();
+      expect(ngeoQueryResult.sources[0].features.length).toBe(1);
+      expect(ngeoQueryResult.sources[1].features.length).toBe(3);
+      expect(ngeoQueryResult.total).toBe(4);
+    });
+
+    it('Issues WFS request for two sources', function() {
+      $httpBackend.when('POST', url).respond(gmlResponseBusStopWfs);
+      $httpBackend.when('POST', url + '?information').respond(gmlResponseInformationWfs);
+
+      var coordinate = [499200, 130000];
+      ngeoQuery.addSource({
+        id: busStopSourceId,
+        layer: busStopLayer,
+        wfsQuery: true
+      });
+      ngeoQuery.addSource({
+        id: informationSourceId,
+        layer: informationLayer,
+        wfsQuery: true,
+        urlWfs: url + '?information'
+      });
+      ngeoQuery.issue(map, coordinate);
+      $httpBackend.flush();
+      expect(ngeoQueryResult.sources[0].features.length).toBe(2);
+      expect(ngeoQueryResult.sources[1].features.length).toBe(3);
+      expect(ngeoQueryResult.total).toBe(5);
+    });
+
+    describe('#getQueryableSources_', function () {
+      it('gets sources for GetFeatureInfo requests', function () {
+        ngeoQuery.addSource({
+          id: busStopSourceId,
+          layer: busStopLayer
+        });
+        ngeoQuery.addSource({
+          id: informationSourceId,
+          layer: informationLayer
+        });
+
+        var queryableSources = ngeoQuery.getQueryableSources_(map, false);
+        expect(url in queryableSources.wfs).not.toBe(true);
+        expect(url in queryableSources.wms).toBe(true);
+        expect(queryableSources.wms[url].length).toBe(2);
+      });
+
+      it('gets sources for GetFeature requests', function () {
+        ngeoQuery.addSource({
+          id: busStopSourceId,
+          layer: busStopLayer,
+          wfsQuery: true
+        });
+        ngeoQuery.addSource({
+          id: informationSourceId,
+          layer: informationLayer,
+          wfsQuery: false
+        });
+
+        var queryableSources = ngeoQuery.getQueryableSources_(map, true);
+        expect(url in queryableSources.wms).not.toBe(true);
+        expect(url in queryableSources.wfs).toBe(true);
+        expect(queryableSources.wfs[url].length).toBe(1);
+      });
+
+      it('only gets visible layers', function () {
+        map.getView().setResolution(50);
+        // layer is not visible
+        busStopLayer.setVisible(false);
+        ngeoQuery.addSource({
+          id: busStopSourceId,
+          layer: busStopLayer
+        });
+        // layer is out of range
+        informationLayer.setMinResolution(60);
+        ngeoQuery.addSource({
+          id: informationSourceId,
+          layer: informationLayer,
+          wfsQuery: true
+        });
+        var queryableSources = ngeoQuery.getQueryableSources_(map, false);
+        expect(url in queryableSources.wms).not.toBe(true);
+        expect(url in queryableSources.wfs).not.toBe(true);
+      });
     });
   });
 

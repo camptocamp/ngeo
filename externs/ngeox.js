@@ -319,7 +319,11 @@ ngeox.QueryResultSource.prototype.queried;
  * The options for the query service.
  * @typedef {{
  *     limit: (number|undefined),
- *     sourceIdsProperty: (string|undefined)
+ *     sourceIdsProperty: (string|undefined),
+ *     tolerance: (number|undefined),
+ *     featureNS: (string|undefined),
+ *     featurePrefix: (string|undefined),
+ *     geometryName: (string|undefined)
  * }}
  */
 ngeox.QueryOptions;
@@ -341,6 +345,38 @@ ngeox.QueryOptions.prototype.limit;
  * @type {string|undefined}
  */
 ngeox.QueryOptions.prototype.sourceIdsProperty;
+
+
+/**
+ * When issuing an identify feature request at a click position, either a WMS GetFeatureInfo
+ * or a WFS GetFeature request will be used. For GetFeature requests a bbox is built
+ * around the position. This `tolerance` in pixel determines the size of the bbox.
+ * The default is `3` pixel.
+ * @type {number|undefined}
+ */
+ngeox.QueryOptions.prototype.tolerance;
+
+
+/**
+ * The feature namespace for WFS GetFeature requests. The default is
+ * `http://mapserver.gis.umn.edu/mapserver`.
+ * @type {string|undefined}
+ */
+ngeox.QueryOptions.prototype.featureNS;
+
+
+/**
+ * The feature prefix for WFS GetFeature requests. The default is `feature`.
+ * @type {string|undefined}
+ */
+ngeox.QueryOptions.prototype.featurePrefix;
+
+
+/**
+ * The name of the geometry property for WFS GetFeature requests. The default is `the_geom`.
+ * @type {string|undefined}
+ */
+ngeox.QueryOptions.prototype.geometryName;
 
 
 /**
