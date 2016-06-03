@@ -14,9 +14,8 @@ gmf-layertree {
 .gmf-layertree-node {
 
   .right-buttons {
-    visibility: hidden;
+    display: none;
     cursor: pointer;
-    right: @app-margin;
   }
 
   &.depth-1 {
@@ -68,11 +67,15 @@ gmf-layertree {
   .group:hover,
   .leaf:hover {
     .right-buttons {
-      visibility: visible;
+      display: block;
     }
   }
 
-  .leaf .legend:hover {
+  .leaf {
+    padding-right: @half-app-margin;
+  }
+
+  .legend:hover {
     a {
       cursor: pointer;
       display: inline-block;
@@ -81,6 +84,10 @@ gmf-layertree {
 
   .legend-button {
     display: none;
+  }
+
+  .name {
+    white-space: nowrap;
   }
 
   // leave space for the drag handle
@@ -97,6 +104,7 @@ gmf-layertree {
     top: 0;
     height: 100%;
     width : @app-margin;
+    margin: 0;
   }
 
   .sortable-handle-icon {
