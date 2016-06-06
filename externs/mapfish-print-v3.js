@@ -164,6 +164,12 @@ MapFishPrintWmsLayer.prototype.layers;
 
 
 /**
+ * @type {string}
+ */
+MapFishPrintWmsLayer.prototype.serverType;
+
+
+/**
  * @type {Array.<string>}
  */
 MapFishPrintWmsLayer.prototype.styles;
