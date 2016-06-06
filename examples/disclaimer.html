@@ -52,22 +52,22 @@
     </p>
     <div class="buttons">
       <button
-          ng-click="ctrl.disclaimer.success('Disclaimer with success style')"
+          ng-click="ctrl.success()"
           title="Displays a disclaimer success message using default options."
           type="button"
           class="btn btn-success">Success</button>
       <button
-          ng-click="ctrl.disclaimer.info('Disclaimer with information style')"
+          ng-click="ctrl.info()"
           title="Displays a disclaimer info message using default options."
           type="button"
           class="btn btn-info">Info</button>
       <button
-          ng-click="ctrl.disclaimer.warn('Disclaimer with warning style')"
+          ng-click="ctrl.warn()"
           title="Displays a disclaimer warning message using default options."
           type="button"
           class="btn btn-warning">Warning</button>
       <button
-          ng-click="ctrl.disclaimer.error('Disclaimer with error style')"
+          ng-click="ctrl.error()"
           title="Displays a disclaimer error message using default options."
           type="button"
           class="btn btn-danger">Error</button>
@@ -76,6 +76,11 @@
           title="Displays multiple disclaimer messages inside the map."
           type="button"
           class="btn btn-default">In Map</button>
+      <button
+          ng-click="ctrl.closeAll()"
+          title="Closes all currently visible disclaimer messages"
+          type="button"
+          class="btn btn-danger">Close all</button>
     </div>
 
     <script src="../node_modules/jquery/dist/jquery.js"></script>
