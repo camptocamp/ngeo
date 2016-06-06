@@ -4,6 +4,7 @@ goog.provide('gmf-layertree');
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.TreeManager');
+goog.require('gmf.disclaimerDirective');
 goog.require('gmf.layertreeDirective');
 goog.require('gmf.mapDirective');
 goog.require('ngeo.proj.EPSG21781');
