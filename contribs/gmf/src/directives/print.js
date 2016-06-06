@@ -698,9 +698,14 @@ gmf.PrintController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
   var mfResp = /** @type {MapFishPrintStatusResponse} */ (resp.data);
   var done = mfResp.done;
   if (done) {
-    // The report is ready. Open it by changing the window location.
-    window.location.href = this.ngeoPrint_.getReportUrl(ref);
-    this.resetPrintStates_();
+    if (mfResp.status != 'error') {
+      // The report is ready. Open it by changing the window location.
+      window.location.href = this.ngeoPrint_.getReportUrl(ref);
+      this.resetPrintStates_();
+    } else {
+      console.error(mfResp.error);
+      this.handleCreateReportError_();
+    }
   } else {
     // The report is not ready yet. Check again in 1s.
     this.statusTimeoutPromise_ = this.$timeout_(function() {

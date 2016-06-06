@@ -326,6 +326,18 @@ MapFishPrintStatusResponse.prototype.done;
 /**
  * @type {string}
  */
+MapFishPrintStatusResponse.prototype.status;
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintStatusResponse.prototype.error;
+
+
+/**
+ * @type {string}
+ */
 MapFishPrintStatusResponse.prototype.downloadURL;
 
 
