@@ -16,9 +16,10 @@ goog.require('ngeo.Debounce');
  * Example:
  *
  *      <span gmf-elevation
- *            gmf-elevation-active="elvationActive"
+ *            gmf-elevation-active="elevationActive"
  *            gmf-elevation-elevation="elevationValue"
  *            gmf-elevation-layer="mainCtrl.elevationLayer"
+ *            gmf-elevation-layers="::mainCtrl.elevationLayers"
  *            gmf-elevation-map="::mainCtrl.map">
  *            {{elevationValue | number:2}}m
  *      </span>
@@ -28,9 +29,10 @@ goog.require('ngeo.Debounce');
  *     deactive the component.
  * @htmlAttribute {number} gmf-elevation-elevation The value to set with the
  *     elevation value.
- * @htmlAttribute {string?} gmf-elevation-layer The elevation layer to use as
- *     named in the server response object. If not provided, take the first
- *     returned value.
+ * @htmlAttribute {string?} gmf-elevation-layer Optional elevation layer to
+ *     display. If not provided, display the first value.
+ * @htmlAttribute {Array.<string>?} gmf-elevation-layers Optional list of
+ *     layers to ask to the server. If not provided, get all available layers.
  * @htmlAttribute {ol.Map} gmf-elevation-map The map.
  * @return {angular.Directive} Directive Definition Object.
  * @ngdoc directive
@@ -46,15 +48,25 @@ gmf.elevationDirective = function() {
       'active': '=gmfElevationActive',
       'elevation': '=gmfElevationElevation',
       'layer': '=?gmfElevationLayer',
+      'getLayersFn': '&?gmfElevationLayers',
       'getMapFn': '&gmfElevationMap'
     },
     link: function(scope, element, attr) {
       var ctrl = scope['ctrl'];
 
+      // Watch active or not.
       scope.$watch(function() {
         return ctrl.active;
       }, function(active) {
         this.toggleActive_(active);
+      }.bind(ctrl));
+
+      // Watch current layer.
+      scope.$watch(function() {
+        return ctrl.layer;
+      }, function(layer) {
+        this.layer = layer;
+        this.updateElevation_();
       }.bind(ctrl));
     }
   };
@@ -104,6 +116,18 @@ gmf.ElevationController = function(ngeoDebounce, gmfAltitude) {
    */
   this.layer;
 
+  /**
+   * @type {Array.<string>|undefined}
+   * @export
+   */
+  this.layers = this['getLayersFn'] ? this['getLayersFn']() : undefined;
+
+  /**
+   * @type {?Object.<string, number>}
+   * @export
+   */
+  this.lastValue_ = null;
+
   var map = this['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
 
@@ -143,7 +167,10 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
  * @private
  */
 gmf.ElevationController.prototype.pointerMove_ = function(e) {
-  this.gmfAltitude_.getAltitude(e.coordinate).then(
+  var params = !this.layers ? undefined : {
+    'layers': this.layers.join(',')
+  };
+  this.gmfAltitude_.getAltitude(e.coordinate, params).then(
       this.getAltitudeSuccess_.bind(this),
       this.getAltitudeError_.bind(this)
   );
@@ -155,12 +182,9 @@ gmf.ElevationController.prototype.pointerMove_ = function(e) {
  * @private
  */
 gmf.ElevationController.prototype.getAltitudeSuccess_ = function(resp) {
-  if (resp !== null) {
-    var layer = this.layer ? this.layer : Object.keys(resp)[0];
-    this.elevation = /** @type {number} */ (resp[layer]);
-  } else {
-    this.elevation = undefined;
-  }
+  this.lastValue_ = resp !== null ?
+    /** @type {Object<string, number>} */ (resp) : null;
+  this.updateElevation_();
 };
 
 
@@ -170,6 +194,20 @@ gmf.ElevationController.prototype.getAltitudeSuccess_ = function(resp) {
 gmf.ElevationController.prototype.getAltitudeError_ = function() {
   console.error('Error on getting altitude.');
   this.elevation = undefined;
+};
+
+
+/**
+ * @private
+ */
+gmf.ElevationController.prototype.updateElevation_ = function() {
+  if (this.lastValue_ !== null) {
+    var layer =  (this.layer && this.layer in this.lastValue_) ? this.layer :
+        Object.keys(this.lastValue_)[0];
+    this.elevation = this.lastValue_[layer];
+  } else {
+    this.elevation = undefined;
+  }
 };
 
 

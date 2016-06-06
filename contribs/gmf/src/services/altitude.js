@@ -41,12 +41,13 @@ gmf.Altitude = function($http, gmfAltitudeUrl) {
 
 /**
  * @param {ol.Coordinate} coordinate Coordinate.
+ * @param {Object=} opt_params Optional parameters for the request.
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.Altitude.prototype.getAltitude = function(coordinate) {
+gmf.Altitude.prototype.getAltitude = function(coordinate, opt_params) {
 
-  var params = {};
+  var params = opt_params || {};
   params[gmf.AltitudeParam.X] = coordinate[0];
   params[gmf.AltitudeParam.Y] = coordinate[1];
 
