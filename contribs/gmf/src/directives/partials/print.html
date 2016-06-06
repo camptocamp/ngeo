@@ -67,14 +67,14 @@
       <button ng-show="ctrl.fields.formats.png" class="btn btn-primary" ng-click="ctrl.print('png')">Image</button>
       <button ng-show="ctrl.fields.formats.pdf" class="btn btn-primary" ng-click="ctrl.print('pdf')">PDF</button>
     </div>
-    <div ng-show="ctrl.isState('ERROR_ON_REPORT')" class="form-group pull-left">
+    <div ng-show="ctrl.isState('ERROR_ON_REPORT')" class="form-group pull-left text-danger">
       <p>{{'Error during the print, please try again.' | translate}}</p>
     </div>
   </div>
   <div ng-show="ctrl.isState('CAPABILITIES_NOT_LOADED')" class="form-group pull-left">
     <p>{{'Connecting to the print server, please wait.' | translate}}</p>
   </div>
-  <div ng-show="ctrl.isState('ERROR_ON_GETCAPABILITIES')" class="form-group pull-left">
+  <div ng-show="ctrl.isState('ERROR_ON_GETCAPABILITIES')" class="form-group pull-left text-danger">
     <p>{{'The print server is unavailable. Please, try later.' | translate}}</p>
   </div>
 </div>
