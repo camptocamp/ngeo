@@ -926,7 +926,7 @@ gmf.LayertreeController.prototype.getNodeDisclaimers_ = function(node) {
       });
     }, this);
   } else if (node.metadata !== undefined &&
-             node.metadata.disclaimer !== undefined &&
+             node.metadata['disclaimer'] !== undefined &&
              disclaimers.indexOf(node.metadata['disclaimer']) === -1) {
     disclaimers.push(node.metadata['disclaimer']);
   }
