@@ -27,7 +27,10 @@
     <span ngeo-popover ngeo-popover-dismiss=".content" ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) === 'on' && layertreeCtrl.node.time && layertreeCtrl.node.time.mode !== 'disabled'">
       <span ngeo-popover-anchor class="fa fa-clock-o" ng-click="$event.preventDefault(); $event.stopPropagation()"></span>
         <div ngeo-popover-content>
-          <gmf-date-picker time="layertreeCtrl.node.time" on-date-selected="gmfLayertreeCtrl.updateWMSTimeLayerState(layertreeCtrl, time)"></gmf-date-picker>
+          <gmf-date-picker ng-if="::layertreeCtrl.node.time.widget === 'datepicker'" time="layertreeCtrl.node.time" on-date-selected="gmfLayertreeCtrl.updateWMSTimeLayerState(layertreeCtrl, time)"></gmf-date-picker>
+          <gmf-time-slider ng-if="::layertreeCtrl.node.time.widget === 'slider'"
+            gmf-time-slider-time="layertreeCtrl.node.time"
+            gmf-time-slider-on-date-selected="gmfLayertreeCtrl.updateWMSTimeLayerState(layertreeCtrl, time)"/>
         </div>
     </span>
   </a>

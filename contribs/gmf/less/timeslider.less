@@ -1,0 +1,33 @@
+.gmf-time-slider {
+  @handle-width : 0.6em;
+
+  // 28 px come from bs popover class .popover-content { padding: 9px 14px; }
+  min-width: @popover-max-width - 28px;
+
+  .ui-slider-handle {
+    top: -0.7rem;
+    width: @handle-width;
+    cursor: pointer;
+    margin-left: -@handle-width / 2;
+  }
+
+  .ui-slider-horizontal {
+    height: 0.4rem;
+    margin: @half-app-margin 0;
+  }
+
+  .tooltip {
+    min-width: 6.5rem;
+  }
+
+  .displayed-dates {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .start-date,
+  .end-date {
+    font-size : @font-size-small;
+    margin-top: @half-app-margin;
+  }
+}

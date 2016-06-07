@@ -11,6 +11,10 @@ goog.require('gmf.mousepositionDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.printDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.DatePickerDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.TimeSliderDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.resizemapDirective');

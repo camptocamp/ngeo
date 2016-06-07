@@ -1,6 +1,6 @@
-goog.provide('gmf-timeselector');
+goog.provide('gmf-timeslider');
 
-goog.require('gmf.DatePickerDirective');
+goog.require('gmf.TimeSliderDirective');
 goog.require('gmf.WMSTime');
 
 /** @const **/
@@ -30,13 +30,13 @@ app.MainController = function($scope, gmfWMSTime) {
    * @export
    */
   this.wmsTimeRangeMode = {
-    widget: /** @type {gmfx.TimePropertyWidgetEnum} */ ('datepicker'),
+    widget: /** @type {gmfx.TimePropertyWidgetEnum} */ ('slider'),
     maxValue: '2013-12-31T00:00:00Z',
     minValue: '2006-01-01T00:00:00Z',
     maxDefValue: null,
     minDefValue: null,
     resolution: /** @type {gmfx.TimePropertyResolutionEnum}*/ ('day'),
-    mode: /** @type {gmfx.TimePropertyModeEnum} */ ('range'),
+    mode: /** @type {gmfx.TimePropertyModeEnum} */('range'),
     interval : [0,1,0,0]
   };
 
@@ -45,34 +45,36 @@ app.MainController = function($scope, gmfWMSTime) {
    * @export
    */
   this.wmsTimeValueMode = {
-    widget: /** @type {gmfx.TimePropertyWidgetEnum} */ ('datepicker'),
+    widget: /** @type {gmfx.TimePropertyWidgetEnum} */ ('slider'),
     maxValue: '2015-12-31T00:00:00Z',
     minValue: '2014-01-01T00:00:00Z',
     maxDefValue: null,
     minDefValue: null,
-    resolution: /** @type {gmfx.TimePropertyResolutionEnum}*/ ('month'),
+    resolution: /** @type {gmfx.TimePropertyResolutionEnum}*/ ('year'),
     mode: /** @type {gmfx.TimePropertyModeEnum} */ ('value'),
-    interval : [0,1,0,0]
+    interval : [0,0,1,0]
   };
 
   /**
    * @type {string}
    * @export
    */
-  this.value;
+  this.sliderValue;
 
   /**
    * @type {string}
    * @export
    */
-  this.rangeValue;
+  this.sliderRangeValue;
 
   this.onDateSelected = function(date) {
-    this.value = this.gmfWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
+    this.sliderValue = this.gmfWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
+    $scope.$digest();
   };
 
   this.onDateRangeSelected = function(date) {
-    this.rangeValue = this.gmfWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
+    this.sliderRangeValue = this.gmfWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
+    $scope.$digest();
   };
 
 };
