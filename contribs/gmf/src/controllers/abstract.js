@@ -8,6 +8,8 @@ goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
+goog.require('gmf.disclaimerDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');

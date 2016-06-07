@@ -111,6 +111,9 @@
           </gmf-backgroundlayerselector>
         </div>
         <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"></gmf-map>
+        <gmf-disclaimer
+          gmf-disclaimer-map="::mainCtrl.map">
+        </gmf-disclaimer>
 
         <!--infobar-->
         <div class="footer" ng-class="{'active': mainCtrl.showInfobar}">
@@ -150,7 +153,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </main>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
