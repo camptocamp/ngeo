@@ -24,6 +24,12 @@
        data-title="{{'Not visible at current scale. Click to zoom.'|translate}}"
        ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
        ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) == 'on'"></i>
+    <span ngeo-popover ngeo-popover-dismiss=".content" ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) === 'on' && layertreeCtrl.node.time && layertreeCtrl.node.time.mode !== 'disabled'">
+      <span ngeo-popover-anchor class="fa fa-clock-o" ng-click="$event.preventDefault(); $event.stopPropagation()"></span>
+        <div ngeo-popover-content>
+          <gmf-date-picker time="layertreeCtrl.node.time" on-date-selected="gmfLayertreeCtrl.updateWMSTimeLayerState(layertreeCtrl, time)"></gmf-date-picker>
+        </div>
+    </span>
   </a>
   <span class="right-buttons">
     <a href="" ng-if="::layertreeCtrl.depth == 1" ng-click="gmfLayertreeCtrl.removeNode(layertreeCtrl.node)">

@@ -286,8 +286,9 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
       break;
     case gmf.Themes.NodeType.WMS:
       var url = node.url || this.gmfWmsUrl_;
+      var time = this.nodeTimeToISO_(node);
       layer = this.layerHelper_.createBasicWMSLayer(url, node.layers,
-              node.serverType);
+              node.serverType, time);
       break;
     default:
       throw new Error('node wrong type: ' + type);
@@ -320,14 +321,33 @@ gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
  * @private
  */
 gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
-  var names = this.retrieveNodeNames_(node, true);
+  var childs = [];
+  var timeParam;
+
+  this.getFlatNodes_(node, childs);
+  var layersNames = childs.map(function(node) {
+    return node['layers'];
+  }).join(',');
   var url = node.url || this.gmfWmsUrl_;
   var serverType = node.children[0]['serverType'];
-  var layer = this.layerHelper_.createBasicWMSLayer(url, '', serverType);
-  this.updateWMSLayerState_(layer, names);
+  var nodes = [node].concat(childs);
+  var nodesWithTime = nodes.filter(hasTime);
+  if (nodesWithTime.length) {
+    timeParam = this.nodeTimeToISO_(nodesWithTime[0]);
+  }
 
+  var layer = this.layerHelper_.createBasicWMSLayer(url, layersNames, serverType, timeParam);
   // Keep a reference to this group with all layer name inside.
   this.groupNodeStates_[goog.getUid(layer)] = [];
+
+  /**
+   * hasTime - filter function to get node with time param
+   * @param  {GmfThemesNode} node the tested node
+   * @return {boolean} node with a time parameter
+   */
+  function hasTime(node) {
+    return node.time && node.time['minValue'];
+  }
 
   return layer;
 };
@@ -496,7 +516,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
           }
         }
         goog.asserts.assertInstanceof(firstParentTreeLayer, ol.layer.Image);
-        this.updateWMSLayerState_(firstParentTreeLayer, newLayersNames);
+        this.updateWMSLayerState_(firstParentTreeLayer, newLayersNames.join(','));
       }
       break;
 
@@ -549,7 +569,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
       }
       firstParentTreeLayer = /** @type {ol.layer.Image} */
           (firstParentTreeLayer);
-      this.updateWMSLayerState_(firstParentTreeLayer, layers);
+      this.updateWMSLayerState_(firstParentTreeLayer, layers.join(','));
       break;
     // no default
   }
@@ -630,22 +650,85 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
 
 
 /**
+ * Transform date object to an ISO date string without millesceond
+ *
+ * @param  {Object} date The date object
+ * @return {string} ISO date string without millesceond
+ * @private
+ */
+gmf.LayertreeController.prototype.toISOdateString_ = function(date) {
+  return date.toISOString().replace(/\.\d{3}/, '');
+};
+
+
+/**
+ * LayertreeController.prototype.nodeTimeToISO_ - get the ISO-8601 string duration/time
+ * for the node using its time parameter
+ * @private
+ * @param  {GmfThemesNode} node node
+ * @return {string|undefined} ISO-8601 string duration/time
+ */
+gmf.LayertreeController.prototype.nodeTimeToISO_ = function(node) {
+  if (!node.time) {
+    return undefined;
+  }
+
+  return node.time['maxValue']
+    ? this.toISOdateString_(new Date(node.time['minValue'])) + '/' + this.toISOdateString_(new Date(node.time['maxValue']))
+    : this.toISOdateString_(new Date(node.time['minValue']));
+};
+
+
+/**
+ * Update the TIME parameter of the source of the layer attached to the given
+ * layertree contoller
+ * LayertreeController.prototype.updateWMSTimeLayerState - description
+ * @param {ngeo.LayertreeController} layertreeCtrl ngeo layertree controller
+ * @param {{start : Object, end : Object}} time The start
+ * and optionally the end datetime (for time range selection) selected by user
+ * @export
+ */
+gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
+  if (time) {
+    var layer = /** @type {ol.layer.Image} */ (layertreeCtrl.layer || this.retrieveFirstParentTree_(layertreeCtrl).layer);
+    if (layer) {
+      var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
+      var timeParam = time.end
+        ? this.toISOdateString_(time.start) + '/' + this.toISOdateString_(time.end)
+        : this.toISOdateString_(time.start);
+      this.updateWMSLayerState_(layer, source.getParams()['LAYERS'], timeParam);
+    }
+  }
+};
+
+
+/**
  * Update the LAYERS parameter of the source of the given WMS layer.
  * @param {ol.layer.Image} layer The WMS layer.
- * @param {Array.<string>} names The array of names that will be used to set
+ * @param {string} names The names that will be used to set
  * the LAYERS parameter.
+ * @param {string=} opt_time The start
+ * and optionally the end datetime (for time range selection) selected by user
+ * in a ISO-8601 string datetime or time interval format
  * @private
  */
 gmf.LayertreeController.prototype.updateWMSLayerState_ = function(layer,
-    names) {
+    names, opt_time) {
   // Don't send layer without parameters, hide layer instead;
   if (names.length <= 0) {
     layer.setVisible(false);
   } else {
     layer.setVisible(true);
-    names.reverse();
     var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
-    source.updateParams({'LAYERS': names.join(',')});
+    var prevNames = source.getParams()['LAYERS'];
+    var prevTime = source.getParams()['TIME'];
+    if (names !== prevNames || opt_time !== prevTime) {
+      if (opt_time) {
+        source.updateParams({'LAYERS': names, 'TIME' : opt_time});
+      } else {
+        source.updateParams({'LAYERS': names});
+      }
+    }
   }
 };
 
