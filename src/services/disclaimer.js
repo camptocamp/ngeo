@@ -2,6 +2,7 @@ goog.provide('ngeo.Disclaimer');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
+goog.require('ngeo.CreatePopup');
 goog.require('ngeo.Message');
 
 
@@ -10,13 +11,27 @@ goog.require('ngeo.Message');
  * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
  * properly.
  *
+ * @param {angular.$sce} $sce Angular sce service.
+ * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @constructor
  * @extends {ngeo.Message}
  * @ngdoc service
  * @ngname ngeoDisclaimer
  * @ngInject
  */
-ngeo.Disclaimer = function() {
+ngeo.Disclaimer = function($sce, ngeoCreatePopup) {
+
+  /**
+   * @private
+   * @type {angular.$sce}
+   */
+  this.sce_ = $sce;
+
+  /**
+   * @private
+   * @type {ngeo.CreatePopup}
+   */
+  this.createPopup_ = ngeoCreatePopup;
 
   goog.base(this);
 
@@ -31,7 +46,7 @@ ngeo.Disclaimer = function() {
 
   /**
    * Cache of messages.
-   * @type {Object.<string, angular.JQLite>}
+   * @type {Object.<string, angular.JQLite|ngeo.Popup>}
    * @private
    */
   this.messages_ = {};
@@ -74,55 +89,80 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
   var type = message.type;
   goog.asserts.assertString(type, 'Type should be set.');
 
+  // No need to do anything if message already exist.
   var uid = this.getMessageUid_(message);
   if (this.messages_[uid] !== undefined) {
     return;
   }
 
-  var classNames = ['alert', 'fade', 'alert-dismissible'];
-  switch (type) {
-    case ngeo.MessageType.ERROR:
-      classNames.push('alert-danger');
-      break;
-    case ngeo.MessageType.INFORMATION:
-      classNames.push('alert-info');
-      break;
-    case ngeo.MessageType.SUCCESS:
-      classNames.push('alert-success');
-      break;
-    case ngeo.MessageType.WARNING:
-      classNames.push('alert-warning');
-      break;
-    default:
-      break;
-  }
+  var showInModal = message.modal !== undefined ? message.modal : false;
 
-  var el = angular.element(
-    '<div role="alert" class="' + classNames.join(' ') + '"></div>');
-  var button = angular.element(
-    '<button type="button" class="close" data-dismiss="alert" aria-label="' +
-    'Close' +  // FIXME i18n
-    '"><span aria-hidden="true">&times;</span></button>');
-  var msg = angular.element('<span />').html(message.msg);
-  el.append(button).append(msg);
+  if (showInModal) {
+    // display the message in a modal, i.e. using the ngeo create popup
+    var popup = this.createPopup_();
+    var content = this.sce_.trustAsHtml(message.msg);
+    popup.open({
+      autoDestroy: true,
+      content: content,
+      title: '&nbsp;'
+    });
 
-  var container;
+    // Watch the open property
+    popup.scope.$watch('open', function(newVal, oldVal) {
+      if (!newVal) {
+        this.closeMessage_(message);
+      }
+    }.bind(this));
 
-  if (message.target) {
-    container = angular.element(message.target);
+    this.messages_[uid] =  popup;
+
   } else {
-    container = this.container_;
+    // display the message using a boostrap dismissible alert
+    var classNames = ['alert', 'fade', 'alert-dismissible'];
+    switch (type) {
+      case ngeo.MessageType.ERROR:
+        classNames.push('alert-danger');
+        break;
+      case ngeo.MessageType.INFORMATION:
+        classNames.push('alert-info');
+        break;
+      case ngeo.MessageType.SUCCESS:
+        classNames.push('alert-success');
+        break;
+      case ngeo.MessageType.WARNING:
+        classNames.push('alert-warning');
+        break;
+      default:
+        break;
+    }
+
+    var el = angular.element(
+      '<div role="alert" class="' + classNames.join(' ') + '"></div>');
+    var button = angular.element(
+      '<button type="button" class="close" data-dismiss="alert" aria-label="' +
+        'Close' +  // FIXME i18n
+        '"><span aria-hidden="true">&times;</span></button>');
+    var msg = angular.element('<span />').html(message.msg);
+    el.append(button).append(msg);
+
+    var container;
+
+    if (message.target) {
+      container = angular.element(message.target);
+    } else {
+      container = this.container_;
+    }
+
+    container.append(el);
+    el.addClass('in');
+
+    // Listen when the message gets closed to cleanup the cache of messages
+    el.on('closed.bs.alert', function() {
+      this.closeMessage_(message);
+    }.bind(this));
+
+    this.messages_[uid] =  el;
   }
-
-  container.append(el);
-  el.addClass('in');
-
-  // Listen when the message gets closed to cleanup the cache of messages
-  el.on('closed.bs.alert', function() {
-    this.closeMessage_(message);
-  }.bind(this));
-
-  this.messages_[uid] =  el;
 };
 
 
@@ -143,16 +183,25 @@ ngeo.Disclaimer.prototype.getMessageUid_ = function(message) {
  */
 ngeo.Disclaimer.prototype.closeMessage_ = function(message) {
   var uid = this.getMessageUid_(message);
+  var obj = this.messages_[uid];
 
   // (1) No need to do anything if message doesn't exist
-  if (this.messages_[uid] === undefined) {
+  if (obj === undefined) {
     return;
   }
 
-  // (2) Check if the message hasn't been closed using the UI, i.e. by
-  //     clicking the close button. If not, then close it.
-  if (this.messages_[uid].hasClass('in')) {
-    this.messages_[uid].alert('close');
+  // (2) Close message (popup or alert)
+  if (obj instanceof ngeo.Popup) {
+    // (2.1) Close popup, if not already closed
+    if (obj.getOpen()) {
+      obj.setOpen(false);
+    }
+  } else {
+    // (2.2) Check if the message hasn't been closed using the UI, i.e. by
+    //       clicking the close button. If not, then close it.
+    if (obj.hasClass('in')) {
+      obj.alert('close');
+    }
   }
 
   // (3) Remove message from cache since it's closed now.
