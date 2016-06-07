@@ -4,15 +4,13 @@
   /**
    * Style rules for treenodes in the layertree
    */
-  margin-top: @half-app-margin;
+  margin-left: @app-margin; // left shifting (indentation)
 
   &.depth-1 {
     margin: 0 @micro-app-margin @app-margin @micro-app-margin;
   }
 
   ul {
-    padding: 0 @app-margin 0 2*@app-margin; //shifting child nodes
-
     ul {
       //nested ul (i.e node groups into node groups should not add extra padding)
       padding-right: 0;
@@ -28,9 +26,6 @@
     line-height: inherit;
     padding-left: 0;
     text-decoration: none;
-    &::after {
-      display: none;
-    }
 
     &.expand-node.fa {
       color : @color-light;
@@ -42,25 +37,6 @@
         content: @fa-var-chevron-down;
       }
     }
-  }
-
-  .rightButtons {
-    position: absolute;
-    right: 0;
-
-    *::before,
-    *::after {
-      background: none;
-      position: relative;
-      right: initial;
-    }
-
-    *::after {
-      color: @map-tools-color;
-      display: inline;
-      font-family: FontAwesome;
-    }
-
   }
 
   .state {
@@ -75,8 +51,15 @@
 
   .leaf,
   .group {
-    font-size: @font-size-small;
+    font-size: ceil(@font-size-base * 0.9);
     position: relative;
+    padding: @micro-app-margin;
+    display: flex;
+
+    > * {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
   }
 
   .leaf .state::after {
@@ -87,7 +70,7 @@
     .state::after {
       content: "\e600";
     }
-    .layerIcon {
+    .layer-icon {
       display: none;
     }
 
@@ -98,9 +81,6 @@
         font-weight: bold;
         color: black;
       }
-      .rightButtons {
-        right: @app-margin;
-      }
     }
 
     &.indeterminate .state::after {
@@ -108,27 +88,35 @@
     }
   }
 
-  .layerIcon {
-    display: inline-flex;
-    height: @app-margin;
-    width: 2 * @app-margin;
+  .layer-icon {
     &.no-layer-icon::after {
       font-family: gmf-icons;
       content: "\e907";
       width: 100%;
       text-align: center;
     }
+
+    width: 20px;
+    padding: 0;
+    display: flex;
+
+    img {
+      // don't let the legend icons images to break the layout by being too
+      // tall or too large
+      max-width: 100%;
+      max-height: 20px;
+      vertical-align: initial;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
   .name {
-    // take the full width minus the width for a layer icon, visibility checkbox,
-    // and legend icon
-    width: calc(~'100%' - 6 * @app-margin);
     overflow: hidden;
-    display: inline-block;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-bottom: -4px;
+    flex: 2;
+    padding-left: @half-app-margin;
+    padding-right: @half-app-margin;
   }
 
   .metadata {
@@ -151,22 +139,22 @@
     }
   }
 
-  .noSource {
+  .no-source {
     opacity: 0.3;
     &::after {
       content: "(source not available)";
     }
   }
 
-  .outOfResolution {
+  .out-of-resolution {
     .name em {
       font-style: italic;
     }
     .zoom {
       display: inline;
     }
-    .rightButtons {
-      .legendButton {
+    .right-buttons {
+      .legend-button {
         display: none;
       }
     }
@@ -175,18 +163,8 @@
     }
   }
 
-  .legendButton {
-    a {
-      padding: 0;
-      &::after {
-        content: @fa-var-align-left;
-        transform: initial;
-      }
-    }
-  }
-
   .legend {
-    margin-left: @app-margin + @half-app-margin;
+    margin: 0 @app-margin;
     position: relative;
     border: 1px solid @main-bg-color;
     background-color: lighten(@main-bg-color, 8%);

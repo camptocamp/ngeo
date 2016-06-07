@@ -1,6 +1,8 @@
 @import 'layertree.less';
 
 gmf-layertree {
+  display: block;
+  margin: @app-margin @half-app-margin @app-margin @app-margin;
   ul {
     padding-top: @micro-app-margin;
   }
@@ -11,8 +13,8 @@ gmf-layertree {
 
 .gmf-layertree-node {
 
-  .rightButtons {
-    visibility: hidden;
+  .right-buttons {
+    display: none;
     cursor: pointer;
   }
 
@@ -24,6 +26,9 @@ gmf-layertree {
     > ul {
       //adding space after the last li elem of the first level nodes
       padding-bottom: @half-app-margin;
+
+      // no padding for the first list in first level nodes
+      padding-left: 0;
     }
 
     &:hover {
@@ -61,23 +66,32 @@ gmf-layertree {
 
   .group:hover,
   .leaf:hover {
-    .rightButtons {
-      visibility: visible;
+    .right-buttons {
+      display: block;
     }
   }
 
-  .leaf .legend:hover {
+  .leaf {
+    padding-right: @half-app-margin;
+  }
+
+  .legend:hover {
     a {
       cursor: pointer;
       display: inline-block;
     }
   }
 
-  .legendButton {
+  .legend-button {
     display: none;
   }
 
-  a.expand-node.fa {
+  .name {
+    white-space: nowrap;
+  }
+
+  // leave space for the drag handle
+  .depth-1 a.expand-node.fa {
     margin-left: @half-app-margin;
   }
 
@@ -90,6 +104,7 @@ gmf-layertree {
     top: 0;
     height: 100%;
     width : @app-margin;
+    margin: 0;
   }
 
   .sortable-handle-icon {

@@ -429,10 +429,10 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
 
 
 /**
- * Return 'outOfResolution' if the current resolution of the map is out of
+ * Return 'out-of-resolution' if the current resolution of the map is out of
  * the min/max resolution in the node.
  * @param {GmfThemesNode} node Layer tree node.
- * @return {?string} 'outOfResolution' or null.
+ * @return {?string} 'out-of-resolution' or null.
  * @export
  */
 gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
@@ -442,7 +442,7 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
   var minExtent = node.minResolutionHint;
   if (minExtent !== undefined && resolution < minExtent ||
       maxExtent !== undefined && resolution > maxExtent) {
-    style = 'outOfResolution';
+    style = 'out-of-resolution';
   }
   return style || null;
 };
@@ -748,10 +748,10 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
 
 
 /**
- * Return 'noSource' if no source is defined in the given treeCtrl's WMTS layer.
+ * Return 'no-source' if no source is defined in the given treeCtrl's WMTS layer.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
- * @return {?string} 'noSource' or null
+ * @return {?string} 'no-source' or null
  * @export
  */
 gmf.LayertreeController.prototype.getNoSourceStyle = function(treeCtrl) {
@@ -760,7 +760,7 @@ gmf.LayertreeController.prototype.getNoSourceStyle = function(treeCtrl) {
       layer instanceof ol.layer.Tile &&
       layer.getSource !== undefined &&
       !goog.isDefAndNotNull(layer.getSource())) {
-    return 'noSource';
+    return 'no-source';
   }
   return null;
 };
