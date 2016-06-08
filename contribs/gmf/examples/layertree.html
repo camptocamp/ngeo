@@ -133,10 +133,31 @@
       .treenode a.expand-node.fa[aria-expanded="true"]::before {
           content: "\f078";
       }
+
+      /** Disclaimer */
+      gmf-disclaimer {
+        position: absolute;
+        bottom: 0.5rem;
+        left: 0.5rem;
+        width: 30rem;
+      }
+      gmf-disclaimer .alert {
+        padding: 0.5rem 1rem;
+        margin: 0 0 0.5rem 0;
+      }
+      gmf-disclaimer .alert-dismissable .close,
+      gmf-disclaimer .alert-dismissible .close {
+        right: -0.5rem;
+      }
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
-    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <div style="position: relative;">
+      <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+      <gmf-disclaimer
+          gmf-disclaimer-map="::ctrl.map">
+      </gmf-disclaimer>
+    </div>
     <p id="desc">This example shows how to use the <code>gmf.Layertree</code> directive. This layertree needs a source object (that can change) that describes layers like the c2cgeoportal themes service. The wmsUrl is used by internals WMS layers but you can use WMS externals layers and WMTS layers too.</p>
     <div id="selections">
         <div>Mode:

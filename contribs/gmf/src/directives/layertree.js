@@ -208,6 +208,7 @@ gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
   var ids =  gmf.LayertreeController.getLayerNodeIds(node);
   layer.set('querySourceIds', ids);
   layer.set('layerName', node.name);
+  layer.set('disclaimers', this.getNodeDisclaimers_(node));
 
   var isMerged = type === gmf.Themes.NodeType.NOT_MIXED_GROUP;
   layer.set('isMerged', isMerged);
@@ -902,6 +903,34 @@ gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
   $(legendNodeId).toggle({
     toggle : true
   });
+};
+
+
+/**
+ * Collect and return all disclaimer strings of this node and all child nodes
+ * as well.
+ * @param {GmfThemesNode} node Layer tree node.
+ * @return {Array.<number|string>} Disclaimer strings
+ * @private
+ */
+gmf.LayertreeController.prototype.getNodeDisclaimers_ = function(node) {
+  var disclaimers = [];
+  var children = node.children || node;
+  if (children && children.length) {
+    children.forEach(function(childNode) {
+      var childDisclaimers = this.getNodeDisclaimers_(childNode);
+      childDisclaimers.forEach(function(childDisclaimer) {
+        if (disclaimers.indexOf(childDisclaimer) === -1) {
+          disclaimers.push(childDisclaimer);
+        }
+      });
+    }, this);
+  } else if (node.metadata !== undefined &&
+             node.metadata['disclaimer'] !== undefined &&
+             disclaimers.indexOf(node.metadata['disclaimer']) === -1) {
+    disclaimers.push(node.metadata['disclaimer']);
+  }
+  return disclaimers;
 };
 
 
