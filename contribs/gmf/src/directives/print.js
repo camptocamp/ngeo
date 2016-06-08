@@ -716,10 +716,9 @@ gmf.PrintController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
  * @private
  */
-gmf.PrintController.prototype.handleCreateReportError_ = function(resp) {
+gmf.PrintController.prototype.handleCreateReportError_ = function() {
   this.resetPrintStates_(gmf.PrintState.ERROR_ON_REPORT);
 };
 
