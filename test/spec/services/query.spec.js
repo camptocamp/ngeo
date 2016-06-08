@@ -144,6 +144,7 @@ describe('ngeo.Query', function() {
       ngeoQuery.clear();
       expect(ngeoQueryResult.sources[0].features.length).toBe(0);
       expect(ngeoQueryResult.total).toBe(0);
+      expect(ngeoQuery.requestCancelers_.length).toBe(1);
     });
 
     it('Issue request with two sources', function() {

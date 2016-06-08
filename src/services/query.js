@@ -56,6 +56,7 @@ ngeo.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
  *
  * @constructor
  * @param {angular.$http} $http Angular $http service.
+ * @param {angular.$q} $q The Angular $q service.
  * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {ngeox.QueryOptions|undefined} ngeoQueryOptions The options to
  *     configure the ngeo query service with.
@@ -64,7 +65,7 @@ ngeo.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
  * @ngname ngeoQuery
  * @ngInject
  */
-ngeo.Query = function($http, ngeoQueryResult, ngeoQueryOptions,
+ngeo.Query = function($http, $q, ngeoQueryResult, ngeoQueryOptions,
     ngeoLayerHelper) {
 
   var options = ngeoQueryOptions !== undefined ? ngeoQueryOptions : {};
@@ -123,6 +124,12 @@ ngeo.Query = function($http, ngeoQueryResult, ngeoQueryOptions,
   this.$http_ = $http;
 
   /**
+   * @type {angular.$q}
+   * @private
+   */
+  this.$q_ = $q;
+
+  /**
    * @type {ngeox.QueryResult}
    * @private
    */
@@ -139,6 +146,13 @@ ngeo.Query = function($http, ngeoQueryResult, ngeoQueryOptions,
    * @private
    */
   this.cache_ = {};
+
+  /**
+   * Promises that can be resolved to cancel started requests.
+   * @type {Array.<angular.$q.Deferred>}
+   * @private
+   */
+  this.requestCancelers_ = [];
 };
 
 
@@ -229,7 +243,6 @@ ngeo.Query.prototype.addSource = function(source) {
   }
   goog.asserts.assert(source.format, 'format should be thruthy');
 
-
   this.sources_.push(source);
 
   var sourceLabel = source.label !== undefined ? source.label : sourceId;
@@ -293,7 +306,7 @@ ngeo.Query.prototype.clear = function() {
  * @export
  */
 ngeo.Query.prototype.issue = function(map, object) {
-
+  this.cancelStillRunningRequests_();
   this.clearResult_();
 
   if (object.length === 2) {
@@ -477,17 +490,17 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
     wmsGetFeatureInfoUrl =
         goog.uri.utils.setParam(wmsGetFeatureInfoUrl, 'QUERY_LAYERS', lyrStr);
 
-    // TODO save promise for each request so that previous, unfinished requests
-    // can be canceled
-    this.$http_.get(wmsGetFeatureInfoUrl).then(function(items, response) {
-      items.forEach(function(item) {
-        var format = item.source.format;
-        var features = format.readFeatures(response.data);
-        item['resultSource'].pending = false;
-        item['resultSource'].features = features;
-        this.result_.total += features.length;
-      }, this);
-    }.bind(this, items));
+    var canceler = this.registerCanceler_();
+    this.$http_.get(wmsGetFeatureInfoUrl, {timeout: canceler.promise})
+        .then(function(items, response) {
+          items.forEach(function(item) {
+            var format = item.source.format;
+            var features = format.readFeatures(response.data);
+            item['resultSource'].pending = false;
+            item['resultSource'].features = features;
+            this.result_.total += features.length;
+          }, this);
+        }.bind(this, items));
   }, this);
 };
 
@@ -537,17 +550,18 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
       });
 
       var featureRequest = xmlSerializer.serializeToString(featureRequestXml);
-      this.$http_.post(url, featureRequest).then(function(response) {
-        // TODO cache this format?
-        var sourceFormat = new ol.format.WFS({
-          featureType: layers,
-          featureNS: this.featureNS_
-        });
-        var features = sourceFormat.readFeatures(response.data);
-        item['resultSource'].pending = false;
-        item['resultSource'].features = features;
-        this.result_.total += features.length;
-      }.bind(this));
+      var canceler = this.registerCanceler_();
+      this.$http_.post(url, featureRequest, {timeout: canceler.promise})
+          .then(function(response) {
+            var sourceFormat = new ol.format.WFS({
+              featureType: layers,
+              featureNS: this.featureNS_
+            });
+            var features = sourceFormat.readFeatures(response.data);
+            item['resultSource'].pending = false;
+            item['resultSource'].features = features;
+            this.result_.total += features.length;
+          }.bind(this));
     }.bind(this));
   }.bind(this));
 };
@@ -620,6 +634,29 @@ ngeo.Query.prototype.getQueryBbox_ = function(coordinate, view) {
   return ol.extent.buffer(
       ol.extent.createOrUpdateFromCoordinate(coordinate),
       tolerance);
+};
+
+
+/**
+ * @return {angular.$q.Deferred} A deferred that can be resolved to cancel a
+ *    HTTP request.
+ * @private
+ */
+ngeo.Query.prototype.registerCanceler_ = function() {
+  var canceler = this.$q_.defer();
+  this.requestCancelers_.push(canceler);
+  return canceler;
+};
+
+
+/**
+ * @private
+ */
+ngeo.Query.prototype.cancelStillRunningRequests_ = function() {
+  this.requestCancelers_.forEach(function(canceler) {
+    canceler.resolve();
+  });
+  this.requestCancelers_.length = 0;
 };
 
 
