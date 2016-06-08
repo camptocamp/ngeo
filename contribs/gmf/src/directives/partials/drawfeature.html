@@ -100,14 +100,15 @@
 
       <div class="gmf-eol"></div>
 
-      <ul class="list-group gmf-drawfeature-featurelist">
-        <li
+      <div class="gmf-drawfeature-featurelist list-group small">
+        <button
+            role="button"
             class="list-group-item"
             ng-repeat="feature in efCtrl.getFeaturesArray()"
             ng-click="efCtrl.selectFeatureFromList(feature);">
           {{ feature.get(efCtrl.nameProperty) }}
-        </li>
-      </ul>
+        </button>
+      </div>
     </div>
 
   </div>
