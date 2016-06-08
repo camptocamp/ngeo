@@ -149,7 +149,7 @@ apidoc: .build/apidoc
 dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
 .PHONY: check
-check: lint dist check-examples test compile-examples build-gmf-apps
+check: lint git-attributes dist check-examples test compile-examples build-gmf-apps
 
 .PHONY: compile-examples
 compile-examples: .build/examples/all.min.js
@@ -164,6 +164,10 @@ check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 
 .PHONY: lint
 lint: .build/eslint.timestamp
+
+.PHONY: git-attributes
+git-attributes:
+	git diff --check HEAD~40
 
 .PHONY: test
 test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp
