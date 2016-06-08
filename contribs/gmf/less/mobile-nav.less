@@ -230,6 +230,31 @@ nav.nav-right {
   }
 }
 
+// For small devices (in portrait mode) we want the navigation menus to take
+// 90% of the viewport width
+@media (max-width: @screen-xs) {
+  main {
+    .nav-left-is-visible & {
+      transform: translateX(90vw);
+    }
+    .nav-right-is-visible & {
+      transform: translateX(-90vw);
+    }
+  }
+  nav.nav-left,
+  nav.nav-right {
+    width: 90vw;
+    .slide {
+      width: 90vw;
+    }
+
+    header > nav {
+      width: 90vw;
+      left: 90vw;
+    }
+  }
+}
+
 .nav-left {
   left: 0;
   right: auto;
