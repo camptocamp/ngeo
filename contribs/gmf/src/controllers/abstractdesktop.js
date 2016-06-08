@@ -122,65 +122,6 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   });
   this.drawFeatureLayer.setMap(this.map);
 
-  var $sce = $injector.get('$sce');
-
-  /**
-   * @type {ngeo.ScaleselectorOptions}
-   * @export
-   */
-  this.scaleSelectorOptions = {
-    'dropup': true
-  };
-
-  /**
-   * @type {!Object.<string, string>}
-   * @export
-   */
-  this.scaleSelectorValues = {
-    '0': $sce.trustAsHtml('1&nbsp;:&nbsp;250\'000'),
-    '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000'),
-    '2': $sce.trustAsHtml('1&nbsp;:&nbsp;50\'000'),
-    '3': $sce.trustAsHtml('1&nbsp;:&nbsp;20\'000'),
-    '4': $sce.trustAsHtml('1&nbsp;:&nbsp;10\'000'),
-    '5': $sce.trustAsHtml('1&nbsp;:&nbsp;5\'000'),
-    '6': $sce.trustAsHtml('1&nbsp;:&nbsp;2\'000'),
-    '7': $sce.trustAsHtml('1&nbsp;:&nbsp;1\'000'),
-    '8': $sce.trustAsHtml('1&nbsp;:&nbsp;500'),
-    '9': $sce.trustAsHtml('1&nbsp;:&nbsp;250'),
-    '10': $sce.trustAsHtml('1&nbsp;:&nbsp;100'),
-    '11': $sce.trustAsHtml('1&nbsp;:&nbsp;50')
-  };
-
-  /**
-   * @type {Array.<string>}
-   * @export
-   */
-  this.elevationLayers = ['aster', 'srtm'];
-
-  /**
-   * @type {string}
-   * @export
-   */
-  this.elevationLayer = this.elevationLayers[0];
-
-  /**
-   * @type {Array.<gmfx.MousePositionProjection>}
-   * @export
-   */
-  this.mousePositionProjections = [{
-    code: 'EPSG:2056',
-    label: 'CH1903+ / LV03',
-    filter: 'ngeoNumberCoordinates::{x}, {y} m:false'
-  }, {
-    code: 'EPSG:21781',
-    label: 'CH1903 / LV03',
-    filter: 'ngeoNumberCoordinates::{x}, {y} m:false'
-  }, {
-    code: 'EPSG:4326',
-    label: 'WGS84',
-    filter: 'ngeoDMSCoordinates:2'
-  }];
-
   goog.base(
       this, config, $scope, $injector);
 

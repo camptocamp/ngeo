@@ -112,9 +112,9 @@
         <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"></gmf-map>
 
         <!--infobar-->
-        <div class="footer" ng-class="{'active': mainCtrl.info}">
-          <button class="btn btn-sm fa map-info ng-cloak" ng-click="mainCtrl.info = !mainCtrl.info"
-                  ng-class="{'fa-angle-double-up': !mainCtrl.info, 'fa-angle-double-down': mainCtrl.info}"></button>
+        <div class="footer" ng-class="{'active': mainCtrl.showInfobar}">
+          <button class="btn btn-sm fa map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
+                  ng-class="{'fa-angle-double-up': !mainCtrl.showInfobar, 'fa-angle-double-down': mainCtrl.showInfobar}"></button>
 
           <div ngeo-scaleselector="mainCtrl.scaleSelectorValues"
                ngeo-scaleselector-map="mainCtrl.map"
@@ -127,7 +127,7 @@
             </gmf-mouseposition>
             <div class="elevation"
               gmf-elevation
-              gmf-elevation-active="mainCtrl.info"
+              gmf-elevation-active="mainCtrl.showInfoBar"
               gmf-elevation-elevation="elevationValue"
               gmf-elevation-layers="::mainCtrl.elevationLayers"
               gmf-elevation-map="mainCtrl.map">
