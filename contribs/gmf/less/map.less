@@ -106,18 +106,18 @@ button[ngeo-mobile-geolocation] {
 /** Disclaimer */
 gmf-disclaimer {
   position: absolute;
-  bottom: 0.5rem;
-  left: 0.5rem;
+  bottom: @half-app-margin;
+  left: @app-margin;
   width: 30rem;
-  z-index: 3;
+  z-index: @above-content-index;
 
   .alert {
-    padding: 0.5rem 1rem;
-    margin: 0 0 0.5rem 0;
+    padding: @half-app-margin @app-margin;
+    margin: 0 0@half-app-margin  0;
   }
 
   .alert-dismissable .close,
   .alert-dismissible .close {
-    right: -5px;
+    right: -0.5rem;
   }
 }
