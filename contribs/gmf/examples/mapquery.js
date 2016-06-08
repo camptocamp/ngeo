@@ -1,4 +1,4 @@
-goog.provide('gmf-mobilequery');
+goog.provide('gmf-mapquery');
 
 goog.require('gmf.QueryManager');
 goog.require('gmf.Themes');
@@ -9,7 +9,7 @@ goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo');
 goog.require('ngeo.Query');
 goog.require('ngeo.btnDirective');
-goog.require('ngeo.mobileQueryDirective');
+goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');

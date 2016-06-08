@@ -17,7 +17,7 @@ goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mobileGeolocationDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.mobileQueryDirective');
+goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');

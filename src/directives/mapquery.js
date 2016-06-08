@@ -1,11 +1,11 @@
-goog.provide('ngeo.mobileQueryDirective');
+goog.provide('ngeo.mapQueryDirective');
 
 goog.require('ngeo');
 goog.require('ngeo.Query');
 
 
 /**
- * Provide a "mobile query" directive.
+ * Provides a "map query" directive.
  *
  * This directive is responsible of binding a map and the ngeo query service
  * together. While active, clicks made on the map are listened by the directive
@@ -18,25 +18,25 @@ goog.require('ngeo.Query');
  * Example:
  *
  *      <span
- *        ngeo-mobile-query=""
- *        ngeo-mobile-query-map="::ctrl.map"
- *        ngeo-mobile-query-active="ctrl.queryActive">
+ *        ngeo-map-query=""
+ *        ngeo-map-query-map="::ctrl.map"
+ *        ngeo-map-query-active="ctrl.queryActive">
  *      </span>
  *
- * See our live example: {@link ../examples/mobilequery.html}
+ * See our live example: {@link ../examples/mapquery.html}
  *
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
- * @ngname ngeoMobileQuery
+ * @ngname ngeoMapQuery
  */
-ngeo.mobileQueryDirective = function(ngeoQuery) {
+ngeo.mapQueryDirective = function(ngeoQuery) {
   return {
     restrict: 'A',
     scope: false,
     link: function(scope, elem, attrs) {
-      var map = scope.$eval(attrs['ngeoMobileQueryMap']);
+      var map = scope.$eval(attrs['ngeoMapQueryMap']);
       var clickEventKey_ = null;
 
       /**
@@ -69,7 +69,7 @@ ngeo.mobileQueryDirective = function(ngeoQuery) {
       };
 
       // watch 'active' property -> activate/deactivate accordingly
-      scope.$watch(attrs['ngeoMobileQueryActive'],
+      scope.$watch(attrs['ngeoMapQueryActive'],
           function(newVal, oldVal) {
             if (newVal) {
               activate_();
@@ -82,4 +82,4 @@ ngeo.mobileQueryDirective = function(ngeoQuery) {
   };
 };
 
-ngeo.module.directive('ngeoMobileQuery', ngeo.mobileQueryDirective);
+ngeo.module.directive('ngeoMapQuery', ngeo.mapQueryDirective);

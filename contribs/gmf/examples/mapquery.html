@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app='app'>
   <head>
-    <title>GeoMapFish Mobile Query example</title>
+    <title>GeoMapFish Map Query example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
@@ -281,8 +281,8 @@
   <body ng-controller="MainController as ctrl">
 
     <gmf-map gmf-map-map="ctrl.map"
-        ngeo-mobile-query="" ngeo-mobile-query-map="::ctrl.map"
-        ngeo-mobile-query-active="ctrl.queryActive">
+        ngeo-map-query="" ngeo-map-query-map="::ctrl.map"
+        ngeo-map-query-active="ctrl.queryActive">
     </gmf-map>
 
     <div id="tree-container">
@@ -304,7 +304,7 @@
     <div class="clear-left"></div>
 
     <p id="desc">
-      This example shows how to use the <code>ngeo-mobile-query</code>
+      This example shows how to use the <code>ngeo-map-query</code>
       directive in combination with the <code>gmf.QueryManager</code>.
       The QueryManager fetches the themes returned by the theme service and
       adds one source to the query service per layer definition found. In this
@@ -335,7 +335,7 @@
     <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
     <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js" type="text/javascript"></script>
     <script src="../../../node_modules/proj4/dist/proj4.js"></script>
-    <script src="/@?main=mobilequery.js"></script>
+    <script src="/@?main=mapquery.js"></script>
     <script src="default.js"></script>
     <script src="../../../utils/watchwatchers.js"></script>
     <script>

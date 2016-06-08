@@ -7,7 +7,7 @@ goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.btnDirective');
 goog.require('ngeo.mapDirective');
-goog.require('ngeo.mobileQueryDirective');
+goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Image');
