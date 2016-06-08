@@ -30,7 +30,7 @@ gmf.disclaimerDirective = function() {
   return {
     restrict: 'E',
     scope: {
-      'modal': '<?gmfDisclaimerModal',
+      'modalIn': '<?gmfDisclaimerModal',
       'map': '=gmfDisclaimerMap'
     },
     bindToController: true,
@@ -63,9 +63,7 @@ gmf.DisclaimerController = function($element, $scope, ngeoCreatePopup,
    * @type {boolean}
    * @export
    */
-  this.modal;
-
-  this.modal = this.modal !== undefined ? this.modal : false;
+  this.modal = this['modalIn'] === true;
 
   /**
    * @type {ol.Map}

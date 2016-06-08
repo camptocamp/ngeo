@@ -65,17 +65,12 @@ app.MainController = function(gmfThemes, gmfTreeManager, ngeoLocation) {
 
   // How should disclaimer message be displayed: in modals or alerts
   var modal = ngeoLocation.getParam('modal');
-  if (modal !== undefined) {
-    modal = modal === 'true' ? true : false;
-  } else {
-    modal = false;
-  }
 
   /**
    * @type {boolean}
    * @export
    */
-  this.modal = modal;
+  this.modal = modal === 'true' ? true : false;
 
   /**
    * @type {gmf.TreeManager}

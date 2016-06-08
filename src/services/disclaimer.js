@@ -12,6 +12,7 @@ goog.require('ngeo.Message');
  * properly.
  *
  * @param {angular.$sce} $sce Angular sce service.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @constructor
  * @extends {ngeo.Message}
@@ -19,13 +20,19 @@ goog.require('ngeo.Message');
  * @ngname ngeoDisclaimer
  * @ngInject
  */
-ngeo.Disclaimer = function($sce, ngeoCreatePopup) {
+ngeo.Disclaimer = function($sce, gettextCatalog, ngeoCreatePopup) {
 
   /**
    * @private
    * @type {angular.$sce}
    */
   this.sce_ = $sce;
+
+  /**
+   * @type {angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @private
@@ -95,7 +102,7 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
     return;
   }
 
-  var showInModal = message.modal !== undefined ? message.modal : false;
+  var showInModal = message.modal === true;
 
   if (showInModal) {
     // display the message in a modal, i.e. using the ngeo create popup
@@ -140,7 +147,7 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
       '<div role="alert" class="' + classNames.join(' ') + '"></div>');
     var button = angular.element(
       '<button type="button" class="close" data-dismiss="alert" aria-label="' +
-        'Close' +  // FIXME i18n
+        this.gettextCatalog_.getString('Close') +
         '"><span aria-hidden="true">&times;</span></button>');
     var msg = angular.element('<span />').html(message.msg);
     el.append(button).append(msg);

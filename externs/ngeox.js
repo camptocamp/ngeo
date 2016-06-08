@@ -109,7 +109,7 @@ ngeox.Message.prototype.delay;
 /**
  * Whether the message should be displayed inside a modal window or not.
  * Defaults to `false`.
- * @type {string}
+ * @type {boolean|undefined}
  */
 ngeox.Message.prototype.modal;
 
