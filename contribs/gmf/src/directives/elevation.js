@@ -45,9 +45,9 @@ gmf.elevationDirective = function() {
     controllerAs: 'ctrl',
     bindToController: true,
     scope: {
-      'active': '=gmfElevationActive',
+      'active': '<gmfElevationActive',
       'elevation': '=gmfElevationElevation',
-      'layer': '=?gmfElevationLayer',
+      'layer': '<?gmfElevationLayer',
       'getLayersFn': '&?gmfElevationLayers',
       'getMapFn': '&gmfElevationMap'
     },
