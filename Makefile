@@ -376,11 +376,11 @@ dist/gmf.js.map: dist/gmf.js
 
 .build/examples-hosted/contribs/gmf/build/images/: contribs/gmf/third-party/jquery-ui/images/
 	mkdir -p $@
-	cp -r $< $@
+	cp -r $</* $@
 
 .build/examples-hosted/lib/images/: contribs/gmf/third-party/jquery-ui/images/
 	mkdir -p $@
-	cp -r $< $@
+	cp -r $</* $@
 
 .build/examples-hosted/lib/d3.min.js: node_modules/d3/d3.min.js
 	mkdir -p $(dir $@)
