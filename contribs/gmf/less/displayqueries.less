@@ -1,6 +1,6 @@
 @import "../../../node_modules/font-awesome/less/variables.less";
 
-.mobiledisplayqueries {
+.displayqueries {
   width: 100%;
   max-width: 100%;
   margin-left: -50%;
@@ -159,23 +159,23 @@
   }
 }
 @media (min-width: @screen-sm-min) {
-  @mobiledisplayqueries-tablet-width: 8 * @map-tools-size;
-  .mobiledisplayqueries {
-    width: @mobiledisplayqueries-tablet-width;
-    max-width: @mobiledisplayqueries-tablet-width;
-    margin-left: -@mobiledisplayqueries-tablet-width / 2;
+  @displayqueries-tablet-width: 8 * @map-tools-size;
+  .displayqueries {
+    width: @displayqueries-tablet-width;
+    max-width: @displayqueries-tablet-width;
+    margin-left: -@displayqueries-tablet-width / 2;
     right: @app-margin + @map-tools-size + @app-margin;
     left: initial;
     bottom: @app-margin;
     /** prevent glitch for swipe animation **/
     .details table {
       .key {
-        min-width: @mobiledisplayqueries-tablet-width * 0.3 - @app-margin;
-        max-width: @mobiledisplayqueries-tablet-width * 0.3 - @app-margin;
+        min-width: @displayqueries-tablet-width * 0.3 - @app-margin;
+        max-width: @displayqueries-tablet-width * 0.3 - @app-margin;
       }
       .value {
-        min-width: @mobiledisplayqueries-tablet-width * 0.7 - @app-margin;
-        max-width: @mobiledisplayqueries-tablet-width * 0.7 - @app-margin;
+        min-width: @displayqueries-tablet-width * 0.7 - @app-margin;
+        max-width: @displayqueries-tablet-width * 0.7 - @app-margin;
       }
     }
   }

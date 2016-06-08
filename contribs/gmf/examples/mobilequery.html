@@ -24,7 +24,7 @@
       }
 
       /* Display queries */
-      .mobiledisplayqueries {
+      .displayqueries {
         max-height: 400px;
         width: 350px;
         max-width: 350px;
@@ -34,7 +34,7 @@
         left: 50%;
         right: 50%;
       }
-      .mobiledisplayqueries .collapse-button {
+      .displayqueries .collapse-button {
         background-color: white;
         border: solid 1px black;
         border-bottom-width: 0;
@@ -44,27 +44,27 @@
         width: 48px;
         margin-left: calc(50% - 24px);
       }
-      .mobiledisplayqueries .collapse-button.up:after {
+      .displayqueries .collapse-button.up:after {
         content: "\f077";
       }
-      .mobiledisplayqueries .collapse-button.down:after {
+      .displayqueries .collapse-button.down:after {
         content: "\f078";
       }
-      .mobiledisplayqueries .displayqueries-container {
+      .displayqueries .displayqueries-container {
         background-color: white;
         border: solid 1px black;
       }
-      .mobiledisplayqueries .animation-container {
+      .displayqueries .animation-container {
         position: relative;
         overflow: hidden;
         height: 60px;
         margin: 0 15px;
         transition: 0.3s ease-in all;
       }
-      .mobiledisplayqueries .animation-container.detailed {
+      .displayqueries .animation-container.detailed {
         height: 160px;
       }
-      .mobiledisplayqueries .animation-container .slide-animation {
+      .displayqueries .animation-container .slide-animation {
         height: 100%;
         padding: 5px 5px 0;
         text-align: left;
@@ -75,91 +75,91 @@
         left: 0;
         right: 0;
       }
-      .mobiledisplayqueries .slide-animation.ng-enter, .slide-animation.ng-leave {
+      .displayqueries .slide-animation.ng-enter, .slide-animation.ng-leave {
         transition: 0.3s ease-in all;
       }
       /* Left to right animation */
-      .mobiledisplayqueries .next .slide-animation.ng-enter {
+      .displayqueries .next .slide-animation.ng-enter {
         left: 100%;
       }
-      .mobiledisplayqueries .next .slide-animation.ng-enter-active {
+      .displayqueries .next .slide-animation.ng-enter-active {
         left: 0;
       }
-      .mobiledisplayqueries .next .slide-animation.ng-leave {
+      .displayqueries .next .slide-animation.ng-leave {
         left: 0;
       }
-      .mobiledisplayqueries .next .slide-animation.ng-leave-active {
+      .displayqueries .next .slide-animation.ng-leave-active {
         left: -100%;
       }
       /* Right to left animation */
-      .mobiledisplayqueries .previous .slide-animation.ng-enter {
+      .displayqueries .previous .slide-animation.ng-enter {
         left: -100%;
       }
-      .mobiledisplayqueries .previous .slide-animation.ng-enter-active {
+      .displayqueries .previous .slide-animation.ng-enter-active {
         left: 0;
       }
-      .mobiledisplayqueries .previous .slide-animation.ng-leave {
+      .displayqueries .previous .slide-animation.ng-leave {
         left: 0;
       }
-      .mobiledisplayqueries .previous .slide-animation.ng-leave-active {
+      .displayqueries .previous .slide-animation.ng-leave-active {
         left: 100%;
       }
-      .mobiledisplayqueries .header .title {
+      .displayqueries .header .title {
         font-weight: bold;
       }
-      .mobiledisplayqueries .header .subtitle {
+      .displayqueries .header .subtitle {
         margin-left: 10px;
         height: 2ex;
       }
-      .mobiledisplayqueries .details {
+      .displayqueries .details {
         height: 65%;
         overflow-x: hidden;
         overflow-y: auto;
         margin-left: 10px;
         padding-bottom: 10px
       }
-      .mobiledisplayqueries .details table {
+      .displayqueries .details table {
         font-size: 0.9em;
       }
-      .mobiledisplayqueries .details .key {
+      .displayqueries .details .key {
         padding-right: 25px;
       }
-      .mobiledisplayqueries .slide-animation.ng-enter-active .details .value {
+      .displayqueries .slide-animation.ng-enter-active .details .value {
         white-space: nowrap;
       }
-      .mobiledisplayqueries .navigate {
+      .displayqueries .navigate {
         border-top: solid 1px black;
         text-align: center;
         margin-top: 10px;
         padding-top: 5px;
         height: 32px;
       }
-      .mobiledisplayqueries button {
+      .displayqueries button {
         background: none;
         border: none;
         font-family: FontAwesome;
         width: 32px;
       }
-      .mobiledisplayqueries button.close {
+      .displayqueries button.close {
         padding: 5px 5px 0 0;
       }
-      .mobiledisplayqueries button.close:after {
+      .displayqueries button.close:after {
         content: "\f00d";
       }
-      .mobiledisplayqueries .navigate .previous {
+      .displayqueries .navigate .previous {
         float: left;
       }
-      .mobiledisplayqueries .navigate .previous:after {
+      .displayqueries .navigate .previous:after {
         content: "\f053";
       }
-      .mobiledisplayqueries .navigate .next {
+      .displayqueries .navigate .next {
         float: right;
       }
-      .mobiledisplayqueries .navigate .next:after {
+      .displayqueries .navigate .next:after {
         content: "\f054";
       }
       @media (max-width: 768px) {
-        .mobiledisplayqueries {
+        .displayqueries {
           width: 100%;
           max-width: 100%;
           margin-left: -50%;
@@ -311,7 +311,7 @@
       example, the layer tree is responsible of creating the layer. You can
       switch theme and turn on/off layers to see the impact it has on results
       returned by the query service.
-      To display results, this example use the <code>gmf-mobiledisplayqueries
+      To display results, this example use the <code>gmf-displayqueries
       </code> componant. Here, this last directive uses a custom style to
       display all selected features.</p>
     </p>
@@ -319,9 +319,10 @@
     <input type="checkbox"
        ng-model="ctrl.queryActive" /> Query-Tool active
 
-    <gmf-mobiledisplayqueries
-      gmf-mobiledisplayqueries-featuresstyle="ctrl.featureStyle">
-    </gmf-mobiledisplayqueries>
+    <gmf-displayqueries
+      gmf-displayqueries-featuresstyle="ctrl.featureStyle">
+    </gmf-displayqueries>
+
     <script src="../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../third-party/jquery-ui/jquery-ui.min.js"></script>
     <script src="../../../node_modules/angular/angular.js"></script>

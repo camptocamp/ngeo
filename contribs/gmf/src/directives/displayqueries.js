@@ -1,5 +1,5 @@
-goog.provide('gmf.MobiledisplayqueriesController');
-goog.provide('gmf.mobiledisplayqueriesDirective');
+goog.provide('gmf.DisplayqueriesController');
+goog.provide('gmf.displayqueriesDirective');
 
 goog.require('gmf');
 goog.require('ngeo.FeatureOverlay');
@@ -11,16 +11,16 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 
-ngeo.module.value('gmfMobiledisplayqueriesTemplateUrl',
+ngeo.module.value('gmfDisplayqueriesTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template.
      */
     function(element, attrs) {
-      var templateUrl = attrs['gmfMobiledisplayqueriesTemplateurl'];
+      var templateUrl = attrs['gmfDisplayqueriesTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/mobiledisplayqueries.html';
+          gmf.baseTemplateUrl + '/displayqueries.html';
     });
 
 
@@ -29,47 +29,46 @@ ngeo.module.value('gmfMobiledisplayqueriesTemplateUrl',
  * and shows related features on the map using the {@link ngeo.FeatureOverlayMgr}.
  *
  * You can override the default directive's template by setting the
- * value `gmfMobiledisplayqueriesTemplateUrl`.
+ * value `gmfDisplayqueriesTemplateUrl`.
  *
  * Features displayed on the map use a default style but you can override these
  * styles by passing ol.style.Style objects as attributes of this directive.
  *
  * Example:
  *
- *      <gmf-mobiledisplayqueries
- *        gmf-mobiledisplayqueries-featuresstyle="ctrl.styleForAllFeatures"
- *        gmf-mobiledisplayqueries-selectedfeaturestyle="ctrl.styleForTheCurrentFeature">
- *      </gmf-mobiledisplayqueries>
+ *      <gmf-displayqueries
+ *        gmf-displayqueries-featuresstyle="ctrl.styleForAllFeatures"
+ *        gmf-displayqueries-selectedfeaturestyle="ctrl.styleForTheCurrentFeature">
+ *      </gmf-displayqueries>
  *
- * @htmlAttribute {ol.style.Style} gmf-mobiledisplayqueries-featuresstyle A style
+ * @htmlAttribute {ol.style.Style} gmf-displayqueries-featuresstyle A style
  *     object for all features from the result of the query.
  * @htmlAttribute {ol.style.Style} selectedfeaturestyle A style
  *     object for the current displayed feature.
- * @param {string} gmfMobiledisplayqueriesTemplateUrl URL to a template.
+ * @param {string} gmfDisplayqueriesTemplateUrl URL to a template.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
- * @ngname gmfMobiledisplayqueries
+ * @ngname gmfDisplayqueries
  */
-gmf.mobiledisplayqueriesDirective = function(
-    gmfMobiledisplayqueriesTemplateUrl) {
+gmf.displayqueriesDirective = function(
+    gmfDisplayqueriesTemplateUrl) {
   return {
     bindToController: true,
-    controller: 'GmfMobiledisplayqueriesController',
+    controller: 'GmfDisplayqueriesController',
     controllerAs: 'ctrl',
-    templateUrl: gmfMobiledisplayqueriesTemplateUrl,
+    templateUrl: gmfDisplayqueriesTemplateUrl,
     replace: true,
     restrict: 'E',
     scope: {
-      'featuresStyleFn': '&gmfMobiledisplayqueriesFeaturesstyle',
-      'selectedFeatureStyleFn': '&gmfMobiledisplayqueriesSelectedfeaturestyle'
+      'featuresStyleFn': '&gmfDisplayqueriesFeaturesstyle',
+      'selectedFeatureStyleFn': '&gmfDisplayqueriesSelectedfeaturestyle'
     }
   };
 };
 
 
-gmf.module.directive('gmfMobiledisplayqueries',
-    gmf.mobiledisplayqueriesDirective);
+gmf.module.directive('gmfDisplayqueries', gmf.displayqueriesDirective);
 
 
 /**
@@ -81,9 +80,9 @@ gmf.module.directive('gmfMobiledisplayqueries',
  * @export
  * @ngInject
  * @ngdoc Controller
- * @ngname GmfMobiledisplayqueriesController
+ * @ngname GmfDisplayqueriesController
  */
-gmf.MobiledisplayqueriesController = function($scope, ngeoQueryResult,
+gmf.DisplayqueriesController = function($scope, ngeoQueryResult,
     ngeoFeatureOverlayMgr) {
 
   /**
@@ -188,7 +187,7 @@ gmf.MobiledisplayqueriesController = function($scope, ngeoQueryResult,
  * highlight the first feature.
  * @export
  */
-gmf.MobiledisplayqueriesController.prototype.show = function() {
+gmf.DisplayqueriesController.prototype.show = function() {
   this.clear();
   this.setCurrentResult_(0, false);
   if (this.source !== null) {
@@ -207,7 +206,7 @@ gmf.MobiledisplayqueriesController.prototype.show = function() {
  * @return {boolean} True if result has changed. False else.
  * @private
  */
-gmf.MobiledisplayqueriesController.prototype.setCurrentResult_ = function(
+gmf.DisplayqueriesController.prototype.setCurrentResult_ = function(
     position, setHighlight) {
   var hasChanged = false;
   if (position !== this.currentResult) {
@@ -240,7 +239,7 @@ gmf.MobiledisplayqueriesController.prototype.setCurrentResult_ = function(
  * the map.
  * @export
  */
-gmf.MobiledisplayqueriesController.prototype.previous = function() {
+gmf.DisplayqueriesController.prototype.previous = function() {
   var position = this.currentResult - 1;
   if (position < 0) {
     position = this.getResultLength() - 1;
@@ -257,7 +256,7 @@ gmf.MobiledisplayqueriesController.prototype.previous = function() {
  * the map.
  * @export
  */
-gmf.MobiledisplayqueriesController.prototype.next = function() {
+gmf.DisplayqueriesController.prototype.next = function() {
   var position = this.currentResult + 1;
   var positionMax = this.getResultLength() - 1;
   if (position > positionMax) {
@@ -275,7 +274,7 @@ gmf.MobiledisplayqueriesController.prototype.next = function() {
  * @return {number} Total number of features.
  * @export
  */
-gmf.MobiledisplayqueriesController.prototype.getResultLength = function() {
+gmf.DisplayqueriesController.prototype.getResultLength = function() {
   return this.ngeoQueryResult_.total;
 };
 
@@ -286,7 +285,7 @@ gmf.MobiledisplayqueriesController.prototype.getResultLength = function() {
  * @return {Object?} Filtered properties of the current feature or null.
  * @export
  */
-gmf.MobiledisplayqueriesController.prototype.getFeatureValues = function() {
+gmf.DisplayqueriesController.prototype.getFeatureValues = function() {
   if (!this.feature) {
     return null;
   }
@@ -306,7 +305,7 @@ gmf.MobiledisplayqueriesController.prototype.getFeatureValues = function() {
  * or the previopus result.
  * @private
  */
-gmf.MobiledisplayqueriesController.prototype.animate_ = function(isNext) {
+gmf.DisplayqueriesController.prototype.animate_ = function(isNext) {
   this.isNext = isNext;
   this.scope_.$evalAsync(function() {
     this.animate++;
@@ -318,7 +317,7 @@ gmf.MobiledisplayqueriesController.prototype.animate_ = function(isNext) {
  * Collect all features in the queryResult object.
  * @private
  */
-gmf.MobiledisplayqueriesController.prototype.collectFeatures_ = function() {
+gmf.DisplayqueriesController.prototype.collectFeatures_ = function() {
   var i, ii, features;
   var sources = this.ngeoQueryResult_.sources;
   this.features_.clear();
@@ -337,7 +336,7 @@ gmf.MobiledisplayqueriesController.prototype.collectFeatures_ = function() {
  * it exists because it must be added to the 'non-selected' features collection.
  * @private
  */
-gmf.MobiledisplayqueriesController.prototype.highlightCurrentFeature_ =
+gmf.DisplayqueriesController.prototype.highlightCurrentFeature_ =
 function(opt_lastFeature) {
   this.selectedFeatureOverlay_.clear();
   this.features_.remove(this.feature);
@@ -353,7 +352,7 @@ function(opt_lastFeature) {
  * from the map.
  * @export
  */
-gmf.MobiledisplayqueriesController.prototype.close = function() {
+gmf.DisplayqueriesController.prototype.close = function() {
   this.open = false;
   this.clear();
 };
@@ -364,7 +363,7 @@ gmf.MobiledisplayqueriesController.prototype.close = function() {
  * from the map.
  * @export
  */
-gmf.MobiledisplayqueriesController.prototype.clear = function() {
+gmf.DisplayqueriesController.prototype.clear = function() {
   this.feature = null;
   this.source = null;
   this.currentResult = -1;
@@ -373,5 +372,4 @@ gmf.MobiledisplayqueriesController.prototype.clear = function() {
 };
 
 
-gmf.module.controller('GmfMobiledisplayqueriesController',
-    gmf.MobiledisplayqueriesController);
+gmf.module.controller('GmfDisplayqueriesController', gmf.DisplayqueriesController);

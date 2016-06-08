@@ -3,7 +3,7 @@ goog.provide('gmf.AbstractMobileController');
 goog.require('gmf');
 goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
-goog.require('gmf.mobiledisplayqueriesDirective');
+goog.require('gmf.displayqueriesDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileMeasureLengthDirective');
 /** @suppress {extraRequire} */
@@ -87,7 +87,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   var queryStroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
-   * FeatureStyle used by the mobiledisplayqueries directive
+   * FeatureStyle used by the displayqueries directive
    * @type {ol.style.Style}
    * @export
    */
