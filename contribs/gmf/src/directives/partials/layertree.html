@@ -1,4 +1,4 @@
-<div ng-if="::!layertreeCtrl.isRoot" id="node-{{::layertreeCtrl.uid}}" ng-class="[layertreeCtrl.node.children ? 'group' : 'leaf', 'depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNoSourceStyle(layertreeCtrl), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
+<div ng-if="::!layertreeCtrl.isRoot" id="node-{{::layertreeCtrl.uid}}" ng-class="[layertreeCtrl.node.children ? 'group' : 'leaf', 'depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
   <div class="sortable-handle" ng-show="layertreeCtrl.depth === 1 && gmfLayertreeCtrl.layers.length > 1">
     <i class="sortable-handle-icon fa fa-ellipsis-v"></i>
   </div>
@@ -15,7 +15,7 @@
     <img ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))" ng-src="{{::legendIconUrl}}"></img>
   </a>
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
-     ng-if="::layertreeCtrl.node.children" ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'state' : 'fa-refresh fa-spin']"></a>
+     ng-class="['fa fa-fw', layertreeCtrl.layer && layertreeCtrl.layer.loading || gmfLayertreeCtrl.getNoSourceStyle(layertreeCtrl) === 'no-source' ? 'fa-refresh fa-spin' : 'state']"></a>
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
      class="name" title="{{layertreeCtrl.node.name | translate}}">
     <em>{{layertreeCtrl.node.name | translate}}</em>

@@ -67,6 +67,7 @@
   }
 
   .group {
+    padding-left: @half-app-margin;
     .state::after {
       content: "\e600";
     }
@@ -136,13 +137,6 @@
     padding-left: 4px;
     &:hover {
       cursor: pointer;
-    }
-  }
-
-  .no-source {
-    opacity: 0.3;
-    &::after {
-      content: "(source not available)";
     }
   }
 
