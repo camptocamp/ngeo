@@ -97,14 +97,15 @@ main {
       background-color: lighten(@main-bg-color, 20%);
       padding: @half-app-margin 0;
     }
+    .form-group{
+      margin-bottom: 0;
+    }
   }
 
   [ngeo-scaleselector] {
-    .dropdown {
-      button {
-        min-width:13rem;
-        font-size: @font-size-small
-      }
+    min-width: 12rem;
+    .dropdown-menu {
+      min-width: 12rem;
     }
   }
   #scaleline {
@@ -115,19 +116,28 @@ main {
       position: relative;
     }
   }
-  #mouse-position {
-    font-size: @font-size-small;
-    .custom-mouse-position {
+  gmf-mouseposition {
+    &>div {
+      min-width: 24rem;
+    }
+    .dropdown-menu {
+      min-width: 24rem;
+    }
+    #mouse-position {
       display: inline-block;
       min-width: 18rem;
-      text-align: right;
     }
   }
   .elevation {
-    text-align: right;
-    font-size: @font-size-small;
-    gmf-elevation {
-      min-width: 10rem;
+    .dropdown-menu {
+      min-width: 12rem;
+    }
+    button {
+      min-width: 12rem;
+    }
+    .elevation-value {
+      display: inline-block;
+      min-width: 6rem;
     }
   }
 }
