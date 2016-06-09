@@ -70,7 +70,7 @@ app.MainController = function(gmfThemes, gmfTreeManager, ngeoLocation) {
    * @type {boolean}
    * @export
    */
-  this.modal = modal === 'true' ? true : false;
+  this.modal = modal === 'true';
 
   /**
    * @type {gmf.TreeManager}
