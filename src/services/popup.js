@@ -41,14 +41,14 @@ ngeo.Popup = function($compile, $rootScope, $sce, $timeout) {
   /**
    * The scope the compiled element is link to.
    * @type {angular.Scope}
-   * @private
+   * @export
    */
-  this.scope_ = $rootScope.$new(true);
+  this.scope = $rootScope.$new(true);
 
   // manage the auto destruction of the popup
-  this.scope_.$watch(
+  this.scope.$watch(
     function() {
-      return this.scope_['open'];
+      return this.scope['open'];
     }.bind(this),
     function(open) {
       if (!open && this.autoDestroy_) {
@@ -86,7 +86,7 @@ ngeo.Popup = function($compile, $rootScope, $sce, $timeout) {
 
 
   // Compile the element, link it to the scope and add it to the document.
-  $compile(this.element_)(this.scope_);
+  $compile(this.element_)(this.scope);
   angular.element(document.body).append(this.element_);
 };
 
@@ -97,7 +97,7 @@ ngeo.Popup = function($compile, $rootScope, $sce, $timeout) {
  * @export
  */
 ngeo.Popup.prototype.getOpen = function() {
-  return this.scope_['open'];
+  return this.scope['open'];
 };
 
 
@@ -107,7 +107,7 @@ ngeo.Popup.prototype.getOpen = function() {
  * @export
  */
 ngeo.Popup.prototype.setOpen = function(open) {
-  this.scope_['open'] = open;
+  this.scope['open'] = open;
 };
 
 
@@ -116,7 +116,7 @@ ngeo.Popup.prototype.setOpen = function(open) {
  * @export
  */
 ngeo.Popup.prototype.destroy = function() {
-  this.scope_.$destroy();
+  this.scope.$destroy();
   this.element_.remove();
 };
 
@@ -127,7 +127,8 @@ ngeo.Popup.prototype.destroy = function() {
  * @export
  */
 ngeo.Popup.prototype.setTitle = function(title) {
-  this.scope_['title'] = title;
+  var trustedTitle = this.sce_.trustAsHtml(title);
+  this.scope['title'] = trustedTitle;
 };
 
 
@@ -139,7 +140,7 @@ ngeo.Popup.prototype.setTitle = function(title) {
  * @export
  */
 ngeo.Popup.prototype.setContent = function(content) {
-  this.scope_['content'] = content;
+  this.scope['content'] = content;
 };
 
 

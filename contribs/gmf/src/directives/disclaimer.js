@@ -17,6 +17,8 @@ goog.require('ngeo.LayerHelper');
  *        gmf-disclaimer-map="::ctrl.map">
  *      </gmf-disclaimer>
  *
+ * @htmlAttribute {boolean} gmf-disclaimer-modal Whether to show the disclaimer
+ *     messages in modals or not. Defaults to `false`.
  * @htmlAttribute {ol.Map=} gmf-disclaimer-map The map.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
@@ -28,6 +30,7 @@ gmf.disclaimerDirective = function() {
   return {
     restrict: 'E',
     scope: {
+      'modalIn': '<?gmfDisclaimerModal',
       'map': '=gmfDisclaimerMap'
     },
     bindToController: true,
@@ -44,6 +47,7 @@ gmf.module.directive('gmfDisclaimer', gmf.disclaimerDirective);
  * @constructor
  * @param {angular.JQLite} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
+ * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {ngeo.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
@@ -52,8 +56,14 @@ gmf.module.directive('gmfDisclaimer', gmf.disclaimerDirective);
  * @ngdoc controller
  * @ngname GmfDisclaimerController
  */
-gmf.DisclaimerController = function($element, $scope, ngeoDisclaimer,
-     ngeoEventHelper, ngeoLayerHelper) {
+gmf.DisclaimerController = function($element, $scope, ngeoCreatePopup,
+    ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.modal = this['modalIn'] === true;
 
   /**
    * @type {ol.Map}
@@ -66,6 +76,12 @@ gmf.DisclaimerController = function($element, $scope, ngeoDisclaimer,
    * @private
    */
   this.element_ = $element;
+
+  /**
+   * @private
+   * @type {ngeo.CreatePopup}
+   */
+  this.createPopup_ = ngeoCreatePopup;
 
   /**
    * @type {ngeo.Disclaimer}
@@ -155,11 +171,7 @@ gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
     var disclaimers = layer.get('disclaimers');
     if (disclaimers && Array.isArray(disclaimers)) {
       disclaimers.forEach(function(disclaimer) {
-        this.disclaimer_.alert({
-          msg: disclaimer,
-          target: this.element_,
-          type: ngeo.MessageType.WARNING
-        });
+        this.showDisclaimerMessage_(disclaimer);
       }, this);
     }
   }
@@ -188,11 +200,7 @@ gmf.DisclaimerController.prototype.unregisterLayer_ = function(layer) {
     var disclaimers = layer.get('disclaimers');
     if (disclaimers && Array.isArray(disclaimers)) {
       disclaimers.forEach(function(disclaimer) {
-        this.disclaimer_.close({
-          msg: disclaimer,
-          target: this.element_,
-          type: ngeo.MessageType.WARNING
-        });
+        this.closeDisclaimerMessage_(disclaimer);
       }, this);
     }
   }
@@ -205,6 +213,34 @@ gmf.DisclaimerController.prototype.unregisterLayer_ = function(layer) {
  */
 gmf.DisclaimerController.prototype.handleDestroy_ = function() {
   this.unregisterLayer_(this.dataLayerGroup_);
+};
+
+
+/**
+ * @param {string} msg Disclaimer message.
+ * @private
+ */
+gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
+  this.disclaimer_.alert({
+    modal: this.modal,
+    msg: msg,
+    target: this.element_,
+    type: ngeo.MessageType.WARNING
+  });
+};
+
+
+/**
+ * @param {string} msg Disclaimer message.
+ * @private
+ */
+gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
+  this.disclaimer_.close({
+    modal: this.modal,
+    msg: msg,
+    target: this.element_,
+    type: ngeo.MessageType.WARNING
+  });
 };
 
 

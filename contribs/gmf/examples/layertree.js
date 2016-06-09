@@ -7,6 +7,7 @@ goog.require('gmf.TreeManager');
 goog.require('gmf.disclaimerDirective');
 goog.require('gmf.layertreeDirective');
 goog.require('gmf.mapDirective');
+goog.require('ngeo.Location');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -35,8 +36,9 @@ app.module.value('gmfWmsUrl',
  * @constructor
  * @param {gmf.Themes} gmfThemes The gme themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {ngeo.Location} ngeoLocation ngeo location service.
  */
-app.MainController = function(gmfThemes, gmfTreeManager) {
+app.MainController = function(gmfThemes, gmfTreeManager, ngeoLocation) {
 
   gmfThemes.loadThemes();
 
@@ -60,6 +62,15 @@ app.MainController = function(gmfThemes, gmfTreeManager) {
       zoom: 3
     })
   });
+
+  // How should disclaimer message be displayed: in modals or alerts
+  var modal = ngeoLocation.getParam('modal');
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.modal = modal === 'true';
 
   /**
    * @type {gmf.TreeManager}
