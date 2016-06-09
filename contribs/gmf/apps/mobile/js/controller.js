@@ -21,15 +21,6 @@ goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mobileGeolocationDirective');
 
-/* global app */
-
-// Filter to apply by default on all coordinates.
-app.module.constant('ngeoPointfilter', 'ngeoNumberCoordinates:0:{x} E, {y} N');
-
-app.module.constant('ngeoQueryOptions', {
-  'limit': 20
-});
-
 
 /**
  * @param {angular.Scope} $scope Scope.
@@ -50,6 +41,13 @@ app.MobileController = function($scope, $injector) {
         }
       },
       $scope, $injector);
+
+  /**
+   * @type {Array.<string>}
+   * @export
+   */
+  this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
+
 };
 goog.inherits(app.MobileController, gmf.AbstractMobileController);
 

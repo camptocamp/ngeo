@@ -21,19 +21,6 @@ goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
 
 
-app.module.constant('ngeoExportFeatureFormats', [
-  ngeo.FeatureHelper.FormatType.KML,
-  ngeo.FeatureHelper.FormatType.GPX
-]);
-
-// Filter to apply by default on all coordinates.
-app.module.constant('ngeoPointfilter', 'ngeoNumberCoordinates:0:{x} E, {y} N');
-
-app.module.constant('ngeoQueryOptions', {
-  'limit': 20
-});
-
-
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
@@ -54,18 +41,16 @@ app.AlternativeDesktopController = function($scope, $injector) {
       }, $scope, $injector);
 
   /**
+   * @type {Array.<string>}
+   * @export
+   */
+  this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
+
+  /**
    * @type {boolean}
    * @export
    */
   this.showInfobar = true;
-
-  /**
-   * @type {ngeo.ScaleselectorOptions}
-   * @export
-   */
-  this.scaleSelectorOptions = {
-    'dropup': true
-  };
 
   var $sce = $injector.get('$sce');
 
