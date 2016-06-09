@@ -22,7 +22,7 @@
 
   <div
       ng-if="fsCtrl.type === 'Point'"
-      class="form-group form-group-sm">
+      class="form-group form-group-sm form-group-nomargin">
     <label class="control-label col-md-4">{{'Size' | translate}}</label>
     <div class="col-md-8">
       <input
@@ -39,7 +39,7 @@
 
   <div
       ng-if="fsCtrl.type === 'Text'"
-      class="form-group form-group-sm">
+      class="form-group form-group-sm form-group-nomargin">
     <label class="control-label col-md-4">{{'Size' | translate}}</label>
     <div class="col-md-8">
       <input
@@ -56,7 +56,7 @@
 
   <div
       ng-if="fsCtrl.type === 'Circle' || fsCtrl.type === 'LineString' || fsCtrl.type === 'Polygon' || fsCtrl.type === 'Rectangle'"
-      class="form-group form-group-sm">
+      class="form-group form-group-sm form-group-nomargin">
     <label class="control-label col-md-4">{{'Stroke' | translate}}</label>
     <div class="col-md-8">
       <input
@@ -73,7 +73,7 @@
 
   <div
       ng-if="fsCtrl.type === 'Circle' || fsCtrl.type === 'Polygon' || fsCtrl.type === 'Rectangle'"
-      class="form-group form-group-sm">
+      class="form-group form-group-sm form-group-nomargin">
     <label class="control-label col-md-4">{{'Opacity' | translate}}</label>
     <div class="col-md-8">
       <input
@@ -90,7 +90,7 @@
 
   <div
       ng-if="fsCtrl.type === 'Text'"
-      class="form-group form-group-sm">
+      class="form-group form-group-sm form-group-nomargin">
     <label class="control-label col-md-4">{{'Angle' | translate}}</label>
     <div class="col-md-8">
       <input
