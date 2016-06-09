@@ -102,3 +102,22 @@ button[ngeo-mobile-geolocation] {
     clear: left;
   }
 }
+
+/** Disclaimer */
+gmf-disclaimer {
+  position: absolute;
+  bottom: @half-app-margin;
+  left: @app-margin;
+  width: 30rem;
+  z-index: @above-content-index;
+
+  .alert {
+    padding: @half-app-margin @app-margin;
+    margin: 0 0@half-app-margin  0;
+  }
+
+  .alert-dismissable .close,
+  .alert-dismissible .close {
+    right: -0.5rem;
+  }
+}
