@@ -33,7 +33,7 @@
     "coveralls": "2.11.9",
     "d3": "3.5.17",
     "eslint": "2.11.1",
-    "eslint-config-openlayers": "4.1.0",
+    "eslint-config-openlayers": "5.0.0",
     "font-awesome": "4.6.3",
     "fs-extra": "0.30.0",
     "gaze": "1.0.0",
