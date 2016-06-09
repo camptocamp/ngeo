@@ -231,6 +231,14 @@ gmf.Authentication.prototype.resetPassword = function(login) {
 
 
 /**
+ * @return {number|null} The role ID.
+ */
+gmf.Authentication.prototype.getRoleId = function() {
+  return this.user_.role_id;
+};
+
+
+/**
  * @param {boolean} checkingLoginStatus Checking the login status?
  * @param {angular.$http.Response} resp Ajax response.
  * @return {angular.$http.Response} Response.

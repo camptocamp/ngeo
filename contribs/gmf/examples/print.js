@@ -35,6 +35,12 @@ app.module.value('gmfPrintUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
 
 
+app.module.constant(
+    'authenticationBaseUrl',
+    'https://geomapfish-demo.camptocamp.net/2.1/wsgi'
+);
+
+
 /**
  * @constructor
  * @param {gmf.Themes} gmfThemes The gme themes service.

@@ -126,6 +126,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
  * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {string} gmfPrintUrl A MapFishPrint url.
+ * @param {gmf.Authentication} gmfAuthentication The authentication service.
  * @constructor
  * @export
  * @ngInject
@@ -134,7 +135,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  */
 gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
     ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils, ngeoCreatePrint,
-    gmfPrintUrl) {
+    gmfPrintUrl, gmfAuthentication) {
   /**
    * @type{boolean}
    * @private
@@ -278,6 +279,11 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
   this.printState = gmf.PrintState.CAPABILITIES_NOT_LOADED;
 
   /**
+   * @type {gmf.Authentication}
+   */
+  this.gmfAuthentication = gmfAuthentication;
+
+  /**
    * @return {ol.Size} Size in dots of the map to print.
    */
   var getSizeFn = function() {
@@ -319,7 +325,13 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
  */
 gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
   if (active) {
-    this.ngeoPrint_.getCapabilities().then(function(resp) {
+    var roleId = this.gmfAuthentication.getRoleId();
+    this.ngeoPrint_.getCapabilities(/** @type {angular.$http.Config} */ ({
+      withCredentials: true,
+      params: roleId !== null ? {
+        'role': roleId
+      } : {}
+    })).then(function(resp) {
       this.printState = gmf.PrintState.NOT_IN_USE;
       // Get capabilities - On success
       this.parseCapabilities_(resp);
