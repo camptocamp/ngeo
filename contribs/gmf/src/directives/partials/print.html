@@ -5,14 +5,14 @@
       <input ng-if="customField.type === 'text'" ng-model="customField.value" class="form-control" type="text" placeholder="{{customField.name | translate}}">
       <textarea ng-if="customField.type === 'textarea'" ng-model="customField.value" class="form-control" row="3" placeholder="{{customField.name | translate}}"></textarea>
       <div ng-if="customField.type === 'checkbox'" class="checkbox">
-        <label>
+        <label class="small">
           <input ng-model="customField.value" type="checkbox">
           <span>{{customField.name | translate}}</span>
         </label>
       </div>
     </div>
     <div ng-show="ctrl.fields.legend !== undefined" class="checkbox">
-      <label>
+      <label class="small">
         <input ng-model="ctrl.fields.legend" type="checkbox">
         <span translate>Legend</span>
       </label>
