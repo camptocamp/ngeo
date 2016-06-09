@@ -22,7 +22,7 @@ app.module = angular.module('app', ['gmf']);
 
 
 app.module.constant(
-    'gmfAltitudeUrl',
+    'gmfRasterUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
 
 

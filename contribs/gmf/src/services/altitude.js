@@ -18,12 +18,12 @@ gmf.AltitudeParam = {
  * at a specific coordinate.
  * @constructor
  * @param {angular.$http} $http Angular http service.
- * @param {string} gmfAltitudeUrl URL to the altitude server
+ * @param {string} gmfRasterUrl URL to a raster service with altitude layers.
  * @ngInject
  * @ngdoc service
  * @ngname gmfAltitude
  */
-gmf.Altitude = function($http, gmfAltitudeUrl) {
+gmf.Altitude = function($http, gmfRasterUrl) {
 
   /**
    * @type {angular.$http}
@@ -35,7 +35,7 @@ gmf.Altitude = function($http, gmfAltitudeUrl) {
    * @type {string}
    * @private
    */
-  this.url_ = gmfAltitudeUrl;
+  this.url_ = gmfRasterUrl;
 };
 
 
