@@ -7,14 +7,23 @@ goog.require('gmf.backgroundlayerselectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawfeatureDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.elevationDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.mousepositionDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.printDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.resizemapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
+/** @suppress {extraRequire} */
+goog.require('ngeo.ScaleselectorOptions');
+/** @suppress {extraRequire} */
+goog.require('ngeo.scaleselectorDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
@@ -58,7 +67,9 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
     layers: [],
     view: new ol.View(viewConfig),
     controls: config.mapControls || [
-      new ol.control.ScaleLine(),
+      new ol.control.ScaleLine({
+        target: document.getElementById('scaleline')
+      }),
       new ol.control.Zoom()
     ],
     interactions: config.mapInteractions || ol.interaction.defaults({

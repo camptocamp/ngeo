@@ -31,7 +31,7 @@ goog.require('ol.style.Style');
 gmf.module.constant('isMobile', true);
 
 gmf.module.constant(
-    'gmfAltitudeUrl',
+    'gmfRasterUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
 
 
