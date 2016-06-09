@@ -9,7 +9,7 @@ goog.require('ol.source.TileWMS');
 
 /**
  * @typedef {{
- *     resultSource: (ngeo.QueryResultSource),
+ *     resultSource: (ngeox.QueryResultSource),
  *     source: (ngeox.QuerySource)
  * }}
  */
@@ -25,30 +25,10 @@ ngeo.QueryInfoFormatType = {
 
 
 /**
- * @typedef {{
- *     sources: (Array.<ngeo.QueryResultSource>),
- *     total: (number)
- * }}
- */
-ngeo.QueryResult;
-
-
-/**
- * @typedef {{
- *     features: (Array.<ol.Feature>),
- *     id: (number|string),
- *     label: (string),
- *     pending: (boolean)
- * }}
- */
-ngeo.QueryResultSource;
-
-
-/**
  * The `ngeoQueryResult` is the value service where the features of the query
  * result are added.
  */
-ngeo.module.value('ngeoQueryResult', /** @type {ngeo.QueryResult} */ ({
+ngeo.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
   sources: [],
   total: 0
 }));
@@ -65,7 +45,7 @@ ngeo.module.value('ngeoQueryResult', /** @type {ngeo.QueryResult} */ ({
  *
  * @constructor
  * @param {angular.$http} $http Angular $http service.
- * @param {ngeo.QueryResult} ngeoQueryResult The ngeo query result service.
+ * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {ngeox.QueryOptions|undefined} ngeoQueryOptions The options to
  *     configure the ngeo query service with.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
@@ -111,7 +91,7 @@ ngeo.Query = function($http, ngeoQueryResult, ngeoQueryOptions,
   this.$http_ = $http;
 
   /**
-   * @type {ngeo.QueryResult}
+   * @type {ngeox.QueryResult}
    * @private
    */
   this.result_ = ngeoQueryResult;
@@ -233,7 +213,7 @@ ngeo.Query.prototype.addSource = function(source) {
       source.identifierAttributeField !== undefined ?
       source.identifierAttributeField : sourceId;
 
-  var resultSource = /** @type {ngeo.QueryResultSource} */ ({
+  var resultSource = /** @type {ngeox.QueryResultSource} */ ({
     'features': [],
     'id': sourceId,
     'identifierAttributeField': sourceIdentifierAttributeField,

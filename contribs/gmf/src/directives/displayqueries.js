@@ -73,7 +73,7 @@ gmf.module.directive('gmfDisplayqueries', gmf.displayqueriesDirective);
 
 /**
  * @param {angular.Scope} $scope Angular scope.
- * @param {ngeo.QueryResult} ngeoQueryResult ngeo query result.
+ * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
@@ -92,7 +92,7 @@ gmf.DisplayqueriesController = function($scope, ngeoQueryResult,
   this.scope_ = $scope;
 
   /**
-   * @type {ngeo.QueryResult}
+   * @type {ngeox.QueryResult}
    * @private
    */
   this.ngeoQueryResult_ = ngeoQueryResult;
@@ -132,7 +132,7 @@ gmf.DisplayqueriesController = function($scope, ngeoQueryResult,
   this.selectedFeatureOverlay_.setStyle(selectedFeatureStyle);
 
   /**
-   * @type {ngeo.QueryResultSource?}
+   * @type {ngeox.QueryResultSource?}
    * @export
    */
   this.source = null;

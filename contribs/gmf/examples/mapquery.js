@@ -66,14 +66,14 @@ app.module.directive('appQueryresult', app.queryresultDirective);
 
 /**
  * Demo, NOT USED.
- * @param {ngeo.QueryResult} ngeoQueryResult Query service.
+ * @param {ngeox.QueryResult} ngeoQueryResult Query service.
  * @constructor
  * @ngInject
  */
 app.QueryresultController = function(ngeoQueryResult) {
 
   /**
-   * @type {ngeo.QueryResult}
+   * @type {ngeox.QueryResult}
    * @export
    */
   this.result = ngeoQueryResult;
