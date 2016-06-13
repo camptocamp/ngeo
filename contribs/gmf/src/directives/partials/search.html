@@ -11,7 +11,9 @@
   </span>
 </div>
 <span ng-show="ctrl.colorchooser && ctrl.displayColorPicker" ngeo-popover ngeo-popover-placement="bottom">
-  <button class="color-button fa fa-tint" ngeo-popover-anchor></button>
+  <button class="color-button fa fa-tint" ngeo-popover-anchor
+      data-toggle="tooltip"
+      data-title="{{'Change the color of the search result'|translate}}"></button>
   <div ngeo-popover-content>
     <div ngeo-colorpicker ngeo-colorpicker-color="ctrl.color"></div>
   </div>
