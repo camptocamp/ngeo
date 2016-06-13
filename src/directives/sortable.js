@@ -76,6 +76,11 @@ ngeo.sortableDirective = function($timeout) {
            */
           var dragListGroup = null;
 
+          /**
+           * @type {number}
+           */
+          var onDragListHeightRatio = 1.5;
+
           scope.$watchCollection(function() {
             return sortable;
           }, function() {
@@ -88,6 +93,7 @@ ngeo.sortableDirective = function($timeout) {
            */
           function resetUpDragDrop() {
             var children = element.children();
+            var dragHoverClass;
             for (var i = 0; i < children.length; ++i) {
               angular.element(children[i]).data('idx', i);
             }
@@ -96,9 +102,13 @@ ngeo.sortableDirective = function($timeout) {
               dragListGroup.dispose();
             }
 
+            if (options['dragHoverClass'] !== undefined) {
+              dragHoverClass = options['dragHoverClass'];
+            }
+
             dragListGroup = new goog.fx.DragListGroup();
             dragListGroup.addDragList(element[0],
-                goog.fx.DragListDirection.DOWN);
+                goog.fx.DragListDirection.DOWN, true, dragHoverClass);
             dragListGroup.setFunctionToGetHandleForDragItem(
                 /**
                  * @param {Element} dragItem Drag item.
@@ -126,11 +136,14 @@ ngeo.sortableDirective = function($timeout) {
             goog.events.listen(dragListGroup, 'dragstart', function(e) {
               hoverNextItemIdx = -1;
               hoverList = null;
+              var height = element[0].offsetHeight;
               /**
                * Adding dynamically the width of the draggerEl to fit the currDragItem width.
                * - > the draggerEl is clipped to the body with an absolute position.
                */
               angular.element(e.draggerEl).css('width', e.currDragItem.offsetWidth);
+
+              element.css('height', height * onDragListHeightRatio + 'px');
             });
 
             goog.events.listen(dragListGroup, 'dragmove', function(e) {
@@ -161,6 +174,7 @@ ngeo.sortableDirective = function($timeout) {
                   sortable.push(sortable.splice(idx, 1)[0]);
                 });
               }
+              element.css('height', 'auto');
             });
 
             dragListGroup.init();
