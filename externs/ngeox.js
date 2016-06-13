@@ -232,7 +232,8 @@ ngeox.QueryResult.prototype.total;
  *     features: (Array.<ol.Feature>),
  *     id: (number|string),
  *     label: (string),
- *     pending: (boolean)
+ *     pending: (boolean),
+ *     queried: (boolean)
  * }}
  */
 ngeox.QueryResultSource;
@@ -264,6 +265,13 @@ ngeox.QueryResultSource.prototype.label;
  * @type {boolean}
  */
 ngeox.QueryResultSource.prototype.pending;
+
+
+/**
+ * Has this source been queried for the last query request?
+ * @type {boolean}
+ */
+ngeox.QueryResultSource.prototype.queried;
 
 
 /**

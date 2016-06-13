@@ -218,7 +218,8 @@ ngeo.Query.prototype.addSource = function(source) {
     'id': sourceId,
     'identifierAttributeField': sourceIdentifierAttributeField,
     'label': sourceLabel,
-    'pending': false
+    'pending': false,
+    'queried': false
   });
 
   this.result_.sources.push(resultSource);
@@ -357,6 +358,7 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
       }
 
       item['resultSource'].pending = true;
+      item['resultSource'].queried = true;
       infoFormat = item.source.infoFormat;
 
       // Sources that use GML as info format are combined together if they
@@ -423,6 +425,8 @@ ngeo.Query.prototype.clearResult_ = function() {
   this.result_.total = 0;
   this.result_.sources.forEach(function(source) {
     source.features.length = 0;
+    source.pending = false;
+    source.queried = false;
   }, this);
 };
 

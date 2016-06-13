@@ -45,6 +45,10 @@ ngeo.module.value('gmfDisplayqueriesTemplateUrl',
  *     object for all features from the result of the query.
  * @htmlAttribute {ol.style.Style} selectedfeaturestyle A style
  *     object for the current displayed feature.
+ * @htmlAttribute {boolean} desktop If the directive is used in the desktop
+ *     application.
+ * @htmlAttribute {boolean} showunqueriedlayers If also layers, that have not
+ *     been queried for the last query, should be shown in the filter.
  * @param {string} gmfDisplayqueriesTemplateUrl URL to a template.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
@@ -62,7 +66,9 @@ gmf.displayqueriesDirective = function(
     restrict: 'E',
     scope: {
       'featuresStyleFn': '&gmfDisplayqueriesFeaturesstyle',
-      'selectedFeatureStyleFn': '&gmfDisplayqueriesSelectedfeaturestyle'
+      'selectedFeatureStyleFn': '&gmfDisplayqueriesSelectedfeaturestyle',
+      'desktopIn': '=gmfDisplayqueriesDesktop',
+      'showUnqueriedLayersIn': '=gmfDisplayqueriesShowunqueriedlayers'
     }
   };
 };
@@ -92,10 +98,44 @@ gmf.DisplayqueriesController = function($scope, ngeoQueryResult,
   this.scope_ = $scope;
 
   /**
-   * @type {ngeox.QueryResult}
+   * @type {boolean}
+   * @export
+   */
+  this.desktop = this['desktopIn'] === true;
+
+  /**
+   * Is the window currently collapsed?
+   * When used for Desktop, it is shown non-collapsed.
+   * @type {boolean}
+   * @export
+   */
+  this.collapsed = !this.desktop;
+
+  /**
+   * @type {boolean}
    * @private
    */
-  this.ngeoQueryResult_ = ngeoQueryResult;
+  this.showUnqueriedLayers_ = this['showUnqueriedLayersIn'] !== undefined ?
+    this['showUnqueriedLayersIn'] === true : false;
+
+  /**
+   * Object that is used to filter the source list in the template.
+   * @type {Object}
+   * @export
+   */
+  this.sourcesFilter = this.showUnqueriedLayers ? {} : {'queried': true};
+
+  /**
+   * @type {ngeox.QueryResult}
+   * @export
+   */
+  this.ngeoQueryResult = ngeoQueryResult;
+
+  /**
+   * @type {?ngeox.QueryResultSource}
+   * @export
+   */
+  this.selectedSource = null;
 
   /**
    * @type {ol.Collection}
@@ -115,21 +155,28 @@ gmf.DisplayqueriesController = function($scope, ngeoQueryResult,
    * @type {ngeo.FeatureOverlay}
    * @private
    */
-  this.selectedFeatureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  this.highlightFeatureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
-  var selectedFeatureStyle = this['selectedFeatureStyleFn']();
-  if (selectedFeatureStyle !== undefined) {
-    goog.asserts.assertInstanceof(selectedFeatureStyle, ol.style.Style);
+  /**
+   * @type {ol.Collection}
+   * @private
+   */
+  this.highlightFeatures_ = new ol.Collection();
+  this.highlightFeatureOverlay_.setFeatures(this.highlightFeatures_);
+
+  var highlightFeatureStyle = this['selectedFeatureStyleFn']();
+  if (highlightFeatureStyle !== undefined) {
+    goog.asserts.assertInstanceof(highlightFeatureStyle, ol.style.Style);
   } else {
     var fill = new ol.style.Fill({color: [255, 0, 0, 0.6]});
     var stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
-    selectedFeatureStyle = new ol.style.Style({
+    highlightFeatureStyle = new ol.style.Style({
       fill: fill,
       image: new ol.style.Circle({fill: fill, radius: 5, stroke: stroke}),
       stroke: stroke
     });
   }
-  this.selectedFeatureOverlay_.setStyle(selectedFeatureStyle);
+  this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
 
   /**
    * @type {ngeox.QueryResultSource?}
@@ -189,6 +236,14 @@ gmf.DisplayqueriesController = function($scope, ngeoQueryResult,
  */
 gmf.DisplayqueriesController.prototype.show = function() {
   this.clear();
+  this.updateFeatures_();
+};
+
+
+/**
+ * @private
+ */
+gmf.DisplayqueriesController.prototype.updateFeatures_ = function() {
   this.setCurrentResult_(0, false);
   if (this.source !== null) {
     this.collectFeatures_();
@@ -212,10 +267,14 @@ gmf.DisplayqueriesController.prototype.setCurrentResult_ = function(
   if (position !== this.currentResult) {
     var i, source, features;
     var lastFeature = this.feature;
-    var sources = this.ngeoQueryResult_.sources;
+    var sources = this.ngeoQueryResult.sources;
     this.currentResult = position;
     for (i = 0; i < sources.length; i++) {
       source = sources[i];
+      if (this.selectedSource !== null && this.selectedSource !== source) {
+        // when filtering on a source, only consider features of the selected source
+        continue;
+      }
       features = source.features;
       if (position >= features.length) {
         position -= features.length;
@@ -270,12 +329,35 @@ gmf.DisplayqueriesController.prototype.next = function() {
 
 
 /**
- * Get the total count of features in the result of the query.
+ * Get the total count of features in the result of the query. If a source
+ * has been select, only the number of features of that source are returned.
  * @return {number} Total number of features.
  * @export
  */
 gmf.DisplayqueriesController.prototype.getResultLength = function() {
-  return this.ngeoQueryResult_.total;
+  if (this.selectedSource === null) {
+    return this.ngeoQueryResult.total;
+  } else {
+    return this.selectedSource.features.length;
+  }
+};
+
+
+/**
+ * @return {boolean} If the first result is active.
+ * @export
+ */
+gmf.DisplayqueriesController.prototype.isFirst = function() {
+  return this.currentResult == 0;
+};
+
+
+/**
+ * @return {boolean} If the last result is active.
+ * @export
+ */
+gmf.DisplayqueriesController.prototype.isLast = function() {
+  return this.currentResult == this.getResultLength() - 1;
 };
 
 
@@ -301,8 +383,8 @@ gmf.DisplayqueriesController.prototype.getFeatureValues = function() {
  * "isNext" value. The aim is to wait on Angular to add a class (corresponding
  * to "isNext") on the DOM before to set the "animation" value and do the
  * animation.
- * @param {boolean} isNext used to indicate if the user want to see the next
- * or the previopus result.
+ * @param {boolean} isNext used to indicate if the user wants to see the next
+ * or the previous result.
  * @private
  */
 gmf.DisplayqueriesController.prototype.animate_ = function(isNext) {
@@ -318,12 +400,16 @@ gmf.DisplayqueriesController.prototype.animate_ = function(isNext) {
  * @private
  */
 gmf.DisplayqueriesController.prototype.collectFeatures_ = function() {
-  var i, ii, features;
-  var sources = this.ngeoQueryResult_.sources;
+  var sources = this.ngeoQueryResult.sources;
   this.features_.clear();
-  for (i = 0; i < sources.length; i++) {
-    features = sources[i].features;
-    for (ii = 0; ii < features.length; ii++) {
+  for (var i = 0; i < sources.length; i++) {
+    var source = sources[i];
+    if (this.selectedSource !== null && this.selectedSource !== source) {
+      // when filtering on a source, only add features of the selected source
+      continue;
+    }
+    var features = source.features;
+    for (var ii = 0; ii < features.length; ii++) {
       this.features_.push(features[ii]);
     }
   }
@@ -338,9 +424,9 @@ gmf.DisplayqueriesController.prototype.collectFeatures_ = function() {
  */
 gmf.DisplayqueriesController.prototype.highlightCurrentFeature_ =
 function(opt_lastFeature) {
-  this.selectedFeatureOverlay_.clear();
+  this.highlightFeatures_.clear();
   this.features_.remove(this.feature);
-  this.selectedFeatureOverlay_.addFeature(this.feature);
+  this.highlightFeatures_.push(this.feature);
   if (opt_lastFeature !== undefined) {
     this.features_.push(opt_lastFeature);
   }
@@ -368,7 +454,23 @@ gmf.DisplayqueriesController.prototype.clear = function() {
   this.source = null;
   this.currentResult = -1;
   this.features_.clear();
-  this.selectedFeatureOverlay_.clear();
+  this.highlightFeatures_.clear();
+  this.selectedSource = null;
+};
+
+
+/**
+ * @param {ngeox.QueryResultSource} source The source to select.
+ * @export
+ */
+gmf.DisplayqueriesController.prototype.setSelectedSource = function(source) {
+  if (source !== null && source.features.length <= 0) {
+    // sources with no results can not be selected
+    return;
+  }
+  this.clear();
+  this.selectedSource = source;
+  this.updateFeatures_();
 };
 
 
