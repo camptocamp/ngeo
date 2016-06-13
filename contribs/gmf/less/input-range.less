@@ -3,6 +3,13 @@ input[type=range] {
   width: 100%;
   padding-right: 0 !important;
   padding-left: 0 !important;
+  border: 0;
+  background-color: transparent;
+
+  &,
+  &:focus {
+    box-shadow: none;
+  }
 }
 input[type=range]:focus {
   outline: none;
