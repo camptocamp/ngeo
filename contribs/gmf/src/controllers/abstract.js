@@ -14,6 +14,8 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.disclaimerDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.displayqueriesDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
@@ -25,11 +27,17 @@ goog.require('gmf.themeselectorDirective');
 goog.require('ngeo.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
+/** @suppress {extraRequire} */
+goog.require('ngeo.mapQueryDirective');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.GetBrowserLanguage');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
 
 
 gmf.module.constant('ngeoExportFeatureFormats', [
@@ -131,6 +139,24 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   // Not used in this file but the QueryManager must be injected to be watched.
   $injector.get('gmfQueryManager');
+
+  var queryFill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
+  var queryStroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
+
+  /**
+   * FeatureStyle used by the displayqueries directive
+   * @type {ol.style.Style}
+   * @export
+   */
+  this.queryFeatureStyle = new ol.style.Style({
+    fill: queryFill,
+    image: new ol.style.Circle({
+      fill: queryFill,
+      radius: 5,
+      stroke: queryStroke
+    }),
+    stroke: queryStroke
+  });
 
   /**
    * The active state of the directive responsible of point measurements.

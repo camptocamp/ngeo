@@ -83,24 +83,6 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     stroke: new ol.style.Stroke({color: 'rgba(40, 40, 230, 1)', width: 2})
   });
 
-  var queryFill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
-  var queryStroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
-
-  /**
-   * FeatureStyle used by the displayqueries directive
-   * @type {ol.style.Style}
-   * @export
-   */
-  this.queryFeatureStyle = new ol.style.Style({
-    fill: queryFill,
-    image: new ol.style.Circle({
-      fill: queryFill,
-      radius: 5,
-      stroke: queryStroke
-    }),
-    stroke: queryStroke
-  });
-
   /**
    * @type {ngeox.MobileGeolocationDirectiveOptions}
    * @export
