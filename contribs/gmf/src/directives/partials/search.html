@@ -9,10 +9,10 @@
     ng-hide="!ctrl.clearButton || ctrl.input_value == ''"
     ng-click="ctrl.onClearButton()">
   </span>
-  <span ng-show="ctrl.colorchooser && ctrl.displayColorPicker" ngeo-popover ngeo-popover-placement="bottom">
-    <button class="color-button fa fa-tint" ngeo-popover-anchor></button>
-    <div ngeo-popover-content>
-      <div ngeo-colorpicker ngeo-colorpicker-color="ctrl.color"></div>
-    </div>
-  </span>
 </div>
+<span ng-show="ctrl.colorchooser && ctrl.displayColorPicker" ngeo-popover ngeo-popover-placement="bottom">
+  <button class="color-button fa fa-tint" ngeo-popover-anchor></button>
+  <div ngeo-popover-content>
+    <div ngeo-colorpicker ngeo-colorpicker-color="ctrl.color"></div>
+  </div>
+</span>
