@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>GMF profile example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="../third-party/jquery-ui/jquery-ui.min.css" type="text/css">
+    <style>
+        gmf-map > div {
+          width: 800px;
+          height: 400px;
+        }
+        .profile {
+          width: 800px;
+          height: 200px;
+        }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <button class="btn btn-primary" data-toggle="button" ng-click="ctrl.toggleDrawLineActive()">Draw a line</button>
+
+    <p id="desc">This example shows how to use the <code>... TODO</code></p>
+
+    <gmf-profile
+      gmf-profile-map="::ctrl.map"
+      gmf-profile-line="ctrl.profileLine">
+    </gmf-profile>
+
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
+    <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
+    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
+    <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
+    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js" type="text/javascript"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../../../node_modules/d3/d3.js"></script>
+    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
+    <script src="/@?main=profile.js"></script>
+    <script src="default.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>
