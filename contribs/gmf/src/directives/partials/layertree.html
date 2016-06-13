@@ -18,7 +18,7 @@
      ng-if="::layertreeCtrl.node.children" ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'state' : 'fa-refresh fa-spin']"></a>
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
      class="name" title="{{layertreeCtrl.node.name | translate}}">
-    <em>{{layertreeCtrl.node.name | translate}}</em>
+    {{layertreeCtrl.node.name | translate}}
     <i class="gmf-icon gmf-icon-search-go zoom"
        data-toggle="tooltip"
        data-title="{{'Not visible at current scale. Click to zoom.'|translate}}"
