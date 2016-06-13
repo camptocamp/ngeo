@@ -2,12 +2,18 @@
 
 gmf-layertree {
   display: block;
-  margin: @app-margin @half-app-margin @app-margin @app-margin;
+  padding: @app-margin;
+  position: absolute;
+  height: 100%;
+  width: 100%;
   ul {
     padding-top: @micro-app-margin;
+    height: 100%;
   }
   > :first-child {
     margin-right: @half-app-margin;
+    width: 100%;
+    height: 100%;
   }
 }
 
