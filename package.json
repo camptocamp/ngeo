@@ -39,7 +39,7 @@
     "gaze": "1.0.0",
     "graceful-fs": "4.1.4",
     "jasmine-core": "2.4.1",
-    "jquery": "2.2.4",
+    "jquery": "3.0.0",
     "angular-ui-date": "1.1.1",
     "angular-ui-slider": "0.3.2",
     "jsdoc": "3.4.0",
