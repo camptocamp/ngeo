@@ -2,6 +2,10 @@ goog.provide('gmf.AbstractController');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
+goog.require('gmf.authenticationDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.backgroundlayerselectorDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.QueryManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.TreeManager');

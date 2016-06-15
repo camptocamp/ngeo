@@ -3,8 +3,6 @@ goog.provide('gmf.AbstractMobileController');
 goog.require('gmf');
 goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
-goog.require('gmf.backgroundlayerselectorDirective');
-/** @suppress {extraRequire} */
 goog.require('gmf.mobiledisplayqueriesDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileMeasureLengthDirective');
@@ -16,6 +14,8 @@ goog.require('goog.fx.Dragger');
 goog.require('goog.math.Rect');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.mobileGeolocationDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mobileQueryDirective');
 goog.require('ol.Map');

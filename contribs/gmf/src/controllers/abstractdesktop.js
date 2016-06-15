@@ -3,8 +3,6 @@ goog.provide('gmf.AbstractDesktopController');
 goog.require('gmf');
 goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
-goog.require('gmf.backgroundlayerselectorDirective');
-/** @suppress {extraRequire} */
 goog.require('gmf.drawfeatureDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.elevationDirective');
