@@ -96,7 +96,7 @@ gmf.ProfileController = function($scope, $http, ngeoFeatureOverlayMgr,
   this.line;
 
   /**
-   * @type {Array.<Object>} FIXME
+   * @type {Array.<Object>}
    * @export
    */
   this.profileData = [];
@@ -122,17 +122,22 @@ gmf.ProfileController = function($scope, $http, ngeoFeatureOverlayMgr,
   this.snappedPoint_ = new ol.Feature();
   this.featureOverlay_.addFeature(this.snappedPoint_);
 
-  var extractor = {
-    dist: this.getDist_,
-    z: this.getZ_
-  };
-
   /**
-   * @type {*} FIXME
+   * @type {ngeox.profile.ProfileOptions}
    * @export
    */
   this.profileOptions = {
-    elevationExtractor: extractor
+    linesConfiguration: {
+      'aster': {
+        color: '#00F',
+        zExtractor: this.getAsterZ_
+      },
+      'srtm': {
+        color: '#0F0',
+        zExtractor: this.getSrtmZ_
+      }
+    },
+    distanceExtractor: this.getDist_
   };
 
   /**
@@ -164,6 +169,7 @@ gmf.ProfileController.prototype.update_ = function() {
   }
 };
 
+
 gmf.ProfileController.prototype.getJsonProfile_ = function() {
 //  var geom = {
 //    'type': 'LineString',
@@ -180,20 +186,23 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
 //    this.getProfileDataSuccess_.bind(this),
 //    this.getProfileDataError_.bind(this)
 //  );
-  this.$http_.get('../../../../examples/data/profile.json').then(
+  this.$http_.get('data/profile.json').then(
     this.getProfileDataSuccess_.bind(this),
     this.getProfileDataError_.bind(this)
   );
 };
 
+
 gmf.ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
-  //this.profileData = resp.data;
-  this.profileData = resp.data.profile;
+  //this.profileData = resp.dat;
+  this.profileData = resp.data['profile'];
 };
+
 
 gmf.ProfileController.prototype.getProfileDataError_ = function(resp) {
   console.error('Can not get JSON profile. ' + resp.statusText);
 };
+
 
 /**
  * TODO
@@ -201,12 +210,27 @@ gmf.ProfileController.prototype.getProfileDataError_ = function(resp) {
  * @return {number} The elevation.
  * @private
  */
-gmf.ProfileController.prototype.getZ_ = function(item) {
-  if ('values' in item && 'mnt' in item['values']) {
-    return parseFloat((item['values']['mnt'] / 100).toPrecision(5));
+gmf.ProfileController.prototype.getAsterZ_ = function(item) {
+  if ('values' in item && 'aster' in item['values']) {
+    return parseFloat(item['values']['aster']);
   }
   return 0;
 };
+
+
+/**
+ * TODO
+ * @param {Object} item The item.
+ * @return {number} The elevation.
+ * @private
+ */
+gmf.ProfileController.prototype.getSrtmZ_ = function(item) {
+  if ('values' in item && 'srtm' in item['values']) {
+    return parseFloat(item['values']['srtm']);
+  }
+  return 0;
+};
+
 
 /**
  * TODO

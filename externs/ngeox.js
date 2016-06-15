@@ -759,7 +759,8 @@ ngeox.profile;
  *   styleDefs: (string|undefined),
  *   poiLabelAngle: (number|undefined),
  *   formatter: (ngeox.profile.ProfileFormatter|undefined),
- *   elevationExtractor: ngeox.profile.ElevationExtractor,
+ *   distanceExtractor: function(Object): number,
+ *   linesConfiguration: !Object.<string, ngeox.profile.LineConfiguration>,
  *   poiExtractor: (ngeox.profile.PoiExtractor|undefined),
  *   light: (boolean|undefined),
  *   lightXAxis: (boolean|undefined),
@@ -793,10 +794,19 @@ ngeox.profile.ProfileOptions.prototype.formatter;
 
 
 /**
- * Extractor for parsing elevation data.
- * @type {ngeox.profile.ElevationExtractor}
+ * Extract the distance from origin of a point (an item of the elevation data
+ * array).
+ * @type {function(Object): number}
  */
-ngeox.profile.ProfileOptions.prototype.elevationExtractor;
+ngeox.profile.ProfileOptions.prototype.distanceExtractor;
+
+
+/**
+ * Configuration object for the profile's lines. The key string of each object
+ * is used as class for its respective svg line.
+ * @type {!Object.<string, ngeox.profile.LineConfiguration>}
+ */
+ngeox.profile.ProfileOptions.prototype.linesConfiguration;
 
 
 /**
@@ -846,28 +856,27 @@ ngeox.profile.ProfileOptions.prototype.outCallback;
 
 
 /**
- * The elevation data extractor is used to extract data from a point.
- * The point is an item of the elevation data array.
+ * Configuration object for the profile's lines.
  * @typedef {{
- *   z: function(Object): number,
- *   dist: function(Object): number
+ *   color: (string|undefined),
+ *   zExtractor: !function(Object): number}
  * }}
  */
-ngeox.profile.ElevationExtractor;
+ngeox.profile.LineConfiguration;
 
 
 /**
- * Extract the elevation of a point.
- * @type {function(Object): number}
+ * Color of the line (hex color string).
+ * @type {string|undefined}
  */
-ngeox.profile.ElevationExtractor.prototype.z;
+ngeox.profile.LineConfiguration.prototype.color;
 
 
 /**
- * Extract the distance from origin of a point.
+ * Extract the elevation of a point (an item of the elevation data array).
  * @type {function(Object): number}
  */
-ngeox.profile.ElevationExtractor.prototype.dist;
+ngeox.profile.LineConfiguration.prototype.zExtractor;
 
 
 /**

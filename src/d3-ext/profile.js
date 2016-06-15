@@ -9,10 +9,15 @@ goog.require('goog.object');
  *
  *     var selection = d3.select('#element_id');
  *     var profile = ngeo.profile({
- *      elevationExtractor: {
- *        z: function (item) {return item['values']['z'];)},
- *        dist: function (item) {return item['dist'];)}
- *      },
+ *      distanceExtractor: function (item) {return item['dist'];)}
+ *      linesConfiguration: {
+ *        'lineZ1': {
+ *          zExtractor: function (item) {return item['values']['z1'];)}
+ *        },
+ *        'lineZ2': {
+ *          color: '#00F',
+ *          zExtractor: function (item) {return item['values']['z2'];)}
+ *        }
  *      hoverCallback: function(point, dist, xUnits, ele, yUnits) {
  *        console.log(point.x, point.y);
  *      },
@@ -22,9 +27,15 @@ goog.require('goog.object');
  *     selection.datum(data).call(profile);
  *
  * The selection data must be an array.
- * The layout for the items of this array is unconstrained: the elevation
- * and distance values are extracted using the elevationExtractor config
- * option. Optionally, POIs can be displayed and depend on a poiExtractor
+ * The layout for the items of this array is unconstrained: the distance values
+ * is extracted using the distanceExtractor config option and multiples z values
+ * can be displayed by providing multiple linesConfiguration with its specific
+ * zExtractor.
+ * Optionally you can provide a color in your linesConfiguration. A line without
+ * color will be red. Each linesConfiguration name is used as class for its
+ * respective line. So you can pass a styleDefs config option (inline css) to
+ * customize the line or all the chart.
+ * Optionally, POIs can be displayed and depend on a poiExtractor
  * config option.
  *
  * The data below will work for the above example:
@@ -32,7 +43,7 @@ goog.require('goog.object');
  *     [
  *         {
  *             "y": 199340,
- *             "values": {"z": 788.7},
+ *             "values": {"z1": 788.7, "z2": 774.2},
  *             "dist": 0.0,
  *             "x": 541620
  *         }, ...
@@ -72,15 +83,25 @@ ngeo.profile = function(options) {
       options.outCallback : goog.nullFunction;
 
   /**
-   * Elevation data extractor used to get the dist and elevation values.
+   * Distance data extractor used to get the dist values.
    */
-  var elevationExtractor = options.elevationExtractor;
+  var distanceExtractor = options.distanceExtractor;
+
+  /**
+   * Line configuration object.
+   */
+  var linesConfiguration = options.linesConfiguration;
+
+  /**
+   * Number of differents configurations for the line.
+   */
+  var numberOfLines = Object.keys(linesConfiguration).length;
 
   /**
    * Method to get the coordinate in pixels from a distance.
    */
   var bisectDistance = d3.bisector(function(d) {
-    return elevationExtractor.dist(d);
+    return distanceExtractor(d);
   }).left;
 
   /**
@@ -202,8 +223,6 @@ ngeo.profile = function(options) {
         return;
       }
 
-      var extractor = elevationExtractor;
-
       width = Math.max(this.clientWidth - margin.right - margin.left, 0);
       x = d3.scale.linear().range([0, width]);
 
@@ -215,21 +234,18 @@ ngeo.profile = function(options) {
           .scale(y)
           .orient('left');
 
-      var area = d3.svg.area()
-          .x(function(d) {
-            return x(extractor.dist(d));
-          })
-          .y0(height)
-          .y1(function(d) {
-            return y(extractor.z(d));
-          });
-      var line = d3.svg.line()
-          .x(function(d) {
-            return x(extractor.dist(d));
-          })
-          .y(function(d) {
-            return y(extractor.z(d));
-          });
+      var area;
+      if (numberOfLines === 1) {
+        area = d3.svg.area()
+            .x(function(d) {
+              return x(distanceExtractor(d));
+            })
+            .y0(height)
+            .y1(function(d) {
+              var firstLineName =  Object.keys(linesConfiguration)[0];
+              return y(linesConfiguration[firstLineName].zExtractor(d));
+            });
+      }
 
       // Select the svg element, if it exists.
       svg = d3.select(this).selectAll('svg').data([data]);
@@ -245,11 +261,11 @@ ngeo.profile = function(options) {
       clearPois();
 
       gEnter.style('font', '11px Arial');
-      gEnter.append('path').attr('class', 'area')
-          .style('fill', 'rgba(222, 222, 222, 0.5)');
-      gEnter.append('path').attr('class', 'line')
-          .style('stroke', '#F00')
-          .style('fill', 'none');
+
+      if (numberOfLines === 1) {
+        gEnter.append('path').attr('class', 'area')
+            .style('fill', 'rgba(222, 222, 222, 0.5)');
+      }
 
       gEnter.insert('g', ':first-child')
           .attr('class', 'grid-y');
@@ -309,13 +325,28 @@ ngeo.profile = function(options) {
               margin.top + ')');
 
       xDomain = d3.extent(data, function(d) {
-        return extractor.dist(d);
+        return distanceExtractor(d);
       });
       x.domain(xDomain);
 
-      var yDomain = d3.extent(data, function(d) {
-        return extractor.z(d);
-      });
+      // Return an array with the min and max value of the min/max values of
+      // each lines.
+      var yDomain = function() {
+        var elevationsValues = [];
+        var extent, name;
+        // Get min/max values (extent) of each lines.
+        for (name in linesConfiguration) {
+          extent = d3.extent(data, function(d) {
+            return linesConfiguration[name].zExtractor(d);
+          });
+          elevationsValues = elevationsValues.concat(extent);
+        }
+        return [
+          Math.min.apply(null, elevationsValues),
+          Math.max.apply(null, elevationsValues)
+        ];
+      }();
+
       y.domain(yDomain);
 
       // set the ratio according to the horizontal distance
@@ -328,12 +359,34 @@ ngeo.profile = function(options) {
       }
 
       // Update the area path.
-      g.select('.area')
-          .transition()
-          .attr('d', area);
-      g.select('.line')
-          .transition()
-          .attr('d', line);
+      if (numberOfLines === 1) {
+        g.select('.area')
+            .transition()
+            .attr('d', area);
+      }
+
+      // Set style and update the lines paths.
+      var line, name;
+      for (name in linesConfiguration) {
+        // Set style of each line and add a class with its respective name.
+        gEnter.append('path').attr('class', 'line ' + name)
+            .style('stroke', linesConfiguration[name].color || '#F00')
+            .style('fill', 'none');
+
+        // Configure the d3 line.
+        line = d3.svg.line()
+            .x(function(d) {
+              return x(distanceExtractor(d));
+            })
+            .y(function(d) {
+              return y(linesConfiguration[name].zExtractor(d));
+            });
+
+        // Update path for the line.
+        g.select('.' + name)
+            .transition()
+            .attr('d', line);
+      }
 
       if (xDomain[1] > 2000) {
         xFactor = 1000;
@@ -431,9 +484,9 @@ ngeo.profile = function(options) {
 
     var point = data[i];
 
-    var extractor = elevationExtractor;
-    var elevation = extractor.z(point);
-    var dist = extractor.dist(point);
+    var firstLineName = Object.keys(linesConfiguration)[0];
+    var elevation = linesConfiguration[firstLineName].zExtractor(point); //FIXME
+    var dist = distanceExtractor(point);
 
     g.select('.x.grid-hover')
         .style('display', 'inline')
@@ -479,12 +532,13 @@ ngeo.profile = function(options) {
     var g = svg.select('g');
     var profileData = svg.datum();
     var ps = g.select('.pois');
+    var firstLineName = Object.keys(linesConfiguration)[0];
 
     var p = ps.selectAll('.poi').data(pois, function(d) {
       var i = bisectDistance(profileData, Math.round(pe.dist(d) * 10) / 10, 1);
       var point = profileData[i];
       if (point) {
-        var z = elevationExtractor.z(point);
+        var z = linesConfiguration[firstLineName].zExtractor(point); //FIXME
         pe.z(d, z);
       }
       return pe.id(d);
