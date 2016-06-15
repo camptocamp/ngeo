@@ -43,7 +43,7 @@ app.MainController = function() {
    * @type {string}
    * @export
    */
-  this.elevationLayer = this.elevationLayers[0];
+  this.selectedElevationLayer = this.elevationLayers[0];
 
   /**
    * @type {ol.Map}

@@ -28,6 +28,21 @@ goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 
 
+gmf.module.constant('ngeoExportFeatureFormats', [
+  ngeo.FeatureHelper.FormatType.KML,
+  ngeo.FeatureHelper.FormatType.GPX
+]);
+
+
+// Filter to apply by default on all coordinates (such points in draw).
+gmf.module.constant('ngeoPointfilter', 'ngeoNumberCoordinates:0:{x} E, {y} N');
+
+
+gmf.module.constant('ngeoQueryOptions', {
+  'limit': 20
+});
+
+
 /**
  * Application abstract controller.
  *
@@ -90,12 +105,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
     projection: 'EPSG:' + (config.srid || 21781),
     url: /** @type {string} **/ ($injector.get('fulltextsearchUrl'))
   }];
-
-  /**
-   * @type {Array.<string>}
-   * @export
-   */
-  this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
   /**
    * @type {boolean}

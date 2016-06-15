@@ -122,6 +122,14 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   });
   this.drawFeatureLayer.setMap(this.map);
 
+  /**
+   * @type {ngeo.ScaleselectorOptions}
+   * @export
+   */
+  this.scaleSelectorOptions = {
+    'dropup': true
+  };
+
   goog.base(
       this, config, $scope, $injector);
 
