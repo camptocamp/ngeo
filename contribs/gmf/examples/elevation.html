@@ -41,7 +41,7 @@
       <span gmf-elevation
             gmf-elevation-active="elevationActive"
             gmf-elevation-elevation="elevationValue"
-            gmf-elevation-layer="ctrl.elevationLayer"
+            gmf-elevation-selectedlayer="ctrl.selectedElevationLayer"
             gmf-elevation-layers="::ctrl.elevationLayers"
             gmf-elevation-map="::ctrl.map">
       </span>
@@ -55,8 +55,8 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-right" role="menu">
             <li ng-repeat="elevationItem in ::ctrl.elevationLayers">
-              <a href ng-click="ctrl.elevationLayer = elevationItem">
-                <span class="fa fa-fw" ng-class="{'fa-check': ctrl.elevationLayer === elevationItem}"></span>
+              <a href ng-click="ctrl.selectedElevationLayer = elevationItem">
+                <span class="fa fa-fw" ng-class="{'fa-check': ctrl.selectedElevationLayer === elevationItem}"></span>
                 {{::elevationItem}}
               </a>
             </li>

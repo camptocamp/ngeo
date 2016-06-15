@@ -133,7 +133,7 @@
             <div class="elevation form-group form-group-sm pull-right" gmf-elevation
                     gmf-elevation-active="mainCtrl.showInfobar"
                     gmf-elevation-elevation="elevationValue"
-                    gmf-elevation-layer="mainCtrl.elevationLayer"
+                    gmf-elevation-selectedlayer="mainCtrl.selectedElevationLayer"
                     gmf-elevation-layers="::mainCtrl.elevationLayers"
                     gmf-elevation-map="mainCtrl.map">
               <div class="btn-group btn-block dropup">
@@ -144,8 +144,8 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                   <li ng-repeat="elevationItem in ::mainCtrl.elevationLayers">
-                    <a href ng-click="mainCtrl.elevationLayer = elevationItem">
-                      <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.elevationLayer === elevationItem}"></span>
+                    <a href ng-click="mainCtrl.selectedElevationLayer = elevationItem">
+                      <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.selectedElevationLayer === elevationItem}"></span>
                       {{::elevationItem}}
                     </a>
                   </li>
