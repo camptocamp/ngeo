@@ -8,7 +8,7 @@ describe('gmf.Themes', function() {
   beforeEach(function() {
     inject(function($injector) {
       gmfThemes = $injector.get('gmfThemes');
-      treeUrl = $injector.get('gmfTreeUrl');
+      treeUrl = $injector.get('gmfTreeUrl') + '?cache_version=0';
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.when('GET', treeUrl).respond(themes);
     });

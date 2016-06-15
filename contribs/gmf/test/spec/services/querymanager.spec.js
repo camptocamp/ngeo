@@ -17,7 +17,7 @@ describe('gmf.QueryManager', function() {
       gmfThemes = $injector.get('gmfThemes');
       var treeUrl = $injector.get('gmfTreeUrl');
       $httpBackend = $injector.get('$httpBackend');
-      $httpBackend.when('GET', treeUrl).respond(themes);
+      $httpBackend.when('GET', treeUrl + '?cache_version=0').respond(themes);
     });
   });
 

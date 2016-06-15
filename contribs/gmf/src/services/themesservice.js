@@ -58,6 +58,11 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
     this.treeUrl_ = $injector.get('gmfTreeUrl');
   }
 
+  this.cacheVersion_ = '0';
+  if ($injector.has('cacheVersion')) {
+    this.cacheVersion_ = $injector.get('cacheVersion');
+  }
+
   /**
    * @type {ngeo.LayerHelper}
    * @private
@@ -309,7 +314,12 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
   var deferred = this.deferred_;
 
   this.$http_.get(this.treeUrl_, {
-    params: opt_roleId !== undefined ? {'role': opt_roleId} : {},
+    params: opt_roleId !== undefined ? {
+      'role': opt_roleId,
+      'cache_version': this.cacheVersion_
+    } : {
+      'cache_version': this.cacheVersion_
+    },
     cache: false,
     withCredentials: true
   }).then(function(response) {
