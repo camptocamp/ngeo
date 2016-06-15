@@ -5,7 +5,6 @@
   right: 50%;
   left: 50%;
   bottom: 0;
-  max-height: 10 * @map-tools-size;
   position: fixed;
   z-index: @above-menus-index;
   .collapse-button {
@@ -32,6 +31,7 @@
     overflow: hidden;
     // height with 2em: 1em per text (title, subtitle)
     height: calc(3 * @app-margin + @half-app-margin ~"+ 2em");
+    max-height: 10 * @map-tools-size;
     margin: 0;
     transition: 0.3s ease-in all;
     &.detailed {
