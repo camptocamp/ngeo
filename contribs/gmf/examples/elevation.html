@@ -15,58 +15,43 @@
         width: 600px;
         height: 400px;
       }
-      .elevation .dropdown-menu {
-        min-width: 120px;
-      }
-      .elevation button {
-        min-width: 120px;
-      }
-      .elevation-value {
-        display: inline-block;
-        min-width: 60px;
-      }
-      .footer {
-        text-align: right;
-        min-height: 30px;
-        background-color: rgba(224, 224, 224, 0.8);
-        width: 600px;
-      }
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
     <gmf-map gmf-map-map="ctrl.map"></gmf-map>
 
-    <div class="footer">
+    <span gmf-elevation
+          gmf-elevation-active="elevationActive"
+          gmf-elevation-elevation="elevationValue"
+          gmf-elevation-loading="elevationLoading"
+          gmf-elevation-layer="ctrl.selectedElevationLayer"
+          gmf-elevation-map="::ctrl.map">
+    </span>
 
-      <span gmf-elevation
-            gmf-elevation-active="elevationActive"
-            gmf-elevation-elevation="elevationValue"
-            gmf-elevation-selectedlayer="ctrl.selectedElevationLayer"
-            gmf-elevation-layers="::ctrl.elevationLayers"
-            gmf-elevation-map="::ctrl.map">
-      </span>
-
-      <div class="elevation form-group form-group-sm pull-right">
-        <div class="btn-group btn-block dropup">
-          <button type="button" class="btn btn-default form-control" data-toggle="dropdown" aria-expanded="false">
-            <span class="fa fa-arrows-v"></span>
-            <small class="elevation-value">{{elevationValue | number:2}}<span ng-show="elevationValue">m</span></small>
-            <span class="fa fa-fw fa-ellipsis-v"></span>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-right" role="menu">
-            <li ng-repeat="elevationItem in ::ctrl.elevationLayers">
-              <a href ng-click="ctrl.selectedElevationLayer = elevationItem">
-                <span class="fa fa-fw" ng-class="{'fa-check': ctrl.selectedElevationLayer === elevationItem}"></span>
-                {{::elevationItem}}
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
+    <div class="btn-group dropdown">
+      <button type="button" class="btn btn-default" data-toggle="dropdown" aria-expanded="false">
+        Raster layer
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="elevationItem in ::ctrl.elevationLayers">
+          <a href ng-click="ctrl.selectedElevationLayer = elevationItem">
+            <span class="fa fa-fw" ng-class="{'fa-check': ctrl.selectedElevationLayer === elevationItem}"></span>
+            {{::elevationItem}}
+          </a>
+        </li>
+      </ul>
     </div>
-
-    <input type="checkbox" ng-model="elevationActive"> Get elevation ?</>
+    <div>
+      Elevation: {{elevationValue}}<span ng-show="elevationValue">m</span>
+      <span class="loading" ng-if="elevationLoading">Loading</span>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" ng-model="elevationActive" />
+        Elevation active
+      </label>
+    </div>
 
     <p id="desc">This example shows how to use the <code>gmf-elevation</code> directive to get elevation under the mouse position.</p>
 

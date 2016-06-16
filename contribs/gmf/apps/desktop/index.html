@@ -117,7 +117,7 @@
         </gmf-disclaimer>
 
         <!--infobar-->
-        <div class="footer small" ng-class="{'active': mainCtrl.showInfobar}">
+        <div class="footer" ng-class="{'active': mainCtrl.showInfobar}">
           <button class="btn fa map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
                   ng-class="{'fa-angle-double-up': !mainCtrl.showInfobar, 'fa-angle-double-down': mainCtrl.showInfobar}"></button>
 
@@ -129,11 +129,15 @@
             <div class="elevation text-center btn-group dropup" gmf-elevation
                     gmf-elevation-active="mainCtrl.showInfobar"
                     gmf-elevation-elevation="elevationValue"
-                    gmf-elevation-selectedlayer="mainCtrl.selectedElevationLayer"
-                    gmf-elevation-layers="::mainCtrl.elevationLayers"
+                    gmf-elevation-loading="elevationLoading"
+                    gmf-elevation-layer="mainCtrl.selectedElevationLayer"
                     gmf-elevation-map="mainCtrl.map">
               <a type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
-                <span class="elevation-value">{{elevationValue | number}}<span ng-show="elevationValue">m</span></span><span ng-if="!elevationValue">{{'Elevation' | translate}}<span ng-show="elevationValue">m</span></span><span class="caret"></span>
+                <span class="elevation-value">
+                  {{elevationValue | number}}<span ng-show="elevationValue">m</span>
+                  <span ng-show="elevationLoading" class="fa fa-spinner"></span>
+                  <span ng-show="!elevationValue && !elevationLoading" translate>Elevation…</span>
+                </span><span class="caret"></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-right" role="menu">
                 <li ng-repeat="elevationItem in ::mainCtrl.elevationLayers">
