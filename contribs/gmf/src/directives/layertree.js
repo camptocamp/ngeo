@@ -754,9 +754,11 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
     return null;
   }
 
+  //In case of multiple layers for a node, always take the first layer name to get the icon
+  var layerName = node.layers.split(',')[0];
   var url = node.url || this.gmfWmsUrl_;
-  return this.layerHelper_.getWMSLegendURL(url, node.name,
-          this.getScale_(), opt_legendRule);
+  return this.layerHelper_.getWMSLegendURL(url, layerName, this.getScale_(),
+    opt_legendRule);
 };
 
 
@@ -769,7 +771,7 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
   var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
-
+  var layersNames;
   if (node.children !== undefined) {
     return null;
   }
@@ -784,7 +786,12 @@ gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
     return this.layerHelper_.getWMTSLegendURL(layer);
   } else {
     var url = node.url || this.gmfWmsUrl_;
-    return this.layerHelper_.getWMSLegendURL(url, node.name, this.getScale_());
+    layersNames = node.layers.split(',');
+    if (layersNames.length > 1) {
+      //not supported, the administrator should give a legendImage metadata
+      return null;
+    }
+    return this.layerHelper_.getWMSLegendURL(url, layersNames[0], this.getScale_());
   }
 };
 
