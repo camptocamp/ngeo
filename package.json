@@ -17,7 +17,7 @@
     "compile-catalog": "buildtools/compile-catalog.js"
   },
   "devDependencies": {
-    "angular": "1.5.6",
+    "angular": "1.5.7",
     "angular-animate": "1.5.6",
     "angular-dynamic-locale": "0.1.32",
     "angular-gettext": "2.3.0",
