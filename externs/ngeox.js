@@ -856,10 +856,10 @@ ngeox.profile.ProfileOptions.prototype.outCallback;
 
 
 /**
- * Configuration object for the profile's lines.
+ * Configuration object for one profile's line.
  * @typedef {{
  *   color: (string|undefined),
- *   zExtractor: !function(Object): number}
+ *   zExtractor: !function(Object): number
  * }}
  */
 ngeox.profile.LineConfiguration;

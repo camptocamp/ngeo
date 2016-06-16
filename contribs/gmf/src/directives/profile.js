@@ -26,8 +26,14 @@ ngeo.module.value('gmfProfileTemplateUrl',
 
 
 /**
- * @htmlAttribute {ol.Map} gmf-profile-map TODO
- * @htmlAttribute {ol.Collection.<ol.Feature>} gmf-profile-features TODO
+ * TODO description and example.
+ *
+ * @htmlAttribute {ol.Map} gmf-profile-map The map.
+ * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
+ *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
+ *     will be used as requested elevation layers names.
+ * @htmlAttribute {ol.geom.LineString} gmf-profile-line. The linestring geometry
+ *     to use to draw the profile.
  * @param {string} gmfProfileTemplateUrl URL to a template.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
@@ -44,6 +50,7 @@ gmf.profileDirective = function(gmfProfileTemplateUrl) {
     restrict: 'E',
     scope: {
       'getMapFn': '&gmfProfileMap',
+      'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
       'line': '<gmfProfileLine'
     }
   };
@@ -89,17 +96,34 @@ gmf.ProfileController = function($scope, $http, ngeoFeatureOverlayMgr,
    */
   this.map_ = map;
 
-  /**
-   * @type {ol.geom.LineString}
-   * @export
-   */
-  this.line;
+  var linesConfiguration = this['getLinesConfigurationFn']();
+  goog.asserts.assertInstanceof(linesConfiguration, Object);
 
   /**
-   * @type {Array.<Object>}
+   * Keep an array of all layer names to sent it to the server.
+   * @type {Array.<string>}
+   * @private
+   */
+  this.layerNames_ = [];
+
+  var name, lineConfig;
+  for (name in linesConfiguration) {
+    this.layerNames_.push(name);
+
+    lineConfig = linesConfiguration[name];
+    if (!lineConfig.zExtractor) {
+      lineConfig.zExtractor = this.getZFactory_(name);
+    }
+  }
+
+  /**
+   * @type {ngeox.profile.ProfileOptions}
    * @export
    */
-  this.profileData = [];
+  this.profileOptions = {
+    linesConfiguration: /** ngeox.profile.LinesConfiguration */ (linesConfiguration),
+    distanceExtractor: this.getDist_
+  };
 
   /**
    * @type {ngeo.FeatureOverlay}
@@ -123,29 +147,24 @@ gmf.ProfileController = function($scope, $http, ngeoFeatureOverlayMgr,
   this.featureOverlay_.addFeature(this.snappedPoint_);
 
   /**
-   * @type {ngeox.profile.ProfileOptions}
-   * @export
-   */
-  this.profileOptions = {
-    linesConfiguration: {
-      'aster': {
-        color: '#00F',
-        zExtractor: this.getAsterZ_
-      },
-      'srtm': {
-        color: '#0F0',
-        zExtractor: this.getSrtmZ_
-      }
-    },
-    distanceExtractor: this.getDist_
-  };
-
-  /**
    * @type {boolean}
    * @export
    */
   this.active = false;
 
+  /**
+   * @type {ol.geom.LineString}
+   * @export
+   */
+  this.line;
+
+  /**
+   * @type {Array.<Object>}
+   * @export
+   */
+  this.profileData = [];
+
+  // Watch the lineto update the profileData (data for the chart).
   $scope.$watch(
     function() {
       return this.line;
@@ -177,7 +196,7 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
 //  };
 //
 //  var data = {
-//    'layers': ['srtm', 'aster'],
+//    'layers': this.layers_,
 //    'geom': geom,
 //    'nbPoints': 100
 //  };
@@ -193,47 +212,49 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
 };
 
 
+/**
+ * @param {*} resp FIXME
+ * @private
+ */
 gmf.ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
   //this.profileData = resp.dat;
   this.profileData = resp.data['profile'];
 };
 
 
+/**
+ * @param {*} resp FIXME
+ * @private
+ */
 gmf.ProfileController.prototype.getProfileDataError_ = function(resp) {
   console.error('Can not get JSON profile. ' + resp.statusText);
 };
 
 
 /**
- * TODO
- * @param {Object} item The item.
- * @return {number} The elevation.
+ * @param {string} layerName name of the elevation layer.
+ * @return {function(Object):number} Z extractor function.
  * @private
  */
-gmf.ProfileController.prototype.getAsterZ_ = function(item) {
-  if ('values' in item && 'aster' in item['values']) {
-    return parseFloat(item['values']['aster']);
-  }
-  return 0;
+gmf.ProfileController.prototype.getZFactory_ = function(layerName) {
+  /**
+   * Generic GMF extractor for the 'given' value in 'values' in profileData.
+   * @param {Object} item The item.
+   * @return {number} The elevation.
+   * @private
+   */
+  var getZFn = function(item) {
+    if ('values' in item && layerName in item['values']) {
+      return parseFloat(item['values'][layerName]);
+    }
+    return 0;
+  };
+  return getZFn;
 };
 
 
 /**
- * TODO
- * @param {Object} item The item.
- * @return {number} The elevation.
- * @private
- */
-gmf.ProfileController.prototype.getSrtmZ_ = function(item) {
-  if ('values' in item && 'srtm' in item['values']) {
-    return parseFloat(item['values']['srtm']);
-  }
-  return 0;
-};
-
-
-/**
- * TODO
+ * Extractor for the 'dist' value in profileData.
  * @param {Object} item The item.
  * @return {number} The distance.
  * @private

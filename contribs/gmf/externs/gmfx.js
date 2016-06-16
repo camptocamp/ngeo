@@ -157,6 +157,30 @@ gmfx.PrintFields.prototype.scales;
 
 
 /**
+ * Configuration object for one profile's line.
+ * @typedef {{
+ *   color: (string|undefined),
+ *   zExtractor: (function(Object): number|undefined)
+ * }}
+ */
+gmfx.ProfileLineConfiguration;
+
+
+/**
+ * Color of the line (hex color string).
+ * @type {(string|undefined)}
+ */
+gmfx.ProfileLineConfiguration.prototype.color;
+
+
+/**
+ * Extract the elevation of a point (an item of the elevation data array).
+ * @type {(function(Object): number|undefined)}
+ */
+gmfx.ProfileLineConfiguration.prototype.zExtractor;
+
+
+/**
  * Object that can be used to generate a form field.
  * @typedef {{
  *   default: (string|boolean|number|undefined),

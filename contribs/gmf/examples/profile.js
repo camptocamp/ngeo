@@ -93,6 +93,19 @@ app.MainController = function($scope, ngeoFeatureOverlayMgr) {
   this.profileLine = null;
 
   /**
+   * @type {Object.<string, gmfx.ProfileLineConfiguration>}
+   * @export
+   */
+  this.profileLinesconfiguration = {
+    'aster': {
+      'color':'#0404A0'
+    },
+    'srtm': {
+      'color':'#04A004'
+    }
+  };
+
+  /**
    * @type {ol.interaction.Draw}
    * @export
    */
