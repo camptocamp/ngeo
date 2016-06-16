@@ -124,7 +124,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, gmfAltitude,
   this.decimals;
 
   /**
-   * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction}
+   * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
    * @export
    */
   this.sketchStyle;
@@ -176,7 +176,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, gmfAltitude,
 
   /**
    * The key for map view 'propertychange' event.
-   * @type {?ol.events.Key}
+   * @type {?ol.EventsKey}
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;

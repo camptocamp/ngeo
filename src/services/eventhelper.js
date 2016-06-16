@@ -29,7 +29,7 @@ ngeo.EventHelper = function() {
  * Utility method to add a listener key bound to a unique id. The key can
  * come from an `ol.events` (default) or `goog.events`.
  * @param {number} uid Unique id.
- * @param {ol.events.Key|goog.events.Key} key Key.
+ * @param {ol.EventsKey|goog.events.Key} key Key.
  * @param {boolean=} opt_isol Whether it's an OpenLayers event or not. Defaults
  *     to true.
  * @export
@@ -41,7 +41,7 @@ ngeo.EventHelper.prototype.addListenerKey = function(uid, key, opt_isol) {
 
   var isol = opt_isol !== undefined ? opt_isol : true;
   if (isol) {
-    this.listenerKeys_[uid].ol.push(/** @type {ol.events.Key} */ (key));
+    this.listenerKeys_[uid].ol.push(/** @type {ol.EventsKey} */ (key));
   } else {
     this.listenerKeys_[uid].goog.push(/** @type {goog.events.Key} */ (key));
   }
@@ -93,7 +93,7 @@ ngeo.EventHelper.prototype.initListenerKey_ = function(uid) {
 /**
  * @typedef {{
  *     goog: (Array.<goog.events.Key>),
- *     ol: (Array.<ol.events.Key>)
+ *     ol: (Array.<ol.EventsKey>)
  * }}
  */
 ngeo.EventHelper.ListenerKeys;

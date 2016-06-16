@@ -99,7 +99,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction) {
   this.decimals;
 
   /**
-   * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction}
+   * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
    * @export
    */
   this.sketchStyle;

@@ -73,7 +73,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
   this.clickOutListenerKey_ = null;
 
   /**
-   * @type {Array.<ol.events.Key>}
+   * @type {Array.<ol.EventsKey>}
    * @private
    */
   this.olListenerKeys_ = [];

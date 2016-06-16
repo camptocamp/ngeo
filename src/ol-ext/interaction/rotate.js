@@ -71,7 +71,7 @@ goog.inherits(ngeo.RotateEvent, ol.events.Event);
 ngeo.interaction.Rotate = function(options) {
 
   /**
-   * @type {Array.<ol.events.Key>}
+   * @type {Array.<ol.EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];

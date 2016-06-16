@@ -122,7 +122,7 @@ gmf.ElevationController = function($scope, ngeoDebounce, gmfAltitude) {
   this.map_ = map;
 
   /**
-   * @type {Array.<ol.events.Key>}
+   * @type {Array.<ol.EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];

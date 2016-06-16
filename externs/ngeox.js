@@ -538,7 +538,7 @@ ngeox.WfsPermalinkOptions.prototype.maxFeatures;
  * MobileDraw Interaction
  * @typedef {{
  *     minPoints: (number|undefined),
- *     style: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
+ *     style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
  *     type: ol.geom.GeometryType,
  *     wrapX: (boolean|undefined)
  * }}
@@ -557,7 +557,7 @@ ngeox.interaction.MobileDrawOptions.prototype.minPoints;
 
 /**
  * Style for sketch features.
- * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  */
 ngeox.interaction.MobileDrawOptions.prototype.style;
 
@@ -645,8 +645,8 @@ ngeox.interaction;
  *    startMsg: (Element|undefined),
  *    continueMsg: (Element|undefined),
  *    decimals: (number|undefined),
- *    style: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
- *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined)
+ *    style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
+ *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
  * }}
  */
 ngeox.interaction.MeasureOptions;
@@ -678,14 +678,14 @@ ngeox.interaction.MeasureOptions.prototype.decimals;
 
 /**
  * The style to be used when drawing is finished.
- * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  */
 ngeox.interaction.MeasureOptions.prototype.style;
 
 
 /**
  * The style to be used while drawing.
- * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  */
 ngeox.interaction.MeasureOptions.prototype.sketchStyle;
 
@@ -693,7 +693,7 @@ ngeox.interaction.MeasureOptions.prototype.sketchStyle;
 /**
  * @typedef {{
  *     features: (ol.Collection.<ol.Feature>|undefined),
- *     style: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined)
+ *     style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
  * }}
  */
 ngeox.interaction.TranslateOptions;
@@ -710,7 +710,7 @@ ngeox.interaction.TranslateOptions.prototype.features;
 /**
  * Style for the center features added by the translate interaction to
  * to show that features can be moved.
- * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  */
 ngeox.interaction.TranslateOptions.prototype.style;
 
@@ -955,8 +955,8 @@ ngeox.RotateEvent.prototype.feature;
 /**
  * Options for the mobile geolocations directive.
  * @typedef {{
- *    accuracyFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
- *    positionFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
+ *    accuracyFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
+ *    positionFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
  *    zoom: (number|undefined)
  * }}
  */
@@ -965,14 +965,14 @@ ngeox.MobileGeolocationDirectiveOptions;
 
 /**
  * The style to use to sketch the accuracy feature, which is a regular polygon.
- * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  */
 ngeox.MobileGeolocationDirectiveOptions.prototype.accuracyFeatureStyle;
 
 
 /**
  * The style to use to sketch the position feature, which is a point.
- * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  */
 ngeox.MobileGeolocationDirectiveOptions.prototype.positionFeatureStyle;
 
@@ -988,8 +988,8 @@ ngeox.MobileGeolocationDirectiveOptions.prototype.zoom;
 /**
  * Options for the mobile geolocations directive.
  * @typedef {{
- *    accuracyFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
- *    positionFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
+ *    accuracyFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
+ *    positionFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
  *    zoom: (number|undefined)
  * }}
  */
@@ -998,14 +998,14 @@ ngeox.DesktopGeolocationDirectiveOptions;
 
 /**
  * The style to use to sketch the accuracy feature, which is a regular polygon.
- * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  */
 ngeox.DesktopGeolocationDirectiveOptions.prototype.accuracyFeatureStyle;
 
 
 /**
  * The style to use to sketch the position feature, which is a point.
- * @type {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  */
 ngeox.DesktopGeolocationDirectiveOptions.prototype.positionFeatureStyle;
 

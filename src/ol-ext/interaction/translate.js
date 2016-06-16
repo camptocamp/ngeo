@@ -26,13 +26,13 @@ goog.require('ol.source.Vector');
 ngeo.interaction.Translate = function(options) {
 
   /**
-   * @type {!Array.<ol.events.Key>}
+   * @type {!Array.<ol.EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {!Object.<number, ol.events.Key>}
+   * @type {!Object.<number, ol.EventsKey>}
    * @private
    */
   this.featureListenerKeys_ = {};

@@ -37,7 +37,7 @@ ngeo.interaction.Modify = function(options) {
   this.features_ = options.features;
 
   /**
-   * @type {!Array.<ol.events.Key>}
+   * @type {!Array.<ol.EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
