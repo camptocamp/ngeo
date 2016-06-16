@@ -163,7 +163,7 @@ main {
       top: 0!important;
       left: -@app-margin!important;
       border: 1px solid @color;
-      border-radius: @half-app-margin;
+      border-radius: @border-radius-base;
       width: @search-width;
 
       .search-header {
@@ -303,7 +303,6 @@ main {
 
 
 ::-webkit-scrollbar-track {
-  border-radius: @app-margin;
   background: @main-bg-color;
 }
 
@@ -311,7 +310,6 @@ main {
   width: @half-app-margin;
 }
 ::-webkit-scrollbar-thumb {
-  border-radius: @app-margin;
   background: @brand-primary;
 }
 
@@ -476,7 +474,6 @@ gmf-featurestyle {
 
   button,
   gmf-backgroundlayerselector {
-    border-radius: 3px !important;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   }
 
