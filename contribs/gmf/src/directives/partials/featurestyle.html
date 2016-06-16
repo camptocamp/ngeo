@@ -1,9 +1,9 @@
 <div ng-if="fsCtrl.feature && fsCtrl.type">
   <div class="form-group form-group-sm">
-    <label class="control-label">{{'Name' | translate}}</label>
     <input
         ng-model="fsCtrl.getSetName"
         ng-model-options="{getterSetter: true}"
+        placeholder="{{'Name' | translate}}"
         class="form-control"/>
   </div>
 </div>
