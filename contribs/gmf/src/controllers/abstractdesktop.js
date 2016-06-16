@@ -19,6 +19,10 @@ goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
 /** @suppress {extraRequire} */
+goog.require('ngeo.FeatureOverlay');
+/** @suppress {extraRequire} */
+goog.require('ngeo.FeatureOverlayMgr');
+/** @suppress {extraRequire} */
 goog.require('ngeo.ScaleselectorOptions');
 /** @suppress {extraRequire} */
 goog.require('ngeo.scaleselectorDirective');
@@ -27,8 +31,6 @@ goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
 goog.require('ol.interaction');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.Vector');
 
 gmf.module.constant('isDesktop', true);
 
@@ -109,16 +111,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   var ngeoFeatures = $injector.get('ngeoFeatures');
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {ngeo.FeatureOverlay}
    * @export
    */
-  this.drawFeatureLayer = new ol.layer.Vector({
-    source: new ol.source.Vector({
-      wrapX: false,
-      features: ngeoFeatures
-    })
-  });
-  this.drawFeatureLayer.setMap(this.map);
+  this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr')
+      .getFeatureOverlay();
+  this.drawFeatureLayer.setFeatures(ngeoFeatures);
 
   /**
    * @type {ngeo.ScaleselectorOptions}
