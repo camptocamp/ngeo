@@ -7,6 +7,7 @@
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="../third-party/jquery-ui/jquery-ui.min.css" type="text/css">
     <style>
@@ -14,9 +15,19 @@
           width: 800px;
           height: 400px;
         }
-        .profile {
+        .profile-container .profile {
           width: 800px;
           height: 200px;
+        }
+        .profile-container .profile-export {
+          width: 800px;
+        }
+        .profile-container .profile-export>div {
+          float: right;
+          width: 180px;
+        }
+        .profile-container .profile-export a {
+          display: inline-block;
         }
     </style>
   </head>

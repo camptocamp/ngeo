@@ -63,17 +63,19 @@ gmf.module.directive('gmfProfile', gmf.profileDirective);
 /**
  * @param {angular.Scope} $scope Angular scope.
  * @param {angular.$http} $http Angular http service.
+ * @param {angular.JQLite} $element Element.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {string} gmfProfileUrl URL of GMF service JSON profile.
+ * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
+ * @param {string} gmfProfileCsvUrl URL of GMF service CSV profile.
  * @constructor
  * @export
  * @ngInject
  * @ngdoc Controller
  * @ngname GmfProfileController
  */
-gmf.ProfileController = function($scope, $http, ngeoFeatureOverlayMgr,
-    gmfProfileUrl) {
+gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
+    gmfProfileJsonUrl, gmfProfileCsvUrl) {
 
   /**
    * @type {angular.$http}
@@ -82,10 +84,22 @@ gmf.ProfileController = function($scope, $http, ngeoFeatureOverlayMgr,
   this.$http_ = $http;
 
   /**
+   * @type {angular.JQLite}
+   * @private
+   */
+  this.$element_ = $element;
+
+  /**
    * @type {string}
    * @private
    */
-  this.gmfProfileUrl_ = gmfProfileUrl;
+  this.gmfProfileJsonUrl_ = gmfProfileJsonUrl;
+
+  /**
+   * @type {string}
+   * @private
+   */
+  this.gmfProfileCsvUrl_ = gmfProfileCsvUrl;
 
   var map = this['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
@@ -147,12 +161,6 @@ gmf.ProfileController = function($scope, $http, ngeoFeatureOverlayMgr,
   this.featureOverlay_.addFeature(this.snappedPoint_);
 
   /**
-   * @type {boolean}
-   * @export
-   */
-  this.active = false;
-
-  /**
    * @type {ol.geom.LineString}
    * @export
    */
@@ -164,6 +172,18 @@ gmf.ProfileController = function($scope, $http, ngeoFeatureOverlayMgr,
    */
   this.profileData = [];
 
+  /**
+   * @type {number}
+   * @private
+   */
+  this.nbPoints_ = 100;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.active = false;
+
   // Watch the lineto update the profileData (data for the chart).
   $scope.$watch(
     function() {
@@ -174,60 +194,6 @@ gmf.ProfileController = function($scope, $http, ngeoFeatureOverlayMgr,
         this.update_();
       }
     }.bind(this));
-};
-
-
-/**
- * @private
- */
-gmf.ProfileController.prototype.update_ = function() {
-  if (this.line) {
-    this.getJsonProfile_();
-  } else {
-    this.profileData = [];
-  }
-};
-
-
-gmf.ProfileController.prototype.getJsonProfile_ = function() {
-//  var geom = {
-//    'type': 'LineString',
-//    'coordinates': this.line.getCoordinates()
-//  };
-//
-//  var data = {
-//    'layers': this.layers_,
-//    'geom': geom,
-//    'nbPoints': 100
-//  };
-//
-//  this.$http_.post(this.gmfProfileUrl_, form_data).then(
-//    this.getProfileDataSuccess_.bind(this),
-//    this.getProfileDataError_.bind(this)
-//  );
-  this.$http_.get('data/profile.json').then(
-    this.getProfileDataSuccess_.bind(this),
-    this.getProfileDataError_.bind(this)
-  );
-};
-
-
-/**
- * @param {*} resp FIXME
- * @private
- */
-gmf.ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
-  //this.profileData = resp.dat;
-  this.profileData = resp.data['profile'];
-};
-
-
-/**
- * @param {*} resp FIXME
- * @private
- */
-gmf.ProfileController.prototype.getProfileDataError_ = function(resp) {
-  console.error('Can not get JSON profile. ' + resp.statusText);
 };
 
 
@@ -265,5 +231,147 @@ gmf.ProfileController.prototype.getDist_ = function(item) {
   }
   return 0;
 };
+
+
+/**
+ * @private
+ */
+gmf.ProfileController.prototype.update_ = function() {
+  if (this.line) {
+    this.getJsonProfile_();
+  } else {
+    this.profileData = [];
+  }
+};
+
+
+/**
+ * Request the profile.
+ * @private
+ */
+gmf.ProfileController.prototype.getJsonProfile_ = function() {
+  var geom = {
+    'type': 'LineString',
+    'coordinates': this.line.getCoordinates()
+  };
+
+  var params = {
+    'layers': this.layerNames_.join(','),
+    'geom': JSON.stringify(geom),
+    'nbPoints': this.nbPoints_
+  };
+
+  this.$http_({
+    url: this.gmfProfileJsonUrl_,
+    method: 'POST',
+    params: params,
+    paramSerializer: '$httpParamSerializerJQLike',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }).then(
+    this.getProfileDataSuccess_.bind(this),
+    this.getProfileDataError_.bind(this)
+  );
+};
+
+
+/**
+ * @param {!angular.$http.Response} resp Response.
+ * @private
+ */
+gmf.ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
+  //this.profileData = resp.dat;
+  this.profileData = resp.data['profile'];
+};
+
+
+/**
+ * @param {!angular.$http.Response} resp Response.
+ * @private
+ */
+gmf.ProfileController.prototype.getProfileDataError_ = function(resp) {
+  console.error('Can not get JSON profile.');
+};
+
+
+/**
+ * Request the csv profile with the current profile data.
+ * @export
+ */
+gmf.ProfileController.prototype.downloadCsv = function() {
+  if (this.profileData.lenght === 0) {
+    return;
+  }
+  var geom = {
+    'type': 'LineString',
+    'coordinates': this.line.getCoordinates()
+  };
+
+  var params = {
+    'layers': this.layerNames_.join(','),
+    'geom': JSON.stringify(geom),
+    'nbPoints': this.nbPoints_
+  };
+
+  this.$http_({
+    url: this.gmfProfileCsvUrl_,
+    method: 'POST',
+    params: params,
+    paramSerializer: '$httpParamSerializerJQLike',
+    headers: {
+      'Content-Type': 'text/csv;'
+    }
+  }).then(
+    this.getCsvSuccess_.bind(this),
+    this.getCsvError_.bind(this)
+  );
+};
+
+
+/**
+ * @param {!angular.$http.Response} resp Response.
+ * @private
+ */
+gmf.ProfileController.prototype.getCsvSuccess_ = function(resp) {
+  var hiddenElement = document.createElement('a');
+  hiddenElement.href = 'data:attachment/csv,' + encodeURI(resp.data);
+  hiddenElement.target = '_blank';
+  hiddenElement.download = 'profile.csv';
+  hiddenElement.click();
+  hiddenElement.remove();
+};
+
+
+/**
+ * @param {!angular.$http.Response} resp Response.
+ * @private
+ */
+gmf.ProfileController.prototype.getCsvError_ = function(resp) {
+  console.error('Can not get CSV profile.');
+};
+
+
+/**
+ * Print profile as an image.
+ * @export
+ */
+gmf.ProfileController.prototype.downloadImage = function() {
+  if (this.profileData.lenght === 0) {
+    return;
+  }
+  var title = 'Profile';
+  var content = /** @type {string} */ (this.$element_.find('.profile').html());
+  var printWindow = window.open();
+  printWindow.document.write('<html><head><title>' + title + '</title>');
+  printWindow.document.write('</head><body >');
+  printWindow.document.write(content);
+  printWindow.document.write('</body></html>');
+  printWindow.document.close(); // Necessary for IE >= 10.
+  printWindow.focus(); // Necessary for IE >= 10.
+  printWindow.print();
+  printWindow.close();
+};
+
 
 gmf.module.controller('GmfProfileController', gmf.ProfileController);

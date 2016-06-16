@@ -1,4 +1,18 @@
-<div class="profile" ngeo-profile="ctrl.profileData"
-    ngeo-profile-highlight="ctrl.profileHighlight"
-    ngeo-profile-options="ctrl.profileOptions">
+<div class="profile-container">
+  <div class="profile" ngeo-profile="ctrl.profileData"
+      ngeo-profile-highlight="ctrl.profileHighlight"
+      ngeo-profile-options="ctrl.profileOptions">
+  </div>
+
+  <div class="profile-export form-group form-group-sm">
+    <div class="btn-group btn-block dropup">
+      <button type="button" class="btn btn-default dropdown-toggle form-control" ng-class="{'disabled': ctrl.profileData.length === 0}" data-toggle="dropdown" aria-expanded="false">
+        {{'Export' | translate}}&nbsp;<i class="fa fa-caret-up"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right" role="menu">
+          <li><a href="" ng-click="ctrl.downloadCsv()"><i class="fa fa-table"></i>&nbsp;{{'Download CSV' | translate}}</a></li>
+          <li><a href="" ng-click="ctrl.downloadImage()"><i class="fa fa-picture-o"></i>&nbsp;{{'Download image' | translate}}</a></li>
+      </ul>
+    </div>
+  </div>
 </div>
