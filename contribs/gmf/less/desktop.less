@@ -69,7 +69,7 @@ main {
     @height: @line-height-computed + 2 * @padding-small-vertical;
     position: absolute;
     bottom:  -@height;
-    background-color: fade(@main-bg-color, 80%);
+    background-color: fade(@main-bg-color, 90%);
     width: 100%;
     /* cancel default navbar bottom margin */
     margin-bottom: 0;
@@ -93,21 +93,8 @@ main {
       border-bottom: 0;
       padding: @half-app-margin @app-margin;
     }
-    .btn {
-      background-color: lighten(@main-bg-color, 20%);
-      padding: @half-app-margin 0;
-    }
-    .form-group{
-      margin-bottom: 0;
-    }
   }
 
-  [ngeo-scaleselector] {
-    min-width: 12rem;
-    .dropdown-menu {
-      min-width: 12rem;
-    }
-  }
   #scaleline {
     vertical-align: middle;
     .ol-scale-line, .ol-scale-line-inner {
@@ -116,31 +103,20 @@ main {
       position: relative;
     }
   }
+
   gmf-mouseposition {
-    &>div {
-      min-width: 24rem;
-    }
-    .dropdown-menu {
-      min-width: 24rem;
-    }
-    #mouse-position {
-      display: inline-block;
-      min-width: 18rem;
-    }
+    display: inline-block;
+  }
+  #mouse-position {
+    display: inline-block;
+    min-width: 18rem;
   }
   .elevation {
     display: inline-block;
-    vertical-align: sub;
-    .dropdown-menu {
-      min-width: 12rem;
-    }
-    button {
-      min-width: 12rem;
-    }
-    .elevation-value {
-      display: inline-block;
-      min-width: 6rem;
-    }
+  }
+  .elevation-value {
+    display: inline-block;
+    min-width: 8rem;
   }
 }
 
