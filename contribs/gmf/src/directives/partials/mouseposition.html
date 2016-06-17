@@ -3,6 +3,7 @@
     <span id="mouse-position"></span><span class="caret"></span>
   </a>
   <ul class="dropdown-menu dropdown-menu-right" role="menu">
+    <li class="dropdown-header" translate>Coordinate systems</li>
     <li ng-repeat="projitem in ::ctrl.projections">
       <a href ng-click="ctrl.setProjection(projitem)">
         <span class="fa fa-fw" ng-class="{'fa-check': ctrl.projection == projitem}"></span>

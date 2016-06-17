@@ -140,6 +140,7 @@
                 </span><span class="caret"></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li class="dropdown-header" translate>Elevation data sources</li>
                 <li ng-repeat="elevationItem in ::mainCtrl.elevationLayers">
                   <a href ng-click="mainCtrl.selectedElevationLayer = elevationItem">
                     <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.selectedElevationLayer === elevationItem}"></span>
