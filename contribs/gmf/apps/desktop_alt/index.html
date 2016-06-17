@@ -92,7 +92,7 @@
           </div>
         </div>
       </div>
-      <div class="map-container">
+      <div class="map-container" ng-class="{'infobar-active': mainCtrl.showInfobar}">
         <gmf-search gmf-search-map="mainCtrl.map"
           class="search"
           gmf-search-datasources="mainCtrl.searchDatasources"
@@ -132,7 +132,7 @@
                     gmf-elevation-layer="::mainCtrl.elevationLayer"
                     gmf-elevation-map="mainCtrl.map">
               <span class="elevation-value">
-                {{elevationValue | number}}<span ng-show="elevationValue">m</span>
+                {{elevationValue | number}}<span ng-show="elevationValue"> m</span>
                 <span ng-show="elevationLoading" class="fa fa-spinner text-muted"></span>
                 <span ng-show="!elevationValue && !elevationLoading" translate>Elevation…</span>
               </span>

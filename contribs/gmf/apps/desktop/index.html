@@ -93,7 +93,7 @@
           </div>
         </div>
       </div>
-      <div class="map-container">
+      <div class="map-container" ng-class="{'infobar-active': mainCtrl.showInfobar}">
         <gmf-search gmf-search-map="mainCtrl.map"
           class="search"
           gmf-search-datasources="mainCtrl.searchDatasources"
@@ -134,7 +134,7 @@
                     gmf-elevation-map="mainCtrl.map">
               <a type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
                 <span class="elevation-value">
-                  {{elevationValue | number}}<span ng-show="elevationValue">m</span>
+                  {{elevationValue | number}}<span ng-show="elevationValue"> m</span>
                   <span ng-show="elevationLoading" class="fa fa-spinner"></span>
                   <span ng-show="!elevationValue && !elevationLoading" translate>Elevation…</span>
                 </span><span class="caret"></span>
