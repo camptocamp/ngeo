@@ -203,6 +203,78 @@ ngeox.PopupOptions.prototype.width;
 
 
 /**
+ * Results of the query source.
+ * @typedef {{
+ *     sources: (Array.<ngeox.QueryResultSource>),
+ *     total: (number)
+ * }}
+ */
+ngeox.QueryResult;
+
+
+/**
+ * Results for each query source.
+ * @type {ngeox.QueryResultSource}
+ */
+ngeox.QueryResult.prototype.sources;
+
+
+/**
+ * The number of results for all sources.
+ * @type {number}
+ */
+ngeox.QueryResult.prototype.total;
+
+
+/**
+ * Results for a query source.
+ * @typedef {{
+ *     features: (Array.<ol.Feature>),
+ *     id: (number|string),
+ *     label: (string),
+ *     pending: (boolean),
+ *     queried: (boolean)
+ * }}
+ */
+ngeox.QueryResultSource;
+
+
+/**
+ * The matching features for this source.
+ * @type {Array.<ol.Feature>}
+ */
+ngeox.QueryResultSource.prototype.features;
+
+
+/**
+ * Identifier.
+ * @type {number|string}
+ */
+ngeox.QueryResultSource.prototype.id;
+
+
+/**
+ * Label.
+ * @type {string}
+ */
+ngeox.QueryResultSource.prototype.label;
+
+
+/**
+ * Is the request for this source still ongoing?
+ * @type {boolean}
+ */
+ngeox.QueryResultSource.prototype.pending;
+
+
+/**
+ * Has this source been queried for the last query request?
+ * @type {boolean}
+ */
+ngeox.QueryResultSource.prototype.queried;
+
+
+/**
  * The options for the query service.
  * @typedef {{
  *     limit: (number|undefined),

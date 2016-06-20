@@ -13,12 +13,12 @@
                    'nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
     <main ng-class="{'search-is-active': mainCtrl.searchOverlayVisible}">
       <gmf-map gmf-map-map="mainCtrl.map"
-        ngeo-mobile-query=""
-        ngeo-mobile-query-map="::mainCtrl.map"
-        ngeo-mobile-query-active="mainCtrl.queryActive"></gmf-map>
-      <gmf-mobiledisplayqueries
-        gmf-mobiledisplayqueries-featuresstyle="::mainCtrl.queryFeatureStyle">
-      </gmf-mobiledisplayqueries>
+        ngeo-map-query=""
+        ngeo-map-query-map="::mainCtrl.map"
+        ngeo-map-query-active="mainCtrl.queryActive"></gmf-map>
+      <gmf-displayqueries
+        gmf-displayqueries-featuresstyle="::mainCtrl.queryFeatureStyle">
+      </gmf-displayqueries>
       <div
         class="measure-tools-control"
         gmf-mobile-measure-length

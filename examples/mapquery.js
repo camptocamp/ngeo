@@ -7,7 +7,7 @@ goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.btnDirective');
 goog.require('ngeo.mapDirective');
-goog.require('ngeo.mobileQueryDirective');
+goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Image');
@@ -50,14 +50,14 @@ app.module.directive('appQueryresult', app.queryresultDirective);
 
 
 /**
- * @param {ngeo.QueryResult} ngeoQueryResult The ngeo query service.
+ * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query service.
  * @constructor
  * @ngInject
  */
 app.QueryresultController = function(ngeoQueryResult) {
 
   /**
-   * @type {ngeo.QueryResult}
+   * @type {ngeox.QueryResult}
    * @export
    */
   this.result = ngeoQueryResult;

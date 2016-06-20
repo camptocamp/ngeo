@@ -49,7 +49,7 @@ ngeo.module.constant('ngeoWfsPermalinkOptions',
  *
  * @constructor
  * @param {angular.$http} $http Angular $http service.
- * @param {ngeo.QueryResult} ngeoQueryResult The ngeo query result service.
+ * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {ngeox.WfsPermalinkOptions} ngeoWfsPermalinkOptions The options to
  *     configure the ngeo wfs permalink service with.
  * @ngdoc service
@@ -106,7 +106,7 @@ ngeo.WfsPermalink = function($http, ngeoQueryResult, ngeoWfsPermalinkOptions) {
   this.$http_ = $http;
 
   /**
-   * @type {ngeo.QueryResult}
+   * @type {ngeox.QueryResult}
    * @private
    */
   this.result_ = ngeoQueryResult;
@@ -124,7 +124,7 @@ ngeo.WfsPermalink.prototype.clear = function() {
 
 /**
  * Build a WFS GetFeature request for the given query parameter data, send the
- * request and add the received features to {@link ngeo.QueryResult}.
+ * request and add the received features to {@link ngeox.QueryResult}.
  *
  * @param {ngeo.WfsPermalinkData} queryData Query data for the WFS request.
  * @param {ol.Map} map The ol3 map object to get the current projection from.
@@ -189,7 +189,7 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
 
     // then show if requested
     if (showFeatures) {
-      var resultSource = /** @type {ngeo.QueryResultSource} */ ({
+      var resultSource = /** @type {ngeox.QueryResultSource} */ ({
         'features': features,
         'id': wfsType.featureType,
         'identifierAttributeField': wfsType.label,

@@ -1,15 +1,15 @@
-goog.provide('gmf-mobilequery');
+goog.provide('gmf-mapquery');
 
 goog.require('gmf.QueryManager');
 goog.require('gmf.Themes');
-goog.require('gmf.mobiledisplayqueriesDirective');
+goog.require('gmf.displayqueriesDirective');
 goog.require('gmf.layertreeDirective');
 goog.require('gmf.mapDirective');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo');
 goog.require('ngeo.Query');
 goog.require('ngeo.btnDirective');
-goog.require('ngeo.mobileQueryDirective');
+goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -66,14 +66,14 @@ app.module.directive('appQueryresult', app.queryresultDirective);
 
 /**
  * Demo, NOT USED.
- * @param {ngeo.QueryResult} ngeoQueryResult Query service.
+ * @param {ngeox.QueryResult} ngeoQueryResult Query service.
  * @constructor
  * @ngInject
  */
 app.QueryresultController = function(ngeoQueryResult) {
 
   /**
-   * @type {ngeo.QueryResult}
+   * @type {ngeox.QueryResult}
    * @export
    */
   this.result = ngeoQueryResult;
@@ -103,7 +103,7 @@ app.MainController = function(gmfThemes, gmfQueryManager,
   var stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
-   * FeatureStyle used by the mobiledisplayqueries directive
+   * FeatureStyle used by the displayqueries directive
    * @type {ol.style.Style}
    * @export
    */

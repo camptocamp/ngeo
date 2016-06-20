@@ -8,7 +8,7 @@ goog.require('ngeo');
  * A simple object that can be managed by `ngeo.ToolActivateMgr`.
  *
  * See our live examples:
- * {@link ../examples/mobilequery.html}
+ * {@link ../examples/mapquery.html}
  * {@link ../examples/toolActivate.html}
  *
  * @param {Object} toolContext An object which acts as the context for the tool.
@@ -72,7 +72,7 @@ ngeo.ToolMgrEntry;
  *     ngeoToolActivateMgr.deactivateTool(tool);
  *
  * See our live examples:
- * {@link ../examples/mobilequery.html}
+ * {@link ../examples/mapquery.html}
  * {@link ../examples/toolActivate.html}
  *
  * @param {angular.Scope} $rootScope The rootScope provider.
