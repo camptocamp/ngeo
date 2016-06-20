@@ -107,6 +107,12 @@ GmfThemesNode.prototype.urlWfs;
 
 
 /**
+ * @type {string|undefined}
+ */
+GmfThemesNode.prototype.serverOGC;
+
+
+/**
  * @constructor
  */
 var GmfThemesNodeCustom = function() {};
@@ -170,3 +176,57 @@ GmfMetaData.prototype.wmsLayers;
  * @type {string|undefined}
  */
 GmfMetaData.prototype.wmsUrl;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfMetaData.prototype.serverOGC;
+
+
+/**
+ * @constructor
+ */
+var GmfServerOgc = function() {};
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfServerOgc.prototype.url;
+
+
+/**
+ * @type {boolean|undefined}
+ */
+GmfServerOgc.prototype.isSingleTile;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfServerOgc.prototype.auth;
+
+
+/**
+ * @type {boolean|undefined}
+ */
+GmfServerOgc.prototype.wfsSupport;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfServerOgc.prototype.urlWfs;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfServerOgc.prototype.type;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfServerOgc.prototype.imageType;

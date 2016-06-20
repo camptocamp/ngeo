@@ -64,23 +64,25 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
    */
   this.cache_ = {};
 
-  var promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
-    // create sources for each themes
-    for (var i = 0, len = themes.length; i < len; i++) {
-      this.createSources_(themes[i]);
-    }
-  }.bind(this));
+  this.gmfThemes_.getServersOgcObject().then(function(serversOgc) {
+    var promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
+      // create sources for each themes
+      for (var i = 0, len = themes.length; i < len; i++) {
+        this.createSources_(themes[i], serversOgc);
+      }
+    }.bind(this));
 
-  var promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(function(backgroundLayers) {
-    // create a source for each background layer
-    for (var i = 0, len = backgroundLayers.length; i < len; i++) {
-      this.createSources_(backgroundLayers[i]);
-    }
-  }.bind(this));
+    var promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(function(backgroundLayers) {
+      // create a source for each background layer
+      for (var i = 0, len = backgroundLayers.length; i < len; i++) {
+        this.createSources_(backgroundLayers[i], serversOgc);
+      }
+    }.bind(this));
 
-  // then add all sources to the query service
-  this.$q_.all([promiseThemes, promiseBgLayers]).then(function() {
-    this.ngeoQuery_.addSources(this.sources_);
+    // then add all sources to the query service
+    this.$q_.all([promiseThemes, promiseBgLayers]).then(function() {
+      this.ngeoQuery_.addSources(this.sources_);
+    }.bind(this));
   }.bind(this));
 };
 
@@ -90,9 +92,10 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
  * it has no children, otherwise create the sources for each child node if
  * it has any.
  * @param {GmfThemesNode} node Theme layer node.
+ * @param {gmf.ServersOgc} serversOgc OGC servers.
  * @private
  */
-gmf.QueryManager.prototype.createSources_ = function(node) {
+gmf.QueryManager.prototype.createSources_ = function(node, serversOgc) {
   var meta = node.metadata;
   var children = node.children;
   var id = node.id;
@@ -108,14 +111,21 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
     return;
   }
 
-  // don't create sources for WMTS layers without wmsUrl, they are not queryable.
+  // don't create sources for WMTS layers without wmsUrl and serverOGC,
+  // they are not queryable.
   if (node.type === 'WMTS' && !meta.wmsUrl) {
-    return;
+    if (meta.serverOGC && serversOgc[meta.serverOGC]) {
+      var serverOGC = serversOgc[meta.serverOGC];
+      url = serverOGC.urlWfs;
+      wfsQuery = serverOGC.wfsSupport;
+    } else {
+      return;
+    }
   }
 
   if (children) {
     for (var i = 0, len = children.length; i < len; i++) {
-      this.createSources_(children[i]);
+      this.createSources_(children[i], serversOgc);
     }
   } else {
     if (!this.cache_[id]) {
