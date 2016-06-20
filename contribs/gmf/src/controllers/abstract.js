@@ -241,14 +241,16 @@ gmf.AbstractController = function(config, $scope, $injector) {
         }
       }
     }
-    if (!background) {
+    if (!background && layers[1]) {
       // fallback to the layers list, use the second one because the first
       // is the blank layer
       background = layers[1];
     }
 
-    var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
-    backgroundLayerMgr.set(this.map, background);
+    if (background) {
+      var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
+      backgroundLayerMgr.set(this.map, background);
+    }
   }.bind(this));
 };
 
