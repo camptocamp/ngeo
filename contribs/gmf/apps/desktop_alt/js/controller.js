@@ -16,6 +16,10 @@ goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
+goog.require('gmf.DatePickerDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.TimeSliderDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 
 

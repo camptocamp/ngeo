@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>GeoMapFish Timeslider example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../third-party/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <style>
+      ul {
+        width: 50%;
+      }
+      li {
+        list-style: none;
+      }
+      .tooltip {
+        min-width: 6.5rem;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the <code>gmf-time-slider</code> directive.</p>
+    <ul>
+      <li>
+        Select a period with a timeslider
+      </li>
+      <li>
+        <gmf-time-slider gmf-time-slider-time="ctrl.sliderRange" gmf-time-slider-on-date-selected="ctrl.onDateRangeSelected(time)"></gmf-time-slider>
+      </li>
+      <li style="margin-top: 50px">
+        Date selected:
+        <pre>
+          {{ctrl.sliderRangeValue | json}}
+        </pre>
+      </li>
+      <li style="margin-top: 50px;">
+        Select a single date with a timeslider
+      </li>
+      <li>
+        <gmf-time-slider gmf-time-slider-time="ctrl.slider" gmf-time-slider-on-date-selected="ctrl.onDateSelected(time)"></gmf-time-slider>
+      </li>
+      <li style="margin-top: 50px">
+        Date selected:
+        <pre>
+          {{ctrl.sliderValue | json}}
+        </pre>
+      </li>
+    </ul>
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../third-party/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
+    <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
+    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
+    <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
+    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js" type="text/javascript"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/@?main=timeslider.js"></script>
+    <script src="default.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+    <script type="text/javascript">
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>

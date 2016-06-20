@@ -388,3 +388,39 @@ gmfx.User.prototype.role_name;
  * @type {string|null}
  */
 gmfx.User.prototype.username;
+
+
+/**
+ * Enum for the time property of a GmfThemesNode
+ * Type of the widget to use
+ * @enum {string}
+ */
+gmfx.TimePropertyWidgetEnum = {
+  SLIDER : 'slider',
+  DATEPICKER : 'datepicker'
+};
+
+/**
+ * Enum for the time property of a GmfThemesNode
+ * Mode of the widget
+ * @enum {string}
+ */
+gmfx.TimePropertyModeEnum = {
+  RANGE : 'range',
+  SINGLE : 'single',
+  DISABLED : 'disabled'
+};
+
+/**
+ * Time object for WMS layer
+ * @typedef {{
+ *  widget : gmfx.TimePropertyWidgetEnum,
+ *  maxValue: string,
+ *  minValue: string,
+ *  maxDefValue: (string|null),
+ *  minDefValue: (string|null),
+ *  resolution: (string|null),
+ *  mode: gmfx.TimePropertyModeEnum
+ * }}
+ */
+gmfx.TimeProperty;
