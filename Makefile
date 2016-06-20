@@ -167,7 +167,7 @@ lint: .build/eslint.timestamp
 
 .PHONY: git-attributes
 git-attributes:
-	git diff --check HEAD~40
+	git --no-pager diff --check HEAD~40
 
 .PHONY: test
 test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp
