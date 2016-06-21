@@ -93,7 +93,7 @@
           </div>
         </div>
       </div>
-      <div class="map-container">
+      <div class="map-container" ng-class="{'infobar-active': mainCtrl.showInfobar}">
         <gmf-search gmf-search-map="mainCtrl.map"
           class="search"
           gmf-search-datasources="mainCtrl.searchDatasources"
@@ -125,7 +125,7 @@
 
         <!--infobar-->
         <div class="footer" ng-class="{'active': mainCtrl.showInfobar}">
-          <button class="btn btn-sm fa map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
+          <button class="btn fa map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
                   ng-class="{'fa-angle-double-up': !mainCtrl.showInfobar, 'fa-angle-double-down': mainCtrl.showInfobar}"></button>
 
           <div ngeo-scaleselector="mainCtrl.scaleSelectorValues"
@@ -133,32 +133,34 @@
                ngeo-scaleselector-options="mainCtrl.scaleSelectorOptions"></div>
           <div id="scaleline"></div>
           <div class="pull-right">
-            <gmf-mouseposition
-                 gmf-mouseposition-map="mainCtrl.map"
-                 gmf-mouseposition-projections="::mainCtrl.mousePositionProjections">
-            </gmf-mouseposition>
-            <div class="elevation form-group form-group-sm pull-right" gmf-elevation
+            <div class="elevation text-center btn-group dropup" gmf-elevation
                     gmf-elevation-active="mainCtrl.showInfobar"
                     gmf-elevation-elevation="elevationValue"
-                    gmf-elevation-selectedlayer="mainCtrl.selectedElevationLayer"
-                    gmf-elevation-layers="::mainCtrl.elevationLayers"
+                    gmf-elevation-loading="elevationLoading"
+                    gmf-elevation-layer="mainCtrl.selectedElevationLayer"
                     gmf-elevation-map="mainCtrl.map">
-              <div class="btn-group btn-block dropup">
-                <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown" aria-expanded="false">
-                  <span class="fa fa-arrows-v"></span>
-                  <small class="elevation-value">{{elevationValue | number:2}}<span ng-show="elevationValue">m</span></small>
-                  <span class="fa fa-fw fa-ellipsis-v"></span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                  <li ng-repeat="elevationItem in ::mainCtrl.elevationLayers">
-                    <a href ng-click="mainCtrl.selectedElevationLayer = elevationItem">
-                      <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.selectedElevationLayer === elevationItem}"></span>
-                      {{::elevationItem}}
-                    </a>
-                  </li>
-                </ul>
-              </div>
+              <a type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+                <span class="elevation-value">
+                  {{elevationValue | number}}<span ng-show="elevationValue"> m</span>
+                  <span ng-show="elevationLoading" class="fa fa-spinner"></span>
+                  <span ng-show="!elevationValue && !elevationLoading" translate>Elevation…</span>
+                </span><span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li class="dropdown-header" translate>Elevation data sources</li>
+                <li ng-repeat="elevationItem in ::mainCtrl.elevationLayers">
+                  <a href ng-click="mainCtrl.selectedElevationLayer = elevationItem">
+                    <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.selectedElevationLayer === elevationItem}"></span>
+                    {{::elevationItem}}
+                  </a>
+                </li>
+              </ul>
             </div>
+            <gmf-mouseposition
+                 gmf-mouseposition-map="mainCtrl.map"
+                 gmf-mouseposition-projections="::mainCtrl.mousePositionProjections"
+                 class="text-center">
+            </gmf-mouseposition>
           </div>
         </div>
       </div>

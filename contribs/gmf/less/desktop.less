@@ -48,6 +48,8 @@ main {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAAAAABzHgM7AAAAAnRSTlMAAHaTzTgAAAARSURBVHgBY3iKBFEAOp/+MgB+UQnYeBZPWAAAAABJRU5ErkJggg==');
 }
 
+@footer-height: @line-height-computed + 4 * @padding-small-vertical;
+
 .map-container {
   width: auto;
   height: 100%;
@@ -67,15 +69,19 @@ main {
   }
 
   .footer {
-    @height: @line-height-computed + 2 * @padding-small-vertical;
+    padding: @padding-small-vertical;
     position: absolute;
-    bottom:  -@height;
-    background-color: fade(@main-bg-color, 80%);
+    bottom:  -@footer-height;
+    // prevent footer to be displayed on 2 lines when screen width is small
+    max-height: @footer-height;
+    background-color: fade(@main-bg-color, 90%);
     width: 100%;
     /* cancel default navbar bottom margin */
     margin-bottom: 0;
     /* buttons or inputs in bar are supposed to be '-sm' */
     transition: 0.2s ease-out all;
+    border: solid @border-color;
+    border-width: 1px 0 0;
     &.active {
       bottom: 0;
     }
@@ -86,29 +92,23 @@ main {
     button.map-info {
       position: absolute;
       /* button is supposed to be .btn-sm */
-      bottom: @line-height-computed + 2 * @padding-small-vertical;
+      bottom: @footer-height - 1;
       background-color: fade(@main-bg-color, 80%);
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       right: @app-margin;
       border-bottom: 0;
       padding: @half-app-margin @app-margin;
-    }
-    .btn {
-      background-color: lighten(@main-bg-color, 20%);
-      padding: @half-app-margin 0;
-    }
-    .form-group{
-      margin-bottom: 0;
+      border: solid @border-color;
+      border-width: 1px 1px 0 1px;
     }
   }
 
-  [ngeo-scaleselector] {
-    min-width: 12rem;
-    .dropdown-menu {
-      min-width: 12rem;
-    }
+  [ngeo-scaleselector] .btn > span {
+    min-width: 8rem;
+    display: inline-block;
   }
+
   #scaleline {
     vertical-align: middle;
     .ol-scale-line, .ol-scale-line-inner {
@@ -117,31 +117,20 @@ main {
       position: relative;
     }
   }
+
   gmf-mouseposition {
-    &>div {
-      min-width: 24rem;
-    }
-    .dropdown-menu {
-      min-width: 24rem;
-    }
-    #mouse-position {
-      display: inline-block;
-      min-width: 18rem;
-    }
+    display: inline-block;
+  }
+  #mouse-position {
+    display: inline-block;
+    min-width: 18rem;
   }
   .elevation {
     display: inline-block;
-    vertical-align: sub;
-    .dropdown-menu {
-      min-width: 12rem;
-    }
-    button {
-      min-width: 12rem;
-    }
-    .elevation-value {
-      display: inline-block;
-      min-width: 6rem;
-    }
+  }
+  .elevation-value {
+    display: inline-block;
+    min-width: 8rem;
   }
 }
 
@@ -464,7 +453,11 @@ gmf-featurestyle {
  * Background layer button (selector)
  */
 .gmf-backgroundlayerbutton {
-  bottom: 4rem;
+  .infobar-active & {
+    bottom: ~"calc(@{footer-height} + @{app-margin})";
+  }
+  bottom: @app-margin;
+  transition: 0.2s ease-out bottom;
   left: @app-margin;
   position: absolute;
   z-index: 2;

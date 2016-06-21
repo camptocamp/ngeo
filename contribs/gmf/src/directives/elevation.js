@@ -5,6 +5,7 @@ goog.require('gmf');
 goog.require('gmf.Altitude');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Debounce');
+goog.require('ol.events.EventType');
 
 
 /**
@@ -18,8 +19,7 @@ goog.require('ngeo.Debounce');
  *      <span gmf-elevation
  *            gmf-elevation-active="elevationActive"
  *            gmf-elevation-elevation="elevationValue"
- *            gmf-elevation-selectedlayer="mainCtrl.selectedElevationLayer"
- *            gmf-elevation-layers="::mainCtrl.elevationLayers"
+ *            gmf-elevation-layer="mainCtrl.elevationLayer"
  *            gmf-elevation-map="::mainCtrl.map">
  *            {{elevationValue | number:2}}m
  *      </span>
@@ -29,11 +29,7 @@ goog.require('ngeo.Debounce');
  *     deactive the component.
  * @htmlAttribute {number} gmf-elevation-elevation The value to set with the
  *     elevation value.
- * @htmlAttribute {string?} gmf-elevation-selectedlayer Optional elevation layer
- *     to use. If not provided, use always the first available value in the
- *     server response object.
- * @htmlAttribute {Array.<string>?} gmf-elevation-layers Optional list of
- *     layers to ask to the server. If not provided, get all available layers.
+ * @htmlAttribute {string} gmf-elevation-layer Elevation layer to use.
  * @htmlAttribute {ol.Map} gmf-elevation-map The map.
  * @return {angular.Directive} Directive Definition Object.
  * @ngdoc directive
@@ -48,8 +44,8 @@ gmf.elevationDirective = function() {
     scope: {
       'active': '<gmfElevationActive',
       'elevation': '=gmfElevationElevation',
-      'selectedLayer': '<?gmfElevationSelectedlayer',
-      'getLayersFn': '&?gmfElevationLayers',
+      'loading': '=?gmfElevationLoading',
+      'layer': '<gmfElevationLayer',
       'getMapFn': '&gmfElevationMap'
     },
     link: function(scope, element, attr) {
@@ -64,10 +60,10 @@ gmf.elevationDirective = function() {
 
       // Watch current layer.
       scope.$watch(function() {
-        return ctrl.selectedLayer;
+        return ctrl.layer;
       }, function(layer) {
-        this.selectedLayer = layer;
-        this.updateElevation_();
+        this.layer = layer;
+        this.elevation = null;
       }.bind(ctrl));
     }
   };
@@ -77,6 +73,7 @@ gmf.elevationDirective = function() {
 gmf.module.directive('gmfElevation', gmf.elevationDirective);
 
 /**
+ * @param {!angular.Scope} $scope Scope.
  * @param {ngeo.Debounce} ngeoDebounce Ngeo debounce service
  * @param {gmf.Altitude} gmfAltitude Gmf altitude service
  * @constructor
@@ -85,7 +82,7 @@ gmf.module.directive('gmfElevation', gmf.elevationDirective);
  * @ngdoc controller
  * @ngname gmfElevationController
  */
-gmf.ElevationController = function(ngeoDebounce, gmfAltitude) {
+gmf.ElevationController = function($scope, ngeoDebounce, gmfAltitude) {
 
   /**
    * @type {ngeo.Debounce}
@@ -101,33 +98,19 @@ gmf.ElevationController = function(ngeoDebounce, gmfAltitude) {
 
   /**
    * @type {boolean}
-   * @export
    */
-  this.active = true;
+  this.active;
 
   /**
-   * @type {number|undefined}
+   * @type {!number|undefined}
    * @export
    */
   this.elevation;
 
   /**
-   * @type {string|undefined}
-   * @export
+   * @type {string}
    */
-  this.selectedLayer;
-
-  /**
-   * @type {Array.<string>|undefined}
-   * @export
-   */
-  this.layers = this['getLayersFn'] ? this['getLayersFn']() : undefined;
-
-  /**
-   * @type {?Object.<string, number>}
-   * @export
-   */
-  this.lastValue_ = null;
+  this.layer;
 
   var map = this['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
@@ -139,10 +122,28 @@ gmf.ElevationController = function(ngeoDebounce, gmfAltitude) {
   this.map_ = map;
 
   /**
-   * @type {ol.events.Key}
+   * @type {Array.<ol.events.Key>}
    * @private
    */
-  this.pointerMoveKey_;
+  this.listenerKeys_ = [];
+
+  /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.scope_ = $scope;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.inViewport_ = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.loading = false;
 };
 
 /**
@@ -151,30 +152,59 @@ gmf.ElevationController = function(ngeoDebounce, gmfAltitude) {
  * @private
  */
 gmf.ElevationController.prototype.toggleActive_ = function(active) {
+  this.elevation = undefined;
   if (active) {
-    this.pointerMoveKey_ = ol.events.listen(this.map_, 'pointermove',
-        this.ngeoDebounce_(this.pointerMove_.bind(this), 500, true)
-      );
+    // Moving the mouse clears previously displayed elevation
+    this.listenerKeys_.push(ol.events.listen(this.map_, 'pointermove',
+        function(e) {
+          this.scope_.$apply(function() {
+            this.inViewport_ = true;
+            this.elevation = undefined;
+            this.loading = false;
+          }.bind(this));
+        }, this));
+
+    // Launch the elevation service request when the user stops moving the
+    // mouse for less short delay
+    this.listenerKeys_.push(ol.events.listen(this.map_, 'pointermove',
+        this.ngeoDebounce_(this.pointerStop_.bind(this), 500, true)
+      ));
+
+    this.listenerKeys_.push(ol.events.listen(this.map_.getViewport(),
+        ol.events.EventType.MOUSEOUT,
+        function(e) {
+          this.scope_.$apply(function() {
+            this.elevation = undefined;
+            this.inViewport_ = false;
+            this.loading = false;
+          }.bind(this));
+        }, this));
   } else {
     this.elevation = undefined;
-    ol.Observable.unByKey(this.pointerMoveKey_);
+    for (var i = 0, ii = this.listenerKeys_.length; i < ii; ++i) {
+      ol.events.unlistenByKey(this.listenerKeys_[i]);
+    }
   }
 };
 
 
 /**
  * Request altitude for a MapBrowserPointerEvent's coordinates.
+ * Called when the user stopped moving the mouse for 500ms.
  * @param {ol.MapBrowserPointerEvent} e An ol map browser pointer event.
  * @private
  */
-gmf.ElevationController.prototype.pointerMove_ = function(e) {
-  var params = !this.layers ? undefined : {
-    'layers': this.layers.join(',')
-  };
-  this.gmfAltitude_.getAltitude(e.coordinate, params).then(
-      this.getAltitudeSuccess_.bind(this),
-      this.getAltitudeError_.bind(this)
-  );
+gmf.ElevationController.prototype.pointerStop_ = function(e) {
+  if (this.inViewport_) {
+    this.loading = true;
+    var params = {
+      'layers': this.layer
+    };
+    this.gmfAltitude_.getAltitude(e.coordinate, params).then(
+        this.getAltitudeSuccess_.bind(this),
+        this.getAltitudeError_.bind(this)
+    );
+  }
 };
 
 
@@ -183,9 +213,9 @@ gmf.ElevationController.prototype.pointerMove_ = function(e) {
  * @private
  */
 gmf.ElevationController.prototype.getAltitudeSuccess_ = function(resp) {
-  this.lastValue_ = resp !== null ?
-    /** @type {Object<string, number>} */ (resp) : null;
-  this.updateElevation_();
+  goog.asserts.assert(this.layer, 'A layer should be selected');
+  this.elevation = resp[this.layer];
+  this.loading = false;
 };
 
 
@@ -195,20 +225,7 @@ gmf.ElevationController.prototype.getAltitudeSuccess_ = function(resp) {
 gmf.ElevationController.prototype.getAltitudeError_ = function() {
   console.error('Error on getting altitude.');
   this.elevation = undefined;
-};
-
-
-/**
- * @private
- */
-gmf.ElevationController.prototype.updateElevation_ = function() {
-  if (this.lastValue_ !== null) {
-    var layer = (this.selectedLayer && this.selectedLayer in this.lastValue_) ?
-        this.selectedLayer : Object.keys(this.lastValue_)[0];
-    this.elevation = this.lastValue_[layer];
-  } else {
-    this.elevation = undefined;
-  }
+  this.loading = false;
 };
 
 
