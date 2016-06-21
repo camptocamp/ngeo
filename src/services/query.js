@@ -496,6 +496,7 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
           items.forEach(function(item) {
             var format = item.source.format;
             var features = format.readFeatures(response.data);
+            this.setUniqueIds_(features, item.source.id);
             item['resultSource'].pending = false;
             item['resultSource'].features = features;
             this.result_.total += features.length;
@@ -558,6 +559,7 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
               featureNS: this.featureNS_
             });
             var features = sourceFormat.readFeatures(response.data);
+            this.setUniqueIds_(features, item.source.id);
             item['resultSource'].pending = false;
             item['resultSource'].features = features;
             this.result_.total += features.length;
@@ -617,6 +619,23 @@ ngeo.Query.prototype.getLayersForItems_ = function(items) {
     layers = layers.concat(this.getLayersForItem_(items[i]));
   }
   return layers;
+};
+
+
+/**
+ * Make sure that feature ids are unique, because the same features might
+ * be returned for different layers.
+ * @param {Array.<ol.Feature>} features Features
+ * @param {string|number} sourceId Source id.
+ * @private
+ */
+ngeo.Query.prototype.setUniqueIds_ = function(features, sourceId) {
+  features.forEach(function(feature) {
+    if (feature.getId() !== undefined) {
+      var id = sourceId + '_' + feature.getId();
+      feature.setId(id);
+    }
+  });
 };
 
 

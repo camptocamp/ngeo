@@ -227,10 +227,11 @@ describe('ngeo.Query', function() {
       expect(ngeoQueryResult.sources[0].features.length).toBe(2);
       expect(ngeoQueryResult.sources[1].features.length).toBe(3);
       expect(ngeoQueryResult.total).toBe(5);
+      expect(ngeoQueryResult.sources[0].features[0].getId()).toBe('bus_stop_bus_stop.380835772');
     });
 
-    describe('#getQueryableSources_', function () {
-      it('gets sources for GetFeatureInfo requests', function () {
+    describe('#getQueryableSources_', function() {
+      it('gets sources for GetFeatureInfo requests', function() {
         ngeoQuery.addSource({
           id: busStopSourceId,
           layer: busStopLayer
@@ -246,7 +247,7 @@ describe('ngeo.Query', function() {
         expect(queryableSources.wms[url].length).toBe(2);
       });
 
-      it('gets sources for GetFeature requests', function () {
+      it('gets sources for GetFeature requests', function() {
         ngeoQuery.addSource({
           id: busStopSourceId,
           layer: busStopLayer,
@@ -264,7 +265,7 @@ describe('ngeo.Query', function() {
         expect(queryableSources.wfs[url].length).toBe(1);
       });
 
-      it('only gets visible layers', function () {
+      it('only gets visible layers', function() {
         map.getView().setResolution(50);
         // layer is not visible
         busStopLayer.setVisible(false);
