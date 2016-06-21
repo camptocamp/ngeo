@@ -5,20 +5,20 @@
       <input ng-if="customField.type === 'text'" ng-model="customField.value" class="form-control" type="text" placeholder="{{customField.name | translate}}">
       <textarea ng-if="customField.type === 'textarea'" ng-model="customField.value" class="form-control" row="3" placeholder="{{customField.name | translate}}"></textarea>
       <div ng-if="customField.type === 'checkbox'" class="checkbox">
-        <label class="small">
+        <label>
           <input ng-model="customField.value" type="checkbox">
           <span>{{customField.name | translate}}</span>
         </label>
       </div>
     </div>
     <div ng-show="ctrl.fields.legend !== undefined" class="checkbox">
-      <label class="small">
+      <label>
         <input ng-model="ctrl.fields.legend" type="checkbox">
         <span translate>Legend</span>
       </label>
     </div>
     <div class="form-horizontal">
-      <div ng-show="ctrl.fields.layouts.length !== 1" class="form-group form-group-sm">
+      <div ng-show="ctrl.fields.layouts.length !== 1" class="form-group">
         <label class="control-label col-md-5" translate>Layout</label>
         <div class="col-md-7">
           <div class="btn-group btn-block">
@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div ng-show="ctrl.fields.scales.length !== 1" class="form-group form-group-sm">
+      <div ng-show="ctrl.fields.scales.length !== 1" class="form-group">
         <label class="control-label col-md-5"translate>Scale</label>
         <div class="col-md-7">
           <div class="btn-group btn-block">
@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div ng-show="ctrl.fields.dpis.length !== 1" class="form-group form-group-sm">
+      <div ng-show="ctrl.fields.dpis.length !== 1" class="form-group">
         <label class="control-label col-md-3" translate>DPI</label>
         <div class="col-md-5">
           <div class="btn-group btn-block">
@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group form-group-sm">
+      <div class="form-group">
         <label class="control-label col-md-3" translate>Rotation</label>
         <div class="col-md-5">
           <input class="form-control" type="range" ng-model="ctrl.getSetRotation" ng-model-options="{getterSetter: true}" min="-180" max="180" data-toggle="tooltip" title="{{'You can also use Alt+Shift on the map' | translate}}">

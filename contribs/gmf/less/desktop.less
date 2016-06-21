@@ -18,9 +18,12 @@
 @left-panel-width: 32rem;
 @right-panel-width: 28rem;
 @topbar-height: 4.5rem;
-@toolbar-width: 4.5rem;
 @border-color: darken(@brand-primary, @standard-variation);
 @search-width: 8 * @map-tools-size;
+@font-size-base: 13px;
+@padding-base-vertical: 5px;
+@padding-base-horizontal: 10px;
+@form-group-margin-bottom: 10px;
 
 html, body {
   position: relative;
@@ -49,7 +52,7 @@ main {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAAAAABzHgM7AAAAAnRSTlMAAHaTzTgAAAARSURBVHgBY3iKBFEAOp/+MgB+UQnYeBZPWAAAAABJRU5ErkJggg==');
 }
 
-@footer-height: @line-height-computed + 4 * @padding-small-vertical;
+@footer-height: @input-height-base + 2 * @padding-base-vertical;
 
 .map-container {
   width: auto;
@@ -264,7 +267,6 @@ gmf-backgroundlayerselector {
   .bar {
     background-color: @brand-primary;
     border-left: 1px solid @border-color;
-    width: @toolbar-width;
 
     float: right;
     height: 100%;
