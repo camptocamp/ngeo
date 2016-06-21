@@ -18,7 +18,7 @@ goog.require('goog.object');
  *          color: '#00F',
  *          zExtractor: function (item) {return item['values']['z2'];)}
  *        }
- *      hoverCallback: function(point, dist, xUnits, ele, yUnits) {
+ *      hoverCallback: function(point, dist, xUnits, elevations, yUnits) {
  *        console.log(point.x, point.y);
  *      },
  *      outCallback: function() {
@@ -70,7 +70,7 @@ ngeo.profile = function(options) {
 
   /**
    * Hover callback function.
-   * @type {function(Object, number, string, number, string)}
+   * @type {function(Object, number, string, Object.<string, number>, string)}
    */
   var hoverCallback = options.hoverCallback !== undefined ?
       options.hoverCallback : goog.nullFunction;
@@ -300,10 +300,6 @@ ngeo.profile = function(options) {
 
       gEnter.append('g').attr('class', 'pois');
 
-      var yHover = gEnter.append('g').attr('class', 'y grid-hover');
-      yHover.append('svg:line').attr('stroke-dasharray', '5,5');
-      yHover.append('text');
-
       var xHover = gEnter.append('g').attr('class', 'x grid-hover');
       xHover.append('svg:line').attr('stroke-dasharray', '5,5');
       xHover.append('text');
@@ -365,13 +361,18 @@ ngeo.profile = function(options) {
             .attr('d', area);
       }
 
-      // Set style and update the lines paths.
-      var line, name;
+      // Set style and update the lines paths and y hover guides for each lines.
+      var line, name, yHover;
       for (name in linesConfiguration) {
         // Set style of each line and add a class with its respective name.
         gEnter.append('path').attr('class', 'line ' + name)
             .style('stroke', linesConfiguration[name].color || '#F00')
             .style('fill', 'none');
+
+        // Set y hover guides
+        yHover = gEnter.append('g').attr('class', 'y grid-hover ' + name);
+        yHover.append('svg:line').attr('stroke-dasharray', '5,5');
+        yHover.append('text');
 
         // Configure the d3 line.
         line = d3.svg.line()
@@ -383,7 +384,7 @@ ngeo.profile = function(options) {
             });
 
         // Update path for the line.
-        g.select('.' + name)
+        g.select('.line.' + name)
             .transition()
             .attr('d', line);
       }
@@ -483,10 +484,24 @@ ngeo.profile = function(options) {
     }
 
     var point = data[i];
-
-    var firstLineName = Object.keys(linesConfiguration)[0];
-    var elevation = linesConfiguration[firstLineName].zExtractor(point); //FIXME
     var dist = distanceExtractor(point);
+    var elevation;
+    var elevations = [];
+    var elevationsRef = {};
+    var lineName;
+
+    for (lineName in linesConfiguration) {
+      elevation = linesConfiguration[lineName].zExtractor(point);
+      elevations.push(elevation);
+      elevationsRef[lineName] = elevation;
+      g.select('.y.grid-hover.' + lineName)
+          .style('display', 'inline')
+          .select('line')
+          .attr('x1', x(0))
+          .attr('y1', y(elevation))
+          .attr('x2', width)
+          .attr('y2', y(elevation));
+    }
 
     g.select('.x.grid-hover')
         .style('display', 'inline')
@@ -494,15 +509,7 @@ ngeo.profile = function(options) {
         .attr('x1', x(dist))
         .attr('y1', height)
         .attr('x2', x(dist))
-        .attr('y2', y(elevation));
-
-    g.select('.y.grid-hover')
-        .style('display', 'inline')
-        .select('line')
-        .attr('x1', x(0))
-        .attr('y1', y(elevation))
-        .attr('x2', width)
-        .attr('y2', y(elevation));
+        .attr('y2', y(Math.max.apply(null, elevations)));
 
     var right = dist > xDomain[1] / 2;
     var xtranslate = x(dist);
@@ -515,12 +522,16 @@ ngeo.profile = function(options) {
             (height - 10) + ')');
 
     var yUnits = 'm';
-    g.select('.y.grid-hover text')
-        .text(formatter.yhover(elevation, 'm'))
-        .style('text-anchor', right ? 'end' : 'start')
-        .attr('transform', 'translate(' + xtranslate + ',' +
-            (y(elevation) - 10) + ')');
-    hoverCallback.call(null, point, dist / xFactor, xUnits, elevation, yUnits);
+    // Display altitude on guides only if there is one line.
+    if (numberOfLines === 1) {
+      g.select('.y.grid-hover text')
+          .text(formatter.yhover(elevations[0], 'm'))
+          .style('text-anchor', right ? 'end' : 'start')
+          .attr('transform', 'translate(' + xtranslate + ',' +
+              (y(elevations[0]) - 10) + ')');
+    }
+    hoverCallback.call(null, point, dist / xFactor, xUnits, elevationsRef,
+        yUnits);
   };
 
 
@@ -532,13 +543,17 @@ ngeo.profile = function(options) {
     var g = svg.select('g');
     var profileData = svg.datum();
     var ps = g.select('.pois');
-    var firstLineName = Object.keys(linesConfiguration)[0];
 
     var p = ps.selectAll('.poi').data(pois, function(d) {
       var i = bisectDistance(profileData, Math.round(pe.dist(d) * 10) / 10, 1);
       var point = profileData[i];
       if (point) {
-        var z = linesConfiguration[firstLineName].zExtractor(point); //FIXME
+        var lineName;
+        var elevations = [];
+        for (lineName in linesConfiguration) {
+          elevations.push(linesConfiguration[lineName].zExtractor(point));
+        }
+        var z = Math.max.apply(null, elevations);
         pe.z(d, z);
       }
       return pe.id(d);
