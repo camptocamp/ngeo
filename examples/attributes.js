@@ -29,8 +29,7 @@ app.MainController = function($http) {
       var attributes = format.read(resp.data);
       document.getElementById('list-of-attributes').innerHTML =
         JSON.stringify(attributes);
-      return resp;
-
+      return attributes;
     }
   );
 };
