@@ -1,7 +1,6 @@
 goog.provide('gmf.WMSTime');
 
 goog.require('gmf');
-goog.require('goog.asserts');
 
 /**
  * gmf - description

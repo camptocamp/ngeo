@@ -228,23 +228,23 @@ gmf.TimeSliderController.prototype.getClosestValue_ = function(timestamp) {
 
   if (this.timeValueList) {
     // Time stops are defined as a list of values
-    var idx;
-    var lIdx = 0;
-    var rIdx = this.timeValueList.length - 1;
+    var index;
+    var leftIndex = 0;
+    var rightIndex = this.timeValueList.length - 1;
 
-    while ((rIdx - lIdx) > 1) {
-      idx = Math.floor((lIdx + rIdx) / 2);
-      if (this.timeValueList[idx] >= timestamp) {
-        rIdx = idx;
+    while ((rightIndex - leftIndex) > 1) {
+      index = Math.floor((leftIndex + rightIndex) / 2);
+      if (this.timeValueList[index] >= timestamp) {
+        rightIndex = index;
       } else {
-        lIdx = idx;
+        leftIndex = index;
       }
     }
 
-    var lDist = Math.abs(this.timeValueList[lIdx] - timestamp);
-    var rDist = Math.abs(this.timeValueList[rIdx] - timestamp);
+    var leftDistance = Math.abs(this.timeValueList[leftIndex] - timestamp);
+    var rightDistance = Math.abs(this.timeValueList[rightIndex] - timestamp);
 
-    return this.timeValueList[lDist < rDist ? lIdx : rIdx];
+    return this.timeValueList[leftDistance < rightDistance ? leftIndex : rightIndex];
   } else {
     // Time stops are defined by a start date plus an interval
     var targetDate = new Date(timestamp);

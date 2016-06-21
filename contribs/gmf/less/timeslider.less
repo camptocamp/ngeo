@@ -1,19 +1,36 @@
+@import 'input-range.less';
+
 .gmf-time-slider {
-  @handle-width : 0.6em;
 
   // 28 px come from bs popover class .popover-content { padding: 9px 14px; }
   min-width: @popover-max-width - 28px;
 
+  .ui-widget-content {
+    border: none;
+  }
+
   .ui-slider-handle {
-    top: -0.7rem;
-    width: @handle-width;
-    cursor: pointer;
-    margin-left: -@handle-width / 2;
+    top: -((@gmf-input-range-thumb-height / 2) - @gmf-input-range-track-height / 2) ;
+    cursor: @gmf-input-range-cursor;
+    margin-left: -@gmf-input-range-thumb-width / 2;
+    box-shadow: @gmf-input-range-thumb-box-shadow;
+    border: @gmf-input-range-thumb-border;
+    height: @gmf-input-range-thumb-height;
+    width: @gmf-input-range-thumb-width;
+    border-radius: @gmf-input-range-thumb-border-radius;
   }
 
   .ui-slider-horizontal {
-    height: 0.4rem;
+    height: @gmf-input-range-track-height;
     margin: @half-app-margin 0;
+    border: @gmf-input-range-track-border;
+    border-radius: @gmf-input-range-track-border-radius;
+    background-color: @brand-secondary;
+  }
+
+  .ui-slider-range {
+    background-color: @brand-primary;
+    cursor: @gmf-input-range-cursor;
   }
 
   .tooltip {
