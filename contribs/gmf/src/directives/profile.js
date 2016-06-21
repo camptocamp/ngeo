@@ -123,20 +123,26 @@ gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
   goog.asserts.assertInstanceof(linesConfiguration, Object);
 
   /**
-   * Keep an array of all layer names to sent it to the server.
+   * @type {Object<string, gmfx.ProfileLineConfiguration>}
+   * @private
+   */
+  this.linesConfiguration_ = linesConfiguration;
+
+  /**
+   * Keep an array of all layer names.
    * @type {Array.<string>}
    * @private
    */
-  this.layerNames_ = [];
+  this.layersNames_ = [];
 
   var name, lineConfig;
-  for (name in linesConfiguration) {
+  for (name in this.linesConfiguration_) {
 
-    this.layerNames_.push(name);
+    this.layersNames_.push(name);
 
-    lineConfig = linesConfiguration[name];
+    lineConfig = this.linesConfiguration_[name];
     if (!lineConfig.zExtractor) {
-      linesConfiguration[name].zExtractor = this.getZFactory_(name);
+      this.linesConfiguration_[name].zExtractor = this.getZFactory_(name);
     }
   }
 
@@ -165,7 +171,7 @@ gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
    * @type {number}
    * @private
    */
-  this.nbPoints_ = 100;
+  this.nbPoints_ =  100;
 
   /**
    * @type {ol.geom.LineString}
@@ -180,6 +186,18 @@ gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
   this.profileData = [];
 
   /**
+   * @type {gmfx.ProfileHoverPointInformations}
+   * @export
+   */
+  this.currentPoint = {
+    coordinate: undefined,
+    distance: undefined,
+    elevations: {},
+    xUnits: undefined,
+    yUnits: undefined
+  };
+
+  /**
    * @type {number|undefined}
    * @export
    */
@@ -190,7 +208,7 @@ gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
    * @export
    */
   this.profileOptions = {
-    linesConfiguration: linesConfiguration,
+    linesConfiguration: this.linesConfiguration_,
     distanceExtractor: this.getDist_,
     hoverCallback: this.hoverCallback_.bind(this),
     outCallback: this.outCallback_.bind(this)
@@ -261,7 +279,7 @@ gmf.ProfileController.prototype.onPointerMove_ = function(e) {
   var eventToLine = new ol.geom.LineString([closestPoint, coordinate]);
   var pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
 
-  if (pixelDist < 20) {
+  if (pixelDist < 16) {
     this.profileHighlight = this.getDistanceOnALine_(closestPoint, this.line);
   } else {
     this.profileHighlight = -1;
@@ -307,11 +325,25 @@ gmf.ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
 
 
 /**
- * @param {ol.Coordinate} point Point.
+ * @param {Object} point Point.
+ * @param {number} dist distance on the line.
+ * @param {string} xUnits X units label.
+ * @param {Object.<string, number>} elevationsRef Elevations references.
+ * @param {string} yUnits Y units label.
  * @private
  */
-gmf.ProfileController.prototype.hoverCallback_ = function(point) {
-  this.snappedPoint_.setGeometry(new ol.geom.Point([point.x, point.y]));
+gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
+    elevationsRef, yUnits) {
+  var coordinate = [point.x, point.y];
+  this.snappedPoint_.setGeometry(new ol.geom.Point(coordinate));
+  var ref;
+  for (ref in elevationsRef) {
+    this.currentPoint.elevations[ref] = elevationsRef[ref];
+  }
+  this.currentPoint.distance = dist;
+  this.currentPoint.xUnits = xUnits;
+  this.currentPoint.yUnits = yUnits;
+  this.currentPoint.coordinate = coordinate;
 };
 
 
@@ -320,6 +352,36 @@ gmf.ProfileController.prototype.hoverCallback_ = function(point) {
  */
 gmf.ProfileController.prototype.outCallback_ = function() {
   this.snappedPoint_.setGeometry(null);
+  this.currentPoint.coordinate = undefined;
+  this.currentPoint.distance = undefined;
+  this.currentPoint.elevations = {};
+  this.currentPoint.xUnits = undefined;
+  this.currentPoint.yUnits = undefined;
+};
+
+
+/**
+ * Return the color value of a gmfx.ProfileLineConfiguration.
+ * @param {string} layerName name of the elevation layer.
+ * @return {string|undefined} A HEX color or undefined is nothing is found.
+ * @export
+ */
+gmf.ProfileController.prototype.getColor = function(layerName) {
+  var lineConfiguration = this.linesConfiguration_[layerName];
+  if (!lineConfiguration) {
+    return undefined;
+  }
+  return lineConfiguration.color;
+};
+
+
+/**
+ * Return a copy of the existing layer names.
+ * @return {Array.<string>} The names of layers.
+ * @export
+ */
+gmf.ProfileController.prototype.getLayersNames = function() {
+  return this.layersNames_.slice(0);
 };
 
 
@@ -382,7 +444,7 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
   };
 
   var params = {
-    'layers': this.layerNames_.join(','),
+    'layers': this.layersNames_.join(','),
     'geom': JSON.stringify(geom),
     'nbPoints': this.nbPoints_
   };
@@ -437,7 +499,7 @@ gmf.ProfileController.prototype.downloadCsv = function() {
   };
 
   var params = {
-    'layers': this.layerNames_.join(','),
+    'layers': this.layersNames_.join(','),
     'geom': JSON.stringify(geom),
     'nbPoints': this.nbPoints_
   };

@@ -181,6 +181,55 @@ gmfx.ProfileLineConfiguration.prototype.zExtractor;
 
 
 /**
+ * Information to display for a given point in the profile. The point is
+ * typically given by the profile's hover.
+ * @typedef {{
+ *   coordinate: (ol.Coordinate|undefined),
+ *   distance: (number|undefined),
+ *   elevations: (Object.<string, number>|undefined),
+ *   xUnits: (string|undefined),
+ *   yUnits: (string|undefined)
+ * }}
+ */
+gmfx.ProfileHoverPointInformations;
+
+
+/**
+ * Coordinate of the point.
+ * @type {ol.Coordinate|undefined}
+ */
+gmfx.ProfileHoverPointInformations.prototype.coordinate;
+
+
+/**
+ * distance of the point on the line. Can be in meters or kilometers.
+ * @type {number|undefined}
+ */
+gmfx.ProfileHoverPointInformations.prototype.distance;
+
+
+/**
+ * Elevations of the point (example: {aster: 556.5, srtm: 560})
+ * @type {Object.<string, number>|undefined}
+ */
+gmfx.ProfileHoverPointInformations.prototype.elevations;
+
+
+/**
+ * Units of the x axis.
+ * @type {string|undefined}
+ */
+gmfx.ProfileHoverPointInformations.prototype.xUnits;
+
+
+/**
+ * Units of the y axis.
+ * @type {string|undefined}
+ */
+gmfx.ProfileHoverPointInformations.prototype.yUnits;
+
+
+/**
  * Object that can be used to generate a form field.
  * @typedef {{
  *   default: (string|boolean|number|undefined),

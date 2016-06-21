@@ -1,17 +1,20 @@
 <div class="profile-container">
   <div class="profile" ngeo-profile="ctrl.profileData"
       ngeo-profile-highlight="ctrl.profileHighlight"
-      ngeo-profile-options="ctrl.profileOptions">
+      ngeo-profile-options="::ctrl.profileOptions">
   </div>
-
+  <ul class="profile-legend" ng-show="ctrl.profileData.length > 0">
+    <li ng-repeat="name in ::ctrl.getLayersNames()"><i class="fa fa-minus" style="color:{{::ctrl.getColor(name)}};"></i>&nbsp;{{name | translate}}&nbsp;{{ctrl.currentPoint.elevations[name]}}&nbsp;{{ctrl.currentPoint.yUnits}}
+    </li>
+  </ul>
   <div class="profile-export form-group form-group-sm">
     <div class="btn-group btn-block dropup">
-      <button type="button" class="btn btn-default dropdown-toggle form-control" ng-class="{'disabled': ctrl.profileData.length === 0}" data-toggle="dropdown" aria-expanded="false">
+      <a class="dropdown-toggle" href="" ng-show="ctrl.profileData.length !== 0" data-toggle="dropdown" aria-expanded="false">
         {{'Export' | translate}}&nbsp;<i class="fa fa-caret-up"></i>
-      </button>
+      </a>
       <ul class="dropdown-menu dropdown-menu-right" role="menu">
-          <li><a href="" ng-click="ctrl.downloadCsv()"><i class="fa fa-table"></i>&nbsp;{{'Download CSV' | translate}}</a></li>
-          <li><a href="" ng-click="ctrl.downloadImage()"><i class="fa fa-picture-o"></i>&nbsp;{{'Download image' | translate}}</a></li>
+        <li><a href="" ng-click="::ctrl.downloadCsv()"><i class="fa fa-table"></i>&nbsp;{{'Download CSV' | translate}}</a></li>
+        <li><a href="" ng-click="::ctrl.downloadImage()"><i class="fa fa-picture-o"></i>&nbsp;{{'Download image' | translate}}</a></li>
       </ul>
     </div>
   </div>
