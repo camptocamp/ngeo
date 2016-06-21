@@ -7,6 +7,8 @@ goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
 goog.require('ol.Feature');
+goog.require('ol.geom.LineString');
+goog.require('ol.geom.Point');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
@@ -49,6 +51,7 @@ gmf.profileDirective = function(gmfProfileTemplateUrl) {
     replace: true,
     restrict: 'E',
     scope: {
+      'active': '<gmfProfileActive',
       'getMapFn': '&gmfProfileMap',
       'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
       'line': '<gmfProfileLine'
@@ -76,6 +79,12 @@ gmf.module.directive('gmfProfile', gmf.profileDirective);
  */
 gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
     gmfProfileJsonUrl, gmfProfileCsvUrl) {
+
+  /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.$scope_ = $scope;
 
   /**
    * @type {angular.$http}
@@ -122,22 +131,14 @@ gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
 
   var name, lineConfig;
   for (name in linesConfiguration) {
+
     this.layerNames_.push(name);
 
     lineConfig = linesConfiguration[name];
     if (!lineConfig.zExtractor) {
-      lineConfig.zExtractor = this.getZFactory_(name);
+      linesConfiguration[name].zExtractor = this.getZFactory_(name);
     }
   }
-
-  /**
-   * @type {ngeox.profile.ProfileOptions}
-   * @export
-   */
-  this.profileOptions = {
-    linesConfiguration: /** ngeox.profile.LinesConfiguration */ (linesConfiguration),
-    distanceExtractor: this.getDist_
-  };
 
   /**
    * @type {ngeo.FeatureOverlay}
@@ -161,6 +162,12 @@ gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
   this.featureOverlay_.addFeature(this.snappedPoint_);
 
   /**
+   * @type {number}
+   * @private
+   */
+  this.nbPoints_ = 100;
+
+  /**
    * @type {ol.geom.LineString}
    * @export
    */
@@ -173,18 +180,46 @@ gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
   this.profileData = [];
 
   /**
-   * @type {number}
-   * @private
+   * @type {number|undefined}
+   * @export
    */
-  this.nbPoints_ = 100;
+  this.profileHighlight;
+
+  /**
+   * @type {ngeox.profile.ProfileOptions}
+   * @export
+   */
+  this.profileOptions = {
+    linesConfiguration: linesConfiguration,
+    distanceExtractor: this.getDist_,
+    hoverCallback: this.hoverCallback_.bind(this),
+    outCallback: this.outCallback_.bind(this)
+  };
 
   /**
    * @type {boolean}
    * @export
    */
-  this.active = false;
+  this.active;
 
-  // Watch the lineto update the profileData (data for the chart).
+  /**
+   * @type {ol.events.Key}
+   * @private
+   */
+  this.pointerMoveKey_;
+
+  // Watch the active value to activate/deactive events listening.
+  $scope.$watch(
+    function() {
+      return this.active;
+    }.bind(this),
+    function(oldValue, newValue) {
+      if (oldValue !== newValue) {
+        this.updateEventsListening_();
+      }
+    }.bind(this));
+
+  // Watch the line to update the profileData (data for the chart).
   $scope.$watch(
     function() {
       return this.line;
@@ -194,6 +229,97 @@ gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
         this.update_();
       }
     }.bind(this));
+
+  this.updateEventsListening_();
+};
+
+
+/**
+ * @private
+ */
+gmf.ProfileController.prototype.updateEventsListening_ = function() {
+  if (this.active === true) {
+    this.pointerMoveKey_ = ol.events.listen(this.map_, 'pointermove',
+        this.onPointerMove_.bind(this));
+  } else {
+    ol.Observable.unByKey(this.pointerMoveKey_);
+  }
+};
+
+
+/**
+ * @param {ol.MapBrowserPointerEvent} e An ol map browser pointer event.
+ * @private
+ */
+gmf.ProfileController.prototype.onPointerMove_ = function(e) {
+  if (e.dragging || !this.line) {
+    return;
+  }
+  var coordinate = this.map_.getEventCoordinate(e.originalEvent);
+  var closestPoint = this.line.getClosestPoint(coordinate);
+  // compute distance to line in pixels
+  var eventToLine = new ol.geom.LineString([closestPoint, coordinate]);
+  var pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
+
+  if (pixelDist < 20) {
+    this.profileHighlight = this.getDistanceOnALine_(closestPoint, this.line);
+  } else {
+    this.profileHighlight = -1;
+  }
+  this.$scope_.$apply();
+};
+
+
+/**
+ * Return the distance between the beginning of the line and the given point.
+ * The point must be on the line. If not, this function will return the total
+ * length of the line.
+ * @param {ol.Coordinate} pointOnLine A point on the given line.
+ * @param {ol.geom.LineString} line A line.
+ * @return {number} A distance.
+ * @private
+ */
+gmf.ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
+    line) {
+  var segment;
+  var distOnLine = 0;
+  var fakeExtent = [
+    pointOnLine[0] - 0.5,
+    pointOnLine[1] - 0.5,
+    pointOnLine[0] + 0.5,
+    pointOnLine[1] + 0.5
+  ];
+  this.line.forEachSegment(function(firstPoint, lastPoint) {
+    segment = new ol.geom.LineString([firstPoint, lastPoint]);
+    // Is the pointOnLine on this swegement ?
+    if (segment.intersectsExtent(fakeExtent)) {
+      // If the closestPoint is on the line, add the distance between the first
+      // point of this segment and the pointOnLine.
+      segment.setCoordinates([firstPoint, pointOnLine]);
+      return distOnLine += segment.getLength(); // Assign value and break;
+    } else {
+      // Do the sum of the length of each eventual previous segment.
+      distOnLine += segment.getLength();
+    }
+  });
+  return distOnLine;
+};
+
+
+/**
+ * @param {ol.Coordinate} point Point.
+ * @private
+ */
+gmf.ProfileController.prototype.hoverCallback_ = function(point) {
+  this.snappedPoint_.setGeometry(new ol.geom.Point([point.x, point.y]));
+};
+
+
+/**
+ * @private
+ */
+gmf.ProfileController.prototype.outCallback_ = function() {
+  this.snappedPoint_.setGeometry(null);
 };
 
 
@@ -281,8 +407,10 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
  * @private
  */
 gmf.ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
-  //this.profileData = resp.dat;
-  this.profileData = resp.data['profile'];
+  var profileData = resp.data['profile'];
+  if (profileData instanceof Array) {
+    this.profileData = profileData;
+  }
 };
 
 
@@ -300,7 +428,7 @@ gmf.ProfileController.prototype.getProfileDataError_ = function(resp) {
  * @export
  */
 gmf.ProfileController.prototype.downloadCsv = function() {
-  if (this.profileData.lenght === 0) {
+  if (this.profileData.length === 0) {
     return;
   }
   var geom = {
@@ -357,7 +485,7 @@ gmf.ProfileController.prototype.getCsvError_ = function(resp) {
  * @export
  */
 gmf.ProfileController.prototype.downloadImage = function() {
-  if (this.profileData.lenght === 0) {
+  if (this.profileData.length === 0) {
     return;
   }
   var title = 'Profile';
