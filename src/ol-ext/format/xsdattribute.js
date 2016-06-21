@@ -18,6 +18,17 @@ goog.inherits(ngeo.format.XSDAttribute, ol.format.XML);
 
 
 /**
+ * @param {Document|Node|string} source Source.
+ * @return {Array.<ngeox.Attribute>} The parsed result.
+ */
+ngeo.format.XSDAttribute.prototype.read = function(source) {
+  return /** @type {Array.<ngeox.Attribute>} */ (
+    goog.base(this, 'read', source)
+  );
+};
+
+
+/**
  * @param {Document} doc Document.
  * @return {Array.<ngeox.Attribute>} List of attributes.
  */
