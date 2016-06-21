@@ -71,6 +71,7 @@ main {
   .footer {
     padding: @padding-small-vertical;
     position: absolute;
+    z-index: 2;
     bottom:  -@footer-height;
     // prevent footer to be displayed on 2 lines when screen width is small
     max-height: @footer-height;
@@ -450,17 +451,25 @@ gmf-featurestyle {
 
 
 /**
+ * Controls at the bottom of the map
+ */
+.map-bottom-controls {
+  .infobar-active & {
+    bottom: @footer-height;
+  }
+  transition: 0.2s ease-out bottom;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+}
+
+/**
  * Background layer button (selector)
  */
 .gmf-backgroundlayerbutton {
-  .infobar-active & {
-    bottom: ~"calc(@{footer-height} + @{app-margin})";
-  }
   bottom: @app-margin;
-  transition: 0.2s ease-out bottom;
   left: @app-margin;
-  position: absolute;
-  z-index: 2;
 
   button {
     padding: 3px;
@@ -474,4 +483,16 @@ gmf-featurestyle {
   ul.gmf-backgroundlayerselector {
     margin: 0 0.5rem;
   }
+}
+
+.displayqueries {
+  position: absolute;
+  right: @app-margin;
+}
+
+/** Disclaimer */
+gmf-disclaimer {
+  position: relative;
+  display: inline-block;
+  vertical-align: bottom;
 }
