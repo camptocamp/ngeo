@@ -7,6 +7,10 @@ goog.require('ngeo.AutoProjection');
 goog.require('ngeo.CreateGeoJSONBloodhound');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
+/** @suppress {extraRequire} */
+goog.require('ngeo.colorpickerDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.popoverDirective');
 /**
  * This goog.require is needed because it provides 'ngeo-search' used in
  * the template.
@@ -17,6 +21,11 @@ goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
 goog.require('ol.proj');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.RegularShape');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
 
 
 gmf.module.value('gmfSearchTemplateUrl',
@@ -46,6 +55,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  * Example flat results:
  *
  *      <gmf-search gmf-search-map="ctrl.map"
+ *        gmf-search-styles="ctrl.searchStyles"
  *        gmf-search-datasources="ctrl.searchDatasources"
  *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
  *        gmf-search-clearbutton="true">
@@ -62,9 +72,11 @@ gmf.module.value('gmfSearchTemplateUrl',
  * Example with categories:
  *
  *      <gmf-search gmf-search-map="ctrl.map"
+ *        gmf-search-styles="ctrl.searchStyles"
  *        gmf-search-datasources="ctrl.searchDatasources"
  *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
  *        gmf-search-clearbutton="true">
+ *        gmf-search-colorchooser="true">
  *      </gmf-search>
  *      <script>
  *        (function() {
@@ -79,11 +91,19 @@ gmf.module.value('gmfSearchTemplateUrl',
  * @htmlAttribute {ol.Map} gmf-search-map The map.
  * @htmlAttribute {gmfx.SearchDirectiveDatasource} gmf-search-datasource
  *      The datasources.
+ * @htmlAttribute {Object.<string, ol.style.Style>}
+ *      gmf-search-styles A map of styles to apply on searched features. Keys
+ *      must be the 'layer_name' propertie of features except for coordinates
+ *      where the key ifor its style is the value of the constant
+ *      'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the
+ *      default style.
  * @htmlAttribute {Array.<string>} gmf-search-coordinatesprojections codes
  *      of supported projections for coordinates search (projections must be
  *      defined in ol3). If not provided, only the map's view projection
  *      format will be supported.
  * @htmlAttribute {boolean} gmf-search-clearbutton The clear button.
+ * @htmlAttribute {boolean} gmf-search-colorchooser Whether to let the user
+ *      change the style of the feature on the map. Default is false.
  * @htmlAttribute {ngeox.SearchDirectiveListeners} gmf-search-listeners
  *      The listeners.
  * @return {angular.Directive} The Directive Definition Object.
@@ -97,7 +117,9 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
     scope: {
       'getMapFn': '&gmfSearchMap',
       'getDatasourcesFn': '&gmfSearchDatasources',
+      'featuresStyles': '<?gmfSearchStyles',
       'clearbutton': '=gmfSearchClearbutton',
+      'colorchooser': '=gmfSearchColorchooser',
       'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
       'additionalListeners': '=gmfSearchListeners'
     },
@@ -185,6 +207,12 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.ngeoCreateGeoJSONBloodhound_ = ngeoCreateGeoJSONBloodhound;
 
   /**
+   * @type {ngeo.FeatureOverlayMgr}
+   * @private
+   */
+  this.ngeoFeatureOverlayMgr = ngeoFeatureOverlayMgr;
+
+  /**
    * @type {ngeo.AutoProjection}
    * @private
    */
@@ -200,12 +228,24 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.map_ = map;
 
   /**
+   * @type {Object}
+   * @private
+   */
+  this.styles_ = {};
+
+  /**
    * Whether or not to show a button to clear the search text.
    * Default to false.
    * @type {boolean}
    * @export
    */
   this.clearButton = this.scope_['clearbutton'] || false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.colorchooser = this.scope_['colorchooser'] || false;
 
   var coordProj = this.scope_['coordinatesProjections'];
   if (coordProj === undefined) {
@@ -221,12 +261,14 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.coordinatesProjections_ = coordProj;
 
   ngeoFeatureOverlayMgr.init(this.map_);
+  this.initStyles_();
 
   /**
    * @type {ngeo.FeatureOverlay}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
 
   var datasources = this.scope_['getDatasourcesFn']();
   goog.asserts.assertArray(datasources);
@@ -303,11 +345,29 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     }, this);
   }
 
+  // For searching coordinates
   this.datasets.push({
-    name: 'coordinates',
-    display: 'label',
     source: this.createSearchCoordinates_(this.map_.getView())
   });
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.color;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.displayColorPicker = false;
+
+  $scope.$watch(
+    function() {
+      return this.color;
+    }.bind(this),
+    this.setStyleColor.bind(this)
+  );
 
   /**
    * @type {ngeox.SearchDirectiveListeners}
@@ -325,7 +385,6 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   gettextCatalog.getString('add_group');
   gettextCatalog.getString('add_layer');
 };
-
 
 /**
  * Merges the custom listeners received via the directive attributes and the
@@ -528,12 +587,96 @@ gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
     }
     var geom = new ol.geom.Point(position);
     this.featureOverlay_.clear();
-    this.featureOverlay_.addFeature(new ol.Feature(geom));
+    this.featureOverlay_.addFeature(new ol.Feature({
+      geometry: geom,
+      'layer_name': gmf.COORDINATES_LAYER_NAME
+    }));
     view.setCenter(position);
     this.leaveSearch_();
   }.bind(this);
 };
 
+
+/**
+ * Init the style object for the search results. It set defaults for the
+ * coordinates and the polygon styles, and both can be overloaded from directive
+ * attributes. The styles from directive attributes can specify custom styles
+ * for each search group.
+ * @private
+ */
+gmf.SearchController.prototype.initStyles_ = function() {
+  this.styles_[gmf.COORDINATES_LAYER_NAME] = new ol.style.Style({
+    image: new ol.style.RegularShape({
+      stroke: new ol.style.Stroke({color: [0, 0, 0, 0.7], width: 2}),
+      points: 4,
+      radius: 8,
+      radius2: 0,
+      angle: 0
+    })
+  });
+  var fill = new ol.style.Fill({
+    color: [65, 134, 240, 0.5]
+  });
+  var stroke = new ol.style.Stroke({
+    color: [65, 134, 240, 1],
+    width: 2
+  });
+  this.styles_['default'] = new ol.style.Style({
+    fill: fill,
+    stroke: stroke,
+    image: new ol.style.Circle({
+      radius: 5,
+      fill: fill,
+      stroke: stroke
+    })
+  });
+  var customStyles = this.scope_['featuresStyles'] || {};
+  goog.object.extend(this.styles_, customStyles);
+};
+
+/**
+ * Style for search results.
+ * @param {null|ol.Feature|ol.render.Feature} feature The searched feature.
+ * @param {number} resolution The current resolution of the map.
+ * @return {ol.style.Style} A style for this kind of features.
+ * @private
+ */
+gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
+  goog.asserts.assert(feature);
+  var style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
+  if (this.color) {
+    var color = ol.color.asArray(this.color);
+    goog.asserts.assert(ol.color.isValid(color));
+    var strokeStyle = style.getStroke();
+    if (strokeStyle) {
+      // 100% opacity for the stroke color
+      var strokeColor = color.slice();
+      strokeColor[3] = 1;
+      strokeStyle.setColor(strokeColor);
+
+      var fillStyle = style.getFill();
+      if (fillStyle) {
+        // 50% opacity for the fill color
+        var fillColor = color.slice();
+        fillColor[3] = 0.5;
+        fillStyle.setColor(fillColor);
+      }
+    }
+  }
+  return style;
+};
+
+/**
+ * Set a new color for the search feature style.
+ * @param {string} color The color to set.
+ * @export
+ */
+gmf.SearchController.prototype.setStyleColor = function(color) {
+  if (color && ol.color.isValid(ol.color.asArray(color))) {
+    this.color = color;
+    this.ngeoFeatureOverlayMgr.getLayer().changed();
+  }
+};
 
 /**
  * @private
@@ -567,6 +710,7 @@ gmf.SearchController.prototype.clear = function() {
   $(inputs[1]).typeahead('val', '');
   ttmenu.children('.tt-dataset').empty();
   this.setTTDropdownVisibility_();
+  this.displayColorPicker = false;
 };
 
 
@@ -618,6 +762,7 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
     var view = this.map_.getView();
     this.featureOverlay_.clear();
     this.featureOverlay_.addFeature(feature);
+    this.displayColorPicker = true;
     var fitArray = featureGeometry.getType() === 'GeometryCollection' ?
         featureGeometry.getExtent() : featureGeometry;
     var mapSize = /** @type {ol.Size} */ (this.map_.getSize());

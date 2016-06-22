@@ -2,18 +2,24 @@
 
 .search {
   top: @app-margin;
-  height: @map-tools-size;
-  left: 0;
-  right: 0;
-  margin: 0 @app-margin + @map-tools-size;
-  padding: 0 @app-margin;
-  background-color: @map-tools-bg-color;
-  border: solid 0 @border-color;
-  border-width: 1px 0;
   z-index: @content-index;
-  input {
+
+  & > * {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .gmf-search {
+    background-color: @map-tools-bg-color;
+    border: 1px solid @border-color;
+    padding: 0 @app-margin;
     height: @map-tools-size;
-    font-size: 1.4rem!important;
+    position: relative;
+  }
+  // the container with border decides of search height, not the child elements
+  .twitter-typeahead,
+  input {
+    height: 100%;
   }
   // hide the native "clear x" in Edge
   input::-ms-clear {
@@ -36,6 +42,16 @@
     &:hover {
       opacity: 1;
       cursor: pointer;
+    }
+  }
+  .color-button {
+    width: @map-tools-size;
+    height: @map-tools-size;
+    background-color: @map-tools-bg-color;
+    border: solid 1px @border-color;
+    color: @map-tools-color;
+    &:hover {
+      background-color: @onhover-color;
     }
   }
   .twitter-typeahead {
@@ -97,16 +113,29 @@
   }
 }
 
+// Overrides for phone devices
+@media (max-width: @screen-sm-min) {
+  .search {
+    left: 0;
+    right: 0;
+    margin: 0 @app-margin + @map-tools-size;
+    .gmf-search {
+      border-width: 1px 0;
+      width: 100%;
+    }
+  }
+}
 
+@search-width: 6 * @map-tools-size;
 
 // Overrides for tablet devices
 @media (min-width: @screen-sm-min) {
-  @search-width: 6 * @map-tools-size;
   .search {
     margin: 0;
     left: 2 * @app-margin + @map-tools-size;
-    width: @search-width;
-    border-width: 1px;
+    .gmf-search {
+      width: @search-width;
+    }
     .clear-button {
       margin-right: @app-margin;
       right: 0;
