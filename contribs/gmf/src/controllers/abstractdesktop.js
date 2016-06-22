@@ -21,6 +21,8 @@ goog.require('gmf.DatePickerDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.TimeSliderDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.shareDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.resizemapDirective');
@@ -99,6 +101,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @export
    */
   this.toolsActive = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.modalShareShown = false;
 
   // initialize tooltips
   $('body').tooltip({
