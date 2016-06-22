@@ -70,7 +70,7 @@ button[ngeo-mobile-geolocation] {
     cursor: pointer;
     display: flex;
     align-items: center;
-    min-height: 30px;
+    min-height: 3rem;
     border: 1px solid transparent;
     padding: @half-app-margin;
 
@@ -78,6 +78,7 @@ button[ngeo-mobile-geolocation] {
       // same as fa-fw
       width: (18em / 14);
       content: '';
+      text-align: center;
     }
     &:hover,
     &.active {
@@ -101,7 +102,7 @@ button[ngeo-mobile-geolocation] {
 
   .gmf-thumb {
     height: @map-tools-size;
-    margin-right: @half-app-margin;
+    margin: 0 @half-app-margin;
   }
 }
 
