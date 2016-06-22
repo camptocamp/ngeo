@@ -119,6 +119,8 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
     }
   }
 
+  goog.asserts.assert(attribute.type);
+
   return attribute;
 };
 
