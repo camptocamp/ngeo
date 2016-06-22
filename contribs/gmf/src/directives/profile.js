@@ -2,16 +2,9 @@ goog.provide('gmf.ProfileController');
 goog.provide('gmf.profileDirective');
 
 goog.require('gmf');
-goog.require('ngeo.FeatureOverlay');
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
-goog.require('ol.Feature');
 goog.require('ol.geom.LineString');
-goog.require('ol.geom.Point');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Style');
 
 
 ngeo.module.value('gmfProfileTemplateUrl',
@@ -34,8 +27,11 @@ ngeo.module.value('gmfProfileTemplateUrl',
  * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
  *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
  *     will be used as requested elevation layers names.
- * @htmlAttribute {ol.geom.LineString} gmf-profile-line. The linestring geometry
+ * @htmlAttribute {ol.geom.LineString} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
+ * @htmlAttribute {function(gmfx.ProfileHoverPointInformations)?}
+ *     gmf-profile-informationscallback Optional callback function that will be
+ *     called at each changes on profile and line hover (component must be active).
  * @param {string} gmfProfileTemplateUrl URL to a template.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
@@ -54,7 +50,8 @@ gmf.profileDirective = function(gmfProfileTemplateUrl) {
       'active': '<gmfProfileActive',
       'getMapFn': '&gmfProfileMap',
       'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
-      'line': '<gmfProfileLine'
+      'line': '<gmfProfileLine',
+      'getInformationsCallbackFn': '&?gmfProfileInformationscallback'
     }
   };
 };
@@ -67,8 +64,6 @@ gmf.module.directive('gmfProfile', gmf.profileDirective);
  * @param {angular.Scope} $scope Angular scope.
  * @param {angular.$http} $http Angular http service.
  * @param {angular.JQLite} $element Element.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *     overlay manager service.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
  * @param {string} gmfProfileCsvUrl URL of GMF service CSV profile.
  * @constructor
@@ -77,8 +72,8 @@ gmf.module.directive('gmfProfile', gmf.profileDirective);
  * @ngdoc Controller
  * @ngname GmfProfileController
  */
-gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
-    gmfProfileJsonUrl, gmfProfileCsvUrl) {
+gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
+    gmfProfileCsvUrl) {
 
   /**
    * @type {angular.Scope}
@@ -147,31 +142,10 @@ gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
   }
 
   /**
-   * @type {ngeo.FeatureOverlay}
-   * @private
-   */
-  this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
-
-  this.featureOverlay_.setStyle(
-    new ol.style.Style({
-      image: new ol.style.Circle({
-        radius: 3,
-        fill: new ol.style.Fill({color: '#ffffff'})
-      })
-    }));
-
-  /**
-   * @type {ol.Feature}
-   * @private
-   */
-  this.snappedPoint_ = new ol.Feature();
-  this.featureOverlay_.addFeature(this.snappedPoint_);
-
-  /**
    * @type {number}
    * @private
    */
-  this.nbPoints_ =  100;
+  this.nbPoints_ = 100;
 
   /**
    * @type {ol.geom.LineString}
@@ -198,27 +172,40 @@ gmf.ProfileController = function($scope, $http, $element, ngeoFeatureOverlayMgr,
   };
 
   /**
-   * @type {number|undefined}
+   * @type {number}
    * @export
    */
-  this.profileHighlight;
+  this.profileHighlight = -1;
 
   /**
    * @type {ngeox.profile.ProfileOptions}
    * @export
    */
-  this.profileOptions = {
+  this.profileOptions = /** @type {ngeox.profile.ProfileOptions} */ ({
     linesConfiguration: this.linesConfiguration_,
     distanceExtractor: this.getDist_,
     hoverCallback: this.hoverCallback_.bind(this),
     outCallback: this.outCallback_.bind(this)
-  };
+  });
 
   /**
    * @type {boolean}
    * @export
    */
   this.active;
+
+  var informationsCallback = null;
+  var informationsCallbackFn = this['getInformationsCallbackFn'];
+  if (informationsCallbackFn) {
+    informationsCallback = informationsCallbackFn();
+    goog.asserts.assertInstanceof(informationsCallback, Function);
+  }
+
+  /**
+   * @type {gmfx.ProfileHoverPointInformations}
+   * @private
+   */
+  this.informationsCallback_ = /** @type {function(gmfx.ProfileHoverPointInformations)} */ (informationsCallback);
 
   /**
    * @type {ol.events.Key}
@@ -329,14 +316,13 @@ gmf.ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
  * @param {number} dist distance on the line.
  * @param {string} xUnits X units label.
  * @param {Object.<string, number>} elevationsRef Elevations references.
- * @param {string} yUnits Y units label.
+  @param {string} yUnits Y units label.
  * @private
  */
 gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
     elevationsRef, yUnits) {
-  var coordinate = [point.x, point.y];
-  this.snappedPoint_.setGeometry(new ol.geom.Point(coordinate));
   var ref;
+  var coordinate = [point.x, point.y];
   for (ref in elevationsRef) {
     this.currentPoint.elevations[ref] = elevationsRef[ref];
   }
@@ -344,6 +330,9 @@ gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
   this.currentPoint.xUnits = xUnits;
   this.currentPoint.yUnits = yUnits;
   this.currentPoint.coordinate = coordinate;
+  if (this.informationsCallback_ !== null) {
+    this.informationsCallback_.call(null, this.currentPoint);
+  }
 };
 
 
@@ -351,12 +340,14 @@ gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
  * @private
  */
 gmf.ProfileController.prototype.outCallback_ = function() {
-  this.snappedPoint_.setGeometry(null);
   this.currentPoint.coordinate = undefined;
   this.currentPoint.distance = undefined;
   this.currentPoint.elevations = {};
   this.currentPoint.xUnits = undefined;
   this.currentPoint.yUnits = undefined;
+  if (this.informationsCallback_ !== null) {
+    this.informationsCallback_.call(null, this.currentPoint);
+  }
 };
 
 
