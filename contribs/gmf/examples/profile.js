@@ -27,11 +27,11 @@ app.module = angular.module('app', ['gmf']);
 
 app.module.constant(
     'gmfProfileJsonUrl',
-    'https://geomapfish-demo.camptocamp.net/2.0/wsgi/profile.json');
+    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.json');
 
 app.module.constant(
     'gmfProfileCsvUrl',
-    'https://geomapfish-demo.camptocamp.net/2.0/wsgi/profile.csv');
+    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.csv');
 
 /**
  * @param {angular.Scope} $scope Angular scope.
@@ -161,6 +161,7 @@ app.MainController = function($scope, $filter, ngeoFeatureOverlayMgr) {
   }.bind(this);
 
   /**
+   * Draw line interaction.
    * @type {ol.interaction.Draw}
    * @export
    */
@@ -173,11 +174,10 @@ app.MainController = function($scope, $filter, ngeoFeatureOverlayMgr) {
   this.drawLine.setActive(false);
   this.map.addInteraction(this.drawLine);
 
-  this.clear_ = function() {
-    features.clear();
-    this.profileLine = null;
-  };
-
+  /**
+   * Toggle activation of the draw line interaction.
+   * @export
+   */
   this.toggleDrawLineActive = function() {
     if (this.drawLine.getActive()) {
       this.drawLine.setActive(false);
@@ -187,11 +187,17 @@ app.MainController = function($scope, $filter, ngeoFeatureOverlayMgr) {
     }
   };
 
+  this.clear_ = function() {
+    features.clear(); // For the draw overlay.
+    this.profileLine = null; // To reset the profile.
+  };
+
   this.drawLine.on('drawstart', function() {
     this.clear_();
   }, this);
 
   this.drawLine.on('drawend', function(e) {
+    // Update the profile with the new geometry
     this.profileLine = e.feature.getGeometry();
     $scope.$digest();
   }, this);
@@ -202,7 +208,7 @@ app.module.controller('MainController', app.MainController);
 
 
 /**
- * Can be translated in real usecase.
+ * Can be I18N in real usecase.
  * @param {!gmfx.ProfileHoverPointInformations} pointInformations Informations
  *     on the current hovered point of the line.
  * @return {string} A texte formated to a tooltip.
@@ -237,9 +243,8 @@ app.MainController.prototype.getTooltipHTML_ = function(pointInformations) {
  */
 app.MainController.prototype.createMeasureTooltip_ = function() {
   this.removeMeasureTooltip_();
-  this.measureTooltipElement_ = goog.dom.createDom(goog.dom.TagName.DIV);
-  goog.dom.classlist.addAll(this.measureTooltipElement_,
-      ['tooltip', 'tooltip-measure']);
+  this.measureTooltipElement_ = document.createElement('div');
+  this.measureTooltipElement_.className += 'tooltip tooltip-measure';
   this.measureTooltip_ = new ol.Overlay({
     element: this.measureTooltipElement_,
     offset: [0, -15],
@@ -254,7 +259,7 @@ app.MainController.prototype.createMeasureTooltip_ = function() {
  * @private
  */
 app.MainController.prototype.removeMeasureTooltip_ = function() {
-  if (!goog.isNull(this.measureTooltipElement_)) {
+  if (this.measureTooltipElement_ !== null) {
     this.measureTooltipElement_.parentNode.removeChild(
         this.measureTooltipElement_);
     this.measureTooltipElement_ = null;

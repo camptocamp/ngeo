@@ -21,17 +21,44 @@ ngeo.module.value('gmfProfileTemplateUrl',
 
 
 /**
- * TODO description and example.
+ * Provide a directive that display a profile panel. This profile use the given
+ * LineString geometry to request the c2cgeoportal profile.json service. The
+ * raster used in the request are the keys of the 'linesconfiguration' object.
+ * The 'profileActive', 'informationscallback' and 'map' attributes are
+ * optionals and are only used to retrieve and display on the map the
+ * informations that concerne the hovered point (in the profile or on the
+ * map) of the line.
+ * This profile relies on the ngeo.profile (d3) and ngeo.ProfileDirective.
  *
- * @htmlAttribute {ol.Map} gmf-profile-map The map.
- * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
- *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
- *     will be used as requested elevation layers names.
+ * Example:
+ *
+ *      <gmf-profile
+ *        gmf-profile-active="ctrl.profileActive"
+ *        gmf-profile-line="ctrl.profileLine"
+ *        gmf-profile-map="::ctrl.map"
+ *        gmf-profile-linesconfiguration="::ctrl.profileLinesconfiguration"
+ *        gmf-profile-informationscallback="::ctrl.profileInformationsCallback"
+ *        gmf-profile-numberofpoints="::ctrl.profileNumberOfPoints"
+ *        gmf-profile-css="::ctrl.profileCss">
+ *      </gmf-profile>
+ *
+ *
+ * @htmlAttribute {boolean?} gmf-profile-active Optional to active the hover
+ *     functions.
  * @htmlAttribute {ol.geom.LineString} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
+ * @htmlAttribute {ol.Map?} gmf-profile-map An optional map.
+ * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
+ *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
+ *     will be used to request elevation layers.
  * @htmlAttribute {function(gmfx.ProfileHoverPointInformations)?}
  *     gmf-profile-informationscallback Optional callback function that will be
- *     called at each changes on profile and line hover (component must be active).
+ *     called at each changes on profile and line hover (component must be
+ *     active and must have a map).
+ * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
+ *     points to request. Default to 100.
+ * @htmlAttribute {string?} gmf-profile-css Inline Optional CSS style definition
+ *     to inject in the SVG.
  * @param {string} gmfProfileTemplateUrl URL to a template.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
@@ -47,11 +74,13 @@ gmf.profileDirective = function(gmfProfileTemplateUrl) {
     replace: true,
     restrict: 'E',
     scope: {
-      'active': '<gmfProfileActive',
-      'getMapFn': '&gmfProfileMap',
-      'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
+      'active': '<?gmfProfileActive',
       'line': '<gmfProfileLine',
-      'getInformationsCallbackFn': '&?gmfProfileInformationscallback'
+      'getMapFn': '&?gmfProfileMap',
+      'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
+      'getInformationsCallbackFn': '&?gmfProfileInformationscallback',
+      'getNbPointsFn': '&?gmfProfileNumberofpoints',
+      'getCssFn': '&?gmfProfileCss'
     }
   };
 };
@@ -105,11 +134,15 @@ gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
    */
   this.gmfProfileCsvUrl_ = gmfProfileCsvUrl;
 
-  var map = this['getMapFn']();
-  goog.asserts.assertInstanceof(map, ol.Map);
+  var map = null;
+  var mapFn = this['getMapFn'];
+  if (mapFn) {
+    map = mapFn();
+    goog.asserts.assertInstanceof(map, ol.Map);
+  }
 
   /**
-   * @type {!ol.Map}
+   * @type {ol.Map}
    * @private
    */
   this.map_ = map;
@@ -124,7 +157,6 @@ gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
   this.linesConfiguration_ = linesConfiguration;
 
   /**
-   * Keep an array of all layer names.
    * @type {Array.<string>}
    * @private
    */
@@ -132,20 +164,40 @@ gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
 
   var name, lineConfig;
   for (name in this.linesConfiguration_) {
-
+    // Keep an array of all layer names.
     this.layersNames_.push(name);
-
+    // Add generic zExtractor to lineConfiguration object that doesn't have one.
     lineConfig = this.linesConfiguration_[name];
     if (!lineConfig.zExtractor) {
       this.linesConfiguration_[name].zExtractor = this.getZFactory_(name);
     }
   }
 
+  var css;
+  var cssFn = this['getCssFn'];
+  if (cssFn) {
+    css = cssFn();
+    goog.asserts.assertString(css);
+  }
+
+  /**
+   * @type {string|undefined}
+   * @private
+   */
+  this.css_ = css;
+
+  var nbPoints = 100;
+  var nbPointsFn = this['getNbPointsFn'];
+  if (nbPointsFn) {
+    nbPoints = nbPointsFn();
+    goog.asserts.assertNumber(nbPoints);
+  }
+
   /**
    * @type {number}
    * @private
    */
-  this.nbPoints_ = 100;
+  this.nbPoints_ = nbPoints;
 
   /**
    * @type {ol.geom.LineString}
@@ -182,6 +234,7 @@ gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
    * @export
    */
   this.profileOptions = /** @type {ngeox.profile.ProfileOptions} */ ({
+    styleDefs: this.css_,
     linesConfiguration: this.linesConfiguration_,
     distanceExtractor: this.getDist_,
     hoverCallback: this.hoverCallback_.bind(this),
@@ -192,7 +245,7 @@ gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
    * @type {boolean}
    * @export
    */
-  this.active;
+  this.active = this.active === true;
 
   var informationsCallback = null;
   var informationsCallbackFn = this['getInformationsCallbackFn'];
@@ -208,7 +261,7 @@ gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
   this.informationsCallback_ = /** @type {function(gmfx.ProfileHoverPointInformations)} */ (informationsCallback);
 
   /**
-   * @type {ol.events.Key}
+   * @type {ol.EventsKey}
    * @private
    */
   this.pointerMoveKey_;
@@ -242,8 +295,20 @@ gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
 /**
  * @private
  */
+gmf.ProfileController.prototype.update_ = function() {
+  if (this.line) {
+    this.getJsonProfile_();
+  } else {
+    this.profileData = [];
+  }
+};
+
+
+/**
+ * @private
+ */
 gmf.ProfileController.prototype.updateEventsListening_ = function() {
-  if (this.active === true) {
+  if (this.active === true && this.map_ !== null) {
     this.pointerMoveKey_ = ol.events.listen(this.map_, 'pointermove',
         this.onPointerMove_.bind(this));
   } else {
@@ -413,18 +478,6 @@ gmf.ProfileController.prototype.getDist_ = function(item) {
 
 
 /**
- * @private
- */
-gmf.ProfileController.prototype.update_ = function() {
-  if (this.line) {
-    this.getJsonProfile_();
-  } else {
-    this.profileData = [];
-  }
-};
-
-
-/**
  * Request the profile.
  * @private
  */
@@ -440,7 +493,7 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
     'nbPoints': this.nbPoints_
   };
 
-  this.$http_({
+  /** @type {Function} */ (this.$http_)({
     url: this.gmfProfileJsonUrl_,
     method: 'POST',
     params: params,
@@ -495,7 +548,7 @@ gmf.ProfileController.prototype.downloadCsv = function() {
     'nbPoints': this.nbPoints_
   };
 
-  this.$http_({
+  /** @type {Function} */ (this.$http_)({
     url: this.gmfProfileCsvUrl_,
     method: 'POST',
     params: params,
@@ -530,28 +583,6 @@ gmf.ProfileController.prototype.getCsvSuccess_ = function(resp) {
  */
 gmf.ProfileController.prototype.getCsvError_ = function(resp) {
   console.error('Can not get CSV profile.');
-};
-
-
-/**
- * Print profile as an image.
- * @export
- */
-gmf.ProfileController.prototype.downloadImage = function() {
-  if (this.profileData.length === 0) {
-    return;
-  }
-  var title = 'Profile';
-  var content = /** @type {string} */ (this.$element_.find('.profile').html());
-  var printWindow = window.open();
-  printWindow.document.write('<html><head><title>' + title + '</title>');
-  printWindow.document.write('</head><body >');
-  printWindow.document.write(content);
-  printWindow.document.write('</body></html>');
-  printWindow.document.close(); // Necessary for IE >= 10.
-  printWindow.focus(); // Necessary for IE >= 10.
-  printWindow.print();
-  printWindow.close();
 };
 
 

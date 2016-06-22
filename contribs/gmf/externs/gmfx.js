@@ -209,7 +209,7 @@ gmfx.ProfileHoverPointInformations.prototype.distance;
 
 
 /**
- * Elevations of the point (example: {aster: 556.5, srtm: 560})
+ * Elevations of the point (example: {aster: 556.5, srtm: 560}).
  * @type {Object.<string, number>|undefined}
  */
 gmfx.ProfileHoverPointInformations.prototype.elevations;
