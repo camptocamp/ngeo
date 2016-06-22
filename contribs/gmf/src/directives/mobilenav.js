@@ -286,3 +286,44 @@ gmf.mobileNavBackDirective = function() {
 };
 
 gmf.module.directive('gmfMobileNavBack', gmf.mobileNavBackDirective);
+
+
+/**
+ * A directive to be used in conjunction with {@link gmf.mobileNavDirective}.
+ * The directive can be set on a slide element of {@link gmf.mobileNavDirective}.
+ * When the element is clicked, the navigation returns to the previous slide if
+ * the slide is currently active.
+ *
+ * Example:
+ *
+ *    <nav class="nav-left" gmf-mobile-nav>
+ *      ...
+ *      <gmf-themeselector
+ *         gmf-mobile-nav-back-on-click
+ *         gmf-themeselector-currenttheme="mainCtrl.theme">
+ *      </gmf-themeselector>
+ *
+ * @return {angular.Directive} The Directive Definition Object.
+ * @ngInject
+ */
+gmf.mobileNavBackOnClickDirective = function() {
+  return {
+    require: '^^gmfMobileNav',
+    restrict: 'A',
+    scope: false,
+    link:
+        /**
+         * @param {angular.Scope} scope Scope.
+         * @param {angular.JQLite} element Element.
+         * @param {angular.Attributes} attrs Atttributes.
+         * @param {gmf.MobileNavController} navCtrl Controller.
+         */
+        function(scope, element, attrs, navCtrl) {
+          element.on('click', function() {
+            navCtrl.backIfActive(element[0]);
+          });
+        }
+  };
+};
+
+gmf.module.directive('gmfMobileNavBackOnClick', gmf.mobileNavBackOnClickDirective);
