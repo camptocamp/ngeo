@@ -151,7 +151,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   this.$scope_ = $scope;
 
   /**
-   * @type {?ol.events.Key}
+   * @type {?ol.EventsKey}
    * @private
    */
   this.resolutionChangeKey_ = null;

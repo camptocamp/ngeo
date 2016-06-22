@@ -43,7 +43,7 @@ ngeo.interaction.MobileDraw = function(options) {
 
   /**
    * The key for view center change event.
-   * @type {?ol.events.Key}
+   * @type {?ol.EventsKey}
    * @private
    */
   this.changeEventKey_ = null;

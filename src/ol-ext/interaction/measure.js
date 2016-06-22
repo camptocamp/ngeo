@@ -26,8 +26,8 @@ goog.require('ol.style.Style');
  *    decimals: (number|undefined),
  *    displayHelpTooltip: (boolean|undefined),
  *    startMsg: (Element|undefined),
- *    style: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
- *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined)
+ *    style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
+ *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
  * }}
  */
 ngeo.interaction.MeasureBaseOptions;
@@ -156,7 +156,7 @@ ngeo.interaction.Measure = function(opt_options) {
 
   /**
    * The key for geometry change event.
-   * @type {?ol.events.Key}
+   * @type {?ol.EventsKey}
    * @private
    */
   this.changeEventKey_ = null;
@@ -381,7 +381,7 @@ ngeo.interaction.Measure.prototype.getDrawInteraction = function() {
 
 /**
  * Creates the draw interaction.
- * @param {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined}
+ * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  *     style The sketchStyle used for the drawing interaction.
  * @param {ol.source.Vector} source Vector source.
  * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw}

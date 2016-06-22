@@ -93,7 +93,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
 
   /**
    * The key for map view 'propertychange' event.
-   * @type {?ol.events.Key}
+   * @type {?ol.EventsKey}
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;
@@ -306,7 +306,7 @@ gmf.Permalink.prototype.initListenerKey_ = function(uid) {
  * Utility method to add a listener key bound to a unique id. The key can
  * come from an `ol.events` (default) or `goog.events`.
  * @param {number} uid Unique id.
- * @param {ol.events.Key|goog.events.Key} key Key.
+ * @param {ol.EventsKey|goog.events.Key} key Key.
  * @param {boolean=} opt_isol Whether it's an OpenLayers event or not. Defaults
  *     to true.
  * @private
@@ -318,7 +318,7 @@ gmf.Permalink.prototype.addListenerKey_ = function(uid, key, opt_isol) {
 
   var isol = opt_isol !== undefined ? opt_isol : true;
   if (isol) {
-    this.listenerKeys_[uid].ol.push(/** @type {ol.events.Key} */ (key));
+    this.listenerKeys_[uid].ol.push(/** @type {ol.EventsKey} */ (key));
   } else {
     this.listenerKeys_[uid].goog.push(/** @type {goog.events.Key} */ (key));
   }
@@ -1109,7 +1109,7 @@ gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 /**
  * @typedef {{
  *     goog: (Array.<goog.events.Key>),
- *     ol: (Array.<ol.events.Key>)
+ *     ol: (Array.<ol.EventsKey>)
  * }}
  */
 gmf.Permalink.ListenerKeys;

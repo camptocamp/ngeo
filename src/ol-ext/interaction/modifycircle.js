@@ -64,7 +64,7 @@ ngeo.interaction.ModifyCircle = function(options) {
 
   /**
    * Segment RTree for each layer
-   * @type {ol.structs.RBush.<ol.interaction.SegmentDataType>}
+   * @type {ol.structs.RBush.<ol.ModifySegmentDataType>}
    * @private
    */
   this.rBush_ = new ol.structs.RBush();
@@ -184,10 +184,10 @@ ngeo.interaction.ModifyCircle.prototype.removeFeature_ = function(feature) {
  */
 ngeo.interaction.ModifyCircle.prototype.removeFeatureSegmentData_ = function(feature) {
   var rBush = this.rBush_;
-  var /** @type {Array.<ol.interaction.SegmentDataType>} */ nodesToRemove = [];
+  var /** @type {Array.<ol.ModifySegmentDataType>} */ nodesToRemove = [];
   rBush.forEach(
       /**
-       * @param {ol.interaction.SegmentDataType} node RTree node.
+       * @param {ol.ModifySegmentDataType} node RTree node.
        */
       function(node) {
         if (feature === node.feature) {
@@ -256,7 +256,7 @@ ngeo.interaction.ModifyCircle.prototype.writeCircleGeometry_ = function(feature,
     coordinates = rings[j];
     for (i = 0, ii = coordinates.length - 1; i < ii; ++i) {
       segment = coordinates.slice(i, i + 2);
-      segmentData = /** @type {ol.interaction.SegmentDataType} */ ({
+      segmentData = /** @type {ol.ModifySegmentDataType} */ ({
         feature: feature,
         geometry: geometry,
         depth: [j],
@@ -289,8 +289,8 @@ ngeo.interaction.ModifyCircle.prototype.createOrUpdateVertexFeature_ = function(
 
 
 /**
- * @param {ol.interaction.SegmentDataType} a The first segment data.
- * @param {ol.interaction.SegmentDataType} b The second segment data.
+ * @param {ol.ModifySegmentDataType} a The first segment data.
+ * @param {ol.ModifySegmentDataType} b The second segment data.
  * @return {number} The difference in indexes.
  * @private
  */
@@ -501,7 +501,7 @@ ngeo.interaction.ModifyCircle.prototype.setGeometryCoordinates_ = function(geome
 
 
 /**
- * @return {ol.style.StyleFunction} Styles.
+ * @return {ol.StyleFunction} Styles.
  */
 ngeo.interaction.ModifyCircle.getDefaultStyleFunction = function() {
   var style = ol.style.createDefaultEditingStyles();

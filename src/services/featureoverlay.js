@@ -14,7 +14,7 @@ goog.require('ol.style.Style');
 
 /**
  * @typedef {{
- *  styleFunction: ol.style.StyleFunction,
+ *  styleFunction: ol.StyleFunction,
  *  features: Object.<string, ol.Feature>
  * }}
  */
@@ -157,7 +157,7 @@ ngeo.FeatureOverlayMgr.prototype.init = function(map) {
 
 
 /**
- * @param {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction} style
+ * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} style
  * Style.
  * @param {number} groupIndex Group index.
  * @protected
@@ -273,7 +273,7 @@ ngeo.FeatureOverlay.prototype.setFeatures = function(features) {
 
 /**
  * Set a style for the feature overlay.
- * @param {ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction} style
+ * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} style
  * Style.
  * @export
  */

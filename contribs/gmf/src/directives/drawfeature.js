@@ -266,7 +266,7 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
   this.translateToolActivate = new ngeo.ToolActivate(this.translate_, 'active');
 
   /**
-   * @type {Array.<ol.events.Key>}
+   * @type {Array.<ol.EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];

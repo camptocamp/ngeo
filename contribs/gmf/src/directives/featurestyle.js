@@ -85,7 +85,7 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
   );
 
   /**
-   * @type {Array.<ol.events.Key>}
+   * @type {Array.<ol.EventsKey>}
    * @private
    */
   this.featureListenerKeys_ = [];

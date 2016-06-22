@@ -72,8 +72,8 @@ describe('ngeo.Query', function() {
 
       var url = 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy';
 
-      var requestUrlBusStop = url + '?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES&WIDTH=101&HEIGHT=101&BBOX=489100%2C119900.00000000003%2C509300%2C140100.00000000003&LAYERS=bus_stop&QUERY_LAYERS=bus_stop';
-      var requestUrlBusStopAndInformation = url + '?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES&WIDTH=101&HEIGHT=101&BBOX=523700%2C142900.00000000003%2C543900%2C163100.00000000003&LAYERS=information%2Cbus_stop&QUERY_LAYERS=information%2Cbus_stop';
+      var requestUrlBusStop = url + '?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=489100%2C119900.00000000003%2C509300%2C140100.00000000003&LAYERS=bus_stop&QUERY_LAYERS=bus_stop';
+      var requestUrlBusStopAndInformation = url + '?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=523700%2C142900.00000000003%2C543900%2C163100.00000000003&LAYERS=information%2Cbus_stop&QUERY_LAYERS=information%2Cbus_stop';
 
       inject(function($injector) {
         $httpBackend = $injector.get('$httpBackend');

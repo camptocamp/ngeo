@@ -710,7 +710,7 @@ contribs/gmf/cursors/%.cur: contribs/gmf/cursors/%.png
 		.build/gmftemplatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	./node_modules/.bin/closure-util build $< $@
+	node buildtools/build.js $< $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
 
 contribs/gmf/build/%.js: .build/%.js $(GMF_APPS_LIBS_JS_FILES)
