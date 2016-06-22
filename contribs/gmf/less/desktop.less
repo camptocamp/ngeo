@@ -197,19 +197,34 @@ main {
     position: relative;
   }
 
-  gmf-themeselector {
-    width: 2 * @left-panel-width;
-    margin: 0;
-    padding: @app-margin;
-    padding-right: 0;
-    .gmf-theme-selector li {
-      padding-right: @app-margin;
-      float: left;
-      width: 50%;
-    }
-  }
 }
 
+gmf-themeselector {
+  width: 1.5 * @left-panel-width;
+}
+gmf-backgroundlayerselector {
+  width: 25rem;
+}
+gmf-themeselector,
+gmf-backgroundlayerselector {
+  padding: @half-app-margin !important;
+}
+
+@theme-selector-columns: 2;
+.gmf-theme-selector li {
+  float: left;
+  width: ~"calc((100% - @{theme-selector-columns} * 2 * @{half-app-margin}) / @{theme-selector-columns})";
+}
+.gmf-backgroundlayerselector {
+  margin-bottom: 0;
+}
+
+.gmf-theme-selector,
+.gmf-backgroundlayerselector {
+  li {
+    margin: @half-app-margin;
+  }
+}
 
 .tools {
   display: block;
@@ -478,10 +493,6 @@ gmf-featurestyle {
   button,
   gmf-backgroundlayerselector {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  }
-
-  ul.gmf-backgroundlayerselector {
-    margin: 0 0.5rem;
   }
 }
 
