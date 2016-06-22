@@ -125,27 +125,22 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
 /**
  * @enum {string}
- * @export
  */
 ngeo.format.XSDAttributeType = {
   /**
    * @type {string}
-   * @export
    */
   DATE: 'date',
   /**
    * @type {string}
-   * @export
    */
   DATETIME: 'datetime',
   /**
    * @type {string}
-   * @export
    */
   SELECT: 'select' ,
   /**
    * @type {string}
-   * @export
    */
   TEXT: 'text'
 };
