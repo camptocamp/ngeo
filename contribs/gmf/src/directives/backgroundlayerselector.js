@@ -27,6 +27,7 @@ gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
  *
  *      <gmf-backgroundlayerselector
  *        gmf-backgroundlayerselector-map="::ctrl.map">
+ *        gmf-backgroundlayerselector-select="onBackgroundSelected()">
  *      </gmf-backgroundlayerselector>
  *
  * Used UI metadata:
@@ -34,6 +35,8 @@ gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
  *  * thumbnail: The URL used for the icon.
  *
  * @htmlAttribute {ol.Map=} gmf-backgroundlayerselector-map The map.
+ * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
+ *     when a layer was selected by the user.
  * @param {string} gmfBackgroundlayerselectorTemplateUrl Url to template.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
