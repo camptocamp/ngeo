@@ -1039,8 +1039,7 @@ ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_optio
         goog.asserts.assert(keyVal.length === 2);
         var key = keyVal[0];
         var value = keyVal[1];
-        if(key == 'm')
-        {
+        if (key == 'm') {
           value = (value == 'true');
         }
         if (!this.setStyle_ && ngeo.format.FeatureHashLegacyProperties_[key]) {
