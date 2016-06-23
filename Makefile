@@ -407,7 +407,7 @@ dist/gmf.js.map: dist/gmf.js
 	cp $< $@
 
 .build/examples-hosted/fonts/%: node_modules/font-awesome/fonts/%
-	mkdir -p $@
+	mkdir -p $(dir $@)
 	cp $< $@
 
 .build/examples-hosted/contribs/gmf/cursors/%: contribs/gmf/cursors/%
