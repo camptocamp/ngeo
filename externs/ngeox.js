@@ -10,6 +10,47 @@ var ngeox;
 
 
 /**
+ * A feature attribute definition.
+ * @typedef {{
+ *     choices: (Array.<string>|undefined),
+ *     name: (string),
+ *     required: (boolean|undefined),
+ *     type: (string)
+ * }}
+ */
+ngeox.Attribute;
+
+
+/**
+ * The list of possible values for the attribute.
+ * @type {Array.<string>|undefined}
+ */
+ngeox.Attribute.prototype.choices;
+
+
+/**
+ * The attribute name.
+ * @type {string}
+ */
+ngeox.Attribute.prototype.name;
+
+
+/**
+ * Whether the attribure required to have a value set or not. Defaults to
+ * `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.Attribute.prototype.required;
+
+
+/**
+ * The attribute type, which determines how to render it.
+ * @type {string}
+ */
+ngeox.Attribute.prototype.type;
+
+
+/**
  * @interface
  */
 ngeox.MenuEvent = function() {};
