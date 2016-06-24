@@ -46,7 +46,7 @@
     "karma": "0.13.22",
     "karma-coverage": "1.0.0",
     "karma-jasmine": "1.0.2",
-    "karma-phantomjs-launcher": "1.0.0",
+    "karma-phantomjs-launcher": "1.0.1",
     "less": "2.7.1",
     "less-plugin-autoprefix": "1.5.1",
     "less-plugin-clean-css": "1.5.1",
