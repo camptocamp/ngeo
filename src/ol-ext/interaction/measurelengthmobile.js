@@ -10,16 +10,17 @@ goog.require('ngeo.interaction.MobileDraw');
  *
  * @constructor
  * @extends {ngeo.interaction.MeasureLength}
+ * @param {ngeox.unitPrefix} format The format function
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
  * @export
  */
-ngeo.interaction.MeasureLengthMobile = function(opt_options) {
+ngeo.interaction.MeasureLengthMobile = function(format, opt_options) {
 
   var options = opt_options !== undefined ? opt_options : {};
 
   goog.object.extend(options, {displayHelpTooltip: false});
 
-  goog.base(this, options);
+  goog.base(this, format, options);
 
 };
 goog.inherits(ngeo.interaction.MeasureLengthMobile,

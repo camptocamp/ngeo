@@ -28,10 +28,11 @@ goog.require('ol.source.Vector');
  * @constructor
  * @fires ol.interaction.DrawEvent
  * @extends {ngeo.interaction.Measure}
+ * @param {ngeox.unitPrefix} format The format function
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
  * @export
  */
-ngeo.interaction.MeasureAzimut = function(opt_options) {
+ngeo.interaction.MeasureAzimut = function(format, opt_options) {
 
   var options = opt_options !== undefined ? opt_options : {};
 
@@ -44,6 +45,12 @@ ngeo.interaction.MeasureAzimut = function(opt_options) {
    */
   this.continueMsg = options.continueMsg !== undefined ? options.continueMsg :
       goog.dom.createDom(goog.dom.TagName.SPAN, {}, 'Click to finish.');
+
+  /**
+   * The format function
+   * @type {ngeox.unitPrefix}
+   */
+  this.format = format;
 
 };
 goog.inherits(ngeo.interaction.MeasureAzimut, ngeo.interaction.Measure);
@@ -93,7 +100,7 @@ ngeo.interaction.MeasureAzimut.prototype.formatMeasure_ = function(line) {
   var proj = this.getMap().getView().getProjection();
   var dec = this.decimals;
   output += '<br/>' + ngeo.interaction.Measure.getFormattedLength(
-      line, proj, dec);
+      line, proj, dec, this.format);
   return output;
 };
 

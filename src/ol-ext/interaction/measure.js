@@ -219,39 +219,24 @@ ngeo.interaction.Measure = function(opt_options) {
 };
 goog.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
 
-
 /**
  * Calculate the area of the passed polygon and return a formatted string
  * of the area.
  * @param {ol.geom.Polygon} polygon Polygon.
  * @param {ol.proj.Projection} projection Projection of the polygon coords.
  * @param {?number} decimals Decimals.
+ * @param {ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  * @export
+ * @this {ngeo.interaction.Measure}
  */
 ngeo.interaction.Measure.getFormattedArea = function(
-    polygon, projection, decimals) {
+    polygon, projection, decimals, format) {
   var geom = /** @type {ol.geom.Polygon} */ (
       polygon.clone().transform(projection, 'EPSG:4326'));
   var coordinates = geom.getLinearRing(0).getCoordinates();
   var area = Math.abs(ol.sphere.WGS84.geodesicArea(coordinates));
-  var output;
-  if (area > 1000000) {
-    if (decimals !== null) {
-      output = goog.string.padNumber(area / 1000000, 0, decimals);
-    } else {
-      output = parseFloat((area / 1000000).toPrecision(3));
-    }
-    output += ' ' + 'km²';
-  } else {
-    if (decimals !== null) {
-      output = goog.string.padNumber(area, 0, decimals);
-    } else {
-      output = parseFloat(area.toPrecision(3));
-    }
-    output += ' ' + 'm²';
-  }
-  return output;
+  return format(area, 'm²', 'square');
 };
 
 
@@ -261,28 +246,13 @@ ngeo.interaction.Measure.getFormattedArea = function(
  * @param {ol.geom.Circle} circle Circle
  * @param {?number} decimals Decimals.
  * @return {string} Formatted string of the area.
+ * @param {ngeox.unitPrefix} format The format function.
  * @export
  */
 ngeo.interaction.Measure.getFormattedCircleArea = function(
-    circle, decimals) {
+    circle, decimals, format) {
   var area = Math.PI * Math.pow(circle.getRadius(), 2);
-  var output;
-  if (area > 1000000) {
-    if (decimals !== null) {
-      output = goog.string.padNumber(area / 1000000, 0, decimals);
-    } else {
-      output = parseFloat((area / 1000000).toPrecision(3));
-    }
-    output += ' ' + 'km²';
-  } else {
-    if (decimals !== null) {
-      output = goog.string.padNumber(area, 0, decimals);
-    } else {
-      output = parseFloat(area.toPrecision(3));
-    }
-    output += ' ' + 'm²';
-  }
-  return output;
+  return format(area, 'm²', 'square');
 };
 
 
@@ -292,11 +262,12 @@ ngeo.interaction.Measure.getFormattedCircleArea = function(
  * @param {ol.geom.LineString} lineString Line string.
  * @param {ol.proj.Projection} projection Projection of the line string coords.
  * @param {?number} decimals Decimals.
+ * @param {ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of length.
  * @export
  */
 ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
-    decimals) {
+    decimals, format) {
   var length = 0;
   var coordinates = lineString.getCoordinates();
   for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
@@ -304,23 +275,7 @@ ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
     var c2 = ol.proj.transform(coordinates[i + 1], projection, 'EPSG:4326');
     length += ol.sphere.WGS84.haversineDistance(c1, c2);
   }
-  var output;
-  if (length > 1000) {
-    if (decimals !== null) {
-      output = goog.string.padNumber(length / 1000, 0, decimals);
-    } else {
-      output = parseFloat((length / 1000).toPrecision(3));
-    }
-    output += ' ' + 'km';
-  } else {
-    if (decimals !== null) {
-      output = goog.string.padNumber(length, 0, decimals);
-    } else {
-      output = parseFloat(length.toPrecision(3));
-    }
-    output += ' ' + 'm';
-  }
-  return output;
+  return format(length, 'm');
 };
 
 

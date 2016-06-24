@@ -1,6 +1,8 @@
 goog.provide('ngeo.measureazimutDirective');
 
 goog.require('ngeo');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol.Feature');
 goog.require('ol.geom.Polygon');
@@ -10,12 +12,13 @@ goog.require('ol.style.Style');
 /**
  * @param {angular.$compile} $compile Angular compile service.
  * @param {gettext} gettext Gettext service.
+ * @param {angular.$filter} $filter Angular filter
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measureazimutDirective = function($compile, gettext) {
+ngeo.measureazimutDirective = function($compile, gettext, $filter) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -30,7 +33,7 @@ ngeo.measureazimutDirective = function($compile, gettext) {
       var helpMsg = gettext('Click to start drawing azimut');
       var contMsg = gettext('Click to finish');
 
-      var measureAzimut = new ngeo.interaction.MeasureAzimut({
+      var measureAzimut = new ngeo.interaction.MeasureAzimut($filter('ngeoUnitPrefix'), {
         style: new ol.style.Style(),
         startMsg: $compile('<div translate>' + helpMsg + '</div>')($scope)[0],
         continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]
