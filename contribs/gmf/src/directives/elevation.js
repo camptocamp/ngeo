@@ -46,7 +46,7 @@ gmf.elevationDirective = function() {
       'elevation': '=gmfElevationElevation',
       'loading': '=?gmfElevationLoading',
       'layer': '<gmfElevationLayer',
-      'getMapFn': '&gmfElevationMap'
+      'map': '=gmfElevationMap'
     },
     link: function(scope, element, attr) {
       var ctrl = scope['ctrl'];
@@ -112,14 +112,10 @@ gmf.ElevationController = function($scope, ngeoDebounce, gmfAltitude) {
    */
   this.layer;
 
-  var map = this['getMapFn']();
-  goog.asserts.assertInstanceof(map, ol.Map);
-
   /**
-   * @type {!ol.Map}
-   * @private
+   * @type {ol.Map}
    */
-  this.map_ = map;
+  this.map;
 
   /**
    * @type {Array.<ol.EventsKey>}
@@ -155,7 +151,7 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
   this.elevation = undefined;
   if (active) {
     // Moving the mouse clears previously displayed elevation
-    this.listenerKeys_.push(ol.events.listen(this.map_, 'pointermove',
+    this.listenerKeys_.push(ol.events.listen(this.map, 'pointermove',
         function(e) {
           this.scope_.$apply(function() {
             this.inViewport_ = true;
@@ -166,11 +162,11 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
 
     // Launch the elevation service request when the user stops moving the
     // mouse for less short delay
-    this.listenerKeys_.push(ol.events.listen(this.map_, 'pointermove',
+    this.listenerKeys_.push(ol.events.listen(this.map, 'pointermove',
         this.ngeoDebounce_(this.pointerStop_.bind(this), 500, true)
       ));
 
-    this.listenerKeys_.push(ol.events.listen(this.map_.getViewport(),
+    this.listenerKeys_.push(ol.events.listen(this.map.getViewport(),
         ol.events.EventType.MOUSEOUT,
         function(e) {
           this.scope_.$apply(function() {
