@@ -1,0 +1,38 @@
+.profile-container {
+  @profileLegendWidth: 15rem;
+  position: absolute;
+  bottom: 0;
+  padding: @app-margin;
+  background-color: white;
+  border-top: solid 1px black;
+  z-index: @above-content-index;
+  width: 100%;
+
+  .profile {
+    display: inline-block;
+    height: 20rem;
+    width: ~"calc(100% - @{profileLegendWidth})";
+  }
+
+  .profile-legend {
+    display: inline-block;
+    vertical-align: top;
+    list-style-type: none;
+    padding: 0;
+    width: @profileLegendWidth - 1;
+  }
+
+  .profile-export {
+    height: 1em;
+    display: right;
+  }
+
+  .profile-export > div {
+    float: right;
+    width: 7rem;
+  }
+
+  .profile-export a {
+    display: inline-block;
+  }
+}
