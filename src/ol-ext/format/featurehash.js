@@ -138,6 +138,12 @@ ngeo.format.FeatureHash = function(opt_options) {
    */
   this.prevY_ = 0;
 
+  /**
+   * @type {Object.<string, string>}
+   * @private
+   */
+  ngeo.format.FeatureHashLegacyProperties_ = (options.propertiesType !== undefined) &&  options.propertiesType;
+
 };
 goog.inherits(ngeo.format.FeatureHash, ol.format.TextFeature);
 

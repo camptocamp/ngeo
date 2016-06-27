@@ -234,7 +234,21 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    */
   this.featureHashFormat_ = new ngeo.format.FeatureHash({
     setStyle: false,
-    encodeStyles: false
+    encodeStyles: false,
+    propertiesType: {
+      'fillColor': ngeo.FeatureProperties.COLOR,
+      'fillOpacity': ngeo.FeatureProperties.OPACITY,
+      'fontColor': ngeo.FeatureProperties.COLOR,
+      'fontSize': ngeo.FeatureProperties.SIZE,
+      'isBox': ngeo.FeatureProperties.IS_RECTANGLE,
+      'isCircle': ngeo.FeatureProperties.IS_CIRCLE,
+      'isLabel': ngeo.FeatureProperties.IS_TEXT,
+      'name': ngeo.FeatureProperties.NAME,
+      'pointRadius': ngeo.FeatureProperties.SIZE,
+      'showMeasure': ngeo.FeatureProperties.SHOW_MEASURE,
+      'strokeColor': ngeo.FeatureProperties.COLOR,
+      'strokeWidth': ngeo.FeatureProperties.STROKE
+    }
   });
 
   // == event listeners ==
