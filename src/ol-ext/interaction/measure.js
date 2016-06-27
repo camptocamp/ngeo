@@ -5,6 +5,7 @@ goog.provide('ngeo.interaction.Measure');
 goog.require('goog.asserts');
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
+goog.require('goog.i18n.NumberFormat');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Overlay');
@@ -231,6 +232,8 @@ goog.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
  */
 ngeo.interaction.Measure.getFormattedArea = function(
     polygon, projection, decimals) {
+  var numberFormat = new goog.i18n.NumberFormat(
+      goog.i18n.NumberFormat.Format.DECIMAL);
   var geom = /** @type {ol.geom.Polygon} */ (
       polygon.clone().transform(projection, 'EPSG:4326'));
   var coordinates = geom.getLinearRing(0).getCoordinates();
@@ -238,17 +241,19 @@ ngeo.interaction.Measure.getFormattedArea = function(
   var output;
   if (area > 1000000) {
     if (decimals !== null) {
-      output = goog.string.padNumber(area / 1000000, 0, decimals);
+      output = parseFloat(goog.string.padNumber(area / 1000000, 0, decimals));
     } else {
       output = parseFloat((area / 1000000).toPrecision(3));
     }
+    output = numberFormat.format(output);
     output += ' ' + 'km²';
   } else {
     if (decimals !== null) {
-      output = goog.string.padNumber(area, 0, decimals);
+      output = parseFloat(goog.string.padNumber(area, 0, decimals));
     } else {
       output = parseFloat(area.toPrecision(3));
     }
+    output = numberFormat.format(output);
     output += ' ' + 'm²';
   }
   return output;
@@ -265,21 +270,25 @@ ngeo.interaction.Measure.getFormattedArea = function(
  */
 ngeo.interaction.Measure.getFormattedCircleArea = function(
     circle, decimals) {
+  var numberFormat = new goog.i18n.NumberFormat(
+      goog.i18n.NumberFormat.Format.DECIMAL);
   var area = Math.PI * Math.pow(circle.getRadius(), 2);
   var output;
   if (area > 1000000) {
     if (decimals !== null) {
-      output = goog.string.padNumber(area / 1000000, 0, decimals);
+      output = parseFloat(goog.string.padNumber(area / 1000000, 0, decimals));
     } else {
       output = parseFloat((area / 1000000).toPrecision(3));
     }
+    output = numberFormat.format(output);
     output += ' ' + 'km²';
   } else {
     if (decimals !== null) {
-      output = goog.string.padNumber(area, 0, decimals);
+      output = parseFloat(goog.string.padNumber(area, 0, decimals));
     } else {
       output = parseFloat(area.toPrecision(3));
     }
+    output = numberFormat.format(output);
     output += ' ' + 'm²';
   }
   return output;
@@ -297,6 +306,8 @@ ngeo.interaction.Measure.getFormattedCircleArea = function(
  */
 ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
     decimals) {
+  var numberFormat = new goog.i18n.NumberFormat(
+      goog.i18n.NumberFormat.Format.DECIMAL);
   var length = 0;
   var coordinates = lineString.getCoordinates();
   for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
@@ -307,17 +318,19 @@ ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
   var output;
   if (length > 1000) {
     if (decimals !== null) {
-      output = goog.string.padNumber(length / 1000, 0, decimals);
+      output = parseFloat(goog.string.padNumber(length / 1000, 0, decimals));
     } else {
       output = parseFloat((length / 1000).toPrecision(3));
     }
+    output = numberFormat.format(output);
     output += ' ' + 'km';
   } else {
     if (decimals !== null) {
-      output = goog.string.padNumber(length, 0, decimals);
+      output = parseFloat(goog.string.padNumber(length, 0, decimals));
     } else {
       output = parseFloat(length.toPrecision(3));
     }
+    output = numberFormat.format(output);
     output += ' ' + 'm';
   }
   return output;
