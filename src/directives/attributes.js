@@ -9,7 +9,10 @@ goog.require('ngeo.EventHelper');
  * Directive used to render the attributes of a feature into a form.
  * Example:
  *
- * Todo...
+ *     <ngeo-attributes
+ *       ngeo-attributes-attributes="::ctrl.attributes"
+ *       ngeo-attributes-feature="::ctrl.feature">
+ *     </ngeo-attributes>
  *
  * @htmlAttribute {Array.<ngeox.Attribute>} ngeo-attributes-attributes The
  *     list of attributes to use.
@@ -112,6 +115,7 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
 /**
  * Called when an input node value changes
  * @param {string} name Attribute name
+ * @export
  */
 ngeo.AttributesController.prototype.handleInputChange = function(name) {
   this.updating_ = true;
