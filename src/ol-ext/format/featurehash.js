@@ -54,20 +54,7 @@ ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  * @type {Object.<string, string>}
  * @private
  */
-ngeo.format.FeatureHashLegacyProperties_ = {
-  'fillColor': ngeo.FeatureProperties.COLOR,
-  'fillOpacity': ngeo.FeatureProperties.OPACITY,
-  'fontColor': ngeo.FeatureProperties.COLOR,
-  'fontSize': ngeo.FeatureProperties.SIZE,
-  'isBox': ngeo.FeatureProperties.IS_RECTANGLE,
-  'isCircle': ngeo.FeatureProperties.IS_CIRCLE,
-  'isLabel': ngeo.FeatureProperties.IS_TEXT,
-  'name': ngeo.FeatureProperties.NAME,
-  'pointRadius': ngeo.FeatureProperties.SIZE,
-  'showMeasure': ngeo.FeatureProperties.SHOW_MEASURE,
-  'strokeColor': ngeo.FeatureProperties.COLOR,
-  'strokeWidth': ngeo.FeatureProperties.STROKE
-};
+ngeo.format.FeatureHashLegacyProperties_ = {};
 
 
 /**
@@ -137,6 +124,12 @@ ngeo.format.FeatureHash = function(opt_options) {
    * @private
    */
   this.prevY_ = 0;
+
+  /**
+   * @type {Object.<string, string>}
+   * @private
+   */
+  ngeo.format.FeatureHashLegacyProperties_ = (options.propertiesType !== undefined) &&  options.propertiesType;
 
 };
 goog.inherits(ngeo.format.FeatureHash, ol.format.TextFeature);
@@ -696,20 +689,13 @@ ngeo.format.FeatureHash.setStyleProperties_ = function(text, feature) {
 
 
 /**
- * From a logical sequence of characters, create and return an object of
- * style properties for a feature. The values are cast in the correct type
- * depending on the property. Some properties are also deleted when they don't
- * match the geometry of the feature.
- * @param {string} text Text.
- * @param {ol.Feature} feature Feature.
- * @return {Object.<string, boolean|number|string>} The style properties for
- *     the feature.
+ * Cast values in the correct type depending on the property.
+ * @param {string} key Key.
+ * @param {string} value Value.
+ * @return {number|boolean|string} The casted value corresponding to the key.
  * @private
  */
-ngeo.format.FeatureHash.getStyleProperties_ = function(text, feature) {
-  var parts = text.split('\'');
-  var properties = {};
-
+ngeo.format.FeatureHash.castValue_ = function(key, value) {
   var numProperties = [
     ngeo.FeatureProperties.ANGLE,
     ngeo.FeatureProperties.OPACITY,
@@ -729,6 +715,31 @@ ngeo.format.FeatureHash.getStyleProperties_ = function(text, feature) {
     'showMeasure'
   ];
 
+  if (ol.array.includes(numProperties, key)) {
+    return +value;
+  } else if (ol.array.includes(boolProperties, key)) {
+    return (value === 'true') ? true : false;
+  } else {
+    return value;
+  }
+};
+
+
+/**
+ * From a logical sequence of characters, create and return an object of
+ * style properties for a feature. The values are cast in the correct type
+ * depending on the property. Some properties are also deleted when they don't
+ * match the geometry of the feature.
+ * @param {string} text Text.
+ * @param {ol.Feature} feature Feature.
+ * @return {Object.<string, boolean|number|string>} The style properties for
+ *     the feature.
+ * @private
+ */
+ngeo.format.FeatureHash.getStyleProperties_ = function(text, feature) {
+  var parts = text.split('\'');
+  var properties = {};
+
   for (var i = 0; i < parts.length; ++i) {
     var part = decodeURIComponent(parts[i]);
     var keyVal = part.split('*');
@@ -736,13 +747,7 @@ ngeo.format.FeatureHash.getStyleProperties_ = function(text, feature) {
     var key = keyVal[0];
     var val = keyVal[1];
 
-    if (ol.array.includes(numProperties, key)) {
-      properties[key] = +val;
-    } else if (ol.array.includes(boolProperties, key)) {
-      properties[key] = (val === 'true') ? true : false;
-    } else {
-      properties[key] = val;
-    }
+    properties[key] = ngeo.format.FeatureHash.castValue_(key, val);
   }
 
   return properties;
@@ -1042,7 +1047,7 @@ ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_optio
         if (!this.setStyle_ && ngeo.format.FeatureHashLegacyProperties_[key]) {
           key = ngeo.format.FeatureHashLegacyProperties_[key];
         }
-        feature.set(key, value);
+        feature.set(key, ngeo.format.FeatureHash.castValue_(key, value));
       }
     }
     if (splitIndex >= 0) {
