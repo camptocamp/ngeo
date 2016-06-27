@@ -5,6 +5,7 @@ goog.require('ngeo.SyncArrays');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
+goog.require('gmf.WMSTime');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
