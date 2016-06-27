@@ -56,7 +56,7 @@ ngeo.StateManager = function(ngeoLocation) {
     }
   }
 
-  this.ngeoLocation.updateParams({});
+  this.ngeoLocation.updateParams(this.initialState);
 };
 
 

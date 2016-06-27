@@ -712,14 +712,10 @@ gmf.LayertreeController.prototype.updateWMSLayerState_ = function(layer,
   } else {
     layer.setVisible(true);
     var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
-    var prevNames = source.getParams()['LAYERS'];
-    var prevTime = source.getParams()['TIME'];
-    if (names !== prevNames || opt_time !== prevTime) {
-      if (opt_time) {
-        source.updateParams({'LAYERS': names, 'TIME' : opt_time});
-      } else {
-        source.updateParams({'LAYERS': names});
-      }
+    if (opt_time) {
+      source.updateParams({'LAYERS': names, 'TIME' : opt_time});
+    } else {
+      source.updateParams({'LAYERS': names});
     }
   }
 };
