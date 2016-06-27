@@ -618,70 +618,12 @@ gmf.Permalink.prototype.initLayers_ = function() {
   }
 
   var layers = this.dataLayerGroup_.getLayers();
-  var layer;
-  var param;
-  var layerNames;
 
   // (1) try to look for any group name from any of the themes in the state
   //     manager.  If any is found, then apply the found results in the
   //     appropriate layer.
   this.themes_.forEach(function(themeNode) {
-    themeNode.children.forEach(function(groupNode) {
-      if (groupNode.mixed) {
-        // (1.1) - Mixed group, treat each node separately
-
-        layerNames = [];
-
-        groupNode.children.forEach(function(layerNode) {
-          param = this.getLayerStateParamFromNode_(layerNode);
-          var enable = this.ngeoStateManager_.getInitialValue(param);
-          if (enable !== undefined) {
-            enable = enable === 'true' ? true : false;
-            var layerName = layerNode.name;
-            layer = this.layerHelper_.getLayerByName(
-              layerName, layers.getArray());
-            if (layer) {
-              layer.setVisible(enable);
-            } else {
-              layerNames.push(layerName);
-            }
-          }
-        }, this);
-
-        if (layerNames.length) {
-          this.gmfTreeManager_.addCustomGroups([{
-            node: groupNode,
-            layers: layerNames
-          }]);
-        }
-
-      } else {
-        // (1.2) - group not mixed
-        param = this.getLayerStateParamFromNode_(groupNode);
-        var groupLayers = this.ngeoStateManager_.getInitialValue(param);
-        if (groupLayers !== undefined) {
-          var groupName = groupNode.name;
-          layer = this.layerHelper_.getLayerByName(
-              groupName, layers.getArray());
-          if (layer) {
-            this.initMergedLayer_(layer, groupLayers);
-          } else if (groupLayers !== '') {
-            layerNames = groupLayers.split(',');
-            this.gmfTreeManager_.addCustomGroups([{
-              node: groupNode,
-              layers: layerNames
-            }]);
-          }
-        }
-      }
-    }, this);
-  }, this);
-
-  // (2) at this point, the initialization is complete. We now need to listen
-  //     to any change happening to the existing layers and any added or
-  //     removed ones.
-  layers.forEach(function(layer) {
-    this.registerLayer_(layer, true);
+    themeNode.children.forEach(this.initLayerFromGroupNode_, this);
   }, this);
 
   var layersUid = goog.getUid(layers);
@@ -690,6 +632,79 @@ gmf.Permalink.prototype.initLayers_ = function() {
       ol.CollectionEventType.ADD, this.handleLayersAdd_, this));
   this.addListenerKey_(layersUid, ol.events.listen(layers,
       ol.CollectionEventType.REMOVE, this.handleLayersRemove_, this));
+
+  // (2) at this point, the initialization is complete. We now need to listen
+  //     to any change happening to the existing layers and any added or
+  //     removed ones.
+  layers.forEach(function(layer) {
+    this.registerLayer_(layer, true);
+  }, this);
+};
+
+
+/**
+ * Init layers state of a group node
+ *
+ * @param  {GmfThemesNode} groupNode a group node from the tree
+ * @private
+ */
+gmf.Permalink.prototype.initLayerFromGroupNode_ = function(groupNode) {
+  var layer;
+  var param;
+  var layerNames;
+  var layers = this.dataLayerGroup_.getLayers();
+
+  if (groupNode.mixed) {
+    //Mixed group, treat each node separately
+    layerNames = [];
+    groupNode.children.forEach(function(layerNode) {
+
+      if (layerNode.mixed) {
+        //enable subgroup registration
+        this.initLayerFromGroupNode_(layerNode);
+      }
+
+      param = this.getLayerStateParamFromNode_(layerNode);
+      var enable = this.ngeoStateManager_.getInitialValue(param);
+      if (enable !== undefined) {
+        enable = enable === 'true' ? true : false;
+        var layerName = layerNode.name;
+        layer = this.layerHelper_.getLayerByName(
+          layerName, layers.getArray());
+        if (layer) {
+          layer.setVisible(enable);
+        } else {
+          layerNames.push(layerName);
+        }
+      }
+    }, this);
+
+    if (layerNames.length) {
+      this.gmfTreeManager_.addCustomGroups([{
+        node: groupNode,
+        layers: layerNames
+      }]);
+    }
+
+  } else {
+    //group not mixed
+    param = this.getLayerStateParamFromNode_(groupNode);
+    var groupLayers = this.ngeoStateManager_.getInitialValue(param);
+    if (groupLayers !== undefined) {
+      var groupName = groupNode.name;
+      layer = this.layerHelper_.getLayerByName(
+          groupName, layers.getArray());
+      if (layer) {
+        this.initMergedLayer_(layer, groupLayers);
+      } else if (groupLayers !== '') {
+        layerNames = groupLayers.split(',');
+        this.gmfTreeManager_.addCustomGroups([{
+          node: groupNode,
+          layers: layerNames
+        }]);
+      }
+    }
+  }
 };
 
 
