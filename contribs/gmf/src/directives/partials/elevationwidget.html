@@ -1,0 +1,28 @@
+<div class="text-center btn-group dropup"
+    gmf-elevation
+    gmf-elevation-active="ctrl.active"
+    gmf-elevation-elevation="ctrl.elevationValue"
+    gmf-elevation-loading="ctrl.elevationLoading"
+    gmf-elevation-layer="ctrl.selectedElevationLayer"
+    gmf-elevation-map="::ctrl.map">
+  <a type="button" class="btn btn-default btn-sm" aria-expanded="false"
+    ng-class="::{'dropdown-toggle': ctrl.layers.length > 1}"
+    ng-attr-data-toggle="{{::(ctrl.layers.length > 1) ? 'dropdown' : ''}}"
+    >
+    <span class="elevation-value">
+      {{ctrl.elevationValue | number}}<span ng-show="ctrl.elevationValue"> m</span>
+      <span ng-show="ctrl.elevationLoading" class="fa fa-spinner"></span>
+      <span ng-show="!ctrl.elevationValue && !ctrl.elevationLoading" translate>Elevation…</span>
+    </span><span class="caret" ng-if="::ctrl.layers.length > 1"></span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-right" role="menu"
+      ng-if="::ctrl.layers.length > 1">
+    <li class="dropdown-header" translate>Elevation data sources</li>
+    <li ng-repeat="elevationItem in ::ctrl.layers">
+      <a href ng-click="ctrl.selectedElevationLayer = elevationItem">
+        <span class="fa fa-fw" ng-class="{'fa-check': ctrl.selectedElevationLayer === elevationItem}"></span>
+        {{::elevationItem}}
+      </a>
+    </li>
+  </ul>
+</div>

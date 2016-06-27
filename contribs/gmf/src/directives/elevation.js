@@ -1,5 +1,7 @@
 goog.provide('gmf.ElevationController');
+goog.provide('gmf.ElevationwidgetController');
 goog.provide('gmf.elevationDirective');
+goog.provide('gmf.elevationWidgetDirective');
 
 goog.require('gmf');
 goog.require('gmf.Altitude');
@@ -226,3 +228,75 @@ gmf.ElevationController.prototype.getAltitudeError_ = function() {
 
 
 gmf.module.controller('GmfElevationController', gmf.ElevationController);
+
+
+/**
+ * Provides a directive which encapsulates the elevation directive (see above)
+ * in a button with dropdown menu to be included in a application directly.
+ *
+ * Example:
+ *  <gmf-elevationwidget
+ *      gmf-elevationwidget-map="::mainCtrl.map"
+ *      gmf-elevationwidget-layers="::mainCtrl.elevationLayers"
+ *      gmf-elevationwidget-active="mainCtrl.showInfobar">
+ *  </gmf-elevationwidget>
+ *
+ * @htmlAttribute {ol.Map} gmf-elevationwidget-map The map.
+ * @htmlAttribute {Array.<string>} gmf-elevationwidget-layers The list of
+ *     layers.
+ * @htmlAttribute {boolean} gmf-elevationwidget-active Whether to activate the
+ *     elevation directive.
+ * @return {angular.Directive} The directive specs.
+ * @ngdoc directive
+ * @ngname gmfElevationwidget
+ */
+gmf.elevationwidgetDirective = function() {
+  return {
+    restrict: 'E',
+    scope: {
+      'map': '<gmfElevationwidgetMap',
+      'layers': '<gmfElevationwidgetLayers',
+      'active': '<gmfElevationwidgetActive'
+    },
+    controller: 'gmfElevationwidgetController',
+    controllerAs: 'ctrl',
+    bindToController: true,
+    templateUrl: gmf.baseTemplateUrl + '/elevationwidget.html'
+  };
+};
+
+gmf.module.directive('gmfElevationwidget', gmf.elevationwidgetDirective);
+
+
+/**
+ * @constructor
+ * @export
+ */
+gmf.ElevationwidgetController = function() {
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map;
+
+  /**
+   * @type {Array.<string>}
+   * @export
+   */
+  this.layers;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.active;
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.selectedElevationLayer = this.layers[0];
+};
+
+gmf.module.controller('gmfElevationwidgetController',
+    gmf.ElevationwidgetController);

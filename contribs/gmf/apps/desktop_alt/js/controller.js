@@ -72,10 +72,10 @@ app.AlternativeDesktopController = function($scope, $injector) {
   };
 
   /**
-   * @type {string}
+   * @type {Array.<string>}
    * @export
    */
-  this.elevationLayer = 'srtm';
+  this.elevationLayers = ['srtm'];
 
   /**
    * @type {Array.<gmfx.MousePositionProjection>}

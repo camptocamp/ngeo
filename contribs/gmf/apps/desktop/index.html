@@ -136,29 +136,12 @@
                ngeo-scaleselector-options="mainCtrl.scaleSelectorOptions"></div>
           <div id="scaleline"></div>
           <div class="pull-right">
-            <div class="elevation text-center btn-group dropup" gmf-elevation
-                    gmf-elevation-active="mainCtrl.showInfobar"
-                    gmf-elevation-elevation="elevationValue"
-                    gmf-elevation-loading="elevationLoading"
-                    gmf-elevation-layer="mainCtrl.selectedElevationLayer"
-                    gmf-elevation-map="mainCtrl.map">
-              <a type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
-                <span class="elevation-value">
-                  {{elevationValue | number}}<span ng-show="elevationValue"> m</span>
-                  <span ng-show="elevationLoading" class="fa fa-spinner"></span>
-                  <span ng-show="!elevationValue && !elevationLoading" translate>Elevation…</span>
-                </span><span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                <li class="dropdown-header" translate>Elevation data sources</li>
-                <li ng-repeat="elevationItem in ::mainCtrl.elevationLayers">
-                  <a href ng-click="mainCtrl.selectedElevationLayer = elevationItem">
-                    <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.selectedElevationLayer === elevationItem}"></span>
-                    {{::elevationItem}}
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <gmf-elevationwidget
+                gmf-elevationwidget-map="::mainCtrl.map"
+                gmf-elevationwidget-layers="::mainCtrl.elevationLayers"
+                gmf-elevationwidget-active="mainCtrl.showInfobar"
+                class="elevation">
+            </gmf-elevationwidget>
             <gmf-mouseposition
                  gmf-mouseposition-map="mainCtrl.map"
                  gmf-mouseposition-projections="::mainCtrl.mousePositionProjections"
