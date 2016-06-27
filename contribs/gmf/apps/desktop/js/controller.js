@@ -72,12 +72,6 @@ app.DesktopController = function($scope, $injector) {
   this.elevationLayers = ['aster', 'srtm'];
 
   /**
-   * @type {string}
-   * @export
-   */
-  this.selectedElevationLayer = this.elevationLayers[0];
-
-  /**
    * @type {Array.<gmfx.MousePositionProjection>}
    * @export
    */

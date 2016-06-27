@@ -128,18 +128,12 @@
                ngeo-scaleselector-options="mainCtrl.scaleSelectorOptions"></div>
           <div id="scaleline"></div>
           <div class="pull-right">
-            <span class="elevation text-center small btn btn-default btn-sm" gmf-elevation
-                    gmf-elevation-active="mainCtrl.showInfobar"
-                    gmf-elevation-elevation="elevationValue"
-                    gmf-elevation-loading="elevationLoading"
-                    gmf-elevation-layer="::mainCtrl.elevationLayer"
-                    gmf-elevation-map="mainCtrl.map">
-              <span class="elevation-value">
-                {{elevationValue | number}}<span ng-show="elevationValue"> m</span>
-                <span ng-show="elevationLoading" class="fa fa-spinner text-muted"></span>
-                <span ng-show="!elevationValue && !elevationLoading" translate>Elevation…</span>
-              </span>
-            </span>
+            <gmf-elevationwidget
+                gmf-elevationwidget-map="::mainCtrl.map"
+                gmf-elevationwidget-layers="::mainCtrl.elevationLayers"
+                gmf-elevationwidget-active="mainCtrl.showInfobar"
+                class="elevation">
+            </gmf-elevationwidget>
             <gmf-mouseposition
                  gmf-mouseposition-map="mainCtrl.map"
                  gmf-mouseposition-projections="::mainCtrl.mousePositionProjections"
