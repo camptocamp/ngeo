@@ -18,6 +18,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % else:
   "exports": [],
 % endif
+  "cwd": ".",
   "src": [
 % if src is not UNDEFINED:
     "${src}",
