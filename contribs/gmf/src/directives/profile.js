@@ -2,9 +2,16 @@ goog.provide('gmf.ProfileController');
 goog.provide('gmf.profileDirective');
 
 goog.require('gmf');
+goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
+goog.require('ol.Feature');
 goog.require('ol.geom.LineString');
+goog.require('ol.geom.Point');
+goog.require('ol.Overlay');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Style');
 
 
 ngeo.module.value('gmfProfileTemplateUrl',
@@ -24,10 +31,9 @@ ngeo.module.value('gmfProfileTemplateUrl',
  * Provide a directive that display a profile panel. This profile use the given
  * LineString geometry to request the c2cgeoportal profile.json service. The
  * raster used in the request are the keys of the 'linesconfiguration' object.
- * The 'profileActive', 'informationscallback' and 'map' attributes are
- * optionals and are only used to retrieve and display on the map the
- * informations that concerne the hovered point (in the profile or on the
- * map) of the line.
+ * The 'profileActive' and 'map' attributes are optionals and are only used to
+ * display on the map the informations that concerne the hovered
+ * point (in the profile and on the map) of the line.
  * This profile relies on the ngeo.profile (d3) and ngeo.ProfileDirective.
  *
  * Example:
@@ -36,10 +42,7 @@ ngeo.module.value('gmfProfileTemplateUrl',
  *        gmf-profile-active="ctrl.profileActive"
  *        gmf-profile-line="ctrl.profileLine"
  *        gmf-profile-map="::ctrl.map"
- *        gmf-profile-linesconfiguration="::ctrl.profileLinesconfiguration"
- *        gmf-profile-informationscallback="::ctrl.profileInformationsCallback"
- *        gmf-profile-numberofpoints="::ctrl.profileNumberOfPoints"
- *        gmf-profile-css="::ctrl.profileCss">
+ *        gmf-profile-linesconfiguration="::ctrl.profileLinesconfiguration">
  *      </gmf-profile>
  *
  *
@@ -51,10 +54,8 @@ ngeo.module.value('gmfProfileTemplateUrl',
  * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
  *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
  *     will be used to request elevation layers.
- * @htmlAttribute {function(gmfx.ProfileHoverPointInformations)?}
- *     gmf-profile-informationscallback Optional callback function that will be
- *     called at each changes on profile and line hover (component must be
- *     active and must have a map).
+ * @htmlAttribute {ol.style.Style?} gmf-profile-hoverpointstyle Optional style
+ *     for the 'on Hover' point on the line.
  * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
  *     points to request. Default to 100.
  * @htmlAttribute {string?} gmf-profile-css Inline Optional CSS style definition
@@ -78,7 +79,7 @@ gmf.profileDirective = function(gmfProfileTemplateUrl) {
       'line': '<gmfProfileLine',
       'getMapFn': '&?gmfProfileMap',
       'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
-      'getInformationsCallbackFn': '&?gmfProfileInformationscallback',
+      'getHoverPointStyleFn': '&?gmfProfileHoverpointstyle',
       'getNbPointsFn': '&?gmfProfileNumberofpoints',
       'getCssFn': '&?gmfProfileCss'
     }
@@ -93,6 +94,10 @@ gmf.module.directive('gmfProfile', gmf.profileDirective);
  * @param {angular.Scope} $scope Angular scope.
  * @param {angular.$http} $http Angular http service.
  * @param {angular.JQLite} $element Element.
+ * @param {angular.$filter} $filter Angular filter
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
  * @param {string} gmfProfileCsvUrl URL of GMF service CSV profile.
  * @constructor
@@ -101,7 +106,8 @@ gmf.module.directive('gmfProfile', gmf.profileDirective);
  * @ngdoc Controller
  * @ngname GmfProfileController
  */
-gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
+gmf.ProfileController = function($scope, $http, $element, $filter,
+    gettextCatalog, ngeoFeatureOverlayMgr, gmfProfileJsonUrl,
     gmfProfileCsvUrl) {
 
   /**
@@ -121,6 +127,24 @@ gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
    * @private
    */
   this.$element_ = $element;
+
+  /**
+   * @type {angular.$filter}
+   * @export
+   */
+  this.$filter_ = $filter;
+
+  /**
+   * @type {angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
+
+  /**
+   * @type {ngeo.FeatureOverlay}
+   * @private
+   */
+  this.pointHoverOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
   /**
    * @type {string}
@@ -224,10 +248,48 @@ gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
   };
 
   /**
+   * Distance to highlight on the profile. (Property used in ngeo.Profile.)
    * @type {number}
    * @export
    */
   this.profileHighlight = -1;
+
+  /**
+   * Overlay to show the measurement.
+   * @type {ol.Overlay}
+   * @private
+   */
+  this.measureTooltip_ = null;
+
+  /**
+   * The measure tooltip element.
+   * @type {Element}
+   * @private
+   */
+  this.measureTooltipElement_ = null;
+
+  /**
+   * @type {ol.Feature}
+   * @private
+   */
+  this.snappedPoint_ = new ol.Feature();
+  this.pointHoverOverlay_.addFeature(this.snappedPoint_);
+
+  var hoverPointStyle;
+  var hoverPointStyleFn = this['getHoverPointStyleFn'];
+  if (hoverPointStyleFn) {
+    hoverPointStyle = hoverPointStyleFn();
+    goog.asserts.assertInstanceof(hoverPointStyle, ol.style.Style);
+  } else {
+    hoverPointStyle = new ol.style.Style({
+      image: new ol.style.Circle({
+        fill: new ol.style.Fill({color: '#ffffff'}),
+        radius: 3
+      })
+    });
+  }
+
+  this.pointHoverOverlay_.setStyle(hoverPointStyle);
 
   /**
    * @type {ngeox.profile.ProfileOptions}
@@ -246,19 +308,6 @@ gmf.ProfileController = function($scope, $http, $element, gmfProfileJsonUrl,
    * @export
    */
   this.active = this.active === true;
-
-  var informationsCallback = null;
-  var informationsCallbackFn = this['getInformationsCallbackFn'];
-  if (informationsCallbackFn) {
-    informationsCallback = informationsCallbackFn();
-    goog.asserts.assertInstanceof(informationsCallback, Function);
-  }
-
-  /**
-   * @type {gmfx.ProfileHoverPointInformations}
-   * @private
-   */
-  this.informationsCallback_ = /** @type {function(gmfx.ProfileHoverPointInformations)} */ (informationsCallback);
 
   /**
    * @type {ol.EventsKey}
@@ -381,11 +430,12 @@ gmf.ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
  * @param {number} dist distance on the line.
  * @param {string} xUnits X units label.
  * @param {Object.<string, number>} elevationsRef Elevations references.
-  @param {string} yUnits Y units label.
+ *  @param {string} yUnits Y units label.
  * @private
  */
 gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
     elevationsRef, yUnits) {
+  // Update information point.
   var ref;
   var coordinate = [point.x, point.y];
   for (ref in elevationsRef) {
@@ -395,9 +445,13 @@ gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
   this.currentPoint.xUnits = xUnits;
   this.currentPoint.yUnits = yUnits;
   this.currentPoint.coordinate = coordinate;
-  if (this.informationsCallback_ !== null) {
-    this.informationsCallback_.call(null, this.currentPoint);
-  }
+
+  // Update hover.
+  var geom = new ol.geom.Point(coordinate);
+  this.createMeasureTooltip_();
+  this.measureTooltipElement_.innerHTML = this.getTooltipHTML_();
+  this.measureTooltip_.setPosition(coordinate);
+  this.snappedPoint_.setGeometry(geom);
 };
 
 
@@ -405,13 +459,75 @@ gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
  * @private
  */
 gmf.ProfileController.prototype.outCallback_ = function() {
+  // Reset information point.
   this.currentPoint.coordinate = undefined;
   this.currentPoint.distance = undefined;
   this.currentPoint.elevations = {};
   this.currentPoint.xUnits = undefined;
   this.currentPoint.yUnits = undefined;
-  if (this.informationsCallback_ !== null) {
-    this.informationsCallback_.call(null, this.currentPoint);
+
+  // Reset hover.
+  this.removeMeasureTooltip_();
+  this.snappedPoint_.setGeometry(null);
+};
+
+
+/**
+ * @return {string} A texte formated to a tooltip.
+ * @private
+ */
+gmf.ProfileController.prototype.getTooltipHTML_ = function() {
+  var distance = this.gettextCatalog_.getString('Distance : ');
+  var elevationName, translatedElevationName;
+  var innerHTML = [];
+  var number = this.$filter_('number');
+  var DistDecimal = this.currentPoint.xUnits === 'm' ? 0 : 2;
+  innerHTML.push(
+      distance +
+      number(this.currentPoint.distance, DistDecimal) +
+      ' ' +
+      this.currentPoint.xUnits
+  );
+  for (elevationName in this.currentPoint.elevations) {
+    translatedElevationName = this.gettextCatalog_.getString(elevationName);
+    innerHTML.push(
+        translatedElevationName +
+        ' : ' +
+        number(this.currentPoint.elevations[elevationName], 0) +
+        ' ' + this.currentPoint.yUnits
+    );
+  }
+  return innerHTML.join('</br>');
+};
+
+
+/**
+ * Creates a new 'hover' tooltip
+ * @private
+ */
+gmf.ProfileController.prototype.createMeasureTooltip_ = function() {
+  this.removeMeasureTooltip_();
+  this.measureTooltipElement_ = document.createElement('div');
+  this.measureTooltipElement_.className += 'tooltip tooltip-measure';
+  this.measureTooltip_ = new ol.Overlay({
+    element: this.measureTooltipElement_,
+    offset: [0, -15],
+    positioning: 'bottom-center'
+  });
+  this.map_.addOverlay(this.measureTooltip_);
+};
+
+
+/**
+ * Destroy the 'hover' tooltip
+ * @private
+ */
+gmf.ProfileController.prototype.removeMeasureTooltip_ = function() {
+  if (this.measureTooltipElement_ !== null) {
+    this.measureTooltipElement_.parentNode.removeChild(
+        this.measureTooltipElement_);
+    this.measureTooltipElement_ = null;
+    this.map_.removeOverlay(this.measureTooltip_);
   }
 };
 
