@@ -114,10 +114,12 @@ gmf.TreeManager.prototype.addTheme = function(theme) {
  * already in the tree.
  * @param{Array.<GmfThemesNode>} groups An array of gmf theme nodes.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
+ * @param{boolean=} showNotification if false notifyCantAddGroups_ is not called
  * @export
  */
-gmf.TreeManager.prototype.addGroups = function(groups, opt_add) {
+gmf.TreeManager.prototype.addGroups = function(groups, opt_add, showNotification) {
   var groupNotAdded = [];
+  showNotification = typeof showNotification !== 'undefined' ? showNotification : true;
   if (this.isModeFlush() && opt_add !== true) {
     this.tree.children.length = 0;
   }
@@ -126,7 +128,7 @@ gmf.TreeManager.prototype.addGroups = function(groups, opt_add) {
       groupNotAdded.push(group);
     }
   }.bind(this));
-  if (groupNotAdded.length > 0) {
+  if (groupNotAdded.length > 0 && showNotification === true) {
     this.notifyCantAddGroups_(groupNotAdded);
   }
 };
@@ -219,13 +221,15 @@ gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
  * corresponding group is found.
  * @param{string} layerName Name of the layer inside the group to add.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
+ * @param{boolean=} showNotification if false notifyCantAddGroups_ is not called
  * @export
  */
-gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add) {
+gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, showNotification) {
+  showNotification = typeof showNotification !== 'undefined' ? showNotification : true;
   this.gmfThemes_.getThemesObject().then(function(themes) {
     var group = gmf.Themes.findGroupByLayerName(themes, layerName);
     if (group) {
-      this.addGroups([group], opt_add);
+      this.addGroups([group], opt_add, showNotification);
       // FIXME: set the layer visible
     }
   }.bind(this));
