@@ -5,7 +5,6 @@
  */
 
 
-
 /**
  * @constructor
  */
@@ -79,10 +78,9 @@ GmfThemesNode.prototype.url;
 
 
 /**
- * @type {Object|undefined}
+ * @type {gmfx.TimeProperty|undefined}
  */
 GmfThemesNode.prototype.time;
-
 
 /**
  * @type {string|undefined}

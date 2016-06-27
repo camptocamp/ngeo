@@ -1,57 +1,50 @@
 <!DOCTYPE html>
 <html ng-app='app'>
   <head>
-    <title>GeoMapFish Datepicker example</title>
+    <title>GeoMapFish Timeslider example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="../third-party/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css">
     <style>
+      ul {
+        width: 50%;
+      }
       li {
-        margin: 20px;
         list-style: none;
       }
-      .end-date {
-        display: inline-block;
-      }
-      .start-date {
-        display: inline-block;
-      }
-      pre {
-        display: block;
-        padding: 9.5px;
-        margin: 0 0 10px;
-        font-size: 13px;
-        line-height: 1.42857143;
-        color: #333;
-        word-break: break-all;
-        word-wrap: break-word;
-        background-color: #f5f5f5;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+      .tooltip {
+        min-width: 6.5rem;
       }
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
-    <p id="desc">This example shows how to use the <code>gmf-date-picker</code> directive.</p>
+    <p id="desc">This example shows how to use the <code>gmf-time-slider</code> directive.</p>
     <ul>
-      <li>Select a periode with a datepicker
-          <gmf-date-picker time="ctrl.wmsTimeRangeMode" on-date-selected="ctrl.onDateRangeSelected(time)"></gmf-date-picker>
+      <li>
+        Select a period with a timeslider
+      </li>
+      <li>
+        <gmf-time-slider gmf-time-slider-time="ctrl.wmsTimeRangeMode" gmf-time-slider-on-date-selected="ctrl.onDateRangeSelected(time)"></gmf-time-slider>
       </li>
       <li style="margin-top: 50px">
         Date formated for a WMS request (resolution set on 'day'):
         <pre>
-          {{ctrl.rangeValue}}
+          {{ctrl.sliderRangeValue}}
         </pre>
       </li>
-      <li>Select a single date with a datepicker
-          <gmf-date-picker time="ctrl.wmsTimeValueMode" on-date-selected="ctrl.onDateSelected(time)"></gmf-date-picker>
+      <li style="margin-top: 50px;">
+        Select a single date with a timeslider
+      </li>
+      <li>
+        <gmf-time-slider gmf-time-slider-time="ctrl.wmsTimeValueMode" gmf-time-slider-on-date-selected="ctrl.onDateSelected(time)"></gmf-time-slider>
       </li>
       <li style="margin-top: 50px">
-        Date formated for a WMS request (resolution set on 'month'):
+        Date formated for a WMS request (resolution set on 'year'):
         <pre>
-          {{ctrl.value}}
+          {{ctrl.sliderValue}}
         </pre>
       </li>
     </ul>
@@ -65,7 +58,8 @@
     <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
     <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
     <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js" type="text/javascript"></script>
-    <script src="/@?main=datepicker.js"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/@?main=timeslider.js"></script>
     <script src="default.js"></script>
     <script src="../../../utils/watchwatchers.js"></script>
     <script type="text/javascript">

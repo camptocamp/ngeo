@@ -107,6 +107,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
+ * @param {gmf.WMSTime} gmfWMSTime wms time service.
  * @constructor
  * @export
  * @ngInject
@@ -114,13 +115,14 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
-    ngeoLayerHelper, gmfWmsUrl, gmfTreeManager, ngeoSyncArrays) {
+    ngeoLayerHelper, gmfWmsUrl, gmfTreeManager, ngeoSyncArrays, gmfWMSTime) {
 
   /**
    * @private
    * @type {angular.$http}
    */
   this.$http_ = $http;
+
 
   /**
    * @private
@@ -145,6 +147,12 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
+
+  /**
+   * @type {gmf.WMSTime}
+   * @private
+   */
+  this.gmfWMSTime_ = gmfWMSTime;
 
   /**
    * @private
@@ -252,6 +260,7 @@ gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
 gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
   var type = gmf.Themes.getNodeType(node);
   var layer = null;
+  var timeParam, timeValues;
 
   if (depth === 1) {
     switch (type) {
@@ -287,9 +296,16 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
       break;
     case gmf.Themes.NodeType.WMS:
       var url = node.url || this.gmfWmsUrl_;
-      var time = this.nodeTimeToISO_(node);
+      if (node.time) {
+        var wmsTime = /** @type {gmfx.TimeProperty} */ (node.time);
+        timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
+        timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, {
+          start : timeValues[0] || timeValues,
+          end : timeValues[1]
+        });
+      }
       layer = this.layerHelper_.createBasicWMSLayer(url, node.layers,
-              node.serverType, time);
+              node.serverType, timeParam);
       break;
     default:
       throw new Error('node wrong type: ' + type);
@@ -323,7 +339,7 @@ gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
  */
 gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
   var childs = [];
-  var timeParam;
+  var timeParam, timeValues;
 
   this.getFlatNodes_(node, childs);
   var layersNames = childs.map(function(node) {
@@ -334,7 +350,12 @@ gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
   var nodes = [node].concat(childs);
   var nodesWithTime = nodes.filter(hasTime);
   if (nodesWithTime.length) {
-    timeParam = this.nodeTimeToISO_(nodesWithTime[0]);
+    var wmsTime = /**@type {gmfx.TimeProperty} */ (nodesWithTime[0]['time']);
+    timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
+    timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, {
+      start : timeValues[0] || timeValues,
+      end : timeValues[1]
+    });
   }
 
   var layer = this.layerHelper_.createBasicWMSLayer(url, layersNames, serverType, timeParam);
@@ -651,52 +672,22 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
 
 
 /**
- * Transform date object to an ISO date string without millesceond
- *
- * @param  {Object} date The date object
- * @return {string} ISO date string without millesceond
- * @private
- */
-gmf.LayertreeController.prototype.toISOdateString_ = function(date) {
-  return date.toISOString().replace(/\.\d{3}/, '');
-};
-
-
-/**
- * LayertreeController.prototype.nodeTimeToISO_ - get the ISO-8601 string duration/time
- * for the node using its time parameter
- * @private
- * @param  {GmfThemesNode} node node
- * @return {string|undefined} ISO-8601 string duration/time
- */
-gmf.LayertreeController.prototype.nodeTimeToISO_ = function(node) {
-  if (!node.time) {
-    return undefined;
-  }
-
-  return node.time['maxValue']
-    ? this.toISOdateString_(new Date(node.time['minValue'])) + '/' + this.toISOdateString_(new Date(node.time['maxValue']))
-    : this.toISOdateString_(new Date(node.time['minValue']));
-};
-
-
-/**
  * Update the TIME parameter of the source of the layer attached to the given
  * layertree contoller
  * LayertreeController.prototype.updateWMSTimeLayerState - description
  * @param {ngeo.LayertreeController} layertreeCtrl ngeo layertree controller
- * @param {{start : Object, end : Object}} time The start
+ * @param {{start : number, end : number}} time The start
  * and optionally the end datetime (for time range selection) selected by user
  * @export
  */
 gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
+  var node = /** @type {GmfThemesNode} */ (layertreeCtrl.node);
+  var wmsTime = /** @type {gmfx.TimeProperty} */ (node.time);
   if (time) {
     var layer = /** @type {ol.layer.Image} */ (layertreeCtrl.layer || this.retrieveFirstParentTree_(layertreeCtrl).layer);
     if (layer) {
       var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
-      var timeParam = time.end
-        ? this.toISOdateString_(time.start) + '/' + this.toISOdateString_(time.end)
-        : this.toISOdateString_(time.start);
+      var timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);
       this.updateWMSLayerState_(layer, source.getParams()['LAYERS'], timeParam);
     }
   }

@@ -1,3 +1,15 @@
+@gmf-input-range-track-box-shadow : 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0), 0 0 0.1rem rgba(13, 13, 13, 0);
+@gmf-input-range-track-height: 0.5rem;
+@gmf-input-range-track-border: 0.2px solid rgba(1, 1, 1, 0.2);
+@gmf-input-range-track-border-radius: 0.1rem;
+@gmf-input-range-thumb-height: 2rem;
+@gmf-input-range-thumb-width: 1rem;
+@gmf-input-range-thumb-border-radius: 0.5rem;
+@gmf-input-range-thumb-border: 0.1rem solid rgba(0, 0, 30, 0.2);
+@gmf-input-range-thumb-background: #ffffff;
+@gmf-input-range-thumb-box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 49, 0.2), 0 0 0.1rem rgba(0, 0, 75, 0.2);
+@gmf-input-range-cursor: pointer;
+
 input[type=range] {
   -webkit-appearance: none;
   width: 100%;
@@ -16,73 +28,73 @@ input[type=range]:focus {
 }
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
-  height: 5px;
-  cursor: pointer;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+  height: @gmf-input-range-track-height;
+  cursor: @gmf-input-range-cursor;
+  box-shadow: @gmf-input-range-track-box-shadow;
   background: @brand-primary;
-  border-radius: 1px;
-  border: 0.2px solid rgba(1, 1, 1, 0.2);
+  border-radius: @gmf-input-range-track-border-radius;
+  border: @gmf-input-range-track-border;
 }
 input[type=range]::-webkit-slider-thumb {
-  box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
-  border: 1px solid rgba(0, 0, 30, 0.2);
-  height: 20px;
-  width: 10px;
-  border-radius: 5px;
-  background: #ffffff;
-  cursor: pointer;
+  box-shadow: @gmf-input-range-thumb-box-shadow;
+  border: @gmf-input-range-thumb-border;
+  height: @gmf-input-range-thumb-height;
+  width: @gmf-input-range-thumb-width;
+  border-radius: @gmf-input-range-thumb-border-radius;
+  background: @gmf-input-range-thumb-background;
+  cursor: @gmf-input-range-cursor;
   -webkit-appearance: none;
   margin-top: -7.7px;
 }
 input[type=range]::-moz-range-track {
   width: 100%;
-  height: 5px;
-  cursor: pointer;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+  height: @gmf-input-range-track-height;
+  cursor: @gmf-input-range-cursor;
+  box-shadow: @gmf-input-range-track-box-shadow;
   background: @brand-secondary;
-  border-radius: 1px;
-  border: 0.2px solid rgba(1, 1, 1, 0.2);
+  border-radius: @gmf-input-range-track-border-radius;
+  border: @gmf-input-range-track-border;
 }
 input[type=range]::-moz-range-progress {
   background: @brand-primary;
-  height: 5px;
+  height: @gmf-input-range-track-height;
 }
 input[type=range]::-moz-range-thumb {
-  box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
-  border: 1px solid rgba(0, 0, 30, 0.2);
-  height: 20px;
-  width: 10px;
-  border-radius: 5px;
-  background: #ffffff;
-  cursor: pointer;
+  box-shadow: @gmf-input-range-thumb-box-shadow;
+  border: @gmf-input-range-thumb-border;
+  height: @gmf-input-range-thumb-height;
+  width: @gmf-input-range-thumb-width;
+  border-radius: @gmf-input-range-thumb-border-radius;
+  background: @gmf-input-range-thumb-background;
+  cursor: @gmf-input-range-cursor;
 }
 input[type=range]::-ms-track {
   width: 100%;
-  height: 5px;
-  cursor: pointer;
+  height: @gmf-input-range-track-height;
+  cursor: @gmf-input-range-cursor;
   background: transparent;
   border-color: transparent;
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
   background: @brand-primary;
-  border: 0.2px solid rgba(1, 1, 1, 0.2);
-  border-radius: 2px;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+  border: @gmf-input-range-track-border;
+  border-radius: 0.2rem;
+  box-shadow: @gmf-input-range-track-box-shadow;
 }
 input[type=range]::-ms-fill-upper {
   background: @brand-secondary;
-  border: 0.2px solid rgba(1, 1, 1, 0.2);
-  border-radius: 2px;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+  border: @gmf-input-range-track-border;
+  border-radius: 0.2rem;
+  box-shadow: @gmf-input-range-track-box-shadow;
 }
 input[type=range]::-ms-thumb {
-  box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
-  border: 1px solid rgba(0, 0, 30, 0.2);
-  height: 20px;
-  width: 10px;
-  border-radius: 5px;
-  background: #ffffff;
-  cursor: pointer;
-  height: 5px;
+  box-shadow: @gmf-input-range-thumb-box-shadow;
+  border: @gmf-input-range-thumb-border;
+  height: @gmf-input-range-thumb-height;
+  width: @gmf-input-range-thumb-width;
+  border-radius: @gmf-input-range-thumb-border-radius;
+  background: @gmf-input-range-thumb-background;
+  cursor: @gmf-input-range-cursor;
+  height: @gmf-input-range-track-height;
 }

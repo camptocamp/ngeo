@@ -3,6 +3,7 @@
 
 goog.require('gmf.LayertreeController');
 goog.require('gmf.test.data.themes');
+goog.require('gmf.WMSTime');
 goog.require('ol.Map');
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Layer');
@@ -11,24 +12,26 @@ goog.require('ol.Collection');
 
 describe('GmfLayertree', function() {
 
-  var $controller, $rootScope, $scope;
+  var $controller, $rootScope, $scope, gmfWMSTime;
   var controllerBindings, gmfLayertreeCtrl, osmThemeNode, mixedNode, nonMixedNode;
   var map = new ol.Map({layers : []});
 
-  beforeEach(inject(function(_$controller_, _$rootScope_) {
+  beforeEach(inject(function(_$controller_, _$rootScope_, $injector) {
     $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
+    gmfWMSTime = $injector.get('gmfWMSTime');
     controllerBindings = {
       openLinksInNewWindowFn : function() {
-        return false
+        return false;
       },
       map : map
     };
     gmfLayertreeCtrl = $controller('GmfLayertreeController',
       {
         $scope: $scope,
-        gmfWmsUrl : ''
+        gmfWmsUrl : '',
+        gmfWMSTime : gmfWMSTime
       },
       controllerBindings
     );

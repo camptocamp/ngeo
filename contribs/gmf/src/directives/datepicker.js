@@ -2,6 +2,7 @@ goog.provide('gmf.DatePickerDirective');
 goog.provide('gmf.DatePickerController');
 
 goog.require('gmf');
+goog.require('gmf.WMSTime');
 
 gmf.module.value('gmfDatePickerTemplateUrl',
     /**
@@ -42,12 +43,7 @@ gmf.DatePicker = function(gmfDatePickerTemplateUrl,  $timeout) {
       var lang =  ctrl.gettextCatalog_.getCurrentLanguage();
       $['datepicker']['setDefaults']($['datepicker']['regional'][lang]);
 
-      var commondateOptions_ = {
-        'minDate' : new Date(ctrl.time.minValue),
-        'maxDate' : new Date(ctrl.time.maxValue)
-      };
-
-      ctrl.sdateOptions = angular.extend({}, commondateOptions_, {
+      ctrl.sdateOptions = angular.extend({}, ctrl.sdateOptions, {
         'onClose' : function(selectedDate) {
           if (selectedDate) {
             $(element[0]).find('input[name="edate"]').datepicker('option', 'minDate', selectedDate);
@@ -55,7 +51,7 @@ gmf.DatePicker = function(gmfDatePickerTemplateUrl,  $timeout) {
         }
       });
 
-      ctrl.edateOptions = angular.extend({}, commondateOptions_, {
+      ctrl.edateOptions = angular.extend({}, ctrl.edateOptions, {
         'onClose' : function(selectedDate) {
           if (selectedDate) {
             $(element[0]).find('input[name="sdate"]').datepicker('option', 'maxDate', selectedDate);
@@ -86,13 +82,29 @@ gmf.module.directive('gmfDatePicker', gmf.DatePicker);
  * DatePickerController - directive conttroller
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$injector} $injector injector.
+ * @param {gmf.WMSTime} gmfWMSTime service wmstime.
  * @constructor
  * @export
  * @ngInject
  * @ngdoc controller
  * @ngname gmfDatePickerController
  */
-gmf.DatePickerController = function($scope, $injector) {
+gmf.DatePickerController = function($scope, $injector, gmfWMSTime) {
+
+  /**
+   * @type {gmf.WMSTime}
+   * @private
+   */
+  this.gmfWMSTime_ = gmfWMSTime;
+
+  /**
+   * @type {gmfx.TimeProperty}
+   * @export
+   */
+  this.time;
+
+  //fetch the initial options for the component
+  var initialOptions_ = this.gmfWMSTime_.getOptions(this.time);
 
   /**
    * The gettext catalog
@@ -103,6 +115,15 @@ gmf.DatePickerController = function($scope, $injector) {
 
 
   /**
+   * If the component is used to select a date range
+   * @type boolean
+   * @export
+   */
+  this.isModeRange = this.time.mode === 'range';
+
+
+  /**
+   * Function called after date(s) changed/selected
    * @function
    * @export
    */
@@ -110,44 +131,73 @@ gmf.DatePickerController = function($scope, $injector) {
 
 
   /**
+   * initial min date for the datepicker
+   * @type {Date}
+   */
+  this.initialMinDate = new Date(initialOptions_.minDate);
+
+  /**
+   * initial max date for the datepickeronDateSelected
+   * @type {Date}
+   */
+  this.initialMaxDate = new Date(initialOptions_.maxDate);
+
+  /**
+   * Datepicker options for the second datepicker (only for range mode)
    * @type {Object}
    * @export
    */
-  this.time;
+  this.edateOptions = {
+    'minDate' : this.initialMinDate,
+    'maxDate' : this.initialMaxDate,
+    'changeMonth': true,
+    'changeYear': true
+  };
 
   /**
+   * Datepicker options for the first datepicker
    * @type {Object}
    * @export
    */
-  this.edateOptions = {};
+  this.sdateOptions = {
+    'minDate' : this.initialMinDate,
+    'maxDate' : this.initialMaxDate,
+    'changeMonth': true,
+    'changeYear': true
+  };
 
   /**
-   * @type {Object}
+   * Start date model for the first date picker
+   * @type {Date}
    * @export
    */
-  this.sdateOptions = {};
+  this.sdate;
 
   /**
-   * @type {Object}
+   * End date model for the second datepicker (only for range mode)
+   * @type {Date}
    * @export
    */
-  this.sdate = new Date(this.time.minValue);
+  this.edate;
 
-  /**
-   * @type {Object|null}
-   * @export
-   */
-  this.edate = this.time.mode === 'range' && new Date(this.time.maxValue) || null;
+  if (this.isModeRange) {
+    goog.asserts.assertArray(initialOptions_.values);
+    this.sdate = new Date(initialOptions_.values[0]);
+    this.edate = new Date(initialOptions_.values[1]);
+  } else {
+    goog.asserts.assertNumber(initialOptions_.values);
+    this.sdate = new Date(initialOptions_.values);
+  }
 
   $scope.$watchGroup(['datepickerCtrl.sdate', 'datepickerCtrl.edate'], function(newDates, oldDates) {
     var sDate = newDates[0];
     var eDate = newDates[1];
 
-    if (angular.isDate(sDate) && (this.time.mode === 'single' || angular.isDate(eDate))) {
+    if (angular.isDate(sDate) && (!this.isModeRange || angular.isDate(eDate))) {
       this.onDateSelected({
         time : {
-          start : sDate,
-          end : eDate
+          start : sDate.getTime(),
+          end : eDate ? eDate.getTime() : null
         }
       });
     }
