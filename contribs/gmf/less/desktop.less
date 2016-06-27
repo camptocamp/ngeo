@@ -467,11 +467,12 @@ gmf-featurestyle {
  * Background layer button (selector)
  */
 .gmf-backgroundlayerbutton {
+  position: absolute;
   bottom: @app-margin;
   left: @app-margin;
 
   button {
-    padding: 3px;
+    padding: @padding-small-vertical;
   }
 
   button,
@@ -490,8 +491,9 @@ gmf-featurestyle {
 }
 
 /** Disclaimer */
+@bgselector-image-size: 48px;
 gmf-disclaimer {
-  position: relative;
-  display: inline-block;
+  position: absolute;
   vertical-align: bottom;
+  left: ~"calc(2 * @{app-margin} + @{bgselector-image-size} + 2 * @{padding-small-vertical})";
 }
