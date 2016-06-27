@@ -54,20 +54,7 @@ ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  * @type {Object.<string, string>}
  * @private
  */
-ngeo.format.FeatureHashLegacyProperties_ = {
-  'fillColor': ngeo.FeatureProperties.COLOR,
-  'fillOpacity': ngeo.FeatureProperties.OPACITY,
-  'fontColor': ngeo.FeatureProperties.COLOR,
-  'fontSize': ngeo.FeatureProperties.SIZE,
-  'isBox': ngeo.FeatureProperties.IS_RECTANGLE,
-  'isCircle': ngeo.FeatureProperties.IS_CIRCLE,
-  'isLabel': ngeo.FeatureProperties.IS_TEXT,
-  'name': ngeo.FeatureProperties.NAME,
-  'pointRadius': ngeo.FeatureProperties.SIZE,
-  'showMeasure': ngeo.FeatureProperties.SHOW_MEASURE,
-  'strokeColor': ngeo.FeatureProperties.COLOR,
-  'strokeWidth': ngeo.FeatureProperties.STROKE
-};
+ngeo.format.FeatureHashLegacyProperties_ = {};
 
 
 /**
