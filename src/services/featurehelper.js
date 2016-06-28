@@ -1,6 +1,8 @@
 goog.provide('ngeo.FeatureHelper');
 
 goog.require('ngeo');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filters');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.Feature');
 goog.require('ol.geom.LineString');
@@ -46,6 +48,11 @@ ngeo.FeatureHelper = function($injector, $filter) {
   if ($injector.has('ngeoMeasureDecimals')) {
     this.decimals_ = $injector.get('ngeoMeasureDecimals');
   }
+
+  /**
+   * @type {ngeox.unitPrefix}
+   */
+  this.format_ = $injector.get('$filter')('ngeoUnitPrefix');
 
   /**
    * Filter function to display point coordinates or null to don't use any
@@ -652,10 +659,10 @@ ngeo.FeatureHelper.prototype.getMeasure = function(feature) {
 
   if (geometry instanceof ol.geom.Polygon) {
     measure = ngeo.interaction.Measure.getFormattedArea(
-      geometry, this.projection_, this.decimals_);
+      geometry, this.projection_, this.decimals_, this.format_);
   } else if (geometry instanceof ol.geom.LineString) {
     measure = ngeo.interaction.Measure.getFormattedLength(
-      geometry, this.projection_, this.decimals_);
+      geometry, this.projection_, this.decimals_, this.format_);
   } else if (geometry instanceof ol.geom.Point) {
     if (this.pointFilterFn_ === null) {
       measure = ngeo.interaction.Measure.getFormattedPoint(

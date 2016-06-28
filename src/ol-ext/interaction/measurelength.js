@@ -13,10 +13,11 @@ goog.require('ol.interaction.Draw');
  *
  * @constructor
  * @extends {ngeo.interaction.Measure}
+ * @param {ngeox.unitPrefix} format The format function
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
  * @export
  */
-ngeo.interaction.MeasureLength = function(opt_options) {
+ngeo.interaction.MeasureLength = function(format, opt_options) {
 
   var options = opt_options !== undefined ? opt_options : {};
 
@@ -32,6 +33,12 @@ ngeo.interaction.MeasureLength = function(opt_options) {
           'Click to continue drawing the line.',
           goog.dom.createDom(goog.dom.TagName.BR),
           'Double-click or click last point to finish.');
+
+  /**
+   * The format function
+   * @type {ngeox.unitPrefix}
+   */
+  this.format = format;
 
 };
 goog.inherits(ngeo.interaction.MeasureLength, ngeo.interaction.Measure);
@@ -61,7 +68,7 @@ ngeo.interaction.MeasureLength.prototype.handleMeasure = function(callback) {
       (this.sketchFeature.getGeometry());
   var proj = this.getMap().getView().getProjection();
   var dec = this.decimals;
-  var output = ngeo.interaction.Measure.getFormattedLength(geom, proj, dec);
+  var output = ngeo.interaction.Measure.getFormattedLength(geom, proj, dec, this.format);
   var coord = geom.getLastCoordinate();
   callback(output, coord);
 };

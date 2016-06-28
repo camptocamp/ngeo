@@ -3,6 +3,8 @@ goog.provide('gmf.mobileMeasureLengthDirective');
 
 goog.require('gmf');
 goog.require('ngeo.DecorateInteraction');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureLengthMobile');
 goog.require('ngeo.interaction.MobileDraw');
 goog.require('ol.style.Fill');
@@ -67,12 +69,13 @@ gmf.module.directive('gmfMobileMeasureLength',
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
+ * @param {angular.$filter} $filter Angular filter
  * @constructor
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileMeasureLengthController
  */
-gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction) {
+gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $filter) {
 
   /**
    * @type {ol.Map}
@@ -131,7 +134,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction) {
    * @type {ngeo.interaction.MeasureLengthMobile}
    * @export
    */
-  this.measure = new ngeo.interaction.MeasureLengthMobile({
+  this.measure = new ngeo.interaction.MeasureLengthMobile($filter('ngeoUnitPrefix'), {
     decimals: this.decimals,
     sketchStyle: this.sketchStyle
   });

@@ -1114,3 +1114,25 @@ ngeox.BackgroundEvent = function() {};
  * @type {ol.layer.Base}
  */
 ngeox.BackgroundEvent.prototype.previous;
+
+/**
+ * Format a number with a precision.
+ *
+ * Arguments:
+ * - opt_precision: The used precision, default is 3.
+ *
+ * @typedef {function(number, number=): string}
+ */
+ngeox.number;
+
+/**
+ * Format a number with the prefix and unit.
+ *
+ * Arguments:
+ * - opt_unit: The unit to used, default is ''.
+ * - opt_type: (unit|square|binary) the type of units, default is 'unit'.
+ * - opt_precision: The used precision, default is 3.
+ *
+ * @typedef {function(number, string=, string=, number=): string}
+ */
+ngeox.unitPrefix;

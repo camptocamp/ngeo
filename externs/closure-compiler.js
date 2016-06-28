@@ -16,3 +16,25 @@ Navigator.prototype.systemLanguage;
  * @type {string}
  */
 Navigator.prototype.userLanguage;
+
+
+/**
+ * Missing in angular
+ * @typedef {{
+ *     GROUP_SEP: (string),
+ *     DECIMAL_SEP: (string)
+ * }}
+ */
+angular.NUMBER_FORMATS;
+
+/**
+ * Missing in angular
+ * @typedef {function(): !Function}
+ */
+angular.$locale;
+
+/**
+ * Missing in angular
+ * @type {angular.NUMBER_FORMATS}
+ */
+angular.$locale.prototype.NUMBER_FORMATS;
