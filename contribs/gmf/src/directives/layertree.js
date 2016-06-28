@@ -215,6 +215,7 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
 gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
   var type = gmf.Themes.getNodeType(node);
   var ids =  gmf.LayertreeController.getLayerNodeIds(node);
+  var childNodes = [], childNodesUnchecked;
   layer.set('querySourceIds', ids);
   layer.set('layerName', node.name);
   layer.set('disclaimers', this.getNodeDisclaimers_(node));
@@ -224,9 +225,22 @@ gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
 
   // If layer is 'unchecked', set it to invisible.
   var metadata = node.metadata;
-  if (node.children === undefined && goog.isDefAndNotNull(metadata)) {
-    if (!metadata['isChecked']) {
+  if (isMerged) {
+    //Case Non Mixed group -> Hide the layer if all child nodes have isCheck set to false
+    this.getFlatNodes_(node, childNodes);
+    childNodesUnchecked = childNodes.filter(function(childNode) {
+      return !childNode.metadata || !childNode.metadata['isChecked'];
+    });
+    if (childNodesUnchecked.length === childNodes.length) {
+      //All children are unchecked
       layer.setVisible(false);
+    }
+  } else {
+    if (node.children === undefined && goog.isDefAndNotNull(metadata)) {
+      //Case leaf in a mixed group
+      if (!metadata['isChecked']) {
+        layer.setVisible(false);
+      }
     }
   }
 };

@@ -696,11 +696,21 @@ gmf.Permalink.prototype.initLayerFromGroupNode_ = function(groupNode) {
           groupName, layers.getArray());
       if (layer) {
         this.initMergedLayer_(layer, groupLayers);
+        if (groupLayers !== '') {
+          //Layer must be visible, we found some layers names in the state
+          layer.setVisible(true);
+        }
       } else if (groupLayers !== '') {
         layerNames = groupLayers.split(',');
         this.gmfTreeManager_.addCustomGroups([{
           node: groupNode,
           layers: layerNames
+        }]);
+      } else {
+        //groupLayers === '', we add the group in an inactive state
+        this.gmfTreeManager_.addCustomGroups([{
+          node: groupNode,
+          layers: []
         }]);
       }
     }
