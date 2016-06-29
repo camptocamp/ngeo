@@ -751,7 +751,7 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
             groupActions.indexOf('add_layer') >= 0) {
         // FIXME: Set the layer visible again (Issue also in the
         // treemanager service).
-        this.gmfTreeManager_.addGroupByLayerName(actionData, true, false);
+        this.gmfTreeManager_.addGroupByLayerName(actionData, true, true);
       }
     }
   }

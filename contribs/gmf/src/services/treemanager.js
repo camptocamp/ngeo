@@ -114,12 +114,11 @@ gmf.TreeManager.prototype.addTheme = function(theme) {
  * already in the tree.
  * @param{Array.<GmfThemesNode>} groups An array of gmf theme nodes.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
- * @param{boolean=} showNotification if false notifyCantAddGroups_ is not called
+ * @param{boolean=} opt_silent if true notifyCantAddGroups_ is not called
  * @export
  */
-gmf.TreeManager.prototype.addGroups = function(groups, opt_add, showNotification) {
+gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent) {
   var groupNotAdded = [];
-  showNotification = typeof showNotification !== 'undefined' ? showNotification : true;
   if (this.isModeFlush() && opt_add !== true) {
     this.tree.children.length = 0;
   }
@@ -128,7 +127,7 @@ gmf.TreeManager.prototype.addGroups = function(groups, opt_add, showNotification
       groupNotAdded.push(group);
     }
   }.bind(this));
-  if (groupNotAdded.length > 0 && showNotification === true) {
+  if (groupNotAdded.length > 0 & !opt_silent) {
     this.notifyCantAddGroups_(groupNotAdded);
   }
 };
@@ -221,15 +220,14 @@ gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
  * corresponding group is found.
  * @param{string} layerName Name of the layer inside the group to add.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
- * @param{boolean=} showNotification if false notifyCantAddGroups_ is not called
+ * @param{boolean=} opt_silent if true notifyCantAddGroups_ is not called
  * @export
  */
-gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, showNotification) {
-  showNotification = typeof showNotification !== 'undefined' ? showNotification : true;
+gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent) {
   this.gmfThemes_.getThemesObject().then(function(themes) {
     var group = gmf.Themes.findGroupByLayerName(themes, layerName);
     if (group) {
-      this.addGroups([group], opt_add, showNotification);
+      this.addGroups([group], opt_add, opt_silent);
       // FIXME: set the layer visible
     }
   }.bind(this));
