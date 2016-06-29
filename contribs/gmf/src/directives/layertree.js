@@ -831,25 +831,6 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
 
 
 /**
- * Return 'no-source' if no source is defined in the given treeCtrl's WMTS layer.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
- * @return {?string} 'no-source' or null
- * @export
- */
-gmf.LayertreeController.prototype.getNoSourceStyle = function(treeCtrl) {
-  var layer = treeCtrl.layer;
-  if (layer !== undefined &&
-      layer instanceof ol.layer.Tile &&
-      layer.getSource !== undefined &&
-      !goog.isDefAndNotNull(layer.getSource())) {
-    return 'no-source';
-  }
-  return null;
-};
-
-
-/**
  * @param {GmfThemesNode} node Layer tree node to remove.
  * @export
  */
