@@ -15,7 +15,7 @@
     <img ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))" ng-src="{{::legendIconUrl}}"></img>
   </a>
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
-     ng-if="::layertreeCtrl.node.children" ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'state' : 'fa-refresh fa-spin']"></a>
+     ng-class="['fa fa-fw', layertreeCtrl.layer && layertreeCtrl.layer.loading || gmfLayertreeCtrl.getNoSourceStyle(layertreeCtrl) === 'no-source' ? 'fa-refresh fa-spin' : 'state']"></a>
   <a href ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
      class="name" title="{{layertreeCtrl.node.name | translate}}">
     {{layertreeCtrl.node.name | translate}}
