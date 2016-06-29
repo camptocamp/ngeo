@@ -736,6 +736,8 @@ gmf.SearchController.prototype.blur = function() {
  */
 gmf.SearchController.select_ = function(event, feature, dataset) {
   var actions = feature.get('actions');
+  var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
+      (feature.getGeometry());
   if (actions) {
     var groupActions = /** @type {Array.<string>} */ (
         this.datasources_[0].groupActions);
@@ -751,13 +753,11 @@ gmf.SearchController.select_ = function(event, feature, dataset) {
             groupActions.indexOf('add_layer') >= 0) {
         // FIXME: Set the layer visible again (Issue also in the
         // treemanager service).
-        this.gmfTreeManager_.addGroupByLayerName(actionData, true);
+        this.gmfTreeManager_.addGroupByLayerName(actionData, true, goog.isDefAndNotNull(featureGeometry));
       }
     }
   }
 
-  var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
-      (feature.getGeometry());
   if (goog.isDefAndNotNull(featureGeometry)) {
     var view = this.map_.getView();
     this.featureOverlay_.clear();
