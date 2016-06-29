@@ -119,6 +119,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @param {angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angular.$q} $q The Angular $q service.
+ * @param {angular.$injector} $injector Main injector.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
@@ -133,7 +134,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @ngdoc Controller
  * @ngname GmfPrintController
  */
-gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
+gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,
     ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils, ngeoCreatePrint,
     gmfPrintUrl, gmfAuthentication) {
   /**
@@ -189,6 +190,11 @@ gmf.PrintController = function($scope, $timeout, $q, gettextCatalog,
    * @private
    */
   this.ngeoPrint_ = ngeoCreatePrint(gmfPrintUrl);
+
+  this.cacheVersion_ = '0';
+  if ($injector.has('cacheVersion')) {
+    this.cacheVersion_ = $injector.get('cacheVersion');
+  }
 
   /**
    * @type {?angular.$q.Deferred}
@@ -329,8 +335,11 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
     this.ngeoPrint_.getCapabilities(/** @type {angular.$http.Config} */ ({
       withCredentials: true,
       params: roleId !== null ? {
-        'role': roleId
-      } : {}
+        'role': roleId,
+        'cache_version': this.cacheVersion_
+      } : {
+        'cache_version': this.cacheVersion_
+      }
     })).then(function(resp) {
       this.printState = gmf.PrintState.NOT_IN_USE;
       // Get capabilities - On success
