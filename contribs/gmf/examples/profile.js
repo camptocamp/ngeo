@@ -2,6 +2,10 @@ goog.provide('gmfapp.profile');
 
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
+goog.require('gmf.Permalink');
+/** @suppress {extraRequire} */
+goog.require('gmf.Snapping');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.profileComponent');
