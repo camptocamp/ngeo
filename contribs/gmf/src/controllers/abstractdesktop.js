@@ -137,12 +137,6 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   };
 
   /**
-   * @type {boolean}
-   * @export
-   */
-  this.profileActive = false;
-
-  /**
    * @type {ol.geom.LineString}
    * @export
    */

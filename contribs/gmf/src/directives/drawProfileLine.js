@@ -7,6 +7,7 @@ goog.require('ol.geom.LineString');
 goog.require('ol.interaction.Draw');
 goog.require('ol.style.Style');
 goog.require('ol.style.Stroke');
+goog.require('ngeo.DecorateInteraction');
 
 
 /**
@@ -36,13 +37,14 @@ goog.require('ol.style.Stroke');
  */
 gmf.drawprofilelineDirective = function() {
   return {
-    bindToController: true,
+    scope: true,
     controller: 'GmfDrawprofilelineController',
     controllerAs: 'ctrl',
     restrict: 'A',
-    scope: {
+    bindToController: {
       'getMapFn': '&gmfDrawprofilelineMap',
       'line': '=gmfDrawprofilelineLine',
+      'active': '<gmfDrawprofilelineActive',
       'getInitialStateFn': '&?gmfDrawprofileLineInitialstate',
       'getStyleFn': '&?gmfDrawprofilelineStyle'
     }
@@ -55,16 +57,19 @@ gmf.module.directive('gmfDrawprofileline', gmf.drawprofilelineDirective);
 /**
  * @param {!angular.Scope} $scope Scope.
  * @param {angular.JQLite} $element Element.
+ * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
+ * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
+ *     interaction service
  * @constructor
  * @export
  * @ngInject
  * @ngdoc controller
  * @ngname gmfDrawprofilelineController
  */
-gmf.DrawprofilelineController = function($scope, $element,
-    ngeoFeatureOverlayMgr) {
+gmf.DrawprofilelineController = function($scope, $element, $timeout,
+    ngeoFeatureOverlayMgr, ngeoDecorateInteraction) {
 
   /**
    * @type {ol.geom.LineString}
@@ -80,6 +85,13 @@ gmf.DrawprofilelineController = function($scope, $element,
    * @private
    */
   this.map_ = map;
+
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.active;
 
   /**
    * @type {ol.Collection}
@@ -110,46 +122,60 @@ gmf.DrawprofilelineController = function($scope, $element,
 
   /**
    * @type {ol.interaction.Draw}
-   * @private
+   * @export
    */
-  this.drawLine_ = new ol.interaction.Draw(
+  this.interaction = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'LineString',
         features: this.features_
       }));
 
-  this.map_.addInteraction(this.drawLine_);
-  this.drawLine_.setActive(initialState);
+  this.map_.addInteraction(this.interaction);
+  this.interaction.setActive(initialState);
+  ngeoDecorateInteraction(this.interaction);
 
-  // Clear the line to draw a new one.
-  this.drawLine_.on('drawstart', function() {
-    this.clear_();
-  }, this);
+  // Clear the line as soon as the interaction is activated.
+  this.interaction.on(
+    ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
+    function() {
+      if (this.interaction.getActive()) {
+        this.clear_();
+      }
+    }, this);
 
   // Update the profile with the new geometry.
-  this.drawLine_.on('drawend', function(e) {
+  this.interaction.on(ol.interaction.DrawEventType.DRAWEND, function(e) {
     this.line = e.feature.getGeometry();
-    $scope.$digest();
+    // using timeout to prevent dblclick to zoom the map
+    $timeout(function() {
+      this.interaction.setActive(false);
+    }.bind(this), 0);
   }, this);
 
-  // Activate or deactive the draw.
-  $element.on('click' , function() {
-    this.toggleActive_();
-  }.bind(this));
-};
+  // Line may be removed from an an other component
+  // for example closing the chart panel
+  $scope.$watch(
+    function() {
+      return this.line;
+    }.bind(this),
+    function(newLine, oldLine) {
+      if (newLine === null) {
+        this.clear_();
+      }
+    }.bind(this));
 
-
-/**
- * Toggle activation of the draw line interaction.
- * @private
- */
-gmf.DrawprofilelineController.prototype.toggleActive_ = function() {
-  if (this.drawLine_.getActive()) {
-    this.drawLine_.setActive(false);
-    this.clear_();
-  } else {
-    this.drawLine_.setActive(true);
-  }
+  $scope.$watch(
+    function() {
+      return this.active;
+    }.bind(this),
+    function(newValue) {
+      if (newValue === false) {
+        this.clear_();
+      }
+      // Will activate the interaction automatically the first time
+      this.interaction.setActive(newValue);
+    }.bind(this)
+  );
 };
 
 

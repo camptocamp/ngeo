@@ -55,11 +55,8 @@
             data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw & Measure'|translate}}">
             <span class="fa fa-pencil"></span>
           </button>
-          <button class="btn btn-default"
-            ng-click="mainCtrl.profileActive = !mainCtrl.profileActive"
-            gmf-drawprofileline
-            gmf-drawprofileline-map="::mainCtrl.map"
-            gmf-drawprofileline-line="mainCtrl.profileLine">
+          <button ngeo-btn class="btn btn-default" ng-model="profileActive"
+            data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
             <span class="fa fa-area-chart"></span>
           </button>
         </div>
@@ -98,9 +95,35 @@
               </gmf-drawfeature>
             </div>
           </div>
+          <div ng-show="profileActive" class="row">
+            <div class="col-sm-12">
+              <div class="tools-content-heading">
+                {{'Profile'|translate}}
+                <a class="btn close" ng-click="profileActive = false">&times;</a>
+              </div>
+              <div gmf-drawprofileline
+                   gmf-drawprofileline-active="profileActive"
+                   gmf-drawprofileline-map="::mainCtrl.map"
+                   gmf-drawprofileline-line="mainCtrl.profileLine">
+                 <p>
+                  <button class="btn btn-default"
+                    ngeo-btn ng-model="ctrl.interaction.active"
+                    translate>
+                    Draw profile line
+                  </button>
+                </p>
+                <p>
+                  <em translate ng-if="ctrl.interaction.active" class="text-muted small">
+                    Draw a line on the map to display the corresponding elevation profile.
+                    Use double-click to finish the drawing.
+                  </em>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="map-container" ng-class="{'infobar-active': mainCtrl.showInfobar}">
+      <div class="map-container" ng-class="{'infobar-active': mainCtrl.showInfobar, 'profile-chart-active': !!profileChartActive}">
         <gmf-search gmf-search-map="mainCtrl.map"
           class="search"
           gmf-search-datasources="mainCtrl.searchDatasources"
@@ -168,6 +191,14 @@
           </div>
         </div>
       </div>
+      <gmf-profile
+        gmf-profile-active="profileChartActive"
+        gmf-profile-line="mainCtrl.profileLine"
+        gmf-profile-map="::mainCtrl.map"
+        gmf-profile-linesconfiguration="::mainCtrl.profileLinesconfiguration"
+        ngeo-resizemap="mainCtrl.map"
+        ngeo-resizemap-state="profileChartActive">
+      </gmf-profile>
     </main>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../third-party/jquery-ui/jquery-ui.min.js"></script>
