@@ -250,6 +250,30 @@ gmf.AbstractController = function(config, $scope, $injector) {
       this, 'measureLengthActive');
   ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
 
+  var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
+
+  $scope.$watch(function() {
+    return this.theme.name;
+  }.bind(this), function(name) {
+    var map = this.map;
+    gmfThemes.getThemeObject(name).then(function(theme) {
+      if (theme) {
+        var backgrounds = theme['functionalities']['default_basemap'];
+        if (backgrounds && backgrounds.length > 0) {
+          var background = backgrounds[0];
+          gmfThemes.getBgLayers().then(function(layers) {
+            var layer = ol.array.find(layers, function(layer) {
+              return layer.get('label') === background;
+            });
+            if (layer) {
+              backgroundLayerMgr.set(map, layer);
+            }
+          });
+        }
+      }
+    });
+  }.bind(this));
+
   gmfThemes.getBgLayers().then(function(layers) {
     // get the background from the permalink
     var permalink = $injector.get('gmfPermalink');
@@ -274,7 +298,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
     }
 
     if (background) {
-      var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
       backgroundLayerMgr.set(this.map, background);
     }
   }.bind(this));
