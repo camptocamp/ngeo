@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>XSD Attributes in GeoMapFish example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="../third-party/jquery-ui/jquery-ui.min.css">
+    <style>
+      .layers-list {
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <p id="desc">
+            This example shows how to use the <code>gmf.XSDAttributes</code>
+            service, which is used to obtain the attributes from a GeoMapFish
+            server using a given layer id. The attributes received are read
+            and transformed into a form using the <code>ngeo-attributes</code>
+            directive.
+          </p>
+          <select
+            class="layers-list"
+            ng-model="ctrl.getSetLayers"
+            ng-model-options="{getterSetter: true}"
+            ng-options="layer.name for layer in ctrl.layers">
+            <option value="">-- Choose a layer --</option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+          <ngeo-attributes
+            ng-if="ctrl.attributes"
+            ngeo-attributes-attributes="::ctrl.attributes"
+            ngeo-attributes-feature="::ctrl.feature">
+          </ngeo-attributes>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../third-party/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
+    <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
+    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
+    <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
+    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js" type="text/javascript"></script>
+    <script src="/@?main=xsdattributes.js"></script>
+    <script src="default.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>
