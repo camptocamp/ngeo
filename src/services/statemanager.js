@@ -45,25 +45,60 @@ ngeo.StateManager = function(ngeoLocation) {
       for (i = 0; i < count; ++i) {
         key = this.localStorage.key(i);
         goog.asserts.assert(key !== null);
-        this.initialState[key] = this.localStorage.get(key);
+        this.initialState[key] = this.getItemFromLocalStorage_(key);
       }
+      this.ngeoLocation.updateParams(this.initialState);
     }
   } else {
     var keys = ngeoLocation.getParamKeys();
     for (i = 0; i < keys.length; ++i) {
       key = keys[i];
-      this.initialState[key] = ngeoLocation.getParam(key);
+      this.initialState[key] = this.getItemFromLocation_(key);
     }
   }
+};
 
-  this.ngeoLocation.updateParams(this.initialState);
+
+/**
+ * Get the item for the given key  from localStorage and try to parse to the appropriate type
+ * If it cannot be parsed, the raw value (string) is returned
+ *
+ * @param  {string} key the localStorage key for the item
+ * @return {*} Param value.
+ * @private
+ */
+ngeo.StateManager.prototype.getItemFromLocalStorage_ = function(key) {
+  var value = this.localStorage.get(key);
+  try {
+    return angular.fromJson(value);
+  } catch (e) {
+    return value;
+  }
+};
+
+
+/**
+ * Get the item for the given key  from Location and try to parse to the appropriate type
+ * If it cannot be parsed, the raw value (string) is returned
+ *
+ * @param  {string} key the localStorage key for the item
+ * @return {*} Param value.
+ * @private
+ */
+ngeo.StateManager.prototype.getItemFromLocation_ = function(key) {
+  var value = this.ngeoLocation.getParam(key);
+  try {
+    return angular.fromJson(value);
+  } catch (e) {
+    return value;
+  }
 };
 
 
 /**
  * Get the state value for `key`.
  * @param {string} key State key.
- * @return {string|undefined} State value.
+ * @return {*} State value.
  */
 ngeo.StateManager.prototype.getInitialValue = function(key) {
   return this.initialState[key];
@@ -79,7 +114,7 @@ ngeo.StateManager.prototype.updateState = function(object) {
   if (this.localStorage.isAvailable()) {
     var key;
     for (key in object) {
-      this.localStorage.set(key, object[key]);
+      this.localStorage.set(key, angular.toJson(object[key]));
     }
   }
 };

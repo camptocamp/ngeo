@@ -111,12 +111,13 @@ gmf.TreeManager.prototype.setModeFlush = function(value) {
  */
 gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
   var firstLevelNodes = theme.children;
-  var treeGroups = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.TREE_GROUPS);
+  var treeGroups = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
+    gmf.PermalinkParam.TREE_GROUPS));
   if (this.isModeFlush()) {
     this.tree.name = theme.name;
   }
   if (opt_init && treeGroups !== undefined) {
-    //Init phase and state exists -> first level groups must be red from the stateManager
+    //Init phase and state exists -> first level groups must be read from the stateManager
     var groupsNames = treeGroups.split(',');
     groupsNames.forEach(function(name) {
       this.addGroupByName(name, true);
@@ -153,19 +154,20 @@ gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent) {
   }
 
   //Update app state
-  this.updateTreeGroupsState_();
+  this.updateTreeGroupsState_(this.tree.children);
 };
 
 
 /**
  * Update the application state with the list of first level groups in the tree
+ * @param {Array.<GmfThemesNode>} groups firstlevel groups of the tree
  * @private
  */
-gmf.TreeManager.prototype.updateTreeGroupsState_ = function() {
+gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
   var treeGroupsParam = {};
-  treeGroupsParam[gmf.PermalinkParam.TREE_GROUPS] = this.tree.children.map(function(node) {
+  treeGroupsParam[gmf.PermalinkParam.TREE_GROUPS] = groups.map(function(node) {
     return node.name;
-  });
+  }).join(',');
   this.ngeoStateManager_.updateState(treeGroupsParam);
 };
 
@@ -218,7 +220,7 @@ gmf.TreeManager.prototype.addCustomGroups = function(groups, opt_add) {
   }
 
   //Update app state
-  this.updateTreeGroupsState_();
+  this.updateTreeGroupsState_(this.tree.children);
 };
 
 
@@ -284,7 +286,6 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
 gmf.TreeManager.prototype.removeGroup = function(group) {
   var children = this.tree.children;
   var index = 0, found = false;
-  var treeGroupsParam = {};
   children.some(function(child) {
     if (child.name === group.name) {
       return found = true;
@@ -293,10 +294,7 @@ gmf.TreeManager.prototype.removeGroup = function(group) {
   }.bind(this));
   if (found) {
     children.splice(index, 1);
-    treeGroupsParam[gmf.PermalinkParam.TREE_GROUPS] = children.map(function(node) {
-      return node.name;
-    });
-    this.ngeoStateManager_.updateState(treeGroupsParam);
+    this.updateTreeGroupsState_(children);
   }
 };
 
