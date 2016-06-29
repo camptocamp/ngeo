@@ -1,4 +1,4 @@
-<div ng-if="::!layertreeCtrl.isRoot" id="node-{{::layertreeCtrl.uid}}" ng-class="[layertreeCtrl.node.children ? 'group' : 'leaf', 'depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNoSourceStyle(layertreeCtrl), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
+<div ng-if="::!layertreeCtrl.isRoot" id="node-{{::layertreeCtrl.uid}}" ng-class="[layertreeCtrl.node.children ? 'group' : 'leaf', 'depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
   <div class="sortable-handle" ng-show="layertreeCtrl.depth === 1 && gmfLayertreeCtrl.layers.length > 1">
     <i class="sortable-handle-icon fa fa-ellipsis-v"></i>
   </div>
