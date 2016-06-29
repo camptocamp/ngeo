@@ -54,7 +54,7 @@ describe('gmf.QueryManager', function() {
   describe('#createSources_', function() {
     it('creates a source only with queryable child layers', function() {
       var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
-      queryManager.createSources_(osmTheme, themes.serversOGC);
+      queryManager.createSources_(osmTheme, themes.ogcServers);
       var osmSource = getSourceById(queryManager.sources_, 109);
       // hotel is ignored because `queryable` is `0`
       var expectedLayers =
@@ -66,7 +66,7 @@ describe('gmf.QueryManager', function() {
 
     it('does not create sources for non-queryable layers', function() {
       var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
-      queryManager.createSources_(osmTheme, themes.serversOGC);
+      queryManager.createSources_(osmTheme, themes.ogcServers);
       var osmScaleSource = getSourceById(queryManager.sources_, 114);
       // layer is ignored because `queryable` is `0`
       expect(osmScaleSource).toBeNull();
@@ -74,7 +74,7 @@ describe('gmf.QueryManager', function() {
 
     it('handles layers w/o WFS support', function() {
       var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
-      queryManager.createSources_(osmTheme, themes.serversOGC);
+      queryManager.createSources_(osmTheme, themes.ogcServers);
       var osmTimeSource = getSourceById(queryManager.sources_, 110);
       expect(osmTimeSource).not.toBeNull();
       // layer does not support wfs ("wfsSupport": false)
@@ -83,7 +83,7 @@ describe('gmf.QueryManager', function() {
 
     it('creates a source for queryable WMTS overlay layers', function() {
       var cadasterTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
-      queryManager.createSources_(cadasterTheme, themes.serversOGC);
+      queryManager.createSources_(cadasterTheme, themes.ogcServers);
 
       // layer 'non-queryable-wmts-layer' without `wmsUrl`
       var sourceNonQueryable = getSourceById(queryManager.sources_, 91346);
@@ -101,8 +101,8 @@ describe('gmf.QueryManager', function() {
       expect(sourceRoutes.params.LAYERS).toBe('ch.astra.ausnahmetransportrouten');
     });
 
-    it('creates a source for bg. WMTS layers with serverOGC', function() {
-      queryManager.createSources_(themes.background_layers[1], themes.serversOGC);
+    it('creates a source for bg. WMTS layers with ogcServer', function() {
+      queryManager.createSources_(themes.background_layers[1], themes.ogcServers);
 
       // layer 'asitvd.fond_couleur'
       var source = getSourceById(queryManager.sources_, 135);

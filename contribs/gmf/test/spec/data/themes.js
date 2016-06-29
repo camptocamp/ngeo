@@ -852,7 +852,7 @@ var themes = {
         "imageType": "image/jpeg",
         "metadata": {
             "thumbnail": "https://geomapfish-demo.camptocamp.net/2.1/wsgi/project/-/img/cadastre.jpeg",
-            "serverOGC": "Main PNG",
+            "ogcServer": "Main PNG",
             "queryLayers": "ch.astra.ausnahmetransportrouten"
         }
     }, {
@@ -869,7 +869,7 @@ var themes = {
         }
     }],
     "errors": [],
-    "serversOGC": {
+    "ogcServers": {
         "Main PNG": {
             "url": "https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?",
             "isSingleTile": false,

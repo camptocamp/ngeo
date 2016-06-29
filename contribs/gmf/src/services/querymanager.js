@@ -64,18 +64,18 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
    */
   this.cache_ = {};
 
-  this.gmfThemes_.getServersOgcObject().then(function(serversOgc) {
+  this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
     var promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
       // create sources for each themes
       for (var i = 0, len = themes.length; i < len; i++) {
-        this.createSources_(themes[i], serversOgc);
+        this.createSources_(themes[i], ogcServers);
       }
     }.bind(this));
 
     var promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(function(backgroundLayers) {
       // create a source for each background layer
       for (var i = 0, len = backgroundLayers.length; i < len; i++) {
-        this.createSources_(backgroundLayers[i], serversOgc);
+        this.createSources_(backgroundLayers[i], ogcServers);
       }
     }.bind(this));
 
@@ -92,10 +92,10 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
  * it has no children, otherwise create the sources for each child node if
  * it has any.
  * @param {GmfThemesNode} node Theme layer node.
- * @param {gmf.ServersOgc} serversOgc OGC servers.
+ * @param {gmf.OgcServers} ogcServers OGC servers.
  * @private
  */
-gmf.QueryManager.prototype.createSources_ = function(node, serversOgc) {
+gmf.QueryManager.prototype.createSources_ = function(node, ogcServers) {
   var meta = node.metadata;
   var children = node.children;
   var id = node.id;
@@ -111,13 +111,13 @@ gmf.QueryManager.prototype.createSources_ = function(node, serversOgc) {
     return;
   }
 
-  // don't create sources for WMTS layers without wmsUrl and serverOGC,
+  // don't create sources for WMTS layers without wmsUrl and ogcServer,
   // they are not queryable.
   if (node.type === 'WMTS' && !meta.wmsUrl) {
-    if (meta.serverOGC && serversOgc[meta.serverOGC]) {
-      var serverOGC = serversOgc[meta.serverOGC];
-      url = serverOGC.urlWfs;
-      wfsQuery = serverOGC.wfsSupport;
+    if (meta.ogcServer && ogcServers[meta.ogcServer]) {
+      var ogcServer = ogcServers[meta.ogcServer];
+      url = ogcServer.urlWfs;
+      wfsQuery = ogcServer.wfsSupport;
     } else {
       return;
     }
@@ -125,7 +125,7 @@ gmf.QueryManager.prototype.createSources_ = function(node, serversOgc) {
 
   if (children) {
     for (var i = 0, len = children.length; i < len; i++) {
-      this.createSources_(children[i], serversOgc);
+      this.createSources_(children[i], ogcServers);
     }
   } else {
     if (!this.cache_[id]) {

@@ -109,7 +109,7 @@ GmfThemesNode.prototype.urlWfs;
 /**
  * @type {string|undefined}
  */
-GmfThemesNode.prototype.serverOGC;
+GmfThemesNode.prototype.ogcServer;
 
 
 /**
@@ -181,52 +181,52 @@ GmfMetaData.prototype.wmsUrl;
 /**
  * @type {string|undefined}
  */
-GmfMetaData.prototype.serverOGC;
+GmfMetaData.prototype.ogcServer;
 
 
 /**
  * @constructor
  */
-var GmfServerOgc = function() {};
+var GmfOgcServer = function() {};
 
 
 /**
  * @type {string|undefined}
  */
-GmfServerOgc.prototype.url;
+GmfOgcServer.prototype.url;
 
 
 /**
  * @type {boolean|undefined}
  */
-GmfServerOgc.prototype.isSingleTile;
+GmfOgcServer.prototype.isSingleTile;
 
 
 /**
  * @type {string|undefined}
  */
-GmfServerOgc.prototype.auth;
+GmfOgcServer.prototype.auth;
 
 
 /**
  * @type {boolean|undefined}
  */
-GmfServerOgc.prototype.wfsSupport;
+GmfOgcServer.prototype.wfsSupport;
 
 
 /**
  * @type {string|undefined}
  */
-GmfServerOgc.prototype.urlWfs;
+GmfOgcServer.prototype.urlWfs;
 
 
 /**
  * @type {string|undefined}
  */
-GmfServerOgc.prototype.type;
+GmfOgcServer.prototype.type;
 
 
 /**
  * @type {string|undefined}
  */
-GmfServerOgc.prototype.imageType;
+GmfOgcServer.prototype.imageType;

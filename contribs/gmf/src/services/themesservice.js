@@ -8,16 +8,16 @@ goog.require('ol.layer.Tile');
 
 
 /**
- * @typedef {Object<string, GmfServerOgc>}
+ * @typedef {Object<string, GmfOgcServer>}
  */
-gmf.ServersOgc;
+gmf.OgcServers;
 
 
 /**
  * @typedef {{
  *     themes: Array.<Object>,
  *     background_layers: Array.<Object>,
- *     serversOGC: gmf.ServersOgc
+ *     ogcServers: gmf.OgcServers
  * }}
  */
 gmf.ThemesResponse;
@@ -305,19 +305,19 @@ gmf.Themes.prototype.getBackgroundLayersObject = function() {
 
 
 /**
- * Get the `serversOGC` object.
+ * Get the `ogcServers` object.
  * @return {angular.$q.Promise} Promise.
  */
-gmf.Themes.prototype.getServersOgcObject = function() {
+gmf.Themes.prototype.getOgcServersObject = function() {
   goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
        * @param {gmf.ThemesResponse} data The "themes" web service response.
-       * @return {gmf.ServersOgc} The `serversOGC` object.
+       * @return {gmf.OgcServers} The `ogcServers` object.
        */
       function(data) {
-        var serversOgc = data['serversOGC'];
-        return serversOgc;
+        var ogcServers = data['ogcServers'];
+        return ogcServers;
       });
 };
 
