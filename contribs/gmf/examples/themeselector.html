@@ -14,37 +14,19 @@
         list-style: none;
         margin: 0;
         padding: 0;
+        width: 300px;
       }
       .gmf-theme-selector li {
         cursor: pointer;
         margin: 10px;
+        display: flex;
+        align-items: center;
       }
-      .gmf-theme-selector .gmf-check,
-      .gmf-theme-selector .gmf-text,
-      .gmf-theme-selector .gmf-thumb {
-        float: left;
+      .gmf-text {
+        flex: 1;
       }
-      .gmf-theme-selector .gmf-check {
-        height: 20px;
-        margin: 15px 5px 0 0;
-        width: 20px;
-      }
-      .gmf-theme-selector .gmf-check .gmf-icon.gmf-icon-check:after {
-        content: 'o';
-      }
-      .gmf-theme-selector .gmf-text {
-        margin: 15px 10px 0 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 120px;
-        white-space: nowrap;
-      }
-      .gmf-theme-selector .gmf-thumb-rect {
+      .gmf-thumb {
         height: 60px;
-        width: 110px;
-      }
-      .gmf-theme-selector .gmf-eol {
-        clear: left;
       }
     </style>
   </head>

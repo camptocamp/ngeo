@@ -67,39 +67,42 @@ button[ngeo-mobile-geolocation] {
   list-style: none;
 
   li {
-    width: 100%;
     cursor: pointer;
-    padding: @app-margin 0;
-    color: @color;
+    display: flex;
+    align-items: center;
+    min-height: 3rem;
+    border: 1px solid transparent;
+    padding: @half-app-margin;
+
+    &::before {
+      // same as fa-fw
+      width: (18em / 14);
+      content: '';
+      text-align: center;
+    }
+    &:hover,
+    &.active {
+      border-color: @brand-secondary;
+      background-color: #f5f5f5;
+    }
+    &.active {
+      &::before {
+        font-family: FontAwesome;
+        content: @fa-var-check;
+      }
+    }
   }
 
-  .gmf-check,
   .gmf-text {
-    float: left;
-  }
-
-  .gmf-check {
-    position: relative;
-    height: 1px; // ::after needs a height different of 0
-    top: 1rem;
-    width: 2rem;
-  }
-
-  .gmf-text {
-    margin: @app-margin @app-margin @app-margin 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    flex: 1;
   }
 
   .gmf-thumb {
-    height: auto;
-    width: 2 * @map-tools-size;
-    float: right;
-  }
-
-  .gmf-eol {
-    clear: left;
+    height: @map-tools-size;
+    margin: 0 @half-app-margin;
   }
 }
 

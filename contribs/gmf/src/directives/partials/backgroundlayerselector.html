@@ -1,14 +1,9 @@
 <ul class="gmf-backgroundlayerselector">
   <li ng-repeat="layer in ::ctrl.bgLayers"
-      ng-click="ctrl.setLayer(layer)">
-    <div class="gmf-check">
-      <span class="gmf-icon"
-          ng-class="{'gmf-icon-check': ctrl.bgLayer == layer}">
-      </span>
-    </div>
-    <div class="gmf-text">{{layer.get("label") | translate}}</div>
+      ng-click="ctrl.setLayer(layer)"
+      ng-class="{'active': ctrl.bgLayer == layer}">
     <img class="gmf-thumb"
          ng-src="{{::layer.get('metadata')['thumbnail']}}" />
-    <div class="gmf-eol"></div>
+    <span class="gmf-text">{{layer.get("label") | translate}}</span>
   </li>
 </ul>

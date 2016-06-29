@@ -7,6 +7,7 @@
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="../third-party/jquery-ui/jquery-ui.min.css">
     <style>
       gmf-map > div {
@@ -17,37 +18,19 @@
         list-style: none;
         margin: 0;
         padding: 0;
+        width: 300px;
       }
       .gmf-backgroundlayerselector li {
         cursor: pointer;
         margin: 10px;
+        display: flex;
+        align-items: center;
       }
-      .gmf-backgroundlayerselector .gmf-check,
-      .gmf-backgroundlayerselector .gmf-text,
-      .gmf-backgroundlayerselector .gmf-thumb {
-        float: left;
+      .gmf-text {
+        flex: 1;
       }
-      .gmf-backgroundlayerselector .gmf-check {
-        height: 20px;
-        margin: 15px 5px 0 0;
-        width: 20px;
-      }
-      .gmf-backgroundlayerselector .gmf-check .gmf-icon.gmf-icon-check:after {
-        content: 'o';
-      }
-      .gmf-backgroundlayerselector .gmf-text {
-        margin: 15px 10px 0 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 120px;
-        white-space: nowrap;
-      }
-      .gmf-backgroundlayerselector .gmf-thumb {
+      .gmf-thumb {
         height: 60px;
-        width: 60px;
-      }
-      .gmf-backgroundlayerselector .gmf-eol {
-        clear: left;
       }
     </style>
   </head>
