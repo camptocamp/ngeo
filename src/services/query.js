@@ -370,6 +370,8 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
         );
         var layerLayers = layerSource.getParams()['LAYERS'].split(',');
         var cfgLayer = item.source.wmsSource.getParams()['LAYERS'];
+        goog.asserts.assert(cfgLayer.indexOf(',') === -1,
+            'The LAYERS param contains more than one item');
         if (layerLayers.indexOf(cfgLayer) === -1) {
           continue;
         }
