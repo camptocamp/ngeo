@@ -95,7 +95,7 @@ app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
 
   var busStopSourceId = 'bus_stop';
   var busStopLayer = new ol.layer.Image({
-    'querySourceId': busStopSourceId,
+    'querySourceIds': [busStopSourceId],
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
       params: {'LAYERS': 'bus_stop'}
@@ -108,7 +108,7 @@ app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
 
   var informationSourceId = 'information';
   var informationLayer = new ol.layer.Image({
-    'querySourceId': informationSourceId,
+    'querySourceIds': [informationSourceId],
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
       params: {'LAYERS': 'information'}

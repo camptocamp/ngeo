@@ -319,7 +319,6 @@ ngeox.QueryResultSource.prototype.queried;
  * The options for the query service.
  * @typedef {{
  *     limit: (number|undefined),
- *     sourceIdProperty: (string|undefined),
  *     sourceIdsProperty: (string|undefined)
  * }}
  */
@@ -333,15 +332,6 @@ ngeox.QueryOptions;
  * @type {number|undefined}
  */
 ngeox.QueryOptions.prototype.limit;
-
-
-/**
- * Defines the name of the layer property that holds the id for the source.
- * Only used if a source is configured without a reference to its layer.
- * Defaults to `querySourceId`.
- * @type {string|undefined}
- */
-ngeox.QueryOptions.prototype.sourceIdProperty;
 
 
 /**

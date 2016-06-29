@@ -45,7 +45,7 @@ describe('ngeo.Query', function() {
       params: {'LAYERS': 'bar'}
     });
     var layer = new ol.layer.Image({
-      querySourceId: id,
+      querySourceIds: [id],
       source: wmsSource
     });
     var source = {
@@ -84,7 +84,7 @@ describe('ngeo.Query', function() {
       });
 
       busStopLayer = new ol.layer.Image({
-        'querySourceId': busStopSourceId,
+        'querySourceIds': [busStopSourceId],
         'source': new ol.source.ImageWMS({
           'url': url,
           params: {'LAYERS': 'bus_stop'}
@@ -92,7 +92,7 @@ describe('ngeo.Query', function() {
       });
 
       informationLayer = new ol.layer.Image({
-        'querySourceId': informationSourceId,
+        'querySourceIds': [informationSourceId],
         'source': new ol.source.ImageWMS({
           'url': url,
           params: {'LAYERS': 'information'}

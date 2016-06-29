@@ -244,7 +244,7 @@ gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
  * If the parent node is "mixed", the child layer freshly created will be added to it
  *
  * All layer created will receive:
- *  - A 'querySourceId' parameter with the node id as value.
+ *  - A 'querySourceIds' parameter with the node id as value.
  *  - A 'layerName' parameter with the node name as value.
  *
  * All layer created will be added at the top of the map and with a Z Index

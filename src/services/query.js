@@ -5,6 +5,7 @@ goog.require('ngeo.LayerHelper');
 goog.require('ol.format.WMSGetFeatureInfo');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
+goog.require('goog.uri.utils');
 
 
 /**
@@ -68,13 +69,6 @@ ngeo.Query = function($http, ngeoQueryResult, ngeoQueryOptions,
    * @type {string}
    * @private
    */
-  this.sourceIdProperty_ = options.sourceIdProperty !== undefined ?
-      options.sourceIdProperty : ngeo.Query.DEFAULT_SOURCE_ID_PROPERTY_;
-
-  /**
-   * @type {string}
-   * @private
-   */
   this.sourceIdsProperty_ = options.sourceIdsProperty !== undefined ?
       options.sourceIdsProperty : ngeo.Query.DEFAULT_SOURCE_IDS_PROPERTY_;
 
@@ -108,13 +102,6 @@ ngeo.Query = function($http, ngeoQueryResult, ngeoQueryOptions,
    */
   this.cache_ = {};
 };
-
-
-/**
- * @const
- * @private
- */
-ngeo.Query.DEFAULT_SOURCE_ID_PROPERTY_ = 'querySourceId';
 
 
 /**
@@ -316,14 +303,9 @@ ngeo.Query.prototype.issueWMSGetFeatureInfoRequests_ = function(
     }
 
     // Skip layers that don't have one or more sources configured
-    id = this.getLayerSourceId_(layer);
     ids = this.getLayerSourceIds_(layer);
-    if ((!id || !this.cache_[id]) && !ids.length) {
+    if (ids.length === 0) {
       return;
-    }
-
-    if (id) {
-      ids.push(id);
     }
 
     for (var i = 0, len = ids.length; i < len; i++) {
@@ -428,19 +410,6 @@ ngeo.Query.prototype.clearResult_ = function() {
     source.pending = false;
     source.queried = false;
   }, this);
-};
-
-
-/**
- * Returns the source id from an ol3 layer object.
- * @param {ol.layer.Base} layer The ol3 layer object.
- * @return {number|string} id The id of the source bound to that layer.
- * @private
- */
-ngeo.Query.prototype.getLayerSourceId_ = function(layer) {
-  var id = layer.get(this.sourceIdProperty_);
-  id = goog.isNumber(id) || goog.isString(id) ? id : '';
-  return id;
 };
 
 
