@@ -127,7 +127,7 @@ gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent) {
       groupNotAdded.push(group);
     }
   }.bind(this));
-  if (groupNotAdded.length > 0 & !opt_silent) {
+  if (groupNotAdded.length > 0 && !opt_silent) {
     this.notifyCantAddGroups_(groupNotAdded);
   }
 };
