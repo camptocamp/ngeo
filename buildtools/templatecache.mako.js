@@ -16,7 +16,13 @@
       content = unicode(f.read().decode('utf8'))
       content = re.sub(r"'", "\\'", content)
       content = htmlmin.minify(content, remove_comments=True)
-      _partials[os.path.join(dest_folder, os.path.basename(filename)).replace("\\", "/")] = content
+      components_idx = filename.find('components')
+      if components_idx == -1:
+          name = os.path.basename(filename)
+      else:
+          # Component partials are in a subdirectory of "components".
+          name = filename[components_idx + len('components')  + 1:]
+      _partials[os.path.join(dest_folder, name).replace("\\", "/")] = content
 %>\
 /**
  * ngeo template cache.
