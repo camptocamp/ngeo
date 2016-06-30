@@ -70,6 +70,12 @@ app.MainController = function(gmfPermalink) {
   this.measureLengthActive = false;
 
   /**
+   * @type {Array.<string>}
+   * @export
+   */
+  this.measurePointLayers = ['aster', 'srtm'];
+
+  /**
    * @type {boolean}
    * @export
    */

@@ -42,6 +42,12 @@ app.MobileController = function($scope, $injector) {
    * @type {Array.<string>}
    * @export
    */
+  this.elevationLayers = ['aster', 'srtm'];
+
+  /**
+   * @type {Array.<string>}
+   * @export
+   */
   this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
 };

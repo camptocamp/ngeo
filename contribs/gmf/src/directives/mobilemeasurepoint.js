@@ -33,6 +33,7 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
  *
  *      <div gmf-mobile-measure-point=""
  *        gmf-mobile-measure-point-active="ctrl.measurePointActive"
+ *        gmf-mobile-measure-point-layers="::ctrl.measurePointLayers"
  *        gmf-mobile-measure-point-map="::ctrl.map">
  *      </div>
  *
@@ -50,6 +51,7 @@ gmf.mobileMeasurePointDirective =
         scope: {
           'active': '=gmfMobileMeasurePointActive',
           'decimals': '<?gmfMobileMeasurePointDecimals',
+          'getLayersFn': '&gmfMobileMeasurePointLayers',
           'map': '=gmfMobileMeasurePointMap',
           'sketchStyle': '=?gmfMobileMeasurePointSketchStyle'
         },
@@ -122,6 +124,15 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, gmfAltitude,
    * @export
    */
   this.decimals;
+
+  var layers = this['getLayersFn']();
+  goog.asserts.assertArray(layers);
+
+  /**
+   * @type {Array.<string>}
+   * @private
+   */
+  this.layers = layers;
 
   /**
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
@@ -236,7 +247,10 @@ gmf.MobileMeasurePointController.prototype.handleMeasureActiveChange_ =
 gmf.MobileMeasurePointController.prototype.getAltitude_ = function() {
   var center = this.map.getView().getCenter();
   goog.asserts.assertArray(center);
-  this.gmfAltitude_.getAltitude(center).then(function(object) {
+  var params = {
+    'layers': this.layers.join(',')
+  };
+  this.gmfAltitude_.getAltitude(center, params).then(function(object) {
     var el = this.measure.getTooltipElement();
     var ctn = document.createElement('div');
     var className = 'gmf-mobile-measure-point-altitude';
