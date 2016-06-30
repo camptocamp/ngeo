@@ -1,5 +1,5 @@
 goog.provide('gmf.MobileMeasurePointController');
-goog.provide('gmf.mobileMeasurePointDirective');
+goog.provide('gmf.mobileMeasurepointDirective');
 
 goog.require('gmf');
 goog.require('gmf.Altitude');
@@ -32,21 +32,21 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
  *
  * Example:
  *
- *      <div gmf-mobile-measure-point=""
- *        gmf-mobile-measure-point-active="ctrl.measurePointActive"
- *        gmf-mobile-measure-point-layers="::ctrl.measurePointLayers"
- *        gmf-mobile-measure-point-map="::ctrl.map">
+ *      <div gmf-mobile-measurepoint=""
+ *        gmf-mobile-measurepoint-active="ctrl.measurePointActive"
+ *        gmf-mobile-measurepoint-layers="::ctrl.measurePointLayers"
+ *        gmf-mobile-measurepoint-map="::ctrl.map">
  *      </div>
  *
- * @htmlAttribute {boolean} gmf-mobile-measure-point-active Used to active
+ * @htmlAttribute {boolean} gmf-mobile-measurepoint-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measure-point-decimals number of decimal
+ * @htmlAttribute {number=} gmf-mobile-measurepoint-decimals number of decimal
  *     to display
- * @htmlAttribute {Array.<string>} gmf-mobile-measure-point-layers Raster
+ * @htmlAttribute {Array.<string>} gmf-mobile-measurepoint-layers Raster
  *     elevation layers to get information under the point.
- * @htmlAttribute {ol.Map} gmf-mobile-measure-point-map The map.
- * @htmlAttribute {ol.style.Style=} gmf-mobile-measure-point-sketch-style A
- *     style for the measure point.
+ * @htmlAttribute {ol.Map} gmf-mobile-measurepoint-map The map.
+ * @htmlAttribute {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction=}
+ *     gmf-mobile-measurepoint-sketchstyle A style for the measure point.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.
  * @return {angular.Directive} The Directive Definition Object.
@@ -59,11 +59,11 @@ gmf.mobileMeasurePointDirective =
       return {
         restrict: 'A',
         scope: {
-          'active': '=gmfMobileMeasurePointActive',
-          'decimals': '<?gmfMobileMeasurePointDecimals',
-          'getLayersFn': '&gmfMobileMeasurePointLayers',
-          'map': '=gmfMobileMeasurePointMap',
-          'sketchStyle': '=?gmfMobileMeasurePointSketchStyle'
+          'active': '=gmfMobileMeasurepointActive',
+          'decimals': '<?gmfMobileMeasurepointDecimals',
+          'getLayersFn': '&gmfMobileMeasurepointLayers',
+          'map': '=gmfMobileMeasurepointMap',
+          'sketchStyle': '=?gmfMobileMeasurepointSketchstyle'
         },
         controller: 'GmfMobileMeasurePointController',
         controllerAs: 'ctrl',
@@ -73,7 +73,7 @@ gmf.mobileMeasurePointDirective =
     };
 
 
-gmf.module.directive('gmfMobileMeasurePoint',
+gmf.module.directive('gmfMobileMeasurepoint',
                      gmf.mobileMeasurePointDirective);
 
 
