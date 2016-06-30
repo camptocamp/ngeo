@@ -36,6 +36,13 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
  *        gmf-mobile-measure-length-map="::ctrl.map">
  *      </div>
  *
+ * @htmlAttribute {boolean} gmf-mobile-measure-point-active Used to active
+ * or deactivate the component.
+ * @htmlAttribute {number=} gmf-mobile-measure-point-decimals number of decimal
+ *     to display
+ * @htmlAttribute {ol.Map} gmf-mobile-measure-point-map The map.
+ * @htmlAttribute {ol.style.Style=} gmf-mobile-measure-point-sketch-style A
+ *     style for the measure point.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.
  * @return {angular.Directive} The Directive Definition Object.

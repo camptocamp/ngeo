@@ -27,7 +27,8 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
 
 
 /**
- * Provide a directive to do a point (coordinate and élévation) measure on the mobile devices.
+ * Provide a directive to do a point (coordinate and elevation) measure on the
+ * mobile devices.
  *
  * Example:
  *
@@ -37,6 +38,15 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
  *        gmf-mobile-measure-point-map="::ctrl.map">
  *      </div>
  *
+ * @htmlAttribute {boolean} gmf-mobile-measure-point-active Used to active
+ * or deactivate the component.
+ * @htmlAttribute {number=} gmf-mobile-measure-point-decimals number of decimal
+ *     to display
+ * @htmlAttribute {Array.<string>} gmf-mobile-measure-point-layers Raster
+ *     elevation layers to get information under the point.
+ * @htmlAttribute {ol.Map} gmf-mobile-measure-point-map The map.
+ * @htmlAttribute {ol.style.Style=} gmf-mobile-measure-point-sketch-style A
+ *     style for the measure point.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.
  * @return {angular.Directive} The Directive Definition Object.
