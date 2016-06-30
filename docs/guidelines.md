@@ -106,17 +106,46 @@ ngeo.exampleDirective = function(…) {
   return {
     restrict: 'A',
     scope: {
-      'm': '=ngeoExampleMap'
+      map: '=ngeoExampleMap'
     }
     controller: function() {
-      var m = this['m'];
+      var m = this['map'];
+      // Then, for Closure-Compiler, assert and type this value.
       // …
     },
     controllerAs: 'ctrl',
-    bindToController: true,
     // …
   });
 ```
+
+But if you bind your directive to the controller, you must
+use the `.` notation. See the example below :
+
+```js
+ngeo.exampleDirective = function(…) {
+  return {
+    restrict: 'A',
+    scope: {
+      map: '=ngeoExampleMap'
+    }
+    bindToController: true,
+    controller: function() {
+      /**
+       * This value will always be the value of 'ngeoExampleMap' and vice versa.
+       * The '@type …' and the '@export' below are only for Closure-Compiler.
+       * @type {ol.Map}
+       * @export
+       */
+      this.map;
+      // …
+    },
+    controllerAs: 'ctrl',
+    // …
+  });
+```
+
+Note also that if you use the `&` binding, you will still get a function
+instead of your ol.Map but directly in the scope of your controller.
 
 ## Directive name or attributes names in the DOM
 
@@ -145,7 +174,7 @@ And in the directive, a scope like this:
 ngeo.mobileMyexampleDirective = function(…) {
   return {
     scope: {
-      't': '=ngeoMobileMyexampleTitle'
+      t: '=ngeoMobileMyexampleTitle'
     },
     // …
   };
