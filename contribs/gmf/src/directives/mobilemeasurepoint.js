@@ -1,5 +1,5 @@
 goog.provide('gmf.MobileMeasurePointController');
-goog.provide('gmf.mobileMeasurePointDirective');
+goog.provide('gmf.mobileMeasurepointDirective');
 
 goog.require('gmf');
 goog.require('gmf.Altitude');
@@ -27,15 +27,26 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
 
 
 /**
- * Provide a directive to do a point (coordinate and élévation) measure on the mobile devices.
+ * Provide a directive to do a point (coordinate and elevation) measure on the
+ * mobile devices.
  *
  * Example:
  *
- *      <div gmf-mobile-measure-point=""
- *        gmf-mobile-measure-point-active="ctrl.measurePointActive"
- *        gmf-mobile-measure-point-map="::ctrl.map">
+ *      <div gmf-mobile-measurepoint=""
+ *        gmf-mobile-measurepoint-active="ctrl.measurePointActive"
+ *        gmf-mobile-measurepoint-layers="::ctrl.measurePointLayers"
+ *        gmf-mobile-measurepoint-map="::ctrl.map">
  *      </div>
  *
+ * @htmlAttribute {boolean} gmf-mobile-measurepoint-active Used to active
+ * or deactivate the component.
+ * @htmlAttribute {number=} gmf-mobile-measurepoint-decimals number of decimal
+ *     to display
+ * @htmlAttribute {Array.<string>} gmf-mobile-measurepoint-layers Raster
+ *     elevation layers to get information under the point.
+ * @htmlAttribute {ol.Map} gmf-mobile-measurepoint-map The map.
+ * @htmlAttribute {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction=}
+ *     gmf-mobile-measurepoint-sketchstyle A style for the measure point.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.
  * @return {angular.Directive} The Directive Definition Object.
@@ -48,10 +59,11 @@ gmf.mobileMeasurePointDirective =
       return {
         restrict: 'A',
         scope: {
-          'active': '=gmfMobileMeasurePointActive',
-          'decimals': '<?gmfMobileMeasurePointDecimals',
-          'map': '=gmfMobileMeasurePointMap',
-          'sketchStyle': '=?gmfMobileMeasurePointSketchStyle'
+          'active': '=gmfMobileMeasurepointActive',
+          'decimals': '<?gmfMobileMeasurepointDecimals',
+          'getLayersFn': '&gmfMobileMeasurepointLayers',
+          'map': '=gmfMobileMeasurepointMap',
+          'sketchStyle': '=?gmfMobileMeasurepointSketchstyle'
         },
         controller: 'GmfMobileMeasurePointController',
         controllerAs: 'ctrl',
@@ -61,7 +73,7 @@ gmf.mobileMeasurePointDirective =
     };
 
 
-gmf.module.directive('gmfMobileMeasurePoint',
+gmf.module.directive('gmfMobileMeasurepoint',
                      gmf.mobileMeasurePointDirective);
 
 
@@ -122,6 +134,15 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, gmfAltitude,
    * @export
    */
   this.decimals;
+
+  var layers = this['getLayersFn']();
+  goog.asserts.assertArray(layers);
+
+  /**
+   * @type {Array.<string>}
+   * @private
+   */
+  this.layers = layers;
 
   /**
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
@@ -236,7 +257,10 @@ gmf.MobileMeasurePointController.prototype.handleMeasureActiveChange_ =
 gmf.MobileMeasurePointController.prototype.getAltitude_ = function() {
   var center = this.map.getView().getCenter();
   goog.asserts.assertArray(center);
-  this.gmfAltitude_.getAltitude(center).then(function(object) {
+  var params = {
+    'layers': this.layers.join(',')
+  };
+  this.gmfAltitude_.getAltitude(center, params).then(function(object) {
     var el = this.measure.getTooltipElement();
     var ctn = document.createElement('div');
     var className = 'gmf-mobile-measure-point-altitude';

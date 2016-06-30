@@ -1,5 +1,5 @@
 goog.provide('gmf.MobileMeasureLengthController');
-goog.provide('gmf.mobileMeasureLengthDirective');
+goog.provide('gmf.mobileMeasurelengthDirective');
 
 goog.require('gmf');
 goog.require('ngeo.DecorateInteraction');
@@ -31,11 +31,18 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
  *
  * Example:
  *
- *      <div gmf-mobile-measure-length=""
- *        gmf-mobile-measure-length-active="ctrl.measureLengthActive"
- *        gmf-mobile-measure-length-map="::ctrl.map">
+ *      <div gmf-mobile-measurelength=""
+ *        gmf-mobile-measurelength-active="ctrl.measureLengthActive"
+ *        gmf-mobile-measurelength-map="::ctrl.map">
  *      </div>
  *
+ * @htmlAttribute {boolean} gmf-mobile-measurelength-active Used to active
+ * or deactivate the component.
+ * @htmlAttribute {number=} gmf-mobile-measurelength-decimals number of decimal
+ *     to display.
+ * @htmlAttribute {ol.Map} gmf-mobile-measurelength-map The map.
+ * @htmlAttribute {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction=}
+ *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.
  * @return {angular.Directive} The Directive Definition Object.
@@ -48,10 +55,10 @@ gmf.mobileMeasureLengthDirective =
       return {
         restrict: 'A',
         scope: {
-          'active': '=gmfMobileMeasureLengthActive',
-          'decimals': '<?gmfMobileMeasureLengthDecimals',
-          'map': '=gmfMobileMeasureLengthMap',
-          'sketchStyle': '=?gmfMobileMeasureLengthSketchStyle'
+          'active': '=gmfMobileMeasurelengthActive',
+          'decimals': '<?gmfMobileMeasurelengthDecimals',
+          'map': '=gmfMobileMeasurelengthMap',
+          'sketchStyle': '=?gmfMobileMeasureLengthSketchstyle'
         },
         controller: 'GmfMobileMeasureLengthController',
         controllerAs: 'ctrl',
@@ -61,7 +68,7 @@ gmf.mobileMeasureLengthDirective =
     };
 
 
-gmf.module.directive('gmfMobileMeasureLength',
+gmf.module.directive('gmfMobileMeasurelength',
                      gmf.mobileMeasureLengthDirective);
 
 

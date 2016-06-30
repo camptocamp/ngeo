@@ -1,8 +1,8 @@
 goog.provide('gmf-mobilemeasure');
 
 goog.require('gmf.Permalink');
-goog.require('gmf.mobileMeasureLengthDirective');
-goog.require('gmf.mobileMeasurePointDirective');
+goog.require('gmf.mobileMeasurelengthDirective');
+goog.require('gmf.mobileMeasurepointDirective');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.MeasureEvent');
 goog.require('ngeo.btngroupDirective');
@@ -68,6 +68,12 @@ app.MainController = function(gmfPermalink) {
    * @export
    */
   this.measureLengthActive = false;
+
+  /**
+   * @type {Array.<string>}
+   * @export
+   */
+  this.measurePointLayers = ['aster', 'srtm'];
 
   /**
    * @type {boolean}
