@@ -101,9 +101,12 @@ main {
       background-color: fade(@main-bg-color, 80%);
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      right: @app-margin;
+      padding: 0;
+      left: 50%;
+      @width: 4rem;
+      width: @width;
+      margin-left: -(@width / 2);
       border-bottom: 0;
-      padding: @half-app-margin @app-margin;
       border: solid @border-color;
       border-width: 1px 1px 0 1px;
     }
