@@ -70,7 +70,7 @@ gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
   var url = goog.uri.utils.appendPath(this.baseUrl_, layerId.toString());
   var geoJSON = new ol.format.GeoJSON().writeFeatures(features);
   return this.http_.post(url, geoJSON, {
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    headers: {'Content-Type': 'application/json'},
     withCredentials: true
   });
 };
@@ -89,7 +89,7 @@ gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
   );
   var geoJSON = new ol.format.GeoJSON().writeFeature(feature);
   return this.http_.put(url, geoJSON, {
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    headers: {'Content-Type': 'application/json'},
     withCredentials: true
   });
 };
@@ -107,7 +107,7 @@ gmf.EditFeature.prototype.deleteFeature = function(layerId, feature) {
     layerId.toString() + '/' + feature.getId()
   );
   return this.http_.delete(url, {
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    headers: {'Content-Type': 'application/json'},
     withCredentials: true
   });
 };
