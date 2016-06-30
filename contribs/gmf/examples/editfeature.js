@@ -4,6 +4,7 @@ goog.require('ngeo.proj.EPSG21781');
 goog.require('gmf.authenticationDirective');
 goog.require('gmf.mapDirective');
 goog.require('gmf.EditFeature');
+goog.require('goog.asserts');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
