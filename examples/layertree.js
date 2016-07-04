@@ -12,7 +12,6 @@ goog.require('ngeo.popupDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
-goog.require('ol.source.MapQuest');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Stamen');
 
@@ -183,17 +182,17 @@ app.getLayer = (function() {
           source = new ol.source.Stamen({
             layer: 'terrain-labels'
           });
-        } else if (type == 'mapquestOsm') {
-          source = new ol.source.MapQuest({
-            layer: 'osm'
+        } else if (type == 'osmHumanitarian') {
+          source = new ol.source.OSM({
+            url: 'https://tile-{a-c}.openstreetmap.fr/hot/{z}/{x}/{y}.png'
           });
-        } else if (type == 'mapquestSat') {
-          source = new ol.source.MapQuest({
-            layer: 'sat'
+        } else if (type == 'osmCycle') {
+          source = new ol.source.OSM({
+            url: 'https://{a-c}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png'
           });
-        } else if (type == 'mapquestHyb') {
-          source = new ol.source.MapQuest({
-            layer: 'hyb'
+        } else if (type == 'osmTransport') {
+          source = new ol.source.OSM({
+            url: 'https://{a-c}.tile.thunderforest.com/transport/{z}/{x}/{y}.png'
           });
         } else {
           source = new ol.source.OSM();
