@@ -11,7 +11,7 @@ goog.require('ol.View');
 goog.require('ol.geom.Point');
 goog.require('ol.interaction.Draw');
 goog.require('ol.layer.Tile');
-goog.require('ol.source.MapQuest');
+goog.require('ol.source.OSM');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
@@ -45,7 +45,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
   this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
-        source: new ol.source.MapQuest({layer: 'sat'})
+        source: new ol.source.OSM()
       })
     ],
     view: new ol.View({

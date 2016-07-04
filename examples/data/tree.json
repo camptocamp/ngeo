@@ -10,20 +10,20 @@
             "layerType": "stamenTerrain-labels"
         }]
     }, {
-        "name": "MapQuest 0",
+        "name": "OpenStreetMap 0",
         "children": [{
-            "name": "MapQuest 00",
+            "name": "OpenStreetMap 00",
             "children": [{
-                "name": "MapQuest 01",
+                "name": "OpenStreetMap 01",
                 "children": [{
-                    "name": "OSM",
-                    "layerType": "mapquestOsm"
+                    "name": "Humanitarian",
+                    "layerType": "osmHumanitarian"
                 }, {
-                    "name": "Satellite",
-                    "layerType": "mapquestSat"
+                    "name": "Cycle Map",
+                    "layerType": "osmCycle"
                 }, {
-                    "name": "Hybrid",
-                    "layerType": "mapquestHyb"
+                    "name": "Transport Map",
+                    "layerType": "osmTransport"
                 }]
             }]
         }, {

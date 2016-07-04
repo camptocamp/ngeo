@@ -5,7 +5,7 @@ goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
-goog.require('ol.source.MapQuest');
+goog.require('ol.source.OSM');
 goog.require('ol.source.TileWMS');
 
 
@@ -47,7 +47,7 @@ app.MainController = function(ngeoDecorateLayer) {
   this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
-        source: new ol.source.MapQuest({layer: 'sat'})
+        source: new ol.source.OSM()
       }),
       wmsLayer
     ],
