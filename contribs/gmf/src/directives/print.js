@@ -156,6 +156,11 @@ gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
+   * @type {boolean}
+   */
+  this.active;
+
+  /**
    * @type{boolean}
    * @private
    */
@@ -368,6 +373,10 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
       this.getCapabilities_();
     }
     this.capabilities_.then(function(resp) {
+      // make sure the panel is still open
+      if (!this.active) {
+        return;
+      }
       this.printState = gmf.PrintState.NOT_IN_USE;
       // Get capabilities - On success
       this.parseCapabilities_(resp);
