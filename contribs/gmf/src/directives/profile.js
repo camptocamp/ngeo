@@ -58,8 +58,11 @@ ngeo.module.value('gmfProfileTemplateUrl',
  *     for the 'on Hover' point on the line.
  * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
  *     points to request. Default to 100.
- * @htmlAttribute {string?} gmf-profile-css Inline Optional CSS style definition
- *     to inject in the SVG.
+ * @htmlAttribute {Object.<string, *>?} gmf-profile-options Optional options
+ *     object like {@link ngeox.profile.ProfileOptions} but without any
+ *     mandatory value. Will be passed to the ngeo profile directive. Providing
+ *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback
+ *     or i18n will override native gmf profile values.
  * @param {string} gmfProfileTemplateUrl URL to a template.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
@@ -81,7 +84,7 @@ gmf.profileDirective = function(gmfProfileTemplateUrl) {
       'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
       'getHoverPointStyleFn': '&?gmfProfileHoverpointstyle',
       'getNbPointsFn': '&?gmfProfileNumberofpoints',
-      'getCssFn': '&?gmfProfileCss'
+      'getOptionsFn': '&?gmfProfileOptions'
     }
   };
 };
@@ -197,19 +200,6 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
     }
   }
 
-  var css;
-  var cssFn = this['getCssFn'];
-  if (cssFn) {
-    css = cssFn();
-    goog.asserts.assertString(css);
-  }
-
-  /**
-   * @type {string|undefined}
-   * @private
-   */
-  this.css_ = css;
-
   var nbPoints = 100;
   var nbPointsFn = this['getNbPointsFn'];
   if (nbPointsFn) {
@@ -305,13 +295,19 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    * @export
    */
   this.profileOptions = /** @type {ngeox.profile.ProfileOptions} */ ({
-    styleDefs: this.css_,
     linesConfiguration: this.linesConfiguration_,
     distanceExtractor: this.getDist_,
     hoverCallback: this.hoverCallback_.bind(this),
     outCallback: this.outCallback_.bind(this),
     i18n: this.profileLabels_
   });
+
+  var optionsFn = this['getOptionsFn'];
+  if (optionsFn) {
+    var options = optionsFn();
+    goog.asserts.assertObject(options);
+    goog.object.extend(this.profileOptions, options);
+  }
 
   /**
    * @type {boolean}
