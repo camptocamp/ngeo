@@ -810,7 +810,8 @@ ngeox.profile;
  *   lightXAxis: (boolean|undefined),
  *   scaleModifier: (function(function(), function(), number, number)|undefined),
  *   hoverCallback: (function(Object)|undefined),
- *   outCallback: (function()|undefined)
+ *   outCallback: (function()|undefined),
+ *   i18n: (ngeox.profile.I18n|undefined)
  * }} ngeox.profile.ProfileOptions
  */
 ngeox.profile.ProfileOptions;
@@ -1010,6 +1011,30 @@ ngeox.profile.ProfileFormatter.prototype.xtick;
  * @type {function(number, string): (string|number)}
  */
 ngeox.profile.ProfileFormatter.prototype.ytick;
+
+
+/**
+ * @typedef {{
+ *   xAxis: (string|undefined),
+ *   yAxis: (string|undefined)
+ * }}
+ */
+ngeox.profile.I18n;
+
+
+/**
+ * Text for the x axis. Will be completed by ` km` or ' m' (for kilometers or
+ * meters).
+ * @type {string|undefined}
+ */
+ngeox.profile.I18n.prototype.xAxis;
+
+
+/**
+ * Text for the y axis. Will be completed by ' m' (for meters).
+ * @type {string|undefined}
+ */
+ngeox.profile.I18n.prototype.yAxis;
 
 
 /**
