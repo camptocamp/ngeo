@@ -333,6 +333,10 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
    */
   this.nameProperty = ngeo.FeatureProperties.NAME;
 
+  /**
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 };
 
 
@@ -454,7 +458,11 @@ gmf.DrawfeatureController.prototype.getFeaturesArray = function() {
  * @export
  */
 gmf.DrawfeatureController.prototype.clearFeatures = function() {
-  this.features.clear();
+  var msg = this.gettextCatalog_.getString(
+      'Do you really want to delete all the features?');
+  if (confirm(msg)) {
+    this.features.clear();
+  }
 };
 
 
@@ -463,7 +471,11 @@ gmf.DrawfeatureController.prototype.clearFeatures = function() {
  * @export
  */
 gmf.DrawfeatureController.prototype.removeFeature = function(feature) {
-  this.features.remove(feature);
+  var msg = this.gettextCatalog_.getString(
+      'Do you really want to delete the selected feature?');
+  if (confirm(msg)) {
+    this.features.remove(feature);
+  }
 };
 
 
@@ -659,7 +671,7 @@ gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
     case gmf.DrawfeatureController.MenuActionType.DELETE:
       goog.asserts.assert(
           this.selectedFeature, 'Selected feature should be truthy');
-      this.features.remove(this.selectedFeature);
+      this.removeFeature(this.selectedFeature);
       this.scope_.$apply();
       break;
     case gmf.DrawfeatureController.MenuActionType.MOVE:
