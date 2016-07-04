@@ -47,7 +47,7 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
  */
 gmf.authenticationDirective = function(gmfAuthenticationTemplateUrl) {
   return {
-    scope: {},
+    scope: true,
     controller: 'GmfAuthenticationController',
     controllerAs: 'authCtrl',
     templateUrl: gmfAuthenticationTemplateUrl
