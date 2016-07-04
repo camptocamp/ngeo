@@ -309,11 +309,6 @@ gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,
   this.printState = gmf.PrintState.CAPABILITIES_NOT_LOADED;
 
   /**
-   * @type {gmf.Authentication}
-   */
-  this.gmfAuthentication = gmfAuthentication;
-
-  /**
    * @return {ol.Size} Size in dots of the map to print.
    */
   var getSizeFn = function() {
@@ -345,6 +340,20 @@ gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,
    */
   this.postcomposeListener_ = ngeoPrintUtils.createPrintMaskPostcompose(
       getSizeFn, getScaleFn, getRotationFn);
+
+  /**
+   * @type {angular.$http.HttpPromise}
+   * @private
+   */
+  this.capabilities_;
+
+  // Clear the capabilities if the roleId changes
+  $scope.$watch(function() {
+    return gmfAuthentication.getRoleId();
+  }, function() {
+    this.printState = gmf.PrintState.CAPABILITIES_NOT_LOADED;
+    this.capabilities_ = null;
+  }.bind(this));
 };
 
 
@@ -355,16 +364,10 @@ gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,
  */
 gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
   if (active) {
-    var roleId = this.gmfAuthentication.getRoleId();
-    this.ngeoPrint_.getCapabilities(/** @type {angular.$http.Config} */ ({
-      withCredentials: true,
-      params: roleId !== null ? {
-        'role': roleId,
-        'cache_version': this.cacheVersion_
-      } : {
-        'cache_version': this.cacheVersion_
-      }
-    })).then(function(resp) {
+    if (!this.capabilities_) {
+      this.getCapabilities_();
+    }
+    this.capabilities_.then(function(resp) {
       this.printState = gmf.PrintState.NOT_IN_USE;
       // Get capabilities - On success
       this.parseCapabilities_(resp);
@@ -376,14 +379,33 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
     }.bind(this), function(resp) {
       // Get capabilities - On error
       this.printState = gmf.PrintState.ERROR_ON_GETCAPABILITIES;
+      this.capabilities_ = null;
     }.bind(this));
-
   } else {
     this.map.unByKey(this.postComposeListenerKey_);
     this.map.unByKey(this.pointerDragListenerKey_);
     this.getSetRotation(0);
     this.map.render(); // Redraw (remove) post compose mask;
   }
+};
+
+
+/**
+ * Gets the print capabilities.
+ * @param {number|null=} opt_roleId The role id.
+ * @private
+ */
+gmf.PrintController.prototype.getCapabilities_ = function(opt_roleId) {
+  this.capabilities_ = this.ngeoPrint_.getCapabilities(
+    /** @type {angular.$http.Config} */ ({
+      withCredentials: true,
+      params: opt_roleId ? {
+        'role': opt_roleId,
+        'cache_version': this.cacheVersion_
+      } : {
+        'cache_version': this.cacheVersion_
+      }
+    }));
 };
 
 
