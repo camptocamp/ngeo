@@ -1,5 +1,6 @@
 goog.provide('gmf-backgroundlayerselector');
 
+goog.require('gmf.LayertreeController');
 goog.require('gmf.Themes');
 goog.require('gmf.backgroundlayerselectorDirective');
 goog.require('gmf.mapDirective');
