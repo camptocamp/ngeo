@@ -132,7 +132,8 @@
           </li>
         </ul>
       </div>
-      <gmf-authentication id="login" class="slide" data-header-title="{{'Login' | translate}}">
+      <gmf-authentication id="login" class="slide" data-header-title="{{'Login' | translate}}"
+        gmf-mobile-nav-back="authCtrl.gmfUser.username !== null">
       </gmf-authentication>
     </nav>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
