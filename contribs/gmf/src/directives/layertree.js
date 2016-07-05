@@ -273,7 +273,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
         this.prepareLayer_(node, layer);
         break;
       default:
-        throw new Error('node wrong type: ' + type);
+        throw new Error('Node wrong type: ' + type);
     }
     this.dataLayerGroup_.getLayers().insertAt(0, layer);
     return layer;
@@ -309,7 +309,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
               node.serverType, timeParam);
       break;
     default:
-      throw new Error('node wrong type: ' + type);
+      throw new Error('Node wrong type: ' + type);
   }
   this.prepareLayer_(node, layer);
   parentCtrl['layer'].getLayers().push(layer);
@@ -384,7 +384,7 @@ gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
  */
 gmf.LayertreeController.prototype.getLayerCaseWMTS_ = function(node) {
   var newLayer = new ol.layer.Tile();
-  this.layerHelper_.createWMTSLayerFromCapabilitites(node.url || '', node.name)
+  this.layerHelper_.createWMTSLayerFromCapabilitites(node.url || '', node.layer)
     .then(function(layer) {
       newLayer.setSource(layer.getSource());
       newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
@@ -529,8 +529,8 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
         this.getFlatNodes_(firstParentTreeNode, childNodes);
         // Add/remove layer and keep order of layers in layergroup.
         for (i = 0; i < childNodes.length; i++) {
-          layersNames = childNodes[i].layers;
-          if (layersNames === node.layers) {
+          layersNames = this.getLayersNames_(childNodes[i]);
+          if (layersNames === this.getLayersNames_(node)) {
             if (!isActive) {
               newLayersNames.push(layersNames);
             }
@@ -547,9 +547,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
       var nodeLayers = [];
       var l, source;
       this.getFlatNodes_(node, childNodes);
-      layersNames = childNodes.map(function(node) {
-        return node.layers;
-      }).join(',');
+      layersNames = childNodes.map(this.getLayersNames_).join(',');
       layers = this.layerHelper_.getFlatLayers(firstParentTreeLayer);
       for (i = 0; i < layers.length; i++) {
         l = layers[i];
@@ -571,9 +569,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
 
     case gmf.Themes.NodeType.NOT_MIXED_GROUP:
       this.getFlatNodes_(node, childNodes);
-      layersNames = childNodes.map(function(node) {
-        return node.layers;
-      });
+      layersNames = childNodes.map(this.getLayersNames_);
       source = /** @type {ol.source.ImageWMS} */
           (firstParentTreeLayer.getSource());
       layers = (firstParentTreeLayer.getVisible() &&
@@ -598,6 +594,24 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
   }
 };
 
+
+/**
+ * Get the layer(s) name(s) Attached to the node param, regarding its type
+ * @param  {GmfThemesNode} node The tree node
+ * @return {string} name(s) of the layer(s) attached to this node regarind its type
+ * @private
+ */
+gmf.LayertreeController.prototype.getLayersNames_ = function(node) {
+  var type = gmf.Themes.getNodeType(node);
+  switch (type) {
+    case gmf.Themes.NodeType.WMS:
+      return node.layers;
+    case gmf.Themes.NodeType.WMTS:
+      return node.layer;
+    default:
+      throw new Error('Node wrong type to get layer(s) name(s): ' + type);
+  }
+};
 
 /**
  * Return the current state of the given treeCtrl's node.
