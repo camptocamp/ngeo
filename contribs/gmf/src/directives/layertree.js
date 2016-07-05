@@ -384,7 +384,8 @@ gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
  */
 gmf.LayertreeController.prototype.getLayerCaseWMTS_ = function(node) {
   var newLayer = new ol.layer.Tile();
-  this.layerHelper_.createWMTSLayerFromCapabilitites(node.url || '', node.layer)
+  goog.asserts.assert(node.url);
+  this.layerHelper_.createWMTSLayerFromCapabilitites(node.url, node.layer, node.dimensions)
     .then(function(layer) {
       newLayer.setSource(layer.getSource());
       newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));

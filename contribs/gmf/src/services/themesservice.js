@@ -214,7 +214,8 @@ gmf.Themes.prototype.getBgLayers = function() {
       if (item['type'] === 'WMTS') {
         return this.layerHelper_.createWMTSLayerFromCapabilitites(
             item['url'],
-            item['name']
+            item['name'],
+            item['dimensions']
         ).then(callback.bind(this, item)).then(null, function(error) {
           console.error(error || 'unknown error');
           // Continue even if some layers have failed loading.
