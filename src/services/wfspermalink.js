@@ -159,7 +159,8 @@ ngeo.WfsPermalink.prototype.issue = function(queryData, map) {
  * @private
  */
 ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showFeatures) {
-  var featureRequestXml = new ol.format.WFS().writeGetFeature({
+  var wfsFormat = new ol.format.WFS();
+  var featureRequestXml = wfsFormat.writeGetFeature({
     srsName: map.getView().getProjection().getCode(),
     featureNS: (wfsType.featureNS !== undefined) ?
         wfsType.featureNS : this.defaultFeatureNS_,
@@ -173,7 +174,7 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
 
   var featureRequest = new XMLSerializer().serializeToString(featureRequestXml);
   this.$http_.post(this.url_, featureRequest).then(function(response) {
-    var features = new ol.format.WFS().readFeatures(response.data);
+    var features = wfsFormat.readFeatures(response.data);
     if (features.length == 0) {
       return;
     }

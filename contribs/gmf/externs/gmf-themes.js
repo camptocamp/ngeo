@@ -42,7 +42,7 @@ GmfThemesNode.prototype.maxResolutionHint;
 
 
 /**
- * @type {Object.<string, ?>}
+ * @type {GmfMetaData}
  */
 GmfThemesNode.prototype.metadata;
 
@@ -89,6 +89,30 @@ GmfThemesNode.prototype.wmsUrl;
 
 
 /**
+ * @type {number|undefined}
+ */
+GmfThemesNode.prototype.queryable;
+
+
+/**
+ * @type {boolean|undefined}
+ */
+GmfThemesNode.prototype.wfsSupport;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesNode.prototype.urlWfs;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesNode.prototype.ogcServer;
+
+
+/**
  * @constructor
  */
 var GmfThemesNodeCustom = function() {};
@@ -122,3 +146,87 @@ GmfChildLayerNode.prototype.name;
  * @type {number|boolean|undefined}
  */
 GmfChildLayerNode.prototype.queryable;
+
+
+/**
+ * @constructor
+ */
+var GmfMetaData = function() {};
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfMetaData.prototype.identifierAttributeField;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfMetaData.prototype.queryLayers;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfMetaData.prototype.wmsLayers;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfMetaData.prototype.wmsUrl;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfMetaData.prototype.ogcServer;
+
+
+/**
+ * @constructor
+ */
+var GmfOgcServer = function() {};
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfOgcServer.prototype.url;
+
+
+/**
+ * @type {boolean|undefined}
+ */
+GmfOgcServer.prototype.isSingleTile;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfOgcServer.prototype.auth;
+
+
+/**
+ * @type {boolean|undefined}
+ */
+GmfOgcServer.prototype.wfsSupport;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfOgcServer.prototype.urlWfs;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfOgcServer.prototype.type;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfOgcServer.prototype.imageType;

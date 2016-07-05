@@ -319,7 +319,11 @@ ngeox.QueryResultSource.prototype.queried;
  * The options for the query service.
  * @typedef {{
  *     limit: (number|undefined),
- *     sourceIdsProperty: (string|undefined)
+ *     sourceIdsProperty: (string|undefined),
+ *     tolerance: (number|undefined),
+ *     featureNS: (string|undefined),
+ *     featurePrefix: (string|undefined),
+ *     geometryName: (string|undefined)
  * }}
  */
 ngeox.QueryOptions;
@@ -344,6 +348,38 @@ ngeox.QueryOptions.prototype.sourceIdsProperty;
 
 
 /**
+ * When issuing an identify feature request at a click position, either a WMS GetFeatureInfo
+ * or a WFS GetFeature request will be used. For GetFeature requests a bbox is built
+ * around the position. This `tolerance` in pixel determines the size of the bbox.
+ * The default is `3` pixel.
+ * @type {number|undefined}
+ */
+ngeox.QueryOptions.prototype.tolerance;
+
+
+/**
+ * The feature namespace for WFS GetFeature requests. The default is
+ * `http://mapserver.gis.umn.edu/mapserver`.
+ * @type {string|undefined}
+ */
+ngeox.QueryOptions.prototype.featureNS;
+
+
+/**
+ * The feature prefix for WFS GetFeature requests. The default is `feature`.
+ * @type {string|undefined}
+ */
+ngeox.QueryOptions.prototype.featurePrefix;
+
+
+/**
+ * The name of the geometry property for WFS GetFeature requests. The default is `the_geom`.
+ * @type {string|undefined}
+ */
+ngeox.QueryOptions.prototype.geometryName;
+
+
+/**
  * The configuration of a source for the Query service
  * @typedef {{
  *     format: (ol.format.Feature|undefined),
@@ -356,7 +392,8 @@ ngeox.QueryOptions.prototype.sourceIdsProperty;
  *     serverType: (string|undefined),
  *     url: (string|undefined),
  *     validateLayerParams: (boolean|undefined),
- *     wmsSource: (ol.source.ImageWMS|ol.source.TileWMS|undefined)
+ *     wmsSource: (ol.source.ImageWMS|ol.source.TileWMS|undefined),
+ *     wfsQuery: (boolean|undefined)
  * }}
  */
 ngeox.QuerySource;
@@ -461,6 +498,13 @@ ngeox.QuerySource.prototype.validateLayerParams;
  * @type {ol.source.ImageWMS|ol.source.TileWMS|undefined}
  */
 ngeox.QuerySource.prototype.wmsSource;
+
+
+/**
+ * If this source supports WFS requests.
+ * @type {boolean|undefined}
+ */
+ngeox.QuerySource.prototype.wfsQuery;
 
 
 /**

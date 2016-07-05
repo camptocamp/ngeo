@@ -281,4 +281,21 @@ ngeo.LayerHelper.prototype.getWMSLegendURL = function(url,
 };
 
 
+/**
+ * Returns if this layer is visible at the current resolution.
+ * @param {ol.layer.Base} layer Layer.
+ * @param {ol.Map} map Map.
+ * @return {boolean} Is the layer currently visible?
+ */
+ngeo.LayerHelper.prototype.isLayerVisible = function(layer, map) {
+  if (!layer.getVisible()) {
+    return false;
+  }
+
+  var currentResolution = map.getView().getResolution();
+  return currentResolution > layer.getMinResolution() &&
+      currentResolution < layer.getMaxResolution();
+};
+
+
 ngeo.module.service('ngeoLayerHelper', ngeo.LayerHelper);

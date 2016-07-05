@@ -64,23 +64,25 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
    */
   this.cache_ = {};
 
-  var promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
-    // create sources for each themes
-    for (var i = 0, len = themes.length; i < len; i++) {
-      this.createSources_(themes[i]);
-    }
-  }.bind(this));
+  this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
+    var promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
+      // create sources for each themes
+      for (var i = 0, len = themes.length; i < len; i++) {
+        this.createSources_(themes[i], ogcServers);
+      }
+    }.bind(this));
 
-  var promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(function(backgroundLayers) {
-    // create a source for each background layer
-    for (var i = 0, len = backgroundLayers.length; i < len; i++) {
-      this.createSources_(backgroundLayers[i]);
-    }
-  }.bind(this));
+    var promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(function(backgroundLayers) {
+      // create a source for each background layer
+      for (var i = 0, len = backgroundLayers.length; i < len; i++) {
+        this.createSources_(backgroundLayers[i], ogcServers);
+      }
+    }.bind(this));
 
-  // then add all sources to the query service
-  this.$q_.all([promiseThemes, promiseBgLayers]).then(function() {
-    this.ngeoQuery_.addSources(this.sources_);
+    // then add all sources to the query service
+    this.$q_.all([promiseThemes, promiseBgLayers]).then(function() {
+      this.ngeoQuery_.addSources(this.sources_);
+    }.bind(this));
   }.bind(this));
 };
 
@@ -90,26 +92,40 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
  * it has no children, otherwise create the sources for each child node if
  * it has any.
  * @param {GmfThemesNode} node Theme layer node.
+ * @param {gmf.OgcServers} ogcServers OGC servers.
  * @private
  */
-gmf.QueryManager.prototype.createSources_ = function(node) {
+gmf.QueryManager.prototype.createSources_ = function(node, ogcServers) {
   var meta = node.metadata;
   var children = node.children;
   var id = node.id;
-  var identifierAttributeField = meta['identifierAttributeField'];
-  var layers = meta['wmsLayers'] || meta['queryLayers'] || node.layers;
+  var identifierAttributeField = meta.identifierAttributeField;
+  var layers = meta.wmsLayers || meta.queryLayers || node.layers;
   var name = node.name;
-  var url = meta['wmsUrl'] || node.url || this.gmfWmsUrl_;
+  var url = meta.wmsUrl || node.url || this.gmfWmsUrl_;
   var validateLayerParams = false;
+  var wfsQuery = node.wfsSupport;
 
-  // don't create sources for WMTS layers without wmsUrl, they are not queryable.
-  if (node.type === 'WMTS' && !meta['wmsUrl']) {
+  // skip non-querable layers that have no child layers
+  if (node.queryable === 0 && !(node.childLayers && node.childLayers.length)) {
     return;
+  }
+
+  // don't create sources for WMTS layers without wmsUrl and ogcServer,
+  // they are not queryable.
+  if (node.type === 'WMTS' && !meta.wmsUrl) {
+    if (meta.ogcServer && ogcServers[meta.ogcServer]) {
+      var ogcServer = ogcServers[meta.ogcServer];
+      url = ogcServer.urlWfs;
+      wfsQuery = ogcServer.wfsSupport;
+    } else {
+      return;
+    }
   }
 
   if (children) {
     for (var i = 0, len = children.length; i < len; i++) {
-      this.createSources_(children[i]);
+      this.createSources_(children[i], ogcServers);
     }
   } else {
     if (!this.cache_[id]) {
@@ -139,7 +155,8 @@ gmf.QueryManager.prototype.createSources_ = function(node) {
         'label': name,
         'params': {'LAYERS': layers},
         'url': url,
-        'validateLayerParams': validateLayerParams
+        'validateLayerParams': validateLayerParams,
+        'wfsQuery': wfsQuery
       };
       this.cache_[id] = source;
       this.sources_.push(source);
