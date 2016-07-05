@@ -233,8 +233,8 @@ ngeo.profile = function(options) {
 
   var profile = function(selection) {
     selection.each(function(data) {
+      d3.select(this).selectAll('svg').remove();
       if (data === undefined) {
-        d3.select(this).selectAll('svg').remove();
         return;
       }
 
@@ -306,7 +306,7 @@ ngeo.profile = function(options) {
           .attr('dy', '.75em')
           .attr('transform', 'rotate(-90)')
           .style('fill', 'grey')
-          .text(yAxisLabel + ' (m)');
+          .text(yAxisLabel + ' [m]');
 
         gEnter.append('g')
           .attr('class', 'metas')
@@ -429,7 +429,7 @@ ngeo.profile = function(options) {
           .call(xAxis);
 
         g.select('.x.label')
-          .text(xAxisLabel + ' (' + xUnits + ')')
+          .text(xAxisLabel + ' [' + xUnits + ']')
           .style('fill', 'grey')
           .style('shape-rendering', 'crispEdges');
 
