@@ -321,6 +321,13 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    */
   this.pointerMoveKey_;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.isErrored = false;
+
+
   // Watch the active value to activate/deactive events listening.
   $scope.$watch(
     function() {
@@ -351,6 +358,7 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
  * @private
  */
 gmf.ProfileController.prototype.update_ = function() {
+  this.isErrored = false;
   if (this.line) {
     this.getJsonProfile_();
   } else {
@@ -649,6 +657,7 @@ gmf.ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
  * @private
  */
 gmf.ProfileController.prototype.getProfileDataError_ = function(resp) {
+  this.isErrored = true;
   console.error('Can not get JSON profile.');
 };
 
@@ -706,6 +715,7 @@ gmf.ProfileController.prototype.getCsvSuccess_ = function(resp) {
  * @private
  */
 gmf.ProfileController.prototype.getCsvError_ = function(resp) {
+  this.isErrored = true;
   console.error('Can not get CSV profile.');
 };
 
