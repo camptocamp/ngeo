@@ -173,6 +173,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.measureLengthActive = false;
 
   /**
+   * @type {boolean}
+   * @export
+   */
+  this.drawFeatureActive = false;
+
+  /**
    * @type {gmfx.User}
    * @export
    */
@@ -246,9 +252,11 @@ gmf.AbstractController = function(config, $scope, $injector) {
   var measurePointActivate = new ngeo.ToolActivate(this, 'measurePointActive');
   ngeoToolActivateMgr.registerTool('mapTools', measurePointActivate, false);
 
-  var measureLengthActivate = new ngeo.ToolActivate(
-      this, 'measureLengthActive');
+  var measureLengthActivate = new ngeo.ToolActivate(this, 'measureLengthActive');
   ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
+
+  var drawFeatureActivate = new ngeo.ToolActivate(this, 'drawFeatureActive');
+  ngeoToolActivateMgr.registerTool('mapTools', drawFeatureActivate, false);
 
   var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
 
