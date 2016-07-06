@@ -497,6 +497,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
+		.build/examples-hosted/contribs/gmf/apps/%/contextualdata.html \
 		.build/examples-hosted/contribs/gmf/apps/%/image/logo.png \
 		.build/examples-hosted/contribs/gmf/apps/%/image/background-layer-button.png \
 		.build/examples-hosted/contribs/gmf/build \
@@ -511,6 +512,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
 		-e 's|/@?main=$*/js/controller\.js|../../build/$*.js|' $< > $@
 
+.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/contextualdata.html
+.build/examples-hosted/contribs/gmf/apps/%/contextualdata.html: contribs/gmf/apps/%/contextualdata.html
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/image/logo.png
 .build/examples-hosted/contribs/gmf/apps/%/image/logo.png: contribs/gmf/apps/%/image/logo.png
 	mkdir -p $(dir $@)
@@ -520,6 +526,12 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/examples-hosted/contribs/gmf/apps/%/image/background-layer-button.png: contribs/gmf/apps/%/image/background-layer-button.png
 	mkdir -p $(dir $@)
 	cp $< $@
+
+.build/examples-hosted/contribs/gmf/apps/desktop_alt/contextualdata.html:
+	# no contextualdata partial for the desktop_alt
+
+.build/examples-hosted/contribs/gmf/apps/mobile/contextualdata.html:
+	# no contextualdata partial for the mobile
 
 .build/examples-hosted/contribs/gmf/apps/mobile/image/logo.png:
 	# no logo for the mobile

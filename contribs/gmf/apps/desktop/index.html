@@ -160,6 +160,9 @@
           </gmf-displayquerywindow>
         </div>
         <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"
+          gmf-contextualdata=""
+          gmf-contextualdata-map="::mainCtrl.map"
+          gmf-contextualdata-projections="::[21781, 4326]"
           ngeo-map-query=""
           ngeo-map-query-map="::mainCtrl.map"
           ngeo-map-query-active="mainCtrl.queryActive"
@@ -257,6 +260,7 @@
         module.constant('gmfSearchGroups', ['osm','district']);
         // Requires that the gmfSearchGroups is specified
         module.constant('gmfSearchActions', ['add_theme', 'add_group', 'add_layer']);
+        module.constant('gmfContextualdatacontentTemplateUrl', window.location.pathname + 'contextualdata.html');
       })();
     </script>
   </body>
