@@ -28,12 +28,13 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
+ * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
  */
 gmf.TreeManager = function(gettextCatalog, ngeoNotification, gmfThemes,
-    gmfTreeManagerModeFlush) {
+    gmfTreeManagerModeFlush, ngeoStateManager) {
 
   /**
    * @type {angularGettext.Catalog}
@@ -67,6 +68,12 @@ gmf.TreeManager = function(gettextCatalog, ngeoNotification, gmfThemes,
     children: [],
     name: ''
   });
+
+  /**
+   * @type {ngeo.StateManager}
+   * @private
+   */
+  this.ngeoStateManager_ = ngeoStateManager;
 };
 
 
@@ -98,13 +105,26 @@ gmf.TreeManager.prototype.setModeFlush = function(value) {
  * Set the current theme name (mode 'flush' only) and add its children. Add
  * only groups that are not already in the tree.
  * @param{GmfThemesNode} theme A theme object.
+ * @param{boolean=} opt_init true for the initialization phase (and get previous
+*  configuration from the state manager)
  * @export
  */
-gmf.TreeManager.prototype.addTheme = function(theme) {
+gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
+  var firstLevelNodes = theme.children;
+  var treeGroups = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
+    gmf.PermalinkParam.TREE_GROUPS));
   if (this.isModeFlush()) {
     this.tree.name = theme.name;
   }
-  this.addGroups(theme.children);
+  if (opt_init && treeGroups !== undefined) {
+    //Init phase and state exists -> first level groups must be read from the stateManager
+    var groupsNames = treeGroups.split(',');
+    groupsNames.forEach(function(name) {
+      this.addGroupByName(name, true);
+    }, this);
+  } else {
+    this.addGroups(firstLevelNodes);
+  }
 };
 
 
@@ -119,8 +139,10 @@ gmf.TreeManager.prototype.addTheme = function(theme) {
  */
 gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent) {
   var groupNotAdded = [];
+
   if (this.isModeFlush() && opt_add !== true) {
     this.tree.children.length = 0;
+    this.ngeoStateManager_.deleteParam(gmf.PermalinkParam.TREE_GROUPS);
   }
   groups.forEach(function(group) {
     if (!this.addGroup_(group)) {
@@ -130,6 +152,23 @@ gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent) {
   if (groupNotAdded.length > 0 && !opt_silent) {
     this.notifyCantAddGroups_(groupNotAdded);
   }
+
+  //Update app state
+  this.updateTreeGroupsState_(this.tree.children);
+};
+
+
+/**
+ * Update the application state with the list of first level groups in the tree
+ * @param {Array.<GmfThemesNode>} groups firstlevel groups of the tree
+ * @private
+ */
+gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
+  var treeGroupsParam = {};
+  treeGroupsParam[gmf.PermalinkParam.TREE_GROUPS] = groups.map(function(node) {
+    return node.name;
+  }).join(',');
+  this.ngeoStateManager_.updateState(treeGroupsParam);
 };
 
 
@@ -166,6 +205,7 @@ gmf.TreeManager.prototype.addGroup_ = function(group) {
  */
 gmf.TreeManager.prototype.addCustomGroups = function(groups, opt_add) {
   var groupNotAdded = [];
+
   if (this.isModeFlush() && opt_add !== true) {
     this.tree.children.length = 0;
   }
@@ -178,6 +218,9 @@ gmf.TreeManager.prototype.addCustomGroups = function(groups, opt_add) {
   if (groupNotAdded.length > 0) {
     this.notifyCantAddGroups_(groupNotAdded);
   }
+
+  //Update app state
+  this.updateTreeGroupsState_(this.tree.children);
 };
 
 
@@ -251,6 +294,7 @@ gmf.TreeManager.prototype.removeGroup = function(group) {
   }.bind(this));
   if (found) {
     children.splice(index, 1);
+    this.updateTreeGroupsState_(children);
   }
 };
 

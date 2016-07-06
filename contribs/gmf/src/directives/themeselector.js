@@ -175,7 +175,7 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
       currentTheme = gmf.Themes.findThemeByName(this.themes, this.defaultTheme);
     }
 
-    this.setTheme(/** @type {GmfThemesNode} */ (currentTheme));
+    this.setTheme(/** @type {GmfThemesNode} */ (currentTheme), true);
 
   }.bind(this);
 
@@ -185,11 +185,12 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
 
 /**
  * @param {GmfThemesNode} theme Theme.
+ * @param {boolean=} opt_init set to true for initialization phase.
  * @export
  */
-gmf.ThemeselectorController.prototype.setTheme = function(theme) {
+gmf.ThemeselectorController.prototype.setTheme = function(theme, opt_init) {
   if (theme) {
-    this.gmfTreeManager_.addTheme(theme);
+    this.gmfTreeManager_.addTheme(theme, opt_init);
   }
 };
 

@@ -41,6 +41,12 @@ gmf.PermalinkParam = {
   WFS_SHOW_FEATURES: 'wfs_showFeatures'
 };
 
+/**
+ * @enum {string}
+ */
+gmf.PermalinkOpenLayersLayerProperties = {
+  OPACITY : 'opacity'
+};
 
 /**
  * @enum {string}
@@ -48,6 +54,8 @@ gmf.PermalinkParam = {
 gmf.PermalinkParamPrefix = {
   TREE_ENABLE: 'tree_enable_',
   TREE_GROUP_LAYERS: 'tree_group_layers_',
+  TREE_GROUP_OPACITY: 'tree_group_opacity_',
+  TREE_OPACITY: 'tree_opacity_',
   WFS: 'wfs_'
 };
 
@@ -349,10 +357,12 @@ gmf.Permalink.prototype.addListenerKey_ = function(uid, key, opt_isol) {
  */
 gmf.Permalink.prototype.getMapCenter = function() {
   var center = null;
-  var x = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.MAP_X);
-  var y = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.MAP_Y);
+  var x = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
+    gmf.PermalinkParam.MAP_X));
+  var y = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
+    gmf.PermalinkParam.MAP_Y));
   if (x !== undefined && y !== undefined) {
-    center = [+x, +y];
+    center = [x,y];
   }
   return center;
 };
@@ -365,9 +375,10 @@ gmf.Permalink.prototype.getMapCenter = function() {
  */
 gmf.Permalink.prototype.getMapZoom = function() {
   var zoom = null;
-  var z = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.MAP_Z);
+  var z = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
+    gmf.PermalinkParam.MAP_Z));
   if (z !== undefined) {
-    zoom = +z;
+    zoom = z;
   }
   return zoom;
 };
@@ -398,8 +409,8 @@ gmf.Permalink.prototype.getMapCrosshair = function() {
  * @export
  */
 gmf.Permalink.prototype.getMapTooltip = function() {
-  return this.ngeoStateManager_.getInitialValue(
-      gmf.PermalinkParam.MAP_TOOLTIP) || null;
+  return /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
+      gmf.PermalinkParam.MAP_TOOLTIP)) || null;
 };
 
 
@@ -413,7 +424,8 @@ gmf.Permalink.prototype.getMapTooltip = function() {
  */
 gmf.Permalink.prototype.getFeatures = function() {
   var features = [];
-  var f = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.FEATURES);
+  var f = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
+    gmf.PermalinkParam.FEATURES));
   if (f !== undefined && f !== '') {
     features = this.featureHashFormat_.readFeatures(f);
   }
@@ -618,70 +630,12 @@ gmf.Permalink.prototype.initLayers_ = function() {
   }
 
   var layers = this.dataLayerGroup_.getLayers();
-  var layer;
-  var param;
-  var layerNames;
 
   // (1) try to look for any group name from any of the themes in the state
   //     manager.  If any is found, then apply the found results in the
   //     appropriate layer.
   this.themes_.forEach(function(themeNode) {
-    themeNode.children.forEach(function(groupNode) {
-      if (groupNode.mixed) {
-        // (1.1) - Mixed group, treat each node separately
-
-        layerNames = [];
-
-        groupNode.children.forEach(function(layerNode) {
-          param = this.getLayerStateParamFromNode_(layerNode);
-          var enable = this.ngeoStateManager_.getInitialValue(param);
-          if (enable !== undefined) {
-            enable = enable === 'true' ? true : false;
-            var layerName = layerNode.name;
-            layer = this.layerHelper_.getLayerByName(
-              layerName, layers.getArray());
-            if (layer) {
-              layer.setVisible(enable);
-            } else {
-              layerNames.push(layerName);
-            }
-          }
-        }, this);
-
-        if (layerNames.length) {
-          this.gmfTreeManager_.addCustomGroups([{
-            node: groupNode,
-            layers: layerNames
-          }]);
-        }
-
-      } else {
-        // (1.2) - group not mixed
-        param = this.getLayerStateParamFromNode_(groupNode);
-        var groupLayers = this.ngeoStateManager_.getInitialValue(param);
-        if (groupLayers !== undefined) {
-          var groupName = groupNode.name;
-          layer = this.layerHelper_.getLayerByName(
-              groupName, layers.getArray());
-          if (layer) {
-            this.initMergedLayer_(layer, groupLayers);
-          } else if (groupLayers !== '') {
-            layerNames = groupLayers.split(',');
-            this.gmfTreeManager_.addCustomGroups([{
-              node: groupNode,
-              layers: layerNames
-            }]);
-          }
-        }
-      }
-    }, this);
-  }, this);
-
-  // (2) at this point, the initialization is complete. We now need to listen
-  //     to any change happening to the existing layers and any added or
-  //     removed ones.
-  layers.forEach(function(layer) {
-    this.registerLayer_(layer, true);
+    themeNode.children.forEach(this.initLayerFromGroupNode_, this);
   }, this);
 
   var layersUid = goog.getUid(layers);
@@ -690,6 +644,85 @@ gmf.Permalink.prototype.initLayers_ = function() {
       ol.CollectionEventType.ADD, this.handleLayersAdd_, this));
   this.addListenerKey_(layersUid, ol.events.listen(layers,
       ol.CollectionEventType.REMOVE, this.handleLayersRemove_, this));
+
+  // (2) at this point, the initialization is complete. We now need to listen
+  //     to any change happening to the existing layers and any added or
+  //     removed ones.
+  layers.forEach(function(layer) {
+    this.registerLayer_(layer, true);
+  }, this);
+};
+
+
+/**
+ * Init layers state of a group node
+ *
+ * @param  {GmfThemesNode} groupNode a group node from the tree
+ * @private
+ */
+gmf.Permalink.prototype.initLayerFromGroupNode_ = function(groupNode) {
+  var layer;
+  var param;
+  var layerNames;
+  var layers = this.dataLayerGroup_.getLayers();
+
+  if (groupNode.mixed) {
+    //Mixed group, treat each node separately
+    layerNames = [];
+    groupNode.children.forEach(function(layerNode) {
+
+      if (layerNode.mixed) {
+        //enable subgroup registration
+        this.initLayerFromGroupNode_(layerNode);
+      }
+
+      param = this.getLayerStateParamFromNode_(layerNode);
+      var enable = this.ngeoStateManager_.getInitialValue(param);
+      if (enable !== undefined) {
+        var layerName = layerNode.name;
+        layer = this.layerHelper_.getLayerByName(
+          layerName, layers.getArray());
+        if (layer) {
+          this.updateLayerFromState_(layer);
+        } else {
+          layerNames.push(layerName);
+        }
+      }
+    }, this);
+
+    if (layerNames.length) {
+      this.gmfTreeManager_.addCustomGroups([{
+        node: groupNode,
+        layers: layerNames
+      }]);
+    }
+
+  } else {
+    //group not mixed
+    param = this.getLayerStateParamFromNode_(groupNode);
+    var groupLayers = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(param));
+    if (groupLayers !== undefined) {
+      var groupName = groupNode.name;
+      layer = this.layerHelper_.getLayerByName(
+          groupName, layers.getArray());
+      if (layer) {
+        this.initMergedLayer_(layer, groupLayers);
+        this.updateLayerFromState_(layer);
+      } else if (groupLayers !== '') {
+        layerNames = groupLayers.split(',');
+        this.gmfTreeManager_.addCustomGroups([{
+          node: groupNode,
+          layers: layerNames
+        }]);
+      } else {
+        //groupLayers === '', we add the group in an inactive state
+        this.gmfTreeManager_.addCustomGroups([{
+          node: groupNode,
+          layers: []
+        }]);
+      }
+    }
+  }
 };
 
 
@@ -766,6 +799,10 @@ gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
       ol.Object.getChangeEventType(ol.layer.LayerProperty.VISIBLE),
       this.handleLayerVisibleChange_, this));
 
+    this.addListenerKey_(layerUid, ol.events.listen(layer,
+      ol.Object.getChangeEventType(ol.layer.LayerProperty.OPACITY),
+      this.handleLayerOpacityChange_, this));
+
     var isMerged = layer.get('isMerged');
     if (isMerged) {
       goog.asserts.assert(
@@ -798,6 +835,8 @@ gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
         this.updateLayerStateByVisibility_(layer);
       }
     }
+    //Check the application state to update layer properties if needed
+    this.updateLayerFromState_(layer);
   }
 
 };
@@ -830,8 +869,7 @@ gmf.Permalink.prototype.unregisterLayer_ = function(layer) {
       this.initListenerKey_(sourceUid); // clear event listeners
     }
 
-    var param = this.getLayerStateParamFromLayer_(layer);
-    this.ngeoStateManager_.deleteParam(param);
+    this.deleteStateParams_(layer);
   }
 };
 
@@ -846,6 +884,24 @@ gmf.Permalink.prototype.handleLayerVisibleChange_ = function(evt) {
   var layer = evt.target;
   goog.asserts.assertInstanceof(layer, ol.layer.Base);
   this.updateLayerStateByVisibility_(layer);
+};
+
+
+/**
+ * Called when a layer `opacity` property changes. Update the state manager
+ * for that particular layer.
+ * @param {ol.ObjectEvent} evt Event.
+ * @private
+ */
+gmf.Permalink.prototype.handleLayerOpacityChange_ = function(evt) {
+  var layer = evt.target;
+  goog.asserts.assertInstanceof(layer, ol.layer.Base);
+  var state = {};
+  var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
+  var layerName = /** @type {string} */ (layer.get('layerName'));
+  var param = this.getLayerStateParam_(layerName, isMerged, gmf.PermalinkOpenLayersLayerProperties.OPACITY);
+  state[param] = layer.getOpacity();
+  this.ngeoStateManager_.updateState(state);
 };
 
 
@@ -872,6 +928,56 @@ gmf.Permalink.prototype.updateLayerStateByVisibility_ = function(layer) {
     object[param] = visible;
     this.ngeoStateManager_.updateState(object);
   }
+};
+
+
+/**
+ * Update all properties found in the appplication state for the given layer
+ * @param  {ol.layer.Base} layer The layer
+ * @private
+ */
+gmf.Permalink.prototype.updateLayerFromState_ = function(layer) {
+  var layerName = /** @type {string} */ (layer.get('layerName'));
+  var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
+  var param, stateValue;
+  Object.keys(gmf.PermalinkOpenLayersLayerProperties).forEach(function(layerProp) {
+    param = this.getLayerStateParam_(layerName, isMerged, gmf.PermalinkOpenLayersLayerProperties[layerProp]);
+    stateValue = this.ngeoStateManager_.getInitialValue(param);
+    if (stateValue !== undefined) {
+      layer.set(gmf.PermalinkOpenLayersLayerProperties[layerProp], stateValue);
+    }
+  },this);
+
+  // -- Layer Visibility -- //
+  param = this.getLayerStateParam_(layerName, isMerged);
+  stateValue = this.ngeoStateManager_.getInitialValue(param);
+  if (stateValue !== undefined) {
+    //Visibility state of the layer is not the default one -> user interacted with
+    if (isMerged) {
+      //Not mixed case, we fetched layers names, if not empty: layer must be visible
+      layer.setVisible(stateValue.length > 0);
+    } else {
+      //Mixed case, we fetched true or false
+      layer.setVisible(/** @type {boolean} */ (stateValue));
+    }
+  }
+};
+
+/**
+ * Remove all state parameters for the given layer
+ * @param  {ol.layer.Base} layer the layer
+ * @private
+ */
+gmf.Permalink.prototype.deleteStateParams_ = function(layer) {
+  var layerName = /** @type {string} */ (layer.get('layerName'));
+  var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
+  var param;
+  Object.keys(gmf.PermalinkOpenLayersLayerProperties).forEach(function(layerProp) {
+    param = this.getLayerStateParam_(layerName, isMerged, gmf.PermalinkOpenLayersLayerProperties[layerProp]);
+    this.ngeoStateManager_.deleteParam(param);
+  },this);
+  param = this.getLayerStateParam_(layerName, isMerged);
+  this.ngeoStateManager_.deleteParam(param);
 };
 
 
@@ -921,18 +1027,28 @@ gmf.Permalink.prototype.getLayerStateParamFromNode_ = function(layerNode) {
 /**
  * @param {string} layerName The name of the layer.
  * @param {boolean} isMerged Whether the layer is merged or not.
+ * @param {string=} opt_propertyName Whether we are looking for a layer property value
+ * (e.g opacity)
  * @return {string} The state param for the layer
  * @private
  */
 gmf.Permalink.prototype.getLayerStateParam_ = function(layerName,
-    isMerged) {
+    isMerged, opt_propertyName) {
   var param;
   if (isMerged) {
-    param = gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + layerName;
+    if (opt_propertyName === gmf.PermalinkOpenLayersLayerProperties.OPACITY) {
+      param = gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY;
+    } else {
+      param = gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS;
+    }
   } else {
-    param = gmf.PermalinkParamPrefix.TREE_ENABLE + layerName;
+    if (opt_propertyName === gmf.PermalinkOpenLayersLayerProperties.OPACITY) {
+      param = gmf.PermalinkParamPrefix.TREE_OPACITY;
+    } else {
+      param = gmf.PermalinkParamPrefix.TREE_ENABLE;
+    }
   }
-  return param;
+  return param + layerName;
 };
 
 
