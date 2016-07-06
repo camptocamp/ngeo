@@ -60,7 +60,6 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
    * @private
    */
   this.treeUrl_ = null;
-
   if ($injector.has('gmfTreeUrl')) {
     this.treeUrl_ = $injector.get('gmfTreeUrl');
   }
@@ -68,6 +67,15 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
   this.cacheVersion_ = '0';
   if ($injector.has('cacheVersion')) {
     this.cacheVersion_ = $injector.get('cacheVersion');
+  }
+
+  /**
+   * @type {ngeo.Location}
+   * @private
+   */
+  this.ngeoLocation_ = null;
+  if ($injector.has('ngeoLocation')) {
+    this.ngeoLocation_ = $injector.get('ngeoLocation');
   }
 
   /**
@@ -349,8 +357,16 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
     cache: false,
     withCredentials: true
   }).then(function(response) {
+    if (response.data['errors'].length != 0) {
+      var message = 'The themes contains some errors:\n' +
+        response.data['errors'].join('\n');
+      console.error(message);
+      if (this.ngeoLocation_ !== null && this.ngeoLocation_.hasParam('debug')) {
+        window.alert(message);
+      }
+    }
     deferred.resolve(response.data);
-  }, function(response) {
+  }.bind(this), function(response) {
     deferred.reject(response);
   });
 };
