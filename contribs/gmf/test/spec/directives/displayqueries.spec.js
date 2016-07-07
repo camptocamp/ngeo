@@ -1,6 +1,6 @@
-goog.require('gmf.displayqueriesDirective');
+goog.require('gmf.displayquerywindowDirective');
 
-describe('gmf.displayqueriesDirective', function() {
+describe('gmf.displayquerywindowDirective', function() {
 
   var displayQueriesController;
   var ngeoQueryResult;
@@ -21,7 +21,7 @@ describe('gmf.displayqueriesDirective', function() {
       }
     };
     displayQueriesController = $controller(
-        'GmfDisplayqueriesController', {$scope: $scope}, data);
+        'GmfDisplayquerywindowController', {$scope: $scope}, data);
   }));
 
   describe('#show', function() {

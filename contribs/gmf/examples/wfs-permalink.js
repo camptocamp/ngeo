@@ -1,7 +1,7 @@
 goog.provide('gmf-wfspermalink');
 
 goog.require('gmf.mapDirective');
-goog.require('gmf.displayqueriesDirective');
+goog.require('gmf.displayquerywindowDirective');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo');
 goog.require('ol.Map');
@@ -62,7 +62,7 @@ app.MainController = function() {
   var stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
-   * FeatureStyle used by the displayqueries directive
+   * FeatureStyle used by the displayquerywindow directive
    * @type {ol.style.Style}
    * @export
    */
