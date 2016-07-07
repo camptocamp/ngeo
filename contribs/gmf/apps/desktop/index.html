@@ -160,13 +160,6 @@
           ngeo-bbox-query-active="mainCtrl.queryActive">
         </gmf-map>
 
-        <gmf-profile
-          gmf-profile-active="mainCtrl.profileActive"
-          gmf-profile-line="mainCtrl.profileLine"
-          gmf-profile-map="::mainCtrl.map"
-          gmf-profile-linesconfiguration="::mainCtrl.profileLinesconfiguration">
-        </gmf-profile>
-
         <!--infobar-->
         <div class="footer" ng-class="{'active': mainCtrl.showInfobar}">
           <button class="btn fa map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
