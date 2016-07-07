@@ -70,8 +70,12 @@ gmf.module.constant('ngeoQueryOptions', {
  */
 gmf.AbstractController = function(config, $scope, $injector) {
 
-  var ngeoLocation = $injector.get('ngeoLocation');
-  if (ngeoLocation.hasParam('debug')) {
+  /**
+   * Location service
+   * @type {ngeo.Location}
+   */
+  this.ngeoLocation = $injector.get('ngeoLocation');
+  if (this.ngeoLocation.hasParam('debug')) {
     // make the injector globally available
     window.injector = $injector;
   }
