@@ -14,7 +14,7 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.disclaimerDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayqueriesDirective');
+goog.require('gmf.displayquerywindowDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
 /** @suppress {extraRequire} */
@@ -148,7 +148,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
   var queryStroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
-   * FeatureStyle used by the displayqueries directive
+   * FeatureStyle used by the displayquerywindow directive
    * @type {ol.style.Style}
    * @export
    */

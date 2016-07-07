@@ -1,10 +1,10 @@
 @import "../../../node_modules/font-awesome/less/variables.less";
 
-@displayqueries-tablet-width: 8 * @map-tools-size;
-.displayqueries {
-  width: @displayqueries-tablet-width;
-  max-width: @displayqueries-tablet-width;
-  margin-left: -@displayqueries-tablet-width / 2;
+@displayquerywindow-tablet-width: 8 * @map-tools-size;
+.displayquerywindow {
+  width: @displayquerywindow-tablet-width;
+  max-width: @displayquerywindow-tablet-width;
+  margin-left: -@displayquerywindow-tablet-width / 2;
   right: @app-margin + @map-tools-size + @app-margin;
   left: initial;
   bottom: @app-margin;
@@ -26,7 +26,7 @@
       content: @fa-var-chevron-down;
     }
   }
-  .displayqueries-container {
+  .displayquerywindow-container {
     background-color: @nav-bg;
     border: solid 1px @border-color;
     position: relative;
@@ -107,8 +107,8 @@
     .key {
       padding-right: @app-margin;
       /** prevent glitch for swipe animation **/
-      min-width: @displayqueries-tablet-width * 0.3 - @app-margin;
-      max-width: @displayqueries-tablet-width * 0.3 - @app-margin;
+      min-width: @displayquerywindow-tablet-width * 0.3 - @app-margin;
+      max-width: @displayquerywindow-tablet-width * 0.3 - @app-margin;
       overflow-x: hidden;
       text-overflow: ellipsis;
     }
@@ -116,8 +116,8 @@
       white-space: pre-wrap;
       word-break: break-all;
       /** prevent glitch for swipe animation **/
-      min-width: @displayqueries-tablet-width * 0.7 - @app-margin;
-      max-width: @displayqueries-tablet-width * 0.7 - @app-margin;
+      min-width: @displayquerywindow-tablet-width * 0.7 - @app-margin;
+      max-width: @displayquerywindow-tablet-width * 0.7 - @app-margin;
     }
     .slide-animation.ng-enter-active .details .value {
       white-space: nowrap;
@@ -181,7 +181,7 @@
   }
 }
 
-.displayqueries-mobile {
+.displayquerywindow-mobile {
   button.close {
     font-size: 21px;
   }
@@ -191,7 +191,7 @@
 }
 
 @media (max-width: @screen-sm-min) {
-  .displayqueries-mobile {
+  .displayquerywindow-mobile {
     width: 100%;
     max-width: 100%;
     margin-left: -50%;

@@ -1,8 +1,8 @@
-<div class="displayqueries" ng-class="{'displayqueries-desktop': ctrl.desktop, 'displayqueries-mobile': !ctrl.desktop}"
+<div class="displayquerywindow" ng-class="{'displayquerywindow-desktop': ctrl.desktop, 'displayquerywindow-mobile': !ctrl.desktop}"
      ng-show="ctrl.open" ng-swipe-disable-mouse ng-swipe-left="ctrl.next()" ng-swipe-right="ctrl.previous()">
   <button class="collapse-button" type="button" ng-show="::!ctrl.desktop"
           ng-click="ctrl.collapsed = !ctrl.collapsed" ng-class="[ctrl.collapsed ? 'up' : 'down']"></button>
-  <div class="displayqueries-container">
+  <div class="displayquerywindow-container">
     <button type="button" class="btn fa-close close" ng-click="ctrl.close()"></button>
     <div class="animation-container" ng-class="[ctrl.collapsed ? '' : 'detailed', ctrl.isNext ? 'next' : 'previous']">
       <div ng-animate-swap="ctrl.animate" class="slide-animation">

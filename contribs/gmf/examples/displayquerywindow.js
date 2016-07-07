@@ -1,8 +1,8 @@
-goog.provide('gmf-mapquery');
+goog.provide('gmf-displayquerywindow');
 
 goog.require('gmf.QueryManager');
 goog.require('gmf.Themes');
-goog.require('gmf.displayqueriesDirective');
+goog.require('gmf.displayquerywindowDirective');
 goog.require('gmf.layertreeDirective');
 goog.require('gmf.mapDirective');
 goog.require('ngeo.proj.EPSG21781');
@@ -103,7 +103,7 @@ app.MainController = function(gmfThemes, gmfQueryManager,
   var stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
-   * FeatureStyle used by the displayqueries directive
+   * FeatureStyle used by the displayquerywindow directive
    * @type {ol.style.Style}
    * @export
    */
