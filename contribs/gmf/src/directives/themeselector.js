@@ -48,6 +48,7 @@ gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
  * @param {ngeo.Location} ngeoLocation ngeo Location service.
  * @param {gmf.TreeManager} gmfTreeManager Tree manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
+ * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
  * @constructor
  * @export
  * @ngInject
@@ -55,7 +56,7 @@ gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
  * @ngname gmfThemeselectorController
  */
 gmf.ThemeselectorController = function($scope, ngeoLocation, gmfTreeManager,
-    gmfThemes) {
+    gmfThemes, ngeoStateManager) {
 
   /**
    * @type {ngeo.Location}
@@ -98,6 +99,12 @@ gmf.ThemeselectorController = function($scope, ngeoLocation, gmfTreeManager,
    * @export
    */
   this.filter;
+
+  /**
+   * @type {ngeo.StateManager}
+   * @private
+   */
+  this.ngeoStateManager_ = ngeoStateManager;
 
   $scope.$watchCollection(function() {
     return this.currentTheme;
@@ -161,7 +168,8 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
     // Then set current theme by looking first in the URL (only in,
     // otherwise use the default theme and add it to the URL.
     var currentTheme;
-    var themeName = this.defaultTheme;
+    var themeName = /** @type {string} */
+      (this.ngeoStateManager_.getInitialValue('theme') || this.defaultTheme);
     if (this.gmfTreeManager_.isModeFlush()) {
       var pathElements = this.ngeoLocation_.getPath().split('/');
       if (gmf.ThemeselectorController.themeInUrl(pathElements)) {

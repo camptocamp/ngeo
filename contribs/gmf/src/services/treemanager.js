@@ -114,6 +114,9 @@ gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
   var treeGroups = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
     gmf.PermalinkParam.TREE_GROUPS));
   if (this.isModeFlush()) {
+    this.ngeoStateManager_.updateState({
+      'theme' : theme.name
+    });
     this.tree.name = theme.name;
   }
   if (opt_init && treeGroups !== undefined) {
