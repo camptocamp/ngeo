@@ -50,8 +50,8 @@ ngeo.recenterDirective = function() {
       }
 
       // if the children is a link or button
-      $element.on('click', function(event) {
-        recenter(angular.element(event.target));
+      $element.on('click', '*', function(event) {
+        recenter(angular.element($(this)));
       });
 
       // if the children is an option inside a select
