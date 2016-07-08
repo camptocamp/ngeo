@@ -255,7 +255,7 @@ ngeox.QueryResult;
 
 /**
  * Results for each query source.
- * @type {ngeox.QueryResultSource}
+ * @type {Array.<ngeox.QueryResultSource>}
  */
 ngeox.QueryResult.prototype.sources;
 

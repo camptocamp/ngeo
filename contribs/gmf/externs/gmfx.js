@@ -511,3 +511,20 @@ gmfx.TimePropertyResolutionEnum = {
  * }}
  */
 gmfx.TimeProperty;
+
+
+/**
+ * @typedef {{
+ *  columns : Array.<string>,
+ *  data : Array.<Array.<string|number|boolean>>
+ * }}
+ */
+gmfx.DataSourceTableObject;
+
+/**
+ * @typedef {{
+ *  title : string,
+ *  table : gmfx.DataSourceTableObject
+ * }}
+ */
+gmfx.DataSourcePrintReportObject;

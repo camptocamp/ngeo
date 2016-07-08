@@ -80,6 +80,7 @@ gmf.module.directive('gmfDisplayquerywindow', gmf.displayquerywindowDirective);
 /**
  * @param {angular.Scope} $scope Angular scope.
  * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
+ * @param {ngeo.FeatureHelper} ngeoFeatureHelper the ngeo FeatureHelper service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
@@ -89,7 +90,7 @@ gmf.module.directive('gmfDisplayquerywindow', gmf.displayquerywindowDirective);
  * @ngname GmfDisplayquerywindowController
  */
 gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
-    ngeoFeatureOverlayMgr) {
+    ngeoFeatureHelper, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {angular.Scope}
@@ -130,6 +131,13 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    * @export
    */
   this.ngeoQueryResult = ngeoQueryResult;
+
+
+  /**
+   * @type {ngeo.FeatureHelper}
+   * @export
+   */
+  this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
    * @type {?ngeox.QueryResultSource}
@@ -371,10 +379,7 @@ gmf.DisplayquerywindowController.prototype.getFeatureValues = function() {
   if (!this.feature) {
     return null;
   }
-  var properties = this.feature.getProperties();
-  delete properties['boundedBy'];
-  delete properties[this.feature.getGeometryName()];
-  return properties;
+  return this.ngeoFeatureHelper_.getFilteredFeatureValues(this.feature);
 };
 
 
