@@ -12,12 +12,13 @@ goog.require('ngeo.DecorateInteraction');
 
 /**
  * Simple directive that can be put on any element. The directive listen on
- *     clicks events to allow/disallow to draw one line (and only one) on the
- *     map. Typically used to draw the line that will serve the gmf.Profile.
+ * clicks events to allow/disallow to draw one line (and only one) on the
+ * map. Typically used to draw the line that will serve the gmf.Profile.
  *
  * Example:
  *
  *      <gmf-drawprofileline
+ *        gmf-drawprofileline-active="mainCtrl.drawProfileActive"
  *        gmf-drawprofileline-map="mainCtrl.map"
  *        gmf-drawprofileline-line="mainCtrl.line"
  *      </gmf-drawprofileline>
@@ -26,9 +27,7 @@ goog.require('ngeo.DecorateInteraction');
  * @htmlAttribute {ol.Map} gmf-drawprofileline-map The map.
  * @htmlAttribute {ol.geom.LineString} gmf-drawprofileline-line The variable to
  *     connect with the drawed line.
- * @htmlAttribute {boolean=} gmf-drawprofileline-initialstate Optional boolean
- *     to set the draw fonction to "active" state at initialisation. By default
- *     it is inactive.
+ * @htmlAttribute {boolean=} gmf-drawprofileline-active Active the component.
  * @htmlAttribute {ol.style.Style=} gmf-drawprofileline-style Optional style
  *     for the drawed line.
  * @return {angular.Directive} Directive Definition Object.
@@ -44,8 +43,7 @@ gmf.drawprofilelineDirective = function() {
     bindToController: {
       'getMapFn': '&gmfDrawprofilelineMap',
       'line': '=gmfDrawprofilelineLine',
-      'active': '<gmfDrawprofilelineActive',
-      'getInitialStateFn': '&?gmfDrawprofileLineInitialstate',
+      'active': '=gmfDrawprofilelineActive',
       'getStyleFn': '&?gmfDrawprofilelineStyle'
     }
   };
@@ -117,9 +115,6 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
   }
   overlay.setStyle(style);
 
-  var initialStateFn = this['getInitialStateFn'];
-  var initialState = initialStateFn && initialStateFn() === true;
-
   /**
    * @type {ol.interaction.Draw}
    * @export
@@ -131,7 +126,6 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
       }));
 
   this.map_.addInteraction(this.interaction);
-  this.interaction.setActive(initialState);
   ngeoDecorateInteraction(this.interaction);
 
   // Clear the line as soon as the interaction is activated.
@@ -141,7 +135,8 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
       if (this.interaction.getActive()) {
         this.clear_();
       }
-    }, this);
+    }, this
+  );
 
   // Update the profile with the new geometry.
   this.interaction.on(ol.interaction.DrawEventType.DRAWEND, function(e) {
@@ -173,7 +168,7 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
         this.clear_();
       }
       // Will activate the interaction automatically the first time
-      this.interaction.setActive(newValue);
+      this.interaction.setActive(this.active);
     }.bind(this)
   );
 };

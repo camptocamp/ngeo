@@ -183,6 +183,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.drawFeatureActive = false;
 
   /**
+   * @type {boolean}
+   * @export
+   */
+  this.drawProfilePanelActive = false;
+
+  /**
    * @type {gmfx.User}
    * @export
    */
@@ -261,6 +267,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   var drawFeatureActivate = new ngeo.ToolActivate(this, 'drawFeatureActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawFeatureActivate, false);
+
+  var drawProfilePanelActivate = new ngeo.ToolActivate(this, 'drawProfilePanelActive');
+  ngeoToolActivateMgr.registerTool('mapTools', drawProfilePanelActivate, false);
 
   var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
 

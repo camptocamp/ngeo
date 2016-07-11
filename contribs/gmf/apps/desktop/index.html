@@ -55,7 +55,7 @@
             data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw & Measure'|translate}}">
             <span class="fa fa-pencil"></span>
           </button>
-          <button ngeo-btn class="btn btn-default" ng-model="profileActive"
+          <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawProfilePanelActive"
             data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
             <span class="fa fa-area-chart"></span>
           </button>
@@ -95,25 +95,24 @@
               </gmf-drawfeature>
             </div>
           </div>
-          <div ng-show="profileActive" class="row">
+          <div ng-show="mainCtrl.drawProfilePanelActive" class="row">
             <div class="col-sm-12">
               <div class="tools-content-heading">
                 {{'Profile'|translate}}
-                <a class="btn close" ng-click="profileActive = false">&times;</a>
+                <a class="btn close" ng-click="mainCtrl.drawProfilePanelActive = false">&times;</a>
               </div>
               <div gmf-drawprofileline
-                   gmf-drawprofileline-active="profileActive"
+                   gmf-drawprofileline-active="mainCtrl.drawProfilePanelActive"
                    gmf-drawprofileline-map="::mainCtrl.map"
                    gmf-drawprofileline-line="mainCtrl.profileLine">
                  <p>
                   <button class="btn btn-default"
                     ngeo-btn ng-model="ctrl.interaction.active"
-                    translate>
-                    Draw profile line
+                    translate> Draw profile line
                   </button>
                 </p>
                 <p>
-                  <em translate ng-if="ctrl.interaction.active" class="text-muted small">
+                  <em ng-if="ctrl.interaction.active" class="text-muted small">
                     Draw a line on the map to display the corresponding elevation profile.
                     Use double-click to finish the drawing.
                   </em>

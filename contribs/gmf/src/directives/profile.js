@@ -46,8 +46,7 @@ ngeo.module.value('gmfProfileTemplateUrl',
  *      </gmf-profile>
  *
  *
- * @htmlAttribute {boolean} gmf-profile-active To active th
- *     functions.
+ * @htmlAttribute {boolean} gmf-profile-active Active the component.
  * @htmlAttribute {ol.geom.LineString} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
  * @htmlAttribute {ol.Map?} gmf-profile-map An optional map.
