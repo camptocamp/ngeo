@@ -310,7 +310,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
     case gmf.Themes.NodeType.WMS:
       var url = node.url || this.gmfWmsUrl_;
       if (node.time) {
-        var wmsTime = /** @type {gmfx.TimeProperty} */ (node.time);
+        var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
         timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
         timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, {
           start : timeValues[0] || timeValues,
@@ -363,7 +363,7 @@ gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
   var nodes = [node].concat(childs);
   var nodesWithTime = nodes.filter(hasTime);
   if (nodesWithTime.length) {
-    var wmsTime = /**@type {gmfx.TimeProperty} */ (nodesWithTime[0]['time']);
+    var wmsTime = /**@type {ngeox.TimeProperty} */ (nodesWithTime[0]['time']);
     timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
     timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, {
       start : timeValues[0] || timeValues,
@@ -710,7 +710,7 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
   var node = /** @type {GmfThemesNode} */ (layertreeCtrl.node);
-  var wmsTime = /** @type {gmfx.TimeProperty} */ (node.time);
+  var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
   if (time) {
     var layer = /** @type {ol.layer.Image} */ (layertreeCtrl.layer || this.retrieveFirstParentTree_(layertreeCtrl).layer);
     if (layer) {

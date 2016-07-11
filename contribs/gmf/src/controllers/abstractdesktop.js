@@ -17,7 +17,7 @@ goog.require('gmf.profileDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawprofilelineDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.DatePickerDirective');
+goog.require('ngeo.DatePickerDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.TimeSliderDirective');
 /** @suppress {extraRequire} */
