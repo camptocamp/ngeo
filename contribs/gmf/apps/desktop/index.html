@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="image/favicon.ico"/>
     <link rel="stylesheet" href="../../build/desktop.css">
   </head>
-  <body>
+  <body ng-class="{'profile-chart-active': !!profileChartActive}">
     <header>
       <div>
         <img src="image/logo.png" />
@@ -122,7 +122,7 @@
           </div>
         </div>
       </div>
-      <div class="map-container" ng-class="{'infobar-active': mainCtrl.showInfobar, 'profile-chart-active': !!profileChartActive}">
+      <div class="map-container" ng-class="{'infobar-active': mainCtrl.showInfobar}">
         <gmf-search gmf-search-map="mainCtrl.map"
           class="search"
           gmf-search-datasources="mainCtrl.searchDatasources"
@@ -183,6 +183,8 @@
           </div>
         </div>
       </div>
+    </main>
+    <footer>
       <gmf-profile
         gmf-profile-active="profileChartActive"
         gmf-profile-line="mainCtrl.profileLine"
@@ -191,7 +193,7 @@
         ngeo-resizemap="mainCtrl.map"
         ngeo-resizemap-state="profileChartActive">
       </gmf-profile>
-    </main>
+    </footer>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../third-party/jquery-ui/jquery-ui.min.js"></script>
     <script src="../../../../node_modules/angular/angular.js"></script>
