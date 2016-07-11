@@ -92,11 +92,11 @@ app.AlternativeDesktopController = function($scope, $injector) {
   this.mousePositionProjections = [{
     code: 'EPSG:2056',
     label: 'CH1903+ / LV03',
-    filter: 'ngeoNumberCoordinates::{x}, {y} m:false'
+    filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {
     code: 'EPSG:21781',
     label: 'CH1903 / LV03',
-    filter: 'ngeoNumberCoordinates::{x}, {y} m:false'
+    filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {
     code: 'EPSG:4326',
     label: 'WGS84',

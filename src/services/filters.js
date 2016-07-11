@@ -190,15 +190,15 @@ ngeo.module.filter('ngeoUnitPrefix', ngeo.UnitPrefix);
  * Example without fractionDigits but with defined template and localize:
  *
  *      <!-- With en-US localization (opt_localize can be true or undefined) -->
- *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates::{x}, {y}:true}}</p>
+ *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates::{x}, {y}}}</p>
  *      <!-- will Become 2,600,000, 1,600,000 -->
  *      <br/>
  *      <!-- With fr-CH localization (opt_localize can be true or undefined) -->
- *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates::{x}, {y}:true}}</p>
+ *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates::{x}, {y}}}</p>
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *      <br/>
  *      <!-- With en-US localization but with localization to false -->
- *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates::{x}, {y}:false}}</p>
+ *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates::{x}, {y}}}</p>
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *
  * @param {angular.$filter} $filter Angular filter
@@ -218,27 +218,15 @@ ngeo.NumberCoordinates = function($filter) {
    *     Where "{x}" will be replaced by the first coordinate and "{y}" by the
    *     second one. Note: Use a html entity to use the semicolon symbole
    *     into a template.
-   * @param {(boolean|string)=} opt_localize Optional. If true or not defined,
-   *     format number as the current local system (see Angular number filter).
-   *     Set it explicitely to false to use always "." as the decimal separator
-   *     and include "'" group separators after each third digit.
    * @return {string} Number formated coordinates.
    */
-  var filterFn = function(coordinates, opt_fractionDigits, opt_template,
-      opt_localize) {
+  var filterFn = function(coordinates, opt_fractionDigits, opt_template) {
     var template = opt_template ? opt_template : '{x} {y}';
     var x = coordinates[0];
     var y = coordinates[1];
     var fractionDigits = parseInt(opt_fractionDigits, 10) | 0;
-    if (opt_localize === 'false' || opt_localize === false) {
-      x = x.toFixed(fractionDigits);
-      y = y.toFixed(fractionDigits);
-      x = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\'');
-      y = y.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\'');
-    } else {
-      x = $filter('number')(x, fractionDigits);
-      y = $filter('number')(y, fractionDigits);
-    }
+    x = $filter('number')(x, fractionDigits);
+    y = $filter('number')(y, fractionDigits);
     return template.replace('{x}', x).replace('{y}', y);
   };
   return filterFn;
