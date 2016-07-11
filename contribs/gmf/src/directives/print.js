@@ -128,6 +128,9 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {string} gmfPrintUrl A MapFishPrint url.
  * @param {gmf.Authentication} gmfAuthentication The authentication service.
+ * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
+ * @param {ngeo.FeatureHelper} ngeoFeatureHelper the ngeo FeatureHelper service.
+ * @param {angular.$filter} $filter Angular $filter service.
  * @constructor
  * @export
  * @ngInject
@@ -136,7 +139,22 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  */
 gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,
     ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils, ngeoCreatePrint,
-    gmfPrintUrl, gmfAuthentication) {
+    gmfPrintUrl, gmfAuthentication, ngeoQueryResult, ngeoFeatureHelper,
+    $filter) {
+
+
+  /**
+   * @type {function(string): string}
+   * @private
+   */
+  this.translate_ = $filter('translate');
+
+  /**
+   * @type {ngeo.FeatureHelper}
+   * @export
+   */
+  this.ngeoFeatureHelper_ = ngeoFeatureHelper;
+
   /**
    * @type{boolean}
    * @private
@@ -190,6 +208,12 @@ gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,
    * @private
    */
   this.ngeoPrint_ = ngeoCreatePrint(gmfPrintUrl);
+
+  /**
+   * @type {ngeox.QueryResult}
+   * @private
+   */
+  this.ngeoQueryResult_ = ngeoQueryResult;
 
   this.cacheVersion_ = '0';
   if ($injector.has('cacheVersion')) {
@@ -582,11 +606,11 @@ gmf.PrintController.prototype.print = function(format) {
   var mapSize = this.map.getSize();
   var viewResolution = this.map.getView().getResolution();
   var scale = this.getOptimalScale_(mapSize, viewResolution);
-
   var rotation = this.rotateMask_ ? -this.rotation : this.rotation;
+  var datasource = this.getDataSource_();
 
   var customAttributes = {
-    'datasource': [],
+    'datasource': datasource,
     'lang': this.gettextCatalog_.currentLanguage,
     'rotation': rotation,
     'scale': this.fields.scale
@@ -658,6 +682,45 @@ gmf.PrintController.prototype.cancel = function() {
 gmf.PrintController.prototype.resetPrintStates_ = function(opt_printState) {
   this.printState = opt_printState || gmf.PrintState.NOT_IN_USE;
   this.curRef_ = '';
+};
+
+
+/**
+ * Get datasource object for print report
+ * @private
+ * @return {Array.<gmfx.DataSourcePrintReportObject>} the datasource objet for
+ * the print report
+ */
+gmf.PrintController.prototype.getDataSource_ = function() {
+  var datasourceObj,data,columns;
+  var datasourceArr = [];
+  var sources = this.ngeoQueryResult_.sources;
+  sources.forEach(function(source) {
+    data = [];
+    columns = [];
+    source.features.forEach(function(feature, i) {
+      var properties = this.ngeoFeatureHelper_.getFilteredFeatureValues(feature);
+      if (i === 0) {
+        columns = Object.keys(properties).map(function tanslateColumns(prop) {
+          return this.translate_(prop);
+        }, this);
+      }
+      data.push(Object.keys(properties).map(function(key) {
+        return properties[key];
+      }));
+    }, this);
+    if (columns.length) {
+      datasourceObj = /** @type {gmfx.DataSourcePrintReportObject} */({
+        title : this.translate_(source.label),
+        table : {
+          columns : columns,
+          data : data
+        }
+      });
+      datasourceArr.push(datasourceObj);
+    }
+  },this);
+  return datasourceArr;
 };
 
 
