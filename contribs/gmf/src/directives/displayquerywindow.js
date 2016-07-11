@@ -45,6 +45,8 @@ ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
  *     object for all features from the result of the query.
  * @htmlAttribute {ol.style.Style} selectedfeaturestyle A style
  *     object for the current displayed feature.
+ * @htmlAttribute {boolean=} defaultcollapsed If the query result window is
+ *     collapsed.
  * @htmlAttribute {boolean} desktop If the directive is used in the desktop
  *     application.
  * @htmlAttribute {boolean} showunqueriedlayers If also layers, that have not
@@ -67,6 +69,7 @@ gmf.displayquerywindowDirective = function(
     scope: {
       'featuresStyleFn': '&gmfDisplayquerywindowFeaturesstyle',
       'selectedFeatureStyleFn': '&gmfDisplayquerywindowSelectedfeaturestyle',
+      'defaultCollapsedFn': '&?gmfDisplayquerywindowDefaultcollapsed',
       'desktopIn': '=gmfDisplayquerywindowDesktop',
       'showUnqueriedLayersIn': '=gmfDisplayquerywindowShowunqueriedlayers'
     }
@@ -109,7 +112,8 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    * @type {boolean}
    * @export
    */
-  this.collapsed = !this.desktop;
+  this.collapsed = this['defaultCollapsedFn'] !== undefined ?
+    this['defaultCollapsedFn']() === true : !this.desktop;
 
   /**
    * @type {boolean}
