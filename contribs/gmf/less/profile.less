@@ -1,7 +1,4 @@
 @profile-height: 20rem;
-.map-container.profile-chart-active {
-  height: calc(~"100% -" @profile-height);
-}
 .profile-container {
   position: relative;
   overflow: hidden;
@@ -36,4 +33,8 @@
   .close {
     height: 1rem;
   }
+}
+
+.profile-chart-active main {
+  height: calc(~'100%' - @profile-height);
 }
