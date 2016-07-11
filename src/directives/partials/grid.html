@@ -1,0 +1,24 @@
+<div class="table-container">
+  <div class="table-container-header">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th ng-repeat="columnDefs in ctrl.configuration.columnDefs" ng-click="ctrl.sort(columnDefs.name)">
+            {{columnDefs.name | translate}}
+            <i ng-show="ctrl.sortedBy === columnDefs.name && ctrl.sortAscending === true" class="fa fa-caret-up"></i>
+            <i ng-show="ctrl.sortedBy === columnDefs.name && ctrl.sortAscending === false" class="fa fa-caret-down"></i>
+          </th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="table-container-body">
+    <table class="table table-hover table-bordered">
+      <tbody>
+        <tr ng-repeat="attributes in ctrl.configuration.data" ng-class="['row-' + ctrl.getRowUid(attributes), ctrl.isRowSelected(attributes) ? 'active': '']" ng-click="ctrl.toggleRow(attributes)">
+          <td ng-repeat="(key, value) in attributes" translate>{{value}}</td>
+        </tr>
+      </body>
+    </table>
+  </div>
+</div>

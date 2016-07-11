@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>GeoMapFish Map Query example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="../../../third-party/jquery-ui/jquery-ui.min.css">
+    <style>
+      gmf-map,
+      #tree-container {
+        float: left;
+      }
+      .clear-left {
+        clear: left;
+      }
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+
+      /* DisplayQueryGrid */
+      .displayquerygrid .grid {
+        height: 200px;
+        width: 100%;
+      }
+
+      .gmf-results-grid {
+        padding: 4px;
+      }
+
+      .message {
+        padding: 10px;
+      }
+
+      .table {
+        font-size: @font-size-small;
+        background-color: white;
+      }
+
+      .table-container {
+        border: 1px solid #ddd;
+        border-top: 0;
+      }
+
+      .table-container-header {
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .table-container-body {
+          height: 154px;
+          overflow: auto;
+          width: 100%;
+      }
+
+      .table-container table {
+          margin-bottom: 0px;
+          table-layout: fixed;
+      }
+
+      .table-container table td,
+      .table-container table th {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+      }
+
+      .table-bordered {
+        border: 0px;
+      }
+      .table-bordered > thead > tr > th,
+      .table-bordered > thead > tr > td {
+        border-bottom-width: 2px;
+      }
+      .table-bordered > tfoot > tr > th,
+      .table-bordered > tfoot > tr > td {
+        border-top-width: 2px;
+      }
+      .table-bordered > tfoot > tr > th,
+      .table-bordered > tfoot > tr > td {
+        border-bottom-width: 0px;
+      }
+      /*Esquerda*/
+      .table-bordered > thead > tr > th:first-child,
+      .table-bordered > tbody > tr > th:first-child,
+      .table-bordered > tfoot > tr > th:first-child,
+      .table-bordered > thead > tr > td:first-child,
+      .table-bordered > tbody > tr > td:first-child,
+      .table-bordered > tfoot > tr > td:first-child {
+        border-left-width: 0px;
+      }
+      /*Direita*/
+      .table-bordered > thead > tr > th:last-child,
+      .table-bordered > tbody > tr > th:last-child,
+      .table-bordered > tfoot > tr > th:last-child,
+      .table-bordered > thead > tr > td:last-child,
+      .table-bordered > tbody > tr > td:last-child,
+      .table-bordered > tfoot > tr > td:last-child {
+        border-right-width: 0px;
+      }
+      /*Topo*/
+      .table-bordered > thead > tr:first-child > th,
+      .table-bordered > thead > tr:first-child > td {
+        border-top-width: 0px;
+      }
+      /*Baixo*/
+      .table-bordered > tfoot > tr:last-child > th,
+      .table-bordered > tfoot > tr:last-child > td {
+        border-bottom-width: 0px;
+      }
+
+      table>tbody>tr>td,
+      table>tbody>tr>th,
+      table>tfoot>tr>td,
+      table>tfoot>tr>th,
+      table>thead>tr>td,
+      table>thead>tr>th {
+        padding: 2px;
+      }
+
+      .table-hover>tbody>tr.active>td,
+      .table-hover>tbody>tr.active>th,
+      .table-hover>tbody>tr>.active,
+      .table-hover>tbody>tr>td.active,
+      .table-hover>tbody>tr>th.active {
+        background-color: lighten(@brand-secondary, 5%);
+      }
+
+
+      .nav-tabs>li>a {
+        padding: 2px 7px;
+      }
+
+      th > .fa-sort {
+        visibility: hidden;
+      }
+      th:hover > .fa-sort {
+        visibility: visible;
+      }
+
+      .navbar {
+        min-height: 0;
+        margin-bottom: 0;
+        margin-right: 15px;
+      }
+
+      /* Layertree */
+      ul {
+        list-style-type: none;
+      }
+      .treenode a{
+        color: black;
+        text-decoration: none;
+        padding-right: 5px;
+      }
+      .treenode .metadata a:before {
+        font-family: FontAwesome;
+        content: "\f129";
+      }
+      .treenode .layerIcon {
+        display: inline-flex;
+        width: 20px;
+        height: 10px;
+      }
+      .treenode .zoom {
+        display: none;
+      }
+      .treenode .zoom:hover {
+        cursor: pointer;
+      }
+      .treenode .zoom:before {
+        font-family: FontAwesome;
+        content: "\f18e";
+      }
+      .treenode .outOfResolution .legend {
+        display: none;
+      }
+      .treenode .legendButton a:after {
+        font-family: FontAwesome;
+        content: "\f036";
+      }
+      .treenode .legend img {
+        padding-left: 15px;
+      }
+      .treenode .noSource {
+        opacity: 0.3;
+      }
+      .treenode .noSource:after {
+        content: "(source not available)";
+      }
+      .treenode .outOfResolution {
+        opacity: 0.6;
+      }
+      .treenode .outOfResolution .zoom {
+        display: inline;
+      }
+      .treenode .state {
+        font-family: FontAwesome;
+        font-weight: lighter;
+      }
+      .treenode .on .state:before {
+        content: "\f14a";
+      }
+      .treenode .off .state:before {
+        content: "\f096";
+      }
+      .treenode .indeterminate .state:before {
+        content: "\f147";
+      }
+      [ngeo-popup] {
+        top: 20px;
+        max-width: 350px;
+        width: 350px;
+        margin-left: -175px;
+        left: 50%;
+        right: 50%;
+        max-height: 400px;
+        position: fixed;
+      }
+      [ngeo-popup] .popover-content {
+        overflow: auto;
+        /*
+         * popup's height - popover-title's height
+         * should be computed using bootstrap variables
+         */
+        max-height: calc(400px - 38px);
+      }
+      @media (max-width: 768px) {
+        #map {
+          height: 200px;
+          width: 200px;
+        }
+        [ngeo-popup] {
+          position: fixed;
+          top: 0;
+          left: auto;
+          right: auto;
+          max-width: 100%;
+          width: calc(100% - 20px);
+          height: calc(100% - 20px);
+          max-height: none;
+          margin: 10px;
+        }
+      }
+      @media (max-width: 768px) {
+        [ngeo-popup] .popover-content {
+          /*
+           * popup's height - popover-title's height
+           * should be computed using bootstrap variables
+           */
+          max-height: calc(100% - 32px);
+          -webkit-overflow-scrolling: touch;
+        }
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+
+    <gmf-map gmf-map-map="ctrl.map"
+        ngeo-map-query="" ngeo-map-query-map="::ctrl.map"
+        ngeo-map-query-active="ctrl.queryActive">
+    </gmf-map>
+
+    <div id="tree-container">
+      <div>
+        <span>Theme:
+        <select
+            ng-model="ctrl.treeSource"
+            ng-options="theme.name for theme in ctrl.themes">
+        </select>
+        </span>
+      </div>
+      <gmf-layertree
+          gmf-layertree-source="ctrl.treeSource"
+          gmf-layertree-map="::ctrl.map"
+          gmf-layertree-openlinksinnewwindow="true">
+      </gmf-layertree>
+    </div>
+
+    <div class="clear-left"></div>
+
+    <p id="desc">
+      TODO
+    </p>
+
+    <input type="checkbox" ng-model="ctrl.queryActive" /> Query-Tool active
+
+    <gmf-displayquerygrid
+      gmf-displayquerygrid-featuresstyle="ctrl.featureStyle">
+    </gmf-displayquerygrid>
+
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
+    <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
+    <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
+    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js" type="text/javascript"></script>
+    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
+    <script src="/@?main=displayquerygrid.js"></script>
+    <script src="default.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>

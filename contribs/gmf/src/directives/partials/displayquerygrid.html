@@ -1,0 +1,16 @@
+<div class="displayquerygrid">
+  <button type="button" class="btn fa-close close" ng-click="ctrl.clear()"></button>
+  <ul class="nav nav-tabs small" role="tablist">
+    <li ng-repeat="gridSource in ctrl.gridSources" role="presentation" ng-class="{'active' : gridSource.source.id === ctrl.selectedTab}" ng-click="ctrl.onSelectTab(gridSource)"><a data-target="#{{gridSource.source.id}}" aria-controls="gridSource.source.id" role="tab" data-toggle="tab">{{gridSource.source.label | translate}} ({{gridSource.source.features.length}})</a></li>
+  </ul>
+  <div ng-if="ctrl.tooManyResults === false" class="tab-content">
+    <div ng-repeat="gridSource in ctrl.gridSources" role="tabpanel" class="tab-pane" ng-class="{'active' : gridSource.source.id === ctrl.selectedTab}" id="{{gridSource.source.id}}">
+      <ngeo-grid ngeo-grid-configuration="gridSource.configuration">
+      </ngeo-grid>
+    </div>
+  </div>
+  <div ng-if="ctrl.tooManyResults === true">
+    <p><span translate>We can't display the results because the maximum number has been reached</span>({{ctrl.maxResults}}).</p>
+    <p translate>Please refine your query.</p>
+  </div>
+</div>
