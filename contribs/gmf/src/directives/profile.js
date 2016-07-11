@@ -31,9 +31,9 @@ ngeo.module.value('gmfProfileTemplateUrl',
  * Provide a directive that display a profile panel. This profile use the given
  * LineString geometry to request the c2cgeoportal profile.json service. The
  * raster used in the request are the keys of the 'linesconfiguration' object.
- * The 'profileActive' and 'map' attributes are optionals and are only used to
- * display on the map the informations that concerne the hovered
- * point (in the profile and on the map) of the line.
+ * The 'map' attribute is optional and are only used to display on the map the
+ * informations that concerne the hovered point (in the profile and on the map)
+ * of the line.
  * This profile relies on the ngeo.profile (d3) and ngeo.ProfileDirective.
  *
  * Example:
@@ -46,8 +46,7 @@ ngeo.module.value('gmfProfileTemplateUrl',
  *      </gmf-profile>
  *
  *
- * @htmlAttribute {boolean?} gmf-profile-active Optional to active the hover
- *     functions.
+ * @htmlAttribute {boolean} gmf-profile-active Active the component.
  * @htmlAttribute {ol.geom.LineString} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
  * @htmlAttribute {ol.Map?} gmf-profile-map An optional map.
@@ -58,8 +57,11 @@ ngeo.module.value('gmfProfileTemplateUrl',
  *     for the 'on Hover' point on the line.
  * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
  *     points to request. Default to 100.
- * @htmlAttribute {string?} gmf-profile-css Inline Optional CSS style definition
- *     to inject in the SVG.
+ * @htmlAttribute {Object.<string, *>?} gmf-profile-options Optional options
+ *     object like {@link ngeox.profile.ProfileOptions} but without any
+ *     mandatory value. Will be passed to the ngeo profile directive. Providing
+ *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback
+ *     or i18n will override native gmf profile values.
  * @param {string} gmfProfileTemplateUrl URL to a template.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
@@ -75,13 +77,13 @@ gmf.profileDirective = function(gmfProfileTemplateUrl) {
     replace: true,
     restrict: 'E',
     scope: {
-      'active': '<?gmfProfileActive',
-      'line': '<gmfProfileLine',
+      'active': '=gmfProfileActive',
+      'line': '=gmfProfileLine',
       'getMapFn': '&?gmfProfileMap',
       'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
       'getHoverPointStyleFn': '&?gmfProfileHoverpointstyle',
       'getNbPointsFn': '&?gmfProfileNumberofpoints',
-      'getCssFn': '&?gmfProfileCss'
+      'getOptionsFn': '&?gmfProfileOptions'
     }
   };
 };
@@ -197,19 +199,6 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
     }
   }
 
-  var css;
-  var cssFn = this['getCssFn'];
-  if (cssFn) {
-    css = cssFn();
-    goog.asserts.assertString(css);
-  }
-
-  /**
-   * @type {string|undefined}
-   * @private
-   */
-  this.css_ = css;
-
   var nbPoints = 100;
   var nbPointsFn = this['getNbPointsFn'];
   if (nbPointsFn) {
@@ -289,6 +278,15 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
     });
   }
 
+  /**
+   * @type {ngeox.profile.I18n}
+   * @private
+   */
+  this.profileLabels_ = {
+    xAxis: gettextCatalog.getString('Distance'),
+    yAxis: gettextCatalog.getString('Elevation')
+  };
+
   this.pointHoverOverlay_.setStyle(hoverPointStyle);
 
   /**
@@ -296,12 +294,19 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    * @export
    */
   this.profileOptions = /** @type {ngeox.profile.ProfileOptions} */ ({
-    styleDefs: this.css_,
     linesConfiguration: this.linesConfiguration_,
     distanceExtractor: this.getDist_,
     hoverCallback: this.hoverCallback_.bind(this),
-    outCallback: this.outCallback_.bind(this)
+    outCallback: this.outCallback_.bind(this),
+    i18n: this.profileLabels_
   });
+
+  var optionsFn = this['getOptionsFn'];
+  if (optionsFn) {
+    var options = optionsFn();
+    goog.asserts.assertObject(options);
+    goog.object.extend(this.profileOptions, options);
+  }
 
   /**
    * @type {boolean}
@@ -315,12 +320,19 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    */
   this.pointerMoveKey_;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.isErrored = false;
+
+
   // Watch the active value to activate/deactive events listening.
   $scope.$watch(
     function() {
       return this.active;
     }.bind(this),
-    function(oldValue, newValue) {
+    function(newValue, oldValue) {
       if (oldValue !== newValue) {
         this.updateEventsListening_();
       }
@@ -331,7 +343,7 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
     function() {
       return this.line;
     }.bind(this),
-    function(oldLine, newLine) {
+    function(newLine, oldLine) {
       if (oldLine !== newLine) {
         this.update_();
       }
@@ -345,11 +357,13 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
  * @private
  */
 gmf.ProfileController.prototype.update_ = function() {
+  this.isErrored = false;
   if (this.line) {
     this.getJsonProfile_();
   } else {
     this.profileData = [];
   }
+  this.active = !!this.line;
 };
 
 
@@ -357,7 +371,7 @@ gmf.ProfileController.prototype.update_ = function() {
  * @private
  */
 gmf.ProfileController.prototype.updateEventsListening_ = function() {
-  if (this.active === true && this.map_ !== null) {
+  if (this.active && this.map_ !== null) {
     this.pointerMoveKey_ = ol.events.listen(this.map_, 'pointermove',
         this.onPointerMove_.bind(this));
   } else {
@@ -477,13 +491,14 @@ gmf.ProfileController.prototype.outCallback_ = function() {
  * @private
  */
 gmf.ProfileController.prototype.getTooltipHTML_ = function() {
-  var distance = this.gettextCatalog_.getString('Distance : ');
+  var separator = ' : ';
   var elevationName, translatedElevationName;
   var innerHTML = [];
   var number = this.$filter_('number');
   var DistDecimal = this.currentPoint.xUnits === 'm' ? 0 : 2;
   innerHTML.push(
-      distance +
+      this.profileLabels_.xAxis +
+      separator +
       number(this.currentPoint.distance, DistDecimal) +
       ' ' +
       this.currentPoint.xUnits
@@ -492,7 +507,7 @@ gmf.ProfileController.prototype.getTooltipHTML_ = function() {
     translatedElevationName = this.gettextCatalog_.getString(elevationName);
     innerHTML.push(
         translatedElevationName +
-        ' : ' +
+        separator +
         number(this.currentPoint.elevations[elevationName], 0) +
         ' ' + this.currentPoint.yUnits
     );
@@ -641,6 +656,7 @@ gmf.ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
  * @private
  */
 gmf.ProfileController.prototype.getProfileDataError_ = function(resp) {
+  this.isErrored = true;
   console.error('Can not get JSON profile.');
 };
 
@@ -698,6 +714,7 @@ gmf.ProfileController.prototype.getCsvSuccess_ = function(resp) {
  * @private
  */
 gmf.ProfileController.prototype.getCsvError_ = function(resp) {
+  this.isErrored = true;
   console.error('Can not get CSV profile.');
 };
 

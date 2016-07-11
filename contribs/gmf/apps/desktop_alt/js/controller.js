@@ -78,6 +78,14 @@ app.AlternativeDesktopController = function($scope, $injector) {
   this.elevationLayers = ['srtm'];
 
   /**
+   * @type {Object.<string, gmfx.ProfileLineConfiguration>}
+   * @export
+   */
+  this.profileLinesconfiguration = {
+    'srtm': {}
+  };
+
+  /**
    * @type {Array.<gmfx.MousePositionProjection>}
    * @export
    */
