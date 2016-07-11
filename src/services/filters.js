@@ -52,8 +52,6 @@ ngeo.module.filter('ngeoScalify', ngeo.Scalify);
  */
 ngeo.Number = function($locale) {
   var formats = $locale.NUMBER_FORMATS;
-  var groupSep = formats.GROUP_SEP;
-  var decimalSep = formats.DECIMAL_SEP;
 
   /**
    * @param {number} number The number to format.
@@ -61,6 +59,8 @@ ngeo.Number = function($locale) {
    * @return {string} The formatted string.
    */
   var result = function(number, opt_precision) {
+    var groupSep = formats.GROUP_SEP;
+    var decimalSep = formats.DECIMAL_SEP;
     if (opt_precision === undefined) {
       opt_precision = 3;
     }
