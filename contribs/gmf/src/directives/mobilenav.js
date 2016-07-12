@@ -128,7 +128,7 @@ gmf.MobileNavController.prototype.init = function(element) {
   element.find('[data-toggle=slide-in]').on('click', function(evt) {
 
     // the element to slide out is the div.slide parent
-    var slideOut = $(evt.target).parents('.slide');
+    var slideOut = $(evt.currentTarget).parents('.slide');
     goog.asserts.assert(slideOut.length === 1);
 
     // push the item to the selected stack
@@ -138,7 +138,7 @@ gmf.MobileNavController.prototype.init = function(element) {
     slideOut.addClass('slide-out').removeClass('active');
 
     // element to slide in
-    var slideIn = $($(evt.target).attr('data-target'));
+    var slideIn = $($(evt.currentTarget).attr('data-target'));
     goog.asserts.assert(slideIn.length === 1);
 
     // slide the "new" element in
