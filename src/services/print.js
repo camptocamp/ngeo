@@ -1,11 +1,13 @@
 goog.provide('ngeo.CreatePrint');
 goog.provide('ngeo.Print');
 
+
 goog.require('goog.color');
 goog.require('goog.color.alpha');
 goog.require('goog.math');
 goog.require('goog.object');
 goog.require('ngeo');
+goog.require('ngeo.LayerHelper');
 goog.require('ol.color');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.GeometryType');
