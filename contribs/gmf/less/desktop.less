@@ -285,25 +285,32 @@ gmf-backgroundlayerselector {
     }
 
     .btn {
+      width: 100%;
+      border-width: 0;
       background-color: @brand-primary;
       margin-left: 0;
-      border-right-width: 0;
-      border-left-width: 0;
       border-radius: 0 !important;
-      border-color: @border-color;
-
       &:hover {
         background-color: lighten(@brand-primary, @standard-variation);
       }
+    }
 
-      &.active,
-      &:active {
-        box-shadow: none;
-      }
-      &.active {
-        background-color: @brand-secondary;
-        border-left: 1px solid @brand-secondary;
-        margin-left: -1px;
+    .btn-group-vertical {
+      width: 100%;
+      .btn {
+        border: 1px solid @border-color;
+        border-right-width: 0;
+        border-left-width: 0;
+
+        &.active,
+        &:active {
+          box-shadow: none;
+        }
+        &.active {
+          background-color: @brand-secondary;
+          border-left: 1px solid @brand-secondary;
+          margin-left: -1px;
+        }
       }
     }
   }

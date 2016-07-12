@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>GMF Share permalink example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="../third-party/jquery-ui/jquery-ui.min.css">
+    <style>
+      .share {
+        margin: 3rem 0;
+        width: 20vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the <code>gmf-share</code> directive to get a shorten permalink</p>
+
+    <div class="share">
+      <strong>
+        Share the permalink
+      </strong>
+      <button class="btn btn-default" ng-click="ctrl.modalShareShown = true">
+        <span class="fa fa-share-alt"></span>
+      </button>
+    </div>
+    <div class="share">
+      <strong>
+        Share with emailing capability
+      </strong>
+      <button class="btn btn-default" ng-click="ctrl.modalShareWithEmailShown = true">
+        <span class="fa fa-share-alt"></span>
+      </button>
+    </div>
+
+    <ngeo-modal ng-model="ctrl.modalShareShown" ngeo-modal-destroy-content-on-hide="true">
+      <gmf-share gmf-share-email="false"/>
+    </ngeo-modal>
+    <ngeo-modal ng-model="ctrl.modalShareWithEmailShown" ngeo-modal-destroy-content-on-hide="true">
+      <gmf-share gmf-share-email="true"/>
+    </ngeo-modal>
+
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../third-party/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
+    <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
+    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
+    <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
+    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js" type="text/javascript"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
+    <script src="/@?main=share.js"></script>
+    <script src="default.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+      gmfModule.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/short/create');
+    </script>
+  </body>
+</html>

@@ -33,6 +33,8 @@ goog.require('ngeo');
  *
  * @param {angular.$parse} $parse Angular parse service.
  * @return {angular.Directive} The directive specs.
+ * @htmlAttribute {boolean} ngeo-modal-destroy-content-on-hide Destroy the content
+ * when the modal is hidden
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoModal
@@ -42,7 +44,6 @@ ngeo.modalDirective = function($parse) {
     template: '<div class="modal fade" tabindex="-1" role="dialog">' +
         '<div class="modal-dialog">' +
         '<div class="modal-content">' +
-        '<ng-transclude></ng-transclude>' +
         '</div>' +
         '</div>' +
         '</div>',
@@ -57,8 +58,11 @@ ngeo.modalDirective = function($parse) {
          * @param {angular.NgModelController} ngModelController The ngModel
          * controller.
          */
-        function(scope, element, attrs, ngModelController) {
+        function(scope, element, attrs, ngModelController, transcludeFn) {
           var modal = element.children();
+          var destroyContent = attrs['ngeoModalDestroyContentOnHide'] === 'true';
+          var childScope = scope.$new();
+
           // move the modal to document body to ensure that it is on top of
           // other elements even if in a positioned element initially.
           angular.element(document.body).append(modal);
@@ -74,6 +78,25 @@ ngeo.modalDirective = function($parse) {
               ngModelController.$setViewValue(type == 'shown');
             });
           });
+
+          if (destroyContent) {
+            modal.on('hide.bs.modal', onHide);
+            modal.on('show.bs.modal', onShow);
+          } else {
+            modal.find('.modal-content').append(transcludeFn());
+          }
+
+          function onShow(e) {
+            childScope = scope.$new();
+            transcludeFn(childScope, function(clone) {
+              modal.find('.modal-content').append(clone);
+            });
+          }
+
+          function onHide(e) {
+            childScope.$destroy();
+            modal.find('.modal-content').empty();
+          }
         }
   };
 };
