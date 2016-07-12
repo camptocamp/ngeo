@@ -2,6 +2,7 @@ goog.provide('gmf-timeselector');
 
 goog.require('gmf.DatePickerDirective');
 goog.require('gmf.WMSTime');
+goog.require('goog.asserts');
 
 /** @const **/
 var app = {};
