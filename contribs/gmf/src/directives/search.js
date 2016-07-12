@@ -353,9 +353,9 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     templates: {
       header: '<div class="search-header">' + gettextCatalog.getString('Recenter to') + '</div>',
       suggestion: function(suggestion) {
-        var coordiantes = suggestion['label'];
+        var coordinates = suggestion['label'];
 
-        var html = '<p class="search-label">' + coordiantes + '</p>';
+        var html = '<p class="search-label">' + coordinates + '</p>';
         html += '<p class="search-group">' + gettextCatalog.getString('Recenter to') + '</p>';
         html = '<div class="search-datum">' + html + '</div>';
         return html;
@@ -580,8 +580,8 @@ gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
 
 
 /**
- * @param {ol.View} view todo
- * @return {function(string, function(Object))} todo
+ * @param {ol.View} view View.
+ * @return {function(string, function(Object))} function defining parameters for the search suggestions.
  * @private
 */
 gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
