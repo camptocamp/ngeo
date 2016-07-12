@@ -7,6 +7,7 @@ goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ngeo.interaction.MeasureLength');
 goog.require('ngeo.mapDirective');
+goog.require('ngeo.filters');
 goog.require('ol.Map');
 goog.require('ol.Observable');
 goog.require('ol.Overlay');
