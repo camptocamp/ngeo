@@ -347,7 +347,20 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
 
   // For searching coordinates
   this.datasets.push({
-    source: this.createSearchCoordinates_(this.map_.getView())
+    source: this.createSearchCoordinates_(this.map_.getView()),
+    name: 'coordinates',
+    display: 'label',
+    templates: {
+      header: '<div class="search-header">' + gettextCatalog.getString('Recenter to') + '</div>',
+      suggestion: function(suggestion) {
+        var coordiantes = suggestion['label'];
+
+        var html = '<p class="search-label">' + coordiantes + '</p>';
+        html += '<p class="search-group">' + gettextCatalog.getString('Recenter to') + '</p>';
+        html = '<div class="search-datum">' + html + '</div>';
+        return html;
+      }
+    }
   });
 
   /**
@@ -568,13 +581,14 @@ gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
 
 /**
  * @param {ol.View} view todo
- * @return {function(string)} todo
+ * @return {function(string, function(Object))} todo
  * @private
 */
 gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
   var viewProjection = view.getProjection();
   var extent = viewProjection.getExtent();
-  return function(query) {
+  return function(query, callback) {
+    var suggestions = [];
     var coordinates = this.ngeoAutoProjection_.stringToCoordinates(query);
     var position;
     if (coordinates === null) {
@@ -585,14 +599,12 @@ gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
     if (position === null) {
       return;
     }
-    var geom = new ol.geom.Point(position);
-    this.featureOverlay_.clear();
-    this.featureOverlay_.addFeature(new ol.Feature({
-      geometry: geom,
-      'layer_name': gmf.COORDINATES_LAYER_NAME
-    }));
-    view.setCenter(position);
-    this.leaveSearch_();
+    suggestions.push({
+      label: coordinates.join(' '),
+      position: position,
+      'tt_source': 'coordinates'
+    });
+    callback(suggestions);
   }.bind(this);
 };
 
@@ -729,12 +741,37 @@ gmf.SearchController.prototype.blur = function() {
 
 /**
  * @param {jQuery.Event} event Event.
+ * @param {Object|ol.Feature} suggestion Suggestion.
+ * @param {TypeaheadDataset} dataset Dataset.
+ * @this {gmf.SearchController}
+ * @private
+ */
+gmf.SearchController.select_ = function(event, suggestion, dataset) {
+  if (suggestion['tt_source'] === 'coordinates') {
+    var geom = new ol.geom.Point(suggestion['position']);
+
+    this.featureOverlay_.clear();
+    this.featureOverlay_.addFeature(new ol.Feature({
+      geometry: geom,
+      'layer_name': gmf.COORDINATES_LAYER_NAME
+    }));
+    this.map_.getView().setCenter(suggestion['position']);
+    this.leaveSearch_();
+  } else {
+    goog.asserts.assertInstanceof(suggestion, ol.Feature);
+    this.selectFromGMF_(event, suggestion, dataset);
+  }
+};
+
+
+/**
+ * @param {jQuery.Event} event Event.
  * @param {ol.Feature} feature Feature.
  * @param {TypeaheadDataset} dataset Dataset.
  * @this {gmf.SearchController}
  * @private
  */
-gmf.SearchController.select_ = function(event, feature, dataset) {
+gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset) {
   var actions = feature.get('actions');
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
