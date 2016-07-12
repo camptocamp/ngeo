@@ -430,7 +430,7 @@ ngeo.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
         if (!wfsItemsByUrl[url]) {
           wfsItemsByUrl[url] = [];
         }
-        wfsItemsByUrl[url].push(item);
+        this.pushSourceIfUnique_(item, wfsItemsByUrl[url]);
       } else if (!wfsOnly) {
         // use WMF GetFeatureInfo
         infoFormat = item.source.infoFormat;
@@ -443,7 +443,7 @@ ngeo.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
           if (!wmsItemsByUrl[url]) {
             wmsItemsByUrl[url] = [];
           }
-          wmsItemsByUrl[url].push(item);
+          this.pushSourceIfUnique_(item, wmsItemsByUrl[url]);
         } else {
           // TODO - support other kinds of infoFormats
           item['resultSource'].pending = false;
@@ -459,6 +459,27 @@ ngeo.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
   };
 };
 
+
+/**
+ * Push source if and only if not already in the array. it aims to add a unicity
+ * constraint on sources.
+ *
+ * The 'id' of a source object is taken from the 'id' property of the
+ * node object (in the tree). Under the wood, the 'id' property of a node is filled
+ * regarding the layer attached to it. therefore, Two nodes with the same layer ,
+ * attached will have the same 'id'. We must avoid multiple identical request.
+ * @param  {ngeo.QueryCacheItem} item  The QueryCache item to push in the array
+ * @param  {Array.<ngeo.QueryCacheItem>} array QueryCacheItem array
+ * @return {boolean} true if the item has been added, false otherwise.
+ * @private
+ */
+ngeo.Query.prototype.pushSourceIfUnique_ = function(item, array) {
+  var isUnique = array.indexOf(item) < 0;
+  if (isUnique) {
+    array.push(item);
+  }
+  return isUnique;
+};
 
 /**
  * @param {Object.<string, Array.<ngeo.QueryCacheItem>>} wmsItemsByUrl Queryable
