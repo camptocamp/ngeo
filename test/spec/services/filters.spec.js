@@ -56,10 +56,6 @@ describe('ngeo.Filters', function() {
       co = [2600000, 1600000];
       expect(ngeoNumberCoordinates(co, 0, '{x}, {y}')).toBe(
           '2,600,000, 1,600,000');
-      expect(ngeoNumberCoordinates(co, 0, '{x}, {y}', true)).toBe(
-          '2,600,000, 1,600,000');
-      expect(ngeoNumberCoordinates(co, 0, '{x}, {y}', false)).toBe(
-          '2\'600\'000, 1\'600\'000');
   });
 
   it('Ngeo DMS coordinates', function() {
