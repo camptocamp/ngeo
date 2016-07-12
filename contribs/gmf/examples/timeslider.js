@@ -2,6 +2,7 @@ goog.provide('gmf-timeslider');
 
 goog.require('gmf.TimeSliderDirective');
 goog.require('gmf.WMSTime');
+goog.require('goog.asserts');
 
 /** @const **/
 var app = {};
