@@ -55,6 +55,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  * Example flat results:
  *
  *      <gmf-search gmf-search-map="ctrl.map"
+ *        gmf-search-options="ctrl.searchOptions"
  *        gmf-search-styles="ctrl.searchStyles"
  *        gmf-search-datasources="ctrl.searchDatasources"
  *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
@@ -72,6 +73,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  * Example with categories:
  *
  *      <gmf-search gmf-search-map="ctrl.map"
+ *        gmf-search-options="ctrl.searchOptions"
  *        gmf-search-styles="ctrl.searchStyles"
  *        gmf-search-datasources="ctrl.searchDatasources"
  *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
@@ -89,6 +91,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *
  * @param {string} gmfSearchTemplateUrl URL to template.
  * @htmlAttribute {ol.Map} gmf-search-map The map.
+ * @htmlAttribute {TypeaheadOptions|undefined} gmf-search-options Addition Typeahead options.
  * @htmlAttribute {gmfx.SearchDirectiveDatasource} gmf-search-datasource
  *      The datasources.
  * @htmlAttribute {Object.<string, ol.style.Style>}
@@ -117,6 +120,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
     scope: {
       'getMapFn': '&gmfSearchMap',
       'getDatasourcesFn': '&gmfSearchDatasources',
+      'typeaheadOptions': '<?gmfSearchOptions',
       'featuresStyles': '<?gmfSearchStyles',
       'clearbutton': '=gmfSearchClearbutton',
       'colorchooser': '=gmfSearchColorchooser',
@@ -284,10 +288,10 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @export
    */
   this.options = /** @type {TypeaheadOptions} */ ({
-    highlight: true,
-    hint: undefined,
-    minLength: undefined
+    highlight: true
   });
+
+  goog.object.extend(this.options, this.scope_['typeaheadOptions'] || {});
 
   /**
    * @type {Array.<TypeaheadDataset>}
