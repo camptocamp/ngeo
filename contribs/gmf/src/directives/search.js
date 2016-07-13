@@ -596,7 +596,6 @@ gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
       'layer_name': gmf.COORDINATES_LAYER_NAME
     }));
     view.setCenter(position);
-    this.leaveSearch_();
   }.bind(this);
 };
 
