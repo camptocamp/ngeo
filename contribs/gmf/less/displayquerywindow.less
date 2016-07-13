@@ -1,6 +1,9 @@
 @import "../../../node_modules/font-awesome/less/variables.less";
 
 @displayquerywindow-tablet-width: 8 * @map-tools-size;
+@displayquerywindow-detailed-header-height: 5rem;
+@displayquerywindow-detailed-details-line-height: 2rem;
+@displayquerywindow-detailed-details-height: 8 * @displayquerywindow-detailed-details-line-height;
 .displayquerywindow {
   width: @displayquerywindow-tablet-width;
   max-width: @displayquerywindow-tablet-width;
@@ -40,7 +43,7 @@
     margin: 0;
     transition: 0.3s ease-in all;
     &.detailed {
-      height: 16rem;
+      height: @displayquerywindow-detailed-header-height + @displayquerywindow-detailed-details-height + @app-margin * 3;
     }
     .slide-animation {
       height: 100%;
@@ -84,6 +87,8 @@
     }
   }
   .header {
+    height: @displayquerywindow-detailed-header-height;
+    margin-bottom: @app-margin;
     .title {
       font-weight: bold;
     }
@@ -96,12 +101,13 @@
     }
   }
   .details {
-    height: 55%;
+    height: @displayquerywindow-detailed-details-height;
+    line-height: @displayquerywindow-detailed-details-line-height;
     overflow-x: hidden;
     overflow-y: auto;
     margin-left: @app-margin;
     table {
-      font-size: 90%;
+      font-size: @font-size-base;
     }
     .key {
       padding-right: @app-margin;
@@ -123,6 +129,7 @@
     }
   }
   .navigate {
+    margin-top: @app-margin;
     border-top: solid 1px @border-color;
     height: @map-tools-size;
     display: flex;
@@ -184,9 +191,6 @@
   button.close {
     font-size: 21px;
   }
-  .animation-container.detailed {
-    height: 33vh;
-  }
 }
 
 @media (max-width: @screen-sm-min) {
@@ -207,6 +211,18 @@
         min-width: calc(~"70vw -" 2 * @app-margin);
         max-width: calc(~"70vw -" 2 * @app-margin);
       }
+    }
+  }
+}
+
+@media (orientation:landscape) {
+  /* mobile landscape orientation */
+  .displayquerywindow-mobile {
+    .animation-container.detailed {
+      height: (@displayquerywindow-detailed-header-height + @displayquerywindow-detailed-details-height / 2 + @app-margin * 3);
+    }
+    .details {
+      height: @displayquerywindow-detailed-details-height / 2;
     }
   }
 }
