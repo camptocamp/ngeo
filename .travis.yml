@@ -17,7 +17,7 @@ addons:
 
 node_js:
 - "4"
-- "6"
+- "0.10"
 
 cache:
   apt: true
@@ -60,12 +60,12 @@ deploy:
   on:
     repo: camptocamp/ngeo
     all_branches: true
-    node: "4"
+    node: "0.10"
 - provider: script
   script: npm publish
   skip_cleanup: true
   on:
-    node: "4"
+    node: "0.10"
     repo: camptocamp/ngeo
     tags: true
     condition: '"`.build/python-venv/bin/jsongrep -e version package.json`" == "${TRAVIS_TAG}"'
@@ -76,9 +76,9 @@ deploy:
   on:
     repo: camptocamp/ngeo
     branch: master
-    node: "4"
+    node: "0.10"
 - <<: *transifex
   on:
     repo: camptocamp/ngeo
     branch: 2.0
-    node: "4"
+    node: "0.10"
