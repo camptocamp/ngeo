@@ -6,13 +6,13 @@ describe('gmfWMSTime service', function() {
   var gmfWMSTime;
 
   var wmsTime = {
-    widget: /** @type {gmfx.TimePropertyWidgetEnum} */ ('slider'),
+    widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('slider'),
     maxValue: '2015-12-31T00:00:00Z',
     minValue: '2014-01-01T00:00:00Z',
     maxDefValue: null,
     minDefValue: null,
-    resolution: /** @type {gmfx.TimePropertyResolutionEnum}*/ ('year'),
-    mode: /** @type {gmfx.TimePropertyModeEnum} */ ('value'),
+    resolution: /** @type {ngeox.TimePropertyResolutionEnum}*/ ('year'),
+    mode: /** @type {ngeox.TimePropertyModeEnum} */ ('value'),
     interval : [0,0,1,0]
   };
 

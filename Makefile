@@ -20,7 +20,6 @@ GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 GMF_APPS_LIBS_JS_FILES += \
 	contribs/gmf/examples/https.js \
 	node_modules/jquery/dist/jquery.min.js \
-	contribs/gmf/third-party/jquery-ui/jquery-ui.min.js \
 	node_modules/angular/angular.min.js \
 	node_modules/angular-animate/angular-animate.min.js \
 	node_modules/angular-gettext/dist/angular-gettext.min.js \
@@ -370,19 +369,19 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/lib/jquery-ui.min.js: contribs/gmf/third-party/jquery-ui/jquery-ui.min.js
+.build/examples-hosted/lib/jquery-ui.min.js: third-party/jquery-ui/jquery-ui.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/lib/jquery-ui.min.css: contribs/gmf/third-party/jquery-ui/jquery-ui.min.css
+.build/examples-hosted/lib/jquery-ui.min.css: third-party/jquery-ui/jquery-ui.min.css
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/contribs/gmf/build/images/: contribs/gmf/third-party/jquery-ui/images/
+.build/examples-hosted/contribs/gmf/build/images/: third-party/jquery-ui/images/
 	mkdir -p $@
 	cp -r $</* $@
 
-.build/examples-hosted/lib/images/: contribs/gmf/third-party/jquery-ui/images/
+.build/examples-hosted/lib/images/: third-party/jquery-ui/images/
 	mkdir -p $@
 	cp -r $</* $@
 
@@ -447,18 +446,21 @@ dist/gmf.js.map: dist/gmf.js
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .PRECIOUS: .build/examples-hosted/%.html
-.build/examples-hosted/%.html: examples/%.html
+.build/examples-hosted/%.html: examples/%.html $(EXAMPLE_HOSTED_REQUIREMENTS)
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
+		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.js|lib/jquery-ui.min.js|' \
+		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.css|lib/jquery-ui.min.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
 		-e 's|\.\./node_modules/angular-animate/angular-animate.js|lib/angular-animate.min.js|' \
 		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext.js|lib/angular-gettext.min.js|' \
 		-e 's|\.\./node_modules/angular-touch/angular-touch.js|lib/angular-touch.min.js|' \
 		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
+		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
 		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
@@ -474,8 +476,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap\.css|lib/bootstrap.min.css|' \
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery\.js|lib/jquery.min.js|' \
-		-e 's|third-party/jquery-ui/jquery-ui.min\.js|\.\./lib/jquery-ui.min.js|' \
-		-e 's|third-party/jquery-ui/jquery-ui.min\.css|\.\./lib/jquery-ui.min.css|' \
+		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.js|lib/jquery-ui.min.js|' \
+		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.css|lib/jquery-ui.min.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap\.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular\.js|lib/angular.min.js|' \
 		-e 's|\.\./node_modules/angular-animate/angular-animate\.js|lib/angular-animate.min.js|' \
@@ -483,8 +485,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/angular-sanitize/angular-sanitize\.js|lib/angular-sanitize.min.js|' \
 		-e 's|\.\./node_modules/angular-touch/angular-touch\.js|lib/angular-touch.min.js|' \
 		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
-		-e 's|\.\./node_modules/angular-ui-slider/src/slider.js|lib/slider.min.js|' \
 		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
+		-e 's|\.\./node_modules/angular-ui-slider/src/slider.js|lib/slider.min.js|' \
 		-e 's|\.\./node_modules/d3/d3\.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
@@ -804,7 +806,7 @@ contribs/gmf/fonts/gmf-icons.eot: contribs/gmf/fonts/gmf-icons.ttf .build/node_m
 contribs/gmf/fonts/gmf-icons.woff: contribs/gmf/fonts/gmf-icons.ttf .build/node_modules.timestamp
 	node_modules/ttf2woff/ttf2woff.js $< $@
 
-contribs/gmf/build/images/: contribs/gmf/third-party/jquery-ui/images
+contribs/gmf/build/images/: third-party/jquery-ui/images
 	mkdir -p $@
 	cp $</*.png $@
 

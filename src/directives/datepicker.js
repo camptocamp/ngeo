@@ -1,43 +1,44 @@
-goog.provide('gmf.DatePickerDirective');
-goog.provide('gmf.DatePickerController');
+goog.provide('ngeo.DatePickerDirective');
+goog.provide('ngeo.DatePickerController');
 
-goog.require('gmf');
-goog.require('gmf.WMSTime');
+goog.require('goog.asserts');
+goog.require('ngeo');
+goog.require('ngeo.Time');
 
-gmf.module.value('gmfDatePickerTemplateUrl',
+ngeo.module.value('ngeoDatePickerTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
     function(element, attrs) {
-      var templateUrl = attrs['gmfDatePickerTemplateUrl'];
+      var templateUrl = attrs['ngeoDatePickerTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/datepicker.html';
+          ngeo.baseTemplateUrl + '/datepicker.html';
     });
 
 
 /**
  * Provide a directive to select a signle date or a range of dates
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
- * gmfDatePickerTemplateUrl Template for the directive.
+ * ngeoDatePickerTemplateUrl Template for the directive.
  * @param  {angular.$timeout} $timeout angular timeout service
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
- * @ngname gmfDatePicker
+ * @ngname ngeoDatePicker
  */
-gmf.DatePicker = function(gmfDatePickerTemplateUrl,  $timeout) {
+ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
   return {
     scope : {
       onDateSelected : '&',
       time : '='
     },
     bindToController : true,
-    controller : 'gmfDatePickerController',
+    controller : 'ngeoDatePickerController',
     controllerAs : 'datepickerCtrl',
     restrict: 'AE',
-    templateUrl : gmfDatePickerTemplateUrl,
+    templateUrl : ngeoDatePickerTemplateUrl,
     link: function(scope, element, attrs, ctrl) {
 
       var lang =  ctrl.gettextCatalog_.getCurrentLanguage();
@@ -75,36 +76,36 @@ gmf.DatePicker = function(gmfDatePickerTemplateUrl,  $timeout) {
   };
 };
 
-gmf.module.directive('gmfDatePicker', gmf.DatePicker);
+ngeo.module.directive('ngeoDatePicker', ngeo.DatePicker);
 
 
 /**
  * DatePickerController - directive conttroller
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$injector} $injector injector.
- * @param {gmf.WMSTime} gmfWMSTime service wmstime.
+ * @param {ngeo.Time} ngeoTime time service.
  * @constructor
  * @export
  * @ngInject
  * @ngdoc controller
- * @ngname gmfDatePickerController
+ * @ngname ngeoDatePickerController
  */
-gmf.DatePickerController = function($scope, $injector, gmfWMSTime) {
+ngeo.DatePickerController = function($scope, $injector, ngeoTime) {
 
   /**
-   * @type {gmf.WMSTime}
+   * @type {ngeo.Time}
    * @private
    */
-  this.gmfWMSTime_ = gmfWMSTime;
+  this.ngeoTime_ = ngeoTime;
 
   /**
-   * @type {gmfx.TimeProperty}
+   * @type {ngeox.TimeProperty}
    * @export
    */
   this.time;
 
   //fetch the initial options for the component
-  var initialOptions_ = this.gmfWMSTime_.getOptions(this.time);
+  var initialOptions_ = this.ngeoTime_.getOptions(this.time);
 
   /**
    * The gettext catalog
@@ -204,4 +205,4 @@ gmf.DatePickerController = function($scope, $injector, gmfWMSTime) {
   }.bind(this));
 };
 
-gmf.module.controller('gmfDatePickerController', gmf.DatePickerController);
+ngeo.module.controller('ngeoDatePickerController', ngeo.DatePickerController);

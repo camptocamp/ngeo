@@ -17,7 +17,7 @@ goog.require('gmf.WMSTime');
  *          gmf-time-slider-on-date-selected="ctrl.onDateSelected(time)">
  *      </gmf-time-slider>
  *
- * @htmlAttribute {gmfx.TimeProperty} gmf-time-slider-time parameter for initialization.
+ * @htmlAttribute {ngeox.TimeProperty} gmf-time-slider-time parameter for initialization.
  * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expresion evaluated after
  * date(s) changed
  * @param {angular.$timeout} $timeout angular timeout service
@@ -105,7 +105,7 @@ gmf.TimeSliderController = function($scope, gmfWMSTime) {
 
   /**
    * A time object for directive initialization
-   * @type {gmfx.TimeProperty}
+   * @type {ngeox.TimeProperty}
    * @export
    */
   this.time;

@@ -1171,6 +1171,54 @@ ngeox.SearchDirectiveListeners.prototype.select;
  */
 ngeox.SearchDirectiveListeners.prototype.autocomplete;
 
+/**
+ * Enum for the time property widget
+ * Type of the widget to use
+ * @enum {string}
+ */
+ngeox.TimePropertyWidgetEnum = {
+  SLIDER : 'slider',
+  DATEPICKER : 'datepicker'
+};
+
+/**
+ * Mode of the widget
+ * @enum {string}
+ */
+ngeox.TimePropertyModeEnum = {
+  RANGE : 'range',
+  VALUE : 'value',
+  DISABLED : 'disabled'
+};
+
+/**
+ * resolution of the widget
+ * @enum {string}
+ */
+ngeox.TimePropertyResolutionEnum = {
+  DAY : 'day',
+  MONTH : 'month',
+  YEAR : 'year',
+  SECOND : 'second'
+};
+
+
+/**
+ * Time object
+ * @typedef {{
+ *  widget : ngeox.TimePropertyWidgetEnum,
+ *  maxValue: string,
+ *  minValue: string,
+ *  maxDefValue: (string|null),
+ *  minDefValue: (string|null),
+ *  mode: ngeox.TimePropertyModeEnum,
+ *  resolution: (ngeox.TimePropertyResolutionEnum|undefined),
+ *  values: (Array<string>|undefined),
+ *  interval : Array<number>
+ * }}
+ */
+ngeox.TimeProperty;
+
 
 /**
  * @interface

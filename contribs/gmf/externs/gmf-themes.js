@@ -78,7 +78,7 @@ GmfThemesNode.prototype.url;
 
 
 /**
- * @type {gmfx.TimeProperty|undefined}
+ * @type {ngeox.TimeProperty|undefined}
  */
 GmfThemesNode.prototype.time;
 
