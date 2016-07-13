@@ -1,0 +1,6 @@
+{
+    "name": "ngeo",
+    "license": "MIT",
+    "main": "dist/ngeo.js",
+    "dependencies": []
+}
