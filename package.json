@@ -30,7 +30,7 @@
     "bootstrap": "3.3.6",
     "clean-css": "3.4.18",
     "closure-util": "1.15.0",
-    "coveralls": "2.11.9",
+    "coveralls": "2.11.11",
     "d3": "3.5.17",
     "eslint": "2.13.1",
     "eslint-config-openlayers": "5.0.0",
