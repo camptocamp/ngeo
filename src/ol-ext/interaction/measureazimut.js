@@ -78,18 +78,42 @@ ngeo.interaction.MeasureAzimut.prototype.handleMeasure = function(callback) {
   var geom = /** @type {ol.geom.GeometryCollection} */
       (this.sketchFeature.getGeometry());
   var line = /** @type {ol.geom.LineString} */ (geom.getGeometries()[0]);
-  var output = this.formatMeasure_(line);
+  var output = ngeo.interaction.MeasureAzimut.getFormattedAzimuthRadius(line, this.getMap().getView().getProjection(), this.decimals, this.format);
   callback(output, line.getLastCoordinate());
 };
 
 
 /**
- * Format measure output.
+ * Format measure output of azimuth and radius.
  * @param {ol.geom.LineString} line LineString.
+ * @param {ol.proj.Projection} projection Projection of the polygon coords.
+ * @param {?number} decimals Decimals.
+ * @param {ngeox.unitPrefix} format The format function.
  * @return {string} Formated measure.
- * @private
  */
-ngeo.interaction.MeasureAzimut.prototype.formatMeasure_ = function(line) {
+ngeo.interaction.MeasureAzimut.getFormattedAzimuthRadius = function(
+    line, projection, decimals, format) {
+
+  var output = ngeo.interaction.MeasureAzimut.getFormattedAzimuth(
+    line, projection, decimals, format);
+
+  output += ', ' + ngeo.interaction.Measure.getFormattedLength(
+      line, projection, decimals, format);
+
+  return output;
+};
+
+
+/**
+ * Format measure output of azimuth.
+ * @param {ol.geom.LineString} line LineString.
+ * @param {ol.proj.Projection} projection Projection of the polygon coords.
+ * @param {?number} decimals Decimals.
+ * @param {ngeox.unitPrefix} format The format function.
+ * @return {string} Formated measure.
+ */
+ngeo.interaction.MeasureAzimut.getFormattedAzimuth = function(
+    line, projection, decimals, format) {
   var coords = line.getCoordinates();
   var dx = coords[1][0] - coords[0][0];
   var dy = coords[1][1] - coords[0][1];
@@ -97,10 +121,6 @@ ngeo.interaction.MeasureAzimut.prototype.formatMeasure_ = function(line) {
   var factor = dx > 0 ? 1 : -1;
   var azimut = Math.round(factor * rad * 180 / Math.PI) % 360;
   var output = azimut + '°';
-  var proj = this.getMap().getView().getProjection();
-  var dec = this.decimals;
-  output += '<br/>' + ngeo.interaction.Measure.getFormattedLength(
-      line, proj, dec, this.format);
   return output;
 };
 
@@ -390,6 +410,7 @@ ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
   if (this.source_ !== null) {
     this.source_.addFeature(sketchFeature);
   }
+
   this.dispatchEvent(new ol.interaction.DrawEvent(
       ol.interaction.DrawEventType.DRAWEND, sketchFeature));
 };

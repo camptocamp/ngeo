@@ -56,6 +56,12 @@ ngeo.FeatureProperties = {
    */
   OPACITY: 'o',
   /**
+   * Needed for circles to keep their azimuths
+   * @type {ol.geom.LineString}
+   * @export
+   */
+  RADIUS_GEOM: 'g',
+  /**
    * @type {string}
    * @export
    */

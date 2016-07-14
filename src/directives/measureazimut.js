@@ -59,6 +59,8 @@ ngeo.measureazimutDirective = function($compile, gettext, $filter) {
                 geometry.getGeometries()[1]);
             var polygon = ol.geom.Polygon.fromCircle(circle, 64);
             event.feature = new ol.Feature(polygon);
+            event.feature.set('radiusGeom', geometry.getGeometries()[0]);
+
             drawFeatureCtrl.handleDrawEnd(ngeo.GeometryType.CIRCLE, event);
           },
           drawFeatureCtrl
