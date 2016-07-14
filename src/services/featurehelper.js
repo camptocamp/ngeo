@@ -4,9 +4,11 @@ goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.Measure');
+goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol.Feature');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.MultiPoint');
+goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
 goog.require('ol.format.GPX');
 goog.require('ol.format.KML');
@@ -110,7 +112,7 @@ ngeo.FeatureHelper.prototype.setProjection = function(projection) {
  * @export
  */
 ngeo.FeatureHelper.prototype.setStyle = function(feature, opt_select) {
-  var styles = [this.getStyle(feature)];
+  var styles = this.getStyle(feature);
   if (opt_select) {
     if (this.supportsVertex_(feature)) {
       styles.push(this.getVertexStyle());
@@ -125,7 +127,7 @@ ngeo.FeatureHelper.prototype.setStyle = function(feature, opt_select) {
  * Create and return a style object from a given feature using its inner
  * properties and depending on its geometry type.
  * @param {ol.Feature} feature Feature.
- * @return {ol.style.Style} The style object.
+ * @return {Array.<ol.style.Style>} The style object.
  * @export
  */
 ngeo.FeatureHelper.prototype.getStyle = function(feature) {
@@ -153,7 +155,14 @@ ngeo.FeatureHelper.prototype.getStyle = function(feature) {
 
   goog.asserts.assert(style, 'Style should be thruthy');
 
-  return style;
+  var styles;
+  if (style.constructor === Array) {
+    styles = /** @type {Array.<ol.style.Style>}*/ (style);
+  } else {
+    styles = [style];
+  }
+
+  return styles;
 };
 
 
@@ -219,7 +228,7 @@ ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
 
 /**
  * @param {ol.Feature} feature Feature with polygon geometry.
- * @return {ol.style.Style} Style.
+ * @return {Array.<ol.style.Style>} Style.
  * @private
  */
 ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
@@ -227,12 +236,17 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
   var strokeWidth = this.getStrokeProperty(feature);
   var opacity = this.getOpacityProperty(feature);
   var color = this.getRGBAColorProperty(feature);
+  var showMeasure = this.getShowMeasureProperty(feature);
+
 
   // fill color with opacity
   var fillColor = color.slice();
   fillColor[3] = opacity;
 
-  var options = {
+  var azimut = /** @type {number} */ (
+    feature.get(ngeo.FeatureProperties.AZIMUT));
+
+  var styles = [new ol.style.Style({
     fill: new ol.style.Fill({
       color: fillColor
     }),
@@ -240,17 +254,50 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       color: color,
       width: strokeWidth
     })
-  };
-
-  var showMeasure = this.getShowMeasureProperty(feature);
+  })];
 
   if (showMeasure) {
-    options.text = this.createTextStyle_({
-      text: this.getMeasure(feature)
-    });
+    if (azimut !== undefined) {
+      // Radius style:
+      var line = this.getRadiusLine(feature, azimut);
+      var length = ngeo.interaction.Measure.getFormattedLength(
+        line, this.projection_, this.decimals_, this.format_);
+
+      styles.push(new ol.style.Style({
+        geometry: line,
+        fill: new ol.style.Fill({
+          color: fillColor
+        }),
+        stroke: new ol.style.Stroke({
+          color: color,
+          width: strokeWidth
+        }),
+        text: this.createTextStyle_({
+          text: length,
+          angle: ((azimut % 180) + 180) % 180 - 90
+        })
+      }));
+
+      // Azimut style
+      styles.push(new ol.style.Style({
+        geometry: new ol.geom.Point(line.getLastCoordinate()),
+        text: this.createTextStyle_({
+          text: azimut + '°',
+          size: 10,
+          offsetX: Math.cos((azimut - 90) * Math.PI / 180) * 15,
+          offsetY: Math.sin((azimut - 90) * Math.PI / 180) * 15
+        })
+      }));
+    } else {
+      styles.push(new ol.style.Style({
+        text: this.createTextStyle_({
+          text: this.getMeasure(feature)
+        })
+      }));
+    }
   }
 
-  return new ol.style.Style(options);
+  return styles;
 };
 
 
@@ -662,8 +709,17 @@ ngeo.FeatureHelper.prototype.getMeasure = function(feature) {
   var measure = '';
 
   if (geometry instanceof ol.geom.Polygon) {
-    measure = ngeo.interaction.Measure.getFormattedArea(
-      geometry, this.projection_, this.decimals_, this.format_);
+    if (this.getType(feature) === ngeo.GeometryType.CIRCLE) {
+      var azimut = /** @type {number} */ (
+        feature.get(ngeo.FeatureProperties.AZIMUT));
+      var line = this.getRadiusLine(feature, azimut);
+
+      measure = ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius(
+        line, this.projection_, this.decimals_, this.format_);
+    } else {
+      measure = ngeo.interaction.Measure.getFormattedArea(
+        geometry, this.projection_, this.decimals_, this.format_);
+    }
   } else if (geometry instanceof ol.geom.LineString) {
     measure = ngeo.interaction.Measure.getFormattedLength(
       geometry, this.projection_, this.decimals_, this.format_);
@@ -760,6 +816,28 @@ ngeo.FeatureHelper.prototype.panMapToFeature = function(feature, map,
     }
     map.getView().setCenter(featureCenter);
   }
+};
+
+
+/**
+ * This method generates a line string geometry that represents the radius for
+ * a given azimut. It expects the input geometry to be a circle.
+ * @param {ol.Feature} feature Feature.
+ * @param {number} azimut Azimut in degrees.
+ * @return {ol.geom.LineString} The line geometry.
+ */
+ngeo.FeatureHelper.prototype.getRadiusLine = function(feature, azimut) {
+  var geometry = feature.getGeometry();
+  // Determine the radius for the circle
+  var extent = geometry.getExtent();
+  var radius = (extent[3] - extent[1]) / 2;
+
+  var center = ol.extent.getCenter(geometry.getExtent());
+
+  var x = Math.cos((azimut - 90) * Math.PI / 180) * radius;
+  var y = -Math.sin((azimut - 90) * Math.PI / 180) * radius;
+  var endPoint = [x + center[0], y + center[1]];
+  return new ol.geom.LineString([center, endPoint]);
 };
 
 

@@ -266,6 +266,9 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
   switch (type) {
     case ngeo.GeometryType.CIRCLE:
       feature.set(prop.IS_CIRCLE, true);
+      if (event.feature.get('azimut') !== undefined) {
+        feature.set(prop.AZIMUT, event.feature.get('azimut'));
+      }
       break;
     case ngeo.GeometryType.TEXT:
       feature.set(prop.IS_TEXT, true);
