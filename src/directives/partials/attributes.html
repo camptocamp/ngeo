@@ -2,27 +2,29 @@
   <div
       class="form-group"
       ng-repeat="attribute in ::attrCtrl.attributes">
-    <label>{{ attribute.name }}:</label>
-    <div ng-switch="attribute.type">
-      <select
-          ng-switch-when="select"
-          ng-model="attrCtrl.properties[attribute.name]"
-          ng-change="attrCtrl.handleInputChange(attribute.name);"
-          class="form-control"
-          type="text">
-        <option
-            ng-repeat="attribute in ::attribute.choices"
-            value="{{ ::attribute }}">
-          {{ ::attribute }}
-        </option>
-      </select>
-      <input
-          ng-switch-default
-          ng-model="attrCtrl.properties[attribute.name]"
-          ng-change="attrCtrl.handleInputChange(attribute.name);"
-          class="form-control"
-          type="text">
-      </input>
+    <div ng-if="attribute.type !== 'geometry'">
+      <label>{{ attribute.name }}:</label>
+      <div ng-switch="attribute.type">
+        <select
+            ng-switch-when="select"
+            ng-model="attrCtrl.properties[attribute.name]"
+            ng-change="attrCtrl.handleInputChange(attribute.name);"
+            class="form-control"
+            type="text">
+          <option
+              ng-repeat="attribute in ::attribute.choices"
+              value="{{ ::attribute }}">
+            {{ ::attribute }}
+          </option>
+        </select>
+        <input
+            ng-switch-default
+            ng-model="attrCtrl.properties[attribute.name]"
+            ng-change="attrCtrl.handleInputChange(attribute.name);"
+            class="form-control"
+            type="text">
+        </input>
+      </div>
     </div>
   </div>
 </form>

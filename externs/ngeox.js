@@ -13,6 +13,7 @@ var ngeox;
  * A feature attribute definition.
  * @typedef {{
  *     choices: (Array.<string>|undefined),
+ *     geomType: (string|undefined),
  *     name: (string),
  *     required: (boolean|undefined),
  *     type: (string)
@@ -26,6 +27,14 @@ ngeox.Attribute;
  * @type {Array.<string>|undefined}
  */
 ngeox.Attribute.prototype.choices;
+
+
+/**
+ * Set only if the attribute is a geometry type. Determines the type of
+ * geometry.
+ * @type {string|undefined}
+ */
+ngeox.Attribute.prototype.geomType;
 
 
 /**

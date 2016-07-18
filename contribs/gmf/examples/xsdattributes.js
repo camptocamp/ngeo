@@ -123,6 +123,24 @@ app.MainController.prototype.setAttributes_ = function(attributes) {
 
 
 /**
+ * @return {string} Type of geometry.
+ * @export
+ */
+app.MainController.prototype.getGeomType = function() {
+  var type = 'N/A';
+  if (this.attributes) {
+    var geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(
+      this.attributes
+    );
+    if (geomAttr && geomAttr.geomType) {
+      type = geomAttr.geomType;
+    }
+  }
+  return type;
+};
+
+
+/**
  * Just for this example
  * @param {GmfThemesNode} node A theme, group or layer node.
  * @param {Array.<GmfThemesNode>} nodes An Array of nodes.
