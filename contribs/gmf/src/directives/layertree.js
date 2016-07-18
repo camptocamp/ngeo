@@ -547,7 +547,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
             if (!isActive) {
               newLayersNames.push(layersNames);
             }
-          } else if (currentLayersNames.search(new RegExp(layersNames)) >= 0) {
+          } else if (this.searchLayersNames_(currentLayersNames, layersNames)) {
             newLayersNames.push(layersNames);
           }
         }
@@ -566,11 +566,12 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
         l = layers[i];
         source = layers[i].getSource();
         if (source instanceof ol.source.WMTS) {
-          if (layersNames.search(source.getLayer()) >= 0) {
+          if (this.searchLayersNames_(layersNames, source.getLayer())) {
             nodeLayers.push(l);
           }
         } else if (source instanceof ol.source.ImageWMS) {
-          if (layersNames.search(source.getParams()['LAYERS']) >= 0) {
+          if (this.searchLayersNames_(layersNames,
+            source.getParams()['LAYERS'])) {
             nodeLayers.push(l);
           }
         }
@@ -607,6 +608,26 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
   }
 };
 
+
+/**
+ * Search if a substring representing layers names are in the string representing
+ * all the layers names of the WM(T)S layer
+ * @param  {string} allLayersNames all layers names currently enable for the
+ * WM(T)S layer
+ * @param  {string} subLayersNames layers names to search on allLayersNames
+ * @return {boolean} true if subLayersNames is in allLayersNames
+ * @private
+ */
+gmf.LayertreeController.prototype.searchLayersNames_ = function(allLayersNames,
+  subLayersNames) {
+  var layersNames = allLayersNames.split(',');
+  var layersNamesToFind = subLayersNames.split(',');
+  var found;
+  found = layersNamesToFind.every(function(lname) {
+    return layersNames.indexOf(lname) >= 0;
+  });
+  return found;
+};
 
 /**
  * Get the layer(s) name(s) Attached to the node param, regarding its type
@@ -661,7 +682,8 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
             firstParentTreeSource.getParams()['LAYERS'];
         // Get style for this layer depending if the layer is on the map or not
         // and if the layer is visible;
-        style = layersNames.search(node.layers) < 0 ||
+        style = !this.searchLayersNames_(layersNames,
+          this.getLayersNames_(node)) ||
             !firstParentTreeLayer.getVisible() ? 'off' : 'on';
       }
 
