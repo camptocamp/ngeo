@@ -89,14 +89,18 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
   var type = node.getAttribute('type');
   if (type) {
-    // Skip attribute of any 'geometry' type
     var geomRegex =
       /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
     if (geomRegex.exec(type)) {
-      return null;
-    }
-
-    if (type === 'xsd:string') {
+      attribute.type = ngeo.format.XSDAttributeType.GEOMETRY;
+      if (/^gml:Point/.exec(type)) {
+        attribute.geomType = ol.geom.GeometryType.POINT;
+      } else if (/^gml:LineString/.exec(type)) {
+        attribute.geomType = ol.geom.GeometryType.LINE_STRING;
+      } else if (/^gml:Polygon/.exec(type)) {
+        attribute.geomType = ol.geom.GeometryType.POLYGON;
+      }
+    } else if (type === 'xsd:string') {
       attribute.type = ngeo.format.XSDAttributeType.TEXT;
     } else if (type === 'xsd:date') {
       attribute.type = ngeo.format.XSDAttributeType.DATE;
@@ -126,6 +130,24 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
 
 /**
+ * Returns the first geometry attribute among a given list of attributes.
+ * @param {Array.<ngeox.Attribute>} attributes The list of attributes.
+ * @return {?ngeox.Attribute} A geometry attribute object.
+ * @export
+ */
+ngeo.format.XSDAttribute.getGeometryAttribute = function(attributes) {
+  var geomAttribute = null;
+  for (var i = 0, ii = attributes.length; i < ii; i++) {
+    if (attributes[i].type === ngeo.format.XSDAttributeType.GEOMETRY) {
+      geomAttribute = attributes[i];
+      break;
+    }
+  }
+  return geomAttribute;
+};
+
+
+/**
  * @enum {string}
  */
 ngeo.format.XSDAttributeType = {
@@ -137,6 +159,10 @@ ngeo.format.XSDAttributeType = {
    * @type {string}
    */
   DATETIME: 'datetime',
+  /**
+   * @type {string}
+   */
+  GEOMETRY: 'geometry',
   /**
    * @type {string}
    */

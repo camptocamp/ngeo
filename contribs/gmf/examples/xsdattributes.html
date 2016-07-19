@@ -34,6 +34,10 @@
             ng-options="layer.name for layer in ctrl.layers">
             <option value="">-- Choose a layer --</option>
           </select>
+          <div>
+            Geometry type:
+            <span>{{ ctrl.getGeomType() }}</span>
+          </div>
         </div>
         <div class="col-sm-6">
           <ngeo-attributes
