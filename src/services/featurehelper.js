@@ -302,7 +302,8 @@ ngeo.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
       stroke: new ol.style.Stroke({
         color: [0, 0, 0, 1]
       })
-    })
+    }),
+    zIndex : 10000
   };
 
   if (incGeomFunc) {
