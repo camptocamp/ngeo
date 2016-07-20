@@ -31,11 +31,13 @@ app.module.constant('ngeoExportFeatureFormats', [
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+ * manager
  *     service.
  * @constructor
  */
 app.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
-    ngeoToolActivateMgr) {
+    ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {!angular.Scope}
@@ -50,16 +52,14 @@ app.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
 
   ngeoFeatureHelper.setProjection(view.getProjection());
 
+
   /**
-   * @type {ol.layer.Vector}
+   * @type {ngeo.FeatureOverlay}
    * @export
    */
-  this.vectorLayer = new ol.layer.Vector({
-    source: new ol.source.Vector({
-      wrapX: false,
-      features: ngeoFeatures
-    })
-  });
+  this.featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+
+  this.featureOverlay.setFeatures(ngeoFeatures);
 
   /**
    * @type {ol.Map}
@@ -70,7 +70,7 @@ app.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
       new ol.layer.Tile({
         source: new ol.source.OSM()
       }),
-      this.vectorLayer
+      this.featureOverlay.getLayer()
     ],
     view: view
   });
