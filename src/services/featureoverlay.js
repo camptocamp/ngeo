@@ -242,6 +242,15 @@ ngeo.FeatureOverlay.prototype.clear = function() {
 
 
 /**
+ * Get the layer
+ * @return {ol.layer.Vector} The vector layer used internally
+ * @export
+ */
+ngeo.FeatureOverlay.prototype.getLayer = function() {
+  return this.manager_.getLayer();
+};
+
+/**
  * Configure this feature overlay with a feature collection. Features added
  * to the collection are also added to the overlay. Same for removal. If you
  * configure the feature overlay with a feature collection you will use the
