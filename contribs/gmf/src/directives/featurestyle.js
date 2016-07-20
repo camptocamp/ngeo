@@ -13,10 +13,12 @@ goog.require('ngeo.colorpickerDirective');
  * Example:
  *
  *     <gmf-featurestyle
- *         gmf-featurestyle-feature="ctrl.selectedFeature">
+ *         gmf-featurestyle-feature="ctrl.selectedFeature"
+ *         gmf-featurestyle-map="ctrl.map">
  *     </gmf-featurestyle>
  *
  * @htmlAttribute {ol.Feature} gmf-featurestyle-feature The feature.
+ * @htmlAttribute {ol.Map} gmf-featurestyle-map map.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -26,7 +28,8 @@ gmf.featurestyleDirective = function() {
   return {
     controller: 'GmfFeaturestyleController',
     scope: {
-      'feature': '=gmfFeaturestyleFeature'
+      'feature': '=gmfFeaturestyleFeature',
+      'map': '=gmfFeaturestyleMap'
     },
     bindToController: true,
     controllerAs: 'fsCtrl',
@@ -46,6 +49,12 @@ gmf.module.directive('gmfFeaturestyle', gmf.featurestyleDirective);
  * @ngname GmfFeaturestyleController
  */
 gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
+
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map;
 
   /**
    * @type {?ol.Feature}
@@ -102,6 +111,12 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
     }.bind(this),
     this.handleFeatureSet_.bind(this)
   );
+
+  ol.events.listen(
+      this.map,
+      'moveend',
+      this.handleMoveEnd_,
+      this);
 
 };
 
@@ -272,7 +287,24 @@ gmf.FeaturestyleController.prototype.handleFeatureChange_ = function() {
     return;
   }
 
-  this.featureHelper_.setStyle(feature, true);
+  this.featureHelper_.setStyle(feature, true, this.map);
+};
+
+
+/**
+ * @private
+ */
+gmf.FeaturestyleController.prototype.handleMoveEnd_ = function() {
+  var feature = this.feature;
+
+  if (!feature) {
+    return;
+  }
+
+  // If we zoom in or out we need to update the circle's measure labels offsets
+  if (this.featureHelper_.getType(feature) === ngeo.GeometryType.CIRCLE) {
+    this.featureHelper_.setStyle(feature, true, this.map);
+  }
 };
 
 

@@ -304,11 +304,11 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
     }.bind(this),
     function(newFeature, previousFeature) {
       if (previousFeature) {
-        this.featureHelper_.setStyle(previousFeature);
+        this.featureHelper_.setStyle(previousFeature, undefined, this.map);
         this.selectedFeatures.clear();
       }
       if (newFeature) {
-        this.featureHelper_.setStyle(newFeature, true);
+        this.featureHelper_.setStyle(newFeature, true, this.map);
         this.selectedFeatures.push(newFeature);
         if (this.listSelectionInProgress_) {
           this.featureHelper_.panMapToFeature(newFeature, this.map);

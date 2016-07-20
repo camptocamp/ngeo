@@ -4,6 +4,7 @@ goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.Measure');
+goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol.Feature');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.MultiPoint');
@@ -107,10 +108,12 @@ ngeo.FeatureHelper.prototype.setProjection = function(projection) {
  * @param {ol.Feature} feature Feature.
  * @param {boolean=} opt_select Whether the feature should be rendered as
  *     selected, which includes additional vertex and halo styles.
+ * @param {ol.Map=} opt_map This is needed for the circle azimuth to be rendered
+ *     in the corner. If ommitted, the azimuth will be displayed in the center.
  * @export
  */
-ngeo.FeatureHelper.prototype.setStyle = function(feature, opt_select) {
-  var styles = [this.getStyle(feature)];
+ngeo.FeatureHelper.prototype.setStyle = function(feature, opt_select, opt_map) {
+  var styles = this.getStyle(feature, opt_map);
   if (opt_select) {
     if (this.supportsVertex_(feature)) {
       styles.push(this.getVertexStyle());
@@ -125,10 +128,12 @@ ngeo.FeatureHelper.prototype.setStyle = function(feature, opt_select) {
  * Create and return a style object from a given feature using its inner
  * properties and depending on its geometry type.
  * @param {ol.Feature} feature Feature.
- * @return {ol.style.Style} The style object.
+ * @param {ol.Map=} opt_map This is needed for the circle azimuth to be rendered
+ *     in the corner. If ommitted, the azimuth will be displayed in the center.
+ * @return {Array.<ol.style.Style>} The style object.
  * @export
  */
-ngeo.FeatureHelper.prototype.getStyle = function(feature) {
+ngeo.FeatureHelper.prototype.getStyle = function(feature, opt_map) {
   var type = this.getType(feature);
   var style;
 
@@ -142,7 +147,7 @@ ngeo.FeatureHelper.prototype.getStyle = function(feature) {
     case ngeo.GeometryType.CIRCLE:
     case ngeo.GeometryType.POLYGON:
     case ngeo.GeometryType.RECTANGLE:
-      style = this.getPolygonStyle_(feature);
+      style = this.getPolygonStyle_(feature, opt_map);
       break;
     case ngeo.GeometryType.TEXT:
       style = this.getTextStyle_(feature);
@@ -153,7 +158,14 @@ ngeo.FeatureHelper.prototype.getStyle = function(feature) {
 
   goog.asserts.assert(style, 'Style should be thruthy');
 
-  return style;
+  var styles;
+  if (style.constructor === Array) {
+    styles = /** @type {Array.<ol.style.Style>}*/ (style);
+  } else {
+    styles = [style];
+  }
+
+  return styles;
 };
 
 
@@ -225,20 +237,30 @@ ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
 
 /**
  * @param {ol.Feature} feature Feature with polygon geometry.
- * @return {ol.style.Style} Style.
+ * @param {ol.Map=} opt_map This is needed for the circle azimuth to be rendered
+ *     in the corner. If ommitted, the azimuth will be displayed in the center.
+ * @return {Array.<ol.style.Style>} Style.
  * @private
  */
-ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
+ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature, opt_map) {
 
   var strokeWidth = this.getStrokeProperty(feature);
   var opacity = this.getOpacityProperty(feature);
   var color = this.getRGBAColorProperty(feature);
+  var showMeasure = this.getShowMeasureProperty(feature);
+
 
   // fill color with opacity
   var fillColor = color.slice();
   fillColor[3] = opacity;
 
-  var options = {
+  var line = /** @type {ol.geom.LineString} */ (
+    feature.get(ngeo.FeatureProperties.RADIUS_GEOM));
+  var polygon = /** @type {ol.geom.Polygon} */ (feature.getGeometry());
+
+
+  var polygonOptions = {
+    geometry: polygon,
     fill: new ol.style.Fill({
       color: fillColor
     }),
@@ -247,15 +269,90 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       width: strokeWidth
     })
   };
-
-  var showMeasure = this.getShowMeasureProperty(feature);
-
+  var radiusOptions;
   if (showMeasure) {
-    var measure = this.getMeasure(feature);
-    options.text = this.createTextStyle_(measure, 10);
+    radiusOptions = {
+      geometry: line,
+      fill: new ol.style.Fill({
+        color: fillColor
+      }),
+      stroke: new ol.style.Stroke({
+        color: color,
+        width: strokeWidth
+      })
+    };
+  } else {
+    radiusOptions = {
+      geometry: line,
+      fill: new ol.style.Fill({
+        color: [0,0,0,0]
+      }),
+      stroke: new ol.style.Stroke({
+        color: [0,0,0,0],
+        width: 0
+      })
+    };
+
   }
 
-  return new ol.style.Style(options);
+  var extent = feature.getGeometry().getExtent();
+
+  if (showMeasure) {
+    // Polygon azimuth style:
+    var lineGeometry = /** @type {ol.geom.LineString} */ (
+      feature.get(ngeo.FeatureProperties.RADIUS_GEOM));
+
+    // Which corner to display the azimuth at
+    if (lineGeometry instanceof ol.geom.LineString) {
+      var formattedAzimuth = ngeo.interaction.MeasureAzimut.getFormattedAzimuth(
+          lineGeometry, this.projection_, this.decimals_, this.format_);
+      var azimuth = parseInt(formattedAzimuth, 10);
+
+      var offsetCoordinates = null;
+
+      if (azimuth > 0 && azimuth <= 90) {
+        offsetCoordinates = ol.extent.getTopRight(extent);
+      } else if (azimuth > 90 && azimuth <= 180) {
+        offsetCoordinates = ol.extent.getBottomRight(extent);
+      } else if (azimuth > -180 && azimuth < -90) {
+        offsetCoordinates = ol.extent.getBottomLeft(extent);
+      } else {
+        offsetCoordinates = ol.extent.getTopLeft(extent);
+      }
+
+      // Finding out the offset in pixels
+      var offsetX, offsetY;
+      if (opt_map) {
+        var centerPixel = opt_map.getPixelFromCoordinate(ol.extent.getCenter(extent));
+        var cornerPixel = opt_map.getPixelFromCoordinate(offsetCoordinates);
+
+        offsetX = cornerPixel[0] - centerPixel[0];
+        offsetY = cornerPixel[1] - centerPixel[1];
+      }
+      polygonOptions.text = this.createTextStyle_(
+        formattedAzimuth,
+        10,
+        undefined,
+        undefined,
+        undefined,
+        offsetX,
+        offsetY);
+
+      // Radius azimuth style:
+      var length = ngeo.interaction.Measure.getFormattedLength(
+        lineGeometry, this.projection_, this.decimals_, this.format_);
+
+      radiusOptions.text = this.createTextStyle_(
+        length,
+        10);
+    }
+  }
+
+  var polygonStyle = new ol.style.Style(polygonOptions);
+
+  var lineStyle = new ol.style.Style(radiusOptions);
+
+  return [lineStyle, polygonStyle];
 };
 
 
@@ -670,10 +767,7 @@ ngeo.FeatureHelper.prototype.getMeasure = function(feature) {
 
   var measure = '';
 
-  if (geometry instanceof ol.geom.Polygon) {
-    measure = ngeo.interaction.Measure.getFormattedArea(
-      geometry, this.projection_, this.decimals_, this.format_);
-  } else if (geometry instanceof ol.geom.LineString) {
+  if (geometry instanceof ol.geom.LineString) {
     measure = ngeo.interaction.Measure.getFormattedLength(
       geometry, this.projection_, this.decimals_, this.format_);
   } else if (geometry instanceof ol.geom.Point) {
@@ -685,6 +779,30 @@ ngeo.FeatureHelper.prototype.getMeasure = function(feature) {
       var args = this.pointFilterArgs_.slice(0);
       args.unshift(coordinates);
       measure = this.pointFilterFn_.apply(this, args);
+    }
+  } else if (geometry instanceof ol.geom.Polygon) {
+    if (this.getType(feature) === ngeo.GeometryType.CIRCLE) {
+      var radius = /** @type {ol.geom.LineString} */ (
+        feature.get(ngeo.FeatureProperties.RADIUS_GEOM));
+
+      // TODO: Load the radius from permalink
+      if (!(radius instanceof ol.geom.Geometry)) {
+        var extent = geometry.getExtent();
+        var center = ol.extent.getCenter(geometry.getExtent());
+
+        //make two points at center and at the edge
+        var startPoint = [center[0], extent[1]];
+        var endPoint = center;
+
+        radius = new ol.geom.LineString([startPoint, endPoint]);
+        feature.set(ngeo.FeatureProperties.RADIUS_GEOM, radius);
+      }
+
+      measure = ngeo.interaction.MeasureAzimut.getFormattedAzimuthRadius(
+        radius, this.projection_, this.decimals_, this.format_);
+    } else {
+      measure = ngeo.interaction.Measure.getFormattedArea(
+        geometry, this.projection_, this.decimals_, this.format_);
     }
   }
 

@@ -266,6 +266,9 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
   switch (type) {
     case ngeo.GeometryType.CIRCLE:
       feature.set(prop.IS_CIRCLE, true);
+      if (event.feature.get('radiusGeom')) {
+        feature.set(prop.RADIUS_GEOM, event.feature.get('radiusGeom'));
+      }
       break;
     case ngeo.GeometryType.TEXT:
       feature.set(prop.IS_TEXT, true);
@@ -296,7 +299,7 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
   feature.set(prop.STROKE, 1);
 
   // set style
-  this.featureHelper_.setStyle(feature);
+  this.featureHelper_.setStyle(feature, undefined, this.map);
 
   // push in collection
   this.features_.push(feature);
