@@ -24,7 +24,9 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * This service's theme is a GmfThemesNode with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
+ * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
@@ -33,14 +35,26 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * @ngdoc service
  * @ngname gmfTreeManager
  */
-gmf.TreeManager = function(gettextCatalog, ngeoNotification, gmfThemes,
+gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper, ngeoNotification, gmfThemes,
     gmfTreeManagerModeFlush, ngeoStateManager) {
+
+  /**
+   * @type {angular.$timeout}
+   * @private
+   */
+  this.$timeout_ = $timeout;
 
   /**
    * @type {angularGettext.Catalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
+
+  /**
+   * @type {ngeo.LayerHelper}
+   * @private
+   */
+  this.layerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {ngeo.Notification}
@@ -163,7 +177,8 @@ gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
  * already in the tree.
  * @param{Array.<GmfThemesNode>} groups An array of gmf theme nodes.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
- * @param{boolean=} opt_silent if true notifyCantAddGroups_ is not called
+ * @param{boolean=} opt_silent if true notifyCantAddGroups_ is not called.
+ * @return{boolean} True if the group has been added. False otherwise.
  * @export
  */
 gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent) {
@@ -184,6 +199,7 @@ gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent) {
 
   //Update app state
   this.updateTreeGroupsState_(this.tree.children);
+  return (groupNotAdded.length === 0);
 };
 
 
@@ -293,16 +309,73 @@ gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
  * @param{string} layerName Name of the layer inside the group to add.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param{boolean=} opt_silent if true notifyCantAddGroups_ is not called
+ * @param{ol.Map=} opt_map Map object.
  * @export
  */
-gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent) {
+gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent, opt_map) {
   this.gmfThemes_.getThemesObject().then(function(themes) {
     var group = gmf.Themes.findGroupByLayerName(themes, layerName);
     if (group) {
-      this.addGroups([group], opt_add, opt_silent);
-      // FIXME: set the layer visible
+      var groupAdded = this.addGroups([group], opt_add, opt_silent);
+      if (opt_map) {
+        this.$timeout_(function() {
+          this.setLayerVisible_(layerName, group, groupAdded, /** @type {ol.Map}*/ (opt_map));
+        }.bind(this));
+      }
     }
   }.bind(this));
+};
+
+
+/**
+ * Make the layer of a group visible if the group is already in the layertree.
+ * If the group has jus been added set only the layer layerName visible.
+ * @param{string} layerName Name of the layer to set visible.
+ * @param{Object} group Group containg the layer to activate.
+ * @param{boolean} groupAdded True if the croup has been newly added. False otherwise
+ * @param{ol.Map} map Map obkect.
+ * @private
+ */
+gmf.TreeManager.prototype.setLayerVisible_ = function(layerName, group, groupAdded, map) {
+  var layersArray;
+  var activeLayers;
+
+  if (!group.mixed) {
+    /** @type {ol.layer.Image} */
+    var layerGroup;
+    layersArray = map.getLayerGroup().getLayersArray();
+    layerGroup = /** @type {ol.layer.Image} */ (this.layerHelper_.getLayerByName(group.name, layersArray));
+
+    if (groupAdded) {
+      activeLayers = layerName;
+    } else {
+      var source = /** @type {ol.source.ImageWMS} */ (layerGroup.getSource());
+      activeLayers = source.getParams()['LAYERS'];
+      activeLayers += activeLayers.includes(layerName) ? '' : ',' + layerName;
+    }
+
+    ngeo.LayerHelper.prototype.updateWMSLayerState(layerGroup, activeLayers);
+
+  } else {
+    var layer;
+
+    layersArray = this.layerHelper_.getGroupFromMap(map, gmf.DATALAYERGROUP_NAME).getLayersArray();
+    if (groupAdded) {
+      var children = group.children;
+
+      children.forEach(function(element) {
+        layer = this.layerHelper_.getLayerByName(element.name, layersArray);
+        if (!(element.name == layerName)) {
+          layer.setVisible(false);
+        } else {
+          layer.setVisible(true);
+        }
+      }.bind(this));
+    } else {
+      layer = this.layerHelper_.getLayerByName(layerName, layersArray);
+      layer.setVisible(true);
+    }
+  }
 };
 
 
