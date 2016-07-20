@@ -125,7 +125,7 @@ gmf.Themes.findGroupByLayerName = function(themes, name) {
       var group = theme.children[j];
       for (var k = 0, kk = group.children.length; k < kk; k++) {
         var layer = group.children[k];
-        if (layer.layers == name) {
+        if (layer.name == name) {
           return group;
         }
       }
