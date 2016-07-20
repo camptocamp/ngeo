@@ -1,8 +1,10 @@
 goog.provide('ngeo.profileDirective');
 
 goog.require('goog.asserts');
+goog.require('goog.events');
 goog.require('ngeo');
 goog.require('ngeo.profile');
+goog.require('ngeo.Debounce');
 
 
 /**
@@ -28,12 +30,13 @@ goog.require('ngeo.profile');
  * @htmlAttribute {?Array} ngeo-profile-pois The data for POIs.
  * @htmlAttribute {*} ngeo-profile-highlight Any property on the scope which
  * evaluated value may correspond to distance from origin.
+ * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoProfile
  */
-ngeo.profileDirective = function() {
+ngeo.profileDirective = function(ngeoDebounce) {
   return {
     restrict: 'A',
     link:
@@ -109,6 +112,10 @@ ngeo.profileDirective = function() {
                   profile.clearHighlight();
                 }
               });
+
+          goog.events.listen(window, goog.events.EventType.RESIZE,
+              ngeoDebounce(refreshData, 50, true),
+              false, this);
 
           function refreshData() {
             if (profile !== undefined) {
