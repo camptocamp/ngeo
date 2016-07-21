@@ -1261,3 +1261,25 @@ ngeox.number;
  * @typedef {function(number, string=, string=, number=): string}
  */
 ngeox.unitPrefix;
+
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+ngeox.style;
+
+
+/**
+ * The options for creating a text style.
+ * @typedef {{
+ *     text: (string),
+ *     size: (number|undefined),
+ *     angle: (number|undefined),
+ *     color: (ol.Color|undefined),
+ *     width: (number|undefined),
+ *     offsetX: (number|undefined),
+ *     offsetY: (number|undefined)
+ * }}
+ */
+ngeox.style.TextOptions;
