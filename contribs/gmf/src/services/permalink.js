@@ -88,6 +88,7 @@ gmf.module.constant('gmfPermalinkOptions',
  *     the gmf permalink service with.
  * @param {ngeo.Location} ngeoLocation ngeo location service.
  * @param {ngeo.WfsPermalink} ngeoWfsPermalink ngeo WFS query service.
+ * @param {angular.Scope} $rootScope Angular rootScope.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
@@ -95,7 +96,7 @@ gmf.module.constant('gmfPermalinkOptions',
 gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     ngeoFeatureOverlayMgr, ngeoFeatureHelper, ngeoFeatures, ngeoLayerHelper,
     ngeoStateManager, gmfThemes, gmfTreeManager, gmfPermalinkOptions,
-    ngeoLocation, ngeoWfsPermalink) {
+    ngeoLocation, ngeoWfsPermalink, $rootScope) {
 
   // == listener keys ==
 
@@ -280,7 +281,6 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   //   (2) listen for further features added/removed
   var features = this.getFeatures();
   features.forEach(function(feature) {
-    this.featureHelper_.setStyle(feature);
     this.addNgeoFeature_(feature);
   }, this);
   this.ngeoFeatures_.extend(features);
@@ -289,6 +289,11 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.REMOVE,
     this.handleNgeoFeaturesRemove_, this);
 
+  $rootScope.$on('$localeChangeSuccess', function() {
+    features.forEach(function(feature) {
+      this.featureHelper_.setStyle(feature);
+    }, this);
+  }.bind(this));
 };
 
 
