@@ -111,6 +111,7 @@ gmf.TreeManager.prototype.setModeFlush = function(value) {
  */
 gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
   var firstLevelNodes = theme.children;
+  var groupsNames, firstLevelNodesNames, isSubset;
   var treeGroups = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
     gmf.PermalinkParam.TREE_GROUPS));
   if (this.isModeFlush()) {
@@ -120,11 +121,36 @@ gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
     this.tree.name = theme.name;
   }
   if (opt_init && treeGroups !== undefined) {
-    //Init phase and state exists -> first level groups must be read from the stateManager
-    var groupsNames = treeGroups.split(',');
-    groupsNames.forEach(function(name) {
-      this.addGroupByName(name, true);
-    }, this);
+    groupsNames = treeGroups.length > 0 ? treeGroups.split(',') : [];
+    if (!groupsNames) {
+      //User removed all groups from the tree
+      return;
+    }
+    if (!this.isModeFlush()) {
+      //Initialization phase and state exists -> first-level groups must be read
+      //from the stateManager
+      groupsNames.forEach(function(name) {
+        this.addGroupByName(name, true);
+      }, this);
+    } else {
+      //Mode flush, check if treeGroups is a subset of firstLevelNodes.
+      //NB:If the theme in the URL was different from the theme stored in
+      //localStorage, the treeGroups values must not be used.
+      firstLevelNodesNames = firstLevelNodes.map(function(group) {
+        return group.name;
+      });
+      isSubset = groupsNames.every(function(name) {
+        return firstLevelNodesNames.indexOf(name) >= 0;
+      });
+      if (isSubset) {
+        groupsNames.forEach(function(name) {
+          this.addGroupByName(name, true);
+        }, this);
+      } else {
+        this.addGroups(firstLevelNodes);
+      }
+    }
+
   } else {
     this.addGroups(firstLevelNodes);
   }
