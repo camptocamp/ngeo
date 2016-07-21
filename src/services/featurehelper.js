@@ -176,8 +176,9 @@ ngeo.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
   };
 
   if (showMeasure) {
-    var measure = this.getMeasure(feature);
-    options.text = this.createTextStyle_(measure, 10);
+    options.text = this.createTextStyle_({
+      text: this.getMeasure(feature)
+    });
   }
 
   return new ol.style.Style(options);
@@ -206,17 +207,10 @@ ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
   var showMeasure = this.getShowMeasureProperty(feature);
 
   if (showMeasure) {
-    var fontSize = 10;
-    var measure = this.getMeasure(feature);
-    options.text = this.createTextStyle_(
-        measure,
-        fontSize,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        -(size + fontSize / 2 + 4)
-    );
+    options.text = this.createTextStyle_({
+      text: this.getMeasure(feature),
+      offsetY: -(size + 10 / 2 + 4)
+    });
   }
 
   return new ol.style.Style(options);
@@ -251,8 +245,9 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
   var showMeasure = this.getShowMeasureProperty(feature);
 
   if (showMeasure) {
-    var measure = this.getMeasure(feature);
-    options.text = this.createTextStyle_(measure, 10);
+    options.text = this.createTextStyle_({
+      text: this.getMeasure(feature)
+    });
   }
 
   return new ol.style.Style(options);
@@ -266,13 +261,13 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
  */
 ngeo.FeatureHelper.prototype.getTextStyle_ = function(feature) {
 
-  var label = this.getNameProperty(feature);
-  var size = this.getSizeProperty(feature);
-  var angle = this.getAngleProperty(feature);
-  var color = this.getRGBAColorProperty(feature);
-
   return new ol.style.Style({
-    text: this.createTextStyle_(label, size, angle, color)
+    text: this.createTextStyle_({
+      text: this.getNameProperty(feature),
+      size: this.getSizeProperty(feature),
+      angle: this.getAngleProperty(feature),
+      color: this.getRGBAColorProperty(feature)
+    })
   });
 };
 
@@ -355,11 +350,10 @@ ngeo.FeatureHelper.prototype.getHaloStyle_ = function(feature) {
   var type = this.getType(feature);
   var style;
   var haloSize = 3;
-  var size;
 
   switch (type) {
     case ngeo.GeometryType.POINT:
-      size = this.getSizeProperty(feature);
+      var size = this.getSizeProperty(feature);
       style = new ol.style.Style({
         image: new ol.style.Circle({
           radius: size + haloSize,
@@ -382,12 +376,13 @@ ngeo.FeatureHelper.prototype.getHaloStyle_ = function(feature) {
       });
       break;
     case ngeo.GeometryType.TEXT:
-      var label = this.getNameProperty(feature);
-      size = this.getSizeProperty(feature);
-      var angle = this.getAngleProperty(feature);
-      var color = [255, 255, 255, 1];
       style = new ol.style.Style({
-        text: this.createTextStyle_(label, size, angle, color, haloSize * 2)
+        text: this.createTextStyle_({
+          text: this.getNameProperty(feature),
+          size: this.getSizeProperty(feature),
+          angle: this.getAngleProperty(feature),
+          width: haloSize * 3
+        })
       });
       break;
     default:
@@ -622,36 +617,32 @@ ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
 
 
 /**
- * @param {string} text The text to display.
- * @param {number} size The size in `pt` of the text font.
- * @param {number=} opt_angle The angle in degrees of the text.
- * @param {ol.Color=} opt_color The color of the text.
- * @param {number=} opt_width The width of the outline color.
- * @param {number=} opt_offsetX The offset in pixels.
- * @param {number=} opt_offsetY The offset in pixels.
+ * @param {ngeox.style.TextOptions} options Options.
  * @return {ol.style.Text} Style.
  * @private
  */
-ngeo.FeatureHelper.prototype.createTextStyle_ = function(text, size,
-    opt_angle, opt_color, opt_width, opt_offsetX, opt_offsetY) {
+ngeo.FeatureHelper.prototype.createTextStyle_ = function(options) {
+  if (options.angle) {
+    var angle = options.angle !== undefined ? options.angle : 0;
+    var rotation = angle * Math.PI / 180;
+    options.rotation = rotation;
+    delete options.angle;
+  }
 
-  var angle = opt_angle !== undefined ? opt_angle : 0;
-  var rotation = angle * Math.PI / 180;
-  var font = ['normal', size + 'pt', 'Arial'].join(' ');
-  var color = opt_color !== undefined ? opt_color : [0, 0, 0, 1];
-  var width = opt_width !== undefined ? opt_width : 3;
-  var offsetX = opt_offsetX !== undefined ? opt_offsetX : 0;
-  var offsetY = opt_offsetY !== undefined ? opt_offsetY : 0;
+  options.font = ['normal', (options.size || 10) + 'pt', 'Arial'].join(' ');
 
-  return new ol.style.Text({
-    font: font,
-    text: text,
-    fill: new ol.style.Fill({color: color}),
-    stroke: new ol.style.Stroke({color: [255, 255, 255, 1], width: width}),
-    rotation: rotation,
-    offsetX: offsetX,
-    offsetY: offsetY
+  if (options.color) {
+    options.fill = new ol.style.Fill({color: options.color || [0, 0, 0, 1]});
+    delete options.color;
+  }
+
+  options.stroke = new ol.style.Stroke({
+    color: [255, 255, 255, 1],
+    width: options.width || 3
   });
+  delete options.width;
+
+  return new ol.style.Text(options);
 };
 
 
