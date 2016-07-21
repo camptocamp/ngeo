@@ -441,6 +441,7 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
 gmf.DrawfeatureController.prototype.selectFeatureFromList = function(feature) {
   this.listSelectionInProgress_ = true;
   this.selectedFeature = feature;
+  this.drawActive = false;
 };
 
 
