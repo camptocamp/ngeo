@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "angular": "1.5.8",
-    "angular-animate": "1.5.7",
+    "angular-animate": "1.5.8",
     "angular-dynamic-locale": "0.1.32",
     "angular-gettext": "2.3.4",
     "angular-gettext-tools": "2.2.3",
