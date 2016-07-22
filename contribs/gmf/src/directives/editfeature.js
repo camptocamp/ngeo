@@ -33,12 +33,15 @@ goog.require('ol.format.GeoJSON');
  *     <gmf-editfeature
  *         gmf-editfeature-layer="::ctrl.layer">
  *         gmf-editfeature-map="::ctrl.map"
+ *         gmf-editfeature-pixelbuffer="::ctrl.pixelBuffer"
  *         gmf-editfeature-vector="::ctrl.vectorLayer">
  *     </gmf-editfeature>
  *
  * @htmlAttribute {GmfThemesNode} gmf-editfeature-layer The GMF node of the
  *     editable layer.
  * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
+ * @htmlAttribute {number|undefined} gmf-editfeatureselector-pixelbuffer The
+ *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
  * @return {angular.Directive} The directive specs.
@@ -51,6 +54,7 @@ gmf.editfeatureDirective = function() {
     scope: {
       'layer': '=gmfEditfeatureLayer',
       'map': '<gmfEditfeatureMap',
+      'pixelBuffer': '<?gmfEditfeaturePixelbuffer',
       'vectorLayer': '<gmfEditfeatureVector'
     },
     bindToController: true,
@@ -91,6 +95,12 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @export
    */
   this.map;
+
+  /**
+   * @type {number}
+   * @export
+   */
+  this.pixelBuffer = this.pixelBuffer !== undefined ? this.pixelBuffer : 10;
 
   /**
    * @type {ol.layer.Vector}
@@ -138,12 +148,6 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
-
-  /**
-   * @type {number}
-   * @private
-   */
-  this.pixelBuffer_ = 10;
 
   /**
    * @type {boolean}
@@ -418,7 +422,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
   var map = this.map;
   var view = map.getView();
   var resolution = view.getResolution();
-  var buffer = resolution * this.pixelBuffer_;
+  var buffer = resolution * this.pixelBuffer;
   var extent = ol.extent.buffer(
     [coordinate[0], coordinate[1], coordinate[0], coordinate[1]],
     buffer
