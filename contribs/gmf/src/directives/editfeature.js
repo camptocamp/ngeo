@@ -19,7 +19,7 @@ goog.require('ol.format.GeoJSON');
 
 /**
  * Directive used to insert, modify and delete features from a single layer.
- * It allows you can modify the geometry of the feature in addition to its
+ * It allows you to modify the geometry of the feature in addition to its
  * attributes.
  *
  * In order to modify or delete a feature, you must click on the map at the
@@ -36,9 +36,12 @@ goog.require('ol.format.GeoJSON');
  *         gmf-editfeature-vector="::ctrl.vectorLayer">
  *     </gmf-editfeature>
  *
+ * @htmlAttribute {GmfThemesNode} gmf-editfeature-layer The GMF node of the
+ *     editable layer.
  * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
+ * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
+ *     which to draw the vector features.
  * @return {angular.Directive} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfEditfeature
  */
@@ -108,7 +111,7 @@ gmf.EditfeatureController = function($scope, $timeout, gmfEditFeature,
 
   /**
    * @type {gmf.EditFeature}
-   * @export
+   * @private
    */
   this.editFeatureService_ = gmfEditFeature;
 
@@ -259,9 +262,7 @@ gmf.EditfeatureController.prototype.delete = function() {
   );
 
   // (2) Reset selected feature
-  this.feature = null;
-  this.features.clear();
-
+  this.cancel();
 };
 
 
@@ -273,9 +274,7 @@ gmf.EditfeatureController.prototype.delete = function() {
 gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
   var features = new ol.format.GeoJSON().readFeatures(resp.data);
   if (features.length) {
-    var feature = features[0];
-    var id = feature.getId();
-    this.feature.setId(id);
+    this.feature.setId(features[0].getId());
   }
 };
 
@@ -292,21 +291,19 @@ gmf.EditfeatureController.prototype.handleDeleteFeature_ = function(resp) {
 
 /**
  * @param {Array.<ngeox.Attribute>} attributes Attributes.
- * @export
+ * @private
  */
 gmf.EditfeatureController.prototype.setAttributes_ = function(attributes) {
-  this.timeout_(function() {
-    // Set attributes
-    this.attributes = attributes;
+  // Set attributes
+  this.attributes = attributes;
 
-    // Get geom type from attributes and set
-    var geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(
-      this.attributes
-    );
-    if (geomAttr && geomAttr.geomType) {
-      this.geomType = geomAttr.geomType;
-    }
-  }.bind(this), 0);
+  // Get geom type from attributes and set
+  var geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(
+    this.attributes
+  );
+  if (geomAttr && geomAttr.geomType) {
+    this.geomType = geomAttr.geomType;
+  }
 };
 
 
@@ -356,8 +353,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
     this.createActive = false;
     //this.modify_.setActive(false);
     this.mapSelectActive = false;
-    this.feature = null;
-    this.features.clear();
+    this.cancel();
   }
 
 };
@@ -402,8 +398,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
     this.handleGetFeatures_.bind(this));
 
   // (2) Clear any previously selected feature
-  this.feature = null;
-  this.features.clear();
+  this.cancel();
 
   // (3) Pending
   //this.pending = true;

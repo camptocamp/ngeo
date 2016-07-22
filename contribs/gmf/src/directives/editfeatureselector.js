@@ -27,7 +27,6 @@ goog.require('gmf.editfeatureDirective');
  * @htmlAttribute {ol.layer.Vector} gmf-editfeatureselector-vector The vector
  *     layer where the selected or created features are drawn.
  * @return {angular.Directive} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfEditfeatureselector
  */
@@ -141,7 +140,7 @@ gmf.EditfeatureselectorController.prototype.getSetLayers = function(value) {
 /**
  * @param {GmfThemesNode} node A theme, group or layer node.
  * @param {Array.<GmfThemesNode>} nodes An Array of nodes.
- * @export
+ * @private
  */
 gmf.EditfeatureselectorController.prototype.getDistinctFlatNodes_ = function(
   node, nodes
