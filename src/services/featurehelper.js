@@ -297,7 +297,8 @@ ngeo.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
       stroke: new ol.style.Stroke({
         color: [0, 0, 0, 1]
       })
-    })
+    }),
+    zIndex : 10000
   };
 
   if (incGeomFunc) {
@@ -738,6 +739,7 @@ ngeo.FeatureHelper.prototype.panMapToFeature = function(feature, map,
   var view = map.getView();
   var extent = view.calculateExtent(size);
   var geometry = feature.getGeometry();
+  var mapSize = /** @type {!ol.Size} */ (map.getSize());
 
   if (!geometry.intersectsExtent(extent)) {
     var mapCenter = view.getCenter();
@@ -747,18 +749,7 @@ ngeo.FeatureHelper.prototype.panMapToFeature = function(feature, map,
       source: mapCenter,
       duration: panDuration
     }));
-
-    var featureCenter;
-    if (geometry instanceof ol.geom.LineString) {
-      featureCenter = geometry.getCoordinateAt(0.5);
-    } else if (geometry instanceof ol.geom.Polygon) {
-      featureCenter = geometry.getInteriorPoint().getCoordinates();
-    } else if (geometry instanceof ol.geom.Point) {
-      featureCenter = geometry.getCoordinates();
-    } else {
-      featureCenter = ol.extent.getCenter(geometry.getExtent());
-    }
-    map.getView().setCenter(featureCenter);
+    map.getView().fit(geometry.getExtent(), mapSize);
   }
 };
 

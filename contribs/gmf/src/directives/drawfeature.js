@@ -29,13 +29,14 @@ goog.require('ol.style.Text');
  *
  *     <gmf-drawfeature
  *         gmf-drawfeature-active="ctrl.drawFeatureActive"
- *         gmf-drawfeature-layer="::ctrl.vectorLayer"
+ *         gmf-drawfeature-feature-overlay="::ctrl.featureOverlay"
  *         gmf-drawfeature-map="::ctrl.map">
  *     </gmf-drawfeature>
  *
  * @htmlAttribute {boolean} gmf-drawfeature-active Whether the directive is
  *     active or not.
- * @htmlAttribute {ol.layer.Vector} gmf-drawfeature-layer The vector layer.
+ * @htmlAttribute {ngeo.FeatureOverlay} gmf-drawfeature-feature-overlay The ngeo
+ * feature overlay service.
  * @htmlAttribute {ol.Map} gmf-drawfeature-map The map.
  * @return {angular.Directive} The directive specs.
  * @ngInject
@@ -47,7 +48,7 @@ gmf.drawfeatureDirective = function() {
     controller: 'GmfDrawfeatureController',
     scope: {
       'active': '=gmfDrawfeatureActive',
-      'layer': '<gmfDrawfeatureLayer',
+      'featureOverlay': '<gmfDrawfeatureFeatureOverlay',
       'map': '<gmfDrawfeatureMap'
     },
     bindToController: true,
@@ -79,10 +80,10 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
     ngeoToolActivateMgr) {
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {ngeo.FeatureOverlay}
    * @export
    */
-  this.layer;
+  this.featureOverlay;
 
   /**
    * @type {ol.Map}
@@ -221,7 +222,6 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
    */
   this.translate_ = new ngeo.interaction.Translate({
     features: this.selectedFeatures,
-    layers: [this.layer],
     style: new ol.style.Style({
       text: new ol.style.Text({
         text: '\uf047',
@@ -240,7 +240,6 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
    */
   this.rotate_ = new ngeo.interaction.Rotate({
     features: this.selectedFeatures,
-    layers: [this.layer],
     style: new ol.style.Style({
       text: new ol.style.Text({
         text: '\uf01e',
@@ -442,6 +441,7 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
 gmf.DrawfeatureController.prototype.selectFeatureFromList = function(feature) {
   this.listSelectionInProgress_ = true;
   this.selectedFeature = feature;
+  this.drawActive = false;
 };
 
 
@@ -567,7 +567,7 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
     }.bind(this),
     null,
     function(layer) {
-      return layer === this.layer;
+      return layer === this.featureOverlay.getLayer();
     }.bind(this)
   );
 
@@ -625,7 +625,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
     }.bind(this),
     null,
     function(layer) {
-      return layer === this.layer;
+      return layer === this.featureOverlay.getLayer();
     }.bind(this)
   );
 
