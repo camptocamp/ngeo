@@ -73,6 +73,7 @@ ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$filter} $filter Angular filter
  * @param {!angular.Scope} $scope Scope.
+ * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @ngInject
@@ -80,7 +81,7 @@ ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
  * @ngname ngeoCreatefeatureController
  */
 ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
-    ngeoEventHelper) {
+    $timeout, ngeoEventHelper) {
 
   /**
    * @type {boolean}
@@ -89,7 +90,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
   this.active = this.active === true;
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {ol.Collection.<ol.Feature>|ol.source.Vector}
    * @export
    */
   this.features;
@@ -105,6 +106,12 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
    * @export
    */
   this.map;
+
+  /**
+   * @type {angular.$timeout}
+   * @private
+   */
+  this.timeout_ = $timeout;
 
   /**
    * @type {ngeo.EventHelper}
@@ -215,7 +222,11 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
  */
 ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
   var feature = new ol.Feature(event.feature.getGeometry());
-  this.features.push(feature);
+  if (this.features instanceof ol.Collection) {
+    this.features.push(feature);
+  } else {
+    this.features.addFeature(feature);
+  }
 };
 
 
@@ -224,9 +235,11 @@ ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
  * @private
  */
 ngeo.CreatefeatureController.prototype.handleDestroy_ = function() {
-  var uid = goog.getUid(this);
-  this.ngeoEventHelper_.clearListenerKey(uid);
-  this.map.removeInteraction(this.interaction_);
+  this.timeout_(function() {
+    var uid = goog.getUid(this);
+    this.ngeoEventHelper_.clearListenerKey(uid);
+    this.map.removeInteraction(this.interaction_);
+  }.bind(this), 0);
 };
 
 

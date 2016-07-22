@@ -1,0 +1,30 @@
+<div
+    ng-switch="efsCtrl.selectedLayer">
+
+  <select
+      ng-switch-when="null"
+      ng-model="efsCtrl.getSetLayers"
+      ng-model-options="{getterSetter: true}"
+      ng-options="layer.name for layer in efsCtrl.layers">
+    <option value="">-- Choose a layer --</option>
+  </select>
+
+  <div ng-switch-default>
+    <button
+        ng-click="efsCtrl.selectedLayer = null;"
+        class="btn btn-link btn-xs gmf-editfeatureselector-stopediting">
+      <span class="fa fa-times"></span>
+      {{'Stop editing' | translate}}
+    </button>
+
+    <h3>{{ efsCtrl.selectedLayer.name }}</h3>
+
+    <gmf-editfeature
+        gmf-editfeature-layer="::efsCtrl.selectedLayer"
+        gmf-editfeature-map="::efsCtrl.map"
+        gmf-editfeature-vector="::efsCtrl.vectorLayer">
+    </gmf-editfeature>
+
+  </div>
+
+</div>
