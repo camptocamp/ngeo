@@ -14,6 +14,7 @@ goog.require('ngeo.createfeatureDirective');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.EventHelper');
 goog.require('ngeo.FeatureHelper');
+goog.require('ngeo.LayerHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.format.GeoJSON');
@@ -38,6 +39,7 @@ goog.require('ol.interaction.Modify');
  *         gmf-editfeature-map="::ctrl.map"
  *         gmf-editfeature-tolerance="::ctrl.tolerance"
  *         gmf-editfeature-vector="::ctrl.vectorLayer">
+ *         gmf-editfeature-wmslayer="::ctrl.selectedWMSLayer">
  *     </gmf-editfeature>
  *
  * @htmlAttribute {GmfThemesNode} gmf-editfeature-layer The GMF node of the
@@ -47,6 +49,8 @@ goog.require('ol.interaction.Modify');
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
+ * @htmlAttribute {ol.layer.Image|ol.layer.Tile} gmf-editfeature-wmslayer The
+ *     WMS layer to refresh after each saved modification.
  * @return {angular.Directive} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeature
@@ -58,7 +62,8 @@ gmf.editfeatureDirective = function() {
       'layer': '=gmfEditfeatureLayer',
       'map': '<gmfEditfeatureMap',
       'tolerance': '<?gmfEditfeatureTolerance',
-      'vectorLayer': '<gmfEditfeatureVector'
+      'vectorLayer': '<gmfEditfeatureVector',
+      'wmsLayer': '<gmfEditfeatureWmslayer'
     },
     bindToController: true,
     controllerAs: 'efCtrl',
@@ -80,6 +85,7 @@ gmf.module.directive(
  *     interaction service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -89,7 +95,7 @@ gmf.module.directive(
  */
 gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
     gmfEditFeature, gmfXSDAttributes, ngeoDecorateInteraction, ngeoEventHelper,
-    ngeoFeatureHelper, ngeoToolActivateMgr) {
+    ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 
   /**
    * @type {GmfThemesNode}
@@ -114,6 +120,12 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @export
    */
   this.vectorLayer;
+
+  /**
+   * @type {ol.layer.Image|ol.layer.Tile}
+   * @export
+   */
+  this.wmsLayer;
 
   /**
    * @type {!angular.Scope}
@@ -161,6 +173,12 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
+
+  /**
+   * @type {ngeo.LayerHelper}
+   * @private
+   */
+  this.layerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {ngeo.ToolActivateMgr}
@@ -350,6 +368,7 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
   var features = new ol.format.GeoJSON().readFeatures(resp.data);
   if (features.length) {
     this.feature.setId(features[0].getId());
+    this.layerHelper_.refreshWMSLayer(this.wmsLayer);
   }
 };
 
@@ -360,7 +379,7 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
  * @private
  */
 gmf.EditfeatureController.prototype.handleDeleteFeature_ = function(resp) {
-  console.log('ok, deleted');
+  this.layerHelper_.refreshWMSLayer(this.wmsLayer);
 };
 
 

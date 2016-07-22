@@ -5,7 +5,7 @@
       ng-switch-when="null"
       ng-model="efsCtrl.getSetLayers"
       ng-model-options="{getterSetter: true}"
-      ng-options="layer.name for layer in efsCtrl.layers">
+      ng-options="layer.name for layer in efsCtrl.availableLayers">
     <option value="">-- Choose a layer --</option>
   </select>
 
@@ -23,7 +23,8 @@
         gmf-editfeature-layer="::efsCtrl.selectedLayer"
         gmf-editfeature-map="::efsCtrl.map"
         gmf-editfeature-tolerance="::efsCtrl.tolerance"
-        gmf-editfeature-vector="::efsCtrl.vectorLayer">
+        gmf-editfeature-vector="::efsCtrl.vectorLayer"
+        gmf-editfeature-wmslayer="::efsCtrl.selectedWMSLayer">
     </gmf-editfeature>
 
   </div>
