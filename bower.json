@@ -1,0 +1,8 @@
+{
+    "name": "ngeo",
+    "license": "MIT",
+    "main": [
+        "dist/ngeo.js",
+        "dist/ngeo.css"
+    ]
+}

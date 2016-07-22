@@ -69,6 +69,13 @@ deploy:
     repo: camptocamp/ngeo
     tags: true
     condition: '"`.build/python-venv/bin/jsongrep -e version package.json`" == "${TRAVIS_TAG}"'
+- provider: script
+  script: bower register ngeo camptocamp/ngeo
+  skip_cleanup: true
+  on:
+    node: "0.10"
+    repo: camptocamp/ngeo
+    tags: true
 - &transifex
   provider: script
   script: make transifex-send
