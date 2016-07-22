@@ -11,10 +11,13 @@ goog.require('ngeo.attributesDirective');
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.createfeatureDirective');
+goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.EventHelper');
+goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.format.GeoJSON');
+goog.require('ol.interaction.Modify');
 
 
 /**
@@ -69,7 +72,10 @@ gmf.module.directive(
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmf.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
+ *     interaction service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
+ * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -78,7 +84,8 @@ gmf.module.directive(
  * @ngname GmfEditfeatureController
  */
 gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
-    gmfEditFeature, gmfXSDAttributes, ngeoEventHelper, ngeoToolActivateMgr) {
+    gmfEditFeature, gmfXSDAttributes, ngeoDecorateInteraction, ngeoEventHelper,
+    ngeoFeatureHelper, ngeoToolActivateMgr) {
 
   /**
    * @type {GmfThemesNode}
@@ -128,10 +135,22 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
   this.xsdAttributes_ = gmfXSDAttributes;
 
   /**
+   * @type {ngeo.DecorateInteraction}
+   * @private
+   */
+  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
+
+  /**
    * @type {ngeo.EventHelper}
    * @private
    */
   this.eventHelper_ = ngeoEventHelper;
+
+  /**
+   * @type {ngeo.FeatureHelper}
+   * @private
+   */
+  this.featureHelper_ = ngeoFeatureHelper;
 
   /**
    * @type {ngeo.ToolActivateMgr}
@@ -144,6 +163,12 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @private
    */
   this.pixelBuffer_ = 10;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.active = true;
 
   /**
    * @type {boolean}
@@ -206,6 +231,22 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @export
    */
   this.features = this.vectorLayer.getSource().getFeaturesCollection();
+
+  /**
+   * @type {ol.interaction.Modify}
+   * @private
+   */
+  this.modify_ = new ol.interaction.Modify({
+    features: this.features,
+    style: ngeoFeatureHelper.getVertexStyle(false)
+  });
+  this.registerInteraction_(this.modify_);
+
+  /**
+   * @type {ngeo.ToolActivate}
+   * @export
+   */
+  this.modifyToolActivate = new ngeo.ToolActivate(this.modify_, 'active');
 
   /**
    * @type {?Array.<ngeox.Attribute>}
@@ -360,28 +401,28 @@ gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
 gmf.EditfeatureController.prototype.toggle_ = function(active) {
 
   var createUid = ['create-', goog.getUid(this)].join('-');
-  //var otherUid = ['other-', goog.getUid(this)].join('-');
+  var otherUid = ['other-', goog.getUid(this)].join('-');
   var toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
     toolMgr.registerTool(createUid, this.createToolActivate, false);
     toolMgr.registerTool(createUid, this.mapSelectToolActivate, true);
 
-    //toolMgr.registerTool(otherUid, this.createToolActivate, false);
-    //toolMgr.registerTool(otherUid, this.modifyToolActivate, true);
+    toolMgr.registerTool(otherUid, this.createToolActivate, false);
+    toolMgr.registerTool(otherUid, this.modifyToolActivate, true);
 
     this.mapSelectActive = true;
-    //this.modify_.setActive(true);
+    this.modify_.setActive(true);
   } else {
 
     toolMgr.unregisterTool(createUid, this.createToolActivate);
     toolMgr.unregisterTool(createUid, this.mapSelectToolActivate);
 
-    //toolMgr.unregisterTool(otherUid, this.createToolActivate);
-    //toolMgr.unregisterTool(otherUid, this.modifyToolActivate);
+    toolMgr.unregisterTool(otherUid, this.createToolActivate);
+    toolMgr.unregisterTool(otherUid, this.modifyToolActivate);
 
     this.createActive = false;
-    //this.modify_.setActive(false);
+    this.modify_.setActive(false);
     this.mapSelectActive = false;
     this.cancel();
   }
@@ -456,6 +497,32 @@ gmf.EditfeatureController.prototype.handleGetFeatures_ = function(features) {
 
 
 /**
+ * Register an interaction by setting it inactive, decorating it and adding it
+ * to the map
+ * @param {ol.interaction.Interaction} interaction Interaction to register.
+ * @private
+ */
+gmf.EditfeatureController.prototype.registerInteraction_ = function(
+    interaction) {
+  interaction.setActive(false);
+  this.ngeoDecorateInteraction_(interaction);
+  this.map.addInteraction(interaction);
+};
+
+
+/**
+ * Unregister an interaction, i.e. set it inactive and remove it from the map
+ * @param {ol.interaction.Interaction} interaction Interaction to unregister.
+ * @private
+ */
+gmf.EditfeatureController.prototype.unregisterInteraction_ = function(
+    interaction) {
+  interaction.setActive(false);
+  this.map.removeInteraction(interaction);
+};
+
+
+/**
  * @private
  */
 gmf.EditfeatureController.prototype.handleDestroy_ = function() {
@@ -464,6 +531,7 @@ gmf.EditfeatureController.prototype.handleDestroy_ = function() {
   this.eventHelper_.clearListenerKey(uid);
   this.toggle_(false);
   this.handleMapSelectActiveChange_(false);
+  this.unregisterInteraction_(this.modify_);
 };
 
 

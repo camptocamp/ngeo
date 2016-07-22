@@ -5,9 +5,11 @@ goog.require('gmf.Themes');
 goog.require('gmf.authenticationDirective');
 goog.require('gmf.editfeatureselectorDirective');
 goog.require('gmf.mapDirective');
+goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.proj.EPSG21781');
+goog.require('ngeo.style.Style');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -42,11 +44,13 @@ app.module.constant('gmfLayersUrl',
  * @param {!angular.Scope} $scope Angular scope.
  * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmfx.User} gmfUser User.
+ * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  */
-app.MainController = function($scope, gmfThemes, gmfUser, ngeoToolActivateMgr) {
+app.MainController = function($scope, gmfThemes, gmfUser, ngeoFeatureHelper,
+    ngeoToolActivateMgr) {
 
   /**
    * @type {!angular.Scope}
@@ -59,6 +63,12 @@ app.MainController = function($scope, gmfThemes, gmfUser, ngeoToolActivateMgr) {
    * @export
    */
   this.gmfUser = gmfUser;
+
+  /**
+   * @type {ngeo.FeatureHelper}
+   * @private
+   */
+  this.featureHelper_ = ngeoFeatureHelper;
 
   gmfThemes.loadThemes();
 
@@ -120,6 +130,12 @@ app.MainController = function($scope, gmfThemes, gmfUser, ngeoToolActivateMgr) {
   });
 
   /**
+   * @type {Object.<ol.geom.GeometryType, Array.<ol.style.Style>>}
+   * @private
+   */
+  this.editingStyles_ = ngeo.style.createDefaultEditingStyles();
+
+  /**
    * @type {ol.layer.Vector}
    * @export
    */
@@ -127,7 +143,23 @@ app.MainController = function($scope, gmfThemes, gmfUser, ngeoToolActivateMgr) {
     source: new ol.source.Vector({
       wrapX: false,
       features: new ol.Collection()
-    })
+    }),
+    style: function(feature, resolution) {
+      // (1) Use the geometry collection style, which works fine for any
+      //     geometry types
+      var styles = [].concat(this.editingStyles_[
+        /** @type {ol.geom.GeometryType<string>} */ ('GeometryCollection')
+      ]);
+
+      // (2) Then, add the vertex style if the geometry is different than points
+      var geom = feature.getGeometry();
+      console.assert(geom);
+      var type = geom.getType();
+      if (type !== 'Point') {
+        styles.push(ngeoFeatureHelper.getVertexStyle(true));
+      }
+      return styles;
+    }.bind(this)
   });
 
   /**
