@@ -56,6 +56,11 @@ ngeo.FeatureProperties = {
    */
   OPACITY: 'o',
   /**
+   * @type {number}
+   * @export
+   */
+  AZIMUT: 'z',
+  /**
    * @type {string}
    * @export
    */

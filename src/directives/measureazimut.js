@@ -59,6 +59,11 @@ ngeo.measureazimutDirective = function($compile, gettext, $filter) {
                 geometry.getGeometries()[1]);
             var polygon = ol.geom.Polygon.fromCircle(circle, 64);
             event.feature = new ol.Feature(polygon);
+            var azimut = ngeo.interaction.MeasureAzimut.getAzimut(
+              /** @type {ol.geom.LineString} */ (geometry.getGeometries()[0])
+            );
+            event.feature.set('azimut', azimut);
+
             drawFeatureCtrl.handleDrawEnd(ngeo.GeometryType.CIRCLE, event);
           },
           drawFeatureCtrl
