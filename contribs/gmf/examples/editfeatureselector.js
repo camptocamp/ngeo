@@ -9,7 +9,6 @@ goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.style.Style');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -17,6 +16,10 @@ goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Image');
+goog.require('ol.style.Stroke');
 
 
 /** @const **/
@@ -130,12 +133,6 @@ app.MainController = function($scope, gmfThemes, gmfUser, ngeoFeatureHelper,
   });
 
   /**
-   * @type {Object.<ol.geom.GeometryType, Array.<ol.style.Style>>}
-   * @private
-   */
-  this.editingStyles_ = ngeo.style.createDefaultEditingStyles();
-
-  /**
    * @type {ol.layer.Vector}
    * @export
    */
@@ -145,19 +142,64 @@ app.MainController = function($scope, gmfThemes, gmfUser, ngeoFeatureHelper,
       features: new ol.Collection()
     }),
     style: function(feature, resolution) {
-      // (1) Use the geometry collection style, which works fine for any
-      //     geometry types
-      var styles = [].concat(this.editingStyles_[
-        /** @type {ol.geom.GeometryType<string>} */ ('GeometryCollection')
-      ]);
+      // (1) Style definition depends on geometry type
+      var white = [255, 255, 255, 1];
+      var blue = [0, 153, 255, 1];
+      var width = 3;
+      var styles = [];
 
-      // (2) Then, add the vertex style if the geometry is different than points
       var geom = feature.getGeometry();
       console.assert(geom);
       var type = geom.getType();
-      if (type !== 'Point') {
+
+      if (type === 'Point') {
+        styles.push(
+          new ol.style.Style({
+            image: new ol.style.Circle({
+              radius: width * 2,
+              fill: new ol.style.Fill({
+                color: blue
+              }),
+              stroke: new ol.style.Stroke({
+                color: white,
+                width: width / 2
+              })
+            }),
+            zIndex: Infinity
+          })
+        );
+      } else {
+        if (type === 'LineString') {
+          styles.push(
+            new ol.style.Style({
+              stroke: new ol.style.Stroke({
+                color: white,
+                width: width + 2
+              })
+            })
+          );
+          styles.push(
+            new ol.style.Style({
+              stroke: new ol.style.Stroke({
+                color: blue,
+                width: width
+              })
+            })
+          );
+        } else {
+          styles.push(
+            new ol.style.Style({
+              fill: new ol.style.Fill({
+                color: [255, 255, 255, 0.5]
+              })
+            })
+          );
+        }
+
+        // (2) Anything else than 'Point' requires the vertex style as well
         styles.push(ngeoFeatureHelper.getVertexStyle(true));
       }
+
       return styles;
     }.bind(this)
   });
