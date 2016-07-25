@@ -238,6 +238,7 @@ ngeo.CreatefeatureController.prototype.handleDestroy_ = function() {
   this.timeout_(function() {
     var uid = goog.getUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);
+    this.interaction_.setActive(false);
     this.map.removeInteraction(this.interaction_);
   }.bind(this), 0);
 };
