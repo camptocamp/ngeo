@@ -66,6 +66,7 @@ gmf.module.directive(
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmf.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
@@ -76,8 +77,8 @@ gmf.module.directive(
  * @ngdoc controller
  * @ngname GmfEditfeatureController
  */
-gmf.EditfeatureController = function($scope, $timeout, gmfEditFeature,
-    gmfXSDAttributes, ngeoEventHelper, ngeoToolActivateMgr) {
+gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
+    gmfEditFeature, gmfXSDAttributes, ngeoEventHelper, ngeoToolActivateMgr) {
 
   /**
    * @type {GmfThemesNode}
@@ -108,6 +109,11 @@ gmf.EditfeatureController = function($scope, $timeout, gmfEditFeature,
    * @private
    */
   this.timeout_ = $timeout;
+
+  /**
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {gmf.EditFeature}
@@ -176,6 +182,25 @@ gmf.EditfeatureController = function($scope, $timeout, gmfEditFeature,
    */
   this.feature = null;
 
+  $scope.$watch(
+    function() {
+      return this.feature;
+    }.bind(this),
+    function(newVal) {
+      if (newVal) {
+        this.featureId = newVal.getId() || null;
+      } else {
+        this.featureId = null;
+      }
+    }.bind(this)
+  );
+
+  /**
+   * @type {?number}
+   * @export
+   */
+  this.featureId = null;
+
   /**
    * @type {ol.Collection}
    * @export
@@ -220,7 +245,7 @@ gmf.EditfeatureController = function($scope, $timeout, gmfEditFeature,
  */
 gmf.EditfeatureController.prototype.save = function() {
   var feature = this.feature;
-  var id = feature.getId();
+  var id = this.featureId;
 
   if (id) {
     this.editFeatureService_.updateFeature(
@@ -253,16 +278,21 @@ gmf.EditfeatureController.prototype.cancel = function() {
  * @export
  */
 gmf.EditfeatureController.prototype.delete = function() {
-  // (1) Launch request
-  this.editFeatureService_.deleteFeature(
-    this.layer.id,
-    this.feature
-  ).then(
-    this.handleDeleteFeature_.bind(this)
-  );
+  var msg = this.gettextCatalog_.getString(
+      'Do you really want to delete the selected feature?');
+  // Confirm deletion first
+  if (confirm(msg)) {
+    // (1) Launch request
+    this.editFeatureService_.deleteFeature(
+      this.layer.id,
+      this.feature
+    ).then(
+      this.handleDeleteFeature_.bind(this)
+    );
 
-  // (2) Reset selected feature
-  this.cancel();
+    // (2) Reset selected feature
+    this.cancel();
+  }
 };
 
 
