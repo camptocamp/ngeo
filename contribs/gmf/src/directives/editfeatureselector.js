@@ -18,14 +18,14 @@ goog.require('gmf.editfeatureDirective');
  *     <gmf-editfeatureselector
  *         gmf-editfeatureselector-active="ctrl.editFeatureSelectorActive"
  *         gmf-editfeatureselector-map="::ctrl.map"
- *         gmf-editfeatureselector-pixelbuffer="::ctrl.pixelBuffer"
+ *         gmf-editfeatureselector-tolerance="::ctrl.tolerance"
  *         gmf-editfeatureselector-vector="::ctrl.vectorLayer">
  *     </gmf-editfeatureselector>
  *
  * @htmlAttribute {boolean} gmf-editfeatureselector-active Whether the
  *     directive is active or not.
  * @htmlAttribute {ol.Map} gmf-editfeatureselector-map The map.
- * @htmlAttribute {number|undefined} gmf-editfeatureselector-pixelbuffer The
+ * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeatureselector-vector The vector
  *     layer where the selected or created features are drawn.
@@ -39,7 +39,7 @@ gmf.editfeatureselectorDirective = function() {
     scope: {
       'active': '=gmfEditfeatureselectorActive',
       'map': '<gmfEditfeatureselectorMap',
-      'pixelBuffer': '<?gmfEditfeatureselectorPixelbuffer',
+      'tolerance': '<?gmfEditfeatureselectorTolerance',
       'vectorLayer': '<gmfEditfeatureselectorVector'
     },
     bindToController: true,
@@ -85,7 +85,7 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes) {
    * @type {number|undefined}
    * @export
    */
-  this.pixelBuffer;
+  this.tolerance;
 
   /**
    * @type {ol.layer.Vector}

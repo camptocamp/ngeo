@@ -33,14 +33,14 @@ goog.require('ol.format.GeoJSON');
  *     <gmf-editfeature
  *         gmf-editfeature-layer="::ctrl.layer">
  *         gmf-editfeature-map="::ctrl.map"
- *         gmf-editfeature-pixelbuffer="::ctrl.pixelBuffer"
+ *         gmf-editfeature-tolerance="::ctrl.tolerance"
  *         gmf-editfeature-vector="::ctrl.vectorLayer">
  *     </gmf-editfeature>
  *
  * @htmlAttribute {GmfThemesNode} gmf-editfeature-layer The GMF node of the
  *     editable layer.
  * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
- * @htmlAttribute {number|undefined} gmf-editfeatureselector-pixelbuffer The
+ * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
@@ -54,7 +54,7 @@ gmf.editfeatureDirective = function() {
     scope: {
       'layer': '=gmfEditfeatureLayer',
       'map': '<gmfEditfeatureMap',
-      'pixelBuffer': '<?gmfEditfeaturePixelbuffer',
+      'tolerance': '<?gmfEditfeatureTolerance',
       'vectorLayer': '<gmfEditfeatureVector'
     },
     bindToController: true,
@@ -100,7 +100,7 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @type {number}
    * @export
    */
-  this.pixelBuffer = this.pixelBuffer !== undefined ? this.pixelBuffer : 10;
+  this.tolerance = this.tolerance !== undefined ? this.tolerance : 10;
 
   /**
    * @type {ol.layer.Vector}
@@ -422,7 +422,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
   var map = this.map;
   var view = map.getView();
   var resolution = view.getResolution();
-  var buffer = resolution * this.pixelBuffer;
+  var buffer = resolution * this.tolerance;
   var extent = ol.extent.buffer(
     [coordinate[0], coordinate[1], coordinate[0], coordinate[1]],
     buffer
