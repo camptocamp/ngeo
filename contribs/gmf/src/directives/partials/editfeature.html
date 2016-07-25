@@ -30,14 +30,20 @@
       </span>
     </a>
     <div
+      class="gmf-editfeature-attributes-container"
       ng-switch-default
       ng-if="efCtrl.attributes">
+      <div
+          class="gmf-editfeature-pending-panel"
+          ng-if="efCtrl.pending">
+      </div>
       <ngeo-attributes
         ngeo-attributes-attributes="::efCtrl.attributes"
         ngeo-attributes-feature="::efCtrl.feature">
       </ngeo-attributes>
       <a
         class="btn btn-sm btn-default gmf-editfeature-btn-save"
+        ng-class="{'disabled': !efCtrl.dirty}"
         ng-click="efCtrl.save()"
         title="{{'Save modifications | translate'}}"
         href>{{'Save' | translate}}</a>

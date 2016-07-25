@@ -187,6 +187,27 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
   /**
+   * @type {number}
+   * @private
+   */
+  this.pixelBuffer_ = 10;
+
+  /**
+   * Flag that is toggled as soon as the feature changes, i.e. if any of its
+   * properties change, which includes the geometry.
+   * @type {boolean}
+   * @private
+   */
+  this.dirty = false;
+
+  /**
+   * Flag that is toggled while a request is pending, either one to get
+   * features when a map is clicked or when saving
+   * @private
+   */
+  this.pending = false;
+
+  /**
    * @type {boolean}
    * @export
    */
@@ -233,17 +254,11 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
     function() {
       return this.feature;
     }.bind(this),
-    function(newVal) {
-      if (newVal) {
-        this.featureId = newVal.getId() || null;
-      } else {
-        this.featureId = null;
-      }
-    }.bind(this)
+    this.handleFeatureChange_.bind(this)
   );
 
   /**
-   * @type {?number}
+   * @type {?number|string}
    * @export
    */
   this.featureId = null;
@@ -310,6 +325,9 @@ gmf.EditfeatureController.prototype.save = function() {
   var feature = this.feature;
   var id = this.featureId;
 
+  this.dirty = false;
+  this.pending = true;
+
   if (id) {
     this.editFeatureService_.updateFeature(
       this.layer.id,
@@ -332,6 +350,7 @@ gmf.EditfeatureController.prototype.save = function() {
  * @export
  */
 gmf.EditfeatureController.prototype.cancel = function() {
+  this.dirty = false;
   this.feature = null;
   this.features.clear();
 };
@@ -345,6 +364,9 @@ gmf.EditfeatureController.prototype.delete = function() {
       'Do you really want to delete the selected feature?');
   // Confirm deletion first
   if (confirm(msg)) {
+    this.dirty = false;
+    this.pending = true;
+
     // (1) Launch request
     this.editFeatureService_.deleteFeature(
       this.layer.id,
@@ -365,6 +387,7 @@ gmf.EditfeatureController.prototype.delete = function() {
  * @private
  */
 gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
+  this.pending = false;
   var features = new ol.format.GeoJSON().readFeatures(resp.data);
   if (features.length) {
     this.feature.setId(features[0].getId());
@@ -379,6 +402,7 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
  * @private
  */
 gmf.EditfeatureController.prototype.handleDeleteFeature_ = function(resp) {
+  this.pending = false;
   this.layerHelper_.refreshWMSLayer(this.wmsLayer);
 };
 
@@ -411,6 +435,9 @@ gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
     goog.asserts.assertInstanceof(feature, ol.Feature);
     this.feature = feature;
     this.createActive = false;
+    if (!feature.getId()) {
+      this.dirty = true;
+    }
     this.scope_.$apply();
   }.bind(this), 0);
 };
@@ -495,7 +522,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
   this.cancel();
 
   // (3) Pending
-  //this.pending = true;
+  this.pending = true;
 
   this.scope_.$apply();
 
@@ -507,7 +534,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
  * @private
  */
 gmf.EditfeatureController.prototype.handleGetFeatures_ = function(features) {
-  //this.pending = false;
+  this.pending = false;
 
   this.timeout_(function() {
     if (features.length) {
@@ -546,10 +573,56 @@ gmf.EditfeatureController.prototype.unregisterInteraction_ = function(
 
 
 /**
+ * @param {?ol.Feature} newFeature The new feature.
+ * @param {?ol.Feature} oldFeature The old feature.
+ * @private
+ */
+gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
+  newFeature, oldFeature
+) {
+
+  if (oldFeature) {
+    ol.events.unlisten(
+      oldFeature,
+      ol.ObjectEventType.PROPERTYCHANGE,
+      this.handleFeaturePropertyChange_,
+      this
+    );
+  }
+
+  if (newFeature) {
+    this.featureId = newFeature.getId() || null;
+    ol.events.listen(
+      newFeature,
+      ol.ObjectEventType.PROPERTYCHANGE,
+      this.handleFeaturePropertyChange_,
+      this
+    );
+  } else {
+    this.featureId = null;
+  }
+
+};
+
+
+/**
+ * @param {ol.ObjectEvent} evt Event.
+ * @private
+ */
+gmf.EditfeatureController.prototype.handleFeaturePropertyChange_ = function(
+  evt
+) {
+  this.dirty = true;
+};
+
+
+/**
  * @private
  */
 gmf.EditfeatureController.prototype.handleDestroy_ = function() {
   this.features.clear();
+  this.handleFeatureChange_(null, this.feature);
+  this.feature = null;
   var uid = goog.getUid(this);
   this.eventHelper_.clearListenerKey(uid);
   this.toggle_(false);
