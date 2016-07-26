@@ -35,10 +35,10 @@ goog.require('ol.interaction.Modify');
  * Example:
  *
  *     <gmf-editfeature
- *         gmf-editfeature-layer="::ctrl.layer">
+ *         gmf-editfeature-layer="::ctrl.layer"
  *         gmf-editfeature-map="::ctrl.map"
  *         gmf-editfeature-tolerance="::ctrl.tolerance"
- *         gmf-editfeature-vector="::ctrl.vectorLayer">
+ *         gmf-editfeature-vector="::ctrl.vectorLayer"
  *         gmf-editfeature-wmslayer="::ctrl.selectedWMSLayer">
  *     </gmf-editfeature>
  *
