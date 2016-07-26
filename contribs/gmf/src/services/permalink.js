@@ -281,6 +281,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   //   (2) listen for further features added/removed
   var features = this.getFeatures();
   features.forEach(function(feature) {
+    this.featureHelper_.setStyle(feature);
     this.addNgeoFeature_(feature);
   }, this);
   this.ngeoFeatures_.extend(features);
