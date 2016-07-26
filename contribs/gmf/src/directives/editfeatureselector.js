@@ -5,6 +5,8 @@ goog.require('gmf');
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureDirective');
+goog.require('ngeo.EventHelper');
+goog.require('ngeo.LayerHelper');
 
 
 /**
@@ -55,12 +57,15 @@ gmf.module.directive(
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {gmf.Themes} gmfThemes The gmf themes service.
+ * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @constructor
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController
  */
-gmf.EditfeatureselectorController = function($scope, gmfThemes) {
+gmf.EditfeatureselectorController = function($scope, gmfThemes,
+    ngeoEventHelper, ngeoLayerHelper) {
 
   /**
    * @type {boolean}
@@ -94,6 +99,19 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes) {
   this.vectorLayer;
 
   /**
+   * @type {ngeo.EventHelper}
+   * @private
+   */
+  this.eventHelper_ = ngeoEventHelper;
+
+  /**
+   * @type {?ol.layer.Group}
+   * @private
+   */
+  this.dataLayerGroup_ = ngeoLayerHelper.getGroupFromMap(this.map,
+      gmf.DATALAYERGROUP_NAME);
+
+  /**
    * List of editable layers (theme nodes)
    * @type {Array.<GmfThemesNode>}
    * @export
@@ -101,11 +119,33 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes) {
   this.layers = [];
 
   /**
+   * List of editable layers (theme nodes) that are available for edition, i.e.
+   * that have a layer in the map.
+   * @type {Array.<GmfThemesNode>}
+   * @export
+   */
+  this.availableLayers = [];
+
+  /**
+   * Hash of editable WMS layers (OL objects), classified by node id.
+   * @type {Object.<string|number, ol.layer.Image|ol.layer.Tile>}
+   * @private_
+   */
+  this.wmsLayers_ = {};
+
+  /**
    * The currently selected layer
    * @type {?GmfThemesNode}
    * @export
    */
   this.selectedLayer = null;
+
+  /**
+   * The currently selected OpenLayers layer object.
+   * @type {?ol.layer.Image|ol.layer.Tile}
+   * @export
+   */
+  this.selectedWMSLayer = null;
 
   // TMP - The list of layer names to use. We'll keep this until we can use
   //       those that are editable.
@@ -126,10 +166,17 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes) {
       // Get an array of all layers
       if (node.children === undefined && layerNames.indexOf(node.name) !== -1) {
         this.layers.push(node);
+        if (this.wmsLayers_[node.id]) {
+          this.availableLayers.push(node);
+        }
       }
     }.bind(this));
 
   }.bind(this));
+
+  this.registerLayer_(this.dataLayerGroup_);
+
+  $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
 };
 
@@ -141,6 +188,7 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes) {
  */
 gmf.EditfeatureselectorController.prototype.getSetLayers = function(value) {
   if (value !== undefined) {
+    this.selectedWMSLayer = this.wmsLayers_[value.id];
     this.selectedLayer = value;
   }
   return this.layers;
@@ -184,8 +232,132 @@ gmf.EditfeatureselectorController.prototype.handleActiveChange_ = function(
   active
 ) {
   if (!active) {
+    this.selectedWMSLayer = null;
     this.selectedLayer = null;
   }
+};
+
+
+/**
+ * @param {ol.layer.Base} layer Layer.
+ * @private
+ */
+gmf.EditfeatureselectorController.prototype.registerLayer_ = function(layer) {
+
+  var uid = goog.getUid(this) + '-' + goog.getUid(layer);
+
+  if (layer instanceof ol.layer.Group) {
+
+    // (1) Listen to added/removed layers to this group
+    this.eventHelper_.addListenerKey(
+      uid,
+      ol.events.listen(
+        layer.getLayers(),
+        ol.CollectionEventType.ADD,
+        this.handleLayersAdd_,
+        this
+      )
+    );
+    this.eventHelper_.addListenerKey(
+      uid,
+      ol.events.listen(
+        layer.getLayers(),
+        ol.CollectionEventType.REMOVE,
+        this.handleLayersRemove_,
+        this
+      )
+    );
+
+    // (2) Register existing layers in the group
+    layer.getLayers().forEach(function(layer) {
+      this.registerLayer_(layer);
+    }, this);
+
+  } else {
+    // FIXME - We should use the 'edit' metadata to detect if the layer is
+    //         is editable instead.
+    var ids = layer.get('querySourceIds');
+    if (ids &&
+        (layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile)
+    ) {
+      for (var i = 0, ii = ids.length; i < ii; i++) {
+        this.wmsLayers_[ids[i]] = layer;
+        for (var j = 0, jj = this.layers.length; j < jj; j++) {
+          if (this.layers[j].id == ids[i]) {
+            this.availableLayers.push(this.layers[j]);
+            break;
+          }
+        }
+      }
+    }
+  }
+};
+
+
+/**
+ * @param {ol.layer.Base} layer Layer.
+ * @private
+ */
+gmf.EditfeatureselectorController.prototype.unregisterLayer_ = function(layer) {
+
+  var uid = goog.getUid(this) + '-' + goog.getUid(layer);
+
+  if (layer instanceof ol.layer.Group) {
+
+    // (1) Clear event listeners
+    this.eventHelper_.clearListenerKey(uid);
+
+    // (2) Unregister existing layers in the group
+    layer.getLayers().forEach(this.unregisterLayer_, this);
+
+  } else {
+    // FIXME - We should use the 'edit' metadata to detect if the layer is
+    //         is editable instead.
+    var ids = layer.get('querySourceIds');
+    if (ids) {
+      for (var i = 0, ii = ids.length; i < ii; i++) {
+        delete this.wmsLayers_[ids[i]];
+        for (var j = 0, jj = this.availableLayers.length; j < jj; j++) {
+          if (this.availableLayers[j].id == ids[i]) {
+            this.availableLayers.splice(j, 1);
+            break;
+          }
+        }
+      }
+    }
+  }
+};
+
+
+/**
+ * @param {ol.CollectionEvent} evt Event.
+ * @private
+ */
+gmf.EditfeatureselectorController.prototype.handleLayersAdd_ = function(evt) {
+  var layer = evt.element;
+  goog.asserts.assertInstanceof(layer, ol.layer.Base);
+  this.registerLayer_(layer);
+};
+
+
+/**
+ * @param {ol.CollectionEvent} evt Event.
+ * @private
+ */
+gmf.EditfeatureselectorController.prototype.handleLayersRemove_ = function(
+  evt
+) {
+  var layer = evt.element;
+  goog.asserts.assertInstanceof(layer, ol.layer.Base);
+  this.unregisterLayer_(layer);
+};
+
+
+/**
+ * @private
+ */
+gmf.EditfeatureselectorController.prototype.handleDestroy_ = function() {
+  this.unregisterLayer_(this.dataLayerGroup_);
 };
 
 

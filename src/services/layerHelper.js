@@ -43,6 +43,12 @@ ngeo.LayerHelper.GROUP_KEY = 'groupName';
 
 
 /**
+ * @const
+ */
+ngeo.LayerHelper.REFRESH_PARAM = 'random';
+
+
+/**
  * Create and return a basic WMS layer with only a source URL and a dot
  * separated layers names (see {@link ol.source.ImageWMS}).
  * @param {string} sourceURL The source URL.
@@ -295,6 +301,22 @@ ngeo.LayerHelper.prototype.isLayerVisible = function(layer, map) {
   var currentResolution = map.getView().getResolution();
   return currentResolution > layer.getMinResolution() &&
       currentResolution < layer.getMaxResolution();
+};
+
+
+/**
+ * Force a WMS layer to refresh using a random value.
+ * @param {ol.layer.Image|ol.layer.Tile} layer Layer to refresh.
+ */
+ngeo.LayerHelper.prototype.refreshWMSLayer = function(layer) {
+  var source = layer.getSource();
+  goog.asserts.assert(
+    source instanceof ol.source.ImageWMS ||
+    source instanceof ol.source.TileWMS
+  );
+  var params = source.getParams();
+  params[ngeo.LayerHelper.REFRESH_PARAM] = Math.random();
+  source.updateParams(params);
 };
 
 

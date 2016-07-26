@@ -142,8 +142,6 @@ ngeo.interaction.ModifyCircle.prototype.addFeature_ = function(feature) {
     if (map) {
       this.handlePointerAtPixel_(this.lastPixel_, map);
     }
-    ol.events.listen(feature, ol.events.EventType.CHANGE,
-        this.handleFeatureChange_, this);
   }
 };
 
@@ -173,8 +171,6 @@ ngeo.interaction.ModifyCircle.prototype.removeFeature_ = function(feature) {
     this.overlay_.getSource().removeFeature(this.vertexFeature_);
     this.vertexFeature_ = null;
   }
-  ol.events.unlisten(feature, ol.events.EventType.CHANGE,
-      this.handleFeatureChange_, this);
 };
 
 
@@ -218,19 +214,6 @@ ngeo.interaction.ModifyCircle.prototype.handleFeatureAdd_ = function(evt) {
   goog.asserts.assertInstanceof(feature, ol.Feature,
       'feature should be an ol.Feature');
   this.addFeature_(feature);
-};
-
-
-/**
- * @param {ol.events.Event} evt Event.
- * @private
- */
-ngeo.interaction.ModifyCircle.prototype.handleFeatureChange_ = function(evt) {
-  if (!this.changingFeature_) {
-    var feature = /** @type {ol.Feature} */ (evt.target);
-    this.removeFeature_(feature);
-    this.addFeature_(feature);
-  }
 };
 
 
@@ -364,6 +347,10 @@ ngeo.interaction.ModifyCircle.handleDragEvent_ = function(evt) {
   var circle = new ol.geom.Circle(center, line.getLength());
   var coordinates = ol.geom.Polygon.fromCircle(circle, 64).getCoordinates();
   this.setGeometryCoordinates_(geometry, coordinates);
+
+
+  var azimut = ngeo.interaction.MeasureAzimut.getAzimut(line);
+  this.features_.getArray()[0].set(ngeo.FeatureProperties.AZIMUT, azimut);
 
   this.createOrUpdateVertexFeature_(vertex);
 };
