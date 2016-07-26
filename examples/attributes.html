@@ -25,13 +25,16 @@
                 ng-click="ctrl.updateName()"
                 value="Change name" >
             </input>
-            to change the name.
+            to change the name. You can also
+            <label for="disable">Disable the form</label>
+            <input id="disable" type="checkbox" ng-model="ctrl.disabled" />.
           </p>
         </div>
         <div class="col-sm-6">
           <ngeo-attributes
             ng-if="ctrl.attributes"
             ngeo-attributes-attributes="::ctrl.attributes"
+            ngeo-attributes-disabled="ctrl.disabled"
             ngeo-attributes-feature="::ctrl.feature">
           </ngeo-attributes>
         </div>

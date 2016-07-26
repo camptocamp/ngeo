@@ -11,11 +11,14 @@ goog.require('ngeo.EventHelper');
  *
  *     <ngeo-attributes
  *       ngeo-attributes-attributes="::ctrl.attributes"
+ *       ngeo-attributes-disabled="ctrl.attributesDisabled"
  *       ngeo-attributes-feature="::ctrl.feature">
  *     </ngeo-attributes>
  *
  * @htmlAttribute {Array.<ngeox.Attribute>} ngeo-attributes-attributes The
  *     list of attributes to use.
+ * @htmlAttribute {boolean} ngeo-attributes-disabled Whether the fieldset should
+ *     be disabled or not.
  * @htmlAttribute {ol.Feature} ngeo-attributes-feature The feature.
  * @return {angular.Directive} The directive specs.
  * @ngInject
@@ -28,6 +31,7 @@ ngeo.attributesDirective = function() {
     scope: true,
     bindToController: {
       'attributes': '=ngeoAttributesAttributes',
+      'disabled': '<ngeoAttributesDisabled',
       'feature': '=ngeoAttributesFeature'
     },
     controllerAs: 'attrCtrl',
@@ -54,6 +58,13 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
    * @export
    */
   this.attributes;
+
+  /**
+   * Whether the fieldset should be disabled or not.
+   * @type {boolean}
+   * @export
+   */
+  this.disabled = this.disabled === true;
 
   /**
    * The feature containing the values.

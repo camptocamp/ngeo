@@ -33,28 +33,27 @@
       class="gmf-editfeature-attributes-container"
       ng-switch-default
       ng-if="efCtrl.attributes">
-      <div
-          class="gmf-editfeature-pending-panel"
-          ng-if="efCtrl.pending">
-      </div>
       <ngeo-attributes
         ngeo-attributes-attributes="::efCtrl.attributes"
+        ngeo-attributes-disabled="efCtrl.pending"
         ngeo-attributes-feature="::efCtrl.feature">
       </ngeo-attributes>
       <a
         class="btn btn-sm btn-default gmf-editfeature-btn-save"
-        ng-class="{'disabled': !efCtrl.dirty}"
         ng-click="efCtrl.save()"
+        ng-disabled="!efCtrl.dirty"
         title="{{'Save modifications | translate'}}"
         href>{{'Save' | translate}}</a>
       <a
         class="btn btn-sm btn-default gmf-editfeature-btn-cancel"
         ng-click="efCtrl.cancel()"
+        ng-disabled="efCtrl.pending"
         title="{{'Cancel modifications | translate'}}"
         href>{{'Cancel' | translate}}</a>
       <button
         class="btn btn-sm btn-link gmf-editfeature-btn-delete"
         ng-click="efCtrl.delete()"
+        ng-disabled="efCtrl.pending"
         ng-show="efCtrl.featureId"
         title="{{'Delete this feature | translate'}}">
         <span class="fa fa-trash"></span>
