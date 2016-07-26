@@ -178,6 +178,13 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
    */
   this.selectedFeatures = new ol.Collection();
 
+
+  /**
+   * @type {ol.Collection}
+   * @private
+   */
+  this.interactions_ = new ol.Collection();
+
   /**
    * @type {ngeo.interaction.Modify}
    * @private
@@ -186,7 +193,7 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
     features: this.selectedFeatures,
     style: ngeoFeatureHelper.getVertexStyle(false)
   });
-  this.registerInteraction_(this.modify_);
+  this.interactions_.push(this.modify_);
 
   /**
    * @type {ngeo.Menu}
@@ -232,7 +239,7 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
       })
     })
   });
-  this.registerInteraction_(this.translate_);
+  this.interactions_.push(this.translate_);
 
   /**
    * @type {ngeo.interaction.Rotate}
@@ -251,7 +258,9 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
       })
     })
   });
-  this.registerInteraction_(this.rotate_);
+  this.interactions_.push(this.rotate_);
+
+  this.initializeInteractions_();
 
   /**
    * @type {ngeo.ToolActivate}
@@ -306,10 +315,12 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
       if (previousFeature) {
         this.featureHelper_.setStyle(previousFeature);
         this.selectedFeatures.clear();
+        this.unregisterInteractions_();
       }
       if (newFeature) {
         this.featureHelper_.setStyle(newFeature, true);
         this.selectedFeatures.push(newFeature);
+        this.registerInteractions_();
         if (this.listSelectionInProgress_) {
           this.featureHelper_.panMapToFeature(newFeature, this.map);
           this.listSelectionInProgress_ = false;
@@ -351,16 +362,36 @@ gmf.DrawfeatureController.MenuActionType = {
 
 
 /**
- * Register an interaction by setting it inactive, decorating it and adding it
- * to the map
- * @param {ol.interaction.Interaction} interaction Interaction to register.
+ * Initialize interactions by setting them inactive and decorating them
  * @private
  */
-gmf.DrawfeatureController.prototype.registerInteraction_ = function(
-    interaction) {
-  interaction.setActive(false);
-  this.ngeoDecorateInteraction_(interaction);
-  this.map.addInteraction(interaction);
+gmf.DrawfeatureController.prototype.initializeInteractions_ = function() {
+  this.interactions_.forEach(function(interaction) {
+    interaction.setActive(false);
+    this.ngeoDecorateInteraction_(interaction);
+  },this);
+};
+
+
+/**
+ * Register interactions by adding them to the map
+ * @private
+ */
+gmf.DrawfeatureController.prototype.registerInteractions_ = function() {
+  this.interactions_.forEach(function(interaction) {
+    this.map.addInteraction(interaction);
+  },this);
+};
+
+
+/**
+ * Register interactions by removing them to the map
+ * @private
+ */
+gmf.DrawfeatureController.prototype.unregisterInteractions_ = function() {
+  this.interactions_.forEach(function(interaction) {
+    this.map.removeInteraction(interaction);
+  },this);
 };
 
 
