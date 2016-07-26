@@ -29,13 +29,11 @@ goog.require('ol.style.Text');
  *
  *     <gmf-drawfeature
  *         gmf-drawfeature-active="ctrl.drawFeatureActive"
- *         gmf-drawfeature-layer="::ctrl.vectorLayer"
  *         gmf-drawfeature-map="::ctrl.map">
  *     </gmf-drawfeature>
  *
  * @htmlAttribute {boolean} gmf-drawfeature-active Whether the directive is
  *     active or not.
- * @htmlAttribute {ol.layer.Vector} gmf-drawfeature-layer The vector layer.
  * @htmlAttribute {ol.Map} gmf-drawfeature-map The map.
  * @return {angular.Directive} The directive specs.
  * @ngInject
@@ -47,7 +45,6 @@ gmf.drawfeatureDirective = function() {
     controller: 'GmfDrawfeatureController',
     scope: {
       'active': '=gmfDrawfeatureActive',
-      'layer': '<gmfDrawfeatureLayer',
       'map': '<gmfDrawfeatureMap'
     },
     bindToController: true,
@@ -77,12 +74,6 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
 gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
     ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures,
     ngeoToolActivateMgr) {
-
-  /**
-   * @type {ol.layer.Vector}
-   * @export
-   */
-  this.layer;
 
   /**
    * @type {ol.Map}
@@ -228,7 +219,6 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
    */
   this.translate_ = new ngeo.interaction.Translate({
     features: this.selectedFeatures,
-    layers: [this.layer],
     style: new ol.style.Style({
       text: new ol.style.Text({
         text: '\uf047',
@@ -247,7 +237,6 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
    */
   this.rotate_ = new ngeo.interaction.Rotate({
     features: this.selectedFeatures,
-    layers: [this.layer],
     style: new ol.style.Style({
       text: new ol.style.Text({
         text: '\uf01e',
@@ -597,10 +586,7 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
       }
       return ret;
     }.bind(this),
-    null,
-    function(layer) {
-      return layer === this.layer;
-    }.bind(this)
+    null
   );
 
   feature = feature ? feature : null;
@@ -655,10 +641,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
       }
       return ret;
     }.bind(this),
-    null,
-    function(layer) {
-      return layer === this.layer;
-    }.bind(this)
+    null
   );
 
   feature = feature ? feature : null;
