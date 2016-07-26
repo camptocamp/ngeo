@@ -312,9 +312,9 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
       return this.selectedFeature;
     }.bind(this),
     function(newFeature, previousFeature) {
+      this.selectedFeatures.clear();
       if (previousFeature) {
         this.featureHelper_.setStyle(previousFeature);
-        this.selectedFeatures.clear();
         this.unregisterInteractions_();
       }
       if (newFeature) {
@@ -609,8 +609,6 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
   if (feature === this.selectedFeature) {
     return;
   }
-
-  this.modify_.setActive(true);
 
   this.selectedFeature = feature;
 
