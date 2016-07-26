@@ -68,6 +68,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * Used UI metadata:
  *
  *  * isChecked: if 'false' the layer visibility will be set to false.
+ *  * iconUrl: layer icon full URL.
  *  * legendRule: WMS rule used to get a layer icon.
  *  * isLegendExpanded: if 'true' the legend is expanded by default.
  *  * metadataUrl: Display a popup with the content of the given URL if
@@ -781,6 +782,12 @@ gmf.LayertreeController.prototype.updateWMSLayerState_ = function(layer,
  */
 gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
   var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
+  var opt_iconUrl = node.metadata['iconUrl'];
+
+  if (opt_iconUrl !== undefined) {
+    return opt_iconUrl;
+  }
+
   var opt_legendRule = node.metadata['legendRule'];
 
   if (node.children !== undefined ||
