@@ -27,7 +27,7 @@
     "angular-sanitize": "1.5.8",
     "angular-touch": "1.5.8",
     "async": "1.5.2",
-    "bootstrap": "3.3.6",
+    "bootstrap": "3.3.7",
     "clean-css": "3.4.19",
     "closure-util": "1.15.0",
     "coveralls": "2.11.11",
