@@ -348,6 +348,10 @@ ngeo.interaction.ModifyCircle.handleDragEvent_ = function(evt) {
   var coordinates = ol.geom.Polygon.fromCircle(circle, 64).getCoordinates();
   this.setGeometryCoordinates_(geometry, coordinates);
 
+
+  var azimut = ngeo.interaction.MeasureAzimut.getAzimut(line);
+  this.features_.getArray()[0].set(ngeo.FeatureProperties.AZIMUT, azimut);
+
   this.createOrUpdateVertexFeature_(vertex);
 };
 
