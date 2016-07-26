@@ -31,7 +31,8 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/bootstrap/dist/js/bootstrap.min.js \
 	node_modules/proj4/dist/proj4.js \
 	node_modules/d3/d3.min.js \
-	node_modules/typeahead.js/dist/typeahead.bundle.min.js
+	node_modules/typeahead.js/dist/typeahead.bundle.min.js \
+	third-party/jquery-ui/jquery-ui.min.js
 
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES)) \
