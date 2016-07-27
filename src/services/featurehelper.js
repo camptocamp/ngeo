@@ -284,8 +284,8 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
         text: this.createTextStyle_({
           text: azimut + '°',
           size: 10,
-          offsetX: Math.cos((azimut - 90) * Math.PI / 180) * 15,
-          offsetY: Math.sin((azimut - 90) * Math.PI / 180) * 15
+          offsetX: Math.cos((azimut - 90) * Math.PI / 180) * 20,
+          offsetY: Math.sin((azimut - 90) * Math.PI / 180) * 20
         })
       }));
     } else {
