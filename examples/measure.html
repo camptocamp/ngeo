@@ -58,9 +58,12 @@
     <label>Select language:</label>
     <select ng-options="lang for lang in ['en', 'fr']" ng-model="ctrl.lang"></select>
     <p id="desc">This example shows how to use the <code><a href="../apidoc/ngeo.interaction.MeasureLength.html" title="Read our documentation">ngeo.interaction.MeasureLength</a></code>, <code><a href="../apidoc/ngeo.interaction.MeasureArea.html" title="Read our documentation">ngeo.interaction.MeasureArea</a></code>, and <code><a href="../apidoc/ngeo.interaction.MeasureAzimut.html" title="Read our documentation">ngeo.interaction.MeasureAzimut</a></code> interactions to create measure tools for an OpenLayers map.</p>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
     <script src="../node_modules/angular-ui-date/dist/date.js"></script>
+    <script src="../node_modules/angular-float-thead/angular-floatThead.js"></script>
+    <script src="../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
     <script src="/@?main=measure.js"></script>
     <script src="default.js"></script>
     <script src="../utils/watchwatchers.js"></script>

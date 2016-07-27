@@ -5,7 +5,7 @@ goog.provide('ngeo');
 
 
 /** @type {!angular.Module} */
-ngeo.module = angular.module('ngeo', ['gettext', 'ui.date']);
+ngeo.module = angular.module('ngeo', ['gettext', 'ui.date', 'floatThead']);
 
 
 /**
