@@ -82,6 +82,13 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   goog.asserts.assertInstanceof(this.map, ol.Map);
 
+  /**
+   * Ngeo FeatureHelper service
+   * @type {ngeo.FeatureHelper}
+   */
+  var ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
+  ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
+
   var gmfTreeManager = $injector.get('gmfTreeManager');
   /**
    * A reference to the current theme

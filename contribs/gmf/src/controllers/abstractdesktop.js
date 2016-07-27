@@ -116,13 +116,6 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   });
 
   /**
-   * Ngeo FeatureHelper service
-   * @type {ngeo.FeatureHelper}
-   */
-  var ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
-  ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
-
-  /**
    * Collection of features for the draw interaction
    * @type {ol.Collection.<ol.Feature>}
    */
