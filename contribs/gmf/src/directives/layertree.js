@@ -58,6 +58,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *
  *      <gmf-layertree
  *        gmf-layertree-source="ctrl.source"
+ *        gmf-layertree-dimensions="ctrl.dimensions"
  *        gmf-layertree-map="ctrl.map"
  *      </gmf-layertree>
  *
@@ -75,6 +76,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *    possible also open a new window.
  *
  * @htmlAttribute {Object} gmf-layertree-source One theme (JSON).
+ * @htmlAttribute {Object<string, string>} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {ol.Map} gmf-layertree-map The map.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfLayertreeTemplate Template for the directive.
@@ -88,6 +90,7 @@ gmf.layertreeDirective = function(gmfLayertreeTemplate) {
     scope: {
       'map': '=gmfLayertreeMap',
       'tree': '=gmfLayertreeSource',
+      'dimensions': '=gmfLayertreeDimensions',
       'openLinksInNewWindowFn': '&gmfLayertreeOpenlinksinnewwindow'
     },
     bindToController: true,
@@ -205,7 +208,68 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   function() {
     this.map.render();
   }.bind(this));
+
+  // watch any change on dimensions object to refresh the layers
+  $scope.$watchCollection(function() {
+    return this.dimensions;
+  }.bind(this), function() {
+    this.updateDimensions_(this.gmfTreeManager_.tree);
+  }.bind(this));
+
 };
+
+
+/**
+ * @param {GmfThemesNode} node Layer tree node.
+ * @private
+ */
+gmf.LayertreeController.prototype.updateDimensions_ = function(node) {
+  node.children.forEach(function(childNode) {
+    if (childNode.children) {
+      this.updateDimensions_(childNode);
+    } else if (childNode.dimensions) {
+      var layersArray = this.map.getLayerGroup().getLayersArray();
+      var layer = this.layerHelper_.getLayerByName(childNode.name, layersArray);
+      if (layer) {
+        goog.asserts.assertInstanceof(layer, ol.layer.Layer);
+        this.updateLayerDimensions_(layer, childNode);
+      }
+    }
+  }, this);
+};
+
+
+/**
+ * @param {ol.layer.Layer} layer Layer to update.
+ * @param {GmfThemesNode} node Layer tree node.
+ * @private
+ */
+gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node) {
+  if (node.dimensions) {
+    var dimensions = {};
+    for (var key in node.dimensions) {
+      var value = this.dimensions[key];
+      if (value !== undefined) {
+        dimensions[key] = value;
+      }
+    }
+    if (!ol.object.isEmpty(dimensions)) {
+      var source = layer.getSource();
+      if (source instanceof ol.source.WMTS) {
+        source.updateDimensions(dimensions);
+      } else if (source instanceof ol.source.TileWMS || source instanceof ol.source.ImageWMS) {
+        source.updateParams(dimensions);
+      } else {
+        // the source is not ready yet
+        layer.once('change:source', function() {
+          goog.asserts.assertInstanceof(layer, ol.layer.Layer);
+          this.updateLayerDimensions_(layer, node);
+        }.bind(this));
+      }
+    }
+  }
+};
+
 
 /**
  * LayertreeController.prototype.prepareLayer_ - inject metadata into the layer
@@ -325,6 +389,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
       throw new Error('Node wrong type: ' + type);
   }
   this.prepareLayer_(node, layer);
+  this.updateLayerDimensions_(/** @type {ol.layer.Layer} */ (layer), node);
   parentCtrl['layer'].getLayers().push(layer);
   return layer;
 };
