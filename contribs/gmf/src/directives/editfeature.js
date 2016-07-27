@@ -187,12 +187,6 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
   /**
-   * @type {number}
-   * @private
-   */
-  this.pixelBuffer_ = 10;
-
-  /**
    * Flag that is toggled as soon as the feature changes, i.e. if any of its
    * properties change, which includes the geometry.
    * @type {boolean}
@@ -581,11 +575,20 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
   newFeature, oldFeature
 ) {
 
+  var geom;
   if (oldFeature) {
     ol.events.unlisten(
       oldFeature,
       ol.ObjectEventType.PROPERTYCHANGE,
       this.handleFeaturePropertyChange_,
+      this
+    );
+    geom = oldFeature.getGeometry();
+    goog.asserts.assert(geom);
+    ol.events.unlisten(
+      geom,
+      ol.events.EventType.CHANGE,
+      this.handleFeatureGeometryChange_,
       this
     );
   }
@@ -598,6 +601,14 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
       this.handleFeaturePropertyChange_,
       this
     );
+    geom = newFeature.getGeometry();
+    goog.asserts.assert(geom);
+    ol.events.listen(
+      geom,
+      ol.events.EventType.CHANGE,
+      this.handleFeatureGeometryChange_,
+      this
+    );
   } else {
     this.featureId = null;
   }
@@ -606,13 +617,19 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
 
 
 /**
- * @param {ol.ObjectEvent} evt Event.
  * @private
  */
-gmf.EditfeatureController.prototype.handleFeaturePropertyChange_ = function(
-  evt
-) {
+gmf.EditfeatureController.prototype.handleFeaturePropertyChange_ = function() {
   this.dirty = true;
+};
+
+
+/**
+ * @private
+ */
+gmf.EditfeatureController.prototype.handleFeatureGeometryChange_ = function() {
+  this.dirty = true;
+  this.scope_.$apply();
 };
 
 
