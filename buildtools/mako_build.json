@@ -1,6 +1,7 @@
 <%doc>
 lib:            Set to true to create the libraries files (ngeo or gmf)
 src:            An additional source directory, used by apps
+src_components: An additional source directory for components, used by apps
 src_set:        The used source set (ngeo|contribs_gmf)
 examples:       Add the examples files
 entry_point:    The entry point
@@ -20,6 +21,9 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % endif
   "cwd": ".",
   "src": [
+% if src_components is not UNDEFINED:
+    "${src_components}",
+% endif
 % if src is not UNDEFINED:
     "${src}",
 % endif
