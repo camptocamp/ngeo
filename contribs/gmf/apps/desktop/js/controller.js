@@ -44,26 +44,11 @@ app.DesktopController = function($scope, $injector) {
    */
   this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
-  var $sce = $injector.get('$sce');
-
   /**
-   * @type {!Object.<string, string>}
+   * @type {!Array.<number>}
    * @export
    */
-  this.scaleSelectorValues = {
-    '0': $sce.trustAsHtml('1&nbsp;:&nbsp;250\'000'),
-    '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000'),
-    '2': $sce.trustAsHtml('1&nbsp;:&nbsp;50\'000'),
-    '3': $sce.trustAsHtml('1&nbsp;:&nbsp;20\'000'),
-    '4': $sce.trustAsHtml('1&nbsp;:&nbsp;10\'000'),
-    '5': $sce.trustAsHtml('1&nbsp;:&nbsp;5\'000'),
-    '6': $sce.trustAsHtml('1&nbsp;:&nbsp;2\'000'),
-    '7': $sce.trustAsHtml('1&nbsp;:&nbsp;1\'000'),
-    '8': $sce.trustAsHtml('1&nbsp;:&nbsp;500'),
-    '9': $sce.trustAsHtml('1&nbsp;:&nbsp;250'),
-    '10': $sce.trustAsHtml('1&nbsp;:&nbsp;100'),
-    '11': $sce.trustAsHtml('1&nbsp;:&nbsp;50')
-  };
+  this.scaleSelectorValues = [250000, 100000, 50000, 20000, 10000, 5000, 2000, 1000, 500, 250, 100, 50];
 
   /**
    * @type {Array.<string>}
