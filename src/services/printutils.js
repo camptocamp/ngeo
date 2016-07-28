@@ -62,18 +62,20 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize,
         var center = [viewportWidth / 2, viewportHeight / 2];
 
         var size = getSize();
+        var height = size[1] * ol.has.DEVICE_PIXEL_RATIO;
+        var width = size[0] * ol.has.DEVICE_PIXEL_RATIO;
         var scale = getScale(frameState);
 
         var ppi = ngeo.PrintUtils.DOTS_PER_INCH_;
         var ipm = ngeo.PrintUtils.INCHES_PER_METER_;
 
         var extentHalfWidth =
-            (((size[0] / ppi) / ipm) * scale / resolution) / 2;
+            (((width / ppi) / ipm) * scale / resolution) / 2;
         self.extentHalfHorizontalDistance_ =
             (((size[0] / ppi) / ipm) * scale) / 2;
 
         var extentHalfHeight =
-            (((size[1] / ppi) / ipm) * scale / resolution) / 2;
+            (((height / ppi) / ipm) * scale / resolution) / 2;
         self.extentHalfVerticalDistance_ =
             (((size[1] / ppi) / ipm) * scale) / 2;
 
