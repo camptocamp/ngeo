@@ -149,6 +149,10 @@ app.MainController = function($scope, gmfThemes, gmfUser, ngeoFeatureHelper,
         } else {
           styles.push(
             new ol.style.Style({
+              stroke: new ol.style.Stroke({
+                color: blue,
+                width: width / 2
+              }),
               fill: new ol.style.Fill({
                 color: [255, 255, 255, 0.5]
               })

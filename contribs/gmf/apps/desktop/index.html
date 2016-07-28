@@ -57,6 +57,10 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw & Measure'|translate}}">
               <span class="fa fa-paint-brush"></span>
             </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.editFeatureActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Editing'|translate}}">
+              <span class="fa fa-pencil"></span>
+            </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawProfilePanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
               <span class="fa fa-area-chart"></span>
@@ -103,6 +107,25 @@
                   gmf-drawfeature-layer="::mainCtrl.drawFeatureLayer"
                   gmf-drawfeature-map="::mainCtrl.map">
               </gmf-drawfeature>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.editFeatureActive" class="row">
+            <div class="col-sm-12">
+              <div class="tools-content-heading">
+                {{'Editing'|translate}}
+                <a class="btn close" ng-click="mainCtrl.editFeatureActive = false">&times;</a>
+              </div>
+              <div ng-switch="mainCtrl.gmfUser.username">
+                <div ng-switch-when="null">
+                  {{'In order to use the editing tool, you must log in first.' | translate}}
+                </div>
+                <gmf-editfeatureselector
+                    ng-switch-default
+                    gmf-editfeatureselector-active="mainCtrl.editFeatureActive"
+                    gmf-editfeatureselector-map="::mainCtrl.map"
+                    gmf-editfeatureselector-vector="::mainCtrl.editFeatureVectorLayer">
+                </gmf-editfeatureselector>
+              </div>
             </div>
           </div>
           <div ng-show="mainCtrl.drawProfilePanelActive" class="row">
@@ -254,6 +277,7 @@
         module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
         module.constant('gmfWmsUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy');
         module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
+        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
         module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/short/create');
         module.constant('gmfSearchGroups', ['osm','district']);
         // Requires that the gmfSearchGroups is specified
