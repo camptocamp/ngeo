@@ -18,6 +18,25 @@
             {{ ::attribute }}
           </option>
         </select>
+
+        <input
+            ng-switch-when="date"
+            ui-date="attrCtrl.dateOptions"
+            ng-model="attrCtrl.properties[attribute.name]"
+            ng-change="attrCtrl.handleInputChange(attribute.name);"
+            class="form-control"
+            type="text">
+        </input>
+
+        <input
+            ng-switch-when="datetime"
+            ui-date="attrCtrl.dateOptions"
+            ng-model="attrCtrl.properties[attribute.name]"
+            ng-change="attrCtrl.handleInputChange(attribute.name);"
+            class="form-control"
+            type="text">
+        </input>
+
         <input
             ng-switch-default
             ng-model="attrCtrl.properties[attribute.name]"

@@ -4,7 +4,6 @@ goog.provide('ngeo.attributesDirective');
 goog.require('ngeo');
 goog.require('ngeo.EventHelper');
 
-
 /**
  * Directive used to render the attributes of a feature into a form.
  * Example:
@@ -92,6 +91,16 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
+
+  /**
+   * Datepicker options
+   * @type {Object}
+   * @export
+   */
+  this.dateOptions = {
+    'changeMonth': true,
+    'changeYear': true
+  };
 
   // Listen to the feature inner properties change and apply them to the form
   var uid = goog.getUid(this);

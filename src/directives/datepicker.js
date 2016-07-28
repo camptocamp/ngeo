@@ -19,7 +19,9 @@ ngeo.module.value('ngeoDatePickerTemplateUrl',
 
 
 /**
- * Provide a directive to select a signle date or a range of dates
+ * Provide a directive to select a signle date or a range of dates. Requires
+ * jQuery UI for the 'datepicker' widget.
+ *
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  * ngeoDatePickerTemplateUrl Template for the directive.
  * @param  {angular.$timeout} $timeout angular timeout service
