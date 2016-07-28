@@ -40,6 +40,8 @@ goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.ScaleselectorOptions');
 /** @suppress {extraRequire} */
 goog.require('ngeo.scaleselectorDirective');
+goog.require('ngeo.ToolActivate');
+goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -222,6 +224,15 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
     }.bind(this)
   });
   this.editFeatureVectorLayer.setMap(this.map);
+
+  /**
+   * The ngeo ToolActivate manager service.
+   * @type {ngeo.ToolActivateMgr}
+   */
+  var ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+
+  var editFeatureActivate = new ngeo.ToolActivate(this, 'editFeatureActive');
+  ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
   /**
    * @type {ngeo.ScaleselectorOptions}
