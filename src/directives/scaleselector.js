@@ -40,13 +40,7 @@ ngeo.ScaleselectorOptions;
  * The expression passed to the ngeo-scaleselector attribute should return an
  * object of this form:
  *
- *     {
- *       '0': $sce.trustAsHtml('1&nbsp;:&nbsp;200\'000\'000'),
- *       '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000\'000'),
- *       '2': $sce.trustAsHtml('1&nbsp;:&nbsp;50\'000\'000'),
- *       '3': $sce.trustAsHtml('1&nbsp;:&nbsp;25\'000\'000'),
- *       '4': $sce.trustAsHtml('1&nbsp;:&nbsp;12\'000\'000')
- *     }
+ *    [20000, 10000, 5000, 2500]
  *
  * This object's keys are strings representing zoom levels, the values are
  * strings representing scales. The directive's partial uses ng-bind-html so
@@ -106,10 +100,10 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
 
   /**
    * The zoom level/scale map object.
-   * @type {!Object.<string, string>}
+   * @type {!Array.<number>}
    * @export
    */
-  this.scales = /** @type {!Object.<string, string>} */
+  this.scales = /** @type {!Array.<number>} */
       ($scope.$eval(scalesExpr));
   goog.asserts.assert(this.scales !== undefined);
 
@@ -157,7 +151,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   this.resolutionChangeKey_ = null;
 
   /**
-   * @type {string|undefined}
+   * @type {number|undefined}
    * @export
    */
   this.currentScale = undefined;
@@ -201,11 +195,11 @@ ngeo.ScaleselectorController.getOptions_ = function(options) {
 
 /**
  * @param {number} zoom Zoom level.
- * @return {string} Scale.
+ * @return {number} Scale.
  * @export
  */
 ngeo.ScaleselectorController.prototype.getScale = function(zoom) {
-  return this.scales[zoom.toString()];
+  return this.scales[zoom];
 };
 
 
@@ -224,7 +218,7 @@ ngeo.ScaleselectorController.prototype.changeZoom = function(zoom) {
  */
 ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
   var view = this.map_.getView();
-  var currentScale = this.scales[view.getZoom().toString()];
+  var currentScale = this.scales[/** @type {number} */ (view.getZoom())];
 
   // handleResolutionChange_ is a change:resolution listener. The listener
   // may be executed outside the Angular context, for example when the user
