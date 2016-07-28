@@ -329,10 +329,10 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
 
 /**
  * Make the layer of a group visible if the group is already in the layertree.
- * If the group has jus been added set only the layer layerName visible.
+ * If the group has just been added set only the layer layerName visible.
  * @param{string} layerName Name of the layer to set visible.
- * @param{Object} group Group containg the layer to activate.
- * @param{boolean} groupAdded True if the croup has been newly added. False otherwise
+ * @param{Object} group Group containing the layer to activate.
+ * @param{boolean} groupAdded True if the group has been newly added. False otherwise
  * @param{ol.Map} map Map obkect.
  * @private
  */
@@ -354,7 +354,7 @@ gmf.TreeManager.prototype.setLayerVisible_ = function(layerName, group, groupAdd
       activeLayers += activeLayers.includes(layerName) ? '' : ',' + layerName;
     }
 
-    ngeo.LayerHelper.prototype.updateWMSLayerState(layerGroup, activeLayers);
+    this.layerHelper_.updateWMSLayerState(layerGroup, activeLayers);
 
   } else {
     var layer;
