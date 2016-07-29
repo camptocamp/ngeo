@@ -7,6 +7,8 @@ goog.require('ngeo.bboxQueryDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawfeatureDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.editfeatureselectorDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.elevationDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mousepositionDirective');
@@ -38,11 +40,16 @@ goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.ScaleselectorOptions');
 /** @suppress {extraRequire} */
 goog.require('ngeo.scaleselectorDirective');
+goog.require('ngeo.ToolActivate');
+goog.require('ngeo.ToolActivateMgr');
+goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
 goog.require('ol.interaction');
+goog.require('ol.layer.Vector');
+goog.require('ol.source.Vector');
 
 gmf.module.constant('isDesktop', true);
 
@@ -108,6 +115,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    */
   this.modalShareShown = false;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.editFeatureActive = false;
+
   // initialize tooltips
   $('body').tooltip({
     container: 'body',
@@ -128,6 +141,33 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr')
       .getFeatureOverlay();
   this.drawFeatureLayer.setFeatures(ngeoFeatures);
+
+  var ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
+
+  /**
+   * @type {ol.layer.Vector}
+   * @export
+   */
+  this.editFeatureVectorLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+      wrapX: false,
+      features: new ol.Collection()
+    }),
+    style: function(feature, resolution) {
+      return ngeoFeatureHelper.createEditingStyles(feature);
+    }
+    // style: ngeoFeatureHelper.createEditingStyles.bind(ngeoFeatureHelper)
+  });
+  this.editFeatureVectorLayer.setMap(this.map);
+
+  /**
+   * The ngeo ToolActivate manager service.
+   * @type {ngeo.ToolActivateMgr}
+   */
+  var ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+
+  var editFeatureActivate = new ngeo.ToolActivate(this, 'editFeatureActive');
+  ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
   /**
    * @type {ngeo.ScaleselectorOptions}

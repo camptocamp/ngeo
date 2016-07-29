@@ -319,6 +319,73 @@ ngeo.FeatureHelper.prototype.getTextStyle_ = function(feature) {
 };
 
 
+ngeo.FeatureHelper.prototype.createEditingStyles = function(feature) {
+  // (1) Style definition depends on geometry type
+  var white = [255, 255, 255, 1];
+  var blue = [0, 153, 255, 1];
+  var width = 3;
+  var styles = [];
+
+  var geom = feature.getGeometry();
+  console.assert(geom);
+  var type = geom.getType();
+
+  if (type === ol.geom.GeometryType.POINT) {
+    styles.push(
+      new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: width * 2,
+          fill: new ol.style.Fill({
+            color: blue
+          }),
+          stroke: new ol.style.Stroke({
+            color: white,
+            width: width / 2
+          })
+        }),
+        zIndex: Infinity
+      })
+    );
+  } else {
+    if (type === ol.geom.GeometryType.LINE_STRING) {
+      styles.push(
+        new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: white,
+            width: width + 2
+          })
+        })
+      );
+      styles.push(
+        new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: blue,
+            width: width
+          })
+        })
+      );
+    } else {
+      styles.push(
+        new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: blue,
+            width: width / 2
+          }),
+          fill: new ol.style.Fill({
+            color: [255, 255, 255, 0.5]
+          })
+        })
+      );
+    }
+
+    // (2) Anything else than 'Point' requires the vertex style as well
+    styles.push(this.getVertexStyle(true));
+  }
+
+  return styles;
+};
+
+
 /**
  * Create and return a style object to be used for vertex.
  * @param {boolean=} opt_incGeomFunc Whether to include the geometry function
