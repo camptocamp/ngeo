@@ -50,10 +50,6 @@ goog.require('ol.control.Zoom');
 goog.require('ol.interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
 
 gmf.module.constant('isDesktop', true);
 
