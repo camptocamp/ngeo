@@ -223,6 +223,7 @@ gmf.Themes.prototype.getBgLayers = function() {
         layer.set('metadata', item['metadata']);
         var ids = gmf.LayertreeController.getLayerNodeIds(item);
         layer.set('querySourceIds', ids);
+        layer.set('editableIds', []);
         return layer;
       };
 

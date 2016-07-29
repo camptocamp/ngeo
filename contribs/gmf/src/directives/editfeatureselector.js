@@ -269,9 +269,7 @@ gmf.EditfeatureselectorController.prototype.registerLayer_ = function(layer) {
     }, this);
 
   } else {
-    // FIXME - We should use the 'edit' metadata to detect if the layer is
-    //         is editable instead.
-    var ids = layer.get('querySourceIds');
+    var ids = layer.get('editableIds');
     if (ids &&
         (layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile)
     ) {
@@ -306,9 +304,7 @@ gmf.EditfeatureselectorController.prototype.unregisterLayer_ = function(layer) {
     layer.getLayers().forEach(this.unregisterLayer_, this);
 
   } else {
-    // FIXME - We should use the 'edit' metadata to detect if the layer is
-    //         is editable instead.
-    var ids = layer.get('querySourceIds');
+    var ids = layer.get('editableIds');
     if (ids) {
       for (var i = 0, ii = ids.length; i < ii; i++) {
         delete this.wmsLayers_[ids[i]];

@@ -81,7 +81,7 @@ app.MainController = function($scope, gmfThemes, gmfUser, ngeoFeatureHelper,
    * @private
    */
   var wmsLayer = new ol.layer.Image({
-    querySourceIds: [111, 112, 113],
+    editableIds: [111, 112, 113],
     source: new ol.source.ImageWMS({
       url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
       params: {'LAYERS': 'point,line,polygon'}
