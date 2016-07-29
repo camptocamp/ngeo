@@ -30,6 +30,13 @@ GmfThemesNode.prototype.childLayers;
 
 
 /**
+ * Flag that is turned on when the node is currently being edited.
+ * @type {boolean|undefined}
+ */
+GmfThemesNode.prototype.editing;
+
+
+/**
  * @type {string}
  */
 GmfThemesNode.prototype.layers;
