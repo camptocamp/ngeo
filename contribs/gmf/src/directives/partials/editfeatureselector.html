@@ -5,8 +5,8 @@
       ng-switch-when="null"
       ng-model="efsCtrl.getSetLayers"
       ng-model-options="{getterSetter: true}"
-      ng-options="layer.name for layer in efsCtrl.availableLayers">
-    <option value="">-- Choose a layer --</option>
+      ng-options="layer.name | translate for layer in efsCtrl.availableLayers">
+    <option value="" translate>-- Choose a layer --</option>
   </select>
 
   <div ng-switch-default>
