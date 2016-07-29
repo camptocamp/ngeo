@@ -312,11 +312,15 @@ gmf.EditfeatureselectorController.prototype.unregisterLayer_ = function(layer) {
     if (ids) {
       for (var i = 0, ii = ids.length; i < ii; i++) {
         delete this.wmsLayers_[ids[i]];
+        var removedLayer;
         for (var j = 0, jj = this.availableLayers.length; j < jj; j++) {
           if (this.availableLayers[j].id == ids[i]) {
-            this.availableLayers.splice(j, 1);
+            removedLayer = this.availableLayers.splice(j, 1)[0];
             break;
           }
+        }
+        if (removedLayer && removedLayer === this.selectedLayer) {
+          this.selectedLayer = null;
         }
       }
     }
