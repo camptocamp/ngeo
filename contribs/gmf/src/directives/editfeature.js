@@ -457,6 +457,8 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
 
     this.mapSelectActive = true;
     this.modify_.setActive(true);
+    this.layer['editing'] = true;
+
   } else {
 
     toolMgr.unregisterTool(createUid, this.createToolActivate);
@@ -469,6 +471,8 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
     this.modify_.setActive(false);
     this.mapSelectActive = false;
     this.cancel();
+    this.layer['editing'] = false;
+
   }
 
 };

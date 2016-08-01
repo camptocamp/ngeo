@@ -33,6 +33,11 @@
             gmf-time-slider-on-date-selected="gmfLayertreeCtrl.updateWMSTimeLayerState(layertreeCtrl, time)"/>
         </div>
     </span>
+    <span
+      class="fa fa-pencil"
+      title="{{'Currently editing this layer'|translate}}"
+      ng-if="layertreeCtrl.node.editing">
+    </span>
   </a>
   <span class="right-buttons">
     <a href="" ng-if="::layertreeCtrl.depth == 1" ng-click="gmfLayertreeCtrl.removeNode(layertreeCtrl.node)">
