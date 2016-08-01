@@ -709,7 +709,7 @@ gmf.EditfeatureController.prototype.initializeInteractions_ = function() {
   this.interactions_.forEach(function(interaction) {
     interaction.setActive(false);
     this.ngeoDecorateInteraction_(interaction);
-  },this);
+  }, this);
 };
 
 
@@ -720,7 +720,7 @@ gmf.EditfeatureController.prototype.initializeInteractions_ = function() {
 gmf.EditfeatureController.prototype.registerInteractions_ = function() {
   this.interactions_.forEach(function(interaction) {
     this.map.addInteraction(interaction);
-  },this);
+  }, this);
 };
 
 
@@ -731,7 +731,7 @@ gmf.EditfeatureController.prototype.registerInteractions_ = function() {
 gmf.EditfeatureController.prototype.unregisterInteractions_ = function() {
   this.interactions_.forEach(function(interaction) {
     this.map.removeInteraction(interaction);
-  },this);
+  }, this);
 };
 
 
