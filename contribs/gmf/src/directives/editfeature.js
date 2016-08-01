@@ -15,10 +15,17 @@ goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.EventHelper');
 goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.LayerHelper');
+goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.interaction.Rotate');
+goog.require('ngeo.interaction.Translate');
+goog.require('ol.Collection');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Modify');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Style');
+goog.require('ol.style.Text');
 
 
 /**
@@ -264,6 +271,12 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
   this.features = this.vectorLayer.getSource().getFeaturesCollection();
 
   /**
+   * @type {ol.Collection}
+   * @private
+   */
+  this.interactions_ = new ol.Collection();
+
+  /**
    * @type {ol.interaction.Modify}
    * @private
    */
@@ -271,13 +284,86 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
     features: this.features,
     style: ngeoFeatureHelper.getVertexStyle(false)
   });
-  this.registerInteraction_(this.modify_);
+  this.interactions_.push(this.modify_);
 
   /**
    * @type {ngeo.ToolActivate}
    * @export
    */
   this.modifyToolActivate = new ngeo.ToolActivate(this.modify_, 'active');
+
+  /**
+   * @type {ngeo.Menu}
+   * @private
+   */
+  this.menu_ = new ngeo.Menu({
+    actions: [{
+      cls: 'fa fa-arrows',
+      label: gettextCatalog.getString('Move'),
+      name: gmf.EditfeatureController.MenuActionType.MOVE
+    }, {
+      cls: 'fa fa-rotate-right',
+      label: gettextCatalog.getString('Rotate'),
+      name: gmf.EditfeatureController.MenuActionType.ROTATE
+    }]
+  });
+  this.map.addOverlay(this.menu_);
+
+  /**
+   * @type {ngeo.interaction.Translate}
+   * @private
+   */
+  this.translate_ = new ngeo.interaction.Translate({
+    features: this.features,
+    style: new ol.style.Style({
+      text: new ol.style.Text({
+        text: '\uf047',
+        font: 'normal 18px FontAwesome',
+        fill: new ol.style.Fill({
+          color: '#7a7a7a'
+        })
+      })
+    })
+  });
+  this.interactions_.push(this.translate_);
+
+  /**
+   * @type {ngeo.interaction.Rotate}
+   * @private
+   */
+  this.rotate_ = new ngeo.interaction.Rotate({
+    features: this.features,
+    style: new ol.style.Style({
+      text: new ol.style.Text({
+        text: '\uf01e',
+        font: 'normal 18px FontAwesome',
+        fill: new ol.style.Fill({
+          color: '#7a7a7a'
+        })
+      })
+    })
+  });
+  this.interactions_.push(this.rotate_);
+
+  this.initializeInteractions_();
+
+  /**
+   * @type {ngeo.ToolActivate}
+   * @export
+   */
+  this.rotateToolActivate = new ngeo.ToolActivate(this.rotate_, 'active');
+
+  /**
+   * @type {ngeo.ToolActivate}
+   * @export
+   */
+  this.translateToolActivate = new ngeo.ToolActivate(this.translate_, 'active');
+
+  /**
+   * @type {Array.<ol.EventsKey>}
+   * @private
+   */
+  this.listenerKeys_ = [];
 
   /**
    * @type {?Array.<ngeox.Attribute>}
@@ -308,6 +394,15 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
   this.toggle_(true);
+};
+
+
+/**
+ * @enum {string}
+ */
+gmf.EditfeatureController.MenuActionType = {
+  MOVE: 'move',
+  ROTATE: 'rotate'
 };
 
 
@@ -347,6 +442,7 @@ gmf.EditfeatureController.prototype.cancel = function() {
   this.dirty = false;
   this.feature = null;
   this.features.clear();
+  this.menu_.close();
 };
 
 
@@ -444,24 +540,45 @@ gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
  */
 gmf.EditfeatureController.prototype.toggle_ = function(active) {
 
+  var keys = this.listenerKeys_;
   var createUid = ['create-', goog.getUid(this)].join('-');
   var otherUid = ['other-', goog.getUid(this)].join('-');
   var toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
+
+    keys.push(ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
+        this.handleMenuActionClick_, this));
+
+    keys.push(ol.events.listen(this.translate_,
+        ol.interaction.TranslateEventType.TRANSLATEEND,
+        this.handleTranslateEnd_, this));
+
+    keys.push(ol.events.listen(this.rotate_,
+        ngeo.RotateEventType.ROTATEEND,
+        this.handleRotateEnd_, this));
+
     toolMgr.registerTool(createUid, this.createToolActivate, false);
     toolMgr.registerTool(createUid, this.mapSelectToolActivate, true);
 
     toolMgr.registerTool(otherUid, this.createToolActivate, false);
     toolMgr.registerTool(otherUid, this.modifyToolActivate, true);
+    toolMgr.registerTool(otherUid, this.translateToolActivate, false);
+    toolMgr.registerTool(otherUid, this.rotateToolActivate, false);
 
   } else {
+
+    keys.forEach(function(key) {
+      ol.events.unlistenByKey(key);
+    }, this);
 
     toolMgr.unregisterTool(createUid, this.createToolActivate);
     toolMgr.unregisterTool(createUid, this.mapSelectToolActivate);
 
     toolMgr.unregisterTool(otherUid, this.createToolActivate);
     toolMgr.unregisterTool(otherUid, this.modifyToolActivate);
+    toolMgr.unregisterTool(otherUid, this.translateToolActivate);
+    toolMgr.unregisterTool(otherUid, this.rotateToolActivate);
 
     this.createActive = false;
     this.cancel();
@@ -482,12 +599,22 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
 gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
     active) {
 
+  var mapDiv = this.map.getTargetElement();
+  goog.asserts.assertElement(mapDiv);
+
   if (active) {
     ol.events.listen(this.map, ol.MapBrowserEvent.EventType.CLICK,
         this.handleMapClick_, this);
+
+    goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
+        this.handleMapContextMenu_, false, this);
+
   } else {
     ol.events.unlisten(this.map, ol.MapBrowserEvent.EventType.CLICK,
         this.handleMapClick_, this);
+
+    goog.events.unlisten(mapDiv, goog.events.EventType.CONTEXTMENU,
+        this.handleMapContextMenu_, false, this);
   }
 };
 
@@ -524,6 +651,40 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
 
 
 /**
+ * @param {Event} evt Event.
+ * @private
+ */
+gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
+  var pixel = this.map.getEventPixel(evt);
+  var coordinate = this.map.getCoordinateFromPixel(pixel);
+
+  var feature = this.map.forEachFeatureAtPixel(
+    pixel,
+    function(feature) {
+      var ret = false;
+      if (ol.array.includes(this.features.getArray(), feature)) {
+        ret = feature;
+      }
+      return ret;
+    }.bind(this),
+    null
+  );
+
+  feature = feature ? feature : null;
+
+  // show contextual menu when clicking on certain types of features
+  if (feature) {
+    var type = this.featureHelper_.getType(feature);
+    if (type === ngeo.GeometryType.POLYGON ||
+        type === ngeo.GeometryType.LINE_STRING) {
+      this.menu_.open(coordinate);
+    }
+    evt.preventDefault();
+  }
+};
+
+
+/**
  * @param {Array.<ol.Feature>} features Features.
  * @private
  */
@@ -541,28 +702,36 @@ gmf.EditfeatureController.prototype.handleGetFeatures_ = function(features) {
 
 
 /**
- * Register an interaction by setting it inactive, decorating it and adding it
- * to the map
- * @param {ol.interaction.Interaction} interaction Interaction to register.
+ * Initialize interactions by setting them inactive and decorating them
  * @private
  */
-gmf.EditfeatureController.prototype.registerInteraction_ = function(
-    interaction) {
-  interaction.setActive(false);
-  this.ngeoDecorateInteraction_(interaction);
-  this.map.addInteraction(interaction);
+gmf.EditfeatureController.prototype.initializeInteractions_ = function() {
+  this.interactions_.forEach(function(interaction) {
+    interaction.setActive(false);
+    this.ngeoDecorateInteraction_(interaction);
+  }, this);
 };
 
 
 /**
- * Unregister an interaction, i.e. set it inactive and remove it from the map
- * @param {ol.interaction.Interaction} interaction Interaction to unregister.
+ * Register interactions by adding them to the map
  * @private
  */
-gmf.EditfeatureController.prototype.unregisterInteraction_ = function(
-    interaction) {
-  interaction.setActive(false);
-  this.map.removeInteraction(interaction);
+gmf.EditfeatureController.prototype.registerInteractions_ = function() {
+  this.interactions_.forEach(function(interaction) {
+    this.map.addInteraction(interaction);
+  }, this);
+};
+
+
+/**
+ * Unregister interactions, i.e. set them inactive and remove them from the map
+ * @private
+ */
+gmf.EditfeatureController.prototype.unregisterInteractions_ = function() {
+  this.interactions_.forEach(function(interaction) {
+    this.map.removeInteraction(interaction);
+  }, this);
 };
 
 
@@ -591,6 +760,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
       this.handleFeatureGeometryChange_,
       this
     );
+    this.unregisterInteractions_();
   }
 
   if (newFeature) {
@@ -609,6 +779,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
       this.handleFeatureGeometryChange_,
       this
     );
+    this.registerInteractions_();
 
     // The `ui-date` triggers an unwanted change, i.e. it converts the text
     // to Date, which makes the directive dirty when it shouldn't... to
@@ -642,6 +813,48 @@ gmf.EditfeatureController.prototype.handleFeatureGeometryChange_ = function() {
 
 
 /**
+ * @param {ngeo.MenuEvent} evt Event.
+ * @private
+ */
+gmf.EditfeatureController.prototype.handleMenuActionClick_ = function(evt) {
+  var action = evt.action;
+
+  switch (action) {
+    case gmf.EditfeatureController.MenuActionType.MOVE:
+      this.translate_.setActive(true);
+      this.scope_.$apply();
+      break;
+    case gmf.EditfeatureController.MenuActionType.ROTATE:
+      this.rotate_.setActive(true);
+      this.scope_.$apply();
+      break;
+    default:
+      break;
+  }
+};
+
+
+/**
+ * @param {ol.interaction.TranslateEvent} evt Event.
+ * @private
+ */
+gmf.EditfeatureController.prototype.handleTranslateEnd_ = function(evt) {
+  this.translate_.setActive(false);
+  this.scope_.$apply();
+};
+
+
+/**
+ * @param {ngeo.RotateEvent} evt Event.
+ * @private
+ */
+gmf.EditfeatureController.prototype.handleRotateEnd_ = function(evt) {
+  this.rotate_.setActive(false);
+  this.scope_.$apply();
+};
+
+
+/**
  * @private
  */
 gmf.EditfeatureController.prototype.handleDestroy_ = function() {
@@ -652,7 +865,7 @@ gmf.EditfeatureController.prototype.handleDestroy_ = function() {
   this.eventHelper_.clearListenerKey(uid);
   this.toggle_(false);
   this.handleMapSelectActiveChange_(false);
-  this.unregisterInteraction_(this.modify_);
+  this.unregisterInteractions_();
 };
 
 
