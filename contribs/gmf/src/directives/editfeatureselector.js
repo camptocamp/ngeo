@@ -178,20 +178,15 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
-};
+  $scope.$watch(
+    function() {
+      return this.selectedLayer;
+    }.bind(this),
+    function(newValue, oldValue) {
+      this.selectedWMSLayer = newValue ? this.wmsLayers_[newValue.id] : null;
+    }.bind(this)
+  );
 
-
-/**
- * @param {GmfThemesNode|undefined} value A layer or undefined to get layers.
- * @return {Array.<GmfThemesNode>} All layers in all themes.
- * @export
- */
-gmf.EditfeatureselectorController.prototype.getSetLayers = function(value) {
-  if (value !== undefined) {
-    this.selectedWMSLayer = this.wmsLayers_[value.id];
-    this.selectedLayer = value;
-  }
-  return this.layers;
 };
 
 
