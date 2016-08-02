@@ -63,7 +63,6 @@ ngeo.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
   var bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {
       url: url,
-      rateLimitWait: 50,
       prepare: function(query, settings) {
         settings.url = settings.url.replace('%QUERY', query);
         return settings;
