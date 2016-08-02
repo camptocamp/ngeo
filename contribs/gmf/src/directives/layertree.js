@@ -987,7 +987,9 @@ gmf.LayertreeController.getLayerNodeIds = function(node, opt_editable) {
   var children = node.children || node;
   if (children && children.length) {
     children.forEach(function(childNode) {
-      ids = ids.concat(gmf.LayertreeController.getLayerNodeIds(childNode));
+      ids = ids.concat(
+        gmf.LayertreeController.getLayerNodeIds(childNode, editable)
+      );
     });
   } else if (node.id !== undefined && (!editable || node.editable)) {
     ids.push(node.id);
