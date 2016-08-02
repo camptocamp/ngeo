@@ -70,7 +70,7 @@ deploy:
     tags: true
     condition: '"`.build/python-venv/bin/jsongrep -e version package.json`" == "${TRAVIS_TAG}"'
 - provider: script
-  script: bower register ngeo camptocamp/ngeo
+  script: bower register ngeo git://github.com/camptocamp/ngeo.git
   skip_cleanup: true
   on:
     node: "0.10"
