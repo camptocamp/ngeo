@@ -783,11 +783,14 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
 
     // The `ui-date` triggers an unwanted change, i.e. it converts the text
     // to Date, which makes the directive dirty when it shouldn't... to
-    // bypass this, we reset the dirty state here
-    this.timeout_(function() {
-      this.dirty = false;
-      this.scope_.$apply();
-    }.bind(this), 0);
+    // bypass this, we reset the dirty state here. We do so only if we're
+    // editing an existing feature
+    if (this.featureId) {
+      this.timeout_(function() {
+        this.dirty = false;
+        this.scope_.$apply();
+      }.bind(this), 0);
+    }
   } else {
     this.featureId = null;
   }
