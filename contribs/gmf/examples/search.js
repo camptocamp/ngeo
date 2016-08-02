@@ -43,6 +43,11 @@ app.MainController = function(gmfThemes) {
     groupActions: [],
     labelKey: 'label',
     projection: 'EPSG:21781',
+    bloodhoundOptions: {
+      remote: {
+        rateLimitWait: 250
+      }
+    },
     url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch'
   }];
 

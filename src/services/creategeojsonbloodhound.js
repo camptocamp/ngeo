@@ -90,12 +90,20 @@ ngeo.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
     datumTokenizer: goog.nullFunction,
     queryTokenizer: Bloodhound.tokenizers.whitespace
   });
-  if (opt_options) {
-    goog.object.extend(bloodhoundOptions, opt_options);
+
+  // the options objects are cloned to avoid updating the passed object
+  var options = goog.object.clone(opt_options || {});
+  var remoteOptions = goog.object.clone(opt_remoteOptions || {});
+
+  if (options.remote) {
+    // move the remote options to opt_remoteOptions
+    goog.object.extend(remoteOptions, options.remote);
+    delete options.remote;
   }
-  if (opt_remoteOptions) {
-    goog.object.extend(bloodhoundOptions.remote, opt_remoteOptions);
-  }
+
+  goog.object.extend(bloodhoundOptions, options);
+  goog.object.extend(bloodhoundOptions.remote, remoteOptions);
+
   return new Bloodhound(bloodhoundOptions);
 };
 
