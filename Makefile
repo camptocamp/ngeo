@@ -14,11 +14,12 @@ JQUERY_UI = contribs/gmf/build/images/
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
+GMF_EXAMPLES_JS_FILES := contribs/gmf/examples/https.js
 GMF_APPS += mobile desktop desktop_alt
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 GMF_APPS_LIBS_JS_FILES += \
-	contribs/gmf/examples/https.js \
+	examples/https.js \
 	node_modules/jquery/dist/jquery.min.js \
 	node_modules/angular/angular.min.js \
 	node_modules/angular-animate/angular-animate.min.js \
@@ -62,6 +63,7 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.js \
 	.build/examples-hosted/lib/watchwatchers.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
 	.build/examples-hosted/lib/proj4.js \
+	.build/examples-hosted/https.js \
 	.build/examples-hosted/lib/font-awesome.min.css \
 	$(addprefix .build/examples-hosted/fonts/fontawesome-webfont.,eot ttf woff woff2) \
 	$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur) \
@@ -191,9 +193,9 @@ serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGUL
 .PHONY: examples-hosted
 examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
 		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(EXAMPLES_HTML_FILES)) \
-		$(patsubst examples/%.html,.build/examples-hosted/%.js,$(EXAMPLES_HTML_FILES)) \
+		$(patsubst examples/%.js,.build/examples-hosted/%.js,$(EXAMPLES_JS_FILES)) \
 		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
-		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.js,$(GMF_EXAMPLES_HTML_FILES)) \
+		$(patsubst contribs/gmf/examples/%.js,.build/examples-hosted/contribs/gmf/%.js,$(GMF_EXAMPLES_JS_FILES)) \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
 .build/python-venv/lib/python2.7/site-packages/requests: .build/python-venv
@@ -468,6 +470,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=$*.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
+		-e '/<head>/a\$(SED_NEW_LINE)    <script src="https.js"></script>$(SED_NEW_LINE)' \
 		-e '/$*.js/i\$(SED_NEW_LINE)    <script src="lib/ngeo.js"></script>$(SED_NEW_LINE)' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
@@ -494,6 +497,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=$*\.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
+		-e '/<head>/a\$(SED_NEW_LINE)    <script src="https.js"></script>$(SED_NEW_LINE)' \
 		-e '/$*.js/i\$(SED_NEW_LINE)    <script src="../../lib/gmf.js"></script>$(SED_NEW_LINE)' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
@@ -571,6 +575,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .PRECIOUS: node_modules/font-awesome/fonts/fontawesome-webfont.%
 node_modules/font-awesome/fonts/fontawesome-webfont.%: .build/node_modules.timestamp
 	touch -c $@
+
+# copy https.js from ngeo examples to gmf examples
+contribs/gmf/examples/https.js:
+	mkdir -p $(dir $@)
+	cp examples/https.js $@
 
 contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontawesome-webfont.%
 	mkdir -p $(dir $@)
