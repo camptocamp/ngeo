@@ -210,6 +210,7 @@ examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
 gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 		.build/python-venv/lib/python2.7/site-packages/requests \
 		.build/python-venv/lib/python2.7/site-packages/urllib3 \
+		examples-hosted \
 		.build/examples-hosted/index.html \
 		.build/examples-hosted/contribs/gmf/index.html \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS))) \
