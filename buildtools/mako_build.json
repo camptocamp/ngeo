@@ -114,7 +114,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "create_source_map": "${source_map}",
     "source_map_format": "V3",
 % endif
-    "language_in": "ECMASCRIPT5_STRICT",
+    "language_in": "ECMASCRIPT6_STRICT",
     "language_out": "ECMASCRIPT5_STRICT",
     "angular_pass": true,
     "compilation_level": "ADVANCED",
