@@ -135,6 +135,11 @@ gmf.AbstractController = function(config, $scope, $injector) {
    */
   this.dimensions = {};
 
+  var permalink = $injector.get('gmfPermalink');
+
+  // watch any change on dimensions object to refresh the url
+  permalink.setDimensions(this.dimensions);
+
   /**
    * @type {boolean}
    * @export
@@ -310,7 +315,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   gmfThemes.getBgLayers().then(function(layers) {
     // get the background from the permalink
-    var permalink = $injector.get('gmfPermalink');
     var background = permalink.getBackgroundLayer(layers);
     if (!background) {
       // get the background from the user settings
