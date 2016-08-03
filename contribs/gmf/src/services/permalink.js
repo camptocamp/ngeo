@@ -52,6 +52,7 @@ gmf.PermalinkOpenLayersLayerProperties = {
  * @enum {string}
  */
 gmf.PermalinkParamPrefix = {
+  DIMENSIONS: 'dim_',
   TREE_ENABLE: 'tree_enable_',
   TREE_GROUP_LAYERS: 'tree_group_layers_',
   TREE_GROUP_OPACITY: 'tree_group_opacity_',
@@ -71,6 +72,7 @@ gmf.module.constant('gmfPermalinkOptions',
  * - the map center and zoom level
  * - the current background layer selected
  * - whether to add a crosshair feature in the map or not
+ * - the dimensions value
  *
  * @constructor
  * @param {angular.$timeout} $timeout Angular timeout service.
@@ -169,6 +171,11 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
+  /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.rootScope_ = $rootScope;
 
   // == other properties ==
 
@@ -290,7 +297,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.REMOVE,
     this.handleNgeoFeaturesRemove_, this);
 
-  $rootScope.$on('$localeChangeSuccess', function() {
+  this.rootScope_.$on('$localeChangeSuccess', function() {
     features.forEach(function(feature) {
       this.featureHelper_.setStyle(feature);
     }, this);
@@ -436,6 +443,31 @@ gmf.Permalink.prototype.getFeatures = function() {
     features = this.featureHashFormat_.readFeatures(f);
   }
   return features;
+};
+
+
+/**
+ * @param {Object.<string, string>} dimensions The global dimensions object.
+ * @export
+ */
+gmf.Permalink.prototype.setDimensions = function(dimensions) {
+  // apply initial state
+  var keys = this.ngeoLocation_.getParamKeysWithPrefix(gmf.PermalinkParamPrefix.DIMENSIONS);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var value = this.ngeoLocation_.getParam(key);
+    dimensions[key.slice(gmf.PermalinkParamPrefix.DIMENSIONS.length)] = value;
+  }
+
+  this.rootScope_.$watchCollection(function() {
+    return dimensions;
+  }.bind(this), function(dimensions) {
+    var params = {};
+    for (var key in dimensions) {
+      params[gmf.PermalinkParamPrefix.DIMENSIONS + key] = dimensions[key];
+    }
+    this.ngeoLocation_.updateParams(params);
+  }.bind(this));
 };
 
 
