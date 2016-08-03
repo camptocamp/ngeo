@@ -320,4 +320,31 @@ ngeo.LayerHelper.prototype.refreshWMSLayer = function(layer) {
 };
 
 
+/**
+ * Update the LAYERS parameter of the source of the given WMS layer.
+ * @param {ol.layer.Image} layer The WMS layer.
+ * @param {string} names The names that will be used to set
+ * the LAYERS parameter.
+ * @param {string=} opt_time The start
+ * and optionally the end datetime (for time range selection) selected by user
+ * in a ISO-8601 string datetime or time interval format
+ * @export
+ */
+ngeo.LayerHelper.prototype.updateWMSLayerState = function(layer,
+    names, opt_time) {
+  // Don't send layer without parameters, hide layer instead;
+  if (names.length <= 0) {
+    layer.setVisible(false);
+  } else {
+    layer.setVisible(true);
+    var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
+    if (opt_time) {
+      source.updateParams({'LAYERS': names, 'TIME': opt_time});
+    } else {
+      source.updateParams({'LAYERS': names});
+    }
+  }
+};
+
+
 ngeo.module.service('ngeoLayerHelper', ngeo.LayerHelper);

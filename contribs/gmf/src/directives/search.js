@@ -792,9 +792,7 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
         this.gmfTreeManager_.addGroupByName(actionData, true);
       } else if (actionName == 'add_layer' &&
             groupActions.indexOf('add_layer') >= 0) {
-        // FIXME: Set the layer visible again (Issue also in the
-        // treemanager service).
-        this.gmfTreeManager_.addGroupByLayerName(actionData, true, goog.isDefAndNotNull(featureGeometry));
+        this.gmfTreeManager_.addGroupByLayerName(actionData, true, goog.isDefAndNotNull(featureGeometry), this.map_);
       }
     }
   }

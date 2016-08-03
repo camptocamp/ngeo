@@ -620,7 +620,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
           }
         }
         goog.asserts.assertInstanceof(firstParentTreeLayer, ol.layer.Image);
-        this.updateWMSLayerState_(firstParentTreeLayer, newLayersNames.join(','));
+        this.layerHelper_.updateWMSLayerState(firstParentTreeLayer, newLayersNames.join(','));
       }
       break;
 
@@ -670,7 +670,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
       }
       firstParentTreeLayer = /** @type {ol.layer.Image} */
           (firstParentTreeLayer);
-      this.updateWMSLayerState_(firstParentTreeLayer, layers.join(','));
+      this.layerHelper_.updateWMSLayerState(firstParentTreeLayer, layers.join(','));
       break;
     // no default
   }
@@ -806,34 +806,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(layertreeCt
     if (layer) {
       var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
       var timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);
-      this.updateWMSLayerState_(layer, source.getParams()['LAYERS'], timeParam);
-    }
-  }
-};
-
-
-/**
- * Update the LAYERS parameter of the source of the given WMS layer.
- * @param {ol.layer.Image} layer The WMS layer.
- * @param {string} names The names that will be used to set
- * the LAYERS parameter.
- * @param {string=} opt_time The start
- * and optionally the end datetime (for time range selection) selected by user
- * in a ISO-8601 string datetime or time interval format
- * @private
- */
-gmf.LayertreeController.prototype.updateWMSLayerState_ = function(layer,
-    names, opt_time) {
-  // Don't send layer without parameters, hide layer instead;
-  if (names.length <= 0) {
-    layer.setVisible(false);
-  } else {
-    layer.setVisible(true);
-    var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
-    if (opt_time) {
-      source.updateParams({'LAYERS': names, 'TIME': opt_time});
-    } else {
-      source.updateParams({'LAYERS': names});
+      this.layerHelper_.updateWMSLayerState(layer, source.getParams()['LAYERS'], timeParam);
     }
   }
 };
