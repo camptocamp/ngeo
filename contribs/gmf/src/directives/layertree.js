@@ -280,8 +280,10 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
 gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
   var type = gmf.Themes.getNodeType(node);
   var ids =  gmf.LayertreeController.getLayerNodeIds(node);
+  var editableIds = gmf.LayertreeController.getLayerNodeIds(node, true);
   var childNodes = [], allChildNodesUnchecked;
   layer.set('querySourceIds', ids);
+  layer.set('editableIds', editableIds);
   layer.set('layerName', node.name);
   layer.set('disclaimers', this.getNodeDisclaimers_(node));
 
@@ -975,16 +977,21 @@ gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
 /**
  * Collect and return all ids of this layer node and all child nodes as well.
  * @param {GmfThemesNode} node Layer tree node.
+ * @param {boolean=} opt_editable Whether the node needs to be editable to
+ *     have its id returned.
  * @return {Array.<number|string>} Layer names.
  */
-gmf.LayertreeController.getLayerNodeIds = function(node) {
+gmf.LayertreeController.getLayerNodeIds = function(node, opt_editable) {
+  var editable = opt_editable === true;
   var ids = [];
   var children = node.children || node;
   if (children && children.length) {
     children.forEach(function(childNode) {
-      ids = ids.concat(gmf.LayertreeController.getLayerNodeIds(childNode));
+      ids = ids.concat(
+        gmf.LayertreeController.getLayerNodeIds(childNode, editable)
+      );
     });
-  } else if (node.id !== undefined) {
+  } else if (node.id !== undefined && (!editable || node.editable)) {
     ids.push(node.id);
   }
   return ids;

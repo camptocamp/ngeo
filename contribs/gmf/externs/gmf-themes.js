@@ -37,6 +37,12 @@ GmfThemesNode.prototype.editing;
 
 
 /**
+ * @type {boolean|undefined}
+ */
+GmfThemesNode.prototype.editable;
+
+
+/**
  * @type {string}
  */
 GmfThemesNode.prototype.layers;
