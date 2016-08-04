@@ -25,21 +25,29 @@ goog.require('ol.style.Text');
  *  - style setting / getting
  *  - measurement
  *  - export
+ *  - validation (using attributes)
  *
  * @constructor
  * @param {angular.$injector} $injector Main injector.
  * @param {angular.$filter} $filter Angular filter
+ * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @ngdoc service
  * @ngname ngeoFeatureHelper
  * @ngInject
  */
-ngeo.FeatureHelper = function($injector, $filter) {
+ngeo.FeatureHelper = function($injector, $filter, gettextCatalog) {
 
   /**
    * @type {angular.$filter}
    * @private
    */
   this.$filter_ = $filter;
+
+  /**
+   * @type {angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {?number}
@@ -729,6 +737,50 @@ ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
     ].join(''),
     'mimeType': mimeType
   })[0].click();
+};
+
+
+// === VALIDATION ===
+
+
+/**
+ * Check if the feature properties validate against a list of attributes.
+ * Return any error bound ot the attribute.
+ *
+ * @param {ol.Feature} feature Feature to validate.
+ * @param {Array.<ngeox.Attribute>} attributes List of attributes to use to
+ *     validate the feature with.
+ * @return {Array.<ngeox.Message>} List of error messages.
+ */
+ngeo.FeatureHelper.prototype.validateAttributes = function(
+  feature, attributes
+) {
+  var errors = [];
+  var attribute;
+
+  for (var i = 0, ii = attributes.length; i < ii; i++) {
+    attribute = attributes[i];
+
+    // (1) Skip any geometry attribute
+    if (attribute.type === ngeo.format.XSDAttributeType.GEOMETRY) {
+      continue;
+    }
+
+    // (2) Check if attribute is required
+    var value = feature.get(attribute.name);
+    if (attribute.required &&
+        (value === undefined || value === null || value === '')
+    ) {
+      errors.push({
+        msg: this.gettextCatalog_.getString(
+            'This field is required: '
+          ) + attribute.name,
+        type: ngeo.MessageType.ERROR
+      });
+    }
+  }
+
+  return errors;
 };
 
 

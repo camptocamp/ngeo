@@ -1,7 +1,6 @@
 goog.provide('gmf.EditfeatureController');
 goog.provide('gmf.editfeatureDirective');
 
-
 goog.require('gmf');
 goog.require('gmf.EditFeature');
 goog.require('gmf.XSDAttributes');
@@ -16,6 +15,7 @@ goog.require('ngeo.EventHelper');
 goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.Menu');
+goog.require('ngeo.Notification');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Rotate');
@@ -93,6 +93,7 @@ gmf.module.directive(
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -102,7 +103,7 @@ gmf.module.directive(
  */
 gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
     gmfEditFeature, gmfXSDAttributes, ngeoDecorateInteraction, ngeoEventHelper,
-    ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
+    ngeoFeatureHelper, ngeoLayerHelper, ngeoNotification, ngeoToolActivateMgr) {
 
   /**
    * @type {GmfThemesNode}
@@ -186,6 +187,12 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {ngeo.Notification}
+   * @private
+   */
+  this.notification_ = ngeoNotification;
 
   /**
    * @type {ngeo.ToolActivateMgr}
@@ -414,9 +421,25 @@ gmf.EditfeatureController.prototype.save = function() {
   var feature = this.feature;
   var id = this.featureId;
 
+  // (1) Validate the feature using the attributes. If there's any error,
+  //     prevent any further action and display the errors
+  var errors = this.featureHelper_.validateAttributes(
+    feature,
+    this.attributes
+  );
+  if (errors.length) {
+    var container = angular.element('.gmf-editfeature-error');
+    errors.forEach(function(error) {
+      error.target = container;
+      this.notification_.notify(error);
+    }, this);
+    return;
+  }
+
   this.dirty = false;
   this.pending = true;
 
+  // (2) Update or Insert
   if (id) {
     this.editFeatureService_.updateFeature(
       this.layer.id,
