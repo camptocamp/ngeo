@@ -1,5 +1,5 @@
 /*
- * Redirect to https
+ * Auto redirect to https to prevent CORS exceptions
  */
 if (window.location.protocol == 'http:' &&
     window.location.port != '3000' &&
