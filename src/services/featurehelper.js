@@ -319,6 +319,11 @@ ngeo.FeatureHelper.prototype.getTextStyle_ = function(feature) {
 };
 
 
+/**
+ * @param {ol.Feature} feature Feature to create the editing styles with.
+ * @return {Array.<ol.style.Style>} List of style.
+ * @export
+ */
 ngeo.FeatureHelper.prototype.createEditingStyles = function(feature) {
   // (1) Style definition depends on geometry type
   var white = [255, 255, 255, 1];
