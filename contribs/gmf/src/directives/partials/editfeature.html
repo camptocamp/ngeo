@@ -29,8 +29,10 @@
         </span>
       </span>
     </a>
-    <div
-      class="gmf-editfeature-attributes-container"
+    <form
+      novalidate
+      name="form"
+      class="form gmf-editfeature-attributes-container"
       ng-switch-default
       ng-if="efCtrl.attributes">
       <ngeo-attributes
@@ -38,12 +40,13 @@
         ngeo-attributes-disabled="efCtrl.pending"
         ngeo-attributes-feature="::efCtrl.feature">
       </ngeo-attributes>
-      <a
+      <input
+        type="submit"
+        value="{{'Save' | translate}}"
         class="btn btn-sm btn-default gmf-editfeature-btn-save"
-        ng-click="efCtrl.save()"
+        ng-click="form.$valid && efCtrl.save()"
         ng-disabled="!efCtrl.dirty"
-        title="{{'Save modifications | translate'}}"
-        href>{{'Save' | translate}}</a>
+        title="{{'Save modifications | translate'}}"></input>
       <a
         class="btn btn-sm btn-default gmf-editfeature-btn-cancel"
         ng-click="efCtrl.cancel()"
@@ -59,6 +62,6 @@
         <span class="fa fa-trash"></span>
         {{'Delete' | translate}}
       </button>
-    </div>
+    </form>
   </div>
 </div>

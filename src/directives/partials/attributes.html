@@ -1,12 +1,13 @@
-<form class="form">
-  <fieldset ng-disabled="attrCtrl.disabled">
+<fieldset ng-disabled="attrCtrl.disabled">
   <div
       class="form-group"
       ng-repeat="attribute in ::attrCtrl.attributes">
     <div ng-if="attribute.type !== 'geometry'">
-      <label>{{ attribute.name }}:</label>
+      <label>{{::attribute.required ? "* " : ""}}{{ ::attribute.name }}:</label>
       <div ng-switch="attribute.type">
         <select
+            name="{{::attribute.name}}"
+            ng-required="attribute.required"
             ng-switch-when="select"
             ng-model="attrCtrl.properties[attribute.name]"
             ng-change="attrCtrl.handleInputChange(attribute.name);"
@@ -20,6 +21,8 @@
         </select>
 
         <input
+            name="{{::attribute.name}}"
+            ng-required="attribute.required"
             ng-switch-when="date"
             ui-date="attrCtrl.dateOptions"
             ng-model="attrCtrl.properties[attribute.name]"
@@ -29,6 +32,8 @@
         </input>
 
         <input
+            name="{{::attribute.name}}"
+            ng-required="attribute.required"
             ng-switch-when="datetime"
             ui-date="attrCtrl.dateOptions"
             ng-model="attrCtrl.properties[attribute.name]"
@@ -38,14 +43,22 @@
         </input>
 
         <input
+            name="{{::attribute.name}}"
+            ng-required="attribute.required"
             ng-switch-default
             ng-model="attrCtrl.properties[attribute.name]"
             ng-change="attrCtrl.handleInputChange(attribute.name);"
             class="form-control"
             type="text">
         </input>
+
+        <div ng-show="form.$submitted || form[attribute.name].$touched">
+          <p class="text-danger"
+             ng-show="form[attribute.name].$error.required">
+            {{'This field is required' | translate}}
+          </p>
+        </div>
       </div>
     </div>
   </div>
-  </fieldset>
-</form>
+</fieldset>
