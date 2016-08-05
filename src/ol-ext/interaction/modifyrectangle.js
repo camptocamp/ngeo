@@ -253,20 +253,12 @@ ngeo.interaction.ModifyRectangle.prototype.handleFeatureRemove_ = function(evt) 
  * @private
  */
 ngeo.interaction.ModifyRectangle.prototype.handleMove_ = function(evt) {
-  var map = evt.map;
-  var feature = map.forEachFeatureAtPixel(evt.pixel,
-        function(feature, layer) {
-          return feature;
-        });
+  var hit = evt.map.hasFeatureAtPixel(evt.pixel);
 
-  if (this.vectorPoints_.getVisible() != !!feature) {
-    if (feature) {
-      this.vectorPoints_.setVisible(true);
-    } else {
-      this.vectorPoints_.setVisible(false);
-    }
+  if (this.vectorPoints_.getVisible() != hit) {
     this.vectorPoints_.changed();
   }
+  this.vectorPoints_.setVisible(hit);
 };
 
 
