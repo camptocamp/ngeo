@@ -566,6 +566,7 @@ gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
 gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
   var gettextCatalog = this.gettextCatalog_;
   return {
+    rateLimitWait: 50,
     prepare: function(query, settings) {
       var url = settings.url;
       var lang = gettextCatalog.currentLanguage;
