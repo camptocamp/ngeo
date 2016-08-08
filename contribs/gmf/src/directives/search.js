@@ -798,14 +798,14 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
     }
   }
 
-  if (goog.isDefAndNotNull(featureGeometry)) {
+  var mapSize = this.map_.getSize();
+  if (goog.isDefAndNotNull(featureGeometry) && mapSize) {
     var view = this.map_.getView();
     this.featureOverlay_.clear();
     this.featureOverlay_.addFeature(feature);
     this.displayColorPicker = true;
     var fitArray = featureGeometry.getType() === 'GeometryCollection' ?
         featureGeometry.getExtent() : featureGeometry;
-    var mapSize = /** @type {ol.Size} */ (this.map_.getSize());
     view.fit(fitArray, mapSize, /** @type {olx.view.FitOptions} */ ({
       maxZoom: 16}));
   }
