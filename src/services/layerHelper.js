@@ -161,9 +161,9 @@ ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
 ngeo.LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
   var groups = map.getLayerGroup().getLayers();
   var group;
-  groups.getArray().some(function(exitingGroup) {
-    if (exitingGroup.get(ngeo.LayerHelper.GROUP_KEY) === groupName) {
-      group = /** @type {ol.layer.Group} */ (exitingGroup);
+  groups.getArray().some(function(existingGroup) {
+    if (existingGroup.get(ngeo.LayerHelper.GROUP_KEY) === groupName) {
+      group = /** @type {ol.layer.Group} */ (existingGroup);
       return true;
     } else {
       return false;
