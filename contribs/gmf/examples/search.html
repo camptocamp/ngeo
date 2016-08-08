@@ -62,7 +62,7 @@
         height: 400px;
       }
       span.twitter-typeahead {
-        width: 160px;
+        width: 300px;
       }
       .gmf-search > * {
         float: left;
@@ -82,6 +82,7 @@
       span.twitter-typeahead .tt-menu {
         position: absolute;
         top: 100%;
+        width: 100%;
         left: 0;
         z-index: 1000;
         display: none;
@@ -150,13 +151,13 @@
   <body ng-controller="MainController as ctrl">
     <div class="container-fluid">
       <gmf-map gmf-map-map="ctrl.map"></gmf-map>
-      <p>Search for « Laus » for example…<p>
       <gmf-search
         gmf-search-map="ctrl.map"
         gmf-search-options="ctrl.searchOptions"
         gmf-search-styles="ctrl.searchStyles"
         gmf-search-datasources="ctrl.searchDatasources"
         gmf-search-colorchooser="true"
+        gmf-search-placeholder="Search for « Laus » for example…"
         gmf-search-clearbutton="true">
       </gmf-search>
       <p id="desc">This example shows how to use the <code>gmf-search</code> directive, which

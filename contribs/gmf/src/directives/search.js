@@ -124,6 +124,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       'featuresStyles': '<?gmfSearchStyles',
       'clearbutton': '=gmfSearchClearbutton',
       'colorchooser': '=gmfSearchColorchooser',
+      'placeholder': '@?gmfSearchPlaceholder',
       'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
       'additionalListeners': '=gmfSearchListeners'
     },
@@ -250,6 +251,12 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @export
    */
   this.colorchooser = this.scope_['colorchooser'] || false;
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.placeholder = this.scope_['placeholder'];
 
   var coordProj = this.scope_['coordinatesProjections'];
   if (coordProj === undefined) {
