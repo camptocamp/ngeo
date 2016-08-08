@@ -52,7 +52,7 @@
     "less-plugin-clean-css": "1.5.1",
     "nomnom": "1.8.1",
     "openlayers": "3.17.1",
-    "phantomjs-prebuilt": "2.1.9",
+    "phantomjs-prebuilt": "2.1.10",
     "proj4": "2.3.14",
     "svg2ttf": "4.0.2",
     "temp": "0.8.3",
