@@ -569,6 +569,14 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	touch $@
 
 .build/node_modules.timestamp: package.json
+	@# re-installing the node packages, while 'make serve' is still running
+	@# might freeze the system. ask for confirmation in that case.
+	@if ps -a | grep node; then \
+		read -r -p "'make serve' might be running, which may cause problems. Abort? [y]" ABORT; \
+		if [ $$ABORT =  "y" ]; then \
+			exit 1; \
+		fi \
+	fi
 	npm install
 	mkdir -p $(dir $@)
 	touch $@
