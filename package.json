@@ -36,7 +36,7 @@
     "eslint-config-openlayers": "5.0.0",
     "font-awesome": "4.6.3",
     "fs-extra": "0.30.0",
-    "gaze": "1.1.0",
+    "gaze": "1.1.1",
     "jasmine-core": "2.4.1",
     "jquery": "2.2.4",
     "angular-ui-date": "1.1.1",
