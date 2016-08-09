@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <div class="navbar">
+  <div class="navbar" ng-show="!ctrl.pending">
     <ul class="nav navbar-nav navbar-right">
       <li class="small ng-hide" ng-show="ctrl.isOneSelected()">
         <p class="navbar-text ng-binding">
@@ -51,5 +51,9 @@
         </ul>
       </li>
     </ul>
+  </div>
+
+  <div ng-show="ctrl.pending" class="pending">
+      <span class="fa fa-spinner fa-spin"></span>
   </div>
 </div>

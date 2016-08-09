@@ -142,6 +142,12 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
   this.active = false;
 
   /**
+   * @type {boolean}
+   * @export
+   */
+  this.pending = false;
+
+  /**
    * @type {!Object.<string, gmfx.GridSource>}
    * @export
    */
@@ -270,18 +276,25 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
  * @private
  */
 gmf.DisplayquerygridController.prototype.updateData_ = function() {
-  this.active = true;
-  // Don't make grid if there are too many results
+  // TODO Don't make grid if there are too many results
   if (this.ngeoQueryResult.total > this.maxResults) {
     this.tooManyResults = true;
     return;
   }
   // And clear grid if there is no result anymore.
   if (this.ngeoQueryResult.total === 0) {
+    var oldActive = this.active;
     this.clear();
+    if (oldActive) {
+      // don't close if there are pending queries
+      this.active = this.ngeoQueryResult.pending;
+      this.pending = this.ngeoQueryResult.pending;
+    }
     return;
   }
 
+  this.active = true;
+  this.pending = false;
   var sources = this.ngeoQueryResult.sources;
   if (Object.keys(this.mergeTabs_).length > 0) {
     sources = this.getMergedSources_(sources);
@@ -531,6 +544,7 @@ gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
  */
 gmf.DisplayquerygridController.prototype.clear = function() {
   this.active = false;
+  this.pending = false;
   this.gridSources = {};
   this.selectedTab = null;
   this.tooManyResults = false;
