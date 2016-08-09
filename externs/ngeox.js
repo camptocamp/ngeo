@@ -256,7 +256,8 @@ ngeox.PopupOptions.prototype.width;
  * Results of the query source.
  * @typedef {{
  *     sources: (Array.<ngeox.QueryResultSource>),
- *     total: (number)
+ *     total: (number),
+ *     pending: (boolean)
  * }}
  */
 ngeox.QueryResult;
@@ -274,6 +275,13 @@ ngeox.QueryResult.prototype.sources;
  * @type {number}
  */
 ngeox.QueryResult.prototype.total;
+
+
+/**
+ * If at least one source is pending.
+ * @type {boolean}
+ */
+ngeox.QueryResult.prototype.pending;
 
 
 /**
