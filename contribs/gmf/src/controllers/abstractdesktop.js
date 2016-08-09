@@ -9,6 +9,8 @@ goog.require('gmf.contextualdataDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdatacontentDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.displayquerygridDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.drawfeatureDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureselectorDirective');

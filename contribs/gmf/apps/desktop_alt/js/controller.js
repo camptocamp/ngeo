@@ -87,6 +87,14 @@ app.AlternativeDesktopController = function($scope, $injector) {
     label: 'WGS84',
     filter: 'ngeoDMSCoordinates:2'
   }];
+
+  /**
+   * @type {gmfx.GridMergeTabs}
+   * @export
+   */
+  this.gridMergeTabs = {
+    'merged_osm_times': ['110', '126', '147']
+  };
 };
 goog.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
 
