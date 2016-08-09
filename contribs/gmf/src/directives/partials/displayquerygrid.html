@@ -1,16 +1,55 @@
-<div class="displayquerygrid">
-  <button type="button" class="btn fa-close close" ng-click="ctrl.clear()"></button>
-  <ul class="nav nav-tabs small" role="tablist">
-    <li ng-repeat="gridSource in ctrl.gridSources" role="presentation" ng-class="{'active' : gridSource.source.id === ctrl.selectedTab}" ng-click="ctrl.onSelectTab(gridSource)"><a data-target="#{{gridSource.source.id}}" aria-controls="gridSource.source.id" role="tab" data-toggle="tab">{{gridSource.source.label | translate}} ({{gridSource.source.features.length}})</a></li>
+<div class="displayquerygrid panel">
+  <div class="close" ng-click="ctrl.clear()">&times;</div>
+
+  <ul class="nav nav-pills small" role="tablist">
+    <li ng-repeat="gridSource in ctrl.gridSources" role="presentation"
+        ng-class="{'active' : ctrl.isSelected(gridSource)}" ng-click="ctrl.selectTab(gridSource)">
+      <a href="#{{gridSource.source.id}}" data-target="#{{gridSource.source.id}}" aria-controls="{{gridSource.source.id}}" role="tab" data-toggle="tab">
+        {{gridSource.source.label | translate}} ({{gridSource.source.features.length}})
+      </a>
+    </li>
   </ul>
-  <div ng-if="ctrl.tooManyResults === false" class="tab-content">
-    <div ng-repeat="gridSource in ctrl.gridSources" role="tabpanel" class="tab-pane" ng-class="{'active' : gridSource.source.id === ctrl.selectedTab}" id="{{gridSource.source.id}}">
-      <ngeo-grid ngeo-grid-configuration="gridSource.configuration">
+
+  <div class="tab-content">
+    <div ng-repeat="gridSource in ctrl.gridSources" role="tabpanel" class="tab-pane"
+         ng-class="{'active' : ctrl.isSelected(gridSource)}" id="{{gridSource.source.id}}">
+      <ngeo-grid ngeo-grid-configuration="gridSource.configuration" ng-if="gridSource.tooManyResults !== true">
       </ngeo-grid>
+      <div ng-if="gridSource.tooManyResults === true">
+        <p><span translate>We can't display the results because the maximum number has been reached</span>({{ctrl.maxResults}}).</p>
+        <p translate>Please refine your query.</p>
+      </div>
     </div>
   </div>
-  <div ng-if="ctrl.tooManyResults === true">
-    <p><span translate>We can't display the results because the maximum number has been reached</span>({{ctrl.maxResults}}).</p>
-    <p translate>Please refine your query.</p>
+
+  <div class="navbar">
+    <ul class="nav navbar-nav navbar-right">
+      <li class="small ng-hide" ng-show="ctrl.isOneSelected()">
+        <p class="navbar-text ng-binding">
+          {{ctrl.getSelectedRowCount()}} <span translate>selected element(s)</span>
+        </p>
+      </li>
+      <li ng-show="ctrl.isOneSelected()" class="ng-hide">
+        <button class="btn btn-link btn-xs" title="{{'Zoom to selection' | translate}}" ng-click="ctrl.zoomToSelection()">
+          <i class="fa fa-search-plus"></i> <span translate>Zoom to</span>
+        </button>
+      </li>
+      <li ng-show="ctrl.isOneSelected()" class="ng-hide">
+        <button class="btn btn-link btn-xs" title="{{'Export selection as CSV' | translate}}">
+          <i class="fa fa-download"></i> <span translate>Export as CSV</span>
+        </button>
+      </li>
+      <li class="dropdown navbar-link dropup">
+        <button type="button" class="dropup btn btn-default btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span translate>Select</span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dLabel">
+          <li><a href="" ng-click="ctrl.selectAll()" translate>All</a></li>
+          <li><a href="" ng-click="ctrl.unselectAll()" translate>None</a></li>
+          <li><a href="" ng-click="ctrl.invertSelection()" translate>Reverse selection</a></li>
+        </ul>
+      </li>
+    </ul>
   </div>
 </div>

@@ -150,6 +150,12 @@ app.MainController = function(gmfThemes, gmfQueryManager,
    */
   this.queryActive = true;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.queryGridActive = true;
+
   gmfThemes.getThemesObject().then(function(themes) {
     if (themes) {
       this.themes = themes;

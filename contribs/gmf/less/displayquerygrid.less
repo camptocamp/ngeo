@@ -1,0 +1,66 @@
+@import "../../../node_modules/font-awesome/less/variables.less";
+
+@grid-height: 25rem;
+@table-height: @grid-height - @app-margin - 2 * @map-tools-size;
+
+.displayquerygrid {
+  padding: @half-app-margin;
+  border-top: solid 1px black;
+  background-color: white;
+  height: @grid-height;
+
+  .table-container {
+    height: @table-height;
+    overflow: auto;
+  }
+
+  .table {
+    background-color: white;
+    width: 100%;
+  }
+
+  .table th {
+    cursor: pointer;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+
+  .table > tbody > tr.active > td {
+    background-color: #C9C9C9;
+  }
+
+  .nav-pills {
+    height: @map-tools-size;
+  }
+
+  .nav-pills > li > a {
+    padding: 2px 7px;
+    margin-right: 0px;
+  }
+
+  .navbar {
+    height: @map-tools-size;
+    padding-top: @half-app-margin;
+
+    .navbar-right {
+      margin-right: 0;
+    }
+    .navbar-text {
+      padding: 1px 5px;
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+  table>tbody>tr>td,
+  table>tbody>tr>th,
+  table>tfoot>tr>td,
+  table>tfoot>tr>th,
+  table>thead>tr>td,
+  table>thead>tr>th {
+    padding: 2px;
+  }
+}
+
+.query-grid-active main {
+  height: calc(~'100%' - @grid-height);
+}

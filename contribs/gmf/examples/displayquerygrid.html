@@ -24,102 +24,54 @@
       }
 
       /* DisplayQueryGrid */
-      .displayquerygrid .grid {
-        height: 200px;
-        width: 100%;
+      .displayquerygrid {
+        padding: @half-app-margin;
+        border-top: solid 1px black;
+        background-color: white;
+        height: @grid-height;
       }
 
-      .gmf-results-grid {
-        padding: 4px;
-      }
-
-      .message {
-        padding: 10px;
+      .table-container {
+        height: @table-height;
+        overflow: auto;
       }
 
       .table {
-        font-size: @font-size-small;
         background-color: white;
         width: 100%;
       }
 
-      .table-container {
-        border: 1px solid #ddd;
-        border-top: 0;
-        height: 154px;
-        overflow: auto;
-      }
-
-      .table-container-header {
-        overflow: hidden;
-        width: 100%;
-      }
-
-      .table-container-body {
-          height: 154px;
-          overflow: auto;
-          width: 100%;
-      }
-
-      .table-container table {
-          margin-bottom: 0px;
-          table-layout: auto;
-      }
-
-      .table-header th {
+      .table th {
         cursor: pointer;
-      }
-
-      .table-container table td,
-      .table-container table th {
-        overflow: hidden;
         white-space: nowrap;
-        text-overflow: ellipsis;
-        /*width: 30px;*/
+        font-weight: bold;
       }
 
-      .table-bordered {
-        border: 0px;
+      .table > tbody > tr.active > td {
+        background-color: #C9C9C9;
       }
-      .table-bordered > thead > tr > th,
-      .table-bordered > thead > tr > td {
-        border-bottom-width: 2px;
+
+      .nav-pills {
+        height: @map-tools-size;
       }
-      .table-bordered > tfoot > tr > th,
-      .table-bordered > tfoot > tr > td {
-        border-top-width: 2px;
+
+      .nav-pills > li > a {
+        padding: 2px 7px;
+        margin-right: 0px;
       }
-      .table-bordered > tfoot > tr > th,
-      .table-bordered > tfoot > tr > td {
-        border-bottom-width: 0px;
+
+      .navbar {
+        height: @map-tools-size;
+        padding-top: @half-app-margin;
       }
-      /*Esquerda*/
-      .table-bordered > thead > tr > th:first-child,
-      .table-bordered > tbody > tr > th:first-child,
-      .table-bordered > tfoot > tr > th:first-child,
-      .table-bordered > thead > tr > td:first-child,
-      .table-bordered > tbody > tr > td:first-child,
-      .table-bordered > tfoot > tr > td:first-child {
-        border-left-width: 0px;
+
+      .navbar-right {
+        margin-right: 0;
       }
-      /*Direita*/
-      .table-bordered > thead > tr > th:last-child,
-      .table-bordered > tbody > tr > th:last-child,
-      .table-bordered > tfoot > tr > th:last-child,
-      .table-bordered > thead > tr > td:last-child,
-      .table-bordered > tbody > tr > td:last-child,
-      .table-bordered > tfoot > tr > td:last-child {
-        border-right-width: 0px;
-      }
-      /*Topo*/
-      .table-bordered > thead > tr:first-child > th,
-      .table-bordered > thead > tr:first-child > td {
-        border-top-width: 0px;
-      }
-      /*Baixo*/
-      .table-bordered > tfoot > tr:last-child > th,
-      .table-bordered > tfoot > tr:last-child > td {
-        border-bottom-width: 0px;
+      .navbar-text {
+        padding: 1px 5px;
+        margin: 0;
+        line-height: 1.5;
       }
 
       table>tbody>tr>td,
@@ -129,32 +81,6 @@
       table>thead>tr>td,
       table>thead>tr>th {
         padding: 2px;
-      }
-
-      .table-hover>tbody>tr.active>td,
-      .table-hover>tbody>tr.active>th,
-      .table-hover>tbody>tr>.active,
-      .table-hover>tbody>tr>td.active,
-      .table-hover>tbody>tr>th.active {
-        background-color: lighten(@brand-secondary, 5%);
-      }
-
-
-      .nav-tabs>li>a {
-        padding: 2px 7px;
-      }
-
-      th > .fa-sort {
-        visibility: hidden;
-      }
-      th:hover > .fa-sort {
-        visibility: visible;
-      }
-
-      .navbar {
-        min-height: 0;
-        margin-bottom: 0;
-        margin-right: 15px;
       }
 
       /* Layertree */
@@ -299,7 +225,9 @@
     <input type="checkbox" ng-model="ctrl.queryActive" /> Query-Tool active
 
     <gmf-displayquerygrid
-      gmf-displayquerygrid-featuresstyle="ctrl.featureStyle">
+        gmf-displayquerygrid-active="ctrl.queryGridActive"
+        gmf-displayquerygrid-featuresstyle="ctrl.featureStyle"
+        gmf-displayquerygrid-map="::ctrl.map">
     </gmf-displayquerygrid>
 
     <script src="../../../node_modules/jquery/dist/jquery.js"></script>

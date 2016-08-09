@@ -27,9 +27,9 @@ gmfx.Config;
 
 
 /**
- * Results of the query source.
+ * Configuration for a grid tab.
  * @typedef {{
- *     configuration: Object,
+ *     configuration: ngeo.GridConfig,
  *     source: ngeox.QueryResultSource
  * }}
  */
@@ -37,17 +37,29 @@ gmfx.GridSource;
 
 
 /**
- * TODO
- * @type {Object}
+ * Configuration used to initialize a grid.
+ * @type {ngeo.GridConfig}
  */
 gmfx.GridSource.prototype.configuration;
 
 
 /**
- * TODO
+ * Results of the query source.
  * @type {ngeox.QueryResultSource}
  */
 gmfx.GridSource.prototype.source;
+
+
+/**
+ * Configuration option for {@link gmf.displayquerygridDirective} to merge
+ * grid tabs.
+ *
+ * E.g. `'my_merged_source': ['123', '234']}` merges the sources with id `123`
+ * and `234` into a new source `my_merged_source`.
+ *
+ * @typedef {Object<string, Array.<string>>}
+ */
+gmfx.GridMergeTabs;
 
 
 /**
