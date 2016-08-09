@@ -1283,3 +1283,17 @@ ngeox.style;
  * }}
  */
 ngeox.style.TextOptions;
+
+
+/**
+ * Definition for grid columns.
+ * @typedef {{name: (string)}}
+ */
+ngeox.GridColumnDef;
+
+
+/**
+ * Name of a column.
+ * @type {String}
+ */
+ngeox.GridColumnDef.prototype.name;

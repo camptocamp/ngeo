@@ -1,7 +1,10 @@
+goog.provide('ngeo.GridConfig');
 goog.provide('ngeo.GridController');
 goog.provide('ngeo.gridDirective');
 
 goog.require('ngeo');
+goog.require('ol.has');
+goog.require('goog.asserts');
 
 ngeo.module.value('ngeoGridTemplateUrl',
     /**
@@ -15,10 +18,122 @@ ngeo.module.value('ngeoGridTemplateUrl',
           ngeo.baseTemplateUrl + '/grid.html';
     });
 
+/**
+ * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
+ * @param {Array.<ngeox.GridColumnDef>|undefined} columnDefs Column definition of a grid.
+ * @constructor
+ * @export
+ */
+ngeo.GridConfig = function(data, columnDefs) {
+  /**
+   * @type {Array.<Object>|undefined}
+   * @export
+   */
+  this.data = data;
+
+  /**
+   * @type {Array.<ngeox.GridColumnDef>|undefined}
+   * @export
+   */
+  this.columnDefs = columnDefs;
+
+  /**
+   * @type {!Object.<string, Object>}
+   * @export
+   */
+  this.selectedRows = {};
+};
+
 
 /**
- * TODO
- * TODO Object -> specific type
+ * @param {Object} attributes An entry/row.
+ * @return {string} Unique id for this object.
+ * @export
+ */
+ngeo.GridConfig.getRowUid = function(attributes) {
+  return '' + goog.getUid(attributes);
+};
+
+
+/**
+ * @param {Object} attributes An entry/row.
+ * @return {boolean} True if already selected. False otherwise.
+ * @export
+ */
+ngeo.GridConfig.prototype.isRowSelected = function(attributes) {
+  return !!this.selectedRows[ngeo.GridConfig.getRowUid(attributes)];
+};
+
+
+/**
+ * @return {number} Number of selected rows.
+ * @export
+ */
+ngeo.GridConfig.prototype.getSelectedCount = function() {
+  return Object.keys(this.selectedRows).length;
+};
+
+
+/**
+ * @param {Object} attributes An entry/row.
+ */
+ngeo.GridConfig.prototype.selectRow = function(attributes) {
+  var uid = ngeo.GridConfig.getRowUid(attributes);
+  this.selectedRows[uid] = attributes;
+};
+
+
+/**
+ * @param {Object} attributes An entry/row.
+ */
+ngeo.GridConfig.prototype.toggleRow = function(attributes) {
+  var uid = ngeo.GridConfig.getRowUid(attributes);
+  var isSelected = this.isRowSelected(attributes);
+  if (isSelected) {
+    delete this.selectedRows[uid];
+  } else {
+    this.selectedRows[uid] = attributes;
+  }
+};
+
+
+/**
+ * Select all.
+ * @export
+ */
+ngeo.GridConfig.prototype.selectAll = function() {
+  this.data.forEach(function(attributes) {
+    this.selectRow(attributes);
+  }.bind(this));
+};
+
+
+/**
+ * Unselect all.
+ * @export
+ */
+ngeo.GridConfig.prototype.unselectAll = function() {
+  for (var rowId in this.selectedRows) {
+    delete this.selectedRows[rowId];
+  }
+};
+
+
+/**
+ * Invert selection
+ * @export
+ */
+ngeo.GridConfig.prototype.invertSelection = function() {
+  this.data.forEach(function(attributes) {
+    this.toggleRow(attributes);
+  }.bind(this));
+};
+
+
+/**
+ * A grid directive for displaying tabular data. The columns of the grid
+ * are sortable, rows can be selected with a single click (also in combination
+ * with SHIFT and CTRL/Meta).
  *
  * Example:
  *
@@ -26,7 +141,7 @@ ngeo.module.value('ngeoGridTemplateUrl',
  *       ngeo-grid-configuration="::ctrl.gridConfiguration"
  *     </ngeo-grid>
  *
- * @htmlAttribute {Array.<Object>} ngeo-grid-configuration The
+ * @htmlAttribute {ngeo.GridConfig} ngeo-grid-configuration The
  * configuration to use.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoGridTemplateUrl Template URL for the directive.
@@ -67,20 +182,19 @@ ngeo.GridController = function($scope) {
   this.scope_ = $scope;
 
   /**
-   * TODO
-   * @type {Object}
+   * @type {ngeo.GridConfig}
    * @export
    */
   this.configuration;
 
   /**
-   * TODO
-   * @type {Object.<number, Object>}
+   * @type {Object.<string, Object>}
    * @export
    */
-  this.selectedRows = {};
+  this.selectedRows = this.configuration.selectedRows;
 
   /**
+   * The name of the column used to sort the grid.
    * @type {string}
    * @export
    */
@@ -92,19 +206,32 @@ ngeo.GridController = function($scope) {
    */
   this.sortAscending = true;
 
+  /**
+   * Configuration object for float-thead.
+   * @type {Object}
+   * @export
+   */
+  this.floatTheadConfig = {
+    'scrollContainer': function($table) {
+      return $table.closest('.table-container');
+    }
+  };
+
 };
 
 
 /**
- * Sort function that always put undefined values to the bottom of the grid.
- * A new call will sort ascending. A seconde one will sort descending (and so
+ * Sort function that always puts undefined values to the bottom of the grid.
+ * A new call will sort ascending. A next one will sort descending (and so
  * on).
- * @param {string} columnName TODO.
+ * @param {string} columnName The name of the column that should be used to
+ *    sort the data.
  * @export
  */
 ngeo.GridController.prototype.sort = function(columnName) {
   this.sortAscending = this.sortedBy === columnName ? !this.sortAscending : true;
   this.sortedBy = columnName;
+
   var asc = this.sortAscending ? 1 : -1;
   this.configuration.data.sort(function(attributes1, attributes2) {
     if (!attributes1[columnName]) {
@@ -119,78 +246,138 @@ ngeo.GridController.prototype.sort = function(columnName) {
 
 
 /**
- * @param {Object} attributes TODO.
- * @return {number} Unique id for this Object.
+ * @param {Object} attributes An entry/row.
+ * @param {jQuery.Event} event Event.
  * @export
  */
-ngeo.GridController.prototype.getRowUid = function(attributes) {
-  return goog.getUid(attributes);
+ngeo.GridController.prototype.clickRow = function(attributes, event) {
+  var shiftKey = this.isShiftKeyOnly_(event);
+  var platformModifierKey = this.isPlatformModifierKeyOnly_(event);
+
+  this.clickRow_(attributes, shiftKey, platformModifierKey);
 };
 
 
 /**
- * @param {Object} attributes TODO.
- * @return {boolean} True if already Selected. False otherwise.
- * @export
+ * @param {Object} attributes An entry/row.
+ * @param {boolean} shiftKey Shift pressed?
+ * @param {boolean} platformModifierKey CTRL/Meta pressed?
  */
-ngeo.GridController.prototype.isRowSelected = function(attributes) {
-  var uid = goog.getUid(attributes);
-  if (this.selectedRows[uid]) {
-    return true;
+ngeo.GridController.prototype.clickRow_ = function(
+    attributes, shiftKey, platformModifierKey) {
+
+  if (shiftKey && !platformModifierKey) {
+    this.selectRange_(attributes);
+  } else if (!shiftKey && platformModifierKey) {
+    this.configuration.toggleRow(attributes);
+  } else {
+    var isSelected = this.configuration.isRowSelected(attributes);
+    this.configuration.unselectAll();
+    if (!isSelected) {
+      this.configuration.selectRow(attributes);
+    }
   }
-  return false;
 };
 
 
 /**
- * @param {Object} attributes TODO.
- * @export
- */
-ngeo.GridController.prototype.toggleRow = function(attributes) {
-  // TODO If shift is pressed, Select all row bewtween this attributes
-  // Object and the previous selected attributes Object in
-  // this.configuration.data.
-  this.toggleRow_(this.isRowSelected(attributes), attributes);
-};
-
-
-/**
- * @param {boolean} select TODO.
- * @param {Object} attributes TODO.
+ * Selects all rows between the given row and the closest already selected row.
+ * @param {Object} attributes An entry/row.
  * @private
  */
-ngeo.GridController.prototype.toggleRow_ = function(select, attributes) {
-  var uid = goog.getUid(attributes);
-  if (select) {
-    delete this.selectedRows[uid];
-  } else {
-    this.selectedRows[uid] = attributes;
+ngeo.GridController.prototype.selectRange_ = function(attributes) {
+  var targetUid = ngeo.GridConfig.getRowUid(attributes);
+  var data = this.configuration.data;
+
+  if (this.configuration.isRowSelected(attributes)) {
+    return;
   }
-  // Fire event with add/remove information and the attributes in params ?
+
+  // get the position of the clicked and all already selected rows
+  /** @type {number|undefined} */
+  var posClickedRow = undefined;
+  var posSelectedRows = [];
+  for (var i = 0; i < data.length; i++) {
+    var currentRow = data[i];
+    var currentUid = ngeo.GridConfig.getRowUid(currentRow);
+
+    if (targetUid === currentUid) {
+      posClickedRow = i;
+    } else if (this.configuration.isRowSelected(currentRow)) {
+      posSelectedRows.push(i);
+    }
+  }
+  goog.asserts.assert(posClickedRow !== undefined);
+
+  if (posSelectedRows.length == 0) {
+    // if no other row is selected, select the clicked one and stop
+    this.configuration.selectRow(attributes);
+  }
+
+  // find the selected row which is the closest to the clicked row
+  var distance = Infinity;
+  var posClosestRow = posSelectedRows[0];
+  for (var j = 0; j < posSelectedRows.length; j++) {
+    var currentPos = posSelectedRows[j];
+    var currentDistance = Math.abs(currentPos - posClickedRow);
+    if (distance > currentDistance) {
+      distance = currentDistance;
+      posClosestRow = currentPos;
+    }
+    // note: this could be optimized because `posSelectedRows` is ordered.
+  }
+
+  // then select all rows between the clicked one and the closest
+  var rangeStart = (posClickedRow < posClosestRow) ? posClickedRow : posClosestRow;
+  var rangeEnd = (posClickedRow > posClosestRow) ? posClickedRow : posClosestRow;
+
+  for (var l = rangeStart; l <= rangeEnd; l++) {
+    this.configuration.selectRow(data[l]);
+  }
 };
 
 
 /**
- * Draft, Not tested
- * @param {boolean} select TODO.
+ * Prevent that the default browser behaviour of selecting text
+ * when selecting multiple rows with SHIFT or CTRL/Meta.
+ * @param {jQuery.Event} event Event.
  * @export
  */
-ngeo.GridController.prototype.toggleAll = function(select) {
-  this.configuration.data.forEach(function(attributes) {
-    this.toggleRow_(select, attributes);
-  }.bind(this));
+ngeo.GridController.prototype.preventTextSelection = function(event) {
+  var shiftKey = this.isShiftKeyOnly_(event);
+  var platformModifierKey = this.isPlatformModifierKeyOnly_(event);
+
+  if (shiftKey || platformModifierKey) {
+    event.preventDefault();
+  }
 };
 
 
 /**
- * Draft, Not tested
- * @export
+ * Same as `ol.events.condition.platformModifierKeyOnly`.
+ * @param {jQuery.Event} event Event.
+ * @return {boolean} True if only the platform modifier key is pressed.
+ * @private
  */
-ngeo.GridController.prototype.inverteSelection = function() {
-  this.configuration.data.forEach(function(attributes) {
-    this.isRowSelected(attributes);
-    this.toggleRow_(!this.isRowSelected(attributes), attributes);
-  }.bind(this));
+ngeo.GridController.prototype.isPlatformModifierKeyOnly_ = function(event) {
+  return (
+      !event.altKey &&
+      (ol.has.MAC ? event.metaKey : event.ctrlKey) &&
+      !event.shiftKey);
+};
+
+
+/**
+ * Same as `ol.events.condition.shiftKeyOnly`.
+ * @param {jQuery.Event} event Event.
+ * @return {boolean} True if only the shift key is pressed.
+ * @private
+ */
+ngeo.GridController.prototype.isShiftKeyOnly_ = function(event) {
+  return (
+      !event.altKey &&
+      !(event.metaKey || event.ctrlKey) &&
+      event.shiftKey);
 };
 
 
