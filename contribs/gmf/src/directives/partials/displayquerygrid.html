@@ -2,7 +2,7 @@
   <div class="close" ng-click="ctrl.clear()">&times;</div>
 
   <ul class="nav nav-pills small" role="tablist">
-    <li ng-repeat="gridSource in ctrl.gridSources" role="presentation"
+    <li ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.id" role="presentation"
         ng-class="{'active' : ctrl.isSelected(gridSource)}" ng-click="ctrl.selectTab(gridSource)">
       <a href="#{{gridSource.source.id}}" data-target="#{{gridSource.source.id}}" aria-controls="{{gridSource.source.id}}" role="tab" data-toggle="tab">
         {{gridSource.source.label | translate}} ({{gridSource.source.features.length}})
@@ -11,7 +11,7 @@
   </ul>
 
   <div class="tab-content">
-    <div ng-repeat="gridSource in ctrl.gridSources" role="tabpanel" class="tab-pane"
+    <div ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.id" role="tabpanel" class="tab-pane"
          ng-class="{'active' : ctrl.isSelected(gridSource)}" id="{{gridSource.source.id}}">
       <ngeo-grid ngeo-grid-configuration="gridSource.configuration" ng-if="gridSource.tooManyResults !== true">
       </ngeo-grid>

@@ -154,6 +154,13 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
   this.gridSources = {};
 
   /**
+   * IDs of the grid sources in the order they were loaded.
+   * @type {Array.<string>}
+   * @export
+   */
+  this.loadedGridSources = [];
+
+  /**
    * The id of the currently shown query source.
    * @type {string|number|null}
    * @export
@@ -273,6 +280,18 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
 
 
 /**
+ * Returns a list of grid sources in the order they were loaded.
+ * @export
+ * @return {Array.<gmfx.GridSource>} Ordered list of grid sources.
+ */
+gmf.DisplayquerygridController.prototype.getGridSources = function() {
+  return this.loadedGridSources.map(function(sourceId) {
+    return this.gridSources[sourceId];
+  }.bind(this));
+};
+
+
+/**
  * @private
  */
 gmf.DisplayquerygridController.prototype.updateData_ = function() {
@@ -313,8 +332,8 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
     // selecting the tab is done in a timeout, because otherwise in rare cases
     // `ng-class` might set the `active` class on multiple tabs.
     this.$timeout_(function() {
-      var ids = Object.keys(this.gridSources);
-      this.selectTab(this.gridSources[ids[0]]);
+      var firstSourceId = this.loadedGridSources[0];
+      this.selectTab(this.gridSources[firstSourceId]);
     }.bind(this), 0);
   }
 };
@@ -506,6 +525,9 @@ gmf.DisplayquerygridController.prototype.removeEmptyColumnsFn_ = function(
  */
 gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
   var sourceId = '' + source.id;
+  if (this.loadedGridSources.indexOf(sourceId) == -1) {
+    this.loadedGridSources.push(sourceId);
+  }
   this.gridSources[sourceId] = {
     configuration: this.getGridConfiguration_(data),
     source: source
@@ -546,6 +568,7 @@ gmf.DisplayquerygridController.prototype.clear = function() {
   this.active = false;
   this.pending = false;
   this.gridSources = {};
+  this.loadedGridSources = [];
   this.selectedTab = null;
   this.tooManyResults = false;
   this.features_.clear();
