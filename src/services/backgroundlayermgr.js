@@ -6,6 +6,9 @@ goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ol.Observable');
 goog.require('ol.events');
+goog.require('ol.source.ImageWMS');
+goog.require('ol.source.TileWMS');
+goog.require('ol.source.WMTS');
 
 
 /**
@@ -137,6 +140,33 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
   this.dispatchEvent(new ngeo.BackgroundEvent(ngeo.BackgroundEventType.CHANGE,
       previous));
   return previous;
+};
+
+/**
+ * @param {ol.Map} map The map.
+ * @param {Object.<string, string>} dimensions The global dimensions object.
+ * @export
+ */
+ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
+  var layer = this.get(map);
+  goog.asserts.assertInstanceof(layer, ol.layer.Layer);
+  if (layer) {
+    var updatedDimensions = {};
+    for (var key in layer.get('dimensions')) {
+      var value = dimensions[key];
+      if (value !== undefined) {
+        updatedDimensions[key] = value;
+      }
+    }
+    if (!ol.object.isEmpty(dimensions)) {
+      var source = layer.getSource();
+      if (source instanceof ol.source.WMTS) {
+        source.updateDimensions(updatedDimensions);
+      } else if (source instanceof ol.source.TileWMS || source instanceof ol.source.ImageWMS) {
+        source.updateParams(updatedDimensions);
+      }
+    }
+  }
 };
 
 
