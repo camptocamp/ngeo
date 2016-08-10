@@ -5,7 +5,6 @@ goog.require('goog.object');
 goog.require('ngeo');
 goog.require('ol.Collection');
 goog.require('ol.CollectionEvent');
-goog.require('ol.CollectionEventType');
 goog.require('ol.Feature');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -253,18 +252,18 @@ ngeo.FeatureOverlay.prototype.clear = function() {
 ngeo.FeatureOverlay.prototype.setFeatures = function(features) {
   if (this.features_ !== null) {
     this.features_.clear();
-    ol.events.unlisten(this.features_, ol.CollectionEventType.ADD,
+    ol.events.unlisten(this.features_, ol.Collection.EventType.ADD,
         this.handleFeatureAdd_, this);
-    ol.events.unlisten(this.features_, ol.CollectionEventType.REMOVE,
+    ol.events.unlisten(this.features_, ol.Collection.EventType.REMOVE,
         this.handleFeatureRemove_, this);
   }
   if (features !== null) {
     features.forEach(function(feature) {
       this.addFeature(feature);
     }, this);
-    ol.events.listen(features, ol.CollectionEventType.ADD,
+    ol.events.listen(features, ol.Collection.EventType.ADD,
         this.handleFeatureAdd_, this);
-    ol.events.listen(features, ol.CollectionEventType.REMOVE,
+    ol.events.listen(features, ol.Collection.EventType.REMOVE,
         this.handleFeatureRemove_, this);
   }
   this.features_ = features;

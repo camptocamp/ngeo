@@ -145,7 +145,7 @@ gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
       layerUid,
       ol.events.listen(
         layer.getLayers(),
-        ol.CollectionEventType.ADD,
+        ol.Collection.EventType.ADD,
         this.handleLayersAdd_,
         this
       )
@@ -154,7 +154,7 @@ gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
       layerUid,
       ol.events.listen(
         layer.getLayers(),
-        ol.CollectionEventType.REMOVE,
+        ol.Collection.EventType.REMOVE,
         this.handleLayersRemove_,
         this
       )

@@ -7,7 +7,6 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('ol');
 goog.require('ol.Collection');
-goog.require('ol.CollectionEventType');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.events');
@@ -185,9 +184,9 @@ ngeo.interaction.Rotate.prototype.setActive = function(active) {
     );
     this.features_.forEach(this.addFeature_, this);
     this.listenerKeys_.push(ol.events.listen(this.features_,
-        ol.CollectionEventType.ADD, this.handleFeatureAdd_, this));
+        ol.Collection.EventType.ADD, this.handleFeatureAdd_, this));
     this.listenerKeys_.push(ol.events.listen(this.features_,
-        ol.CollectionEventType.REMOVE, this.handleFeatureRemove_, this));
+        ol.Collection.EventType.REMOVE, this.handleFeatureRemove_, this));
 
   } else {
     this.listenerKeys_.forEach(function(key) {

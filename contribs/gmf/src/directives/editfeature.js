@@ -417,7 +417,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
     uid,
     ol.events.listen(
       this.features,
-      ol.CollectionEventType.ADD,
+      ol.Collection.EventType.ADD,
       this.handleFeatureAdd_,
       this
     )

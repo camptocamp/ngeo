@@ -3,7 +3,6 @@ goog.provide('ngeo.interaction.ModifyCircle');
 goog.require('goog.asserts');
 goog.require('ol');
 goog.require('ol.Collection');
-goog.require('ol.CollectionEventType');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent.EventType');
 goog.require('ol.MapBrowserPointerEvent');
@@ -119,9 +118,9 @@ ngeo.interaction.ModifyCircle = function(options) {
   this.features_ = options.features;
 
   this.features_.forEach(this.addFeature_, this);
-  ol.events.listen(this.features_, ol.CollectionEventType.ADD,
+  ol.events.listen(this.features_, ol.Collection.EventType.ADD,
       this.handleFeatureAdd_, this);
-  ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
+  ol.events.listen(this.features_, ol.Collection.EventType.REMOVE,
       this.handleFeatureRemove_, this);
 
 };

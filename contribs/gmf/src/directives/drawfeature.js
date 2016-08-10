@@ -400,9 +400,9 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
   if (active) {
     // when activated
 
-    keys.push(ol.events.listen(this.features, ol.CollectionEventType.ADD,
+    keys.push(ol.events.listen(this.features, ol.Collection.EventType.ADD,
         this.handleFeaturesAdd_, this));
-    keys.push(ol.events.listen(this.features, ol.CollectionEventType.REMOVE,
+    keys.push(ol.events.listen(this.features, ol.Collection.EventType.REMOVE,
         this.handleFeaturesRemove_, this));
 
     keys.push(ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
