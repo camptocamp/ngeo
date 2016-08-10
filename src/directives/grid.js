@@ -75,6 +75,17 @@ ngeo.GridConfig.prototype.getSelectedCount = function() {
 
 
 /**
+ * @return {Array.<Object>} Selected rows in the current ordering.
+ * @export
+ */
+ngeo.GridConfig.prototype.getSelectedRows = function() {
+  return this.data.filter(function(row) {
+    return this.isRowSelected(row);
+  }.bind(this));
+};
+
+
+/**
  * @param {Object} attributes An entry/row.
  */
 ngeo.GridConfig.prototype.selectRow = function(attributes) {

@@ -2,6 +2,7 @@ goog.provide('gmf.DisplayquerygridController');
 goog.provide('gmf.displayquerygridDirective');
 
 goog.require('gmf');
+goog.require('ngeo.CsvDownload');
 goog.require('ngeo.GridConfig');
 /** @suppress {extraRequire} */
 goog.require('ngeo.gridDirective');
@@ -101,6 +102,7 @@ gmf.module.directive('gmfDisplayquerygrid', gmf.displayquerygridDirective);
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {ngeo.CsvDownload} ngeoCsvDownload CSV download service.
  * @constructor
  * @export
  * @ngInject
@@ -108,7 +110,7 @@ gmf.module.directive('gmfDisplayquerygrid', gmf.displayquerygridDirective);
  * @ngname GmfDisplayquerygridController
  */
 gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
-    ngeoFeatureOverlayMgr, $timeout) {
+    ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload) {
 
   /**
    * @type {!angular.Scope}
@@ -127,6 +129,12 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
    * @export
    */
   this.ngeoQueryResult = ngeoQueryResult;
+
+  /**
+   * @type {ngeo.CsvDownload}
+   * @private
+   */
+  this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   // TODO this should be per source
   /**
@@ -728,6 +736,22 @@ gmf.DisplayquerygridController.prototype.zoomToSelection = function() {
     var mapSize = this.map_.getSize();
     goog.asserts.assert(mapSize !== undefined);
     this.map_.getView().fit(extent, mapSize, {maxZoom: this.maxRecenterZoom});
+  }
+};
+
+
+/**
+ * @export
+ */
+gmf.DisplayquerygridController.prototype.downloadCsv = function() {
+  var source = this.getActiveGridSource_();
+  if (source !== null) {
+    var columnDefs = source.configuration.columnDefs;
+    goog.asserts.assert(columnDefs !== undefined);
+    var selectedRows = source.configuration.getSelectedRows();
+
+    this.ngeoCsvDownload_.startDownload(
+        selectedRows, columnDefs, 'query-results.csv');
   }
 };
 

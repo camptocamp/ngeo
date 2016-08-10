@@ -35,7 +35,7 @@
         </button>
       </li>
       <li ng-show="ctrl.isOneSelected()" class="ng-hide">
-        <button class="btn btn-link btn-xs" title="{{'Export selection as CSV' | translate}}">
+        <button class="btn btn-link btn-xs" title="{{'Export selection as CSV' | translate}}" ng-click="ctrl.downloadCsv()">
           <i class="fa fa-download"></i> <span translate>Export as CSV</span>
         </button>
       </li>
