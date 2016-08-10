@@ -659,13 +659,21 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
           source.getParams()['LAYERS'].split(','))  || [];
       if (isActive) {
         for (i = 0; i < layersNames.length; i++) {
-          ol.array.remove(layers, layersNames[i]);
+          // layersNames may be "foo,bar". Each should be removed from the
+          // LAYERS param
+          layersNames[i].split(',').forEach(function(name) {
+            ol.array.remove(layers, name);
+          });
         }
       } else {
         for (i = 0; i < layersNames.length; i++) {
-          if (!ol.array.includes(layers, layersNames[i])) {
-            layers.push(layersNames[i]);
-          }
+          // layersNames may be "foo,bar". Each should be checked for presence
+          // in the LAYERS param
+          layersNames[i].split(',').forEach(function(name) {
+            if (!ol.array.includes(layers, name)) {
+              layers.push(name);
+            }
+          });
         }
       }
       firstParentTreeLayer = /** @type {ol.layer.Image} */
