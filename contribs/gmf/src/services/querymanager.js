@@ -137,6 +137,14 @@ gmf.QueryManager.prototype.createSources_ = function(node, ogcServers) {
       // This override makes sure that those layer names are used instead of
       // the original one.
       if (node.childLayers && node.childLayers.length) {
+        // skip layers with no queryable childLayer
+        var isQueryable = function(item) {
+          return item.queryable;
+        };
+        if (!node.childLayers.some(isQueryable)) {
+          return;
+        }
+
         var childLayerNames = [];
         node.childLayers.forEach(function(childLayer) {
           if (childLayer.queryable) {
