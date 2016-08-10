@@ -4,6 +4,7 @@ goog.provide('ngeo.BackgroundLayerMgr');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
+goog.require('ol.obj');
 goog.require('ol.Observable');
 goog.require('ol.events');
 goog.require('ol.source.ImageWMS');
@@ -166,7 +167,7 @@ ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
             updatedDimensions[key] = value;
           }
         }
-        if (!ol.object.isEmpty(dimensions)) {
+        if (!ol.obj.isEmpty(dimensions)) {
           var source = layer.getSource();
           if (source instanceof ol.source.WMTS) {
             source.updateDimensions(updatedDimensions);

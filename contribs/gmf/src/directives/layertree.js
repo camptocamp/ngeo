@@ -253,7 +253,7 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
         dimensions[key] = value;
       }
     }
-    if (!ol.object.isEmpty(dimensions)) {
+    if (!ol.obj.isEmpty(dimensions)) {
       var source = layer.getSource();
       if (source instanceof ol.source.WMTS) {
         source.updateDimensions(dimensions);
