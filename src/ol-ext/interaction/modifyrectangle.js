@@ -225,7 +225,7 @@ ngeo.interaction.ModifyRectangle.prototype.setMap = function(map) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.ModifyRectangle.prototype.handleFeatureAdd_ = function(evt) {
@@ -237,7 +237,7 @@ ngeo.interaction.ModifyRectangle.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.ModifyRectangle.prototype.handleFeatureRemove_ = function(evt) {

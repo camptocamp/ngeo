@@ -789,7 +789,7 @@ gmf.Permalink.prototype.initMergedLayer_ = function(layer, layerNames) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.Permalink.prototype.handleLayersAdd_ = function(evt) {
@@ -800,7 +800,7 @@ gmf.Permalink.prototype.handleLayersAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.Permalink.prototype.handleLayersRemove_ = function(evt) {
@@ -1121,7 +1121,7 @@ gmf.Permalink.prototype.unregisterDataLayerGroup_ = function() {
 
 
 /**
- * @param {ol.CollectionEvent} event Collection event.
+ * @param {ol.Collection.Event} event Collection event.
  * @private
  */
 gmf.Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
@@ -1132,7 +1132,7 @@ gmf.Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
 
 
 /**
- * @param {ol.CollectionEvent} event Collection event.
+ * @param {ol.Collection.Event} event Collection event.
  * @private
  */
 gmf.Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {

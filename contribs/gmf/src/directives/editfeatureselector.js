@@ -308,7 +308,7 @@ gmf.EditfeatureselectorController.prototype.unregisterLayer_ = function(layer) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.EditfeatureselectorController.prototype.handleLayersAdd_ = function(evt) {
@@ -319,7 +319,7 @@ gmf.EditfeatureselectorController.prototype.handleLayersAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.EditfeatureselectorController.prototype.handleLayersRemove_ = function(

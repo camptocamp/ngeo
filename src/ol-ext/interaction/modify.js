@@ -166,7 +166,7 @@ ngeo.interaction.Modify.prototype.setState_ = function() {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.Modify.prototype.handleFeaturesAdd_ = function(evt) {
@@ -178,7 +178,7 @@ ngeo.interaction.Modify.prototype.handleFeaturesAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.Modify.prototype.handleFeaturesRemove_ = function(evt) {

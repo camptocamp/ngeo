@@ -501,7 +501,7 @@ gmf.DrawfeatureController.prototype.removeFeature = function(feature) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.DrawfeatureController.prototype.handleFeaturesAdd_ = function(evt) {
@@ -515,7 +515,7 @@ gmf.DrawfeatureController.prototype.handleFeaturesAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.DrawfeatureController.prototype.handleFeaturesRemove_ = function(evt) {

@@ -4,7 +4,6 @@ goog.provide('ngeo.FeatureOverlayMgr');
 goog.require('goog.object');
 goog.require('ngeo');
 goog.require('ol.Collection');
-goog.require('ol.CollectionEvent');
 goog.require('ol.Feature');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -282,7 +281,7 @@ ngeo.FeatureOverlay.prototype.setStyle = function(style) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Feature collection event.
+ * @param {ol.Collection.Event} evt Feature collection event.
  * @private
  */
 ngeo.FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
@@ -292,7 +291,7 @@ ngeo.FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Feature collection event.
+ * @param {ol.Collection.Event} evt Feature collection event.
  * @private
  */
 ngeo.FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {

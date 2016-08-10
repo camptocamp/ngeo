@@ -205,7 +205,7 @@ ngeo.interaction.ModifyCircle.prototype.setMap = function(map) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.handleFeatureAdd_ = function(evt) {
@@ -217,7 +217,7 @@ ngeo.interaction.ModifyCircle.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.handleFeatureRemove_ = function(evt) {

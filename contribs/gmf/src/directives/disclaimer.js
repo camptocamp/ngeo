@@ -109,7 +109,7 @@ gmf.DisclaimerController = function($element, $scope, ngeoCreatePopup,
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
@@ -120,7 +120,7 @@ gmf.DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.DisclaimerController.prototype.handleLayersRemove_ = function(evt) {

@@ -162,7 +162,7 @@ ngeo.interaction.Translate.prototype.setState_ = function() {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.Translate.prototype.handleFeaturesAdd_ = function(evt) {
@@ -174,7 +174,7 @@ ngeo.interaction.Translate.prototype.handleFeaturesAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.Translate.prototype.handleFeaturesRemove_ = function(evt) {

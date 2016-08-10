@@ -612,7 +612,7 @@ gmf.EditfeatureController.prototype.setAttributes_ = function(attributes) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {

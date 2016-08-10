@@ -259,7 +259,7 @@ ngeo.interaction.Rotate.prototype.setMap = function(map) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.Rotate.prototype.handleFeatureAdd_ = function(evt) {
@@ -271,7 +271,7 @@ ngeo.interaction.Rotate.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.Rotate.prototype.handleFeatureRemove_ = function(evt) {
