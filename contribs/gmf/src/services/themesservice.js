@@ -3,6 +3,7 @@ goog.provide('gmf.Themes');
 goog.require('gmf');
 goog.require('ngeo.LayerHelper');
 goog.require('ol.array');
+goog.require('ol.Collection');
 goog.require('ol.events.EventTarget');
 goog.require('ol.layer.Tile');
 
@@ -210,6 +211,42 @@ gmf.Themes.prototype.getBgLayers = function() {
     return this.bgLayerPromise_;
   }
   var $q = this.$q_;
+  var layerHelper = this.layerHelper_;
+
+  var callback = function(item, layer) {
+    layer.set('label', item['name']);
+    layer.set('metadata', item['metadata']);
+    layer.set('dimensions', item['dimensions']);
+    var ids = gmf.LayertreeController.getLayerNodeIds(item);
+    layer.set('querySourceIds', ids);
+    layer.set('editableIds', []);
+    return layer;
+  };
+
+  var layerLayerCreationFn = function(item) {
+    if (item['type'] === 'WMTS') {
+      return layerHelper.createWMTSLayerFromCapabilitites(
+          item['url'],
+          item['name'],
+          item['dimensions']
+      ).then(callback.bind(null, item)).then(null, function(error) {
+        console.error(error || 'unknown error');
+        // Continue even if some layers have failed loading.
+        return $q.resolve(undefined);
+      });
+    }
+  };
+
+  var layerGroupCreationFn = function(item) {
+    // We assume no child is a layer group.
+    var promises = item['children'].map(layerLayerCreationFn);
+    return $q.all(promises).then(function(layers) {
+      var collection = layers ? new ol.Collection(layers) : undefined;
+      var group = layerHelper.createBasicGroup(collection);
+      callback(item, group);
+      return group;
+    });
+  };
 
   /**
    * @param {gmf.ThemesResponse} data The "themes" web service response.
@@ -217,27 +254,14 @@ gmf.Themes.prototype.getBgLayers = function() {
    */
   var promiseSuccessFn = function(data) {
     var promises = data['background_layers'].map(function(item) {
-
-      var callback = function(item, layer) {
-        layer.set('label', item['name']);
-        layer.set('metadata', item['metadata']);
-        layer.set('dimensions', item['dimensions']);
-        var ids = gmf.LayertreeController.getLayerNodeIds(item);
-        layer.set('querySourceIds', ids);
-        layer.set('editableIds', []);
-        return layer;
-      };
-
-      if (item['type'] === 'WMTS') {
-        return this.layerHelper_.createWMTSLayerFromCapabilitites(
-            item['url'],
-            item['name'],
-            item['dimensions']
-        ).then(callback.bind(this, item)).then(null, function(error) {
-          console.error(error || 'unknown error');
-          // Continue even if some layers have failed loading.
-          return $q.resolve(undefined);
-        });
+      var itemType = item['type'];
+      if (itemType === 'WMTS') {
+        return layerLayerCreationFn(item);
+      } else if (item['children']) {
+        // group of layers
+        return layerGroupCreationFn(item);
+      } else {
+        return undefined;
       }
     }, this);
     return $q.all(promises);
