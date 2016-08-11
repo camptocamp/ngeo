@@ -64,9 +64,8 @@ ngeo.StateManager = function(ngeoLocation) {
       this.ngeoLocation.updateParams(locationInitState);
     }
   } else {
-    var keys = ngeoLocation.getParamKeys();
-    for (i = 0; i < keys.length; ++i) {
-      key = keys[i];
+    for (i = 0; i < paramKeys.length; ++i) {
+      key = paramKeys[i];
       this.initialState[key] = this.getItemFromLocation_(key);
     }
     //Retrieve selected theme in url path
