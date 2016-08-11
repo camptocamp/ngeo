@@ -221,6 +221,7 @@ gmf.Themes.prototype.getBgLayers = function() {
       var callback = function(item, layer) {
         layer.set('label', item['name']);
         layer.set('metadata', item['metadata']);
+        layer.set('dimensions', item['dimensions']);
         var ids = gmf.LayertreeController.getLayerNodeIds(item);
         layer.set('querySourceIds', ids);
         layer.set('editableIds', []);

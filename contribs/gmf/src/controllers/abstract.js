@@ -140,6 +140,15 @@ gmf.AbstractController = function(config, $scope, $injector) {
   // watch any change on dimensions object to refresh the url
   permalink.setDimensions(this.dimensions);
 
+  var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
+
+  // watch any change on dimensions object to refresh the background layer
+  $scope.$watchCollection(function() {
+    return this.dimensions;
+  }.bind(this), function() {
+    backgroundLayerMgr.updateDimensions(this.map, this.dimensions);
+  }.bind(this));
+
   /**
    * @type {boolean}
    * @export
@@ -289,7 +298,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
   var drawProfilePanelActivate = new ngeo.ToolActivate(this, 'drawProfilePanelActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawProfilePanelActivate, false);
 
-  var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
 
   $scope.$watch(function() {
     return this.theme.name;
