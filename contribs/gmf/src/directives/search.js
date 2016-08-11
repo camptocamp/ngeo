@@ -271,7 +271,6 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    */
   this.coordinatesProjections_ = coordProj;
 
-  ngeoFeatureOverlayMgr.init(this.map_);
   this.initStyles_();
 
   /**
