@@ -170,8 +170,10 @@ ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
           var source = layer.getSource();
           if (source instanceof ol.source.WMTS) {
             source.updateDimensions(updatedDimensions);
+            source.refresh();
           } else if (source instanceof ol.source.TileWMS || source instanceof ol.source.ImageWMS) {
             source.updateParams(updatedDimensions);
+            source.refresh();
           }
         }
       }
