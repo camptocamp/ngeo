@@ -240,9 +240,10 @@ gmf.Themes.getFlatNodes = function(node, nodes) {
 
 /**
  * Get background layers.
+ * @param {Object.<string, string>} appDimensions Dimensions.
  * @return {angular.$q.Promise} Promise.
  */
-gmf.Themes.prototype.getBgLayers = function() {
+gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   if (this.bgLayerPromise_) {
     return this.bgLayerPromise_;
   }
@@ -260,6 +261,13 @@ gmf.Themes.prototype.getBgLayers = function() {
   };
 
   var layerLayerCreationFn = function(item) {
+    // Overwrite conflicting server dimensions with application ones
+    for (var dimkey in item['dimensions']) {
+      if (appDimensions[dimkey] !== undefined) {
+        item['dimensions'][dimkey] = appDimensions[dimkey];
+      }
+    }
+
     if (item['type'] === 'WMTS') {
       return layerHelper.createWMTSLayerFromCapabilitites(
           item['url'],
@@ -270,6 +278,14 @@ gmf.Themes.prototype.getBgLayers = function() {
         // Continue even if some layers have failed loading.
         return $q.resolve(undefined);
       });
+    } else if (item['type'] === 'WMS') {
+      return callback(item, layerHelper.createBasicWMSLayer(
+          item['url'],
+          item['layers'],
+          item['serverType'],
+          item['time'],
+          item['dimensions']
+      ));
     }
   };
 
@@ -291,7 +307,7 @@ gmf.Themes.prototype.getBgLayers = function() {
   var promiseSuccessFn = function(data) {
     var promises = data['background_layers'].map(function(item) {
       var itemType = item['type'];
-      if (itemType === 'WMTS') {
+      if (itemType === 'WMTS' || itemType === 'WMS') {
         return layerLayerCreationFn(item);
       } else if (item['children']) {
         // group of layers

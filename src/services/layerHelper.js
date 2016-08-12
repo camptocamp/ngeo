@@ -49,18 +49,19 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
 
 
 /**
- * Create and return a basic WMS layer with only a source URL and a dot
+ * Create and return a basic WMS layer with only a source URL and a cmoma
  * separated layers names (see {@link ol.source.ImageWMS}).
  * @param {string} sourceURL The source URL.
- * @param {string} sourceLayersName A dot separated names string.
+ * @param {string} sourceLayersName A comma separated names string.
  * @param {string=} opt_serverType Type of the server ("mapserver",
  *     "geoserver", "qgisserver", …).
  * @param {string=} opt_time time parameter for layer queryable by time/periode
+ * @param {Object.<string, string>=} opt_params WMS parameters.
  * @return {ol.layer.Image} WMS Layer.
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
-    sourceLayersName, opt_serverType, opt_time) {
+    sourceLayersName, opt_serverType, opt_time, opt_params) {
   var params = {'LAYERS': sourceLayersName};
   var olServerType;
   if (opt_time) {
@@ -71,14 +72,16 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
     // OpenLayers expects 'qgis' insteads of 'qgisserver'
     olServerType = opt_serverType.replace('qgisserver', 'qgis');
   }
-  var layer = new ol.layer.Image({
-    source: new ol.source.ImageWMS({
-      url: sourceURL,
-      params: params,
-      serverType: olServerType
-    })
+  var source = new ol.source.ImageWMS({
+    url: sourceURL,
+    params: params,
+    serverType: olServerType
   });
-  return layer;
+  if (opt_params) {
+    source.updateParams(opt_params);
+  }
+
+  return new ol.layer.Image({source: source});
 };
 
 

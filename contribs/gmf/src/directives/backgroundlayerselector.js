@@ -1,6 +1,7 @@
 goog.provide('gmf.BackgroundlayerselectorController');
 goog.provide('gmf.backgroundlayerselectorDirective');
 
+goog.require('goog.asserts');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('ngeo.BackgroundEventType');
@@ -50,6 +51,7 @@ gmf.backgroundlayerselectorDirective = function(
     restrict: 'E',
     scope: {
       'map': '=gmfBackgroundlayerselectorMap',
+      'dimensions': '=gmfBackgroundlayerselectorDimensions',
       'select': '&?gmfBackgroundlayerselectorSelect'
     },
     bindToController: true,
@@ -119,6 +121,18 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
     gmf.ThemesEventType.CHANGE, this.handleThemesChange_, this));
 
   /**
+   * @type {Object.<string, string>}
+   * @export
+   */
+  this.dimensions;
+
+  goog.asserts.assert(this.dimensions, "The dimensions object is required");
+
+  gmfThemes.getBgLayers(this.dimensions).then(function(layers) {
+    this.bgLayers = layers;
+  }.bind(this));
+
+  /**
    * @type {ngeo.BackgroundLayerMgr}
    * @private
    */
@@ -145,7 +159,7 @@ gmf.module.controller('GmfBackgroundlayerselectorController',
  * @private
  */
 gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function() {
-  this.gmfThemes_.getBgLayers().then(function(layers) {
+  this.gmfThemes_.getBgLayers(this.dimensions).then(function(layers) {
     this.bgLayers = layers;
   }.bind(this));
 };

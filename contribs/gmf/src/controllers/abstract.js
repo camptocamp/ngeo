@@ -145,6 +145,16 @@ gmf.AbstractController = function(config, $scope, $injector) {
   // watch any change on dimensions object to refresh the url
   permalink.setDimensions(this.dimensions);
 
+  if ($injector.has('gmfDefaultDimensions')) {
+    // Set defaults
+    var defaultDimensions = $injector.get('gmfDefaultDimensions');
+    for (var dim in defaultDimensions) {
+      if (this.dimensions[dim] === undefined) {
+        this.dimensions[dim] = defaultDimensions[dim];
+      }
+    }
+  }
+
   var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
 
   // watch any change on dimensions object to refresh the background layer
@@ -354,7 +364,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
         var backgrounds = theme['functionalities']['default_basemap'];
         if (backgrounds && backgrounds.length > 0) {
           var background = backgrounds[0];
-          gmfThemes.getBgLayers().then(function(layers) {
+          gmfThemes.getBgLayers(this.dimensions).then(function(layers) {
             var layer = ol.array.find(layers, function(layer) {
               return layer.get('label') === background;
             });
@@ -373,7 +383,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @private
    */
   this.updateCurrentBackgroundLayer_ = function(skipPermalink) {
-    gmfThemes.getBgLayers().then(function(layers) {
+    gmfThemes.getBgLayers(this.dimensions).then(function(layers) {
       var background;
       if (!skipPermalink) {
         // get the background from the permalink
