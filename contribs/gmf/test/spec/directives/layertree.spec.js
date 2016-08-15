@@ -7,7 +7,7 @@ var fakeParentController = {
 };
 fakeParentController['node'].children = []
 fakeParentController['node'].mixed = true
-fakeParentController['layer'].getLayers = function() { return [] };
+fakeParentController['layer'].getLayers = function() { return new ol.Collection() };
 
 describe('gmf.LayertreeController', function() {
   var layertreeController;
