@@ -9,6 +9,7 @@ goog.require('ngeo.Notification');
 goog.require('ol.Feature');
 goog.require('ol.Geolocation');
 goog.require('ol.Map');
+goog.require('ol.View');
 goog.require('ol.geom.Point');
 
 
@@ -184,19 +185,19 @@ ngeo.MobileGeolocationController = function($scope, $element,
 
   ol.events.listen(
       view,
-      ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
+      ol.Object.getChangeEventType(ol.View.Property.CENTER),
       this.handleViewChange_,
       this);
 
   ol.events.listen(
       view,
-      ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
+      ol.Object.getChangeEventType(ol.View.Property.RESOLUTION),
       this.handleViewChange_,
       this);
 
   ol.events.listen(
       view,
-      ol.Object.getChangeEventType(ol.ViewProperty.ROTATION),
+      ol.Object.getChangeEventType(ol.View.Property.ROTATION),
       this.handleViewChange_,
       this);
 
