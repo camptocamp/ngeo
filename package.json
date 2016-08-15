@@ -30,7 +30,7 @@
     "async": "1.5.2",
     "bootstrap": "3.3.7",
     "clean-css": "3.4.19",
-    "closure-util": "1.15.0",
+    "closure-util": "1.15.1",
     "coveralls": "2.11.12",
     "d3": "3.5.17",
     "eslint": "3.3.0",
