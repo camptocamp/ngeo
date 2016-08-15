@@ -148,24 +148,36 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
-  var layer = this.get(map);
-  goog.asserts.assertInstanceof(layer, ol.layer.Layer);
-  if (layer) {
-    var updatedDimensions = {};
-    for (var key in layer.get('dimensions')) {
-      var value = dimensions[key];
-      if (value !== undefined) {
-        updatedDimensions[key] = value;
-      }
+  var baseBgLayer = this.get(map);
+  if (baseBgLayer) {
+    var layers = [baseBgLayer];
+    if (baseBgLayer instanceof ol.layer.Group) {
+      // Handle the first level of layers of the base background layer.
+      layers = baseBgLayer.getLayers().getArray();
     }
-    if (!ol.object.isEmpty(dimensions)) {
-      var source = layer.getSource();
-      if (source instanceof ol.source.WMTS) {
-        source.updateDimensions(updatedDimensions);
-      } else if (source instanceof ol.source.TileWMS || source instanceof ol.source.ImageWMS) {
-        source.updateParams(updatedDimensions);
+
+    layers.forEach(function(layer) {
+      goog.asserts.assertInstanceof(layer, ol.layer.Layer);
+      if (layer) {
+        var updatedDimensions = {};
+        for (var key in layer.get('dimensions')) {
+          var value = dimensions[key];
+          if (value !== undefined) {
+            updatedDimensions[key] = value;
+          }
+        }
+        if (!ol.object.isEmpty(dimensions)) {
+          var source = layer.getSource();
+          if (source instanceof ol.source.WMTS) {
+            source.updateDimensions(updatedDimensions);
+            source.refresh();
+          } else if (source instanceof ol.source.TileWMS || source instanceof ol.source.ImageWMS) {
+            source.updateParams(updatedDimensions);
+            source.refresh();
+          }
+        }
       }
-    }
+    });
   }
 };
 
