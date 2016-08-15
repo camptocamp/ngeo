@@ -14,7 +14,8 @@
     "url": "https://github.com/camptocamp/ngeo/issues"
   },
   "bin": {
-    "compile-catalog": "buildtools/compile-catalog.js"
+    "compile-catalog": "buildtools/compile-catalog.js",
+    "ngeo-build": "buildtools/build.js"
   },
   "devDependencies": {
     "angular": "1.5.8",
