@@ -294,7 +294,7 @@ gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
   var metadata = node.metadata;
   if (isMerged) {
     //Case Non Mixed group -> Hide the layer if all child nodes have isChecked set to false
-    this.getFlatNodes_(node, childNodes);
+    gmf.LayertreeController.getFlatNodes(node, childNodes);
     allChildNodesUnchecked = childNodes.every(function(childNode) {
       return !childNode.metadata || !childNode.metadata['isChecked'];
     });
@@ -421,7 +421,7 @@ gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
   var childNodes = [];
   var timeParam, timeValues;
 
-  this.getFlatNodes_(node, childNodes);
+  gmf.LayertreeController.getFlatNodes(node, childNodes);
   // layersNames come from the json theme nodes and will become the wms
   // LAYERS. It must be reversed to get the correct layer order on the map.
   var layersNames = childNodes.map(function(node) {
@@ -480,14 +480,14 @@ gmf.LayertreeController.prototype.getLayerCaseWMTS_ = function(node) {
  * given node itself.
  * @param {GmfThemesNode} node Layertree node.
  * @param {Array.<GmfThemesNode>} nodes An array.
- * @private
+ * @export
  */
-gmf.LayertreeController.prototype.getFlatNodes_ = function(node, nodes) {
+gmf.LayertreeController.getFlatNodes = function(node, nodes) {
   var i;
   var children = node.children;
   if (children !== undefined) {
     for (i = 0; i < children.length; i++) {
-      this.getFlatNodes_(children[i], nodes);
+      gmf.LayertreeController.getFlatNodes(children[i], nodes);
     }
   } else {
     nodes.push(node);
@@ -506,7 +506,7 @@ gmf.LayertreeController.prototype.retrieveNodeNames_ = function(node,
     opt_onlyChecked) {
   var names = [];
   var nodes = [];
-  this.getFlatNodes_(node, nodes);
+  gmf.LayertreeController.getFlatNodes(node, nodes);
   var metadata, n, i;
   for (i = 0; i < nodes.length; i++) {
     n = nodes[i];
@@ -608,7 +608,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
         var currentLayersNames = (firstParentTreeLayer.getVisible()) ?
             firstParentTreeSource.getParams()['LAYERS'] : '';
         var newLayersNames = [];
-        this.getFlatNodes_(firstParentTreeNode, childNodes);
+        gmf.LayertreeController.getFlatNodes(firstParentTreeNode, childNodes);
         // Add/remove layer and keep order of layers in layergroup.
         for (i = 0; i < childNodes.length; i++) {
           layersNames = this.getLayersNames_(childNodes[i]);
@@ -630,7 +630,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
     case gmf.Themes.NodeType.MIXED_GROUP:
       var nodeLayers = [];
       var l, source;
-      this.getFlatNodes_(node, childNodes);
+      gmf.LayertreeController.getFlatNodes(node, childNodes);
       layersNames = childNodes.map(this.getLayersNames_).join(',');
       layers = this.layerHelper_.getFlatLayers(firstParentTreeLayer);
       for (i = 0; i < layers.length; i++) {
@@ -657,7 +657,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
       if (isActive) {
         this.layerHelper_.updateWMSLayerState(firstParentTreeLayer, '');
       } else {
-        this.getFlatNodes_(node, childNodes);
+        gmf.LayertreeController.getFlatNodes(node, childNodes);
         layersNames = childNodes.map(this.getLayersNames_);
         // layersNames come from the json theme nodes and replace the wms
         // LAYERS. It must be reversed to get the correct layer order on the map.

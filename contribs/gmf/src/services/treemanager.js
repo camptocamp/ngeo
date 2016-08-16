@@ -331,30 +331,42 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
  * Make the layer of a group visible if the group is already in the layertree.
  * If the group has just been added set only the layer layerName visible.
  * @param{string} layerName Name of the layer to set visible.
- * @param{Object} group Group containing the layer to activate.
+ * @param{GmfThemesNode} group Group containing the layer to activate.
  * @param{boolean} groupAdded True if the group has been newly added. False otherwise
  * @param{ol.Map} map Map obkect.
  * @private
  */
 gmf.TreeManager.prototype.setLayerVisible_ = function(layerName, group, groupAdded, map) {
   var layersArray;
-  var activeLayers;
 
   if (!group.mixed) {
-    /** @type {ol.layer.Image} */
     var layerGroup;
+    var newActiveLayers = [];
+    var activeLayers;
     layersArray = map.getLayerGroup().getLayersArray();
     layerGroup = /** @type {ol.layer.Image} */ (this.layerHelper_.getLayerByName(group.name, layersArray));
 
     if (groupAdded) {
-      activeLayers = layerName;
+      newActiveLayers.push(layerName);
     } else {
+      // Get current active values
       var source = /** @type {ol.source.ImageWMS} */ (layerGroup.getSource());
-      activeLayers = source.getParams()['LAYERS'];
-      activeLayers += activeLayers.includes(layerName) ? '' : ',' + layerName;
+      activeLayers = layerGroup.getVisible() ? source.getParams()['LAYERS'] : '';
+      // Get all possible LAYERS values in this group.
+      var childNodes = [];
+      gmf.LayertreeController.getFlatNodes(group, childNodes);
+      var allLayersNames = childNodes.map(function(node) {
+        return node['layers'];
+      });
+      // Keep only active value and add the new one by keepping the right order.
+      allLayersNames.forEach(function(item) {
+        if (item === layerName || activeLayers.indexOf(item) > -1) {
+          newActiveLayers.push(item);
+        }
+      });
     }
-
-    this.layerHelper_.updateWMSLayerState(layerGroup, activeLayers);
+    this.layerHelper_.updateWMSLayerState(layerGroup,
+        newActiveLayers.reverse().join(','));
 
   } else {
     var layer;
