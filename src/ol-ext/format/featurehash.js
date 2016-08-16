@@ -584,30 +584,30 @@ ngeo.format.FeatureHash.setStyleInFeature_ = function(text, feature) {
   }
   var fillColor, fontSize, fontColor, pointRadius, strokeColor, strokeWidth;
   var properties = ngeo.format.FeatureHash.getStyleProperties_(text, feature);
-  fillColor = properties.fillColor;
-  fontSize = properties.fontSize;
-  fontColor = properties.fontColor;
-  pointRadius = properties.pointRadius;
-  strokeColor = properties.strokeColor;
-  strokeWidth = properties.strokeWidth;
+  fillColor = properties['fillColor'];
+  fontSize = properties['fontSize'];
+  fontColor = properties['fontColor'];
+  pointRadius = properties['pointRadius'];
+  strokeColor = properties['strokeColor'];
+  strokeWidth = properties['strokeWidth'];
 
   var fillStyle = null;
   if (fillColor !== undefined) {
     fillStyle = new ol.style.Fill({
-      color: fillColor
+      color: /** @type {Array<number>|string} */ (fillColor)
     });
   }
   var strokeStyle = null;
   if (strokeColor !== undefined && strokeWidth !== undefined) {
     strokeStyle = new ol.style.Stroke({
-      color: strokeColor,
-      width: strokeWidth
+      color: /** @type {Array<number>|string} */ (strokeColor),
+      width: /** @type {number} */ (strokeWidth)
     });
   }
   var imageStyle = null;
   if (pointRadius !== undefined) {
     imageStyle = new ol.style.Circle({
-      radius: pointRadius,
+      radius: /** @type {number} */ (pointRadius),
       fill: fillStyle,
       stroke: strokeStyle
     });
@@ -618,7 +618,7 @@ ngeo.format.FeatureHash.setStyleInFeature_ = function(text, feature) {
     textStyle = new ol.style.Text({
       font: fontSize + ' sans-serif',
       fill: new ol.style.Fill({
-        color: fontColor
+        color: /** @type {Array<number>|string} */ (fontColor)
       })
     });
   }
