@@ -49,7 +49,7 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
 
 
 /**
- * Create and return a basic WMS layer with only a source URL and a cmoma
+ * Create and return a basic WMS layer with only a source URL and a comma
  * separated layers names (see {@link ol.source.ImageWMS}).
  * @param {string} sourceURL The source URL.
  * @param {string} sourceLayersName A comma separated names string.
@@ -95,7 +95,7 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
  * @param {string} capabilitiesURL The getCapabilities url.
  * @param {string} layerName The name of the layer.
  * @param {Object.<string, string>=} opt_dimensions WMTS dimensions.
- * @return {angular.$q.Promise} A Promise with a layer (with source) on success,
+ * @return {angular.$q.Promise.<ol.layer.Tile>} A Promise with a layer (with source) on success,
  *     no layer else.
  * @export
  */

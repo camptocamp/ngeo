@@ -6,6 +6,22 @@
 
 
 /**
+ * @typedef {Object<string, GmfOgcServer>}
+ */
+var GmfOgcServers;
+
+
+/**
+ * @typedef {{
+ *     themes: Array.<GmfThemesNode>,
+ *     background_layers: Array.<GmfThemesNode>,
+ *     ogcServers: GmfOgcServers
+ * }}
+ */
+var GmfThemesResponse;
+
+
+/**
  * @constructor
  */
 var GmfThemesNode = function() {};
