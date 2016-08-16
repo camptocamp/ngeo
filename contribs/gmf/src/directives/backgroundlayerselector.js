@@ -126,7 +126,7 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
    */
   this.dimensions;
 
-  goog.asserts.assert(this.dimensions, "The dimensions object is required");
+  goog.asserts.assert(this.dimensions, 'The dimensions object is required');
 
   gmfThemes.getBgLayers(this.dimensions).then(function(layers) {
     this.bgLayers = layers;
