@@ -861,7 +861,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
     if (layer.getVisible() && source !== undefined) {
       // For WMTS layers.
       if (layer instanceof ol.layer.Tile) {
-        layerName = layer.get('layerName');
+        layerName = layer.get('layerNodeName');
         icons = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
         // Don't add classes without legend url.
         if (icons !== null) {

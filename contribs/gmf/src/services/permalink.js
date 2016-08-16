@@ -936,7 +936,7 @@ gmf.Permalink.prototype.handleLayerOpacityChange_ = function(evt) {
   goog.asserts.assertInstanceof(layer, ol.layer.Base);
   var state = {};
   var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
-  var layerName = /** @type {string} */ (layer.get('layerName'));
+  var layerName = /** @type {string} */ (layer.get('layerNodeName'));
   var param = this.getLayerStateParam_(layerName, isMerged, gmf.PermalinkOpenLayersLayerProperties.OPACITY);
   state[param] = layer.getOpacity();
   this.ngeoStateManager_.updateState(state);
@@ -975,7 +975,7 @@ gmf.Permalink.prototype.updateLayerStateByVisibility_ = function(layer) {
  * @private
  */
 gmf.Permalink.prototype.updateLayerFromState_ = function(layer) {
-  var layerName = /** @type {string} */ (layer.get('layerName'));
+  var layerName = /** @type {string} */ (layer.get('layerNodeName'));
   var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
   var param, stateValue;
   Object.keys(gmf.PermalinkOpenLayersLayerProperties).forEach(function(layerProp) {
@@ -1007,7 +1007,7 @@ gmf.Permalink.prototype.updateLayerFromState_ = function(layer) {
  * @private
  */
 gmf.Permalink.prototype.deleteStateParams_ = function(layer) {
-  var layerName = /** @type {string} */ (layer.get('layerName'));
+  var layerName = /** @type {string} */ (layer.get('layerNodeName'));
   var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
   var param;
   Object.keys(gmf.PermalinkOpenLayersLayerProperties).forEach(function(layerProp) {
@@ -1029,7 +1029,7 @@ gmf.Permalink.prototype.handleWMSSourceChange_ = function(layer, source) {
   if (Array.isArray(layers)) {
     layers = layers.join(',');
   }
-  var layerName = layer.get('layerName');
+  var layerName = layer.get('layerNodeName');
   var param = gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + layerName;
   var object = {};
   object[param] = layers;
@@ -1043,7 +1043,7 @@ gmf.Permalink.prototype.handleWMSSourceChange_ = function(layer, source) {
  * @private
  */
 gmf.Permalink.prototype.getLayerStateParamFromLayer_ = function(layer) {
-  var layerName = /** @type {string} */ (layer.get('layerName'));
+  var layerName = /** @type {string} */ (layer.get('layerNodeName'));
   var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
   return this.getLayerStateParam_(layerName, isMerged);
 };
