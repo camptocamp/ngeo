@@ -284,7 +284,7 @@ gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
   var childNodes = [], allChildNodesUnchecked;
   layer.set('querySourceIds', ids);
   layer.set('editableIds', editableIds);
-  layer.set('layerName', node.name);
+  layer.set('layerNodeName', node.name);
   layer.set('disclaimers', this.getNodeDisclaimers_(node));
 
   var isMerged = type === gmf.Themes.NodeType.NOT_MIXED_GROUP;

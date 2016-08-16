@@ -228,7 +228,7 @@ ngeo.LayerHelper.prototype.getLayerByName = function(layerName, layers) {
     if (layer instanceof ol.layer.Group) {
       var sublayers = layer.getLayers().getArray();
       found = this.getLayerByName(layerName, sublayers);
-    } else if (layer.get('layerName') === layerName) {
+    } else if (layer.get('layerNodeName') === layerName) {
       found = layer;
     }
     return !!found;
