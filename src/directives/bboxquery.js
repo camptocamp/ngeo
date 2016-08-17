@@ -22,6 +22,7 @@ goog.require('ol.interaction.DragBox');
  *        ngeo-bbox-query=""
  *        ngeo-bbox-query-map="::ctrl.map"
  *        ngeo-bbox-query-active="ctrl.queryActive">
+ *        ngeo-bbox-query-autoclear="ctrl.queryAutoClear">
  *      </span>
  *
  * See the live example: {@link ../examples/bboxquery.html}
@@ -66,7 +67,9 @@ ngeo.bboxQueryDirective = function(ngeoQuery) {
             } else {
               // deactivate
               map.removeInteraction(interaction);
-              ngeoQuery.clear();
+              if (scope.$eval(attrs['ngeoBboxQueryAutoclear']) !== false) {
+                ngeoQuery.clear();
+              }
             }
           }
       );
