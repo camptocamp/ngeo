@@ -51,7 +51,7 @@ gmf.module.constant('ngeoExportFeatureFormats', [
 gmf.module.constant('ngeoPointfilter', 'ngeoNumberCoordinates:0:{x} E, {y} N');
 
 
-gmf.module.constant('ngeoQueryOptions', {
+gmf.module.value('ngeoQueryOptions', {
   'limit': 20
 });
 

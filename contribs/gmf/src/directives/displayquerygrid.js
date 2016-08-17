@@ -55,9 +55,6 @@ ngeo.module.value('gmfDisplayquerygridTemplateUrl',
  * @htmlAttribute {ol.Map} gmf-displayquerygrid-map The map.
  * @htmlAttribute {boolean?} gmf-displayquerygrid-removeemptycolumns Optional. Should
  *     empty columns be hidden? Default: `false`.
- * @htmlAttribute {number?} gmf-displayquerygrid-maxresults Optional. The maximum
- *     number of results that will be requested. If a query would return more
- *     results, the results are not fetched. Default: `200`.
  * @htmlAttribute {number?} gmf-displayquerygrid-maxrecenterzoom Optional. Maximum
  *     zoom-level to use when zooming to selected features.
  * @htmlAttribute {gmfx.GridMergeTabs?} gmf-displayquerygrid-gridmergetabas Optional.
@@ -103,6 +100,7 @@ gmf.module.directive('gmfDisplayquerygrid', gmf.displayquerygridDirective);
  *     overlay manager service.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {ngeo.CsvDownload} ngeoCsvDownload CSV download service.
+ * @param {ngeo.Query} ngeoQuery Query service.
  * @constructor
  * @export
  * @ngInject
@@ -110,7 +108,7 @@ gmf.module.directive('gmfDisplayquerygrid', gmf.displayquerygridDirective);
  * @ngname GmfDisplayquerygridController
  */
 gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
-    ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload) {
+    ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, ngeoQuery) {
 
   /**
    * @type {!angular.Scope}
@@ -136,12 +134,11 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
-  // TODO this should be per source
   /**
-   * @type {boolean}
+   * @type {number}
    * @export
    */
-  this.tooManyResults = false;
+  this.maxResults = ngeoQuery.getLimit();
 
   /**
    * @type {boolean}
@@ -181,12 +178,6 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
    */
   this.removeEmptyColumns_ = this['removeEmptyColumnsFn'] ?
       this['removeEmptyColumnsFn']() === true : false;
-
-  /**
-   * @type {number}
-   * @export
-   */
-  this.maxResults = this['maxResultsFn'] ? this['maxResultsFn']() : 200;
 
   /**
    * @type {number|undefined}
@@ -280,10 +271,10 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
   /**
    * An unregister function returned from `$scope.$watchCollection` for
    * "on-select" changes (when rows are selected/unselected).
-   * @type {function()}
+   * @type {?function()}
    * @private
    */
-  this.unregisterSelectWatcher_;
+  this.unregisterSelectWatcher_ = null;
 };
 
 
@@ -303,13 +294,8 @@ gmf.DisplayquerygridController.prototype.getGridSources = function() {
  * @private
  */
 gmf.DisplayquerygridController.prototype.updateData_ = function() {
-  // TODO Don't make grid if there are too many results
-  if (this.ngeoQueryResult.total > this.maxResults) {
-    this.tooManyResults = true;
-    return;
-  }
-  // And clear grid if there is no result anymore.
-  if (this.ngeoQueryResult.total === 0) {
+  // close if there are no results
+  if (this.ngeoQueryResult.total === 0 && !this.hasOneWithTooManyResults_()) {
     var oldActive = this.active;
     this.clear();
     if (oldActive) {
@@ -323,15 +309,20 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
   this.active = true;
   this.pending = false;
   var sources = this.ngeoQueryResult.sources;
+  // merge sources if requested
   if (Object.keys(this.mergeTabs_).length > 0) {
     sources = this.getMergedSources_(sources);
   }
 
-  // Create grids (only for source with features)
+  // create grids (only for source with features or with too many results)
   sources.forEach(function(source) {
-    var features = source.features;
-    if (features.length > 0) {
-      this.collectData_(source);
+    if (source.tooManyResults) {
+      this.makeGrid_(null, source);
+    } else {
+      var features = source.features;
+      if (features.length > 0) {
+        this.collectData_(source);
+      }
     }
   }.bind(this));
 
@@ -344,6 +335,17 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
       this.selectTab(this.gridSources[firstSourceId]);
     }.bind(this), 0);
   }
+};
+
+
+/**
+ * @private
+ * @return {boolean} If one of the source has too many results.
+ */
+gmf.DisplayquerygridController.prototype.hasOneWithTooManyResults_ = function() {
+  return this.ngeoQueryResult.sources.some(function(source) {
+    return source.tooManyResults;
+  });
 };
 
 
@@ -423,7 +425,9 @@ gmf.DisplayquerygridController.prototype.getMergedSource_ = function(source, mer
       id: mergeSourceId,
       label: mergeSourceId,
       pending: false,
-      queried: true
+      queried: true,
+      tooManyResults: false,
+      totalFeatureCount: undefined
     };
     mergedSources[mergeSourceId] = mergeSource;
   }
@@ -432,6 +436,19 @@ gmf.DisplayquerygridController.prototype.getMergedSource_ = function(source, mer
   source.features.forEach(function(feature) {
     mergeSource.features.push(feature);
   });
+
+  // if one of the source has too many results, the resulting merged source will
+  // also be marked with `tooManyResults` and will not contain any features.
+  mergeSource.tooManyResults = mergeSource.tooManyResults || source.tooManyResults;
+  if (mergeSource.tooManyResults) {
+    mergeSource.totalFeatureCount = (mergeSource.totalFeatureCount !== undefined) ?
+        mergeSource.totalFeatureCount + mergeSource.features.length : mergeSource.features.length;
+    mergeSource.features = [];
+  }
+  if (source.totalFeatureCount !== undefined) {
+    mergeSource.totalFeatureCount = (mergeSource.totalFeatureCount !== undefined) ?
+        mergeSource.totalFeatureCount + source.totalFeatureCount : source.totalFeatureCount;
+  }
 
   return mergeSource;
 };
@@ -527,7 +544,7 @@ gmf.DisplayquerygridController.prototype.removeEmptyColumnsFn_ = function(
 
 
 /**
- * @param {Array.<Object>} data Grid rows.
+ * @param {?Array.<Object>} data Grid rows.
  * @param {ngeox.QueryResultSource} source Query source.
  * @private
  */
@@ -536,8 +553,12 @@ gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
   if (this.loadedGridSources.indexOf(sourceId) == -1) {
     this.loadedGridSources.push(sourceId);
   }
+  var gridConfig = null;
+  if (data !== null) {
+    gridConfig = this.getGridConfiguration_(data);
+  }
   this.gridSources[sourceId] = {
-    configuration: this.getGridConfiguration_(data),
+    configuration: gridConfig,
     source: source
   };
 };
@@ -598,17 +619,20 @@ gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
 
   if (this.unregisterSelectWatcher_) {
     this.unregisterSelectWatcher_();
+    this.unregisterSelectWatcher_ = null;
   }
 
-  this.unregisterSelectWatcher_ = this.$scope_.$watchCollection(
-      function() {
-        return gridSource.configuration.selectedRows;
-      },
-      function(newSelected, oldSelectedRows) {
-        if (Object.keys(newSelected) !== Object.keys(oldSelectedRows)) {
-          this.onSelectionChanged_();
-        }
-      }.bind(this));
+  if (gridSource.configuration !== null) {
+    this.unregisterSelectWatcher_ = this.$scope_.$watchCollection(
+        function() {
+          return gridSource.configuration.selectedRows;
+        },
+        function(newSelected, oldSelectedRows) {
+          if (Object.keys(newSelected) !== Object.keys(oldSelectedRows)) {
+            this.onSelectionChanged_();
+          }
+        }.bind(this));
+  }
   this.updateFeatures_(gridSource);
 };
 
@@ -634,6 +658,10 @@ gmf.DisplayquerygridController.prototype.updateFeatures_ = function(gridSource) 
   this.features_.clear();
   this.highlightFeatures_.clear();
 
+  if (gridSource.configuration === null) {
+    return;
+  }
+
   var sourceId = '' + gridSource.source.id;
   var featuresForSource = this.featuresForSources_[sourceId];
   var selectedRows = gridSource.configuration.selectedRows;
@@ -650,10 +678,10 @@ gmf.DisplayquerygridController.prototype.updateFeatures_ = function(gridSource) 
 
 
 /**
- * @private
+ * @export
  * @return {gmfx.GridSource|null} The currently shown grid source.
  */
-gmf.DisplayquerygridController.prototype.getActiveGridSource_ = function() {
+gmf.DisplayquerygridController.prototype.getActiveGridSource = function() {
   if (this.selectedTab === null) {
     return null;
   } else {
@@ -667,8 +695,8 @@ gmf.DisplayquerygridController.prototype.getActiveGridSource_ = function() {
  * @return {boolean} Is a row of the currently active grid selected?
  */
 gmf.DisplayquerygridController.prototype.isOneSelected = function() {
-  var source = this.getActiveGridSource_();
-  if (source === null) {
+  var source = this.getActiveGridSource();
+  if (source === null || source.configuration === null) {
     return false;
   } else {
     return source.configuration.getSelectedCount() > 0;
@@ -681,8 +709,8 @@ gmf.DisplayquerygridController.prototype.isOneSelected = function() {
  * @return {number} The number of selected rows of the currently active grid.
  */
 gmf.DisplayquerygridController.prototype.getSelectedRowCount = function() {
-  var source = this.getActiveGridSource_();
-  if (source === null) {
+  var source = this.getActiveGridSource();
+  if (source === null || source.configuration === null) {
     return 0;
   } else {
     return source.configuration.getSelectedCount();
@@ -694,7 +722,7 @@ gmf.DisplayquerygridController.prototype.getSelectedRowCount = function() {
  * @export
  */
 gmf.DisplayquerygridController.prototype.selectAll = function() {
-  var source = this.getActiveGridSource_();
+  var source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.selectAll();
   }
@@ -705,7 +733,7 @@ gmf.DisplayquerygridController.prototype.selectAll = function() {
  * @export
  */
 gmf.DisplayquerygridController.prototype.unselectAll = function() {
-  var source = this.getActiveGridSource_();
+  var source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.unselectAll();
   }
@@ -716,7 +744,7 @@ gmf.DisplayquerygridController.prototype.unselectAll = function() {
  * @export
  */
 gmf.DisplayquerygridController.prototype.invertSelection = function() {
-  var source = this.getActiveGridSource_();
+  var source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.invertSelection();
   }
@@ -727,7 +755,7 @@ gmf.DisplayquerygridController.prototype.invertSelection = function() {
  * @export
  */
 gmf.DisplayquerygridController.prototype.zoomToSelection = function() {
-  var source = this.getActiveGridSource_();
+  var source = this.getActiveGridSource();
   if (source !== null) {
     var extent = ol.extent.createEmpty();
     this.highlightFeatures_.forEach(function(feature) {
@@ -744,7 +772,7 @@ gmf.DisplayquerygridController.prototype.zoomToSelection = function() {
  * @export
  */
 gmf.DisplayquerygridController.prototype.downloadCsv = function() {
-  var source = this.getActiveGridSource_();
+  var source = this.getActiveGridSource();
   if (source !== null) {
     var columnDefs = source.configuration.columnDefs;
     goog.asserts.assert(columnDefs !== undefined);

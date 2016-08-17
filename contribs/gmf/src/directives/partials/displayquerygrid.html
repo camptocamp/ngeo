@@ -5,7 +5,12 @@
     <li ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.id" role="presentation"
         ng-class="{'active' : ctrl.isSelected(gridSource)}" ng-click="ctrl.selectTab(gridSource)">
       <a href="#{{gridSource.source.id}}" data-target="#{{gridSource.source.id}}" aria-controls="{{gridSource.source.id}}" role="tab" data-toggle="tab">
-        {{gridSource.source.label | translate}} ({{gridSource.source.features.length}})
+        <span ng-if="gridSource.source.tooManyResults !== true">
+          {{gridSource.source.label | translate}} ({{gridSource.source.features.length}})
+        </span>
+        <span ng-if="gridSource.source.tooManyResults === true">
+          {{gridSource.source.label | translate}} ({{gridSource.source.totalFeatureCount}}*)
+        </span>
       </a>
     </li>
   </ul>
@@ -13,16 +18,18 @@
   <div class="tab-content">
     <div ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.id" role="tabpanel" class="tab-pane"
          ng-class="{'active' : ctrl.isSelected(gridSource)}" id="{{gridSource.source.id}}">
-      <ngeo-grid ngeo-grid-configuration="gridSource.configuration" ng-if="gridSource.tooManyResults !== true">
+      <ngeo-grid ngeo-grid-configuration="gridSource.configuration" ng-if="gridSource.source.tooManyResults !== true">
       </ngeo-grid>
-      <div ng-if="gridSource.tooManyResults === true">
-        <p><span translate>We can't display the results because the maximum number has been reached</span>({{ctrl.maxResults}}).</p>
-        <p translate>Please refine your query.</p>
+      <div ng-if="gridSource.source.tooManyResults === true">
+        <div class="message alert alert-warning">
+          <p><span translate>The results can not be displayed because the maximum number has been reached</span> ({{ctrl.maxResults}}).</p>
+          <p translate>Please refine your query.</p>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="navbar" ng-show="!ctrl.pending">
+  <div class="navbar" ng-show="!ctrl.pending && ctrl.getActiveGridSource() && ctrl.getActiveGridSource().configuration !== null">
     <ul class="nav navbar-nav navbar-right">
       <li class="small ng-hide" ng-show="ctrl.isOneSelected()">
         <p class="navbar-text ng-binding">

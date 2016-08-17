@@ -19,6 +19,11 @@ goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
 
 
+gmf.module.value('ngeoQueryOptions', {
+  'limit': 20,
+  'queryCountFirst': true
+});
+
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.

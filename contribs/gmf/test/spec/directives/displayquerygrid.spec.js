@@ -22,32 +22,38 @@ describe('gmf.displayquerygridDirective', function() {
   var $rootScope;
   var $timeout;
 
-  beforeEach(inject(function($injector, _$controller_, _$rootScope_) {
-    ngeoQueryResult = $injector.get('ngeoQueryResult');
-    $timeout = $injector.get('$timeout');
-    var $controller = _$controller_;
-    $rootScope = _$rootScope_;
-    $scope = $rootScope.$new();
-    var data = {
-      featuresStyleFn: function() {
-        return new ol.style.Style();
-      },
-      selectedFeatureStyleFn: function() {
-        return undefined;
-      },
-      getMapFn: function() {
-        return new ol.Map({
-          view: new ol.View({
-            center: [0, 0],
-            zoom: 0
-          })
-        });
-      }
-    };
-    queryGridController = $controller(
-        'GmfDisplayquerygridController', {$scope: $scope}, data);
-    $rootScope.$digest();
-  }));
+  beforeEach(function() {
+    module('ngeo', function($provide) {
+      $provide.value('ngeoQueryOptions', {});
+    });
+
+    inject(function($injector, _$controller_, _$rootScope_) {
+      ngeoQueryResult = $injector.get('ngeoQueryResult');
+      $timeout = $injector.get('$timeout');
+      var $controller = _$controller_;
+      $rootScope = _$rootScope_;
+      $scope = $rootScope.$new();
+      var data = {
+        featuresStyleFn: function() {
+          return new ol.style.Style();
+        },
+        selectedFeatureStyleFn: function() {
+          return undefined;
+        },
+        getMapFn: function() {
+          return new ol.Map({
+            view: new ol.View({
+              center: [0, 0],
+              zoom: 0
+            })
+          });
+        }
+      };
+      queryGridController = $controller(
+          'GmfDisplayquerygridController', {$scope: $scope}, data);
+      $rootScope.$digest();
+    });
+  });
 
   describe('#updateData_', function() {
 
@@ -247,6 +253,80 @@ describe('gmf.displayquerygridDirective', function() {
       expect(gridConfig3.columnDefs).toEqual(expectedColumnDefs3);
     });
 
+    it('deals with sources with too many features', function() {
+      ngeoQueryResult.total = 2;
+      ngeoQueryResult.sources = [{
+        features: [
+          new ol.Feature({
+            'osm_id': 1234,
+            'name': 'A'
+          }),
+          new ol.Feature({
+            'osm_id': 12345,
+            'name': 'B'
+          })
+        ],
+        id: 123,
+        label: 'Test 1',
+        pending: false,
+        queried: true
+      }, {
+        features: [],
+        id: 345,
+        label: 'Test 3',
+        pending: false,
+        queried: true,
+        tooManyResults: true,
+        totalFeatureCount: 351
+      }];
+      $rootScope.$digest();
+      $timeout.flush();
+      expect(queryGridController.active).toBe(true);
+
+      // grid source 1
+      var gridSource1 = queryGridController.gridSources['123'];
+      expect(gridSource1).toBeDefined();
+
+      // grid source 2
+      var gridSource2 = queryGridController.gridSources['345'];
+      expect(gridSource2).toBeDefined();
+      expect(gridSource2.configuration).toBe(null);
+    });
+
+    it('deals with sources that all have too many features', function() {
+      ngeoQueryResult.total = 0;
+      ngeoQueryResult.sources = [{
+        features: [],
+        id: 123,
+        label: 'Test 1',
+        pending: false,
+        queried: true,
+        tooManyResults: true,
+        totalFeatureCount: 123
+      }, {
+        features: [],
+        id: 345,
+        label: 'Test 3',
+        pending: false,
+        queried: true,
+        tooManyResults: true,
+        totalFeatureCount: 351
+      }];
+      $rootScope.$digest();
+      $timeout.flush();
+      expect(queryGridController.active).toBe(true);
+
+      // grid source 1
+      var gridSource1 = queryGridController.gridSources['123'];
+      expect(gridSource1).toBeDefined();
+      expect(gridSource1.configuration).toBe(null);
+
+      // grid source 2
+      var gridSource2 = queryGridController.gridSources['345'];
+      expect(gridSource2).toBeDefined();
+      expect(gridSource2.configuration).toBe(null);
+    });
+
     it('merges sources', function() {
       ngeoQueryResult.total = 4;
       ngeoQueryResult.sources = [{
@@ -341,6 +421,65 @@ describe('gmf.displayquerygridDirective', function() {
         {'name': 'label'}
       ];
       expect(gridConfig3.columnDefs).toEqual(expectedColumnDefs3);
+    });
+
+    it('merges sources with too many features', function() {
+      ngeoQueryResult.total = 4;
+      ngeoQueryResult.sources = [{
+        features: [
+          new ol.Feature({
+            'osm_id': 1234,
+            'name': 'A'
+          }),
+          new ol.Feature({
+            'osm_id': 12345,
+            'name': 'B'
+          })
+        ],
+        id: 123,
+        label: 'Test 1',
+        pending: false,
+        queried: true
+      }, {
+        features: [],
+        id: 234,
+        label: 'Test 2',
+        pending: false,
+        queried: true,
+        tooManyResults: true,
+        totalFeatureCount: 351
+      }, {
+        features: [
+          new ol.Feature({
+            'id': 1234,
+            'label': 'D'
+          })
+        ],
+        id: 345,
+        label: 'Test 3',
+        pending: false,
+        queried: true
+      }];
+
+      queryGridController.mergeTabs_ = {
+        'merged_source': ['123', '234']
+      };
+
+      $rootScope.$digest();
+      $timeout.flush();
+      expect(queryGridController.active).toBe(true);
+
+      // merged source
+      var gridSource1 = queryGridController.gridSources['merged_source'];
+      expect(gridSource1).toBeDefined();
+      expect(gridSource1.configuration).toBe(null);
+      expect(gridSource1.source.tooManyResults).toBe(true);
+      expect(gridSource1.source.totalFeatureCount).toBe(353);
+      expect(gridSource1.source.features).toEqual([]);
+
+      // grid source 3
+      var gridSource3 = queryGridController.gridSources['345'];
+      expect(gridSource3).toBeDefined();
     });
 
   });
