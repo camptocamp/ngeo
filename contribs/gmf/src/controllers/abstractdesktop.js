@@ -94,7 +94,9 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
     interactions: config.mapInteractions || ol.interaction.defaults({
       pinchRotate: false,
       altShiftDragRotate: false
-    })
+    }),
+    loadTilesWhileAnimating: true,
+    loadTilesWhileInteracting: true
   });
 
   /**
