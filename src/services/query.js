@@ -4,6 +4,7 @@ goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
+goog.require('ol.object');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('goog.uri.utils');
@@ -76,6 +77,13 @@ ngeo.Query = function($http, $q, ngeoQueryResult, ngeoQueryOptions,
    * @private
    */
   this.limit_ = options.limit !== undefined ? options.limit : 50;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.queryCountFirst_ = options.queryCountFirst !== undefined ?
+      options.queryCountFirst : false;
 
   /**
    * @type {string}
@@ -573,32 +581,66 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
         return;
       }
 
-      var featureRequestXml = wfsFormat.writeGetFeature({
+      /** @type{olx.format.WFSWriteGetFeatureOptions} */
+      var getFeatureOptions = {
         srsName: projCode,
         featureNS: this.featureNS_,
         featurePrefix: this.featurePrefix_,
         featureTypes: layers,
         outputFormat: 'GML3',
         bbox: bbox,
-        geometryName: this.geometryName_,
-        maxFeatures: this.limit_
+        geometryName: this.geometryName_
+      };
+
+      var sourceFormat = new ol.format.WFS({
+        featureType: layers,
+        featureNS: this.featureNS_
       });
 
-      var featureRequest = xmlSerializer.serializeToString(featureRequestXml);
-      var canceler = this.registerCanceler_();
-      this.$http_.post(url, featureRequest, {timeout: canceler.promise})
-          .then(function(response) {
-            item['resultSource'].pending = false;
-            var sourceFormat = new ol.format.WFS({
-              featureType: layers,
-              featureNS: this.featureNS_
-            });
-            var features = sourceFormat.readFeatures(response.data);
-            this.setUniqueIds_(features, item.source.id);
-            item['resultSource'].features = features;
-            this.result_.total += features.length;
-            this.updatePendingState_();
-          }.bind(this));
+      var getFeatures = function() {
+        /** @type{olx.format.WFSWriteGetFeatureOptions} */
+        var options = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.object.assign({
+          maxFeatures: this.limit_
+        }, getFeatureOptions));
+        var featureRequestXml = wfsFormat.writeGetFeature(options);
+        var featureRequest = xmlSerializer.serializeToString(featureRequestXml);
+
+        var canceler = this.registerCanceler_();
+        this.$http_.post(url, featureRequest, {timeout: canceler.promise})
+            .then(function(response) {
+              item['resultSource'].pending = false;
+              var features = sourceFormat.readFeatures(response.data);
+              this.setUniqueIds_(features, item.source.id);
+              item['resultSource'].features = features;
+              this.result_.total += features.length;
+              this.updatePendingState_();
+            }.bind(this));
+      }.bind(this);
+
+      if (this.queryCountFirst_) {
+        var getCountOptions = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.object.assign({
+          resultType: 'hits'
+        }, getFeatureOptions));
+        var featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
+        var featureCountRequest = xmlSerializer.serializeToString(featureCountXml);
+
+        var canceler = this.registerCanceler_();
+        this.$http_.post(url, featureCountRequest, {timeout: canceler.promise})
+            .then(function(response) {
+              var meta = sourceFormat.readFeatureCollectionMetadata(response.data);
+              if (meta['numberOfFeatures'] > this.limit_) {
+                item['resultSource'].pending = false;
+                item['resultSource'].features = [];
+                item['resultSource'].tooManyResults = true;
+                item['resultSource'].totalFeatureCount = meta['numberOfFeatures'];
+                this.updatePendingState_();
+              } else {
+                getFeatures();
+              }
+            }.bind(this));
+      } else {
+        getFeatures();
+      }
     }.bind(this));
   }.bind(this));
 };
@@ -614,6 +656,8 @@ ngeo.Query.prototype.clearResult_ = function() {
     source.features.length = 0;
     source.pending = false;
     source.queried = false;
+    source.tooManyResults = false;
+    source.totalFeatureCount = undefined;
   }, this);
   this.result_.pending = false;
 };
@@ -723,6 +767,15 @@ ngeo.Query.prototype.updatePendingState_ = function() {
     }
   });
   this.result_.pending = pendingSources > 0;
+};
+
+
+/**
+ * @returns {number} The maximum number of features that are requested.
+ * @public
+ */
+ngeo.Query.prototype.getLimit = function() {
+  return this.limit_;
 };
 
 

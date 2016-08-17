@@ -291,7 +291,9 @@ ngeox.QueryResult.prototype.pending;
  *     id: (number|string),
  *     label: (string),
  *     pending: (boolean),
- *     queried: (boolean)
+ *     queried: (boolean),
+ *     tooManyResults: (boolean),
+ *     totalFeatureCount: (number|undefined)
  * }}
  */
 ngeox.QueryResultSource;
@@ -333,9 +335,25 @@ ngeox.QueryResultSource.prototype.queried;
 
 
 /**
+ * If the last query for this source would return more features than the
+ * configured limit.
+ * @type {boolean}
+ */
+ngeox.QueryResultSource.prototype.tooManyResults;
+
+
+/**
+ * If `tooManyResults` is `true`, this contains the total number of features.
+ * @type {number|undefined}
+ */
+ngeox.QueryResultSource.prototype.totalFeatureCount;
+
+
+/**
  * The options for the query service.
  * @typedef {{
  *     limit: (number|undefined),
+ *     queryCountFirst: (boolean|undefined),
  *     sourceIdsProperty: (string|undefined),
  *     tolerance: (number|undefined),
  *     featureNS: (string|undefined),
@@ -353,6 +371,15 @@ ngeox.QueryOptions;
  * @type {number|undefined}
  */
 ngeox.QueryOptions.prototype.limit;
+
+
+/**
+ * For WFS sources, should the number of features first be requested with
+ * `resultType=hits` before requesting the actual features in an seconds request?
+ * Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.QueryOptions.prototype.queryCountFirst;
 
 
 /**

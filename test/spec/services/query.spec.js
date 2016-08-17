@@ -3,6 +3,7 @@ goog.require('ngeo.test.data.msGMLOutputBusStop');
 goog.require('ngeo.test.data.msGMLOutputBusStopAndInformation');
 goog.require('ngeo.test.data.msGMLOutputBusStopWfs');
 goog.require('ngeo.test.data.msGMLOutputInformationWfs');
+goog.require('ngeo.test.data.msGMLOutputInformationHitsWfs');
 
 describe('ngeo.Query', function() {
 
@@ -228,6 +229,62 @@ describe('ngeo.Query', function() {
       expect(ngeoQueryResult.sources[1].features.length).toBe(3);
       expect(ngeoQueryResult.total).toBe(5);
       expect(ngeoQueryResult.sources[0].features[0].getId()).toBe('bus_stop_bus_stop.380835772');
+    });
+
+    it('Issues WFS request for one source (get count first)', function() {
+      ngeoQuery.queryCountFirst_ = true;
+
+      // request to get feature count
+      $httpBackend.when('POST', url, function(body) {
+        return body.indexOf('hits') != -1;
+      }).respond(gmlResponseInformationHitsWfs);
+      // request to get features
+      $httpBackend.when('POST', url, function(body) {
+        return body.indexOf('hits') == -1;
+      }).respond(gmlResponseInformationWfs);
+
+      var coordinate = [499200, 130000.00000000003];
+      // make a WFS GetFeature request for this source
+      ngeoQuery.addSource({
+        id: informationSourceId,
+        layer: informationLayer,
+        wfsQuery: true
+      });
+
+      ngeoQuery.issue(map, coordinate);
+      $httpBackend.flush();
+      $httpBackend.verifyNoOutstandingExpectation();
+      $httpBackend.verifyNoOutstandingRequest();
+
+      expect(ngeoQueryResult.sources[0].features.length).toBe(3);
+      expect(ngeoQueryResult.total).toBe(3);
+    });
+
+    it('Stops if too many features', function() {
+      ngeoQuery.queryCountFirst_ = true;
+      ngeoQuery.limit_ = 2;
+
+      // request to get feature count
+      $httpBackend.when('POST', url, function(body) {
+        return body.indexOf('hits') != -1;
+      }).respond(gmlResponseInformationHitsWfs);
+
+      var coordinate = [499200, 130000.00000000003];
+      // make a WFS GetFeature request for this source
+      ngeoQuery.addSource({
+        id: informationSourceId,
+        layer: informationLayer,
+        wfsQuery: true
+      });
+
+      ngeoQuery.issue(map, coordinate);
+      $httpBackend.flush();
+      $httpBackend.verifyNoOutstandingExpectation();
+      $httpBackend.verifyNoOutstandingRequest();
+
+      expect(ngeoQueryResult.sources[0].tooManyResults).toBe(true);
+      expect(ngeoQueryResult.sources[0].features.length).toBe(0);
+      expect(ngeoQueryResult.total).toBe(0);
     });
 
     describe('#getQueryableSources_', function() {
