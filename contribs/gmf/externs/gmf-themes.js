@@ -15,7 +15,8 @@ var GmfOgcServers;
  * @typedef {{
  *     themes: Array.<GmfThemesNode>,
  *     background_layers: Array.<GmfThemesNode>,
- *     ogcServers: GmfOgcServers
+ *     ogcServers: GmfOgcServers,
+ *     errors: Array.<string>
  * }}
  */
 var GmfThemesResponse;
@@ -95,6 +96,18 @@ GmfThemesNode.prototype.name;
 
 
 /**
+ * @type {Object.<string, string>|undefined}
+ */
+GmfThemesNode.prototype.dimensions;
+
+
+/**
+ * @type {string}
+ */
+GmfThemesNode.prototype.serverType;
+
+
+/**
  * @type {string}
  */
 GmfThemesNode.prototype.type;
@@ -110,6 +123,7 @@ GmfThemesNode.prototype.url;
  * @type {ngeox.TimeProperty|undefined}
  */
 GmfThemesNode.prototype.time;
+
 
 /**
  * @type {string|undefined}

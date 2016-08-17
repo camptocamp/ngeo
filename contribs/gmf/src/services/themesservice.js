@@ -173,7 +173,7 @@ gmf.Themes.findGroupByName = function(themes, name) {
 
 /**
  * Find an object by its name. Return null if not found.
- * @param {Array.<T>} objects Array of objects.
+ * @param {Array.<T>} objects Array of objects with a 'name' attribute.
  * @param {string} objectName The object name.
  * @return {T} The object.
  * @template T
@@ -256,9 +256,9 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    * @return {ol.layer.Base} the provided layer.
    */
   var callback = function(item, layer) {
-    layer.set('label', item['name']);
-    layer.set('metadata', item['metadata']);
-    layer.set('dimensions', item['dimensions']);
+    layer.set('label', item.name);
+    layer.set('metadata', item.metadata);
+    layer.set('dimensions', item.dimensions);
     var ids = gmf.LayertreeController.getLayerNodeIds(item);
     layer.set('querySourceIds', ids);
     layer.set('editableIds', []);
@@ -271,32 +271,34 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    */
   var layerLayerCreationFn = function(item) {
     // Overwrite conflicting server dimensions with application ones
-    for (var dimkey in item['dimensions']) {
+    for (var dimkey in item.dimensions) {
       if (appDimensions[dimkey] !== undefined) {
-        item['dimensions'][dimkey] = appDimensions[dimkey];
+        item.dimensions[dimkey] = appDimensions[dimkey];
       }
     }
 
-    if (item['type'] === 'WMTS') {
+    goog.asserts.assert(item.url, 'Layer URL is required');
+
+    if (item.type === 'WMTS') {
       return layerHelper.createWMTSLayerFromCapabilitites(
-          item['url'],
-          item['name'],
-          item['dimensions']
+          item.url,
+          item.name,
+          item.dimensions
       ).then(callback.bind(null, item)).then(null, function(error) {
         console.error(error || 'unknown error');
         // Continue even if some layers have failed loading.
         return $q.resolve(undefined);
       });
-    } else if (item['type'] === 'WMS') {
+    } else if (item.type === 'WMS') {
       return callback(item, layerHelper.createBasicWMSLayer(
-          item['url'],
-          item['layers'],
-          item['serverType'],
-          item['time'],
-          item['dimensions']
+          item.url,
+          item.layers,
+          item.serverType,
+          undefined, // time
+          item.dimensions
       ));
     }
-    goog.asserts.fail('Unsupported type: ' + item['type']);
+    goog.asserts.fail('Unsupported type: ' + item.type);
   };
 
   /**
@@ -305,7 +307,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    */
   var layerGroupCreationFn = function(item) {
     // We assume no child is a layer group.
-    var promises = item['children'].map(layerLayerCreationFn);
+    var promises = item.children.map(layerLayerCreationFn);
     return $q.all(promises).then(function(layers) {
       var collection = layers ? new ol.Collection(layers) : undefined;
       var group = layerHelper.createBasicGroup(collection);
@@ -319,11 +321,11 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    * @return {angular.$q.Promise.<Array.<ol.layer.Base>>} Promise.
    */
   var promiseSuccessFn = function(data) {
-    var promises = data['background_layers'].map(function(item) {
-      var itemType = item['type'];
+    var promises = data.background_layers.map(function(item) {
+      var itemType = item.type;
       if (itemType === 'WMTS' || itemType === 'WMS') {
         return layerLayerCreationFn(item);
-      } else if (item['children']) {
+      } else if (item.children) {
         // group of layers
         return layerGroupCreationFn(item);
       } else {
@@ -368,7 +370,7 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
        * @return {GmfThemesNode} The theme object for themeName, or null if not found.
        */
       function(data) {
-        return gmf.Themes.findThemeByName(data['themes'], themeName);
+        return gmf.Themes.findThemeByName(data.themes, themeName);
       });
 };
 
@@ -385,7 +387,7 @@ gmf.Themes.prototype.getThemesObject = function() {
        * @return {Array.<GmfThemesNode>} The themes object.
        */
       function(data) {
-        return data['themes'];
+        return data.themes;
       });
 };
 
@@ -402,8 +404,7 @@ gmf.Themes.prototype.getBackgroundLayersObject = function() {
        * @return {Array.<GmfThemesNode>} The background layers object.
        */
       function(data) {
-        var backgroundLayers = data['background_layers'];
-        return backgroundLayers;
+        return data.background_layers;
       });
 };
 
@@ -420,7 +421,7 @@ gmf.Themes.prototype.getOgcServersObject = function() {
        * @return {GmfOgcServers} The `ogcServers` object.
        */
       function(data) {
-        return data['ogcServers'];
+        return data.ogcServers;
       });
 };
 
@@ -452,9 +453,9 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
     cache: false,
     withCredentials: true
   }).then(function(response) {
-    if (response.data['errors'].length != 0) {
-      var message = 'The themes contains some errors:\n' +
-        response.data['errors'].join('\n');
+    if (response.data.errors.length != 0) {
+      var message = 'The themes contain some errors:\n' +
+        response.data.errors.join('\n');
       console.error(message);
       if (this.ngeoLocation_ !== null && this.ngeoLocation_.hasParam('debug')) {
         window.alert(message);
