@@ -112,7 +112,7 @@ This section includes information for developers and users of ngeo.
 ### Style guide
 
 We more or less follow the [AngularJS Style Guide for Closure Users at
-Google](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html).
+Google](https://google.github.io/styleguide/angularjs-google-style.html).
 
 ### Exports
 
