@@ -231,6 +231,14 @@ gmf.Authentication.prototype.resetPassword = function(login) {
 
 
 /**
+ * @return {?gmfx.AuthenticationFunctionalities} The role functionalities.
+ */
+gmf.Authentication.prototype.getFunctionalities = function() {
+  return this.user_.functionalities;
+};
+
+
+/**
  * @return {number|null} The role ID.
  */
 gmf.Authentication.prototype.getRoleId = function() {

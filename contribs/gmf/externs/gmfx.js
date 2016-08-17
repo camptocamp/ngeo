@@ -397,6 +397,7 @@ gmfx.ServiceUrls.prototype.exportgpxkml;
  * Availables functionalities.
  * @typedef {{
  *     default_basemap: Array.<string>,
+ *     default_theme: Array.<string>,
  *     location: Array.<string>
  * }}
  */
@@ -409,6 +410,12 @@ gmfx.AuthenticationFunctionalities;
  */
 gmfx.AuthenticationFunctionalities.prototype.default_basemap;
 
+
+/**
+ * Theme to use by default.
+ * @type {Array.<string>}
+ */
+gmfx.AuthenticationFunctionalities.prototype.default_theme;
 
 /**
  * Availables locations.
