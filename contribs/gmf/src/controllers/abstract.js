@@ -31,6 +31,7 @@ goog.require('ngeo.filters');
 goog.require('ngeo.mapQueryDirective');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.GetBrowserLanguage');
+goog.require('ngeo.Query');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
@@ -161,13 +162,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
    */
   this.rightNavVisible = false;
 
-  /**
-   * The active state of the ngeo query directive.
-   * @type {boolean}
-   * @export
-   */
-  this.queryActive = true;
-
   // Not used in this file but the QueryManager must be injected to be watched.
   $injector.get('gmfQueryManager');
 
@@ -188,6 +182,51 @@ gmf.AbstractController = function(config, $scope, $injector) {
     }),
     stroke: queryStroke
   });
+
+  /**
+   * The active state of the ngeo query directive.
+   * @type {boolean}
+   * @export
+   */
+  this.queryActive = true;
+
+  /**
+   * Set the clearing of the ngeoQuery after the deactivation of the query
+   * @type {boolean}
+   * @export
+   */
+  this.queryAutoClear = true;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.printPanelActive = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.printActive = false;
+
+  /**
+   * @type {ngeo.Query}
+   * @private
+   */
+  this.ngeoQuery_ = $injector.get('ngeoQuery');
+
+  // Don't deactivate ngeoQuery on print activation
+  $scope.$watch(function() {
+    return this.printPanelActive;
+  }.bind(this), function(newVal) {
+    // Clear queries if another panel is open but not if user go back to the
+    // map form the print.
+    if (!newVal && !this.queryActive) {
+      this.ngeoQuery_.clear();
+    }
+    this.queryAutoClear = !newVal;
+    this.printActive = newVal;
+  }.bind(this));
 
   /**
    * The active state of the directive responsible of point measurements.
@@ -297,6 +336,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   var drawProfilePanelActivate = new ngeo.ToolActivate(this, 'drawProfilePanelActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawProfilePanelActivate, false);
+
+  var printPanelActivate = new ngeo.ToolActivate(this, 'printPanelActive');
+  ngeoToolActivateMgr.registerTool('mapTools', printPanelActivate, false);
 
 
   $scope.$watch(function() {
