@@ -101,11 +101,13 @@ ngeo.CsvDownload.prototype.startDownload = function(data, columnDefs, fileName) 
   var fileContent = this.generateCsv(data, columnDefs);
 
   var hiddenElement = document.createElement('a');
+  // FF requires the link to be in the body
+  document.body.appendChild(hiddenElement);
   hiddenElement.href = 'data:attachment/csv,' + encodeURI(fileContent);
   hiddenElement.target = '_blank';
   hiddenElement.download = fileName;
   hiddenElement.click();
-  hiddenElement.remove();
+  document.body.removeChild(hiddenElement);
 };
 
 ngeo.module.service('ngeoCsvDownload', ngeo.CsvDownload);
