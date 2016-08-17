@@ -135,6 +135,18 @@ gmf.source.SomeLayer = function(options) {
 };
 ```
 
+### Requires compilation warnings
+
+Developers often need to add `goog.require(...);` statements at the top of the
+files to make sure that dependency is correctly handled.
+
+However, in some cases, specifically when adding requirements for directives,
+the closure compiler may complain because the directive's namespace is actually
+not used in the file.
+
+To avoid such a warning, developers are invited to use the following annotation
+just before a `goog.require(...);`: `@suppress {extraRequire}`.
+
 ### Running examples
 
 #### Local mode
