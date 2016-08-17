@@ -5,6 +5,8 @@ goog.provide('ngeo.gridDirective');
 goog.require('ngeo');
 goog.require('ol.has');
 goog.require('goog.asserts');
+/** @suppress {extraRequire} */
+goog.require('ngeo.trustHtmlFilter');
 
 ngeo.module.value('ngeoGridTemplateUrl',
     /**
