@@ -77,6 +77,34 @@ The published examples use the `ngeo.js` standalone build.
 
 Example: https://camptocamp.github.io/ngeo/master/examples/simple.html.
 
+## Build API documentation
+
+Ngeo (and GMF) comes with an automatically built API documentation.
+
+The current master version of this doc is available at
+https://camptocamp.github.io/ngeo/master/apidoc/index.html
+
+You can build the API documentation locally on your machine in order to make
+sure that your changes are correctly taken into account.
+
+To do so you can run the following command:
+
+```shell
+$ make apidoc
+```
+
+You can then see the result using `make serve` and pointing your browser to
+`http://localhost:3000/.build/apidoc`
+
+You can also see it online if you use the following command:
+
+```shell
+$ make gh-pages GITHUB_USERNAME=<your_github_username>
+```
+
+URL will then be `http://<your_github_username>.github.io/ngeo/<branchname>/apidoc`
+
+
 ## Developer Guide
 
 This section includes information for developers and users of ngeo.
