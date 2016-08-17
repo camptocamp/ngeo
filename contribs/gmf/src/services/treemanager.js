@@ -314,7 +314,7 @@ gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
  */
 gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent, opt_map) {
   this.gmfThemes_.getThemesObject().then(function(themes) {
-    var group = gmf.Themes.findGroupByLayerName(themes, layerName);
+    var group = gmf.Themes.findGroupByLayerNodeName(themes, layerName);
     if (group) {
       var groupAdded = this.addGroups([group], opt_add, opt_silent);
       if (opt_map) {
@@ -354,7 +354,7 @@ gmf.TreeManager.prototype.setLayerVisible_ = function(layerName, group, groupAdd
       activeLayers = layerGroup.getVisible() ? source.getParams()['LAYERS'] : '';
       // Get all possible LAYERS values in this group.
       var childNodes = [];
-      gmf.LayertreeController.getFlatNodes(group, childNodes);
+      gmf.Themes.getFlatNodes(group, childNodes);
       var allLayersNames = childNodes.map(function(node) {
         return node['layers'];
       });

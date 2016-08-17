@@ -103,7 +103,6 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
    */
   this.promise_ = this.deferred_.promise;
 
-
   /**
    * @type {angular.$q.Promise}
    * @private
@@ -119,13 +118,15 @@ goog.inherits(gmf.Themes, ol.events.EventTarget);
  * @param {string} name The layer name.
  * @return {GmfThemesNode} The group.
  */
-gmf.Themes.findGroupByLayerName = function(themes, name) {
+gmf.Themes.findGroupByLayerNodeName = function(themes, name) {
   for (var i = 0, ii = themes.length; i < ii; i++) {
     var theme = themes[i];
     for (var j = 0, jj = theme.children.length; j < jj; j++) {
       var group = theme.children[j];
-      for (var k = 0, kk = group.children.length; k < kk; k++) {
-        var layer = group.children[k];
+      var childNodes = [];
+      gmf.Themes.getFlatNodes(group, childNodes);
+      for (var k = 0, kk = childNodes.length; k < kk; k++) {
+        var layer = childNodes[k];
         if (layer.name == name) {
           return group;
         }
@@ -199,6 +200,26 @@ gmf.Themes.getNodeType = function(node) {
     return gmf.Themes.NodeType.WMTS;
   }
   return gmf.Themes.NodeType.WMS;
+};
+
+
+/**
+ * Fill the given "nodes" array with all node in the given node including the
+ * given node itself.
+ * @param {GmfThemesNode} node Layertree node.
+ * @param {Array.<GmfThemesNode>} nodes An array.
+ * @export
+ */
+gmf.Themes.getFlatNodes = function(node, nodes) {
+  var i;
+  var children = node.children;
+  if (children !== undefined) {
+    for (i = 0; i < children.length; i++) {
+      gmf.Themes.getFlatNodes(children[i], nodes);
+    }
+  } else {
+    nodes.push(node);
+  }
 };
 
 
