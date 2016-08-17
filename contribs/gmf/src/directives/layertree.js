@@ -294,7 +294,7 @@ gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
   var metadata = node.metadata;
   if (isMerged) {
     //Case Non Mixed group -> Hide the layer if all child nodes have isChecked set to false
-    this.getFlatNodes_(node, childNodes);
+    gmf.LayertreeController.getFlatNodes(node, childNodes);
     allChildNodesUnchecked = childNodes.every(function(childNode) {
       return !childNode.metadata || !childNode.metadata['isChecked'];
     });
@@ -369,7 +369,6 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
       break;
     case gmf.Themes.NodeType.NOT_MIXED_GROUP:
       layer = this.getLayerCaseNotMixedGroup_(node);
-      this.prepareLayer_(node, layer);
       break;
     case gmf.Themes.NodeType.WMTS:
       layer = this.getLayerCaseWMTS_(node);
@@ -392,7 +391,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
   }
   this.prepareLayer_(node, layer);
   this.updateLayerDimensions_(/** @type {ol.layer.Layer} */ (layer), node);
-  parentCtrl['layer'].getLayers().push(layer);
+  parentCtrl['layer'].getLayers().insertAt(0, layer);
   return layer;
 };
 
@@ -419,16 +418,18 @@ gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
  * @private
  */
 gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
-  var childs = [];
+  var childNodes = [];
   var timeParam, timeValues;
 
-  this.getFlatNodes_(node, childs);
-  var layersNames = childs.map(function(node) {
+  gmf.LayertreeController.getFlatNodes(node, childNodes);
+  // layersNames come from the json theme nodes and will become the wms
+  // LAYERS. It must be reversed to get the correct layer order on the map.
+  var layersNames = childNodes.map(function(node) {
     return node['layers'];
-  }).join(',');
+  }).reverse().join(',');
   var url = node.url || this.gmfWmsUrl_;
   var serverType = node.children[0]['serverType'];
-  var nodes = [node].concat(childs);
+  var nodes = [node].concat(childNodes);
   var nodesWithTime = nodes.filter(hasTime);
   if (nodesWithTime.length) {
     var wmsTime = /**@type {ngeox.TimeProperty} */ (nodesWithTime[0]['time']);
@@ -479,14 +480,14 @@ gmf.LayertreeController.prototype.getLayerCaseWMTS_ = function(node) {
  * given node itself.
  * @param {GmfThemesNode} node Layertree node.
  * @param {Array.<GmfThemesNode>} nodes An array.
- * @private
+ * @export
  */
-gmf.LayertreeController.prototype.getFlatNodes_ = function(node, nodes) {
+gmf.LayertreeController.getFlatNodes = function(node, nodes) {
   var i;
   var children = node.children;
   if (children !== undefined) {
     for (i = 0; i < children.length; i++) {
-      this.getFlatNodes_(children[i], nodes);
+      gmf.LayertreeController.getFlatNodes(children[i], nodes);
     }
   } else {
     nodes.push(node);
@@ -505,7 +506,7 @@ gmf.LayertreeController.prototype.retrieveNodeNames_ = function(node,
     opt_onlyChecked) {
   var names = [];
   var nodes = [];
-  this.getFlatNodes_(node, nodes);
+  gmf.LayertreeController.getFlatNodes(node, nodes);
   var metadata, n, i;
   for (i = 0; i < nodes.length; i++) {
     n = nodes[i];
@@ -607,7 +608,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
         var currentLayersNames = (firstParentTreeLayer.getVisible()) ?
             firstParentTreeSource.getParams()['LAYERS'] : '';
         var newLayersNames = [];
-        this.getFlatNodes_(firstParentTreeNode, childNodes);
+        gmf.LayertreeController.getFlatNodes(firstParentTreeNode, childNodes);
         // Add/remove layer and keep order of layers in layergroup.
         for (i = 0; i < childNodes.length; i++) {
           layersNames = this.getLayersNames_(childNodes[i]);
@@ -620,14 +621,16 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
           }
         }
         goog.asserts.assertInstanceof(firstParentTreeLayer, ol.layer.Image);
-        this.layerHelper_.updateWMSLayerState(firstParentTreeLayer, newLayersNames.join(','));
+        // layersNames come from the json theme nodes and replace the wms
+        // LAYERS. It must be reversed to get the correct layer order on the map.
+        this.layerHelper_.updateWMSLayerState(firstParentTreeLayer, newLayersNames.reverse().join(','));
       }
       break;
 
     case gmf.Themes.NodeType.MIXED_GROUP:
       var nodeLayers = [];
       var l, source;
-      this.getFlatNodes_(node, childNodes);
+      gmf.LayertreeController.getFlatNodes(node, childNodes);
       layersNames = childNodes.map(this.getLayersNames_).join(',');
       layers = this.layerHelper_.getFlatLayers(firstParentTreeLayer);
       for (i = 0; i < layers.length; i++) {
@@ -650,35 +653,17 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
       break;
 
     case gmf.Themes.NodeType.NOT_MIXED_GROUP:
-      this.getFlatNodes_(node, childNodes);
-      layersNames = childNodes.map(this.getLayersNames_);
-      source = /** @type {ol.source.ImageWMS} */
-          (firstParentTreeLayer.getSource());
-      layers = (firstParentTreeLayer.getVisible() &&
-          source.getParams()['LAYERS'].trim() !== '' &&
-          source.getParams()['LAYERS'].split(','))  || [];
+      goog.asserts.assertInstanceof(firstParentTreeLayer, ol.layer.Image);
       if (isActive) {
-        for (i = 0; i < layersNames.length; i++) {
-          // layersNames may be "foo,bar". Each should be removed from the
-          // LAYERS param
-          layersNames[i].split(',').forEach(function(name) {
-            ol.array.remove(layers, name);
-          });
-        }
+        this.layerHelper_.updateWMSLayerState(firstParentTreeLayer, '');
       } else {
-        for (i = 0; i < layersNames.length; i++) {
-          // layersNames may be "foo,bar". Each should be checked for presence
-          // in the LAYERS param
-          layersNames[i].split(',').forEach(function(name) {
-            if (!ol.array.includes(layers, name)) {
-              layers.push(name);
-            }
-          });
-        }
+        gmf.LayertreeController.getFlatNodes(node, childNodes);
+        layersNames = childNodes.map(this.getLayersNames_);
+        // layersNames come from the json theme nodes and replace the wms
+        // LAYERS. It must be reversed to get the correct layer order on the map.
+        this.layerHelper_.updateWMSLayerState(firstParentTreeLayer,
+          layersNames.reverse().join(','));
       }
-      firstParentTreeLayer = /** @type {ol.layer.Image} */
-          (firstParentTreeLayer);
-      this.layerHelper_.updateWMSLayerState(firstParentTreeLayer, layers.join(','));
       break;
     // no default
   }
