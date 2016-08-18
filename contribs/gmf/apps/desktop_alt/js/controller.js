@@ -19,6 +19,11 @@ goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
 
 
+gmf.module.value('ngeoQueryOptions', {
+  'limit': 20,
+  'queryCountFirst': true
+});
+
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
@@ -87,6 +92,14 @@ app.AlternativeDesktopController = function($scope, $injector) {
     label: 'WGS84',
     filter: 'ngeoDMSCoordinates:2'
   }];
+
+  /**
+   * @type {gmfx.GridMergeTabs}
+   * @export
+   */
+  this.gridMergeTabs = {
+    'merged_osm_times': ['110', '126', '147']
+  };
 };
 goog.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
 

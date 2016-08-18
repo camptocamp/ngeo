@@ -4,6 +4,7 @@ goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
+goog.require('ol.object');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('goog.uri.utils');
@@ -41,7 +42,8 @@ ngeo.QueryableSources;
  */
 ngeo.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
   sources: [],
-  total: 0
+  total: 0,
+  pending: false
 }));
 
 
@@ -75,6 +77,13 @@ ngeo.Query = function($http, $q, ngeoQueryResult, ngeoQueryOptions,
    * @private
    */
   this.limit_ = options.limit !== undefined ? options.limit : 50;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.queryCountFirst_ = options.queryCountFirst !== undefined ?
+      options.queryCountFirst : false;
 
   /**
    * @type {string}
@@ -339,6 +348,7 @@ ngeo.Query.prototype.issueIdentifyFeaturesRequests_ = function(map, coordinate) 
 
   this.doGetFeatureInfoRequests_(sources.wms, coordinate, map);
   this.doGetFeatureRequestsWithCoordinate_(sources.wfs, coordinate, map);
+  this.updatePendingState_();
 };
 
 
@@ -353,6 +363,7 @@ ngeo.Query.prototype.issueIdentifyFeaturesRequests_ = function(map, coordinate) 
 ngeo.Query.prototype.issueGetFeatureRequests_ = function(map, extent) {
   var sources = this.getQueryableSources_(map, true);
   this.doGetFeatureRequests_(sources.wfs, extent, map);
+  this.updatePendingState_();
 };
 
 
@@ -517,13 +528,14 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
     this.$http_.get(wmsGetFeatureInfoUrl, {timeout: canceler.promise})
         .then(function(items, response) {
           items.forEach(function(item) {
+            item['resultSource'].pending = false;
             var format = item.source.format;
             var features = format.readFeatures(response.data);
             this.setUniqueIds_(features, item.source.id);
-            item['resultSource'].pending = false;
             item['resultSource'].features = features;
             this.result_.total += features.length;
           }, this);
+          this.updatePendingState_();
         }.bind(this, items));
   }, this);
 };
@@ -562,31 +574,73 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
     items.forEach(function(item) {
       var layers = this.getLayersForItem_(item);
 
-      var featureRequestXml = wfsFormat.writeGetFeature({
+      if (layers.length == 0 || layers[0] === '') {
+        // do not query source if no valid layers
+        item['resultSource'].pending = false;
+        item['resultSource'].queried = false;
+        return;
+      }
+
+      /** @type{olx.format.WFSWriteGetFeatureOptions} */
+      var getFeatureOptions = {
         srsName: projCode,
         featureNS: this.featureNS_,
         featurePrefix: this.featurePrefix_,
         featureTypes: layers,
         outputFormat: 'GML3',
         bbox: bbox,
-        geometryName: this.geometryName_,
-        maxFeatures: this.limit_
+        geometryName: this.geometryName_
+      };
+
+      var sourceFormat = new ol.format.WFS({
+        featureType: layers,
+        featureNS: this.featureNS_
       });
 
-      var featureRequest = xmlSerializer.serializeToString(featureRequestXml);
-      var canceler = this.registerCanceler_();
-      this.$http_.post(url, featureRequest, {timeout: canceler.promise})
-          .then(function(response) {
-            var sourceFormat = new ol.format.WFS({
-              featureType: layers,
-              featureNS: this.featureNS_
-            });
-            var features = sourceFormat.readFeatures(response.data);
-            this.setUniqueIds_(features, item.source.id);
-            item['resultSource'].pending = false;
-            item['resultSource'].features = features;
-            this.result_.total += features.length;
-          }.bind(this));
+      var getFeatures = function() {
+        /** @type{olx.format.WFSWriteGetFeatureOptions} */
+        var options = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.object.assign({
+          maxFeatures: this.limit_
+        }, getFeatureOptions));
+        var featureRequestXml = wfsFormat.writeGetFeature(options);
+        var featureRequest = xmlSerializer.serializeToString(featureRequestXml);
+
+        var canceler = this.registerCanceler_();
+        this.$http_.post(url, featureRequest, {timeout: canceler.promise})
+            .then(function(response) {
+              item['resultSource'].pending = false;
+              var features = sourceFormat.readFeatures(response.data);
+              this.setUniqueIds_(features, item.source.id);
+              item['resultSource'].features = features;
+              this.result_.total += features.length;
+              this.updatePendingState_();
+            }.bind(this));
+      }.bind(this);
+
+      if (this.queryCountFirst_) {
+        var getCountOptions = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.object.assign({
+          resultType: 'hits'
+        }, getFeatureOptions));
+        var featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
+        var featureCountRequest = xmlSerializer.serializeToString(featureCountXml);
+
+        var canceler = this.registerCanceler_();
+        this.$http_.post(url, featureCountRequest, {timeout: canceler.promise})
+            .then(function(response) {
+              var meta = sourceFormat.readFeatureCollectionMetadata(response.data);
+              if (meta['numberOfFeatures'] > this.limit_) {
+                item['resultSource'].pending = false;
+                item['resultSource'].features = [];
+                item['resultSource'].tooManyResults = true;
+                item['resultSource'].totalFeatureCount = meta['numberOfFeatures'];
+                this.updatePendingState_();
+              } else {
+                getFeatures();
+              }
+            }.bind(this));
+      } else {
+        getFeatures();
+      }
     }.bind(this));
   }.bind(this));
 };
@@ -602,7 +656,10 @@ ngeo.Query.prototype.clearResult_ = function() {
     source.features.length = 0;
     source.pending = false;
     source.queried = false;
+    source.tooManyResults = false;
+    source.totalFeatureCount = undefined;
   }, this);
+  this.result_.pending = false;
 };
 
 
@@ -699,6 +756,26 @@ ngeo.Query.prototype.cancelStillRunningRequests_ = function() {
     canceler.resolve();
   });
   this.requestCancelers_.length = 0;
+};
+
+
+ngeo.Query.prototype.updatePendingState_ = function() {
+  var pendingSources = 0;
+  this.result_.sources.forEach(function(source) {
+    if (source.pending) {
+      pendingSources++;
+    }
+  });
+  this.result_.pending = pendingSources > 0;
+};
+
+
+/**
+ * @returns {number} The maximum number of features that are requested.
+ * @public
+ */
+ngeo.Query.prototype.getLimit = function() {
+  return this.limit_;
 };
 
 

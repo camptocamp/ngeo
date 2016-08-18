@@ -242,7 +242,7 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
 
 /**
  * Remove current displayed results then get new results from the
- * ngeoQueryResult sevice. Display all results on the map and display,
+ * ngeoQueryResult service. Display all results on the map and display,
  * highlight the first feature.
  * @export
  */

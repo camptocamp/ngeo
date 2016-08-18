@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="image/favicon.ico"/>
     <link rel="stylesheet" href="../../build/desktop_alt.css">
   </head>
-  <body ng-class="{'profile-chart-active': !!profileChartActive}">
+  <body ng-class="{'profile-chart-active': !!profileChartActive, 'query-grid-active': !!queryGridActive}">
     <header>
       <div>
         <img src="image/logo.png" />
@@ -179,7 +179,16 @@
             gmf-disclaimer-map="::mainCtrl.map">
           </gmf-disclaimer>
         </div>
-        <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"></gmf-map>
+        <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"
+          ngeo-map-query=""
+          ngeo-map-query-map="::mainCtrl.map"
+          ngeo-map-query-active="mainCtrl.queryActive"
+          ngeo-map-query-autoclear="mainCtrl.queryAutoClear"
+          ngeo-bbox-query=""
+          ngeo-bbox-query-map="::mainCtrl.map"
+          ngeo-bbox-query-active="mainCtrl.queryActive"
+          ngeo-bbox-query-autoclear="mainCtrl.queryAutoClear">
+        </gmf-map>
 
         <!--infobar-->
         <div class="footer" ng-class="{'active': mainCtrl.showInfobar}">
@@ -218,6 +227,16 @@
         ngeo-resizemap="mainCtrl.map"
         ngeo-resizemap-state="profileChartActive">
       </gmf-profile>
+
+      <gmf-displayquerygrid
+        gmf-displayquerygrid-active="queryGridActive"
+        gmf-displayquerygrid-featuresstyle="::mainCtrl.queryFeatureStyle"
+        gmf-displayquerygrid-map="::mainCtrl.map"
+        gmf-displayquerygrid-removeemptycolumns="true"
+        gmf-displayquerygrid-mergetabs="::mainCtrl.gridMergeTabs"
+        ngeo-resizemap="mainCtrl.map"
+        ngeo-resizemap-state="queryGridActive">
+      </gmf-displayquerygrid>
     </footer>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../../third-party/jquery-ui/jquery-ui.min.js"></script>
@@ -226,6 +245,8 @@
     <script src="../../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
     <script src="../../../../node_modules/angular-touch/angular-touch.js"></script>
     <script src="../../../../node_modules/angular-ui-date/dist/date.js"></script>
+    <script src="../../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
+    <script src="../../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
     <script src="../../../../node_modules/angular-ui-slider/src/slider.js"></script>
     <script src="../../../../node_modules/typeahead.js/dist/typeahead.bundle.js"></script>
     <script src="../../../../node_modules/proj4/dist/proj4-src.js" type="text/javascript"></script>

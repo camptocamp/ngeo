@@ -256,7 +256,8 @@ ngeox.PopupOptions.prototype.width;
  * Results of the query source.
  * @typedef {{
  *     sources: (Array.<ngeox.QueryResultSource>),
- *     total: (number)
+ *     total: (number),
+ *     pending: (boolean)
  * }}
  */
 ngeox.QueryResult;
@@ -277,13 +278,22 @@ ngeox.QueryResult.prototype.total;
 
 
 /**
+ * If at least one source is pending.
+ * @type {boolean}
+ */
+ngeox.QueryResult.prototype.pending;
+
+
+/**
  * Results for a query source.
  * @typedef {{
  *     features: (Array.<ol.Feature>),
  *     id: (number|string),
  *     label: (string),
  *     pending: (boolean),
- *     queried: (boolean)
+ *     queried: (boolean),
+ *     tooManyResults: (boolean),
+ *     totalFeatureCount: (number|undefined)
  * }}
  */
 ngeox.QueryResultSource;
@@ -325,9 +335,25 @@ ngeox.QueryResultSource.prototype.queried;
 
 
 /**
+ * If the last query for this source would return more features than the
+ * configured limit.
+ * @type {boolean}
+ */
+ngeox.QueryResultSource.prototype.tooManyResults;
+
+
+/**
+ * If `tooManyResults` is `true`, this contains the total number of features.
+ * @type {number|undefined}
+ */
+ngeox.QueryResultSource.prototype.totalFeatureCount;
+
+
+/**
  * The options for the query service.
  * @typedef {{
  *     limit: (number|undefined),
+ *     queryCountFirst: (boolean|undefined),
  *     sourceIdsProperty: (string|undefined),
  *     tolerance: (number|undefined),
  *     featureNS: (string|undefined),
@@ -345,6 +371,15 @@ ngeox.QueryOptions;
  * @type {number|undefined}
  */
 ngeox.QueryOptions.prototype.limit;
+
+
+/**
+ * For WFS sources, should the number of features first be requested with
+ * `resultType=hits` before requesting the actual features in an seconds request?
+ * Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.QueryOptions.prototype.queryCountFirst;
 
 
 /**
@@ -1283,3 +1318,17 @@ ngeox.style;
  * }}
  */
 ngeox.style.TextOptions;
+
+
+/**
+ * Definition for grid columns.
+ * @typedef {{name: (string)}}
+ */
+ngeox.GridColumnDef;
+
+
+/**
+ * Name of a column.
+ * @type {String}
+ */
+ngeox.GridColumnDef.prototype.name;
