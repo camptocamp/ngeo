@@ -6,7 +6,7 @@ goog.require('ngeo');
 goog.require('ol.has');
 goog.require('goog.asserts');
 /** @suppress {extraRequire} */
-goog.require('ngeo.trustHtmlFilter');
+goog.require('ngeo.filters');
 
 ngeo.module.value('ngeoGridTemplateUrl',
     /**

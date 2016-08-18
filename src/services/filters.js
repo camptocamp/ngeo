@@ -292,3 +292,29 @@ ngeo.DMSCoordinates = function() {
 };
 
 ngeo.module.filter('ngeoDMSCoordinates', ngeo.DMSCoordinates);
+
+
+/**
+ * A filter to mark a value as trusted HTML.
+ *
+ * Usage:
+ *
+ *    <p ng-bind-html="ctrl.someValue | ngeoTrustHtml"></p>
+ *
+ * @return {function(?):string} The filter function.
+ * @ngInject
+ * @ngdoc filter
+ * @param {angular.$sce} $sce Angular sce service.
+ * @ngname ngeoTrustHtml
+ */
+ngeo.trustHtmlFilter = function($sce) {
+  return function(input) {
+    if (input !== undefined && input !== null) {
+      return $sce.trustAsHtml('' + input);
+    } else {
+      return input;
+    }
+  };
+};
+
+ngeo.module.filter('ngeoTrustHtml', ngeo.trustHtmlFilter);
