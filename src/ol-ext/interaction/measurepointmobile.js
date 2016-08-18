@@ -20,10 +20,10 @@ ngeo.interaction.MeasurePointMobile = function(opt_options) {
 
   goog.object.extend(options, {displayHelpTooltip: false});
 
-  goog.base(this, options);
+  ngeo.interaction.Measure.call(this, options);
 
 };
-goog.inherits(ngeo.interaction.MeasurePointMobile, ngeo.interaction.Measure);
+ol.inherits(ngeo.interaction.MeasurePointMobile, ngeo.interaction.Measure);
 
 
 /**

@@ -28,7 +28,7 @@ goog.require('ol.source.Vector');
  */
 ngeo.interaction.ModifyRectangle = function(options) {
 
-  goog.base(this, {
+  ol.interaction.Pointer.call(this, {
     handleDownEvent: this.handleDown_,
     handleMoveEvent: this.handleMove_,
     handleDragEvent: this.handleDrag_,
@@ -105,7 +105,7 @@ ngeo.interaction.ModifyRectangle = function(options) {
   this.features_.forEach(this.addFeature_, this);
 
 };
-goog.inherits(ngeo.interaction.ModifyRectangle, ol.interaction.Pointer);
+ol.inherits(ngeo.interaction.ModifyRectangle, ol.interaction.Pointer);
 
 
 /**
@@ -221,7 +221,7 @@ ngeo.interaction.ModifyRectangle.prototype.removeFeature_ = function(feature) {
 ngeo.interaction.ModifyRectangle.prototype.setMap = function(map) {
   this.vectorPoints_.setMap(map);
   this.vectorPoints_.setVisible(false);
-  goog.base(this, 'setMap', map);
+  ol.interaction.Pointer.prototype.setMap.call(this, map);
 };
 
 

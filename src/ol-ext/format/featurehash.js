@@ -82,7 +82,8 @@ ngeo.format.FeatureHashLegacyProperties_ = {};
  * @export
  */
 ngeo.format.FeatureHash = function(opt_options) {
-  goog.base(this);
+
+  ol.format.TextFeature.call(this);
 
   var options = opt_options !== undefined ? opt_options : {};
 
@@ -132,7 +133,7 @@ ngeo.format.FeatureHash = function(opt_options) {
   ngeo.format.FeatureHashLegacyProperties_ = (options.propertiesType !== undefined) &&  options.propertiesType;
 
 };
-goog.inherits(ngeo.format.FeatureHash, ol.format.TextFeature);
+ol.inherits(ngeo.format.FeatureHash, ol.format.TextFeature);
 
 
 /**

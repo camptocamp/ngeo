@@ -12,9 +12,9 @@ goog.require('ol.format.XML');
  * @export
  */
 ngeo.format.XSDAttribute = function() {
-  goog.base(this);
+  ol.format.XML.call(this);
 };
-goog.inherits(ngeo.format.XSDAttribute, ol.format.XML);
+ol.inherits(ngeo.format.XSDAttribute, ol.format.XML);
 
 
 /**
@@ -23,7 +23,7 @@ goog.inherits(ngeo.format.XSDAttribute, ol.format.XML);
  */
 ngeo.format.XSDAttribute.prototype.read = function(source) {
   return /** @type {Array.<ngeox.Attribute>} */ (
-    goog.base(this, 'read', source)
+    ol.format.XML.prototype.read.call(this, source)
   );
 };
 

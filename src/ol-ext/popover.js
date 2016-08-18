@@ -51,10 +51,10 @@ ngeo.Popover = function(opt_options) {
 
   options.element = $('<div />')[0];
 
-  goog.base(this, options);
+  ol.Overlay.call(this, options);
 
 };
-goog.inherits(ngeo.Popover, ol.Overlay);
+ol.inherits(ngeo.Popover, ol.Overlay);
 
 
 /**
@@ -74,7 +74,7 @@ ngeo.Popover.prototype.setMap = function(map) {
     $(element).popover('destroy');
   }
 
-  goog.base(this, 'setMap', map);
+  ol.Overlay.prototype.setMap.call(this, map);
 
   if (map) {
     var contentEl = this.contentEl_;

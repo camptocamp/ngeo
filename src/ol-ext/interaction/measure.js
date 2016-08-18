@@ -58,7 +58,7 @@ ngeo.MeasureEventType = {
  */
 ngeo.MeasureEvent = function(type, feature) {
 
-  goog.base(this, type);
+  ol.events.Event.call(this, type);
 
   /**
    * The feature being drawn.
@@ -68,7 +68,7 @@ ngeo.MeasureEvent = function(type, feature) {
   this.feature = feature;
 
 };
-goog.inherits(ngeo.MeasureEvent, ol.events.Event);
+ol.inherits(ngeo.MeasureEvent, ol.events.Event);
 
 
 /**
@@ -82,7 +82,7 @@ ngeo.interaction.Measure = function(opt_options) {
 
   var options = opt_options !== undefined ? opt_options : {};
 
-  goog.base(this, {
+  ol.interaction.Interaction.call(this, {
     handleEvent: ngeo.interaction.Measure.handleEvent_
   });
 
@@ -217,7 +217,7 @@ ngeo.interaction.Measure = function(opt_options) {
       ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
       this.updateState_, this);
 };
-goog.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
+ol.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
 
 /**
  * Calculate the area of the passed polygon and return a formatted string
@@ -349,7 +349,8 @@ ngeo.interaction.Measure.prototype.createDrawInteraction = goog.abstractMethod;
  * @inheritDoc
  */
 ngeo.interaction.Measure.prototype.setMap = function(map) {
-  goog.base(this, 'setMap', map);
+
+  ol.interaction.Interaction.prototype.setMap.call(this, map);
 
   this.vectorLayer_.setMap(map);
 

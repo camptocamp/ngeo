@@ -37,7 +37,7 @@ ngeo.interaction.MobileDrawProperty = {
  */
 ngeo.interaction.MobileDraw = function(options) {
 
-  goog.base(this, {
+  ol.interaction.Interaction.call(this, {
     handleEvent: goog.functions.TRUE
   });
 
@@ -112,7 +112,7 @@ ngeo.interaction.MobileDraw = function(options) {
   this.set(ngeo.interaction.MobileDrawProperty.VALID, false);
 
 };
-goog.inherits(ngeo.interaction.MobileDraw, ol.interaction.Interaction);
+ol.inherits(ngeo.interaction.MobileDraw, ol.interaction.Interaction);
 
 
 /**
@@ -127,7 +127,7 @@ ngeo.interaction.MobileDraw.prototype.setMap = function(map) {
     }
   }
 
-  goog.base(this, 'setMap', map);
+  ol.interaction.Interaction.prototype.setMap.call(this, map);
 
   if (map) {
     this.changeEventKey_ = ol.events.listen(map.getView(),

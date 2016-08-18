@@ -36,7 +36,7 @@ ngeo.interaction.MeasureAzimut = function(format, opt_options) {
 
   var options = opt_options !== undefined ? opt_options : {};
 
-  goog.base(this, options);
+  ngeo.interaction.Measure.call(this, options);
 
 
   /**
@@ -53,7 +53,7 @@ ngeo.interaction.MeasureAzimut = function(format, opt_options) {
   this.format = format;
 
 };
-goog.inherits(ngeo.interaction.MeasureAzimut, ngeo.interaction.Measure);
+ol.inherits(ngeo.interaction.MeasureAzimut, ngeo.interaction.Measure);
 
 
 /**
@@ -140,7 +140,7 @@ ngeo.interaction.MeasureAzimut.getAzimut = function(line) {
  */
 ngeo.interaction.DrawAzimut = function(options) {
 
-  goog.base(this, {
+  ol.interaction.Pointer.call(this, {
     handleDownEvent: ngeo.interaction.DrawAzimut.handleDownEvent_,
     handleEvent: ngeo.interaction.DrawAzimut.handleEvent_,
     handleUpEvent: ngeo.interaction.DrawAzimut.handleUpEvent_
@@ -210,7 +210,7 @@ ngeo.interaction.DrawAzimut = function(options) {
       ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
       this.updateState_, this);
 };
-goog.inherits(ngeo.interaction.DrawAzimut, ol.interaction.Pointer);
+ol.inherits(ngeo.interaction.DrawAzimut, ol.interaction.Pointer);
 
 
 /**
@@ -424,6 +424,6 @@ ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
  * @inheritDoc
  */
 ngeo.interaction.DrawAzimut.prototype.setMap = function(map) {
-  goog.base(this, 'setMap', map);
+  ol.interaction.Pointer.prototype.setMap.call(this, map);
   this.updateState_();
 };

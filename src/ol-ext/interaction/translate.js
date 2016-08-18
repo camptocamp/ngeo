@@ -74,9 +74,10 @@ ngeo.interaction.Translate = function(options) {
    */
   this.centerFeatures_ = {};
 
-  goog.base(this, /** @type {olx.interaction.TranslateOptions} */ (options));
+  ol.interaction.Translate.call(
+    this, /** @type {olx.interaction.TranslateOptions} */ (options));
 };
-goog.inherits(ngeo.interaction.Translate, ol.interaction.Translate);
+ol.inherits(ngeo.interaction.Translate, ol.interaction.Translate);
 
 
 /**
@@ -91,7 +92,7 @@ ngeo.interaction.Translate.prototype.setActive = function(active) {
     this.keyPressListenerKey_ = null;
   }
 
-  goog.base(this, 'setActive', active);
+  ol.interaction.Translate.prototype.setActive.call(this, active);
 
   if (active) {
     this.keyPressListenerKey_ = goog.events.listen(
@@ -120,7 +121,7 @@ ngeo.interaction.Translate.prototype.setMap = function(map) {
     this.vectorLayer_.setMap(null);
   }
 
-  goog.base(this, 'setMap', map);
+  ol.interaction.Translate.prototype.setMap.call(this, map);
 
   if (map) {
     this.vectorLayer_.setMap(map);
