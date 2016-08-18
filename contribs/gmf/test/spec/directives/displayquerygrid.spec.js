@@ -167,6 +167,34 @@ describe('gmf.displayquerygridDirective', function() {
       expect(gridConfig.columnDefs).toEqual(expectedColumnDefs);
     });
 
+    it('does not create a grid if only empty columns', function() {
+      queryGridController.removeEmptyColumns_ = true;
+
+      ngeoQueryResult.total = 2;
+      ngeoQueryResult.sources = [{
+        features: [
+          new ol.Feature({
+            'empty_column': undefined,
+            '2n-empty_column': undefined
+          }),
+          new ol.Feature({
+            'empty_column': undefined,
+            '2n-empty_column': undefined
+          })
+        ],
+        id: 123,
+        label: 'Test',
+        pending: false,
+        queried: true
+      }];
+      $rootScope.$digest();
+      $timeout.flush();
+      expect(queryGridController.active).toBe(false);
+
+      var gridSource = queryGridController.gridSources['123'];
+      expect(gridSource).toBeUndefined();
+    });
+
     it('deals with multiple sources', function() {
       ngeoQueryResult.total = 3;
       ngeoQueryResult.sources = [{

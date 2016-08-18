@@ -312,7 +312,7 @@ ngeo.trustHtmlFilter = function($sce) {
     if (input !== undefined && input !== null) {
       return $sce.trustAsHtml('' + input);
     } else {
-      return input;
+      return $sce.trustAsHtml('&nbsp;');
     }
   };
 };

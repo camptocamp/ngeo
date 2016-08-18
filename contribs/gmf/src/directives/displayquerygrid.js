@@ -326,6 +326,12 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
     }
   }.bind(this));
 
+  if (this.loadedGridSources.length == 0) {
+    // if no grids were created, do not show
+    this.active = false;
+    return;
+  }
+
   // keep the first existing navigation tab open
   if (this.selectedTab === null || !(('' + this.selectedTab) in this.gridSources)) {
     // selecting the tab is done in a timeout, because otherwise in rare cases
@@ -484,8 +490,10 @@ gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
 
   this.cleanProperties_(allProperties, featureGeometriesNames);
   if (allProperties.length > 0) {
-    this.makeGrid_(allProperties, source);
-    this.featuresForSources_['' + source.id] = featuresForSource;
+    var gridCreated = this.makeGrid_(allProperties, source);
+    if (gridCreated) {
+      this.featuresForSources_['' + source.id] = featuresForSource;
+    }
   }
 };
 
@@ -549,27 +557,32 @@ gmf.DisplayquerygridController.prototype.removeEmptyColumnsFn_ = function(
 /**
  * @param {?Array.<Object>} data Grid rows.
  * @param {ngeox.QueryResultSource} source Query source.
+ * @return {boolean} Returns true if a grid was created.
  * @private
  */
 gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
   var sourceId = '' + source.id;
-  if (this.loadedGridSources.indexOf(sourceId) == -1) {
-    this.loadedGridSources.push(sourceId);
-  }
   var gridConfig = null;
   if (data !== null) {
     gridConfig = this.getGridConfiguration_(data);
+    if (gridConfig === null) {
+      return false;
+    }
+  }
+  if (this.loadedGridSources.indexOf(sourceId) == -1) {
+    this.loadedGridSources.push(sourceId);
   }
   this.gridSources[sourceId] = {
     configuration: gridConfig,
     source: source
   };
+  return true;
 };
 
 
 /**
  * @param {Array.<!Object>} data Grid rows.
- * @return {ngeo.GridConfig} Grid config.
+ * @return {?ngeo.GridConfig} Grid config.
  * @private
  */
 gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
@@ -587,7 +600,12 @@ gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
     }
   });
 
-  return new ngeo.GridConfig(data, columnDefs);
+  if (columnDefs.length > 0) {
+    return new ngeo.GridConfig(data, columnDefs);
+  } else {
+    // no columns, do not show grid
+    return null;
+  }
 };
 
 
