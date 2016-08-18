@@ -77,6 +77,34 @@ The published examples use the `ngeo.js` standalone build.
 
 Example: https://camptocamp.github.io/ngeo/master/examples/simple.html.
 
+## Build API documentation
+
+Ngeo (and GMF) comes with an automatically built API documentation.
+
+The current master version of this doc is available at
+https://camptocamp.github.io/ngeo/master/apidoc/index.html
+
+You can build the API documentation locally on your machine in order to make
+sure that your changes are correctly taken into account.
+
+To do so you can run the following command:
+
+```shell
+$ make apidoc
+```
+
+You can then see the result using `make serve` and pointing your browser to
+`http://localhost:3000/.build/apidoc`
+
+You can also see it online if you use the following command:
+
+```shell
+$ make gh-pages GITHUB_USERNAME=<your_github_username>
+```
+
+URL will then be `http://<your_github_username>.github.io/ngeo/<branchname>/apidoc`
+
+
 ## Developer Guide
 
 This section includes information for developers and users of ngeo.
@@ -84,7 +112,7 @@ This section includes information for developers and users of ngeo.
 ### Style guide
 
 We more or less follow the [AngularJS Style Guide for Closure Users at
-Google](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html).
+Google](https://google.github.io/styleguide/angularjs-google-style.html).
 
 ### Exports
 
@@ -106,6 +134,18 @@ gmf.source.SomeLayer = function(options) {
   ...
 };
 ```
+
+### Requires compilation warnings
+
+Developers often need to add `goog.require(...);` statements at the top of the
+files to make sure that dependency is correctly handled.
+
+However, in some cases, specifically when adding requirements for directives,
+the closure compiler may complain because the directive's namespace is actually
+not used in the file.
+
+To avoid such a warning, developers are invited to use the following annotation
+just before a `goog.require(...);`: `@suppress {extraRequire}`.
 
 ### Running examples
 
