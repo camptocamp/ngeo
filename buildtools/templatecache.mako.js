@@ -8,21 +8,21 @@
 <%
   import re
   import os
+  import glob
   import htmlmin
   _partials = {}
   for p in partials.strip().split():
-      dest_folder, filename = p.split(":")
-      f = file(filename)
-      content = unicode(f.read().decode('utf8'))
-      content = re.sub(r"'", "\\'", content)
-      content = htmlmin.minify(content, remove_comments=True)
-      components_idx = filename.find('components')
-      if components_idx == -1:
-          name = os.path.basename(filename)
-      else:
-          # Component partials are in a subdirectory of "components".
-          name = filename[components_idx + len('components')  + 1:]
-      _partials[os.path.join(dest_folder, name).replace("\\", "/")] = content
+      dest_folder, source_folder = p.split(":")
+      filenames = []
+      filenames += glob.glob("{}/*.html".format(source_folder))
+      filenames += glob.glob("{}/**/*.html".format(source_folder))
+      for filename in filenames:
+          f = file(filename)
+          content = unicode(f.read().decode('utf8'))
+          content = re.sub(r"'", "\\'", content)
+          content = htmlmin.minify(content, remove_comments=True)
+          name = os.path.join(dest_folder, filename[len(source_folder) + 1:])
+          _partials[name.replace("\\", "/")] = content
 %>\
 /**
  * ngeo template cache.

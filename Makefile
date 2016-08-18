@@ -712,16 +712,15 @@ $(EXTERNS_JQUERY):
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "app=ngeo" \
-		--var "partials=$(addprefix ngeo:,$(NGEO_DIRECTIVES_PARTIALS_FILES))" $< > $@
+		--var "partials=ngeo:src/directives/partials" \
+		--var "app=ngeo" $< > $@
 
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(GMF_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "app=gmf" \
-		--var "partials=$(addprefix ngeo:,$(NGEO_DIRECTIVES_PARTIALS_FILES)) \
-		$(addprefix gmf:,$(GMF_DIRECTIVES_PARTIALS_FILES))" $< > $@
+		--var "partials=ngeo:src/directives/partials gmf:contribs/gmf/src/directives/partials" \
+		--var "app=gmf" $< > $@
 
 .build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp
 	node $< > $@
