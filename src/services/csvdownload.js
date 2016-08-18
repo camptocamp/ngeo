@@ -69,7 +69,7 @@ ngeo.CsvDownload.prototype.generateCsv = function(data, columnDefs) {
 /**
  * @param {Array.<?>} values Values.
  * @return {string} CSV row.
- * @export
+ * @private
  */
 ngeo.CsvDownload.prototype.getRow_ = function(values) {
   var matchAllQuotesRegex = new RegExp(this.quote_, 'g');

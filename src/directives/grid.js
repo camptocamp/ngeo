@@ -48,6 +48,7 @@ ngeo.GridConfig = function(data, columnDefs) {
 
 
 /**
+ * Get an ID for a row.
  * @param {Object} attributes An entry/row.
  * @return {string} Unique id for this object.
  * @export
@@ -58,6 +59,7 @@ ngeo.GridConfig.getRowUid = function(attributes) {
 
 
 /**
+ * Is the given row selected?
  * @param {Object} attributes An entry/row.
  * @return {boolean} True if already selected. False otherwise.
  * @export
@@ -68,6 +70,7 @@ ngeo.GridConfig.prototype.isRowSelected = function(attributes) {
 
 
 /**
+ * Returns the number of selected rows.
  * @return {number} Number of selected rows.
  * @export
  */
@@ -77,6 +80,7 @@ ngeo.GridConfig.prototype.getSelectedCount = function() {
 
 
 /**
+ * Returns the selected rows.
  * @return {Array.<Object>} Selected rows in the current ordering.
  * @export
  */
@@ -89,6 +93,7 @@ ngeo.GridConfig.prototype.getSelectedRows = function() {
 
 /**
  * @param {Object} attributes An entry/row.
+ * @public
  */
 ngeo.GridConfig.prototype.selectRow = function(attributes) {
   var uid = ngeo.GridConfig.getRowUid(attributes);
@@ -98,6 +103,7 @@ ngeo.GridConfig.prototype.selectRow = function(attributes) {
 
 /**
  * @param {Object} attributes An entry/row.
+ * @public
  */
 ngeo.GridConfig.prototype.toggleRow = function(attributes) {
   var uid = ngeo.GridConfig.getRowUid(attributes);
@@ -111,7 +117,7 @@ ngeo.GridConfig.prototype.toggleRow = function(attributes) {
 
 
 /**
- * Select all.
+ * Select all rows.
  * @export
  */
 ngeo.GridConfig.prototype.selectAll = function() {
@@ -122,7 +128,7 @@ ngeo.GridConfig.prototype.selectAll = function() {
 
 
 /**
- * Unselect all.
+ * Unselect all rows.
  * @export
  */
 ngeo.GridConfig.prototype.unselectAll = function() {
@@ -133,7 +139,7 @@ ngeo.GridConfig.prototype.unselectAll = function() {
 
 
 /**
- * Invert selection
+ * Invert selection.
  * @export
  */
 ngeo.GridConfig.prototype.invertSelection = function() {
@@ -259,6 +265,7 @@ ngeo.GridController.prototype.sort = function(columnName) {
 
 
 /**
+ * Handler for clicks on a row.
  * @param {Object} attributes An entry/row.
  * @param {jQuery.Event} event Event.
  * @export
@@ -275,6 +282,7 @@ ngeo.GridController.prototype.clickRow = function(attributes, event) {
  * @param {Object} attributes An entry/row.
  * @param {boolean} shiftKey Shift pressed?
  * @param {boolean} platformModifierKey CTRL/Meta pressed?
+ * @private
  */
 ngeo.GridController.prototype.clickRow_ = function(
     attributes, shiftKey, platformModifierKey) {
@@ -351,7 +359,7 @@ ngeo.GridController.prototype.selectRange_ = function(attributes) {
 
 
 /**
- * Prevent that the default browser behaviour of selecting text
+ * Prevent the default browser behaviour of selecting text
  * when selecting multiple rows with SHIFT or CTRL/Meta.
  * @param {jQuery.Event} event Event.
  * @export

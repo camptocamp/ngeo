@@ -82,7 +82,7 @@ gmf.displayquerygridDirective = function(
       'removeEmptyColumnsFn': '&?gmfDisplayquerygridRemoveemptycolumns',
       'maxResultsFn': '&?gmfDisplayquerygridMaxresults',
       'maxRecenterZoomFn': '&?gmfDisplayquerygridMaxrecenterzoom',
-      'mergeTabsFn': '&gmfDisplayquerygridMergetabs'
+      'mergeTabsFn': '&?gmfDisplayquerygridMergetabs'
     }
   };
 };
@@ -281,7 +281,7 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
 /**
  * Returns a list of grid sources in the order they were loaded.
  * @export
- * @return {Array.<gmfx.GridSource>} Ordered list of grid sources.
+ * @return {Array.<gmfx.GridSource>} Grid sources.
  */
 gmf.DisplayquerygridController.prototype.getGridSources = function() {
   return this.loadedGridSources.map(function(sourceId) {
@@ -350,6 +350,7 @@ gmf.DisplayquerygridController.prototype.hasOneWithTooManyResults_ = function() 
 
 
 /**
+ * Returns if the given grid source is selected?
  * @export
  * @param {gmfx.GridSource} gridSource Grid source.
  * @return {boolean} Is selected?
@@ -363,6 +364,7 @@ gmf.DisplayquerygridController.prototype.isSelected = function(gridSource) {
  * Try to merge the mergable sources.
  * @param {Array.<ngeox.QueryResultSource>} sources Sources.
  * @return {Array.<ngeox.QueryResultSource>} The merged sources.
+ * @private
  */
 gmf.DisplayquerygridController.prototype.getMergedSources_ = function(sources) {
   var allSources = [];
@@ -395,6 +397,7 @@ gmf.DisplayquerygridController.prototype.getMergedSources_ = function(sources) {
  * @param {Object.<string, ngeox.QueryResultSource>} mergedSources Merged sources.
  * @return {?ngeox.QueryResultSource} A merged source of null if the source should
  *    not be merged.
+ * @private
  */
 gmf.DisplayquerygridController.prototype.getMergedSource_ = function(source, mergedSources) {
   var mergeSourceId = null;
@@ -610,6 +613,7 @@ gmf.DisplayquerygridController.prototype.clear = function() {
 
 
 /**
+ * Select the tab for the given grid source.
  * @param {gmfx.GridSource} gridSource Grid source.
  * @export
  */
@@ -639,6 +643,7 @@ gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
 
 /**
  * Called when the row selection has changed.
+ * @private
  */
 gmf.DisplayquerygridController.prototype.onSelectionChanged_ = function() {
   if (this.selectedTab === null) {
@@ -652,7 +657,7 @@ gmf.DisplayquerygridController.prototype.onSelectionChanged_ = function() {
 
 /**
  * @param {gmfx.GridSource} gridSource Grid source
- * @export
+ * @private
  */
 gmf.DisplayquerygridController.prototype.updateFeatures_ = function(gridSource) {
   this.features_.clear();
@@ -678,8 +683,9 @@ gmf.DisplayquerygridController.prototype.updateFeatures_ = function(gridSource) 
 
 
 /**
+ * Get the currently shown grid source.
  * @export
- * @return {gmfx.GridSource|null} The currently shown grid source.
+ * @return {gmfx.GridSource|null} Grid source.
  */
 gmf.DisplayquerygridController.prototype.getActiveGridSource = function() {
   if (this.selectedTab === null) {
@@ -691,8 +697,9 @@ gmf.DisplayquerygridController.prototype.getActiveGridSource = function() {
 
 
 /**
+ * Returns if a row of the currently active grid is selected?
  * @export
- * @return {boolean} Is a row of the currently active grid selected?
+ * @return {boolean} Is one selected?
  */
 gmf.DisplayquerygridController.prototype.isOneSelected = function() {
   var source = this.getActiveGridSource();
@@ -705,8 +712,9 @@ gmf.DisplayquerygridController.prototype.isOneSelected = function() {
 
 
 /**
+ * Returns the number of selected rows of the currently active grid.
  * @export
- * @return {number} The number of selected rows of the currently active grid.
+ * @return {number} The number of selected rows.
  */
 gmf.DisplayquerygridController.prototype.getSelectedRowCount = function() {
   var source = this.getActiveGridSource();
@@ -719,6 +727,7 @@ gmf.DisplayquerygridController.prototype.getSelectedRowCount = function() {
 
 
 /**
+ * Select all rows of the currently active grid.
  * @export
  */
 gmf.DisplayquerygridController.prototype.selectAll = function() {
@@ -730,6 +739,7 @@ gmf.DisplayquerygridController.prototype.selectAll = function() {
 
 
 /**
+ * Unselect all rows of the currently active grid.
  * @export
  */
 gmf.DisplayquerygridController.prototype.unselectAll = function() {
@@ -741,6 +751,7 @@ gmf.DisplayquerygridController.prototype.unselectAll = function() {
 
 
 /**
+ * Invert the selection of the currently active grid.
  * @export
  */
 gmf.DisplayquerygridController.prototype.invertSelection = function() {
@@ -752,6 +763,7 @@ gmf.DisplayquerygridController.prototype.invertSelection = function() {
 
 
 /**
+ * Zoom to the selected features.
  * @export
  */
 gmf.DisplayquerygridController.prototype.zoomToSelection = function() {
@@ -769,6 +781,7 @@ gmf.DisplayquerygridController.prototype.zoomToSelection = function() {
 
 
 /**
+ * Start a CSV download for the selected features.
  * @export
  */
 gmf.DisplayquerygridController.prototype.downloadCsv = function() {
