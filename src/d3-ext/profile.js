@@ -9,21 +9,23 @@ goog.require('goog.object');
  *
  *     var selection = d3.select('#element_id');
  *     var profile = ngeo.profile({
- *      distanceExtractor: function (item) {return item['dist'];)}
- *      linesConfiguration: {
- *        'lineZ1': {
- *          zExtractor: function (item) {return item['values']['z1'];)}
- *        },
- *        'lineZ2': {
- *          color: '#00F',
- *          zExtractor: function (item) {return item['values']['z2'];)}
- *        }
- *      hoverCallback: function(point, dist, xUnits, elevations, yUnits) {
- *        console.log(point.x, point.y);
- *      },
- *      outCallback: function() {
- *        console.log("out");
- *      }});
+ *       distanceExtractor: function (item) {return item['dist'];},
+ *       linesConfiguration: {
+ *         'lineZ1': {
+ *           zExtractor: function (item) {return item['values']['z1'];}
+ *         },
+ *         'lineZ2': {
+ *           color: '#00F',
+ *           zExtractor: function (item) {return item['values']['z2'];}
+ *         }
+ *       },
+ *       hoverCallback: function(point, dist, xUnits, elevations, yUnits) {
+ *         console.log(point.x, point.y);
+ *       },
+ *       outCallback: function() {
+ *         console.log("out");
+ *       }
+ *     });
  *     selection.datum(data).call(profile);
  *
  * The selection data must be an array.
