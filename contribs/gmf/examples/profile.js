@@ -25,11 +25,11 @@ var app = {};
 app.module = angular.module('app', ['gmf']);
 
 
-app.module.constant(
+app.module.value(
     'gmfProfileJsonUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.json');
 
-app.module.constant(
+app.module.value(
     'gmfProfileCsvUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.csv');
 

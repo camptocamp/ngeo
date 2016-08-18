@@ -7,9 +7,9 @@ goog.require('ngeo');
 /**
  * Directive used to export vector features in different types of format.
  * To configure which formats to use, define the `ngeoExportFeatureFormats`
- * constant, as such:
+ * value, as such:
  *
- *     app.module.constant('ngeoExportFeatureFormats', [
+ *     app.module.value('ngeoExportFeatureFormats', [
  *         ngeo.FeatureHelper.FormatType.KML,
  *         ngeo.FeatureHelper.FormatType.GPX
  *     ]);

@@ -21,7 +21,7 @@ var app = {};
 app.module = angular.module('app', ['gmf']);
 
 
-app.module.constant(
+app.module.value(
     'gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
         'version=2&background=background');
@@ -35,7 +35,7 @@ app.module.value('gmfPrintUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
 
 
-app.module.constant(
+app.module.value(
     'authenticationBaseUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi'
 );

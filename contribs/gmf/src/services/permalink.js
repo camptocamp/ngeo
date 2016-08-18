@@ -61,7 +61,7 @@ gmf.PermalinkParamPrefix = {
 };
 
 
-gmf.module.constant('gmfPermalinkOptions',
+gmf.module.value('gmfPermalinkOptions',
     /** @type {gmfx.PermalinkOptions} */ ({}));
 
 

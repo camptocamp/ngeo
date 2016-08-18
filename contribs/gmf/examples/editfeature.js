@@ -21,12 +21,12 @@ var app = {};
 app.module = angular.module('app', ['gmf']);
 
 
-app.module.constant(
+app.module.value(
     'authenticationBaseUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
 
 
-app.module.constant('gmfLayersUrl',
+app.module.value('gmfLayersUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
 
 

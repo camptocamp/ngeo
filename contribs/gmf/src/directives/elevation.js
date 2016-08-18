@@ -14,7 +14,7 @@ goog.require('ol.events.EventType');
  * Provide a directive that set a value each 500ms with the elevation under the
  * mouse cursor position on the map. The value must come from the elevation
  * service of a c2cgeoportal server. The server's URL must be defined as
- * constant of the application.
+ * config value of the application.
  *
  * Example:
  *

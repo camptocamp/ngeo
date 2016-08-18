@@ -25,7 +25,7 @@ var app = {};
 app.module = angular.module('app', ['ngeo']);
 
 
-app.module.constant('ngeoQueryOptions', {
+app.module.value('ngeoQueryOptions', {
   'limit': 20
 });
 

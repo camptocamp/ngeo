@@ -18,11 +18,11 @@ var app = {};
 app.module = angular.module('app', ['gmf']);
 
 
-app.module.constant(
+app.module.value(
     'gmfRasterUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
 
-app.module.constant(
+app.module.value(
     'gmfContextualdatacontentTemplateUrl',
     'partials/contextualdata.html');
 

@@ -9,7 +9,7 @@ describe('ngeo.WfsPermalink', function() {
 
   beforeEach(function() {
     module('ngeo', function($provide) {
-      $provide.constant('ngeoWfsPermalinkOptions', {
+      $provide.value('ngeoWfsPermalinkOptions', {
         url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
         wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
         defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',

@@ -64,9 +64,9 @@ gmf.module.value('gmfSearchTemplateUrl',
  *      <script>
  *        (function() {
  *          var module = angular.module('app');
- *          module.constant('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 20}) | n}');
- *          module.constant('gmfSearchGroups', []);
- *          module.constant('gmfSearchActions', ['add_theme', 'add_group', 'add_layer']);
+ *          module.value('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 20}) | n}');
+ *          module.value('gmfSearchGroups', []);
+ *          module.value('gmfSearchActions', ['add_theme', 'add_group', 'add_layer']);
  *        })();
  *      </script>
  *
@@ -83,9 +83,9 @@ gmf.module.value('gmfSearchTemplateUrl',
  *      <script>
  *        (function() {
  *          var module = angular.module('app');
- *          module.constant('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 30, "partitionlimit": 5}) | n}');
- *          module.constant('gmfSearchGroups', ${dumps(fulltextsearch_groups) | n});
- *          module.constant('gmfSearchActions', []);
+ *          module.value('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 30, "partitionlimit": 5}) | n}');
+ *          module.value('gmfSearchGroups', ${dumps(fulltextsearch_groups) | n});
+ *          module.value('gmfSearchActions', []);
  *        })();
  *      </script>
  *
