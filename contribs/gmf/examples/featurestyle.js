@@ -20,7 +20,7 @@ var app = {};
 /** @type {!angular.Module} **/
 app.module = angular.module('app', ['gmf']);
 
-app.module.constant('ngeoMeasureDecimals', 2);
+app.module.value('ngeoMeasureDecimals', 2);
 
 
 /**

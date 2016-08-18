@@ -55,7 +55,7 @@ goog.require('ol.interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 
-gmf.module.constant('isDesktop', true);
+gmf.module.value('isDesktop', true);
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.sortableDirective');

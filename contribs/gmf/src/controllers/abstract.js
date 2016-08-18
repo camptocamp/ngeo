@@ -41,17 +41,17 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 
-gmf.module.constant('ngeoExportFeatureFormats', [
+gmf.module.value('ngeoExportFeatureFormats', [
   ngeo.FeatureHelper.FormatType.KML,
   ngeo.FeatureHelper.FormatType.GPX
 ]);
 
 
 // Filter to apply by default on all coordinates (such points in draw).
-gmf.module.constant('ngeoPointfilter', 'ngeoNumberCoordinates:0:{x} E, {y} N');
+gmf.module.value('ngeoPointfilter', 'ngeoNumberCoordinates:0:{x} E, {y} N');
 
 
-gmf.module.constant('ngeoQueryOptions', {
+gmf.module.value('ngeoQueryOptions', {
   'limit': 20
 });
 

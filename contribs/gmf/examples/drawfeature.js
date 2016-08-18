@@ -20,7 +20,7 @@ var app = {};
 app.module = angular.module('app', ['gmf']);
 
 
-app.module.constant('ngeoExportFeatureFormats', [
+app.module.value('ngeoExportFeatureFormats', [
   ngeo.FeatureHelper.FormatType.KML,
   ngeo.FeatureHelper.FormatType.GPX
 ]);

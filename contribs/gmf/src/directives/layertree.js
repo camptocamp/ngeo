@@ -49,7 +49,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * This directive creates a layertree based on the c2cgeoportal JSON themes
  * source and a {@link ngeo.layertreeDirective}. The controller used by this
  * directive defines some functions for each node that are created by a default
- * template. This default template can be overrided by setting the constant
+ * template. This default template can be overrided by setting the value
  * 'gmf.layertreeTemplateUrl' but you will have to adapt the
  * ngeoLayertreeTemplateUrl value too (to define the children's nodes template
  * path).

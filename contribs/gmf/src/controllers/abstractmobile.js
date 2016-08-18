@@ -28,9 +28,9 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
-gmf.module.constant('isMobile', true);
+gmf.module.value('isMobile', true);
 
-gmf.module.constant(
+gmf.module.value(
     'gmfRasterUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
 

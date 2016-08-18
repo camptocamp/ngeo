@@ -21,7 +21,7 @@ var app = {};
 /** @type {!angular.Module} **/
 app.module = angular.module('app', ['gmf']);
 
-app.module.constant('ngeoWfsPermalinkOptions',
+app.module.value('ngeoWfsPermalinkOptions',
     /** @type {ngeox.WfsPermalinkOptions} */ ({
       url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
       wfsTypes: [

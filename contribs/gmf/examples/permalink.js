@@ -21,7 +21,7 @@ var app = {};
 app.module = angular.module('app', ['gmf']);
 
 
-app.module.constant('gmfPermalinkOptions',
+app.module.value('gmfPermalinkOptions',
     /** @type {gmfx.PermalinkOptions} */ ({
       crosshairStyle: new ol.style.Style({
         image: new ol.style.RegularShape({

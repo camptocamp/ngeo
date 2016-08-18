@@ -23,7 +23,7 @@ goog.require('ol.proj');
  *         gmf-contextualdata-projections="::[21781,4326]">
  *
  * The content of the popover is managed in a partial that must be defined
- * using the `gmfContextualdatacontentTemplateUrl` constant. See
+ * using the `gmfContextualdatacontentTemplateUrl` value. See
  * `gmfContextualdatacontentDirective` for more detail.
  *
  * One can also provide a `gmf-contextualdata-callback` attribute in order to
