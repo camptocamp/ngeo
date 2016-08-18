@@ -235,7 +235,7 @@ gmf.TreeManager.prototype.addGroup_ = function(group) {
   if (alreadyAdded) {
     return false;
   }
-  children.push(group);
+  children.unshift(group);
   return true;
 };
 
