@@ -40,10 +40,12 @@ describe('gmf.TreeManager', function() {
     gmfTreeManager.addGroups([group1]);
     expect(gmfTreeManager.tree.children[0]).toEqual(group1);
     expect(gmfTreeManager.tree.children.length).toBe(1);
-    // Add another group, mode add. It will be added in children array.
+    // Add another group, mode add. It will be added first in children array.
     gmfTreeManager.setModeFlush(false);
     gmfTreeManager.addGroups([group0]);
-    expect(gmfTreeManager.tree.children[1]).toEqual(group0);
+    expect(gmfTreeManager.tree.children[0]).toEqual(group0);
+    // First group is always there, but in second position.
+    expect(gmfTreeManager.tree.children[1]).toEqual(group1);
   });
 
   it('Add a theme', function() {
@@ -81,8 +83,8 @@ describe('gmf.TreeManager', function() {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    expect(gmfTreeManager.tree.children[0]).toEqual(group0);
-    expect(gmfTreeManager.tree.children[1]).toEqual(group1);
+    expect(gmfTreeManager.tree.children[0]).toEqual(group1);
+    expect(gmfTreeManager.tree.children[1]).toEqual(group0);
   });
 
   it('Add a group by layer name', function() {
@@ -98,8 +100,8 @@ describe('gmf.TreeManager', function() {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    expect(gmfTreeManager.tree.children[0]).toEqual(group0);
-    expect(gmfTreeManager.tree.children[1]).toEqual(group1);
+    expect(gmfTreeManager.tree.children[0]).toEqual(group1);
+    expect(gmfTreeManager.tree.children[1]).toEqual(group0);
   });
 
   it('Remove a group', function() {
