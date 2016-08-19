@@ -20,6 +20,8 @@ goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
+/** @suppress {extraRequire} */
+goog.require('ngeo.modalDirective');
 goog.require('ol.Collection');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Modify');
@@ -83,6 +85,7 @@ gmf.module.directive(
 
 
 /**
+ * @param {angular.JQLite} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
@@ -100,7 +103,7 @@ gmf.module.directive(
  * @ngdoc controller
  * @ngname GmfEditfeatureController
  */
-gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
+gmf.EditfeatureController = function($element, $scope, $timeout, gettextCatalog,
     gmfEditFeature, gmfXSDAttributes, ngeoDecorateInteraction, ngeoEventHelper,
     ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 
@@ -133,6 +136,12 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @export
    */
   this.wmsLayer;
+
+  /**
+   * @type {angular.JQLite}
+   * @private
+   */
+  this.element_ = $element;
 
   /**
    * @type {!angular.Scope}
@@ -192,6 +201,14 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
+
+  /**
+   * Flag that controls the visibility of the modal that manages unsaved
+   * modifications.
+   * @type {boolean}
+   * @export
+   */
+  this.unsavedModificationsModalShown = false;
 
   /**
    * Flag that is toggled as soon as the feature changes, i.e. if any of its
@@ -443,6 +460,7 @@ gmf.EditfeatureController.prototype.cancel = function() {
   this.feature = null;
   this.features.clear();
   this.menu_.close();
+  this.unsavedModificationsModalShown = false;
 };
 
 
@@ -470,6 +488,20 @@ gmf.EditfeatureController.prototype.delete = function() {
   }
 };
 
+
+/**
+ * Called when the modal 'save' button is clicked. Do as if the user had
+ * clicked on the 'save' input button in the form, which allows the form
+ * to be validated.
+ * @export
+ */
+gmf.EditfeatureController.prototype.submit = function() {
+  // Use timeout to prevent the digest already in progress
+  // due to clicking on the modal button to throw an error.
+  this.timeout_(function() {
+    this.element_.find('input[type="submit"]').click();
+  }.bind(this), 0);
+};
 
 /**
  * Called after an insert, update or delete request.
@@ -623,9 +655,15 @@ gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
  * Called when the map is clicked.
  *
  * (1) If a vector feature was clicked, don't do anything (i.e. allow the
- *     interactions to do their bidings without selecting a new feature)
+ *     interactions to do their bidings without selecting a new feature).
  *
- * (2) Otherwise, launch a query to fetch the features at the clicked location
+ * (2) Otherwise, if there is a feature being edited and has unsaved
+ *     modifications, show the confirmation modal asking the user what to do
+ *     about it.
+ *
+ * (3) If there's no feature selected or we have one without unsaved
+ *     modifications, launch a query to fetch the features at the clicked
+ *     location.
  *
  * @param {ol.MapBrowserEvent} evt Event.
  * @private
@@ -652,7 +690,15 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
     return;
   }
 
-  // (2) Launch query to fetch features
+  // (2) If a feature is being edited and has unsaved changes, show modal
+  //     to let the user decide what to do
+  if (this.feature && this.dirty) {
+    this.unsavedModificationsModalShown = true;
+    this.scope_.$apply();
+    return;
+  }
+
+  // (3) Launch query to fetch features
   var coordinate = evt.coordinate;
   var map = this.map;
   var view = map.getView();
@@ -666,10 +712,10 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
   this.editFeatureService_.getFeatures([this.layer.id], extent).then(
     this.handleGetFeatures_.bind(this));
 
-  // (3) Clear any previously selected feature
+  // (4) Clear any previously selected feature
   this.cancel();
 
-  // (4) Pending
+  // (5) Pending
   this.pending = true;
 
   this.scope_.$apply();
