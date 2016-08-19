@@ -620,12 +620,39 @@ gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
 
 
 /**
+ * Called when the map is clicked.
+ *
+ * (1) If a vector feature was clicked, don't do anything (i.e. allow the
+ *     interactions to do their bidings without selecting a new feature)
+ *
+ * (2) Otherwise, launch a query to fetch the features at the clicked location
+ *
  * @param {ol.MapBrowserEvent} evt Event.
  * @private
  */
 gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
 
-  // (1) Launch query to fetch features
+  var pixel = evt.pixel;
+
+  // (1) Check if we clicked on an existing vector feature, i.e the one
+  //     selected. In that case, no need to do any further action.
+  var feature = this.map.forEachFeatureAtPixel(
+    pixel,
+    function(feature) {
+      var ret = false;
+      if (ol.array.includes(this.features.getArray(), feature)) {
+        ret = feature;
+      }
+      return ret;
+    }.bind(this),
+    null
+  );
+
+  if (feature) {
+    return;
+  }
+
+  // (2) Launch query to fetch features
   var coordinate = evt.coordinate;
   var map = this.map;
   var view = map.getView();
@@ -639,10 +666,10 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
   this.editFeatureService_.getFeatures([this.layer.id], extent).then(
     this.handleGetFeatures_.bind(this));
 
-  // (2) Clear any previously selected feature
+  // (3) Clear any previously selected feature
   this.cancel();
 
-  // (3) Pending
+  // (4) Pending
   this.pending = true;
 
   this.scope_.$apply();
