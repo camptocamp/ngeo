@@ -88,12 +88,12 @@ ngeo.interaction.Modify = function(options) {
   }));
 
 
-  goog.base(this, {
+  ol.interaction.Interaction.call(this, {
     handleEvent: goog.functions.TRUE
   });
 
 };
-goog.inherits(ngeo.interaction.Modify, ol.interaction.Interaction);
+ol.inherits(ngeo.interaction.Modify, ol.interaction.Interaction);
 
 
 /**
@@ -102,7 +102,7 @@ goog.inherits(ngeo.interaction.Modify, ol.interaction.Interaction);
  * @export
  */
 ngeo.interaction.Modify.prototype.setActive = function(active) {
-  goog.base(this, 'setActive', active);
+  ol.interaction.Interaction.prototype.setActive.call(this, active);
   this.setState_();
 };
 
@@ -124,7 +124,7 @@ ngeo.interaction.Modify.prototype.setMap = function(map) {
     }, this);
   }
 
-  goog.base(this, 'setMap', map);
+  ol.interaction.Interaction.prototype.setMap.call(this, map);
 
   if (map) {
     interactions.forEach(function(interaction) {

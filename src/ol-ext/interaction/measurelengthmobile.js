@@ -20,11 +20,11 @@ ngeo.interaction.MeasureLengthMobile = function(format, opt_options) {
 
   goog.object.extend(options, {displayHelpTooltip: false});
 
-  goog.base(this, format, options);
+  ngeo.interaction.MeasureLength.call(this, format, options);
 
 };
-goog.inherits(ngeo.interaction.MeasureLengthMobile,
-              ngeo.interaction.MeasureLength);
+ol.inherits(
+  ngeo.interaction.MeasureLengthMobile, ngeo.interaction.MeasureLength);
 
 
 /**

@@ -44,7 +44,7 @@ ngeo.RotateEventType = {
  */
 ngeo.RotateEvent = function(type, feature) {
 
-  goog.base(this, type);
+  ol.events.Event.call(this, type);
 
   /**
    * The feature being rotated.
@@ -54,7 +54,7 @@ ngeo.RotateEvent = function(type, feature) {
   this.feature = feature;
 
 };
-goog.inherits(ngeo.RotateEvent, ol.events.Event);
+ol.inherits(ngeo.RotateEvent, ol.events.Event);
 
 
 /**
@@ -151,14 +151,14 @@ ngeo.interaction.Rotate = function(options) {
    */
   this.centerFeatures_ = {};
 
-  goog.base(this, {
+  ol.interaction.Pointer.call(this, {
     handleDownEvent: this.handleDown_,
     handleDragEvent: this.handleDrag_,
     handleUpEvent: this.handleUp_
   });
 
 };
-goog.inherits(ngeo.interaction.Rotate, ol.interaction.Pointer);
+ol.inherits(ngeo.interaction.Rotate, ol.interaction.Pointer);
 
 
 /**
@@ -173,7 +173,7 @@ ngeo.interaction.Rotate.prototype.setActive = function(active) {
     this.keyPressListenerKey_ = null;
   }
 
-  goog.base(this, 'setActive', active);
+  ol.interaction.Pointer.prototype.setActive.call(this, active);
 
   if (active) {
     this.keyPressListenerKey_ = goog.events.listen(
@@ -255,7 +255,7 @@ ngeo.interaction.Rotate.prototype.removeFeature_ = function(feature) {
  */
 ngeo.interaction.Rotate.prototype.setMap = function(map) {
   this.overlay_.setMap(map);
-  goog.base(this, 'setMap', map);
+  ol.interaction.Pointer.prototype.setMap.call(this, map);
 };
 
 

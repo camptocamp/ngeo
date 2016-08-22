@@ -21,7 +21,7 @@ ngeo.interaction.MeasureArea = function(format, opt_options) {
 
   var options = opt_options !== undefined ? opt_options : {};
 
-  goog.base(this, options);
+  ngeo.interaction.Measure.call(this, options);
 
 
   /**
@@ -41,7 +41,7 @@ ngeo.interaction.MeasureArea = function(format, opt_options) {
   this.format = format;
 
 };
-goog.inherits(ngeo.interaction.MeasureArea, ngeo.interaction.Measure);
+ol.inherits(ngeo.interaction.MeasureArea, ngeo.interaction.Measure);
 
 
 /**

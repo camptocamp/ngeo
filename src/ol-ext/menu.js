@@ -30,7 +30,7 @@ ngeo.MenuEventType = {
  */
 ngeo.MenuEvent = function(type, action) {
 
-  goog.base(this, type);
+  ol.events.Event.call(this, type);
 
   /**
    * The action name that was clicked.
@@ -40,7 +40,7 @@ ngeo.MenuEvent = function(type, action) {
   this.action = action;
 
 };
-goog.inherits(ngeo.MenuEvent, ol.events.Event);
+ol.inherits(ngeo.MenuEvent, ol.events.Event);
 
 
 /**
@@ -130,10 +130,10 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
 
   options.element = contentEl[0];
 
-  goog.base(this, options);
+  ol.Overlay.call(this, options);
 
 };
-goog.inherits(ngeo.Menu, ol.Overlay);
+ol.inherits(ngeo.Menu, ol.Overlay);
 
 
 /**
@@ -157,7 +157,7 @@ ngeo.Menu.prototype.setMap = function(map) {
     olKeys.length = 0;
   }
 
-  goog.base(this, 'setMap', map);
+  ol.Overlay.prototype.setMap.call(this, map);
 
   if (map) {
     this.actions_.forEach(function(action) {

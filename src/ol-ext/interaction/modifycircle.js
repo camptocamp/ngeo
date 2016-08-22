@@ -36,7 +36,7 @@ goog.require('ol.structs.RBush');
  */
 ngeo.interaction.ModifyCircle = function(options) {
 
-  goog.base(this, {
+  ol.interaction.Pointer.call(this, {
     handleDownEvent: ngeo.interaction.ModifyCircle.handleDownEvent_,
     handleDragEvent: ngeo.interaction.ModifyCircle.handleDragEvent_,
     handleEvent: ngeo.interaction.ModifyCircle.handleEvent,
@@ -125,7 +125,7 @@ ngeo.interaction.ModifyCircle = function(options) {
       this.handleFeatureRemove_, this);
 
 };
-goog.inherits(ngeo.interaction.ModifyCircle, ol.interaction.Pointer);
+ol.inherits(ngeo.interaction.ModifyCircle, ol.interaction.Pointer);
 
 
 /**
@@ -201,7 +201,7 @@ ngeo.interaction.ModifyCircle.prototype.removeFeatureSegmentData_ = function(fea
  */
 ngeo.interaction.ModifyCircle.prototype.setMap = function(map) {
   this.overlay_.setMap(map);
-  goog.base(this, 'setMap', map);
+  ol.interaction.Pointer.prototype.setMap.call(this, map);
 };
 
 
