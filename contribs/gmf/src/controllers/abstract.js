@@ -109,14 +109,18 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @type {gmf.Authentication}
    */
   var gmfAuthentication = $injector.get('gmfAuthentication');
-  var loadThemes = function(evt) {
-    // reload themes when login status changes
+
+  var userChange = function(evt) {
     var roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
+    // Reload background layer when login status changes.
+    this.updateCurrentBackgroundLayer_(true);
+    // Reload themes when login status changes.
     gmfThemes.loadThemes(roleId);
-  };
-  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.READY, loadThemes);
-  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.LOGIN, loadThemes);
-  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.LOGOUT, loadThemes);
+  }.bind(this);
+
+  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.READY, userChange);
+  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.LOGIN, userChange);
+  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.LOGOUT, userChange);
 
   /**
    * @type {Array.<gmfx.SearchDirectiveDatasource>}
@@ -363,32 +367,44 @@ gmf.AbstractController = function(config, $scope, $injector) {
     });
   }.bind(this));
 
-  gmfThemes.getBgLayers().then(function(layers) {
-    // get the background from the permalink
-    var background = permalink.getBackgroundLayer(layers);
-    if (!background) {
-      // get the background from the user settings
-      var functionalities = this.gmfUser.functionalities;
-      if (functionalities) {
-        var defaultBasemapArray = functionalities.default_basemap;
-        if (defaultBasemapArray.length > 0) {
-          var defaultBasemapLabel = defaultBasemapArray[0];
-          background = ol.array.find(layers, function(layer) {
-            return layer.get('label') === defaultBasemapLabel;
-          });
+  /**
+   * @param {boolean} skipPermalink If True, don't use permalink
+   * background layer.
+   * @private
+   */
+  this.updateCurrentBackgroundLayer_ = function(skipPermalink) {
+    gmfThemes.getBgLayers().then(function(layers) {
+      var background;
+      if (!skipPermalink) {
+        // get the background from the permalink
+        background = permalink.getBackgroundLayer(layers);
+      }
+      if (!background) {
+        // get the background from the user settings
+        var functionalities = this.gmfUser.functionalities;
+        if (functionalities) {
+          var defaultBasemapArray = functionalities.default_basemap;
+          if (defaultBasemapArray.length > 0) {
+            var defaultBasemapLabel = defaultBasemapArray[0];
+            background = ol.array.find(layers, function(layer) {
+              return layer.get('label') === defaultBasemapLabel;
+            });
+          }
         }
       }
-    }
-    if (!background && layers[1]) {
-      // fallback to the layers list, use the second one because the first
-      // is the blank layer
-      background = layers[1];
-    }
+      if (!background && layers[1]) {
+        // fallback to the layers list, use the second one because the first
+        // is the blank layer
+        background = layers[1];
+      }
 
-    if (background) {
-      backgroundLayerMgr.set(this.map, background);
-    }
-  }.bind(this));
+      if (background) {
+        backgroundLayerMgr.set(this.map, background);
+      }
+    }.bind(this));
+  };
+
+  this.updateCurrentBackgroundLayer_(false);
 };
 
 
