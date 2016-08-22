@@ -95,7 +95,10 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       new ol.control.ScaleLine({
         target: document.getElementById('scaleline')
       }),
-      new ol.control.Zoom()
+      new ol.control.Zoom({
+        zoomInTipLabel: '',
+        zoomoutTipLabel: ''
+      })
     ],
     interactions: config.mapInteractions || ol.interaction.defaults({
       pinchRotate: false,
