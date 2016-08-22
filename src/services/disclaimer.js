@@ -40,7 +40,7 @@ ngeo.Disclaimer = function($sce, gettextCatalog, ngeoCreatePopup) {
    */
   this.createPopup_ = ngeoCreatePopup;
 
-  goog.base(this);
+  ngeo.Message.call(this);
 
   var container = angular.element('<div class="ngeo-disclaimer"></div>');
   angular.element(document.body).append(container);
@@ -59,7 +59,7 @@ ngeo.Disclaimer = function($sce, gettextCatalog, ngeoCreatePopup) {
   this.messages_ = {};
 
 };
-goog.inherits(ngeo.Disclaimer, ngeo.Message);
+ol.inherits(ngeo.Disclaimer, ngeo.Message);
 
 
 /**

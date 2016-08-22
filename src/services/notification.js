@@ -19,7 +19,7 @@ goog.require('ngeo.Message');
  */
 ngeo.Notification = function($timeout) {
 
-  goog.base(this);
+  ngeo.Message.call(this);
 
   /**
    * @type {angular.$timeout}
@@ -43,7 +43,7 @@ ngeo.Notification = function($timeout) {
   this.cache_ = {};
 
 };
-goog.inherits(ngeo.Notification, ngeo.Message);
+ol.inherits(ngeo.Notification, ngeo.Message);
 
 
 /**

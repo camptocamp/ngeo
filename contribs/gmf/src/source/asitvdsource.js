@@ -39,7 +39,7 @@ gmf.source.AsitVDTileGrid_ = new ol.tilegrid.WMTS({
  */
 gmf.source.AsitVD = function(options) {
 
-  goog.base(this, {
+  ol.source.WMTS.call(this, {
     attributions: [gmf.source.AsitVD.ATTRIBUTION_],
     url: 'https://ows{1-4}.asitvd.ch/wmts/1.0.0/{Layer}/default/default/0/' +
         '21781/{TileMatrix}/{TileRow}/{TileCol}.png',
@@ -52,7 +52,7 @@ gmf.source.AsitVD = function(options) {
     tileGrid: gmf.source.AsitVDTileGrid_
   });
 };
-goog.inherits(gmf.source.AsitVD, ol.source.WMTS);
+ol.inherits(gmf.source.AsitVD, ol.source.WMTS);
 
 
 /**

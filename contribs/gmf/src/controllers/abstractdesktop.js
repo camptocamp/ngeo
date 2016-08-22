@@ -194,8 +194,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    */
   this.profileLine = null;
 
-  goog.base(
-      this, config, $scope, $injector);
+  gmf.AbstractController.call(this, config, $scope, $injector);
 
   // close the login panel on successful login
   $scope.$watch(function() {
@@ -207,7 +206,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   }.bind(this));
 
 };
-goog.inherits(gmf.AbstractDesktopController, gmf.AbstractController);
+ol.inherits(gmf.AbstractDesktopController, gmf.AbstractController);
 
 
 gmf.module.controller(
