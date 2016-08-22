@@ -119,7 +119,10 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     view: new ol.View(viewConfig),
     controls: config.mapControls || [
       new ol.control.ScaleLine(),
-      new ol.control.Zoom()
+      new ol.control.Zoom({
+        zoomInTipLabel: '',
+        zoomoutTipLabel: ''
+      })
     ],
     interactions:
         config.mapInteractions ||
