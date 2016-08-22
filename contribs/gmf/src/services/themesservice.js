@@ -1,4 +1,5 @@
 goog.provide('gmf.Themes');
+goog.provide('gmf.ThemesEventType');
 
 goog.require('gmf');
 goog.require('ngeo.LayerHelper');
@@ -22,6 +23,14 @@ gmf.OgcServers;
  * }}
  */
 gmf.ThemesResponse;
+
+
+/**
+ * @enum {string}
+ */
+gmf.ThemesEventType = {
+  LOAD: 'load'
+};
 
 
 /**
@@ -412,6 +421,7 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
         window.alert(message);
       }
     }
+    this.dispatchEvent(gmf.ThemesEventType.LOAD);
     deferred.resolve(response.data);
   }.bind(this), function(response) {
     deferred.reject(response);
