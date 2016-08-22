@@ -401,6 +401,9 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
 
   goog.asserts.assert(this.treeUrl_, 'gmfTreeUrl should be defined.');
 
+  this.deferred_ = this.$q_.defer();
+  this.promise_ = this.deferred_.promise;
+
   var deferred = this.deferred_;
 
   this.$http_.get(this.treeUrl_, {

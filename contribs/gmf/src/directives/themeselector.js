@@ -187,7 +187,14 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
 
   }.bind(this);
 
-  this.gmfThemes_.getThemesObject().then(getThemesObjectSuccessFn);
+  ol.events.listen(
+    this.gmfThemes_,
+    gmf.ThemesEventType.LOAD,
+    function() {
+      this.gmfThemes_.getThemesObject().then(getThemesObjectSuccessFn);
+    },
+    this
+  );
 };
 
 
