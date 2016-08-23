@@ -64,6 +64,22 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
    */
   this.cache_ = {};
 
+  ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE,
+    this.handleThemesChange_, this);
+};
+
+
+/**
+ * Called when the themes change. Remove any existing sources first, then
+ * create and add sources from the loaded themes.
+ * @private
+ */
+gmf.QueryManager.prototype.handleThemesChange_ = function() {
+
+  this.sources_.length = 0;
+  this.cache_ = {};
+  this.ngeoQuery_.removeAllSources();
+
   this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
     var promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
       // create sources for each themes
