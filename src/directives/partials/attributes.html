@@ -3,7 +3,7 @@
       class="form-group"
       ng-repeat="attribute in ::attrCtrl.attributes">
     <div ng-if="attribute.type !== 'geometry'">
-      <label>{{::attribute.required ? "* " : ""}}{{ ::attribute.name | translate }}:</label>
+      <label class="control-label">{{ ::attribute.name | translate }} <span class="text-muted">{{::attribute.required ? "*" : ""}}</span></label>
       <div ng-switch="attribute.type">
         <select
             name="{{::attribute.name}}"

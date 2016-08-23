@@ -11,14 +11,21 @@
   </div>
 
   <div ng-switch-default>
-    <button
-        ng-click="efsCtrl.selectedLayer = null;"
-        class="btn btn-link btn-xs gmf-editfeatureselector-stopediting">
-      <span class="fa fa-times"></span>
-      {{'Stop editing' | translate}}
-    </button>
 
-    <h3>{{ efsCtrl.selectedLayer.name | translate }}</h3>
+    <div class="row">
+      <div class="col-sm-12">
+        <span translate>Currently editing: </span>
+        <b>{{ efsCtrl.selectedLayer.name | translate }}</b>
+        <span class="fa fa-pencil"></span>
+        <br>
+        <button
+            ng-click="efsCtrl.selectedLayer = null;"
+            class="btn btn-link btn-xs pull-right">
+          <span class="fa fa-times"></span>
+          {{'Stop editing' | translate}}
+        </button>
+      </div>
+    </div>
 
     <gmf-editfeature
         gmf-editfeature-layer="::efsCtrl.selectedLayer"
