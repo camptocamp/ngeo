@@ -51,7 +51,7 @@
               type="button"
               class="btn btn-default"
               data-dismiss="modal"
-              ng-click="efCtrl.cancel()">
+              ng-click="efCtrl.continueWithoutSaving()">
             {{'Continue without saving' | translate}}
           </button>
           <button
@@ -89,7 +89,7 @@
           title="{{'Save modifications | translate'}}"></input>
         <a
           class="btn btn-sm btn-default gmf-editfeature-btn-cancel"
-          ng-click="efCtrl.cancel()"
+          ng-click="efCtrl.confirmCancel()"
           ng-disabled="efCtrl.pending"
           title="{{'Cancel modifications | translate'}}"
           href>{{'Cancel' | translate}}</a>
