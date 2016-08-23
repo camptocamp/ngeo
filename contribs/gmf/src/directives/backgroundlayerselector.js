@@ -66,6 +66,7 @@ gmf.module.directive('gmfBackgroundlayerselector',
 
 /**
  * @constructor
+ * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
  * @param {gmf.Themes} gmfThemes Themes service.
@@ -74,7 +75,8 @@ gmf.module.directive('gmfBackgroundlayerselector',
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
  */
-gmf.BackgroundlayerselectorController = function(ngeoBackgroundLayerMgr, gmfThemes) {
+gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
+    gmfThemes) {
 
   /**
    * @type {ol.Map}
@@ -101,9 +103,20 @@ gmf.BackgroundlayerselectorController = function(ngeoBackgroundLayerMgr, gmfThem
    */
   this.bgLayers;
 
-  gmfThemes.getBgLayers().then(function(layers) {
-    this.bgLayers = layers;
-  }.bind(this));
+  /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
+
+  /**
+   * @type {Array.<ol.EventsKey>}
+   * @export
+   */
+  this.listenerKeys_ = [];
+
+  this.listenerKeys_.push(ol.events.listen(gmfThemes,
+    gmf.ThemesEventType.CHANGE, this.handleThemesChange_, this));
 
   /**
    * @type {ngeo.BackgroundLayerMgr}
@@ -111,18 +124,31 @@ gmf.BackgroundlayerselectorController = function(ngeoBackgroundLayerMgr, gmfThem
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
-  ol.events.listen(
+  this.listenerKeys_.push(ol.events.listen(
       this.backgroundLayerMgr_,
       ngeo.BackgroundEventType.CHANGE,
       function() {
         this.bgLayer = this.backgroundLayerMgr_.get(this.map);
       },
-      this);
+      this));
+
+  $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
 };
 
 gmf.module.controller('GmfBackgroundlayerselectorController',
     gmf.BackgroundlayerselectorController);
+
+
+/**
+ * Called when the themes changes. Set (or reset) the backround layers.
+ * @private
+ */
+gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function() {
+  this.gmfThemes_.getBgLayers().then(function(layers) {
+    this.bgLayers = layers;
+  }.bind(this));
+};
 
 
 /**
@@ -137,4 +163,13 @@ gmf.BackgroundlayerselectorController.prototype.setLayer = function(
   if (!opt_silent && this.select) {
     this.select();
   }
+};
+
+
+/**
+ * @private
+ */
+gmf.BackgroundlayerselectorController.prototype.handleDestroy_ = function() {
+  this.listenerKeys_.forEach(ol.events.unlistenByKey);
+  this.listenerKeys_.length = 0;
 };
