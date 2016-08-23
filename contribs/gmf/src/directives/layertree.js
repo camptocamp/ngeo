@@ -354,7 +354,9 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
       default:
         throw new Error('Node wrong type: ' + type);
     }
-    this.dataLayerGroup_.getLayers().insertAt(0, layer);
+    var position = this.gmfTreeManager_.tree.children.length -
+        this.gmfTreeManager_.layersToAddAtOnce | 0;
+    this.dataLayerGroup_.getLayers().insertAt(position, layer);
     return layer;
   }
 
