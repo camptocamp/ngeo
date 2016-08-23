@@ -520,15 +520,12 @@ ngeox.QuerySource.prototype.url;
  * to a layer that also has an ol3 WMS source object, then the latter may
  * contain more than one layer name within the LAYERS param. In that case,
  * this `validateLayerParams` property, when enabled, will make the query
- * service check if the layer name within its LAYERS params is currently inside
- * the layer source LAYERS params. If it's not there, then the source should
- * not be queried.
+ * service check if the layer name(s) within its LAYERS params is currently
+ * inside the layer source LAYERS params. If it's not there, then the source
+ * should not be queried.
  *
  * When setting this option, you must not set the wmsSource or layer if
  * it has an inner ol3 wms source object.
- *
- * Also, when using this option, your config `params` must also only have
- * one layer name set in the LAYERS property.
  * @type {boolean|undefined}
  */
 ngeox.QuerySource.prototype.validateLayerParams;

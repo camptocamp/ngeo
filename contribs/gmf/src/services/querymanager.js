@@ -152,9 +152,7 @@ gmf.QueryManager.prototype.createSources_ = function(node, ogcServers) {
           }
         }, this);
         layers = childLayerNames.join(',');
-        if (node.type === 'WMS' && childLayerNames.length == 1) {
-          validateLayerParams = true;
-        }
+        validateLayerParams = node.type === 'WMS';
       }
 
       var source = {

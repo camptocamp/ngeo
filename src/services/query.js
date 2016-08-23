@@ -423,10 +423,12 @@ ngeo.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
             'validateLayerParams option.'
         );
         var layerLayers = layerSource.getParams()['LAYERS'].split(',');
-        var cfgLayer = item.source.wmsSource.getParams()['LAYERS'];
-        goog.asserts.assert(cfgLayer.indexOf(',') === -1,
-            'The LAYERS param contains more than one item');
-        if (layerLayers.indexOf(cfgLayer) === -1) {
+        var cfgLayer = item.source.wmsSource.getParams()['LAYERS'].split(',');
+
+        var every = cfgLayer.every(function(layer) {
+          return layerLayers.indexOf(layer) != -1;
+        });
+        if (!every) {
           continue;
         }
       }
