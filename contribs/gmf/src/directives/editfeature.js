@@ -20,6 +20,8 @@ goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
+/** @suppress {extraRequire} */
+goog.require('ngeo.modalDirective');
 goog.require('ol.Collection');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Modify');
@@ -83,6 +85,7 @@ gmf.module.directive(
 
 
 /**
+ * @param {angular.JQLite} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
@@ -100,7 +103,7 @@ gmf.module.directive(
  * @ngdoc controller
  * @ngname GmfEditfeatureController
  */
-gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
+gmf.EditfeatureController = function($element, $scope, $timeout, gettextCatalog,
     gmfEditFeature, gmfXSDAttributes, ngeoDecorateInteraction, ngeoEventHelper,
     ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 
@@ -133,6 +136,12 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @export
    */
   this.wmsLayer;
+
+  /**
+   * @type {angular.JQLite}
+   * @private
+   */
+  this.element_ = $element;
 
   /**
    * @type {!angular.Scope}
@@ -192,6 +201,36 @@ gmf.EditfeatureController = function($scope, $timeout, gettextCatalog,
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
+
+  /**
+   * The last coordinate where the map click occured.
+   * @type {?ol.Coordinate}
+   * @private
+   */
+  this.lastCoordinate_ = null;
+
+  /**
+   * The last pixel where the map click occured.
+   * @type {?ol.Pixel}
+   * @private
+   */
+  this.lastPixel_ = null;
+
+  /**
+   * Flag enabled when the 'save' button of the confirm modal is clicked.
+   * After saving, the selected feature should be unselected.
+   * @type {boolean}
+   * @private
+   */
+  this.unselectAfterSave_ = false;
+
+  /**
+   * Flag that controls the visibility of the modal that manages unsaved
+   * modifications.
+   * @type {boolean}
+   * @export
+   */
+  this.unsavedModificationsModalShown = false;
 
   /**
    * Flag that is toggled as soon as the feature changes, i.e. if any of its
@@ -443,6 +482,62 @@ gmf.EditfeatureController.prototype.cancel = function() {
   this.feature = null;
   this.features.clear();
   this.menu_.close();
+  this.unsavedModificationsModalShown = false;
+};
+
+
+/**
+ * @private
+ */
+gmf.EditfeatureController.prototype.clearLastLocation_ = function() {
+  this.lastCoordinate_ = null;
+  this.lastPixel_ = null;
+};
+
+
+/**
+ * Check if there are unsaved modifications. If there aren't, then cancel.
+ * Used by the 'cancel' button in the template.
+ * @export
+ */
+gmf.EditfeatureController.prototype.confirmCancel = function() {
+  this.confirmUnsavedModifications_(false, true);
+  if (!this.unsavedModificationsModalShown) {
+    this.cancel();
+  }
+};
+
+
+/**
+ * Check if there's a feature selected and if it contains modifications
+ * (a.k.a. is dirty), then the confirmation modal is shown.
+ * @param {boolean} scopeApply Whether to force scope to refresh or not.
+ * @param {boolean} clearLastLocation Whether to clear the last map location
+ *     (i.e. pixel and coordinate) or not.
+ * @private
+ */
+gmf.EditfeatureController.prototype.confirmUnsavedModifications_ = function(
+  scopeApply, clearLastLocation
+) {
+  if (this.feature && this.dirty) {
+    this.unsavedModificationsModalShown = true;
+    if (scopeApply) {
+      this.scope_.$apply();
+    }
+  }
+
+  if (clearLastLocation) {
+    this.clearLastLocation_();
+  }
+};
+
+
+/**
+ * @export
+ */
+gmf.EditfeatureController.prototype.continueWithoutSaving = function() {
+  this.cancel();
+  this.manageLastLocation_(false);
 };
 
 
@@ -472,6 +567,21 @@ gmf.EditfeatureController.prototype.delete = function() {
 
 
 /**
+ * Called when the modal 'save' button is clicked. Do as if the user had
+ * clicked on the 'save' input button in the form, which allows the form
+ * to be validated.
+ * @export
+ */
+gmf.EditfeatureController.prototype.submit = function() {
+  // Use timeout to prevent the digest already in progress
+  // due to clicking on the modal button to throw an error.
+  this.timeout_(function() {
+    this.unselectAfterSave_ = true;
+    this.element_.find('input[type="submit"]').click();
+  }.bind(this), 0);
+};
+
+/**
  * Called after an insert, update or delete request.
  * @param {angular.$http.Response} resp Ajax response.
  * @private
@@ -482,6 +592,21 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
   if (features.length) {
     this.feature.setId(features[0].getId());
     this.layerHelper_.refreshWMSLayer(this.wmsLayer);
+  }
+
+  // If the save occured after saving from the confirmation modal and there
+  // was a last location set, manage it (i.e. act as if it had been clicked
+  // again).
+  if (this.unselectAfterSave_) {
+    this.unselectAfterSave_ = false;
+
+    if (this.lastCoordinate_) {
+      this.manageLastLocation_(false);
+    } else {
+      this.cancel();
+    }
+
+    this.clearLastLocation_();
   }
 };
 
@@ -620,20 +745,51 @@ gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
 
 
 /**
- * Called when the map is clicked.
- *
- * (1) If a vector feature was clicked, don't do anything (i.e. allow the
- *     interactions to do their bidings without selecting a new feature)
- *
- * (2) Otherwise, launch a query to fetch the features at the clicked location
+ * Called when the map is clicked. Manage the clicked location
+ * (i.e. coordinate and pixel).
  *
  * @param {ol.MapBrowserEvent} evt Event.
  * @private
  */
 gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
-
+  var coordinate = evt.coordinate;
   var pixel = evt.pixel;
 
+  this.lastCoordinate_ = coordinate;
+  this.lastPixel_ = pixel;
+
+  this.manageMapLocation_(coordinate, pixel, true);
+};
+
+
+/**
+ * Manage a map location (i.e. a coordinate and pixel), which triggers different
+ * kinds of actions depending on what is at that location and if there's already
+ * a feature selected.
+ *
+ * Can be called right after the map is clicked, or when the
+ * 'continue without saving' or 'save' actions are clicked in the confirmation
+ * modal, which act with the previously clicked location on the map.
+ *
+ * (1) If a vector feature was clicked, don't do anything (i.e. allow the
+ *     interactions to do their bidings without selecting a new feature).
+ *
+ * (2) Otherwise, if there is a feature being edited and has unsaved
+ *     modifications, show the confirmation modal asking the user what to do
+ *     about it.
+ *
+ * (3) If there's no feature selected or we have one without unsaved
+ *     modifications, launch a query to fetch the features at the clicked
+ *     location.
+ *
+ * @param {ol.Coordinate} coordinate The coordinate of the location
+ * @param {ol.Pixel} pixel The pixel of the location
+ * @param {boolean} scopeApply Whether to force scope to refresh or not.
+ * @private
+ */
+gmf.EditfeatureController.prototype.manageMapLocation_ = function(
+  coordinate, pixel, scopeApply
+) {
   // (1) Check if we clicked on an existing vector feature, i.e the one
   //     selected. In that case, no need to do any further action.
   var feature = this.map.forEachFeatureAtPixel(
@@ -652,8 +808,14 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
     return;
   }
 
-  // (2) Launch query to fetch features
-  var coordinate = evt.coordinate;
+  // (2) If a feature is being edited and has unsaved changes, show modal
+  //     to let the user decide what to do
+  this.confirmUnsavedModifications_(true, false);
+  if (this.unsavedModificationsModalShown) {
+    return;
+  }
+
+  // (3) Launch query to fetch features
   var map = this.map;
   var view = map.getView();
   var resolution = view.getResolution();
@@ -666,14 +828,31 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
   this.editFeatureService_.getFeatures([this.layer.id], extent).then(
     this.handleGetFeatures_.bind(this));
 
-  // (3) Clear any previously selected feature
+  // (4) Clear any previously selected feature
   this.cancel();
 
-  // (4) Pending
+  // (5) Pending
   this.pending = true;
 
-  this.scope_.$apply();
+  // (6) Scope apply
+  if (scopeApply) {
+    this.scope_.$apply();
+  }
+};
 
+
+/**
+ * If there is a last location set (coordinate and pixel), act as if that
+ * was clicked.
+ * @param {boolean} scopeApply Whether to force scope to refresh or not.
+ * @private
+ */
+gmf.EditfeatureController.prototype.manageLastLocation_ = function(scopeApply) {
+  if (!this.lastCoordinate_ || !this.lastPixel_) {
+    return;
+  }
+
+  this.manageMapLocation_(this.lastCoordinate_, this.lastPixel_, scopeApply);
 };
 
 
