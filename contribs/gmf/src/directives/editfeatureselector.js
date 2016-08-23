@@ -99,6 +99,12 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
   this.vectorLayer;
 
   /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
+
+  /**
    * @type {ngeo.EventHelper}
    * @private
    */
@@ -147,32 +153,21 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
    */
   this.selectedWMSLayer = null;
 
-  // TMP - The list of layer names to use. We'll keep this until we can use
-  //       those that are editable.
-  var layerNames = ['line', 'point', 'polygon'];
+  // Set layers
+  this.setLayersFromThemes_();
 
-  gmfThemes.getThemesObject().then(function(themes) {
-    if (!themes) {
-      return;
-    }
-    // Get an array with all nodes entities existing in "themes".
-    var flatNodes = [];
-    themes.forEach(function(theme) {
-      theme.children.forEach(function(group) {
-        this.getDistinctFlatNodes_(group, flatNodes);
-      }.bind(this));
-    }.bind(this));
-    flatNodes.forEach(function(node) {
-      // Get an array of all layers
-      if (node.children === undefined && layerNames.indexOf(node.name) !== -1) {
-        this.layers.push(node);
-        if (this.wmsLayers_[node.id]) {
-          this.availableLayers.push(node);
-        }
-      }
-    }.bind(this));
-
-  }.bind(this));
+  // Listen to the theme service LOAD event to update the layers
+  var uid = goog.getUid(this);
+  this.eventHelper_.addListenerKey(
+    uid,
+    ol.events.listen(
+      gmfThemes,
+      gmf.ThemesEventType.LOAD,
+      this.setLayersFromThemes_,
+      this
+    ),
+    true
+  );
 
   this.registerLayer_(this.dataLayerGroup_);
 
@@ -187,6 +182,43 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
     }.bind(this)
   );
 
+};
+
+
+/**
+ * Sets the layers and available layers from the existing themes. Called once
+ * in the constructor and once every time the LOAD event gets fired by the
+ * theme service.
+ * @private
+ */
+gmf.EditfeatureselectorController.prototype.setLayersFromThemes_ = function() {
+
+  // (1) Clear any existing layers in case the themes are reloaded
+  this.layers.length = 0;
+  this.availableLayers.length = 0;
+
+  // (2) Get layers
+  this.gmfThemes_.getThemesObject().then(function(themes) {
+    if (!themes) {
+      return;
+    }
+    // Get an array with all nodes entities existing in "themes".
+    var flatNodes = [];
+    themes.forEach(function(theme) {
+      theme.children.forEach(function(group) {
+        this.getDistinctFlatNodes_(group, flatNodes);
+      }.bind(this));
+    }.bind(this));
+    flatNodes.forEach(function(node) {
+      // Get an array of all layers
+      if (node.children === undefined && node.editable === true) {
+        this.layers.push(node);
+        if (this.wmsLayers_[node.id]) {
+          this.availableLayers.push(node);
+        }
+      }
+    }.bind(this));
+  }.bind(this));
 };
 
 
@@ -353,6 +385,8 @@ gmf.EditfeatureselectorController.prototype.handleLayersRemove_ = function(
  */
 gmf.EditfeatureselectorController.prototype.handleDestroy_ = function() {
   this.unregisterLayer_(this.dataLayerGroup_);
+  var uid = goog.getUid(this);
+  this.eventHelper_.clearListenerKey(uid);
 };
 
 
