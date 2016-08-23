@@ -116,7 +116,17 @@ gmf.ThemeselectorController = function($scope, ngeoLocation, gmfTreeManager,
     }
   }.bind(this));
 
-  ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE, this.setThemes_, this);
+  /**
+   * @type {Array.<ol.EventsKey>}
+   * @export
+   */
+  this.listenerKeys_ = [];
+
+  this.listenerKeys_.push(ol.events.listen(this.gmfThemes_,
+      gmf.ThemesEventType.CHANGE, this.setThemes_, this));
+
+  $scope.$on('$destroy', this.handleDestroy_.bind(this));
+
 };
 
 
@@ -158,6 +168,8 @@ gmf.ThemeselectorController.prototype.setLocationPath_ = function(themeId) {
  * @private
  */
 gmf.ThemeselectorController.prototype.setThemes_ = function() {
+
+  this.gmfTreeManager_.removeAll();
 
   /**
    * @param {Array.<GmfThemesNode>} themes Array of theme objects.
@@ -201,6 +213,15 @@ gmf.ThemeselectorController.prototype.setTheme = function(theme, opt_init) {
   if (theme) {
     this.gmfTreeManager_.addTheme(theme, opt_init);
   }
+};
+
+
+/**
+ * @private
+ */
+gmf.ThemeselectorController.prototype.handleDestroy_ = function() {
+  this.listenerKeys_.forEach(ol.events.unlistenByKey);
+  this.listenerKeys_.length = 0;
 };
 
 

@@ -414,6 +414,17 @@ gmf.TreeManager.prototype.removeGroup = function(group) {
 
 
 /**
+ * Remove all groups.
+ * @export
+ */
+gmf.TreeManager.prototype.removeAll = function() {
+  while (this.tree.children.length) {
+    this.removeGroup(this.tree.children[0]);
+  }
+};
+
+
+/**
  * Clone a group node and recursively set all child node `isChecked` using
  * the given list of layer names.
  * @param {GmfThemesNode} group The original group node.
