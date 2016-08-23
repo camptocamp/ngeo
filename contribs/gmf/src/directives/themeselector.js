@@ -4,6 +4,7 @@ goog.provide('gmf.themeselectorDirective');
 goog.require('gmf');
 goog.require('gmf.TreeManager');
 goog.require('gmf.Themes');
+goog.require('gmf.ThemesEventType');
 goog.require('ngeo.Location');
 
 
@@ -115,7 +116,7 @@ gmf.ThemeselectorController = function($scope, ngeoLocation, gmfTreeManager,
     }
   }.bind(this));
 
-  this.setThemes_();
+  ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE, this.setThemes_, this);
 };
 
 
