@@ -719,16 +719,15 @@ ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
 
   var data = format.writeFeatures(clones, writeOptions);
 
-  $('<a />', {
-    'download': fileName,
-    'href': [
-      'data:',
-      mimeType,
-      ';charset=utf-8,',
-      encodeURIComponent(data)
-    ].join(''),
-    'mimeType': mimeType
-  })[0].click();
+  // FF requires the link to be in the body
+  var hiddenElement = document.createElement('a');
+  document.body.appendChild(hiddenElement);
+  hiddenElement.href = 'data:' + mimeType + ';charset=utf-8,' + encodeURIComponent(data);
+  hiddenElement.target = '_blank';
+  hiddenElement.download = fileName;
+  hiddenElement.click();
+  document.body.removeChild(hiddenElement);
+
 };
 
 
