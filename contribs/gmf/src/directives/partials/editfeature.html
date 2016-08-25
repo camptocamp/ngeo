@@ -29,49 +29,90 @@
         </span>
       </span>
     </a>
-    <form
-      novalidate
-      name="form"
-      class="form gmf-editfeature-attributes-container"
-      ng-switch-default
-      ng-if="efCtrl.attributes">
-      <div class="row">
-        <div class="col-sm-12">
-          <a
-            class="close"
-            ng-click="efCtrl.cancel()"
-            ng-disabled="efCtrl.pending"
-            title="{{'Cancel modifications | translate'}}"
-            href>&times;</a>
+    <div ng-switch-default>
+      <ngeo-modal ng-model="efCtrl.unsavedModificationsModalShown">
+        <div class="modal-header">
+          <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="{{'Close' | translate}}">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            {{'Unsaved modifications!' | translate}}
+          </h4>
         </div>
-      </div>
-      <ngeo-attributes
-        ngeo-attributes-attributes="::efCtrl.attributes"
-        ngeo-attributes-disabled="efCtrl.pending"
-        ngeo-attributes-feature="::efCtrl.feature">
-      </ngeo-attributes>
-      <input
-        type="submit"
-        value="{{'Save' | translate}}"
-        class="btn btn-sm btn-default btn-primary"
-        ng-click="form.$valid && efCtrl.save()"
-        ng-disabled="!efCtrl.dirty"
-        title="{{'Save modifications | translate'}}"></input>
-      <a
-        class="btn btn-sm btn-default"
-        ng-click="efCtrl.cancel()"
-        ng-disabled="efCtrl.pending"
-        title="{{'Cancel modifications | translate'}}"
-        href>{{'Cancel' | translate}}</a>
-      <button
-        class="btn btn-sm btn-link pull-right"
-        ng-click="efCtrl.delete()"
-        ng-disabled="efCtrl.pending"
-        ng-show="efCtrl.featureId"
-        title="{{'Delete this feature | translate'}}">
-        <span class="fa fa-trash"></span>
-        {{'Delete' | translate}}
-      </button>
-    </form>
+        <div class="modal-body">
+          {{'There are unsaved changes.' | translate}}
+        </div>
+        <div class="modal-footer">
+          <button
+              type="button"
+              class="btn btn-default"
+              data-dismiss="modal"
+              ng-click="efCtrl.continueWithoutSaving()">
+            {{'Continue without saving' | translate}}
+          </button>
+          <button
+              type="button"
+              class="btn btn-primary"
+              data-dismiss="modal">
+            {{'Cancel' | translate}}
+          </button>
+          <button
+              type="button"
+              class="btn btn-default"
+              data-dismiss="modal"
+              ng-click="efCtrl.submit()">
+            {{'Save' | translate}}
+          </button>
+        </div>
+      </ngeo-modal>
+
+      <form
+        novalidate
+        name="form"
+        class="form gmf-editfeature-attributes-container"
+        ng-if="efCtrl.attributes">
+        <div class="row">
+          <div class="col-sm-12">
+            <a
+              class="close"
+              ng-click="efCtrl.cancel()"
+              ng-disabled="efCtrl.pending"
+              title="{{'Cancel modifications | translate'}}"
+              href>&times;</a>
+          </div>
+        </div>
+        <ngeo-attributes
+          ngeo-attributes-attributes="::efCtrl.attributes"
+          ngeo-attributes-disabled="efCtrl.pending"
+          ngeo-attributes-feature="::efCtrl.feature">
+        </ngeo-attributes>
+        <input
+          type="submit"
+          value="{{'Save' | translate}}"
+          class="btn btn-sm btn-default gmf-editfeature-btn-save"
+          ng-click="form.$valid && efCtrl.save()"
+          ng-disabled="!efCtrl.dirty"
+          title="{{'Save modifications | translate'}}"></input>
+        <a
+          class="btn btn-sm btn-default gmf-editfeature-btn-cancel"
+          ng-click="efCtrl.confirmCancel()"
+          ng-disabled="efCtrl.pending"
+          title="{{'Cancel modifications | translate'}}"
+          href>{{'Cancel' | translate}}</a>
+        <button
+          class="btn btn-sm btn-link gmf-editfeature-btn-delete"
+          ng-click="efCtrl.delete()"
+          ng-disabled="efCtrl.pending"
+          ng-show="efCtrl.featureId"
+          title="{{'Delete this feature | translate'}}">
+          <span class="fa fa-trash"></span>
+          {{'Delete' | translate}}
+        </button>
+      </form>
+    </div>
   </div>
 </div>
