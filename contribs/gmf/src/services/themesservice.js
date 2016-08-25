@@ -1,4 +1,5 @@
 goog.provide('gmf.Themes');
+goog.provide('gmf.ThemesEventType');
 
 goog.require('gmf');
 goog.require('ngeo.LayerHelper');
@@ -12,6 +13,14 @@ goog.require('ol.layer.Tile');
  * @typedef {Object<string, GmfOgcServer>}
  */
 gmf.OgcServers;
+
+
+/**
+ * @enum {string}
+ */
+gmf.ThemesEventType = {
+  CHANGE: 'change'
+};
 
 
 /**
@@ -102,6 +111,12 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
    * @private
    */
   this.promise_ = this.deferred_.promise;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.loaded_ = false;
 
   /**
    * @type {angular.$q.Promise}
@@ -392,7 +407,13 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
 
   goog.asserts.assert(this.treeUrl_, 'gmfTreeUrl should be defined.');
 
-  var deferred = this.deferred_;
+  if (this.loaded_) {
+    // reload the themes
+    this.deferred_ = this.$q_.defer();
+    this.promise_ = this.deferred_.promise;
+    this.bgLayerPromise_ = null;
+    this.loaded_ = false;
+  }
 
   this.$http_.get(this.treeUrl_, {
     params: opt_roleId !== undefined ? {
@@ -412,10 +433,12 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
         window.alert(message);
       }
     }
-    deferred.resolve(response.data);
+    this.deferred_.resolve(response.data);
+    this.dispatchEvent(gmf.ThemesEventType.CHANGE);
+    this.loaded_ = true;
   }.bind(this), function(response) {
-    deferred.reject(response);
-  });
+    this.deferred_.reject(response);
+  }.bind(this));
 };
 
 

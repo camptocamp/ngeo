@@ -1,4 +1,5 @@
 goog.require('gmf.Themes');
+goog.require('gmf.ThemesEventType');
 goog.require('gmf.test.data.themes');
 
 describe('gmf.Themes', function() {
@@ -40,6 +41,19 @@ describe('gmf.Themes', function() {
     var firstBgName = themes.background_layers[0].name;
     expect(responseFirstBgName).toBe(firstBgName);
     expect(response[1].get('querySourceIds')).toBeDefined();
+  });
+
+  it('Emit change event', function() {
+    var spy = jasmine.createSpy();
+    var eventSpy = jasmine.createSpy();
+    ol.events.listen(gmfThemes, gmf.ThemesEventType.CHANGE, eventSpy);
+
+    gmfThemes.promise_.then(spy);
+
+    gmfThemes.loadThemes();
+    $httpBackend.flush();
+
+    expect(spy.calls.count()).toBe(1);
   });
 
   it('Load themes', function() {

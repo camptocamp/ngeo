@@ -3,6 +3,7 @@ goog.provide('gmf.editfeatureselectorDirective');
 
 goog.require('gmf');
 goog.require('gmf.Themes');
+goog.require('gmf.ThemesEventType');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureDirective');
 goog.require('ngeo.EventHelper');
@@ -66,6 +67,12 @@ gmf.module.directive(
  */
 gmf.EditfeatureselectorController = function($scope, gmfThemes,
     ngeoEventHelper, ngeoLayerHelper) {
+
+  /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {boolean}
@@ -147,32 +154,8 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
    */
   this.selectedWMSLayer = null;
 
-  // TMP - The list of layer names to use. We'll keep this until we can use
-  //       those that are editable.
-  var layerNames = ['line', 'point', 'polygon'];
-
-  gmfThemes.getThemesObject().then(function(themes) {
-    if (!themes) {
-      return;
-    }
-    // Get an array with all nodes entities existing in "themes".
-    var flatNodes = [];
-    themes.forEach(function(theme) {
-      theme.children.forEach(function(group) {
-        this.getDistinctFlatNodes_(group, flatNodes);
-      }.bind(this));
-    }.bind(this));
-    flatNodes.forEach(function(node) {
-      // Get an array of all layers
-      if (node.children === undefined && layerNames.indexOf(node.name) !== -1) {
-        this.layers.push(node);
-        if (this.wmsLayers_[node.id]) {
-          this.availableLayers.push(node);
-        }
-      }
-    }.bind(this));
-
-  }.bind(this));
+  this.themesChangeListenerKey = ol.events.listen(this.gmfThemes_,
+      gmf.ThemesEventType.CHANGE, this.setLayersFromThemes_, this);
 
   this.registerLayer_(this.dataLayerGroup_);
 
@@ -353,6 +336,40 @@ gmf.EditfeatureselectorController.prototype.handleLayersRemove_ = function(
  */
 gmf.EditfeatureselectorController.prototype.handleDestroy_ = function() {
   this.unregisterLayer_(this.dataLayerGroup_);
+  ol.events.unlistenByKey(this.themesChangeListenerKey);
+};
+
+
+/**
+ * Sets the layers and available layers from the existing themes.
+ * Called every time the themes are changed.
+ * @private
+ */
+gmf.EditfeatureselectorController.prototype.setLayersFromThemes_ = function() {
+
+  // (1) Clear any existing layers in case the themes are reloaded
+  this.layers.length = 0;
+  this.availableLayers.length = 0;
+
+  // (2) Get layers
+  this.gmfThemes_.getThemesObject().then(function(themes) {
+    // Get an array with all nodes entities existing in "themes".
+    var flatNodes = [];
+    themes.forEach(function(theme) {
+      theme.children.forEach(function(group) {
+        this.getDistinctFlatNodes_(group, flatNodes);
+      }, this);
+    }, this);
+    flatNodes.forEach(function(node) {
+      // Get an array of all layers
+      if (node.children === undefined && node.editable) {
+        this.layers.push(node);
+        if (this.wmsLayers_[node.id]) {
+          this.availableLayers.push(node);
+        }
+      }
+    }, this);
+  }.bind(this));
 };
 
 

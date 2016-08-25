@@ -300,6 +300,17 @@ ngeo.Query.prototype.clear = function() {
 
 
 /**
+ * Remove all sources.
+ * @export
+ */
+ngeo.Query.prototype.removeAllSources = function() {
+  this.result_.sources.length = 0;
+  this.sources_.length = 0;
+  this.cache_ = {};
+};
+
+
+/**
  * Issue a new request using a given map and a given object, which can be
  * a coordinate or extent.
  *
