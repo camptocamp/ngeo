@@ -24,7 +24,6 @@
               <span class="caret"></span>
             </a>
             <gmf-themeselector class="dropdown-menu"
-              gmf-themeselector-defaulttheme="OSM"
               gmf-themeselector-currenttheme="mainCtrl.theme"
               gmf-themeselector-filter="::mainCtrl.filter">
             </gmf-themeselector>
@@ -276,6 +275,7 @@
         });
 
         var module = angular.module('app');
+        module.constant('defaultTheme', 'OSM');
         module.constant('defaultLang', 'en');
         module.constant('langUrls', langUrls);
         module.constant('cacheVersion', cacheVersion);

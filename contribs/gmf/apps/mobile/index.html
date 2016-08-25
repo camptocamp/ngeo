@@ -96,7 +96,6 @@
         id="themes"
         class="gmf-mobile-nav-slide"
         data-header-title="{{'Themes' | translate}}"
-        gmf-themeselector-defaulttheme="OSM"
         gmf-themeselector-currenttheme="mainCtrl.theme"
         gmf-themeselector-filter="::mainCtrl.filter"
         gmf-mobile-nav-back-on-click>
@@ -179,6 +178,7 @@
         });
 
         var module = angular.module('app');
+        module.constant('defaultTheme', 'OSM');
         module.constant('defaultLang', 'en');
         module.constant('langUrls', langUrls);
         module.constant('cacheVersion', cacheVersion);
