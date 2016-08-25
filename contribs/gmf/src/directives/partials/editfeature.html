@@ -35,6 +35,16 @@
       class="form gmf-editfeature-attributes-container"
       ng-switch-default
       ng-if="efCtrl.attributes">
+      <div class="row">
+        <div class="col-sm-12">
+          <a
+            class="close"
+            ng-click="efCtrl.cancel()"
+            ng-disabled="efCtrl.pending"
+            title="{{'Cancel modifications | translate'}}"
+            href>&times;</a>
+        </div>
+      </div>
       <ngeo-attributes
         ngeo-attributes-attributes="::efCtrl.attributes"
         ngeo-attributes-disabled="efCtrl.pending"
@@ -43,18 +53,18 @@
       <input
         type="submit"
         value="{{'Save' | translate}}"
-        class="btn btn-sm btn-default gmf-editfeature-btn-save"
+        class="btn btn-sm btn-default btn-primary"
         ng-click="form.$valid && efCtrl.save()"
         ng-disabled="!efCtrl.dirty"
         title="{{'Save modifications | translate'}}"></input>
       <a
-        class="btn btn-sm btn-default gmf-editfeature-btn-cancel"
+        class="btn btn-sm btn-default"
         ng-click="efCtrl.cancel()"
         ng-disabled="efCtrl.pending"
         title="{{'Cancel modifications | translate'}}"
         href>{{'Cancel' | translate}}</a>
       <button
-        class="btn btn-sm btn-link gmf-editfeature-btn-delete"
+        class="btn btn-sm btn-link pull-right"
         ng-click="efCtrl.delete()"
         ng-disabled="efCtrl.pending"
         ng-show="efCtrl.featureId"
