@@ -84,6 +84,12 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper, ngeoNotifi
   });
 
   /**
+   * @type {number}
+   * @public
+   */
+  this.layersToAddAtOnce = 0;
+
+  /**
    * @type {ngeo.StateManager}
    * @private
    */
@@ -143,8 +149,9 @@ gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
     if (!this.isModeFlush()) {
       //Initialization phase and state exists -> first-level groups must be read
       //from the stateManager
+      groupsNames.reverse();
       groupsNames.forEach(function(name) {
-        this.addGroupByName(name, true);
+        this.addGroupByName(name, true, groupsNames.length);
       }, this);
     } else {
       //Mode flush, check if treeGroups is a subset of firstLevelNodes.
@@ -166,7 +173,7 @@ gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
     }
 
   } else {
-    this.addGroups(firstLevelNodes);
+    this.addGroups(firstLevelNodes.reverse());
   }
 };
 
@@ -178,11 +185,15 @@ gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
  * @param{Array.<GmfThemesNode>} groups An array of gmf theme nodes.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param{boolean=} opt_silent if true notifyCantAddGroups_ is not called.
+ * @param{number=} opt_totalGroupsLength length of all group to add for this
+    action.
  * @return{boolean} True if the group has been added. False otherwise.
  * @export
  */
-gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent) {
+gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent,
+    opt_totalGroupsLength) {
   var groupNotAdded = [];
+  this.layersToAddAtOnce = opt_totalGroupsLength || groups.length;
 
   if (this.isModeFlush() && opt_add !== true) {
     this.tree.children.length = 0;
@@ -229,9 +240,10 @@ gmf.TreeManager.prototype.addGroup_ = function(group) {
   var alreadyAdded = false;
   children.some(function(child) {
     if (group.id === child.id) {
+      this.layersToAddAtOnce -= 1;
       return alreadyAdded = true;
     }
-  });
+  }, this);
   if (alreadyAdded) {
     return false;
   }
@@ -246,10 +258,14 @@ gmf.TreeManager.prototype.addGroup_ = function(group) {
  * @param{Array.<GmfThemesNodeCustom>} groups An array of object defining
  *     a theme node and an array of layer names to override.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
+ * @param{number=} opt_totalGroupsLength length of all group to add for this
+    action.
  * @export
  */
-gmf.TreeManager.prototype.addCustomGroups = function(groups, opt_add) {
+gmf.TreeManager.prototype.addCustomGroups = function(groups, opt_add,
+    opt_totalGroupsLength) {
   var groupNotAdded = [];
+  this.layersToAddAtOnce = opt_totalGroupsLength || groups.length;
 
   if (this.isModeFlush() && opt_add !== true) {
     this.tree.children.length = 0;
@@ -290,13 +306,16 @@ gmf.TreeManager.prototype.addThemeByName = function(themeName) {
  * if any corresponding group is found.
  * @param{string} groupName Name of the group to add.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
+ * @param{number=} opt_totalGroupsLength length of all group to add for this
+ *     user action.
  * @export
  */
-gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
+gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add,
+    opt_totalGroupsLength) {
   this.gmfThemes_.getThemesObject().then(function(themes) {
     var group = gmf.Themes.findGroupByName(themes, groupName);
     if (group) {
-      this.addGroups([group], opt_add);
+      this.addGroups([group], opt_add, false, opt_totalGroupsLength);
     }
   }.bind(this));
 };
