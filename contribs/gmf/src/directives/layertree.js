@@ -76,7 +76,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *    possible also open a new window.
  *
  * @htmlAttribute {Object} gmf-layertree-source One theme (JSON).
- * @htmlAttribute {Object<string, string>} gmf-layertree-dimensions Global dimensions object.
+ * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {ol.Map} gmf-layertree-map The map.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfLayertreeTemplate Template for the directive.
@@ -90,7 +90,7 @@ gmf.layertreeDirective = function(gmfLayertreeTemplate) {
     scope: {
       'map': '=gmfLayertreeMap',
       'tree': '=gmfLayertreeSource',
-      'dimensions': '=gmfLayertreeDimensions',
+      'dimensions': '=?gmfLayertreeDimensions',
       'openLinksInNewWindowFn': '&gmfLayertreeOpenlinksinnewwindow'
     },
     bindToController: true,
@@ -245,7 +245,7 @@ gmf.LayertreeController.prototype.updateDimensions_ = function(node) {
  * @private
  */
 gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node) {
-  if (node.dimensions) {
+  if (this.dimensions && node.dimensions) {
     var dimensions = {};
     for (var key in node.dimensions) {
       var value = this.dimensions[key];
