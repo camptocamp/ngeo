@@ -164,7 +164,7 @@ ngeo.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
   this.groups_[groupIndex].styleFunction = style === null ?
-      ol.style.defaultStyleFunction : ol.style.createStyleFunction(style);
+      ol.style.defaultStyleFunction : ol.style.Style.createFunction(style);
 };
 
 
