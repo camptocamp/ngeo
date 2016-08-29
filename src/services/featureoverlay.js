@@ -138,7 +138,7 @@ ngeo.FeatureOverlayMgr.prototype.getLayer = function() {
 ngeo.FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
   var groupIndex = this.groups_.length;
   this.groups_.push({
-    styleFunction: ol.style.defaultStyleFunction,
+    styleFunction: ol.style.Style.defaultFunction,
     features: {}
   });
   return new ngeo.FeatureOverlay(this, groupIndex);
@@ -164,7 +164,7 @@ ngeo.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
   this.groups_[groupIndex].styleFunction = style === null ?
-      ol.style.defaultStyleFunction : ol.style.Style.createFunction(style);
+      ol.style.Style.defaultFunction : ol.style.Style.createFunction(style);
 };
 
 
