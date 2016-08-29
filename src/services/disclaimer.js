@@ -148,7 +148,7 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
     var button = angular.element(
       '<button type="button" class="close" data-dismiss="alert" aria-label="' +
         this.gettextCatalog_.getString('Close') +
-        '"><span aria-hidden="true">&times;</span></button>');
+        '"><span aria-hidden="true" class="fa fa-times"></span></button>');
     var msg = angular.element('<span />').html(message.msg);
     el.append(button).append(msg);
 
