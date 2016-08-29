@@ -20,6 +20,7 @@ goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 goog.require('ol.structs.RBush');
+goog.require('ol.style.Style');
 
 
 /**
@@ -490,7 +491,7 @@ ngeo.interaction.ModifyCircle.prototype.setGeometryCoordinates_ = function(geome
  * @return {ol.StyleFunction} Styles.
  */
 ngeo.interaction.ModifyCircle.getDefaultStyleFunction = function() {
-  var style = ol.style.createDefaultEditingStyles();
+  var style = ol.style.Style.createDefaultEditing();
   return function(feature, resolution) {
     return style[ol.geom.GeometryType.POINT];
   };
