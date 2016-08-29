@@ -48,7 +48,7 @@ ngeo.AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
       code = 'EPSG:' + code;
     }
     proj = ol.proj.get(code);
-    if (proj !== undefined) {
+    if (proj !== null) {
       projections.push(proj);
     } else {
       console.error('The projection ' + code + ' is not defined in ol.proj.');
