@@ -351,6 +351,7 @@ ngeo.format.FeatureHash.encodeStyleFill_ = function(fillStyle, encodedStyles, op
   if (fillColor !== null) {
     goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
     var fillColorRgba = ol.color.asArray(fillColor);
+    goog.asserts.assert(Array.isArray(fillColorRgba), 'fill color must be an array');
     var fillColorHex = goog.color.rgbArrayToHex(fillColorRgba);
     if (encodedStyles.length > 0) {
       encodedStyles.push('\'');
@@ -372,6 +373,7 @@ ngeo.format.FeatureHash.encodeStyleStroke_ = function(strokeStyle, encodedStyles
   var strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
     var strokeColorRgba = ol.color.asArray(strokeColor);
+    goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
     var strokeColorHex = goog.color.rgbArrayToHex(strokeColorRgba);
     if (encodedStyles.length > 0) {
       encodedStyles.push('\'');
