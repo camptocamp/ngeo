@@ -2,6 +2,7 @@ goog.provide('ngeo.interaction.DrawAzimut');
 goog.provide('ngeo.interaction.MeasureAzimut');
 
 goog.require('goog.asserts');
+goog.require('goog.functions');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
