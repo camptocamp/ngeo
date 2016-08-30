@@ -277,7 +277,13 @@ gmf.Themes.prototype.getBgLayers = function() {
     // We assume no child is a layer group.
     var promises = item['children'].map(layerLayerCreationFn);
     return $q.all(promises).then(function(layers) {
-      var collection = layers ? new ol.Collection(layers) : undefined;
+      var collection;
+      if (layers) {
+        layers = layers.filter(function(l) {
+          return l;
+        });
+        collection = new ol.Collection(layers);
+      }
       var group = layerHelper.createBasicGroup(collection);
       callback(item, group);
       return group;
