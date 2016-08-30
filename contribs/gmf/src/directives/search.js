@@ -90,6 +90,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *      </script>
  *
  * @param {string} gmfSearchTemplateUrl URL to template.
+ * @htmlAttribute {string} gmf-search-input-value The input value (read only).
  * @htmlAttribute {ol.Map} gmf-search-map The map.
  * @htmlAttribute {TypeaheadOptions|undefined} gmf-search-options Addition Typeahead options.
  * @htmlAttribute {gmfx.SearchDirectiveDatasource} gmf-search-datasource
@@ -117,6 +118,9 @@ gmf.module.value('gmfSearchTemplateUrl',
 gmf.searchDirective = function(gmfSearchTemplateUrl) {
   return {
     restrict: 'E',
+    bindToController: {
+      'inputValue': '=?gmfSearchInputValue'
+    },
     scope: {
       'getMapFn': '&gmfSearchMap',
       'getDatasourcesFn': '&gmfSearchDatasources',
@@ -309,7 +313,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @type {string}
    * @export
    */
-  this.input_value = '';
+  this.inputValue = '';
 
   // Create each datasource
   for (var i = 0; i < this.datasources_.length; i++) {
@@ -707,7 +711,7 @@ gmf.SearchController.prototype.setStyleColor = function(color) {
 gmf.SearchController.prototype.setTTDropdownVisibility_ = function() {
   if (this.clearButton) {
     var ttDropdown = $('.twitter-typeahead .tt-menu');
-    (this.input_value) ? ttDropdown.show() : ttDropdown.hide();
+    (this.inputValue) ? ttDropdown.show() : ttDropdown.hide();
   }
 };
 
@@ -729,7 +733,7 @@ gmf.SearchController.prototype.clear = function() {
   var ttmenu = typeahead.children('.tt-menu');
   var inputs = typeahead.children('input');
   // clear model value, the 'real' input value and tt's suggestions
-  this.input_value = '';
+  this.inputValue = '';
   $(inputs[1]).typeahead('val', '');
   ttmenu.children('.tt-dataset').empty();
   this.setTTDropdownVisibility_();
