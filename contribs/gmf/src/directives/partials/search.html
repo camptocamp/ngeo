@@ -1,12 +1,12 @@
 <div class="gmf-search">
   <input type="text" placeholder="{{ctrl.placeholder || 'Search…' | translate}}"
     class="form-control"
-    ng-model="ctrl.input_value"
+    ng-model="ctrl.inputValue"
     ngeo-search="ctrl.options"
     ngeo-search-datasets="ctrl.datasets"
     ngeo-search-listeners="ctrl.listeners">
   <span class="clear-button ng-hide"
-    ng-hide="!ctrl.clearButton || ctrl.input_value == ''"
+    ng-hide="!ctrl.clearButton || ctrl.inputValue == ''"
     ng-click="ctrl.onClearButton()">
   </span>
 </div>
