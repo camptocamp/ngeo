@@ -3,11 +3,10 @@ goog.provide('ngeo.interaction.ModifyCircle');
 goog.require('goog.asserts');
 goog.require('ol');
 goog.require('ol.Collection');
-goog.require('ol.CollectionEventType');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent.EventType');
 goog.require('ol.MapBrowserPointerEvent');
-goog.require('ol.ViewHint');
+goog.require('ol.View');
 goog.require('ol.coordinate');
 goog.require('ol.events');
 goog.require('ol.extent');
@@ -21,6 +20,7 @@ goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 goog.require('ol.structs.RBush');
+goog.require('ol.style.Style');
 
 
 /**
@@ -119,9 +119,9 @@ ngeo.interaction.ModifyCircle = function(options) {
   this.features_ = options.features;
 
   this.features_.forEach(this.addFeature_, this);
-  ol.events.listen(this.features_, ol.CollectionEventType.ADD,
+  ol.events.listen(this.features_, ol.Collection.EventType.ADD,
       this.handleFeatureAdd_, this);
-  ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
+  ol.events.listen(this.features_, ol.Collection.EventType.REMOVE,
       this.handleFeatureRemove_, this);
 
 };
@@ -206,7 +206,7 @@ ngeo.interaction.ModifyCircle.prototype.setMap = function(map) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.handleFeatureAdd_ = function(evt) {
@@ -218,7 +218,7 @@ ngeo.interaction.ModifyCircle.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.handleFeatureRemove_ = function(evt) {
@@ -390,7 +390,7 @@ ngeo.interaction.ModifyCircle.handleEvent = function(mapBrowserEvent) {
   }
 
   var handled;
-  if (!mapBrowserEvent.map.getView().getHints()[ol.ViewHint.INTERACTING] &&
+  if (!mapBrowserEvent.map.getView().getHints()[ol.View.Hint.INTERACTING] &&
       mapBrowserEvent.type == ol.MapBrowserEvent.EventType.POINTERMOVE &&
       !this.handlingDownUpSequence) {
     this.handlePointerMove_(mapBrowserEvent);
@@ -491,7 +491,7 @@ ngeo.interaction.ModifyCircle.prototype.setGeometryCoordinates_ = function(geome
  * @return {ol.StyleFunction} Styles.
  */
 ngeo.interaction.ModifyCircle.getDefaultStyleFunction = function() {
-  var style = ol.style.createDefaultEditingStyles();
+  var style = ol.style.Style.createDefaultEditing();
   return function(feature, resolution) {
     return style[ol.geom.GeometryType.POINT];
   };

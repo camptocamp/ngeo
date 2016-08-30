@@ -4,7 +4,7 @@ goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
-goog.require('ol.object');
+goog.require('ol.obj');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('goog.uri.utils');
@@ -612,7 +612,7 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
 
       var getFeatures = function() {
         /** @type{olx.format.WFSWriteGetFeatureOptions} */
-        var options = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.object.assign({
+        var options = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.obj.assign({
           maxFeatures: this.limit_
         }, getFeatureOptions));
         var featureRequestXml = wfsFormat.writeGetFeature(options);
@@ -631,7 +631,7 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
       }.bind(this);
 
       if (this.queryCountFirst_) {
-        var getCountOptions = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.object.assign({
+        var getCountOptions = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.obj.assign({
           resultType: 'hits'
         }, getFeatureOptions));
         var featureCountXml = wfsFormat.writeGetFeature(getCountOptions);

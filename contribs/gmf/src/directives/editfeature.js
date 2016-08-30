@@ -417,7 +417,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
     uid,
     ol.events.listen(
       this.features,
-      ol.CollectionEventType.ADD,
+      ol.Collection.EventType.ADD,
       this.handleFeatureAdd_,
       this
     )
@@ -612,7 +612,7 @@ gmf.EditfeatureController.prototype.setAttributes_ = function(attributes) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {

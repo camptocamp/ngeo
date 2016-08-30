@@ -3,7 +3,6 @@ goog.provide('ngeo.interaction.ModifyRectangle');
 goog.require('goog.asserts');
 goog.require('ol');
 goog.require('ol.Collection');
-goog.require('ol.CollectionEventType');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.events');
@@ -97,9 +96,9 @@ ngeo.interaction.ModifyRectangle = function(options) {
    */
   this.cache_ = {};
 
-  ol.events.listen(this.features_, ol.CollectionEventType.ADD,
+  ol.events.listen(this.features_, ol.Collection.EventType.ADD,
       this.handleFeatureAdd_, this);
-  ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
+  ol.events.listen(this.features_, ol.Collection.EventType.REMOVE,
       this.handleFeatureRemove_, this);
 
   this.features_.forEach(this.addFeature_, this);
@@ -226,7 +225,7 @@ ngeo.interaction.ModifyRectangle.prototype.setMap = function(map) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.ModifyRectangle.prototype.handleFeatureAdd_ = function(evt) {
@@ -238,7 +237,7 @@ ngeo.interaction.ModifyRectangle.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 ngeo.interaction.ModifyRectangle.prototype.handleFeatureRemove_ = function(evt) {

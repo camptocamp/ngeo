@@ -231,7 +231,7 @@ gmf.EditfeatureselectorController.prototype.registerLayer_ = function(layer) {
       uid,
       ol.events.listen(
         layer.getLayers(),
-        ol.CollectionEventType.ADD,
+        ol.Collection.EventType.ADD,
         this.handleLayersAdd_,
         this
       )
@@ -240,7 +240,7 @@ gmf.EditfeatureselectorController.prototype.registerLayer_ = function(layer) {
       uid,
       ol.events.listen(
         layer.getLayers(),
-        ol.CollectionEventType.REMOVE,
+        ol.Collection.EventType.REMOVE,
         this.handleLayersRemove_,
         this
       )
@@ -308,7 +308,7 @@ gmf.EditfeatureselectorController.prototype.unregisterLayer_ = function(layer) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.EditfeatureselectorController.prototype.handleLayersAdd_ = function(evt) {
@@ -319,7 +319,7 @@ gmf.EditfeatureselectorController.prototype.handleLayersAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.EditfeatureselectorController.prototype.handleLayersRemove_ = function(

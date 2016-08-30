@@ -4,8 +4,6 @@ goog.provide('ngeo.FeatureOverlayMgr');
 goog.require('goog.object');
 goog.require('ngeo');
 goog.require('ol.Collection');
-goog.require('ol.CollectionEvent');
-goog.require('ol.CollectionEventType');
 goog.require('ol.Feature');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -140,7 +138,7 @@ ngeo.FeatureOverlayMgr.prototype.getLayer = function() {
 ngeo.FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
   var groupIndex = this.groups_.length;
   this.groups_.push({
-    styleFunction: ol.style.defaultStyleFunction,
+    styleFunction: ol.style.Style.defaultFunction,
     features: {}
   });
   return new ngeo.FeatureOverlay(this, groupIndex);
@@ -166,7 +164,7 @@ ngeo.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
   this.groups_[groupIndex].styleFunction = style === null ?
-      ol.style.defaultStyleFunction : ol.style.createStyleFunction(style);
+      ol.style.Style.defaultFunction : ol.style.Style.createFunction(style);
 };
 
 
@@ -253,18 +251,18 @@ ngeo.FeatureOverlay.prototype.clear = function() {
 ngeo.FeatureOverlay.prototype.setFeatures = function(features) {
   if (this.features_ !== null) {
     this.features_.clear();
-    ol.events.unlisten(this.features_, ol.CollectionEventType.ADD,
+    ol.events.unlisten(this.features_, ol.Collection.EventType.ADD,
         this.handleFeatureAdd_, this);
-    ol.events.unlisten(this.features_, ol.CollectionEventType.REMOVE,
+    ol.events.unlisten(this.features_, ol.Collection.EventType.REMOVE,
         this.handleFeatureRemove_, this);
   }
   if (features !== null) {
     features.forEach(function(feature) {
       this.addFeature(feature);
     }, this);
-    ol.events.listen(features, ol.CollectionEventType.ADD,
+    ol.events.listen(features, ol.Collection.EventType.ADD,
         this.handleFeatureAdd_, this);
-    ol.events.listen(features, ol.CollectionEventType.REMOVE,
+    ol.events.listen(features, ol.Collection.EventType.REMOVE,
         this.handleFeatureRemove_, this);
   }
   this.features_ = features;
@@ -283,7 +281,7 @@ ngeo.FeatureOverlay.prototype.setStyle = function(style) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Feature collection event.
+ * @param {ol.Collection.Event} evt Feature collection event.
  * @private
  */
 ngeo.FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
@@ -293,7 +291,7 @@ ngeo.FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Feature collection event.
+ * @param {ol.Collection.Event} evt Feature collection event.
  * @private
  */
 ngeo.FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {

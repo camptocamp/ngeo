@@ -292,9 +292,9 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     this.addNgeoFeature_(feature);
   }, this);
   this.ngeoFeatures_.extend(features);
-  ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.ADD,
+  ol.events.listen(this.ngeoFeatures_, ol.Collection.EventType.ADD,
     this.handleNgeoFeaturesAdd_, this);
-  ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.REMOVE,
+  ol.events.listen(this.ngeoFeatures_, ol.Collection.EventType.REMOVE,
     this.handleNgeoFeaturesRemove_, this);
 
   this.rootScope_.$on('$localeChangeSuccess', function() {
@@ -679,9 +679,9 @@ gmf.Permalink.prototype.initLayers_ = function() {
   var layersUid = goog.getUid(layers);
 
   this.addListenerKey_(layersUid, ol.events.listen(layers,
-      ol.CollectionEventType.ADD, this.handleLayersAdd_, this));
+      ol.Collection.EventType.ADD, this.handleLayersAdd_, this));
   this.addListenerKey_(layersUid, ol.events.listen(layers,
-      ol.CollectionEventType.REMOVE, this.handleLayersRemove_, this));
+      ol.Collection.EventType.REMOVE, this.handleLayersRemove_, this));
 
   // (2) at this point, the initialization is complete. We now need to listen
   //     to any change happening to the existing layers and any added or
@@ -789,7 +789,7 @@ gmf.Permalink.prototype.initMergedLayer_ = function(layer, layerNames) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.Permalink.prototype.handleLayersAdd_ = function(evt) {
@@ -800,7 +800,7 @@ gmf.Permalink.prototype.handleLayersAdd_ = function(evt) {
 
 
 /**
- * @param {ol.CollectionEvent} evt Event.
+ * @param {ol.Collection.Event} evt Event.
  * @private
  */
 gmf.Permalink.prototype.handleLayersRemove_ = function(evt) {
@@ -825,9 +825,9 @@ gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
     // set up a listener on group layers because layers can also later be added
     // to a group
     this.addListenerKey_(layerUid, ol.events.listen(layer.getLayers(),
-        ol.CollectionEventType.ADD, this.handleLayersAdd_, this));
+        ol.Collection.EventType.ADD, this.handleLayersAdd_, this));
     this.addListenerKey_(layerUid, ol.events.listen(layer.getLayers(),
-        ol.CollectionEventType.REMOVE, this.handleLayersRemove_, this));
+        ol.Collection.EventType.REMOVE, this.handleLayersRemove_, this));
 
     layer.getLayers().forEach(function(layer) {
       this.registerLayer_(layer, opt_init);
@@ -1121,7 +1121,7 @@ gmf.Permalink.prototype.unregisterDataLayerGroup_ = function() {
 
 
 /**
- * @param {ol.CollectionEvent} event Collection event.
+ * @param {ol.Collection.Event} event Collection event.
  * @private
  */
 gmf.Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
@@ -1132,7 +1132,7 @@ gmf.Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
 
 
 /**
- * @param {ol.CollectionEvent} event Collection event.
+ * @param {ol.Collection.Event} event Collection event.
  * @private
  */
 gmf.Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {
