@@ -27,16 +27,14 @@ goog.require('ngeo.proj.EPSG21781');
  * @export
  */
 app.MobileController = function($scope, $injector) {
-  goog.base(
-      this, {
-        srid: 21781,
-        mapViewConfig: {
-          center: [632464, 185457],
-          zoom: 3,
-          resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
-        }
-      },
-      $scope, $injector);
+  gmf.AbstractMobileController.call(this, {
+    srid: 21781,
+    mapViewConfig: {
+      center: [632464, 185457],
+      zoom: 3,
+      resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
+    }
+  }, $scope, $injector);
 
   /**
    * @type {Array.<string>}
@@ -51,7 +49,7 @@ app.MobileController = function($scope, $injector) {
   this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
 };
-goog.inherits(app.MobileController, gmf.AbstractMobileController);
+ol.inherits(app.MobileController, gmf.AbstractMobileController);
 
 
 app.module.controller('MobileController', app.MobileController);

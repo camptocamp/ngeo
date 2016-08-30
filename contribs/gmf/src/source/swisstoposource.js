@@ -43,7 +43,7 @@ gmf.source.Swisstopo = function(options) {
 
   var format = options.format ? options.format : 'png';
 
-  goog.base(this, {
+  ol.source.WMTS.call(this, {
     attributions: [gmf.source.Swisstopo.ATTRIBUTION_],
     url: 'https://wmts{5-9}.geo.admin.ch/1.0.0/{Layer}/default/{Time}' +
         '/21781/{TileMatrix}/{TileRow}/{TileCol}.' + format,
@@ -59,7 +59,7 @@ gmf.source.Swisstopo = function(options) {
     tileGrid: gmf.source.SwisstopoTileGrid_
   });
 };
-goog.inherits(gmf.source.Swisstopo, ol.source.WMTS);
+ol.inherits(gmf.source.Swisstopo, ol.source.WMTS);
 
 
 /**

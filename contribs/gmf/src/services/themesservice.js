@@ -51,7 +51,7 @@ gmf.ThemesResponse;
  */
 gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
 
-  goog.base(this);
+  ol.events.EventTarget.call(this);
 
   /**
    * @type {angular.$q}
@@ -125,7 +125,7 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
   this.bgLayerPromise_ = null;
 
 };
-goog.inherits(gmf.Themes, ol.events.EventTarget);
+ol.inherits(gmf.Themes, ol.events.EventTarget);
 
 
 /**

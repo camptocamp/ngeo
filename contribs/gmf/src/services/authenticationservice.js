@@ -78,7 +78,7 @@ gmf.AuthenticationEventType = {
  */
 gmf.AuthenticationEvent = function(type, user) {
 
-  goog.base(this, type);
+  ol.events.Event.call(this, type);
 
   /**
    * The logged-in user.
@@ -87,7 +87,7 @@ gmf.AuthenticationEvent = function(type, user) {
   this.user = user;
 
 };
-goog.inherits(gmf.AuthenticationEvent, ol.events.Event);
+ol.inherits(gmf.AuthenticationEvent, ol.events.Event);
 
 
 /**
@@ -111,7 +111,7 @@ goog.inherits(gmf.AuthenticationEvent, ol.events.Event);
  */
 gmf.Authentication = function($http, authenticationBaseUrl, gmfUser) {
 
-  goog.base(this);
+  ol.events.EventTarget.call(this);
 
   /**
    * @type {angular.$http}
@@ -133,7 +133,7 @@ gmf.Authentication = function($http, authenticationBaseUrl, gmfUser) {
 
   this.load_();
 };
-goog.inherits(gmf.Authentication, ol.events.EventTarget);
+ol.inherits(gmf.Authentication, ol.events.EventTarget);
 
 
 /**

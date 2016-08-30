@@ -129,7 +129,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
         ol.interaction.defaults({pinchRotate: false})
   });
 
-  goog.base(this, config, $scope, $injector);
+  gmf.AbstractController.call(this, config, $scope, $injector);
 
 
   var dragEl = document.querySelector('main');
@@ -166,7 +166,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     }
   }).bind(this));
 };
-goog.inherits(gmf.AbstractMobileController, gmf.AbstractController);
+ol.inherits(gmf.AbstractMobileController, gmf.AbstractController);
 
 
 /**

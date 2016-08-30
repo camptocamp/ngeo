@@ -14,16 +14,15 @@ goog.require('ngeo.Time');
  */
 gmf.WMSTime  = function($filter) {
 
-
   /**
    * @private
    * @type {angular.$filter}
    */
   this.$filter_ = $filter;
 
-  goog.base(this);
+  ngeo.Time.call(this);
 };
-goog.inherits(gmf.WMSTime, ngeo.Time);
+ol.inherits(gmf.WMSTime, ngeo.Time);
 
 
 /**

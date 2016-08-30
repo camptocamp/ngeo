@@ -33,15 +33,14 @@ gmf.module.value('ngeoQueryOptions', {
  * @export
  */
 app.AlternativeDesktopController = function($scope, $injector) {
-  goog.base(
-      this, {
-        srid: 21781,
-        mapViewConfig: {
-          center: [632464, 185457],
-          zoom: 3,
-          resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
-        }
-      }, $scope, $injector);
+  gmf.AbstractDesktopController.call(this, {
+    srid: 21781,
+    mapViewConfig: {
+      center: [632464, 185457],
+      zoom: 3,
+      resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
+    }
+  }, $scope, $injector);
 
   /**
    * @type {Array.<string>}
@@ -101,7 +100,7 @@ app.AlternativeDesktopController = function($scope, $injector) {
     'merged_osm_times': ['110', '126', '147']
   };
 };
-goog.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
+ol.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
 
 
 app.module.controller('AlternativeDesktopController', app.AlternativeDesktopController);
