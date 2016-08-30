@@ -87,6 +87,13 @@ app.DesktopController = function($scope, $injector) {
     label: 'WGS84',
     filter: 'ngeoDMSCoordinates:2'
   }];
+
+  // Allow angular-gettext-tools to collect the strings to translate
+  /** @type {angularGettext.Catalog} */
+  var gettextCatalog = $injector.get('gettextCatalog');
+  gettextCatalog.getString('Add a theme');
+  gettextCatalog.getString('Add a sub theme');
+  gettextCatalog.getString('Add a layer');
 };
 ol.inherits(app.DesktopController, gmf.AbstractDesktopController);
 
