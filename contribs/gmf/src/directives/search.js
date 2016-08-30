@@ -90,6 +90,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *      </script>
  *
  * @param {string} gmfSearchTemplateUrl URL to template.
+ * @htmlAttribute {string} gmf-search-input-value The input value (read only).
  * @htmlAttribute {ol.Map} gmf-search-map The map.
  * @htmlAttribute {TypeaheadOptions|undefined} gmf-search-options Addition Typeahead options.
  * @htmlAttribute {gmfx.SearchDirectiveDatasource} gmf-search-datasource
@@ -117,6 +118,9 @@ gmf.module.value('gmfSearchTemplateUrl',
 gmf.searchDirective = function(gmfSearchTemplateUrl) {
   return {
     restrict: 'E',
+    bindToController: {
+      'input_value': '=?gmfSearchInputValue'
+    },
     scope: {
       'getMapFn': '&gmfSearchMap',
       'getDatasourcesFn': '&gmfSearchDatasources',
