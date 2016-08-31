@@ -44,6 +44,7 @@ goog.require('ol.style.Text');
  * Example:
  *
  *     <gmf-editfeature
+ *         gmf-editfeature-dirty="ctrl.dirty"
  *         gmf-editfeature-layer="::ctrl.layer"
  *         gmf-editfeature-map="::ctrl.map"
  *         gmf-editfeature-state="efsCtrl.state"
@@ -71,6 +72,7 @@ gmf.editfeatureDirective = function() {
   return {
     controller: 'GmfEditfeatureController',
     scope: {
+      'dirty': '=gmfEditfeatureDirty',
       'layer': '=gmfEditfeatureLayer',
       'map': '<gmfEditfeatureMap',
       'state': '=gmfEditfeatureState',
@@ -113,6 +115,14 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
     ngeoEventHelper, ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 
   /**
+   * Flag that is toggled as soon as the feature changes, i.e. if any of its
+   * properties change, which includes the geometry.
+   * @type {boolean}
+   * @export
+   */
+  this.dirty = this.dirty === true;
+
+  /**
    * @type {GmfThemesNode}
    * @export
    */
@@ -137,10 +147,14 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
       return this.state;
     }.bind(this),
     function(newValue, oldValue) {
-      if (newValue === gmf.EditfeatureController.State.STOP_EDITING_PENDING) {
+      var state = gmf.EditfeatureController.State;
+      if (newValue === state.STOP_EDITING_PENDING) {
         this.confirmCancel().then(function() {
-          this.state =
-            gmf.EditfeatureController.State.STOP_EDITING_EXECUTE;
+          this.state = state.STOP_EDITING_EXECUTE;
+        }.bind(this));
+      } else if (newValue === state.DEACTIVATE_PENDING) {
+        this.confirmCancel().then(function() {
+          this.state = state.DEACTIVATE_EXECUTE;
         }.bind(this));
       }
     }.bind(this)
@@ -262,14 +276,6 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
       }
     }.bind(this)
   );
-
-  /**
-   * Flag that is toggled as soon as the feature changes, i.e. if any of its
-   * properties change, which includes the geometry.
-   * @type {boolean}
-   * @private
-   */
-  this.dirty = false;
 
   /**
    * Flag that is toggled while a request is pending, either one to get
@@ -1057,6 +1063,18 @@ gmf.EditfeatureController.State = {
    * @type {string}
    */
   IDLE: 'idle',
+  /**
+   * The state active after the deactivation of the editing tools and the
+   * unsaved modifications were saved or discarded.
+   * @type {string}
+   */
+  DEACTIVATE_EXECUTE: 'execute',
+  /**
+   * The state active when the deactivation of the editing tools is in
+   * progress while there are unsaved modifications.
+   * @type {string}
+   */
+  DEACTIVATE_PENDING: 'pending',
   /**
    * Final state set after the "stop editing" button has been clicked while
    * no unsaved modifications were made or if the user saved them or confirmed
