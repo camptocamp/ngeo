@@ -22,7 +22,7 @@ describe('gmf.Themes', function() {
 
   it('Get background layers', function() {
     var spy = jasmine.createSpy();
-    gmfThemes.getBgLayers().then(spy);
+    gmfThemes.getBgLayers({}).then(spy);
 
     $httpBackend.expectGET(treeUrl);
     themes.background_layers.forEach(function(bgLayer) {

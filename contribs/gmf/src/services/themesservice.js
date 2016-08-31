@@ -173,9 +173,10 @@ gmf.Themes.findGroupByName = function(themes, name) {
 
 /**
  * Find an object by its name. Return null if not found.
- * @param {Array.<Object>} objects Array of objects.
+ * @param {Array.<T>} objects Array of objects with a 'name' attribute.
  * @param {string} objectName The object name.
- * @return {Object} The object.
+ * @return {T} The object.
+ * @template T
  * @private
  */
 gmf.Themes.findObjectByName_ = function(objects, objectName) {
@@ -192,8 +193,7 @@ gmf.Themes.findObjectByName_ = function(objects, objectName) {
  * @return {GmfThemesNode} The theme object.
  */
 gmf.Themes.findThemeByName = function(themes, themeName) {
-  var theme = gmf.Themes.findObjectByName_(themes, themeName);
-  return /** @type {GmfThemesNode} */ (theme);
+  return gmf.Themes.findObjectByName_(themes, themeName);
 };
 
 
@@ -240,42 +240,74 @@ gmf.Themes.getFlatNodes = function(node, nodes) {
 
 /**
  * Get background layers.
- * @return {angular.$q.Promise} Promise.
+ * @param {Object.<string, string>} appDimensions Dimensions.
+ * @return {angular.$q.Promise.<Array.<GmfThemesNode>>} Promise.
  */
-gmf.Themes.prototype.getBgLayers = function() {
+gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   if (this.bgLayerPromise_) {
     return this.bgLayerPromise_;
   }
   var $q = this.$q_;
   var layerHelper = this.layerHelper_;
 
+  /**
+   * @param {GmfThemesNode} item The item.
+   * @param {ol.layer.Base} layer The layer.
+   * @return {ol.layer.Base} the provided layer.
+   */
   var callback = function(item, layer) {
-    layer.set('label', item['name']);
-    layer.set('metadata', item['metadata']);
-    layer.set('dimensions', item['dimensions']);
+    layer.set('label', item.name);
+    layer.set('metadata', item.metadata);
+    layer.set('dimensions', item.dimensions);
     var ids = gmf.LayertreeController.getLayerNodeIds(item);
     layer.set('querySourceIds', ids);
     layer.set('editableIds', []);
     return layer;
   };
 
+  /**
+   * @param {GmfThemesNode} item The item.
+   * @return {angular.$q.Promise.<ol.layer.Base>|ol.layer.Base} the created layer.
+   */
   var layerLayerCreationFn = function(item) {
-    if (item['type'] === 'WMTS') {
+    // Overwrite conflicting server dimensions with application ones
+    for (var dimkey in item.dimensions) {
+      if (appDimensions[dimkey] !== undefined) {
+        item.dimensions[dimkey] = appDimensions[dimkey];
+      }
+    }
+
+    goog.asserts.assert(item.url, 'Layer URL is required');
+
+    if (item.type === 'WMTS') {
       return layerHelper.createWMTSLayerFromCapabilitites(
-          item['url'],
-          item['name'],
-          item['dimensions']
+          item.url,
+          item.name,
+          item.dimensions
       ).then(callback.bind(null, item)).then(null, function(error) {
         console.error(error || 'unknown error');
         // Continue even if some layers have failed loading.
         return $q.resolve(undefined);
       });
+    } else if (item.type === 'WMS') {
+      return callback(item, layerHelper.createBasicWMSLayer(
+          item.url,
+          item.layers,
+          item.serverType,
+          undefined, // time
+          item.dimensions
+      ));
     }
+    goog.asserts.fail('Unsupported type: ' + item.type);
   };
 
+  /**
+   * @param {GmfThemesNode} item The item.
+   * @return {angular.$q.Promise.<ol.layer.Group>} the created layer.
+   */
   var layerGroupCreationFn = function(item) {
     // We assume no child is a layer group.
-    var promises = item['children'].map(layerLayerCreationFn);
+    var promises = item.children.map(layerLayerCreationFn);
     return $q.all(promises).then(function(layers) {
       var collection;
       if (layers) {
@@ -291,15 +323,15 @@ gmf.Themes.prototype.getBgLayers = function() {
   };
 
   /**
-   * @param {gmf.ThemesResponse} data The "themes" web service response.
-   * @return {angular.$q.Promise} Promise.
+   * @param {GmfThemesResponse} data The "themes" web service response.
+   * @return {angular.$q.Promise.<Array.<ol.layer.Base>>} Promise.
    */
   var promiseSuccessFn = function(data) {
-    var promises = data['background_layers'].map(function(item) {
-      var itemType = item['type'];
-      if (itemType === 'WMTS') {
+    var promises = data.background_layers.map(function(item) {
+      var itemType = item.type;
+      if (itemType === 'WMTS' || itemType === 'WMS') {
         return layerLayerCreationFn(item);
-      } else if (item['children']) {
+      } else if (item.children) {
         // group of layers
         return layerGroupCreationFn(item);
       } else {
@@ -334,72 +366,68 @@ gmf.Themes.prototype.getBgLayers = function() {
 /**
  * Get a theme object by its name.
  * @param {string} themeName Theme name.
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.$q.Promise.<GmfThemesNode>} Promise.
  * @export
  */
 gmf.Themes.prototype.getThemeObject = function(themeName) {
   return this.promise_.then(
       /**
-       * @param {gmf.ThemesResponse} data The "themes" web service response.
-       * @return {Object} The theme object for themeName, or null if not found.
+       * @param {GmfThemesResponse} data The "themes" web service response.
+       * @return {GmfThemesNode} The theme object for themeName, or null if not found.
        */
       function(data) {
-        var themes = data['themes'];
-        return gmf.Themes.findThemeByName(themes, themeName);
+        return gmf.Themes.findThemeByName(data.themes, themeName);
       });
 };
 
 
 /**
  * Get an array of theme objects.
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.$q.Promise.<Array.<GmfThemesNode>>} Promise.
  * @export
  */
 gmf.Themes.prototype.getThemesObject = function() {
   return this.promise_.then(
       /**
-       * @param {gmf.ThemesResponse} data The "themes" web service response.
-       * @return {Array.<Object>} The themes object.
+       * @param {GmfThemesResponse} data The "themes" web service response.
+       * @return {Array.<GmfThemesNode>} The themes object.
        */
       function(data) {
-        var themes = data['themes'];
-        return themes;
+        return data.themes;
       });
 };
 
 
 /**
  * Get an array of background layer objects.
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.$q.Promise.<Array.<GmfThemesNode>>} Promise.
  */
 gmf.Themes.prototype.getBackgroundLayersObject = function() {
   goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
-       * @param {gmf.ThemesResponse} data The "themes" web service response.
-       * @return {Array.<Object>} The background layers object.
+       * @param {GmfThemesResponse} data The "themes" web service response.
+       * @return {Array.<GmfThemesNode>} The background layers object.
        */
       function(data) {
-        var backgroundLayers = data['background_layers'];
-        return backgroundLayers;
+        return data.background_layers;
       });
 };
 
 
 /**
  * Get the `ogcServers` object.
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.$q.Promise.<GmfOgcServers>} Promise.
  */
 gmf.Themes.prototype.getOgcServersObject = function() {
   goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
-       * @param {gmf.ThemesResponse} data The "themes" web service response.
-       * @return {gmf.OgcServers} The `ogcServers` object.
+       * @param {GmfThemesResponse} data The "themes" web service response.
+       * @return {GmfOgcServers} The `ogcServers` object.
        */
       function(data) {
-        var ogcServers = data['ogcServers'];
-        return ogcServers;
+        return data.ogcServers;
       });
 };
 
@@ -431,9 +459,9 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
     cache: false,
     withCredentials: true
   }).then(function(response) {
-    if (response.data['errors'].length != 0) {
-      var message = 'The themes contains some errors:\n' +
-        response.data['errors'].join('\n');
+    if (response.data.errors.length != 0) {
+      var message = 'The themes contain some errors:\n' +
+        response.data.errors.join('\n');
       console.error(message);
       if (this.ngeoLocation_ !== null && this.ngeoLocation_.hasParam('debug')) {
         window.alert(message);
