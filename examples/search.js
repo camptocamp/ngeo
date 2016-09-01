@@ -106,7 +106,7 @@ app.SearchController = function($rootScope, $compile,
     },
     templates: {
       header: function() {
-        return '<div class="header">Addresses</div>';
+        return '<div class="ngeo-header">Addresses</div>';
       },
       suggestion: function(suggestion) {
         var feature = /** @type {ol.Feature} */ (suggestion);

@@ -365,13 +365,13 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     name: 'coordinates',
     display: 'label',
     templates: {
-      header: '<div class="search-header">' + gettextCatalog.getString('Recenter to') + '</div>',
+      header: '<div class="gmf-search-header">' + gettextCatalog.getString('Recenter to') + '</div>',
       suggestion: function(suggestion) {
         var coordinates = suggestion['label'];
 
-        var html = '<p class="search-label">' + coordinates + '</p>';
-        html += '<p class="search-group">' + gettextCatalog.getString('Recenter to') + '</p>';
-        html = '<div class="search-datum">' + html + '</div>';
+        var html = '<p class="gmf-search-label">' + coordinates + '</p>';
+        html += '<p class="gmf-search-group">' + gettextCatalog.getString('Recenter to') + '</p>';
+        html = '<div class="gmf-search-datum">' + html + '</div>';
         return html;
       }
     }
@@ -469,7 +469,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
           return '';
         } else {
           var header = gettextCatalog.getString(config.datasetTitle);
-          return '<div class="search-header">' + header + '</div>';
+          return '<div class="gmf-search-header">' + header + '</div>';
         }
       },
       suggestion: function(suggestion) {
@@ -478,11 +478,11 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
         var scope = directiveScope.$new(true);
         scope['feature'] = feature;
 
-        var html = '<p class="search-label">' + feature.get(config.labelKey) +
-                   '</p>';
-        html += '<p class="search-group">' + (feature.get('layer_name') ||
+        var html = '<p class="gmf-search-label">' +
+                   feature.get(config.labelKey) + '</p>';
+        html += '<p class="gmf-search-group">' + (feature.get('layer_name') ||
                 config.datasetTitle) + '</p>';
-        html = '<div class="search-datum">' + html + '</div>';
+        html = '<div class="gmf-search-datum">' + html + '</div>';
         return compile(html)(scope);
       }
     })

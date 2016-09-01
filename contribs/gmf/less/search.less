@@ -1,6 +1,6 @@
 @import "../../../node_modules/font-awesome/less/variables.less";
 
-.search {
+gmf-search {
   top: @app-margin;
   z-index: @content-index;
 
@@ -25,7 +25,7 @@
   input::-ms-clear {
     display: none;
   }
-  .clear-button {
+  .gmf-clear-button {
     position: absolute;
     top: @half-app-margin;
     right: @app-margin;
@@ -44,7 +44,7 @@
       cursor: pointer;
     }
   }
-  .color-button {
+  .gmf-color-button {
     width: @map-tools-size;
     height: @map-tools-size;
     background-color: @map-tools-bg-color;
@@ -68,7 +68,7 @@
     }
   }
 
-  .search-is-active & {
+  .gmf-search-is-active & {
     z-index: @search-index;
   }
 
@@ -87,10 +87,10 @@
     overflow-y: auto;
     background-color: @map-tools-bg-color;
     border: solid 1px @border-color;
-    .search-header {
+    .gmf-search-header {
       display: none;
     }
-    .search-datum {
+    .gmf-search-datum {
       border-bottom: solid 1px @border-color;
       padding: @app-margin;
       padding-left: @app-margin + 2rem + @app-margin;
@@ -102,10 +102,10 @@
       p {
         margin: 0;
       }
-      .search-label {
+      .gmf-search-label {
         color: @color;
       }
-      .search-group {
+      .gmf-search-group {
         color: @color-light;
         font-size: 80%;
       }
@@ -115,7 +115,7 @@
 
 // Overrides for small browser widths
 @media (max-width: @screen-sm-min) {
-  .search {
+  gmf-search {
     margin: 0;
     left: 2 * @app-margin + @map-tools-size;
     .gmf-search {
@@ -128,13 +128,13 @@
 
 // Overrides for tablet devices
 @media (min-width: @screen-sm-min) {
-  .search {
+  gmf-search {
     margin: 0;
     left: 2 * @app-margin + @map-tools-size;
     .gmf-search {
       width: @search-width;
     }
-    .clear-button {
+    .gmf-clear-button {
       margin-right: @app-margin;
       right: 0;
     }
