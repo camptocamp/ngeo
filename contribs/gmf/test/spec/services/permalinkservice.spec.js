@@ -88,7 +88,7 @@ describe('Permalink service', function() {
 
     //delete non-mixed group from children
     osmThemeNode.children = osmThemeNode.children.filter(function(node) {
-      return node.name === 'OSM function';
+      return node.name === 'OSM functions mixed';
     });
 
     //only 1 theme for testing

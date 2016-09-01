@@ -1,4 +1,6 @@
 goog.require('gmf.LayertreeController');
+goog.require('gmf.test.data.themes');
+goog.require('gmf.Themes');
 
 var fakeParentController = null;
 var fakeParentController = {
@@ -10,12 +12,17 @@ fakeParentController['node'].mixed = true
 fakeParentController['layer'].getLayers = function() { return new ol.Collection() };
 
 describe('gmf.LayertreeController', function() {
-  var layertreeController;
+  var layertreeController, $httpBackend, gmfThemes;
 
   beforeEach(function () {
 
-    inject(function ($rootScope, $compile, $templateCache) {
+    inject(function ($rootScope, $compile, $injector, $templateCache) {
       $templateCache.put('gmf/layertree.html', '<div></div>');
+
+      gmfThemes = $injector.get('gmfThemes');
+      var treeUrl = $injector.get('gmfTreeUrl');
+      $httpBackend = $injector.get('$httpBackend');
+      $httpBackend.when('GET', treeUrl + '?cache_version=0').respond(themes);
 
       var element = angular.element(
         '<gmf-layertree gmf-layertree-source="treeSource" gmf-layertree-map="map">' +
@@ -46,6 +53,9 @@ describe('gmf.LayertreeController', function() {
 
   describe('#getLayer', function() {
     it('uses false as default visibility (with medadata)', function() {
+      gmfThemes.loadThemes();
+      $httpBackend.flush();
+
       var layerConfig = {
         "layers": "bus_stop",
         "name": "bus_stop",
@@ -59,6 +69,7 @@ describe('gmf.LayertreeController', function() {
         "type": "WMS",
         "id": 101,
         "imageType": "image/jpeg",
+        "ogcServer": "Main PNG", // fake property to test layer without group
         "metadata": {
         }
       };
@@ -68,6 +79,8 @@ describe('gmf.LayertreeController', function() {
     });
 
     it('uses false as default visibility (w/o medadata)', function() {
+      gmfThemes.loadThemes();
+      $httpBackend.flush();
       // bus_stop layer with no `is_checked` attribute in metadata
       var layerConfig = {
         "layers": "bus_stop",
@@ -82,6 +95,7 @@ describe('gmf.LayertreeController', function() {
         "type": "WMS",
         "id": 101,
         "imageType": "image/jpeg",
+        "ogcServer": "Main PNG", // fake property to test layer without group
         "metadata": {
           "isChecked": false
         }
@@ -92,6 +106,8 @@ describe('gmf.LayertreeController', function() {
     });
 
     it('uses the visibility given in the metadata', function() {
+      gmfThemes.loadThemes();
+      $httpBackend.flush();
       var layerConfig = {
         "layers": "bus_stop",
         "name": "bus_stop",
@@ -105,6 +121,7 @@ describe('gmf.LayertreeController', function() {
         "type": "WMS",
         "id": 101,
         "imageType": "image/jpeg",
+        "ogcServer": "Main PNG", // fake property to test layer without group
         "metadata": {
           "isChecked": true
         }

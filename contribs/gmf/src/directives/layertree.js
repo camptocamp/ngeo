@@ -381,6 +381,7 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
       break;
     case gmf.Themes.NodeType.WMS:
       var url = this.ogcServersObject_[node.ogcServer].url;
+      goog.asserts.assertString(url);
       if (node.time) {
         var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
         timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
@@ -434,6 +435,7 @@ gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
     return node['layers'];
   }).reverse().join(',');
   var url = this.ogcServersObject_[node.ogcServer].url;
+  goog.asserts.assertString(url);
   var serverType = node.children[0]['serverType'];
   var nodes = [node].concat(childNodes);
   var nodesWithTime = nodes.filter(hasTime);
@@ -446,7 +448,8 @@ gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
     });
   }
 
-  var layer = this.layerHelper_.createBasicWMSLayer(url, layersNames, serverType, timeParam);
+  var layer = this.layerHelper_.createBasicWMSLayer(url, layersNames,
+    serverType, timeParam);
   // Keep a reference to this group with all layer name inside.
   this.groupNodeStates_[goog.getUid(layer)] = [];
 
@@ -819,7 +822,8 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
 
   //In case of multiple layers for a node, always take the first layer name to get the icon
   var layerName = node.layers.split(',')[0];
-  return this.layerHelper_.getWMSLegendURL(node.url, layerName,
+  var url = node.url + ''; // FIXME precise node type to always have an url
+  return this.layerHelper_.getWMSLegendURL(url, layerName,
     this.getScale_(), opt_legendRule);
 };
 
@@ -852,7 +856,8 @@ gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
       //not supported, the administrator should give a legendImage metadata
       return null;
     }
-    return this.layerHelper_.getWMSLegendURL(node.url, layersNames[0],
+    var url = node.url + ''; // FIXME precise node type to always have an url
+    return this.layerHelper_.getWMSLegendURL(url, layersNames[0],
       this.getScale_());
   }
 };

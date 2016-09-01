@@ -150,7 +150,7 @@ GmfThemesNode.prototype.urlWfs;
 
 
 /**
- * @type {string|undefined}
+ * @type {string}
  */
 GmfThemesNode.prototype.ogcServer;
 

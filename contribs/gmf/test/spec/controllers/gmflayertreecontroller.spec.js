@@ -3,6 +3,7 @@
 
 goog.require('gmf.LayertreeController');
 goog.require('gmf.test.data.themes');
+goog.require('gmf.Themes');
 goog.require('gmf.WMSTime');
 goog.require('ol.Map');
 goog.require('ol.layer.Group');
@@ -12,14 +13,19 @@ goog.require('ol.Collection');
 
 describe('GmfLayertree', function() {
 
-  var $controller, $rootScope, $scope, gmfWMSTime;
-  var controllerBindings, gmfLayertreeCtrl, osmThemeNode, mixedNode, nonMixedNode;
+  var $controller, $rootScope, $scope, $httpBackend, gmfWMSTime,
+    controllerBindings, gmfLayertreeCtrl, osmThemeNode, mixedNode,
+    nonMixedNode, gmfThemes;
   var map = new ol.Map({layers : []});
 
   beforeEach(inject(function(_$controller_, _$rootScope_, $injector) {
     $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
+    gmfThemes = $injector.get('gmfThemes');
+    var treeUrl = $injector.get('gmfTreeUrl');
+    $httpBackend = $injector.get('$httpBackend');
+    $httpBackend.when('GET', treeUrl + '?cache_version=0').respond(themes);
     gmfWMSTime = $injector.get('gmfWMSTime');
     controllerBindings = {
       openLinksInNewWindowFn : function() {
@@ -39,7 +45,7 @@ describe('GmfLayertree', function() {
       return theme.name === 'OSM';
     })[0];
     mixedNode = osmThemeNode.children.filter(function(node) {
-      return node.name === 'OSM function';
+      return node.name === 'OSM functions mixed';
     })[0];
     nonMixedNode = osmThemeNode.children.filter(function(node) {
       return node.name === 'Layers';
@@ -50,6 +56,9 @@ describe('GmfLayertree', function() {
   }));
 
   it('getLayer should return ol.layer.Group in case of a MIXED node', function() {
+    gmfThemes.loadThemes();
+    $httpBackend.flush();
+
     var parentTreeCtrl = {
       node : osmThemeNode,
       depth : 1,
@@ -63,6 +72,9 @@ describe('GmfLayertree', function() {
   });
 
   it('getLayer should add layer to the parent node in case of parent node is MIXED', function() {
+    gmfThemes.loadThemes();
+    $httpBackend.flush();
+
     var parentTreeCtrl = {
       node : mixedNode,
       depth : 1,
@@ -79,6 +91,9 @@ describe('GmfLayertree', function() {
   });
 
   it('getLayer should create a ol.layer.Image in case of a NON-MIXED group', function() {
+    gmfThemes.loadThemes();
+    $httpBackend.flush();
+
     var parentTreeCtrl = {
       node : osmThemeNode,
       depth : 1,

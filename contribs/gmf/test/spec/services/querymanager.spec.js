@@ -44,10 +44,10 @@ describe('gmf.QueryManager', function() {
       expect(osmSource).not.toBeNull();
 
       // background layer
-      var bgLayerSource = getSourceById(queryManager.sources_, 134);
+      var bgLayerSource = getSourceById(queryManager.sources_, 119);
       expect(bgLayerSource).not.toBeNull();
       expect(bgLayerSource.params.LAYERS).toBe('ch.are.alpenkonvention');
-      expect(bgLayerSource.url).toBe('https://wms.geo.admin.ch/');
+      expect(bgLayerSource.url).toBe('https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr');
     });
   });
 
@@ -55,13 +55,11 @@ describe('gmf.QueryManager', function() {
     it('creates a source only with queryable child layers', function() {
       var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
       queryManager.createSources_(osmTheme, themes.ogcServers);
-      var osmSource = getSourceById(queryManager.sources_, 109);
-      // hotel is ignored because `queryable` is `0`
-      var expectedLayers =
-          'fuel,information,cinema,alpine_hut,bank,bus_stop,cafe,parking,' +
-          'place_of_worship,police,post_office,restaurant,zoo';
-      expect(osmSource.params.LAYERS).toBe(expectedLayers);
-      expect(osmSource.wfsQuery).toBe(true);
+      var osmHalf_querySource = getSourceById(queryManager.sources_, 150);
+      // aster is ignored because `queryable` is `0`
+      var expectedLayers = 'cinema';
+      expect(osmHalf_querySource.params.LAYERS).toBe(expectedLayers);
+      expect(osmHalf_querySource.wfsQuery).toBe(true);
     });
 
     it('does not create sources for non-queryable layers', function() {
@@ -75,10 +73,11 @@ describe('gmf.QueryManager', function() {
     it('handles layers w/o WFS support', function() {
       var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
       queryManager.createSources_(osmTheme, themes.ogcServers);
-      var osmTimeSource = getSourceById(queryManager.sources_, 110);
-      expect(osmTimeSource).not.toBeNull();
+      // ch.swisstopo.dreiecksvermaschung
+      var osmDreiecksSource = getSourceById(queryManager.sources_, 115);
+      expect(osmDreiecksSource).not.toBeNull();
       // layer does not support wfs ("wfsSupport": false)
-      expect(osmTimeSource.wfsQuery).toBe(false);
+      expect(osmDreiecksSource.wfsQuery).toBe(false);
     });
 
     it('creates a source for queryable WMTS overlay layers', function() {
@@ -105,7 +104,7 @@ describe('gmf.QueryManager', function() {
       queryManager.createSources_(themes.background_layers[1], themes.ogcServers);
 
       // layer 'asitvd.fond_couleur'
-      var source = getSourceById(queryManager.sources_, 135);
+      var source = getSourceById(queryManager.sources_, 133);
       expect(source).not.toBeNull();
       expect(source.params.LAYERS).toBe('ch.astra.ausnahmetransportrouten');
       expect(source.url).toBe('https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?');
