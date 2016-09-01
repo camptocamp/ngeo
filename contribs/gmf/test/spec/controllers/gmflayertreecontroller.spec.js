@@ -30,7 +30,6 @@ describe('GmfLayertree', function() {
     gmfLayertreeCtrl = $controller('GmfLayertreeController',
       {
         $scope: $scope,
-        gmfWmsUrl : '',
         gmfWMSTime : gmfWMSTime
       },
       controllerBindings

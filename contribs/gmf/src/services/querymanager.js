@@ -20,13 +20,12 @@ goog.require('ngeo.Query');
  * @constructor
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
- * @param {string} gmfWmsUrl URL to the wms service to use by default.
  * @param {angular.$q} $q Angular q service
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
+gmf.QueryManager = function(ngeoQuery, gmfThemes, $q) {
 
   /**
    * @type {ngeo.Query}
@@ -39,12 +38,6 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, gmfWmsUrl, $q) {
    * @private
    */
   this.gmfThemes_ = gmfThemes;
-
-  /**
-   * @type {string}
-   * @private
-   */
-  this.gmfWmsUrl_ = gmfWmsUrl;
 
   /**
    * @type {angular.$q}
@@ -118,7 +111,7 @@ gmf.QueryManager.prototype.createSources_ = function(node, ogcServers) {
   var identifierAttributeField = meta.identifierAttributeField;
   var layers = meta.wmsLayers || meta.queryLayers || node.layers;
   var name = node.name;
-  var url = meta.wmsUrl || node.url || this.gmfWmsUrl_;
+  var url = node.url;
   var validateLayerParams = false;
   var wfsQuery = node.wfsSupport;
 
