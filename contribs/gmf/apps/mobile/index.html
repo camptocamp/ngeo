@@ -8,9 +8,9 @@
     <link rel="shortcut icon" href="image/favicon.ico"/>
     <link rel="stylesheet" href="../../build/mobile.css">
   </head>
-  <body ng-class="{'nav-is-visible': mainCtrl.navIsVisible(),
-                   'nav-left-is-visible': mainCtrl.leftNavIsVisible(),
-                   'nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
+  <body ng-class="{'gmf-mobile-nav-is-visible': mainCtrl.navIsVisible(),
+                   'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavIsVisible(),
+                   'gmf-mobile-nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
     <main ng-class="{'gmf-search-is-active': mainCtrl.searchOverlayVisible}">
       <gmf-map gmf-map-map="mainCtrl.map"
         ngeo-map-query=""
@@ -35,7 +35,7 @@
         gmf-mobile-measurepoint-layers="::mainCtrl.elevationLayers"
         gmf-mobile-measurepoint-map="::mainCtrl.map">
       </div>
-      <button class="nav-trigger nav-left-trigger"
+      <button class="gmf-mobile-nav-trigger gmf-mobile-nav-left-trigger"
         ng-click="mainCtrl.toggleLeftNavVisibility()">
         <span class="gmf-icon gmf-icon-layers"></span>
       </button>
@@ -45,7 +45,7 @@
         gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
         gmf-search-listeners="::mainCtrl.searchListeners">
       </gmf-search>
-      <button class="nav-trigger nav-right-trigger"
+      <button class="gmf-mobile-nav-trigger gmf-mobile-nav-right-trigger"
         ng-click="mainCtrl.toggleRightNavVisibility()">
         <i class="fa fa-wrench"></i>
       </button>
@@ -63,18 +63,18 @@
         gmf-disclaimer-map="::mainCtrl.map">
       </gmf-disclaimer>
     </main>
-    <nav class="nav-left" gmf-mobile-nav>
+    <nav class="gmf-mobile-nav-left" gmf-mobile-nav>
       <header>
-        <a class="go-back" href>{{'Back' | translate}}</a>
+        <a class="gmf-mobile-nav-go-back" href>{{'Back' | translate}}</a>
       </header>
       <!-- main menu -->
-      <div class="active slide">
+      <div class="gmf-mobile-nav-active gmf-mobile-nav-slide">
         <ul>
           <li>
-            <a href data-target="#background" data-toggle="slide-in" class="nav-button">{{'Background' | translate}}</a>
+            <a href data-target="#background" data-toggle="slide-in" class="gmf-mobile-nav-button">{{'Background' | translate}}</a>
           </li>
           <li>
-            <a href data-target="#themes" data-toggle="slide-in" class="nav-button">{{'Themes' | translate}}</a>
+            <a href data-target="#themes" data-toggle="slide-in" class="gmf-mobile-nav-button">{{'Themes' | translate}}</a>
           </li>
         </ul>
         <gmf-layertree
@@ -86,14 +86,14 @@
       </div>
       <gmf-backgroundlayerselector
         id="background"
-        class="slide"
+        class="gmf-mobile-nav-slide"
         data-header-title="{{'Background' | translate}}"
         gmf-backgroundlayerselector-map="::mainCtrl.map"
         gmf-backgroundlayerselector-select="mainCtrl.hideNav()">
       </gmf-backgroundlayerselector>
       <gmf-themeselector
         id="themes"
-        class="slide"
+        class="gmf-mobile-nav-slide"
         data-header-title="{{'Themes' | translate}}"
         gmf-themeselector-defaulttheme="OSM"
         gmf-themeselector-currenttheme="mainCtrl.theme"
@@ -101,25 +101,25 @@
         gmf-mobile-nav-back-on-click>
       </gmf-themeselector>
     </nav>
-    <nav class="nav-right" gmf-mobile-nav>
+    <nav class="gmf-mobile-nav-right" gmf-mobile-nav>
       <header>
-        <a class="go-back" href>{{'Back' | translate}}</a>
+        <a class="gmf-mobile-nav-go-back" href>{{'Back' | translate}}</a>
       </header>
       <!-- main menu -->
-      <div class="active slide">
+      <div class="gmf-mobile-nav-active gmf-mobile-nav-slide">
         <ul>
           <li>
-            <a href data-target="#measure-tools" data-toggle="slide-in" class="nav-button">{{'Measure tools' | translate}}</a>
-            <a href data-target="#login" data-toggle="slide-in" class="nav-button">{{'Login' | translate}}</a>
+            <a href data-target="#measure-tools" data-toggle="slide-in" class="gmf-mobile-nav-button">{{'Measure tools' | translate}}</a>
+            <a href data-target="#login" data-toggle="slide-in" class="gmf-mobile-nav-button">{{'Login' | translate}}</a>
           </li>
         </ul>
       </div>
-      <div id="measure-tools" class="slide" data-header-title="{{'Measure tools' | translate}}">
+      <div id="measure-tools" class="gmf-mobile-nav-slide" data-header-title="{{'Measure tools' | translate}}">
         <ul>
           <li>
             <a ngeo-btn
               ng-click="mainCtrl.hideNav()"
-              class="nav-button"
+              class="gmf-mobile-nav-button"
               ng-model="mainCtrl.measurePointActive">
               <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measurePointActive}"></span>
               {{'Coordinate' | translate}}
@@ -128,7 +128,7 @@
           <li>
             <a ngeo-btn
               ng-click="mainCtrl.hideNav()"
-              class="nav-button"
+              class="gmf-mobile-nav-button"
               ng-model="mainCtrl.measureLengthActive">
               <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measureLengthActive}"></span>
               {{'Length' | translate}}
@@ -136,7 +136,7 @@
           </li>
         </ul>
       </div>
-      <gmf-authentication id="login" class="slide" data-header-title="{{'Login' | translate}}"
+      <gmf-authentication id="login" class="gmf-mobile-nav-slide" data-header-title="{{'Login' | translate}}"
         gmf-mobile-nav-back="authCtrl.gmfUser.username !== null">
       </gmf-authentication>
     </nav>
