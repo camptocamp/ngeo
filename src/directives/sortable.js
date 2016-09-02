@@ -26,9 +26,9 @@ ngeo.SortableOptions;
  * Example:
  *
  *     <ul ngeo-sortable="ctrl.layers"
- *         ngeo-sortable-options="{handleClassName: 'sortable-handle'}">
+ *         ngeo-sortable-options="{handleClassName: 'ngeo-sortable-handle'}">
  *       <li ng-repeat="layer in ctrl.layers">
- *         <span class="sortable-handle">handle</span>{{layer.get('name')}}
+ *         <span class="ngeo-sortable-handle">handle</span>{{layer.get('name')}}
  *       </li>
  *     </ul>
  *
@@ -36,8 +36,8 @@ ngeo.SortableOptions;
  * to an array (an array of layers in the above example). This is the array
  * that is re-ordered after a drag-and-drop.
  *
- * The element with the class "sortable-handle" is the "drag handle". It is
- * required.
+ * The element with the class "ngeo-sortable-handle" is the "drag handle".
+ * It is required.
  *
  * This directives uses `$watchCollection` to watch the "sortable" array. So
  * if some outside code adds/removes elements to/from the "sortable" array,
@@ -173,11 +173,12 @@ ngeo.sortableDirective = function($timeout) {
            */
           function getOptions(options) {
             var ret;
+            var defaultHandleClassName = 'ngeo-sortable-handle';
             if (options === undefined) {
-              ret = {'handleClassName': 'handle'};
+              ret = {'handleClassName': defaultHandleClassName};
             } else {
               if (options['handleClassName'] === undefined) {
-                options['handleClassName'] = 'handle';
+                options['handleClassName'] = defaultHandleClassName;
               }
               ret = /** @type {ngeo.SortableOptions} */ (options);
             }
