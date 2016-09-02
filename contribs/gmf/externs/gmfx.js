@@ -99,7 +99,8 @@ gmfx.MousePositionProjection.prototype.filter;
 /**
  * Configuration options for the permalink service.
  * @typedef {{
- *     crosshairStyle: (Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined)
+ *     crosshairStyle: (Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined),
+ *     projectionCodes: (Array.<string>|undefined)
  * }}
  */
 gmfx.PermalinkOptions;
@@ -110,6 +111,15 @@ gmfx.PermalinkOptions;
  * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined}
  */
 gmfx.PermalinkOptions.prototype.crosshairStyle;
+
+
+/**
+ * EPSG codes (e.g. 'EPSG:3857', 'epsg:3857' or '3857'). The permalink service
+ * will accept coordinates in these projections and try to detect which projection
+ * the given coordinates are in.
+ * @type {Array.<string>|undefined}
+ */
+gmfx.PermalinkOptions.prototype.projectionCodes;
 
 
 /**

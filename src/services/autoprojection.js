@@ -34,9 +34,9 @@ ngeo.AutoProjection.prototype.stringToCoordinates = function(str) {
 /**
  * Get an array of projections corresponding to their EPSG codes. Log an error
  *     for each code that are not defined in ol projections.
- * @param {Array.<string>} projectionsCodes EPSG codes (f.i 'EPSG:3857',
+ * @param {Array.<string>} projectionsCodes EPSG codes (e.g. 'EPSG:3857',
  *     'epsg:3857' or '3857').
- * @return {?Array.<ol.proj.Projection>} An array of projections.
+ * @return {Array.<ol.proj.Projection>} An array of projections.
  * @export
  */
 ngeo.AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
@@ -67,8 +67,8 @@ ngeo.AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
  * @param {Array.<ol.proj.Projection>=} opt_projections optional array of
  *     projections. The point is tested in each projection, in the order of
  *     the array.
- * @return {?ol.Coordinate} A coordinates in the view's projection if it match
- *     in one of the given projection, or null else.
+ * @return {?ol.Coordinate} A coordinates in the view's projection if it matches
+ *     in one of the given projections, or null else.
  * @export
  */
 ngeo.AutoProjection.prototype.tryProjections = function(coordinates,
@@ -97,8 +97,8 @@ ngeo.AutoProjection.prototype.tryProjections = function(coordinates,
  * @param {Array.<ol.proj.Projection>=} opt_projections optional array of
  *     projections. The point is tested in each projection, in the order of
  *     the array.
- * @return {?ol.Coordinate} A coordinates in the view's projection if it match
- *     in one of the given projection, or null else.
+ * @return {?ol.Coordinate} A coordinates in the view's projection if it matches
+ *     in one of the given projections, or null else.
  * @export
  */
 ngeo.AutoProjection.prototype.tryProjectionsWithInversion = function(

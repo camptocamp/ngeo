@@ -1,6 +1,7 @@
 goog.provide('gmf.Permalink');
 
 goog.require('gmf');
+goog.require('ngeo.AutoProjection');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.BackgroundEventType');
@@ -16,8 +17,10 @@ goog.require('ngeo.Popover');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.WfsPermalink');
+goog.require('goog.asserts');
 goog.require('ol.Feature');
 goog.require('ol.geom.Point');
+goog.require('ol.proj');
 goog.require('ol.layer.Group');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.RegularShape');
@@ -90,6 +93,7 @@ gmf.module.value('gmfPermalinkOptions',
  *     the gmf permalink service with.
  * @param {ngeo.Location} ngeoLocation ngeo location service.
  * @param {ngeo.WfsPermalink} ngeoWfsPermalink ngeo WFS query service.
+ * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @ngInject
  * @ngdoc service
@@ -98,7 +102,7 @@ gmf.module.value('gmfPermalinkOptions',
 gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     ngeoFeatureOverlayMgr, ngeoFeatureHelper, ngeoFeatures, ngeoLayerHelper,
     ngeoStateManager, gmfThemes, gmfTreeManager, gmfPermalinkOptions,
-    ngeoLocation, ngeoWfsPermalink, $rootScope) {
+    ngeoLocation, ngeoWfsPermalink, ngeoAutoProjection, $rootScope) {
 
   // == listener keys ==
 
@@ -208,6 +212,25 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @private
    */
   this.themes_ = null;
+
+  /**
+   * @type {ngeo.AutoProjection}
+   * @private
+   */
+  this.ngeoAutoProjection_ = ngeoAutoProjection;
+
+  /**
+   * @type {?Array.<ol.proj.Projection>} A list of projections that the coordinates
+   *    in the permalink can be in.
+   * @private
+   */
+  this.sourceProjections_ = null;
+  if (gmfPermalinkOptions.projectionCodes !== undefined) {
+    var projections = ngeoAutoProjection.getProjectionList(gmfPermalinkOptions.projectionCodes);
+    if (projections.length > 0) {
+      this.sourceProjections_ = projections;
+    }
+  }
 
   /**
    * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style}
@@ -374,8 +397,18 @@ gmf.Permalink.prototype.getMapCenter = function() {
     gmf.PermalinkParam.MAP_X));
   var y = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
     gmf.PermalinkParam.MAP_Y));
+
   if (x !== undefined && y !== undefined) {
     center = [x,y];
+    if (this.sourceProjections_ !== null) {
+      var targetProjection = this.map_.getView().getProjection();
+      var reprojectedCenter = this.ngeoAutoProjection_.tryProjectionsWithInversion(
+          center, targetProjection.getExtent(), targetProjection,
+          this.sourceProjections_);
+      if (reprojectedCenter !== null) {
+        center = reprojectedCenter;
+      }
+    }
   }
   return center;
 };
@@ -493,8 +526,8 @@ gmf.Permalink.prototype.setMap = function(map) {
   }
 
   if (map) {
-    this.registerMap_(map);
     this.map_ = map;
+    this.registerMap_(map);
   }
 
 };
