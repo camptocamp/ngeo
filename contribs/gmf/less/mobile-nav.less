@@ -54,7 +54,7 @@ main {
   }
 }
 
-.search-overlay {
+.gmf-search-overlay {
   /* shadow layer visible when search is active */
   position: absolute;
   z-index: @above-menus-index;
@@ -71,7 +71,7 @@ main {
   .backface-visibility(hidden);
 
   @media (max-width: @screen-xs-max) {
-    .search-is-active & {
+    .gmf-search-is-active & {
       visibility: visible;
       opacity: 1;
     }

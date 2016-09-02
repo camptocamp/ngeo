@@ -11,7 +11,7 @@
   <body ng-class="{'nav-is-visible': mainCtrl.navIsVisible(),
                    'nav-left-is-visible': mainCtrl.leftNavIsVisible(),
                    'nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
-    <main ng-class="{'search-is-active': mainCtrl.searchOverlayVisible}">
+    <main ng-class="{'gmf-search-is-active': mainCtrl.searchOverlayVisible}">
       <gmf-map gmf-map-map="mainCtrl.map"
         ngeo-map-query=""
         ngeo-map-query-map="::mainCtrl.map"
@@ -40,7 +40,6 @@
         <span class="gmf-icon gmf-icon-layers"></span>
       </button>
       <gmf-search gmf-search-map="mainCtrl.map"
-        class="search"
         gmf-search-datasources="mainCtrl.searchDatasources"
         gmf-search-clearbutton="true"
         gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
@@ -51,7 +50,10 @@
         <i class="fa fa-wrench"></i>
       </button>
       <div class="overlay" ng-click="mainCtrl.hideNav()"></div>
-      <div class="search-overlay" ng-click="mainCtrl.hideSearchOverlay()"></div>
+      <div
+        class="gmf-search-overlay"
+        ng-click="mainCtrl.hideSearchOverlay()">
+      </div>
       <button ngeo-mobile-geolocation=""
         ngeo-mobile-geolocation-map="::mainCtrl.map"
         ngeo-mobile-geolocation-options="::mainCtrl.mobileGeolocationOptions">
