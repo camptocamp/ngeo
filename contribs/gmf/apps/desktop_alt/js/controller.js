@@ -99,6 +99,12 @@ app.AlternativeDesktopController = function($scope, $injector) {
   this.gridMergeTabs = {
     'merged_osm_times': ['110', '126', '147']
   };
+
+  // mark 'merged_osm_times' as translatable
+  /** @type {angularGettext.Catalog} */
+  var gettextCatalog = $injector.get('gettextCatalog');
+  gettextCatalog.getString('merged_osm_times');
+
 };
 ol.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
 
