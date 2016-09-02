@@ -109,7 +109,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {string} gmfWmsUrl URL to the wms service to use by default.
+ * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
  * @param {gmf.WMSTime} gmfWMSTime wms time service.
@@ -120,7 +120,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
-    ngeoLayerHelper, gmfWmsUrl, gmfTreeManager, ngeoSyncArrays, gmfWMSTime) {
+    ngeoLayerHelper, gmfThemes, gmfTreeManager, ngeoSyncArrays, gmfWMSTime) {
 
   /**
    * @private
@@ -136,10 +136,14 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   this.$sce_ = $sce;
 
   /**
-   * @type {string}
+   * @type {GmfOgcServers}
    * @private
    */
-  this.gmfWmsUrl_ = gmfWmsUrl;
+  this.ogcServersObject_;
+
+  gmfThemes.getOgcServersObject().then(function(ogcServersObject) {
+    this.ogcServersObject_ = ogcServersObject;
+  }.bind(this));
 
   /**
    * @type {ngeo.LayerHelper}
@@ -376,7 +380,8 @@ gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
       layer = this.getLayerCaseWMTS_(node);
       break;
     case gmf.Themes.NodeType.WMS:
-      var url = node.url || this.gmfWmsUrl_;
+      var url = this.ogcServersObject_[node.ogcServer].url;
+      goog.asserts.assertString(url);
       if (node.time) {
         var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
         timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
@@ -429,7 +434,8 @@ gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
   var layersNames = childNodes.map(function(node) {
     return node['layers'];
   }).reverse().join(',');
-  var url = node.url || this.gmfWmsUrl_;
+  var url = this.ogcServersObject_[node.ogcServer].url;
+  goog.asserts.assertString(url);
   var serverType = node.children[0]['serverType'];
   var nodes = [node].concat(childNodes);
   var nodesWithTime = nodes.filter(hasTime);
@@ -442,7 +448,8 @@ gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
     });
   }
 
-  var layer = this.layerHelper_.createBasicWMSLayer(url, layersNames, serverType, timeParam);
+  var layer = this.layerHelper_.createBasicWMSLayer(url, layersNames,
+    serverType, timeParam);
   // Keep a reference to this group with all layer name inside.
   this.groupNodeStates_[goog.getUid(layer)] = [];
 
@@ -815,9 +822,9 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
 
   //In case of multiple layers for a node, always take the first layer name to get the icon
   var layerName = node.layers.split(',')[0];
-  var url = node.url || this.gmfWmsUrl_;
-  return this.layerHelper_.getWMSLegendURL(url, layerName, this.getScale_(),
-    opt_legendRule);
+  var url = node.url + ''; // FIXME precise node type to always have an url
+  return this.layerHelper_.getWMSLegendURL(url, layerName,
+    this.getScale_(), opt_legendRule);
 };
 
 
@@ -844,13 +851,14 @@ gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
     goog.asserts.assertInstanceof(layer, ol.layer.Tile);
     return this.layerHelper_.getWMTSLegendURL(layer);
   } else {
-    var url = node.url || this.gmfWmsUrl_;
     layersNames = node.layers.split(',');
     if (layersNames.length > 1) {
       //not supported, the administrator should give a legendImage metadata
       return null;
     }
-    return this.layerHelper_.getWMSLegendURL(url, layersNames[0], this.getScale_());
+    var url = node.url + ''; // FIXME precise node type to always have an url
+    return this.layerHelper_.getWMSLegendURL(url, layersNames[0],
+      this.getScale_());
   }
 };
 
