@@ -2,6 +2,7 @@ goog.provide('gmf.WMSTime');
 
 goog.require('gmf');
 goog.require('ngeo.Time');
+goog.require('ol');
 
 /**
  * gmf - WMS time service
