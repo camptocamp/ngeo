@@ -8,6 +8,7 @@ goog.require('ngeo.Location');
 goog.require('ol.Map');
 goog.require('ol.Collection');
 goog.require('ol.layer.Group');
+goog.require('ngeo.proj.EPSG2056');
 
 
 describe('Permalink service', function() {
@@ -22,7 +23,7 @@ describe('Permalink service', function() {
     StateManagerService = $injector.get('ngeoStateManager');
     PermalinkService = $injector.get('gmfPermalink');
     ngeoLocation = $injector.get('ngeoLocation');
-    map = new ol.Map({layers : []});
+    map = new ol.Map({layers : [], view: new ol.View({projection: ol.proj.get('EPSG:2056')})});
     PermalinkService.setMap(map);
     // need to work on a clone of themes, because the permalink service
     // seems to change the original object?!
@@ -243,6 +244,32 @@ describe('Permalink service', function() {
         ]
       };
       expect(PermalinkService.getWfsPermalinkData_()).toEqual(expectedQueryParams);
+    });
+  });
+
+  describe('#getMapCenter', function() {
+    it('returns the unprojected center', function() {
+      StateManagerService.initialState['map_x'] = 2537046;
+      StateManagerService.initialState['map_y'] = 1180040;
+      expect(PermalinkService.getMapCenter()).toEqual([2537046, 1180040]);
+    });
+
+    it('accepts flipped coordinates (x/y switched)', function() {
+      PermalinkService.sourceProjections_ = [ol.proj.get('EPSG:2056'), ol.proj.get('EPSG:4326')];
+      StateManagerService.initialState['map_x'] = 46.7685575;
+      StateManagerService.initialState['map_y'] = 6.6144562;
+      var center = PermalinkService.getMapCenter();
+      expect(center[0]).toBeCloseTo(2537046, 0);
+      expect(center[1]).toBeCloseTo(1180040, 0);
+    });
+
+    it('reprojects the center', function() {
+      PermalinkService.sourceProjections_ = [ol.proj.get('EPSG:2056'), ol.proj.get('EPSG:4326')];
+      StateManagerService.initialState['map_x'] = 6.6144562;
+      StateManagerService.initialState['map_y'] = 46.7685575;
+      var center = PermalinkService.getMapCenter();
+      expect(center[0]).toBeCloseTo(2537046, 0);
+      expect(center[1]).toBeCloseTo(1180040, 0);
     });
   });
 });
