@@ -695,7 +695,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
 gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
     active) {
 
-  var mapDiv = this.map.getTargetElement();
+  var mapDiv = this.map.getViewport();
   goog.asserts.assertElement(mapDiv);
 
   if (active) {
@@ -810,6 +810,7 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
       this.menu_.open(coordinate);
     }
     evt.preventDefault();
+    evt.stopPropagation();
   }
 };
 
