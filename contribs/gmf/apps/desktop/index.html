@@ -287,7 +287,11 @@
         module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/short/create');
         module.constant('gmfSearchGroups', ['osm','district']);
         // Requires that the gmfSearchGroups is specified
-        module.constant('gmfSearchActions', ['add_theme', 'add_group', 'add_layer']);
+        module.constant('gmfSearchActions', [
+                {action: 'add_theme', title: 'Add a theme'},
+                {action: 'add_group', title: 'Add a sub theme'},
+                {action: 'add_layer', title: 'Add a layer'}
+        ]);
         module.constant('gmfContextualdatacontentTemplateUrl', window.location.pathname + 'contextualdata.html');
       })();
     </script>

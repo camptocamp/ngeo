@@ -100,10 +100,13 @@ app.AlternativeDesktopController = function($scope, $injector) {
     'merged_osm_times': ['110', '126', '147']
   };
 
-  // mark 'merged_osm_times' as translatable
+  // Allow angular-gettext-tools to collect the strings to translate
   /** @type {angularGettext.Catalog} */
   var gettextCatalog = $injector.get('gettextCatalog');
   gettextCatalog.getString('merged_osm_times');
+  gettextCatalog.getString('Add a theme');
+  gettextCatalog.getString('Add a sub theme');
+  gettextCatalog.getString('Add a layer');
 
 };
 ol.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);

@@ -66,7 +66,11 @@ gmf.module.value('gmfSearchTemplateUrl',
  *          var module = angular.module('app');
  *          module.value('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 20}) | n}');
  *          module.value('gmfSearchGroups', []);
- *          module.value('gmfSearchActions', ['add_theme', 'add_group', 'add_layer']);
+ *          module.constant('gmfSearchActions', [
+ *                {action: 'add_theme', title: 'Add a theme'},
+ *                {action: 'add_group', title: 'Add a sub theme'},
+ *                {action: 'add_layer', title: 'Add a layer'}
+ *          ]);
  *        })();
  *      </script>
  *
@@ -341,8 +345,8 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
 
     groupActions.forEach(function(action) {
       filters.push({
-        'title': action,
-        'filter': this.filterAction_(action)
+        'title': gettextCatalog.getString(action['title']),
+        'filter': this.filterAction_(action['action'])
       });
     }, this);
 
@@ -406,11 +410,6 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
       select: gmf.SearchController.select_.bind(this),
       close: gmf.SearchController.close_.bind(this)
     }));
-
-  // allow angular-gettext-tools to collect the strings to translate
-  gettextCatalog.getString('add_theme');
-  gettextCatalog.getString('add_group');
-  gettextCatalog.getString('add_layer');
 };
 
 /**
@@ -791,8 +790,6 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
   if (actions) {
-    var groupActions = /** @type {Array.<string>} */ (
-        this.datasources_[0].groupActions);
     for (var i = 0, ii = actions.length; i < ii; i++) {
       var action = actions[i];
       var actionName = action['action'];
@@ -801,9 +798,19 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
         this.gmfTreeManager_.addThemeByName(actionData);
       } else if (actionName == 'add_group') {
         this.gmfTreeManager_.addGroupByName(actionData, true);
-      } else if (actionName == 'add_layer' &&
-            groupActions.indexOf('add_layer') >= 0) {
-        this.gmfTreeManager_.addGroupByLayerName(actionData, true, goog.isDefAndNotNull(featureGeometry), this.map_);
+      } else if (actionName == 'add_layer') {
+        var groupActions = /** @type {Array.<string>} */ (
+            this.datasources_[0].groupActions);
+        var datasourcesActionsHaveAddLayer;
+        groupActions.forEach(function(groupAction) {
+          if (groupAction['action'] === 'add_layer') {
+            return datasourcesActionsHaveAddLayer = true;
+          }
+        });
+        if (datasourcesActionsHaveAddLayer) {
+          this.gmfTreeManager_.addGroupByLayerName(actionData, true,
+              goog.isDefAndNotNull(featureGeometry), this.map_);
+        }
       }
     }
   }
