@@ -91,17 +91,16 @@ gmf.AbstractController = function(config, $scope, $injector) {
   ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
 
   /**
+   * @type {gmf.ThemeManager}
+   * @export
+   */
+  this.gmfThemeManager = $injector.get('gmfThemeManager');
+
+  /**
    * @type {gmf.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = $injector.get('gmfTreeManager');
-
-  /**
-   * A reference to the current theme
-   * @type {GmfThemesNode}
-   * @export
-   */
-  this.theme = this.gmfTreeManager_.tree;
 
   /**
    * Themes service
@@ -373,9 +372,8 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
 
   $scope.$watch(function() {
-    return this.theme.name;
+    return this.gmfThemeManager.themeName;
   }.bind(this), function(name) {
-    this.setThemeInUrl_(name);
     var map = this.map;
     this.gmfThemes_.getThemeObject(name).then(function(theme) {
       if (theme) {
@@ -503,68 +501,19 @@ gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
   this.gmfThemes_.getThemesObject().then(function(themes) {
     var themeName;
 
-    // check if we have a theme in the permalink
-    var pathElements = this.ngeoLocation.getPath().split('/');
-    if (gmf.AbstractController.themeInUrl(pathElements)) {
-      themeName = pathElements[pathElements.length - 1];
-    }
-    if (!themeName) {
-      // check if we have a theme in the local storage
-      themeName = this.stateManager.getInitialValue('theme');
-    }
-
-    if (!themeName) {
-      // check if we have a theme in the user functionalities
-      var functionalities = this.gmfUser.functionalities;
-      if (functionalities && 'default_theme' in functionalities) {
-        var defaultTheme = functionalities.default_theme;
-        if (defaultTheme.length > 0) {
-          themeName = defaultTheme[0];
-        }
+    // check if we have a theme in the user functionalities
+    var functionalities = this.gmfUser.functionalities;
+    if (functionalities && 'default_theme' in functionalities) {
+      var defaultTheme = functionalities.default_theme;
+      if (defaultTheme.length > 0) {
+        themeName = defaultTheme[0];
       }
     }
-    if (!themeName) {
-      // fallback to the default theme
-      themeName = this.defaultTheme_;
+    if (themeName) {
+      var theme = gmf.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
+      this.gmfThemeManager.addTheme(theme);
     }
-    var theme = gmf.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
-    this.gmfTreeManager_.addTheme(theme, true);
-
   }.bind(this));
-};
-
-
-/**
- * Return true if there is a theme specified in the URL path.
- * @param {Array.<string>} pathElements Array of path elements.
- * @return {boolean} theme in path.
- */
-gmf.AbstractController.themeInUrl = function(pathElements) {
-  var indexOfTheme = pathElements.indexOf('theme');
-  return indexOfTheme >= 0 &&
-      pathElements.indexOf('theme') == pathElements.length - 2;
-};
-
-
-/**
- * @param {string} themeId The theme id to set in the path of the URL.
- * @private
- */
-gmf.AbstractController.prototype.setThemeInUrl_ = function(themeId) {
-  if (themeId) {
-    var pathElements = this.ngeoLocation.getPath().split('/');
-    goog.asserts.assert(pathElements.length > 1);
-    if (pathElements[pathElements.length - 1] === '') {
-      // case where the path is just "/"
-      pathElements.splice(pathElements.length - 1);
-    }
-    if (gmf.AbstractController.themeInUrl(pathElements)) {
-      pathElements[pathElements.length - 1] = themeId;
-    } else {
-      pathElements.push('theme', themeId);
-    }
-    this.ngeoLocation.setPath(pathElements.join('/'));
-  }
 };
 
 gmf.module.controller('AbstractController', gmf.AbstractController);

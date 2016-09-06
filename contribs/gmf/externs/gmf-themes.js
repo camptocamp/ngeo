@@ -4,19 +4,23 @@
  * @externs
  */
 
+/**
+ * @constructor
+ */
+var GmfRootNode = function() {};
+
 
 /**
- * @typedef {Object<string, GmfOgcServer>}
+ * @type {Array.<GmfThemesGroup>}
  */
-var GmfOgcServers;
-
+GmfRootNode.prototype.children;
 
 /**
  * @typedef {{
- *     themes: Array.<GmfThemesNode>,
- *     background_layers: Array.<GmfThemesNode>,
+ *     background_layers: Array.<GmfThemesBackground>,
+ *     errors: Array.<string>,
  *     ogcServers: GmfOgcServers,
- *     errors: Array.<string>
+ *     themes: Array.<GmfThemesTheme>
  * }}
  */
 var GmfThemesResponse;
@@ -25,206 +29,61 @@ var GmfThemesResponse;
 /**
  * @constructor
  */
-var GmfThemesNode = function() {};
+var GmfThemesBackground = function() {};
+
+
+/**
+ * @type {Object.<string, string>}
+ */
+GmfThemesBackground.prototype.dimensions;
 
 
 /**
  * @type {number}
  */
-GmfThemesNode.prototype.id;
-
-
-/**
- * @type {Array.<GmfThemesNode>}
- */
-GmfThemesNode.prototype.children;
-
-
-/**
- * @type {Array.<GmfChildLayerNode>}
- */
-GmfThemesNode.prototype.childLayers;
-
-
-/**
- * Flag that is turned on when the node is currently being edited.
- * @type {boolean|undefined}
- */
-GmfThemesNode.prototype.editing;
-
-
-/**
- * @type {boolean|undefined}
- */
-GmfThemesNode.prototype.editable;
-
-
-/**
- * @type {string}
- */
-GmfThemesNode.prototype.layers;
-
-
-/**
- * @type {number}
- */
-GmfThemesNode.prototype.maxResolutionHint;
-
-
-/**
- * @type {GmfMetaData}
- */
-GmfThemesNode.prototype.metadata;
-
-
-/**
- * @type {number}
- */
-GmfThemesNode.prototype.minResolutionHint;
-
-
-/**
- * @type {boolean}
- */
-GmfThemesNode.prototype.mixed;
-
-
-/**
- * @type {string}
- */
-GmfThemesNode.prototype.name;
-
-
-/**
- * @type {Object.<string, string>|undefined}
- */
-GmfThemesNode.prototype.dimensions;
-
-
-/**
- * @type {string}
- */
-GmfThemesNode.prototype.serverType;
-
-
-/**
- * @type {string}
- */
-GmfThemesNode.prototype.type;
+GmfThemesBackground.prototype.id;
 
 
 /**
  * @type {string|undefined}
  */
-GmfThemesNode.prototype.url;
+GmfThemesBackground.prototype.imageType;
 
 
 /**
- * @type {ngeox.TimeProperty|undefined}
+ * @type {string|null|undefined}
  */
-GmfThemesNode.prototype.time;
+GmfThemesBackground.prototype.layer;
 
 
 /**
- * @type {string|undefined}
+ * @type {Object.<string, *>}
  */
-GmfThemesNode.prototype.wmsUrl;
-
-
-/**
- * @type {number|undefined}
- */
-GmfThemesNode.prototype.queryable;
-
-
-/**
- * @type {boolean|undefined}
- */
-GmfThemesNode.prototype.wfsSupport;
+GmfThemesBackground.prototype.metadata;
 
 
 /**
  * @type {string|undefined}
  */
-GmfThemesNode.prototype.urlWfs;
+GmfThemesBackground.prototype.name;
 
 
 /**
  * @type {string|undefined}
  */
-GmfThemesNode.prototype.ogcServer;
-
-
-/**
- * @constructor
- */
-var GmfThemesNodeCustom = function() {};
-
-
-/**
- * @type {Array.<string>}
- */
-GmfThemesNodeCustom.prototype.layers;
-
-
-/**
- * @type {GmfThemesNode}
- */
-GmfThemesNodeCustom.prototype.node;
-
-
-/**
- * @constructor
- */
-var GmfChildLayerNode = function() {};
-
-
-/**
- * @type {string}
- */
-GmfChildLayerNode.prototype.name;
-
-
-/**
- * @type {number|boolean|undefined}
- */
-GmfChildLayerNode.prototype.queryable;
-
-
-/**
- * @constructor
- */
-var GmfMetaData = function() {};
+GmfThemesBackground.prototype.type;
 
 
 /**
  * @type {string|undefined}
  */
-GmfMetaData.prototype.identifierAttributeField;
+GmfThemesBackground.prototype.url;
 
 
 /**
- * @type {string|undefined}
+ * @typedef {Object<string, GmfOgcServer>}
  */
-GmfMetaData.prototype.queryLayers;
-
-
-/**
- * @type {string|undefined}
- */
-GmfMetaData.prototype.wmsLayers;
-
-
-/**
- * @type {string|undefined}
- */
-GmfMetaData.prototype.wmsUrl;
-
-
-/**
- * @type {string|undefined}
- */
-GmfMetaData.prototype.ogcServer;
+var GmfOgcServers;
 
 
 /**
@@ -236,7 +95,13 @@ var GmfOgcServer = function() {};
 /**
  * @type {string|undefined}
  */
-GmfOgcServer.prototype.url;
+GmfOgcServer.prototype.auth;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfOgcServer.prototype.imageType;
 
 
 /**
@@ -248,13 +113,13 @@ GmfOgcServer.prototype.isSingleTile;
 /**
  * @type {string|undefined}
  */
-GmfOgcServer.prototype.auth;
+GmfOgcServer.prototype.type;
 
 
 /**
- * @type {boolean|undefined}
+ * @type {string|undefined}
  */
-GmfOgcServer.prototype.wfsSupport;
+GmfOgcServer.prototype.url;
 
 
 /**
@@ -264,12 +129,306 @@ GmfOgcServer.prototype.urlWfs;
 
 
 /**
- * @type {string|undefined}
+ * @type {boolean|undefined}
  */
-GmfOgcServer.prototype.type;
+GmfOgcServer.prototype.wfsSupport;
+
+
+/**
+ * @constructor
+ */
+var GmfThemesTheme = function() {};
+
+
+/**
+ * @type {Array.<GmfThemesGroup>}
+ */
+GmfThemesTheme.prototype.children;
+
+
+/**
+ * @type {Object.<string, Array.<string|number>>}
+ */
+GmfThemesTheme.prototype.functionalities;
 
 
 /**
  * @type {string|undefined}
  */
-GmfOgcServer.prototype.imageType;
+GmfThemesTheme.prototype.icon;
+
+
+/**
+ * @type {number}
+ */
+GmfThemesTheme.prototype.id;
+
+
+/**
+ * @type {Object.<string, *>}
+ */
+GmfThemesTheme.prototype.metadata;
+
+
+/**
+ * @type {string}
+ */
+GmfThemesTheme.prototype.name;
+
+
+/**
+ * @constructor
+ */
+var GmfThemesGroup = function() {};
+
+
+/**
+ * @type {Array.<GmfThemesGroup|GmfThemesLeaf>|undefined}
+ */
+GmfThemesGroup.prototype.children;
+
+
+/**
+ * @type {number}
+ */
+GmfThemesGroup.prototype.id;
+
+
+/**
+ * @type {Object.<string, *>}
+ */
+GmfThemesGroup.prototype.metadata;
+
+
+/**
+ * @type {boolean|undefined}
+ */
+GmfThemesGroup.prototype.mixed;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesGroup.prototype.name;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesGroup.prototype.ogcServer;
+
+
+/**
+ * @type {ngeox.TimeProperty|undefined}
+ */
+GmfThemesGroup.prototype.time;
+
+
+/**
+ * @constructor
+ */
+var GmfThemesLeaf = function() {};
+
+
+/**
+ * @type {Array.<GmfThemesChildLayer>|undefined}
+ */
+GmfThemesLeaf.prototype.childLayers;
+
+
+/**
+ * @type {Object.<string, string>}
+ */
+GmfThemesLeaf.prototype.dimensions;
+
+
+/**
+ * @type {boolean|undefined}
+ */
+GmfThemesLeaf.prototype.editable;
+
+
+/**
+ * @type {number}
+ */
+GmfThemesLeaf.prototype.id;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeaf.prototype.imageType;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeaf.prototype.layer;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeaf.prototype.layers;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeaf.prototype.matrixSet;
+
+
+/**
+ * @type {number}
+ */
+GmfThemesLeaf.prototype.maxResolutionHint;
+
+
+/**
+ * @type {GmfThemesLeafMetaData}
+ */
+GmfThemesLeaf.prototype.metadata;
+
+
+/**
+ * @type {number}
+ */
+GmfThemesLeaf.prototype.minResolutionHint;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeaf.prototype.name;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeaf.prototype.ogcServer;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeaf.prototype.style;
+
+
+/**
+ * @type {ngeox.TimeProperty|undefined}
+ */
+GmfThemesLeaf.prototype.time;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeaf.prototype.type;
+
+
+/**
+ * @constructor
+ */
+var GmfThemesChildLayer = function() {};
+
+
+/**
+ * @type {number}
+ */
+GmfThemesChildLayer.prototype.maxResolutionHint;
+
+
+/**
+ * @type {number}
+ */
+GmfThemesChildLayer.prototype.minResolutionHint;
+
+
+/**
+ * @type {string}
+ */
+GmfThemesChildLayer.prototype.name;
+
+
+/**
+ * @type {boolean}
+ */
+GmfThemesChildLayer.prototype.queryable;
+
+
+/**
+ * @constructor
+ */
+var GmfThemesLeafMetaData = function() {};
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeafMetaData.prototype.disclaimer;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeafMetaData.prototype.identifierAttributeField;
+
+
+/**
+ * @type {boolean|undefined}
+ */
+GmfThemesLeafMetaData.prototype.isChecked;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeafMetaData.prototype.legend;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeafMetaData.prototype.legendRule;
+
+
+/**
+ * @type {number|undefined}
+ */
+GmfThemesLeafMetaData.prototype.maxResolution;
+
+
+/**
+ * @type {number|undefined}
+ */
+GmfThemesLeafMetaData.prototype.maxResolutionHint;
+
+
+/**
+ * @type {number|undefined}
+ */
+GmfThemesLeafMetaData.prototype.minResolution;
+
+
+/**
+ * @type {number|undefined}
+ */
+GmfThemesLeafMetaData.prototype.minResolutionHint;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeafMetaData.prototype.wmsLayers;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeafMetaData.prototype.queryLayers;
+
+
+/**
+ * @type {string|undefined}
+ */
+GmfThemesLeafMetaData.prototype.wmsUrl;

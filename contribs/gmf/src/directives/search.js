@@ -2,6 +2,7 @@ goog.provide('gmf.SearchController');
 goog.provide('gmf.searchDirective');
 
 goog.require('gmf');
+goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.AutoProjection');
 goog.require('ngeo.CreateGeoJSONBloodhound');
@@ -172,6 +173,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  *     create GeoJSON Bloodhound service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
+ * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @export
  * @ngInject
@@ -180,7 +182,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  */
 gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     ngeoAutoProjection, ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
-    gmfTreeManager) {
+    gmfThemes, gmfTreeManager) {
 
 
   /**
@@ -206,6 +208,12 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
+
+  /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {gmf.TreeManager}
@@ -797,7 +805,9 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
       var actionName = action['action'];
       var actionData = action['data'];
       if (actionName == 'add_theme') {
-        this.gmfTreeManager_.addThemeByName(actionData);
+        this.gmfThemes_.getThemesObject().then(function(themes) {
+          this.gmfTreeManager_.addFirstLevelGroups(gmf.Themes.findThemeByName(themes, actionData).children);
+        }.bind(this));
       } else if (actionName == 'add_group') {
         this.gmfTreeManager_.addGroupByName(actionData, true);
       } else if (actionName == 'add_layer') {
@@ -811,7 +821,7 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
         });
         if (datasourcesActionsHaveAddLayer) {
           this.gmfTreeManager_.addGroupByLayerName(actionData, true,
-              goog.isDefAndNotNull(featureGeometry), this.map_);
+              goog.isDefAndNotNull(featureGeometry));
         }
       }
     }

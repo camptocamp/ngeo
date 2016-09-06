@@ -1,4 +1,4 @@
-goog.provide('gmf-layertree');
+goog.provide('gmf-layertree-add');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.Themes');
