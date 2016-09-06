@@ -232,7 +232,7 @@ ngeo.GridController = function($scope) {
    */
   this.floatTheadConfig = {
     'scrollContainer': function($table) {
-      return $table.closest('.table-container');
+      return $table.closest('.ngeo-grid-table-container');
     }
   };
 
