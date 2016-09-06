@@ -169,6 +169,22 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
   this.parent = $scope.$parent['layertreeCtrl'];
 
   /**
+   * @type {Array.<ngeo.LayertreeController>}
+   * @export
+   */
+  this.children = [];
+
+  if (this.parent) {
+    this.parent.children.push(this);
+  }
+
+  $scope.$on('$destroy', function() {
+    var index = this.parent.children.indexOf(this);
+    goog.asserts.assert(index >= 0);
+    this.parent.children.splice(index, 1);
+  }.bind(this));
+
+  /**
    * @type {number}
    * @export
    */
