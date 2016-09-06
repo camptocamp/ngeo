@@ -122,7 +122,6 @@ ngeo.module.directive('ngeoLayertree', ngeo.layertreeDirective);
 /**
  * The controller for the "tree node" directive.
  * @param {angular.Scope} $scope Scope.
- * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.
  * @param {ngeo.DecorateLayer} ngeoDecorateLayer layer decorator service.
  * @param {ngeo.DecorateLayerLoading} ngeoDecorateLayerLoading Decorate Layer service.
@@ -132,7 +131,7 @@ ngeo.module.directive('ngeoLayertree', ngeo.layertreeDirective);
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */
-ngeo.LayertreeController = function($scope, $element, $attrs, ngeoDecorateLayer, ngeoDecorateLayerLoading) {
+ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecorateLayerLoading) {
 
   var isRoot = $attrs['ngeoLayertreeNotroot'] === undefined;
 
