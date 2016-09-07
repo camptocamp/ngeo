@@ -531,7 +531,7 @@ gmf.DrawfeatureController.prototype.handleFeaturesRemove_ = function(evt) {
 gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
     active) {
 
-  var mapDiv = this.map.getTargetElement();
+  var mapDiv = this.map.getViewport();
   goog.asserts.assertElement(mapDiv);
 
   if (active) {
@@ -658,6 +658,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
     }
 
     evt.preventDefault();
+    evt.stopPropagation();
   }
 
   // do not do any further action if feature is null or already selected
