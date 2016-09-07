@@ -46,6 +46,7 @@ goog.require('ol.style.Text');
  *     <gmf-editfeature
  *         gmf-editfeature-layer="::ctrl.layer"
  *         gmf-editfeature-map="::ctrl.map"
+ *         gmf-editfeature-state="efsCtrl.state"
  *         gmf-editfeature-tolerance="::ctrl.tolerance"
  *         gmf-editfeature-vector="::ctrl.vectorLayer"
  *         gmf-editfeature-wmslayer="::ctrl.selectedWMSLayer">
@@ -54,6 +55,8 @@ goog.require('ol.style.Text');
  * @htmlAttribute {GmfThemesNode} gmf-editfeature-layer The GMF node of the
  *     editable layer.
  * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
+ * @htmlAttribute {string} gmf-editfeature-stopeditingrequest Stop editing
+ *     state.
  * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
@@ -70,6 +73,7 @@ gmf.editfeatureDirective = function() {
     scope: {
       'layer': '=gmfEditfeatureLayer',
       'map': '<gmfEditfeatureMap',
+      'state': '=gmfEditfeatureState',
       'tolerance': '<?gmfEditfeatureTolerance',
       'vectorLayer': '<gmfEditfeatureVector',
       'wmsLayer': '<gmfEditfeatureWmslayer'
@@ -119,6 +123,28 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @export
    */
   this.map;
+
+  /**
+   * The state property shared with the `gmf-editfeatureselector` directive.
+   * For more info, see in that directive.
+   * @type {string}
+   * @export
+   */
+  this.state;
+
+  $scope.$watch(
+    function() {
+      return this.state;
+    }.bind(this),
+    function(newValue, oldValue) {
+      if (newValue === gmf.EditfeatureController.State.STOP_EDITING_PENDING) {
+        this.confirmCancel().then(function() {
+          this.state =
+            gmf.EditfeatureController.State.STOP_EDITING_EXECUTE;
+        }.bind(this));
+      }
+    }.bind(this)
+  );
 
   /**
    * @type {number}
@@ -224,6 +250,18 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @export
    */
   this.unsavedModificationsModalShown = false;
+
+  // Reset stop request when closing the confirmation modal
+  $scope.$watch(
+    function() {
+      return this.unsavedModificationsModalShown;
+    }.bind(this),
+    function(newValue, oldValue) {
+      if (oldValue && !newValue) {
+        this.state = gmf.EditfeatureController.State.IDLE;
+      }
+    }.bind(this)
+  );
 
   /**
    * Flag that is toggled as soon as the feature changes, i.e. if any of its
@@ -482,10 +520,12 @@ gmf.EditfeatureController.prototype.cancel = function() {
 /**
  * Check if there are unsaved modifications. If there aren't, then cancel.
  * Used by the 'cancel' button in the template.
+ * @return {angular.$q.Promise} The promise attached to the confirm deferred
+ *     object.
  * @export
  */
 gmf.EditfeatureController.prototype.confirmCancel = function() {
-  this.checkForModifications_().then(function() {
+  return this.checkForModifications_().then(function() {
     this.cancel();
   }.bind(this));
 };
@@ -1005,3 +1045,29 @@ gmf.EditfeatureController.prototype.handleDestroy_ = function() {
 
 gmf.module.controller(
   'GmfEditfeatureController', gmf.EditfeatureController);
+
+
+/**
+ * The different possible values of the `state` inner property.
+ * @enum {string}
+ */
+gmf.EditfeatureController.State = {
+  /**
+   * The default state. While idle, nothing happens.
+   * @type {string}
+   */
+  IDLE: 'idle',
+  /**
+   * Final state set after the "stop editing" button has been clicked while
+   * no unsaved modifications were made or if the user saved them or confirmed
+   * to continue without saving.
+   * @type {string}
+   */
+  STOP_EDITING_EXECUTE: 'execute',
+  /**
+   * The state that is active while when the "stop editing" button has been
+   * clicked but before any confirmation has been made to continue.
+   * @type {string}
+   */
+  STOP_EDITING_PENDING: 'pending'
+};

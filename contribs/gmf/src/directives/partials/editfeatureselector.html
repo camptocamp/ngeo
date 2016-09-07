@@ -11,7 +11,6 @@
   </div>
 
   <div ng-switch-default>
-
     <div class="row">
       <div class="col-sm-12">
         <span translate>Currently editing: </span>
@@ -19,7 +18,7 @@
         <span class="fa fa-pencil"></span>
         <br>
         <button
-            ng-click="efsCtrl.selectedLayer = null;"
+            ng-click="efsCtrl.stopEditing()"
             class="btn btn-link btn-xs pull-right">
           <span class="fa fa-times"></span>
           {{'Stop editing' | translate}}
@@ -30,6 +29,7 @@
     <gmf-editfeature
         gmf-editfeature-layer="::efsCtrl.selectedLayer"
         gmf-editfeature-map="::efsCtrl.map"
+        gmf-editfeature-state="efsCtrl.state"
         gmf-editfeature-tolerance="::efsCtrl.tolerance"
         gmf-editfeature-vector="::efsCtrl.vectorLayer"
         gmf-editfeature-wmslayer="::efsCtrl.selectedWMSLayer">

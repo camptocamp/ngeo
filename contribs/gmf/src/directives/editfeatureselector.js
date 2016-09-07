@@ -147,12 +147,48 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
    */
   this.selectedLayer = null;
 
+  $scope.$watch(
+    function() {
+      return this.selectedLayer;
+    }.bind(this),
+    function(newValue, oldValue) {
+      if (newValue) {
+        this.selectedWMSLayer = newValue ? this.wmsLayers_[newValue.id] : null;
+      } else {
+        this.selectedWMSLayer = null;
+        this.state = gmf.EditfeatureController.State.IDLE;
+      }
+    }.bind(this)
+  );
+
   /**
    * The currently selected OpenLayers layer object.
    * @type {?ol.layer.Image|ol.layer.Tile}
    * @export
    */
   this.selectedWMSLayer = null;
+
+  /**
+   * The state of this directive shared with the `gmf-editfeature` directive.
+   * This property allows the proper management of the "stop editing" button.
+   * When clicked, the according state is set and the `gmf-editfeature`
+   * directive checks if it has unsaved changes and allow this directive to
+   * continue the action that was made or not.
+   * @type {string}
+   * @export
+   */
+  this.state = gmf.EditfeatureController.State.IDLE;
+
+  $scope.$watch(
+    function() {
+      return this.state;
+    }.bind(this),
+    function(newValue, oldValue) {
+      if (newValue === gmf.EditfeatureController.State.STOP_EDITING_EXECUTE) {
+        this.selectedLayer = null;
+      }
+    }.bind(this)
+  );
 
   this.themesChangeListenerKey = ol.events.listen(this.gmfThemes_,
       gmf.ThemesEventType.CHANGE, this.setLayersFromThemes_, this);
@@ -161,15 +197,17 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
-  $scope.$watch(
-    function() {
-      return this.selectedLayer;
-    }.bind(this),
-    function(newValue, oldValue) {
-      this.selectedWMSLayer = newValue ? this.wmsLayers_[newValue.id] : null;
-    }.bind(this)
-  );
+};
 
+
+/**
+ * Called when the 'stop editing' button is clicked. Set the 'state'
+ * variable to 'pending' allow the editfeature directive to check if it can
+ * stop or if it requires confirmation due to unsaved modifications.
+ * @export
+ */
+gmf.EditfeatureselectorController.prototype.stopEditing = function() {
+  this.state = gmf.EditfeatureController.State.STOP_EDITING_PENDING;
 };
 
 
