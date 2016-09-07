@@ -20,12 +20,12 @@ gmf-layertree {
 
 .gmf-layertree-node {
 
-  .right-buttons {
+  .gmf-layertree-right-buttons {
     display: none;
     cursor: pointer;
   }
 
-  &.depth-1 {
+  &.gmf-layertree-depth-1 {
     //styling first level node for desktop app
     background-color: @nav-bg;
     box-shadow: 0 0 4px 1px @input-border-focus;
@@ -45,7 +45,7 @@ gmf-layertree {
     }
   }
 
-  &.dragger {
+  &.gmf-layertree-dragger {
     * {
       cursor: url(../cursors/grabbing.cur), default;
       cursor: -webkit-grabbing;
@@ -55,7 +55,7 @@ gmf-layertree {
       display: none;
     }
   }
-  &.curr-drag-item {
+  &.gmf-layertree-curr-drag-item {
     * {
       visibility: hidden;
     }
@@ -66,39 +66,39 @@ gmf-layertree {
     }
   }
 
-  .group.depth-1 {
+  .gmf-layertree-group.gmf-layertree-depth-1 {
     background-color: @main-bg-color;
     padding: @half-app-margin;
   }
 
-  .group:hover,
-  .leaf:hover {
-    .right-buttons {
+  .gmf-layertree-group:hover,
+  .gmf-layertree-leaf:hover {
+    .gmf-layertree-right-buttons {
       display: block;
     }
   }
 
-  .leaf {
+  .gmf-layertree-leaf {
     padding-right: @half-app-margin;
   }
 
-  .legend:hover {
+  .gmf-layertree-legend:hover {
     a {
       cursor: pointer;
       display: inline-block;
     }
   }
 
-  .legend-button {
+  .gmf-layertree-legend-button {
     display: none;
   }
 
-  .name {
+  .gmf-layertree-name {
     white-space: nowrap;
   }
 
   // leave space for the drag handle
-  .depth-1 a.expand-node.fa {
+  .gmf-layertree-depth-1 a.gmf-layertree-expand-node.fa {
     margin-left: @half-app-margin;
   }
 

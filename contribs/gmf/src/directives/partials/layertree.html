@@ -1,7 +1,7 @@
 <div
   ng-if="::!layertreeCtrl.isRoot"
-  id="node-{{::layertreeCtrl.uid}}"
-  ng-class="[layertreeCtrl.node.children ? 'group' : 'leaf', 'depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
+  id="gmf-layertree-node-{{::layertreeCtrl.uid}}"
+  ng-class="[layertreeCtrl.node.children ? 'gmf-layertree-group' : 'gmf-layertree-leaf', 'gmf-layertree-depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
 
   <div
     class="ngeo-sortable-handle"
@@ -12,16 +12,16 @@
   <a
     ng-if="::layertreeCtrl.node.children"
     data-toggle="collapse"
-    href="#layer-group-{{::layertreeCtrl.uid}}"
+    href="#gmf-layertree-layer-group-{{::layertreeCtrl.uid}}"
     aria-expanded="{{::layertreeCtrl.node.metadata.isExpanded}}"
-    class="fa expand-node fa-fw">
+    class="fa gmf-layertree-expand-node fa-fw">
   </a>
 
   <a
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
-    ng-if="::!layertreeCtrl.node.children" ng-class="::{'no-layer-icon' : !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}"
-    class="layer-icon">
+    ng-if="::!layertreeCtrl.node.children" ng-class="::{'gmf-layertree-no-layer-icon' : !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}"
+    class="gmf-layertree-layer-icon">
 
     <img
       ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))"
@@ -32,19 +32,20 @@
   <a
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
-    ng-if="::layertreeCtrl.node.children" ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'state' : 'fa-refresh fa-spin']">
+    ng-if="::layertreeCtrl.node.children"
+    ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'gmf-layertree-state' : 'fa-refresh fa-spin']">
   </a>
 
   <a
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
-    class="name"
+    class="gmf-layertree-name"
     title="{{layertreeCtrl.node.name | translate}}">
 
     {{layertreeCtrl.node.name | translate}}
 
     <i
-      class="gmf-icon gmf-icon-search-go zoom"
+      class="gmf-icon gmf-icon-search-go gmf-layertree-zoom"
       data-toggle="tooltip"
       data-title="{{'Not visible at current scale. Click to zoom.'|translate}}"
       ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
@@ -84,7 +85,7 @@
     </span>
   </a>
 
-  <span class="right-buttons">
+  <span class="gmf-layertree-right-buttons">
     <a
       href=""
       ng-if="::layertreeCtrl.depth == 1"
@@ -119,7 +120,7 @@
             <i class="fa fa-th-list fa-fw"></i>
             <a
               title="{{'Show/hide legend'|translate}}"
-              ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#node-' + layertreeCtrl.uid + '-legend'); popoverCtrl.dismissPopover()"
+              ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend'); popoverCtrl.dismissPopover()"
               data-toggle="collapse"
               href="">
               {{'Show/hide legend'|translate}}
@@ -130,7 +131,7 @@
     </span>
 
     <span
-      class="metadata"
+      class="gmf-layertree-metadata"
       ng-if="::layertreeCtrl.node.metadata.metadataUrl">
 
       <span ng-if="::gmfLayertreeCtrl.openLinksInNewWindow === true">
@@ -150,24 +151,24 @@
     </span>
 
     <a
-      class="fa fa-align-left legend-button"
+      class="fa fa-align-left gmf-layertree-legend-button"
       ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend"
       title="{{'Show/hide legend'|translate}}"
       data-toggle="collapse"
-      href="#node-{{::layertreeCtrl.uid}}-legend">
+      href="#gmf-layertree-node-{{::layertreeCtrl.uid}}-legend">
     </a>
   </span>
 </div>
 
 <div
-  ng-if="::!layertreeCtrl.isRoot && gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend" id="node-{{::layertreeCtrl.uid}}-legend"
-  class="collapse legend"
+  ng-if="::!layertreeCtrl.isRoot && gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend" id="gmf-layertree-node-{{::layertreeCtrl.uid}}-legend"
+  class="collapse gmf-layertree-legend"
   ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded ? 'in' : '']">
 
   <a
     title="{{'Hide legend'|translate}}"
     data-toggle="collapse"
-    ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#node-' + layertreeCtrl.uid + '-legend')"
+    ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')"
     href="">
     {{'Hide legend'|translate}}
   </a>
@@ -176,16 +177,16 @@
 </div>
 
 <ul
-  id="layer-group-{{::layertreeCtrl.uid}}"
+  id="gmf-layertree-layer-group-{{::layertreeCtrl.uid}}"
   ng-if="::layertreeCtrl.node.children"
   ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded}"
   ngeo-sortable="::layertreeCtrl.isRoot && gmfLayertreeCtrl.layers"
-  ngeo-sortable-options="{handleClassName: 'ngeo-sortable-handle', draggerClassName: 'dragger', currDragItemClassName : 'curr-drag-item'}">
+  ngeo-sortable-options="{handleClassName: 'ngeo-sortable-handle', draggerClassName: 'gmf-layertree-dragger', currDragItemClassName : 'gmf-layertree-curr-drag-item'}">
 
   <li
     class="gmf-layertree-node"
     ng-repeat="node in layertreeCtrl.node.children"
-    ng-class="'depth-' + layertreeCtrl.depth"
+    ng-class="'gmf-layertree-depth-' + layertreeCtrl.depth"
     ngeo-layertree="node"
     ngeo-layertree-notroot
     ngeo-layertree-map="layertreeCtrl.map"
