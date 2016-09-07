@@ -122,12 +122,18 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
     ngeoLayerHelper, gmfWmsUrl, gmfTreeManager, ngeoSyncArrays, gmfWMSTime) {
 
+
+  /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.scope_ = $scope;
+
   /**
    * @private
    * @type {angular.$http}
    */
   this.$http_ = $http;
-
 
   /**
    * @private
@@ -216,6 +222,18 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
     this.updateDimensions_(this.gmfTreeManager_.tree);
   }.bind(this));
 
+  $scope.$on('state', this.handleStateChange_.bind(this));
+
+};
+
+
+/**
+ * @param {angular.Scope.Event} event Change event.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @private
+ */
+gmf.LayertreeController.prototype.handleStateChange_ = function(event, treeCtrl) {
+  console.log(treeCtrl.node.name, 'state is now', treeCtrl.state)
 };
 
 
@@ -556,99 +574,33 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
 
 
 /**
+ * @param {string} state State.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller
+ */
+gmf.LayertreeController.prototype.setState = function(state, treeCtrl) {
+  treeCtrl.state = state;
+  this.scope_.$emit('state', treeCtrl);
+  treeCtrl.children.forEach(this.setState.bind(this, state));
+};
+
+
+/**
  * Toggle the state of treeCtrl's node.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
 gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
-  var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
-  var childNodes = [];
-  var type = gmf.Themes.getNodeType(node);
-  var layer = treeCtrl.layer;
-  var i, layers, layersNames;
-  var firstParentTree = this.retrieveFirstParentTree_(treeCtrl);
-  var firstParentTreeLayer = firstParentTree.layer;
-  // Check if the current node state is 'activated'.
-  var isActive = (this.getNodeState(treeCtrl) === 'on') ? true : false;
-
-  // Deactivate/activate the corresponding layer(s).
-  switch (type) {
-    case gmf.Themes.NodeType.WMS:
-    case gmf.Themes.NodeType.WMTS:
-
-      // If layer is in a mixed group
-      if (firstParentTreeLayer instanceof ol.layer.Group) {
-        layer.setVisible(!isActive);
-
-      } else {
-        // If layer of the group is a wms in a not mixed group:
-        var firstParentTreeSource = /** @type {ol.source.ImageWMS} */
-            (firstParentTreeLayer.getSource());
-        var firstParentTreeNode =  /** @type {GmfThemesNode} */
-            (firstParentTree.node);
-        var currentLayersNames = (firstParentTreeLayer.getVisible()) ?
-            firstParentTreeSource.getParams()['LAYERS'] : '';
-        var newLayersNames = [];
-        gmf.Themes.getFlatNodes(firstParentTreeNode, childNodes);
-        // Add/remove layer and keep order of layers in layergroup.
-        for (i = 0; i < childNodes.length; i++) {
-          layersNames = this.getLayersNames_(childNodes[i]);
-          if (layersNames === this.getLayersNames_(node)) {
-            if (!isActive) {
-              newLayersNames.push(layersNames);
-            }
-          } else if (this.searchLayersNames_(currentLayersNames, layersNames)) {
-            newLayersNames.push(layersNames);
-          }
-        }
-        goog.asserts.assertInstanceof(firstParentTreeLayer, ol.layer.Image);
-        // layersNames come from the json theme nodes and replace the wms
-        // LAYERS. It must be reversed to get the correct layer order on the map.
-        this.layerHelper_.updateWMSLayerState(firstParentTreeLayer, newLayersNames.reverse().join(','));
-      }
-      break;
-
-    case gmf.Themes.NodeType.MIXED_GROUP:
-      var nodeLayers = [];
-      var l, source;
-      gmf.Themes.getFlatNodes(node, childNodes);
-      layersNames = childNodes.map(this.getLayersNames_).join(',');
-      layers = this.layerHelper_.getFlatLayers(firstParentTreeLayer);
-      for (i = 0; i < layers.length; i++) {
-        l = layers[i];
-        source = layers[i].getSource();
-        if (source instanceof ol.source.WMTS) {
-          if (this.searchLayersNames_(layersNames, source.getLayer())) {
-            nodeLayers.push(l);
-          }
-        } else if (source instanceof ol.source.ImageWMS) {
-          if (this.searchLayersNames_(layersNames,
-            source.getParams()['LAYERS'])) {
-            nodeLayers.push(l);
-          }
-        }
-      }
-      for (i = 0; i < nodeLayers.length; i++) {
-        nodeLayers[i].setVisible(!isActive);
-      }
-      break;
-
-    case gmf.Themes.NodeType.NOT_MIXED_GROUP:
-      goog.asserts.assertInstanceof(firstParentTreeLayer, ol.layer.Image);
-      if (isActive) {
-        this.layerHelper_.updateWMSLayerState(firstParentTreeLayer, '');
-      } else {
-        gmf.Themes.getFlatNodes(node, childNodes);
-        layersNames = childNodes.map(this.getLayersNames_);
-        // layersNames come from the json theme nodes and replace the wms
-        // LAYERS. It must be reversed to get the correct layer order on the map.
-        this.layerHelper_.updateWMSLayerState(firstParentTreeLayer,
-          layersNames.reverse().join(','));
-      }
-      break;
-    // no default
+  var state;
+  if (treeCtrl.state === 'off' || treeCtrl.state === 'indeterminate') {
+    state = 'on';
+  } else if (treeCtrl.state === 'on') {
+    state = 'off';
+  } else {
+    goog.asserts.fail();
   }
+  this.setState(state, treeCtrl);
+  // FIXME: traverse treeCtrl.parent and set state = 'indeterminate' if needed
 };
 
 
@@ -699,68 +651,12 @@ gmf.LayertreeController.prototype.getLayersNames_ = function(node) {
  * @export
  */
 gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
-  var style;
-  var layer = treeCtrl.layer;
-  var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
-  var type = gmf.Themes.getNodeType(node);
-  var firstParentTree = this.retrieveFirstParentTree_(treeCtrl);
-  var firstParentTreeLayer = firstParentTree.layer;
-  var firstParentTreeSource;
-  var currentNodeState = this.groupNodeStates_[
-      goog.getUid(firstParentTreeLayer)];
-
-  switch (type) {
-    case gmf.Themes.NodeType.WMS:
-    case gmf.Themes.NodeType.WMTS:
-      if (firstParentTreeLayer instanceof ol.layer.Group) {
-        // Get style of this node depending if the relative layer is visible.
-        style = goog.isDefAndNotNull(layer) && layer.getVisible() ?
-            'on' : 'off';
-
-      } else {
-        // If layer of the group is a wms in a not mixed group:
-        firstParentTreeSource = /** @type {ol.source.ImageWMS} */
-            (firstParentTreeLayer.getSource());
-        var layersNames =
-            firstParentTreeSource.getParams()['LAYERS'];
-        // Get style for this layer depending if the layer is on the map or not
-        // and if the layer is visible;
-        style = !this.searchLayersNames_(layersNames,
-          this.getLayersNames_(node)) ||
-            !firstParentTreeLayer.getVisible() ? 'off' : 'on';
-      }
-
-      // Update group state
-      if (style === 'on') {
-        if (!ol.array.includes(currentNodeState, node.name)) {
-          currentNodeState.push(node.name);
-        }
-      } else {
-        ol.array.remove(currentNodeState, node.name);
-      }
-
-      break;
-
-    case gmf.Themes.NodeType.MIXED_GROUP:
-    case gmf.Themes.NodeType.NOT_MIXED_GROUP:
-      var nodeNames = this.retrieveNodeNames_(node);
-      var i, found = 0;
-      for (i = 0; i < nodeNames.length; i++) {
-        if (currentNodeState.indexOf(nodeNames[i]) >= 0) {
-          found++;
-        }
-      }
-      if (found === 0) {
-        style = 'off';
-      } else if (found === nodeNames.length) {
-        style = 'on';
-      } else {
-        style = 'indeterminate';
-      }
-      break;
-    // no default
+  if (treeCtrl.state === undefined) {
+    var checked = treeCtrl.node.metadata['isChecked'] || false;
+    treeCtrl.state = checked ? 'on' : 'off';
+    // FIXME: traverse treeCtrl.parent and set state = 'indeterminate' if needed
   }
-  return style || 'off';
+  return treeCtrl.state;
 };
 
 
