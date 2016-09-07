@@ -27,7 +27,8 @@ gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
  * Example:
  *
  *      <gmf-backgroundlayerselector
- *        gmf-backgroundlayerselector-map="::ctrl.map">
+ *        gmf-backgroundlayerselector-dimensions="::ctrl.dimensions"
+ *        gmf-backgroundlayerselector-map="::ctrl.map"
  *        gmf-backgroundlayerselector-select="onBackgroundSelected()">
  *      </gmf-backgroundlayerselector>
  *
@@ -35,6 +36,8 @@ gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
  *
  *  * thumbnail: The URL used for the icon.
  *
+ * @htmlAttribute {Object.<string, string>} gmf-backgroundlayerselector-dimensions
+ *     The dimensions.
  * @htmlAttribute {ol.Map=} gmf-backgroundlayerselector-map The map.
  * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
  *     when a layer was selected by the user.
@@ -50,8 +53,8 @@ gmf.backgroundlayerselectorDirective = function(
   return {
     restrict: 'E',
     scope: {
-      'map': '=gmfBackgroundlayerselectorMap',
       'dimensions': '=gmfBackgroundlayerselectorDimensions',
+      'map': '=gmfBackgroundlayerselectorMap',
       'select': '&?gmfBackgroundlayerselectorSelect'
     },
     bindToController: true,
@@ -79,6 +82,14 @@ gmf.module.directive('gmfBackgroundlayerselector',
  */
 gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
     gmfThemes) {
+
+  /**
+   * @type {Object.<string, string>}
+   * @export
+   */
+  this.dimensions;
+
+  goog.asserts.assert(this.dimensions, 'The dimensions object is required');
 
   /**
    * @type {ol.Map}
@@ -119,14 +130,6 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
 
   this.listenerKeys_.push(ol.events.listen(gmfThemes,
     gmf.ThemesEventType.CHANGE, this.handleThemesChange_, this));
-
-  /**
-   * @type {Object.<string, string>}
-   * @export
-   */
-  this.dimensions;
-
-  goog.asserts.assert(this.dimensions, 'The dimensions object is required');
 
   gmfThemes.getBgLayers(this.dimensions).then(function(layers) {
     this.bgLayers = layers;
