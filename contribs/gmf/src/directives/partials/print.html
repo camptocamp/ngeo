@@ -23,7 +23,7 @@
         <div class="col-md-7">
           <div class="btn-group btn-block">
             <button type="button" class="btn btn-default form-control" data-toggle="dropdown">{{ctrl.fields.layout | translate}}&nbsp;<i class="fa fa-caret-down"></i></button>
-            <ul class="dropdown-menu btn-block" role="menu">
+            <ul class="dropdown-menu dropdown-menu-right btn-block" role="menu">
               <li ng-repeat="layout in ctrl.fields.layouts"><a href="" ng-click="ctrl.setLayout(layout)">{{layout | translate}}</a></li>
             </ul>
           </div>
