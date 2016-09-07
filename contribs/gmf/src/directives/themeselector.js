@@ -15,7 +15,6 @@ goog.require('ngeo.Location');
  *
  *     <gmf-themeselector
  *         id="themes"
- *         class="slide"
  *         data-header-title="Themes"
  *         gmf-themeselector-filter="::mainCtrl.filter">
  *     </gmf-themeselector>

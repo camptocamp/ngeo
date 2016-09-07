@@ -151,7 +151,8 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
    * @type {number}
    * @private
    */
-  this.navWidth_ = angular.element(document.querySelector('.nav-left')).width();
+  this.navWidth_ = angular.element(document.querySelector(
+    '.gmf-mobile-nav-left')).width();
 
   goog.events.listen(this.dragger_, 'end', (function(e) {
     angular.element(dragEl).removeClass('dragging');

@@ -12,9 +12,9 @@ goog.require('gmf');
  * structure:
  * <nav gmf-mobile-nav>
  *   <header>
- *     <a class="go-back" href="#"></a>
+ *     <a class="gmf-mobile-nav-go-back" href="#"></a>
  *   </header>
- *   <div class="active slide">
+ *   <div class="gmf-mobile-nav-active gmf-mobile-nav-slide">
  *     <ul>
  *       <li>
  *         <a href data-target="#devices">Devices</a>
@@ -24,13 +24,13 @@ goog.require('gmf');
  *       </li>
  *     </ul>
  *   </div>
- *   <div id="devices" class="slide" data-header-title="Devices">
+ *   <div id="devices" class="gmf-mobile-nav-slide" data-header-title="Devices">
  *     <ul>
  *       <li>Mobile Phones</li>
  *       <li>Televisions</li>
  *     </ul>
  *   </div>
- *   <div id="vehicles" class="slide" data-header-title="Vehicles">
+ *   <div id="vehicles" class="gmf-mobile-nav-slide" data-header-title="Vehicles">
  *     <ul>
  *       <li>Cars</li>
  *       <li>Planes</li>
@@ -120,29 +120,32 @@ gmf.module.controller('gmfMobileNavController', gmf.MobileNavController);
  * @param {angular.JQLite} element Element.
  */
 gmf.MobileNavController.prototype.init = function(element) {
-  this.active_ = $(element.find('.active.slide'));
+  var cls = gmf.MobileNavController.ClassName_;
+  this.active_ = $(element.find('.' + cls.ACTIVE + '.' + cls.SLIDE));
   this.header_ = $(element.find('> header'));
-  this.backButton_ = $(element.find('header > .go-back'));
+  this.backButton_ = $(element.find('header > .' + cls.GO_BACK));
 
   // watch for clicks on "slide-in" elements
   element.find('[data-toggle=slide-in]').on('click', function(evt) {
 
+    var cls = gmf.MobileNavController.ClassName_;
+
     // the element to slide out is the div.slide parent
-    var slideOut = $(evt.currentTarget).parents('.slide');
+    var slideOut = $(evt.currentTarget).parents('.' + cls.SLIDE);
     goog.asserts.assert(slideOut.length === 1);
 
     // push the item to the selected stack
     this.slid_.push(slideOut);
 
     // slide the "old" element out
-    slideOut.addClass('slide-out').removeClass('active');
+    slideOut.addClass(cls.SLIDE_OUT).removeClass(cls.ACTIVE);
 
     // element to slide in
     var slideIn = $($(evt.currentTarget).attr('data-target'));
     goog.asserts.assert(slideIn.length === 1);
 
     // slide the "new" element in
-    slideIn.addClass('active');
+    slideIn.addClass(cls.ACTIVE);
 
     // update the navigation header
     this.updateNavigationHeader_(slideIn, false);
@@ -162,17 +165,18 @@ gmf.MobileNavController.prototype.init = function(element) {
  */
 gmf.MobileNavController.prototype.updateNavigationHeader_ = function(
     active, back) {
-  this.header_.toggleClass('back', back);
+  var cls = gmf.MobileNavController.ClassName_;
+  this.header_.toggleClass(cls.BACK, back);
 
   // remove any inactive nav
-  this.header_.find('nav:not(.active)').remove();
+  this.header_.find('nav:not(.' + cls.ACTIVE + ' +)').remove();
 
   // deactivate the currently active nav
-  this.header_.find('nav.active').removeClass('active')
-      .addClass('slide-out');
+  this.header_.find('nav.' + cls.ACTIVE).removeClass(cls.ACTIVE)
+      .addClass(cls.SLIDE_OUT);
 
   // show the back button when relevant
-  this.backButton_.toggleClass('active', this.slid_.length > 0);
+  this.backButton_.toggleClass(cls.ACTIVE, this.slid_.length > 0);
 
   // create a new nav
   var nav = $('<nav>');
@@ -196,7 +200,7 @@ gmf.MobileNavController.prototype.updateNavigationHeader_ = function(
       // fix: calling `position()` makes sure that the animation
       // is always run
       nav.position();
-      nav.addClass('active');
+      nav.addClass(gmf.MobileNavController.ClassName_.ACTIVE);
     }, 0);
   }, 0);
 };
@@ -213,14 +217,16 @@ gmf.MobileNavController.prototype.back_ = function() {
     return;
   }
 
+  var cls = gmf.MobileNavController.ClassName_;
+
   // slide active item to the right
-  this.active_.removeClass('active');
+  this.active_.removeClass(cls.ACTIVE);
 
   // get the previously active item
   var slideBack = this.slid_.pop();
 
   // slide previous item to the right
-  slideBack.addClass('active').removeClass('slide-out');
+  slideBack.addClass(cls.ACTIVE).removeClass(cls.SLIDE_OUT);
 
   // update the navigation header
   this.updateNavigationHeader_(slideBack, true);
@@ -242,6 +248,21 @@ gmf.MobileNavController.prototype.backIfActive = function(element) {
 
 
 /**
+ * CSS class names toggled by the controller.
+ * @enum {string}
+ * @private
+ */
+
+gmf.MobileNavController.ClassName_ = {
+  ACTIVE: 'gmf-mobile-nav-active',
+  BACK: 'gmf-mobile-nav-go-back',
+  GO_BACK: 'gmf-mobile-nav-go-back',
+  SLIDE: 'gmf-mobile-nav-slide',
+  SLIDE_OUT: 'gmf-mobile-nav-slide-out'
+};
+
+
+/**
  * A directive to be used in conjunction with {@link gmf.mobileNavDirective}.
  * The directive can be set on a slide element of {@link gmf.mobileNavDirective}
  * with an expression. When the value of the expression changes and becomes
@@ -250,9 +271,9 @@ gmf.MobileNavController.prototype.backIfActive = function(element) {
  *
  * Example:
  *
- *    <nav class="nav-left" gmf-mobile-nav>
+ *    <nav class="gmf-mobile-nav-left" gmf-mobile-nav>
  *      ...
- *      <gmf-authentication class="slide"
+ *      <gmf-authentication class="gmf-mobile-nav-slide"
  *         gmf-mobile-nav-back="authCtrl.gmfUser.username !== null">
  *      </gmf-authentication>
  *
@@ -295,7 +316,7 @@ gmf.module.directive('gmfMobileNavBack', gmf.mobileNavBackDirective);
  *
  * Example:
  *
- *    <nav class="nav-left" gmf-mobile-nav>
+ *    <nav class="gmf-mobile-nav-left" gmf-mobile-nav>
  *      ...
  *      <gmf-themeselector
  *         gmf-mobile-nav-back-on-click
