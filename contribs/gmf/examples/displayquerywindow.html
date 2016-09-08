@@ -24,7 +24,7 @@
       }
 
       /* Display queries */
-      .displayquerywindow {
+      .gmf-displayquerywindow {
         max-height: 400px;
         width: 350px;
         max-width: 350px;
@@ -34,7 +34,16 @@
         left: 50%;
         right: 50%;
       }
-      .displayquerywindow .collapse-button {
+      .gmf-displayquerywindow button {
+        background: none;
+        border: none;
+        font-family: FontAwesome;
+        width: 32px;
+      }
+      .gmf-displayquerywindow button.close {
+        padding: 5px 5px 0 0;
+      }
+      .gmf-displayquerywindow .gmf-displayquerywindow-collapse-button {
         background-color: white;
         border: solid 1px black;
         border-bottom-width: 0;
@@ -44,27 +53,27 @@
         width: 48px;
         margin-left: calc(50% - 24px);
       }
-      .displayquerywindow .collapse-button.up:after {
+      .gmf-displayquerywindow-collapse-button-up:after {
         content: "\f077";
       }
-      .displayquerywindow .collapse-button.down:after {
+      .gmf-displayquerywindow-collapse-button-down:after {
         content: "\f078";
       }
-      .displayquerywindow .displayquerywindow-container {
+      .gmf-displayquerywindow-container {
         background-color: white;
         border: solid 1px black;
       }
-      .displayquerywindow .animation-container {
+      .gmf-displayquerywindow-animation-container {
         position: relative;
         overflow: hidden;
         height: 60px;
         margin: 0 15px;
         transition: 0.3s ease-in all;
       }
-      .displayquerywindow .animation-container.detailed {
+      .gmf-displayquerywindow-animation-container-detailed {
         height: 160px;
       }
-      .displayquerywindow .animation-container .slide-animation {
+      .gmf-displayquerywindow-animation-container .gmf-displayquerywindow-slide-animation {
         height: 100%;
         padding: 5px 5px 0;
         text-align: left;
@@ -75,91 +84,79 @@
         left: 0;
         right: 0;
       }
-      .displayquerywindow .slide-animation.ng-enter, .slide-animation.ng-leave {
+      .gmf-displayquerywindow-slide-animation.ng-enter, .gmf-displayquerywindow-slide-animation.ng-leave {
         transition: 0.3s ease-in all;
       }
       /* Left to right animation */
-      .displayquerywindow .next .slide-animation.ng-enter {
+      .gmf-displayquerywindow-next .gmf-displayquerywindow-slide-animation.ng-enter {
         left: 100%;
       }
-      .displayquerywindow .next .slide-animation.ng-enter-active {
+      .gmf-displayquerywindow-next .gmf-displayquerywindow-slide-animation.ng-enter-active {
         left: 0;
       }
-      .displayquerywindow .next .slide-animation.ng-leave {
+      .gmf-displayquerywindow-next .gmf-displayquerywindow-slide-animation.ng-leave {
         left: 0;
       }
-      .displayquerywindow .next .slide-animation.ng-leave-active {
+      .gmf-displayquerywindow-next .gmf-displayquerywindow-slide-animation.ng-leave-active {
         left: -100%;
       }
       /* Right to left animation */
-      .displayquerywindow .previous .slide-animation.ng-enter {
+      .gmf-displayquerywindow-previous .gmf-displayquerywindow-slide-animation.ng-enter {
         left: -100%;
       }
-      .displayquerywindow .previous .slide-animation.ng-enter-active {
+      .gmf-displayquerywindow-previous .gmf-displayquerywindow-slide-animation.ng-enter-active {
         left: 0;
       }
-      .displayquerywindow .previous .slide-animation.ng-leave {
+      .gmf-displayquerywindow-previous .gmf-displayquerywindow-slide-animation.ng-leave {
         left: 0;
       }
-      .displayquerywindow .previous .slide-animation.ng-leave-active {
+      .gmf-displayquerywindow-previous .gmf-displayquerywindow-slide-animation.ng-leave-active {
         left: 100%;
       }
-      .displayquerywindow .header .title {
+      .gmf-displayquerywindow-title {
         font-weight: bold;
       }
-      .displayquerywindow .header .subtitle {
+      .gmf-displayquerywindow-subtitle {
         margin-left: 10px;
         height: 2ex;
       }
-      .displayquerywindow .details {
+      .gmf-displayquerywindow-details {
         height: 65%;
         overflow-x: hidden;
         overflow-y: auto;
         margin-left: 10px;
         padding-bottom: 10px
       }
-      .displayquerywindow .details table {
+      .gmf-displayquerywindow-details table {
         font-size: 0.9em;
       }
-      .displayquerywindow .details .key {
+      .gmf-displayquerywindow-details-key {
         padding-right: 25px;
       }
-      .displayquerywindow .slide-animation.ng-enter-active .details .value {
+      .gmf-displayquerywindow-slide-animation.ng-enter-active .gmf-displayquerywindow-details-value {
         white-space: nowrap;
       }
-      .displayquerywindow .navigate {
+      .gmf-displayquerywindow-navigate {
         border-top: solid 1px black;
         text-align: center;
         margin-top: 10px;
         padding-top: 5px;
         height: 32px;
       }
-      .displayquerywindow button {
-        background: none;
-        border: none;
-        font-family: FontAwesome;
-        width: 32px;
-      }
-      .displayquerywindow button.close {
-        padding: 5px 5px 0 0;
-      }
-      .displayquerywindow button.close:after {
-        content: "\f00d";
-      }
-      .displayquerywindow .navigate .previous {
+      .gmf-displayquerywindow-navigate .gmf-displayquerywindow-previous {
         float: left;
       }
-      .displayquerywindow .navigate .previous:after {
+      .gmf-displayquerywindow-navigate .gmf-displayquerywindow-previous:after {
         content: "\f053";
       }
-      .displayquerywindow .navigate .next {
+      .gmf-displayquerywindow-navigate .gmf-displayquerywindow-next {
         float: right;
       }
-      .displayquerywindow .navigate .next:after {
+      .gmf-displayquerywindow-navigate .gmf-displayquerywindow-next:after {
         content: "\f054";
       }
       @media (max-width: 768px) {
-        .displayquerywindow {
+        .gmf-displayquerywindow {
           width: 100%;
           max-width: 100%;
           margin-left: -50%;
