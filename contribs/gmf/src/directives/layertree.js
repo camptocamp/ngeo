@@ -3,13 +3,13 @@ goog.provide('gmf.layertreeDirective');
 
 goog.require('ngeo.SyncArrays');
 goog.require('gmf');
+goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('gmf.WMSTime');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
-goog.require('ol.array');
 goog.require('ol.layer.Tile');
 
 /** @suppress {extraRequire} */
@@ -111,6 +111,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
  * @param {ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
  * @param {gmf.WMSTime} gmfWMSTime wms time service.
  * @constructor
@@ -120,8 +121,8 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
-    ngeoLayerHelper, gmfWmsUrl, gmfTreeManager, ngeoSyncArrays, gmfWMSTime) {
-
+    ngeoLayerHelper, gmfWmsUrl, gmfTreeManager, gmfSyncLayertreeMap,
+    ngeoSyncArrays, gmfWMSTime) {
 
   /**
    * @type {angular.Scope}
@@ -158,6 +159,12 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
+
+  /**
+   * @type {gmf.SyncLayertreeMap}
+   * @private
+   */
+  this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
   /**
    * @type {gmf.WMSTime}
@@ -222,18 +229,6 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
     this.updateDimensions_(this.gmfTreeManager_.tree);
   }.bind(this));
 
-  $scope.$on('state', this.handleStateChange_.bind(this));
-
-};
-
-
-/**
- * @param {angular.Scope.Event} event Change event.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
- * @private
- */
-gmf.LayertreeController.prototype.handleStateChange_ = function(event, treeCtrl) {
-  console.log(treeCtrl.node.name, 'state is now', treeCtrl.state)
 };
 
 
@@ -574,35 +569,28 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
 
 
 /**
- * @param {string} state State.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller
- */
-gmf.LayertreeController.prototype.setState = function(state, treeCtrl) {
-  treeCtrl.state = state;
-  this.scope_.$emit('state', treeCtrl);
-  treeCtrl.children.forEach(this.setState.bind(this, state));
-};
-
-
-/**
  * Toggle the state of treeCtrl's node.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
 gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
-  var state;
-  if (treeCtrl.state === 'off' || treeCtrl.state === 'indeterminate') {
-    state = 'on';
-  } else if (treeCtrl.state === 'on') {
-    state = 'off';
-  } else {
-    goog.asserts.fail();
-  }
-  this.setState(state, treeCtrl);
-  // FIXME: traverse treeCtrl.parent and set state = 'indeterminate' if needed
+  treeCtrl.toggleState();
+  var firstLevelTreeCtrl = this.retrieveFirstParentTree_(treeCtrl);
+  this.gmfSyncLayertreeMap_.syncStates(firstLevelTreeCtrl);
 };
 
+/**
+ * Return the current state of the given treeCtrl's node.
+ * Return a class name that match with the current node activation state.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ *     the current node.
+ * @return {string} 'on' or 'off' or 'indeterminate'.
+ * @export
+ */
+gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
+  return treeCtrl.getState();
+};
 
 /**
  * Search if a substring representing layers names are in the string representing
@@ -641,24 +629,6 @@ gmf.LayertreeController.prototype.getLayersNames_ = function(node) {
       throw new Error('Node wrong type to get layer(s) name(s): ' + type);
   }
 };
-
-/**
- * Return the current state of the given treeCtrl's node.
- * Return a class name that match with the current node activation state.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
- * @return {string} 'on' or 'off' or 'indeterminate'.
- * @export
- */
-gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
-  if (treeCtrl.state === undefined) {
-    var checked = treeCtrl.node.metadata['isChecked'] || false;
-    treeCtrl.state = checked ? 'on' : 'off';
-    // FIXME: traverse treeCtrl.parent and set state = 'indeterminate' if needed
-  }
-  return treeCtrl.state;
-};
-
 
 /**
  * Update the TIME parameter of the source of the layer attached to the given
