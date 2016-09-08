@@ -144,6 +144,12 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
   var nodeExpr = $attrs['ngeoLayertree'];
 
   /**
+   * @type {!string}
+   * @private
+   */
+  this.state_ = 'undeterminate';
+
+  /**
    * @type {Object|undefined}
    * @export
    */
@@ -252,6 +258,76 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
   }
 
   $scope['layertreeCtrl'] = this;
+};
+
+
+/**
+ * Return the current state.
+ * @return {string} 'on', 'off', 'indeterminate'.
+ * @export
+ */
+ngeo.LayertreeController.prototype.getState = function() {
+  return this.state_;
+};
+
+
+/**
+ * @param {boolean=} opt_avoidRefreshParents TODO;
+ * @export
+ */
+ngeo.LayertreeController.prototype.toggleState = function(opt_avoidRefreshParents) {
+  // set its state
+  this.state_ = (this.state_ !== 'on') ? 'on' : 'off';
+  // Asks to each child to toggle its state;
+  this.children.forEach(function(child) {
+    child.toggleState(true);
+  });
+  // Ask to its parent to update it's state.
+  if (!opt_avoidRefreshParents && this.parent) {
+    this.parent.refreshState();
+  }
+  //this.scope_.$emit('stateUpdated', this);
+};
+
+
+/**
+ * TODO
+ * @public
+ */
+ngeo.LayertreeController.prototype.refreshState = function() {
+  var newState = this.getCalculateState();
+  if (this.state_ === newState) {
+    return;
+  }
+  this.state_ = newState;
+  //this.scope_.$emit('stateUpdated', this);
+  if (this.parent) {
+    this.parent.refreshState();
+  }
+};
+
+
+/**
+ * Return the current state, calculate on all its children recursively.
+ * @return {string} 'on', 'off' or 'indeterminate'.
+ * @public
+ */
+ngeo.LayertreeController.prototype.getCalculateState = function() {
+  if (this.children.length === 0) {
+    return this.state_;
+  }
+  var childState;
+  var previousChildState;
+  this.children.some(function(child) {
+    childState = child.getCalculateState();
+    if (previousChildState) {
+      if (previousChildState !== childState) {
+        return childState = 'indeterminate';
+      }
+    }
+    previousChildState = childState;
+  });
+  return childState;
 };
 
 
