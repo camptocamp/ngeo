@@ -87,6 +87,11 @@ ngeo.sortableDirective = function($timeout) {
            * time the sortable array changes (see $watchCollection above).
            */
           function resetUpDragDrop() {
+            // Save the current nodes in order to restore the state if the node
+            // is dropped at the same place
+            // In this case the comments and element nodes are messed up
+            var savedNodes = element.contents();
+
             var children = element.children();
             for (var i = 0; i < children.length; ++i) {
               angular.element(children[i]).data('idx', i);
@@ -144,7 +149,16 @@ ngeo.sortableDirective = function($timeout) {
               var li = e.currDragItem;
               var idx = /** @type {number} */
                   (angular.element(li).data('idx'));
-              if (hoverNextItemIdx != -1) {
+              if (hoverList === null ||
+                  hoverNextItemIdx == idx + 1 ||
+                  (hoverNextItemIdx == -1 &&
+                   idx == element.children().length - 1)) {
+                // element dropped out of the list container
+                // or
+                // element dropped at the same location
+                // -> restore initial nodes list
+                element.append(savedNodes);
+              } else if (hoverNextItemIdx != -1) {
                 // there's a next item, so insert
                 if (hoverNextItemIdx != idx) {
                   if (hoverNextItemIdx > idx) {
@@ -155,7 +169,7 @@ ngeo.sortableDirective = function($timeout) {
                         sortable.splice(idx, 1)[0]);
                   });
                 }
-              } else if (hoverList !== null) {
+              } else {
                 // there's no next item, so push
                 scope.$apply(function() {
                   sortable.push(sortable.splice(idx, 1)[0]);
