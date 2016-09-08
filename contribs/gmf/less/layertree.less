@@ -6,7 +6,7 @@
    */
   margin-left: @app-margin; // left shifting (indentation)
 
-  &.depth-1 {
+  &.gmf-layertree-depth-1 {
     margin: 0 @micro-app-margin @app-margin @micro-app-margin;
   }
 
@@ -27,7 +27,7 @@
     padding-left: 0;
     text-decoration: none;
 
-    &.expand-node.fa {
+    &.gmf-layertree-expand-node.fa {
       color : @color-light;
       display: inline-block;
       &::before {
@@ -39,18 +39,18 @@
     }
   }
 
-  .state {
+  .gmf-layertree-state {
     font-family: gmf-icons;
     color: @color;
   }
 
   .off,
-  .off .legend img {
+  .off .gmf-layertree-legend img {
     opacity: 0.5;
   }
 
-  .leaf,
-  .group {
+  .gmf-layertree-leaf,
+  .gmf-layertree-group {
     position: relative;
     padding: @micro-app-margin;
     display: flex;
@@ -61,32 +61,32 @@
     }
   }
 
-  .leaf .state::after {
+  .gmf-layertree-leaf .gmf-layertree-state::after {
     content: "\e603";
   }
 
-  .group {
-    .state::after {
+  .gmf-layertree-group {
+    .gmf-layertree-state::after {
       content: "\e600";
     }
-    .layer-icon {
+    .gmf-layertree-layer-icon {
       display: none;
     }
 
-    &.depth-1 {
-      .name {
+    &.gmf-layertree-depth-1 {
+      .gmf-layertree-name {
         font-weight: bold;
         color: black;
       }
     }
 
-    &.indeterminate .state::after {
+    &.indeterminate .gmf-layertree-state::after {
       content: "\e900";
     }
   }
 
-  .layer-icon {
-    &.no-layer-icon::after {
+  .gmf-layertree-layer-icon {
+    &.gmf-layertree-no-layer-icon::after {
       font-family: gmf-icons;
       content: "\e907";
       width: 100%;
@@ -108,7 +108,7 @@
     }
   }
 
-  .name {
+  .gmf-layertree-name {
     overflow: hidden;
     text-overflow: ellipsis;
     flex: 2;
@@ -116,7 +116,7 @@
     padding-right: @half-app-margin;
   }
 
-  .metadata {
+  .gmf-layertree-metadata {
     a {
       padding: 0;
       &::after {
@@ -127,7 +127,7 @@
     }
   }
 
-  .zoom {
+  .gmf-layertree-zoom {
     display: none;
     // leave space after text label
     padding-left: 4px;
@@ -137,23 +137,23 @@
   }
 
   .out-of-resolution {
-    .name {
+    .gmf-layertree-name {
       font-style: italic;
     }
-    .zoom {
+    .gmf-layertree-zoom {
       display: inline;
     }
-    .right-buttons {
-      .legend-button {
+    .gmf-layertree-right-buttons {
+      .gmf-layertree-legend-button {
         display: none;
       }
     }
-    &.leaf .state::after {
+    &.gmf-layertree-leaf .gmf-layertree-state::after {
       content: "\e604";
     }
   }
 
-  .legend {
+  .gmf-layertree-legend {
     margin: 0 @app-margin;
     position: relative;
     border: 1px solid @main-bg-color;
