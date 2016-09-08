@@ -1,6 +1,7 @@
 goog.provide('ngeo.CsvDownload');
 
 goog.require('ngeo');
+goog.require('ngeo.Download');
 
 
 /**
@@ -61,6 +62,13 @@ ngeo.CsvDownload = function($injector, gettextCatalog) {
    */
   this.separator_ = $injector.has('ngeoCsvSeparator') ?
     $injector.get('ngeoCsvSeparator') : ',';
+
+  /**
+   * Download service.
+   * @type {ngeo.Download}
+   * @private
+   */
+  this.download_ = $injector.get('ngeoDownload');
 };
 
 
@@ -126,16 +134,8 @@ ngeo.CsvDownload.prototype.getRow_ = function(values) {
  */
 ngeo.CsvDownload.prototype.startDownload = function(data, columnDefs, fileName) {
   var fileContent = this.generateCsv(data, columnDefs);
-
-  var hiddenElement = document.createElement('a');
-  // FF requires the link to be in the body
-  document.body.appendChild(hiddenElement);
-  hiddenElement.href = 'data:attachment/csv;charset=' + this.encoding_ +
-    ',' + encodeURI(fileContent);
-  hiddenElement.target = '_blank';
-  hiddenElement.download = fileName + this.extension_;
-  hiddenElement.click();
-  document.body.removeChild(hiddenElement);
+  this.download_(
+      fileContent, fileName, 'attachment/csv;charset=' + this.encoding_);
 };
 
 ngeo.module.service('ngeoCsvDownload', ngeo.CsvDownload);

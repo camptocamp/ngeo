@@ -5,6 +5,7 @@ goog.require('ngeo');
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.Measure');
 goog.require('ngeo.interaction.MeasureAzimut');
+goog.require('ngeo.Download');
 goog.require('ol.Feature');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.MultiPoint');
@@ -87,6 +88,13 @@ ngeo.FeatureHelper = function($injector, $filter) {
    * @private
    */
   this.projection_;
+
+  /**
+   * Download service.
+   * @type {ngeo.Download}
+   * @private
+   */
+  this.download_ = $injector.get('ngeoDownload');
 
 };
 
@@ -718,16 +726,8 @@ ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
   } : {};
 
   var data = format.writeFeatures(clones, writeOptions);
-
-  // FF requires the link to be in the body
-  var hiddenElement = document.createElement('a');
-  document.body.appendChild(hiddenElement);
-  hiddenElement.href = 'data:' + mimeType + ';charset=utf-8,' + encodeURIComponent(data);
-  hiddenElement.target = '_blank';
-  hiddenElement.download = fileName;
-  hiddenElement.click();
-  document.body.removeChild(hiddenElement);
-
+  this.download_(
+      data, fileName, mimeType + ';charset=utf-8');
 };
 
 
