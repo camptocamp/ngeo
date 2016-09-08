@@ -202,12 +202,12 @@ examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
 		$(patsubst contribs/gmf/examples/%.js,.build/examples-hosted/contribs/gmf/%.js,$(GMF_EXAMPLES_JS_FILES)) \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
-.build/python-venv/lib/python2.7/site-packages/requests: .build/python-venv
-	.build/python-venv/bin/pip install requests
+.build/python-venv/lib/python2.7/site-packages/requests: requirements.txt .build/python-venv
+	.build/python-venv/bin/pip install `grep ^requests== $< --colour=never`
 	touch $@
 
-.build/python-venv/lib/python2.7/site-packages/urllib3: .build/python-venv
-	.build/python-venv/bin/pip install urllib3
+.build/python-venv/lib/python2.7/site-packages/urllib3: requirements.txt .build/python-venv
+	.build/python-venv/bin/pip install `grep ^urllib3== $< --colour=never`
 	touch $@
 
 .PHONY: gh-pages
@@ -695,12 +695,12 @@ $(EXTERNS_JQUERY): github_versions
 	mkdir -p $(dir $@)
 	virtualenv --no-site-packages $@
 
-.build/python-venv/bin/mako-render: .build/python-venv
-	.build/python-venv/bin/pip install "Mako==1.0.0" "htmlmin==0.1.10"
+.build/python-venv/bin/mako-render: requirements.txt .build/python-venv
+	.build/python-venv/bin/pip install `grep ^Mako== $< --colour=never` `grep ^htmlmin== $< --colour=never`
 	touch $@
 
-.build/beautifulsoup4.timestamp: .build/python-venv
-	.build/python-venv/bin/pip install "beautifulsoup4==4.3.2"
+.build/beautifulsoup4.timestamp: requirements.txt .build/python-venv
+	.build/python-venv/bin/pip install `grep ^beautifulsoup4== $< --colour=never`
 	touch $@
 
 .build/closure-library: github_versions
@@ -801,8 +801,8 @@ $(HOME)/.transifexrc:
 	mkdir -p $(dir $@)
 	node buildtools/extract-messages $(GMF_DIRECTIVES_PARTIALS_FILES) $(GMF_JS_FILES) > $@
 
-.build/python-venv/bin/tx: .build/python-venv $(HOME)/.transifexrc
-	.build/python-venv/bin/pip install transifex-client
+.build/python-venv/bin/tx: requirements.txt .build/python-venv $(HOME)/.transifexrc
+	.build/python-venv/bin/pip install `grep ^transifex-client== $< --colour=never`
 	touch $@
 
 .PHONY: transifex-get
