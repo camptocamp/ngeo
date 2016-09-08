@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
     for examplefile in args.example:
         basename = os.path.basename(examplefile)
-        soup = bs4.BeautifulSoup(open(examplefile))
+        soup = bs4.BeautifulSoup(open(examplefile), "html.parser")
         example = {}
         if soup.title is None:
             raise Exception('Example %s has no title.' % basename)
