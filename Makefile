@@ -667,28 +667,28 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		--var generate_exports=true \
 		--var source_map=contribs/gmf/build/$*.js.map $< > $@
 
-contribs/gmf/build/angular-locale_%.js:
+contribs/gmf/build/angular-locale_%.js: github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/master/src/ngLocale/angular-locale_$*.js
+	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/`grep ^angular.js= $< | cut --delimiter = --fields 2`/src/ngLocale/angular-locale_$*.js
 
-$(EXTERNS_ANGULAR):
+$(EXTERNS_ANGULAR): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.5.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5.js
 	touch $@
 
-$(EXTERNS_ANGULAR_Q):
+$(EXTERNS_ANGULAR_Q): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.5-q_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5-q_templated.js
 	touch $@
 
-$(EXTERNS_ANGULAR_HTTP_PROMISE):
+$(EXTERNS_ANGULAR_HTTP_PROMISE): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.5-http-promise_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5-http-promise_templated.js
 	touch $@
 
-$(EXTERNS_JQUERY):
+$(EXTERNS_JQUERY): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/jquery-1.9.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/jquery-1.9.js
 	touch $@
 
 .build/python-venv:
@@ -703,9 +703,10 @@ $(EXTERNS_JQUERY):
 	.build/python-venv/bin/pip install "beautifulsoup4==4.3.2"
 	touch $@
 
-.build/closure-library:
-	mkdir -p .build
+.build/closure-library: github_versions
+	mkdir -p $(dir $@)
 	git clone http://github.com/google/closure-library/ $@
+	cd $@; git checkout `grep ^closure-library= $< | cut --delimiter = --fields 2`
 
 .build/ol-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
