@@ -43,6 +43,19 @@ describe('gmf.Themes', function() {
     expect(response[1].get('querySourceIds')).toBeDefined();
   });
 
+  it('Returns hasEditableLayers', function() {
+    var spy = jasmine.createSpy();
+    gmfThemes.hasEditableLayers().then(spy);
+
+    $httpBackend.expectGET(treeUrl);
+    gmfThemes.loadThemes();
+    $httpBackend.flush();
+
+    expect(spy.calls.count()).toBe(1);
+    var response = spy.calls.mostRecent().args[0];
+    expect(response).toBe(true);
+  });
+
   it('Emit change event', function() {
     var spy = jasmine.createSpy();
     var eventSpy = jasmine.createSpy();

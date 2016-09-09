@@ -116,6 +116,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
     this.updateCurrentBackgroundLayer_(true);
     // Reload themes when login status changes.
     gmfThemes.loadThemes(roleId);
+    this.updateHasEditableLayers_();
   }.bind(this);
 
   ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.READY, userChange);
@@ -415,6 +416,21 @@ gmf.AbstractController = function(config, $scope, $injector) {
   };
 
   this.updateCurrentBackgroundLayer_(false);
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.hasEditableLayers = true;
+
+  /**
+   * @private
+   */
+  this.updateHasEditableLayers_ = function() {
+    gmfThemes.hasEditableLayers().then(function(hasEditableLayers) {
+      this.hasEditableLayers = hasEditableLayers;
+    }.bind(this));
+  };
 };
 
 

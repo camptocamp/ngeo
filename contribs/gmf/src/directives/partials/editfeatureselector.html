@@ -5,9 +5,11 @@
     <select
         class="form-control"
         ng-model="efsCtrl.selectedLayer"
+        ng-show="efsCtrl.availableLayers.length > 0"
         ng-options="layer.name | translate for layer in efsCtrl.availableLayers">
       <option value="" translate>-- Choose a layer --</option>
     </select>
+    <span ng-show="efsCtrl.availableLayers.length == 0" translate>No editable layer available!</span>
   </div>
 
   <div ng-switch-default>
