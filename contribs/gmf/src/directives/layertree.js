@@ -575,9 +575,9 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
  * @export
  */
 gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
-  treeCtrl.toggleState();
+  treeCtrl.setState(treeCtrl.getState() === 'on' ? 'off' : 'on');
   var firstLevelTreeCtrl = this.retrieveFirstParentTree_(treeCtrl);
-  this.gmfSyncLayertreeMap_.syncStates(firstLevelTreeCtrl);
+  this.gmfSyncLayertreeMap_.syncAll(this.map, firstLevelTreeCtrl);
 };
 
 /**
