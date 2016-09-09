@@ -266,10 +266,11 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   };
 
   /**
+   * @param {GmfOgcServers} ogcServers The ogc servers.
    * @param {GmfThemesNode} item The item.
    * @return {angular.$q.Promise.<ol.layer.Base>|ol.layer.Base} the created layer.
    */
-  var layerLayerCreationFn = function(item) {
+  var layerLayerCreationFn = function(ogcServers, item) {
     // Overwrite conflicting server dimensions with application ones
     for (var dimkey in item.dimensions) {
       if (appDimensions[dimkey] !== undefined) {
@@ -277,9 +278,8 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
       }
     }
 
-    goog.asserts.assert(item.url, 'Layer URL is required');
-
     if (item.type === 'WMTS') {
+      goog.asserts.assert(item.url, 'Layer URL is required');
       return layerHelper.createWMTSLayerFromCapabilitites(
           item.url,
           item.name,
@@ -290,10 +290,14 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
         return $q.resolve(undefined);
       });
     } else if (item.type === 'WMS') {
+      goog.asserts.assert(item.ogcServer, 'An OGC server is required');
+      var server = ogcServers[item.ogcServer];
+      goog.asserts.assert(server, 'The OGC server was not found');
+      goog.asserts.assert(server.url, 'The server URL is required');
       return callback(item, layerHelper.createBasicWMSLayer(
-          item.url,
+          server.url,
           item.layers,
-          item.serverType,
+          server.type,
           undefined, // time
           item.dimensions
       ));
@@ -302,12 +306,13 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   };
 
   /**
+   * @param {GmfOgcServers} ogcServers The ogc servers.
    * @param {GmfThemesNode} item The item.
    * @return {angular.$q.Promise.<ol.layer.Group>} the created layer.
    */
-  var layerGroupCreationFn = function(item) {
+  var layerGroupCreationFn = function(ogcServers, item) {
     // We assume no child is a layer group.
-    var promises = item.children.map(layerLayerCreationFn);
+    var promises = item.children.map(layerLayerCreationFn.bind(null, ogcServers));
     return $q.all(promises).then(function(layers) {
       var collection;
       if (layers) {
@@ -330,10 +335,10 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
     var promises = data.background_layers.map(function(item) {
       var itemType = item.type;
       if (itemType === 'WMTS' || itemType === 'WMS') {
-        return layerLayerCreationFn(item);
+        return layerLayerCreationFn(data.ogcServers, item);
       } else if (item.children) {
         // group of layers
-        return layerGroupCreationFn(item);
+        return layerGroupCreationFn(data.ogcServers, item);
       } else {
         return undefined;
       }
