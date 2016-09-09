@@ -39,7 +39,14 @@ script:
 - if [ ${TRAVIS_PULL_REQUEST} != "false" ] ; then git diff --check ${TRAVIS_BRANCH} -- ; fi
 - if [ "`git grep @fileoverview src contribs`" != "" ] ; then echo "Using @fileoverview breaks the documentation main page" ; false ; fi
 - if [ "`git grep @example src contribs`" != "" ] ; then echo "We don't use @example to have the example in the description" ; false ; fi
-- make check
+- make git-attributes
+- make lint
+- make .build/contribs/gmf/apps/mobile.check.timestamp
+- make .build/contribs/gmf/apps/desktop.check.timestamp
+- make .build/contribs/gmf/apps/desktop_alt.check.timestamp
+- make check-examples
+- make test
+- make other-check
 - make .build/examples-hosted/index.html
 - make .build/examples-hosted/contribs/gmf/index.html
 - make apidoc

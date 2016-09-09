@@ -155,7 +155,10 @@ apidoc: .build/apidoc
 dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
 .PHONY: check
-check: lint git-attributes dist check-examples test compile-examples build-gmf-apps
+check: git-attributes lint check-examples test other-check
+
+.PHONY: other-check
+other-check: dist compile-examples build-gmf-apps
 
 .PHONY: compile-examples
 compile-examples: .build/examples/all.min.js
