@@ -10,22 +10,21 @@
         ng-model="customField.value"
         class="form-control"
         type="number"
-        placeholder="{{customField.name | translate}}" />
+        placeholder="{{customField.name | translate}}">
 
       <input
         ng-if="customField.type === 'text'"
         ng-model="customField.value"
         class="form-control"
         type="text"
-        placeholder="{{customField.name | translate}}" />
+        placeholder="{{customField.name | translate}}">
 
       <textarea
         ng-if="customField.type === 'textarea'"
         ng-model="customField.value"
         class="form-control"
         row="3"
-        placeholder="{{customField.name | translate}}">
-      </textarea>
+        placeholder="{{customField.name | translate}}"></textarea>
 
       <div
         ng-if="customField.type === 'checkbox'"
@@ -33,7 +32,7 @@
         <label>
           <input
             ng-model="customField.value"
-            type="checkbox" />
+            type="checkbox">
           <span>{{customField.name | translate}}</span>
         </label>
       </div>
@@ -45,7 +44,7 @@
       <label>
         <input
           ng-model="ctrl.fields.legend"
-          type="checkbox" />
+          type="checkbox">
         <span translate>Legend</span>
       </label>
     </div>
@@ -155,7 +154,7 @@
             min="-180"
             max="180"
             data-toggle="tooltip"
-            title="{{'You can also use Alt+Shift on the map' | translate}}" />
+            title="{{'You can also use Alt+Shift on the map' | translate}}">
         </div>
 
         <div class="col-md-4">
@@ -163,7 +162,7 @@
             class="form-control"
             type="number"
             ng-model="ctrl.getSetRotation"
-            ng-model-options="{getterSetter: true}" />
+            ng-model-options="{getterSetter: true}">
         </div>
       </div>
 
