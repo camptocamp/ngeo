@@ -101,6 +101,7 @@ gmf.module.directive('gmfDisplayquerygrid', gmf.displayquerygridDirective);
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {ngeo.CsvDownload} ngeoCsvDownload CSV download service.
  * @param {ngeo.Query} ngeoQuery Query service.
+ * @param {angular.JQLite} $element Element.
  * @constructor
  * @export
  * @ngInject
@@ -108,7 +109,7 @@ gmf.module.directive('gmfDisplayquerygrid', gmf.displayquerygridDirective);
  * @ngname GmfDisplayquerygridController
  */
 gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
-    ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, ngeoQuery) {
+    ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, ngeoQuery, $element) {
 
   /**
    * @type {!angular.Scope}
@@ -133,6 +134,12 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
+
+  /**
+   * @type {angular.JQLite}
+   * @private
+   */
+  this.$element_ = $element;
 
   /**
    * @type {number}
@@ -339,6 +346,7 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
     this.$timeout_(function() {
       var firstSourceId = this.loadedGridSources[0];
       this.selectTab(this.gridSources[firstSourceId]);
+      this.reflowGrid_(firstSourceId);
     }.bind(this), 0);
   }
 };
@@ -656,6 +664,24 @@ gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
         }.bind(this));
   }
   this.updateFeatures_(gridSource);
+};
+
+
+/**
+ * @private
+ * @param {string|number} sourceId Id of the source that should be refreshed.
+ */
+gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceId) {
+  // this is a "work-around" to make sure that the grid is rendered correctly.
+  // when a pane is activated by setting `this.selectedTab`, the class `active`
+  // is not yet set on the pane. that's why the class is set manually, and
+  // after the pane is shown (in the next digest loop), the grid table can
+  // be refreshed.
+  var activePane = this.$element_.find('div.tab-pane#' + sourceId);
+  activePane.removeClass('active').addClass('active');
+  this.$timeout_(function() {
+    activePane.find('div.ngeo-grid-table-container table')['trigger']('reflow');
+  });
 };
 
 
