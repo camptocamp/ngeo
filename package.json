@@ -44,7 +44,7 @@
     "jquery": "2.2.4",
     "angular-ui-date": "1.1.1",
     "angular-ui-slider": "0.3.2",
-    "jsdoc": "3.4.0",
+    "jsdoc": "3.4.1",
     "jsdom": "9.5.0",
     "karma": "1.2.0",
     "karma-coverage": "1.1.1",
