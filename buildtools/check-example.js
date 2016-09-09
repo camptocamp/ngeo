@@ -5,10 +5,11 @@
 //
 var args = require('system').args;
 if (args.length != 2) {
-  phantom.exit(2);
+  phantom.exit(1);
 }
 var examplePath = args[1];
 var page = require('webpage').create();
+var exitCode = 0;
 page.onError = function(msg, trace) {
   var msgStack = ['JavaScript ERROR: ' + msg];
   if (trace) {
@@ -18,17 +19,20 @@ page.onError = function(msg, trace) {
     });
   }
   console.error(msgStack.join('\n'));
-  phantom.exit(1);
+  exitCode = 2;
 };
-page.open(examplePath, function(s) {
-  var exitCode = 0;
-  if (s != 'success') {
-    exitCode = 1;
-    console.error('PAGE LOAD ERROR');
-  }
-  phantom.exit(exitCode);
-});
 page.onConsoleMessage = function(msg) {
   console.log('console:', msg);
-  phantom.exit(msg.match(/error/i) ? 1 : 0);
+  exitCode = 2;
 };
+page.open(examplePath, function(s) {
+  if (s != 'success') {
+    console.error('PAGE LOAD ERROR');
+    phantom.exit(2);
+  }
+
+  setTimeout(function() {
+    console.log("EXIT", exitCode)
+    phantom.exit(exitCode);
+  }, 3000)
+});
