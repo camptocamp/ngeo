@@ -397,7 +397,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
-  goog.dom.classlist.add(this.measureTooltipElement_, 'tooltip-static');
+  goog.dom.classlist.add(this.measureTooltipElement_, 'ngeo-tooltip-static');
   this.measureTooltipOverlay_.setOffset([0, -7]);
   this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
       this.sketchFeature));
@@ -451,7 +451,7 @@ ngeo.interaction.Measure.prototype.createMeasureTooltip_ = function() {
   this.removeMeasureTooltip_();
   this.measureTooltipElement_ = goog.dom.createDom(goog.dom.TagName.DIV);
   goog.dom.classlist.addAll(this.measureTooltipElement_,
-      ['tooltip', 'tooltip-measure']);
+      ['tooltip', 'ngeo-tooltip-measure']);
   this.measureTooltipOverlay_ = new ol.Overlay({
     element: this.measureTooltipElement_,
     offset: [0, -15],
