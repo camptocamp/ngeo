@@ -433,6 +433,47 @@ gmf.Themes.prototype.getOgcServersObject = function() {
 
 
 /**
+ * Returns a promise to check if one of the layers in the themes is editable.
+ * @return {angular.$q.Promise.<boolean>} Promise.
+ */
+gmf.Themes.prototype.hasEditableLayers = function() {
+  goog.asserts.assert(this.promise_ !== null);
+  return this.promise_.then(this.hasEditableLayers_.bind(this));
+};
+
+
+/**
+ * Returns if one of the layers in the themes is editable.
+ * @param {GmfThemesResponse} data The "themes" web service response.
+ * @return {boolean} Editable layers?
+ */
+gmf.Themes.prototype.hasEditableLayers_ = function(data) {
+  return data.themes.some(function(theme) {
+    var hasEditableLayers = theme.children.some(this.hasNodeEditableLayers_.bind(this));
+    return hasEditableLayers;
+  }.bind(this));
+};
+
+
+/**
+ * @param {GmfThemesNode} node Theme node
+ * @return {boolean} Editable layers?
+ */
+gmf.Themes.prototype.hasNodeEditableLayers_ = function(node) {
+  if (node.editable) {
+    return true;
+  }
+
+  var hasEditableLayers = false;
+  var children = node.children;
+  if (children && children.length) {
+    hasEditableLayers = children.some(this.hasNodeEditableLayers_.bind(this));
+  }
+  return hasEditableLayers;
+};
+
+
+/**
  * @param {number=} opt_roleId The role id to send in the request.
  * Load themes from the "themes" service.
  * @export
