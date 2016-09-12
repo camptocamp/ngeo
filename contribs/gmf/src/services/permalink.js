@@ -30,23 +30,6 @@ goog.require('ol.style.Style');
 /**
  * @enum {string}
  */
-gmf.PermalinkParam = {
-  BG_LAYER: 'baselayer_ref',
-  FEATURES: 'rl_features',
-  MAP_CROSSHAIR: 'map_crosshair',
-  MAP_TOOLTIP: 'map_tooltip',
-  MAP_X: 'map_x',
-  MAP_Y: 'map_y',
-  MAP_Z: 'map_zoom',
-  TREE_GROUPS: 'tree_groups',
-  WFS_LAYER: 'wfs_layer',
-  WFS_NGROUPS: 'wfs_ngroups',
-  WFS_SHOW_FEATURES: 'wfs_showFeatures'
-};
-
-/**
- * @enum {string}
- */
 gmf.PermalinkOpenLayersLayerProperties = {
   OPACITY : 'opacity'
 };
