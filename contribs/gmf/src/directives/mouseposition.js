@@ -81,9 +81,9 @@ gmf.MousepositionController = function($filter, gettext) {
   };
 
   this.control = new ol.control.MousePosition({
-    className: 'custom-mouse-position',
+    className: 'gmf-mouseposition-control',
     coordinateFormat: formatFn.bind(this),
-    target: document.getElementById('mouse-position'),
+    target: document.getElementById('gmf-mouseposition-control-target'),
     undefinedHTML: gettext('Coordinates')
   });
 
