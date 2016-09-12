@@ -25,7 +25,7 @@ gmf.module.value('gmfLayertreeTemplate',
       var subTemplateUrl = gmf.baseTemplateUrl + '/layertree.html';
       return '<div ngeo-layertree="gmfLayertreeCtrl.tree" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
-          'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(node, parentCtrl, depth)" ' +
+          'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
           'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
           'ngeo-layertree-templateurl="' + subTemplateUrl + '">' +
           '</div>';
@@ -350,64 +350,10 @@ gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
  * @return {ol.layer.Base} The OpenLayers layer or group for the node.
  * @export
  */
-gmf.LayertreeController.prototype.getLayer = function(node, parentCtrl, depth) {
-  var type = gmf.Themes.getNodeType(node);
-  var layer = null;
-  var timeParam, timeValues;
-
-  if (depth === 1) {
-    switch (type) {
-      case gmf.Themes.NodeType.MIXED_GROUP:
-        layer = this.getLayerCaseMixedGroup_(node);
-        break;
-      case gmf.Themes.NodeType.NOT_MIXED_GROUP:
-        layer = this.getLayerCaseNotMixedGroup_(node);
-        this.prepareLayer_(node, layer);
-        break;
-      default:
-        throw new Error('Node wrong type: ' + type);
-    }
-    var position = this.gmfTreeManager_.tree.children.length -
-        this.gmfTreeManager_.layersToAddAtOnce | 0;
-    this.dataLayerGroup_.getLayers().insertAt(position, layer);
-    return layer;
-  }
-
-  //depth > 1 && parent is not a MIXED_GROUP;
-  if (!parentCtrl || gmf.Themes.getNodeType(parentCtrl['node']) !== gmf.Themes.NodeType.MIXED_GROUP) {
-    return null;
-  }
-  //depth > 1 && parent is a MIXED group
-  switch (type) {
-    case gmf.Themes.NodeType.MIXED_GROUP:
-      layer = this.getLayerCaseMixedGroup_(node);
-      break;
-    case gmf.Themes.NodeType.NOT_MIXED_GROUP:
-      layer = this.getLayerCaseNotMixedGroup_(node);
-      break;
-    case gmf.Themes.NodeType.WMTS:
-      layer = this.getLayerCaseWMTS_(node);
-      break;
-    case gmf.Themes.NodeType.WMS:
-      var url = node.url || this.gmfWmsUrl_;
-      if (node.time) {
-        var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
-        timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
-        timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, {
-          start : timeValues[0] || timeValues,
-          end : timeValues[1]
-        });
-      }
-      layer = this.layerHelper_.createBasicWMSLayer(url, node.layers,
-              node.serverType, timeParam);
-      break;
-    default:
-      throw new Error('Node wrong type: ' + type);
-  }
-  this.prepareLayer_(node, layer);
-  this.updateLayerDimensions_(/** @type {ol.layer.Layer} */ (layer), node);
-  parentCtrl['layer'].getLayers().insertAt(0, layer);
-  return layer;
+gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
+  //this.updateLayerDimensions_(/** @type {ol.layer.Layer} */ (layer), node);
+  return this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.dataLayerGroup_,
+         this.map);
 };
 
 
