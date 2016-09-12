@@ -458,9 +458,15 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/contribs/gmf/build: build-gmf-apps
+.PRECIOUS: .build/examples-hosted/contribs/gmf/build/%.js
+.build/examples-hosted/contribs/gmf/build/%.js: contribs/gmf/build/%.js
 	mkdir -p $(dir $@)
-	cp -r contribs/gmf/build $(dir $@)
+	cp $< $@
+
+.PRECIOUS: .build/examples-hosted/contribs/gmf/build/%.css
+.build/examples-hosted/contribs/gmf/build/%.css: contribs/gmf/build/%.css
+	mkdir -p $(dir $@)
+	cp $< $@
 
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
@@ -525,7 +531,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/examples-hosted/contribs/gmf/apps/%/contextualdata.html \
 		.build/examples-hosted/contribs/gmf/apps/%/image/logo.png \
 		.build/examples-hosted/contribs/gmf/apps/%/image/background-layer-button.png \
-		.build/examples-hosted/contribs/gmf/build \
+		.build/examples-hosted/contribs/gmf/build/%.js \
+		.build/examples-hosted/contribs/gmf/build/%.css \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/gmf-icons., eot ttf woff)
 	mkdir -p $(dir $@)
@@ -758,6 +765,9 @@ contribs/gmf/cursors/%.cur: contribs/gmf/cursors/%.png
 .PRECIOUS: .build/%.js
 .build/%.js: .build/app-%.json \
 		$(EXTERNS_FILES) \
+		${SRC_JS_FILES} \
+		${GMF_APPS_JS_FILES} \
+		$(GMF_SRC_JS_FILES) \
 		contribs/gmf/apps/%/js/controller.js \
 		.build/gmftemplatecache.js \
 		.build/node_modules.timestamp
@@ -765,12 +775,14 @@ contribs/gmf/cursors/%.cur: contribs/gmf/cursors/%.png
 	node buildtools/build.js $< $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
 
+.PRECIOUS: contribs/gmf/build/%.js
 contribs/gmf/build/%.js: .build/%.js $(GMF_APPS_LIBS_JS_FILES)
 	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
 
 .PHONY: compile-css
 compile-css: $(addprefix contribs/gmf/build/,$(addsuffix .css,$(GMF_APPS)))
 
+.PRECIOUS: contribs/gmf/build/%.css
 contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less \
 		$(GMF_APPS_LESS_FILES) \
 		.build/node_modules.timestamp \
