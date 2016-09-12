@@ -43,6 +43,7 @@ gmf.module.directive('gmfMouseposition', gmf.mousepositionDirective);
 
 
 /**
+ * @param {angular.JQLite} $element Element.
  * @param {angular.$filter} $filter Angular filter
  * @param {gettext} gettext Gettext service.
  * @constructor
@@ -51,7 +52,7 @@ gmf.module.directive('gmfMouseposition', gmf.mousepositionDirective);
  * @ngdoc controller
  * @ngname gmfMousepositionController
  */
-gmf.MousepositionController = function($filter, gettext) {
+gmf.MousepositionController = function($element, $filter, gettext) {
   /**
    * @type {ol.Map}
    * @export
@@ -83,7 +84,7 @@ gmf.MousepositionController = function($filter, gettext) {
   this.control = new ol.control.MousePosition({
     className: 'gmf-mouseposition-control',
     coordinateFormat: formatFn.bind(this),
-    target: document.getElementById('gmf-mouseposition-control-target'),
+    target: angular.element('.gmf-mouseposition-control-target', $element)[0],
     undefinedHTML: gettext('Coordinates')
   });
 
