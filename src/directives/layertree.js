@@ -147,7 +147,7 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
    * @type {!string}
    * @private
    */
-  this.state_ = 'undeterminate';
+  this.state_ = 'off';
 
   /**
    * @type {Object|undefined}
@@ -162,9 +162,6 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
   } else {
     this.node = /** @type {Object} */ ($scope.$eval(nodeExpr));
     goog.asserts.assert(this.node !== undefined);
-
-    //debug FIXME remove me
-    this.state_ = this.node['metadata']['isChecked'] || 'undeterminate';
   }
 
   var mapExpr = $attrs['ngeoLayertreeMap'];
@@ -235,7 +232,7 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
    * @export
    */
   this.layer = isRoot ? null : /** @type {ol.layer.Layer} */
-      ($scope.$eval(nodelayerExpr, {'node': this.node, 'depth': this.depth, 'parentCtrl' : this.parent}));
+      ($scope.$eval(nodelayerExpr, {'treeCtrl' : this}));
 
   if (this.layer) {
     ngeoDecorateLayerLoading(this.layer, $scope);
@@ -275,10 +272,12 @@ ngeo.LayertreeController.prototype.getState = function() {
 
 
 /**
- * @param {boolean=} opt_avoidRefreshParents TODO;
+ * @param {boolean} state TODO
+ * @param {boolean=} opt_avoidRefreshParents TODO
  * @export
  */
-ngeo.LayertreeController.prototype.setState = function(state, opt_avoidRefreshParents) {
+ngeo.LayertreeController.prototype.setState = function(state,
+    opt_avoidRefreshParents) {
   if (state === this.state_) {
     return;
   }
