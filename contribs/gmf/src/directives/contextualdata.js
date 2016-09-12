@@ -188,7 +188,7 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
 gmf.ContextualdataController.prototype.preparePopover_ = function() {
 
   var container = goog.dom.createElement('DIV');
-  container.classList.add('popover', 'bottom', 'contextualdata');
+  container.classList.add('popover', 'bottom', 'gmf-contextualdata');
   angular.element(container).css('position', 'relative');
   var arrow = goog.dom.createElement('DIV');
   arrow.classList.add('arrow');
