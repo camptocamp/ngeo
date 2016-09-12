@@ -312,7 +312,10 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    */
   var layerGroupCreationFn = function(ogcServers, item) {
     // We assume no child is a layer group.
-    var promises = item.children.map(layerLayerCreationFn.bind(null, ogcServers));
+    var orderedChildren = item.children.map(function(x) {
+      return x;
+    }).reverse(); // the order of insertion in OL3 is the contrary of the theme
+    var promises = orderedChildren.map(layerLayerCreationFn.bind(null, ogcServers));
     return $q.all(promises).then(function(layers) {
       var collection;
       if (layers) {
