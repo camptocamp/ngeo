@@ -523,7 +523,7 @@ gmf.ProfileController.prototype.getTooltipHTML_ = function() {
 gmf.ProfileController.prototype.createMeasureTooltip_ = function() {
   this.removeMeasureTooltip_();
   this.measureTooltipElement_ = document.createElement('div');
-  this.measureTooltipElement_.className += 'tooltip tooltip-measure';
+  this.measureTooltipElement_.className += 'tooltip ngeo-tooltip-measure';
   this.measureTooltip_ = new ol.Overlay({
     element: this.measureTooltipElement_,
     offset: [0, -15],
