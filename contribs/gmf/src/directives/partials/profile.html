@@ -1,22 +1,60 @@
-<div class="profile-container panel" ng-show="ctrl.active">
-  <div class="profile" ng-show="!ctrl.isErrored" ngeo-profile="ctrl.profileData"
-      ngeo-profile-highlight="ctrl.profileHighlight"
-      ngeo-profile-options="::ctrl.profileOptions">
+<div
+  class="gmf-profile-container panel"
+  ng-show="ctrl.active">
+
+  <div
+    class="ngeo-profile"
+    ng-show="!ctrl.isErrored"
+    ngeo-profile="ctrl.profileData"
+    ngeo-profile-highlight="ctrl.profileHighlight"
+    ngeo-profile-options="::ctrl.profileOptions">
   </div>
-  <ul class="profile-legend" ng-show="!ctrl.isErrored">
-    <li ng-repeat="name in ::ctrl.getLayersNames()"><i class="fa fa-minus" style="color:{{::ctrl.getColor(name)}};"></i>&nbsp;{{name | translate}}&nbsp;{{ctrl.currentPoint.elevations[name]}}&nbsp;{{ctrl.currentPoint.yUnits}}
+
+  <ul
+    class="gmf-profile-legend"
+    ng-show="!ctrl.isErrored">
+
+    <li ng-repeat="name in ::ctrl.getLayersNames()">
+      <i
+        class="fa fa-minus"
+        style="color:{{::ctrl.getColor(name)}};"></i>
+      &nbsp;{{name | translate}}&nbsp;{{ctrl.currentPoint.elevations[name]}}&nbsp;{{ctrl.currentPoint.yUnits}}
     </li>
   </ul>
-  <div class="profile-export btn-group dropup" ng-show="!ctrl.isErrored">
-    <a class="dropdown-toggle" href="" ng-show="ctrl.profileData.length !== 0" data-toggle="dropdown" aria-expanded="false">
+
+  <div
+    class="gmf-profile-export btn-group dropup"
+    ng-show="!ctrl.isErrored">
+
+    <a
+      class="dropdown-toggle"
+      href=""
+      ng-show="ctrl.profileData.length !== 0"
+      data-toggle="dropdown"
+      aria-expanded="false">
       {{'Export' | translate}}&nbsp;<i class="fa fa-caret-up"></i>
     </a>
-    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-      <li><a href="" ng-click="::ctrl.downloadCsv()"><i class="fa fa-table"></i>&nbsp;{{'Download CSV' | translate}}</a></li>
+
+    <ul
+      class="dropdown-menu dropdown-menu-right"
+      role="menu">
+
+      <li>
+      <a
+        href=""
+        ng-click="::ctrl.downloadCsv()">
+        <i class="fa fa-table"></i>&nbsp;{{'Download CSV' | translate}}</a>
+      </li>
     </ul>
   </div>
-  <div class="profile-error" ng-show="ctrl.isErrored">
+
+  <div
+    class="gmf-profile-error"
+    ng-show="ctrl.isErrored">
+
     <p>{{'The profile service does not respond, please try later.' | translate}}</p>
   </div>
-  <div class="close" ng-click="ctrl.line = null">&times;</div>
+  <div
+    class="close"
+    ng-click="ctrl.line = null">&times;</div>
 </div>

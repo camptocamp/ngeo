@@ -1,5 +1,5 @@
 @profile-height: 20rem;
-.profile-container {
+.gmf-profile-container {
   position: relative;
   overflow: hidden;
   @profile-legend-width: 15rem;
@@ -9,24 +9,24 @@
   height: @profile-height;
   display: flex;
 
-  .profile {
+  .ngeo-profile {
     width: ~"calc(100% - @{profile-legend-width})";
     background-color: #f5f5f5;
   }
 
-  .profile-legend {
+  .gmf-profile-legend {
     list-style-type: none;
     width: @profile-legend-width;
     padding: @app-margin;
   }
 
-  .profile-export {
+  .gmf-profile-export {
     position: absolute;
     right: @app-margin;
     bottom: @app-margin;
   }
 
-  .profile-error {
+  .gmf-profile-error {
     width: 100%;
   }
 
