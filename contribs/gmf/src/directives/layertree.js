@@ -232,7 +232,7 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
 
 
 /**
- * @param {GmfThemesGroup} node Layer tree node.
+ * @param {GmfThemesTheme|GmfThemesGroup|GmfThemesLeaf} node Layer tree node.
  * @private
  */
 gmf.LayertreeController.prototype.updateDimensions_ = function(node) {
@@ -241,7 +241,8 @@ gmf.LayertreeController.prototype.updateDimensions_ = function(node) {
       this.updateDimensions_(childNode);
     } else if (childNode.dimensions) {
       var layersArray = this.map.getLayerGroup().getLayersArray();
-      var layer = this.layerHelper_.getLayerByName(childNode.name, layersArray);
+      var childNodeName = childNode.name || '';
+      var layer = this.layerHelper_.getLayerByName(childNodeName, layersArray);
       if (layer) {
         goog.asserts.assertInstanceof(layer, ol.layer.Layer);
         this.updateLayerDimensions_(layer, childNode);
@@ -292,8 +293,8 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
  */
 gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
   //this.updateLayerDimensions_(/** @type {ol.layer.Layer} */ (layer), node);
-  return this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.dataLayerGroup_,
-         this.map);
+  return this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
+          this.dataLayerGroup_);
 };
 
 
