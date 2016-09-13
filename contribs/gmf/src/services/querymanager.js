@@ -107,7 +107,7 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
  * Create and add a source for the query service from the GMF theme node if
  * it has no children, otherwise create the sources for each child node if
  * it has any.
- * @param {GmfThemesNode} node Theme layer node.
+ * @param {GmfThemesTheme} node Theme layer node.
  * @param {GmfOgcServers} ogcServers OGC servers.
  * @private
  */
