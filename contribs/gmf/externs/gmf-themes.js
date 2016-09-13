@@ -312,6 +312,12 @@ GmfThemesLeaf.prototype.style;
 
 
 /**
+ * @type {ngeox.TimeProperty|undefined}
+ */
+GmfThemesLeaf.prototype.time;
+
+
+/**
  * @type {string|undefined}
  */
 GmfThemesLeaf.prototype.type;

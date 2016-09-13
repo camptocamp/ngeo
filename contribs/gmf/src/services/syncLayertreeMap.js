@@ -9,13 +9,15 @@ goog.require('ol.layer.Tile');
  *
  * @constructor
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
+ * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {gmf.WMSTime} gmfWMSTime wms time service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap
  */
-gmf.SyncLayertreeMap = function(ngeoLayerHelper, gmfTreeManager, gmfThemes) {
+gmf.SyncLayertreeMap = function(ngeoLayerHelper, gmfThemes, gmfTreeManager,
+    gmfWMSTime) {
 
   /**
    * @type {ngeo.LayerHelper}
@@ -30,6 +32,11 @@ gmf.SyncLayertreeMap = function(ngeoLayerHelper, gmfTreeManager, gmfThemes) {
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
+  /**
+   * @type {gmf.WMSTime}
+   * @private
+   */
+  this.gmfWMSTime_ = gmfWMSTime;
 
   /**
    * @type {GmfOgcServers}
@@ -223,7 +230,7 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
   var isFirstLevelGroup = treeCtrl.parent.isRoot;
 
   if (isFirstLevelGroup) { // First level group
-    layer = this.createLayerFromGroup_(!!groupNode.mixed, groupNode);
+    layer = this.createLayerFromGroup_(treeCtrl, !!groupNode.mixed);
     // Insert the layer at the right place
     var position = this.gmfTreeManager_.tree.children.length -
         this.gmfTreeManager_.layersToAddAtOnce | 0;
@@ -232,7 +239,7 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
   } else { // Other Groups, create a group layer only in mixed groups
     var inAMixedGroup = !this.isOneParentNotMixed_(treeCtrl);
     if (inAMixedGroup) {
-      layer = this.createLayerFromGroup_(true);
+      layer = this.createLayerFromGroup_(treeCtrl, true);
       var layerGroup = /** @type {ol.layer.Group} */ (
               this.getLayerGroupById(map, treeCtrl.parent.node.id));
       layerGroup.getLayers().insertAt(0, layer);
@@ -245,24 +252,25 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
 /**
  * Create, insert and return a layer group (for not mixed case) or a wmsLayer
  * for mixed case).
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
  * @param {boolean} mixed True for a group layer, false for a WMS layer.
- * @param {GmfThemesGroup=} opt_groupNode node object that musts exist for not
- *     mixed group.
  * @return {ol.layer.Image|ol.layer.Group} a new layer.
  * @private
  */
-gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(mixed,
-  opt_groupNode) {
+gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
+    mixed) {
   var layer;
-  var groupNode = opt_groupNode || {};
+  var groupNode = /** @type {GmfThemesGroup} */ (treeCtrl.node);
   if (mixed) { // Will be one ol.layer per each node.
     layer = this.layerHelper_.createBasicGroup();
   } else { // Will be one ol.layer for multiple WMS nodes.
+    var timeParam = this.getTimeParam_(treeCtrl);
     var ogcServer = this.ogcServersObject_[groupNode.ogcServer || ''];
     goog.asserts.assert(ogcServer);
     goog.asserts.assert(ogcServer.url);
     goog.asserts.assert(ogcServer.type);
-    layer = this.layerHelper_.createBasicWMSLayer(ogcServer.url, '', ogcServer.type);
+    layer = this.layerHelper_.createBasicWMSLayer(ogcServer.url, '',
+            ogcServer.type, timeParam);
     layer.set('layerNodeName', groupNode.name); //Really useful ?
   }
   layer.set('gmfThemesGroupId', groupNode.id);
@@ -304,22 +312,23 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl,
   if (leafNode.type === 'WMTS') {
     layer = this.createWMTSLayer_(leafNode);
   } else {
+    var timeParam = this.getTimeParam_(treeCtrl);
     var ogcServer = this.ogcServersObject_[leafNode.ogcServer || ''];
     goog.asserts.assert(ogcServer);
     goog.asserts.assert(ogcServer.url);
     goog.asserts.assert(ogcServer.type);
     goog.asserts.assert(leafNode.layers);
     layer = this.layerHelper_.createBasicWMSLayer(ogcServer.url,
-            leafNode.layers, ogcServer.type); // FIXME handle time
+            leafNode.layers, ogcServer.type, timeParam);
   }
-  //Update layer information and tree state.
+  // Update layer information and tree state.
   layer.set('layerNodeName', leafNode.name); // Really useful ?
   this.updateLayerReferences_(leafNode, layer);
   if (leafNode.metadata.isChecked) {
     treeCtrl.setState('on');
     layer.setVisible(true);
   }
-  // Get the wms layer
+  // Get the wms layer.
   var parentTree = treeCtrl.parent;
   var layerGroup;
   while (!layerGroup && parentTree) {
@@ -408,6 +417,38 @@ gmf.SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode,
   }
 };
 
+
+/**
+ * Get the time parameter for a WMS Layer. If it's a group and it doesn't have
+ * time, get the first time parameter available in any child.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @return {string|undefined} A wms time param.
+ * @private
+ */
+gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
+  var wmsTime;
+  var timeParam;
+  var node = treeCtrl.node;
+  if (node.time) {
+    wmsTime = node.time;
+  } else if (node.children) {
+    var treeCtrls = [];
+    this.getFlatTree(treeCtrl, treeCtrls);
+    treeCtrls.some(function(item) {
+      if (item.node.time) {
+        return wmsTime = item.node.time;
+      }
+    });
+  }
+  if (wmsTime) {
+    var timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
+    timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, {
+      start : timeValues[0] || timeValues,
+      end : timeValues[1]
+    });
+  }
+  return timeParam;
+};
 
 /**
  * Get the "top level" layertree. Can return itself.
