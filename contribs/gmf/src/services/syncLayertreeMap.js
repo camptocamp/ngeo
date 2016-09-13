@@ -143,7 +143,7 @@ gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
     var allPossibleWMSLayerParam = this.getAllPossibleWMSLayerParam(treeCtrl);
     var currentWMSLayerParam = layer.getVisible() ?
         source.getParams()['LAYERS'].split(',') : [];
-    var WMSLayerParam = treeCtrl.node.name.split(',');
+    var WMSLayerParam = treeCtrl.node.layers.split(',');
     var newWMSLayerParam = [];
 
     allPossibleWMSLayerParam.forEach(function(possibleItem) {
@@ -319,9 +319,15 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl,
     treeCtrl.setState('on');
     layer.setVisible(true);
   }
+  // Get the wms layer
+  var parentTree = treeCtrl.parent;
+  var layerGroup;
+  while (!layerGroup && parentTree) {
+    layerGroup = /** @type {ol.layer.Group} */ (
+            this.getLayerGroupById(map, parentTree.node.id));
+    parentTree = parentTree.parent;
+  }
   // Insert layer in the map.
-  var layerGroup = /** @type {ol.layer.Group} */ (
-          this.getLayerGroupById(map, treeCtrl.parent.node.id));
   layerGroup.getLayers().insertAt(0, layer);
   return layer;
 };
