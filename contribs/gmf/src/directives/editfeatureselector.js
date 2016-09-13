@@ -119,16 +119,16 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
       gmf.DATALAYERGROUP_NAME);
 
   /**
-   * List of editable layers (theme nodes)
-   * @type {Array.<GmfThemesNode>}
+   * List of editable layers (leaf nodes).
+   * @type {Array.<GmfThemesLeaf>}
    * @export
    */
   this.layers = [];
 
   /**
-   * List of editable layers (theme nodes) that are available for edition, i.e.
+   * List of editable layers (leaf nodes) that are available for edition, i.e.
    * that have a layer in the map.
-   * @type {Array.<GmfThemesNode>}
+   * @type {Array.<GmfThemesLeaf>}
    * @export
    */
   this.availableLayers = [];
@@ -141,8 +141,8 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
   this.wmsLayers_ = {};
 
   /**
-   * The currently selected layer
-   * @type {?GmfThemesNode}
+   * The currently selected layer (leaf node)
+   * @type {?GmfThemesLeaf}
    * @export
    */
   this.selectedLayer = null;
@@ -212,8 +212,10 @@ gmf.EditfeatureselectorController.prototype.stopEditing = function() {
 
 
 /**
- * @param {GmfThemesNode} node A theme, group or layer node.
- * @param {Array.<GmfThemesNode>} nodes An Array of nodes.
+ * @param {GmfThemesTheme|GmfThemesGroup|GmfThemesLeaf} node A theme, group or
+ *     layer node.
+ * @param {Array.<GmfThemesTheme|GmfThemesGroup|GmfThemesLeaf>} nodes An Array
+ *     of nodes.
  * @private
  */
 gmf.EditfeatureselectorController.prototype.getDistinctFlatNodes_ = function(

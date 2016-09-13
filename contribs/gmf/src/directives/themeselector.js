@@ -112,7 +112,7 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
 
 
 /**
- * @param {GmfThemesNode} theme Theme.
+ * @param {GmfThemesTheme} theme Theme.
  * @param {boolean=} opt_init set to true for initialization phase.
  * @export
  */

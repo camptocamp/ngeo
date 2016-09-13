@@ -52,7 +52,7 @@ goog.require('ol.style.Text');
  *         gmf-editfeature-wmslayer="::ctrl.selectedWMSLayer">
  *     </gmf-editfeature>
  *
- * @htmlAttribute {GmfThemesNode} gmf-editfeature-layer The GMF node of the
+ * @htmlAttribute {GmfThemesLeaf} gmf-editfeature-layer The GMF Leaf node of the
  *     editable layer.
  * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
  * @htmlAttribute {string} gmf-editfeature-stopeditingrequest Stop editing
@@ -113,7 +113,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
     ngeoEventHelper, ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 
   /**
-   * @type {GmfThemesNode}
+   * @type {GmfThemesLeaf}
    * @export
    */
   this.layer;
