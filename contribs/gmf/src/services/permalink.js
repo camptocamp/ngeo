@@ -726,6 +726,7 @@ gmf.Permalink.prototype.initLayerFromGroupNode_ = function(groupNode) {
     groupNode.children.forEach(function(layerNode) {
 
       if (layerNode.mixed) {
+        layerNode = /** @type {GmfThemesGroup} */ (layerNode);
         //enable subgroup registration
         this.initLayerFromGroupNode_(layerNode);
       }
@@ -733,7 +734,7 @@ gmf.Permalink.prototype.initLayerFromGroupNode_ = function(groupNode) {
       param = this.getLayerStateParamFromNode_(layerNode);
       var enable = this.ngeoStateManager_.getInitialValue(param);
       if (enable !== undefined) {
-        var layerName = layerNode.name;
+        var layerName = layerNode.name || '';
         layer = this.layerHelper_.getLayerByName(
           layerName, layers.getArray());
         if (layer) {
@@ -754,9 +755,10 @@ gmf.Permalink.prototype.initLayerFromGroupNode_ = function(groupNode) {
   } else {
     //group not mixed
     param = this.getLayerStateParamFromNode_(groupNode);
-    var groupLayers = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(param));
+    var groupLayers = /** @type {string} */ (
+            this.ngeoStateManager_.getInitialValue(param));
     if (groupLayers !== undefined) {
-      var groupName = groupNode.name;
+      var groupName = groupNode.name || '';
       layer = this.layerHelper_.getLayerByName(
           groupName, layers.getArray());
       if (layer) {
@@ -1073,9 +1075,9 @@ gmf.Permalink.prototype.getLayerStateParamFromLayer_ = function(layer) {
  */
 gmf.Permalink.prototype.getLayerStateParamFromNode_ = function(layerNode) {
   var layerName = layerNode.name;
-  var type = gmf.Themes.getNodeType(layerNode);
-  var isMerged = type === gmf.Themes.NodeType.NOT_MIXED_GROUP;
-  return this.getLayerStateParam_(layerName, isMerged);
+  goog.asserts.assert(layerName);
+  var mixed = (layerNode.children !== undefined && layerNode.mixed === true);
+  return this.getLayerStateParam_(layerName, mixed);
 };
 
 

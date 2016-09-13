@@ -198,31 +198,10 @@ gmf.Themes.findThemeByName = function(themes, themeName) {
 
 
 /**
- * Return a "type" that defines the node.
- * @param {GmfThemesLeaf} node Layer tree node.
- * @return {string} A type.
- */
-gmf.Themes.getNodeType = function(node) {
-  var children = node.children;
-  var mixed = node.mixed;
-  if (node.children !== undefined && mixed) {
-    return gmf.Themes.NodeType.MIXED_GROUP;
-  }
-  if (children !== undefined && !mixed) {
-    return gmf.Themes.NodeType.NOT_MIXED_GROUP;
-  }
-  if (node.type === 'WMTS') {
-    return gmf.Themes.NodeType.WMTS;
-  }
-  return gmf.Themes.NodeType.WMS;
-};
-
-
-/**
  * Fill the given "nodes" array with all node in the given node including the
  * given node itself.
- * @param {GmfThemesGroup} node Layertree node.
- * @param {Array.<GmfThemesGroup>} nodes An array.
+ * @param {GmfThemesGroup|GmfThemesLeaf} node Layertree node.
+ * @param {Array.<GmfThemesGroup|GmfThemesLeaf>} nodes An array.
  * @export
  */
 gmf.Themes.getFlatNodes = function(node, nodes) {
@@ -251,6 +230,18 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   var layerHelper = this.layerHelper_;
 
   /**
+   * @param {GmfThemesGroup|GmfThemesLeaf} item A group or a leaf.
+   * @param {Array.<number>} array Array of ids;
+   */
+  var getIds = function(item, array) {
+    array.push(item.id);
+    var children = item.children || [];
+    children.forEach(function(child) {
+      getIds(child, array);
+    });
+  };
+
+  /**
    * @param {GmfThemesGroup|GmfThemesLeaf} item The item.
    * @param {ol.layer.Base} layer The layer.
    * @return {ol.layer.Base} the provided layer.
@@ -259,7 +250,8 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
     layer.set('label', item.name);
     layer.set('metadata', item.metadata);
     layer.set('dimensions', item.dimensions);
-    var ids = gmf.LayertreeController.getLayerNodeIds(item);
+    var ids = [];
+    getIds(item, ids);
     layer.set('querySourceIds', ids);
     layer.set('editableIds', []);
     return layer;
@@ -267,7 +259,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
 
   /**
    * @param {GmfOgcServers} ogcServers The ogc servers.
-   * @param {GmfThemesLeaf} item The item.
+   * @param {GmfThemesGroup|GmfThemesLeaf} item The item.
    * @return {angular.$q.Promise.<ol.layer.Base>|ol.layer.Base} the created layer.
    */
   var layerLayerCreationFn = function(ogcServers, item) {
@@ -282,7 +274,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
       goog.asserts.assert(item.url, 'Layer URL is required');
       return layerHelper.createWMTSLayerFromCapabilitites(
           item.url,
-          item.name,
+          item.name || '',
           item.dimensions
       ).then(callback.bind(null, item)).then(null, function(response) {
         console.error('unable to get capabilities', response['config']['url']);
@@ -296,7 +288,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
       goog.asserts.assert(server.url, 'The server URL is required');
       return callback(item, layerHelper.createBasicWMSLayer(
           server.url,
-          item.layers,
+          item.layers || '',
           server.type,
           undefined, // time
           item.dimensions
