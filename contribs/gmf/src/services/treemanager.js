@@ -365,7 +365,8 @@ gmf.TreeManager.prototype.setLayerVisible_ = function(layerName, group, groupAdd
     var newActiveLayers = [];
     var activeLayers;
     layersArray = map.getLayerGroup().getLayersArray();
-    layerGroup = /** @type {ol.layer.Image} */ (this.layerHelper_.getLayerByName(group.name, layersArray));
+    var groupName = group.name || '';
+    layerGroup = /** @type {ol.layer.Image} */ (this.layerHelper_.getLayerByName(groupName, layersArray));
 
     if (groupAdded) {
       newActiveLayers.push(layerName);
@@ -464,7 +465,7 @@ gmf.TreeManager.prototype.cloneGroupNode_ = function(group, names) {
 /**
  * Set the child nodes metadata `isChecked` if its name is among the list of
  * given names. If a child node also has children, check those instead.
- * @param {GmfThemesGroup} node The original node.
+ * @param {GmfThemesGroup|GmfThemesLeaf} node The original node.
  * @param {Array.<string>} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
  * @export

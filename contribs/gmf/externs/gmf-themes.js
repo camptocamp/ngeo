@@ -266,7 +266,7 @@ GmfThemesLeaf.prototype.layer;
 /**
  * @type {string|undefined}
  */
-GmfThemesLeaf.aprototype.layers;
+GmfThemesLeaf.prototype.layers;
 
 
 /**
