@@ -98,7 +98,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   /**
    * A reference to the current theme
-   * @type {GmfThemesNode}
+   * @type {GmfThemesTheme}
    * @export
    */
   this.theme = this.gmfTreeManager_.tree;

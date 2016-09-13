@@ -1,7 +1,8 @@
 goog.provide('gmf.SyncLayertreeMap');
 
 goog.require('gmf');
-
+goog.require('ol.layer.Image');
+goog.require('ol.layer.Tile');
 
 /**
  * TODO
@@ -89,7 +90,7 @@ gmf.SyncLayertreeMap.prototype.syncAll = function(map, treeCtrl) {
  * given id.
  * @param {ol.Map} map A map that contains the group (or WMSLayer) to find.
  * @param {number} id The id of a group node.
- * @return {ol.layer.Group|ol.layer.ImageWMS|null} The corresponding group
+ * @return {ol.layer.Group|ol.layer.Image|null} The corresponding group
  *     (or WMSLayer).
  * @public
  */
@@ -128,7 +129,7 @@ gmf.SyncLayertreeMap.prototype.getLayerById = function(map, id) {
 
 /**
  * Set the active state of a layer based on its treeCtrl state.
- * @param {ol.layer.WMTS|ol.layer.ImageWMS} layer A layer.
+ * @param {ol.layer.Tile|ol.layer.Image} layer A layer.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
  * @private
  */
@@ -211,7 +212,7 @@ gmf.SyncLayertreeMap.prototype.getFlatTree = function(treeCtrl, treeCtrls) {
  *     level group layer.
  * @param {ol.layer.Group} dataLayerGroup the layer group to insert the first
  *     level group layer.
- * @return {ol.layer.ImageWMS|ol.layer.Group} a new layer.
+ * @return {ol.layer.Image|ol.layer.Group} a new layer.
  * @private
  */
 gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
@@ -245,7 +246,7 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
  * @param {boolean} mixed True for a group layer, false for a WMS layer.
  * @param {GmfThemesGroup=} opt_groupNode node object that musts exist for not
  *     mixed group.
- * @return {ol.layer.ImageWMS|ol.layer.Group} a new layer.
+ * @return {ol.layer.Image|ol.layer.Group} a new layer.
  * @private
  */
 gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(mixed,
@@ -269,7 +270,7 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(mixed,
  * Create and insert (or update) a layer from a leaf.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
  * @param {ol.Map} map A map that contains the group to insert the layer.
- * @return {ol.layer.WMTS|ol.layer.ImageWMS|null} a new layer.
+ * @return {ol.layer.Tile|ol.layer.Image|null} a new layer.
  * @private
  */
 gmf.SyncLayertreeMap.prototype.createLeaf_ = function(treeCtrl, map) {
@@ -288,7 +289,7 @@ gmf.SyncLayertreeMap.prototype.createLeaf_ = function(treeCtrl, map) {
  * Create and insert a layer from a leaf in a mixed group.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
  * @param {ol.Map} map A map that contains the group to insert the layer.
- * @return {ol.layer.WMTS|ol.layer.ImageWMS} a new layer.
+ * @return {ol.layer.Tile|ol.layer.Image} a new layer.
  * @private
  */
 gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl,
@@ -345,9 +346,9 @@ gmf.SyncLayertreeMap.prototype.createLeafInANotMixedGroup_ = function(treeCtrl,
 
 
 /**
- * Create and return a WMTS.
+ * Create and return a Tile layer.
  * @param {GmfThemesLeaf} leafNode A leaf node.
- * @return {ol.layer.WMTS} a WMTS layer. (Source and capabilities can come
+ * @return {ol.layer.Tile} a Tile WMTS layer. (Source and capabilities can come
  *     later).
  * @private
  */
@@ -397,7 +398,7 @@ gmf.SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode,
  * @return {ngeo.LayertreeController} the top level layertree.
  * @public
  */
-gmf.SyncLayertreeMap.prototype.getFirstParentTree_ = function(treeCtrl) {
+gmf.SyncLayertreeMap.prototype.getFirstParentTree = function(treeCtrl) {
   var tree = treeCtrl;
   while (!tree.parent.isRoot) {
     tree = tree.parent;
