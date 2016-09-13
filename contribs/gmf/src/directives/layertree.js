@@ -359,6 +359,35 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
   return treeCtrl.getState();
 };
 
+
+/**
+ * Update the TIME parameter of the source of the layer attached to the given
+ * layertree contoller
+ * LayertreeController.prototype.updateWMSTimeLayerState - description
+ * @param {ngeo.LayertreeController} layertreeCtrl ngeo layertree controller
+ * @param {{start : number, end : number}} time The start
+ * and optionally the end datetime (for time range selection) selected by user
+ * @export
+ */
+gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
+        layertreeCtrl, time) {
+  if (!time) {
+    return;
+  }
+  var node = /** @type {GmfThemesGroup} */ (layertreeCtrl.node);
+  var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
+  // FIXME Get layer by the map, not by using layer object in the tree.
+  var layer = /** @type {ol.layer.Image} */ (
+          layertreeCtrl.layer ||
+          this.gmfSyncLayertreeMap_.getFirstParentTree(layertreeCtrl).layer);
+  if (layer) {
+    var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
+    var timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);
+    this.layerHelper_.updateWMSLayerState(layer, source.getParams()['LAYERS'], timeParam);
+  }
+};
+
+
 /**
  * Get the icon image URL for the given treeCtrl's layer. It can only return a
  * string for internal WMS layers without multiple childlayers in the node.
