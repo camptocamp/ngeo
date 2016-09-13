@@ -13,7 +13,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="attributes in ctrl.configuration.data"
-          ng-class="['row-' + ctrl.configuration.getRowUid(attributes), ctrl.configuration.isRowSelected(attributes) ? 'active': '']"
+          ng-class="['row-' + ctrl.configuration.getRowUid(attributes), ctrl.configuration.isRowSelected(attributes) ? 'ngeo-grid-active': '']"
           ng-click="ctrl.clickRow(attributes, $event)" ng-mousedown="ctrl.preventTextSelection($event)">
         <td ng-repeat="columnDefs in ctrl.configuration.columnDefs" ng-bind-html="attributes[columnDefs.name] | ngeoTrustHtml"></td>
       </tr>
