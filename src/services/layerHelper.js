@@ -225,8 +225,8 @@ ngeo.LayerHelper.prototype.getFlatLayers_ = function(layer, array) {
 
 
 /**
- * Get an array of all group or layer in a group. The group can contain multiple
- * levels of others groups. It will include itself.
+ * Get an array of all group and layer in a group. The group can contain
+ * multiple levels of others groups. It will include itself.
  * @param {ol.layer.Group} group The base group of layers
  * @return {Array.<ol.layer.Group|ol.layer.Base>} .
  * @export
@@ -237,9 +237,9 @@ ngeo.LayerHelper.prototype.getFlatMapElements = function(group) {
 
 
 /**
- * Get an array of all layers in a group. The group can contain multiple levels
- * of others groups.
- * @param {ol.layer.Group|ol.layer.Base} element. A group or a layer.
+ * Get an array of all layers and group in a group. The group can contain
+ * multiple levels of others groups.
+ * @param {ol.layer.Group|ol.layer.Base} element A group or a layer.
  * @param {Array.<ol.layer.Group|ol.layer.Base>} array An array to add elements.
  * @return {Array.<ol.layer.Group|ol.layer.Base>} Elements.
  * @private

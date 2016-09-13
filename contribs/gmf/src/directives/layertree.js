@@ -344,9 +344,7 @@ gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
  *
  * If the node metadata 'isChecked' value is 'true', the layer visibility will
  * be set to true.
- * @param {GmfThemesNode} node Layer tree node.
- * @param {ngeo.LayertreeController} parentCtrl parent controller of the node
- * @param {number} depth ngeo layertree node depth.
+ * @param {ngeo.LayertreeController} treeCtrl tree controller of the node
  * @return {ol.layer.Base} The OpenLayers layer or group for the node.
  * @export
  */
