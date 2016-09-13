@@ -22,7 +22,7 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  *    var module = angular.module('app');
  *    module.value('gmfTreeManagerModeFlush', false);
  *
- * This service's theme is a GmfThemesNode with only children and a name.
+ * This service's theme is a GmfThemesTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
  * @param {angular.$timeout} $timeout Angular timeout service.
@@ -76,10 +76,10 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
   this.modeFlush_ = gmfTreeManagerModeFlush;
 
   /**
-   * @type {GmfThemesNode}
+   * @type {GmfThemesTheme}
    * @export
    */
-  this.tree = /** @type {GmfThemesNode} */ ({
+  this.tree = /** @type {GmfThemesTheme} */ ({
     children: [],
     name: ''
   });
@@ -125,7 +125,7 @@ gmf.TreeManager.prototype.setModeFlush = function(value) {
 /**
  * Set the current theme name (mode 'flush' only) and add its children. Add
  * only groups that are not already in the tree.
- * @param{GmfThemesNode} theme A theme object.
+ * @param{GmfThemesTheme} theme A theme object.
  * @param{boolean=} opt_init true for the initialization phase (and get previous
 *  configuration from the state manager)
  * @export
@@ -183,7 +183,7 @@ gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
  * Add some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param{Array.<GmfThemesNode>} groups An array of gmf theme nodes.
+ * @param{Array.<GmfThemesGroup>} groups An array of gmf theme group.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param{boolean=} opt_silent if true notifyCantAddGroups_ is not called.
  * @param{number=} opt_totalGroupsLength length of all group to add for this
@@ -217,7 +217,7 @@ gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent,
 
 /**
  * Update the application state with the list of first level groups in the tree
- * @param {Array.<GmfThemesNode>} groups firstlevel groups of the tree
+ * @param {Array.<GmfThemesGroup>} groups firstlevel groups of the tree
  * @private
  */
 gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
@@ -232,7 +232,7 @@ gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
 /**
  * Add a group as tree's children without consideration of this service 'mode'.
  * Add it only if it's not already in the tree.
- * @param{GmfThemesNode} group The group to add.
+ * @param{GmfThemesGroup} group The group to add.
  * @return {boolean} true if the group has been added.
  * @private
  */
@@ -256,7 +256,7 @@ gmf.TreeManager.prototype.addGroup_ = function(group) {
 /**
  * The same as `addGroups`, with the exception that the given group will be
  * deep cloned. Only the clone will be added to the tree.
- * @param{Array.<GmfThemesNodeCustom>} groups An array of object defining
+ * @param{Array.<GmfThemesGroup>} groups An array of object defining
  *     a theme node and an array of layer names to override.
  * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param{number=} opt_totalGroupsLength length of all group to add for this
@@ -332,7 +332,8 @@ gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add,
  * @param{ol.Map=} opt_map Map object.
  * @export
  */
-gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent, opt_map) {
+gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add,
+    opt_silent, opt_map) {
   this.gmfThemes_.getThemesObject().then(function(themes) {
     var group = gmf.Themes.findGroupByLayerNodeName(themes, layerName);
     if (group) {
@@ -351,7 +352,7 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
  * Make the layer of a group visible if the group is already in the layertree.
  * If the group has just been added set only the layer layerName visible.
  * @param{string} layerName Name of the layer to set visible.
- * @param{GmfThemesNode} group Group containing the layer to activate.
+ * @param{GmfThemesGroup} group Group containing the layer to activate.
  * @param{boolean} groupAdded True if the group has been newly added. False otherwise
  * @param{ol.Map} map Map obkect.
  * @private
@@ -414,7 +415,7 @@ gmf.TreeManager.prototype.setLayerVisible_ = function(layerName, group, groupAdd
 /**
  * Remove a group from this tree's children. The first group that is found (
  * based on its name) will be removed. If any is found, nothing will append.
- * @param{GmfThemesNode} group The group to remove.
+ * @param{GmfThemesGroup} group The group to remove.
  * @export
  */
 gmf.TreeManager.prototype.removeGroup = function(group) {
@@ -447,14 +448,14 @@ gmf.TreeManager.prototype.removeAll = function() {
 /**
  * Clone a group node and recursively set all child node `isChecked` using
  * the given list of layer names.
- * @param {GmfThemesNode} group The original group node.
+ * @param {GmfThemesGroup} group The original group node.
  * @param {Array.<string>} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
- * @return {GmfThemesNode} Cloned node.
+ * @return {GmfThemesGroup} Cloned node.
  * @export
  */
 gmf.TreeManager.prototype.cloneGroupNode_ = function(group, names) {
-  var clone = /** @type {GmfThemesNode} */ (goog.object.unsafeClone(group));
+  var clone = /** @type {GmfThemesGroup} */ (goog.object.unsafeClone(group));
   this.toggleNodeCheck_(clone, names);
   return clone;
 };
@@ -463,7 +464,7 @@ gmf.TreeManager.prototype.cloneGroupNode_ = function(group, names) {
 /**
  * Set the child nodes metadata `isChecked` if its name is among the list of
  * given names. If a child node also has children, check those instead.
- * @param {GmfThemesNode} node The original node.
+ * @param {GmfThemesGroup} node The original node.
  * @param {Array.<string>} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
  * @export
@@ -485,7 +486,7 @@ gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
 /**
  * Display a notification that informs that the given groups are already in the
  * tree.
- * @param{Array.<GmfThemesNodeCustom>} groups An array of groups that already in
+ * @param{Array.<GmfThemesGroup>} groups An array of groups that already in
  *   the tree.
  * @private
  */
