@@ -4,7 +4,6 @@ goog.provide('gmf.layertreeDirective');
 goog.require('ngeo.SyncArrays');
 goog.require('gmf');
 goog.require('gmf.SyncLayertreeMap');
-goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('gmf.WMSTime');
 goog.require('ngeo.CreatePopup');
@@ -233,7 +232,7 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
 
 
 /**
- * @param {GmfThemesNode} node Layer tree node.
+ * @param {GmfThemesGroup} node Layer tree node.
  * @private
  */
 gmf.LayertreeController.prototype.updateDimensions_ = function(node) {
@@ -254,7 +253,7 @@ gmf.LayertreeController.prototype.updateDimensions_ = function(node) {
 
 /**
  * @param {ol.layer.Layer} layer Layer to update.
- * @param {GmfThemesNode} node Layer tree node.
+ * @param {GmfThemesGroup|GmfThemesLeaf} node Layer tree node.
  * @private
  */
 gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node) {
@@ -285,193 +284,16 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
 
 
 /**
- * LayertreeController.prototype.prepareLayer_ - inject metadata into the layer
- * @private
- * @param {GmfThemesNode} node Layer tree node.
- * @param {ol.layer.Base} layer The OpenLayers layer or group for the node.
- */
-gmf.LayertreeController.prototype.prepareLayer_ = function(node, layer) {
-  var type = gmf.Themes.getNodeType(node);
-  var ids =  gmf.LayertreeController.getLayerNodeIds(node);
-  var editableIds = gmf.LayertreeController.getLayerNodeIds(node, true);
-  var childNodes = [], allChildNodesUnchecked;
-  layer.set('querySourceIds', ids);
-  layer.set('editableIds', editableIds);
-  layer.set('layerNodeName', node.name);
-  layer.set('disclaimers', this.getNodeDisclaimers_(node));
-
-  var isMerged = type === gmf.Themes.NodeType.NOT_MIXED_GROUP;
-  layer.set('isMerged', isMerged);
-
-  // If layer is 'unchecked', set it to invisible.
-  var metadata = node.metadata;
-  if (isMerged) {
-    //Case Non Mixed group -> Hide the layer if all child nodes have isChecked set to false
-    gmf.Themes.getFlatNodes(node, childNodes);
-    allChildNodesUnchecked = childNodes.every(function(childNode) {
-      return !childNode.metadata || !childNode.metadata['isChecked'];
-    });
-    if (allChildNodesUnchecked) {
-      //All children are unchecked
-      layer.setVisible(false);
-    }
-  } else if (node.children === undefined && goog.isDefAndNotNull(metadata)) {
-    //Case leaf in a mixed group
-    if (!metadata['isChecked']) {
-      layer.setVisible(false);
-    }
-  }
-};
-
-
-/**
- * Create and return a layer corresponding to the ngeo layertree's node.
- * This function will only create a layer for each "top-level" (depth 1) groups.
- *
- * On "not mixed" type nodes, the returned layer will be an ol.layer.Image (WMS)
- * with each name of node's children as LAYERS parameters.
- *
- * On "mixed" type node, the returned  layer will be an ol.layer.Group
- *
- * If the parent node is "mixed", the child layer freshly created will be added to it
- *
- * All layer created will receive:
- *  - A 'querySourceIds' parameter with the node id as value.
- *  - A 'layerName' parameter with the node name as value.
- *
- * All layer created will be added at the top of the map and with a Z Index
- * value of 1.
- *
- * If the node metadata 'isChecked' value is 'true', the layer visibility will
- * be set to true.
+ * TODO
  * @param {ngeo.LayertreeController} treeCtrl tree controller of the node
- * @return {ol.layer.Base} The OpenLayers layer or group for the node.
+ * @return {ol.layer.Base|ol.layer.Group|null} The OpenLayers layer or group
+ *     for the node.
  * @export
  */
 gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
   //this.updateLayerDimensions_(/** @type {ol.layer.Layer} */ (layer), node);
   return this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.dataLayerGroup_,
          this.map);
-};
-
-
-/**
- * Create an ol.layer.Group with all node's children as layers except others
- * groups.
- * @param {GmfThemesNode} node Layer tree node.
- * @return {ol.layer.Group} Layer group.
- * @private
- */
-gmf.LayertreeController.prototype.getLayerCaseMixedGroup_ = function(node) {
-  var group = this.layerHelper_.createBasicGroup();
-  // Keep a reference to this group.
-  this.groupNodeStates_[goog.getUid(group)] = [];
-  return group;
-};
-
-
-/**
- * Create an ol.layer.Image with all node's children as LAYERS params.
- * @param {GmfThemesNode} node Layer tree node.
- * @return {ol.layer.Image} Image layer.
- * @private
- */
-gmf.LayertreeController.prototype.getLayerCaseNotMixedGroup_ = function(node) {
-  var childNodes = [];
-  var timeParam, timeValues;
-
-  gmf.Themes.getFlatNodes(node, childNodes);
-  // layersNames come from the json theme nodes and will become the wms
-  // LAYERS. It must be reversed to get the correct layer order on the map.
-  var layersNames = childNodes.map(function(node) {
-    return node['layers'];
-  }).reverse().join(',');
-  var url = node.url || this.gmfWmsUrl_;
-  var serverType = node.children[0]['serverType'];
-  var nodes = [node].concat(childNodes);
-  var nodesWithTime = nodes.filter(hasTime);
-  if (nodesWithTime.length) {
-    var wmsTime = /**@type {ngeox.TimeProperty} */ (nodesWithTime[0]['time']);
-    timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
-    timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, {
-      start : timeValues[0] || timeValues,
-      end : timeValues[1]
-    });
-  }
-
-  var layer = this.layerHelper_.createBasicWMSLayer(url, layersNames, serverType, timeParam);
-  // Keep a reference to this group with all layer name inside.
-  this.groupNodeStates_[goog.getUid(layer)] = [];
-
-  /**
-   * hasTime - filter function to get node with time param
-   * @param  {GmfThemesNode} node the tested node
-   * @return {boolean} node with a time parameter
-   */
-  function hasTime(node) {
-    return node.time && node.time['minValue'];
-  }
-
-  return layer;
-};
-
-
-/**
- * Create an ol.layer.Tile layer.
- * @param {GmfThemesNode} node Layertree node.
- * @return {ol.layer.Tile} The OpenLayers layer or group for the node.
- * @private
- */
-gmf.LayertreeController.prototype.getLayerCaseWMTS_ = function(node) {
-  var newLayer = new ol.layer.Tile();
-  goog.asserts.assert(node.url);
-  this.layerHelper_.createWMTSLayerFromCapabilitites(node.url, node.layer, node.dimensions)
-    .then(function(layer) {
-      newLayer.setSource(layer.getSource());
-      newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
-    });
-  return newLayer;
-};
-
-
-/**
- * Return all names existing in a node and in its children.
- * @param {GmfThemesNode} node Layer tree node.
- * @param {boolean=} opt_onlyChecked return only 'isChecked' node names.
- * @return {Array.<string>} An Array of all nodes names.
- * @private
- */
-gmf.LayertreeController.prototype.retrieveNodeNames_ = function(node,
-    opt_onlyChecked) {
-  var names = [];
-  var nodes = [];
-  gmf.Themes.getFlatNodes(node, nodes);
-  var metadata, n, i;
-  for (i = 0; i < nodes.length; i++) {
-    n = nodes[i];
-    metadata = n.metadata;
-    if (!opt_onlyChecked ||
-        (goog.isDefAndNotNull(metadata) && metadata['isChecked'])) {
-      names.push(n.name);
-    }
-  }
-  return names;
-};
-
-
-/**
- * Retrieve the "top level" layertree.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
- *     the current node.
- * @return {ngeo.LayertreeController} the top level layertree.
- * @private
- */
-gmf.LayertreeController.prototype.retrieveFirstParentTree_ = function(treeCtrl) {
-  var tree = treeCtrl;
-  while (tree.depth > 1) {
-    tree = tree.parent;
-  }
-  return tree;
 };
 
 
@@ -495,7 +317,7 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
 /**
  * Return 'out-of-resolution' if the current resolution of the map is out of
  * the min/max resolution in the node.
- * @param {GmfThemesNode} node Layer tree node.
+ * @param {GmfThemesLeaf} node Layer tree node.
  * @return {?string} 'out-of-resolution' or null.
  * @export
  */
@@ -520,7 +342,7 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
  */
 gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
   treeCtrl.setState(treeCtrl.getState() === 'on' ? 'off' : 'on');
-  var firstLevelTreeCtrl = this.retrieveFirstParentTree_(treeCtrl);
+  var firstLevelTreeCtrl = this.gmfSyncLayertreeMap_.getFirstParentTree(treeCtrl);
   this.gmfSyncLayertreeMap_.syncAll(this.map, firstLevelTreeCtrl);
 };
 
@@ -537,67 +359,6 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
 };
 
 /**
- * Search if a substring representing layers names are in the string representing
- * all the layers names of the WM(T)S layer
- * @param  {string} allLayersNames all layers names currently enable for the
- * WM(T)S layer
- * @param  {string} subLayersNames layers names to search on allLayersNames
- * @return {boolean} true if subLayersNames is in allLayersNames
- * @private
- */
-gmf.LayertreeController.prototype.searchLayersNames_ = function(allLayersNames,
-  subLayersNames) {
-  var layersNames = allLayersNames.split(',');
-  var layersNamesToFind = subLayersNames.split(',');
-  var found;
-  found = layersNamesToFind.every(function(lname) {
-    return layersNames.indexOf(lname) >= 0;
-  });
-  return found;
-};
-
-/**
- * Get the layer(s) name(s) Attached to the node param, regarding its type
- * @param  {GmfThemesNode} node The tree node
- * @return {string} name(s) of the layer(s) attached to this node regarind its type
- * @private
- */
-gmf.LayertreeController.prototype.getLayersNames_ = function(node) {
-  var type = gmf.Themes.getNodeType(node);
-  switch (type) {
-    case gmf.Themes.NodeType.WMS:
-      return node.layers;
-    case gmf.Themes.NodeType.WMTS:
-      return node.layer;
-    default:
-      throw new Error('Node wrong type to get layer(s) name(s): ' + type);
-  }
-};
-
-/**
- * Update the TIME parameter of the source of the layer attached to the given
- * layertree contoller
- * LayertreeController.prototype.updateWMSTimeLayerState - description
- * @param {ngeo.LayertreeController} layertreeCtrl ngeo layertree controller
- * @param {{start : number, end : number}} time The start
- * and optionally the end datetime (for time range selection) selected by user
- * @export
- */
-gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
-  var node = /** @type {GmfThemesNode} */ (layertreeCtrl.node);
-  var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
-  if (time) {
-    var layer = /** @type {ol.layer.Image} */ (layertreeCtrl.layer || this.retrieveFirstParentTree_(layertreeCtrl).layer);
-    if (layer) {
-      var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
-      var timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);
-      this.layerHelper_.updateWMSLayerState(layer, source.getParams()['LAYERS'], timeParam);
-    }
-  }
-};
-
-
-/**
  * Get the icon image URL for the given treeCtrl's layer. It can only return a
  * string for internal WMS layers without multiple childlayers in the node.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
@@ -606,7 +367,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(layertreeCt
  * @export
  */
 gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
-  var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
+  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
   var opt_iconUrl = node.metadata['iconUrl'];
 
   if (opt_iconUrl !== undefined) {
@@ -639,7 +400,7 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
  * @export
  */
 gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
-  var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
+  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
   var layersNames;
   if (node.children !== undefined) {
     return null;
@@ -708,7 +469,7 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
 
 
 /**
- * @param {GmfThemesNode} node Layer tree node to remove.
+ * @param {GmfThemesGroup} node Layer tree node to remove.
  * @export
  */
 gmf.LayertreeController.prototype.removeNode = function(node) {
@@ -723,36 +484,12 @@ gmf.LayertreeController.prototype.removeNode = function(node) {
  * @export
  */
 gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
-  var node = /** @type {GmfThemesNode} */ (treeCtrl.node);
+  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
   var view = this.map.getView();
   var resolution = node.minResolutionHint || node.maxResolutionHint;
   if (resolution !== undefined) {
     view.setResolution(view.constrainResolution(resolution, 0, 1));
   }
-};
-
-
-/**
- * Collect and return all ids of this layer node and all child nodes as well.
- * @param {GmfThemesNode} node Layer tree node.
- * @param {boolean=} opt_editable Whether the node needs to be editable to
- *     have its id returned.
- * @return {Array.<number|string>} Layer names.
- */
-gmf.LayertreeController.getLayerNodeIds = function(node, opt_editable) {
-  var editable = opt_editable === true;
-  var ids = [];
-  var children = node.children || node;
-  if (children && children.length) {
-    children.forEach(function(childNode) {
-      ids = ids.concat(
-        gmf.LayertreeController.getLayerNodeIds(childNode, editable)
-      );
-    });
-  } else if (node.id !== undefined && (!editable || node.editable)) {
-    ids.push(node.id);
-  }
-  return ids;
 };
 
 
@@ -765,34 +502,6 @@ gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
   $(legendNodeId).toggle({
     toggle : true
   });
-};
-
-
-/**
- * Collect and return all disclaimer strings of this node and all child nodes
- * as well.
- * @param {GmfThemesNode} node Layer tree node.
- * @return {Array.<number|string>} Disclaimer strings
- * @private
- */
-gmf.LayertreeController.prototype.getNodeDisclaimers_ = function(node) {
-  var disclaimers = [];
-  var children = node.children || node;
-  if (children && children.length) {
-    children.forEach(function(childNode) {
-      var childDisclaimers = this.getNodeDisclaimers_(childNode);
-      childDisclaimers.forEach(function(childDisclaimer) {
-        if (disclaimers.indexOf(childDisclaimer) === -1) {
-          disclaimers.push(childDisclaimer);
-        }
-      });
-    }, this);
-  } else if (node.metadata !== undefined &&
-             node.metadata['disclaimer'] !== undefined &&
-             disclaimers.indexOf(node.metadata['disclaimer']) === -1) {
-    disclaimers.push(node.metadata['disclaimer']);
-  }
-  return disclaimers;
 };
 
 

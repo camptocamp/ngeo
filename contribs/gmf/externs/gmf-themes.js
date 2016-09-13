@@ -173,7 +173,7 @@ var GmfThemesGroup = function() {};
 
 
 /**
- * @type {Array.<GmfThemesGroup|GmfThemesLeaf>}
+ * @type {Array.<GmfThemesGroup|GmfThemesLeaf>|undefined}
  */
 GmfThemesGroup.prototype.children;
 
@@ -212,6 +212,12 @@ GmfThemesGroup.prototype.ogcServer;
  * @type {ngeox.TimeProperty|undefined}
  */
 GmfThemesGroup.prototype.time;
+
+
+/**
+ * @constructor
+ */
+var GmfThemesLeaf = function() {};
 
 
 /**
@@ -276,7 +282,7 @@ GmfThemesLeaf.prototype.maxResolutionHint;
 
 
 /**
- * @type {GmfThemeLeafMetaData}
+ * @type {GmfThemesLeafMetaData}
  */
 GmfThemesLeaf.prototype.metadata;
 
@@ -320,19 +326,19 @@ var GmfThemesChildLayer = function() {};
 /**
  * @type {number}
  */
-GmfThemeChildLayer.prototype.maxResolutionHint;
+GmfThemesChildLayer.prototype.maxResolutionHint;
 
 
 /**
  * @type {number}
  */
-GmfThemeChildLayer.prototype.minResolutionHint;
+GmfThemesChildLayer.prototype.minResolutionHint;
 
 
 /**
  * @type {string}
  */
-GmfThemeChildLayer.prototype.name;
+GmfThemesChildLayer.prototype.name;
 
 
 /**
@@ -344,70 +350,70 @@ GmfThemesChildLayer.prototype.queryable;
 /**
  * @constructor
  */
-var GmfThemeLeafMetaData = function() {};
+var GmfThemesLeafMetaData = function() {};
 
 
 /**
  * @type {string|undefined}
  */
-GmfThemeLeafMetaData.prototype.disclaimer;
+GmfThemesLeafMetaData.prototype.disclaimer;
 
 
 /**
  * @type {string|undefined}
  */
-GmfThemeLeafMetaData.prototype.identifierAttributeField;
+GmfThemesLeafMetaData.prototype.identifierAttributeField;
 
 
 /**
  * @type {boolean|undefined}
  */
-GmfThemeLeafMetaData.prototype.isChecked;
+GmfThemesLeafMetaData.prototype.isChecked;
 
 
 /**
  * @type {string|undefined}
  */
-GmfThemeLeafMetaData.prototype.legend;
+GmfThemesLeafMetaData.prototype.legend;
 
 
 /**
  * @type {string|undefined}
  */
-GmfThemeLeafMetaData.prototype.legendRule;
+GmfThemesLeafMetaData.prototype.legendRule;
 
 
 /**
  * @type {number|undefined}
  */
-GmfThemeLeafMetaData.prototype.maxResolution;
+GmfThemesLeafMetaData.prototype.maxResolution;
 
 
 /**
  * @type {number|undefined}
  */
-GmfThemeLeafMetaData.prototype.maxResolutionHint;
+GmfThemesLeafMetaData.prototype.maxResolutionHint;
 
 
 /**
  * @type {number|undefined}
  */
-GmfThemeLeafMetaData.prototype.minResolution;
+GmfThemesLeafMetaData.prototype.minResolution;
 
 
 /**
  * @type {number|undefined}
  */
-GmfThemeLeafMetaData.prototype.minResolutionHint;
+GmfThemesLeafMetaData.prototype.minResolutionHint;
 
 
 /**
  * @type {string|undefined}
  */
-GmfThemeLeafMetaData.prototype.wmsLayers;
+GmfThemesLeafMetaData.prototype.wmsLayers;
 
 
 /**
  * @type {string|undefined}
  */
-GmfThemeLeafMetaData.prototype.wmsUrl;
+GmfThemesLeafMetaData.prototype.wmsUrl;

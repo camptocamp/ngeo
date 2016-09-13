@@ -192,7 +192,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   this.dataLayerGroup_ = null;
 
   /**
-   * @type {?Array.<GmfThemesNode>}
+   * @type {?Array.<GmfThemesTheme>}
    * @private
    */
   this.themes_ = null;
@@ -706,7 +706,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
 /**
  * Init layers state of a group node
  *
- * @param  {GmfThemesNode} groupNode a group node from the tree
+ * @param  {GmfThemesGroup} groupNode a group node from the tree
  * @private
  */
 gmf.Permalink.prototype.initLayerFromGroupNode_ = function(groupNode) {
@@ -1061,7 +1061,8 @@ gmf.Permalink.prototype.getLayerStateParamFromLayer_ = function(layer) {
 
 
 /**
- * @param {GmfThemesNode} layerNode Gmf theme node representing a layer.
+ * @param {GmfThemesGroup|GmfThemesLeaf} layerNode Gmf theme node representing
+ *     a layer.
  * @return {string} The state param for the layer
  * @private
  */
