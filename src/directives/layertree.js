@@ -272,8 +272,11 @@ ngeo.LayertreeController.prototype.getState = function() {
 
 
 /**
- * @param {boolean} state TODO
- * @param {boolean=} opt_avoidRefreshParents TODO
+ * Set the state of this treeCtrl. Update its children with its value and then
+ * ask its parent to refresh its state.
+ * @param {string} state 'on' or 'off'.
+ * @param {boolean=} opt_avoidRefreshParents True to avoid refreshing its
+ * parent.
  * @export
  */
 ngeo.LayertreeController.prototype.setState = function(state,
@@ -291,12 +294,12 @@ ngeo.LayertreeController.prototype.setState = function(state,
   if (!opt_avoidRefreshParents && this.parent) {
     this.parent.refreshState();
   }
-  //this.scope_.$emit('stateUpdated', this);
 };
 
 
 /**
- * TODO
+ * Refresh the state of this treeCtrl based on it's children value. The call its
+ * parent to do the same.
  * @public
  */
 ngeo.LayertreeController.prototype.refreshState = function() {
@@ -305,7 +308,6 @@ ngeo.LayertreeController.prototype.refreshState = function() {
     return;
   }
   this.state_ = newState;
-  //this.scope_.$emit('stateUpdated', this);
   if (this.parent) {
     this.parent.refreshState();
   }
@@ -315,7 +317,7 @@ ngeo.LayertreeController.prototype.refreshState = function() {
 /**
  * Return the current state, calculate on all its children recursively.
  * @return {string} 'on', 'off' or 'indeterminate'.
- * @public
+ * @export
  */
 ngeo.LayertreeController.prototype.getCalculateState = function() {
   if (this.children.length === 0) {
