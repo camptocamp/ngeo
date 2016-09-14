@@ -1,22 +1,24 @@
 <div
-    ng-switch="efsCtrl.selectedLayer">
+    ng-switch="efsCtrl.selectedEditableNode">
 
   <div ng-switch-when="null">
     <select
         class="form-control"
-        ng-model="efsCtrl.selectedLayer"
-        ng-show="efsCtrl.availableLayers.length > 0"
-        ng-options="layer.name | translate for layer in efsCtrl.availableLayers">
+        ng-model="efsCtrl.selectedEditableNode"
+        ng-show="efsCtrl.availableEditableNodes.length > 0"
+        ng-options="layer.name | translate for layer in efsCtrl.availableEditableNodes">
       <option value="" translate>-- Choose a layer --</option>
     </select>
-    <span ng-show="efsCtrl.availableLayers.length == 0" translate>No editable layer available!</span>
+    <span
+      ng-show="efsCtrl.availableEditableNodes.length == 0"
+      translate>No editable layer available!</span>
   </div>
 
   <div ng-switch-default>
     <div class="row">
       <div class="col-sm-12">
         <span translate>Currently editing: </span>
-        <b>{{ efsCtrl.selectedLayer.name | translate }}</b>
+        <b>{{ efsCtrl.selectedEditableNode.name | translate }}</b>
         <span class="fa fa-pencil"></span>
         <br>
         <button
@@ -30,12 +32,12 @@
 
     <gmf-editfeature
         gmf-editfeature-dirty="efsCtrl.dirty"
-        gmf-editfeature-layer="::efsCtrl.selectedLayer"
+        gmf-editfeature-layer="::efsCtrl.selectedEditableNode"
         gmf-editfeature-map="::efsCtrl.map"
         gmf-editfeature-state="efsCtrl.state"
         gmf-editfeature-tolerance="::efsCtrl.tolerance"
         gmf-editfeature-vector="::efsCtrl.vectorLayer"
-        gmf-editfeature-wmslayer="::efsCtrl.selectedWMSLayer">
+        gmf-editfeature-wmslayer="::efsCtrl.selectedEditableWMSLayer">
     </gmf-editfeature>
 
   </div>
