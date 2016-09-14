@@ -148,20 +148,29 @@ gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
   } else if (source instanceof ol.source.ImageWMS) {
     goog.asserts.assertInstanceof(layer, ol.layer.Image);
     var allPossibleWMSLayerParam = this.getAllPossibleWMSLayerParam(treeCtrl);
-    var currentWMSLayerParam = layer.getVisible() ?
+    var activeWMSLayerParam = layer.getVisible() ?
         source.getParams()['LAYERS'].split(',') : [];
-    var WMSLayerParam = treeCtrl.node.layers.split(',');
+    var thisNodeWMSLayerParam = treeCtrl.node.layers.split(',');
     var newWMSLayerParam = [];
 
+    // Check one possible name after the other if it must be added in the new
+    // WMSLayerParam. That keep the order of layers.
     allPossibleWMSLayerParam.forEach(function(possibleItem) {
-      WMSLayerParam.forEach(function(item) {
-        if (possibleItem === item) {
+      thisNodeWMSLayerParam.forEach(function(nodeItem) {
+        // If the possible name is the current treeCtrl name and it's active
+        // then add it.
+        if (possibleItem === nodeItem) {
           if (active) {
             newWMSLayerParam.push(possibleItem);
           }
         } else {
-          if (currentWMSLayerParam.indexOf(possibleItem) > -1) {
-            newWMSLayerParam.push(possibleItem);
+          // If not but it's on the map, add it.
+          if (activeWMSLayerParam.indexOf(possibleItem) > -1) {
+            // Except if the name in one in the current TreeCtrl (it must pass
+            // by the previous if).
+            if (thisNodeWMSLayerParam.indexOf(possibleItem) < 0) {
+              newWMSLayerParam.push(possibleItem);
+            }
           }
         }
       });
