@@ -284,8 +284,8 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
           item.url,
           item.name,
           item.dimensions
-      ).then(callback.bind(null, item)).then(null, function(error) {
-        console.error(error || 'unknown error');
+      ).then(callback.bind(null, item)).then(null, function(response) {
+        console.error('unable to get capabilities', response['config']['url']);
         // Continue even if some layers have failed loading.
         return $q.resolve(undefined);
       });

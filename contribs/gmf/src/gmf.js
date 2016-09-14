@@ -14,6 +14,7 @@ gmf.module = angular.module('gmf', [ngeo.module.name, 'gettext',
 gmf.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   /**
    * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider
+   * @param {string} angularLocaleScript the script.
    */
   function(tmhDynamicLocaleProvider, angularLocaleScript) {
     // configure the script URL

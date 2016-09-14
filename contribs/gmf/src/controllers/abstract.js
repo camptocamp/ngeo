@@ -375,7 +375,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
           });
         }
       }
-    });
+    }.bind(this));
   }.bind(this));
 
   /**
@@ -413,7 +413,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
         backgroundLayerMgr.set(this.map, background);
       }
     }.bind(this));
-  };
+  }.bind(this);
 
   this.updateCurrentBackgroundLayer_(false);
 
