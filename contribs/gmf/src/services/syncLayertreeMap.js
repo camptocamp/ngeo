@@ -265,10 +265,11 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl,
   // Update layer information and tree state.
   layer.set('layerNodeName', leafNode.name); // Really useful ?
   this.updateLayerReferences_(leafNode, layer);
-  if (leafNode.metadata.isChecked) {
+  var checked = leafNode.metadata.isChecked === true;
+  if (checked) {
     treeCtrl.setState('on');
-    layer.setVisible(true);
   }
+  layer.setVisible(checked);
   // Insert layer in the map.
   var layerGroup = /** @type {ol.layer.Group} */ (this.getLayer(treeCtrl));
   layerGroup.getLayers().insertAt(0, layer);
