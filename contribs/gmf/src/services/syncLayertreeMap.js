@@ -141,6 +141,7 @@ gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
   } else if (source instanceof ol.source.ImageWMS) {
     goog.asserts.assertInstanceof(layer, ol.layer.Image);
     var allPossibleWMSLayerParam = this.getAllPossibleWMSLayerParam(treeCtrl);
+    allPossibleWMSLayerParam.reverse(); // Reverse to to keep order.
     var activeWMSLayerParam = layer.getVisible() ?
         source.getParams()['LAYERS'].split(',') : [];
     var thisNodeWMSLayerParam = treeCtrl.node.layers.split(',');
@@ -348,7 +349,8 @@ gmf.SyncLayertreeMap.prototype.createLeafInANotMixedGroup_ = function(treeCtrl,
   var source = /** @type {ol.source.ImageWMS} */ (wmsLayer.getSource());
   var WMSLayerParam = source.getParams()['LAYERS'];
   WMSLayerParam = WMSLayerParam.length > 0 ? WMSLayerParam.split(',') : [];
-  WMSLayerParam.push(leafNode.layers);
+  // Add it at first place in the array to keep order.
+  WMSLayerParam.unshift(leafNode.layers);
   this.layerHelper_.updateWMSLayerState(wmsLayer, WMSLayerParam.join(','));
 };
 
