@@ -29,6 +29,7 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+ * @param {gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
@@ -37,7 +38,8 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * @ngname gmfTreeManager
  */
 gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
-    ngeoNotification, gmfThemes, gmfTreeManagerModeFlush, ngeoStateManager) {
+    ngeoNotification, gmfSyncLayertreeMap, gmfThemes, gmfTreeManagerModeFlush,
+    ngeoStateManager) {
 
   /**
    * @type {angular.$timeout}
@@ -64,6 +66,12 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
   this.ngeoNotification_ = ngeoNotification;
 
   /**
+   * @type {gmf.SyncLayertreeMap}
+   * @private
+   */
+  this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
+
+  /**
    * @type {gmf.Themes}
    * @private
    */
@@ -83,6 +91,12 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
     children: [],
     name: ''
   });
+
+  /**
+   * @type {Array.<ngeo.LayertreeController>}
+   * @private
+   */
+  this.treeCtrlReferences_ = [];
 
   /**
    * @type {number}
@@ -339,77 +353,31 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add,
     if (group) {
       var groupAdded = this.addGroups([group], opt_add, opt_silent);
       if (opt_map) {
+        var map = opt_map;
         this.$timeout_(function() {
-          this.setLayerVisible_(layerName, group, groupAdded, /** @type {ol.Map}*/ (opt_map));
+          var treeCtrl = this.getTreeCtrlByNodeId(group.id);
+          var treeCtrls = [];
+          var treeCtrlToActive;
+          ngeo.LayertreeController.getFlatTree(treeCtrl, treeCtrls);
+          // Deactive all layers in the group if it's not in the tree.
+          if (groupAdded)  {
+            treeCtrl.setState('off');
+          }
+          // Search the tree.
+          treeCtrls.some(function(item) {
+            if (item.node.name === layerName) {
+              return treeCtrlToActive = item;
+            }
+          });
+          // Active it.
+          if (treeCtrlToActive) {
+            treeCtrlToActive.setState('on');
+            this.gmfSyncLayertreeMap_.sync(map, treeCtrl);
+          }
         }.bind(this));
       }
     }
   }.bind(this));
-};
-
-
-/**
- * Make the layer of a group visible if the group is already in the layertree.
- * If the group has just been added set only the layer layerName visible.
- * @param{string} layerName Name of the layer to set visible.
- * @param{GmfThemesGroup} group Group containing the layer to activate.
- * @param{boolean} groupAdded True if the group has been newly added. False otherwise
- * @param{ol.Map} map Map obkect.
- * @private
- */
-gmf.TreeManager.prototype.setLayerVisible_ = function(layerName, group, groupAdded, map) {
-  var layersArray;
-
-  if (!group.mixed) {
-    var layerGroup;
-    var newActiveLayers = [];
-    var activeLayers;
-    layersArray = map.getLayerGroup().getLayersArray();
-    var groupName = group.name || '';
-    layerGroup = /** @type {ol.layer.Image} */ (this.layerHelper_.getLayerByName(groupName, layersArray));
-
-    if (groupAdded) {
-      newActiveLayers.push(layerName);
-    } else {
-      // Get current active values
-      var source = /** @type {ol.source.ImageWMS} */ (layerGroup.getSource());
-      activeLayers = layerGroup.getVisible() ? source.getParams()['LAYERS'] : '';
-      // Get all possible LAYERS values in this group.
-      var childNodes = [];
-      gmf.Themes.getFlatNodes(group, childNodes);
-      var allLayersNames = childNodes.map(function(node) {
-        return node['layers'];
-      });
-      // Keep only active value and add the new one by keepping the right order.
-      allLayersNames.forEach(function(item) {
-        if (item === layerName || activeLayers.indexOf(item) > -1) {
-          newActiveLayers.push(item);
-        }
-      });
-    }
-    this.layerHelper_.updateWMSLayerState(layerGroup,
-        newActiveLayers.reverse().join(','));
-
-  } else {
-    var layer;
-
-    layersArray = this.layerHelper_.getGroupFromMap(map, gmf.DATALAYERGROUP_NAME).getLayersArray();
-    if (groupAdded) {
-      var children = group.children;
-
-      children.forEach(function(element) {
-        layer = this.layerHelper_.getLayerByName(element.name, layersArray);
-        if (!(element.name == layerName)) {
-          layer.setVisible(false);
-        } else {
-          layer.setVisible(true);
-        }
-      }.bind(this));
-    } else {
-      layer = this.layerHelper_.getLayerByName(layerName, layersArray);
-      layer.setVisible(true);
-    }
-  }
 };
 
 
@@ -487,7 +455,7 @@ gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
 /**
  * Display a notification that informs that the given groups are already in the
  * tree.
- * @param{Array.<GmfThemesGroup>} groups An array of groups that already in
+ * @param {Array.<GmfThemesGroup>} groups An array of groups that already in
  *   the tree.
  * @private
  */
@@ -504,6 +472,48 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
     msg: names.join(', ') + ' ' + msg,
     type: ngeo.MessageType.INFORMATION
   });
+};
+
+
+/**
+ * TODO
+ * @param {ngeo.LayertreeController} treeCtrl Todo.
+ * @public
+ */
+gmf.TreeManager.prototype.addTreeCtrlReference = function(treeCtrl) {
+  if (this.treeCtrlReferences_.indexOf(treeCtrl) < 0) {
+    this.treeCtrlReferences_.push(treeCtrl);
+  }
+};
+
+
+/**
+ * TODO
+ * @param {ngeo.LayertreeController} treeCtrl Todo.
+ * @public
+ */
+gmf.TreeManager.prototype.removeTreeCtrlReference = function(treeCtrl) {
+  var idx = this.treeCtrlReferences_.indexOf(treeCtrl);
+  if (idx > -1) {
+    this.treeCtrlReferences_.splice(idx, 1);
+  }
+};
+
+
+/**
+ * TODO
+ * @param {number} id Todo.
+ * @return {ngeo.LayertreeController} Todo.
+ * @public
+ */
+gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
+  var correspondingTreeCtrl = null;
+  this.treeCtrlReferences_.some(function(treeCtrl) {
+    if (treeCtrl.node.id === id) {
+      return correspondingTreeCtrl = treeCtrl;
+    }
+  }, this);
+  return correspondingTreeCtrl;
 };
 
 gmf.module.service('gmfTreeManager', gmf.TreeManager);

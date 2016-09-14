@@ -10,27 +10,18 @@ goog.require('ol.layer.Tile');
  * @constructor
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
- * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmf.WMSTime} gmfWMSTime wms time service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap
  */
-gmf.SyncLayertreeMap = function(ngeoLayerHelper, gmfThemes, gmfTreeManager,
-    gmfWMSTime) {
+gmf.SyncLayertreeMap = function(ngeoLayerHelper, gmfThemes, gmfWMSTime) {
 
   /**
    * @type {ngeo.LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
-
-
-  /**
-   * @type {gmf.TreeManager}
-   * @private
-   */
-  this.gmfTreeManager_ = gmfTreeManager;
 
   /**
    * @type {gmf.WMSTime}
@@ -58,14 +49,16 @@ gmf.SyncLayertreeMap = function(ngeoLayerHelper, gmfThemes, gmfTreeManager,
  *     level group layer.
  * @param {ol.layer.Group} dataLayerGroup the layer group to insert the first
  *     level group layer.
+ * @param {number=} opt_position for first level Group, you can precise the
+ *     position to add the group in the array of layers of the dataLayerGroup.
  * @return {ol.layer.Base|ol.layer.Group} a new layer.
  * @public
  */
 gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map,
-    dataLayerGroup) {
+    dataLayerGroup, opt_position) {
   var layer;
   if (treeCtrl.node.children) {
-    layer = this.createGroup_(treeCtrl, map, dataLayerGroup);
+    layer = this.createGroup_(treeCtrl, map, dataLayerGroup, opt_position);
   } else {
     layer = this.createLeaf_(treeCtrl, map);
   }
@@ -80,9 +73,9 @@ gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map,
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
  * @public
  */
-gmf.SyncLayertreeMap.prototype.syncAll = function(map, treeCtrl) {
+gmf.SyncLayertreeMap.prototype.sync = function(map, treeCtrl) {
   var treeCtrls = [];
-  this.getFlatTree(treeCtrl, treeCtrls);
+  ngeo.LayertreeController.getFlatTree(treeCtrl, treeCtrls);
   treeCtrls.forEach(function(item) {
     var layer = this.getLayerById(map, item.node.id);
     if (layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile) {
@@ -190,33 +183,13 @@ gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
 gmf.SyncLayertreeMap.prototype.getAllPossibleWMSLayerParam = function(treeCtrl) {
   var firstLevelTree = this.getFirstParentTree(treeCtrl);
   var treeCtrls = [];
-  this.getFlatTree(firstLevelTree, treeCtrls);
+  ngeo.LayertreeController.getFlatTree(firstLevelTree, treeCtrls);
   var WMSLayerParams = [];
   treeCtrls.forEach(function(item) {
     WMSLayerParams.push(item.node['layers']);
   });
   // join then split for group layers named "shop,bank".
   return WMSLayerParams.join(',').split(',');
-};
-
-
-/**
- * Fill the given array with all layertree objects of any level from the
- * children of the given layertree.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
- * @param {Array.<ngeo.LayertreeController>} treeCtrls array that will contains
- * the ngeo layertree controller.
- * @public
- */
-gmf.SyncLayertreeMap.prototype.getFlatTree = function(treeCtrl, treeCtrls) {
-  var children = treeCtrl.children;
-  if (children.length > 0) {
-    children.forEach(function(child) {
-      this.getFlatTree(child, treeCtrls);
-    }, this);
-  } else {
-    treeCtrls.push(treeCtrl);
-  }
 };
 
 
@@ -229,11 +202,13 @@ gmf.SyncLayertreeMap.prototype.getFlatTree = function(treeCtrl, treeCtrls) {
  *     level group layer.
  * @param {ol.layer.Group} dataLayerGroup the layer group to insert the first
  *     level group layer.
+ * @param {number=} opt_position for first level Group, you can precise the
+ *     position to add the group in the array of layers of the dataLayerGroup.
  * @return {ol.layer.Image|ol.layer.Group} a new layer.
  * @private
  */
 gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
-    dataLayerGroup) {
+    dataLayerGroup, opt_position) {
   var groupNode = /** @type {GmfThemesGroup} */ (treeCtrl.node);
   var layer = null;
   var isFirstLevelGroup = treeCtrl.parent.isRoot;
@@ -241,8 +216,7 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
   if (isFirstLevelGroup) { // First level group
     layer = this.createLayerFromGroup_(treeCtrl, !!groupNode.mixed);
     // Insert the layer at the right place
-    var position = this.gmfTreeManager_.tree.children.length -
-        this.gmfTreeManager_.layersToAddAtOnce | 0;
+    var position = opt_position | 0;
     dataLayerGroup.getLayers().insertAt(position, layer);
 
   } else { // Other Groups, create a group layer only in mixed groups
@@ -442,7 +416,7 @@ gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
     wmsTime = node.time;
   } else if (node.children) {
     var treeCtrls = [];
-    this.getFlatTree(treeCtrl, treeCtrls);
+    ngeo.LayertreeController.getFlatTree(treeCtrl, treeCtrls);
     treeCtrls.some(function(item) {
       if (item.node.time) {
         return wmsTime = item.node.time;
