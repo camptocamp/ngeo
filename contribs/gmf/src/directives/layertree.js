@@ -353,7 +353,7 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
  */
 gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
   treeCtrl.setState(treeCtrl.getState() === 'on' ? 'off' : 'on');
-  var firstLevelTreeCtrl = this.gmfSyncLayertreeMap_.getFirstParentTree(treeCtrl);
+  var firstLevelTreeCtrl = ngeo.LayertreeController.getFirstParentTree(treeCtrl);
   this.gmfSyncLayertreeMap_.sync(this.map, firstLevelTreeCtrl);
 };
 
@@ -389,7 +389,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
   // FIXME Get layer by the map, not by using layer object in the tree.
   var layer = /** @type {ol.layer.Image} */ (
           layertreeCtrl.layer ||
-          this.gmfSyncLayertreeMap_.getFirstParentTree(layertreeCtrl).layer);
+          ngeo.LayertreeController.getFirstParentTree(layertreeCtrl).layer);
   if (layer) {
     var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
     var timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);

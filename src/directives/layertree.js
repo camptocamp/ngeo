@@ -360,6 +360,21 @@ ngeo.LayertreeController.prototype.getSetActive = function(val) {
 
 
 /**
+ * Get the "top level" layertree. Can return itself.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @return {ngeo.LayertreeController} the top level layertree.
+ * @public
+ */
+ngeo.LayertreeController.getFirstParentTree = function(treeCtrl) {
+  var tree = treeCtrl;
+  while (!tree.parent.isRoot) {
+    tree = tree.parent;
+  }
+  return tree;
+};
+
+
+/**
  * Fill the given array with all layertree objects of any level from the
  * children of the given layertree.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
