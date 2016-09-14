@@ -60,13 +60,20 @@ gmf.module.directive(
  * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {angular.$timeout} $timeout Angular timeout service.
  * @constructor
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController
  */
 gmf.EditfeatureselectorController = function($scope, gmfThemes,
-    ngeoEventHelper, ngeoLayerHelper) {
+    ngeoEventHelper, ngeoLayerHelper, $timeout) {
+
+  /**
+   * @type {angular.$timeout}
+   * @private
+   */
+  this.$timeout_ = $timeout;
 
   /**
    * @type {gmf.Themes}
@@ -110,6 +117,14 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
    * @private
    */
   this.eventHelper_ = ngeoEventHelper;
+
+  /**
+   * Flag shared with the `gmf-editfeature` directive used to determine if it
+   * has unsaved changes or not.
+   * @type {boolean}
+   * @export
+   */
+  this.dirty = false;
 
   /**
    * @type {?ol.layer.Group}
@@ -156,8 +171,9 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
         this.selectedWMSLayer = newValue ? this.wmsLayers_[newValue.id] : null;
       } else {
         this.selectedWMSLayer = null;
-        this.state = gmf.EditfeatureController.State.IDLE;
       }
+      this.dirty = false;
+      this.state = gmf.EditfeatureController.State.IDLE;
     }.bind(this)
   );
 
@@ -184,8 +200,12 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
       return this.state;
     }.bind(this),
     function(newValue, oldValue) {
-      if (newValue === gmf.EditfeatureController.State.STOP_EDITING_EXECUTE) {
+      if (newValue === gmf.EditfeatureController.State.STOP_EDITING_EXECUTE ||
+          newValue === gmf.EditfeatureController.State.DEACTIVATE_EXECUTE) {
         this.selectedLayer = null;
+      }
+      if (newValue === gmf.EditfeatureController.State.DEACTIVATE_EXECUTE) {
+        this.active = false;
       }
     }.bind(this)
   );
@@ -244,12 +264,21 @@ gmf.EditfeatureselectorController.prototype.getDistinctFlatNodes_ = function(
  * @param {boolean} active Whether the directive is active or not.
  * @private
  */
-gmf.EditfeatureselectorController.prototype.handleActiveChange_ = function(
-  active
-) {
+gmf.EditfeatureselectorController.prototype.handleActiveChange_ = function(active) {
   if (!active) {
-    this.selectedWMSLayer = null;
-    this.selectedLayer = null;
+    if (!this.dirty) {
+      this.selectedLayer = null;
+    } else {
+      // There are unsaved modifications. Prevent the deactivation and
+      // set the state accordingly for the `gmf-editfeature` directive
+      // to manage the unsaved modifications.
+      // The changes are made inside a $timeout to be taken into account
+      // in the next digest cycle.
+      this.$timeout_(function() {
+        this.active = true;
+        this.stopEditing();
+      }.bind(this));
+    }
   }
 };
 
