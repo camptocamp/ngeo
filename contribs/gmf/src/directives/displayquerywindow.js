@@ -96,12 +96,6 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
     ngeoFeatureHelper, ngeoFeatureOverlayMgr) {
 
   /**
-   * @type {angular.Scope}
-   * @private
-   */
-  this.scope_ = $scope;
-
-  /**
    * @type {boolean}
    * @export
    */
@@ -226,7 +220,7 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    */
   this.open = false;
 
-  this.scope_.$watchCollection(
+  $scope.$watchCollection(
       function() {
         return ngeoQueryResult;
       },
@@ -398,9 +392,7 @@ gmf.DisplayquerywindowController.prototype.getFeatureValues = function() {
  */
 gmf.DisplayquerywindowController.prototype.animate_ = function(isNext) {
   this.isNext = isNext;
-  this.scope_.$evalAsync(function() {
-    this.animate++;
-  }.bind(this));
+  this.animate++;
 };
 
 
