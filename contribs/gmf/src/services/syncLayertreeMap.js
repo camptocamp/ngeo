@@ -77,7 +77,8 @@ gmf.SyncLayertreeMap.prototype.sync = function(map, treeCtrl) {
   var treeCtrls = [];
   ngeo.LayertreeController.getFlatTree(treeCtrl, treeCtrls);
   treeCtrls.forEach(function(item) {
-    var layer = this.getLayerById(map, item.node.id);
+    var pathIds = this.getGmfThemesPathIds(item);
+    var layer = this.getLayerById(map, pathIds, item.node.id);
     if (layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile) {
       this.updateLayerState_(layer, item);
     }
@@ -86,20 +87,22 @@ gmf.SyncLayertreeMap.prototype.sync = function(map, treeCtrl) {
 
 
 /**
- * Return a Group or a WMSLayer that its "gmfThemesGroupId" correspony to the
- * given id.
+ * Return a Group or a WMSLayer that its "gmfThemesGroupId" and its
+ * "gmfThemesPathIds" correspond to the given params.
  * @param {ol.Map} map A map that contains the group (or WMSLayer) to find.
+ * @param {string} pathIds The id of each parents of a leaf node.
  * @param {number} id The id of a group node.
  * @return {ol.layer.Base|null} The corresponding group (or
  *     WMSLayer).
  * @public
  */
-gmf.SyncLayertreeMap.prototype.getLayerGroupById = function(map, id) {
+gmf.SyncLayertreeMap.prototype.getLayerGroupById = function(map, pathIds, id) {
   var groupsArray = this.layerHelper_.getFlatMapElements(map.getLayerGroup());
   var searchedGroup = null;
   groupsArray.some(function(group) {
     var groupId = group.getProperties()['gmfThemesGroupId'];
-    if (groupId === id) {
+    var groupPathIds = group.getProperties()['gmfThemesPathIds'];
+    if (groupPathIds === pathIds && groupId === id) {
       return searchedGroup = group;
     }
   });
@@ -108,18 +111,23 @@ gmf.SyncLayertreeMap.prototype.getLayerGroupById = function(map, id) {
 
 
 /**
- * Return a layer that its "querySourceIds" correspond to the given id.
+ * Return a layer that its "querySourceIds" and its "gmfThemesPathIds"
+ * correspond to the given params.
  * @param {ol.Map} map A map that contains the layer to find.
+ * @param {string} pathIds The id of each parents of a leaf node.
  * @param {number} id The id of a leaf node.
  * @return {ol.layer.Base|null} The corresponding layer.
  * @public
  */
-gmf.SyncLayertreeMap.prototype.getLayerById = function(map, id) {
+gmf.SyncLayertreeMap.prototype.getLayerById = function(map, pathIds, id) {
   var layersArray = map.getLayerGroup().getLayersArray();
   var searchedLayer = null;
   layersArray.some(function(layer) {
-    var ids = layer.getProperties()['querySourceIds'];
-    if (ids === id || ids instanceof Array && ids.indexOf(id) > -1) {
+    var layerIds = layer.getProperties()['querySourceIds'];
+    var layerPathIds = layer.getProperties()['gmfThemesPathIds'];
+    if (layerPathIds === pathIds && (
+        layerIds === id ||
+        layerIds instanceof Array && layerIds.indexOf(id) > -1)) {
       return searchedLayer = layer;
     }
   });
@@ -224,8 +232,9 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
     var inAMixedGroup = !this.isOneParentNotMixed_(treeCtrl);
     if (inAMixedGroup) {
       layer = this.createLayerFromGroup_(treeCtrl, true);
+      var pathIds = this.getGmfThemesPathIds(treeCtrl.parent);
       var layerGroup = /** @type {ol.layer.Group} */ (
-              this.getLayerGroupById(map, treeCtrl.parent.node.id));
+              this.getLayerGroupById(map, pathIds, treeCtrl.parent.node.id));
       layerGroup.getLayers().insertAt(0, layer);
     }
   }
@@ -257,6 +266,8 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
             ogcServer.type, timeParam);
     layer.set('layerNodeName', groupNode.name); //Really useful ?
   }
+  var gmfThemesPathIds = this.getGmfThemesPathIds(treeCtrl);
+  layer.set('gmfThemesPathIds', gmfThemesPathIds);
   layer.set('gmfThemesGroupId', groupNode.id);
   return layer;
 };
@@ -307,7 +318,7 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl,
   }
   // Update layer information and tree state.
   layer.set('layerNodeName', leafNode.name); // Really useful ?
-  this.updateLayerReferences_(leafNode, layer);
+  this.updateLayerReferences_(treeCtrl, layer);
   if (leafNode.metadata.isChecked) {
     treeCtrl.setState('on');
     layer.setVisible(true);
@@ -316,8 +327,9 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl,
   var parentTree = treeCtrl.parent;
   var layerGroup;
   while (!layerGroup && parentTree) {
+    var pathIds = this.getGmfThemesPathIds(parentTree);
     layerGroup = /** @type {ol.layer.Group} */ (
-            this.getLayerGroupById(map, parentTree.node.id));
+            this.getLayerGroupById(map, pathIds, parentTree.node.id));
     parentTree = parentTree.parent;
   }
   // Insert layer in the map.
@@ -339,11 +351,12 @@ gmf.SyncLayertreeMap.prototype.createLeafInANotMixedGroup_ = function(treeCtrl,
   var leafNode = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
   var notMixedTreeCtrl = this.getFirstNotMixedParentTreeCtrl_(treeCtrl);
   goog.asserts.assert(notMixedTreeCtrl);
+  var pathIds = this.getGmfThemesPathIds(notMixedTreeCtrl);
   var wmsLayer = /** @type {ol.layer.Image} */ (
-          this.getLayerGroupById(map, notMixedTreeCtrl.node.id));
+          this.getLayerGroupById(map, pathIds, notMixedTreeCtrl.node.id));
   goog.asserts.assertInstanceof(wmsLayer, ol.layer.Image);
   //Update layer information and tree state.
-  this.updateLayerReferences_(leafNode, wmsLayer);
+  this.updateLayerReferences_(treeCtrl, wmsLayer);
   if (leafNode.metadata.isChecked) {
     treeCtrl.setState('on');
   }
@@ -378,12 +391,18 @@ gmf.SyncLayertreeMap.prototype.createWMTSLayer_ = function(leafNode) {
 
 /**
  * Update properties of a layer with the node of a given leafNode.
- * @param {GmfThemesLeaf} leafNode A leaf node.
+ * @param {ngeo.LayertreeController} treeCtrl A treeCtrl that is a leaf.
  * @param {ol.layer.Base} layer A layer.
  * @private
  */
-gmf.SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode,
+gmf.SyncLayertreeMap.prototype.updateLayerReferences_ = function(treeCtrl,
     layer) {
+  var leafNode = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
+
+  // Update gmfThemesPathIds only for leaf. 
+  var gmfThemesPathIds = this.getGmfThemesPathIds(treeCtrl);
+  layer.set('gmfThemesPathIds', gmfThemesPathIds);
+
   var id = leafNode.id;
   var querySourceIds = layer.get('querySourceIds') || [];
   querySourceIds.push(id);
@@ -434,6 +453,23 @@ gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
     });
   }
   return timeParam;
+};
+
+/**
+ * Return a string with all parents id, in the ascendant order, separated by a
+ * comma.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @return {string} pathIds.
+ * @public
+ */
+gmf.SyncLayertreeMap.prototype.getGmfThemesPathIds = function(treeCtrl) {
+  var pathIds = [];
+  var tree = treeCtrl.parent;
+  while (!tree.isRoot) {
+    pathIds.push(tree.node.id);
+    tree = tree.parent;
+  }
+  return pathIds.join(',');
 };
 
 
