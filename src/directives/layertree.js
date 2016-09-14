@@ -359,4 +359,24 @@ ngeo.LayertreeController.prototype.getSetActive = function(val) {
 };
 
 
+/**
+ * Fill the given array with all layertree objects of any level from the
+ * children of the given layertree.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {Array.<ngeo.LayertreeController>} treeCtrls array that will contains
+ * the ngeo layertree controller.
+ * @public
+ */
+ngeo.LayertreeController.getFlatTree = function(treeCtrl, treeCtrls) {
+  var children = treeCtrl.children;
+  if (children.length > 0) {
+    children.forEach(function(child) {
+      ngeo.LayertreeController.getFlatTree(child, treeCtrls);
+    });
+  } else {
+    treeCtrls.push(treeCtrl);
+  }
+};
+
+
 ngeo.module.controller('NgeoLayertreeController', ngeo.LayertreeController);
