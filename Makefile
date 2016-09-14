@@ -205,12 +205,12 @@ examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
 		$(patsubst contribs/gmf/examples/%.js,.build/examples-hosted/contribs/gmf/%.js,$(GMF_EXAMPLES_JS_FILES)) \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
-.build/python-venv/lib/python2.7/site-packages/requests: .build/python-venv
-	.build/python-venv/bin/pip install requests
+.build/python-venv/lib/python2.7/site-packages/requests: requirements.txt .build/python-venv
+	.build/python-venv/bin/pip install `grep ^requests== $< --colour=never`
 	touch $@
 
-.build/python-venv/lib/python2.7/site-packages/urllib3: .build/python-venv
-	.build/python-venv/bin/pip install urllib3
+.build/python-venv/lib/python2.7/site-packages/urllib3: requirements.txt .build/python-venv
+	.build/python-venv/bin/pip install `grep ^urllib3== $< --colour=never`
 	touch $@
 
 .PHONY: gh-pages
@@ -677,45 +677,46 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		--var generate_exports=true \
 		--var source_map=contribs/gmf/build/$*.js.map $< > $@
 
-contribs/gmf/build/angular-locale_%.js:
+contribs/gmf/build/angular-locale_%.js: github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/master/src/ngLocale/angular-locale_$*.js
+	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/`grep ^angular.js= $< | cut --delimiter = --fields 2`/src/ngLocale/angular-locale_$*.js
 
-$(EXTERNS_ANGULAR):
+$(EXTERNS_ANGULAR): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.5.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5.js
 	touch $@
 
-$(EXTERNS_ANGULAR_Q):
+$(EXTERNS_ANGULAR_Q): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.5-q_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5-q_templated.js
 	touch $@
 
-$(EXTERNS_ANGULAR_HTTP_PROMISE):
+$(EXTERNS_ANGULAR_HTTP_PROMISE): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.5-http-promise_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5-http-promise_templated.js
 	touch $@
 
-$(EXTERNS_JQUERY):
+$(EXTERNS_JQUERY): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/jquery-1.9.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/jquery-1.9.js
 	touch $@
 
 .build/python-venv:
 	mkdir -p $(dir $@)
 	virtualenv --no-site-packages $@
 
-.build/python-venv/bin/mako-render: .build/python-venv
-	.build/python-venv/bin/pip install "Mako==1.0.0" "htmlmin==0.1.10"
+.build/python-venv/bin/mako-render: requirements.txt .build/python-venv
+	.build/python-venv/bin/pip install `grep ^Mako== $< --colour=never` `grep ^htmlmin== $< --colour=never`
 	touch $@
 
-.build/beautifulsoup4.timestamp: .build/python-venv
-	.build/python-venv/bin/pip install "beautifulsoup4==4.3.2"
+.build/beautifulsoup4.timestamp: requirements.txt .build/python-venv
+	.build/python-venv/bin/pip install `grep ^beautifulsoup4== $< --colour=never`
 	touch $@
 
-.build/closure-library:
-	mkdir -p .build
+.build/closure-library: github_versions
+	mkdir -p $(dir $@)
 	git clone http://github.com/google/closure-library/ $@
+	cd $@; git checkout `grep ^closure-library= $< | cut --delimiter = --fields 2`
 
 .build/ol-deps.js: .build/python-venv
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
@@ -815,8 +816,8 @@ $(HOME)/.transifexrc:
 	mkdir -p $(dir $@)
 	node buildtools/extract-messages $(GMF_DIRECTIVES_PARTIALS_FILES) $(GMF_JS_FILES) > $@
 
-.build/python-venv/bin/tx: .build/python-venv $(HOME)/.transifexrc
-	.build/python-venv/bin/pip install transifex-client
+.build/python-venv/bin/tx: requirements.txt .build/python-venv $(HOME)/.transifexrc
+	.build/python-venv/bin/pip install `grep ^transifex-client== $< --colour=never`
 	touch $@
 
 .PHONY: transifex-get

@@ -14,8 +14,8 @@
       </div>
     </header>
     <main>
-      <div class="data-panel" ng-cloak>
-        <div class="header">
+      <div class="gmf-app-data-panel" ng-cloak>
+        <div class="gmf-app-header">
           <div class="dropdown">
             <a href class="btn btn-default btn-block btn-primary"
               data-toggle="dropdown">
@@ -32,7 +32,7 @@
             </gmf-themeselector>
           </div>
         </div>
-        <div class="content">
+        <div class="gmf-app-content">
           <gmf-layertree
             gmf-layertree-source="mainCtrl.theme"
             gmf-layertree-dimensions="mainCtrl.dimensions"
@@ -41,9 +41,9 @@
           </gmf-layertree>
         </div>
       </div>
-      <div class="tools" ngeo-resizemap="mainCtrl.map"
+      <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map"
         ngeo-resizemap-state="mainCtrl.toolsActive">
-        <div class="bar">
+        <div class="gmf-app-bar">
           <div ngeo-btn-group class="btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
@@ -75,10 +75,10 @@
             </button>
           </span>
         </div>
-        <div class="tools-content container-fluid" ng-class="{active: mainCtrl.toolsActive}">
+        <div class="gmf-app-tools-content container-fluid" ng-class="{'gmf-app-active': mainCtrl.toolsActive}">
           <div ng-show="mainCtrl.loginActive" class="row">
             <div class="col-sm-12">
-              <div class="tools-content-heading">
+              <div class="gmf-app-tools-content-heading">
                 {{'Login' | translate}}
                 <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
               </div>
@@ -87,7 +87,7 @@
           </div>
           <div ng-show="mainCtrl.printPanelActive" class="row">
             <div class="col-sm-12">
-              <div class="tools-content-heading">
+              <div class="gmf-app-tools-content-heading">
                 {{'Print' | translate}}
                 <a class="btn close" ng-click="mainCtrl.printPanelActive = false">&times;</a>
               </div>
@@ -99,7 +99,7 @@
           </div>
           <div ng-show="mainCtrl.drawFeatureActive" class="row">
             <div class="col-sm-12">
-              <div class="tools-content-heading">
+              <div class="gmf-app-tools-content-heading">
                 {{'Draw & Measure'|translate}}
                 <a class="btn close" ng-click="mainCtrl.drawFeatureActive = false">&times;</a>
               </div>
@@ -112,7 +112,7 @@
           </div>
           <div ng-show="mainCtrl.editFeatureActive" class="row">
             <div class="col-sm-12">
-              <div class="tools-content-heading">
+              <div class="gmf-app-tools-content-heading">
                 {{'Editing'|translate}}
                 <a class="btn close" ng-click="mainCtrl.editFeatureActive = false">&times;</a>
               </div>
@@ -131,7 +131,7 @@
           </div>
           <div ng-show="mainCtrl.drawProfilePanelActive" class="row">
             <div class="col-sm-12">
-              <div class="tools-content-heading">
+              <div class="gmf-app-tools-content-heading">
                 {{'Profile'|translate}}
                 <a class="btn close" ng-click="mainCtrl.drawProfilePanelActive = false">&times;</a>
               </div>
@@ -156,14 +156,14 @@
           </div>
         </div>
       </div>
-      <div class="map-container" ng-class="{'infobar-active': mainCtrl.showInfobar}">
+      <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
         <gmf-search gmf-search-map="mainCtrl.map"
           gmf-search-datasources="mainCtrl.searchDatasources"
           gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
           gmf-search-colorchooser="false"
           gmf-search-clearbutton="true">
         </gmf-search>
-        <div class="map-bottom-controls">
+        <div class="gmf-app-map-bottom-controls">
           <div class="gmf-backgroundlayerbutton btn-group dropup">
             <button
                 class="btn btn-default dropdown-toggle"
@@ -199,8 +199,8 @@
         </gmf-map>
 
         <!--infobar-->
-        <div class="footer" ng-class="{'active': mainCtrl.showInfobar}">
-          <button class="btn fa map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
+        <div class="gmf-app-footer" ng-class="{'gmf-app-active': mainCtrl.showInfobar}">
+          <button class="btn fa gmf-app-map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
                   ng-class="{'fa-angle-double-up': !mainCtrl.showInfobar, 'fa-angle-double-down': mainCtrl.showInfobar}"></button>
 
           <div ngeo-scaleselector="mainCtrl.scaleSelectorValues"
@@ -211,8 +211,7 @@
             <gmf-elevationwidget
                 gmf-elevationwidget-map="::mainCtrl.map"
                 gmf-elevationwidget-layers="::mainCtrl.elevationLayers"
-                gmf-elevationwidget-active="mainCtrl.showInfobar"
-                class="elevation">
+                gmf-elevationwidget-active="mainCtrl.showInfobar">
             </gmf-elevationwidget>
             <gmf-mouseposition
                  gmf-mouseposition-map="mainCtrl.map"
@@ -247,11 +246,11 @@
     <script src="../../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
     <script src="../../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
     <script src="../../../../node_modules/angular-ui-slider/src/slider.js"></script>
-    <script src="../../../../node_modules/proj4/dist/proj4-src.js" type="text/javascript"></script>
-    <script src="../../../../node_modules/angular-gettext/dist/angular-gettext.js" type="text/javascript"></script>
-    <script src="../../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js" type="text/javascript"></script>
-    <script src="../../../../node_modules/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>
-    <script src="../../../../node_modules/d3/d3.min.js" type="text/javascript"></script>
+    <script src="../../../../node_modules/proj4/dist/proj4-src.js"></script>
+    <script src="../../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="../../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
+    <script src="../../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../../../../node_modules/d3/d3.min.js"></script>
     <script src="/@?main=desktop/js/controller.js"></script>
     <script src="default.js"></script>
     <script src="../../../../utils/watchwatchers.js"></script>

@@ -3,7 +3,7 @@
 @grid-height: 25rem;
 @table-height: @grid-height - @app-margin - 2 * @map-tools-size;
 
-.displayquerygrid {
+.gmf-displayquerygrid {
   padding: @half-app-margin;
   border-top: solid 1px black;
   background-color: white;
@@ -25,7 +25,7 @@
     font-weight: bold;
   }
 
-  .table > tbody > tr.active > td {
+  .table > tbody > tr.ngeo-grid-active > td {
     background-color: #C9C9C9;
   }
 
@@ -60,7 +60,7 @@
     padding: 2px;
   }
 
-  .message {
+  .gmf-displayquerygrid-message {
     width: 300px;
     text-align: center;
     font-style: italic;
@@ -69,7 +69,7 @@
     margin-top: @app-margin;
   }
 
-  .pending {
+  .gmf-displayquerygrid-pending {
     font-size: 3em;
     margin-left: 50%;
     margin-right: 50%;

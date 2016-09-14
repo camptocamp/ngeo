@@ -21,12 +21,21 @@
         margin: 10px;
         display: flex;
         align-items: center;
+        border: 0.1rem solid black;
       }
       .gmf-text {
         flex: 1;
       }
       .gmf-thumb {
         height: 60px;
+      }
+      li.gmf-theme-selector-active {
+        border: 0.1rem solid blue;
+      }
+      .gmf-theme-selector-active::after {
+        color: blue;
+        content: 'X';
+        margin: 0 1rem 0 0;
       }
     </style>
   </head>
@@ -51,7 +60,7 @@
     <script src="../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
     <script src="../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
     <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
-    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js" type="text/javascript"></script>
+    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
     <script src="/@?main=themeselector.js"></script>
     <script src="default.js"></script>
     <script src="../../../utils/watchwatchers.js"></script>

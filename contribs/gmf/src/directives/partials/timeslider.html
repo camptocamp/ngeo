@@ -1,16 +1,34 @@
 <div class="gmf-time-slider">
-  <div ui-slider="sliderCtrl.sliderOptions" ng-model="sliderCtrl.dates">
-    <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" data-toggle="tooltip" title=""></span>
+
+  <div
+    ui-slider="sliderCtrl.sliderOptions"
+    ng-model="sliderCtrl.dates">
+    <span
+      class="ui-slider-handle ui-state-default ui-corner-all"
+      tabindex="0"
+      data-toggle="tooltip"
+      title="">
+    </span>
   </div>
-  <div class="displayed-dates">
-    <div class="start-date" ng-if="::sliderCtrl.time.mode === 'range'">
-      <span >{{sliderCtrl.dates[0] | date : 'shortDate'}}</span>
+
+  <div class="gmf-time-slider-displayed-dates">
+    <div
+      class="start-date"
+      ng-if="::sliderCtrl.time.mode === 'range'">
+      <span>{{sliderCtrl.dates[0] | date : 'shortDate'}}</span>
     </div>
-    <div class="start-date" ng-if="::sliderCtrl.time.mode === 'value'">
+
+    <div
+      class="gmf-time-slider-start-date"
+      ng-if="::sliderCtrl.time.mode === 'value'">
       <span>{{sliderCtrl.dates | date : 'shortDate'}}</span>
     </div>
-    <div class="end-date" ng-if="::sliderCtrl.time.mode === 'range'">
+
+    <div
+      class="gmf-time-slider-end-date"
+      ng-if="::sliderCtrl.time.mode === 'range'">
       <span>{{sliderCtrl.dates[1] | date : 'shortDate'}}</span>
     </div>
   </div>
+
 </div>

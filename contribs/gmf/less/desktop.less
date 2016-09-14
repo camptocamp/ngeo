@@ -58,7 +58,7 @@ main {
 
 @footer-height: @input-height-base + 2 * @padding-base-vertical;
 
-.map-container {
+.gmf-app-map-container {
   width: auto;
   height: 100%;
   overflow: hidden;
@@ -76,7 +76,7 @@ main {
     left: 0;
   }
 
-  .footer {
+  .gmf-app-footer {
     padding: @padding-small-vertical;
     position: absolute;
     z-index: 2;
@@ -91,14 +91,14 @@ main {
     transition: 0.2s ease-out all;
     border: solid @border-color;
     border-width: 1px 0 0;
-    &.active {
+    &.gmf-app-active {
       bottom: 0;
     }
     > div {
       display: inline-block;
     }
 
-    button.map-info {
+    button.gmf-app-map-info {
       position: absolute;
       /* button is supposed to be .btn-sm */
       bottom: @footer-height - 1;
@@ -133,14 +133,14 @@ main {
   gmf-mouseposition {
     display: inline-block;
   }
-  #mouse-position {
+  .gmf-mouseposition-control {
     display: inline-block;
     min-width: 18rem;
   }
-  .elevation {
+  gmf-elevationwidget {
     display: inline-block;
   }
-  .elevation-value {
+  .gmf-elevationwidget-value {
     display: inline-block;
     min-width: 8rem;
   }
@@ -188,7 +188,7 @@ gmf-search {
   top: @app-margin;
 }
 
-.data-panel {
+.gmf-app-data-panel {
   display: block;
   float: left;
   background-color: @brand-secondary;
@@ -197,12 +197,12 @@ gmf-search {
   display: flex;
   flex-flow: column;
 
-  .header {
+  .gmf-app-header {
     flex: 0 1 auto;
     padding: @app-margin @app-margin 0 @app-margin;
   }
 
-  .content {
+  .gmf-app-content {
     flex: 1 1 auto;
     overflow-y: auto;
     position: relative;
@@ -239,12 +239,12 @@ gmf-backgroundlayerselector {
   }
 }
 
-.tools {
+.gmf-app-tools {
   display: block;
   float: right;
   background-color: @brand-secondary;
 
-  .tools-content {
+  .gmf-app-tools-content {
     width: @right-panel-width;
     margin-right: -@right-panel-width;
     transition: margin-right 0.2s ease;
@@ -252,7 +252,7 @@ gmf-backgroundlayerselector {
     height: 100%;
     overflow: auto;
 
-    &.active {
+    &.gmf-app-active {
       margin-right: 0;
     }
 
@@ -266,7 +266,7 @@ gmf-backgroundlayerselector {
       resize: vertical;
     }
 
-    .tools-content-heading {
+    .gmf-app-tools-content-heading {
       @color: lighten(@text-color, @standard-variation);
       color: @color;
       padding-bottom: @app-margin;
@@ -276,7 +276,7 @@ gmf-backgroundlayerselector {
     }
   }
 
-  .bar {
+  .gmf-app-bar {
     background-color: @brand-primary;
     border-left: 1px solid @border-color;
 
@@ -321,8 +321,8 @@ gmf-backgroundlayerselector {
   }
 }
 
-.data-panel,
-.tools {
+.gmf-app-data-panel,
+.gmf-app-tools {
   height: 100%;
   position: relative;
 }
@@ -380,15 +380,15 @@ gmf-drawfeature h2 {
     opacity: 0.7;
     white-space: nowrap;
   }
-  .tooltip-measure {
+  .ngeo-tooltip-measure {
     opacity: 1;
     font-weight: bold;
   }
-  .tooltip-static {
+  .ngeo-tooltip-static {
     display: none;
   }
-  .tooltip-measure:before,
-  .tooltip-static:before {
+  .ngeo-tooltip-measure:before,
+  .ngeo-tooltip-static:before {
     border-top: 6px solid rgba(0, 0, 0, 0.5);
     border-right: 6px solid transparent;
     border-left: 6px solid transparent;
@@ -398,7 +398,7 @@ gmf-drawfeature h2 {
     margin-left: -7px;
     left: 50%;
   }
-  .tooltip-static:before {
+  .ngeo-tooltip-static:before {
     border-top-color: #ffcc33;
   }
 }
@@ -488,8 +488,8 @@ gmf-featurestyle {
 /**
  * Controls at the bottom of the map
  */
-.map-bottom-controls {
-  .infobar-active & {
+.gmf-app-map-bottom-controls {
+  .gmf-app-infobar-active & {
     bottom: @footer-height;
   }
   transition: 0.2s ease-out bottom;
@@ -517,7 +517,7 @@ gmf-featurestyle {
   }
 }
 
-.displayquerywindow {
+.gmf-displayquerywindow {
   position: absolute;
   right: @app-margin;
 }

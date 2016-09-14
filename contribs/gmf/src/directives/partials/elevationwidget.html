@@ -9,7 +9,7 @@
     ng-class="::{'dropdown-toggle': ctrl.layers.length > 1}"
     ng-attr-data-toggle="{{::(ctrl.layers.length > 1) ? 'dropdown' : ''}}"
     >
-    <span class="elevation-value">
+    <span class="gmf-elevationwidget-value">
       {{ctrl.elevationValue | number}}<span ng-show="ctrl.elevationValue"> m</span>
       <span ng-show="ctrl.elevationLoading" class="fa fa-spinner"></span>
       <span ng-show="!ctrl.elevationValue && !ctrl.elevationLoading" translate>Elevation…</span>
