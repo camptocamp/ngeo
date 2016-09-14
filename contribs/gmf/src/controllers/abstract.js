@@ -90,19 +90,31 @@ gmf.AbstractController = function(config, $scope, $injector) {
   var ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
   ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
 
-  var gmfTreeManager = $injector.get('gmfTreeManager');
+  /**
+   * @type {gmf.TreeManager}
+   * @private
+   */
+  this.gmfTreeManager_ = $injector.get('gmfTreeManager');
+
   /**
    * A reference to the current theme
    * @type {GmfThemesNode}
    * @export
    */
-  this.theme = gmfTreeManager.tree;
+  this.theme = this.gmfTreeManager_.tree;
 
   /**
    * Themes service
    * @type {gmf.Themes}
+   * @private
    */
-  var gmfThemes = $injector.get('gmfThemes');
+  this.gmfThemes_ = $injector.get('gmfThemes');
+
+  /**
+   * @type {string}
+   * @private
+   */
+  this.defaultTheme_ = $injector.get('defaultTheme');
 
   /**
    * Authentication service
@@ -112,10 +124,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   var userChange = function(evt) {
     var roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
+    // Reload theme when login status changes.
+    this.updateCurrentTheme_();
     // Reload background layer when login status changes.
     this.updateCurrentBackgroundLayer_(true);
     // Reload themes when login status changes.
-    gmfThemes.loadThemes(roleId);
+    this.gmfThemes_.loadThemes(roleId);
     this.updateHasEditableLayers_();
   }.bind(this);
 
@@ -359,13 +373,14 @@ gmf.AbstractController = function(config, $scope, $injector) {
   $scope.$watch(function() {
     return this.theme.name;
   }.bind(this), function(name) {
+    this.setThemeInUrl_(name);
     var map = this.map;
-    gmfThemes.getThemeObject(name).then(function(theme) {
+    this.gmfThemes_.getThemeObject(name).then(function(theme) {
       if (theme) {
         var backgrounds = theme['functionalities']['default_basemap'];
         if (backgrounds && backgrounds.length > 0) {
           var background = backgrounds[0];
-          gmfThemes.getBgLayers(this.dimensions).then(function(layers) {
+          this.gmfThemes_.getBgLayers(this.dimensions).then(function(layers) {
             var layer = ol.array.find(layers, function(layer) {
               return layer.get('label') === background;
             });
@@ -384,7 +399,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @private
    */
   this.updateCurrentBackgroundLayer_ = function(skipPermalink) {
-    gmfThemes.getBgLayers(this.dimensions).then(function(layers) {
+    this.gmfThemes_.getBgLayers(this.dimensions).then(function(layers) {
       var background;
       if (!skipPermalink) {
         // get the background from the permalink
@@ -427,7 +442,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @private
    */
   this.updateHasEditableLayers_ = function() {
-    gmfThemes.hasEditableLayers().then(function(hasEditableLayers) {
+    this.gmfThemes_.hasEditableLayers().then(function(hasEditableLayers) {
       this.hasEditableLayers = hasEditableLayers;
     }.bind(this));
   };
@@ -475,6 +490,78 @@ gmf.AbstractController.prototype.initLanguage = function() {
 
     this.switchLanguage(this.defaultLang);
     return;
+  }
+};
+
+
+/**
+ * @private
+ */
+gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
+  this.gmfThemes_.getThemesObject().then(function(themes) {
+    var themeName;
+
+    // check if we have a theme in the permalink
+    var pathElements = this.ngeoLocation.getPath().split('/');
+    if (gmf.AbstractController.themeInUrl(pathElements)) {
+      themeName = pathElements[pathElements.length - 1];
+    }
+    if (!themeName) {
+      // check if we have a theme in the local storage
+      themeName = this.stateManager.getInitialValue('theme');
+    }
+
+    if (!themeName) {
+      // check if we have a theme in the user functionalities
+      var functionalities = this.gmfUser.functionalities;
+      if (functionalities && 'default_theme' in functionalities) {
+        var defaultTheme = functionalities.default_theme;
+        if (defaultTheme.length > 0) {
+          themeName = defaultTheme[0];
+        }
+      }
+    }
+    if (!themeName) {
+      // fallback to the default theme
+      themeName = this.defaultTheme_;
+    }
+    var theme = gmf.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
+    this.gmfTreeManager_.addTheme(theme, true);
+
+  }.bind(this));
+};
+
+
+/**
+ * Return true if there is a theme specified in the URL path.
+ * @param {Array.<string>} pathElements Array of path elements.
+ * @return {boolean} theme in path.
+ */
+gmf.AbstractController.themeInUrl = function(pathElements) {
+  var indexOfTheme = pathElements.indexOf('theme');
+  return indexOfTheme >= 0 &&
+      pathElements.indexOf('theme') == pathElements.length - 2;
+};
+
+
+/**
+ * @param {string} themeId The theme id to set in the path of the URL.
+ * @private
+ */
+gmf.AbstractController.prototype.setThemeInUrl_ = function(themeId) {
+  if (themeId) {
+    var pathElements = this.ngeoLocation.getPath().split('/');
+    goog.asserts.assert(pathElements.length > 1);
+    if (pathElements[pathElements.length - 1] === '') {
+      // case where the path is just "/"
+      pathElements.splice(pathElements.length - 1);
+    }
+    if (gmf.AbstractController.themeInUrl(pathElements)) {
+      pathElements[pathElements.length - 1] = themeId;
+    } else {
+      pathElements.push('theme', themeId);
+    }
+    this.ngeoLocation.setPath(pathElements.join('/'));
   }
 };
 
