@@ -889,3 +889,14 @@ We choose units that don't depend on parent tags and are relative.
  * rem: 1 rem is the font size of the root element (<html>).
  * vw: 1 vw is 1/100th of the width of the viewport.
  * vh: 1 vh is 1/100th of the height of the viewport.
+
+## CSS class names convention
+
+CSS class names, in both ngeo and gmf, follow a set of rules that determines their value.  A CSS class name:
+
+ * always begins with the `ngeo-` or `gmf-` prefix depending on its origin
+ * always begins with the name of the component in which it is defined, for example in a layer tree directive in gmf, a name starts with `gmf-layertree`, like `gmf-layertree-name`, `gmf-layertree-node`, `gmf-layertree` (for the main `<div>`), etc.
+
+In the gmf applications, CSS class names should begins with `gmf-app`.
+
+In directive html templates, you should avoid using `ìd` with a combination of `document.getElementById`.  Instead, define a unique CSS class name, inject the `$element` service in your controller and use Angular jqLite selector to get the element needed.
