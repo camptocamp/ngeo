@@ -182,7 +182,7 @@ gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
  * @public
  */
 gmf.SyncLayertreeMap.prototype.getAllPossibleWMSLayerParam = function(treeCtrl) {
-  var firstLevelTree = this.getFirstParentTree(treeCtrl);
+  var firstLevelTree = ngeo.LayertreeController.getFirstParentTree(treeCtrl);
   var treeCtrls = [];
   ngeo.LayertreeController.getFlatTree(firstLevelTree, treeCtrls);
   var WMSLayerParams = [];
@@ -337,9 +337,10 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl,
 gmf.SyncLayertreeMap.prototype.createLeafInANotMixedGroup_ = function(treeCtrl,
     map) {
   var leafNode = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
-  var treeCtrlWithOgcServer = this.getFirstParentTreeWithOgcServer_(treeCtrl);
+  var notMixedTreeCtrl = this.getFirstNotMixedParentTreeCtrl_(treeCtrl);
+  goog.asserts.assert(notMixedTreeCtrl);
   var wmsLayer = /** @type {ol.layer.Image} */ (
-          this.getLayerGroupById(map, treeCtrlWithOgcServer.node.id));
+          this.getLayerGroupById(map, notMixedTreeCtrl.node.id));
   goog.asserts.assertInstanceof(wmsLayer, ol.layer.Image);
   //Update layer information and tree state.
   this.updateLayerReferences_(leafNode, wmsLayer);
@@ -435,20 +436,6 @@ gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
   return timeParam;
 };
 
-/**
- * Get the "top level" layertree. Can return itself.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
- * @return {ngeo.LayertreeController} the top level layertree.
- * @public
- */
-gmf.SyncLayertreeMap.prototype.getFirstParentTree = function(treeCtrl) {
-  var tree = treeCtrl;
-  while (!tree.parent.isRoot) {
-    tree = tree.parent;
-  }
-  return tree;
-};
-
 
 /**
  * Return true if a parent tree is mixed, based on its node.
@@ -467,25 +454,24 @@ gmf.SyncLayertreeMap.prototype.isOneParentNotMixed_ = function(treeCtrl) {
   return isOneParentNotMix;
 };
 
+
 /**
- * Return the first parent tree that contains a ogcServer value in its node.
+ * Return the first parent, from the root parent, that is not mixed.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
- * @return {ngeo.LayertreeController} The first parent tree with an ogcServer
- *     information.
+ * @return {ngeo.LayertreeController} The first not mixed parent.
  * @private
  */
-gmf.SyncLayertreeMap.prototype.getFirstParentTreeWithOgcServer_ = function(
+gmf.SyncLayertreeMap.prototype.getFirstNotMixedParentTreeCtrl_ = function(
     treeCtrl) {
-  var tree = treeCtrl.parent;
-  var treeWithOgcServer = null;
-  do {
-    if (tree.node.ogcServer) {
-      treeWithOgcServer = tree;
+  var tree = treeCtrl;
+  var notMixedParent = null;
+  while (!tree.isRoot) {
+    if (tree.node.mixed === false) {
+      notMixedParent = tree;
     }
     tree = tree.parent;
   }
-  while (tree.parent && !treeWithOgcServer);
-  return treeWithOgcServer;
+  return notMixedParent;
 };
 
 
