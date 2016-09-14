@@ -294,12 +294,14 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
 gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
   //this.updateLayerDimensions_(/** @type {ol.layer.Layer} */ (layer), node);
   this.gmfTreeManager_.addTreeCtrlReference(treeCtrl);
+
   var opt_position;
   // Precise the index to add first level groups.
   if (treeCtrl.parent.isRoot) {
     opt_position = this.gmfTreeManager_.tree.children.length -
         this.gmfTreeManager_.layersToAddAtOnce | 0;
   }
+
   return this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
           this.dataLayerGroup_, opt_position);
 };
@@ -384,13 +386,11 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
   if (!time) {
     return;
   }
-  var node = /** @type {GmfThemesGroup} */ (layertreeCtrl.node);
-  var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
-  // FIXME Get layer by the map, not by using layer object in the tree.
   var layer = /** @type {ol.layer.Image} */ (
-          layertreeCtrl.layer ||
-          ngeo.LayertreeController.getFirstParentTree(layertreeCtrl).layer);
+          this.gmfSyncLayertreeMap_.getLayer(layertreeCtrl));
   if (layer) {
+    var node = /** @type {GmfThemesGroup} */ (layertreeCtrl.node);
+    var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
     var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
     var timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);
     this.layerHelper_.updateWMSLayerState(layer, source.getParams()['LAYERS'], timeParam);
