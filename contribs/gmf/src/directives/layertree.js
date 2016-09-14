@@ -293,8 +293,15 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
  */
 gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
   //this.updateLayerDimensions_(/** @type {ol.layer.Layer} */ (layer), node);
+  this.gmfTreeManager_.addTreeCtrlReference(treeCtrl);
+  var opt_position;
+  // Precise the index to add first level groups.
+  if (treeCtrl.parent.isRoot) {
+    opt_position = this.gmfTreeManager_.tree.children.length -
+        this.gmfTreeManager_.layersToAddAtOnce | 0;
+  }
   return this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
-          this.dataLayerGroup_);
+          this.dataLayerGroup_, opt_position);
 };
 
 
@@ -308,9 +315,12 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
   var dataLayerGroup = this.dataLayerGroup_;
+  var that = this;
   scope.$on('$destroy', function() {
     // Remove the layer from the map.
     dataLayerGroup.getLayers().remove(treeCtrl.layer);
+    // Remove treeCtrl references
+    that.gmfTreeManager_.removeTreeCtrlReference(treeCtrl);
   }.bind(treeCtrl));
 };
 
@@ -344,7 +354,7 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
 gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
   treeCtrl.setState(treeCtrl.getState() === 'on' ? 'off' : 'on');
   var firstLevelTreeCtrl = this.gmfSyncLayertreeMap_.getFirstParentTree(treeCtrl);
-  this.gmfSyncLayertreeMap_.syncAll(this.map, firstLevelTreeCtrl);
+  this.gmfSyncLayertreeMap_.sync(this.map, firstLevelTreeCtrl);
 };
 
 /**
