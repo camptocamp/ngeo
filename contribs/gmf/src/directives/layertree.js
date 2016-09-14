@@ -285,14 +285,16 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
 
 
 /**
- * TODO
+ * Use the gmfSyncLayertreeMap_ to create and get layer corresponding to this
+ * treeCtrl. The layer will be inserted into the map. The layer can be null
+ * if the treeCtrl is based on a node inside a mixed node. It this case, the
+ * layer will be in the first parent declared as a mixed node.
  * @param {ngeo.LayertreeController} treeCtrl tree controller of the node
  * @return {ol.layer.Base|ol.layer.Group|null} The OpenLayers layer or group
  *     for the node.
  * @export
  */
 gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
-  //this.updateLayerDimensions_(/** @type {ol.layer.Layer} */ (layer), node);
   this.gmfTreeManager_.addTreeCtrlReference(treeCtrl);
 
   var opt_position;
@@ -302,8 +304,15 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
         this.gmfTreeManager_.layersToAddAtOnce | 0;
   }
 
-  return this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
+  var layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
           this.dataLayerGroup_, opt_position);
+
+  if (layer instanceof ol.layer.Layer) {
+    var node = /** @type {GmfThemesGroup|GmfThemesLeaf} */ (treeCtrl.node);
+    this.updateLayerDimensions_(layer, node);
+  }
+
+  return layer;
 };
 
 
