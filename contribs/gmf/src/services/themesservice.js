@@ -457,7 +457,7 @@ gmf.Themes.prototype.hasEditableLayers_ = function(data) {
 
 
 /**
- * @param {GmfThemesNode} node Theme node
+ * @param {GmfThemesGroup|GmfThemesLeaf} node Theme node
  * @return {boolean} Editable layers?
  */
 gmf.Themes.prototype.hasNodeEditableLayers_ = function(node) {
