@@ -5,7 +5,10 @@ goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 
 /**
- * TODO
+ * Service to create layer based on a ngeo.LayertreeController with a
+ * GMFThemesGroup ou GMFThemesLeaf as node object.
+ * This layer is also used to synchronise a state of ngeo.LayertreeController
+ * and its corresponding layer in the map.
  *
  * @constructor
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.

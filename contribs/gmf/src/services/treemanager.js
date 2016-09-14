@@ -477,8 +477,8 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
 
 
 /**
- * TODO
- * @param {ngeo.LayertreeController} treeCtrl Todo.
+ * Add a treeCtrl to kept in reference.
+ * @param {ngeo.LayertreeController} treeCtrl ngeoLayer tree controller.
  * @public
  */
 gmf.TreeManager.prototype.addTreeCtrlReference = function(treeCtrl) {
@@ -489,8 +489,8 @@ gmf.TreeManager.prototype.addTreeCtrlReference = function(treeCtrl) {
 
 
 /**
- * TODO
- * @param {ngeo.LayertreeController} treeCtrl Todo.
+ * Remove a treeCtrl kept as reference.
+ * @param {ngeo.LayertreeController} treeCtrl ngeoLayer tree controller.
  * @public
  */
 gmf.TreeManager.prototype.removeTreeCtrlReference = function(treeCtrl) {
@@ -502,9 +502,10 @@ gmf.TreeManager.prototype.removeTreeCtrlReference = function(treeCtrl) {
 
 
 /**
- * TODO
- * @param {number} id Todo.
- * @return {ngeo.LayertreeController} Todo.
+ * Get a treeCtrl based on it's node id. The treeCtrl must have been added to
+ * this service to be found.
+ * @param {number} id the id of a GMFThemesGroup or a GMFThemesLeaf.
+ * @return {ngeo.LayertreeController} treeCtrl Todo.
  * @public
  */
 gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
