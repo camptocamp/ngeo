@@ -107,7 +107,7 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
  * Create and add a source for the query service from the GMF theme node if
  * it has no children, otherwise create the sources for each child node if
  * it has any.
- * @param {GmfThemesGroup|GmfThemesLeaf} node A node.
+ * @param {GMFThemesBackground|GMFThemesTheme|GmfThemesGroup|GmfThemesLeaf} node A node.
  * @param {GmfOgcServers} ogcServers OGC servers.
  * @private
  */
@@ -122,12 +122,7 @@ gmf.QueryManager.prototype.createSources_ = function(node, ogcServers) {
   var validateLayerParams = false;
   var wfsQuery;
 
-  // Skip non-querable layers that have no child layers.
-  if (!node.childLayers || node.childLayers.length < 1) {
-    return;
-  }
-
-  // don't create sources for WMTS layers without wmsUrl and ogcServer,
+  // Don't create sources for WMTS layers without wmsUrl and ogcServer,
   // they are not queryable.
   if (node.type === 'WMTS' && !meta.wmsUrl) {
     if (meta.ogcServer && ogcServers[meta.ogcServer]) {
