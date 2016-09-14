@@ -64,8 +64,8 @@
       <div class="gmf-displayquerywindow-placeholder">
         <button
           type="button"
-          class="gmf-displayquerywindow-previous"
-          ng-class="{'inactive': ctrl.isFirst()}"
+          class="gmf-displayquerywindow-previous btn"
+          ng-disabled="ctrl.isFirst()"
           ng-show="ctrl.getResultLength() > 1"
           ng-click="ctrl.previous()">
           <span ng-show="::ctrl.desktop">{{'Prev.' | translate}}</span>
@@ -131,8 +131,8 @@
       <div class="gmf-displayquerywindow-placeholder">
         <button
           type="button"
-          class="gmf-displayquerywindow-next"
-          ng-class="{'gmf-displayquerywindow-inactive': ctrl.isLast()}"
+          class="gmf-displayquerywindow-next btn"
+          ng-disabled="ctrl.isLast()"
           ng-show="ctrl.getResultLength() > 1"
           ng-click="ctrl.next()">
           <span ng-show="::ctrl.desktop">{{'Next' | translate}}</span>
