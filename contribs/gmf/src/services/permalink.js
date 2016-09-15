@@ -1133,33 +1133,33 @@ gmf.Permalink.prototype.getLayerStateParamFromLayer_ = function(layer) {
 gmf.Permalink.prototype.getLayerStateParamFromNode_ = function(layerNode) {
   var layerName = layerNode.name;
   goog.asserts.assert(layerName);
-  var mixed = (layerNode.children !== undefined && layerNode.mixed === true);
-  return this.getLayerStateParam_(layerName, mixed);
+  var isMerged = layerNode.children !== undefined && layerNode.mixed === false;
+  return this.getLayerStateParam_(layerName, isMerged);
 };
 
 
 /**
  * @param {string} layerName The name of the layer.
- * @param {boolean} mixed Mixed node or not
+ * @param {boolean} isMerged isMerged
  * @param {string=} opt_propertyName Whether we are looking for a layer property value
  * (e.g opacity)
  * @return {string} The state param for the layer
  * @private
  */
 gmf.Permalink.prototype.getLayerStateParam_ = function(layerName,
-    mixed, opt_propertyName) {
+    isMerged, opt_propertyName) {
   var param;
-  if (mixed) {
-    if (opt_propertyName === gmf.PermalinkOpenLayersLayerProperties.OPACITY) {
-      param = gmf.PermalinkParamPrefix.TREE_OPACITY;
-    } else {
-      param = gmf.PermalinkParamPrefix.TREE_ENABLE;
-    }
-  } else {
+  if (isMerged) {
     if (opt_propertyName === gmf.PermalinkOpenLayersLayerProperties.OPACITY) {
       param = gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY;
     } else {
       param = gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS;
+    }
+  } else {
+    if (opt_propertyName === gmf.PermalinkOpenLayersLayerProperties.OPACITY) {
+      param = gmf.PermalinkParamPrefix.TREE_OPACITY;
+    } else {
+      param = gmf.PermalinkParamPrefix.TREE_ENABLE;
     }
   }
   return param + layerName;
