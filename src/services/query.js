@@ -518,7 +518,7 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
     items.forEach(function(item) {
       item['resultSource'].pending = true;
       item['resultSource'].queried = true;
-    }.bind(this));
+    });
 
     var infoFormat = items[0].source.infoFormat;
     var wmsGetFeatureInfoUrl = items[0].source.wmsSource.getGetFeatureInfoUrl(
