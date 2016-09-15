@@ -53,7 +53,10 @@ goog.require('ol.style.Text');
  *         gmf-editfeature-vector="::ctrl.vectorLayer">
  *     </gmf-editfeature>
  *
- * @htmlAttribute {GmfThemesNode} gmf-editfeature-editable The GMF node
+ * @htmlAttribute {boolean} gmf-editfeature-dirty Flag that is toggled as soon
+ *     as the feature changes, i.e. if any of its properties change, which
+ *     includes the geometry.
+ * @htmlAttribute {GmfThemesNode} gmf-editfeature-editablenode The GMF node
  *     representing the editable layer.
  * @htmlAttribute {ol.layer.Image|ol.layer.Tile} gmf-editfeature-editablewmslayer
  *     The WMS layer to refresh after each saved modification.
