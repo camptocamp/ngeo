@@ -1,6 +1,4 @@
-/*global describe beforeEach inject expect it themes spyOn*/
-/*eslint no-undef: "error"*/
-
+/* global themes */
 goog.require('gmf.LayertreeController');
 goog.require('gmf.test.data.themes');
 goog.require('gmf.WMSTime');

@@ -13,6 +13,7 @@ FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot t
 JQUERY_UI = contribs/gmf/build/images/
 
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
+GMF_TEST_JS_FILES := $(shell find contribs/gmf/test -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
 GMF_EXAMPLES_JS_FILES := contribs/gmf/examples/https.js
@@ -251,6 +252,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 .build/eslint.timestamp: .build/node_modules.timestamp \
 		$(SRC_JS_FILES) \
 		$(TEST_JS_FILES) \
+		$(GMF_TEST_JS_FILES) \
 		$(EXAMPLES_JS_FILES) \
 		$(GMF_SRC_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \

@@ -5,6 +5,8 @@ goog.require('ngeo.GridConfig');
 /**
  * Compare two list of objects using only the properties of the expected objects.
  * For example to ignore 'closure_uid_*'.
+ * @param {Array} data The data.
+ * @param {Array} expectedData Expected data.
  */
 var compareGridData = function(data, expectedData) {
   expect(data.length).toBe(expectedData.length);

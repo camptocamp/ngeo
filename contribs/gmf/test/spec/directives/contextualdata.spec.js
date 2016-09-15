@@ -8,7 +8,6 @@ describe('gmf.contextualdataDirective', function() {
   var $document;
   var contextualdataController;
   var map;
-  var altitudeService;
   var $httpBackend;
   var callbackSpy;
 
@@ -20,13 +19,13 @@ describe('gmf.contextualdataDirective', function() {
 
     var element = angular.element(
       '<gmf-map gmf-map-map="map" gmf-contextualdata="" gmf-contextualdata-map="::map" gmf-contextualdata-projections="[4326,3857]" gmf-contextualdata-callback="callback"></gmf-map>');
-      element.css({
-        position: 'absolute',
-        top: 10,
-        left: 20,
-        width: 800,
-        height: 400
-      });
+    element.css({
+      position: 'absolute',
+      top: 10,
+      left: 20,
+      width: 800,
+      height: 400
+    });
     angular.element($document[0].body).append(element);
     var scope = $rootScope.$new();
 

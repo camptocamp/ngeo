@@ -1,3 +1,4 @@
+/* global themes */
 goog.require('gmf.TreeManager');
 goog.require('gmf.test.data.themes');
 
@@ -5,6 +6,7 @@ describe('gmf.TreeManager', function() {
   var gmfTreeManager;
   var gmfThemes;
   var treeUrl;
+  var $httpBackend;
 
   beforeEach(function() {
     inject(function($injector) {

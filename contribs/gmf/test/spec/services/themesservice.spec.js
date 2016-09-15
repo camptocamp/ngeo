@@ -1,3 +1,4 @@
+/* global themes capabilities */
 goog.require('gmf.Themes');
 goog.require('gmf.ThemesEventType');
 goog.require('gmf.test.data.themes');
@@ -5,6 +6,7 @@ goog.require('gmf.test.data.themes');
 describe('gmf.Themes', function() {
   var gmfThemes;
   var treeUrl;
+  var $httpBackend;
 
   beforeEach(function() {
     inject(function($injector) {

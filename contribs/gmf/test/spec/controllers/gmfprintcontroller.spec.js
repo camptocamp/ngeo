@@ -1,9 +1,11 @@
+/* global printCapabilities */
 goog.require('gmf.PrintController');
 goog.require('gmf.test.data.printcapabilities');
 
 describe('GmfPrintController', function() {
 
   var $controller, $rootScope, $scope;
+  var gmfPrintCtrl;
 
   beforeEach(inject(function(_$controller_, _$rootScope_) {
     $controller = _$controller_;

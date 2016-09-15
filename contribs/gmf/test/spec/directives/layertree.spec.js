@@ -1,20 +1,21 @@
 goog.require('gmf.LayertreeController');
 
-var fakeParentController = null;
 var fakeParentController = {
-    'node': {},
-    'layer': {}
+  'node': {},
+  'layer': {}
 };
-fakeParentController['node'].children = []
-fakeParentController['node'].mixed = true
-fakeParentController['layer'].getLayers = function() { return new ol.Collection() };
+fakeParentController['node'].children = [];
+fakeParentController['node'].mixed = true;
+fakeParentController['layer'].getLayers = function() {
+  return new ol.Collection();
+};
 
 describe('gmf.LayertreeController', function() {
   var layertreeController;
 
-  beforeEach(function () {
+  beforeEach(function() {
 
-    inject(function ($rootScope, $compile, $templateCache) {
+    inject(function($rootScope, $compile, $templateCache) {
       $templateCache.put('gmf/layertree.html', '<div></div>');
 
       var element = angular.element(
@@ -47,19 +48,19 @@ describe('gmf.LayertreeController', function() {
   describe('#getLayer', function() {
     it('uses false as default visibility (with medadata)', function() {
       var layerConfig = {
-        "layers": "bus_stop",
-        "name": "bus_stop",
-        "url": null,
-        "isSingleTile": false,
-        "serverType": "mapserver",
-        "queryable": 1,
-        "childLayers": [],
-        "wfsSupport": true,
-        "urlWfs": null,
-        "type": "WMS",
-        "id": 101,
-        "imageType": "image/jpeg",
-        "metadata": {
+        'layers': 'bus_stop',
+        'name': 'bus_stop',
+        'url': null,
+        'isSingleTile': false,
+        'serverType': 'mapserver',
+        'queryable': 1,
+        'childLayers': [],
+        'wfsSupport': true,
+        'urlWfs': null,
+        'type': 'WMS',
+        'id': 101,
+        'imageType': 'image/jpeg',
+        'metadata': {
         }
       };
       var layer = layertreeController.getLayer(layerConfig, fakeParentController, 2);
@@ -70,20 +71,20 @@ describe('gmf.LayertreeController', function() {
     it('uses false as default visibility (w/o medadata)', function() {
       // bus_stop layer with no `is_checked` attribute in metadata
       var layerConfig = {
-        "layers": "bus_stop",
-        "name": "bus_stop",
-        "url": null,
-        "isSingleTile": false,
-        "serverType": "mapserver",
-        "queryable": 1,
-        "childLayers": [],
-        "wfsSupport": true,
-        "urlWfs": null,
-        "type": "WMS",
-        "id": 101,
-        "imageType": "image/jpeg",
-        "metadata": {
-          "isChecked": false
+        'layers': 'bus_stop',
+        'name': 'bus_stop',
+        'url': null,
+        'isSingleTile': false,
+        'serverType': 'mapserver',
+        'queryable': 1,
+        'childLayers': [],
+        'wfsSupport': true,
+        'urlWfs': null,
+        'type': 'WMS',
+        'id': 101,
+        'imageType': 'image/jpeg',
+        'metadata': {
+          'isChecked': false
         }
       };
       var layer = layertreeController.getLayer(layerConfig, fakeParentController, 2);
@@ -93,20 +94,20 @@ describe('gmf.LayertreeController', function() {
 
     it('uses the visibility given in the metadata', function() {
       var layerConfig = {
-        "layers": "bus_stop",
-        "name": "bus_stop",
-        "url": null,
-        "isSingleTile": false,
-        "serverType": "mapserver",
-        "queryable": 1,
-        "childLayers": [],
-        "wfsSupport": true,
-        "urlWfs": null,
-        "type": "WMS",
-        "id": 101,
-        "imageType": "image/jpeg",
-        "metadata": {
-          "isChecked": true
+        'layers': 'bus_stop',
+        'name': 'bus_stop',
+        'url': null,
+        'isSingleTile': false,
+        'serverType': 'mapserver',
+        'queryable': 1,
+        'childLayers': [],
+        'wfsSupport': true,
+        'urlWfs': null,
+        'type': 'WMS',
+        'id': 101,
+        'imageType': 'image/jpeg',
+        'metadata': {
+          'isChecked': true
         }
       };
       var layer = layertreeController.getLayer(layerConfig, fakeParentController, 2);
