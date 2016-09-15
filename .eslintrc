@@ -1,7 +1,8 @@
 {
   "extends": "openlayers",
   "env": {
-    "jquery": true
+    "jquery": true,
+    "jasmine": true
   },
   "rules": {
     "no-console": 0,
@@ -15,6 +16,7 @@
     "proj4": false,
     "ngeo": false,
     "gmf": false,
-    "app": false
+    "app": false,
+    "inject": false
   }
 }

@@ -1,4 +1,5 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
+TEST_JS_FILES := $(shell find test -type f -name '*.js')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
 
@@ -249,6 +250,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 
 .build/eslint.timestamp: .build/node_modules.timestamp \
 		$(SRC_JS_FILES) \
+		$(TEST_JS_FILES) \
 		$(EXAMPLES_JS_FILES) \
 		$(GMF_SRC_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \

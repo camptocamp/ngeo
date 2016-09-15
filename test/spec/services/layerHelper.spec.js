@@ -1,15 +1,15 @@
+/* global wmtsCapabilities */
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.test.data.wmtsCapabilities');
 
 describe('ngeo.LayerHelper', function() {
   var ngeoLayerHelper;
-  var map;
   var layer;
   var wmtsSrc = 'http://fake/wmts/capabilities.xml';
   var wmtsName = 'layer-7328';
+  var $httpBackend;
 
   beforeEach(function() {
-    map = new ol.Map({});
     inject(function($injector) {
       ngeoLayerHelper = $injector.get('ngeoLayerHelper');
       $httpBackend = $injector.get('$httpBackend');
@@ -64,10 +64,10 @@ describe('ngeo.LayerHelper', function() {
     var scale = 0;
     var legendRule = 'legendRule';
     var wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale,
-        legendRule)
+        legendRule);
     var expectedResult = url + '?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=' +
       'wms&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + layerName +
-      '&SCALE=' + scale + '&RULE=' +legendRule;
+      '&SCALE=' + scale + '&RULE=' + legendRule;
     expect(expectedResult).toBe(wmsLegendURL);
   });
 
