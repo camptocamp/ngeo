@@ -176,6 +176,37 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
+   *
+   * @type {Object.<number, gmf.Permalink.TreeCtrlCacheItem>}
+   * @private
+   */
+  this.treeCtrlCache_ = {};
+
+  $rootScope.$watchCollection(
+    function() {
+      return this.gmfTreeManager_.treeCtrlReferences_;
+    }.bind(this),
+    function (newVal, oldVal) {
+      var i, ii;
+
+      // (1) Register newly added Layertree controllers
+      for (i = 0, ii = newVal.length; i < ii; i++) {
+        if (oldVal.indexOf(newVal[i]) === -1) {
+          this.registerTreeCtrl_(newVal[i]);
+        }
+      }
+
+      // (2) Unregister removed Layertree controllers
+      for (i = 0, ii = oldVal.length; i < ii; i++) {
+        if (newVal.indexOf(oldVal[i]) === -1) {
+          this.unregisterTreeCtrl_(oldVal[i]);
+        }
+      }
+
+    }.bind(this)
+  );
+
+  /**
    * @type {angular.Scope}
    * @private
    */
@@ -700,7 +731,8 @@ gmf.Permalink.prototype.initLayers_ = function() {
     return;
   }
 
-  var layers = this.dataLayerGroup_.getLayers();
+  // FIXME
+  //var layers = this.dataLayerGroup_.getLayers();
 
   // (1) try to look for any group name from any of the themes in the state
   //     manager.  If any is found, then apply the found results in the
@@ -709,6 +741,8 @@ gmf.Permalink.prototype.initLayers_ = function() {
     themeNode.children.forEach(this.initLayerFromGroupNode_, this);
   }, this);
 
+  // FIXME
+  /*
   var layersUid = goog.getUid(layers);
 
   this.addListenerKey_(layersUid, ol.events.listen(layers,
@@ -722,6 +756,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
   layers.forEach(function(layer) {
     this.registerLayer_(layer, true);
   }, this);
+  */
 };
 
 
@@ -1146,9 +1181,11 @@ gmf.Permalink.prototype.registerDataLayerGroup_ = function(map) {
  * @private
  */
 gmf.Permalink.prototype.unregisterDataLayerGroup_ = function() {
-  var layers = this.dataLayerGroup_.getLayers();
-  var layersUid = goog.getUid(layers);
-  this.initListenerKey_(layersUid); // clear event listeners
+  // FIXME
+  //var layers = this.dataLayerGroup_.getLayers();
+  //var layersUid = goog.getUid(layers);
+  //this.initListenerKey_(layersUid); // clear event listeners
+
   this.dataLayerGroup_ = null;
 };
 
@@ -1311,12 +1348,72 @@ gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 
 
 /**
+ * Registers a newly added Layertree controller. Listen to the 'state' property
+ * change.
+ * @param {ngeo.LayertreeController} treeCtrl Layertree controller to register
+ * @private
+ */
+gmf.Permalink.prototype.registerTreeCtrl_ = function(treeCtrl) {
+  var uid = goog.getUid(treeCtrl);
+
+  var stateWatcherUnregister = this.rootScope_.$watch(
+    function() {
+      return treeCtrl.state_
+    }.bind(this),
+    this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
+  );
+
+  this.treeCtrlCache_[uid] = {
+    stateWatcherUnregister: stateWatcherUnregister
+  };
+};
+
+
+/**
+ * Unregisters a removed Layertree controller. Unlisten any watchers and remove
+ * the item from cache.
+ * @param {ngeo.LayertreeController} treeCtrl Layer tree controller to
+ *     unregister
+ * @private
+ */
+gmf.Permalink.prototype.unregisterTreeCtrl_ = function(treeCtrl) {
+  var uid = goog.getUid(treeCtrl);
+  this.treeCtrlCache_[uid].stateWatcherUnregister();
+  delete this.treeCtrlCache_[uid];
+};
+
+
+/**
+ * Called when the state of a Layertree controller changes. Apply the changes
+ * to the permalink accordingly.
+ * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
+ * @param {?string} newVal New state value
+ * @param {?string} oldValue Old state value
+ * @private
+ */
+gmf.Permalink.prototype.handleTreeCtrlStateChange_ = function(
+  treeCtrl, newVal, oldVal
+) {
+  console.log(treeCtrl);
+  console.log(newVal);
+};
+
+
+/**
  * @typedef {{
  *     goog: (Array.<goog.events.Key>),
  *     ol: (Array.<ol.EventsKey>)
  * }}
  */
 gmf.Permalink.ListenerKeys;
+
+
+/**
+ * @typedef {{
+ *     stateWatcherUnregister: (Function)
+ * }}
+ */
+gmf.Permalink.TreeCtrlCacheItem;
 
 
 gmf.module.service('gmfPermalink', gmf.Permalink);
