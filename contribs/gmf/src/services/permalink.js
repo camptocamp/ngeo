@@ -1393,10 +1393,8 @@ gmf.Permalink.prototype.unregisterTreeCtrl_ = function(treeCtrl) {
   // (1) When removing a node that has the mixed property set, clear the
   //     according state param.
   if (node.mixed !== undefined) {
-    var object = {};
     var param = this.getLayerStateParamFromNode_(node);
-    object[param] = '';
-    this.ngeoStateManager_.updateState(object);
+    this.ngeoStateManager_.deleteParam(param);
   }
 
   // (2) Clear item from cache after unregistering watcher
@@ -1445,6 +1443,7 @@ gmf.Permalink.prototype.handleTreeCtrlStateChange_ = function(
 
     var parentState = parentTreeCtrl.getState();
     if (parentState === 'off') {
+      // The state is set to '', which is different than being deleted
       object[param] = '';
       this.ngeoStateManager_.updateState(object);
     } else {
