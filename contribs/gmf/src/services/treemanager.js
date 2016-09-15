@@ -2,6 +2,7 @@ goog.provide('gmf.TreeManager');
 
 goog.require('gmf');
 goog.require('gmf.Themes');
+goog.require('gmf.SyncLayertreeMap');
 goog.require('ngeo.Notification');
 goog.require('ngeo.StateManager');
 
