@@ -94,9 +94,9 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
 
   /**
    * @type {Array.<ngeo.LayertreeController>}
-   * @private
+   * @export
    */
-  this.treeCtrlReferences_ = [];
+  this.treeCtrlReferences = [];
 
   /**
    * @type {number}
@@ -481,8 +481,8 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
  * @public
  */
 gmf.TreeManager.prototype.addTreeCtrlReference = function(treeCtrl) {
-  if (this.treeCtrlReferences_.indexOf(treeCtrl) < 0) {
-    this.treeCtrlReferences_.push(treeCtrl);
+  if (this.treeCtrlReferences.indexOf(treeCtrl) < 0) {
+    this.treeCtrlReferences.push(treeCtrl);
   }
 };
 
@@ -493,9 +493,9 @@ gmf.TreeManager.prototype.addTreeCtrlReference = function(treeCtrl) {
  * @public
  */
 gmf.TreeManager.prototype.removeTreeCtrlReference = function(treeCtrl) {
-  var idx = this.treeCtrlReferences_.indexOf(treeCtrl);
+  var idx = this.treeCtrlReferences.indexOf(treeCtrl);
   if (idx > -1) {
-    this.treeCtrlReferences_.splice(idx, 1);
+    this.treeCtrlReferences.splice(idx, 1);
   }
 };
 
@@ -509,7 +509,7 @@ gmf.TreeManager.prototype.removeTreeCtrlReference = function(treeCtrl) {
  */
 gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
   var correspondingTreeCtrl = null;
-  this.treeCtrlReferences_.some(function(treeCtrl) {
+  this.treeCtrlReferences.some(function(treeCtrl) {
     if (treeCtrl.node.id === id) {
       return correspondingTreeCtrl = treeCtrl;
     }
