@@ -438,7 +438,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @type {boolean}
    * @export
    */
-  this.hasEditableLayers = true;
+  this.hasEditableLayers = false;
 
   /**
    * @private
