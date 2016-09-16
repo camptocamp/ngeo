@@ -185,9 +185,11 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
   }
 
   $scope.$on('$destroy', function() {
-    var index = this.parent.children.indexOf(this);
-    goog.asserts.assert(index >= 0);
-    this.parent.children.splice(index, 1);
+    if (this.parent) {
+      var index = this.parent.children.indexOf(this);
+      goog.asserts.assert(index >= 0);
+      this.parent.children.splice(index, 1);
+    }
   }.bind(this));
 
   /**
@@ -360,7 +362,8 @@ ngeo.LayertreeController.prototype.getSetActive = function(val) {
 
 
 /**
- * Get the "top level" layertree. Can return itself.
+ * Get the "top level" layertree (one of the first level child under the root
+ * layertree). Can return itself.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
  * @return {ngeo.LayertreeController} the top level layertree.
  * @public
@@ -376,19 +379,22 @@ ngeo.LayertreeController.getFirstParentTree = function(treeCtrl) {
 
 /**
  * Fill the given array with all layertree objects of any level from the
- * children of the given layertree.
+ * children of the given layertree. By default, include onyl all leaves.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
  * @param {Array.<ngeo.LayertreeController>} treeCtrls array that will contains
- * the ngeo layertree controller.
+ *     the ngeo layertree controller.
+ * @param {boolean=} opt_includeGroups If true, include leaves and groups.
  * @public
  */
-ngeo.LayertreeController.getFlatTree = function(treeCtrl, treeCtrls) {
+ngeo.LayertreeController.getFlatTree = function(treeCtrl, treeCtrls,
+    opt_includeGroups) {
   var children = treeCtrl.children;
   if (children.length > 0) {
     children.forEach(function(child) {
-      ngeo.LayertreeController.getFlatTree(child, treeCtrls);
+      ngeo.LayertreeController.getFlatTree(child, treeCtrls, opt_includeGroups);
     });
-  } else {
+  }
+  if (children.length <= 0 || opt_includeGroups === true) {
     treeCtrls.push(treeCtrl);
   }
 };
