@@ -1389,15 +1389,21 @@ gmf.Permalink.prototype.registerTreeCtrl_ = function(treeCtrl) {
 gmf.Permalink.prototype.unregisterTreeCtrl_ = function(treeCtrl) {
 
   var node = treeCtrl.node;
+  var param;
 
-  // (1) When removing a node that has the mixed property set, clear the
-  //     according state param.
-  if (node.mixed !== undefined) {
-    var param = this.getLayerStateParamFromNode_(node);
+  // (1) When removing a node that is part of a parent mixed node, clear
+  //     the according parameter
+  if (treeCtrl.parent.node.mixed === true) {
+    param = this.getLayerStateParamFromNode_(treeCtrl.node);
+    this.ngeoStateManager_.deleteParam(param);
+  } else if (node.mixed === false) {
+    // (2) When removing a node that has the mixed property disabled, clear the
+    //     according state param.
+    param = this.getLayerStateParamFromNode_(node);
     this.ngeoStateManager_.deleteParam(param);
   }
 
-  // (2) Clear item from cache after unregistering watcher
+  // (4) Clear item from cache after unregistering watcher
   var uid = goog.getUid(treeCtrl);
   this.treeCtrlCache_[uid].stateWatcherUnregister();
   delete this.treeCtrlCache_[uid];
@@ -1416,9 +1422,10 @@ gmf.Permalink.prototype.handleTreeCtrlStateChange_ = function(
   treeCtrl, newVal, oldVal
 ) {
 
-  var newStatusOn = newVal !== 'off';
-  var oldStatusOn = oldVal !== 'off';
+  var newStatusOn = newVal === 'on' || newVal === 'indeterminate';
+  var oldStatusOn = oldVal !== 'on' || oldVal === 'indeterminate';
   var object = {};
+  var param;
 
   // (1) If status of the treeCtrl didn't actually change, no need to do
   //     anything
@@ -1435,11 +1442,17 @@ gmf.Permalink.prototype.handleTreeCtrlStateChange_ = function(
   var childTreeCtrl;
   var parentTreeCtrl = treeCtrl.parent;
 
-  // (3) If parent node has a 'mixed' property set, manage the parent param
-  //     by looping in the state of its children
-  if (parentTreeCtrl.node.mixed !== undefined) {
-
-    var param = this.getLayerStateParamFromNode_(parentTreeCtrl.node);
+  if (parentTreeCtrl.node.mixed === true) {
+    // (3) If parent node has a 'mixed' property enabled, treat each of its
+    //     node seperately.  In this case, we only need to manage the current
+    //     treeCtrl
+    param = this.getLayerStateParamFromNode_(treeCtrl.node);
+    object[param] = oldStatusOn;
+    this.ngeoStateManager_.updateState(object);
+  } else if (parentTreeCtrl.node.mixed === false) {
+    // (4) If parent node has a 'mixed' property disabled, manage the parent
+    //     param by looping in the state of its children
+    param = this.getLayerStateParamFromNode_(parentTreeCtrl.node);
 
     var parentState = parentTreeCtrl.getState();
     if (parentState === 'off') {
