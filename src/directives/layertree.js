@@ -145,9 +145,9 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
 
   /**
    * @type {!string}
-   * @export
+   * @private
    */
-  this.state = 'off';
+  this.state_ = 'off';
 
   /**
    * @type {Object|undefined}
@@ -269,7 +269,7 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
  * @export
  */
 ngeo.LayertreeController.prototype.getState = function() {
-  return this.state;
+  return this.state_;
 };
 
 
@@ -283,14 +283,14 @@ ngeo.LayertreeController.prototype.getState = function() {
  */
 ngeo.LayertreeController.prototype.setState = function(state,
     opt_avoidRefreshParents) {
-  if (state === this.state) {
+  if (state === this.state_) {
     return;
   }
   // Set the state
-  this.state = state === 'on' ? 'on' : 'off';
+  this.state_ = state === 'on' ? 'on' : 'off';
   // Asks to each child to set its state;
   this.children.forEach(function(child) {
-    child.setState(this.state, true);
+    child.setState(this.state_, true);
   }, this);
   // Ask to its parent to update it's state.
   if (!opt_avoidRefreshParents && this.parent) {
@@ -306,10 +306,10 @@ ngeo.LayertreeController.prototype.setState = function(state,
  */
 ngeo.LayertreeController.prototype.refreshState = function() {
   var newState = this.getCalculateState();
-  if (this.state === newState) {
+  if (this.state_ === newState) {
     return;
   }
-  this.state = newState;
+  this.state_ = newState;
   if (this.parent) {
     this.parent.refreshState();
   }
@@ -323,7 +323,7 @@ ngeo.LayertreeController.prototype.refreshState = function() {
  */
 ngeo.LayertreeController.prototype.getCalculateState = function() {
   if (this.children.length === 0) {
-    return this.state;
+    return this.state_;
   }
   var childState;
   var previousChildState;

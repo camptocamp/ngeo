@@ -1364,7 +1364,7 @@ gmf.Permalink.prototype.registerTreeCtrl_ = function(treeCtrl) {
   // (1) Watch state change
   var stateWatcherUnregister = this.rootScope_.$watch(
     function() {
-      return treeCtrl.state;
+      return treeCtrl.getState();
     }.bind(this),
     this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
   );
