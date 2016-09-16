@@ -32,7 +32,7 @@
     "bootstrap": "3.3.7",
     "clean-css": "3.4.19",
     "closure-util": "1.15.1",
-    "coveralls": "2.11.12",
+    "coveralls": "2.11.13",
     "d3": "3.5.17",
     "eslint": "3.5.0",
     "eslint-config-openlayers": "5.0.0",
