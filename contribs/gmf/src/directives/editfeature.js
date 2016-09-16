@@ -45,16 +45,21 @@ goog.require('ol.style.Text');
  *
  *     <gmf-editfeature
  *         gmf-editfeature-dirty="ctrl.dirty"
- *         gmf-editfeature-layer="::ctrl.layer"
+ *         gmf-editfeature-editablenode="::ctrl.node"
+ *         gmf-editfeature-editablewmslayer="::ctrl.selectedWMSLayer"
  *         gmf-editfeature-map="::ctrl.map"
  *         gmf-editfeature-state="efsCtrl.state"
  *         gmf-editfeature-tolerance="::ctrl.tolerance"
- *         gmf-editfeature-vector="::ctrl.vectorLayer"
- *         gmf-editfeature-wmslayer="::ctrl.selectedWMSLayer">
+ *         gmf-editfeature-vector="::ctrl.vectorLayer">
  *     </gmf-editfeature>
  *
- * @htmlAttribute {GmfThemesNode} gmf-editfeature-layer The GMF node of the
- *     editable layer.
+ * @htmlAttribute {boolean} gmf-editfeature-dirty Flag that is toggled as soon
+ *     as the feature changes, i.e. if any of its properties change, which
+ *     includes the geometry.
+ * @htmlAttribute {GmfThemesNode} gmf-editfeature-editablenode The GMF node
+ *     representing the editable layer.
+ * @htmlAttribute {ol.layer.Image|ol.layer.Tile} gmf-editfeature-editablewmslayer
+ *     The WMS layer to refresh after each saved modification.
  * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
  * @htmlAttribute {string} gmf-editfeature-stopeditingrequest Stop editing
  *     state.
@@ -62,8 +67,6 @@ goog.require('ol.style.Text');
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
- * @htmlAttribute {ol.layer.Image|ol.layer.Tile} gmf-editfeature-wmslayer The
- *     WMS layer to refresh after each saved modification.
  * @return {angular.Directive} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeature
@@ -74,11 +77,12 @@ gmf.editfeatureDirective = function() {
     scope: {
       'dirty': '=gmfEditfeatureDirty',
       'layer': '=gmfEditfeatureLayer',
+      'editableNode': '=gmfEditfeatureEditablenode',
+      'editableWMSLayer': '<gmfEditfeatureEditablewmslayer',
       'map': '<gmfEditfeatureMap',
       'state': '=gmfEditfeatureState',
       'tolerance': '<?gmfEditfeatureTolerance',
-      'vectorLayer': '<gmfEditfeatureVector',
-      'wmsLayer': '<gmfEditfeatureWmslayer'
+      'vectorLayer': '<gmfEditfeatureVector'
     },
     bindToController: true,
     controllerAs: 'efCtrl',
@@ -126,7 +130,13 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @type {GmfThemesNode}
    * @export
    */
-  this.layer;
+  this.editableNode;
+
+  /**
+   * @type {ol.layer.Image|ol.layer.Tile}
+   * @export
+   */
+  this.editableWMSLayer;
 
   /**
    * @type {ol.Map}
@@ -171,12 +181,6 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @export
    */
   this.vectorLayer;
-
-  /**
-   * @type {ol.layer.Image|ol.layer.Tile}
-   * @export
-   */
-  this.wmsLayer;
 
   /**
    * @type {angular.JQLite}
@@ -453,7 +457,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    */
   this.geomType = null;
 
-  gmfXSDAttributes.getAttributes(this.layer.id).then(
+  gmfXSDAttributes.getAttributes(this.editableNode.id).then(
     this.setAttributes_.bind(this));
 
   var uid = goog.getUid(this);
@@ -495,14 +499,14 @@ gmf.EditfeatureController.prototype.save = function() {
 
   if (id) {
     this.editFeatureService_.updateFeature(
-      this.layer.id,
+      this.editableNode.id,
       feature
     ).then(
       this.handleEditFeature_.bind(this)
     );
   } else {
     this.editFeatureService_.insertFeatures(
-      this.layer.id,
+      this.editableNode.id,
       [feature]
     ).then(
       this.handleEditFeature_.bind(this)
@@ -584,7 +588,7 @@ gmf.EditfeatureController.prototype.delete = function() {
 
     // (1) Launch request
     this.editFeatureService_.deleteFeature(
-      this.layer.id,
+      this.editableNode.id,
       this.feature
     ).then(
       this.handleDeleteFeature_.bind(this)
@@ -620,7 +624,7 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
   var features = new ol.format.GeoJSON().readFeatures(resp.data);
   if (features.length) {
     this.feature.setId(features[0].getId());
-    this.layerHelper_.refreshWMSLayer(this.wmsLayer);
+    this.layerHelper_.refreshWMSLayer(this.editableWMSLayer);
   }
   if (this.confirmDeferred_) {
     this.confirmDeferred_.resolve();
@@ -635,7 +639,7 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
  */
 gmf.EditfeatureController.prototype.handleDeleteFeature_ = function(resp) {
   this.pending = false;
-  this.layerHelper_.refreshWMSLayer(this.wmsLayer);
+  this.layerHelper_.refreshWMSLayer(this.editableWMSLayer);
 };
 
 
@@ -728,7 +732,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
 
   this.modify_.setActive(active);
   this.mapSelectActive = active;
-  this.layer['editing'] = active;
+  this.editableNode['editing'] = active;
 
 };
 
@@ -814,7 +818,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
     );
 
     // (3) Launch query to fetch features
-    this.editFeatureService_.getFeatures([this.layer.id], extent).then(
+    this.editFeatureService_.getFeatures([this.editableNode.id], extent).then(
       this.handleGetFeatures_.bind(this));
 
     // (4) Clear any previously selected feature

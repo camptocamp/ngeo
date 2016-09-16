@@ -138,7 +138,7 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
    * @type {Array.<GmfThemesNode>}
    * @export
    */
-  this.layers = [];
+  this.editableNodes = [];
 
   /**
    * List of editable layers (theme nodes) that are available for edition, i.e.
@@ -146,31 +146,33 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
    * @type {Array.<GmfThemesNode>}
    * @export
    */
-  this.availableLayers = [];
+  this.availableEditableNodes = [];
 
   /**
    * Hash of editable WMS layers (OL objects), classified by node id.
    * @type {Object.<string|number, ol.layer.Image|ol.layer.Tile>}
    * @private_
    */
-  this.wmsLayers_ = {};
+  this.editableWMSLayers_ = {};
 
   /**
    * The currently selected layer
    * @type {?GmfThemesNode}
    * @export
    */
-  this.selectedLayer = null;
+  this.selectedEditableNode = null;
 
   $scope.$watch(
     function() {
-      return this.selectedLayer;
+      return this.selectedEditableNode;
     }.bind(this),
     function(newValue, oldValue) {
       if (newValue) {
-        this.selectedWMSLayer = newValue ? this.wmsLayers_[newValue.id] : null;
+        this.selectedEditableWMSLayer = newValue ?
+          this.editableWMSLayers_[newValue.id] : null;
       } else {
-        this.selectedWMSLayer = null;
+        this.selectedEditableWMSLayer = null;
+        this.state = gmf.EditfeatureController.State.IDLE;
       }
       this.dirty = false;
       this.state = gmf.EditfeatureController.State.IDLE;
@@ -182,7 +184,7 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
    * @type {?ol.layer.Image|ol.layer.Tile}
    * @export
    */
-  this.selectedWMSLayer = null;
+  this.selectedEditableWMSLayer = null;
 
   /**
    * The state of this directive shared with the `gmf-editfeature` directive.
@@ -202,7 +204,7 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
     function(newValue, oldValue) {
       if (newValue === gmf.EditfeatureController.State.STOP_EDITING_EXECUTE ||
           newValue === gmf.EditfeatureController.State.DEACTIVATE_EXECUTE) {
-        this.selectedLayer = null;
+        this.selectedEditableNode = null;
       }
       if (newValue === gmf.EditfeatureController.State.DEACTIVATE_EXECUTE) {
         this.active = false;
@@ -211,7 +213,7 @@ gmf.EditfeatureselectorController = function($scope, gmfThemes,
   );
 
   this.themesChangeListenerKey = ol.events.listen(this.gmfThemes_,
-      gmf.ThemesEventType.CHANGE, this.setLayersFromThemes_, this);
+      gmf.ThemesEventType.CHANGE, this.setNodesFromThemes_, this);
 
   this.registerLayer_(this.dataLayerGroup_);
 
@@ -267,7 +269,7 @@ gmf.EditfeatureselectorController.prototype.getDistinctFlatNodes_ = function(
 gmf.EditfeatureselectorController.prototype.handleActiveChange_ = function(active) {
   if (!active) {
     if (!this.dirty) {
-      this.selectedLayer = null;
+      this.selectedEditableNode = null;
     } else {
       // There are unsaved modifications. Prevent the deactivation and
       // set the state accordingly for the `gmf-editfeature` directive
@@ -324,10 +326,10 @@ gmf.EditfeatureselectorController.prototype.registerLayer_ = function(layer) {
         (layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile)
     ) {
       for (var i = 0, ii = ids.length; i < ii; i++) {
-        this.wmsLayers_[ids[i]] = layer;
-        for (var j = 0, jj = this.layers.length; j < jj; j++) {
-          if (this.layers[j].id == ids[i]) {
-            this.availableLayers.push(this.layers[j]);
+        this.editableWMSLayers_[ids[i]] = layer;
+        for (var j = 0, jj = this.editableNodes.length; j < jj; j++) {
+          if (this.editableNodes[j].id == ids[i]) {
+            this.availableEditableNodes.push(this.editableNodes[j]);
             break;
           }
         }
@@ -357,16 +359,18 @@ gmf.EditfeatureselectorController.prototype.unregisterLayer_ = function(layer) {
     var ids = layer.get('editableIds');
     if (ids) {
       for (var i = 0, ii = ids.length; i < ii; i++) {
-        delete this.wmsLayers_[ids[i]];
-        var removedLayer;
-        for (var j = 0, jj = this.availableLayers.length; j < jj; j++) {
-          if (this.availableLayers[j].id == ids[i]) {
-            removedLayer = this.availableLayers.splice(j, 1)[0];
+        delete this.editableWMSLayers_[ids[i]];
+        var removedEditableNode;
+        for (var j = 0, jj = this.availableEditableNodes.length; j < jj; j++) {
+          if (this.availableEditableNodes[j].id == ids[i]) {
+            removedEditableNode = this.availableEditableNodes.splice(j, 1)[0];
             break;
           }
         }
-        if (removedLayer && removedLayer === this.selectedLayer) {
-          this.selectedLayer = null;
+        if (removedEditableNode &&
+            removedEditableNode === this.selectedEditableNode
+        ) {
+          this.selectedEditableNode = null;
         }
       }
     }
@@ -408,15 +412,15 @@ gmf.EditfeatureselectorController.prototype.handleDestroy_ = function() {
 
 
 /**
- * Sets the layers and available layers from the existing themes.
+ * Sets all nodes (editable, available, etc.) from the existing themes.
  * Called every time the themes are changed.
  * @private
  */
-gmf.EditfeatureselectorController.prototype.setLayersFromThemes_ = function() {
+gmf.EditfeatureselectorController.prototype.setNodesFromThemes_ = function() {
 
   // (1) Clear any existing layers in case the themes are reloaded
-  this.layers.length = 0;
-  this.availableLayers.length = 0;
+  this.editableNodes.length = 0;
+  this.availableEditableNodes.length = 0;
 
   // (2) Get layers
   this.gmfThemes_.getThemesObject().then(function(themes) {
@@ -430,9 +434,9 @@ gmf.EditfeatureselectorController.prototype.setLayersFromThemes_ = function() {
     flatNodes.forEach(function(node) {
       // Get an array of all layers
       if (node.children === undefined && node.editable) {
-        this.layers.push(node);
-        if (this.wmsLayers_[node.id]) {
-          this.availableLayers.push(node);
+        this.editableNodes.push(node);
+        if (this.editableWMSLayers_[node.id]) {
+          this.availableEditableNodes.push(node);
         }
       }
     }, this);
