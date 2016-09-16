@@ -1,3 +1,4 @@
+/*eslint no-unused-vars: ["error", { "varsIgnorePattern": "gmlResponseBusStopAndInformation" }] */
 goog.provide('ngeo.test.data.msGMLOutputBusStopAndInformation');
 
 var gmlResponseBusStopAndInformation =

@@ -1,3 +1,4 @@
+/*eslint no-unused-vars: ["error", { "varsIgnorePattern": "gmlResponseBusStopWfs" }] */
 goog.provide('ngeo.test.data.msGMLOutputBusStopWfs');
 
 var gmlResponseBusStopWfs =

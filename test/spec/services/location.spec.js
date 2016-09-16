@@ -72,13 +72,13 @@ describe('ngeo.Location', function() {
 
   describe('#updateParams', function() {
     it('updates an existing param key', function() {
-      var keys = ngeoLocation.updateParams({'key1': 'new value'});
+      ngeoLocation.updateParams({'key1': 'new value'});
       var value = ngeoLocation.getParam('key1');
       expect(value).toBe('new value');
     });
 
     it('adds a new param key', function() {
-      var keys = ngeoLocation.updateParams({'key3': 'value3'});
+      ngeoLocation.updateParams({'key3': 'value3'});
       var value = ngeoLocation.getParam('key3');
       expect(value).toBe('value3');
     });
@@ -155,13 +155,13 @@ describe('ngeo.Location', function() {
 
     describe('#updateFragmentParams', function() {
       it('updates an existing param key', function() {
-        var keys = ngeoLocation.updateFragmentParams({'key1': 'new value'});
+        ngeoLocation.updateFragmentParams({'key1': 'new value'});
         var value = ngeoLocation.getFragmentParam('key1');
         expect(value).toBe('new value');
       });
 
       it('adds a new param key', function() {
-        var keys = ngeoLocation.updateFragmentParams({'key3': 'value3'});
+        ngeoLocation.updateFragmentParams({'key3': 'value3'});
         var value = ngeoLocation.getFragmentParam('key3');
         expect(value).toBe('value3');
       });

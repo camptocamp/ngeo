@@ -1,3 +1,4 @@
+/* global themes */
 goog.require('gmf.Themes');
 goog.require('gmf.QueryManager');
 goog.require('gmf.test.data.themes');

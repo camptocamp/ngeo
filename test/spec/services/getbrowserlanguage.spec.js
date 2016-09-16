@@ -15,13 +15,13 @@ describe('ngeo.GetBrowserLanguage', function() {
   });
 
   it('gets language from navigator.languages', function() {
-    win.navigator.languages = ["en-US", "zh-CN", "ja-JP", "fr-FR"];
+    win.navigator.languages = ['en-US', 'zh-CN', 'ja-JP', 'fr-FR'];
     var langCode = ngeoGetBrowserLanguage(['de', 'fr', 'it']);
     expect(langCode).toBe('fr');
   });
 
   it('gets language from navigator.language', function() {
-    win.navigator.language = ["fr-FR"];
+    win.navigator.language = ['fr-FR'];
     var langCode = ngeoGetBrowserLanguage(['de', 'fr', 'it']);
     expect(langCode).toBe('fr');
   });

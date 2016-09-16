@@ -64,8 +64,8 @@ describe('ngeo.AutoProjection', function() {
     var coordinatesTransformed = ol.proj.transform(coordinates.reverse(),
         projections[0], viewProjection);
 
-    point = ngeoAutoProjection.tryProjectionsWithInversion(coordinates, extent,
-        viewProjection, projections);
+    var point = ngeoAutoProjection.tryProjectionsWithInversion(coordinates,
+        extent, viewProjection, projections);
     expect(point).toEqual(coordinatesTransformed);
   });
 });

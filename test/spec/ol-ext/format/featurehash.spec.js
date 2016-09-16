@@ -252,7 +252,7 @@ describe('ngeo.format.FeatureHash', function() {
         expect(feature instanceof ol.Feature).toBeTruthy();
         geometry = feature.getGeometry();
         expect(geometry instanceof ol.geom.Point).toBeTruthy();
-        var coordinates = geometry.getCoordinates();
+        coordinates = geometry.getCoordinates();
         expect(coordinates).toEqual([1, 1]);
         feature = features[1];
         expect(feature instanceof ol.Feature).toBeTruthy();

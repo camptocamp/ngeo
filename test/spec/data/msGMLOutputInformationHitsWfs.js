@@ -1,3 +1,4 @@
+/*eslint no-unused-vars: ["error", { "varsIgnorePattern": "gmlResponseInformationHitsWfs" }] */
 goog.provide('ngeo.test.data.msGMLOutputInformationHitsWfs');
 
 var gmlResponseInformationHitsWfs =

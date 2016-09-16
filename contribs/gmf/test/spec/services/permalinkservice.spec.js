@@ -1,5 +1,4 @@
-/*global describe beforeEach inject  it expect themes spyOn */
-/*eslint no-undef: "error"*/
+/* global themes */
 goog.require('gmf.Permalink');
 goog.require('gmf');
 goog.require('ngeo.LayerHelper');
@@ -77,8 +76,7 @@ describe('Permalink service', function() {
     }
 
     function shouldHaveBeenUnRegistered(layer) {
-      var uid = goog.getUid(layer),
-          listeners = PermalinkService.listenerKeys_[uid];
+      var uid = goog.getUid(layer);
       expect(PermalinkService.listenerKeys_[uid].ol.length).toBe(0);
       expect(PermalinkService.listenerKeys_[uid].goog.length).toBe(0);
     }

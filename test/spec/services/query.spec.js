@@ -1,3 +1,11 @@
+/* global gmlResponseBusStop,
+          gmlResponseBusStopAndInformation,
+          gmlResponseInformationWfs,
+          gmlResponseBusStopWfs,
+          gmlResponseInformationWfs,
+          gmlResponseInformationHitsWfs,
+          gmlResponseInformationWfs,
+          gmlResponseInformationHitsWfs */
 goog.require('ngeo.Query');
 goog.require('ngeo.test.data.msGMLOutputBusStop');
 goog.require('ngeo.test.data.msGMLOutputBusStopAndInformation');
@@ -74,7 +82,6 @@ describe('ngeo.Query', function() {
     var busStopSourceId = 'bus_stop';
     var informationLayer;
     var informationSourceId = 'information';
-    var coordinate;
     var $httpBackend;
 
     var url = 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy';

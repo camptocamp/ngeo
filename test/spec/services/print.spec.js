@@ -103,7 +103,6 @@ describe('ngeo.CreatePrint', function() {
               projection: 'EPSG:3857',
               rotation: 0,
               scale: 500,
-              rotation: 0,
               layers: [{
                 baseURL: 'http://example.com/wms',
                 imageFormat: 'image/jpeg',
@@ -632,9 +631,9 @@ describe('ngeo.CreatePrint', function() {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('POST', 'http://example.com/print/report.pdf')
             .respond({
-                ref: 'deadbeef',
-                statusURL: '/print/status/deadbeef.json',
-                downloadURL: '/print/report/deadbeef.json'
+              ref: 'deadbeef',
+              statusURL: '/print/status/deadbeef.json',
+              downloadURL: '/print/report/deadbeef.json'
             });
       });
     });
@@ -667,7 +666,7 @@ describe('ngeo.CreatePrint', function() {
         $httpBackend.expectPOST('http://example.com/print/report.pdf');
 
         var canceler = $q.defer();
-        var promise = print.createReport(spec, {
+        print.createReport(spec, {
           timeout: canceler.promise
         });
 
@@ -683,38 +682,17 @@ describe('ngeo.CreatePrint', function() {
   describe('#getStatus', function() {
 
     var print;
-    var spec;
     var $httpBackend;
 
     beforeEach(function() {
       print = ngeoCreatePrint('http://example.com/print');
 
-      spec = {
-        attributes: {
-          map: {
-            dpi: 72,
-            center: [3000, 4000],
-            projection: 'EPSG:3857',
-            scale: 500,
-            layers: [{
-              baseURL: 'http://example.com/wms',
-              imageFormat: 'image/jpeg',
-              layers: ['foo', 'bar'],
-              type: 'wms'
-            }]
-          },
-          foo: 'fooval',
-          bar: 'barval'
-        },
-        layout: 'foo layout'
-      };
-
       inject(function($injector) {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('GET',
             'http://example.com/print/status/deadbeef.json').respond({
-                done: false,
-                downloadURL: '/print/report/deadbeef.json'
+              done: false,
+              downloadURL: '/print/report/deadbeef.json'
             });
       });
     });
@@ -761,7 +739,7 @@ describe('ngeo.CreatePrint', function() {
     // Only used to test that getCapabilities fetch the json from the proper url
     var capabilities;
 
-    beforeEach(inject(function (_$httpBackend_) {
+    beforeEach(inject(function(_$httpBackend_) {
 
       $httpBackend = _$httpBackend_;
 
@@ -777,7 +755,7 @@ describe('ngeo.CreatePrint', function() {
       print = ngeoCreatePrint('http://example.com/print');
     });
 
-    it('gets the correct capabilities', function () {
+    it('gets the correct capabilities', function() {
       var resp;
       print.getCapabilities().success(function(data) {
         resp = data;
@@ -795,7 +773,7 @@ describe('ngeo.CreatePrint', function() {
       print = ngeoCreatePrint('http://example.com/print');
       $httpBackend = _$httpBackend_;
       $httpBackend.when('DELETE', 'http://example.com/print/cancel/deadbeef')
-          .respond(200)
+          .respond(200);
     }));
 
     afterEach(function() {

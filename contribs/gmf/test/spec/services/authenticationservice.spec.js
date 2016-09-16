@@ -7,6 +7,7 @@ describe('gmf.Authentication', function() {
   var isLoggedInUrl;
   var loginUrl;
   var logoutUrl;
+  var $httpBackend;
 
   beforeEach(function() {
     inject(function($injector) {

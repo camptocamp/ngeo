@@ -1,5 +1,3 @@
-/*global describe afterEach inject it*/
-/*eslint no-undef: "error"*/
 goog.require('gmf.ShareService');
 
 describe('gmf.ShareService', function() {

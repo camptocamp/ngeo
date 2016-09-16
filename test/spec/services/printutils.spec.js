@@ -6,7 +6,7 @@ describe('ngeo.PrintUtils', function() {
 
   beforeEach(function() {
     inject(function($injector) {
-      printUtils = $injector.get('ngeoPrintUtils');
+      ngeoPrintUtils = $injector.get('ngeoPrintUtils');
     });
   });
 
@@ -32,7 +32,7 @@ describe('ngeo.PrintUtils', function() {
       var mapSize = [2, 1];  // px
       var printMapSize = [640, 320];  // dots
       var printScale = 10;  // scale denominator
-      var optimalResolution = printUtils.getOptimalResolution(
+      var optimalResolution = ngeoPrintUtils.getOptimalResolution(
           mapSize, printMapSize, printScale);
       expect(optimalResolution).toBe(1);
     });
