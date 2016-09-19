@@ -94,6 +94,12 @@
         class="panel panel-default panel-body">
     </gmf-authentication>
 
+    <gmf-layertree
+        style="display:none;"
+        gmf-layertree-source="ctrl.treeSource"
+        gmf-layertree-map="::ctrl.map">
+    </gmf-layertree>
+
     <div
         ng-show="ctrl.gmfUser.username"
         class="panel panel-default panel-body">
