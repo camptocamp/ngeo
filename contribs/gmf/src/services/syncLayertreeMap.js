@@ -1,6 +1,7 @@
 goog.provide('gmf.SyncLayertreeMap');
 
 goog.require('gmf');
+goog.require('gmf.WMSTime');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 
