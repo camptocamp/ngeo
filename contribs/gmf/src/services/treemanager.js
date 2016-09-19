@@ -477,6 +477,16 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
 
 
 /**
+ * Returns the treeCtrls list kept as reference.
+ * @return {Array.<ngeo.LayertreeController>} List of Layertree controllers.
+ * @public
+ */
+gmf.TreeManager.prototype.getTreeCtrlReferences = function() {
+  return this.treeCtrlReferences_;
+};
+
+
+/**
  * Add a treeCtrl to kept in reference.
  * @param {ngeo.LayertreeController} treeCtrl ngeoLayer tree controller.
  * @public
