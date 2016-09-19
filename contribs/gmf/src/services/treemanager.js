@@ -3,6 +3,7 @@ goog.provide('gmf.TreeManager');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('ngeo.Notification');
+goog.require('ngeo.StateManager');
 
 
 /**
@@ -12,11 +13,11 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
 
 
 /**
- * Manage a tree with children. This service can be used in mode 'flush' (default) or
- * not (mode 'add'). In mode 'flush', each theme, group or group by layer that
- * you add will replace the previous children's array. In mode 'add', children
- * will be just pushed in this array. The default state can be changed by setting
- * the value `gmfTreeManagerModeFlush`, e.g.:
+ * Manage a tree with children. This service can be used in mode 'flush'
+ * (default) or not (mode 'add'). In mode 'flush', each theme, group or group
+ * by layer that you add will replace the previous children's array. In mode
+ * 'add', children will be just pushed in this array. The default state can be
+ * changed by setting the value `gmfTreeManagerModeFlush`, e.g.:
  *
  *    var module = angular.module('app');
  *    module.value('gmfTreeManagerModeFlush', false);
@@ -35,8 +36,8 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * @ngdoc service
  * @ngname gmfTreeManager
  */
-gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper, ngeoNotification, gmfThemes,
-    gmfTreeManagerModeFlush, ngeoStateManager) {
+gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
+    ngeoNotification, gmfThemes, gmfTreeManagerModeFlush, ngeoStateManager) {
 
   /**
    * @type {angular.$timeout}
