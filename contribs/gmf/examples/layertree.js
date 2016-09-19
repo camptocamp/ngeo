@@ -187,8 +187,8 @@ app.MainController = function(gmfThemes, gmfTreeManager, ngeoLocation) {
         }
       }.bind(this));
 
-      //set arbitrarily a default theme
-      this.gmfTreeManager.addTheme(themes[0]);
+      // do not set arbitrarily a default theme. Let the permalink do its job
+
       this.treeSource = this.gmfTreeManager.tree;
     }
   }.bind(this));

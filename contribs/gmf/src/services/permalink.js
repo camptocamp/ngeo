@@ -176,6 +176,37 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
+   *
+   * @type {Object.<number, gmf.Permalink.TreeCtrlCacheItem>}
+   * @private
+   */
+  this.treeCtrlCache_ = {};
+
+  $rootScope.$watchCollection(
+    function() {
+      return this.gmfTreeManager_.treeCtrlReferences;
+    }.bind(this),
+    function(newVal, oldVal) {
+      var i, ii;
+
+      // (1) Register newly added Layertree controllers
+      for (i = 0, ii = newVal.length; i < ii; i++) {
+        if (oldVal.indexOf(newVal[i]) === -1) {
+          this.registerTreeCtrl_(newVal[i]);
+        }
+      }
+
+      // (2) Unregister removed Layertree controllers
+      for (i = 0, ii = oldVal.length; i < ii; i++) {
+        if (newVal.indexOf(oldVal[i]) === -1) {
+          this.unregisterTreeCtrl_(oldVal[i]);
+        }
+      }
+
+    }.bind(this)
+  );
+
+  /**
    * @type {angular.Scope}
    * @private
    */
@@ -700,7 +731,8 @@ gmf.Permalink.prototype.initLayers_ = function() {
     return;
   }
 
-  var layers = this.dataLayerGroup_.getLayers();
+  // FIXME
+  //var layers = this.dataLayerGroup_.getLayers();
 
   // (1) try to look for any group name from any of the themes in the state
   //     manager.  If any is found, then apply the found results in the
@@ -709,6 +741,8 @@ gmf.Permalink.prototype.initLayers_ = function() {
     themeNode.children.forEach(this.initLayerFromGroupNode_, this);
   }, this);
 
+  // FIXME
+  /*
   var layersUid = goog.getUid(layers);
 
   this.addListenerKey_(layersUid, ol.events.listen(layers,
@@ -722,6 +756,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
   layers.forEach(function(layer) {
     this.registerLayer_(layer, true);
   }, this);
+  */
 };
 
 
@@ -1073,19 +1108,24 @@ gmf.Permalink.prototype.handleWMSSourceChange_ = function(layer, source) {
 
 
 /**
+ * FIXME - DEPRECATE
  * @param {ol.layer.Base} layer Layer.
  * @return {string} The state param for the layer
  * @private
  */
 gmf.Permalink.prototype.getLayerStateParamFromLayer_ = function(layer) {
+
+  console.log('deprecate this');
+
   var layerName = /** @type {string} */ (layer.get('layerNodeName'));
   var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
-  return this.getLayerStateParam_(layerName, isMerged);
+  return this.getLayerStateParam_(layerName, !isMerged);
 };
 
 
 /**
- * @param {GmfThemesGroup|GmfThemesLeaf} layerNode Gmf theme node representing
+ * FIXME - was: GmfThemesGroup|GmfThemesLeaf
+ * @param {Object} layerNode Gmf theme node representing
  *     a layer.
  * @return {string} The state param for the layer
  * @private
@@ -1093,14 +1133,14 @@ gmf.Permalink.prototype.getLayerStateParamFromLayer_ = function(layer) {
 gmf.Permalink.prototype.getLayerStateParamFromNode_ = function(layerNode) {
   var layerName = layerNode.name;
   goog.asserts.assert(layerName);
-  var mixed = (layerNode.children !== undefined && layerNode.mixed === true);
-  return this.getLayerStateParam_(layerName, mixed);
+  var isMerged = layerNode.children !== undefined && layerNode.mixed === false;
+  return this.getLayerStateParam_(layerName, isMerged);
 };
 
 
 /**
  * @param {string} layerName The name of the layer.
- * @param {boolean} isMerged Whether the layer is merged or not.
+ * @param {boolean} isMerged isMerged
  * @param {string=} opt_propertyName Whether we are looking for a layer property value
  * (e.g opacity)
  * @return {string} The state param for the layer
@@ -1146,9 +1186,11 @@ gmf.Permalink.prototype.registerDataLayerGroup_ = function(map) {
  * @private
  */
 gmf.Permalink.prototype.unregisterDataLayerGroup_ = function() {
-  var layers = this.dataLayerGroup_.getLayers();
-  var layersUid = goog.getUid(layers);
-  this.initListenerKey_(layersUid); // clear event listeners
+  // FIXME
+  //var layers = this.dataLayerGroup_.getLayers();
+  //var layersUid = goog.getUid(layers);
+  //this.initListenerKey_(layersUid); // clear event listeners
+
   this.dataLayerGroup_ = null;
 };
 
@@ -1311,12 +1353,144 @@ gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 
 
 /**
+ * Registers a newly added Layertree controller. Listen to the 'state' property
+ * change.
+ * @param {ngeo.LayertreeController} treeCtrl Layertree controller to register
+ * @private
+ */
+gmf.Permalink.prototype.registerTreeCtrl_ = function(treeCtrl) {
+  var uid = goog.getUid(treeCtrl);
+
+  // (1) Watch state change
+  var stateWatcherUnregister = this.rootScope_.$watch(
+    function() {
+      return treeCtrl.getState();
+    }.bind(this),
+    this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
+  );
+
+  // (2) Add item to cache
+  this.treeCtrlCache_[uid] = {
+    stateWatcherUnregister: stateWatcherUnregister
+  };
+
+  // (3) Initialize state, i.e. as-if it was changed
+  this.handleTreeCtrlStateChange_(treeCtrl, treeCtrl.getState(), null);
+};
+
+
+/**
+ * Unregisters a removed Layertree controller. Unlisten any watchers and remove
+ * the item from cache.
+ * @param {ngeo.LayertreeController} treeCtrl Layer tree controller to
+ *     unregister
+ * @private
+ */
+gmf.Permalink.prototype.unregisterTreeCtrl_ = function(treeCtrl) {
+
+  var node = /** @type {Object} */ (treeCtrl.node);
+  var param;
+
+  // (1) When removing a node that is part of a parent mixed node, clear
+  //     the according parameter
+  if (treeCtrl.parent.node.mixed === true) {
+    param = this.getLayerStateParamFromNode_(node);
+    this.ngeoStateManager_.deleteParam(param);
+  } else if (node.mixed === false) {
+    // (2) When removing a node that has the mixed property disabled, clear the
+    //     according state param.
+    param = this.getLayerStateParamFromNode_(node);
+    this.ngeoStateManager_.deleteParam(param);
+  }
+
+  // (4) Clear item from cache after unregistering watcher
+  var uid = goog.getUid(treeCtrl);
+  this.treeCtrlCache_[uid].stateWatcherUnregister();
+  delete this.treeCtrlCache_[uid];
+};
+
+
+/**
+ * Called when the state of a Layertree controller changes. Apply the changes
+ * to the permalink accordingly.
+ * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
+ * @param {?string} newVal New state value
+ * @param {?string} oldVal Old state value
+ * @private
+ */
+gmf.Permalink.prototype.handleTreeCtrlStateChange_ = function(
+  treeCtrl, newVal, oldVal
+) {
+
+  var newStatusOn = newVal === 'on' || newVal === 'indeterminate';
+  var oldStatusOn = oldVal === 'on' || oldVal === 'indeterminate';
+  var object = {};
+  var param;
+
+  // (1) If status of the treeCtrl didn't actually change, no need to do
+  //     anything
+  if (newStatusOn === oldStatusOn) {
+    return;
+  }
+
+  // (2) If node is not mixed, no need to do anything because we let the
+  //     children handle their state individually.
+  if (treeCtrl.node.mixed === false) {
+    return;
+  }
+
+  var childTreeCtrl;
+  var parentTreeCtrl = treeCtrl.parent;
+
+  if (parentTreeCtrl.node.mixed === true) {
+    // (3) If parent node has a 'mixed' property enabled, treat each of its
+    //     node seperately.  In this case, we only need to manage the current
+    //     treeCtrl
+    param = this.getLayerStateParamFromNode_(treeCtrl.node);
+    object[param] = oldStatusOn;
+    this.ngeoStateManager_.updateState(object);
+  } else if (parentTreeCtrl.node.mixed === false) {
+    // (4) If parent node has a 'mixed' property disabled, manage the parent
+    //     param by looping in the state of its children
+    param = this.getLayerStateParamFromNode_(parentTreeCtrl.node);
+
+    var parentState = parentTreeCtrl.getState();
+    if (parentState === 'off') {
+      // The state is set to '', which is different than being deleted
+      object[param] = '';
+      this.ngeoStateManager_.updateState(object);
+    } else {
+      var childNodeNames = [];
+      for (var i = 0, ii = parentTreeCtrl.children.length; i < ii; i++) {
+        childTreeCtrl = parentTreeCtrl.children[i];
+        if (childTreeCtrl.getState() !== 'off') {
+          childNodeNames.push(childTreeCtrl.node.name);
+        }
+      }
+      object[param] = childNodeNames.join(',');
+      this.ngeoStateManager_.updateState(object);
+    }
+  } else {
+    console.log('todo...');
+  }
+};
+
+
+/**
  * @typedef {{
  *     goog: (Array.<goog.events.Key>),
  *     ol: (Array.<ol.EventsKey>)
  * }}
  */
 gmf.Permalink.ListenerKeys;
+
+
+/**
+ * @typedef {{
+ *     stateWatcherUnregister: (Function)
+ * }}
+ */
+gmf.Permalink.TreeCtrlCacheItem;
 
 
 gmf.module.service('gmfPermalink', gmf.Permalink);
