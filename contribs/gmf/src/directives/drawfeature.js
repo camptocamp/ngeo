@@ -187,25 +187,10 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
   this.interactions_.push(this.modify_);
 
   /**
-   * @type {ngeo.Menu}
+   * @type {?ngeo.Menu}
    * @private
    */
-  this.menu_ = new ngeo.Menu({
-    actions: [{
-      cls: 'fa fa-arrows',
-      label: gettextCatalog.getString('Move'),
-      name: gmf.DrawfeatureController.MenuActionType.MOVE
-    }, {
-      cls: 'fa fa-rotate-right',
-      label: gettextCatalog.getString('Rotate'),
-      name: gmf.DrawfeatureController.MenuActionType.ROTATE
-    }, {
-      cls: 'fa fa-trash-o',
-      label: gettextCatalog.getString('Delete'),
-      name: gmf.DrawfeatureController.MenuActionType.DELETE
-    }]
-  });
-  this.map.addOverlay(this.menu_);
+  this.menu_ = null;
 
   /**
    * @type {ngeo.ToolActivate}
@@ -314,8 +299,9 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
           this.featureHelper_.panMapToFeature(newFeature, this.map);
           this.listSelectionInProgress_ = false;
         }
-      } else {
-        this.menu_.close();
+      } else if (this.menu_) {
+        this.map.removeOverlay(this.menu_);
+        this.menu_ = null;
       }
     }.bind(this)
   );
@@ -405,9 +391,6 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
     keys.push(ol.events.listen(this.features, ol.Collection.EventType.REMOVE,
         this.handleFeaturesRemove_, this));
 
-    keys.push(ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
-        this.handleMenuActionClick_, this));
-
     keys.push(ol.events.listen(this.translate_,
         ol.interaction.TranslateEventType.TRANSLATEEND,
         this.handleTranslateEnd_, this));
@@ -446,7 +429,10 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
     this.mapSelectActive = false;
     this.selectedFeature = null;
 
-    this.menu_.close();
+    if (this.menu_) {
+      this.map.removeOverlay(this.menu_);
+      this.menu_ = null;
+    }
   }
 
 };
@@ -646,16 +632,39 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
 
   // show contextual menu when clicking on certain types of features
   if (feature) {
-    var supportedTypes = [
-      ngeo.GeometryType.CIRCLE,
-      ngeo.GeometryType.LINE_STRING,
-      ngeo.GeometryType.POLYGON,
-      ngeo.GeometryType.RECTANGLE
-    ];
+    var actions = [];
+
     var type = this.featureHelper_.getType(feature);
-    if (ol.array.includes(supportedTypes, type)) {
-      this.menu_.open(coordinate);
+    if (type == ngeo.GeometryType.CIRCLE ||
+        type == ngeo.GeometryType.LINE_STRING ||
+        type == ngeo.GeometryType.POLYGON ||
+        type == ngeo.GeometryType.RECTANGLE) {
+      actions = actions.concat([{
+        cls: 'fa fa-arrows',
+        label: this.gettextCatalog_.getString('Move'),
+        name: gmf.DrawfeatureController.MenuActionType.MOVE
+      }, {
+        cls: 'fa fa-rotate-right',
+        label: this.gettextCatalog_.getString('Rotate'),
+        name: gmf.DrawfeatureController.MenuActionType.ROTATE
+      }]);
     }
+
+    actions = actions.concat([{
+      cls: 'fa fa-trash-o',
+      label: this.gettextCatalog_.getString('Delete'),
+      name: gmf.DrawfeatureController.MenuActionType.DELETE
+    }]);
+
+    this.menu_ = new ngeo.Menu({
+      actions: actions
+    });
+
+    ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
+        this.handleMenuActionClick_, this);
+    this.map.addOverlay(this.menu_);
+
+    this.menu_.open(coordinate);
 
     evt.preventDefault();
     evt.stopPropagation();
