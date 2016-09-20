@@ -100,6 +100,12 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
   // === Injected services ===
 
   /**
+   * @type {!angular.Scope} $scope Angular scope.
+   * @private
+   */
+  this.scope_ = $scope;
+
+  /**
    * @type {angular.$timeout}
    * @private
    */
@@ -195,6 +201,20 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
     }.bind(this)
   );
 
+  /**
+   * List of active snappable Layertree controllers with state equal to 'on'.
+   * @type {Array.<ngeo.LayertreeController>}
+   * @export
+   */
+  this.snappableOnTreeCtrls = [];
+
+  /**
+   *
+   * @type {Object.<number, gmf.EditfeatureselectorController.SnappableTreeCtrlCacheItem>}
+   * @private
+   */
+  this.snappableOnTreeCtrlCache_ = {};
+
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
 };
@@ -245,19 +265,6 @@ gmf.EditfeatureselectorController.prototype.handleDestroy_ = function() {
 
 
 /**
- * @param {ngeo.LayertreeController} treeCtrl Layertree controller to check.
- * @return {boolean} Whether the Layertree controller contains an editable node.
- * @private
- */
-gmf.EditfeatureselectorController.prototype.isTreeCtrlEditable_ = function(
-  treeCtrl
-) {
-  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
-  return node.editable === true;
-};
-
-
-/**
  * Registers a newly added Layertree controller.
  *
  *  - If it's editable, add it to the editable Layertree controller array
@@ -268,15 +275,36 @@ gmf.EditfeatureselectorController.prototype.isTreeCtrlEditable_ = function(
 gmf.EditfeatureselectorController.prototype.registerTreeCtrl_ = function(
   treeCtrl
 ) {
-  if (this.isTreeCtrlEditable_(treeCtrl)) {
+  // If treeCtrl is editable, add it to the list of editable tree ctrls
+  if (gmf.LayertreeController.isEditable(treeCtrl)) {
     this.editableTreeCtrls.push(treeCtrl);
   }
 
+  // If treeCtrl is snappable, listen to its state change. When it becomes
+  // visible, it's added to the list of "snappable on" tree ctrls.
+  var snappableConfig = gmf.LayertreeController.getSnappingConfig(treeCtrl);
+  if (snappableConfig) {
+    var uid = goog.getUid(treeCtrl);
+
+    var stateWatcherUnregister = this.scope_.$watch(
+      function() {
+        return treeCtrl.getState();
+      }.bind(this),
+      this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
+    );
+
+    this.snappableOnTreeCtrlCache_[uid] = {
+      stateWatcherUnregister: stateWatcherUnregister
+    };
+
+    // This extra call is to initialize the treeCtrl with its current state
+    this.handleTreeCtrlStateChange_(treeCtrl, treeCtrl.getState());
+  }
 };
 
 
 /**
- * Unregisters a removed eLayertree controller.
+ * Unregisters a removed Layertree controller.
  *
  *  - If it's editable, remove it from the editable Layertree controller array
  *
@@ -286,11 +314,52 @@ gmf.EditfeatureselectorController.prototype.registerTreeCtrl_ = function(
 gmf.EditfeatureselectorController.prototype.unregisterTreeCtrl_ = function(
   treeCtrl
 ) {
+  // Editable
   var index = this.editableTreeCtrls.indexOf(treeCtrl);
   if (index !== -1) {
     this.editableTreeCtrls.splice(index, 1);
   }
+
+  // Snappable
+  var uid = goog.getUid(treeCtrl);
+  if (this.snappableOnTreeCtrlCache_[uid]) {
+    this.snappableOnTreeCtrlCache_[uid].stateWatcherUnregister();
+    delete this.snappableOnTreeCtrlCache_[uid];
+  }
+  index = this.snappableOnTreeCtrls.indexOf(treeCtrl);
+  if (index !== -1) {
+    this.snappableOnTreeCtrls.splice(index, 1);
+  }
 };
+
+
+/**
+ * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
+ * @param {?string} newVal New state value
+ * @private
+ */
+gmf.EditfeatureselectorController.prototype.handleTreeCtrlStateChange_ = function(
+  treeCtrl, newVal
+) {
+  // Note: a snappable treeCtrl can only be a leaf, therefore the only possible
+  //       states are: 'on' and 'off'.
+  if (newVal === 'on') {
+    this.snappableOnTreeCtrls.push(treeCtrl);
+  } else {
+    var index = this.snappableOnTreeCtrls.indexOf(treeCtrl);
+    if (index !== -1) {
+      this.snappableOnTreeCtrls.splice(index, 1);
+    }
+  }
+};
+
+
+/**
+ * @typedef {{
+ *     stateWatcherUnregister: (Function)
+ * }}
+ */
+gmf.EditfeatureselectorController.SnappableTreeCtrlCacheItem;
 
 
 gmf.module.controller(
