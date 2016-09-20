@@ -13,7 +13,8 @@ urllib3.disable_warnings()
 
 def main():
     try:
-        url = "https://api.github.com/repos/%s/ngeo/branches" % argv[1]
+        url = "https://api.github.com/repos/%s/ngeo/branches?per_page=100" \
+            % argv[1]
         expected = [
             branch["name"] for branch in loads(requests.get(url).content)
         ]
