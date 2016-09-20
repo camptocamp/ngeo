@@ -662,30 +662,6 @@ var themes = {
               }
             },
             {
-              'layers':'police',
-              'minResolutionHint':0.0,
-              'name':'police',
-              'childLayers':[
-                {
-                  'minResolutionHint':0.0,
-                  'name':'police',
-                  'maxResolutionHint':999999999.0,
-                  'queryable':true
-                }
-              ],
-              'maxResolutionHint':999999999.0,
-              'type':'WMS',
-              'id':105,
-              'imageType':'image/png',
-              'metadata':{
-                'identifierAttributeField':'display_name',
-                'isChecked':true,
-                'legendRule':'Poste de police',
-                'legend':'true',
-                'disclaimer':'\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
-            },
-            {
               'layers':'post_office',
               'minResolutionHint':0.0,
               'name':'post_office',
@@ -824,6 +800,30 @@ var themes = {
                 'isChecked':true,
                 'legendRule':'H\u00f4pital',
                 'legend':'false',
+                'disclaimer':'\u00a9 les contributeurs d\u2019OpenStreetMap'
+              }
+            },
+            {
+              'layers':'police',
+              'minResolutionHint':0.0,
+              'name':'police',
+              'childLayers':[
+                {
+                  'minResolutionHint':0.0,
+                  'name':'police',
+                  'maxResolutionHint':999999999.0,
+                  'queryable':true
+                }
+              ],
+              'maxResolutionHint':999999999.0,
+              'type':'WMS',
+              'id':105,
+              'imageType':'image/png',
+              'metadata':{
+                'identifierAttributeField':'display_name',
+                'isChecked':true,
+                'legendRule':'Poste de police',
+                'legend':'true',
                 'disclaimer':'\u00a9 les contributeurs d\u2019OpenStreetMap'
               }
             }
