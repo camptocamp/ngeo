@@ -1,7 +1,7 @@
-/* global themes capabilities */
+/* global old_themes capabilities */
 goog.require('gmf.Themes');
 goog.require('gmf.ThemesEventType');
-goog.require('gmf.test.data.themes');
+goog.require('gmf.test.data.old_themes');
 
 describe('gmf.Themes', function() {
   var gmfThemes;
@@ -13,7 +13,8 @@ describe('gmf.Themes', function() {
       gmfThemes = $injector.get('gmfThemes');
       treeUrl = $injector.get('gmfTreeUrl') + '?cache_version=0';
       $httpBackend = $injector.get('$httpBackend');
-      $httpBackend.when('GET', treeUrl).respond(themes);
+      // FIXME Use current version of the theme
+      $httpBackend.when('GET', treeUrl).respond(old_themes);
     });
   });
 
@@ -27,7 +28,8 @@ describe('gmf.Themes', function() {
     gmfThemes.getBgLayers({}).then(spy);
 
     $httpBackend.expectGET(treeUrl);
-    themes.background_layers.forEach(function(bgLayer) {
+    // FIXME Use current version of the theme
+    old_themes.background_layers.forEach(function(bgLayer) {
       var response = bgLayer.name == 'map' ? capabilities.map :
           capabilities.asitvd;
       $httpBackend.when('GET', bgLayer.url).respond(response);
@@ -40,7 +42,8 @@ describe('gmf.Themes', function() {
     var response = spy.calls.mostRecent().args[0];
     expect(response.length).toBe(4);
     var responseFirstBgName = response[1].get('label');
-    var firstBgName = themes.background_layers[0].name;
+    // FIXME Use current version of the theme
+    var firstBgName = old_themes.background_layers[0].name;
     expect(responseFirstBgName).toBe(firstBgName);
     expect(response[1].get('querySourceIds')).toBeDefined();
   });
@@ -81,7 +84,8 @@ describe('gmf.Themes', function() {
 
     expect(spy.calls.count()).toBe(1);
     var data = spy.calls.mostRecent().args[0];
-    expect(Object.keys(data)[0]).toBe(Object.keys(themes)[0]);
+    // FIXME Use current version of the theme
+    expect(Object.keys(data)[0]).toBe(Object.keys(old_themes)[0]);
   });
 
   it('Get themes object', function() {
@@ -95,7 +99,8 @@ describe('gmf.Themes', function() {
     expect(spy.calls.count()).toBe(1);
     var resultThemes = spy.calls.mostRecent().args[0];
     var dataFirstKey = Object.keys(resultThemes[0])[0];
-    var themesThemesFirstKey = Object.keys(themes.themes[0])[0];
+    // FIXME Use current version of the theme
+    var themesThemesFirstKey = Object.keys(old_themes.themes[0])[0];
     expect(dataFirstKey).toBe(themesThemesFirstKey);
   });
 
