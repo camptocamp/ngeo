@@ -1,4 +1,4 @@
-/* global themes */
+/* global old_themes */
 goog.require('gmf.Permalink');
 goog.require('gmf');
 goog.require('ngeo.LayerHelper');
@@ -26,7 +26,8 @@ describe('Permalink service', function() {
     PermalinkService.setMap(map);
     // need to work on a clone of themes, because the permalink service
     // seems to change the original object?!
-    themesClone = goog.object.unsafeClone(themes);
+    // FIXME use the current version of the themes.
+    themesClone = goog.object.unsafeClone(old_themes);
     PermalinkService.themes_ = themesClone['themes'];
 
 
