@@ -38,7 +38,7 @@ describe('ngeo.layertreeDirective', function() {
     };
 
     var getLayer = function(node) {
-      return new ol.layer.ImageWMS({name: node['name']});
+      return new ol.layer.Image();
     };
 
     inject(function($rootScope, $compile, $sce) {

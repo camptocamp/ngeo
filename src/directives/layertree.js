@@ -348,7 +348,9 @@ ngeo.LayertreeController.prototype.getCalculateState = function() {
 ngeo.LayertreeController.prototype.getSetActive = function(val) {
   var layer = this.layer;
   var map = this.map;
-  goog.asserts.assert(this.layer !== null);
+  if (!layer) {
+    return;
+  }
   if (val !== undefined) {
     if (!val) {
       map.removeLayer(layer);
