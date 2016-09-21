@@ -570,3 +570,57 @@ gmfx.ShortenerAPIResponseData;
  * }}
  */
 gmfx.ShortenerAPIRequestParams;
+
+
+/**
+ * @typedef {{
+ *     featureTypes: (string),
+ *     url: (string)
+ * }}
+ */
+gmfx.SnappingHandlerWFSConfig;
+
+
+/**
+ * A comma-separated list of featureTypes
+ * @type {string}
+ */
+gmfx.SnappingHandlerWFSConfig.prototype.featureTypes;
+
+
+/**
+ * The WFS server url
+ * @type {string}
+ */
+gmfx.SnappingHandlerWFSConfig.prototype.url;
+
+
+/**
+ * @typedef {{
+ *     features: (ol.Collection.<ol.Feature>),
+ *     snappingConfig: (GmfSnappingConfig),
+ *     wfsConfig: (gmfx.SnappingHandlerWFSConfig)
+ * }}
+ */
+gmfx.SnappableItem;
+
+
+/**
+ * Collection where to add snappable features obtained from WFS requests.
+ * @type {ol.Collection.<ol.Feature>}
+ */
+gmfx.SnappableItem.prototype.features;
+
+
+/**
+ * Configuration for the `ol.interaction.Snap`.
+ * @type {GmfSnappingConfig}
+ */
+gmfx.SnappableItem.prototype.snappingConfig;
+
+
+/**
+ * Configuration to be able to do WFS requests.
+ * @type {gmfx.SnappingHandlerWFSConfig}
+ */
+gmfx.SnappableItem.prototype.wfsConfig;

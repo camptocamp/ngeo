@@ -414,6 +414,18 @@ GmfThemesLeafMetaData.prototype.minResolutionHint;
 
 
 /**
+ * The snapping configuration for the leaf. If set, the leaf's layer is
+ * considered to be "snappable", even if the config itself is empty.
+ *
+ * NOTE: The configuration is currently a string, but the parsed value is equal
+ * to: GmfSnappingConfig.
+ *
+ * @type {string|undefined}
+ */
+GmfThemesLeafMetaData.prototype.snappingConfig;
+
+
+/**
  * @type {string|undefined}
  */
 GmfThemesLeafMetaData.prototype.wmsLayers;
@@ -423,3 +435,33 @@ GmfThemesLeafMetaData.prototype.wmsLayers;
  * @type {string|undefined}
  */
 GmfThemesLeafMetaData.prototype.wmsUrl;
+
+
+/**
+ * @constructor
+ */
+var GmfSnappingConfig = function() {};
+
+
+/**
+ * Determines whethers the edges of features from the node layer can be snapped
+ * or not. Defaults to `true`.
+ * @type {boolean|undefined}
+ */
+GmfSnappingConfig.prototype.edge;
+
+
+/**
+ * The tolerance in pixels the snapping should occur for the node layer.
+ * Defaults to `10`.
+ * @type {number|undefined}
+ */
+GmfSnappingConfig.prototype.tolerance;
+
+
+/**
+ * Determines whethers the vertices of features from the node layer can be
+ * snapped or not. Defaults to `true`.
+ * @type {boolean|undefined}
+ */
+GmfSnappingConfig.prototype.vertex;

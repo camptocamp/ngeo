@@ -554,4 +554,36 @@ gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
 };
 
 
+/**
+ * Get the snapping configuration object from a Layertree controller
+ *
+ * @param {ngeo.LayertreeController} treeCtrl Layertree controller,
+ * @return {?GmfSnappingConfig} Snapping configuration, if found.
+ * @export
+ */
+gmf.LayertreeController.getSnappingConfig = function(treeCtrl) {
+  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
+  var config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
+      /** @type {GmfSnappingConfig} */ ({}) : null;
+
+  // FIXME
+  //JSON.parse(node.metadata.snappingConfig) : null;
+
+  return config;
+};
+
+
+/**
+ * Determines whether a Layertree controller is editable or not using its node.
+ *
+ * @param {ngeo.LayertreeController} treeCtrl Layertree controller.
+ * @return {boolean} Whether the Layertree controller contains an editable node.
+ * @export
+ */
+gmf.LayertreeController.isEditable = function(treeCtrl) {
+  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
+  return node.editable === true;
+};
+
+
 gmf.module.controller('GmfLayertreeController', gmf.LayertreeController);
