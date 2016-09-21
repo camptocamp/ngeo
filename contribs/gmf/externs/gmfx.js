@@ -100,7 +100,8 @@ gmfx.MousePositionProjection.prototype.filter;
  * Configuration options for the permalink service.
  * @typedef {{
  *     crosshairStyle: (Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined),
- *     projectionCodes: (Array.<string>|undefined)
+ *     projectionCodes: (Array.<string>|undefined),
+ *     useLocalStorage: (boolean|undefined)
  * }}
  */
 gmfx.PermalinkOptions;
@@ -120,6 +121,13 @@ gmfx.PermalinkOptions.prototype.crosshairStyle;
  * @type {Array.<string>|undefined}
  */
 gmfx.PermalinkOptions.prototype.projectionCodes;
+
+
+/**
+ * Store the values in the local storage. Default is `true`.
+ * @type {boolean|undefined}
+ */
+gmfx.PermalinkOptions.prototype.useLocalStorage;
 
 
 /**

@@ -19,6 +19,7 @@ goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.WfsPermalink');
 goog.require('goog.asserts');
 goog.require('ol.Feature');
+goog.require('ol.functions');
 goog.require('ol.geom.Point');
 goog.require('ol.proj');
 goog.require('ol.layer.Group');
@@ -146,6 +147,10 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
+
+  if (gmfPermalinkOptions.useLocalStorage === false) {
+    this.ngeoStateManager_.localStorage.isAvailable = ol.functions.FALSE;
+  }
 
   /**
    * @type {gmf.Themes}

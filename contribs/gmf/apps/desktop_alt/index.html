@@ -299,7 +299,7 @@
                 {action: 'add_layer', title: 'Add a layer'}
         ]);
         module.constant('gmfTreeManagerModeFlush', false);
-        module.value('gmfPermalinkOptions', {projectionCodes: ['EPSG:21781', 'EPSG:2056', 'EPSG:4326']});
+        module.value('gmfPermalinkOptions', {projectionCodes: ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'], useLocalStorage: false});
         module.value('ngeoWfsPermalinkOptions',
             /** @type {ngeox.WfsPermalinkOptions} */ ({
               url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
