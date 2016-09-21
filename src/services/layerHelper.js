@@ -63,11 +63,6 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
 ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
     sourceLayersName, opt_serverType, opt_time, opt_params) {
 
-  //DebugZone
-  sourceURL = sourceURL.replace('ogcserver=Main+PNG&','');
-  sourceURL = sourceURL.replace('ogcserver=Main+Jpeg&','');
-  sourceURL = sourceURL.replace('ogcserver=WMS+CH+topo+fr&','');
-
   var params = {'LAYERS': sourceLayersName};
   var olServerType;
   if (opt_time) {
