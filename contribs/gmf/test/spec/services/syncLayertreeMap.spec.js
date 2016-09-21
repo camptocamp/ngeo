@@ -39,7 +39,7 @@ describe('gmf.SyncLayertreeMap', function() {
       treeUrl = $injector.get('gmfTreeUrl') + '?cache_version=0';
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.when('GET', treeUrl).respond(themes);
-      $httpBackend.when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr').respond(capabilities);
+      $httpBackend.when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr').respond(capabilities.swisstopo);
 
       // Prepare themes
       $httpBackend.expectGET(treeUrl);
@@ -131,22 +131,23 @@ describe('gmf.SyncLayertreeMap', function() {
     expect(wmsParamLayers).toEqual(checkedLayers.reverse().join(','));
   });
 
-  // FIXME source is null... must wait.
-  //it('Create WMTS Layer (in a mixed group)', function() {
-  //  inject(function($rootScope, $compile) {
-  //    // Init, compile layertree
-  //    $rootScope.tree = themes.themes[2]; // Theme 'Cadastre'
-  //    $rootScope.map = map;
-  //    $rootScope.getLayer = getLayer;
-  //    $compile(element)($rootScope);
-  //    $rootScope.$digest();
-  //  });
-  //  roottreeCtrl = element.scope().layertreeCtrl;
-  //  var treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
-  //  var treeLeaf = treeGroup.children[4]; // Leaf 'ch.alpenkonvention'
+  it('Create WMTS Layer (in a mixed group)', function() {
+    inject(function($rootScope, $compile) {
+      // Init, compile layertree
+      $rootScope.tree = themes.themes[2]; // Theme 'Cadastre'
+      $rootScope.map = map;
+      $rootScope.getLayer = getLayer;
+      $compile(element)($rootScope);
+      $rootScope.$digest();
+    });
 
-  //  expect(treeLeaf.node.name).toBe(treeLeaf.layer.getSource().getLayer());
-  //});
+    $httpBackend.flush(); // To get capabilities (and source) for the WMTS layer.
+    roottreeCtrl = element.scope().layertreeCtrl;
+    var treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
+    var treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
+
+    expect(treeLeaf.node.name).toBe(treeLeaf.layer.getSource().getLayer());
+  });
 
   // ================== Sync ================
 
@@ -207,27 +208,26 @@ describe('gmf.SyncLayertreeMap', function() {
     expect(wmsParamLayers).toEqual(allWMSLayerParam.reverse().join(','));
   });
 
+  it('Sync WMTS Layer (in a mixed group)', function() {
+    inject(function($rootScope, $compile) {
+      // Init, compile layertree
+      $rootScope.tree = themes.themes[2]; // Theme 'Cadastre'
+      $rootScope.map = map;
+      $rootScope.getLayer = getLayer;
+      $compile(element)($rootScope);
+      $rootScope.$digest();
+    });
+    $httpBackend.flush(); // To get capabilities (and source) for the WMTS layer.
+    roottreeCtrl = element.scope().layertreeCtrl;
+    var treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
+    var treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
 
-  // FIXME source is null... must wait.
-  //it('Create WMTS Layer (in a mixed group)', function() {
-  //  inject(function($rootScope, $compile) {
-  //    // Init, compile layertree
-  //    $rootScope.tree = themes.themes[2]; // Theme 'Cadastre'
-  //    $rootScope.map = map;
-  //    $rootScope.getLayer = getLayer;
-  //    $compile(element)($rootScope);
-  //    $rootScope.$digest();
-  //  });
-  //  roottreeCtrl = element.scope().layertreeCtrl;
-  //  var treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
-  //  var treeLeaf = treeGroup.children[4]; // Leaf 'ch.alpenkonvention'
+    treeGroup.setState('off');
+    gmfSyncLayertreeMap.sync(map, treeGroup);
+    expect(treeLeaf.layer.getVisible()).toBe(false);
 
-  //  roottreeCtrl.setState('off');
-  //  gmfSyncLayertreeMap.sync(map, treeGroup);
-  //  expect(treeGroup.layer.getVisible()).toBe(false);
-
-  //  treeLeaf.setState('on');
-  //  gmfSyncLayertreeMap.sync(map, treeLeaf);
-  //  expect(treeGroup.layer.getVisible()).toBe(true);
-  //});
+    treeLeaf.setState('on');
+    gmfSyncLayertreeMap.sync(map, treeLeaf);
+    expect(treeLeaf.layer.getVisible()).toBe(true);
+  });
 });
