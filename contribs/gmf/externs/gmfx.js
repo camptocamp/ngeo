@@ -570,3 +570,65 @@ gmfx.ShortenerAPIResponseData;
  * }}
  */
 gmfx.ShortenerAPIRequestParams;
+
+
+/**
+ * @typedef {{
+ *     featureTypes: (string),
+ *     url: (string)
+ * }}
+ */
+gmfx.SnappingHandlerWFSConfig;
+
+
+/**
+ * A comma-separated list of featureTypes
+ * @type {string}
+ */
+gmfx.SnappingHandlerWFSConfig.prototype.featureTypes;
+
+
+/**
+ * The WFS server url
+ * @type {string}
+ */
+gmfx.SnappingHandlerWFSConfig.prototype.url;
+
+
+/**
+ * The key is the uid of the treeCtrl obtained using `goog.getUid`.
+ * @typedef {Object<number, gmfx.SnappableItem>}
+ */
+gmfx.SnappableItems;
+
+
+/**
+ * @typedef {{
+ *     snappingConfig: (GmfSnappingConfig),
+ *     wfsConfig: (gmfx.SnappingHandlerWFSConfig)
+ * }}
+ */
+gmfx.SnappableItem;
+
+
+/**
+ * @typedef {{
+ *     snappingConfig: (GmfSnappingConfig),
+ *     wfsConfig: (gmfx.SnappingHandlerWFSConfig)
+ * }}
+ */
+gmfx.SnappableItem;
+
+
+/**
+ * Configuration for the `ol.interaction.Snap`.
+ * @type {GmfSnappingConfig}
+ */
+gmfx.SnappableItem.prototype.snappingConfig;
+
+
+/**
+ * Configuration to be able to do WFS requests.
+ * @type {gmfx.SnappingHandlerWFSConfig}
+ */
+gmfx.SnappableItem.prototype.wfsConfig;

@@ -2,6 +2,7 @@ goog.provide('gmf.EditfeatureselectorController');
 goog.provide('gmf.editfeatureselectorDirective');
 
 goog.require('gmf');
+goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureDirective');
@@ -55,13 +56,15 @@ gmf.module.directive(
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @constructor
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController
  */
-gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
+gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
+    gmfTreeManager) {
 
   // === Directive options ===
 
@@ -112,6 +115,12 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
   this.$timeout_ = $timeout;
 
   /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
+
+  /**
    * @type {gmf.TreeManager}
    * @private
    */
@@ -150,6 +159,17 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
    * @export
    */
   this.dirty = false;
+
+  /**
+   * @type {ol.EventsKey}
+   * @private
+   */
+  this.gmfThemesChangeEventKey_ = ol.events.listen(
+    this.gmfThemes_,
+    gmf.ThemesEventType.CHANGE,
+    this.handleThemesChange_,
+    this
+  );
 
   /**
    * List of editable Layertree controllers.
@@ -202,21 +222,48 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
   );
 
   /**
-   * List of active snappable Layertree controllers with state equal to 'on'.
-   * @type {Array.<ngeo.LayertreeController>}
-   * @export
-   */
-  this.snappableOnTreeCtrls = [];
-
-  /**
-   *
-   * @type {Object.<number, gmf.EditfeatureselectorController.SnappableTreeCtrlCacheItem>}
+   * A reference to the OGC servers loaded by the theme service.
+   * @type {GmfOgcServers}
    * @private
    */
-  this.snappableOnTreeCtrlCache_ = {};
+  this.ogcServers_ = null;
+
+  /**
+   * The list of Snappable items, i.e. configurations required to enable
+   * snapping in the `gmf-editfeature` directive.
+   * @type {Array.<gmfx.SnappableItem>}
+   * @export
+   */
+  this.snappableItems = [];
+
+  /**
+   * A cache containing all available snappable items, in which the listening
+   * of the state of the `treeCtrl` is registered and unregistered.
+   * @type {gmf.EditfeatureselectorController.SnappableItemCache}
+   * @private
+   */
+  this.snappableItemsCache_ = {};
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
+};
+
+
+/**
+ * Called when the themes change. Get the OGC servers, then listen to the
+ * tree manager Layertree controllers array changes.
+ * @private
+ */
+gmf.EditfeatureselectorController.prototype.handleThemesChange_ = function() {
+
+  this.ogcServers_ = null;
+
+  this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
+    console.log(ogcServers);
+
+    this.ogcServers_ = ogcServers;
+
+  }.bind(this));
 };
 
 
@@ -260,14 +307,19 @@ gmf.EditfeatureselectorController.prototype.handleActiveChange_ = function(activ
  * @private
  */
 gmf.EditfeatureselectorController.prototype.handleDestroy_ = function() {
+  ol.events.unlistenByKey(this.gmfThemesChangeEventKey_);
   this.treeCtrlReferencesWatcherUnregister_();
 };
 
 
 /**
- * Registers a newly added Layertree controller.
+ * Registers a newly added Layertree controller 'leaf'.
  *
  *  - If it's editable, add it to the editable Layertree controller array
+ * -  If it's snappable, create and add a `gmfx.SnappableItem` and add it
+ *    to a cache. The state of the treeCtrl gets also watched. Once the state
+ *    becomes `on`, then the item is pushed in the list of snappableItems that
+ *    is shared with the `gmf-editfeature` directive.
  *
  * @param {ngeo.LayertreeController} treeCtrl Layertree controller to register
  * @private
@@ -275,38 +327,54 @@ gmf.EditfeatureselectorController.prototype.handleDestroy_ = function() {
 gmf.EditfeatureselectorController.prototype.registerTreeCtrl_ = function(
   treeCtrl
 ) {
+
+  // Skip any Layertree controller that has a node that is not a leaf
+  var node = /** @type {GmfThemesGroup|GmfThemesLeaf} */ (treeCtrl.node);
+  if (node.children) {
+    return;
+  }
+
   // If treeCtrl is editable, add it to the list of editable tree ctrls
   if (gmf.LayertreeController.isEditable(treeCtrl)) {
     this.editableTreeCtrls.push(treeCtrl);
   }
 
-  // If treeCtrl is snappable, listen to its state change. When it becomes
-  // visible, it's added to the list of "snappable on" tree ctrls.
-  var snappableConfig = gmf.LayertreeController.getSnappingConfig(treeCtrl);
-  if (snappableConfig) {
-    var uid = goog.getUid(treeCtrl);
+  // If treeCtrl is snappable and supports WFS, listen to its state change.
+  // When it becomes visible, it's added to the list of snappable tree ctrls.
+  var snappingConfig = gmf.LayertreeController.getSnappingConfig(treeCtrl);
+  if (snappingConfig) {
+    var wfsConfig = this.getSnappingHandlerWFSConfig_(treeCtrl);
+    if (wfsConfig) {
+      var uid = goog.getUid(treeCtrl);
 
-    var stateWatcherUnregister = this.scope_.$watch(
-      function() {
-        return treeCtrl.getState();
-      }.bind(this),
-      this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
-    );
+      var stateWatcherUnregister = this.scope_.$watch(
+        function() {
+          return treeCtrl.getState();
+        }.bind(this),
+        this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
+      );
 
-    this.snappableOnTreeCtrlCache_[uid] = {
-      stateWatcherUnregister: stateWatcherUnregister
-    };
+      this.snappableItemsCache_[uid] = {
+        item: {
+          snappingConfig: snappingConfig,
+          wfsConfig: wfsConfig
+        },
+        stateWatcherUnregister: stateWatcherUnregister
+      };
 
-    // This extra call is to initialize the treeCtrl with its current state
-    this.handleTreeCtrlStateChange_(treeCtrl, treeCtrl.getState());
+      // This extra call is to initialize the treeCtrl with its current state
+      this.handleTreeCtrlStateChange_(treeCtrl, treeCtrl.getState());
+    }
   }
 };
 
 
 /**
- * Unregisters a removed Layertree controller.
+ * Unregisters a removed Layertree controller 'leaf'.
  *
  *  - If it's editable, remove it from the editable Layertree controller array
+ *  - If it's snappable, remove it from both the snappable cache and list
+ *    and also unlisten the state watcher.
  *
  * @param {ngeo.LayertreeController} treeCtrl Layertree controller to register
  * @private
@@ -314,6 +382,13 @@ gmf.EditfeatureselectorController.prototype.registerTreeCtrl_ = function(
 gmf.EditfeatureselectorController.prototype.unregisterTreeCtrl_ = function(
   treeCtrl
 ) {
+
+  // Skip any Layertree controller that has a node that is not a leaf
+  var node = /** @type {GmfThemesGroup|GmfThemesLeaf} */ (treeCtrl.node);
+  if (node.children) {
+    return;
+  }
+
   // Editable
   var index = this.editableTreeCtrls.indexOf(treeCtrl);
   if (index !== -1) {
@@ -322,14 +397,16 @@ gmf.EditfeatureselectorController.prototype.unregisterTreeCtrl_ = function(
 
   // Snappable
   var uid = goog.getUid(treeCtrl);
-  if (this.snappableOnTreeCtrlCache_[uid]) {
-    this.snappableOnTreeCtrlCache_[uid].stateWatcherUnregister();
-    delete this.snappableOnTreeCtrlCache_[uid];
+  if (this.snappableItemsCache_[uid]) {
+    this.snappableItemsCache_[uid].stateWatcherUnregister();
+    var item = this.snappableItemsCache_[uid].item;
+    index = this.snappableItems.indexOf(item);
+    if (index !== -1) {
+      this.snappableItems.splice(index, 1);
+    }
+    delete this.snappableItemsCache_[uid];
   }
-  index = this.snappableOnTreeCtrls.indexOf(treeCtrl);
-  if (index !== -1) {
-    this.snappableOnTreeCtrls.splice(index, 1);
-  }
+
 };
 
 
@@ -341,25 +418,118 @@ gmf.EditfeatureselectorController.prototype.unregisterTreeCtrl_ = function(
 gmf.EditfeatureselectorController.prototype.handleTreeCtrlStateChange_ = function(
   treeCtrl, newVal
 ) {
+
+  var uid = goog.getUid(treeCtrl);
+  var item = this.snappableItemsCache_[uid].item;
+
   // Note: a snappable treeCtrl can only be a leaf, therefore the only possible
   //       states are: 'on' and 'off'.
   if (newVal === 'on') {
-    this.snappableOnTreeCtrls.push(treeCtrl);
+    this.snappableItems.push(item);
   } else {
-    var index = this.snappableOnTreeCtrls.indexOf(treeCtrl);
+    var index = this.snappableItems.indexOf(item);
     if (index !== -1) {
-      this.snappableOnTreeCtrls.splice(index, 1);
+      this.snappableItems.splice(index, 1);
     }
   }
+
+  // FIXME - remove
+  //console.log(this.snappableItems);
 };
 
 
 /**
+ * Get the configuration required to do WFS requests (for snapping purpose)
+ * from a Layertree controller that has a leaf node.
+ *
+ * The following requirements must be met in order for a treeCtrl to be
+ * considered supporting WFS:
+ *
+ * 1) ogcServers objects are loaded
+ * 2) its node `type` property is equal to `WMS`
+ * 3) in its node `childLayers` property, the `queryable` property is set
+ *    to `true`
+ * 4) if its node `mixed` property is:
+ *   a) true: then the node must have an `ogcServer` property set
+ *   b) false: then the first parent node must have an `ogcServer` property set
+ * 5) the ogcServer defined in 3) has the `wfsSupport` property set to `true`.
+ *
+ * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
+ * @return {?gmfx.SnappingHandlerWFSConfig} The configuration object.
+ * @private
+ */
+gmf.EditfeatureselectorController.prototype.getSnappingHandlerWFSConfig_ = function(
+  treeCtrl
+) {
+
+  // (1)
+  if (this.ogcServers_ === null) {
+    return null;
+  }
+
+  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
+
+  // (2)
+  if (node.type !== gmf.Themes.NodeType.WMS) {
+    return null;
+  }
+
+  // (3)
+  var featureTypes = [];
+  for (var i = 0, ii = node.childLayers.length; i < ii; i++) {
+    if (node.childLayers[i].queryable) {
+      featureTypes.push(node.childLayers[i].name);
+    }
+  }
+  if (!featureTypes.length) {
+    return null;
+  }
+
+  // (4)
+  var ogcServerName;
+  var parentNode = /** @type {GmfThemesGroup} */ (treeCtrl.parent.node);
+  if (parentNode.mixed) {
+    ogcServerName = node.ogcServer;
+  } else {
+    var firstTreeCtrl = ngeo.LayertreeController.getFirstParentTree(treeCtrl);
+    var firstNode = /** @type {GmfThemesGroup} */ (firstTreeCtrl.node);
+    ogcServerName = firstNode.ogcServer;
+  }
+  if (!ogcServerName) {
+    return null;
+  }
+
+  // (5)
+  var ogcServer = this.ogcServers_[ogcServerName];
+  if (!ogcServer.wfsSupport) {
+    return null;
+  }
+
+  // At this point, every requirements have been met.
+  // Create and return the configuration.
+  var urlWfs = ogcServer.urlWfs;
+  goog.asserts.assert(urlWfs, 'urlWfs should be defined.');
+
+  return {
+    featureTypes: featureTypes.join(','),
+    url: urlWfs
+  };
+};
+
+
+/**
+ * @typedef {Object<number, gmf.EditfeatureselectorController.SnappableItemCacheItem>}
+ */
+gmf.EditfeatureselectorController.SnappableItemCache;
+
+
+/**
  * @typedef {{
+ *     item: (gmfx.SnappableItem),
  *     stateWatcherUnregister: (Function)
  * }}
  */
-gmf.EditfeatureselectorController.SnappableTreeCtrlCacheItem;
+gmf.EditfeatureselectorController.SnappableItemCacheItem;
 
 
 gmf.module.controller(
