@@ -396,7 +396,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
     return;
   }
   var layer = /** @type {ol.layer.Image} */ (
-          this.gmfSyncLayertreeMap_.getLayer(layertreeCtrl));
+      gmf.SyncLayertreeMap.getLayer(layertreeCtrl));
   if (layer) {
     var node = /** @type {GmfThemesGroup} */ (layertreeCtrl.node);
     var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);

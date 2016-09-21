@@ -4,6 +4,7 @@ goog.provide('gmf.editfeatureDirective');
 
 goog.require('gmf');
 goog.require('gmf.EditFeature');
+goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.XSDAttributes');
 /** @suppress {extraRequire} */
 goog.require('ngeo.attributesDirective');
@@ -181,7 +182,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
     this.editableTreeCtrl.node);
 
 
-  var layer = this.editableTreeCtrl.parent.layer;
+  var layer = gmf.SyncLayertreeMap.getLayer(this.editableTreeCtrl);
   goog.asserts.assert(
     layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile);
 
