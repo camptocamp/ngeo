@@ -81,7 +81,7 @@ gmf.SyncLayertreeMap.prototype.sync = function(map, treeCtrl) {
   var treeCtrls = [];
   ngeo.LayertreeController.getFlatTree(treeCtrl, treeCtrls);
   treeCtrls.forEach(function(item) {
-    var layer = this.getLayer(item);
+    var layer = gmf.SyncLayertreeMap.getLayer(item);
     if (layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile) {
       this.updateLayerState_(layer, item);
     }
@@ -187,7 +187,7 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
     if (inAMixedGroup) {
       layer = this.createLayerFromGroup_(treeCtrl, true);
       var layerGroup = /** @type {ol.layer.Group} */ (
-              this.getLayer(treeCtrl.parent));
+              gmf.SyncLayertreeMap.getLayer(treeCtrl.parent));
       layerGroup.getLayers().insertAt(0, layer);
     }
   }
@@ -275,7 +275,8 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl,
   }
   layer.setVisible(checked);
   // Insert layer in the map.
-  var layerGroup = /** @type {ol.layer.Group} */ (this.getLayer(treeCtrl));
+  var layerGroup = /** @type {ol.layer.Group} */ (
+    gmf.SyncLayertreeMap.getLayer(treeCtrl));
   layerGroup.getLayers().insertAt(0, layer);
   return layer;
 };
@@ -295,7 +296,7 @@ gmf.SyncLayertreeMap.prototype.createLeafInANotMixedGroup_ = function(treeCtrl,
   var notMixedTreeCtrl = this.getFirstNotMixedParentTreeCtrl_(treeCtrl);
   goog.asserts.assert(notMixedTreeCtrl);
   var wmsLayer = /** @type {ol.layer.Image} */ (
-          this.getLayer(notMixedTreeCtrl));
+          gmf.SyncLayertreeMap.getLayer(notMixedTreeCtrl));
   goog.asserts.assertInstanceof(wmsLayer, ol.layer.Image);
   //Update layer information and tree state.
   this.updateLayerReferences_(leafNode, wmsLayer);
@@ -386,24 +387,6 @@ gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
   return timeParam;
 };
 
-/**
- * Return the layer used by the given treeCtrl.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
- * @return {ol.layer.Base} The layer.
- * @public
- */
-gmf.SyncLayertreeMap.prototype.getLayer = function(treeCtrl) {
-  var tree = treeCtrl;
-  var layer = null;
-  while (!tree.isRoot && layer === null) {
-    if (tree.layer) {
-      layer = tree.layer;
-    }
-    tree = tree.parent;
-  }
-  return layer;
-};
-
 
 /**
  * Return true if a parent tree is mixed, based on its node.
@@ -440,6 +423,25 @@ gmf.SyncLayertreeMap.prototype.getFirstNotMixedParentTreeCtrl_ = function(
     tree = tree.parent;
   }
   return notMixedParent;
+};
+
+
+/**
+ * Return the layer used by the given treeCtrl.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @return {ol.layer.Base} The layer.
+ * @public
+ */
+gmf.SyncLayertreeMap.getLayer = function(treeCtrl) {
+  var tree = treeCtrl;
+  var layer = null;
+  while (!tree.isRoot && layer === null) {
+    if (tree.layer) {
+      layer = tree.layer;
+    }
+    tree = tree.parent;
+  }
+  return layer;
 };
 
 
