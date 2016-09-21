@@ -6,6 +6,7 @@ goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureDirective');
+goog.require('ol.Collection');
 
 
 /**
@@ -229,7 +230,7 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
   this.ogcServers_ = null;
 
   /**
-   * The list of Snappable items, i.e. configurations required to enable
+   * The list of snappable items, i.e. configurations required to enable
    * snapping in the `gmf-editfeature` directive.
    * @type {Array.<gmfx.SnappableItem>}
    * @export
@@ -255,14 +256,9 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
  * @private
  */
 gmf.EditfeatureselectorController.prototype.handleThemesChange_ = function() {
-
   this.ogcServers_ = null;
-
   this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
-    console.log(ogcServers);
-
     this.ogcServers_ = ogcServers;
-
   }.bind(this));
 };
 
@@ -356,6 +352,7 @@ gmf.EditfeatureselectorController.prototype.registerTreeCtrl_ = function(
 
       this.snappableItemsCache_[uid] = {
         item: {
+          features: new ol.Collection(),
           snappingConfig: snappingConfig,
           wfsConfig: wfsConfig
         },

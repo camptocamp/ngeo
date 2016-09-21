@@ -596,14 +596,8 @@ gmfx.SnappingHandlerWFSConfig.prototype.url;
 
 
 /**
- * The key is the uid of the treeCtrl obtained using `goog.getUid`.
- * @typedef {Object<number, gmfx.SnappableItem>}
- */
-gmfx.SnappableItems;
-
-
-/**
  * @typedef {{
+ *     features: (ol.Collection.<ol.Feature>),
  *     snappingConfig: (GmfSnappingConfig),
  *     wfsConfig: (gmfx.SnappingHandlerWFSConfig)
  * }}
@@ -612,12 +606,10 @@ gmfx.SnappableItem;
 
 
 /**
- * @typedef {{
- *     snappingConfig: (GmfSnappingConfig),
- *     wfsConfig: (gmfx.SnappingHandlerWFSConfig)
- * }}
+ * Collection where to add snappable features obtained from WFS requests.
+ * @type {ol.Collection.<ol.Feature>}
  */
-gmfx.SnappableItem;
+gmfx.SnappableItem.prototype.features;
 
 
 /**

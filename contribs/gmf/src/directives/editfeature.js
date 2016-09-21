@@ -4,6 +4,7 @@ goog.provide('gmf.editfeatureDirective');
 
 goog.require('gmf');
 goog.require('gmf.EditFeature');
+goog.require('gmf.SnappingHandler');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.XSDAttributes');
 /** @suppress {extraRequire} */
@@ -48,6 +49,7 @@ goog.require('ol.style.Text');
  *         gmf-editfeature-dirty="ctrl.dirty"
  *         gmf-editfeature-editabletreectrl="::ctrl.treeCtrl"
  *         gmf-editfeature-map="::ctrl.map"
+ *         gmf-editfeature-snappableitems="ctrl.snappableItems"
  *         gmf-editfeature-state="efsCtrl.state"
  *         gmf-editfeature-tolerance="::ctrl.tolerance"
  *         gmf-editfeature-vector="::ctrl.vectorLayer">
@@ -60,8 +62,9 @@ goog.require('ol.style.Text');
  *     A reference to the editable Layertree controller, which contains a
  *     a reference to the node and WMS layer.
  * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
- * @htmlAttribute {string} gmf-editfeature-stopeditingrequest Stop editing
- *     state.
+ * @htmlAttribute {string} gmf-editfeature-state The state property shared
+ *     with the `gmf-editfeatureselector` directive. For more info, see in
+ *     that directive.
  * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
@@ -78,6 +81,7 @@ gmf.editfeatureDirective = function() {
       'layer': '=gmfEditfeatureLayer',
       'editableTreeCtrl': '=gmfEditfeatureEditabletreectrl',
       'map': '<gmfEditfeatureMap',
+      'snappableItems': '=gmfEditfeatureSnappableitems',
       'state': '=gmfEditfeatureState',
       'tolerance': '<?gmfEditfeatureTolerance',
       'vectorLayer': '<gmfEditfeatureVector'
@@ -135,6 +139,37 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @export
    */
   this.map;
+
+  /**
+   * The list of snappable items, i.e. configurations required to enable
+   * snapping in this directive.
+   * @type {Array.<gmfx.SnappableItem>}
+   * @export
+   */
+  this.snappableItems;
+
+  $scope.$watchCollection(
+    function() {
+      return this.snappableItems;
+    }.bind(this),
+    function(newVal, oldVal) {
+      var i, ii;
+
+      // (1) Register newly added snappable item
+      for (i = 0, ii = newVal.length; i < ii; i++) {
+        if (oldVal.indexOf(newVal[i]) === -1) {
+          this.registerSnappableItem_(newVal[i]);
+        }
+      }
+
+      // (2) Unregister removed snappable item
+      for (i = 0, ii = oldVal.length; i < ii; i++) {
+        if (newVal.indexOf(oldVal[i]) === -1) {
+          this.unregisterSnappableItem_(oldVal[i]);
+        }
+      }
+    }.bind(this)
+  );
 
   /**
    * The state property shared with the `gmf-editfeatureselector` directive.
@@ -480,6 +515,12 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
       this
     )
   );
+
+  /**
+   * @type {gmf.EditfeatureController.SnappingHandlers}
+   * @private
+   */
+  this.snappingHandlers_ = {};
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
@@ -1049,6 +1090,34 @@ gmf.EditfeatureController.prototype.handleRotateEnd_ = function(evt) {
 
 
 /**
+ * Registers a newly added snappable item. Create a snapping handler using the
+ * item configuration, then bind it to th emap.
+ *
+ * @param {gmfx.SnappableItem} item Snappable item.
+ * @private
+ */
+gmf.EditfeatureController.prototype.registerSnappableItem_ = function(item) {
+  var uid = goog.getUid(item);
+  if (!this.snappingHandlers_[uid]) {
+    this.snappingHandlers_[uid] = new gmf.SnappingHandler(item);
+  }
+  this.snappingHandlers_[uid].setMap(this.map);
+};
+
+
+/**
+ * Unregisters a removed snappable item by unbinding it from the map.
+ *
+ * @param {gmfx.SnappableItem} item Snappable item.
+ * @private
+ */
+gmf.EditfeatureController.prototype.unregisterSnappableItem_ = function(item) {
+  var uid = goog.getUid(item);
+  this.snappingHandlers_[uid].setMap(null);
+};
+
+
+/**
  * @private
  */
 gmf.EditfeatureController.prototype.handleDestroy_ = function() {
@@ -1060,6 +1129,7 @@ gmf.EditfeatureController.prototype.handleDestroy_ = function() {
   this.toggle_(false);
   this.handleMapSelectActiveChange_(false);
   this.unregisterInteractions_();
+  this.snappableItems.forEach(this.unregisterSnappableItem_, this);
 };
 
 
@@ -1103,3 +1173,9 @@ gmf.EditfeatureController.State = {
    */
   STOP_EDITING_PENDING: 'stop_editing_pending'
 };
+
+
+/**
+ * @typedef {Object<number, gmf.SnappingHandler>}
+ */
+gmf.EditfeatureController.SnappingHandlers;
