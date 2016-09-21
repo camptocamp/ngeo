@@ -117,7 +117,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
     if (response.data) {
       result = parser.read(response.data);
     }
-    if (result !== undefined) {
+    if (result) {
       var options = ol.source.WMTS.optionsFromCapabilities(result, {
         layer: layerName
       });
