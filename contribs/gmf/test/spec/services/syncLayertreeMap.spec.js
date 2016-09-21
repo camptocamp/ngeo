@@ -88,7 +88,7 @@ describe('gmf.SyncLayertreeMap', function() {
 
     var treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
     var treeLayer = treeGroup.children[0]; // Leaf 'cinema'
-    var layer = gmfSyncLayertreeMap.getLayer(treeLayer);
+    var layer = gmf.SyncLayertreeMap.getLayer(treeLayer);
 
     expect(treeLayer.layer).toBe(null);
     expect(layer.constructor).toBe(ol.layer.Image);
