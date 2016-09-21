@@ -125,10 +125,10 @@ describe('gmf.SyncLayertreeMap', function() {
     roottreeCtrl = element.scope().layertreeCtrl;
     var treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
     var wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
-    var allWMSLayerParam = gmfSyncLayertreeMap.getAllPossibleWMSLayerParam(
-        treeGroup);
+    var checkedLayers = ['cinema','post_office','entertainment','sustenance',
+      'hospitals','police']; // order count !
 
-    expect(wmsParamLayers).toEqual(allWMSLayerParam.reverse().join(','));
+    expect(wmsParamLayers).toEqual(checkedLayers.reverse().join(','));
   });
 
   // FIXME source is null... must wait.
