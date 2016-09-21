@@ -301,12 +301,7 @@ gmf.SyncLayertreeMap.prototype.createLeafInANotMixedGroup_ = function(treeCtrl,
   this.updateLayerReferences_(leafNode, wmsLayer);
   if (leafNode.metadata.isChecked) {
     treeCtrl.setState('on');
-    var source = /** @type {ol.source.ImageWMS} */ (wmsLayer.getSource());
-    var WMSLayerParam = source.getParams()['LAYERS'];
-    WMSLayerParam = WMSLayerParam.length > 0 ? WMSLayerParam.split(',') : [];
-    // Add it at first place in the array to keep order.
-    WMSLayerParam.unshift(leafNode.layers);
-    this.layerHelper_.updateWMSLayerState(wmsLayer, WMSLayerParam.join(','));
+    this.updateLayerState_(wmsLayer, treeCtrl);
   }
 };
 
