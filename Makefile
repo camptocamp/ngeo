@@ -478,6 +478,11 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.PRECIOUS: .build/examples-hosted/contribs/gmf/build/%.json
+.build/examples-hosted/contribs/gmf/build/%.json: contribs/gmf/build/%.json
+	mkdir -p $(dir $@)
+	cp $< $@
+
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .PRECIOUS: .build/examples-hosted/%.html
@@ -545,6 +550,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/examples-hosted/contribs/gmf/apps/%/image/background-layer-button.png \
 		.build/examples-hosted/contribs/gmf/build/%.js \
 		.build/examples-hosted/contribs/gmf/build/%.css \
+		$(addprefix .build/examples-hosted/contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
+		$(addprefix .build/examples-hosted/contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/gmf-icons., eot ttf woff)
 	mkdir -p $(dir $@)
