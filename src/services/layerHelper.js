@@ -268,13 +268,13 @@ ngeo.LayerHelper.prototype.getWMTSLegendURL = function(layer) {
  * Get the WMS legend URL for the given node.
  * @param {string} url The base url of the wms service.
  * @param {string} layerName The name of a wms layer.
- * @param {number} scale A scale.
+ * @param {number=} opt_scale A scale.
  * @param {string=} opt_legendRule rule parameters to add to the returned URL.
  * @return {?string} The legend URL or null.
  * @export
  */
 ngeo.LayerHelper.prototype.getWMSLegendURL = function(url,
-    layerName, scale, opt_legendRule) {
+    layerName, opt_scale, opt_legendRule) {
   if (!url) {
     return null;
   }
@@ -284,7 +284,9 @@ ngeo.LayerHelper.prototype.getWMSLegendURL = function(url,
   url = goog.uri.utils.setParam(url, 'VERSION', '1.1.1');
   url = goog.uri.utils.setParam(url, 'REQUEST', 'GetLegendGraphic');
   url = goog.uri.utils.setParam(url, 'LAYER', layerName);
-  url = goog.uri.utils.setParam(url, 'SCALE', scale);
+  if (opt_scale !== undefined) {
+    url = goog.uri.utils.setParam(url, 'SCALE', opt_scale);
+  }
   if (opt_legendRule !== undefined) {
     url = goog.uri.utils.setParam(url, 'RULE', opt_legendRule);
   }
