@@ -93,7 +93,7 @@ L10N_PO_FILES = $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L1
 LANGUAGES = en $(L10N_LANGUAGES)
 ANGULAR_LOCALES_FILES = $(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 
-TX_VERSION ?= master
+TX_VERSION ?= 2_1
 ifeq (,$(wildcard $(HOME)/.transifexrc))
 TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
@@ -851,11 +851,11 @@ transifex-send: .tx/config .build/python-venv/bin/tx \
 	.build/python-venv/bin/tx push --source
 
 .PHONY: transifex-init
-transifex-init: .build/dev-requirements.timestamp .tx/config \
+transifex-init: .build/python-venv/bin/tx .tx/config \
 	.build/locale/gmf.pot
 	# .build/locale/ngeo.pot
-	.build/venv/bin/tx push --source --force
-	.build/venv/bin/tx push --translations --force --no-interactive
+	.build/python-venv/bin/tx push --source --force
+	.build/python-venv/bin/tx push --translations --force --no-interactive
 
 #.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
 #	.build/python-venv/bin/tx pull -l $* --force
