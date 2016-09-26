@@ -280,7 +280,7 @@ ngeo.LayerHelper.prototype.getWMSLegendURL = function(url,
   }
   url = goog.uri.utils.setParam(url, 'FORMAT', 'image/png');
   url = goog.uri.utils.setParam(url, 'TRANSPARENT', true);
-  url = goog.uri.utils.setParam(url, 'SERVICE', 'wms');
+  url = goog.uri.utils.setParam(url, 'SERVICE', 'WMS');
   url = goog.uri.utils.setParam(url, 'VERSION', '1.1.1');
   url = goog.uri.utils.setParam(url, 'REQUEST', 'GetLegendGraphic');
   url = goog.uri.utils.setParam(url, 'LAYER', layerName);

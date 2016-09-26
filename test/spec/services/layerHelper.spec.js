@@ -66,7 +66,7 @@ describe('ngeo.LayerHelper', function() {
     var wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale,
         legendRule);
     var expectedResult = url + '?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=' +
-      'wms&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + layerName +
+      'WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + layerName +
       '&SCALE=' + scale + '&RULE=' + legendRule;
     expect(expectedResult).toBe(wmsLegendURL);
   });
