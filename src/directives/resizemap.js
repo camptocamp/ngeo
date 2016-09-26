@@ -22,13 +22,12 @@ goog.require('ol.Map');
  * See our live example: {@link ../examples/animation.html}
  *
  * @param {angular.$window} $window Angular window service.
- * @param {angular.$animate} $animate Angular animate service.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoResizemap
  */
-ngeo.resizemapDirective = function($window, $animate) {
+ngeo.resizemapDirective = function($window) {
   var /** @type {number} */ duration = 1000;
 
   return {
@@ -59,6 +58,13 @@ ngeo.resizemapDirective = function($window, $animate) {
                   animationDelay.start();
                 }
               }, $window);
+
+          // Make sure the map is resized when the animation ends.
+          // It may help in case the animation didn't start correctly.
+          element.bind('transitionend',function() {
+            map.updateSize();
+            map.renderSync();
+          });
 
           scope.$watch(stateExpr, function(newVal, oldVal) {
             if (newVal != oldVal) {
