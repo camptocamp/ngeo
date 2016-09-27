@@ -122,6 +122,7 @@ ngeo.module.directive('ngeoLayertree', ngeo.layertreeDirective);
 /**
  * The controller for the "tree node" directive.
  * @param {angular.Scope} $scope Scope.
+ * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.Attributes} $attrs Attributes.
  * @param {ngeo.DecorateLayer} ngeoDecorateLayer layer decorator service.
  * @param {ngeo.DecorateLayerLoading} ngeoDecorateLayerLoading Decorate Layer service.
@@ -132,7 +133,7 @@ ngeo.module.directive('ngeoLayertree', ngeo.layertreeDirective);
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */
-ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecorateLayerLoading) {
+ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLayer, ngeoDecorateLayerLoading) {
 
   var isRoot = $attrs['ngeoLayertreeNotroot'] === undefined;
 
@@ -143,6 +144,12 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
   this.isRoot = isRoot;
 
   var nodeExpr = $attrs['ngeoLayertree'];
+
+  /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.rootScope_ = $rootScope;
 
   /**
    * @type {!Object}
@@ -288,16 +295,27 @@ ngeo.LayertreeController.prototype.getState = function() {
  * parent.
  * @export
  */
-ngeo.LayertreeController.prototype.setState = function(state,
-    opt_avoidRefreshParents) {
+ngeo.LayertreeController.prototype.setState = function(state, opt_avoidRefreshParents) {
   if (state === this.state_) {
     return;
   }
+  this.setStateInternal_(state);
+  var firstParent = ngeo.LayertreeController.getFirstParentTree(this);
+  // FIXME: get rid of this.map
+  this.rootScope_.$broadcast('ngeo-layertree-state', this.map, this, firstParent);
+};
+
+
+/**
+ * @param {string} state 'on' or 'off'.
+ * @param {boolean=} opt_avoidRefreshParents True to avoid refreshing its parent.
+ */
+ngeo.LayertreeController.prototype.setStateInternal_ = function(state, opt_avoidRefreshParents) {
   // Set the state
   this.state_ = state === 'on' ? 'on' : 'off';
   // Asks to each child to set its state;
   this.children.forEach(function(child) {
-    child.setState(this.state_, true);
+    child.setStateInternal_(this.state_, true);
   }, this);
   // Ask to its parent to update it's state.
   if (!opt_avoidRefreshParents && this.parent) {

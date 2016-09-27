@@ -2,7 +2,6 @@ goog.provide('gmf.TreeManager');
 
 goog.require('gmf');
 goog.require('gmf.Themes');
-goog.require('gmf.SyncLayertreeMap');
 goog.require('ngeo.Notification');
 goog.require('ngeo.StateManager');
 
@@ -31,7 +30,6 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
- * @param {gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
@@ -40,8 +38,7 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * @ngname gmfTreeManager
  */
 gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
-    ngeoNotification, gmfSyncLayertreeMap, gmfThemes, gmfTreeManagerModeFlush,
-    ngeoStateManager) {
+    ngeoNotification, gmfThemes, gmfTreeManagerModeFlush, ngeoStateManager) {
 
   /**
    * @type {angular.$timeout}
@@ -66,12 +63,6 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
    * @private
    */
   this.ngeoNotification_ = ngeoNotification;
-
-  /**
-   * @type {gmf.SyncLayertreeMap}
-   * @private
-   */
-  this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
   /**
    * @type {gmf.Themes}
@@ -345,39 +336,33 @@ gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add,
  * @param {string} layerName Name of the layer inside the group to add.
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called
- * @param {ol.Map=} opt_map Map object.
  * @export
  */
-gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add,
-    opt_silent, opt_map) {
+gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent) {
   this.gmfThemes_.getThemesObject().then(function(themes) {
     var group = gmf.Themes.findGroupByLayerNodeName(themes, layerName);
     if (group) {
       var groupAdded = this.addGroups([group], opt_add, opt_silent);
-      if (opt_map) {
-        var map = opt_map;
-        this.$timeout_(function() {
-          var treeCtrl = this.getTreeCtrlByNodeId(group.id);
-          var treeCtrls = [];
-          var treeCtrlToActive;
-          ngeo.LayertreeController.getFlatTree(treeCtrl, treeCtrls);
-          // Deactive all layers in the group if it's not in the tree.
-          if (groupAdded)  {
-            treeCtrl.setState('off');
+      this.$timeout_(function() {
+        var treeCtrl = this.getTreeCtrlByNodeId(group.id);
+        var treeCtrls = [];
+        var treeCtrlToActive;
+        ngeo.LayertreeController.getFlatTree(treeCtrl, treeCtrls);
+        // Deactive all layers in the group if it's not in the tree.
+        if (groupAdded)  {
+          treeCtrl.setState('off');
+        }
+        // Search the tree.
+        treeCtrls.some(function(item) {
+          if (item.node.name === layerName) {
+            return treeCtrlToActive = item;
           }
-          // Search the tree.
-          treeCtrls.some(function(item) {
-            if (item.node.name === layerName) {
-              return treeCtrlToActive = item;
-            }
-          });
-          // Active it.
-          if (treeCtrlToActive) {
-            treeCtrlToActive.setState('on');
-            this.gmfSyncLayertreeMap_.sync(map, treeCtrl);
-          }
-        }.bind(this));
-      }
+        });
+        // Active it.
+        if (treeCtrlToActive) {
+          treeCtrlToActive.setState('on');
+        }
+      }.bind(this));
     }
   }.bind(this));
 };

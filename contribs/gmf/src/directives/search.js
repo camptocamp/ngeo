@@ -811,7 +811,7 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
         });
         if (datasourcesActionsHaveAddLayer) {
           this.gmfTreeManager_.addGroupByLayerName(actionData, true,
-              goog.isDefAndNotNull(featureGeometry), this.map_);
+              goog.isDefAndNotNull(featureGeometry));
         }
       }
     }

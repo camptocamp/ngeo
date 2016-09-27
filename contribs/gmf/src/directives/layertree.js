@@ -383,8 +383,6 @@ gmf.LayertreeController.prototype.getResolutionStyle = function(node) {
  */
 gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
   treeCtrl.setState(treeCtrl.getState() === 'on' ? 'off' : 'on');
-  var firstLevelTreeCtrl = ngeo.LayertreeController.getFirstParentTree(treeCtrl);
-  this.gmfSyncLayertreeMap_.sync(this.map, firstLevelTreeCtrl);
 };
 
 /**

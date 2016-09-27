@@ -12,6 +12,7 @@ goog.require('ol.layer.Tile');
  * and its corresponding layer in the map.
  *
  * @constructor
+ * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.WMSTime} gmfWMSTime wms time service.
@@ -19,7 +20,7 @@ goog.require('ol.layer.Tile');
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap
  */
-gmf.SyncLayertreeMap = function(ngeoLayerHelper, gmfThemes, gmfWMSTime) {
+gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, gmfThemes, gmfWMSTime) {
 
   /**
    * @type {ngeo.LayerHelper}
@@ -41,6 +42,10 @@ gmf.SyncLayertreeMap = function(ngeoLayerHelper, gmfThemes, gmfWMSTime) {
 
   gmfThemes.getOgcServersObject().then(function(ogcServersObject) {
     this.ogcServersObject_ = ogcServersObject;
+  }.bind(this));
+
+  $rootScope.$on('ngeo-layertree-state', function(map, treeCtrl, firstParent) {
+    this.sync_(map, firstParent);
   }.bind(this));
 };
 
@@ -75,9 +80,9 @@ gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map,
  * all its children.
  * @param {ol.Map} map A map that contains the layers.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
- * @public
+ * @private
  */
-gmf.SyncLayertreeMap.prototype.sync = function(map, treeCtrl) {
+gmf.SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
   var treeCtrls = [];
   ngeo.LayertreeController.getFlatTree(treeCtrl, treeCtrls);
   treeCtrls.forEach(function(item) {
