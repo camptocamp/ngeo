@@ -62,12 +62,22 @@ describe('ngeo.LayerHelper', function() {
     var url = 'http://test';
     var layerName = 'wmsLayer';
     var scale = 0;
+    var wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale);
+    var expectedResult = url + '?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=' +
+      'WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + layerName +
+      '&SCALE=' + scale;
+    expect(expectedResult).toBe(wmsLegendURL);
+  });
+
+  it('Get WMS legend icon url', function() {
+    var url = 'http://test';
+    var layerName = 'wmsLayer';
     var legendRule = 'legendRule';
-    var wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale,
+    var wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, undefined,
         legendRule);
     var expectedResult = url + '?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=' +
-      'wms&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + layerName +
-      '&SCALE=' + scale + '&RULE=' + legendRule;
+      'WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + layerName +
+      '&RULE=' + legendRule;
     expect(expectedResult).toBe(wmsLegendURL);
   });
 

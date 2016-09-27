@@ -816,7 +816,7 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
   //In case of multiple layers for a node, always take the first layer name to get the icon
   var layerName = node.layers.split(',')[0];
   var url = node.url || this.gmfWmsUrl_;
-  return this.layerHelper_.getWMSLegendURL(url, layerName, this.getScale_(),
+  return this.layerHelper_.getWMSLegendURL(url, layerName, undefined,
     opt_legendRule);
 };
 
