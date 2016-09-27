@@ -166,12 +166,12 @@ describe('gmf.SyncLayertreeMap', function() {
     var wmsParamLayers;
 
     roottreeCtrl.setState('off');
-    gmfSyncLayertreeMap.sync(map, treeGroup);
+    gmfSyncLayertreeMap.sync_(map, treeGroup);
     expect(treeLeaf.layer.getVisible()).toBe(false);
 
-    gmfSyncLayertreeMap.sync(map, treeGroup);
+    gmfSyncLayertreeMap.sync_(map, treeGroup);
     treeLeaf.setState('on');
-    gmfSyncLayertreeMap.sync(map, treeLeaf);
+    gmfSyncLayertreeMap.sync_(map, treeLeaf);
     wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
     expect(wmsParamLayers).toBe('osm_scale');
   });
@@ -191,17 +191,17 @@ describe('gmf.SyncLayertreeMap', function() {
     var wmsParamLayers;
 
     roottreeCtrl.setState('off');
-    gmfSyncLayertreeMap.sync(map, treeGroup);
+    gmfSyncLayertreeMap.sync_(map, treeGroup);
     expect(treeGroup.layer.getVisible()).toBe(false);
 
     treeLeaf.setState('on');
-    gmfSyncLayertreeMap.sync(map, treeLeaf);
+    gmfSyncLayertreeMap.sync_(map, treeLeaf);
     wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
     expect(wmsParamLayers).toBe('cinema');
 
     // Group is on, original order must be kept.
     treeGroup.setState('on');
-    gmfSyncLayertreeMap.sync(map, treeGroup);
+    gmfSyncLayertreeMap.sync_(map, treeGroup);
     wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
     var allWMSLayerParam = gmfSyncLayertreeMap.getAllPossibleWMSLayerParam(
         treeGroup);
@@ -223,11 +223,11 @@ describe('gmf.SyncLayertreeMap', function() {
     var treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
 
     treeGroup.setState('off');
-    gmfSyncLayertreeMap.sync(map, treeGroup);
+    gmfSyncLayertreeMap.sync_(map, treeGroup);
     expect(treeLeaf.layer.getVisible()).toBe(false);
 
     treeLeaf.setState('on');
-    gmfSyncLayertreeMap.sync(map, treeLeaf);
+    gmfSyncLayertreeMap.sync_(map, treeLeaf);
     expect(treeLeaf.layer.getVisible()).toBe(true);
   });
 });
