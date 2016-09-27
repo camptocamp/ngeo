@@ -300,9 +300,12 @@ ngeo.LayertreeController.prototype.setState = function(state, opt_avoidRefreshPa
     return;
   }
   this.setStateInternal_(state);
-  var firstParent = ngeo.LayertreeController.getFirstParentTree(this);
-  // FIXME: get rid of this.map
-  this.rootScope_.$broadcast('ngeo-layertree-state', this.map, this, firstParent);
+  var firstParents = this.isRoot ? this.children : [ngeo.LayertreeController.getFirstParentTree(this)];
+
+  firstParents.forEach(function(firstParent) {
+    // FIXME: get rid of this.map
+    this.rootScope_.$broadcast('ngeo-layertree-state', this.map, this, firstParent);
+  }.bind(this));
 };
 
 
