@@ -115,6 +115,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @param {gmf.WMSTime} gmfWMSTime wms time service.
  * @constructor
  * @export
+ * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname gmfLayertreeController
@@ -122,6 +123,19 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
     ngeoLayerHelper, gmfWmsUrl, gmfTreeManager, gmfSyncLayertreeMap,
     ngeoSyncArrays, gmfWMSTime) {
+
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map;
+
+  /**
+   * @type {Object<string, string>|undefined}
+   * @export
+   */
+  this.dimensions;
+
 
   /**
    * @type {angular.Scope}
@@ -190,11 +204,16 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   this.groupNodeStates_ = {};
 
   /**
+   * @type {function()|undefined}
+   * @export
+   */
+  this.openLinksInNewWindowFn;
+
+  /**
    * @type {boolean}
    * @export
    */
-  this.openLinksInNewWindow = this['openLinksInNewWindowFn']() === true ?
-      true : false;
+  this.openLinksInNewWindow = this.openLinksInNewWindowFn() === true ? true : false;
 
   /**
    * @type {ol.layer.Group}
@@ -496,7 +515,7 @@ gmf.LayertreeController.prototype.getScale_ = function() {
  * @export
  */
 gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
-  var treeUid = treeCtrl['uid'].toString();
+  var treeUid = treeCtrl.uid.toString();
   var node = treeCtrl.node;
   var metadataURL = node.metadata['metadataUrl'];
   if (metadataURL !== undefined) {

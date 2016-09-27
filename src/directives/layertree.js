@@ -128,6 +128,7 @@ ngeo.module.directive('ngeoLayertree', ngeo.layertreeDirective);
  * @constructor
  * @ngInject
  * @export
+ * @struct
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */
@@ -208,7 +209,7 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
    * @type {number}
    * @export
    */
-  this.depth = isRoot ? 0 : this.parent['depth'] + 1;
+  this.depth = isRoot ? 0 : this.parent.depth + 1;
 
   // We set 'uid' and 'depth' in the scope as well to access the parent values
   // in the inherited scopes. This is intended to be used in the javascript not
