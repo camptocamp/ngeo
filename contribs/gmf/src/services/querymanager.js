@@ -113,9 +113,21 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
  * @private
  */
 gmf.QueryManager.prototype.createSources_ = function(node, ogcServers) {
-  var meta = node.metadata;
   var children = node.children;
+
+  // First we handle the groups
+  if (children) {
+    for (var i = 0, len = children.length; i < len; i++) {
+      this.createSources_(children[i], ogcServers);
+    }
+    return;
+  }
+
+  // We are now on a leaf so we can cast node.metadata to the typed
+  // (and non minified) version.
+
   var id = node.id;
+  var meta = /** @type {GmfThemesLeafMetaData} */ (node.metadata);
   var identifierAttributeField = meta.identifierAttributeField;
   var layers = meta.queryLayers || meta.wmsLayers || node.layers;
   var name = node.name;
@@ -135,50 +147,44 @@ gmf.QueryManager.prototype.createSources_ = function(node, ogcServers) {
     }
   }
 
-  if (children) {
-    for (var i = 0, len = children.length; i < len; i++) {
-      this.createSources_(children[i], ogcServers);
-    }
-  } else {
-    if (!this.cache_[id]) {
+  if (!this.cache_[id]) {
 
-      // Some nodes have child layers, i.e. a list of layer names that are
-      // part of a group. The name of the group itself can't be used 'as-is'
-      // as an identifier of the layers for this source. For example, a
-      // group named 'osm' might result in returning 'restaurant' features.
-      // This override makes sure that those layer names are used instead of
-      // the original one.
-      if (node.childLayers && node.childLayers.length) {
-        // skip layers with no queryable childLayer
-        var isQueryable = function(item) {
-          return item.queryable;
-        };
-        if (!node.childLayers.some(isQueryable)) {
-          return;
-        }
-
-        var childLayerNames = [];
-        node.childLayers.forEach(function(childLayer) {
-          if (childLayer.queryable) {
-            childLayerNames.push(childLayer.name);
-          }
-        }, this);
-        layers = childLayerNames.join(',');
-        validateLayerParams = node.type === 'WMS';
+    // Some nodes have child layers, i.e. a list of layer names that are
+    // part of a group. The name of the group itself can't be used 'as-is'
+    // as an identifier of the layers for this source. For example, a
+    // group named 'osm' might result in returning 'restaurant' features.
+    // This override makes sure that those layer names are used instead of
+    // the original one.
+    if (node.childLayers && node.childLayers.length) {
+      // skip layers with no queryable childLayer
+      var isQueryable = function(item) {
+        return item.queryable;
+      };
+      if (!node.childLayers.some(isQueryable)) {
+        return;
       }
 
-      var source = {
-        'id': id,
-        'identifierAttributeField': identifierAttributeField,
-        'label': name,
-        'params': {'LAYERS': layers},
-        'url': url,
-        'validateLayerParams': validateLayerParams,
-        'wfsQuery': wfsQuery
-      };
-      this.cache_[id] = source;
-      this.sources_.push(source);
+      var childLayerNames = [];
+      node.childLayers.forEach(function(childLayer) {
+        if (childLayer.queryable) {
+          childLayerNames.push(childLayer.name);
+        }
+      }, this);
+      layers = childLayerNames.join(',');
+      validateLayerParams = node.type === 'WMS';
     }
+
+    var source = {
+      'id': id,
+      'identifierAttributeField': identifierAttributeField,
+      'label': name,
+      'params': {'LAYERS': layers},
+      'url': url,
+      'validateLayerParams': validateLayerParams,
+      'wfsQuery': wfsQuery
+    };
+    this.cache_[id] = source;
+    this.sources_.push(source);
   }
 };
 
