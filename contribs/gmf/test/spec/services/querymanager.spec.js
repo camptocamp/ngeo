@@ -96,11 +96,11 @@ describe('gmf.QueryManager', function() {
       var sourceNonQueryable = getSourceById(queryManager.sources_, 91346);
       expect(sourceNonQueryable).toBeNull();
 
-      // layer 'ch.are.alpenkonvention' with `wmsUrl` and `wmsLayers` and `queryLayers`
-      // (`wmsLayers` takes precedence over `queryLayers`)
+      // layer with `wmsUrl` and `wmsLayers` and 'ch.astra.ausnahmetransportrouten.queryLayers'
+      // `queryLayers`. (`queryLayers` takes precedence over `wmsLayers`)
       var sourceAlpConvention = getSourceById(queryManager.sources_, 119);
       expect(sourceAlpConvention).not.toBeNull();
-      expect(sourceAlpConvention.params.LAYERS).toBe('ch.are.alpenkonvention');
+      expect(sourceAlpConvention.params.LAYERS).toBe('ch.astra.ausnahmetransportrouten.queryLayers');
 
       // layer 'ch.astra.ausnahmetransportrouten' with `wmsUrl` and `queryLayers`
       var sourceRoutes = getSourceById(queryManager.sources_, 120);
