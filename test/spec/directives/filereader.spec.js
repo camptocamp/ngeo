@@ -29,7 +29,7 @@ describe('ngeo.filereaderDirective', function() {
   it('sets the file content onto the scope', function() {
     var input = element[0];
     var customEvent = document.createEvent('CustomEvent');
-    customEvent.initCustomEvent('change');
+    customEvent.initCustomEvent('change', true, true, {});
     input.dispatchEvent(customEvent);
     expect(rootScope.fileContent).toBe('<kml></kml>');
   });
