@@ -87,9 +87,10 @@ GIT_REMOTE_NAME ?= origin
 
 # i18n
 L10N_LANGUAGES = fr de
-L10N_PO_FILES = $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L10N_LANGUAGES))) \
-	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/demo.po, $(L10N_LANGUAGES))) # \
-	# $(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/ngeo.po, $(L10N_LANGUAGES)))
+L10N_PO_FILES = \
+	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/ngeo.po, $(L10N_LANGUAGES))) \
+	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L10N_LANGUAGES))) \
+	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/demo.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
 ANGULAR_LOCALES_FILES = $(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 
@@ -825,10 +826,10 @@ $(HOME)/.transifexrc:
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var "tx_version=$(TX_VERSION)" $< > $@
 
-#.build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
-#		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES)
-#	mkdir -p $(dir $@)
-#	node buildtools/extract-messages.js $(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
+.build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
+		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES)
+	mkdir -p $(dir $@)
+	node buildtools/extract-messages $(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
 
 .build/locale/gmf.pot: lingua.cfg .build/node_modules.timestamp \
 		$(GMF_DIRECTIVES_PARTIALS_FILES) $(GMF_JS_FILES)
@@ -841,24 +842,25 @@ $(HOME)/.transifexrc:
 
 .PHONY: transifex-get
 transifex-get: $(L10N_PO_FILES) \
+	.build/locale/ngeo.pot \
 	.build/locale/gmf.pot
-	# .build/locale/ngeo.pot \
 
 .PHONY: transifex-send
 transifex-send: .tx/config .build/python-venv/bin/tx \
+		.build/locale/ngeo.pot \
 		.build/locale/gmf.pot
-		# .build/locale/ngeo.pot
 	.build/python-venv/bin/tx push --source
 
 .PHONY: transifex-init
 transifex-init: .build/python-venv/bin/tx .tx/config \
+	.build/locale/ngeo.pot \
 	.build/locale/gmf.pot
-	# .build/locale/ngeo.pot
 	.build/python-venv/bin/tx push --source --force
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 
-#.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
-#	.build/python-venv/bin/tx pull -l $* --force
+.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
+	.build/python-venv/bin/tx pull -l $* --force
+	$(TOUCHBACK_TXRC)
 
 .build/locale/%/LC_MESSAGES/gmf.po: .tx/config .build/python-venv/bin/tx
 	.build/python-venv/bin/tx pull -l $* --force
@@ -869,7 +871,9 @@ transifex-init: .build/python-venv/bin/tx .tx/config \
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/camptocamp/demo_geomapfish/master/demo/locale/$*/LC_MESSAGES/demo-client.po
 
-contribs/gmf/build/gmf-%.json: .build/locale/%/LC_MESSAGES/gmf.po \
+contribs/gmf/build/gmf-%.json: \
+		.build/locale/%/LC_MESSAGES/ngeo.po \
+		.build/locale/%/LC_MESSAGES/gmf.po \
 		.build/locale/%/LC_MESSAGES/demo.po \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
