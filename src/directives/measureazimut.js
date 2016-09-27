@@ -30,7 +30,7 @@ ngeo.measureazimutDirective = function($compile, gettext, $filter) {
      */
     link: function($scope, element, attrs, drawFeatureCtrl) {
 
-      var helpMsg = gettext('Click to start drawing azimut');
+      var helpMsg = gettext('Click to start drawing circle');
       var contMsg = gettext('Click to finish');
 
       var measureAzimut = new ngeo.interaction.MeasureAzimut($filter('ngeoUnitPrefix'), {

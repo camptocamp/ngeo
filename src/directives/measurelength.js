@@ -28,7 +28,7 @@ ngeo.measurelengthDirective = function($compile, gettext, $filter) {
      */
     link: function($scope, element, attrs, drawFeatureCtrl) {
 
-      var helpMsg = gettext('Click to start drawing length');
+      var helpMsg = gettext('Click to start drawing line');
       var contMsg = gettext('Click to continue drawing<br/>' +
                             'Double-click or click last point to finish');
 
