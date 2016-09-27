@@ -3,6 +3,7 @@ goog.provide('gmf.editfeatureselectorDirective');
 
 goog.require('goog.asserts');
 goog.require('gmf');
+goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureDirective');
@@ -55,13 +56,15 @@ gmf.module.directive('gmfEditfeatureselector', gmf.editfeatureselectorDirective)
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @constructor
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController
  */
-gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
+gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
+    gmfTreeManager) {
 
   // === Directive options ===
 
@@ -100,10 +103,22 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
   // === Injected services ===
 
   /**
+   * @type {!angular.Scope} $scope Angular scope.
+   * @private
+   */
+  this.scope_ = $scope;
+
+  /**
    * @type {angular.$timeout}
    * @private
    */
   this.$timeout_ = $timeout;
+
+  /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {gmf.TreeManager}
@@ -115,17 +130,21 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
    * @param {Array.<ngeo.LayertreeController>} value First level controllers.
    */
   var updateEditableTreeCtrls = function(value) {
-    if (value) {
-      var editables = this.editableTreeCtrls;
+    // Timeout required, because the collection event is fired before the
+    // leaf nodes are created and they are the ones we're looking for here.
+    this.$timeout_(function() {
+      if (value) {
+        var editables = this.editableTreeCtrls;
 
-      editables.length = 0;
-      this.gmfTreeManager_.rootCtrl.traverseDepthFirst(function(treeCtrl) {
-        if (treeCtrl.node.editable) {
-          goog.asserts.assert(treeCtrl.node.children === undefined);
-          editables.push(treeCtrl);
-        }
-      });
-    }
+        editables.length = 0;
+        this.gmfTreeManager_.rootCtrl.traverseDepthFirst(function(treeCtrl) {
+          if (treeCtrl.node.editable) {
+            goog.asserts.assert(treeCtrl.children.length === 0);
+            editables.push(treeCtrl);
+          }
+        });
+      }
+    }.bind(this), 0);
   };
 
   /**

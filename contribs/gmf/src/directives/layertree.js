@@ -571,4 +571,18 @@ gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
 };
 
 
+/**
+ * Get the snapping configuration object from a Layertree controller
+ *
+ * @param {ngeo.LayertreeController} treeCtrl Layertree controller,
+ * @return {?GmfSnappingConfig} Snapping configuration, if found.
+ * @export
+ */
+gmf.LayertreeController.getSnappingConfig = function(treeCtrl) {
+  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
+  var config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
+      node.metadata.snappingConfig : null;
+  return config;
+};
+
 gmf.module.controller('GmfLayertreeController', gmf.LayertreeController);
