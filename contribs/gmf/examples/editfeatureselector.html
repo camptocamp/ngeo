@@ -90,15 +90,15 @@
 
     <p><strong>Note:</strong> After logging it, you need to refresh the page</p>
 
-    <gmf-authentication
-        class="panel panel-default panel-body">
-    </gmf-authentication>
-
     <gmf-layertree
-        style="display:none;"
+        class="panel panel-default panel-body"
         gmf-layertree-source="ctrl.treeSource"
         gmf-layertree-map="::ctrl.map">
     </gmf-layertree>
+
+    <gmf-authentication
+        class="panel panel-default panel-body">
+    </gmf-authentication>
 
     <div
         ng-show="ctrl.gmfUser.username"

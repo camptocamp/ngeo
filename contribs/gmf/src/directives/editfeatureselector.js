@@ -2,6 +2,7 @@ goog.provide('gmf.EditfeatureselectorController');
 goog.provide('gmf.editfeatureselectorDirective');
 
 goog.require('gmf');
+goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureDirective');
@@ -55,13 +56,15 @@ gmf.module.directive(
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @constructor
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController
  */
-gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
+gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
+    gmfTreeManager) {
 
   // === Directive options ===
 
@@ -100,10 +103,22 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
   // === Injected services ===
 
   /**
+   * @type {!angular.Scope} $scope Angular scope.
+   * @private
+   */
+  this.scope_ = $scope;
+
+  /**
    * @type {angular.$timeout}
    * @private
    */
   this.$timeout_ = $timeout;
+
+  /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {gmf.TreeManager}
@@ -245,20 +260,7 @@ gmf.EditfeatureselectorController.prototype.handleDestroy_ = function() {
 
 
 /**
- * @param {ngeo.LayertreeController} treeCtrl Layertree controller to check.
- * @return {boolean} Whether the Layertree controller contains an editable node.
- * @private
- */
-gmf.EditfeatureselectorController.prototype.isTreeCtrlEditable_ = function(
-  treeCtrl
-) {
-  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
-  return node.editable === true;
-};
-
-
-/**
- * Registers a newly added Layertree controller.
+ * Registers a newly added Layertree controller 'leaf'.
  *
  *  - If it's editable, add it to the editable Layertree controller array
  *
@@ -268,7 +270,15 @@ gmf.EditfeatureselectorController.prototype.isTreeCtrlEditable_ = function(
 gmf.EditfeatureselectorController.prototype.registerTreeCtrl_ = function(
   treeCtrl
 ) {
-  if (this.isTreeCtrlEditable_(treeCtrl)) {
+
+  // Skip any Layertree controller that has a node that is not a leaf
+  var node = /** @type {GmfThemesGroup|GmfThemesLeaf} */ (treeCtrl.node);
+  if (node.children) {
+    return;
+  }
+
+  // If treeCtrl is editable, add it to the list of editable tree ctrls
+  if (gmf.LayertreeController.isEditable(treeCtrl)) {
     this.editableTreeCtrls.push(treeCtrl);
   }
 
@@ -276,7 +286,7 @@ gmf.EditfeatureselectorController.prototype.registerTreeCtrl_ = function(
 
 
 /**
- * Unregisters a removed eLayertree controller.
+ * Unregisters a removed Layertree controller 'leaf'.
  *
  *  - If it's editable, remove it from the editable Layertree controller array
  *
@@ -286,10 +296,19 @@ gmf.EditfeatureselectorController.prototype.registerTreeCtrl_ = function(
 gmf.EditfeatureselectorController.prototype.unregisterTreeCtrl_ = function(
   treeCtrl
 ) {
+
+  // Skip any Layertree controller that has a node that is not a leaf
+  var node = /** @type {GmfThemesGroup|GmfThemesLeaf} */ (treeCtrl.node);
+  if (node.children) {
+    return;
+  }
+
+  // Editable
   var index = this.editableTreeCtrls.indexOf(treeCtrl);
   if (index !== -1) {
     this.editableTreeCtrls.splice(index, 1);
   }
+
 };
 
 
