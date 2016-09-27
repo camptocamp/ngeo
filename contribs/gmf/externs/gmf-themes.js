@@ -233,13 +233,6 @@ GmfThemesLeaf.prototype.dimensions;
 
 
 /**
- * Flag that is turned on when the leaf is currently being edited.
- * @type {boolean|undefined}
- */
-GmfThemesLeaf.prototype.editing;
-
-
-/**
  * @type {boolean|undefined}
  */
 GmfThemesLeaf.prototype.editable;

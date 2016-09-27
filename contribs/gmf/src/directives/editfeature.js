@@ -742,7 +742,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
 
   this.modify_.setActive(active);
   this.mapSelectActive = active;
-  this.editableNode_['editing'] = active;
+  this.editableTreeCtrl.editing = active;
 
 };
 
