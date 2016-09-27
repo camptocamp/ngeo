@@ -369,12 +369,14 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     name: 'coordinates',
     display: 'label',
     templates: {
-      header: '<div class="gmf-search-header">' + gettextCatalog.getString('Recenter to') + '</div>',
+      header: function() {
+        var header = gettextCatalog.getString('Recenter to');
+        return '<div class="gmf-search-header" translate>' + header + '</div>';
+      },
       suggestion: function(suggestion) {
         var coordinates = suggestion['label'];
 
         var html = '<p class="gmf-search-label">' + coordinates + '</p>';
-        html += '<p class="gmf-search-group">' + gettextCatalog.getString('Recenter to') + '</p>';
         html = '<div class="gmf-search-datum">' + html + '</div>';
         return html;
       }
