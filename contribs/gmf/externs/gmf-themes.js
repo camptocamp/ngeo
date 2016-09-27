@@ -415,4 +415,10 @@ GmfThemesLeafMetaData.prototype.wmsLayers;
 /**
  * @type {string|undefined}
  */
+GmfThemesLeafMetaData.prototype.queryLayers;
+
+
+/**
+ * @type {string|undefined}
+ */
 GmfThemesLeafMetaData.prototype.wmsUrl;
