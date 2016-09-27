@@ -28,7 +28,7 @@ ngeo.measureareaDirective = function($compile, gettext, $filter) {
      */
     link: function($scope, element, attrs, drawFeatureCtrl) {
 
-      var helpMsg = gettext('Click to start drawing area');
+      var helpMsg = gettext('Click to start drawing polygon');
       var contMsg = gettext('Click to continue drawing<br/>' +
           'Double-click or click starting point to finish');
 
