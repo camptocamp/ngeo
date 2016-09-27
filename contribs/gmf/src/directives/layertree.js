@@ -190,13 +190,6 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   this.groupNodeStates_ = {};
 
   /**
-   * Flag that is turned on when the leaf is currently being edited.
-   * @type {boolean}
-   * @export
-   */
-  this.editing = false;
-
-  /**
    * @type {boolean}
    * @export
    */

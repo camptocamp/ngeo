@@ -144,6 +144,12 @@ ngeo.LayertreeController = function($scope, $attrs, ngeoDecorateLayer, ngeoDecor
   var nodeExpr = $attrs['ngeoLayertree'];
 
   /**
+   * @type {!Object}
+   * @export
+   */
+  this.properties = {};
+
+  /**
    * @type {!string}
    * @private
    */
