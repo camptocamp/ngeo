@@ -146,7 +146,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
     helpMsg = gettext('Click to start drawing area');
     contMsg = gettext(
       'Click to continue drawing<br/>' +
-      'Double-click or click last starting point to finish'
+      'Double-click or click starting point to finish'
     );
 
     interaction = new ngeo.interaction.MeasureArea(
