@@ -30,7 +30,7 @@ ngeo.measureareaDirective = function($compile, gettext, $filter) {
 
       var helpMsg = gettext('Click to start drawing area');
       var contMsg = gettext('Click to continue drawing<br/>' +
-          'Double-click or click last starting point to finish');
+          'Double-click or click starting point to finish');
 
       var measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), {
         style: new ol.style.Style(),

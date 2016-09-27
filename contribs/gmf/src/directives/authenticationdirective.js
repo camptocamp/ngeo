@@ -174,18 +174,17 @@ gmf.AuthenticationController.prototype.changePassword = function() {
   var oldPwd = this.oldPwdVal;
   var newPwd = this.newPwdVal;
   var confPwd = this.newPwdConfVal;
-  var cat = this.gettextCatalog;
 
   var errors = [];
   // (1) validation - passwords are required
   if (oldPwd === '') {
-    errors.push(cat.getString('The old password is required.'));
+    errors.push(this.gettextCatalog.getString('The old password is required.'));
   }
   if (newPwd === '') {
-    errors.push(cat.getString('The new password is required.'));
+    errors.push(this.gettextCatalog.getString('The new password is required.'));
   }
   if (confPwd === '') {
-    errors.push(cat.getString('The password confirmation is required.'));
+    errors.push(this.gettextCatalog.getString('The password confirmation is required.'));
   }
 
   if (errors.length) {
@@ -193,10 +192,10 @@ gmf.AuthenticationController.prototype.changePassword = function() {
   } else {
     // (2) validation - passwords must be new and must also match
     if (oldPwd === newPwd) {
-      errors.push(cat.getString('The old and new passwords are the same.'));
+      errors.push(this.gettextCatalog.getString('The old and new passwords are the same.'));
     }
     if (newPwd !== confPwd) {
-      errors.push(cat.getString('The passwords don\'t match.'));
+      errors.push(this.gettextCatalog.getString('The passwords don\'t match.'));
     }
 
     if (errors.length) {
@@ -204,7 +203,7 @@ gmf.AuthenticationController.prototype.changePassword = function() {
     } else {
       // (3) send request with current credentials, which may fail if
       //     the old password given is incorrect.
-      var error = cat.getString('Incorrect old password.');
+      var error = this.gettextCatalog.getString('Incorrect old password.');
       this.gmfAuthentication_.changePassword(oldPwd, newPwd, confPwd).then(
           function() {
             this.changePasswordModalShown = true;
@@ -221,18 +220,17 @@ gmf.AuthenticationController.prototype.changePassword = function() {
  * @export
  */
 gmf.AuthenticationController.prototype.login = function() {
-  var cat = this.gettextCatalog;
   var errors = [];
   if (this.loginVal === '') {
-    errors.push(cat.getString('The username is required.'));
+    errors.push(this.gettextCatalog.getString('The username is required.'));
   }
   if (this.pwdVal === '') {
-    errors.push(cat.getString('The password is required.'));
+    errors.push(this.gettextCatalog.getString('The password is required.'));
   }
   if (errors.length) {
     this.setError_(errors);
   } else {
-    var error = cat.getString('Incorrect username or password.');
+    var error = this.gettextCatalog.getString('Incorrect username or password.');
     this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
         this.resetError_.bind(this),
         this.setError_.bind(this, error));
