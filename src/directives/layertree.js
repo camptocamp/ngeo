@@ -430,4 +430,52 @@ ngeo.LayertreeController.getFlatTree = function(treeCtrl, treeCtrls,
 };
 
 
+/**
+ * @enum {string}
+ */
+ngeo.LayertreeController.VisitorDecision = {
+  STOP: 'STOP',
+  SKIP: 'SKIP',
+  DESCEND: 'DESCEND'
+};
+
+
+/**
+ * @typedef {
+ *   function(ngeo.LayertreeController): (!ngeo.LayertreeController.VisitorDecision|undefined)
+ * }
+ */
+ngeo.LayertreeController.Visitor;
+
+
+/**
+ * Recursive method to traverse the layertree controller graph.
+ * @param {ngeo.LayertreeController.Visitor} visitor A visitor called for each node.
+ * @return {boolean} whether to stop traversing.
+ * @export
+ */
+ngeo.LayertreeController.prototype.traverseDepthFirst = function(visitor) {
+  // First visit the current controller
+  var decision = visitor(this) || ngeo.LayertreeController.VisitorDecision.DESCEND;
+
+  switch (decision) {
+    case ngeo.LayertreeController.VisitorDecision.STOP:
+      return true; // stop traversing
+    case ngeo.LayertreeController.VisitorDecision.SKIP:
+      return false; // continue traversing but skip current branch
+    case ngeo.LayertreeController.VisitorDecision.DESCEND:
+      for (var i = 0; i < this.children.length; ++i) {
+        var child = this.children[i];
+        var stop = child.traverseDepthFirst(visitor);
+        if (stop) {
+          return true; // stop traversing
+        }
+      }
+      return false; // continue traversing
+    default:
+      goog.asserts.fail('Unhandled case');
+  }
+};
+
+
 ngeo.module.controller('NgeoLayertreeController', ngeo.LayertreeController);
