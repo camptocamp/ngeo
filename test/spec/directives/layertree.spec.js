@@ -133,18 +133,40 @@ describe('ngeo.layertreeDirective', function() {
     expect(ngeo.LayertreeController.getFirstParentTree(treeLeaf1).node.name).toBe(treeLeaf1.node.name);
   });
 
-  it('Get flat tree', function() {
-    var treeNode0 = roottreeCtrl.children[0];
-    var treeLeaf00 = treeNode0.children[0];
-    var flatTree = [];
+  it('Traverse tree', function() {
+    // All nodes of the graph
+    var visited = '';
+    roottreeCtrl.traverseDepthFirst(function(treeCtrl) {
+      visited += ', ' + treeCtrl.node.name;
+    });
+    expect(visited).toBe(', Root, Node 0, Leaf 00, Leaf 01, Leaf 1');
 
-    ngeo.LayertreeController.getFlatTree(roottreeCtrl, flatTree);
-    expect(flatTree.length).toBe(3);
+    // Stop at first node
+    visited = '';
+    roottreeCtrl.traverseDepthFirst(function(treeCtrl) {
+      visited = visited + ', ' + treeCtrl.node.name;
+      return ngeo.LayertreeController.VisitorDecision.STOP;
+    });
+    expect(visited).toBe(', Root');
 
-    flatTree.length = 0;
-    ngeo.LayertreeController.getFlatTree(roottreeCtrl, flatTree, true);
-    expect(flatTree.length).toBe(5);
-    expect(flatTree[0].node.name).toBe(treeLeaf00.node.name);
-    expect(flatTree[4].node.name).toBe(roottreeCtrl.node.name);
+    // Stop at leaf01 node
+    visited = '';
+    roottreeCtrl.traverseDepthFirst(function(treeCtrl) {
+      visited = visited + ', ' + treeCtrl.node.name;
+      if (treeCtrl.node.name === 'Leaf 01') {
+        return ngeo.LayertreeController.VisitorDecision.STOP;
+      }
+    });
+    expect(visited).toBe(', Root, Node 0, Leaf 00, Leaf 01');
+
+    // Skip Node0 children
+    visited = '';
+    roottreeCtrl.traverseDepthFirst(function(treeCtrl) {
+      visited = visited + ', ' + treeCtrl.node.name;
+      if (treeCtrl.node.name === 'Node 0') {
+        return ngeo.LayertreeController.VisitorDecision.SKIP;
+      }
+    });
+    expect(visited).toBe(', Root, Node 0, Leaf 1');
   });
 });
