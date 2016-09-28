@@ -86,6 +86,14 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
   });
 
   /**
+   * The controller of the (unique) root layer tree.
+   * The array of top level layer trees is avaible through `rootCtrl.children`.
+   * @type {ngeo.LayertreeController}
+   * @export
+   */
+  this.rootCtrl = null;
+
+  /**
    * @type {Array.<ngeo.LayertreeController>}
    * @private
    */

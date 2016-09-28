@@ -314,11 +314,12 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
  * @export
  */
 gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
-  this.gmfTreeManager_.addTreeCtrlReference(treeCtrl);
+  this.gmfTreeManager_.addTreeCtrlReference(treeCtrl); // FIXME: to remove
 
   var opt_position;
-  // Precise the index to add first level groups.
   if (treeCtrl.parent.isRoot) {
+    this.gmfTreeManager_.rootCtrl = treeCtrl.parent;
+    // Precise the index to add first level groups.
     opt_position = this.gmfTreeManager_.tree.children.length -
         this.gmfTreeManager_.layersToAddAtOnce | 0;
   }
@@ -350,7 +351,7 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
     // Remove the layer from the map.
     dataLayerGroup.getLayers().remove(treeCtrl.layer);
     // Remove treeCtrl references
-    that.gmfTreeManager_.removeTreeCtrlReference(treeCtrl);
+    that.gmfTreeManager_.removeTreeCtrlReference(treeCtrl); // FIXME: to remove
   }.bind(treeCtrl));
 };
 
