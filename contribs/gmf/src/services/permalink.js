@@ -288,16 +288,12 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     var state = treeCtrl.getState();
     goog.asserts.assert(state === 'on' || state === 'off');
     var visible = state === 'on';
-    if (treeCtrl.children.length > 0) {
-      // toggle a group: all the children will have the same state
-      treeCtrl.children.forEach(function(childTreeCtrl) {
-        var param = gmf.PermalinkParamPrefix.TREE_ENABLE + childTreeCtrl.node.name;
+    treeCtrl.traverseDepthFirst(function(treeCtrl) {
+      if (treeCtrl.children.length === 0) {
+        var param = gmf.PermalinkParamPrefix.TREE_ENABLE + treeCtrl.node.name;
         object[param] = visible;
-      });
-    } else {
-      var param = gmf.PermalinkParamPrefix.TREE_ENABLE + treeCtrl.node.name;
-      object[param] = visible;
-    }
+      }
+    });
     this.ngeoStateManager_.updateState(object);
   }.bind(this));
 
