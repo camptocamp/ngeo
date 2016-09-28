@@ -162,10 +162,10 @@ gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
       //User removed all groups from the tree
       return;
     }
+    groupsNames.reverse();
     if (!this.isModeFlush()) {
       //Initialization phase and state exists -> first-level groups must be read
       //from the stateManager
-      groupsNames.reverse();
       groupsNames.forEach(function(name) {
         this.addGroupByName(name, true, groupsNames.length);
       }, this);
