@@ -718,7 +718,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
   //     to any change happening to the existing layers and any added or
   //     removed ones.
   layers.forEach(function(layer) {
-    this.registerLayer_(layer, true);
+    this.registerLayer_(layer);
   }, this);
 };
 
@@ -828,7 +828,7 @@ gmf.Permalink.prototype.initMergedLayer_ = function(layer, layerNames) {
 gmf.Permalink.prototype.handleLayersAdd_ = function(evt) {
   var layer = evt.element;
   goog.asserts.assertInstanceof(layer, ol.layer.Base);
-  this.registerLayer_(layer, true);
+  this.registerLayer_(layer);
 };
 
 
@@ -845,13 +845,10 @@ gmf.Permalink.prototype.handleLayersRemove_ = function(evt) {
 
 /**
  * @param {ol.layer.Base} layer Layer.
- * @param {boolean=} opt_init Whether the registration of the layer happens
- *     during the initialization of the permalink or not. Defaults to `false`.
  * @private
  */
-gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
+gmf.Permalink.prototype.registerLayer_ = function(layer) {
 
-  var init = opt_init !== undefined ? opt_init : false;
   var layerUid = goog.getUid(layer);
 
   if (layer instanceof ol.layer.Group) {
@@ -863,7 +860,7 @@ gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
         ol.Collection.EventType.REMOVE, this.handleLayersRemove_, this));
 
     layer.getLayers().forEach(function(layer) {
-      this.registerLayer_(layer, opt_init);
+      this.registerLayer_(layer);
     }, this);
   } else {
     this.addListenerKey_(layerUid, ol.events.listen(layer,
@@ -889,18 +886,6 @@ gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
           this.handleWMSSourceChange_.bind(this, layer, source),
           this));
 
-      if (!init) {
-        // if registering a layer after initialization, then we need to update
-        // the state manager properties using the current state of the layer.
-        // Emulating a source 'change' does the trick.
-        source.changed(); // forces `this.handleWMSSourceChange_` to be called
-      }
-    } else {
-      if (!init) {
-        // if registering a layer after initialization, then we need to update
-        // the state manager properties using the current state of the layer
-        this.updateLayerStateByVisibility_(layer);
-      }
     }
     //Check the application state to update layer properties if needed
     this.updateLayerFromState_(layer);
