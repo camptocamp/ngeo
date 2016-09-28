@@ -408,29 +408,6 @@ ngeo.LayertreeController.getFirstParentTree = function(treeCtrl) {
 
 
 /**
- * Fill the given array with all layertree objects of any level from the
- * children of the given layertree. By default, include onyl all leaves.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
- * @param {Array.<ngeo.LayertreeController>} treeCtrls array that will contains
- *     the ngeo layertree controller.
- * @param {boolean=} opt_includeGroups If true, include leaves and groups.
- * @public
- */
-ngeo.LayertreeController.getFlatTree = function(treeCtrl, treeCtrls,
-    opt_includeGroups) {
-  var children = treeCtrl.children;
-  if (children.length > 0) {
-    children.forEach(function(child) {
-      ngeo.LayertreeController.getFlatTree(child, treeCtrls, opt_includeGroups);
-    });
-  }
-  if (children.length <= 0 || opt_includeGroups === true) {
-    treeCtrls.push(treeCtrl);
-  }
-};
-
-
-/**
  * @enum {string}
  */
 ngeo.LayertreeController.VisitorDecision = {

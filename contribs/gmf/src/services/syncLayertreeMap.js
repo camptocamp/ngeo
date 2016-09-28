@@ -83,14 +83,14 @@ gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map,
  * @private
  */
 gmf.SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
-  var treeCtrls = [];
-  ngeo.LayertreeController.getFlatTree(treeCtrl, treeCtrls);
-  treeCtrls.forEach(function(item) {
-    var layer = gmf.SyncLayertreeMap.getLayer(item);
-    if (layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile) {
-      this.updateLayerState_(layer, item);
+  treeCtrl.traverseDepthFirst(function(treeCtrl) {
+    if (treeCtrl.children.length === 0) {
+      var layer = gmf.SyncLayertreeMap.getLayer(treeCtrl);
+      if (layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile) {
+        this.updateLayerState_(layer, treeCtrl);
+      }
     }
-  }, this);
+  }.bind(this));
 };
 
 
@@ -150,14 +150,14 @@ gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
  */
 gmf.SyncLayertreeMap.prototype.getAllPossibleWMSLayerParam = function(treeCtrl) {
   var firstLevelTree = ngeo.LayertreeController.getFirstParentTree(treeCtrl);
-  var treeCtrls = [];
-  ngeo.LayertreeController.getFlatTree(firstLevelTree, treeCtrls);
-  var WMSLayerParams = [];
-  treeCtrls.forEach(function(item) {
-    WMSLayerParams.push(item.node['layers']);
+  var names = [];
+  firstLevelTree.traverseDepthFirst(function(treeCtrl) {
+    if (treeCtrl.children.length === 0) {
+      names.push(treeCtrl.node['layers']);
+    }
   });
   // join then split for group layers named "shop,bank".
-  return WMSLayerParams.join(',').split(',');
+  return names.join(',').split(',');
 };
 
 
@@ -374,19 +374,18 @@ gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
   if (node.time) {
     wmsTime = node.time;
   } else if (node.children) {
-    var treeCtrls = [];
-    ngeo.LayertreeController.getFlatTree(treeCtrl, treeCtrls);
-    treeCtrls.some(function(item) {
-      if (item.node.time) {
-        return wmsTime = item.node.time;
+    treeCtrl.traverseDepthFirst(function(treeCtrl) {
+      if (treeCtrl.children.length === 0 && treeCtrl.node.time) {
+        wmsTime = treeCtrl.node.time;
+        return ngeo.LayertreeController.VisitorDecision.STOP;
       }
     });
   }
   if (wmsTime) {
     var timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
     timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, {
-      start : timeValues[0] || timeValues,
-      end : timeValues[1]
+      start: timeValues[0] || timeValues,
+      end: timeValues[1]
     });
   }
   return timeParam;

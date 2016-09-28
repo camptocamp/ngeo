@@ -111,22 +111,32 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
-  this.treeCtrlReferencesWatcherUnregister_ = $scope.$watchCollection(function() {
-    if (this.gmfTreeManager_.rootCtrl) {
-      return this.gmfTreeManager_.rootCtrl.children;
-    }
-  }.bind(this), function(value) {
+  /**
+   * @param {Array.<ngeo.LayertreeController>} value First level controllers.
+   */
+  var updateEditableTreeCtrls = function(value) {
     if (value) {
-      // a first level node was added or removed
-      this.editableTreeCtrls.length = 0;
+      var editables = this.editableTreeCtrls;
+
+      editables.length = 0;
       this.gmfTreeManager_.rootCtrl.traverseDepthFirst(function(treeCtrl) {
         if (treeCtrl.node.editable) {
           goog.asserts.assert(treeCtrl.children.length === 0);
-          this.editableTreeCtrls.push(treeCtrl);
+          editables.push(treeCtrl);
         }
-      }.bind(this));
+      });
     }
-  }.bind(this));
+  };
+
+  /**
+   * @type {function()}
+   * @private
+   */
+  this.treeCtrlsWatcherUnregister_ = $scope.$watchCollection(function() {
+    if (gmfTreeManager.rootCtrl) {
+      return gmfTreeManager.rootCtrl.children;
+    }
+  }, updateEditableTreeCtrls.bind(this));
 
 
   // === Other inner properties ===
@@ -234,7 +244,7 @@ gmf.EditfeatureselectorController.prototype.handleActiveChange_ = function(activ
  * @private
  */
 gmf.EditfeatureselectorController.prototype.handleDestroy_ = function() {
-  this.treeCtrlReferencesWatcherUnregister_();
+  this.treeCtrlsWatcherUnregister_();
 };
 
 

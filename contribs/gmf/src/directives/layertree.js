@@ -314,8 +314,6 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
  * @export
  */
 gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
-  this.gmfTreeManager_.addTreeCtrlReference(treeCtrl); // FIXME: to remove
-
   var opt_position;
   if (treeCtrl.parent.isRoot) {
     this.gmfTreeManager_.rootCtrl = treeCtrl.parent;
@@ -346,12 +344,9 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
   var dataLayerGroup = this.dataLayerGroup_;
-  var that = this;
   scope.$on('$destroy', function() {
     // Remove the layer from the map.
     dataLayerGroup.getLayers().remove(treeCtrl.layer);
-    // Remove treeCtrl references
-    that.gmfTreeManager_.removeTreeCtrlReference(treeCtrl); // FIXME: to remove
   }.bind(treeCtrl));
 };
 

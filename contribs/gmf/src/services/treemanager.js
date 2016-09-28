@@ -94,12 +94,6 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
   this.rootCtrl = null;
 
   /**
-   * @type {Array.<ngeo.LayertreeController>}
-   * @private
-   */
-  this.treeCtrlReferences_ = [];
-
-  /**
    * @type {number}
    * @public
    */
@@ -353,19 +347,19 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
       var groupAdded = this.addGroups([group], opt_add, opt_silent);
       this.$timeout_(function() {
         var treeCtrl = this.getTreeCtrlByNodeId(group.id);
-        var treeCtrls = [];
         var treeCtrlToActive;
-        ngeo.LayertreeController.getFlatTree(treeCtrl, treeCtrls);
+        treeCtrl.traverseDepthFirst(function(treeCtrl) {
+          if (treeCtrl.node.name === layerName) {
+            treeCtrlToActive = treeCtrl;
+            return ngeo.LayertreeController.VisitorDecision.STOP;
+          }
+        });
+
         // Deactive all layers in the group if it's not in the tree.
         if (groupAdded)  {
           treeCtrl.setState('off');
         }
-        // Search the tree.
-        treeCtrls.some(function(item) {
-          if (item.node.name === layerName) {
-            return treeCtrlToActive = item;
-          }
-        });
+
         // Active it.
         if (treeCtrlToActive) {
           treeCtrlToActive.setState('on');
@@ -471,54 +465,19 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
 
 
 /**
- * Returns the treeCtrls list kept as reference.
- * @return {Array.<ngeo.LayertreeController>} List of Layertree controllers.
- * @public
- */
-gmf.TreeManager.prototype.getTreeCtrlReferences = function() {
-  return this.treeCtrlReferences_;
-};
-
-
-/**
- * Add a treeCtrl to kept in reference.
- * @param {ngeo.LayertreeController} treeCtrl ngeoLayer tree controller.
- * @public
- */
-gmf.TreeManager.prototype.addTreeCtrlReference = function(treeCtrl) {
-  if (this.treeCtrlReferences_.indexOf(treeCtrl) < 0) {
-    this.treeCtrlReferences_.push(treeCtrl);
-  }
-};
-
-
-/**
- * Remove a treeCtrl kept as reference.
- * @param {ngeo.LayertreeController} treeCtrl ngeoLayer tree controller.
- * @public
- */
-gmf.TreeManager.prototype.removeTreeCtrlReference = function(treeCtrl) {
-  var idx = this.treeCtrlReferences_.indexOf(treeCtrl);
-  if (idx > -1) {
-    this.treeCtrlReferences_.splice(idx, 1);
-  }
-};
-
-
-/**
- * Get a treeCtrl based on it's node id. The treeCtrl must have been added to
- * this service to be found.
+ * Get a treeCtrl based on it's node id.
  * @param {number} id the id of a GMFThemesGroup or a GMFThemesLeaf.
- * @return {ngeo.LayertreeController} treeCtrl Todo.
+ * @return {ngeo.LayertreeController} treeCtrl The associated controller.
  * @public
  */
 gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
   var correspondingTreeCtrl = null;
-  this.treeCtrlReferences_.some(function(treeCtrl) {
+  this.rootCtrl.traverseDepthFirst(function(treeCtrl) {
     if (treeCtrl.node.id === id) {
-      return correspondingTreeCtrl = treeCtrl;
+      correspondingTreeCtrl = treeCtrl;
+      return ngeo.LayertreeController.VisitorDecision.STOP;
     }
-  }, this);
+  });
   return correspondingTreeCtrl;
 };
 
