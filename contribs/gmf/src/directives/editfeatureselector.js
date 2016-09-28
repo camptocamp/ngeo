@@ -1,6 +1,7 @@
 goog.provide('gmf.EditfeatureselectorController');
 goog.provide('gmf.editfeatureselectorDirective');
 
+goog.require('goog.asserts');
 goog.require('gmf');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
@@ -48,8 +49,7 @@ gmf.editfeatureselectorDirective = function() {
   };
 };
 
-gmf.module.directive(
-  'gmfEditfeatureselector', gmf.editfeatureselectorDirective);
+gmf.module.directive('gmfEditfeatureselector', gmf.editfeatureselectorDirective);
 
 
 /**
@@ -111,28 +111,22 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
-  this.treeCtrlReferencesWatcherUnregister_ = $scope.$watchCollection(
-    function() {
-      return this.gmfTreeManager_.getTreeCtrlReferences();
-    }.bind(this),
-    function(newVal, oldVal) {
-      var i, ii;
-
-      // (1) Register newly added Layertree controllers
-      for (i = 0, ii = newVal.length; i < ii; i++) {
-        if (oldVal.indexOf(newVal[i]) === -1) {
-          this.registerTreeCtrl_(newVal[i]);
+  this.treeCtrlReferencesWatcherUnregister_ = $scope.$watchCollection(function() {
+    if (this.gmfTreeManager_.rootCtrl) {
+      return this.gmfTreeManager_.rootCtrl.children;
+    }
+  }.bind(this), function(value) {
+    if (value) {
+      // a first level node was added or removed
+      this.editableTreeCtrls.length = 0;
+      this.gmfTreeManager_.rootCtrl.traverseDepthFirst(function(treeCtrl) {
+        if (treeCtrl.node.editable) {
+          goog.asserts.assert(treeCtrl.children.length === 0);
+          this.editableTreeCtrls.push(treeCtrl);
         }
-      }
-
-      // (2) Unregister removed Layertree controllers
-      for (i = 0, ii = oldVal.length; i < ii; i++) {
-        if (newVal.indexOf(oldVal[i]) === -1) {
-          this.unregisterTreeCtrl_(oldVal[i]);
-        }
-      }
-    }.bind(this)
-  );
+      }.bind(this));
+    }
+  }.bind(this));
 
 
   // === Other inner properties ===
@@ -244,54 +238,4 @@ gmf.EditfeatureselectorController.prototype.handleDestroy_ = function() {
 };
 
 
-/**
- * @param {ngeo.LayertreeController} treeCtrl Layertree controller to check.
- * @return {boolean} Whether the Layertree controller contains an editable node.
- * @private
- */
-gmf.EditfeatureselectorController.prototype.isTreeCtrlEditable_ = function(
-  treeCtrl
-) {
-  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
-  return node.editable === true;
-};
-
-
-/**
- * Registers a newly added Layertree controller.
- *
- *  - If it's editable, add it to the editable Layertree controller array
- *
- * @param {ngeo.LayertreeController} treeCtrl Layertree controller to register
- * @private
- */
-gmf.EditfeatureselectorController.prototype.registerTreeCtrl_ = function(
-  treeCtrl
-) {
-  if (this.isTreeCtrlEditable_(treeCtrl)) {
-    this.editableTreeCtrls.push(treeCtrl);
-  }
-
-};
-
-
-/**
- * Unregisters a removed eLayertree controller.
- *
- *  - If it's editable, remove it from the editable Layertree controller array
- *
- * @param {ngeo.LayertreeController} treeCtrl Layertree controller to register
- * @private
- */
-gmf.EditfeatureselectorController.prototype.unregisterTreeCtrl_ = function(
-  treeCtrl
-) {
-  var index = this.editableTreeCtrls.indexOf(treeCtrl);
-  if (index !== -1) {
-    this.editableTreeCtrls.splice(index, 1);
-  }
-};
-
-
-gmf.module.controller(
-  'GmfEditfeatureselectorController', gmf.EditfeatureselectorController);
+gmf.module.controller('GmfEditfeatureselectorController', gmf.EditfeatureselectorController);
