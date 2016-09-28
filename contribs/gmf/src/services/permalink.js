@@ -282,6 +282,26 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
       this.handleBackgroundLayerManagerChange_,
       this);
 
+  // visibility
+  this.rootScope_.$on('ngeo-layertree-state', function(event, map, treeCtrl, firstParent) {
+    var object = {};
+    var state = treeCtrl.getState();
+    goog.asserts.assert(state === 'on' || state === 'off');
+    var visible = state === 'on';
+    if (treeCtrl.children.length > 0) {
+      // toggle a group: all the children will have the same state
+      treeCtrl.children.forEach(function(childTreeCtrl) {
+        var param = gmf.PermalinkParamPrefix.TREE_ENABLE + childTreeCtrl.node.name;
+        object[param] = visible;
+      });
+    } else {
+      var param = gmf.PermalinkParamPrefix.TREE_ENABLE + treeCtrl.node.name;
+      object[param] = visible;
+    }
+    this.ngeoStateManager_.updateState(object);
+  }.bind(this));
+
+  // opacity
   this.gmfThemes_.getThemesObject().then(function(themes) {
     this.themes_ = themes;
     // The theme service has loaded. Wait to allow the layers to be created
@@ -847,10 +867,6 @@ gmf.Permalink.prototype.registerLayer_ = function(layer, opt_init) {
     }, this);
   } else {
     this.addListenerKey_(layerUid, ol.events.listen(layer,
-      ol.Object.getChangeEventType(ol.layer.LayerProperty.VISIBLE),
-      this.handleLayerVisibleChange_, this));
-
-    this.addListenerKey_(layerUid, ol.events.listen(layer,
       ol.Object.getChangeEventType(ol.layer.LayerProperty.OPACITY),
       this.handleLayerOpacityChange_, this));
 
@@ -926,19 +942,6 @@ gmf.Permalink.prototype.unregisterLayer_ = function(layer) {
 
 
 /**
- * Called when a layer `visible` property changes. Update the state manager
- * for that particular layer.
- * @param {ol.ObjectEvent} evt Event.
- * @private
- */
-gmf.Permalink.prototype.handleLayerVisibleChange_ = function(evt) {
-  var layer = evt.target;
-  goog.asserts.assertInstanceof(layer, ol.layer.Base);
-  this.updateLayerStateByVisibility_(layer);
-};
-
-
-/**
  * Called when a layer `opacity` property changes. Update the state manager
  * for that particular layer.
  * @param {ol.ObjectEvent} evt Event.
@@ -953,32 +956,6 @@ gmf.Permalink.prototype.handleLayerOpacityChange_ = function(evt) {
   var param = this.getLayerStateParam_(layerName, isMerged, gmf.PermalinkOpenLayersLayerProperties.OPACITY);
   state[param] = layer.getOpacity();
   this.ngeoStateManager_.updateState(state);
-};
-
-
-/**
- * Update the state manager if the layer is hidden. No need to manage when it
- * is visible (when merged), since that's managed elsewhere.
- * @param {ol.layer.Base} layer Layer.
- * @private
- */
-gmf.Permalink.prototype.updateLayerStateByVisibility_ = function(layer) {
-  var visible = layer.getVisible();
-  var param = this.getLayerStateParamFromLayer_(layer);
-  var isMerged = layer.get('isMerged');
-  var object = {};
-
-  if (isMerged) {
-    if (visible === false) {
-      // TODO - only WMS layers should be managed here... that's not currently
-      //     the case
-      object[param] = '';
-      this.ngeoStateManager_.updateState(object);
-    }
-  } else {
-    object[param] = visible;
-    this.ngeoStateManager_.updateState(object);
-  }
 };
 
 
@@ -1003,6 +980,13 @@ gmf.Permalink.prototype.updateLayerFromState_ = function(layer) {
   param = this.getLayerStateParam_(layerName, isMerged);
   stateValue = this.ngeoStateManager_.getInitialValue(param);
   if (stateValue !== undefined) {
+    // FIXME
+    // var treeCtrl = this.gmfTreeManager_.root.find(function(treeCtrl) {
+    //   return treeCtrl.noed.name === layerName;
+    // });
+    // goog.asserts.assert(treeCtrl);
+    // treeCtrl.setState(stateValue);
+
     //Visibility state of the layer is not the default one -> user interacted with
     if (isMerged) {
       //Not mixed case, we fetched layers names, if not empty: layer must be visible
