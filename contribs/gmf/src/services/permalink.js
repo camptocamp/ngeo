@@ -961,21 +961,12 @@ gmf.Permalink.prototype.updateLayerFromState_ = function(layer) {
   param = this.getLayerStateParam_(layerName, isMerged);
   stateValue = this.ngeoStateManager_.getInitialValue(param);
   if (stateValue !== undefined) {
-    // FIXME
-    // var treeCtrl = this.gmfTreeManager_.root.find(function(treeCtrl) {
-    //   return treeCtrl.noed.name === layerName;
-    // });
-    // goog.asserts.assert(treeCtrl);
-    // treeCtrl.setState(stateValue);
-
-    //Visibility state of the layer is not the default one -> user interacted with
-    if (isMerged) {
-      //Not mixed case, we fetched layers names, if not empty: layer must be visible
-      layer.setVisible(stateValue.length > 0);
-    } else {
-      //Mixed case, we fetched true or false
-      layer.setVisible(/** @type {boolean} */ (stateValue));
-    }
+    this.gmfTreeManager_.rootCtrl.traverseDepthFirst(function(treeCtrl) {
+      if (treeCtrl.node.name === layerName) {
+        treeCtrl.setState(stateValue ? 'on' : 'off');
+        return ngeo.LayertreeController.VisitorDecision.STOP;
+      }
+    });
   }
 };
 
