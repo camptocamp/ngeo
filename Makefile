@@ -547,6 +547,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
 		.build/examples-hosted/contribs/gmf/apps/%/contextualdata.html \
+		.build/examples-hosted/contribs/gmf/apps/%/image/favicon.ico \
 		.build/examples-hosted/contribs/gmf/apps/%/image/logo.png \
 		.build/examples-hosted/contribs/gmf/apps/%/image/background-layer-button.png \
 		.build/examples-hosted/contribs/gmf/build/%.js \
@@ -566,6 +567,11 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/contextualdata.html
 .build/examples-hosted/contribs/gmf/apps/%/contextualdata.html: contribs/gmf/apps/%/contextualdata.html
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/image/favicon.ico
+.build/examples-hosted/contribs/gmf/apps/%/image/favicon.ico: contribs/gmf/apps/%/image/favicon.ico
 	mkdir -p $(dir $@)
 	cp $< $@
 
