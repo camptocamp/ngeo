@@ -10,6 +10,7 @@ goog.require('ngeo.format.XSDAttribute');
  * id from a GeoMapFish server.
  *
  * @constructor
+ * @struct
  * @param {angular.$http} $http Angular http service.
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject

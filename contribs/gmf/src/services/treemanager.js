@@ -25,6 +25,7 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * This service's theme is a GmfThemesNode with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
+ * @struct
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.

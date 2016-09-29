@@ -9,6 +9,7 @@ goog.require('ol');
  * @extends {ngeo.Time}
  * @param {angular.$filter} $filter angular filter service.
  * @constructor
+ * @struct
  * @ngInject
  * @ngdoc service
  * @ngname gmfWMSTime
