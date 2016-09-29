@@ -291,11 +291,9 @@ ngeo.LayertreeController.prototype.getState = function() {
  * Set the state of this treeCtrl. Update its children with its value and then
  * ask its parent to refresh its state.
  * @param {string} state 'on' or 'off'.
- * @param {boolean=} opt_avoidRefreshParents True to avoid refreshing its
- * parent.
  * @export
  */
-ngeo.LayertreeController.prototype.setState = function(state, opt_avoidRefreshParents) {
+ngeo.LayertreeController.prototype.setState = function(state) {
   if (state === this.state_) {
     return;
   }
@@ -311,17 +309,16 @@ ngeo.LayertreeController.prototype.setState = function(state, opt_avoidRefreshPa
 
 /**
  * @param {string} state 'on' or 'off'.
- * @param {boolean=} opt_avoidRefreshParents True to avoid refreshing its parent.
  */
-ngeo.LayertreeController.prototype.setStateInternal_ = function(state, opt_avoidRefreshParents) {
+ngeo.LayertreeController.prototype.setStateInternal_ = function(state) {
   // Set the state
   this.state_ = state === 'on' ? 'on' : 'off';
   // Asks to each child to set its state;
   this.children.forEach(function(child) {
-    child.setStateInternal_(this.state_, true);
+    child.setStateInternal_(this.state_);
   }, this);
   // Ask to its parent to update it's state.
-  if (!opt_avoidRefreshParents && this.parent) {
+  if (this.parent) {
     this.parent.refreshState();
   }
 };

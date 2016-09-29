@@ -254,8 +254,7 @@ gmf.SyncLayertreeMap.prototype.createLeaf_ = function(treeCtrl, map) {
  * @return {ol.layer.Tile|ol.layer.Image} a new layer.
  * @private
  */
-gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl,
-    map) {
+gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
   var leafNode = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
   var layer;
   // Make layer.
@@ -295,8 +294,7 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl,
  * @param {ol.Map} map A map that contains the layer to update.
  * @private
  */
-gmf.SyncLayertreeMap.prototype.createLeafInANotMixedGroup_ = function(treeCtrl,
-    map) {
+gmf.SyncLayertreeMap.prototype.createLeafInANotMixedGroup_ = function(treeCtrl, map) {
   var leafNode = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
   var notMixedTreeCtrl = this.getFirstNotMixedParentTreeCtrl_(treeCtrl);
   goog.asserts.assert(notMixedTreeCtrl);
