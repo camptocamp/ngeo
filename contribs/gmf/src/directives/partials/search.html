@@ -10,11 +10,12 @@
     ng-click="ctrl.onClearButton()">
   </span>
 </div>
-<span ng-show="ctrl.colorchooser && ctrl.displayColorPicker" ngeo-popover ngeo-popover-placement="bottom">
-  <button class="gmf-color-button fa fa-tint" ngeo-popover-anchor
-    data-original-title="{{'Change the color of the search result'|translate}}"
-    ></button>
-  <div ngeo-popover-content>
-    <div ngeo-colorpicker ngeo-colorpicker-color="ctrl.color"></div>
-  </div>
+<span ng-if="ctrl.colorchooser">
+  <span ng-show="ctrl.displayColorPicker" ngeo-popover ngeo-popover-placement="bottom">
+    <button class="gmf-color-button fa fa-tint" ngeo-popover-anchor
+            data-original-title="{{'Change the color of the search result'|translate}}"></button>
+    <div ngeo-popover-content>
+      <div ngeo-colorpicker ngeo-colorpicker-color="ctrl.color"></div>
+    </div>
+  </span>
 </span>
