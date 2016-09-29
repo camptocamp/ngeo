@@ -112,7 +112,7 @@ gmf.TreeManager.prototype.isModeFlush = function() {
  * Set the 'mode' of this service. In mode 'flush', you'll replace previous
  * tree's children with groups that you add. In mode 'add', you'll add them to
  * the array.
- * @param{boolean} value True to use the 'flush' mode. false to use the 'add'
+ * @param {boolean} value True to use the 'flush' mode. false to use the 'add'
  *     one.
  * @export
  */
@@ -125,8 +125,8 @@ gmf.TreeManager.prototype.setModeFlush = function(value) {
 /**
  * Set the current theme name (mode 'flush' only) and add its children. Add
  * only groups that are not already in the tree.
- * @param{GmfThemesNode} theme A theme object.
- * @param{boolean=} opt_init true for the initialization phase (and get previous
+ * @param {GmfThemesNode} theme A theme object.
+ * @param {boolean=} opt_init true for the initialization phase (and get previous
 *  configuration from the state manager)
  * @export
  */
@@ -137,7 +137,7 @@ gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
     gmf.PermalinkParam.TREE_GROUPS));
   if (this.isModeFlush()) {
     this.ngeoStateManager_.updateState({
-      'theme' : theme.name
+      'theme': theme.name
     });
     this.tree.name = theme.name;
   }
@@ -183,10 +183,10 @@ gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
  * Add some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param{Array.<GmfThemesNode>} groups An array of gmf theme nodes.
- * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
- * @param{boolean=} opt_silent if true notifyCantAddGroups_ is not called.
- * @param{number=} opt_totalGroupsLength length of all group to add for this
+ * @param {Array.<GmfThemesNode>} groups An array of gmf theme nodes.
+ * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
+ * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
+ * @param {number=} opt_totalGroupsLength length of all group to add for this
     action.
  * @return{boolean} True if the group has been added. False otherwise.
  * @export
@@ -232,7 +232,7 @@ gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
 /**
  * Add a group as tree's children without consideration of this service 'mode'.
  * Add it only if it's not already in the tree.
- * @param{GmfThemesNode} group The group to add.
+ * @param {GmfThemesNode} group The group to add.
  * @return {boolean} true if the group has been added.
  * @private
  */
@@ -256,10 +256,10 @@ gmf.TreeManager.prototype.addGroup_ = function(group) {
 /**
  * The same as `addGroups`, with the exception that the given group will be
  * deep cloned. Only the clone will be added to the tree.
- * @param{Array.<GmfThemesNodeCustom>} groups An array of object defining
+ * @param {Array.<GmfThemesNodeCustom>} groups An array of object defining
  *     a theme node and an array of layer names to override.
- * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
- * @param{number=} opt_totalGroupsLength length of all group to add for this
+ * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
+ * @param {number=} opt_totalGroupsLength length of all group to add for this
     action.
  * @export
  */
@@ -289,7 +289,7 @@ gmf.TreeManager.prototype.addCustomGroups = function(groups, opt_add,
 /**
  * Retrieve a theme (first found) by its name and add in the tree. Do nothing
  * if any corresponding theme is found.
- * @param{string} themeName Name of the theme to add.
+ * @param {string} themeName Name of the theme to add.
  * @export
  */
 gmf.TreeManager.prototype.addThemeByName = function(themeName) {
@@ -305,9 +305,9 @@ gmf.TreeManager.prototype.addThemeByName = function(themeName) {
 /**
  * Retrieve a group (first found) by its name and add in the tree. Do nothing
  * if any corresponding group is found.
- * @param{string} groupName Name of the group to add.
- * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
- * @param{number=} opt_totalGroupsLength length of all group to add for this
+ * @param {string} groupName Name of the group to add.
+ * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
+ * @param {number=} opt_totalGroupsLength length of all group to add for this
  *     user action.
  * @export
  */
@@ -326,10 +326,10 @@ gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add,
  * Retrieve a group by the name of a layer that is contained in this group
  * (first found). This group will be added in the tree. Do nothing if any
  * corresponding group is found.
- * @param{string} layerName Name of the layer inside the group to add.
- * @param{boolean=} opt_add if true, force to use the 'add' mode this time.
- * @param{boolean=} opt_silent if true notifyCantAddGroups_ is not called
- * @param{ol.Map=} opt_map Map object.
+ * @param {string} layerName Name of the layer inside the group to add.
+ * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
+ * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called
+ * @param {ol.Map=} opt_map Map object.
  * @export
  */
 gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent, opt_map) {
@@ -350,10 +350,10 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
 /**
  * Make the layer of a group visible if the group is already in the layertree.
  * If the group has just been added set only the layer layerName visible.
- * @param{string} layerName Name of the layer to set visible.
- * @param{GmfThemesNode} group Group containing the layer to activate.
- * @param{boolean} groupAdded True if the group has been newly added. False otherwise
- * @param{ol.Map} map Map obkect.
+ * @param {string} layerName Name of the layer to set visible.
+ * @param {GmfThemesNode} group Group containing the layer to activate.
+ * @param {boolean} groupAdded True if the group has been newly added. False otherwise
+ * @param {ol.Map} map Map obkect.
  * @private
  */
 gmf.TreeManager.prototype.setLayerVisible_ = function(layerName, group, groupAdded, map) {
@@ -414,7 +414,7 @@ gmf.TreeManager.prototype.setLayerVisible_ = function(layerName, group, groupAdd
 /**
  * Remove a group from this tree's children. The first group that is found (
  * based on its name) will be removed. If any is found, nothing will append.
- * @param{GmfThemesNode} group The group to remove.
+ * @param {GmfThemesNode} group The group to remove.
  * @export
  */
 gmf.TreeManager.prototype.removeGroup = function(group) {
@@ -485,7 +485,7 @@ gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
 /**
  * Display a notification that informs that the given groups are already in the
  * tree.
- * @param{Array.<GmfThemesNodeCustom>} groups An array of groups that already in
+ * @param {Array.<GmfThemesNodeCustom>} groups An array of groups that already in
  *   the tree.
  * @private
  */
