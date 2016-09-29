@@ -451,7 +451,7 @@ gmf.TreeManager.prototype.removeAll = function() {
  * @param {Array.<string>} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
  * @return {GmfThemesNode} Cloned node.
- * @export
+ * @private
  */
 gmf.TreeManager.prototype.cloneGroupNode_ = function(group, names) {
   var clone = /** @type {GmfThemesNode} */ (goog.object.unsafeClone(group));
@@ -466,7 +466,7 @@ gmf.TreeManager.prototype.cloneGroupNode_ = function(group, names) {
  * @param {GmfThemesNode} node The original node.
  * @param {Array.<string>} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
- * @export
+ * @private
  */
 gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
   if (!node.children) {
