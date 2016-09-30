@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html ng-app='app'>
   <head>
-    <title>GeoMapFish Print example</title>
+    <title>GeoMapFish Layer Tree Example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
@@ -11,80 +11,10 @@
     <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="../../../third-party/jquery-ui/jquery-ui.min.css">
     <style>
-      gmf-map,
-      #tree-container {
-        float: left;
-      }
-      .clear-left {
-        clear: left;
-      }
       gmf-map > div {
         width: 600px;
         height: 400px;
       }
-      .printpanel {
-        width: 250px;
-        margin: 10px;
-        padding: 10px;
-        background-color: #D3E5D7;
-      }
-      .tools-content-heading {
-        border-bottom: solid 1px;
-      }
-      .tools-content-heading .close {
-        line-height: 0;
-      }
-      input[type=range] {
-        -webkit-appearance: none;
-        width: 100%;
-        padding-right: 0 !important;
-        padding-left: 0 !important;
-      }
-      input[type=range]:focus {
-        outline: none;
-      }
-      input[type=range]::-webkit-slider-runnable-track {
-        width: 100%;
-        height: 5px;
-        cursor: pointer;
-        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
-        background: rgba(148, 172, 154, 0.78);
-        border-radius: 1px;
-        border: 0.2px solid rgba(1, 1, 1, 0.2);
-      }
-      input[type=range]::-webkit-slider-thumb {
-        box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
-        border: 1px solid rgba(0, 0, 30, 0.2);
-        height: 20px;
-        width: 10px;
-        border-radius: 5px;
-        background: #ffffff;
-        cursor: pointer;
-        -webkit-appearance: none;
-        margin-top: -7.7px;
-      }
-      input[type=range]:focus::-webkit-slider-runnable-track {
-        background: rgba(205, 217, 208, 0.78);
-      }
-      input[type=range]::-moz-range-track {
-        width: 100%;
-        height: 5px;
-        cursor: pointer;
-        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
-        background: rgba(148, 172, 154, 0.78);
-        border-radius: 1px;
-        border: 0.2px solid rgba(1, 1, 1, 0.2);
-      }
-      input[type=range]::-moz-range-thumb {
-        box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
-        border: 1px solid rgba(0, 0, 30, 0.2);
-        height: 20px;
-        width: 10px;
-        border-radius: 5px;
-        background: #ffffff;
-        cursor: pointer;
-      }
-      /* Layertree */
       ul {
         list-style-type: none;
       }
@@ -147,62 +77,112 @@
       gmf-layertree .indeterminate .gmf-layertree-state:before {
         content: "\f147";
       }
-
+      gmf-layertree .on {
+        color: green;
+      }
+      gmf-layertree .off {
+        color: red;
+      }
+      gmf-layertree .indeterminate {
+        color: orange;
+      }
+      [ngeo-popup] {
+        top: 20px;
+        max-width: 350px;
+        width: 350px;
+        margin-left: -175px;
+        left: 50%;
+        right: 50%;
+        max-height: 400px;
+        position: fixed;
+      }
+      [ngeo-popup] .popover-content {
+        overflow: auto;
+        /*
+         * popup's height - popover-title's height
+         * should be computed using bootstrap variables
+         */
+        max-height: calc(400px - 38px);
+      }
       @media (max-width: 768px) {
         #map {
           height: 200px;
           width: 200px;
         }
+        [ngeo-popup] {
+          position: fixed;
+          top: 0;
+          left: auto;
+          right: auto;
+          max-width: 100%;
+          width: calc(100% - 20px);
+          height: calc(100% - 20px);
+          max-height: none;
+          margin: 10px;
+        }
+      }
+      @media (max-width: 768px) {
+        [ngeo-popup] .popover-content {
+          /*
+           * popup's height - popover-title's height
+           * should be computed using bootstrap variables
+           */
+          max-height: calc(100% - 32px);
+          -webkit-overflow-scrolling: touch;
+        }
+      }
+      #desc, #selections {
+        margin-bottom: 20px;
+      }
+      gmf-layertree a.gmf-layertree-expand-node.fa {
+        display: inline-block;
+      }
+      gmf-layertree a.gmf-layertree-expand-node.fa::before {
+          content: "\f054";
+      }
+      gmf-layertree a.gmf-layertree-expand-node.fa[aria-expanded="true"]::before {
+          content: "\f078";
+      }
+
+      /** Disclaimer */
+      gmf-disclaimer {
+        position: absolute;
+        bottom: 0.5rem;
+        left: 0.5rem;
+        width: 30rem;
+      }
+      gmf-disclaimer .alert {
+        padding: 0.5rem 1rem;
+        margin: 0 0 0.5rem 0;
+      }
+      gmf-disclaimer .alert-dismissable .close,
+      gmf-disclaimer .alert-dismissible .close {
+        right: -0.5rem;
       }
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
-
-  <div style="display: none;"><gmf-authentication></gmf-authentication></div>
-  <gmf-map gmf-map-map="ctrl.map"></gmf-map>
-
-    <div id="tree-container">
-      <div>
-        <span>Theme:
-        <select
-            ng-model="ctrl.treeSource"
-            ng-options="theme.name for theme in ctrl.themes">
-        </select>
-        </span>
-      </div>
-      <gmf-layertree
-          gmf-layertree-source="ctrl.treeSource"
-          gmf-layertree-map="::ctrl.map"
-          gmf-layertree-openlinksinnewwindow="true">
-      </gmf-layertree>
+    <div style="position: relative;">
+      <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+      <gmf-disclaimer
+          gmf-disclaimer-modal="::ctrl.modal"
+          gmf-disclaimer-map="::ctrl.map">
+      </gmf-disclaimer>
     </div>
-
-    <div class="clear-left"></div>
-
-    <p id="desc">
-      This example shows how to use the <code>gmf.printDirective</code>.
-      Directive that generates fields and manages tools to print with a
-      MapFishPrint v3.
-    </p>
-
-    <button ng-init="printActive = false"  ng-show="printActive === false" ng-click="printActive = true">Show print panel</button>
-    <div class="printpanel" ng-show="printActive">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="tools-content-heading">
-            Print
-            <a class="btn close" ng-click="printActive = false">&times;</a>
-          </div>
-          <gmf-print
-            gmf-print-map="ctrl.map"
-            gmf-print-active="printActive">
-          </gmf-print>
-        </div>
-      </div>
+    <p id="desc">This example shows how to use the <code>gmf.Layertree</code> directive. This layertree needs a source object (that can change) that describes layers like the c2cgeoportal themes service. The wmsUrl is used by internals WMS layers but you can use WMS externals layers and WMTS layers too.</p>
+    <div id="selections">
+        <div>New Theme <select ng-model="ctrl.getSetTheme" ng-model-options="{getterSetter: true}" ng-options="theme.name for theme in ctrl.themes"><option value="">-- Choose a theme --</option></select></div>
+        <div>New Group <select ng-model="ctrl.getSetGroup" ng-model-options="{getterSetter: true}" ng-options="group.name for group in ctrl.groups"><option value="">-- Choose a group --</option></select></div>
+        <div>New Layer <select ng-model="ctrl.getSetLayers" ng-model-options="{getterSetter: true}" ng-options="layer.name for layer in ctrl.layers"> <option value="">-- Choose a layer --</option></select></div>
+        <div>Remove a tree <select ng-model="ctrl.getSetRemoveTree" ng-model-options="{getterSetter: true}" ng-options="tree.name for tree in ctrl.gmfTreeManager.root.children"><option value="">-- Choose a tree --</option></select></div>
     </div>
-
+    <gmf-layertree
+        gmf-layertree-source="ctrl.treeSource"
+        gmf-layertree-map="::ctrl.map">
+    </gmf-layertree>
     <script src="../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
     <script src="../../../node_modules/angular/angular.js"></script>
     <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
     <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
@@ -215,12 +195,13 @@
     <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
     <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
     <script src="../../../node_modules/proj4/dist/proj4.js"></script>
-    <script src="/@?main=print.js"></script>
+    <script src="/@?main=layertreeadd.js"></script>
     <script src="default.js"></script>
     <script src="../../../utils/watchwatchers.js"></script>
     <script>
       var gmfModule = angular.module('gmf');
       gmfModule.constant('defaultTheme', 'OSM');
+      gmfModule.constant('gmfTreeManagerModeFlush', false);
       gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
     </script>
   </body>

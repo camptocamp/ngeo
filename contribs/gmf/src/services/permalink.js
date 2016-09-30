@@ -3,6 +3,7 @@ goog.provide('gmf.Permalink');
 goog.require('gmf');
 goog.require('ngeo.AutoProjection');
 goog.require('gmf.Themes');
+goog.require('gmf.ThemeManager');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
@@ -21,7 +22,6 @@ goog.require('goog.asserts');
 goog.require('ol.Feature');
 goog.require('ol.geom.Point');
 goog.require('ol.proj');
-goog.require('ol.layer.Group');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Style');
@@ -72,9 +72,12 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
- * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {gmf.ThemeManager} gmfThemeManager The gmf ThemeManager service.
+ * @param {gmf.TreeManager} gmfTreeManager The gmf gmfTreeManager service.
+ * @param {gmfx.User} gmfUser The gmf User service.
  * @param {gmfx.PermalinkOptions} gmfPermalinkOptions The options to configure
  *     the gmf permalink service with.
+ * @param {string} defaultTheme the default theme.
  * @param {ngeo.Location} ngeoLocation ngeo location service.
  * @param {ngeo.WfsPermalink} ngeoWfsPermalink ngeo WFS query service.
  * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
@@ -85,7 +88,7 @@ gmf.module.value('gmfPermalinkOptions',
  */
 gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     ngeoFeatureOverlayMgr, ngeoFeatureHelper, ngeoFeatures, ngeoLayerHelper,
-    ngeoStateManager, gmfThemes, gmfTreeManager, gmfPermalinkOptions,
+    ngeoStateManager, gmfThemes, gmfThemeManager, gmfTreeManager, gmfUser, gmfPermalinkOptions, defaultTheme,
     ngeoLocation, ngeoWfsPermalink, ngeoAutoProjection, $rootScope) {
 
   // == listener keys ==
@@ -160,10 +163,34 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
+   * @type {gmf.ThemeManager}
+   * @private
+   */
+  this.gmfThemeManager_ = gmfThemeManager;
+
+  /**
+   * @type {gmfx.User}
+   * @private
+   */
+  this.gmfUser_ = gmfUser;
+
+  /**
+   * @type {string}
+   * @private
+   */
+  this.defaultTheme_ = defaultTheme;
+
+  /**
    * @type {angular.Scope}
    * @private
    */
   this.rootScope_ = $rootScope;
+
+  /**
+   * @type {angular.$timeout}
+   * @private
+   */
+  this.$timeout_ = $timeout;
 
   // == other properties ==
 
@@ -184,18 +211,6 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @private
    */
   this.map_ = null;
-
-  /**
-   * @type {?ol.layer.Group}
-   * @private
-   */
-  this.dataLayerGroup_ = null;
-
-  /**
-   * @type {?Array.<GmfThemesTheme>}
-   * @private
-   */
-  this.themes_ = null;
 
   /**
    * @type {ngeo.AutoProjection}
@@ -283,27 +298,37 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
       this);
 
   // visibility
-  this.rootScope_.$on('ngeo-layertree-state', function(event, map, treeCtrl, firstParent) {
-    var object = {};
-    var state = treeCtrl.getState();
-    goog.asserts.assert(state === 'on' || state === 'off');
-    var visible = state === 'on';
-    treeCtrl.traverseDepthFirst(function(treeCtrl) {
-      if (treeCtrl.children.length === 0) {
-        var param = gmf.PermalinkParamPrefix.TREE_ENABLE + treeCtrl.node.name;
-        object[param] = visible;
-      }
-    });
-    this.ngeoStateManager_.updateState(object);
+  this.rootScope_.$on('ngeo-layertree-state', function(event, treeCtrl, firstParent) {
+    var newState = {};
+    if (firstParent.node.mixed) {
+      var state = treeCtrl.getState();
+      goog.asserts.assert(state === 'on' || state === 'off');
+      var visible = state === 'on';
+      treeCtrl.traverseDepthFirst(function(ctrl) {
+        if (ctrl.node.children === undefined) {
+          var param = gmf.PermalinkParamPrefix.TREE_ENABLE + ctrl.node.name;
+          newState[param] = visible;
+        }
+      });
+    } else {
+      var gmfLayerNames = [];
+      firstParent.traverseDepthFirst(function(ctrl) {
+        if (ctrl.children.length === 0 && ctrl.state_ === 'on') {
+          gmfLayerNames.push(ctrl.node.name);
+        }
+      });
+      newState[gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + firstParent.node.name] = gmfLayerNames.join(',');
+    }
+    this.ngeoStateManager_.updateState(newState);
   }.bind(this));
-
-  // opacity
-  this.gmfThemes_.getThemesObject().then(function(themes) {
-    this.themes_ = themes;
-    // The theme service has loaded. Wait to allow the layers to be created
-    $timeout(function() {
-      this.initLayers_();
-    }.bind(this));
+  this.rootScope_.$on('ngeo-layertree-opacity', function(event, treeCtrl) {
+    var newState = {};
+    var opacity = treeCtrl.layer.opacity;
+    var stateName = (treeCtrl.node.mixed === false ?
+        gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY : gmf.PermalinkParamPrefix.TREE_OPACITY
+    ) + treeCtrl.node.name;
+    newState[stateName] = opacity;
+    this.ngeoStateManager_.updateState(newState);
   }.bind(this));
 
   // ngeoFeatures
@@ -325,6 +350,14 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
       this.featureHelper_.setStyle(feature);
     }, this);
   }.bind(this));
+
+  $rootScope.$watch(function() {
+    return this.gmfThemeManager_.themeName;
+  }.bind(this), function(name) {
+    this.setThemeInUrl_(name);
+  }.bind(this));
+
+  this.initLayers_();
 };
 
 
@@ -609,9 +642,6 @@ gmf.Permalink.prototype.registerMap_ = function(map) {
     map.addOverlay(popover);
   }
 
-  // (5) register 'data' layers
-  this.registerDataLayerGroup_(map);
-
   // (6) check for a wfs permalink
   var wfsPermalinkData = this.getWfsPermalinkData_();
   if (wfsPermalinkData !== null) {
@@ -629,8 +659,6 @@ gmf.Permalink.prototype.unregisterMap_ = function() {
       this.mapViewPropertyChangeEventKey_, 'Key should be thruthy');
   ol.events.unlistenByKey(this.mapViewPropertyChangeEventKey_);
   this.mapViewPropertyChangeEventKey_ = null;
-
-  this.unregisterDataLayerGroup_();
 };
 
 
@@ -686,404 +714,142 @@ gmf.Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
 
 
 /**
+ * Return true if there is a theme specified in the URL path.
+ * @private
+ * @param {Array.<string>} pathElements Array of path elements.
+ * @return {boolean} theme in path.
+ */
+gmf.Permalink.prototype.themeInUrl_ = function(pathElements) {
+  var indexOfTheme = pathElements.indexOf('theme');
+  return indexOfTheme >= 0 &&
+      pathElements.indexOf('theme') == pathElements.length - 2;
+};
+
+
+/**
+ * @param {string} themeId The theme id to set in the path of the URL.
+ * @private
+ */
+gmf.Permalink.prototype.setThemeInUrl_ = function(themeId) {
+  if (themeId) {
+    var pathElements = this.ngeoLocation_.getPath().split('/');
+    goog.asserts.assert(pathElements.length > 1);
+    if (pathElements[pathElements.length - 1] === '') {
+      // case where the path is just "/"
+      pathElements.splice(pathElements.length - 1);
+    }
+    if (this.themeInUrl_(pathElements)) {
+      pathElements[pathElements.length - 1] = themeId;
+    } else {
+      pathElements.push('theme', themeId);
+    }
+    this.ngeoLocation_.setPath(pathElements.join('/'));
+  }
+};
+
+
+/**
  * @private
  */
 gmf.Permalink.prototype.initLayers_ = function() {
+  this.gmfThemes_.getThemesObject().then(function(themes) {
+    // check if we have the groups in the permalink
+    var groupsNames = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.TREE_GROUPS);
+    /**
+     * @type {Array<(GmfThemesGroup)>}
+     */
+    var firstLevelGroups = [];
+    /**
+     * @type {string}
+     */
+    var themeName;
+    var pathElements = this.ngeoLocation_.getPath().split('/');
+    if (this.themeInUrl_(pathElements)) {
+      themeName = pathElements[pathElements.length - 1];
+    }
 
-  if (!this.themes_) {
-    return;
-  }
-
-  var layers = this.dataLayerGroup_.getLayers();
-
-  // (1) try to look for any group name from any of the themes in the state
-  //     manager.  If any is found, then apply the found results in the
-  //     appropriate layer.
-  this.themes_.forEach(function(themeNode) {
-    themeNode.children.forEach(this.initLayerFromGroupNode_, this);
-  }, this);
-
-  var layersUid = goog.getUid(layers);
-
-  this.addListenerKey_(layersUid, ol.events.listen(layers,
-      ol.Collection.EventType.ADD, this.handleLayersAdd_, this));
-  this.addListenerKey_(layersUid, ol.events.listen(layers,
-      ol.Collection.EventType.REMOVE, this.handleLayersRemove_, this));
-
-  // (2) at this point, the initialization is complete. We now need to listen
-  //     to any change happening to the existing layers and any added or
-  //     removed ones.
-  layers.forEach(function(layer) {
-    this.registerLayer_(layer);
-  }, this);
-};
-
-
-/**
- * Init layers state of a group node
- *
- * @param  {GmfThemesGroup} groupNode a group node from the tree
- * @private
- */
-gmf.Permalink.prototype.initLayerFromGroupNode_ = function(groupNode) {
-  var layer;
-  var param;
-  var layerNames;
-  var layers = this.dataLayerGroup_.getLayers();
-
-  if (groupNode.mixed) {
-    //Mixed group, treat each node separately
-    layerNames = [];
-    groupNode.children.forEach(function(layerNode) {
-
-      if (layerNode.mixed) {
-        layerNode = /** @type {GmfThemesGroup} */ (layerNode);
-        //enable subgroup registration
-        this.initLayerFromGroupNode_(layerNode);
-      }
-
-      param = this.getLayerStateParamFromNode_(layerNode);
-      var enable = this.ngeoStateManager_.getInitialValue(param);
-      if (enable !== undefined) {
-        var layerName = layerNode.name || '';
-        layer = this.layerHelper_.getLayerByName(
-          layerName, layers.getArray());
-        if (layer) {
-          this.updateLayerFromState_(layer);
-        } else {
-          layerNames.push(layerName);
+    // check if we have a theme in the user functionalities
+    if (!themeName) {
+      var functionalities = this.gmfUser_.functionalities;
+      if (functionalities && 'default_theme' in functionalities) {
+        var defaultTheme = functionalities.default_theme;
+        if (defaultTheme.length > 0) {
+          themeName = defaultTheme[0];
         }
       }
-    }, this);
-
-    if (layerNames.length) {
-      this.gmfTreeManager_.addCustomGroups([{
-        node: groupNode,
-        layers: layerNames
-      }]);
+    }
+    if (!themeName) {
+      // check if we have a theme in the local storage
+      themeName = /** @type string */(this.ngeoStateManager_.getInitialValue('theme'));
     }
 
-  } else {
-    //group not mixed
-    param = this.getLayerStateParamFromNode_(groupNode);
-    var groupLayers = /** @type {string} */ (
-            this.ngeoStateManager_.getInitialValue(param));
-    if (groupLayers !== undefined) {
-      var groupName = groupNode.name || '';
-      layer = this.layerHelper_.getLayerByName(
-          groupName, layers.getArray());
-      if (layer) {
-        this.initMergedLayer_(layer, groupLayers);
-        this.updateLayerFromState_(layer);
-      } else if (groupLayers !== '') {
-        layerNames = groupLayers.split(',');
-        this.gmfTreeManager_.addCustomGroups([{
-          node: groupNode,
-          layers: layerNames
-        }]);
-      } else {
-        //groupLayers === '', we add the group in an inactive state
-        this.gmfTreeManager_.addCustomGroups([{
-          node: groupNode,
-          layers: []
-        }]);
-      }
+    if (!themeName) {
+      // fallback to the default theme
+      themeName = this.defaultTheme_;
     }
-  }
-};
-
-
-/**
- * Initializes a WMS layer containing more than one layer names in its source
- * LAYERS param using a list of layer names that were fetched from the state
- * manager. The `layerNames` string may be empty.
- * @param {ol.layer.Base} layer Layer.
- * @param {string} layerNames A comma separated list of server-side layer names
- * @private
- */
-gmf.Permalink.prototype.initMergedLayer_ = function(layer, layerNames) {
-  goog.asserts.assert(
-      layer instanceof ol.layer.Image ||
-      layer instanceof ol.layer.Tile);
-
-  var source = layer.getSource();
-  goog.asserts.assert(
-      source instanceof ol.source.ImageWMS ||
-      source instanceof ol.source.TileWMS);
-
-  source.updateParams({
-    'LAYERS': layerNames
-  });
-};
-
-
-/**
- * @param {ol.Collection.Event} evt Event.
- * @private
- */
-gmf.Permalink.prototype.handleLayersAdd_ = function(evt) {
-  var layer = evt.element;
-  goog.asserts.assertInstanceof(layer, ol.layer.Base);
-  this.registerLayer_(layer);
-};
-
-
-/**
- * @param {ol.Collection.Event} evt Event.
- * @private
- */
-gmf.Permalink.prototype.handleLayersRemove_ = function(evt) {
-  var layer = evt.element;
-  goog.asserts.assertInstanceof(layer, ol.layer.Base);
-  this.unregisterLayer_(layer);
-};
-
-
-/**
- * @param {ol.layer.Base} layer Layer.
- * @private
- */
-gmf.Permalink.prototype.registerLayer_ = function(layer) {
-
-  var layerUid = goog.getUid(layer);
-
-  if (layer instanceof ol.layer.Group) {
-    // set up a listener on group layers because layers can also later be added
-    // to a group
-    this.addListenerKey_(layerUid, ol.events.listen(layer.getLayers(),
-        ol.Collection.EventType.ADD, this.handleLayersAdd_, this));
-    this.addListenerKey_(layerUid, ol.events.listen(layer.getLayers(),
-        ol.Collection.EventType.REMOVE, this.handleLayersRemove_, this));
-
-    layer.getLayers().forEach(function(layer) {
-      this.registerLayer_(layer);
-    }, this);
-  } else {
-    this.addListenerKey_(layerUid, ol.events.listen(layer,
-      ol.Object.getChangeEventType(ol.layer.LayerProperty.OPACITY),
-      this.handleLayerOpacityChange_, this));
-
-    var isMerged = layer.get('isMerged');
-    if (isMerged) {
-      goog.asserts.assert(
-        layer instanceof ol.layer.Image ||
-        layer instanceof ol.layer.Tile);
-
-      var source = layer.getSource();
-      goog.asserts.assert(
-        source instanceof ol.source.ImageWMS ||
-        source instanceof ol.source.TileWMS);
-
-      var sourceUid = goog.getUid(source);
-      this.addListenerKey_(
-        sourceUid,
-        ol.events.listen(
-          source, ol.events.EventType.CHANGE,
-          this.handleWMSSourceChange_.bind(this, layer, source),
-          this));
-
+    if (this.gmfThemeManager_.themeName.modeFlush) {
+      this.gmfThemeManager_.themeName = themeName;
     }
-    //Check the application state to update layer properties if needed
-    this.updateLayerFromState_(layer);
-  }
-
-};
-
-
-/**
- * @param {ol.layer.Base} layer Layer.
- * @private
- */
-gmf.Permalink.prototype.unregisterLayer_ = function(layer) {
-
-  var layerUid = goog.getUid(layer);
-
-  this.initListenerKey_(layerUid); // clear event listeners
-  if (layer instanceof ol.layer.Group) {
-    layer.getLayers().forEach(this.unregisterLayer_, this);
-  } else {
-    var isMerged = layer.get('isMerged');
-    if (isMerged) {
-      goog.asserts.assert(
-        layer instanceof ol.layer.Image ||
-        layer instanceof ol.layer.Tile);
-
-      var source = layer.getSource();
-      goog.asserts.assert(
-        source instanceof ol.source.ImageWMS ||
-        source instanceof ol.source.TileWMS);
-
-      var sourceUid = goog.getUid(source);
-      this.initListenerKey_(sourceUid); // clear event listeners
-    }
-
-    this.deleteStateParams_(layer);
-  }
-};
-
-
-/**
- * Called when a layer `opacity` property changes. Update the state manager
- * for that particular layer.
- * @param {ol.ObjectEvent} evt Event.
- * @private
- */
-gmf.Permalink.prototype.handleLayerOpacityChange_ = function(evt) {
-  var layer = evt.target;
-  goog.asserts.assertInstanceof(layer, ol.layer.Base);
-  var state = {};
-  var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
-  var layerName = /** @type {string} */ (layer.get('layerNodeName'));
-  var param = this.getLayerStateParam_(layerName, isMerged, gmf.PermalinkOpenLayersLayerProperties.OPACITY);
-  state[param] = layer.getOpacity();
-  this.ngeoStateManager_.updateState(state);
-};
-
-
-/**
- * Update all properties found in the appplication state for the given layer
- * @param  {ol.layer.Base} layer The layer
- * @private
- */
-gmf.Permalink.prototype.updateLayerFromState_ = function(layer) {
-  var layerName = /** @type {string} */ (layer.get('layerNodeName'));
-  var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
-  var param, stateValue;
-  Object.keys(gmf.PermalinkOpenLayersLayerProperties).forEach(function(layerProp) {
-    param = this.getLayerStateParam_(layerName, isMerged, gmf.PermalinkOpenLayersLayerProperties[layerProp]);
-    stateValue = this.ngeoStateManager_.getInitialValue(param);
-    if (stateValue !== undefined) {
-      layer.set(gmf.PermalinkOpenLayersLayerProperties[layerProp], stateValue);
-    }
-  },this);
-
-  // -- Layer Visibility -- //
-  param = this.getLayerStateParam_(layerName, isMerged);
-  stateValue = this.ngeoStateManager_.getInitialValue(param);
-  if (stateValue !== undefined) {
-    this.gmfTreeManager_.rootCtrl.traverseDepthFirst(function(treeCtrl) {
-      if (treeCtrl.node.name === layerName) {
-        treeCtrl.setState(stateValue ? 'on' : 'off');
-        return ngeo.LayertreeController.VisitorDecision.STOP;
-      }
-    });
-  }
-};
-
-/**
- * Remove all state parameters for the given layer
- * @param  {ol.layer.Base} layer the layer
- * @private
- */
-gmf.Permalink.prototype.deleteStateParams_ = function(layer) {
-  var layerName = /** @type {string} */ (layer.get('layerNodeName'));
-  var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
-  var param;
-  Object.keys(gmf.PermalinkOpenLayersLayerProperties).forEach(function(layerProp) {
-    param = this.getLayerStateParam_(layerName, isMerged, gmf.PermalinkOpenLayersLayerProperties[layerProp]);
-    this.ngeoStateManager_.deleteParam(param);
-  },this);
-  param = this.getLayerStateParam_(layerName, isMerged);
-  this.ngeoStateManager_.deleteParam(param);
-};
-
-
-/**
- * @param {ol.layer.Image|ol.layer.Tile} layer Layer.
- * @param {ol.source.ImageWMS|ol.source.TileWMS} source WMS source.
- * @private
- */
-gmf.Permalink.prototype.handleWMSSourceChange_ = function(layer, source) {
-  var layers = source.getParams()['LAYERS'];
-  if (Array.isArray(layers)) {
-    layers = layers.join(',');
-  }
-  var layerName = layer.get('layerNodeName');
-  var param = gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + layerName;
-  var object = {};
-  object[param] = layers;
-  this.ngeoStateManager_.updateState(object);
-};
-
-
-/**
- * @param {ol.layer.Base} layer Layer.
- * @return {string} The state param for the layer
- * @private
- */
-gmf.Permalink.prototype.getLayerStateParamFromLayer_ = function(layer) {
-  var layerName = /** @type {string} */ (layer.get('layerNodeName'));
-  var isMerged = /** @type {boolean} */ (layer.get('isMerged'));
-  return this.getLayerStateParam_(layerName, isMerged);
-};
-
-
-/**
- * @param {GmfThemesGroup|GmfThemesLeaf} layerNode Gmf theme node representing
- *     a layer.
- * @return {string} The state param for the layer
- * @private
- */
-gmf.Permalink.prototype.getLayerStateParamFromNode_ = function(layerNode) {
-  var layerName = layerNode.name;
-  goog.asserts.assert(layerName);
-  var mixed = (layerNode.children !== undefined && layerNode.mixed === true);
-  return this.getLayerStateParam_(layerName, mixed);
-};
-
-
-/**
- * @param {string} layerName The name of the layer.
- * @param {boolean} isMerged Whether the layer is merged or not.
- * @param {string=} opt_propertyName Whether we are looking for a layer property value
- * (e.g opacity)
- * @return {string} The state param for the layer
- * @private
- */
-gmf.Permalink.prototype.getLayerStateParam_ = function(layerName,
-    isMerged, opt_propertyName) {
-  var param;
-  if (isMerged) {
-    if (opt_propertyName === gmf.PermalinkOpenLayersLayerProperties.OPACITY) {
-      param = gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY;
+    if (!groupsNames) {
+      firstLevelGroups = gmf.Themes.findThemeByName(
+        themes, /** @type {string} */ (themeName)
+      ).children;
     } else {
-      param = gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS;
+      groupsNames.split(',').forEach(function(groupName) {
+        firstLevelGroups.push(gmf.Themes.findGroupByName(
+          themes, groupName
+        ));
+      });
     }
-  } else {
-    if (opt_propertyName === gmf.PermalinkOpenLayersLayerProperties.OPACITY) {
-      param = gmf.PermalinkParamPrefix.TREE_OPACITY;
-    } else {
-      param = gmf.PermalinkParamPrefix.TREE_ENABLE;
-    }
-  }
-  return param + layerName;
-};
 
+    this.gmfTreeManager_.setFirstLevelGroups(firstLevelGroups);
 
-/**
- * Look in the map layers for a layer group named 'data' and keep a reference
- * to its layer collection.
- *
- * If the themes haven't been loaded yet, that means the map doesn't have
- * the 'data' layer group created yet.
- * @param {ol.Map} map The ol3 map object
- * @private
- */
-gmf.Permalink.prototype.registerDataLayerGroup_ = function(map) {
-  this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(map,
-      gmf.DATALAYERGROUP_NAME);
-  this.initLayers_();
-};
+    this.$timeout_(function() {
+      if (!this.gmfTreeManager_.rootCtrl) {
+        // we don't have any layertree
+        return;
+      }
+      // Enable the layers and set the opacity
+      this.gmfTreeManager_.rootCtrl.traverseDepthFirst(function(treeCtrl) {
+        if (treeCtrl.isRoot) {
+          return;
+        }
 
-
-/**
- * @private
- */
-gmf.Permalink.prototype.unregisterDataLayerGroup_ = function() {
-  var layers = this.dataLayerGroup_.getLayers();
-  var layersUid = goog.getUid(layers);
-  this.initListenerKey_(layersUid); // clear event listeners
-  this.dataLayerGroup_ = null;
+        var opacity = this.ngeoStateManager_.getInitialValue(
+          (treeCtrl.parent.node.mixed ? gmf.PermalinkParamPrefix.TREE_OPACITY : gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY)
+          + treeCtrl.node.name
+        );
+        if (opacity !== undefined) {
+          treeCtrl.layer.setOpacity(opacity);
+        }
+        if (treeCtrl.node.mixed) {
+          return;
+        }
+        if (treeCtrl.parent.node.mixed) {
+          var enable = this.ngeoStateManager_.getInitialValue(
+            gmf.PermalinkParamPrefix.TREE_ENABLE + treeCtrl.node.name
+          );
+          if (enable !== undefined) {
+            treeCtrl.setState(enable ? 'on' : 'off');
+          }
+        } else {
+          var groupLayers = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
+            gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
+          ));
+          if (groupLayers !== undefined) {
+            var groupLayersArray = groupLayers.split(',');
+            treeCtrl.traverseDepthFirst(function(treeCtrl) {
+              if (treeCtrl.node.children === undefined) {
+                var enable = groupLayersArray.includes(treeCtrl.node.name);
+                treeCtrl.setState(enable ? 'on' : 'off');
+              }
+            });
+            return ngeo.LayertreeController.VisitorDecision.STOP;
+          }
+        }
+      }.bind(this));
+    }.bind(this));
+  }.bind(this));
 };
 
 

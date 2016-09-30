@@ -56,25 +56,6 @@ describe('gmf.SyncLayertreeMap', function() {
 
   // ================== miscellaneous ================
 
-  it('get All Possible WMS Layer Param', function() {
-    inject(function($rootScope, $compile) {
-      // Init, compile layertree
-      $rootScope.tree = themes.themes[3]; // Theme 'OSM'
-      $rootScope.map = map;
-      $rootScope.getLayer = getLayer;
-      $compile(element)($rootScope);
-      $rootScope.$digest();
-    });
-    roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
-    // Order count !
-    var possibilities = ['cinema','post_office','osm_time',
-      'entertainment','sustenance','hospitals','police'];
-
-    expect(gmfSyncLayertreeMap.getAllPossibleWMSLayerParam(treeGroup)).toEqual(
-        possibilities);
-  });
-
   it('Get layer', function() {
     inject(function($rootScope, $compile) {
       // Init, compile layertree
@@ -203,9 +184,7 @@ describe('gmf.SyncLayertreeMap', function() {
     treeGroup.setState('on');
     gmfSyncLayertreeMap.sync_(map, treeGroup);
     wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
-    var allWMSLayerParam = gmfSyncLayertreeMap.getAllPossibleWMSLayerParam(
-        treeGroup);
-    expect(wmsParamLayers).toEqual(allWMSLayerParam.reverse().join(','));
+    expect(wmsParamLayers).toEqual('police,hospitals,sustenance,entertainment,osm_time,post_office,cinema');
   });
 
   it('Sync WMTS Layer (in a mixed group)', function() {

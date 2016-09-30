@@ -7,12 +7,6 @@ goog.require('ngeo.StateManager');
 
 
 /**
- * The default value for `modeFlush` that `gmf.TreeManager` is initialized with.
- */
-gmf.module.value('gmfTreeManagerModeFlush', true);
-
-
-/**
  * Manage a tree with children. This service can be used in mode 'flush'
  * (default) or not (mode 'add'). In mode 'flush', each theme, group or group
  * by layer that you add will replace the previous children's array. In mode
@@ -31,14 +25,13 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
- * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
  */
 gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
-    ngeoNotification, gmfThemes, gmfTreeManagerModeFlush, ngeoStateManager) {
+    ngeoNotification, gmfThemes, ngeoStateManager) {
 
   /**
    * @type {angular.$timeout}
@@ -70,19 +63,8 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
    */
   this.gmfThemes_ = gmfThemes;
 
-  /**
-   * @type {boolean}
-   * @private
-   */
-  this.modeFlush_ = gmfTreeManagerModeFlush;
-
-  /**
-   * @type {GmfThemesTheme}
-   * @export
-   */
-  this.tree = /** @type {GmfThemesTheme} */ ({
-    children: [],
-    name: ''
+  this.root = /** @type {GmfRootNode} */ ({
+    children: []
   });
 
   /**
@@ -106,93 +88,25 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
   this.ngeoStateManager_ = ngeoStateManager;
 };
 
-
 /**
- * Return the current 'mode' of this service.
- * @return {boolean} True if the service is in 'flush' mode. False otherwise.
+ * Set some groups as tree's children. If the service use mode 'flush', the
+ * previous tree's children will be removed. Add only groups that are not
+ * already in the tree.
+ * @param{Array.<GmfThemesGroup>} firstLevelGroups An array of gmf theme group.
+ * @return{boolean} True if the group has been added. False otherwise.
  * @export
  */
-gmf.TreeManager.prototype.isModeFlush = function() {
-  return this.modeFlush_;
+gmf.TreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
+  this.root.children.length = 0;
+  this.ngeoStateManager_.deleteParam(gmf.PermalinkParam.TREE_GROUPS);
+  return this.addFirstLevelGroups(firstLevelGroups);
 };
-
-
-/**
- * Set the 'mode' of this service. In mode 'flush', you'll replace previous
- * tree's children with groups that you add. In mode 'add', you'll add them to
- * the array.
- * @param {boolean} value True to use the 'flush' mode. false to use the 'add'
- *     one.
- * @export
- */
-gmf.TreeManager.prototype.setModeFlush = function(value) {
-  this.modeFlush_ = value;
-  this.tree.name = '';
-};
-
-
-/**
- * Set the current theme name (mode 'flush' only) and add its children. Add
- * only groups that are not already in the tree.
- * @param {GmfThemesTheme} theme A theme object.
- * @param {boolean=} opt_init true for the initialization phase (and get previous
-*  configuration from the state manager)
- * @export
- */
-gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
-  var firstLevelNodes = theme.children;
-  var groupsNames, firstLevelNodesNames, isSubset;
-  var treeGroups = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
-    gmf.PermalinkParam.TREE_GROUPS));
-  if (this.isModeFlush()) {
-    this.ngeoStateManager_.updateState({
-      'theme': theme.name
-    });
-    this.tree.name = theme.name;
-  }
-  if (opt_init && treeGroups !== undefined) {
-    groupsNames = treeGroups.length > 0 ? treeGroups.split(',') : [];
-    if (!groupsNames) {
-      //User removed all groups from the tree
-      return;
-    }
-    groupsNames.reverse();
-    if (!this.isModeFlush()) {
-      //Initialization phase and state exists -> first-level groups must be read
-      //from the stateManager
-      groupsNames.forEach(function(name) {
-        this.addGroupByName(name, true, groupsNames.length);
-      }, this);
-    } else {
-      //Mode flush, check if treeGroups is a subset of firstLevelNodes.
-      //NB:If the theme in the URL was different from the theme stored in
-      //localStorage, the treeGroups values must not be used.
-      firstLevelNodesNames = firstLevelNodes.map(function(group) {
-        return group.name;
-      });
-      isSubset = groupsNames.every(function(name) {
-        return firstLevelNodesNames.indexOf(name) >= 0;
-      });
-      if (isSubset) {
-        groupsNames.forEach(function(name) {
-          this.addGroupByName(name, true);
-        }, this);
-      } else {
-        this.addGroups(firstLevelNodes);
-      }
-    }
-
-  } else {
-    this.addGroups(firstLevelNodes.reverse());
-  }
-};
-
 
 /**
  * Add some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param {Array.<GmfThemesGroup>} groups An array of gmf theme group.
+ * @param {Array.<GmfThemesGroup>} firstLevelGroups An array of gmf theme group.
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
  * @param {number=} opt_totalGroupsLength length of all group to add for this
@@ -200,17 +114,13 @@ gmf.TreeManager.prototype.addTheme = function(theme, opt_init) {
  * @return{boolean} True if the group has been added. False otherwise.
  * @export
  */
-gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent,
+gmf.TreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups, opt_add, opt_silent,
     opt_totalGroupsLength) {
   var groupNotAdded = [];
-  this.layersToAddAtOnce = opt_totalGroupsLength || groups.length;
+  this.layersToAddAtOnce = opt_totalGroupsLength || firstLevelGroups.length;
 
-  if (this.isModeFlush() && opt_add !== true) {
-    this.tree.children.length = 0;
-    this.ngeoStateManager_.deleteParam(gmf.PermalinkParam.TREE_GROUPS);
-  }
-  groups.forEach(function(group) {
-    if (!this.addGroup_(group)) {
+  firstLevelGroups.reverse().forEach(function(group) {
+    if (!this.addFirstLevelGroup(group)) {
       groupNotAdded.push(group);
     }
   }.bind(this));
@@ -219,8 +129,8 @@ gmf.TreeManager.prototype.addGroups = function(groups, opt_add, opt_silent,
   }
 
   //Update app state
-  this.updateTreeGroupsState_(this.tree.children);
-  return (groupNotAdded.length === 0);
+  this.updateTreeGroupsState_(this.root.children);
+  return groupNotAdded.length === 0;
 };
 
 
@@ -243,12 +153,11 @@ gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
  * Add it only if it's not already in the tree.
  * @param {GmfThemesGroup} group The group to add.
  * @return {boolean} true if the group has been added.
- * @private
+ * @export
  */
-gmf.TreeManager.prototype.addGroup_ = function(group) {
-  var children = this.tree.children;
+gmf.TreeManager.prototype.addFirstLevelGroup = function(group) {
   var alreadyAdded = false;
-  children.some(function(child) {
+  this.root.children.some(function(child) {
     if (group.id === child.id) {
       this.layersToAddAtOnce -= 1;
       return alreadyAdded = true;
@@ -257,57 +166,8 @@ gmf.TreeManager.prototype.addGroup_ = function(group) {
   if (alreadyAdded) {
     return false;
   }
-  children.unshift(group);
+  this.root.children.unshift(group);
   return true;
-};
-
-
-/**
- * The same as `addGroups`, with the exception that the given group will be
- * deep cloned. Only the clone will be added to the tree.
- * @param {Array.<GmfThemesGroup>} groups An array of object defining
- *     a theme node and an array of layer names to override.
- * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
- * @param {number=} opt_totalGroupsLength length of all group to add for this
-    action.
- * @export
- */
-gmf.TreeManager.prototype.addCustomGroups = function(groups, opt_add,
-    opt_totalGroupsLength) {
-  var groupNotAdded = [];
-  this.layersToAddAtOnce = opt_totalGroupsLength || groups.length;
-
-  if (this.isModeFlush() && opt_add !== true) {
-    this.tree.children.length = 0;
-  }
-  groups.forEach(function(group) {
-    var clone = this.cloneGroupNode_(group.node, group.layers);
-    if (!this.addGroup_(clone)) {
-      groupNotAdded.push(clone);
-    }
-  }.bind(this));
-  if (groupNotAdded.length > 0) {
-    this.notifyCantAddGroups_(groupNotAdded);
-  }
-
-  //Update app state
-  this.updateTreeGroupsState_(this.tree.children);
-};
-
-
-/**
- * Retrieve a theme (first found) by its name and add in the tree. Do nothing
- * if any corresponding theme is found.
- * @param {string} themeName Name of the theme to add.
- * @export
- */
-gmf.TreeManager.prototype.addThemeByName = function(themeName) {
-  this.gmfThemes_.getThemesObject().then(function(themes) {
-    var theme = gmf.Themes.findThemeByName(themes, themeName);
-    if (theme) {
-      this.addTheme(theme);
-    }
-  }.bind(this));
 };
 
 
@@ -325,7 +185,7 @@ gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add,
   this.gmfThemes_.getThemesObject().then(function(themes) {
     var group = gmf.Themes.findGroupByName(themes, groupName);
     if (group) {
-      this.addGroups([group], opt_add, false, opt_totalGroupsLength);
+      this.addFirstLevelGroups([group], opt_add, false, opt_totalGroupsLength);
     }
   }.bind(this));
 };
@@ -344,7 +204,7 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
   this.gmfThemes_.getThemesObject().then(function(themes) {
     var group = gmf.Themes.findGroupByLayerNodeName(themes, layerName);
     if (group) {
-      var groupAdded = this.addGroups([group], opt_add, opt_silent);
+      var groupAdded = this.addFirstLevelGroups([group], opt_add, opt_silent);
       this.$timeout_(function() {
         var treeCtrl = this.getTreeCtrlByNodeId(group.id);
         var treeCtrlToActive;
@@ -377,7 +237,7 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
  * @export
  */
 gmf.TreeManager.prototype.removeGroup = function(group) {
-  var children = this.tree.children;
+  var children = this.root.children;
   var index = 0, found = false;
   children.some(function(child) {
     if (child.name === group.name) {
@@ -397,8 +257,8 @@ gmf.TreeManager.prototype.removeGroup = function(group) {
  * @export
  */
 gmf.TreeManager.prototype.removeAll = function() {
-  while (this.tree.children.length) {
-    this.removeGroup(this.tree.children[0]);
+  while (this.root.children.length) {
+    this.removeGroup(this.root.children[0]);
   }
 };
 

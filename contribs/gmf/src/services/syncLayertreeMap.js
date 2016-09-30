@@ -65,11 +65,17 @@ gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, gmfThemes, gmfWMSTi
  */
 gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map,
     dataLayerGroup, opt_position) {
+  /**
+   * @type {ol.layer.Base|ol.layer.Group}
+   */
   var layer;
-  if (treeCtrl.node.children) {
+  if (treeCtrl.node.children && treeCtrl.node.mixed) {
     layer = this.createGroup_(treeCtrl, map, dataLayerGroup, opt_position);
-  } else {
+  } else if (treeCtrl.node.children === undefined) {
     layer = this.createLeaf_(treeCtrl, map);
+  } else if (treeCtrl.depth == 1) {
+    layer = this.createLayerFromGroup_(treeCtrl, false);
+    dataLayerGroup.getLayers().insertAt(0, layer);
   }
   return layer;
 };
@@ -84,11 +90,14 @@ gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map,
  */
 gmf.SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
   treeCtrl.traverseDepthFirst(function(treeCtrl) {
-    if (treeCtrl.children.length === 0) {
-      var layer = gmf.SyncLayertreeMap.getLayer(treeCtrl);
-      if (layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile) {
-        this.updateLayerState_(layer, treeCtrl);
-      }
+    if (treeCtrl.node.children !== undefined && !treeCtrl.parent.node.mixed && treeCtrl.depth === 2) {
+      // First level group and non mixed
+      var layer = /** @type ol.layer.Image */(gmf.SyncLayertreeMap.getLayer(treeCtrl));
+      this.updateLayerState_(layer, treeCtrl);
+    }
+    if (treeCtrl.node.children === undefined && treeCtrl.parent.node.mixed) {
+      // layers on mixed group
+      this.updateLayerState_(treeCtrl.layer, treeCtrl);
     }
   }.bind(this));
 };
@@ -102,62 +111,26 @@ gmf.SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
  */
 gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
   var active = treeCtrl.getState() === 'on';
-  var source = layer.getSource();
-  if (source instanceof ol.source.WMTS) {
+  if (treeCtrl.node.type === 'WMTS') {
     layer.setVisible(active);
-  } else if (source instanceof ol.source.ImageWMS) {
+  } else if (treeCtrl.node.mixed === false || treeCtrl.parent.node.mixed === false) {
+    // WMS group
     goog.asserts.assertInstanceof(layer, ol.layer.Image);
-    var allPossibleWMSLayerParam = this.getAllPossibleWMSLayerParam(treeCtrl);
-    allPossibleWMSLayerParam.reverse(); // Reverse to to keep order.
-    var activeWMSLayerParam = layer.getVisible() ?
-        source.getParams()['LAYERS'].split(',') : [];
-    var thisNodeWMSLayerParam = treeCtrl.node.layers.split(',');
-    var newWMSLayerParam = [];
-
-    // Check one possible name after the other if it must be added in the new
-    // WMSLayerParam. That keep the order of layers.
-    allPossibleWMSLayerParam.forEach(function(possibleItem) {
-      thisNodeWMSLayerParam.forEach(function(nodeItem) {
-        // If the possible name is the current treeCtrl name and it's active
-        // then add it.
-        if (possibleItem === nodeItem) {
-          if (active) {
-            newWMSLayerParam.push(possibleItem);
-          }
-        } else {
-          // If not but it's on the map, add it.
-          if (activeWMSLayerParam.indexOf(possibleItem) > -1) {
-            // Except if the name in one in the current TreeCtrl (it must pass
-            // by the previous if).
-            if (thisNodeWMSLayerParam.indexOf(possibleItem) < 0) {
-              newWMSLayerParam.push(possibleItem);
-            }
-          }
-        }
-      });
+    var firstLevelTree = ngeo.LayertreeController.getFirstParentTree(treeCtrl);
+    var names = [];
+    firstLevelTree.traverseDepthFirst(function(treeCtrl) {
+      if (treeCtrl.node.children === undefined && treeCtrl.getState() === 'on') {
+        names.push(treeCtrl.node.layers);
+      }
     });
-    this.layerHelper_.updateWMSLayerState(layer, newWMSLayerParam.join(','));
+    /** @type ol.source.ImageWMS */(layer.getSource()).updateParams({
+      'LAYERS': names.reverse().join(',')
+    });
+  } else {
+    // WMS mixed layer
+    goog.asserts.assertInstanceof(layer, ol.layer.Image);
+    layer.setVisible(active);
   }
-};
-
-
-/**
- * Get all possible WMSLayerParam names for a given tree. The collection of
- * names start from the first level group and take care of the order.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
- * @return {Array.<string>} Array of names.
- * @public
- */
-gmf.SyncLayertreeMap.prototype.getAllPossibleWMSLayerParam = function(treeCtrl) {
-  var firstLevelTree = ngeo.LayertreeController.getFirstParentTree(treeCtrl);
-  var names = [];
-  firstLevelTree.traverseDepthFirst(function(treeCtrl) {
-    if (treeCtrl.children.length === 0) {
-      names.push(treeCtrl.node['layers']);
-    }
-  });
-  // join then split for group layers named "shop,bank".
-  return names.join(',').split(',');
 };
 
 
@@ -275,12 +248,12 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map
   this.updateLayerReferences_(leafNode, layer);
   var checked = leafNode.metadata.isChecked === true;
   if (checked) {
-    treeCtrl.setState('on');
+    treeCtrl.setState('on', false);
   }
   layer.setVisible(checked);
   // Insert layer in the map.
   var layerGroup = /** @type {ol.layer.Group} */ (
-    gmf.SyncLayertreeMap.getLayer(treeCtrl));
+    gmf.SyncLayertreeMap.getLayer(treeCtrl.parent));
   layerGroup.getLayers().insertAt(0, layer);
   return layer;
 };
@@ -304,7 +277,7 @@ gmf.SyncLayertreeMap.prototype.createLeafInANotMixedGroup_ = function(treeCtrl, 
   //Update layer information and tree state.
   this.updateLayerReferences_(leafNode, wmsLayer);
   if (leafNode.metadata.isChecked) {
-    treeCtrl.setState('on');
+    treeCtrl.setState('on', false);
     this.updateLayerState_(wmsLayer, treeCtrl);
   }
 };

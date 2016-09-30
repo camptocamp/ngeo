@@ -4,6 +4,16 @@
  * @externs
  */
 
+/**
+ * @constructor
+ */
+var GmfRootNode = function() {};
+
+
+/**
+ * @type {Array.<GmfThemesGroup>}
+ */
+GmfRootNode.prototype.children;
 
 /**
  * @typedef {{
@@ -161,7 +171,7 @@ GmfThemesTheme.prototype.metadata;
 
 
 /**
- * @type {string|undefined}
+ * @type {string}
  */
 GmfThemesTheme.prototype.name;
 

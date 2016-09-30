@@ -22,7 +22,7 @@ gmf.module.value('gmfLayertreeTemplate',
      */
     function(element, attrs) {
       var subTemplateUrl = gmf.baseTemplateUrl + '/layertree.html';
-      return '<div ngeo-layertree="gmfLayertreeCtrl.tree" ' +
+      return '<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
           'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
           'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
@@ -174,6 +174,12 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
+   * @type {GmfRootNode}
+   * @export
+   */
+  this.root = gmfTreeManager.root;
+
+  /**
    * @type {gmf.SyncLayertreeMap}
    * @private
    */
@@ -244,14 +250,12 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   $scope.$watchCollection(function() {
     return this.dimensions;
   }.bind(this), function() {
-    this.updateDimensions_(this.gmfTreeManager_.tree);
+    this.updateDimensions_(this.gmfTreeManager_.root);
   }.bind(this));
-
 };
 
-
 /**
- * @param {GmfThemesTheme|GmfThemesGroup|GmfThemesLeaf} node Layer tree node.
+ * @param {GmfRootNode|GmfThemesTheme|GmfThemesGroup|GmfThemesLeaf} node Layer tree node.
  * @private
  */
 gmf.LayertreeController.prototype.updateDimensions_ = function(node) {
@@ -318,7 +322,7 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
   if (treeCtrl.parent.isRoot) {
     this.gmfTreeManager_.rootCtrl = treeCtrl.parent;
     // Precise the index to add first level groups.
-    opt_position = this.gmfTreeManager_.tree.children.length -
+    opt_position = this.gmfTreeManager_.root.children.length -
         this.gmfTreeManager_.layersToAddAtOnce | 0;
   }
 

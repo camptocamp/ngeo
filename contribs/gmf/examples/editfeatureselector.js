@@ -134,7 +134,7 @@ app.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
       // Add 'Edit' theme, i.e. the one with id 73
       for (var i = 0, ii = themes.length; i < ii; i++) {
         if (themes[i].id === 73) {
-          this.gmfTreeManager.addTheme(themes[i]);
+          this.gmfTreeManager.setFirstLevelGroups(themes[i].children);
           break;
         }
       }

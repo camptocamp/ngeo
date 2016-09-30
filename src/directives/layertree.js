@@ -253,8 +253,15 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   if (this.layer) {
     ngeoDecorateLayerLoading(this.layer, $scope);
     ngeoDecorateLayer(this.layer);
-  }
 
+    ol.events.listen(
+      this.layer,
+      ol.Object.getChangeEventType(ol.layer.LayerProperty.OPACITY),
+      function(evt) {
+        this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
+      }, this
+    );
+  }
 
   var listenersExpr = $attrs['ngeoLayertreeListeners'];
   if (listenersExpr === undefined) {
@@ -291,19 +298,21 @@ ngeo.LayertreeController.prototype.getState = function() {
  * Set the state of this treeCtrl. Update its children with its value and then
  * ask its parent to refresh its state.
  * @param {string} state 'on' or 'off'.
+ * @param {boolean=} opt_broadcast Broadcast.
  * @export
  */
-ngeo.LayertreeController.prototype.setState = function(state) {
+ngeo.LayertreeController.prototype.setState = function(state, opt_broadcast) {
   if (state === this.state_) {
     return;
   }
   this.setStateInternal_(state);
   var firstParents = this.isRoot ? this.children : [ngeo.LayertreeController.getFirstParentTree(this)];
 
-  firstParents.forEach(function(firstParent) {
-    // FIXME: get rid of this.map
-    this.rootScope_.$broadcast('ngeo-layertree-state', this.map, this, firstParent);
-  }.bind(this));
+  if (opt_broadcast === undefined || opt_broadcast) {
+    firstParents.forEach(function(firstParent) {
+      this.rootScope_.$broadcast('ngeo-layertree-state', this, firstParent);
+    }.bind(this));
+  }
 };
 
 

@@ -9,5 +9,6 @@ beforeEach(function() {
     $provide.value('authenticationBaseUrl', 'https://fake/gmf/authentication');
     $provide.value('gmfRasterUrl', 'https://fake/gmf/raster');
     $provide.value('gmfContextualdatacontentTemplateUrl', 'contextualdata.html');
+    $provide.value('defaultTheme', 'OSM');
   });
 });

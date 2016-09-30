@@ -124,7 +124,6 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
    * @private
    */
   this.bgLayerPromise_ = null;
-
 };
 ol.inherits(gmf.Themes, ol.events.EventTarget);
 
