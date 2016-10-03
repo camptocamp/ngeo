@@ -39,6 +39,7 @@ gmf.ThemesResponse;
  * objects in the tree returned by the "themes" web service.
  *
  * @constructor
+ * @struct
  * @extends {ol.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$injector} $injector Main injector.

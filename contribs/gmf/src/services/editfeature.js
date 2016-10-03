@@ -12,6 +12,7 @@ goog.require('ol.format.GeoJSON');
  * The GeoJSON format is used when obtaining or sending features.
  *
  * @constructor
+ * @struct
  * @param {angular.$http} $http Angular http service.
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject

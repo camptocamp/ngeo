@@ -18,6 +18,7 @@ goog.require('ngeo.Query');
  *  * wmsUrl: An alternate wmsUrl used to do the query (essential to query WMTS layer).
  *
  * @constructor
+ * @struct
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {string} gmfWmsUrl URL to the wms service to use by default.

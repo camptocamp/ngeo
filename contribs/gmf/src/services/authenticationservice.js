@@ -72,6 +72,7 @@ gmf.AuthenticationEventType = {
  * Event emitted by the authentication service.
  *
  * @constructor
+ * @struct
  * @extends {ol.events.Event}
  * @param {gmf.AuthenticationEventType} type Event type.
  * @param {gmfx.User} user The current user.
@@ -103,6 +104,7 @@ ol.inherits(gmf.AuthenticationEvent, ol.events.Event);
  * - resetPassword
  *
  * @constructor
+ * @struct
  * @extends {ol.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
  * @param {string} authenticationBaseUrl URL to "authentication" web service.

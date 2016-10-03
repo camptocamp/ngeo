@@ -8,6 +8,7 @@ goog.require('gmf');
  * @param {angular.$http} $http Angular http service.
  * @param  {string} gmfShortenerCreateUrl URL for the shortener API
  * @constructor
+ * @struct
  * @ngInject
  * @export
  * @ngname gmfShareService

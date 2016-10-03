@@ -17,6 +17,7 @@ gmf.AltitudeParam = {
  * c2cgeoportal's raster to obtain different kinds of altitude information
  * at a specific coordinate.
  * @constructor
+ * @struct
  * @param {angular.$http} $http Angular http service.
  * @param {string} gmfRasterUrl URL to a raster service with altitude layers.
  * @ngInject

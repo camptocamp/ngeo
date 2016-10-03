@@ -61,6 +61,7 @@ gmf.module.value('gmfPermalinkOptions',
  * - the dimensions value
  *
  * @constructor
+ * @struct
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
@@ -612,12 +613,6 @@ gmf.Permalink.prototype.unregisterMap_ = function() {
       this.mapViewPropertyChangeEventKey_, 'Key should be thruthy');
   ol.events.unlistenByKey(this.mapViewPropertyChangeEventKey_);
   this.mapViewPropertyChangeEventKey_ = null;
-
-  if (this.crosshairLayer_) {
-    this.crosshairLayer_.setMap(null);
-    this.crosshairLayer_.getSource().clear();
-    this.crosshairLayer_ = null;
-  }
 
   this.unregisterDataLayerGroup_();
 };
