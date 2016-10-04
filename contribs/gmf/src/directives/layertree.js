@@ -229,7 +229,7 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
         gmf.DATALAYERGROUP_NAME);
 
   /**
-   * @type Array.<ol.layer.Base>
+   * @type {Array.<ol.layer.Base>}
    * @export
    */
   this.layers = [];

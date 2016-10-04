@@ -112,7 +112,7 @@ gmf.TimeSliderController = function($scope, gmfWMSTime) {
 
   /**
    * If the component is used to select a date range
-   * @type boolean
+   * @type {boolean}
    * @export
    */
   this.isModeRange = this.time.mode === 'range';

@@ -124,7 +124,7 @@ gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
     if (names.length === 0) {
       layer.setVisible(false);
     }
-    /** @type ol.source.ImageWMS */ (layer.getSource()).updateParams({
+    /** @type {ol.source.ImageWMS} */ (layer.getSource()).updateParams({
       'LAYERS': names.reverse().join(',')
     });
     if (names.length !== 0) {
@@ -205,7 +205,7 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
       this.updateLayerReferences_(ctrl.node, layer);
       if (ctrl.node.metadata.isChecked) {
         ctrl.setState('on', false);
-        this.updateLayerState_(/** @type ol.layer.Image */ (layer), ctrl);
+        this.updateLayerState_(/** @type {ol.layer.Image} */ (layer), ctrl);
       }
     }.bind(this));
     layer.set('layerNodeName', groupNode.name); //Really useful ?

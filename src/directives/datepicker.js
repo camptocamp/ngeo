@@ -120,7 +120,7 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime) {
 
   /**
    * If the component is used to select a date range
-   * @type boolean
+   * @type {boolean}
    * @export
    */
   this.isModeRange = this.time.mode === 'range';
@@ -128,7 +128,7 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime) {
 
   /**
    * Function called after date(s) changed/selected
-   * @function
+   * @type {function({time: {start: number, end: number}})}
    * @export
    */
   this.onDateSelected;
