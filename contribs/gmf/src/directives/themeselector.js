@@ -2,7 +2,7 @@ goog.provide('gmf.ThemeselectorController');
 goog.provide('gmf.themeselectorDirective');
 
 goog.require('gmf');
-goog.require('gmf.TreeManager');
+goog.require('gmf.ThemeManager');
 goog.require('gmf.Themes');
 goog.require('gmf.ThemesEventType');
 
@@ -42,7 +42,7 @@ gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {gmf.TreeManager} gmfTreeManager Tree manager service.
+ * @param {gmf.ThemeManager} gmfThemeManager Tree manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @constructor
  * @export
@@ -50,13 +50,13 @@ gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
  * @ngdoc controller
  * @ngname gmfThemeselectorController
  */
-gmf.ThemeselectorController = function($scope, gmfTreeManager, gmfThemes) {
+gmf.ThemeselectorController = function($scope, gmfThemeManager, gmfThemes) {
 
   /**
-   * @type {gmf.TreeManager}
-   * @private
+   * @type {gmf.ThemeManager}
+   * @export
    */
-  this.gmfTreeManager_ = gmfTreeManager;
+  this.gmfThemeManager = gmfThemeManager;
 
   /**
    * @type {gmf.Themes}
@@ -69,12 +69,6 @@ gmf.ThemeselectorController = function($scope, gmfTreeManager, gmfThemes) {
    * @export
    */
   this.themes;
-
-  /**
-   * @type {Object}
-   * @export
-   */
-  this.currentTheme = this.gmfTreeManager_.tree;
 
   /**
    * @type {Function|undefined}
@@ -102,7 +96,7 @@ gmf.ThemeselectorController = function($scope, gmfTreeManager, gmfThemes) {
  */
 gmf.ThemeselectorController.prototype.setThemes_ = function() {
 
-  this.gmfTreeManager_.removeAll();
+  this.gmfThemeManager.removeAll();
 
   this.gmfThemes_.getThemesObject().then(function(themes) {
     // Keep only the themes dedicated to the theme switcher
@@ -112,13 +106,12 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
 
 
 /**
- * @param {GmfThemesNode} theme Theme.
- * @param {boolean=} opt_init set to true for initialization phase.
+ * @param {GmfThemesTheme} theme Theme.
  * @export
  */
-gmf.ThemeselectorController.prototype.setTheme = function(theme, opt_init) {
+gmf.ThemeselectorController.prototype.setTheme = function(theme) {
   if (theme) {
-    this.gmfTreeManager_.addTheme(theme, opt_init);
+    this.gmfThemeManager.addTheme(theme);
   }
 };
 

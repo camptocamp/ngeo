@@ -4,6 +4,7 @@ goog.provide('gmf.editfeatureDirective');
 
 goog.require('gmf');
 goog.require('gmf.EditFeature');
+goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.XSDAttributes');
 /** @suppress {extraRequire} */
 goog.require('ngeo.attributesDirective');
@@ -45,8 +46,7 @@ goog.require('ol.style.Text');
  *
  *     <gmf-editfeature
  *         gmf-editfeature-dirty="ctrl.dirty"
- *         gmf-editfeature-editablenode="::ctrl.node"
- *         gmf-editfeature-editablewmslayer="::ctrl.selectedWMSLayer"
+ *         gmf-editfeature-editabletreectrl="::ctrl.treeCtrl"
  *         gmf-editfeature-map="::ctrl.map"
  *         gmf-editfeature-state="efsCtrl.state"
  *         gmf-editfeature-tolerance="::ctrl.tolerance"
@@ -56,10 +56,9 @@ goog.require('ol.style.Text');
  * @htmlAttribute {boolean} gmf-editfeature-dirty Flag that is toggled as soon
  *     as the feature changes, i.e. if any of its properties change, which
  *     includes the geometry.
- * @htmlAttribute {GmfThemesNode} gmf-editfeature-editablenode The GMF node
- *     representing the editable layer.
- * @htmlAttribute {ol.layer.Image|ol.layer.Tile} gmf-editfeature-editablewmslayer
- *     The WMS layer to refresh after each saved modification.
+ * @htmlAttribute {ngeo.LayertreeController} gmf-editfeature-editabletreectrl
+ *     A reference to the editable Layertree controller, which contains a
+ *     a reference to the node and WMS layer.
  * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
  * @htmlAttribute {string} gmf-editfeature-stopeditingrequest Stop editing
  *     state.
@@ -77,8 +76,7 @@ gmf.editfeatureDirective = function() {
     scope: {
       'dirty': '=gmfEditfeatureDirty',
       'layer': '=gmfEditfeatureLayer',
-      'editableNode': '=gmfEditfeatureEditablenode',
-      'editableWMSLayer': '<gmfEditfeatureEditablewmslayer',
+      'editableTreeCtrl': '=gmfEditfeatureEditabletreectrl',
       'map': '<gmfEditfeatureMap',
       'state': '=gmfEditfeatureState',
       'tolerance': '<?gmfEditfeatureTolerance',
@@ -127,16 +125,10 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   this.dirty = this.dirty === true;
 
   /**
-   * @type {GmfThemesNode}
+   * @type {ngeo.LayertreeController}
    * @export
    */
-  this.editableNode;
-
-  /**
-   * @type {ol.layer.Image|ol.layer.Tile}
-   * @export
-   */
-  this.editableWMSLayer;
+  this.editableTreeCtrl;
 
   /**
    * @type {ol.Map}
@@ -181,6 +173,24 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @export
    */
   this.vectorLayer;
+
+  /**
+   * @type {GmfThemesLeaf}
+   * @private
+   */
+  this.editableNode_ = /** @type {GmfThemesLeaf} */ (
+    this.editableTreeCtrl.node);
+
+
+  var layer = gmf.SyncLayertreeMap.getLayer(this.editableTreeCtrl);
+  goog.asserts.assert(
+    layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile);
+
+  /**
+   * @type {ol.layer.Image|ol.layer.Tile}
+   * @private
+   */
+  this.editableWMSLayer_ = layer;
 
   /**
    * @type {angular.JQLite}
@@ -457,7 +467,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    */
   this.geomType = null;
 
-  gmfXSDAttributes.getAttributes(this.editableNode.id).then(
+  gmfXSDAttributes.getAttributes(this.editableNode_.id).then(
     this.setAttributes_.bind(this));
 
   var uid = goog.getUid(this);
@@ -499,14 +509,14 @@ gmf.EditfeatureController.prototype.save = function() {
 
   if (id) {
     this.editFeatureService_.updateFeature(
-      this.editableNode.id,
+      this.editableNode_.id,
       feature
     ).then(
       this.handleEditFeature_.bind(this)
     );
   } else {
     this.editFeatureService_.insertFeatures(
-      this.editableNode.id,
+      this.editableNode_.id,
       [feature]
     ).then(
       this.handleEditFeature_.bind(this)
@@ -588,7 +598,7 @@ gmf.EditfeatureController.prototype.delete = function() {
 
     // (1) Launch request
     this.editFeatureService_.deleteFeature(
-      this.editableNode.id,
+      this.editableNode_.id,
       this.feature
     ).then(
       this.handleDeleteFeature_.bind(this)
@@ -624,7 +634,7 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
   var features = new ol.format.GeoJSON().readFeatures(resp.data);
   if (features.length) {
     this.feature.setId(features[0].getId());
-    this.layerHelper_.refreshWMSLayer(this.editableWMSLayer);
+    this.layerHelper_.refreshWMSLayer(this.editableWMSLayer_);
   }
   if (this.confirmDeferred_) {
     this.confirmDeferred_.resolve();
@@ -639,7 +649,7 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
  */
 gmf.EditfeatureController.prototype.handleDeleteFeature_ = function(resp) {
   this.pending = false;
-  this.layerHelper_.refreshWMSLayer(this.editableWMSLayer);
+  this.layerHelper_.refreshWMSLayer(this.editableWMSLayer_);
 };
 
 
@@ -732,7 +742,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
 
   this.modify_.setActive(active);
   this.mapSelectActive = active;
-  this.editableNode['editing'] = active;
+  this.editableTreeCtrl.properties['editing'] = active;
 
 };
 
@@ -818,7 +828,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
     );
 
     // (3) Launch query to fetch features
-    this.editFeatureService_.getFeatures([this.editableNode.id], extent).then(
+    this.editFeatureService_.getFeatures([this.editableNode_.id], extent).then(
       this.handleGetFeatures_.bind(this));
 
     // (4) Clear any previously selected feature
@@ -1072,24 +1082,24 @@ gmf.EditfeatureController.State = {
    * unsaved modifications were saved or discarded.
    * @type {string}
    */
-  DEACTIVATE_EXECUTE: 'execute',
+  DEACTIVATE_EXECUTE: 'deactivate_execute',
   /**
    * The state active when the deactivation of the editing tools is in
    * progress while there are unsaved modifications.
    * @type {string}
    */
-  DEACTIVATE_PENDING: 'pending',
+  DEACTIVATE_PENDING: 'deactivate_pending',
   /**
    * Final state set after the "stop editing" button has been clicked while
    * no unsaved modifications were made or if the user saved them or confirmed
    * to continue without saving.
    * @type {string}
    */
-  STOP_EDITING_EXECUTE: 'execute',
+  STOP_EDITING_EXECUTE: 'stop_editing_execute',
   /**
    * The state that is active while when the "stop editing" button has been
    * clicked but before any confirmation has been made to continue.
    * @type {string}
    */
-  STOP_EDITING_PENDING: 'pending'
+  STOP_EDITING_PENDING: 'stop_editing_pending'
 };

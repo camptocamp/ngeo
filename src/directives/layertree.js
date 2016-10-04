@@ -122,17 +122,18 @@ ngeo.module.directive('ngeoLayertree', ngeo.layertreeDirective);
 /**
  * The controller for the "tree node" directive.
  * @param {angular.Scope} $scope Scope.
- * @param {angular.JQLite} $element Element.
+ * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.Attributes} $attrs Attributes.
  * @param {ngeo.DecorateLayer} ngeoDecorateLayer layer decorator service.
  * @param {ngeo.DecorateLayerLoading} ngeoDecorateLayerLoading Decorate Layer service.
  * @constructor
  * @ngInject
  * @export
+ * @struct
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */
-ngeo.LayertreeController = function($scope, $element, $attrs, ngeoDecorateLayer, ngeoDecorateLayerLoading) {
+ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLayer, ngeoDecorateLayerLoading) {
 
   var isRoot = $attrs['ngeoLayertreeNotroot'] === undefined;
 
@@ -143,6 +144,24 @@ ngeo.LayertreeController = function($scope, $element, $attrs, ngeoDecorateLayer,
   this.isRoot = isRoot;
 
   var nodeExpr = $attrs['ngeoLayertree'];
+
+  /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.rootScope_ = $rootScope;
+
+  /**
+   * @type {!Object}
+   * @export
+   */
+  this.properties = {};
+
+  /**
+   * @type {!string}
+   * @private
+   */
+  this.state_ = 'off';
 
   /**
    * @type {Object|undefined}
@@ -170,6 +189,24 @@ ngeo.LayertreeController = function($scope, $element, $attrs, ngeoDecorateLayer,
   this.parent = $scope.$parent['layertreeCtrl'];
 
   /**
+   * @type {Array.<ngeo.LayertreeController>}
+   * @export
+   */
+  this.children = [];
+
+  if (this.parent) {
+    this.parent.children.push(this);
+  }
+
+  $scope.$on('$destroy', function() {
+    if (this.parent) {
+      var index = this.parent.children.indexOf(this);
+      goog.asserts.assert(index >= 0);
+      this.parent.children.splice(index, 1);
+    }
+  }.bind(this));
+
+  /**
    * @type {number}
    * @export
    */
@@ -179,7 +216,7 @@ ngeo.LayertreeController = function($scope, $element, $attrs, ngeoDecorateLayer,
    * @type {number}
    * @export
    */
-  this.depth = isRoot ? 0 : this.parent['depth'] + 1;
+  this.depth = isRoot ? 0 : this.parent.depth + 1;
 
   // We set 'uid' and 'depth' in the scope as well to access the parent values
   // in the inherited scopes. This is intended to be used in the javascript not
@@ -211,13 +248,20 @@ ngeo.LayertreeController = function($scope, $element, $attrs, ngeoDecorateLayer,
    * @export
    */
   this.layer = isRoot ? null : /** @type {ol.layer.Layer} */
-      ($scope.$eval(nodelayerExpr, {'node': this.node, 'depth': this.depth, 'parentCtrl' : this.parent}));
+      ($scope.$eval(nodelayerExpr, {'treeCtrl' : this}));
 
   if (this.layer) {
     ngeoDecorateLayerLoading(this.layer, $scope);
     ngeoDecorateLayer(this.layer);
-  }
 
+    ol.events.listen(
+      this.layer,
+      ol.Object.getChangeEventType(ol.layer.LayerProperty.OPACITY),
+      function(evt) {
+        this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
+      }, this
+    );
+  }
 
   var listenersExpr = $attrs['ngeoLayertreeListeners'];
   if (listenersExpr === undefined) {
@@ -241,6 +285,98 @@ ngeo.LayertreeController = function($scope, $element, $attrs, ngeoDecorateLayer,
 
 
 /**
+ * Return the current state.
+ * @return {string} 'on', 'off', 'indeterminate'.
+ * @export
+ */
+ngeo.LayertreeController.prototype.getState = function() {
+  return this.state_;
+};
+
+
+/**
+ * Set the state of this treeCtrl. Update its children with its value and then
+ * ask its parent to refresh its state.
+ * @param {string} state 'on' or 'off'.
+ * @param {boolean=} opt_broadcast Broadcast.
+ * @export
+ */
+ngeo.LayertreeController.prototype.setState = function(state, opt_broadcast) {
+  if (state === this.state_) {
+    return;
+  }
+  this.setStateInternal_(state);
+
+  // Ask to its parent to update it's state.
+  if (this.parent) {
+    this.parent.refreshState();
+  }
+
+  var firstParents = this.isRoot ? this.children : [ngeo.LayertreeController.getFirstParentTree(this)];
+
+  if (opt_broadcast === undefined || opt_broadcast) {
+    firstParents.forEach(function(firstParent) {
+      this.rootScope_.$broadcast('ngeo-layertree-state', this, firstParent);
+    }.bind(this));
+  }
+};
+
+
+/**
+ * @param {string} state 'on' or 'off'.
+ */
+ngeo.LayertreeController.prototype.setStateInternal_ = function(state) {
+  // Set the state
+  this.state_ = state === 'on' ? 'on' : 'off';
+  // Asks to each child to set its state;
+  this.children.forEach(function(child) {
+    child.setStateInternal_(this.state_);
+  }, this);
+};
+
+
+/**
+ * Refresh the state of this treeCtrl based on it's children value. The call its
+ * parent to do the same.
+ * @public
+ */
+ngeo.LayertreeController.prototype.refreshState = function() {
+  var newState = this.getCalculateState();
+  if (this.state_ === newState) {
+    return;
+  }
+  this.state_ = newState;
+  if (this.parent) {
+    this.parent.refreshState();
+  }
+};
+
+
+/**
+ * Return the current state, calculate on all its children recursively.
+ * @return {string} 'on', 'off' or 'indeterminate'.
+ * @export
+ */
+ngeo.LayertreeController.prototype.getCalculateState = function() {
+  if (this.node.children === undefined) {
+    return this.state_;
+  }
+  var childState;
+  var previousChildState;
+  this.children.some(function(child) {
+    childState = child.getCalculateState();
+    if (previousChildState) {
+      if (previousChildState !== childState) {
+        return childState = 'indeterminate';
+      }
+    }
+    previousChildState = childState;
+  });
+  return childState;
+};
+
+
+/**
  * @param {boolean|undefined} val Value.
  * @return {boolean|undefined} Value.
  * @export
@@ -248,7 +384,9 @@ ngeo.LayertreeController = function($scope, $element, $attrs, ngeoDecorateLayer,
 ngeo.LayertreeController.prototype.getSetActive = function(val) {
   var layer = this.layer;
   var map = this.map;
-  goog.asserts.assert(this.layer !== null);
+  if (!layer) {
+    return;
+  }
   if (val !== undefined) {
     if (!val) {
       map.removeLayer(layer);
@@ -257,6 +395,70 @@ ngeo.LayertreeController.prototype.getSetActive = function(val) {
     }
   } else {
     return map.getLayers().getArray().indexOf(layer) >= 0;
+  }
+};
+
+
+/**
+ * Get the "top level" layertree (one of the first level child under the root
+ * layertree). Can return itself.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @return {ngeo.LayertreeController} the top level layertree.
+ * @public
+ */
+ngeo.LayertreeController.getFirstParentTree = function(treeCtrl) {
+  var tree = treeCtrl;
+  while (!tree.parent.isRoot) {
+    tree = tree.parent;
+  }
+  return tree;
+};
+
+
+/**
+ * @enum {string}
+ */
+ngeo.LayertreeController.VisitorDecision = {
+  STOP: 'STOP',
+  SKIP: 'SKIP',
+  DESCEND: 'DESCEND'
+};
+
+
+/**
+ * @typedef {
+ *   function(ngeo.LayertreeController): (!ngeo.LayertreeController.VisitorDecision|undefined)
+ * }
+ */
+ngeo.LayertreeController.Visitor;
+
+
+/**
+ * Recursive method to traverse the layertree controller graph.
+ * @param {ngeo.LayertreeController.Visitor} visitor A visitor called for each node.
+ * @return {boolean} whether to stop traversing.
+ * @export
+ */
+ngeo.LayertreeController.prototype.traverseDepthFirst = function(visitor) {
+  // First visit the current controller
+  var decision = visitor(this) || ngeo.LayertreeController.VisitorDecision.DESCEND;
+
+  switch (decision) {
+    case ngeo.LayertreeController.VisitorDecision.STOP:
+      return true; // stop traversing
+    case ngeo.LayertreeController.VisitorDecision.SKIP:
+      return false; // continue traversing but skip current branch
+    case ngeo.LayertreeController.VisitorDecision.DESCEND:
+      for (var i = 0; i < this.children.length; ++i) {
+        var child = this.children[i];
+        var stop = child.traverseDepthFirst(visitor);
+        if (stop) {
+          return true; // stop traversing
+        }
+      }
+      return false; // continue traversing
+    default:
+      goog.asserts.fail('Unhandled case');
   }
 };
 
