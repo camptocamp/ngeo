@@ -57,6 +57,7 @@ ngeo.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
  * `ngeox.QuerySource`
  *
  * @constructor
+ * @struct
  * @param {angular.$http} $http Angular $http service.
  * @param {angular.$q} $q The Angular $q service.
  * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.

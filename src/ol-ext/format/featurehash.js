@@ -77,6 +77,7 @@ ngeo.format.FeatureHashLegacyProperties_ = {};
  *
  * @see https://github.com/sbrunner/OpenLayers-URLCompressed
  * @constructor
+ * @struct
  * @extends {ol.format.TextFeature}
  * @param {ngeox.format.FeatureHashOptions=} opt_options Options.
  * @export

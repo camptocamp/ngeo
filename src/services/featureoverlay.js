@@ -38,6 +38,7 @@ ngeo.FeatureOverlayGroup;
  *     featureOverlay.addFeature(myFeature);
  *
  * @constructor
+ * @struct
  * @ngdoc service
  * @ngname ngeoFeatureOverlayMgr
  */

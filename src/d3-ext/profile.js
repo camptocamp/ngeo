@@ -52,6 +52,7 @@ goog.require('goog.object');
  *     ]
  *
  * @constructor
+ * @struct
  * @return {Object} D3js component.
  * @param {ngeox.profile.ProfileOptions} options Profile options.
  * @export

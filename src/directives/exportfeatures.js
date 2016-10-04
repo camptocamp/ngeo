@@ -49,6 +49,7 @@ ngeo.module.directive('ngeoExportfeatures', ngeo.exportfeaturesDirective);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @constructor
+ * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoExportfeaturesController

@@ -24,6 +24,7 @@ ngeo.BackgroundEventType = {
 
 /**
  * @constructor
+ * @struct
  * @extends {ol.events.Event}
  * @param {ngeo.BackgroundEventType} type Type.
  * @param {ol.layer.Base} previous Previous background layer.
@@ -82,6 +83,7 @@ ol.inherits(ngeo.BackgroundEvent, ol.events.Event);
  *
  * @extends {ol.Observable}
  * @constructor
+ * @struct
  * @ngdoc service
  * @ngname ngeoBackgroundLayerMgr
  */

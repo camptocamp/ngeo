@@ -102,6 +102,7 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  *   as MapFish Print does not support sprite icons.
  *
  * @constructor
+ * @struct
  * @param {string} url URL to MapFish print web service.
  * @param {angular.$http} $http Angular $http service.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.

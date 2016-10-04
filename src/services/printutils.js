@@ -7,10 +7,24 @@ goog.require('ngeo');
  * Provides a service with print utility functions.
  *
  * @constructor
+ * @struct
  * @ngdoc service
  * @ngname ngeoPrintUtils
  */
 ngeo.PrintUtils = function() {
+
+  /**
+   * @type {number}
+   * @private
+   */
+  this.extentHalfHorizontalDistance_;
+
+  /**
+   * @type {number}
+   * @private
+   */
+  this.extentHalfVerticalDistance_;
+
 };
 
 

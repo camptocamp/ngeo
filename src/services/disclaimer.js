@@ -15,6 +15,7 @@ goog.require('ngeo.Message');
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @constructor
+ * @struct
  * @extends {ngeo.Message}
  * @ngdoc service
  * @ngname ngeoDisclaimer

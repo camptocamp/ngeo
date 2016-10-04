@@ -19,6 +19,7 @@ goog.require('ol.source.Vector');
  * - pressing the ESC key automatically deactivate the interaction.
  *
  * @constructor
+ * @struct
  * @extends {ol.interaction.Translate}
  * @param {ngeox.interaction.TranslateOptions} options Options.
  * @export

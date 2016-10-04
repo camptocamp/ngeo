@@ -10,6 +10,7 @@ goog.require('ngeo');
  * - events from Closure Library
  *
  * @constructor
+ * @struct
  * @ngdoc service
  * @ngname ngeoEventHelper
  * @ngInject

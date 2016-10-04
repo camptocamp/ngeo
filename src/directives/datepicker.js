@@ -87,6 +87,7 @@ ngeo.module.directive('ngeoDatePicker', ngeo.DatePicker);
  * @param {angular.$injector} $injector injector.
  * @param {ngeo.Time} ngeoTime time service.
  * @constructor
+ * @struct
  * @export
  * @ngInject
  * @ngdoc controller

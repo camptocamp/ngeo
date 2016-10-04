@@ -16,6 +16,7 @@ goog.require('ol.source.WMTS');
  * @param {angular.$q} $q Angular promises/deferred service.
  * @param {angular.$http} $http Angular http service.
  * @constructor
+ * @struct
  * @ngdoc service
  * @ngname ngeoLayerHelper
  * @ngInject

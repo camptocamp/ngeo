@@ -5,6 +5,7 @@ goog.require('ol.proj');
 
 /**
  * @constructor
+ * @struct
  * @ngdoc service
  * @ngname ngeoAutoProjection
  */

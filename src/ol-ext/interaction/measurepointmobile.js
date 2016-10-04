@@ -10,6 +10,7 @@ goog.require('ol.geom.Point');
  * Interaction dedicated to measure by coordinate (point) on mobile devices.
  *
  * @constructor
+ * @struct
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
  * @export

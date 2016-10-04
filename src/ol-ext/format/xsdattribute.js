@@ -8,6 +8,7 @@ goog.require('ol.format.XML');
  * Reads attributes that are defined in XSD format and return them as a list.
  *
  * @constructor
+ * @struct
  * @extends {ol.format.XML}
  * @export
  */

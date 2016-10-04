@@ -36,6 +36,7 @@ ngeo.RotateEventType = {
  * instances of this type.
  *
  * @constructor
+ * @struct
  * @extends {ol.events.Event}
  * @implements {ngeox.RotateEvent}
  * @param {ngeo.RotateEventType} type Type.
@@ -61,6 +62,7 @@ ol.inherits(ngeo.RotateEvent, ol.events.Event);
  * Interaction to rotate features.
  *
  * @constructor
+ * @struct
  * @extends {ol.interaction.Pointer}
  * @param {olx.interaction.ModifyOptions} options Options.
  * @fires ngeo.interaction.ModifyCircleEvent

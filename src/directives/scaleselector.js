@@ -86,6 +86,7 @@ ngeo.module.directive('ngeoScaleselector', ngeo.scaleselectorDirective);
 
 /**
  * @constructor
+ * @struct
  * @param {angular.Scope} $scope Directive scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.
