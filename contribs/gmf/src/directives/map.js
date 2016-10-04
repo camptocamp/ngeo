@@ -3,6 +3,7 @@ goog.provide('gmf.mapDirective');
 
 goog.require('gmf');
 goog.require('gmf.Permalink');
+goog.require('gmf.Snapping');
 goog.require('goog.asserts');
 goog.require('ngeo.FeatureOverlayMgr');
 
@@ -46,12 +47,14 @@ gmf.module.directive('gmfMap', gmf.mapDirective);
  * @param {angular.Scope} $scope The directive's scope.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  * @param {gmf.Permalink} gmfPermalink The gmf permalink service.
+ * @param {gmf.Snapping} gmfSnapping The gmf snapping service.
  * @constructor
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMapController
  */
-gmf.MapController = function($scope, ngeoFeatureOverlayMgr, gmfPermalink) {
+gmf.MapController = function($scope, ngeoFeatureOverlayMgr, gmfPermalink,
+    gmfSnapping) {
 
   var map = $scope['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
@@ -65,6 +68,8 @@ gmf.MapController = function($scope, ngeoFeatureOverlayMgr, gmfPermalink) {
   ngeoFeatureOverlayMgr.init(this.map);
 
   gmfPermalink.setMap(this.map);
+
+  gmfSnapping.setMap(this.map);
 
 };
 

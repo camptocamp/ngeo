@@ -4,6 +4,8 @@ goog.provide('gmf.editfeatureDirective');
 
 goog.require('gmf');
 goog.require('gmf.EditFeature');
+/** @suppress {extraRequire} */
+goog.require('gmf.Snapping');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.XSDAttributes');
 /** @suppress {extraRequire} */
@@ -60,8 +62,9 @@ goog.require('ol.style.Text');
  *     A reference to the editable Layertree controller, which contains a
  *     a reference to the node and WMS layer.
  * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
- * @htmlAttribute {string} gmf-editfeature-stopeditingrequest Stop editing
- *     state.
+ * @htmlAttribute {string} gmf-editfeature-state The state property shared
+ *     with the `gmf-editfeatureselector` directive. For more info, see in
+ *     that directive.
  * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
@@ -99,6 +102,7 @@ gmf.module.directive(
  * @param {angular.$q} $q Angular $q service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {gmf.Snapping} gmfSnapping The gmf snapping service.
  * @param {gmf.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
@@ -113,8 +117,9 @@ gmf.module.directive(
  * @ngname GmfEditfeatureController
  */
 gmf.EditfeatureController = function($element, $scope, $timeout, $q,
-    gettextCatalog, gmfEditFeature, gmfXSDAttributes, ngeoDecorateInteraction,
-    ngeoEventHelper, ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
+    gettextCatalog, gmfEditFeature, gmfSnapping, gmfXSDAttributes,
+    ngeoDecorateInteraction, ngeoEventHelper, ngeoFeatureHelper,
+    ngeoLayerHelper, ngeoToolActivateMgr) {
 
   /**
    * Flag that is toggled as soon as the feature changes, i.e. if any of its
@@ -228,6 +233,12 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   this.editFeatureService_ = gmfEditFeature;
 
   /**
+   * @type {gmf.Snapping}
+   * @private
+   */
+  this.gmfSnapping_ = gmfSnapping;
+
+  /**
    * @type {gmf.XSDAttributes}
    * @private
    */
@@ -309,6 +320,17 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @export
    */
   this.createActive = false;
+
+  $scope.$watch(
+    function() {
+      return this.createActive;
+    }.bind(this),
+    function(newVal, oldVal) {
+      if (newVal) {
+        this.gmfSnapping_.ensureSnapInteractionsOnTop();
+      }
+    }.bind(this)
+  );
 
   /**
    * @type {ngeo.ToolActivate}
@@ -971,6 +993,8 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
       this
     );
     this.registerInteractions_();
+
+    this.gmfSnapping_.ensureSnapInteractionsOnTop();
 
     // The `ui-date` triggers an unwanted change, i.e. it converts the text
     // to Date, which makes the directive dirty when it shouldn't... to
