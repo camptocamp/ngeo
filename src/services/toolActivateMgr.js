@@ -15,6 +15,7 @@ goog.require('ngeo');
  * @param {string} activePropertyName The name of a boolean property on
  *      `toolContext` which represents the active state of the tool.
  * @constructor
+ * @struct
  * @ngdoc value
  * @ngname ngeoToolActivate
  * @export
@@ -77,6 +78,7 @@ ngeo.ToolMgrEntry;
  *
  * @param {angular.Scope} $rootScope The rootScope provider.
  * @constructor
+ * @struct
  * @ngdoc service
  * @ngname ngeoToolActivateMgr
  * @ngInject

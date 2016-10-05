@@ -9,6 +9,7 @@ goog.require('ngeo.interaction.MobileDraw');
  * Interaction dedicated to measure length on mobile devices.
  *
  * @constructor
+ * @struct
  * @extends {ngeo.interaction.MeasureLength}
  * @param {ngeox.unitPrefix} format The format function
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options

@@ -31,6 +31,7 @@ ngeo.interaction.MobileDrawProperty = {
  * - line string
  *
  * @constructor
+ * @struct
  * @fires ol.interaction.DrawEvent
  * @extends {ol.interaction.Interaction}
  * @param {ngeox.interaction.MobileDrawOptions} options Options

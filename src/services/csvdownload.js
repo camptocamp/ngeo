@@ -11,6 +11,7 @@ goog.require('ngeo.Download');
  * @param {angular.$injector} $injector Main injector.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @constructor
+ * @struct
  * @ngdoc service
  * @ngname ngeoCsvDownload
  * @ngInject

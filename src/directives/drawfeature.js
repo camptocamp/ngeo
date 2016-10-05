@@ -114,6 +114,7 @@ ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @constructor
+ * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController

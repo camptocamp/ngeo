@@ -77,6 +77,7 @@ ngeo.module.value('ngeoWfsPermalinkOptions',
  * parcels #78 and 90 of the city of Paris.
  *
  * @constructor
+ * @struct
  * @param {angular.$http} $http Angular $http service.
  * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {ngeox.WfsPermalinkOptions} ngeoWfsPermalinkOptions The options to

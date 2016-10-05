@@ -76,6 +76,7 @@ ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
+ * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController

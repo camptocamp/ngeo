@@ -62,6 +62,7 @@ ngeo.module.directive('ngeoDesktopGeolocation',
 
 /**
  * @constructor
+ * @struct
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
  * @param {ngeo.DecorateGeolocation} ngeoDecorateGeolocation Decorate

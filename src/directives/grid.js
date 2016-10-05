@@ -24,6 +24,7 @@ ngeo.module.value('ngeoGridTemplateUrl',
  * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
  * @param {Array.<ngeox.GridColumnDef>|undefined} columnDefs Column definition of a grid.
  * @constructor
+ * @struct
  * @export
  */
 ngeo.GridConfig = function(data, columnDefs) {
@@ -188,6 +189,7 @@ ngeo.module.directive('ngeoGrid', ngeo.gridDirective);
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @constructor
+ * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoGridController

@@ -11,6 +11,7 @@ goog.require('ngeo.Message');
  * properly.
  *
  * @constructor
+ * @struct
  * @extends {ngeo.Message}
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @ngdoc service

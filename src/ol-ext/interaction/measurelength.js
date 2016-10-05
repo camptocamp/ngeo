@@ -12,6 +12,7 @@ goog.require('ol.interaction.Draw');
  * See our live example: {@link ../examples/measure.html}
  *
  * @constructor
+ * @struct
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.unitPrefix} format The format function
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options

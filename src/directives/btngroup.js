@@ -73,6 +73,7 @@ ngeo.module.directive('ngeoBtnGroup', ngeo.btngroupDirective);
 /**
  * @param {!angular.Scope} $scope Scope.
  * @constructor
+ * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoBtnGroupController

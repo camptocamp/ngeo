@@ -33,6 +33,7 @@ ngeo.MessageType = {
  * Abstract class for services that display messages.
  *
  * @constructor
+ * @struct
  */
 ngeo.Message = function() {};
 

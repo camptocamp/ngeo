@@ -28,6 +28,7 @@ goog.require('ol.style.Text');
  *  - export
  *
  * @constructor
+ * @struct
  * @param {angular.$injector} $injector Main injector.
  * @param {angular.$filter} $filter Angular filter
  * @ngdoc service

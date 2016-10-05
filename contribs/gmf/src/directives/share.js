@@ -70,13 +70,13 @@ gmf.ShareController = function($scope, ngeoLocation, gmfShareService, $q, $attrs
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type boolean
+   * @type {boolean}
    * @export
    */
   this.enableEmail = $attrs['gmfShareEmail'] === 'true';
 
   /**
-   * @type string
+   * @type {string}
    * @export
    */
   this.permalink = ngeoLocation.getUriString();
@@ -101,7 +101,7 @@ gmf.ShareController = function($scope, ngeoLocation, gmfShareService, $q, $attrs
   this.message;
 
   /**
-   * @type boolean
+   * @type {boolean}
    * @export
    */
   this.showLenghtWarning = this.permalink.length > gmf.ShareService.URL_MAX_LEN ||

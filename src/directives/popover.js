@@ -101,6 +101,7 @@ ngeo.popoverContentDirective = function() {
 /**
  * The controller for the 'popover' directive.
  * @constructor
+ * @struct
  * @ngInject
  * @export
  * @ngdoc controller

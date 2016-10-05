@@ -777,7 +777,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
     }
     if (!themeName) {
       // check if we have a theme in the local storage
-      themeName = /** @type string */ (this.ngeoStateManager_.getInitialValue('theme'));
+      themeName = /** @type {string} */ (this.ngeoStateManager_.getInitialValue('theme'));
     }
 
     if (!themeName) {

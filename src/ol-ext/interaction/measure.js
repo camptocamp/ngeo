@@ -51,6 +51,7 @@ ngeo.MeasureEventType = {
  * instances of this type.
  *
  * @constructor
+ * @struct
  * @extends {ol.events.Event}
  * @implements {ngeox.MeasureEvent}
  * @param {ngeo.MeasureEventType} type Type.
@@ -75,6 +76,7 @@ ol.inherits(ngeo.MeasureEvent, ol.events.Event);
  * Interaction that allows measuring (length, area, ...).
  *
  * @constructor
+ * @struct
  * @extends {ol.interaction.Interaction}
  * @param {ngeo.interaction.MeasureBaseOptions=} opt_options Options
  */

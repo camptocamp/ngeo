@@ -19,6 +19,7 @@ goog.require('ol.source.Vector');
  * Interaction for modifying feature geometries.
  *
  * @constructor
+ * @struct
  * @extends {ol.interaction.Pointer}
  * @param {olx.interaction.ModifyOptions} options Options.
  * @fires ngeo.interaction.ModifyCircleEvent

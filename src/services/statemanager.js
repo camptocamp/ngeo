@@ -10,6 +10,7 @@ goog.require('ngeo.Location');
  * Provides a service for managing the application state.
  * The application state is written to both the URL and the local storage.
  * @constructor
+ * @struct
  * @param {ngeo.Location} ngeoLocation ngeo location service.
  * @ngInject
  */

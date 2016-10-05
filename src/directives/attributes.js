@@ -45,6 +45,7 @@ ngeo.module.directive('ngeoAttributes', ngeo.attributesDirective);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
+ * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoAttributesController

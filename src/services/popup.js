@@ -29,6 +29,7 @@ ngeo.CreatePopup;
  *     popup.setOpen(true);
  *
  * @constructor
+ * @struct
  * @param {angular.$compile} $compile The compile provider.
  * @param {angular.Scope} $rootScope The rootScope provider.
  * @param {angular.$sce} $sce Angular sce service.

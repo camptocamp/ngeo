@@ -27,6 +27,7 @@ goog.require('ol.source.Vector');
  * See our live example: {@link ../examples/measure.html}
  *
  * @constructor
+ * @struct
  * @fires ol.interaction.DrawEvent
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.unitPrefix} format The format function
@@ -135,6 +136,7 @@ ngeo.interaction.MeasureAzimut.getAzimut = function(line) {
  * Interaction dedicated to measure azimut.
  *
  * @constructor
+ * @struct
  * @extends {ol.interaction.Pointer}
  * @param {olx.interaction.PointerOptions} options Options.
  * @export
