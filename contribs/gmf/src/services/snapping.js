@@ -226,7 +226,7 @@ gmf.Snapping.prototype.handleThemesChange_ = function() {
 gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
-  var node = /** @type {GmfThemesGroup|GmfThemesLeaf} */ (treeCtrl.node);
+  var node = /** @type {GmfGroup|GmfLayer} */ (treeCtrl.node);
   if (node.children) {
     return;
   }
@@ -315,7 +315,7 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
     return null;
   }
 
-  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
+  var node = /** @type {GmfLayer} */ (treeCtrl.node);
 
   // (2)
   if (node.type !== gmf.Themes.NodeType.WMS) {
@@ -335,12 +335,12 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
 
   // (4)
   var ogcServerName;
-  var parentNode = /** @type {GmfThemesGroup} */ (treeCtrl.parent.node);
+  var parentNode = /** @type {GmfGroup} */ (treeCtrl.parent.node);
   if (parentNode.mixed) {
     ogcServerName = node.ogcServer;
   } else {
     var firstTreeCtrl = ngeo.LayertreeController.getFirstParentTree(treeCtrl);
-    var firstNode = /** @type {GmfThemesGroup} */ (firstTreeCtrl.node);
+    var firstNode = /** @type {GmfGroup} */ (firstTreeCtrl.node);
     ogcServerName = firstNode.ogcServer;
   }
   if (!ogcServerName) {

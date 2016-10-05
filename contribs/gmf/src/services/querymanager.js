@@ -101,7 +101,7 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
  * Create and add a source for the query service from the GMF theme node if
  * it has no children, otherwise create the sources for each child node if
  * it has any.
- * @param {GmfThemesBackground|GmfThemesTheme|GmfThemesGroup|GmfThemesLeaf} node A node.
+ * @param {GmfLayer|GmfTheme|GmfGroup|GmfLayer} node A node.
  * @param {GmfOgcServers} ogcServers OGC servers.
  * @private
  */
@@ -120,7 +120,7 @@ gmf.QueryManager.prototype.createSources_ = function(node, ogcServers) {
   // (and non minified) version.
 
   var id = node.id;
-  var meta = /** @type {GmfThemesLeafMetaData} */ (node.metadata);
+  var meta = /** @type {GmfMetaData} */ (node.metadata);
   var identifierAttributeField = meta.identifierAttributeField;
   var layers = meta.queryLayers || meta.wmsLayers || node.layers;
   var name = node.name;

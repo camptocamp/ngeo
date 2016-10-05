@@ -248,7 +248,7 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
 };
 
 /**
- * @param {GmfRootNode|GmfThemesTheme|GmfThemesGroup|GmfThemesLeaf} node Layer tree node.
+ * @param {GmfRootNode|GmfTheme|GmfGroup|GmfLayer} node Layer tree node.
  * @private
  */
 gmf.LayertreeController.prototype.updateDimensions_ = function(node) {
@@ -270,7 +270,7 @@ gmf.LayertreeController.prototype.updateDimensions_ = function(node) {
 
 /**
  * @param {ol.layer.Layer} layer Layer to update.
- * @param {GmfThemesGroup|GmfThemesLeaf} node Layer tree node.
+ * @param {GmfGroup|GmfLayer} node Layer tree node.
  * @private
  */
 gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node) {
@@ -323,7 +323,7 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
           this.dataLayerGroup_, opt_position);
 
   if (layer instanceof ol.layer.Layer) {
-    var node = /** @type {GmfThemesGroup|GmfThemesLeaf} */ (treeCtrl.node);
+    var node = /** @type {GmfGroup|GmfLayer} */ (treeCtrl.node);
     this.updateLayerDimensions_(layer, node);
   }
 
@@ -351,7 +351,7 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
 /**
  * Return 'out-of-resolution' if the current resolution of the map is out of
  * the min/max resolution in the node.
- * @param {GmfThemesLeaf} node Layer tree node.
+ * @param {GmfLayer} node Layer tree node.
  * @return {?string} 'out-of-resolution' or null.
  * @export
  */
@@ -408,7 +408,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
   var layer = /** @type {ol.layer.Image} */ (
       gmf.SyncLayertreeMap.getLayer(layertreeCtrl));
   if (layer) {
-    var node = /** @type {GmfThemesGroup} */ (layertreeCtrl.node);
+    var node = /** @type {GmfGroup} */ (layertreeCtrl.node);
     var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
     var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
     var timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);
@@ -426,7 +426,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
  * @export
  */
 gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
-  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
+  var node = /** @type {GmfLayer} */ (treeCtrl.node);
   var opt_iconUrl = node.metadata['iconUrl'];
 
   if (opt_iconUrl !== undefined) {
@@ -459,7 +459,7 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
  * @export
  */
 gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
-  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
+  var node = /** @type {GmfLayer} */ (treeCtrl.node);
   var layersNames;
   if (node.children !== undefined) {
     return null;
@@ -528,7 +528,7 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
 
 
 /**
- * @param {GmfThemesGroup} node Layer tree node to remove.
+ * @param {GmfGroup} node Layer tree node to remove.
  * @export
  */
 gmf.LayertreeController.prototype.removeNode = function(node) {
@@ -543,7 +543,7 @@ gmf.LayertreeController.prototype.removeNode = function(node) {
  * @export
  */
 gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
-  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
+  var node = /** @type {GmfLayer} */ (treeCtrl.node);
   var view = this.map.getView();
   var resolution = node.minResolutionHint || node.maxResolutionHint;
   if (resolution !== undefined) {
@@ -572,7 +572,7 @@ gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
  * @export
  */
 gmf.LayertreeController.getSnappingConfig = function(treeCtrl) {
-  var node = /** @type {GmfThemesLeaf} */ (treeCtrl.node);
+  var node = /** @type {GmfLayer} */ (treeCtrl.node);
   var config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
       node.metadata.snappingConfig : null;
   return config;
