@@ -77,15 +77,18 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
   this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
     var promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
       // create sources for each themes
-      for (var i = 0, len = themes.length; i < len; i++) {
-        this.createSources_(themes[i], ogcServers);
+      for (var i = 0, leni = themes.length; i < leni; i++) {
+        var theme = themes[i];
+        for (var j = 0, lenj = theme.children.length; j < lenj; j++) {
+          this.createSources_(theme.children[j], theme.children[j], ogcServers);
+        }
       }
     }.bind(this));
 
     var promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(function(backgroundLayers) {
       // create a source for each background layer
       for (var i = 0, len = backgroundLayers.length; i < len; i++) {
-        this.createSources_(backgroundLayers[i], ogcServers);
+        this.createSources_(backgroundLayers[i], backgroundLayers[i], ogcServers);
       }
     }.bind(this));
 
@@ -101,17 +104,18 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
  * Create and add a source for the query service from the GMF theme node if
  * it has no children, otherwise create the sources for each child node if
  * it has any.
- * @param {GmfLayer|GmfTheme|GmfGroup|GmfLayer} node A node.
+ * @param {GmfGroup} firstLevelGroup A node.
+ * @param {GmfGroup|GmfLayer} node A node.
  * @param {GmfOgcServers} ogcServers OGC servers.
  * @private
  */
-gmf.QueryManager.prototype.createSources_ = function(node, ogcServers) {
+gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcServers) {
   var children = node.children;
 
   // First we handle the groups
   if (children) {
     for (var i = 0, len = children.length; i < len; i++) {
-      this.createSources_(children[i], ogcServers);
+      this.createSources_(firstLevelGroup, children[i], ogcServers);
     }
     return;
   }
@@ -122,59 +126,72 @@ gmf.QueryManager.prototype.createSources_ = function(node, ogcServers) {
   var id = node.id;
   var meta = /** @type {GmfMetaData} */ (node.metadata);
   var identifierAttributeField = meta.identifierAttributeField;
-  var layers = meta.queryLayers || meta.wmsLayers || node.layers;
+  var layers;
   var name = node.name;
-  var url = meta.wmsUrl || node.url || this.gmfWmsUrl_;
   var validateLayerParams = false;
-  var wfsQuery;
+  var gmfLayer = /** @type GmfLayer */ (node);
+  var ogcServer;
 
   // Don't create sources for WMTS layers without wmsUrl and ogcServer,
   // they are not queryable.
-  if (node.type === 'WMTS' && !meta.wmsUrl) {
-    if (meta.ogcServer && ogcServers[meta.ogcServer]) {
-      var ogcServer = ogcServers[meta.ogcServer];
-      url = ogcServer.urlWfs;
-      wfsQuery = ogcServer.wfsSupport;
+  if (gmfLayer.type === 'WMTS') {
+    layers = meta.queryLayers || meta.wmsLayers;
+    if (layers && meta.ogcServer && ogcServers[meta.ogcServer]) {
+      ogcServer = ogcServers[meta.ogcServer];
     } else {
       return;
     }
   }
 
-  if (!this.cache_[id]) {
-
+  validateLayerParams = gmfLayer.type === 'WMS';
+  var gmfLayerWMS;
+  if (gmfLayer.type === 'WMS') {
+    gmfLayerWMS = /** @type GmfLayerWMS */ (gmfLayer);
+    layers = gmfLayerWMS.layers;
+    if (firstLevelGroup.mixed) {
+      goog.asserts.assert(gmfLayerWMS.ogcServer);
+      ogcServer = ogcServers[/** @type string */ (gmfLayerWMS.ogcServer)];
+    } else {
+      goog.asserts.assert(firstLevelGroup.ogcServer);
+      ogcServer = ogcServers[/** @type string */ (firstLevelGroup.ogcServer)];
+    }
+  }
+  if (!this.cache_[id] && validateLayerParams) {
     // Some nodes have child layers, i.e. a list of layer names that are
     // part of a group. The name of the group itself can't be used 'as-is'
     // as an identifier of the layers for this source. For example, a
     // group named 'osm' might result in returning 'restaurant' features.
     // This override makes sure that those layer names are used instead of
     // the original one.
-    if (node.childLayers && node.childLayers.length) {
+    if (gmfLayerWMS.childLayers && gmfLayerWMS.childLayers.length) {
       // skip layers with no queryable childLayer
       var isQueryable = function(item) {
         return item.queryable;
       };
-      if (!node.childLayers.some(isQueryable)) {
+      if (!gmfLayerWMS.childLayers.some(isQueryable)) {
         return;
       }
 
       var childLayerNames = [];
-      node.childLayers.forEach(function(childLayer) {
+      gmfLayerWMS.childLayers.forEach(function(childLayer) {
         if (childLayer.queryable) {
           childLayerNames.push(childLayer.name);
         }
       }, this);
       layers = childLayerNames.join(',');
-      validateLayerParams = node.type === 'WMS';
     }
+
+    goog.asserts.assert(ogcServer.urlWfs);
+    goog.asserts.assert(layers);
 
     var source = {
       'id': id,
       'identifierAttributeField': identifierAttributeField,
       'label': name,
       'params': {'LAYERS': layers},
-      'url': url,
+      'url': ogcServer.urlWfs,
       'validateLayerParams': validateLayerParams,
-      'wfsQuery': wfsQuery
+      'wfsQuery': ogcServer.wfsSupport
     };
     this.cache_[id] = source;
     this.sources_.push(source);

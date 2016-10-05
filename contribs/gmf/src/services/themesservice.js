@@ -10,27 +10,11 @@ goog.require('ol.layer.Tile');
 
 
 /**
- * @typedef {Object<string, GmfOgcServer>}
- */
-gmf.OgcServers;
-
-
-/**
  * @enum {string}
  */
 gmf.ThemesEventType = {
   CHANGE: 'change'
 };
-
-
-/**
- * @typedef {{
- *     themes: Array.<Object>,
- *     background_layers: Array.<Object>,
- *     ogcServers: gmf.OgcServers
- * }}
- */
-gmf.ThemesResponse;
 
 
 /**
@@ -259,42 +243,44 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
 
   /**
    * @param {GmfOgcServers} ogcServers The ogc servers.
-   * @param {GmfGroup|GmfLayer} item The item.
+   * @param {GmfGroup|GmfLayer} gmfLayer The item.
    * @return {angular.$q.Promise.<ol.layer.Base>|ol.layer.Base} the created layer.
    */
-  var layerLayerCreationFn = function(ogcServers, item) {
+  var layerLayerCreationFn = function(ogcServers, gmfLayer) {
     // Overwrite conflicting server dimensions with application ones
-    for (var dimkey in item.dimensions) {
+    for (var dimkey in gmfLayer.dimensions) {
       if (appDimensions[dimkey] !== undefined) {
-        item.dimensions[dimkey] = appDimensions[dimkey];
+        gmfLayer.dimensions[dimkey] = appDimensions[dimkey];
       }
     }
 
-    if (item.type === 'WMTS') {
-      goog.asserts.assert(item.url, 'Layer URL is required');
+    if (gmfLayer.type === 'WMTS') {
+      var gmfLayerWMTS = /** @type GmfLayerWMTS */ (gmfLayer);
+      goog.asserts.assert(gmfLayerWMTS.url, 'Layer URL is required');
       return layerHelper.createWMTSLayerFromCapabilitites(
-          item.url,
-          item.name || '',
-          item.dimensions
-      ).then(callback.bind(null, item)).then(null, function(response) {
+          gmfLayerWMTS.url,
+          gmfLayer.name || '',
+          gmfLayer.dimensions
+      ).then(callback.bind(null, gmfLayer)).then(null, function(response) {
         console.error('unable to get capabilities', response['config']['url']);
         // Continue even if some layers have failed loading.
         return $q.resolve(undefined);
       });
-    } else if (item.type === 'WMS') {
-      goog.asserts.assert(item.ogcServer, 'An OGC server is required');
-      var server = ogcServers[item.ogcServer];
+    } else if (gmfLayer.type === 'WMS') {
+      var gmfLayerWMS = /** @type GmfLayerWMS */ (gmfLayer);
+      goog.asserts.assert(gmfLayerWMS.ogcServer, 'An OGC server is required');
+      var server = ogcServers[gmfLayerWMS.ogcServer];
       goog.asserts.assert(server, 'The OGC server was not found');
       goog.asserts.assert(server.url, 'The server URL is required');
-      return callback(item, layerHelper.createBasicWMSLayer(
+      return callback(gmfLayer, layerHelper.createBasicWMSLayer(
           server.url,
-          item.layers || '',
+          gmfLayerWMS.layers || '',
           server.type,
           undefined, // time
-          item.dimensions
+          gmfLayer.dimensions
       ));
     }
-    goog.asserts.fail('Unsupported type: ' + item.type);
+    goog.asserts.fail('Unsupported type: ' + gmfLayer.type);
   };
 
   /**

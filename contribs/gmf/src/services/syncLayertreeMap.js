@@ -222,25 +222,26 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
  * @private
  */
 gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
-  var leafNode = /** @type {GmfLayer} */ (treeCtrl.node);
+  var gmfLayer = /** @type {GmfLayer} */ (treeCtrl.node);
   var layer;
   // Make layer.
-  if (leafNode.type === 'WMTS') {
-    layer = this.createWMTSLayer_(leafNode);
+  if (gmfLayer.type === 'WMTS') {
+    layer = this.createWMTSLayer_(/** @type GmfLayerWMTS */ (gmfLayer));
   } else {
+    var gmfLayerWMS = /** @type GmfLayerWMS */ (gmfLayer);
     var timeParam = this.getTimeParam_(treeCtrl);
-    var ogcServer = this.ogcServersObject_[leafNode.ogcServer || ''];
+    var ogcServer = this.ogcServersObject_[/** @type string */ (gmfLayerWMS.ogcServer)];
     goog.asserts.assert(ogcServer);
     goog.asserts.assert(ogcServer.url);
     goog.asserts.assert(ogcServer.type);
-    goog.asserts.assert(leafNode.layers);
+    goog.asserts.assert(gmfLayerWMS.layers);
     layer = this.layerHelper_.createBasicWMSLayer(ogcServer.url,
-            leafNode.layers, ogcServer.type, timeParam);
+            gmfLayerWMS.layers, ogcServer.type, timeParam);
   }
   // Update layer information and tree state.
-  layer.set('layerNodeName', leafNode.name); // Really useful ?
-  this.updateLayerReferences_(leafNode, layer);
-  var checked = leafNode.metadata.isChecked === true;
+  layer.set('layerNodeName', gmfLayer.name); // Really useful ?
+  this.updateLayerReferences_(gmfLayer, layer);
+  var checked = gmfLayer.metadata.isChecked === true;
   if (checked) {
     treeCtrl.setState('on', false);
   }
@@ -278,17 +279,17 @@ gmf.SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl
 
 /**
  * Create and return a Tile layer.
- * @param {GmfLayer} leafNode A leaf node.
+ * @param {GmfLayerWMTS} gmfLayerWMTS A leaf node.
  * @return {ol.layer.Tile} a Tile WMTS layer. (Source and capabilities can come
  *     later).
  * @private
  */
-gmf.SyncLayertreeMap.prototype.createWMTSLayer_ = function(leafNode) {
+gmf.SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
   var newLayer = new ol.layer.Tile();
-  goog.asserts.assert(leafNode.url);
-  goog.asserts.assert(leafNode.layer);
-  this.layerHelper_.createWMTSLayerFromCapabilitites(leafNode.url,
-        leafNode.layer, leafNode.dimensions).then(function(layer) {
+  goog.asserts.assert(gmfLayerWMTS.url);
+  goog.asserts.assert(gmfLayerWMTS.layer);
+  this.layerHelper_.createWMTSLayerFromCapabilitites(gmfLayerWMTS.url,
+        gmfLayerWMTS.layer, gmfLayerWMTS.dimensions).then(function(layer) {
           newLayer.setSource(layer.getSource());
           newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
         });

@@ -1927,10 +1927,10 @@ var themes = {
   ],
   'ogcServers':{
     'WMS CH topo fr':{
-      'url':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?ogcserver=WMS+CH+topo+fr&cache_version=3ddc87649e8a4e02aa88232efe740279',
+      'url':'https://wms.geo.admin.ch/',
       'isSingleTile':false,
       'wfsSupport':false,
-      'urlWfs':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?ogcserver=WMS+CH+topo+fr&cache_version=3ddc87649e8a4e02aa88232efe740279',
+      'urlWfs':'https://wms.geo.admin.ch/',
       'type':'mapserver',
       'imageType':'image/png'
     },

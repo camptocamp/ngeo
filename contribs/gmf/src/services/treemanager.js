@@ -86,6 +86,31 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
+
+  /**
+   * A reference to the OGC servers loaded by the theme service.
+   * @type {GmfOgcServers}
+   * @private
+   */
+  this.ogcServers_ = null;
+
+  ol.events.listen(
+    this.gmfThemes_,
+    gmf.ThemesEventType.CHANGE,
+    this.handleThemesChange_,
+    this
+  );
+};
+
+/**
+ * Called when the themes change. Get the OGC servers, then listen to the
+ * tree manager Layertree controllers array changes.
+ * @private
+ */
+gmf.TreeManager.prototype.handleThemesChange_ = function() {
+  this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
+    this.ogcServers_ = ogcServers;
+  }.bind(this));
 };
 
 /**
@@ -295,7 +320,7 @@ gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
     if (childNode.children) {
       this.toggleNodeCheck_(childNode, names);
     } else if (childNode.metadata) {
-      childNode.metadata['isChecked'] = ol.array.includes(names, childNode.name);
+      childNode.metadata.isChecked = ol.array.includes(names, childNode.name);
     }
   }, this);
 };
@@ -339,6 +364,29 @@ gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
     }
   });
   return correspondingTreeCtrl;
+};
+
+
+/**
+ * Get the OGC server.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ *     the current node.
+ * @return {GmfOgcServer} The OGC server.
+ */
+gmf.TreeManager.prototype.getOgcServer = function(treeCtrl) {
+  if (treeCtrl.parent.node.mixed) {
+    var gmfLayerWMS = /** @type {GmfLayerWMS} */ (treeCtrl.node);
+    goog.asserts.assert(gmfLayerWMS.ogcServer);
+    return this.ogcServers_[gmfLayerWMS.ogcServer];
+  } else {
+    var firstLevelGroupCtrl = treeCtrl;
+    while (!firstLevelGroupCtrl.parent.isRoot) {
+      firstLevelGroupCtrl = firstLevelGroupCtrl.parent;
+    }
+    var gmfGroup = /** @type {GmfGroup} */ (firstLevelGroupCtrl.node);
+    goog.asserts.assert(gmfGroup.ogcServer);
+    return this.ogcServers_[gmfGroup.ogcServer];
+  }
 };
 
 gmf.module.service('gmfTreeManager', gmf.TreeManager);

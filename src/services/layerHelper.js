@@ -248,7 +248,7 @@ ngeo.LayerHelper.prototype.getLayerByName = function(layerName, layers) {
  * Get the WMTS legend URL for the given layer.
  * @param {ol.layer.Tile} layer Tile layer as returned by the
  * ngeo layerHelper service.
- * @return {?string} The legend URL or null.
+ * @return {string|undefined} The legend URL or undefined.
  * @export
  */
 ngeo.LayerHelper.prototype.getWMTSLegendURL = function(layer) {
@@ -261,7 +261,7 @@ ngeo.LayerHelper.prototype.getWMTSLegendURL = function(layer) {
       url = legendURL[0]['href'];
     }
   }
-  return url || null;
+  return url;
 };
 
 
@@ -271,13 +271,13 @@ ngeo.LayerHelper.prototype.getWMTSLegendURL = function(layer) {
  * @param {string} layerName The name of a wms layer.
  * @param {number=} opt_scale A scale.
  * @param {string=} opt_legendRule rule parameters to add to the returned URL.
- * @return {?string} The legend URL or null.
+ * @return {string|undefined} The legend URL or undefined.
  * @export
  */
 ngeo.LayerHelper.prototype.getWMSLegendURL = function(url,
     layerName, opt_scale, opt_legendRule) {
   if (!url) {
-    return null;
+    return undefined;
   }
   url = goog.uri.utils.setParam(url, 'FORMAT', 'image/png');
   url = goog.uri.utils.setParam(url, 'TRANSPARENT', true);

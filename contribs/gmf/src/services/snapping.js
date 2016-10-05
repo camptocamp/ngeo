@@ -315,18 +315,20 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
     return null;
   }
 
-  var node = /** @type {GmfLayer} */ (treeCtrl.node);
+  var gmfLayer = /** @type {GmfLayer} */ (treeCtrl.node);
 
   // (2)
-  if (node.type !== gmf.Themes.NodeType.WMS) {
+  if (gmfLayer.type !== gmf.Themes.NodeType.WMS) {
     return null;
   }
 
+  var gmfLayerWMS = /** @type {GmfLayerWMS} */ (gmfLayer);
+
   // (3)
   var featureTypes = [];
-  for (var i = 0, ii = node.childLayers.length; i < ii; i++) {
-    if (node.childLayers[i].queryable) {
-      featureTypes.push(node.childLayers[i].name);
+  for (var i = 0, ii = gmfLayerWMS.childLayers.length; i < ii; i++) {
+    if (gmfLayerWMS.childLayers[i].queryable) {
+      featureTypes.push(gmfLayerWMS.childLayers[i].name);
     }
   }
   if (!featureTypes.length) {
@@ -335,9 +337,9 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
 
   // (4)
   var ogcServerName;
-  var parentNode = /** @type {GmfGroup} */ (treeCtrl.parent.node);
-  if (parentNode.mixed) {
-    ogcServerName = node.ogcServer;
+  var gmfGroup = /** @type {GmfGroup} */ (treeCtrl.parent.node);
+  if (gmfGroup.mixed) {
+    ogcServerName = gmfLayerWMS.ogcServer;
   } else {
     var firstTreeCtrl = ngeo.LayertreeController.getFirstParentTree(treeCtrl);
     var firstNode = /** @type {GmfGroup} */ (firstTreeCtrl.node);

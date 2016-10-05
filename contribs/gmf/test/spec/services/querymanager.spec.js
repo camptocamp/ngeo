@@ -1,7 +1,7 @@
-/* global old_themes */
+/* global themes */
 goog.require('gmf.Themes');
 goog.require('gmf.QueryManager');
-goog.require('gmf.test.data.old_themes');
+goog.require('gmf.test.data.themes');
 
 describe('gmf.QueryManager', function() {
   var queryManager;
@@ -19,7 +19,7 @@ describe('gmf.QueryManager', function() {
       var treeUrl = $injector.get('gmfTreeUrl');
       $httpBackend = $injector.get('$httpBackend');
       // FIXME use current versions of the theme
-      $httpBackend.when('GET', treeUrl + '?cache_version=0').respond(old_themes);
+      $httpBackend.when('GET', treeUrl + '?cache_version=0').respond(themes);
     });
   });
 
@@ -46,9 +46,9 @@ describe('gmf.QueryManager', function() {
       expect(osmSource).not.toBeNull();
 
       // background layer
-      var bgLayerSource = getSourceById(queryManager.sources_, 134);
+      var bgLayerSource = getSourceById(queryManager.sources_, 115);
       expect(bgLayerSource).not.toBeNull();
-      expect(bgLayerSource.params.LAYERS).toBe('ch.are.alpenkonvention');
+      expect(bgLayerSource.params.LAYERS).toBe('ch.swisstopo.dreiecksvermaschung');
       expect(bgLayerSource.url).toBe('https://wms.geo.admin.ch/');
     });
   });
@@ -88,9 +88,11 @@ describe('gmf.QueryManager', function() {
 
     it('creates a source for queryable WMTS overlay layers', function() {
       // FIXME use current versions of the theme
-      var cadasterTheme = gmf.Themes.findThemeByName(old_themes.themes, 'Cadastre');
+      var cadasterTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
       // FIXME use current versions of the theme
-      queryManager.createSources_(cadasterTheme, old_themes.ogcServers);
+      cadasterTheme.children.forEach(function(group) {
+        queryManager.createSources_(group, group, themes.ogcServers);
+      });
 
       // layer 'non-queryable-wmts-layer' without `wmsUrl`
       var sourceNonQueryable = getSourceById(queryManager.sources_, 91346);
@@ -98,14 +100,14 @@ describe('gmf.QueryManager', function() {
 
       // layer with `wmsUrl` and `wmsLayers` and 'ch.astra.ausnahmetransportrouten.queryLayers'
       // `queryLayers`. (`queryLayers` takes precedence over `wmsLayers`)
-      var sourceAlpConvention = getSourceById(queryManager.sources_, 119);
+      var sourceAlpConvention = getSourceById(queryManager.sources_, 115);
       expect(sourceAlpConvention).not.toBeNull();
-      expect(sourceAlpConvention.params.LAYERS).toBe('ch.astra.ausnahmetransportrouten.queryLayers');
+      expect(sourceAlpConvention.params.LAYERS).toBe('ch.swisstopo.dreiecksvermaschung');
 
       // layer 'ch.astra.ausnahmetransportrouten' with `wmsUrl` and `queryLayers`
-      var sourceRoutes = getSourceById(queryManager.sources_, 120);
+      var sourceRoutes = getSourceById(queryManager.sources_, 116);
       expect(sourceRoutes).not.toBeNull();
-      expect(sourceRoutes.params.LAYERS).toBe('ch.astra.ausnahmetransportrouten');
+      expect(sourceRoutes.params.LAYERS).toBe('ch.swisstopo.geologie-gravimetrischer_atlas');
     });
 
 
