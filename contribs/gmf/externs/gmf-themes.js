@@ -27,60 +27,6 @@ var GmfThemesResponse;
 
 
 /**
- * @constructor
- */
-var GmfLayer = function() {};
-
-
-/**
- * @type {Object.<string, string>}
- */
-GmfLayer.prototype.dimensions;
-
-
-/**
- * @type {number}
- */
-GmfLayer.prototype.id;
-
-
-/**
- * @type {string|undefined}
- */
-GmfLayer.prototype.imageType;
-
-
-/**
- * @type {string|null|undefined}
- */
-GmfLayer.prototype.layer;
-
-
-/**
- * @type {Object.<string, *>}
- */
-GmfLayer.prototype.metadata;
-
-
-/**
- * @type {string|undefined}
- */
-GmfLayer.prototype.name;
-
-
-/**
- * @type {string|undefined}
- */
-GmfLayer.prototype.type;
-
-
-/**
- * @type {string|undefined}
- */
-GmfLayer.prototype.url;
-
-
-/**
  * @typedef {Object<string, GmfOgcServer>}
  */
 var GmfOgcServers;
@@ -231,9 +177,9 @@ var GmfLayer = function() {};
 
 
 /**
- * @type {Array.<GmfLayerChildLayer>|undefined}
+ * @type {string}
  */
-GmfLayer.prototype.childLayers;
+GmfLayer.prototype.type;
 
 
 /**
@@ -261,51 +207,15 @@ GmfLayer.prototype.imageType;
 
 
 /**
- * @type {string|undefined}
- */
-GmfLayer.prototype.layer;
-
-
-/**
- * @type {string|undefined}
- */
-GmfLayer.prototype.layers;
-
-
-/**
- * @type {string|undefined}
- */
-GmfLayer.prototype.matrixSet;
-
-
-/**
- * @type {number}
- */
-GmfLayer.prototype.maxResolutionHint;
-
-
-/**
  * @type {GmfMetaData}
  */
 GmfLayer.prototype.metadata;
 
 
 /**
- * @type {number}
- */
-GmfLayer.prototype.minResolutionHint;
-
-
-/**
- * @type {string|undefined}
+ * @type {string}
  */
 GmfLayer.prototype.name;
-
-
-/**
- * @type {string|undefined}
- */
-GmfLayer.prototype.ogcServer;
 
 
 /**
@@ -315,15 +225,65 @@ GmfLayer.prototype.style;
 
 
 /**
- * @type {ngeox.TimeProperty|undefined}
+ * @constructor
+ * @extend GmfLayer
  */
-GmfLayer.prototype.time;
+var GmfLayerWMS = function() {};
 
 
 /**
- * @type {string|undefined}
+ * @type {string}
  */
-GmfLayer.prototype.type;
+GmfLayerWMS.prototype.layers;
+
+
+/**
+ * @type {Array.<GmfLayerChildLayer>}
+ */
+GmfLayerWMS.prototype.childLayers;
+
+
+/**
+ * @type {number}
+ */
+GmfLayerWMS.prototype.minResolutionHint;
+
+
+/**
+ * @type {number}
+ */
+GmfLayerWMS.prototype.maxResolutionHint;
+
+
+/**
+ * @type {string}
+ */
+GmfLayerWMS.prototype.ogcServer;
+
+
+/**
+ * @type {ngeox.TimeProperty|undefined}
+ */
+GmfLayerWMS.prototype.time;
+
+
+/**
+ * @constructor
+ * @extend GmfLayer
+ */
+var GmfLayerWMTS = function() {};
+
+
+/**
+ * @type {string}
+ */
+GmfLayerWMTS.prototype.layer;
+
+
+/**
+ * @type {string}
+ */
+GmfLayerWMTS.prototype.matrixSet;
 
 
 /**
