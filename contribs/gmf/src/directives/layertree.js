@@ -108,7 +108,6 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {string} gmfWmsUrl URL to the wms service to use by default.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
  * @param {ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
@@ -121,7 +120,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
-    ngeoLayerHelper, gmfWmsUrl, gmfTreeManager, gmfSyncLayertreeMap,
+    ngeoLayerHelper, gmfTreeManager, gmfSyncLayertreeMap,
     ngeoSyncArrays, gmfWMSTime) {
 
   /**
@@ -154,12 +153,6 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
    * @type {angular.$sce}
    */
   this.$sce_ = $sce;
-
-  /**
-   * @type {string}
-   * @private
-   */
-  this.gmfWmsUrl_ = gmfWmsUrl;
 
   /**
    * @type {ngeo.LayerHelper}

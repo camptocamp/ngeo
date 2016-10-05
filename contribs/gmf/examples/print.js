@@ -27,10 +27,6 @@ app.module.value(
         'version=2&background=background');
 
 
-app.module.value('gmfWmsUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy');
-
-
 app.module.value('gmfPrintUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
 
