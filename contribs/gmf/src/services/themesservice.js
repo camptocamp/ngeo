@@ -10,27 +10,11 @@ goog.require('ol.layer.Tile');
 
 
 /**
- * @typedef {Object<string, GmfOgcServer>}
- */
-gmf.OgcServers;
-
-
-/**
  * @enum {string}
  */
 gmf.ThemesEventType = {
   CHANGE: 'change'
 };
-
-
-/**
- * @typedef {{
- *     themes: Array.<Object>,
- *     background_layers: Array.<Object>,
- *     ogcServers: gmf.OgcServers
- * }}
- */
-gmf.ThemesResponse;
 
 
 /**
@@ -129,9 +113,9 @@ ol.inherits(gmf.Themes, ol.events.EventTarget);
 
 
 /**
- * @param {Array.<GmfThemesTheme>} themes Array of "theme" objects.
+ * @param {Array.<GmfTheme>} themes Array of "theme" objects.
  * @param {string} name The layer name.
- * @return {GmfThemesGroup} The group.
+ * @return {GmfGroup} The group.
  */
 gmf.Themes.findGroupByLayerNodeName = function(themes, name) {
   for (var i = 0, ii = themes.length; i < ii; i++) {
@@ -153,9 +137,9 @@ gmf.Themes.findGroupByLayerNodeName = function(themes, name) {
 
 /**
  * Find a layer group object by its name. Return null if not found.
- * @param {Array.<GmfThemesTheme>} themes Array of "theme" objects.
+ * @param {Array.<GmfTheme>} themes Array of "theme" objects.
  * @param {string} name The group name.
- * @return {GmfThemesGroup} The group.
+ * @return {GmfGroup} The group.
  */
 gmf.Themes.findGroupByName = function(themes, name) {
   for (var i = 0, ii = themes.length; i < ii; i++) {
@@ -188,9 +172,9 @@ gmf.Themes.findObjectByName_ = function(objects, objectName) {
 
 /**
  * Find a theme object by its name. Return null if not found.
- * @param {Array.<GmfThemesTheme>} themes Array of "theme" objects.
+ * @param {Array.<GmfTheme>} themes Array of "theme" objects.
  * @param {string} themeName The theme name.
- * @return {GmfThemesTheme} The theme object.
+ * @return {GmfTheme} The theme object.
  */
 gmf.Themes.findThemeByName = function(themes, themeName) {
   return gmf.Themes.findObjectByName_(themes, themeName);
@@ -200,8 +184,8 @@ gmf.Themes.findThemeByName = function(themes, themeName) {
 /**
  * Fill the given "nodes" array with all node in the given node including the
  * given node itself.
- * @param {GmfThemesGroup|GmfThemesLeaf} node Layertree node.
- * @param {Array.<GmfThemesGroup|GmfThemesLeaf>} nodes An array.
+ * @param {GmfGroup|GmfLayer} node Layertree node.
+ * @param {Array.<GmfGroup|GmfLayer>} nodes An array.
  * @export
  */
 gmf.Themes.getFlatNodes = function(node, nodes) {
@@ -220,7 +204,7 @@ gmf.Themes.getFlatNodes = function(node, nodes) {
 /**
  * Get background layers.
  * @param {Object.<string, string>} appDimensions Dimensions.
- * @return {angular.$q.Promise.<Array.<GmfThemesBackground>>} Promise.
+ * @return {angular.$q.Promise.<Array.<GmfLayer>>} Promise.
  */
 gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   if (this.bgLayerPromise_) {
@@ -230,7 +214,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   var layerHelper = this.layerHelper_;
 
   /**
-   * @param {GmfThemesGroup|GmfThemesLeaf} item A group or a leaf.
+   * @param {GmfGroup|GmfLayer} item A group or a leaf.
    * @param {Array.<number>} array Array of ids;
    */
   var getIds = function(item, array) {
@@ -242,7 +226,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   };
 
   /**
-   * @param {GmfThemesGroup|GmfThemesLeaf} item The item.
+   * @param {GmfGroup|GmfLayer} item The item.
    * @param {ol.layer.Base} layer The layer.
    * @return {ol.layer.Base} the provided layer.
    */
@@ -259,47 +243,49 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
 
   /**
    * @param {GmfOgcServers} ogcServers The ogc servers.
-   * @param {GmfThemesGroup|GmfThemesLeaf} item The item.
+   * @param {GmfGroup|GmfLayer} gmfLayer The item.
    * @return {angular.$q.Promise.<ol.layer.Base>|ol.layer.Base} the created layer.
    */
-  var layerLayerCreationFn = function(ogcServers, item) {
+  var layerLayerCreationFn = function(ogcServers, gmfLayer) {
     // Overwrite conflicting server dimensions with application ones
-    for (var dimkey in item.dimensions) {
+    for (var dimkey in gmfLayer.dimensions) {
       if (appDimensions[dimkey] !== undefined) {
-        item.dimensions[dimkey] = appDimensions[dimkey];
+        gmfLayer.dimensions[dimkey] = appDimensions[dimkey];
       }
     }
 
-    if (item.type === 'WMTS') {
-      goog.asserts.assert(item.url, 'Layer URL is required');
+    if (gmfLayer.type === 'WMTS') {
+      var gmfLayerWMTS = /** @type GmfLayerWMTS */ (gmfLayer);
+      goog.asserts.assert(gmfLayerWMTS.url, 'Layer URL is required');
       return layerHelper.createWMTSLayerFromCapabilitites(
-          item.url,
-          item.name || '',
-          item.dimensions
-      ).then(callback.bind(null, item)).then(null, function(response) {
+          gmfLayerWMTS.url,
+          gmfLayer.name || '',
+          gmfLayer.dimensions
+      ).then(callback.bind(null, gmfLayer)).then(null, function(response) {
         console.error('unable to get capabilities', response['config']['url']);
         // Continue even if some layers have failed loading.
         return $q.resolve(undefined);
       });
-    } else if (item.type === 'WMS') {
-      goog.asserts.assert(item.ogcServer, 'An OGC server is required');
-      var server = ogcServers[item.ogcServer];
+    } else if (gmfLayer.type === 'WMS') {
+      var gmfLayerWMS = /** @type GmfLayerWMS */ (gmfLayer);
+      goog.asserts.assert(gmfLayerWMS.ogcServer, 'An OGC server is required');
+      var server = ogcServers[gmfLayerWMS.ogcServer];
       goog.asserts.assert(server, 'The OGC server was not found');
       goog.asserts.assert(server.url, 'The server URL is required');
-      return callback(item, layerHelper.createBasicWMSLayer(
+      return callback(gmfLayer, layerHelper.createBasicWMSLayer(
           server.url,
-          item.layers || '',
+          gmfLayerWMS.layers || '',
           server.type,
           undefined, // time
-          item.dimensions
+          gmfLayer.dimensions
       ));
     }
-    goog.asserts.fail('Unsupported type: ' + item.type);
+    goog.asserts.fail('Unsupported type: ' + gmfLayer.type);
   };
 
   /**
    * @param {GmfOgcServers} ogcServers The ogc servers.
-   * @param {GmfThemesGroup} item The item.
+   * @param {GmfGroup} item The item.
    * @return {angular.$q.Promise.<ol.layer.Group>} the created layer.
    */
   var layerGroupCreationFn = function(ogcServers, item) {
@@ -366,14 +352,14 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
 /**
  * Get a theme object by its name.
  * @param {string} themeName Theme name.
- * @return {angular.$q.Promise.<GmfThemesTheme>} Promise.
+ * @return {angular.$q.Promise.<GmfTheme>} Promise.
  * @export
  */
 gmf.Themes.prototype.getThemeObject = function(themeName) {
   return this.promise_.then(
       /**
        * @param {GmfThemesResponse} data The "themes" web service response.
-       * @return {GmfThemesTheme} The theme object for themeName, or null if
+       * @return {GmfTheme} The theme object for themeName, or null if
        *     not found.
        */
       function(data) {
@@ -384,14 +370,14 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
 
 /**
  * Get an array of theme objects.
- * @return {angular.$q.Promise.<Array.<GmfThemesTheme>>} Promise.
+ * @return {angular.$q.Promise.<Array.<GmfTheme>>} Promise.
  * @export
  */
 gmf.Themes.prototype.getThemesObject = function() {
   return this.promise_.then(
       /**
        * @param {GmfThemesResponse} data The "themes" web service response.
-       * @return {Array.<GmfThemesTheme>} The themes object.
+       * @return {Array.<GmfTheme>} The themes object.
        */
       function(data) {
         return data.themes;
@@ -401,14 +387,14 @@ gmf.Themes.prototype.getThemesObject = function() {
 
 /**
  * Get an array of background layer objects.
- * @return {angular.$q.Promise.<Array.<GmfThemesBackground>>} Promise.
+ * @return {angular.$q.Promise.<Array.<GmfLayer>>} Promise.
  */
 gmf.Themes.prototype.getBackgroundLayersObject = function() {
   goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
        * @param {GmfThemesResponse} data The "themes" web service response.
-       * @return {Array.<GmfThemesBackground>} The background layers object.
+       * @return {Array.<GmfLayer>} The background layers object.
        */
       function(data) {
         return data.background_layers;
@@ -457,7 +443,7 @@ gmf.Themes.prototype.hasEditableLayers_ = function(data) {
 
 
 /**
- * @param {GmfThemesGroup|GmfThemesLeaf} node Theme node
+ * @param {GmfGroup|GmfLayer} node Theme node
  * @return {boolean} Editable layers?
  */
 gmf.Themes.prototype.hasNodeEditableLayers_ = function(node) {

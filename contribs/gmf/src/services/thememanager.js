@@ -22,7 +22,7 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  *    var module = angular.module('app');
  *    module.value('gmfTreeManagerModeFlush', false);
  *
- * This service's theme is a GmfThemesTheme with only children and a name.
+ * This service's theme is a GmfTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
  * @param {gmf.Themes} gmfThemes gmf Themes service.
@@ -70,7 +70,7 @@ gmf.ThemeManager = function(gmfThemes, gmfTreeManagerModeFlush, gmfTreeManager, 
 /**
  * Set the current theme name (mode 'flush' only) and add its children. Add
  * only groups that are not already in the tree.
- * @param {GmfThemesTheme} theme A theme object.
+ * @param {GmfTheme} theme A theme object.
  * @export
  */
 gmf.ThemeManager.prototype.addTheme = function(theme) {

@@ -16,7 +16,7 @@ goog.require('ngeo.StateManager');
  *    var module = angular.module('app');
  *    module.value('gmfTreeManagerModeFlush', false);
  *
- * This service's theme is a GmfThemesTheme with only children and a name.
+ * This service's theme is a GmfTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
  * @struct
@@ -86,13 +86,38 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
+
+  /**
+   * A reference to the OGC servers loaded by the theme service.
+   * @type {GmfOgcServers}
+   * @private
+   */
+  this.ogcServers_ = null;
+
+  ol.events.listen(
+    this.gmfThemes_,
+    gmf.ThemesEventType.CHANGE,
+    this.handleThemesChange_,
+    this
+  );
+};
+
+/**
+ * Called when the themes change. Get the OGC servers, then listen to the
+ * tree manager Layertree controllers array changes.
+ * @private
+ */
+gmf.TreeManager.prototype.handleThemesChange_ = function() {
+  this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
+    this.ogcServers_ = ogcServers;
+  }.bind(this));
 };
 
 /**
  * Set some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param{Array.<GmfThemesGroup>} firstLevelGroups An array of gmf theme group.
+ * @param{Array.<GmfGroup>} firstLevelGroups An array of gmf theme group.
  * @return{boolean} True if the group has been added. False otherwise.
  * @export
  */
@@ -106,7 +131,7 @@ gmf.TreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
  * Add some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param {Array.<GmfThemesGroup>} firstLevelGroups An array of gmf theme group.
+ * @param {Array.<GmfGroup>} firstLevelGroups An array of gmf theme group.
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
  * @param {number=} opt_totalGroupsLength length of all group to add for this
@@ -136,7 +161,7 @@ gmf.TreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups, opt_a
 
 /**
  * Update the application state with the list of first level groups in the tree
- * @param {Array.<GmfThemesGroup>} groups firstlevel groups of the tree
+ * @param {Array.<GmfGroup>} groups firstlevel groups of the tree
  * @private
  */
 gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
@@ -151,7 +176,7 @@ gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
 /**
  * Add a group as tree's children without consideration of this service 'mode'.
  * Add it only if it's not already in the tree.
- * @param {GmfThemesGroup} group The group to add.
+ * @param {GmfGroup} group The group to add.
  * @return {boolean} true if the group has been added.
  * @export
  */
@@ -233,7 +258,7 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
 /**
  * Remove a group from this tree's children. The first group that is found (
  * based on its name) will be removed. If any is found, nothing will append.
- * @param {GmfThemesGroup} group The group to remove.
+ * @param {GmfGroup} group The group to remove.
  * @export
  */
 gmf.TreeManager.prototype.removeGroup = function(group) {
@@ -266,14 +291,14 @@ gmf.TreeManager.prototype.removeAll = function() {
 /**
  * Clone a group node and recursively set all child node `isChecked` using
  * the given list of layer names.
- * @param {GmfThemesGroup} group The original group node.
+ * @param {GmfGroup} group The original group node.
  * @param {Array.<string>} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
- * @return {GmfThemesGroup} Cloned node.
+ * @return {GmfGroup} Cloned node.
  * @private
  */
 gmf.TreeManager.prototype.cloneGroupNode_ = function(group, names) {
-  var clone = /** @type {GmfThemesGroup} */ (goog.object.unsafeClone(group));
+  var clone = /** @type {GmfGroup} */ (goog.object.unsafeClone(group));
   this.toggleNodeCheck_(clone, names);
   return clone;
 };
@@ -282,7 +307,7 @@ gmf.TreeManager.prototype.cloneGroupNode_ = function(group, names) {
 /**
  * Set the child nodes metadata `isChecked` if its name is among the list of
  * given names. If a child node also has children, check those instead.
- * @param {GmfThemesGroup|GmfThemesLeaf} node The original node.
+ * @param {GmfGroup|GmfLayer} node The original node.
  * @param {Array.<string>} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
  * @private
@@ -295,7 +320,7 @@ gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
     if (childNode.children) {
       this.toggleNodeCheck_(childNode, names);
     } else if (childNode.metadata) {
-      childNode.metadata['isChecked'] = ol.array.includes(names, childNode.name);
+      childNode.metadata.isChecked = ol.array.includes(names, childNode.name);
     }
   }, this);
 };
@@ -304,7 +329,7 @@ gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
 /**
  * Display a notification that informs that the given groups are already in the
  * tree.
- * @param {Array.<GmfThemesGroup>} groups An array of groups that already in
+ * @param {Array.<GmfGroup>} groups An array of groups that already in
  *   the tree.
  * @private
  */
@@ -339,6 +364,29 @@ gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
     }
   });
   return correspondingTreeCtrl;
+};
+
+
+/**
+ * Get the OGC server.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ *     the current node.
+ * @return {GmfOgcServer} The OGC server.
+ */
+gmf.TreeManager.prototype.getOgcServer = function(treeCtrl) {
+  if (treeCtrl.parent.node.mixed) {
+    var gmfLayerWMS = /** @type {GmfLayerWMS} */ (treeCtrl.node);
+    goog.asserts.assert(gmfLayerWMS.ogcServer);
+    return this.ogcServers_[gmfLayerWMS.ogcServer];
+  } else {
+    var firstLevelGroupCtrl = treeCtrl;
+    while (!firstLevelGroupCtrl.parent.isRoot) {
+      firstLevelGroupCtrl = firstLevelGroupCtrl.parent;
+    }
+    var gmfGroup = /** @type {GmfGroup} */ (firstLevelGroupCtrl.node);
+    goog.asserts.assert(gmfGroup.ogcServer);
+    return this.ogcServers_[gmfGroup.ogcServer];
+  }
 };
 
 gmf.module.service('gmfTreeManager', gmf.TreeManager);

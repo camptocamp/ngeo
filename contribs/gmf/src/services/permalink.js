@@ -789,7 +789,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
     }
 
     /**
-     * @type {Array<(GmfThemesGroup)>}
+     * @type {Array<(GmfGroup)>}
      */
     var firstLevelGroups = [];
     // check if we have the groups in the permalink

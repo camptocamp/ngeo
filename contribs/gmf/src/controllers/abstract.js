@@ -382,7 +382,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
           var background = backgrounds[0];
           this.gmfThemes_.getBgLayers(this.dimensions).then(function(layers) {
             var layer = ol.array.find(layers, function(layer) {
-              return layer.get('label') === background;
+              return layer.name === background;
             });
             if (layer) {
               backgroundLayerMgr.set(map, layer);
@@ -413,7 +413,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
           if (defaultBasemapArray.length > 0) {
             var defaultBasemapLabel = defaultBasemapArray[0];
             background = ol.array.find(layers, function(layer) {
-              return layer.get('label') === defaultBasemapLabel;
+              return layer.name === defaultBasemapLabel;
             });
           }
         }

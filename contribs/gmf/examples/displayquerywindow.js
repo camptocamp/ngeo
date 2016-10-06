@@ -40,10 +40,6 @@ app.module.value(
         'version=2&background=background');
 
 
-app.module.value('gmfWmsUrl',
-    'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy');
-
-
 /**
  * Demo, NOT USED.
  * A sample directive to display the result.

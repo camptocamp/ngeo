@@ -28,10 +28,6 @@ app.module.value('gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background&interface=desktop');
 
 
-app.module.value('gmfWmsUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy');
-
-
 /**
  * @constructor
  * @param {gmf.Themes} gmfThemes The gme themes service.

@@ -32,9 +32,6 @@ app.module.value('gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
 
 
-app.module.value('gmfWmsUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy');
-
 app.module.value(
     'authenticationBaseUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
