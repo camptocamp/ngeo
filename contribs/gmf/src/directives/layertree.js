@@ -248,30 +248,28 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
 
   // watch any change on dimensions object to refresh the layers
   $scope.$watchCollection(function() {
-    return this.dimensions;
-  }.bind(this), function() {
-    this.updateDimensions_(this.gmfTreeManager_.root);
+    if (this.gmfTreeManager_.rootCtrl) {
+      return this.dimensions;
+    }
+  }.bind(this), function(dimensions) {
+    if (dimensions) {
+      this.updateDimensions_(this.gmfTreeManager_.rootCtrl);
+    }
   }.bind(this));
 };
 
 /**
- * @param {GmfRootNode|GmfTheme|GmfGroup|GmfLayer} node Layer tree node.
+ * @param {ngeo.LayertreeController} treeCtrl Layer tree controller.
  * @private
  */
-gmf.LayertreeController.prototype.updateDimensions_ = function(node) {
-  node.children.forEach(function(childNode) {
-    if (childNode.children) {
-      this.updateDimensions_(childNode);
-    } else if (childNode.dimensions) {
-      var layersArray = this.map.getLayerGroup().getLayersArray();
-      var childNodeName = childNode.name || '';
-      var layer = this.layerHelper_.getLayerByName(childNodeName, layersArray);
-      if (layer) {
-        goog.asserts.assertInstanceof(layer, ol.layer.Layer);
-        this.updateLayerDimensions_(layer, childNode);
-      }
+gmf.LayertreeController.prototype.updateDimensions_ = function(treeCtrl) {
+  treeCtrl.traverseDepthFirst(function(ctrl) {
+    if (ctrl.node.dimensions) {
+      var layer = ctrl.layer;
+      goog.asserts.assertInstanceof(layer, ol.layer.Layer);
+      this.updateLayerDimensions_(layer, ctrl.node);
     }
-  }, this);
+  }.bind(this));
 };
 
 
