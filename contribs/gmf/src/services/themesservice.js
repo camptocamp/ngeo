@@ -17,6 +17,9 @@ gmf.ThemesEventType = {
 };
 
 
+gmf.module.value('gmfThemesOptions', {});
+
+
 /**
  * The Themes service. This service interacts
  * with c2cgeoportal's "themes" web service and exposes functions that return
@@ -30,13 +33,23 @@ gmf.ThemesEventType = {
  * @param {angular.$q} $q Angular q service
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {gmfx.ThemesOptions} gmfThemesOptions Themes options.
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog) {
+gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmfThemesOptions) {
 
   ol.events.EventTarget.call(this);
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.addBlankBackgroundLayer_ = true;
+  if (gmfThemesOptions.addBlankBackgroundLayer !== undefined) {
+    this.addBlankBackgroundLayer_ = gmfThemesOptions.addBlankBackgroundLayer;
+  }
 
   /**
    * @type {angular.$q}
@@ -331,10 +344,12 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
     var layers = [];
 
     // (1) add a blank layer
-    layers.push(new ol.layer.Tile({
-      'label': this.gettextCatalog.getString('blank'),
-      'metadata': {'thumbnail': ''}
-    }));
+    if (this.addBlankBackgroundLayer_) {
+      layers.push(new ol.layer.Tile({
+        'label': this.gettextCatalog.getString('blank'),
+        'metadata': {'thumbnail': ''}
+      }));
+    }
 
     // (2) add layers that were returned
     values.forEach(function(layer) {

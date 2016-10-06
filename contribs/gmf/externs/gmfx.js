@@ -578,3 +578,18 @@ gmfx.ShortenerAPIResponseData;
  * }}
  */
 gmfx.ShortenerAPIRequestParams;
+
+/**
+ * Configuration options for the themes service.
+ * @typedef {{
+ *     addBlankBackgroundLayer: (boolean|undefined)
+ * }}
+ */
+gmfx.ThemesOptions;
+
+
+/**
+ * Whether to add a blank background layer to the list of available backgrounds.
+ * @type {boolean|undefined}
+ */
+gmfx.ThemesOptions.prototype.addBlankBackgroundLayer;
