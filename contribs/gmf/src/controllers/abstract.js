@@ -161,6 +161,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
   // watch any change on dimensions object to refresh the url
   permalink.setDimensions(this.dimensions);
 
+  var queryManager = $injector.get('gmfQueryManager');
+  queryManager.setDimensions(this.dimensions);
+
   if ($injector.has('gmfDefaultDimensions')) {
     // Set defaults
     var defaultDimensions = $injector.get('gmfDefaultDimensions');
@@ -191,9 +194,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @export
    */
   this.rightNavVisible = false;
-
-  // Not used in this file but the QueryManager must be injected to be watched.
-  $injector.get('gmfQueryManager');
 
   var queryFill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
   var queryStroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});

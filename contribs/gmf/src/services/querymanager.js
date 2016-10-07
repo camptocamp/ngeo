@@ -64,6 +64,15 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, $q) {
 
 
 /**
+ * @param {Object.<string, string>} dimensions The global dimensions object.
+ * @export
+ */
+gmf.QueryManager.prototype.setDimensions = function(dimensions) {
+  this.ngeoQuery_.dimensions = dimensions;
+};
+
+
+/**
  * Called when the themes change. Remove any existing sources first, then
  * create and add sources from the loaded themes.
  * @private
@@ -189,6 +198,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
       'identifierAttributeField': identifierAttributeField,
       'label': name,
       'params': {'LAYERS': layers},
+      'dimensions': firstLevelGroup.dimensions,
       'url': ogcServer.urlWfs,
       'validateLayerParams': validateLayerParams,
       'wfsQuery': ogcServer.wfsSupport
