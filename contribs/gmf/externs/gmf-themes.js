@@ -124,6 +124,14 @@ GmfGroup.prototype.time;
 
 
 /**
+ * The dimensions managed by the OpenLayers layer, if the value is null we will take the dimension from the application.
+ * This is present only on non mixed first level group.
+ * @type {Object.<string, string>}
+ */
+GmfGroup.prototype.dimensions;
+
+
+/**
  * A GeoMapFish layer
  * not an OpenLayers layer
  * neither a WMS layer.
@@ -144,6 +152,7 @@ GmfLayer.prototype.type;
 
 /**
  * The dimensions managed by the layer, if the value is null we will take the dimension from the application.
+ * Present only on layer in a mixed group.
  * @type {Object.<string, string>}
  */
 GmfLayer.prototype.dimensions;
