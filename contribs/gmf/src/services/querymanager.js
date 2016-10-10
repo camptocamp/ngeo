@@ -198,7 +198,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
       'identifierAttributeField': identifierAttributeField,
       'label': name,
       'params': {'LAYERS': layers},
-      'dimensions': firstLevelGroup.dimensions,
+      'dimensions': node.dimensions || firstLevelGroup.dimensions,
       'url': ogcServer.urlWfs,
       'validateLayerParams': validateLayerParams,
       'wfsQuery': ogcServer.wfsSupport
