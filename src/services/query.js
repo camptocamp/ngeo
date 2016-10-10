@@ -73,6 +73,12 @@ ngeo.Query = function($http, $q, ngeoQueryResult, ngeoQueryOptions,
 
   var options = ngeoQueryOptions !== undefined ? ngeoQueryOptions : {};
 
+
+  /**
+   * @type {Object.<string, string>}
+   */
+  this.dimensions = {};
+
   /**
    * @type {number}
    * @private
@@ -538,6 +544,22 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
         goog.uri.utils.setParam(wmsGetFeatureInfoUrl, 'LAYERS', lyrStr);
     wmsGetFeatureInfoUrl =
         goog.uri.utils.setParam(wmsGetFeatureInfoUrl, 'QUERY_LAYERS', lyrStr);
+
+    // add dimensions values
+    var dimensions = items[0].source.dimensions;
+    if (dimensions) {
+      for (var key in dimensions) {
+        // get the value from the global dimensions
+        var value = this.dimensions[key];
+        if (value === undefined) {
+          // get the value from the layer default value
+          value = dimensions[key];
+        }
+        if (value !== undefined) {
+          wmsGetFeatureInfoUrl = goog.uri.utils.setParam(wmsGetFeatureInfoUrl, key, value);
+        }
+      }
+    }
 
     var canceler = this.registerCanceler_();
     this.$http_.get(wmsGetFeatureInfoUrl, {timeout: canceler.promise})
