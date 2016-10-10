@@ -165,29 +165,31 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
       ogcServer = ogcServers[/** @type string */ (firstLevelGroup.ogcServer)];
     }
   }
-  if (!this.cache_[id] && validateLayerParams) {
-    // Some nodes have child layers, i.e. a list of layer names that are
-    // part of a group. The name of the group itself can't be used 'as-is'
-    // as an identifier of the layers for this source. For example, a
-    // group named 'osm' might result in returning 'restaurant' features.
-    // This override makes sure that those layer names are used instead of
-    // the original one.
-    if (gmfLayerWMS.childLayers && gmfLayerWMS.childLayers.length) {
-      // skip layers with no queryable childLayer
-      var isQueryable = function(item) {
-        return item.queryable;
-      };
-      if (!gmfLayerWMS.childLayers.some(isQueryable)) {
-        return;
-      }
-
-      var childLayerNames = [];
-      gmfLayerWMS.childLayers.forEach(function(childLayer) {
-        if (childLayer.queryable) {
-          childLayerNames.push(childLayer.name);
+  if (!this.cache_[id]) {
+    if (validateLayerParams) {
+      // Some nodes have child layers, i.e. a list of layer names that are
+      // part of a group. The name of the group itself can't be used 'as-is'
+      // as an identifier of the layers for this source. For example, a
+      // group named 'osm' might result in returning 'restaurant' features.
+      // This override makes sure that those layer names are used instead of
+      // the original one.
+      if (gmfLayerWMS.childLayers && gmfLayerWMS.childLayers.length) {
+        // skip layers with no queryable childLayer
+        var isQueryable = function(item) {
+          return item.queryable;
+        };
+        if (!gmfLayerWMS.childLayers.some(isQueryable)) {
+          return;
         }
-      }, this);
-      layers = childLayerNames.join(',');
+
+        var childLayerNames = [];
+        gmfLayerWMS.childLayers.forEach(function(childLayer) {
+          if (childLayer.queryable) {
+            childLayerNames.push(childLayer.name);
+          }
+        }, this);
+        layers = childLayerNames.join(',');
+      }
     }
 
     goog.asserts.assert(ogcServer.urlWfs);
@@ -198,7 +200,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
       'identifierAttributeField': identifierAttributeField,
       'label': name,
       'params': {'LAYERS': layers},
-      'dimensions': firstLevelGroup.dimensions,
+      'dimensions': node.dimensions || firstLevelGroup.dimensions,
       'url': ogcServer.urlWfs,
       'validateLayerParams': validateLayerParams,
       'wfsQuery': ogcServer.wfsSupport
