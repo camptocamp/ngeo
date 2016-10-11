@@ -271,14 +271,12 @@ gmf.Authentication.prototype.handleLogin_ = function(checkingLoginStatus, resp) 
  * @private
  */
 gmf.Authentication.prototype.setUser_ = function(respData, emitEvent) {
-  if (respData.username !== undefined) {
-    for (var key in respData) {
-      this.user_[key] = respData[key];
-    }
-    if (emitEvent) {
-      this.dispatchEvent(new gmf.AuthenticationEvent(
-        gmf.AuthenticationEventType.LOGIN, this.user_));
-    }
+  for (var key in respData) {
+    this.user_[key] = respData[key];
+  }
+  if (emitEvent && respData.username !== undefined) {
+    this.dispatchEvent(new gmf.AuthenticationEvent(
+      gmf.AuthenticationEventType.LOGIN, this.user_));
   }
 };
 
