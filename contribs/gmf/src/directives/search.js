@@ -124,7 +124,8 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
   return {
     restrict: 'E',
     bindToController: {
-      'inputValue': '=?gmfSearchInputValue'
+      'inputValue': '=?gmfSearchInputValue',
+      'placeholder': '@?gmfSearchPlaceholder'
     },
     scope: {
       'getMapFn': '&gmfSearchMap',
@@ -133,7 +134,6 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       'featuresStyles': '<?gmfSearchStyles',
       'clearbutton': '=gmfSearchClearbutton',
       'colorchooser': '=gmfSearchColorchooser',
-      'placeholder': '@?gmfSearchPlaceholder',
       'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
       'additionalListeners': '=gmfSearchListeners'
     },
@@ -272,7 +272,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @type {string}
    * @export
    */
-  this.placeholder = this.scope_['placeholder'];
+  this.placeholder = '';
 
   var coordProj = this.scope_['coordinatesProjections'];
   if (coordProj === undefined) {
