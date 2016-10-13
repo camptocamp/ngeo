@@ -33,7 +33,7 @@
     "clean-css": "3.4.20",
     "closure-util": "1.15.1",
     "coveralls": "2.11.14",
-    "d3": "3.5.17",
+    "d3": "4.2.7",
     "eslint": "3.7.1",
     "eslint-config-openlayers": "5.0.0",
     "floatthead": "1.4.4",
