@@ -246,6 +246,32 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
     this.map.render();
   }.bind(this));
 
+  // watch any change on root children to update the layers on the map
+  $scope.$watchCollection(function() {
+    return this.gmfTreeManager_.root.children;
+  }.bind(this),
+  function(newValue, oldValue) {
+    // we want to watch for order change only
+    if (newValue != oldValue &&
+        newValue.length == oldValue.length &&
+        this.gmfTreeManager_.rootCtrl) {
+      // create a new children array with the new order
+      var newChildren = new Array(newValue.length);
+      oldValue.forEach(function(item, index) {
+        newChildren[newValue.indexOf(item)] =
+            this.gmfTreeManager_.rootCtrl.children[index];
+      }, this);
+      // update the root controller with the new children's order
+      this.gmfTreeManager_.rootCtrl.children = newChildren;
+
+      // then update the layers order
+      this.layers.length = 0;
+      this.gmfTreeManager_.rootCtrl.children.forEach(function(child) {
+        this.layers.push(child.layer);
+      }, this);
+    }
+  }.bind(this));
+
   // watch any change on dimensions object to refresh the layers
   $scope.$watchCollection(function() {
     if (this.gmfTreeManager_.rootCtrl) {
