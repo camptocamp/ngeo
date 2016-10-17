@@ -70,7 +70,7 @@ gmf.ThemeManager = function(gmfThemes, gmfTreeManagerModeFlush, gmfTreeManager, 
 /**
  * Set the current theme name (mode 'flush' only) and add its children. Add
  * only groups that are not already in the tree.
- * @param {GmfTheme} theme A theme object.
+ * @param {gmfThemes.GmfTheme} theme A theme object.
  * @export
  */
 gmf.ThemeManager.prototype.addTheme = function(theme) {

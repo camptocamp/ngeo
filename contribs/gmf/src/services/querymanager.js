@@ -113,9 +113,9 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
  * Create and add a source for the query service from the GMF theme node if
  * it has no children, otherwise create the sources for each child node if
  * it has any.
- * @param {GmfGroup} firstLevelGroup A node.
- * @param {GmfGroup|GmfLayer} node A node.
- * @param {GmfOgcServers} ogcServers OGC servers.
+ * @param {gmfThemes.GmfGroup} firstLevelGroup A node.
+ * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node A node.
+ * @param {gmfThemes.GmfOgcServers} ogcServers OGC servers.
  * @private
  */
 gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcServers) {
@@ -133,12 +133,12 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
   // (and non minified) version.
 
   var id = node.id;
-  var meta = /** @type {GmfMetaData} */ (node.metadata);
+  var meta = /** @type {gmfThemes.GmfMetaData} */ (node.metadata);
   var identifierAttributeField = meta.identifierAttributeField;
   var layers;
   var name = node.name;
   var validateLayerParams = false;
-  var gmfLayer = /** @type GmfLayer */ (node);
+  var gmfLayer = /** @type gmfThemes.GmfLayer */ (node);
   var ogcServer;
 
   // Don't create sources for WMTS layers without wmsUrl and ogcServer,
@@ -155,7 +155,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
   validateLayerParams = gmfLayer.type === 'WMS';
   var gmfLayerWMS;
   if (gmfLayer.type === 'WMS') {
-    gmfLayerWMS = /** @type GmfLayerWMS */ (gmfLayer);
+    gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
     layers = gmfLayerWMS.layers;
     if (firstLevelGroup.mixed) {
       goog.asserts.assert(gmfLayerWMS.ogcServer);

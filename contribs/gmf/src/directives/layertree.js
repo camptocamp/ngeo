@@ -168,7 +168,7 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {GmfRootNode}
+   * @type {gmfThemes.GmfRootNode}
    * @export
    */
   this.root = gmfTreeManager.root;
@@ -275,7 +275,7 @@ gmf.LayertreeController.prototype.updateDimensions_ = function(treeCtrl) {
 
 /**
  * @param {ol.layer.Layer} layer Layer to update.
- * @param {GmfGroup|GmfLayer} node Layer tree node.
+ * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layer tree node.
  * @private
  */
 gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node) {
@@ -328,7 +328,7 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
           this.dataLayerGroup_, opt_position);
 
   if (layer instanceof ol.layer.Layer) {
-    var node = /** @type {GmfGroup|GmfLayer} */ (treeCtrl.node);
+    var node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
     this.updateLayerDimensions_(layer, node);
   }
 
@@ -356,7 +356,7 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
 /**
  * Return 'out-of-resolution' if the current resolution of the map is out of
  * the min/max resolution in the node.
- * @param {GmfLayerWMS} gmfLayerWMS the GeoMapFish Layer WMS.
+ * @param {gmfThemes.GmfLayerWMS} gmfLayerWMS the GeoMapFish Layer WMS.
  * @return {?string} 'out-of-resolution' or null.
  * @export
  */
@@ -414,7 +414,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
   var layer = /** @type {ol.layer.Image} */ (
       gmf.SyncLayertreeMap.getLayer(layertreeCtrl));
   if (layer) {
-    var node = /** @type {GmfGroup} */ (layertreeCtrl.node);
+    var node = /** @type {gmfThemes.GmfGroup} */ (layertreeCtrl.node);
     var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
     var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
     var timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);
@@ -432,11 +432,11 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
  * @export
  */
 gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
-  if (/** @type GmfGroup */ (treeCtrl.node).children !== undefined) {
+  if (/** @type gmfThemes.GmfGroup */ (treeCtrl.node).children !== undefined) {
     return undefined;
   }
 
-  var gmfLayer = /** @type {GmfLayer} */ (treeCtrl.node);
+  var gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   var iconUrl = gmfLayer.metadata.iconUrl;
 
   if (iconUrl !== undefined) {
@@ -447,7 +447,7 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
     return undefined;
   }
 
-  var gmfLayerWMS = /** @type {GmfLayerWMS} */ (gmfLayer);
+  var gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
 
   var legendRule = gmfLayerWMS.metadata.legendRule;
 
@@ -455,7 +455,8 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
     return undefined;
   }
 
-  //In case of multiple layers for a gmfLayerWMS, always take the first layer name to get the icon
+  //In case of multiple layers for a gmfLayerWMS, always take the first layer
+  //name to get the icon
   var layerName = gmfLayerWMS.layers.split(',')[0];
   var gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
   return this.layerHelper_.getWMSLegendURL(
@@ -472,11 +473,11 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
  * @export
  */
 gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
-  if (/** @type GmfGroup */ (treeCtrl.node).children !== undefined) {
+  if (/** @type gmfThemes.GmfGroup */ (treeCtrl.node).children !== undefined) {
     return undefined;
   }
 
-  var gmfLayer = /** @type {GmfLayer} */ (treeCtrl.node);
+  var gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   var layersNames;
 
   if (gmfLayer.metadata.legendImage) {
@@ -488,7 +489,7 @@ gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
     goog.asserts.assertInstanceof(layer, ol.layer.Tile);
     return this.layerHelper_.getWMTSLegendURL(layer);
   } else {
-    var gmfLayerWMS = /** @type {GmfLayerWMS} */ (gmfLayer);
+    var gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
     layersNames = gmfLayerWMS.layers.split(',');
     if (layersNames.length > 1) {
       // not supported, the administrator should give a legendImage metadata
@@ -543,7 +544,7 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
 
 
 /**
- * @param {GmfGroup} node Layer tree node to remove.
+ * @param {gmfThemes.GmfGroup} node Layer tree node to remove.
  * @export
  */
 gmf.LayertreeController.prototype.removeNode = function(node) {
@@ -558,7 +559,7 @@ gmf.LayertreeController.prototype.removeNode = function(node) {
  * @export
  */
 gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
-  var gmfLayer = /** @type {GmfLayerWMS} */ (treeCtrl.node);
+  var gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
   var view = this.map.getView();
   var resolution = gmfLayer.minResolutionHint || gmfLayer.maxResolutionHint;
   if (resolution !== undefined) {
@@ -583,11 +584,11 @@ gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
  * Get the snapping configuration object from a Layertree controller
  *
  * @param {ngeo.LayertreeController} treeCtrl Layertree controller,
- * @return {?GmfSnappingConfig} Snapping configuration, if found.
+ * @return {?gmfThemes.GmfSnappingConfig} Snapping configuration, if found.
  * @export
  */
 gmf.LayertreeController.getSnappingConfig = function(treeCtrl) {
-  var node = /** @type {GmfLayer} */ (treeCtrl.node);
+  var node = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   var config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
       node.metadata.snappingConfig : null;
   return config;

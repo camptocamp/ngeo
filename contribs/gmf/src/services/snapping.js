@@ -105,7 +105,7 @@ gmf.Snapping = function($http, $q, $rootScope, $timeout, gmfThemes,
 
   /**
    * A reference to the OGC servers loaded by the theme service.
-   * @type {GmfOgcServers}
+   * @type {gmfThemes.GmfOgcServers}
    * @private
    */
   this.ogcServers_ = null;
@@ -226,7 +226,7 @@ gmf.Snapping.prototype.handleThemesChange_ = function() {
 gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
-  var node = /** @type {GmfGroup|GmfLayer} */ (treeCtrl.node);
+  var node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
   if (node.children) {
     return;
   }
@@ -315,14 +315,14 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
     return null;
   }
 
-  var gmfLayer = /** @type {GmfLayer} */ (treeCtrl.node);
+  var gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
 
   // (2)
   if (gmfLayer.type !== gmf.Themes.NodeType.WMS) {
     return null;
   }
 
-  var gmfLayerWMS = /** @type {GmfLayerWMS} */ (gmfLayer);
+  var gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
 
   // (3)
   var featureTypes = [];
@@ -337,12 +337,12 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
 
   // (4)
   var ogcServerName;
-  var gmfGroup = /** @type {GmfGroup} */ (treeCtrl.parent.node);
+  var gmfGroup = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.parent.node);
   if (gmfGroup.mixed) {
     ogcServerName = gmfLayerWMS.ogcServer;
   } else {
     var firstTreeCtrl = ngeo.LayertreeController.getFirstParentTree(treeCtrl);
-    var firstNode = /** @type {GmfGroup} */ (firstTreeCtrl.node);
+    var firstNode = /** @type {gmfThemes.GmfGroup} */ (firstTreeCtrl.node);
     ogcServerName = firstNode.ogcServer;
   }
   if (!ogcServerName) {
@@ -564,7 +564,7 @@ gmf.Snapping.Cache;
  *     interaction: (?ol.interaction.Snap),
  *     maxFeatures: (number),
  *     requestDeferred: (?angular.$q.Deferred),
- *     snappingConfig: (GmfSnappingConfig),
+ *     snappingConfig: (gmfThemes.GmfSnappingConfig),
  *     stateWatcherUnregister: (Function),
  *     treeCtrl: (ngeo.LayertreeController),
  *     wfsConfig: (gmf.Snapping.WFSConfig)
