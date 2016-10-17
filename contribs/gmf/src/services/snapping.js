@@ -48,7 +48,7 @@ gmf.Snapping = function($http, $q, $rootScope, $timeout, gmfThemes,
   this.q_ = $q;
 
   /**
-   * @type {!angular.Scope} $rootScope Angular scope.
+   * @type {!angular.Scope}
    * @private
    */
   this.rootScope_ = $rootScope;

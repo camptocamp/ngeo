@@ -92,20 +92,18 @@ gmf.ShareService.prototype.postShortUrl_ = function(params) {
 
 
 /**
- * Max length defined for the complete url
+ * Max length defined for the complete url.
+ * Check IE limits, see {@link http://support.microsoft.com/kb/208427}
  * @constant
  * @type {number}
- * Check IE limits
- * @see {@link http://support.microsoft.com/kb/208427}
  */
 gmf.ShareService.URL_MAX_LEN = 2083;
 
 /**
- * Max length defined for the url parth section
+ * Max length defined for the url parth section.
+ * Check IE limits, see {@link http://support.microsoft.com/kb/208427}
  * @constant
  * @type {number}
- * Check IE limits
- * @see {@link http://support.microsoft.com/kb/208427}
  */
 gmf.ShareService.URL_PATH_MAX_LEN = 2048;
 

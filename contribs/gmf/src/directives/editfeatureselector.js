@@ -103,7 +103,7 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
   // === Injected services ===
 
   /**
-   * @type {!angular.Scope} $scope Angular scope.
+   * @type {!angular.Scope}
    * @private
    */
   this.scope_ = $scope;

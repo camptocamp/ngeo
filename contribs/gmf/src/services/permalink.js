@@ -224,8 +224,8 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   this.ngeoAutoProjection_ = ngeoAutoProjection;
 
   /**
-   * @type {?Array.<ol.proj.Projection>} A list of projections that the coordinates
-   *    in the permalink can be in.
+   * A list of projections that the coordinates in the permalink can be in.
+   * @type {?Array.<ol.proj.Projection>}
    * @private
    */
   this.sourceProjections_ = null;
