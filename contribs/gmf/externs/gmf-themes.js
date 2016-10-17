@@ -22,11 +22,10 @@ gmfThemes.GmfThemesResponse;
 
 
 /**
- * @typedef {{
- *   children: Array.<gmfThemes.GmfGroup>
- * }}
+ * @constructor
+ * @struct
  */
-gmfThemes.GmfRootNode;
+gmfThemes.GmfRootNode = function() {};
 
 
 /**
@@ -36,13 +35,10 @@ gmfThemes.GmfRootNode.prototype.children;
 
 /**
  * Contains the common element of all the elements of the GeoMapFisf layer tree.
- * @typedef {{
- *   id: number,
- *   metadata: gmfThemes.GmfMetaData,
- *   name: string
- * }}
+ * @constructor
+ * @struct
  */
-gmfThemes.GmfBaseNode;
+gmfThemes.GmfBaseNode = function() {};
 
 
 /**
@@ -66,13 +62,11 @@ gmfThemes.GmfBaseNode.prototype.name;
 
 /**
  * The element we can select in the theme selector.
- * @typedef {{
- *   children: Array.<gmfThemes.GmfGroup>,
- *   functionalities: Object.<string, Array.<string|number>>
- * }}
+ * @constructor
+ * @struct
  * @extends gmfThemes.GmfBaseNode
  */
-gmfThemes.GmfTheme;
+gmfThemes.GmfTheme = function() {};
 
 
 /**
@@ -95,16 +89,11 @@ gmfThemes.GmfTheme.prototype.functionalities;
  * neither a WMS group.
  * This represent « first level group » (Block in the layer tree),
  * or all sub nodes that's not al leaf.
- * @typedef {{
- *   children: Array.<gmfThemes.GmfGroup|gmfThemes.GmfLayer>,
- *   dimensions: Object.<string, string>,
- *   mixed: boolean,
- *   ogcServer: (string|undefined),
- *   time: (ngeox.TimeProperty|undefined)
- * }}
+ * @constructor
+ * @struct
  * @extends gmfThemes.GmfBaseNode
  */
-gmfThemes.GmfGroup;
+gmfThemes.GmfGroup = function() {};
 
 
 /**
@@ -152,15 +141,11 @@ gmfThemes.GmfGroup.prototype.time;
  * not an OpenLayers layer
  * neither a WMS layer.
  * This is also the leaf of the tree.
- * @typedef {{
- *   dimensions: Object.<string, string>,
- *   editable: (boolean|undefined),
- *   style: (string|undefined),
- *   type: string
- * }}
+ * @constructor
+ * @struct
  * @extends gmfThemes.GmfBaseNode
  */
-gmfThemes.GmfLayer;
+gmfThemes.GmfLayer = function() {};
 
 
 /**
@@ -191,17 +176,11 @@ gmfThemes.GmfLayer.prototype.type;
 
 
 /**
- * @typedef {{
- *   childLayers: Array.<gmfThemes.GmfLayerChildLayer>,
- *   layers: string,
- *   maxResolutionHint: number,
- *   minResolutionHint: number,
- *   ogcServer: (string|undefined),
- *   time: (ngeox.TimeProperty|undefined)
- * }}
+ * @constructor
+ * @struct
  * @extends gmfThemes.GmfLayer
  */
-gmfThemes.GmfLayerWMS;
+gmfThemes.GmfLayerWMS = function() {};
 
 
 /**
@@ -245,15 +224,11 @@ gmfThemes.GmfLayerWMS.prototype.time;
 
 
 /**
- * @typedef {{
- *   imageType: string,
- *   layer: string,
- *   matrixSet: string,
- *   url: string
- * }}
+ * @constructor
+ * @struct
  * @extends gmfThemes.GmfLayer
  */
-gmfThemes.GmfLayerWMTS;
+gmfThemes.GmfLayerWMTS = function() {};
 
 
 /**
@@ -283,14 +258,10 @@ gmfThemes.GmfLayerWMTS.prototype.url;
 
 /**
  * Additional attributes related on a WMS layers (or WFS features type).
- * @typedef {{
- *   maxResolutionHint: number,
- *   minResolutionHint: number,
- *   name: string,
- *   queryable: boolean
- * }}
+ * @constructor
+ * @struct
  */
-gmfThemes.GmfLayerChildLayer;
+gmfThemes.GmfLayerChildLayer = function() {};
 
 
 /**
@@ -326,16 +297,10 @@ gmfThemes.GmfOgcServers;
 
 
 /**
- * @typedef {{
- *   imageType: string,
- *   isSingleTile: boolean,
- *   type: string,
- *   url: string,
- *   urlWfs: string,
- *   wfsSupport: boolean
- * }}
+ * @constructor
+ * @struct
  */
-gmfThemes.GmfOgcServer;
+gmfThemes.GmfOgcServer = function() {};
 
 
 /**
@@ -378,27 +343,10 @@ gmfThemes.GmfOgcServer.prototype.wfsSupport;
 
 
 /**
- * @typedef {{
- *   disclaimer: (string|undefined),
- *   iconUrl: (string|undefined),
- *   identifierAttributeField: (string|undefined),
- *   isChecked: (boolean|undefined),
- *   isExpanded: (boolean|undefined),
- *   isLegendExpanded: (boolean|undefined),
- *   legend: (boolean|undefined),
- *   legendImage: (string|undefined),
- *   legendRule: (string|undefined),
- *   maxResolution: (number|undefined),
- *   metadataUrl: (string|undefined),
- *   minResolution: (number|undefined),
- *   ogcServer: (string|undefined),
- *   printLayers: (string|undefined),
- *   snappingConfig: (gmfThemes.GmfSnappingConfig|undefined)
- *   thumbnail: (string|undefined),
- *   wmsLayers: (string|undefined),
- * }}
+ * @constructor
+ * @struct
  */
-gmfThemes.GmfMetaData;
+gmfThemes.GmfMetaData = function() {};
 
 
 /**
@@ -530,13 +478,10 @@ gmfThemes.GmfMetaData.prototype.wmsLayers;
 
 
 /**
- * @typedef {{
- *   edge: (boolean|undefined),
- *   tolerance: (number|undefined),
- *   vertex: (boolean|undefined)
- * }}
+ * @constructor
+ * @struct
  */
-gmfThemes.GmfSnappingConfig;
+gmfThemes.GmfSnappingConfig = function() {};
 
 
 /**
