@@ -181,7 +181,9 @@
   ng-if="::layertreeCtrl.node.children"
   ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded}"
   ngeo-sortable="::layertreeCtrl.isRoot && layertreeCtrl.node.children"
-  ngeo-sortable-options="{handleClassName: 'ngeo-sortable-handle', draggerClassName: 'gmf-layertree-dragger', currDragItemClassName : 'gmf-layertree-curr-drag-item'}">
+  ngeo-sortable-options="{handleClassName: 'ngeo-sortable-handle', draggerClassName: 'gmf-layertree-dragger', currDragItemClassName : 'gmf-layertree-curr-drag-item'}"
+  ngeo-sortable-callback="::gmfLayertreeCtrl.syncTreeAndLayers"
+  ngeo-sortable-callback-ctx="::gmfLayertreeCtrl">
 
   <li
     class="gmf-layertree-node"
