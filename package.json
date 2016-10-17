@@ -28,7 +28,7 @@
     "angular-mocks": "1.5.8",
     "angular-sanitize": "1.5.8",
     "angular-touch": "1.5.8",
-    "async": "2.1.1",
+    "async": "2.1.2",
     "bootstrap": "3.3.7",
     "clean-css": "3.4.20",
     "closure-util": "1.15.1",
