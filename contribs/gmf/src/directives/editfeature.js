@@ -180,10 +180,10 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   this.vectorLayer;
 
   /**
-   * @type {GmfLayer}
+   * @type {gmfThemes.GmfLayer}
    * @private
    */
-  this.editableNode_ = /** @type {GmfLayer} */ (
+  this.editableNode_ = /** @type {gmfThemes.GmfLayer} */ (
     this.editableTreeCtrl.node);
 
 

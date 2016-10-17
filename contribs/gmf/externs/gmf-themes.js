@@ -6,76 +6,81 @@
 
 
 /**
+ * @type {Object}
+ */
+var gmfThemes;
+
+/**
  * @typedef {{
- *     background_layers: Array.<GmfLayer>,
+ *     background_layers: Array.<gmfThemes.GmfLayer>,
  *     errors: Array.<string>,
- *     ogcServers: GmfOgcServers,
- *     themes: Array.<GmfTheme>
+ *     ogcServers: gmfThemes.GmfOgcServers,
+ *     themes: Array.<gmfThemes.GmfTheme>
  * }}
  */
-var GmfThemesResponse;
+gmfThemes.GmfThemesResponse;
 
 
 /**
  * @constructor
  * @struct
  */
-var GmfRootNode = function() {};
+gmfThemes.GmfRootNode = function() {};
 
 
 /**
- * @type {Array.<GmfGroup>}
+ * @type {Array.<gmfThemes.GmfGroup>}
  */
-GmfRootNode.prototype.children;
+gmfThemes.GmfRootNode.prototype.children;
 
 /**
  * Contains the common element of all the elements of the GeoMapFisf layer tree.
  * @constructor
  * @struct
  */
-var GmfBaseNode = function() {};
+gmfThemes.GmfBaseNode = function() {};
 
 
 /**
  * @type {number}
  */
-GmfBaseNode.prototype.id;
+gmfThemes.GmfBaseNode.prototype.id;
+
+
+/**
+ * The related metadata.
+ * @type {gmfThemes.GmfMetaData}
+ */
+gmfThemes.GmfBaseNode.prototype.metadata;
 
 
 /**
  * @type {string}
  */
-GmfBaseNode.prototype.name;
-
-
-/**
- * The related metadata.
- * @type {GmfMetaData}
- */
-GmfBaseNode.prototype.metadata;
+gmfThemes.GmfBaseNode.prototype.name;
 
 
 /**
  * The element we can select in the theme selector.
  * @constructor
  * @struct
- * @extends GmfBaseNode
+ * @extends gmfThemes.GmfBaseNode
  */
-var GmfTheme = function() {};
+gmfThemes.GmfTheme = function() {};
 
 
 /**
  * The first level layer groups.
- * @type {Array.<GmfGroup>}
+ * @type {Array.<gmfThemes.GmfGroup>}
  */
-GmfTheme.prototype.children;
+gmfThemes.GmfTheme.prototype.children;
 
 
 /**
  * The Functionalities related to the theme.
  * @type {Object.<string, Array.<string|number>>}
  */
-GmfTheme.prototype.functionalities;
+gmfThemes.GmfTheme.prototype.functionalities;
 
 
 /**
@@ -84,17 +89,25 @@ GmfTheme.prototype.functionalities;
  * neither a WMS group.
  * This represent « first level group » (Block in the layer tree),
  * or all sub nodes that's not al leaf.
- * @extends GmfBaseNode
  * @constructor
  * @struct
+ * @extends gmfThemes.GmfBaseNode
  */
-var GmfGroup = function() {};
+gmfThemes.GmfGroup = function() {};
 
 
 /**
- * @type {Array.<GmfGroup|GmfLayer>}
+ * @type {Array.<gmfThemes.GmfGroup|gmfThemes.GmfLayer>}
  */
-GmfGroup.prototype.children;
+gmfThemes.GmfGroup.prototype.children;
+
+
+/**
+ * The dimensions managed by the OpenLayers layer, if the value is null we will take the dimension from the application.
+ * This is present only on non mixed first level group.
+ * @type {Object.<string, string>}
+ */
+gmfThemes.GmfGroup.prototype.dimensions;
 
 
 /**
@@ -106,29 +119,21 @@ GmfGroup.prototype.children;
  * In other word, all the group of a first level group will have the same value.
  * @type {boolean}
  */
-GmfGroup.prototype.mixed;
+gmfThemes.GmfGroup.prototype.mixed;
 
 
 /**
  * On non mixed first level group it is the ogc server to use.
  * @type {string|undefined}
  */
-GmfGroup.prototype.ogcServer;
+gmfThemes.GmfGroup.prototype.ogcServer;
 
 
 /**
  * On non mixed first level group with more then one time layer, it is the time informations.
  * @type {ngeox.TimeProperty|undefined}
  */
-GmfGroup.prototype.time;
-
-
-/**
- * The dimensions managed by the OpenLayers layer, if the value is null we will take the dimension from the application.
- * This is present only on non mixed first level group.
- * @type {Object.<string, string>}
- */
-GmfGroup.prototype.dimensions;
+gmfThemes.GmfGroup.prototype.time;
 
 
 /**
@@ -138,16 +143,9 @@ GmfGroup.prototype.dimensions;
  * This is also the leaf of the tree.
  * @constructor
  * @struct
- * @extends GmfBaseNode
+ * @extends gmfThemes.GmfBaseNode
  */
-var GmfLayer = function() {};
-
-
-/**
- * WMS or WMTS.
- * @type {string}
- */
-GmfLayer.prototype.type;
+gmfThemes.GmfLayer = function() {};
 
 
 /**
@@ -155,100 +153,107 @@ GmfLayer.prototype.type;
  * Present only on layer in a mixed group.
  * @type {Object.<string, string>}
  */
-GmfLayer.prototype.dimensions;
+gmfThemes.GmfLayer.prototype.dimensions;
 
 
 /**
  * @type {boolean|undefined}
  */
-GmfLayer.prototype.editable;
+gmfThemes.GmfLayer.prototype.editable;
 
 
 /**
  * @type {string|undefined}
  */
-GmfLayer.prototype.style;
+gmfThemes.GmfLayer.prototype.style;
+
+
+/**
+ * WMS or WMTS.
+ * @type {string}
+ */
+gmfThemes.GmfLayer.prototype.type;
 
 
 /**
  * @constructor
  * @struct
- * @extends GmfLayer
+ * @extends gmfThemes.GmfLayer
  */
-var GmfLayerWMS = function() {};
+gmfThemes.GmfLayerWMS = function() {};
 
+
+/**
+ * @type {Array.<gmfThemes.GmfLayerChildLayer>}
+ */
+gmfThemes.GmfLayerWMS.prototype.childLayers;
 
 /**
  * The comma separated list of WMS layers or groups.
  * @type {string}
  */
-GmfLayerWMS.prototype.layers;
-
-
-/**
- * @type {Array.<GmfLayerChildLayer>}
- */
-GmfLayerWMS.prototype.childLayers;
-
-
-/**
- * The min resolution where the layer is visible.
- * @type {number}
- */
-GmfLayerWMS.prototype.minResolutionHint;
+gmfThemes.GmfLayerWMS.prototype.layers;
 
 
 /**
  * The max resolution where the layer is visible.
  * @type {number}
  */
-GmfLayerWMS.prototype.maxResolutionHint;
+gmfThemes.GmfLayerWMS.prototype.maxResolutionHint;
+
+
+/**
+ * The min resolution where the layer is visible.
+ * @type {number}
+ */
+gmfThemes.GmfLayerWMS.prototype.minResolutionHint;
 
 
 /**
  * @type {string|undefined}
  */
-GmfLayerWMS.prototype.ogcServer;
+gmfThemes.GmfLayerWMS.prototype.ogcServer;
 
 
 /**
- * The time informations if the layer directly manage it, see also {GmfGroup.time}.
+ * The time informations if the layer directly manage it, see
+ * also {gmfThemes.GmfGroup.time}.
  * @type {ngeox.TimeProperty|undefined}
  */
-GmfLayerWMS.prototype.time;
+gmfThemes.GmfLayerWMS.prototype.time;
 
 
 /**
  * @constructor
- * @extends GmfLayer
  * @struct
+ * @extends gmfThemes.GmfLayer
  */
-var GmfLayerWMTS = function() {};
-
-
-/**
- * @type {string}
- */
-GmfLayerWMTS.prototype.url;
-
-
-/**
- * @type {string}
- */
-GmfLayerWMTS.prototype.layer;
+gmfThemes.GmfLayerWMTS = function() {};
 
 
 /**
  * 'image/png' or 'image/jpeg'.
  * @type {string}
  */
-GmfLayerWMTS.prototype.imageType;
+gmfThemes.GmfLayerWMTS.prototype.imageType;
 
 
 /**
  * @type {string}
  */
-GmfLayerWMTS.prototype.matrixSet;
+gmfThemes.GmfLayerWMTS.prototype.layer;
+
+
+/**
+ * @type {string}
+ */
+gmfThemes.GmfLayerWMTS.prototype.matrixSet;
+
+
+/**
+ * @type {string}
+ */
+gmfThemes.GmfLayerWMTS.prototype.url;
 
 
 /**
@@ -256,229 +261,227 @@ GmfLayerWMTS.prototype.matrixSet;
  * @constructor
  * @struct
  */
-var GmfLayerChildLayer = function() {};
+gmfThemes.GmfLayerChildLayer = function() {};
 
 
 /**
  * The min resolution where the layer is visible.
  * @type {number}
  */
-GmfLayerChildLayer.prototype.maxResolutionHint;
+gmfThemes.GmfLayerChildLayer.prototype.maxResolutionHint;
 
 
 /**
  * The max resolution where the layer is visible.
  * @type {number}
  */
-GmfLayerChildLayer.prototype.minResolutionHint;
+gmfThemes.GmfLayerChildLayer.prototype.minResolutionHint;
 
 
 /**
  * @type {string}
  */
-GmfLayerChildLayer.prototype.name;
+gmfThemes.GmfLayerChildLayer.prototype.name;
 
 
 /**
  * @type {boolean}
  */
-GmfLayerChildLayer.prototype.queryable;
-
-
+gmfThemes.GmfLayerChildLayer.prototype.queryable;
 
 
 /**
- * @typedef {Object<string, GmfOgcServer>}
+ * @typedef {Object<string, gmfThemes.GmfOgcServer>}
  */
-var GmfOgcServers;
+gmfThemes.GmfOgcServers;
 
 
 /**
  * @constructor
  * @struct
  */
-var GmfOgcServer = function() {};
+gmfThemes.GmfOgcServer = function() {};
 
 
 /**
  * 'image/png' or 'image/jpeg'.
  * @type {string}
  */
-GmfOgcServer.prototype.imageType;
+gmfThemes.GmfOgcServer.prototype.imageType;
 
 
 /**
  * @type {boolean}
  */
-GmfOgcServer.prototype.isSingleTile;
+gmfThemes.GmfOgcServer.prototype.isSingleTile;
 
 
 /**
  * 'mapserver', 'qgisserver', 'geoserver' or 'other'.
  * @type {string}
  */
-GmfOgcServer.prototype.type;
+gmfThemes.GmfOgcServer.prototype.type;
 
 
 /**
  * @type {string}
  */
-GmfOgcServer.prototype.url;
+gmfThemes.GmfOgcServer.prototype.url;
 
 
 /**
  * The WFS URL.
  * @type {string}
  */
-GmfOgcServer.prototype.urlWfs;
+gmfThemes.GmfOgcServer.prototype.urlWfs;
 
 
 /**
  * @type {boolean}
  */
-GmfOgcServer.prototype.wfsSupport;
+gmfThemes.GmfOgcServer.prototype.wfsSupport;
 
 
 /**
  * @constructor
  * @struct
  */
-var GmfMetaData = function() {};
-
-
-/**
- * Group expanded by default.
- * @type {boolean|undefined}
- */
-GmfMetaData.prototype.isExpanded;
-
-
-/**
- * Display the legend (default true).
- * @type {boolean|undefined}
- */
-GmfMetaData.prototype.legend;
-
-
-/**
- * Legend expanded by default.
- * @type {boolean|undefined}
- */
-GmfMetaData.prototype.isLegendExpanded;
-
-
-/**
- * The WMS rule used to get the icon visible in the layer tree.
- * @type {string|undefined}
- */
-GmfMetaData.prototype.legendRule;
-
-
-/**
- * The URL to the image used as a legend in the layer tree.
- * @type {string|undefined}
- */
-GmfMetaData.prototype.legendImage;
-
-
-/**
- * The icon URL visible in the layer tree.
- * @type {string|undefined}
- */
-GmfMetaData.prototype.iconUrl;
-
-
-/**
- * The Metadata URL.
- * @type {string|undefined}
- */
-GmfMetaData.prototype.metadataUrl;
+gmfThemes.GmfMetaData = function() {};
 
 
 /**
  * The disclaimer.
  * @type {string|undefined}
  */
-GmfMetaData.prototype.disclaimer;
+gmfThemes.GmfMetaData.prototype.disclaimer;
 
 
 /**
- * Is the layer checked by default.
- * @type {boolean|undefined}
- */
-GmfMetaData.prototype.isChecked;
-
-
-/**
- * The min resolution where the layer is visible.
- * @type {number|undefined}
- */
-GmfMetaData.prototype.minResolution;
-
-
-/**
- * The max resolution where the layer is visible.
- * @type {number|undefined}
- */
-GmfMetaData.prototype.maxResolution;
-
-
-/**
- * The icon visible in the theme selector.
+ * The icon URL visible in the layer tree.
  * @type {string|undefined}
  */
-GmfMetaData.prototype.thumbnail;
+gmfThemes.GmfMetaData.prototype.iconUrl;
 
 
 /**
  * The field used in the display query window as feature title.
  * @type {string|undefined}
  */
-GmfMetaData.prototype.identifierAttributeField;
+gmfThemes.GmfMetaData.prototype.identifierAttributeField;
+
+
+/**
+ * Is the layer checked by default.
+ * @type {boolean|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.isChecked;
+
+
+/**
+ * Group expanded by default.
+ * @type {boolean|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.isExpanded;
+
+
+/**
+ * Legend expanded by default.
+ * @type {boolean|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.isLegendExpanded;
+
+
+/**
+ * Display the legend (default true).
+ * @type {boolean|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.legend;
+
+
+/**
+ * The URL to the image used as a legend in the layer tree.
+ * @type {string|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.legendImage;
+
+
+/**
+ * The WMS rule used to get the icon visible in the layer tree.
+ * @type {string|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.legendRule;
+
+
+/**
+ * The max resolution where the layer is visible.
+ * @type {number|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.maxResolution;
+
+
+/**
+ * The Metadata URL.
+ * @type {string|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.metadataUrl;
+
+
+/**
+ * The min resolution where the layer is visible.
+ * @type {number|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.minResolution;
 
 
 /**
  * The corresponding OGC server for GeoMapFish layer WMTS.
  * @type {string|undefined}
  */
-GmfMetaData.prototype.ogcServer;
-
-
-/**
- * On GeoMapFish layer WMTS the corresponding WMS layers.
- * @type {string|undefined}
- */
-GmfMetaData.prototype.wmsLayers;
-
-
-/**
- * On GeoMapFish layer WMTS the WMS layers used to query.
- * @type {string|undefined}
- */
-GmfMetaData.prototype.queryLayers;
+gmfThemes.GmfMetaData.prototype.ogcServer;
 
 
 /**
  * On GeoMapFish layer WMTS the WMS layers used in the print.
  * @type {string|undefined}
  */
-GmfMetaData.prototype.printLayers;
+gmfThemes.GmfMetaData.prototype.printLayers;
+
+
+/**
+ * On GeoMapFish layer WMTS the WMS layers used to query.
+ * @type {string|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.queryLayers;
+
+
+/**
+ * The icon visible in the theme selector.
+ * @type {string|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.thumbnail;
 
 
 /**
  * The snapping configuration for the leaf. If set, the leaf's layer is
  * considered to be "snappable", even if the config itself is empty.
  *
- * @type {GmfSnappingConfig|undefined}
+ * @type {gmfThemes.GmfSnappingConfig|undefined}
  */
-GmfMetaData.prototype.snappingConfig;
+gmfThemes.GmfMetaData.prototype.snappingConfig;
+
+
+/**
+ * On GeoMapFish layer WMTS the corresponding WMS layers.
+ * @type {string|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.wmsLayers;
 
 
 /**
  * @constructor
  * @struct
  */
-var GmfSnappingConfig = function() {};
+gmfThemes.GmfSnappingConfig = function() {};
 
 
 /**
@@ -486,7 +489,7 @@ var GmfSnappingConfig = function() {};
  * or not. Defaults to `true`.
  * @type {boolean|undefined}
  */
-GmfSnappingConfig.prototype.edge;
+gmfThemes.GmfSnappingConfig.prototype.edge;
 
 
 /**
@@ -494,7 +497,7 @@ GmfSnappingConfig.prototype.edge;
  * Defaults to `10`.
  * @type {number|undefined}
  */
-GmfSnappingConfig.prototype.tolerance;
+gmfThemes.GmfSnappingConfig.prototype.tolerance;
 
 
 /**
@@ -502,4 +505,4 @@ GmfSnappingConfig.prototype.tolerance;
  * snapped or not. Defaults to `true`.
  * @type {boolean|undefined}
  */
-GmfSnappingConfig.prototype.vertex;
+gmfThemes.GmfSnappingConfig.prototype.vertex;
