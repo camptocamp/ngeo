@@ -6,14 +6,16 @@ var themes = {
     {
       'name':'Enseignement 2',
       'functionalities':{
+
       },
       'id':38,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/enseignement.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/enseignement.jpeg',
       'children':[
         {
           'name':'Enseignement 2',
           'id':35,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -72,19 +74,22 @@ var themes = {
         }
       ],
       'metadata':{
+
       }
     },
     {
       'name':'Transport',
       'functionalities':{
+
       },
       'id':37,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/transports.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/transports.jpeg',
       'children':[
         {
           'name':'Transport',
           'id':36,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -166,14 +171,16 @@ var themes = {
         }
       ],
       'metadata':{
+
       }
     },
     {
       'name':'Cadastre',
       'functionalities':{
+
       },
       'id':29,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/cadastre.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg',
       'children':[
         {
           'mixed':true,
@@ -185,6 +192,7 @@ var themes = {
               'layers':'ch.swisstopo.dreiecksvermaschung',
               'minResolutionHint':0.0,
               'dimensions':{
+
               },
               'name':'ch.swisstopo.dreiecksvermaschung',
               'childLayers':[
@@ -209,6 +217,7 @@ var themes = {
               'layers':'ch.swisstopo.geologie-gravimetrischer_atlas',
               'minResolutionHint':0.0,
               'dimensions':{
+
               },
               'name':'ch.swisstopo.geologie-gravimetrischer_atlas',
               'childLayers':[
@@ -233,6 +242,7 @@ var themes = {
               'layers':'ch.swisstopo.geologie-geotechnik-gk500-lithologie_hauptgruppen',
               'minResolutionHint':0.0,
               'dimensions':{
+
               },
               'name':'ch.swisstopo.geologie-geotechnik-gk500-lithologie_hauptgruppen',
               'childLayers':[
@@ -258,6 +268,7 @@ var themes = {
               'layers':'ch.swisstopo.geologie-geotechnik-gk500-gesteinsklassierung',
               'minResolutionHint':0.0,
               'dimensions':{
+
               },
               'name':'ch.swisstopo.geologie-geotechnik-gk500-gesteinsklassierung',
               'childLayers':[
@@ -281,6 +292,7 @@ var themes = {
             {
               'layer':'ch.are.alpenkonvention',
               'dimensions':{
+
               },
               'url':'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr',
               'matrixSet':'21781_26',
@@ -324,6 +336,7 @@ var themes = {
         }
       ],
       'metadata':{
+
       }
     },
     {
@@ -334,7 +347,7 @@ var themes = {
         ]
       },
       'id':64,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/osm.png',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/osm.png',
       'children':[
         {
           'mixed':true,
@@ -346,6 +359,7 @@ var themes = {
               'layers':'osm_scale',
               'minResolutionHint':0.53,
               'dimensions':{
+
               },
               'name':'osm_scale',
               'childLayers':[
@@ -373,6 +387,7 @@ var themes = {
               'layers':'osm_open',
               'minResolutionHint':0.0,
               'dimensions':{
+
               },
               'name':'osm_open',
               'childLayers':[
@@ -389,12 +404,14 @@ var themes = {
               'id':139,
               'imageType':'image/png',
               'metadata':{
+
               }
             },
             {
               'layers':'bank',
               'minResolutionHint':0.0,
               'dimensions':{
+
               },
               'name':'Layer with very very very very very long name',
               'childLayers':[
@@ -411,17 +428,20 @@ var themes = {
               'id':140,
               'imageType':'image/png',
               'metadata':{
+
               }
             },
             {
               'mixed':true,
               'metadata':{
+
               },
               'children':[
                 {
                   'layers':'osm_time',
                   'minResolutionHint':0.0,
                   'dimensions':{
+
                   },
                   'name':'osm_time_r_s',
                   'childLayers':[
@@ -464,6 +484,7 @@ var themes = {
                   'layers':'osm_time',
                   'minResolutionHint':0.0,
                   'dimensions':{
+
                   },
                   'name':'osm_time_v_s',
                   'childLayers':[
@@ -495,12 +516,14 @@ var themes = {
                   'id':143,
                   'imageType':'image/png',
                   'metadata':{
+
                   }
                 },
                 {
                   'layers':'osm_time',
                   'minResolutionHint':0.0,
                   'dimensions':{
+
                   },
                   'name':'osm_time_v_dp',
                   'childLayers':[
@@ -532,12 +555,14 @@ var themes = {
                   'id':144,
                   'imageType':'image/png',
                   'metadata':{
+
                   }
                 },
                 {
                   'layers':'osm_time',
                   'minResolutionHint':0.0,
                   'dimensions':{
+
                   },
                   'name':'osm_time_r_dp',
                   'childLayers':[
@@ -582,6 +607,7 @@ var themes = {
               'layers':'sustenance,entertainment',
               'minResolutionHint':0.0,
               'dimensions':{
+
               },
               'name':'two_layers',
               'childLayers':[
@@ -604,6 +630,7 @@ var themes = {
               'id':141,
               'imageType':'image/png',
               'metadata':{
+
               }
             },
             {
@@ -633,6 +660,7 @@ var themes = {
           'name':'Layers',
           'id':63,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -657,6 +685,30 @@ var themes = {
                 'identifierAttributeField':'display_name',
                 'isChecked':true,
                 'legendRule':'Cin\u00e9mas',
+                'legend':'true',
+                'disclaimer':'\u00a9 les contributeurs d\u2019OpenStreetMap'
+              }
+            },
+            {
+              'layers':'police',
+              'minResolutionHint':0.0,
+              'name':'police',
+              'childLayers':[
+                {
+                  'minResolutionHint':0.0,
+                  'name':'police',
+                  'maxResolutionHint':999999999.0,
+                  'queryable':true
+                }
+              ],
+              'maxResolutionHint':999999999.0,
+              'type':'WMS',
+              'id':105,
+              'imageType':'image/png',
+              'metadata':{
+                'identifierAttributeField':'display_name',
+                'isChecked':true,
+                'legendRule':'Poste de police',
                 'legend':'true',
                 'disclaimer':'\u00a9 les contributeurs d\u2019OpenStreetMap'
               }
@@ -725,6 +777,7 @@ var themes = {
             {
               'mixed':false,
               'metadata':{
+
               },
               'children':[
                 {
@@ -802,39 +855,17 @@ var themes = {
                 'legend':'false',
                 'disclaimer':'\u00a9 les contributeurs d\u2019OpenStreetMap'
               }
-            },
-            {
-              'layers':'police',
-              'minResolutionHint':0.0,
-              'name':'police',
-              'childLayers':[
-                {
-                  'minResolutionHint':0.0,
-                  'name':'police',
-                  'maxResolutionHint':999999999.0,
-                  'queryable':true
-                }
-              ],
-              'maxResolutionHint':999999999.0,
-              'type':'WMS',
-              'id':105,
-              'imageType':'image/png',
-              'metadata':{
-                'identifierAttributeField':'display_name',
-                'isChecked':true,
-                'legendRule':'Poste de police',
-                'legend':'true',
-                'disclaimer':'\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
             }
           ],
           'metadata':{
+
           }
         },
         {
           'name':'Group',
           'id':66,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -876,12 +907,14 @@ var themes = {
             }
           ],
           'metadata':{
+
           }
         },
         {
           'name':'OSM functions',
           'id':146,
           'dimensions':{
+
           },
           'time':{
             'widget':'datepicker',
@@ -985,6 +1018,7 @@ var themes = {
               'id':139,
               'imageType':'image/png',
               'metadata':{
+
               }
             },
             {
@@ -1004,6 +1038,7 @@ var themes = {
               'id':140,
               'imageType':'image/png',
               'metadata':{
+
               }
             },
             {
@@ -1029,6 +1064,7 @@ var themes = {
               'id':141,
               'imageType':'image/png',
               'metadata':{
+
               }
             },
             {
@@ -1054,6 +1090,7 @@ var themes = {
               'id':150,
               'imageType':'image/png',
               'metadata':{
+
               }
             },
             {
@@ -1073,6 +1110,7 @@ var themes = {
               'id':151,
               'imageType':'image/png',
               'metadata':{
+
               }
             },
             {
@@ -1092,16 +1130,19 @@ var themes = {
               'id':152,
               'imageType':'image/png',
               'metadata':{
+
               }
             }
           ],
           'metadata':{
+
           }
         },
         {
           'name':'External',
           'id':153,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'WMS CH topo fr',
@@ -1193,23 +1234,27 @@ var themes = {
             }
           ],
           'metadata':{
+
           }
         }
       ],
       'metadata':{
+
       }
     },
     {
       'name':'Edit',
       'functionalities':{
+
       },
       'id':73,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/edit.png',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/edit.png',
       'children':[
         {
           'name':'Edit',
           'id':72,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -1218,6 +1263,7 @@ var themes = {
               'layers':'line',
               'minResolutionHint':0.0,
               'name':'line',
+              'editable':true,
               'childLayers':[
                 {
                   'minResolutionHint':0.0,
@@ -1241,6 +1287,7 @@ var themes = {
               'layers':'polygon',
               'minResolutionHint':0.0,
               'name':'polygon',
+              'editable':true,
               'childLayers':[
                 {
                   'minResolutionHint':0.0,
@@ -1264,6 +1311,7 @@ var themes = {
               'layers':'point',
               'minResolutionHint':0.0,
               'name':'point',
+              'editable':true,
               'childLayers':[
                 {
                   'minResolutionHint':0.0,
@@ -1277,7 +1325,7 @@ var themes = {
               'id':113,
               'imageType':'image/png',
               'metadata':{
-                'metadataUrl':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/htdocs/example.html',
+                'metadataUrl':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/htdocs/example.html',
                 'isChecked':true,
                 'identifierAttributeField':'name',
                 'legend':'true',
@@ -1294,6 +1342,7 @@ var themes = {
           'name':'Snapping',
           'id':164,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -1315,7 +1364,9 @@ var themes = {
               'id':154,
               'imageType':'image/png',
               'metadata':{
-                'snappingConfig':'{}'
+                'snappingConfig':{
+
+                }
               }
             },
             {
@@ -1335,7 +1386,9 @@ var themes = {
               'id':155,
               'imageType':'image/png',
               'metadata':{
-                'snappingConfig':'{}'
+                'snappingConfig':{
+
+                }
               }
             },
             {
@@ -1355,17 +1408,21 @@ var themes = {
               'id':163,
               'imageType':'image/png',
               'metadata':{
-                'snappingConfig':'{}'
+                'snappingConfig':{
+
+                }
               }
             }
           ],
           'metadata':{
+
           }
         },
         {
           'name':'Snapping tollerance',
           'id':165,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -1387,7 +1444,9 @@ var themes = {
               'id':156,
               'imageType':'image/png',
               'metadata':{
-                'snappingConfig':'{tolerance: 50}'
+                'snappingConfig':{
+                  'tolerance':50
+                }
               }
             },
             {
@@ -1407,7 +1466,9 @@ var themes = {
               'id':157,
               'imageType':'image/png',
               'metadata':{
-                'snappingConfig':'{tolerance: 50}'
+                'snappingConfig':{
+                  'tolerance':50
+                }
               }
             },
             {
@@ -1427,17 +1488,21 @@ var themes = {
               'id':158,
               'imageType':'image/png',
               'metadata':{
-                'snappingConfig':'{tolerance: 50}'
+                'snappingConfig':{
+                  'tolerance':50
+                }
               }
             }
           ],
           'metadata':{
+
           }
         },
         {
           'name':'Snapping no edge',
           'id':166,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -1459,7 +1524,9 @@ var themes = {
               'id':159,
               'imageType':'image/png',
               'metadata':{
-                'snappingConfig':'{edge: false}'
+                'snappingConfig':{
+                  'edge':false
+                }
               }
             },
             {
@@ -1479,17 +1546,21 @@ var themes = {
               'id':161,
               'imageType':'image/png',
               'metadata':{
-                'snappingConfig':'{edge: false}'
+                'snappingConfig':{
+                  'edge':false
+                }
               }
             }
           ],
           'metadata':{
+
           }
         },
         {
           'name':'Snapping no vertex',
           'id':167,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -1511,7 +1582,9 @@ var themes = {
               'id':160,
               'imageType':'image/png',
               'metadata':{
-                'snappingConfig':'{vertex: false}'
+                'snappingConfig':{
+                  'vertex':false
+                }
               }
             },
             {
@@ -1531,11 +1604,14 @@ var themes = {
               'id':162,
               'imageType':'image/png',
               'metadata':{
-                'snappingConfig':'{vertex: false}'
+                'snappingConfig':{
+                  'vertex':false
+                }
               }
             }
           ],
           'metadata':{
+
           }
         }
       ],
@@ -1546,14 +1622,16 @@ var themes = {
     {
       'name':'Administration',
       'functionalities':{
+
       },
       'id':5,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/administration.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/administration.jpeg',
       'children':[
         {
           'name':'Administration',
           'id':6,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -1581,6 +1659,29 @@ var themes = {
                 'legend':'false',
                 'disclaimer':'\u00a9 les contributeurs d\u2019OpenStreetMap'
               }
+            },
+            {
+              'layers':'firestations',
+              'minResolutionHint':0.0,
+              'name':'firestations',
+              'childLayers':[
+                {
+                  'minResolutionHint':0.0,
+                  'name':'firestations',
+                  'maxResolutionHint':999999999.0,
+                  'queryable':true
+                }
+              ],
+              'maxResolutionHint':999999999.0,
+              'type':'WMS',
+              'id':122,
+              'imageType':'image/png',
+              'metadata':{
+                'identifierAttributeField':'display_name',
+                'legendRule':'Casernes de pompiers',
+                'legend':'false',
+                'disclaimer':'\u00a9 les contributeurs d\u2019OpenStreetMap'
+              }
             }
           ],
           'metadata':{
@@ -1589,19 +1690,22 @@ var themes = {
         }
       ],
       'metadata':{
+
       }
     },
     {
       'name':'Enseignement',
       'functionalities':{
+
       },
       'id':92,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/enseignement2.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/enseignement2.jpeg',
       'children':[
         {
           'name':'Enseignement',
           'id':93,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -1631,23 +1735,27 @@ var themes = {
             }
           ],
           'metadata':{
+
           }
         }
       ],
       'metadata':{
+
       }
     },
     {
       'name':'Patrimoine',
       'functionalities':{
+
       },
       'id':4,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/patrimoine.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/patrimoine.jpeg',
       'children':[
         {
           'name':'Patrimoine',
           'id':7,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -1707,19 +1815,22 @@ var themes = {
         }
       ],
       'metadata':{
+
       }
     },
     {
       'name':'Gestion des eaux',
       'functionalities':{
+
       },
       'id':3,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/gestion_eaux.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/gestion_eaux.jpeg',
       'children':[
         {
           'name':'Gestion des eaux',
           'id':8,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -1779,19 +1890,22 @@ var themes = {
         }
       ],
       'metadata':{
+
       }
     },
     {
       'name':'Paysage',
       'functionalities':{
+
       },
       'id':2,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/paysage.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/paysage.jpeg',
       'children':[
         {
           'name':'Paysage',
           'id':9,
           'dimensions':{
+
           },
           'mixed':false,
           'ogcServer':'Main PNG',
@@ -1875,6 +1989,7 @@ var themes = {
         }
       ],
       'metadata':{
+
       }
     }
   ],
@@ -1882,6 +1997,7 @@ var themes = {
     {
       'layer':null,
       'dimensions':{
+
       },
       'url':'https://geomapfish-demo.camptocamp.net/2.1//tiles/1.0.0/WMTSCapabilities.xml?',
       'name':'map',
@@ -1889,7 +2005,7 @@ var themes = {
       'id':134,
       'imageType':'image/jpeg',
       'metadata':{
-        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/cadastre.jpeg'
+        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
       }
     },
     {
@@ -1904,7 +2020,7 @@ var themes = {
       'id':132,
       'imageType':'image/jpeg',
       'metadata':{
-        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/cadastre.jpeg'
+        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
       }
     },
     {
@@ -1919,34 +2035,35 @@ var themes = {
       'id':133,
       'imageType':'image/jpeg',
       'metadata':{
-        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/3ddc87649e8a4e02aa88232efe740279/img/cadastre.jpeg'
+        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
       }
     }
   ],
   'errors':[
+
   ],
   'ogcServers':{
     'WMS CH topo fr':{
-      'url':'https://wms.geo.admin.ch/',
+      'url':'https://wms.geo.admin.ch?lang=fr',
       'isSingleTile':false,
       'wfsSupport':false,
-      'urlWfs':'https://wms.geo.admin.ch/',
+      'urlWfs':'https://wms.geo.admin.ch?lang=fr',
       'type':'mapserver',
       'imageType':'image/png'
     },
     'Main Jpeg':{
-      'url':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?ogcserver=Main+Jpeg&cache_version=3ddc87649e8a4e02aa88232efe740279',
+      'url':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?username=admin&ogcserver=Main+Jpeg&cache_version=276bcfffd75a40debc73e47936bfe884',
       'isSingleTile':false,
       'wfsSupport':true,
-      'urlWfs':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?ogcserver=Main+Jpeg&cache_version=3ddc87649e8a4e02aa88232efe740279',
+      'urlWfs':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?username=admin&ogcserver=Main+Jpeg&cache_version=276bcfffd75a40debc73e47936bfe884',
       'type':'mapserver',
       'imageType':'image/jpeg'
     },
     'Main PNG':{
-      'url':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?ogcserver=Main+PNG&cache_version=3ddc87649e8a4e02aa88232efe740279',
+      'url':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?username=admin&ogcserver=Main+PNG&cache_version=276bcfffd75a40debc73e47936bfe884',
       'isSingleTile':false,
       'wfsSupport':true,
-      'urlWfs':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?ogcserver=Main+PNG&cache_version=3ddc87649e8a4e02aa88232efe740279',
+      'urlWfs':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?username=admin&ogcserver=Main+PNG&cache_version=276bcfffd75a40debc73e47936bfe884',
       'type':'mapserver',
       'imageType':'image/png'
     }

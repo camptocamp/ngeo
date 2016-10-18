@@ -106,8 +106,8 @@ describe('gmf.SyncLayertreeMap', function() {
     roottreeCtrl = element.scope().layertreeCtrl;
     var treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
     var wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
-    var checkedLayers = ['cinema','post_office','entertainment','sustenance',
-      'hospitals','police']; // order count !
+    var checkedLayers = ['cinema', 'police', 'post_office','entertainment',
+      'sustenance', 'hospitals']; // order count !
 
     expect(wmsParamLayers).toEqual(checkedLayers.reverse().join(','));
   });
@@ -184,7 +184,8 @@ describe('gmf.SyncLayertreeMap', function() {
     treeGroup.setState('on');
     gmfSyncLayertreeMap.sync_(map, treeGroup);
     wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
-    expect(wmsParamLayers).toEqual('police,hospitals,sustenance,entertainment,osm_time,post_office,cinema');
+    expect(wmsParamLayers).toEqual('hospitals,sustenance,entertainment,' +
+            'osm_time,post_office,police,cinema');
   });
 
   it('Sync WMTS Layer (in a mixed group)', function() {
