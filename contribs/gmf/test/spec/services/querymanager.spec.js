@@ -18,7 +18,6 @@ describe('gmf.QueryManager', function() {
       gmfThemes = $injector.get('gmfThemes');
       var treeUrl = $injector.get('gmfTreeUrl');
       $httpBackend = $injector.get('$httpBackend');
-      // FIXME use current versions of the theme
       $httpBackend.when('GET', treeUrl + '?cache_version=0').respond(themes);
     });
   });
@@ -36,7 +35,7 @@ describe('gmf.QueryManager', function() {
   };
 
   describe('#handleThemesLoad_', function() {
-    it('creates sources when the themes are loaded', function() {
+    it('Creates sources when the themes are loaded', function() {
       gmfThemes.loadThemes();
       $httpBackend.flush();
       expect(queryManager.sources_.length).toBeGreaterThan(0);
@@ -49,47 +48,41 @@ describe('gmf.QueryManager', function() {
       var bgLayerSource = getSourceById(queryManager.sources_, 115);
       expect(bgLayerSource).not.toBeNull();
       expect(bgLayerSource.params.LAYERS).toBe('ch.swisstopo.dreiecksvermaschung');
-      expect(bgLayerSource.url).toBe('https://wms.geo.admin.ch/');
+      expect(bgLayerSource.url).toBe('https://wms.geo.admin.ch?lang=fr');
     });
   });
 
   describe('#createSources_', function() {
-    // FIXME old ways to check wfs query support
-    //it('creates a source only with queryable child layers', function() {
-    //  var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
-    //  queryManager.createSources_(osmTheme, themes.ogcServers);
-    //  var osmSource = getSourceById(queryManager.sources_, 109);
-    //  // hotel is ignored because `queryable` is `0`
-    //  var expectedLayers =
-    //      'fuel,information,cinema,alpine_hut,bank,bus_stop,cafe,parking,' +
-    //      'place_of_worship,police,post_office,restaurant,zoo';
-    //  expect(osmSource.params.LAYERS).toBe(expectedLayers);
-    //  expect(osmSource.wfsQuery).toBe(true);
-    //});
+    it('Creates sources on queryable layers with WFS support', function() {
+      var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
+      var firstLevelGroup = osmTheme.children[3]; // OSM Function
+      queryManager.createSources_(firstLevelGroup, firstLevelGroup, themes.ogcServers);
+      var children, osmSource;
 
-    // FIXME doesn't work
-    //it('does not create sources for non-queryable layers', function() {
-    //  var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
-    //  queryManager.createSources_(osmTheme, themes.ogcServers);
-    //  var osmScaleSource = getSourceById(queryManager.sources_, 114);
-    //  // layer is ignored because `queryable` is `0`
-    //  expect(osmScaleSource).toBeNull();
-    //});
+      // Child 0 (osm_time) is queryable and has wfs support.
+      children = firstLevelGroup.children[0]; // osm_time
+      osmSource = getSourceById(queryManager.sources_, children.id);
+      expect(osmSource.params.LAYERS).toBe('osm_time');
+      expect(osmSource.wfsQuery).toBe(true);
 
-    // FIXME old ways to check wfs query support
-    //it('handles layers w/o WFS support', function() {
-    //  var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
-    //  queryManager.createSources_(osmTheme, themes.ogcServers);
-    //  var osmTimeSource = getSourceById(queryManager.sources_, 110);
-    //  expect(osmTimeSource).not.toBeNull();
-    //  // layer does not support wfs ("wfsSupport": false)
-    //  expect(osmTimeSource.wfsQuery).toBe(false);
-    //});
+      // Child 8 (srtm) is not queryable
+      children = firstLevelGroup.children[8];
+      osmSource = getSourceById(queryManager.sources_, children.id);
+      expect(children.childLayers[0].queryable).toBe(false);
+      expect(osmSource).toBeNull();
+    });
 
-    it('creates a source for queryable WMTS overlay layers', function() {
-      // FIXME use current versions of the theme
+    it('Creates sources on queryable layer without WFS support', function() {
+      var osmTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
+      var firstLevelGroup = osmTheme.children[0]; // 'Cadastre'
+      queryManager.createSources_(firstLevelGroup, firstLevelGroup, themes.ogcServers);
+      var osmSource = getSourceById(queryManager.sources_, 115);
+      expect(osmSource.params.LAYERS).toBe('ch.swisstopo.dreiecksvermaschung');
+      expect(osmSource.wfsQuery).toBe(false);
+    });
+
+    it('Creates a source for queryable WMTS overlay layers', function() {
       var cadasterTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
-      // FIXME use current versions of the theme
       cadasterTheme.children.forEach(function(group) {
         queryManager.createSources_(group, group, themes.ogcServers);
       });
@@ -110,13 +103,15 @@ describe('gmf.QueryManager', function() {
       expect(sourceRoutes.params.LAYERS).toBe('ch.swisstopo.geologie-gravimetrischer_atlas');
     });
 
-
-    // FIXME doesn't work
+    // FIXME no data to run this test
     //it('creates a source for bg. WMTS layers with ogcServer', function() {
-    //  queryManager.createSources_(themes.background_layers[1], themes.ogcServers);
+    //  var node = themes.background_layers[2];
+    //  console.log(node);
+    //  queryManager.createSources_(node, node, themes.ogcServers);
 
     //  // layer 'asitvd.fond_couleur'
-    //  var source = getSourceById(queryManager.sources_, 135);
+    //  console.log(queryManager.sources_);
+    //  var source = getSourceById(queryManager.sources_, 133);
     //  expect(source).not.toBeNull();
     //  expect(source.params.LAYERS).toBe('ch.astra.ausnahmetransportrouten');
     //  expect(source.url).toBe('https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?');

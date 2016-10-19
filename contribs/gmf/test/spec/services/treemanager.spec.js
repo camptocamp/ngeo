@@ -1,6 +1,6 @@
-/* global old_themes */
+/* global themes */
 goog.require('gmf.TreeManager');
-goog.require('gmf.test.data.old_themes');
+goog.require('gmf.test.data.themes');
 
 describe('gmf.TreeManager', function() {
   var gmfTreeManager;
@@ -14,15 +14,13 @@ describe('gmf.TreeManager', function() {
       gmfThemes = $injector.get('gmfThemes');
       treeUrl = $injector.get('gmfTreeUrl') + '?cache_version=0';
       $httpBackend = $injector.get('$httpBackend');
-      // FIXME use current version of the theme
-      $httpBackend.when('GET', treeUrl).respond(old_themes);
+      $httpBackend.when('GET', treeUrl).respond(themes);
     });
   });
 
   it('Add some groups', function() {
-    // FIXME use current version of the theme
-    var group0 = old_themes.themes[0].children[0];
-    var group1 = old_themes.themes[1].children[0];
+    var group0 = themes.themes[0].children[0];
+    var group1 = themes.themes[1].children[0];
     // Add a group
     gmfTreeManager.setFirstLevelGroups([group0]);
     expect(gmfTreeManager.root.children[0]).toEqual(group0);
@@ -42,9 +40,8 @@ describe('gmf.TreeManager', function() {
 
   it('Add a group by name', function() {
     var spy = jasmine.createSpy();
-    // FIXME use current version of the theme
-    var group0 = old_themes.themes[0].children[0];
-    var group1 = old_themes.themes[1].children[0];
+    var group0 = themes.themes[0].children[0];
+    var group1 = themes.themes[1].children[0];
     gmfTreeManager.addGroupByName(group0.name);
     gmfTreeManager.addGroupByName(group1.name, true);
 
@@ -60,9 +57,8 @@ describe('gmf.TreeManager', function() {
 
   it('Add a group by layer name', function() {
     var spy = jasmine.createSpy();
-    // FIXME use current version of the theme
-    var group0 = old_themes.themes[0].children[0];
-    var group1 = old_themes.themes[1].children[0];
+    var group0 = themes.themes[0].children[0];
+    var group1 = themes.themes[1].children[0];
     gmfTreeManager.addGroupByLayerName(group0.children[0].name);
     gmfTreeManager.addGroupByLayerName(group1.children[0].name, true);
 
@@ -77,9 +73,8 @@ describe('gmf.TreeManager', function() {
   });
 
   it('Remove a group', function() {
-    // FIXME use current version of the theme
-    var group0 = old_themes.themes[0].children[0];
-    var group1 = old_themes.themes[1].children[0];
+    var group0 = themes.themes[0].children[0];
+    var group1 = themes.themes[1].children[0];
     gmfTreeManager.setFirstLevelGroups([group0, group1]);
     gmfTreeManager.removeGroup(group0);
     expect(gmfTreeManager.root.children[0]).toEqual(group1);
