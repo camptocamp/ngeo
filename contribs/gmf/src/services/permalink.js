@@ -75,7 +75,6 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.ThemeManager} gmfThemeManager The gmf ThemeManager service.
  * @param {gmf.TreeManager} gmfTreeManager The gmf gmfTreeManager service.
- * @param {gmfx.User} gmfUser The gmf User service.
  * @param {gmfx.PermalinkOptions} gmfPermalinkOptions The options to configure
  *     the gmf permalink service with.
  * @param {string} defaultTheme the default theme.
@@ -83,14 +82,15 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {ngeo.WfsPermalink} ngeoWfsPermalink ngeo WFS query service.
  * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
  * @param {angular.Scope} $rootScope Angular rootScope.
+ * @param {angular.$injector} $injector Main injector.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */
 gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     ngeoFeatureOverlayMgr, ngeoFeatureHelper, ngeoFeatures, ngeoLayerHelper,
-    ngeoStateManager, gmfThemes, gmfThemeManager, gmfTreeManager, gmfUser, gmfPermalinkOptions, defaultTheme,
-    ngeoLocation, ngeoWfsPermalink, ngeoAutoProjection, $rootScope) {
+    ngeoStateManager, gmfThemes, gmfThemeManager, gmfTreeManager, gmfPermalinkOptions, defaultTheme,
+    ngeoLocation, ngeoWfsPermalink, ngeoAutoProjection, $rootScope, $injector) {
 
   // == listener keys ==
 
@@ -174,10 +174,10 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   this.gmfThemeManager_ = gmfThemeManager;
 
   /**
-   * @type {gmfx.User}
+   * @type {gmfx.User|undefined}
    * @private
    */
-  this.gmfUser_ = gmfUser;
+  this.gmfUser_ = $injector.has('gmfUser') ? $injector.get('gmfUser') : undefined;
 
   /**
    * @type {string}
@@ -766,7 +766,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
     }
 
     // check if we have a theme in the user functionalities
-    if (!themeName) {
+    if (!themeName && this.gmfUser_) {
       var functionalities = this.gmfUser_.functionalities;
       if (functionalities && 'default_theme' in functionalities) {
         var defaultTheme = functionalities.default_theme;
