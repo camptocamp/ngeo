@@ -43,6 +43,7 @@ page.open(examplePath, function(s) {
   }
 
   setTimeout(function() {
+//    page.render(examplePath + '.png')
     console.log("EXIT " + exitCode)
     phantom.exit(exitCode);
   }, 3000)
