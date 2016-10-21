@@ -16,7 +16,6 @@ GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.js')
-GMF_EXAMPLES_JS_FILES := contribs/gmf/examples/https.js
 GMF_APPS += mobile desktop desktop_alt
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
@@ -203,11 +202,9 @@ serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGUL
 	node buildtools/serve.js
 
 .PHONY: examples-hosted
-examples-hosted: $(EXAMPLE_HOSTED_REQUIREMENTS) \
+examples-hosted: \
 		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(EXAMPLES_HTML_FILES)) \
-		$(patsubst examples/%.js,.build/examples-hosted/%.js,$(EXAMPLES_JS_FILES)) \
 		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
-		$(patsubst contribs/gmf/examples/%.js,.build/examples-hosted/contribs/gmf/%.js,$(GMF_EXAMPLES_JS_FILES)) \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
 .build/python-venv/lib/python2.7/site-packages/requests: requirements.txt .build/python-venv
@@ -487,7 +484,9 @@ dist/gmf.js.map: dist/gmf.js
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .PRECIOUS: .build/examples-hosted/%.html
-.build/examples-hosted/%.html: examples/%.html $(EXAMPLE_HOSTED_REQUIREMENTS)
+.build/examples-hosted/%.html: examples/%.html \
+		.build/examples-hosted/%.js \
+		$(EXAMPLE_HOSTED_REQUIREMENTS)
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
@@ -515,7 +514,9 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e '/$*.js/i\$(SED_NEW_LINE)    <script src="lib/ngeo.js"></script>$(SED_NEW_LINE)' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
-.build/examples-hosted/contribs/gmf/%.html: contribs/gmf/examples/%.html
+.build/examples-hosted/contribs/gmf/%.html: contribs/gmf/examples/%.html \
+		.build/examples-hosted/contribs/gmf/%.js \
+		$(EXAMPLE_HOSTED_REQUIREMENTS)
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol\.css|lib/ngeo.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap\.css|lib/bootstrap.min.css|' \
@@ -541,7 +542,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|/@?main=$*\.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
-		-e '/<head>/a\$(SED_NEW_LINE)    <script src="https.js"></script>$(SED_NEW_LINE)' \
+		-e '/<head>/a\$(SED_NEW_LINE)    <script src="../../https.js"></script>$(SED_NEW_LINE)' \
 		-e '/$*.js/i\$(SED_NEW_LINE)    <script src="../../lib/gmf.js"></script>$(SED_NEW_LINE)' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
@@ -552,6 +553,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/examples-hosted/contribs/gmf/apps/%/image/background-layer-button.png \
 		.build/examples-hosted/contribs/gmf/build/%.js \
 		.build/examples-hosted/contribs/gmf/build/%.css \
+		.build/examples-hosted/lib/watchwatchers.js \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
@@ -648,11 +650,6 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .PRECIOUS: node_modules/font-awesome/fonts/fontawesome-webfont.%
 node_modules/font-awesome/fonts/fontawesome-webfont.%: .build/node_modules.timestamp
 	touch -c $@
-
-# copy https.js from ngeo examples to gmf examples
-contribs/gmf/examples/https.js:
-	mkdir -p $(dir $@)
-	cp examples/https.js $@
 
 contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontawesome-webfont.%
 	mkdir -p $(dir $@)
