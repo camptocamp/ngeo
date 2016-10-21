@@ -729,7 +729,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
         this.handleMenuActionClick_, this));
 
     keys.push(ol.events.listen(this.translate_,
-        ol.interaction.TranslateEventType.TRANSLATEEND,
+        ol.interaction.Translate.EventType.TRANSLATEEND,
         this.handleTranslateEnd_, this));
 
     keys.push(ol.events.listen(this.rotate_,
@@ -1053,7 +1053,7 @@ gmf.EditfeatureController.prototype.handleMenuActionClick_ = function(evt) {
 
 
 /**
- * @param {ol.interaction.TranslateEvent} evt Event.
+ * @param {ol.interaction.Translate.Event} evt Event.
  * @private
  */
 gmf.EditfeatureController.prototype.handleTranslateEnd_ = function(evt) {

@@ -13,8 +13,7 @@ goog.require('ol.geom.GeometryCollection');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.interaction.Draw');
-goog.require('ol.interaction.DrawEvent');
-goog.require('ol.interaction.InteractionProperty');
+goog.require('ol.interaction.Interaction');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -28,7 +27,7 @@ goog.require('ol.source.Vector');
  *
  * @constructor
  * @struct
- * @fires ol.interaction.DrawEvent
+ * @fires ol.interaction.Draw.Event
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.unitPrefix} format The format function
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
@@ -210,7 +209,7 @@ ngeo.interaction.DrawAzimut = function(options) {
 
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
       this.updateState_, this);
 };
 ol.inherits(ngeo.interaction.DrawAzimut, ol.interaction.Pointer);
@@ -337,8 +336,8 @@ ngeo.interaction.DrawAzimut.prototype.startDrawing_ = function(event) {
   this.sketchFeature_ = new ol.Feature();
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();
-  this.dispatchEvent(new ol.interaction.DrawEvent(
-      ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
+  this.dispatchEvent(new ol.interaction.Draw.Event(
+      ol.interaction.Draw.EventType.DRAWSTART, this.sketchFeature_));
 };
 
 
@@ -418,8 +417,8 @@ ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
     this.source_.addFeature(sketchFeature);
   }
 
-  this.dispatchEvent(new ol.interaction.DrawEvent(
-      ol.interaction.DrawEventType.DRAWEND, sketchFeature));
+  this.dispatchEvent(new ol.interaction.Draw.Event(
+      ol.interaction.Draw.EventType.DRAWEND, sketchFeature));
 };
 
 

@@ -15,7 +15,7 @@ goog.require('ol.geom.Circle');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
-goog.require('ol.interaction.ModifyEvent');
+goog.require('ol.interaction.Modify');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -154,8 +154,8 @@ ngeo.interaction.ModifyCircle.prototype.addFeature_ = function(feature) {
 ngeo.interaction.ModifyCircle.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
-    this.dispatchEvent(new ol.interaction.ModifyEvent(
-        ol.ModifyEventType.MODIFYSTART, this.features_, evt));
+    this.dispatchEvent(new ol.interaction.Modify.Event(
+        ol.interaction.Modify.EventType.MODIFYSTART, this.features_, evt));
   }
 };
 
@@ -369,8 +369,8 @@ ngeo.interaction.ModifyCircle.handleUpEvent_ = function(evt) {
       this.dragSegments_[0][0].geometry);
 
   if (this.modified_) {
-    this.dispatchEvent(new ol.interaction.ModifyEvent(
-        ol.ModifyEventType.MODIFYEND, this.features_, evt));
+    this.dispatchEvent(new ol.interaction.Modify.Event(
+        ol.interaction.Modify.EventType.MODIFYEND, this.features_, evt));
     this.modified_ = false;
   }
   return false;

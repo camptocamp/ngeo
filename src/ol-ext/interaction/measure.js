@@ -9,8 +9,7 @@ goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Overlay');
 goog.require('ol.events');
-goog.require('ol.interaction.DrawEvent');
-goog.require('ol.interaction.DrawEventType');
+goog.require('ol.interaction.Draw');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -208,15 +207,15 @@ ngeo.interaction.Measure = function(opt_options) {
   this.shouldHandleDrawInteractionActiveChange_ = true;
 
   ol.events.listen(this.drawInteraction_,
-      ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
       this.handleDrawInteractionActiveChange_, this);
   ol.events.listen(this.drawInteraction_,
-      ol.interaction.DrawEventType.DRAWSTART, this.onDrawStart_, this);
+      ol.interaction.Draw.EventType.DRAWSTART, this.onDrawStart_, this);
   ol.events.listen(this.drawInteraction_,
-      ol.interaction.DrawEventType.DRAWEND, this.onDrawEnd_, this);
+      ol.interaction.Draw.EventType.DRAWEND, this.onDrawEnd_, this);
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
       this.updateState_, this);
 };
 ol.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
@@ -369,7 +368,7 @@ ngeo.interaction.Measure.prototype.setMap = function(map) {
 
 /**
  * Handle draw interaction `drawstart` event.
- * @param {ol.interaction.DrawEvent} evt Event.
+ * @param {ol.interaction.Draw.Event} evt Event.
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
@@ -395,7 +394,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
 
 /**
  * Handle draw interaction `drawend` event.
- * @param {ol.interaction.DrawEvent} evt Event.
+ * @param {ol.interaction.Draw.Event} evt Event.
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {

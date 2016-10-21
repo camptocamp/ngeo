@@ -373,6 +373,7 @@ ngeo.format.FeatureHash.encodeStyleFill_ = function(fillStyle, encodedStyles, op
 ngeo.format.FeatureHash.encodeStyleStroke_ = function(strokeStyle, encodedStyles) {
   var strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
+    goog.asserts.assert(Array.isArray(strokeColor));
     var strokeColorRgba = ol.color.asArray(strokeColor);
     goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
     var strokeColorHex = goog.color.rgbArrayToHex(strokeColorRgba);

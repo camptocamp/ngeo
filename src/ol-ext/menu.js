@@ -58,7 +58,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
 
   var options = opt_overlayOptions !== undefined ? opt_overlayOptions : {};
 
-  options.positioning = ol.OverlayPositioning.TOP_LEFT;
+  options.positioning = ol.Overlay.Positioning.TOP_LEFT;
 
   /**
    * @type {Array.<goog.events.Key>}

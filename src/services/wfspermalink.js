@@ -185,7 +185,7 @@ ngeo.WfsPermalink.prototype.issue = function(queryData, map) {
 
 /**
  * @param {ngeox.WfsType} wfsType Type.
- * @param {ol.format.ogc.filter.Filter} filter Filter.
+ * @param {ol.format.filter.Filter} filter Filter.
  * @param {ol.Map} map The ol3 map object to get the current projection from.
  * @param {boolean} showFeatures Show features or only zoom to feature extent?
  * @private
@@ -252,14 +252,14 @@ ngeo.WfsPermalink.prototype.getExtent_ = function(features) {
  * Create OGC filters for the filter groups extracted from the query params.
  *
  * @param {Array.<ngeo.WfsPermalinkFilterGroup>} filterGroups Filter groups.
- * @return {ol.format.ogc.filter.Filter} OGC filters.
+ * @return {ol.format.filter.Filter} OGC filters.
  * @private
  */
 ngeo.WfsPermalink.prototype.createFilters_ = function(filterGroups) {
   if (filterGroups.length == 0) {
     return null;
   }
-  var f = ol.format.ogc.filter;
+  var f = ol.format.filter;
   var createFiltersForGroup = function(filterGroup) {
     var filters = filterGroup.filters.map(function(filterDef) {
       var condition = filterDef.condition;
@@ -280,34 +280,34 @@ ngeo.WfsPermalink.prototype.createFilters_ = function(filterGroups) {
 /**
  * Join a list of filters with `and(...)`.
  *
- * @param {Array.<ol.format.ogc.filter.Filter>} filters The filters to join.
- * @return {ol.format.ogc.filter.Filter} The joined filters.
+ * @param {Array.<ol.format.filter.Filter>} filters The filters to join.
+ * @return {ol.format.filter.Filter} The joined filters.
  * @private
  */
 ngeo.WfsPermalink.and_ = function(filters) {
-  return ngeo.WfsPermalink.joinFilters_(filters, ol.format.ogc.filter.and);
+  return ngeo.WfsPermalink.joinFilters_(filters, ol.format.filter.and);
 };
 
 
 /**
  * Join a list of filters with `or(...)`.
  *
- * @param {Array.<ol.format.ogc.filter.Filter>} filters The filters to join.
- * @return {ol.format.ogc.filter.Filter} The joined filters.
+ * @param {Array.<ol.format.filter.Filter>} filters The filters to join.
+ * @return {ol.format.filter.Filter} The joined filters.
  * @private
  */
 ngeo.WfsPermalink.or_ = function(filters) {
-  return ngeo.WfsPermalink.joinFilters_(filters, ol.format.ogc.filter.or);
+  return ngeo.WfsPermalink.joinFilters_(filters, ol.format.filter.or);
 };
 
 
 /**
  * Join a list of filters with a given join function.
  *
- * @param {Array.<ol.format.ogc.filter.Filter>} filters The filters to join.
- * @param {function(!ol.format.ogc.filter.Filter, !ol.format.ogc.filter.Filter):
- *    ol.format.ogc.filter.Filter} joinFn The function to join two filters.
- * @return {ol.format.ogc.filter.Filter} The joined filters.
+ * @param {Array.<ol.format.filter.Filter>} filters The filters to join.
+ * @param {function(!ol.format.filter.Filter, !ol.format.filter.Filter):
+ *    ol.format.filter.Filter} joinFn The function to join two filters.
+ * @return {ol.format.filter.Filter} The joined filters.
  * @private
  */
 ngeo.WfsPermalink.joinFilters_ = function(filters, joinFn) {

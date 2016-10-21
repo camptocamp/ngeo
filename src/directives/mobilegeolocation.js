@@ -167,7 +167,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
 
   ol.events.listen(
       this.geolocation_,
-      ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
+      ol.Object.getChangeEventType(ol.Geolocation.Property.ACCURACY_GEOMETRY),
       function() {
         this.accuracyFeature_.setGeometry(
             this.geolocation_.getAccuracyGeometry());
@@ -176,7 +176,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
 
   ol.events.listen(
       this.geolocation_,
-      ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
+      ol.Object.getChangeEventType(ol.Geolocation.Property.POSITION),
       function(e) {
         this.setPosition_(e);
       },
