@@ -21,9 +21,20 @@ page.onError = function(msg, trace) {
   console.error(msgStack.join('\n'));
   exitCode = 2;
 };
-page.onConsoleMessage = function(msg) {
-  console.log('console:', msg);
+page.onConsoleMessage = function(msg, lineNum, sourceId) {
+  console.log('console: ' + msg + ' (from line #' + lineNum + ' in "' + sourceId + '")');
   exitCode = 2;
+};
+page.onAlert = function(msg) {
+  console.log('alert: ' + msg);
+  exitCode = 2;
+};
+page.onResourceError = function(resourceError) {
+  console.log('Resource error: ' + resourceError.errorCode + ', ' + resourceError.url);
+  exitCode = 2;
+};
+page.onUrlChanged = function(url) {
+  console.log('URL changed: ' + url);
 };
 page.open(examplePath, function(s) {
   if (s != 'success') {
@@ -32,7 +43,7 @@ page.open(examplePath, function(s) {
   }
 
   setTimeout(function() {
-    console.log("EXIT", exitCode)
+    console.log("EXIT " + exitCode)
     phantom.exit(exitCode);
   }, 3000)
 });
