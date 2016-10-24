@@ -28,7 +28,7 @@ app.module.value('gmfTreeUrl',
 app.MainController = function($http, gmfThemes, gmfTreeManager) {
 
   /**
-   * @param {GmfThemesNode} theme Theme.
+   * @param {gmfThemes.GmfTheme} theme Theme.
    * @return {boolean} Theme is 'Enseignement'
    * @export
    */
@@ -37,7 +37,7 @@ app.MainController = function($http, gmfThemes, gmfTreeManager) {
   };
 
   /**
-   * @type {GmfThemesNode}
+   * @type {gmfThemes.GmfTheme}
    * @export
    */
   this.theme = gmfTreeManager.tree;
