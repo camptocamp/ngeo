@@ -100,12 +100,6 @@ app.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, ngeoLo
   this.layers = [];
 
   /**
-   * @type {Object|undefined}
-   * @export
-   */
-  this.treeSource = undefined;
-
-  /**
    * @param {gmfThemes.GmfTheme|undefined} value A theme or undefined to get Themes.
    * @return {Array.<gmfThemes.GmfTheme>} All themes.
    * @export
@@ -172,8 +166,6 @@ app.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, ngeoLo
           this.layers.push(node);
         }
       }.bind(this));
-
-      this.treeSource = this.gmfTreeManager.tree;
     }
   }.bind(this));
 
