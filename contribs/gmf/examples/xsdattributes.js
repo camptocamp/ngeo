@@ -143,7 +143,7 @@ app.MainController.prototype.getGeomType = function() {
 /**
  * Just for this example
  * @param {gmfThemes.GmfTheme|gmfThemes.GmfGroup|gmfThemes.GmfLayer} node A theme, group or layer node.
- * @param {Array.<gmfThemes.GmfLayer>} nodes An Array of nodes.
+ * @param {Array.<gmfThemes.GmfTheme|gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An Array of nodes.
  * @export
  */
 app.MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
