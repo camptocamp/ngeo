@@ -57,7 +57,7 @@ app.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
   this.feature = null;
 
   /**
-   * @type {Array.<GmfThemesNode>}
+   * @type {Array.<gmfThemes.GmfLayer>}
    * @export
    */
   this.layers = [];
@@ -91,8 +91,8 @@ app.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
 
 
 /**
- * @param {GmfThemesNode|undefined} value A layer or undefined to get layers.
- * @return {Array.<GmfThemesNode>} All layers in all themes.
+ * @param {gmfThemes.GmfLayer|undefined} value A layer or undefined to get layers.
+ * @return {Array.<gmfThemes.GmfLayer>} All layers in all themes.
  * @export
  */
 app.MainController.prototype.getSetLayers = function(value) {
@@ -142,8 +142,8 @@ app.MainController.prototype.getGeomType = function() {
 
 /**
  * Just for this example
- * @param {GmfThemesNode} node A theme, group or layer node.
- * @param {Array.<GmfThemesNode>} nodes An Array of nodes.
+ * @param {gmfThemes.GmfTheme|gmfThemes.GmfGroup|gmfThemes.GmfLayer} node A theme, group or layer node.
+ * @param {Array.<gmfThemes.GmfTheme|gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An Array of nodes.
  * @export
  */
 app.MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {

@@ -56,7 +56,6 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * Example:
  *
  *      <gmf-layertree
- *        gmf-layertree-source="ctrl.source"
  *        gmf-layertree-dimensions="ctrl.dimensions"
  *        gmf-layertree-map="ctrl.map"
  *      </gmf-layertree>
@@ -74,7 +73,6 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *  * metadataUrl: Display a popup with the content of the given URL if
  *    possible also open a new window.
  *
- * @htmlAttribute {Object} gmf-layertree-source One theme (JSON).
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {ol.Map} gmf-layertree-map The map.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
@@ -88,7 +86,6 @@ gmf.layertreeDirective = function(gmfLayertreeTemplate) {
   return {
     scope: {
       'map': '=gmfLayertreeMap',
-      'tree': '=gmfLayertreeSource',
       'dimensions': '=?gmfLayertreeDimensions',
       'openLinksInNewWindowFn': '&gmfLayertreeOpenlinksinnewwindow'
     },

@@ -22,13 +22,13 @@ app.module.value('gmfTreeUrl',
  * @constructor
  * @param {angular.$http} $http Angular's $http service.
  * @param {gmf.Themes} gmfThemes Themes service.
- * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {gmf.ThemeManager} gmfThemeManager gmf Tree Manager service.
  * @ngInject
  */
-app.MainController = function($http, gmfThemes, gmfTreeManager) {
+app.MainController = function($http, gmfThemes, gmfThemeManager) {
 
   /**
-   * @param {GmfThemesNode} theme Theme.
+   * @param {gmfThemes.GmfTheme} theme Theme.
    * @return {boolean} Theme is 'Enseignement'
    * @export
    */
@@ -37,10 +37,10 @@ app.MainController = function($http, gmfThemes, gmfTreeManager) {
   };
 
   /**
-   * @type {GmfThemesNode}
+   * @type {gmf.ThemeManager}
    * @export
    */
-  this.theme = gmfTreeManager.tree;
+  this.manager = gmfThemeManager;
 
   gmfThemes.loadThemes();
 };

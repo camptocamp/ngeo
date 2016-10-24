@@ -32,9 +32,10 @@ app.module.value('gmfTreeUrl',
  * @constructor
  * @param {gmf.Themes} gmfThemes The gme themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {gmf.ThemeManager} gmfThemeManager gmf Tree Manager service.
  * @param {ngeo.Location} ngeoLocation ngeo location service.
  */
-app.MainController = function(gmfThemes, gmfTreeManager, ngeoLocation) {
+app.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, ngeoLocation) {
 
   gmfThemes.loadThemes();
 
@@ -75,56 +76,56 @@ app.MainController = function(gmfThemes, gmfTreeManager, ngeoLocation) {
   this.gmfTreeManager = gmfTreeManager;
 
   /**
-   * @type {Array.<GmfThemesNode>}
+   * @type {gmf.ThemeManager}
+   * @export
+   */
+  this.gmfThemeManager = gmfThemeManager;
+
+  /**
+   * @type {Array.<gmfThemes.GmfTheme>}
    * @export
    */
   this.themes = [];
 
   /**
-   * @type {Array.<GmfThemesNode>}
+   * @type {Array.<gmfThemes.GmfGroup>}
    * @export
    */
   this.groups = [];
 
   /**
-   * @type {Array.<GmfThemesNode>}
+   * @type {Array.<gmfThemes.GmfLayer>}
    * @export
    */
   this.layers = [];
 
   /**
-   * @type {Object|undefined}
-   * @export
-   */
-  this.treeSource = undefined;
-
-  /**
-   * @param {GmfThemesNode|undefined} value A theme or undefined to get Themes.
-   * @return {Array.<GmfThemesNode>} All themes.
+   * @param {gmfThemes.GmfTheme|undefined} value A theme or undefined to get Themes.
+   * @return {Array.<gmfThemes.GmfTheme>} All themes.
    * @export
    */
   this.getSetTheme = function(value) {
     if (value !== undefined) {
-      this.gmfTreeManager.addTheme(value);
+      this.gmfThemeManager.addTheme(value);
     }
     return this.themes;
   };
 
   /**
-   * @param {GmfThemesNode|undefined} value A group or undefined to get groups.
-   * @return {Array.<GmfThemesNode>} All groups in all themes.
+   * @param {gmfThemes.GmfGroup|undefined} value A group or undefined to get groups.
+   * @return {Array.<gmfThemes.GmfGroup>} All groups in all themes.
    * @export
    */
   this.getSetGroup = function(value) {
     if (value !== undefined) {
-      this.gmfTreeManager.addGroups([value]);
+      this.gmfTreeManager.addFirstLevelGroups([value]);
     }
     return this.groups;
   };
 
   /**
-   * @param {GmfThemesNode|undefined} value A group or undefined to get groups.
-   * @return {Array.<GmfThemesNode>} All groups in all themes.
+   * @param {gmfThemes.GmfLayer|undefined} value A group or undefined to get groups.
+   * @return {Array.<gmfThemes.GmfLayer>} All groups in all themes.
    * @export
    */
   this.getSetLayers = function(value) {
@@ -135,9 +136,9 @@ app.MainController = function(gmfThemes, gmfTreeManager, ngeoLocation) {
   };
 
   /**
-   * @param {GmfThemesNode|undefined} value A Theme or group node, or undefined
+   * @param {gmfThemes.GmfGroup|undefined} value A GeoMapFish group node, or undefined
    *     to get the groups of the tree manager.
-   * @return {Array.<GmfThemesNode>} All groups in the tree manager.
+   * @return {Array.<gmfThemes.GmfGroup>} All groups in the tree manager.
    * @export
    */
   this.getSetRemoveTree = function(value) {
@@ -165,15 +166,13 @@ app.MainController = function(gmfThemes, gmfTreeManager, ngeoLocation) {
           this.layers.push(node);
         }
       }.bind(this));
-
-      this.treeSource = this.gmfTreeManager.tree;
     }
   }.bind(this));
 
   /**
    * Just for this example
-   * @param {GmfThemesNode} node A theme, group or layer node.
-   * @param {Array.<GmfThemesNode>} nodes An Array of nodes.
+   * @param {gmfThemes.GmfTheme|gmfThemes.GmfGroup|gmfThemes.GmfLayer} node A theme, group or layer node.
+   * @param {Array.<gmfThemes.GmfTheme|gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An Array of nodes.
    * @export
    */
   this.getDistinctFlatNodes_ = function(node, nodes) {

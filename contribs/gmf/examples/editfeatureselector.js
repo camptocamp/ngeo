@@ -103,12 +103,6 @@ app.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   });
 
   /**
-   * @type {Object|undefined}
-   * @export
-   */
-  this.treeSource = undefined;
-
-  /**
    * @type {ol.Map}
    * @export
    */
@@ -135,7 +129,6 @@ app.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
           break;
         }
       }
-      this.treeSource = this.gmfTreeManager.tree;
 
       // Add layer vector after
       this.map.addLayer(this.vectorLayer);
