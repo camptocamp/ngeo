@@ -190,7 +190,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
       uid,
       ol.events.listen(
         interaction,
-        ol.interaction.DrawEventType.DRAWEND,
+        ol.interaction.Draw.EventType.DRAWEND,
         this.handleDrawEnd_,
         this
       ),
@@ -218,7 +218,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {ol.interaction.DrawEvent|ngeo.MeasureEvent} event Event.
+ * @param {ol.interaction.Draw.Event|ngeo.MeasureEvent} event Event.
  * @export
  */
 ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {

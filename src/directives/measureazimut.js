@@ -72,7 +72,7 @@ ngeo.measureazimutDirective = function($compile, gettext, $filter) {
       ol.events.listen(
           measureAzimut,
           ol.Object.getChangeEventType(
-              ol.interaction.InteractionProperty.ACTIVE),
+              ol.interaction.Interaction.Property.ACTIVE),
           drawFeatureCtrl.handleActiveChange,
           drawFeatureCtrl
       );

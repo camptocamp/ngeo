@@ -682,7 +682,6 @@ gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
   var style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
   if (this.color) {
     var color = ol.color.asArray(this.color);
-    goog.asserts.assert(ol.color.isValid(color));
     var strokeStyle = style.getStroke();
     if (strokeStyle) {
       // 100% opacity for the stroke color
@@ -708,7 +707,7 @@ gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
  * @export
  */
 gmf.SearchController.prototype.setStyleColor = function(color) {
-  if (color && ol.color.isValid(ol.color.asArray(color))) {
+  if (color) {
     this.color = color;
     this.ngeoFeatureOverlayMgr.getLayer().changed();
   }

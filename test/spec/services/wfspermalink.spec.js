@@ -1,6 +1,6 @@
 /* global msGMLOutputFuel */
 goog.require('ngeo.WfsPermalink');
-goog.require('ol.format.ogc.filter');
+goog.require('ol.format.filter');
 goog.require('ngeo.test.data.msGMLOutputFuel');
 
 describe('ngeo.WfsPermalink', function() {
@@ -84,11 +84,11 @@ describe('ngeo.WfsPermalink', function() {
   describe('#createFilters_', function() {
     var expectFiltersToEqual = function(filter1, filter2) {
       expect(filter1.constructor).toBe(filter2.constructor, 'same filter type');
-      if (filter1 instanceof ol.format.ogc.filter.LogicalBinary) {
+      if (filter1 instanceof ol.format.filter.LogicalBinary) {
         expectFiltersToEqual(filter1.conditionA, filter2.conditionA);
         expectFiltersToEqual(filter1.conditionB, filter2.conditionB);
       } else {
-        expect(filter1 instanceof ol.format.ogc.filter.EqualTo);
+        expect(filter1 instanceof ol.format.filter.EqualTo);
         expect(filter1.propertyName).toBe(filter2.propertyName);
         expect(filter1.expression).toBe(filter2.expression);
       }
@@ -116,7 +116,7 @@ describe('ngeo.WfsPermalink', function() {
           }
         ]
       };
-      var f = ol.format.ogc.filter;
+      var f = ol.format.filter;
       var expectedFilters = f.or(
           f.or(
             f.and(

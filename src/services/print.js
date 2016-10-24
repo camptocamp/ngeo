@@ -710,6 +710,7 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle
 ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle) {
   var strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
+    goog.asserts.assert(Array.isArray(strokeColor));
     var strokeColorRgba = ol.color.asArray(strokeColor);
     goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
     symbolizer.strokeColor = goog.color.rgbArrayToHex(strokeColorRgba);
@@ -763,7 +764,9 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
 
     var strokeStyle = textStyle.getStroke();
     if (strokeStyle !== null) {
-      var strokeColorRgba = ol.color.asArray(strokeStyle.getColor());
+      var strokeColor = strokeStyle.getColor();
+      goog.asserts.assert(Array.isArray(strokeColor));
+      var strokeColorRgba = ol.color.asArray(strokeColor);
       goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
       symbolizer.haloColor = goog.color.rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];

@@ -89,8 +89,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     ],
     "define": [
       "goog.dom.ASSUME_STANDARDS_MODE=true",
-      "goog.DEBUG=false",
-      "ol.ENABLE_DOM=false",
+      "ol.DEBUG=false",
       "ol.ENABLE_WEBGL=false"
     ],
     "jscomp_error": [

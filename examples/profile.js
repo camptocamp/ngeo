@@ -69,7 +69,7 @@ app.MainController = function($http, $scope) {
             'LAYERS': 'ch.swisstopo.pixelkarte-farbe-pk1000.noscale',
             'FORMAT': 'image/jpeg'
           },
-          serverType: /** @type {ol.source.wms.ServerType} */ ('mapserver')
+          serverType: /** @type {ol.source.WMSServerType} */ ('mapserver')
         })
       }),
       new ol.layer.Vector({

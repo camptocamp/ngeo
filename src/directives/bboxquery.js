@@ -50,7 +50,7 @@ ngeo.bboxQueryDirective = function(ngeoQuery) {
       /**
        * Called when a bbox is drawn while this controller is active. Issue
        * a request to the query service using the extent that was drawn.
-       * @param {ol.DragBoxEvent} evt Event.
+       * @param {ol.interaction.DragBox.Event} evt Event.
        */
       var handleBoxEnd = function(evt) {
         var extent = interaction.getGeometry().getExtent();

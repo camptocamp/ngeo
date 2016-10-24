@@ -32,7 +32,7 @@ ngeo.drawtextDirective = function() {
 
       ol.events.listen(
           drawText,
-          ol.interaction.DrawEventType.DRAWEND,
+          ol.interaction.Draw.EventType.DRAWEND,
           drawFeatureCtrl.handleDrawEnd.bind(
               drawFeatureCtrl, ngeo.GeometryType.TEXT),
           drawFeatureCtrl
@@ -40,7 +40,7 @@ ngeo.drawtextDirective = function() {
       ol.events.listen(
           drawText,
           ol.Object.getChangeEventType(
-              ol.interaction.InteractionProperty.ACTIVE),
+              ol.interaction.Interaction.Property.ACTIVE),
           drawFeatureCtrl.handleActiveChange,
           drawFeatureCtrl
       );

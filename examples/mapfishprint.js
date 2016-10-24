@@ -101,7 +101,7 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
           params: {
             'LAYERS': 'osm'
           },
-          serverType: /** @type {ol.source.wms.ServerType} */ ('mapserver')
+          serverType: /** @type {ol.source.WMSServerType} */ ('mapserver')
         })
       }),
       new ol.layer.Vector({

@@ -392,7 +392,7 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
         this.handleFeaturesRemove_, this));
 
     keys.push(ol.events.listen(this.translate_,
-        ol.interaction.TranslateEventType.TRANSLATEEND,
+        ol.interaction.Translate.EventType.TRANSLATEEND,
         this.handleTranslateEnd_, this));
 
     keys.push(ol.events.listen(this.rotate_,
@@ -714,7 +714,7 @@ gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
 
 
 /**
- * @param {ol.interaction.TranslateEvent} evt Event.
+ * @param {ol.interaction.Translate.Event} evt Event.
  * @private
  */
 gmf.DrawfeatureController.prototype.handleTranslateEnd_ = function(evt) {
