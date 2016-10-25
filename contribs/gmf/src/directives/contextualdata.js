@@ -12,7 +12,7 @@ goog.require('ol.proj');
  * Provide a directive responsible of displaying contextual data after a right
  * click on the map.
  *
- * This directive doesn't require be rendered in a visible DOM element.
+ * This directive doesn't require being rendered in a visible DOM element.
  * It's usually added to the element where the map directive is also added.
  *
  * Example:
@@ -24,13 +24,15 @@ goog.require('ol.proj');
  *
  * The content of the popover is managed in a partial that must be defined
  * using the `gmfContextualdatacontentTemplateUrl` value. See
- * `gmfContextualdatacontentDirective` for more detail.
+ * {@link gmf.contextualdatacontentDirective} for more details.
  *
  * One can also provide a `gmf-contextualdata-callback` attribute in order to
  * do some additional computing on the coordinate or the values received for
  * the raster service. The callback function is called with the coordinate of
  * the clicked point and the response data from the server. It is intended to
  * return an object of additional properties to add to the scope.
+ *
+ * See the {@link ../examples/contribs/gmf/contextualdata.html} example for a usage sample.
  *
  * @htmlAttribute {ol.Map} map The map.
  * @htmlAttribute {Array<number>} projections The list of projections.
@@ -227,7 +229,7 @@ gmf.module.controller('GmfContextualdataController', gmf.ContextualdataControlle
  * Provide a directive responsible of formatting the content of the popover for
  * the contextual data directive.
  *
- * It's main purpose is to configure the template to be used.
+ * Its main purpose is to configure the template to be used.
  * Integrators should ensure that the template values match the configuration
  * of the contextual data directive.
  *
@@ -243,7 +245,7 @@ gmf.module.controller('GmfContextualdataController', gmf.ContextualdataControlle
  * integrators can also use `{{xxxx}}` where `xxxx` will be replaced by
  * the name of the raster layers (for example 'srtm').
  *
- * See the gmf `contextualdata` example for a usage sample.
+ * See the {@link ../examples/contribs/gmf/contextualdata.html} example for a usage sample.
  *
  * @param {string} gmfContextualdatacontentTemplateUrl Url to template.
  * @return {angular.Directive} The Directive Definition Object.
