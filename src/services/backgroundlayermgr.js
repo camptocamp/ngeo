@@ -78,8 +78,8 @@ ol.inherits(ngeo.BackgroundEvent, ol.events.Event);
  *     });
  *
  * See our live examples:
- * {@link ../examples/backgroundlayer.html}
- * {@link ../examples/backgroundlayerdropdown.html}
+ * [../examples/backgroundlayer.html](../examples/backgroundlayer.html)
+ * [../examples/backgroundlayerdropdown.html](../examples/backgroundlayerdropdown.html)
  *
  * @extends {ol.Observable}
  * @constructor

@@ -89,7 +89,7 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  *       'rotation': 45 // degree
  *     });
  *
- * See our live example: {@link ../examples/mapfishprint.html}
+ * See our live example: [../examples/mapfishprint.html](../examples/mapfishprint.html)
  *
  * TODO and limitations:
  *

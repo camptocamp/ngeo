@@ -24,7 +24,7 @@ goog.require('ngeo.Query');
  *        ngeo-map-query-autoclear="ctrl.queryAutoClear">
  *      </span>
  *
- * See our live example: {@link ../examples/mapquery.html}
+ * See our live example: [../examples/mapquery.html](../examples/mapquery.html)
  *
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.
  * @return {angular.Directive} The Directive Definition Object.

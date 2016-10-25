@@ -32,7 +32,7 @@ goog.require('ol.proj');
  * the clicked point and the response data from the server. It is intended to
  * return an object of additional properties to add to the scope.
  *
- * See the {@link ../examples/contribs/gmf/contextualdata.html} example for a usage sample.
+ * See the [../examples/contribs/gmf/contextualdata.html](../examples/contribs/gmf/contextualdata.html) example for a usage sample.
  *
  * @htmlAttribute {ol.Map} map The map.
  * @htmlAttribute {Array<number>} projections The list of projections.
@@ -245,7 +245,7 @@ gmf.module.controller('GmfContextualdataController', gmf.ContextualdataControlle
  * integrators can also use `{{xxxx}}` where `xxxx` will be replaced by
  * the name of the raster layers (for example 'srtm').
  *
- * See the {@link ../examples/contribs/gmf/contextualdata.html} example for a usage sample.
+ * See the [../examples/contribs/gmf/contextualdata.html](../examples/contribs/gmf/contextualdata.html) example for a usage sample.
  *
  * @param {string} gmfContextualdatacontentTemplateUrl Url to template.
  * @return {angular.Directive} The Directive Definition Object.

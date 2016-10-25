@@ -28,7 +28,7 @@ goog.require('ngeo');
  *
  *     <div ngeo-btn-group ngeo-btn-group-active="ctrl.drawToolActive">
  *
- * See our live example: {@link ../examples/interactionbtngroup.html}
+ * See our live example: [../examples/interactionbtngroup.html](../examples/interactionbtngroup.html)
  *
  * @htmlAttribute {*} ngeo-btn-group-active Any property of the scope.
  * Tells whether at least one button of the group is active.
