@@ -750,6 +750,8 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     if (labelRotation !== undefined) {
       // Mapfish Print expects a string, not a number to rotate text
       symbolizer.labelRotation = (labelRotation * 180 / Math.PI).toString();
+      // rotate around the vertical/horizontal center
+      symbolizer.labelAlign = 'cm';
     }
 
     var fontStyle = textStyle.getFont();
