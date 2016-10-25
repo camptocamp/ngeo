@@ -2,6 +2,7 @@ goog.provide('gmf.ProfileController');
 goog.provide('gmf.profileDirective');
 
 goog.require('gmf');
+goog.require('ngeo.Download');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
@@ -102,6 +103,7 @@ gmf.module.directive('gmfProfile', gmf.profileDirective);
  *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
  * @param {string} gmfProfileCsvUrl URL of GMF service CSV profile.
+ * @param {ngeo.Download} ngeoDownload Download service.
  * @constructor
  * @export
  * @ngInject
@@ -110,7 +112,7 @@ gmf.module.directive('gmfProfile', gmf.profileDirective);
  */
 gmf.ProfileController = function($scope, $http, $element, $filter,
     gettextCatalog, ngeoFeatureOverlayMgr, gmfProfileJsonUrl,
-    gmfProfileCsvUrl) {
+    gmfProfileCsvUrl, ngeoDownload) {
 
   /**
    * @type {angular.Scope}
@@ -159,6 +161,13 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    * @private
    */
   this.gmfProfileCsvUrl_ = gmfProfileCsvUrl;
+
+  /**
+   * Download service.
+   * @type {ngeo.Download}
+   * @private
+   */
+  this.ngeoDownload_ = ngeoDownload;
 
   var map = null;
   var mapFn = this['getMapFn'];
@@ -700,12 +709,7 @@ gmf.ProfileController.prototype.downloadCsv = function() {
  * @private
  */
 gmf.ProfileController.prototype.getCsvSuccess_ = function(resp) {
-  var hiddenElement = document.createElement('a');
-  hiddenElement.href = 'data:attachment/csv,' + encodeURI(resp.data);
-  hiddenElement.target = '_blank';
-  hiddenElement.download = 'profile.csv';
-  hiddenElement.click();
-  hiddenElement.remove();
+  this.ngeoDownload_(resp.data, 'profile.csv', 'attachment/csv;charset=utf-8');
 };
 
 
