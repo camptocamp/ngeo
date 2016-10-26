@@ -3,6 +3,7 @@ goog.provide('gmf.layertreeDirective');
 
 goog.require('ngeo.SyncArrays');
 goog.require('gmf');
+goog.require('gmf.Permalink');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
 goog.require('gmf.WMSTime');
@@ -105,6 +106,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {gmf.Permalink} gmfPermalink The gmf permalink service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
  * @param {ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
@@ -118,7 +120,7 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
-    ngeoLayerHelper, gmfTreeManager, gmfSyncLayertreeMap,
+    ngeoLayerHelper, gmfPermalink, gmfTreeManager, gmfSyncLayertreeMap,
     ngeoSyncArrays, gmfWMSTime, gmfThemes) {
 
   /**
@@ -157,6 +159,12 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {gmf.Permalink}
+   * @private
+   */
+  this.gmfPermalink_ = gmfPermalink;
 
   /**
    * @type {gmf.TreeManager}
@@ -543,10 +551,10 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
 
 /**
  * Update the layers order in the map and the treeCtrl in the treeManager after
- * a reorder of the first-level groups.
+ * a reorder of the first-level groups. Then update the permalink.
  * @export
  */
-gmf.LayertreeController.prototype.syncTreeAndLayers = function() {
+gmf.LayertreeController.prototype.afterReorder = function() {
   var groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
   var currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
   var treeCtrls = [];
@@ -569,6 +577,9 @@ gmf.LayertreeController.prototype.syncTreeAndLayers = function() {
   this.gmfTreeManager_.rootCtrl.children.forEach(function(child) {
     this.layers.push(child.layer);
   }, this);
+
+  // Update the permalink order
+  this.gmfPermalink_.refreshFirstLevelGroups();
 };
 
 

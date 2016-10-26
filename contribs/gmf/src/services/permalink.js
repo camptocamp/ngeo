@@ -719,6 +719,26 @@ gmf.Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
 
 
 /**
+ * Get the current first level node names in the tree manager and update the
+ * correspondant state of the permalink.
+ * @export
+ */
+gmf.Permalink.prototype.refreshFirstLevelGroups = function() {
+  // Get first-level-groups order
+  var groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
+  var orderedNames = [];
+  groupNodes.forEach(function(node) {
+    orderedNames.push(node.name);
+  });
+
+  // set it in state
+  var object = {};
+  object[gmf.PermalinkParam.TREE_GROUPS] = orderedNames.join(',');
+  this.ngeoStateManager_.updateState(object);
+};
+
+
+/**
  * Return true if there is a theme specified in the URL path.
  * @private
  * @param {Array.<string>} pathElements Array of path elements.
