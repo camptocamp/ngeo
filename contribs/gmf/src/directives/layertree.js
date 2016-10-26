@@ -327,7 +327,7 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
     this.gmfTreeManager_.rootCtrl = treeCtrl.parent;
     // Precise the index to add first level groups.
     opt_position = this.gmfTreeManager_.root.children.length -
-        this.gmfTreeManager_.layersToAddAtOnce | 0;
+        this.gmfTreeManager_.numberOfGroupsToAddInThisDigestLoop | 0;
   }
 
   var layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
