@@ -429,17 +429,17 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
  * @export
  */
 gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
-  if (/** @type gmfThemes.GmfGroup */ (treeCtrl.node).children !== undefined) {
-    return undefined;
-  }
-
-  var gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
-  var iconUrl = gmfLayer.metadata.iconUrl;
+  var iconUrl = treeCtrl.node.metadata.iconUrl;
 
   if (iconUrl !== undefined) {
     return iconUrl;
   }
 
+  if (treeCtrl.node.children !== undefined) {
+    return undefined;
+  }
+
+  var gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   if (gmfLayer.type !== 'WMS') {
     return undefined;
   }
