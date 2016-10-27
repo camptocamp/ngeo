@@ -10,21 +10,49 @@ goog.require('gmf.ThemesEventType');
 /**
  * Note that this directive works with the {@link gmf.TreeManager}. Setting the
  * theme will update the "tree" object of this {@link gmf.TreeManager}.
+ *
  * Example:
  *
- *     <gmf-themeselector
+ *      <a href class="btn btn-default btn-block btn-primary" data-toggle="dropdown">
+ *          <span class="fa fa-grid"></span>
+ *          <span translate>Theme:</span>
+ *          <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Loading...</b>
+ *          <b ng-if="mainCtrl.gmfThemeManager.themeName">{{mainCtrl.gmfThemeManager.themeName|translate}}</b>
+ *          <span class="caret"></span>
+ *      </a>
+ *      <gmf-themeselector
  *         id="themes"
  *         data-header-title="Themes"
  *         gmf-themeselector-filter="::mainCtrl.filter">
- *     </gmf-themeselector>
+ *      </gmf-themeselector>
+ *      <script>
+ *        (function() {
+ *          var module = angular.module('app');
+ *          module.value('gmfTreeManagerModeFlush', true);
+ *        })();
+ *      </script>
  *
- * The theme selector can operate in a 'flush' or 'add' mode. For more information
+ * The theme selector can operate in a 'flush' (as above) or 'add' mode. For more information
  * about these modes, refer to the documentation of {@link gmf.TreeManager}.
  *
- * When used in 'flush' mode, the current theme can be shown as follows:
+ * Example in 'add' mode:
  *
- *     <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Loading...</b>
- *     <b ng-if="mainCtrl.gmfThemeManager.themeName">{{mainCtrl.gmfThemeManager.themeName|translate}}</b>
+ *      <a href class="btn btn-default btn-block btn-primary" data-toggle="dropdown">
+ *          <span class="fa fa-grid"></span>
+ *          <span translate>Themes</span>
+ *          <span class="caret"></span>
+ *      </a>
+ *      <gmf-themeselector
+ *         id="themes"
+ *         data-header-title="Themes"
+ *         gmf-themeselector-filter="::mainCtrl.filter">
+ *      </gmf-themeselector>
+ *      <script>
+ *        (function() {
+ *          var module = angular.module('app');
+ *          module.value('gmfTreeManagerModeFlush', false);
+ *        })();
+ *      </script>
  *
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
  * @return {angular.Directive} The directive specs.
