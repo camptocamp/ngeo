@@ -39,7 +39,7 @@ app.module.value(
 
 /**
  * @constructor
- * @param {gmf.Themes} gmfThemes The gme themes service.
+ * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  */

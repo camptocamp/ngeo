@@ -30,7 +30,7 @@ app.module.value('gmfTreeUrl',
 
 /**
  * @constructor
- * @param {gmf.Themes} gmfThemes The gme themes service.
+ * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmf.ThemeManager} gmfThemeManager gmf Theme Manager service.
  * @param {ngeo.Location} ngeoLocation ngeo location service.
