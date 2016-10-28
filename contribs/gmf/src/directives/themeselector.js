@@ -8,8 +8,8 @@ goog.require('gmf.ThemesEventType');
 
 
 /**
- * Note that this directive works with the gmf TreeManager service. Set the
- * theme will update the "tree" object of this TreeManager service.
+ * Note that this directive works with the {@link gmf.TreeManager}. Setting the
+ * theme will update the "tree" object of this {@link gmf.TreeManager}.
  * Example:
  *
  *     <gmf-themeselector
@@ -17,6 +17,14 @@ goog.require('gmf.ThemesEventType');
  *         data-header-title="Themes"
  *         gmf-themeselector-filter="::mainCtrl.filter">
  *     </gmf-themeselector>
+ *
+ * The theme selector can operate in a 'flush' or 'add' mode. For more information
+ * about these modes, refer to the documentation of {@link gmf.TreeManager}.
+ *
+ * When used in 'flush' mode, the current theme can be shown as follows:
+ *
+ *     <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Loading...</b>
+ *     <b ng-if="mainCtrl.gmfThemeManager.themeName">{{mainCtrl.gmfThemeManager.themeName|translate}}</b>
  *
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
  * @return {angular.Directive} The directive specs.
