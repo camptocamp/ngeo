@@ -83,7 +83,7 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
 
 /**
  * @constructor
- * @param {gmf.Themes} gmfThemes The gme themes service.
+ * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
