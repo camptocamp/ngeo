@@ -8,15 +8,51 @@ goog.require('gmf.ThemesEventType');
 
 
 /**
- * Note that this directive works with the gmf TreeManager service. Set the
- * theme will update the "tree" object of this TreeManager service.
+ * Note that this directive works with the {@link gmf.TreeManager}. Setting the
+ * theme will update the "tree" object of this {@link gmf.TreeManager}.
+ *
  * Example:
  *
- *     <gmf-themeselector
+ *      <a href class="btn btn-default btn-block btn-primary" data-toggle="dropdown">
+ *          <span class="fa fa-grid"></span>
+ *          <span translate>Theme:</span>
+ *          <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Loading...</b>
+ *          <b ng-if="mainCtrl.gmfThemeManager.themeName">{{mainCtrl.gmfThemeManager.themeName|translate}}</b>
+ *          <span class="caret"></span>
+ *      </a>
+ *      <gmf-themeselector
  *         id="themes"
  *         data-header-title="Themes"
  *         gmf-themeselector-filter="::mainCtrl.filter">
- *     </gmf-themeselector>
+ *      </gmf-themeselector>
+ *      <script>
+ *        (function() {
+ *          var module = angular.module('app');
+ *          module.value('gmfTreeManagerModeFlush', true);
+ *        })();
+ *      </script>
+ *
+ * The theme selector can operate in a 'flush' (as above) or 'add' mode. For more information
+ * about these modes, refer to the documentation of {@link gmf.TreeManager}.
+ *
+ * Example in 'add' mode:
+ *
+ *      <a href class="btn btn-default btn-block btn-primary" data-toggle="dropdown">
+ *          <span class="fa fa-grid"></span>
+ *          <span translate>Themes</span>
+ *          <span class="caret"></span>
+ *      </a>
+ *      <gmf-themeselector
+ *         id="themes"
+ *         data-header-title="Themes"
+ *         gmf-themeselector-filter="::mainCtrl.filter">
+ *      </gmf-themeselector>
+ *      <script>
+ *        (function() {
+ *          var module = angular.module('app');
+ *          module.value('gmfTreeManagerModeFlush', false);
+ *        })();
+ *      </script>
  *
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
  * @return {angular.Directive} The directive specs.
