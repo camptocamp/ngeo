@@ -143,11 +143,13 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
 
 /**
  * @param {gmfThemes.GmfTheme} theme Theme.
+ * @param {boolean=} opt_silent if true it will be no user message if
+ *     the theme should be added but it's already added.
  * @export
  */
-gmf.ThemeselectorController.prototype.setTheme = function(theme) {
+gmf.ThemeselectorController.prototype.setTheme = function(theme, opt_silent) {
   if (theme) {
-    this.gmfThemeManager.addTheme(theme);
+    this.gmfThemeManager.addTheme(theme, opt_silent);
   }
 };
 

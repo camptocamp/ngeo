@@ -71,9 +71,11 @@ gmf.ThemeManager = function(gmfThemes, gmfTreeManagerModeFlush, gmfTreeManager, 
  * Set the current theme name (mode 'flush' only) and add its children. Add
  * only groups that are not already in the tree.
  * @param {gmfThemes.GmfTheme} theme A theme object.
+ * @param {boolean=} opt_silent if true it will be no user message if
+ *     the theme should be added but it's already added.
  * @export
  */
-gmf.ThemeManager.prototype.addTheme = function(theme) {
+gmf.ThemeManager.prototype.addTheme = function(theme, opt_silent) {
   if (this.modeFlush) {
     this.ngeoStateManager_.updateState({
       'theme' : theme.name
@@ -81,7 +83,7 @@ gmf.ThemeManager.prototype.addTheme = function(theme) {
     this.themeName = theme.name;
     this.gmfTreeManager_.setFirstLevelGroups(theme.children);
   } else {
-    this.gmfTreeManager_.addFirstLevelGroups(theme.children);
+    this.gmfTreeManager_.addFirstLevelGroups(theme.children, false, opt_silent);
   }
 };
 
