@@ -7,9 +7,10 @@ goog.require('ngeo');
 
 
 /** @type {!angular.Module} */
-gmf.module = angular.module('gmf', [ngeo.module.name, 'gettext',
-    'ngAnimate', 'ngTouch', 'ngSanitize', 'tmh.dynamicLocale', 'ui.date',
-    'ui.slider']);
+gmf.module = angular.module('gmf', [
+  ngeo.module.name, 'gettext', 'ngAnimate', 'ngTouch', 'ngSanitize',
+  'tmh.dynamicLocale', 'ui.date', 'ui.slider'
+]);
 
 gmf.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   /**
