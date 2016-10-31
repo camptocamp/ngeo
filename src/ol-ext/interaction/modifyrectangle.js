@@ -377,14 +377,18 @@ ngeo.interaction.ModifyRectangle.prototype.calculateNewPixel_ = function(
   origin, destination, point) {
 
   var aVector = [destination[0] - origin[0], destination[1] - origin[1]];
-  var bVector = [point[0] - origin[0],
-                 point[1] - origin[1]];
+  var bVector = [
+    point[0] - origin[0],
+    point[1] - origin[1]
+  ];
 
   var abScalarProduct = aVector[0] * bVector[0] + aVector[1] * bVector[1];
   var bDivisor = Math.pow(bVector[0], 2) + Math.pow(bVector[1], 2);
 
-  var b2Vector = [(bVector[0] * abScalarProduct) / bDivisor,
-                  (bVector[1] * abScalarProduct) / bDivisor];
+  var b2Vector = [
+    (bVector[0] * abScalarProduct) / bDivisor,
+    (bVector[1] * abScalarProduct) / bDivisor
+  ];
 
   return [b2Vector[0] + origin[0], b2Vector[1] + origin[1]];
 };
