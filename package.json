@@ -38,7 +38,7 @@
     "eslint-config-openlayers": "5.0.0",
     "floatthead": "1.4.5",
     "font-awesome": "4.7.0",
-    "fs-extra": "0.30.0",
+    "fs-extra": "1.0.0",
     "gaze": "1.1.2",
     "jasmine-core": "2.5.2",
     "jquery": "2.2.4",
