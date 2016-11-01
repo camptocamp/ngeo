@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>ObjectEditing - Hub</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="../../../third-party/jquery-ui/jquery-ui.min.css">
+    <style>
+      .gmf-oe-hub-form {
+        padding: 10px;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+
+    <p id="desc">
+      This example serves as a hub for other examples and applications
+      that uses the ObjectEditing tools. You need to be logged in too.
+    </p>
+
+    <div class='gmf-oe-hub-form'>
+      <div class="form-group">
+        <select
+          class="form-control"
+          ng-model="ctrl.selectedUrl"
+          ng-options="url as url for url in ctrl.urls">
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select
+          class="form-control"
+          ng-model="ctrl.selectedGmfLayerNode"
+          ng-options="gmfTreeNode.layers | translate for gmfTreeNode in ctrl.gmfLayerNodes">
+        <option value="" translate>-- Choose a layer --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select
+          class="form-control"
+          ng-model="ctrl.selectedFeature"
+          ng-options="feature.get('name') | translate for feature in ctrl.features">
+        <option value="">-- Choose a feature --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <button
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null"
+          ng-click="ctrl.run()"
+          type="button"
+          class="form-control btn btn-primary"
+          aria-label="Left Align">
+          </span> Launch
+        </button>
+      </div>
+
+    </div>
+
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../../../node_modules/angular/angular.js"></script>
+    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
+    <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
+    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+    <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
+    <script src="../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
+    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
+    <script src="../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
+    <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
+    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
+    <script src="/@?main=objectediting-hub.js"></script>
+    <script src="default.js"></script>
+    <script src="../../../utils/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('defaultTheme', 'OSM');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>
