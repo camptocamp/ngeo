@@ -1,71 +1,28 @@
 <!DOCTYPE html>
 <html ng-app='app'>
   <head>
-    <title>ObjectEditing - Hub</title>
+    <title>ObjectEditing example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
     <link rel="stylesheet" href="../../../third-party/jquery-ui/jquery-ui.min.css">
     <style>
-      .gmf-oe-hub-form {
-        padding: 10px;
-        width: 300px;
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
       }
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
-
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
     <p id="desc">
-      This example serves as a hub for other examples and applications
-      that uses the ObjectEditing tools. You need to be logged in too.
+      This example shows how to use the <code>gmf-objectediting</code>
+      directive to edit a single feature with advanced editing tools.
     </p>
-
-    <div class='gmf-oe-hub-form'>
-      <div class="form-group">
-        <select
-          class="form-control"
-          ng-model="ctrl.selectedUrl"
-          ng-options="url as url for url in ctrl.urls">
-        </select>
-      </div>
-
-      <div class="form-group">
-        <select
-          class="form-control"
-          ng-model="ctrl.selectedGmfLayerNode"
-          ng-options="gmfTreeNode.layers | translate for gmfTreeNode in ctrl.gmfLayerNodes">
-        <option value="" translate>-- Choose a layer --</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <select
-          class="form-control"
-          ng-model="ctrl.selectedFeature"
-          ng-options="feature.get('name') | translate for feature in ctrl.features">
-        <option value="">-- Choose a feature --</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <button
-          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === null"
-          ng-click="ctrl.run()"
-          type="button"
-          class="form-control btn btn-primary"
-          aria-label="Left Align">
-          </span> Launch
-        </button>
-      </div>
-
-    </div>
-
     <script src="../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
-    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../../../node_modules/angular/angular.js"></script>
     <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
     <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
@@ -77,7 +34,7 @@
     <script src="../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
     <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
     <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
-    <script src="/@?main=objectediting-hub.js"></script>
+    <script src="/@?main=objectediting.js"></script>
     <script src="default.js"></script>
     <script src="../../../utils/watchwatchers.js"></script>
     <script>

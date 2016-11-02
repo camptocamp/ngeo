@@ -103,6 +103,12 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
         attribute.geomType = ol.geom.GeometryType.LINE_STRING;
       } else if (/^gml:Polygon/.exec(type)) {
         attribute.geomType = ol.geom.GeometryType.POLYGON;
+      } else if (/^gml:MultiPoint/.exec(type)) {
+        attribute.geomType = ol.geom.GeometryType.MULTI_POINT;
+      } else if (/^gml:MultiLineString/.exec(type)) {
+        attribute.geomType = ol.geom.GeometryType.MULTI_LINE_STRING;
+      } else if (/^gml:MultiPolygon/.exec(type)) {
+        attribute.geomType = ol.geom.GeometryType.MULTI_POLYGON;
       }
     } else if (type === 'xsd:string') {
       attribute.type = ngeo.format.XSDAttributeType.TEXT;
