@@ -17,10 +17,32 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+
+    <input type="checkbox"
+       id="checkbox-objectediting"
+       ng-model="ctrl.objectEditingActive" />
+    <label for="checkbox-objectediting"> ObjectEditing</label>
+
+    <input type="checkbox"
+       id="checkbox-dummy"
+       ng-model="ctrl.dummyActive" />
+    <label for="checkbox-dummy"> Dummy tool</label>
+
+    <h2>ObjectEditing</h2>
+
+    <gmf-objectediting
+      ng-if="ctrl.objectEditingFeature"
+      ng-show="ctrl.objectEditingActive === true"
+      gmf-objectediting-active="ctrl.objectEditingActive"
+      gmf-objectediting-feature-="ctrl.objectEditingFeature"
+      gmf-objectediting-map="::ctrl.map">
+    </gmf-objectediting>
+
     <p id="desc">
       This example shows how to use the <code>gmf-objectediting</code>
       directive to edit a single feature with advanced editing tools.
     </p>
+
     <script src="../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
     <script src="../../../node_modules/angular/angular.js"></script>

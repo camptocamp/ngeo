@@ -1,8 +1,10 @@
 goog.provide('gmf-objectediting');
 
 goog.require('gmf.mapDirective');
-/** @suppress {extraRequire} */
+goog.require('gmf.objecteditingDirective');
 goog.require('gmf.ObjectEditingManager');
+goog.require('ngeo.ToolActivate');
+goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -27,9 +29,13 @@ app.module.value('gmfLayersUrl',
 
 
 /**
+ * @param {gmf.ObjectEditingManager} gmfObjectEditingManager The gmf
+ *     ObjectEditing manager service.
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ *     service.
  * @constructor
  */
-app.MainController = function() {
+app.MainController = function(gmfObjectEditingManager, ngeoToolActivateMgr) {
 
   var projection = ol.proj.get('EPSG:21781');
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
@@ -51,6 +57,38 @@ app.MainController = function() {
       zoom: 2
     })
   });
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.objectEditingActive = true;
+
+  var objectEditingToolActivate = new ngeo.ToolActivate(
+    this, 'objectEditingActive');
+  ngeoToolActivateMgr.registerTool(
+    'mapTools', objectEditingToolActivate, true);
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.dummyActive = false;
+
+  var dummyToolActivate = new ngeo.ToolActivate(
+    this, 'dummyActive');
+  ngeoToolActivateMgr.registerTool(
+    'mapTools', dummyToolActivate, false);
+
+  /**
+   * @type {?ol.Feature}
+   * @export
+   */
+  this.objectEditingFeature = null;
+
+  gmfObjectEditingManager.getFeature().then(function(feature) {
+    this.objectEditingFeature = feature;
+  }.bind(this));
 
 };
 
