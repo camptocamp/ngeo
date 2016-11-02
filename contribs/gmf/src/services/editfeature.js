@@ -14,10 +14,11 @@ goog.require('ol.format.GeoJSON');
  * @constructor
  * @struct
  * @param {angular.$http} $http Angular http service.
- * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
+ * @param {angular.$injector} $injector Main injector.
+ * @param {angular.$q} $q Angular $q service.
  * @ngInject
  */
-gmf.EditFeature = function($http, gmfLayersUrl) {
+gmf.EditFeature = function($http, $injector, $q) {
 
   /**
    * @type {angular.$http}
@@ -26,10 +27,21 @@ gmf.EditFeature = function($http, gmfLayersUrl) {
   this.http_ = $http;
 
   /**
-   * @type {string}
+   * @type {angular.$q}
    * @private
    */
-  this.baseUrl_ = gmfLayersUrl;
+  this.q_ = $q;
+
+  /**
+   * Url to the GeoMapFish layers service. Required in applications that use:
+   * - the editfeature tools
+   * - the objectediting tools
+   *
+   * @type {?string}
+   * @private
+   */
+  this.baseUrl_ = $injector.has('gmfLayersUrl') ?
+    $injector.get('gmfLayersUrl') : null;
 
 };
 
@@ -44,6 +56,7 @@ gmf.EditFeature = function($http, gmfLayersUrl) {
  * @export
  */
 gmf.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
+  goog.asserts.assert(this.baseUrl_, 'GMF layers url must be defined');
   var ids = layerIds.join(',');
   var url = goog.uri.utils.appendParam(
     goog.uri.utils.appendPath(this.baseUrl_, ids),
@@ -58,6 +71,11 @@ gmf.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
  * Build a query to the MapFish protocol to fetch features from a list
  * of layer ids and a list of comparison filters.
  *
+ * This method is called in the ObjectEditing service, which is injected in
+ * the permalink service, i.e. it's always called. Since we don't have to
+ * define the url to the GMF Protocol (layers) a dummy promise returns an
+ * empty array of features if the url is not defined.
+ *
  * @param {Array.<number>} layerIds List of layer ids to get the features from.
  * @param {Array.<gmfx.ComparisonFilter>} filters List of comparison filters
  * @return {angular.$q.Promise} Promise.
@@ -67,28 +85,35 @@ gmf.EditFeature.prototype.getFeaturesWithComparisonFilters = function(
   layerIds, filters
 ) {
 
-  goog.asserts.assert(filters.length, 'Should have at least one filter.');
+  if (this.baseUrl_) {
+    goog.asserts.assert(filters.length, 'Should have at least one filter.');
 
-  var ids = layerIds.join(',');
+    var ids = layerIds.join(',');
 
-  var properties = [];
-  var params = {};
+    var properties = [];
+    var params = {};
 
-  var filter;
-  for (var i = 0, ii = filters.length; i < ii; i++) {
-    filter = filters[i];
-    params[filter.property + '__' + filter.operator] = filter.value;
-    properties.push(filter.property);
+    var filter;
+    for (var i = 0, ii = filters.length; i < ii; i++) {
+      filter = filters[i];
+      params[filter.property + '__' + filter.operator] = filter.value;
+      properties.push(filter.property);
+    }
+
+    params['queryable'] = properties.join(',');
+
+    var url = ol.uri.appendParams(
+      goog.uri.utils.appendPath(this.baseUrl_, ids),
+      params
+    );
+
+    return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
+  } else {
+    // Dummy promise
+    var deferred = this.q_.defer();
+    deferred.resolve([]);
+    return deferred.promise;
   }
-
-  params['queryable'] = properties.join(',');
-
-  var url = ol.uri.appendParams(
-    goog.uri.utils.appendPath(this.baseUrl_, ids),
-    params
-  );
-
-  return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
 
 
@@ -109,6 +134,7 @@ gmf.EditFeature.prototype.handleGetFeatures_ = function(resp) {
  * @export
  */
 gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
+  goog.asserts.assert(this.baseUrl_, 'GMF layers url must be defined');
   var url = goog.uri.utils.appendPath(this.baseUrl_, layerId.toString());
   var geoJSON = new ol.format.GeoJSON().writeFeatures(features);
   return this.http_.post(url, geoJSON, {
@@ -125,6 +151,7 @@ gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
  * @export
  */
 gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
+  goog.asserts.assert(this.baseUrl_, 'GMF layers url must be defined');
   var url = goog.uri.utils.appendPath(
     this.baseUrl_,
     layerId.toString() + '/' + feature.getId()
@@ -144,6 +171,7 @@ gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
  * @export
  */
 gmf.EditFeature.prototype.deleteFeature = function(layerId, feature) {
+  goog.asserts.assert(this.baseUrl_, 'GMF layers url must be defined');
   var url = goog.uri.utils.appendPath(
     this.baseUrl_,
     layerId.toString() + '/' + feature.getId()
