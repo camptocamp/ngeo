@@ -1,6 +1,7 @@
 goog.provide('gmf.Themes');
 goog.provide('gmf.ThemesEventType');
 
+goog.require('goog.asserts');
 goog.require('gmf');
 goog.require('ngeo.LayerHelper');
 goog.require('ol.array');
@@ -424,6 +425,7 @@ gmf.Themes.prototype.getBackgroundLayersObject = function() {
 /**
  * Get the `ogcServers` object.
  * @return {angular.$q.Promise.<gmfThemes.GmfOgcServers>} Promise.
+ * @export
  */
 gmf.Themes.prototype.getOgcServersObject = function() {
   goog.asserts.assert(this.promise_ !== null);
