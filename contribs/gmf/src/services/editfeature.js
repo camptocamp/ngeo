@@ -7,7 +7,7 @@ goog.require('ol.format.GeoJSON');
 
 /**
  * Service that provides methods to get, insert, update and delete vector
- * features with the use of a GeoMapFish server as back-end.
+ * features with the use of a GeoMapFish Protocol as back-end.
  *
  * The GeoJSON format is used when obtaining or sending features.
  *
@@ -35,18 +35,59 @@ gmf.EditFeature = function($http, gmfLayersUrl) {
 
 
 /**
+ * Build a query to the MapFish protocol to fetch features from a list
+ * of layer ids inside a specified extent.
+ *
  * @param {Array.<number>} layerIds List of layer ids to get the features from.
  * @param {ol.Extent} extent The extent where to get the features from.
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.EditFeature.prototype.getFeatures = function(layerIds, extent) {
+gmf.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
   var ids = layerIds.join(',');
   var url = goog.uri.utils.appendParam(
     goog.uri.utils.appendPath(this.baseUrl_, ids),
     'bbox',
     extent.join(',')
   );
+  return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
+};
+
+
+/**
+ * Build a query to the MapFish protocol to fetch features from a list
+ * of layer ids and a list of comparison filters.
+ *
+ * @param {Array.<number>} layerIds List of layer ids to get the features from.
+ * @param {Array.<gmfx.ComparisonFilter>} filters List of comparison filters
+ * @return {angular.$q.Promise} Promise.
+ * @export
+ */
+gmf.EditFeature.prototype.getFeaturesWithComparisonFilters = function(
+  layerIds, filters
+) {
+
+  goog.asserts.assert(filters.length, 'Should have at least one filter.');
+
+  var ids = layerIds.join(',');
+
+  var properties = [];
+  var params = {};
+
+  var filter;
+  for (var i = 0, ii = filters.length; i < ii; i++) {
+    filter = filters[i];
+    params[filter.property + '__' + filter.operator] = filter.value;
+    properties.push(filter.property);
+  }
+
+  params['queryable'] = properties.join(',');
+
+  var url = ol.uri.appendParams(
+    goog.uri.utils.appendPath(this.baseUrl_, ids),
+    params
+  );
+
   return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
 

@@ -11,6 +11,39 @@
  */
 var gmfx;
 
+
+/**
+ * @typedef {{
+ *     operator: (string),
+ *     property: (string),
+ *     value: (string)
+ * }}
+ */
+gmfx.ComparisonFilter;
+
+
+/**
+ * The type of operator for the comparison filter.
+ * @type {string}
+ */
+gmfx.ComparisonFilter.prototype.operator;
+
+
+/**
+ * The name of the property for the comparison filter.
+ * @type {string}
+ */
+gmfx.ComparisonFilter.prototype.property;
+
+
+/**
+ * The value for the comparison filter that must match the combinaison of
+ * the operator and property.
+ * @type {string}
+ */
+gmfx.ComparisonFilter.prototype.value;
+
+
 /**
  * A part of the application config.
  * @typedef {{

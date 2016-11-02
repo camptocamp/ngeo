@@ -52,7 +52,7 @@ app.MainController = function($http, $q, $scope, gmfThemes) {
    * @export
    */
   this.urls = [
-    'authentication.html'
+    'objectediting.html'
   ];
 
   /**
@@ -179,7 +179,7 @@ app.MainController = function($http, $q, $scope, gmfThemes) {
 app.MainController.prototype.run = function() {
 
   var feature = this.selectedFeature;
-  var layer = this.selectedGmfLayerNode.name;
+  var layer = this.selectedGmfLayerNode.id;
   var property = 'name';
   var id = feature.get(property);
 

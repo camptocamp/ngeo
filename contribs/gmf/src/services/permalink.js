@@ -2,6 +2,7 @@ goog.provide('gmf.Permalink');
 
 goog.require('gmf');
 goog.require('ngeo.AutoProjection');
+goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
 goog.require('gmf.ThemeManager');
 goog.require('gmf.TreeManager');
@@ -72,6 +73,8 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
+ * @param {gmf.ObjectEditingManager} gmfObjectEditingManager The gmf
+ *     ObjectEditing manager service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.ThemeManager} gmfThemeManager The gmf ThemeManager service.
  * @param {gmf.TreeManager} gmfTreeManager The gmf gmfTreeManager service.
@@ -89,7 +92,8 @@ gmf.module.value('gmfPermalinkOptions',
  */
 gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     ngeoFeatureOverlayMgr, ngeoFeatureHelper, ngeoFeatures, ngeoLayerHelper,
-    ngeoStateManager, gmfThemes, gmfThemeManager, gmfTreeManager, gmfPermalinkOptions, defaultTheme,
+    ngeoStateManager, gmfObjectEditingManager, gmfThemes, gmfThemeManager,
+    gmfTreeManager, gmfPermalinkOptions, defaultTheme,
     ngeoLocation, ngeoWfsPermalink, ngeoAutoProjection, $rootScope, $injector) {
 
   // == listener keys ==
@@ -154,6 +158,16 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   if (gmfPermalinkOptions.useLocalStorage === false) {
     this.ngeoStateManager_.localStorage.isAvailable = ol.functions.FALSE;
   }
+
+  /**
+   * @type {gmf.ObjectEditingManager}
+   * @private
+   */
+  this.gmfObjectEditingManager_ = gmfObjectEditingManager;
+
+  gmfObjectEditingManager.getFeature().then(function(feature) {
+    console.log(feature);
+  });
 
   /**
    * @type {gmf.Themes}
