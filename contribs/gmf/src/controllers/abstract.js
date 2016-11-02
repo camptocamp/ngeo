@@ -110,12 +110,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.gmfThemes_ = $injector.get('gmfThemes');
 
   /**
-   * @type {string}
-   * @private
-   */
-  this.defaultTheme_ = $injector.get('defaultTheme');
-
-  /**
    * Authentication service
    * @type {gmf.Authentication}
    */
