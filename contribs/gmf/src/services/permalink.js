@@ -574,8 +574,8 @@ gmf.Permalink.prototype.setMap = function(map) {
   }
 
   if (map) {
+    this.map_ = map;
     this.gmfObjectEditingManager_.getFeature().then(function(feature) {
-      this.map_ = map;
       this.registerMap_(map, feature);
     }.bind(this));
   }
