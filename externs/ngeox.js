@@ -432,6 +432,7 @@ ngeox.QueryOptions.prototype.geometryName;
  *     infoFormat: (string|undefined),
  *     label: (string|undefined),
  *     layer: (ol.layer.Base|undefined),
+ *     layers: (string|undefined),
  *     params: (Object.<string, *>|undefined),
  *     serverType: (string|undefined),
  *     url: (string|undefined),
@@ -487,6 +488,14 @@ ngeox.QuerySource.prototype.label;
  * @type {ol.layer.Base|undefined}
  */
 ngeox.QuerySource.prototype.layer;
+
+
+/**
+ * A reference to the ol3 layers names. Multiple layers names can be separated
+ * by a comma.
+ * @type {string|undefined}
+ */
+ngeox.QuerySource.prototype.layers;
 
 
 /**

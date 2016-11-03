@@ -136,6 +136,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
   var meta = /** @type {gmfThemes.GmfMetaData} */ (node.metadata);
   var identifierAttributeField = meta.identifierAttributeField;
   var layers;
+  var childLayers;
   var name = node.name;
   var validateLayerParams = false;
   var gmfLayer = /** @type gmfThemes.GmfLayer */ (node);
@@ -157,6 +158,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
   if (gmfLayer.type === 'WMS') {
     gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
     layers = gmfLayerWMS.layers;
+    childLayers = layers;
     if (firstLevelGroup.mixed) {
       goog.asserts.assert(gmfLayerWMS.ogcServer);
       ogcServer = ogcServers[/** @type string */ (gmfLayerWMS.ogcServer)];
@@ -188,18 +190,20 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
             childLayerNames.push(childLayer.name);
           }
         }, this);
-        layers = childLayerNames.join(',');
+        childLayers = childLayerNames.join(',');
       }
     }
 
     goog.asserts.assert(ogcServer.urlWfs);
+    goog.asserts.assert(childLayers);
     goog.asserts.assert(layers);
 
     var source = {
       'id': id,
       'identifierAttributeField': identifierAttributeField,
       'label': name,
-      'params': {'LAYERS': layers},
+      'params': {'LAYERS': childLayers},
+      'layers': layers,
       'dimensions': node.dimensions || firstLevelGroup.dimensions,
       'url': ogcServer.urlWfs,
       'validateLayerParams': validateLayerParams,
