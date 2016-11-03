@@ -9,7 +9,9 @@ goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
+goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
+goog.require('ol.source.Vector');
 
 
 /** @const **/
@@ -41,6 +43,18 @@ app.MainController = function(gmfObjectEditingManager, ngeoToolActivateMgr) {
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
+   * @type {ol.source.Vector}
+   * @private
+   */
+  this.vectorSource_ = new ol.source.Vector({
+    wrapX: false
+  });
+
+  var vectorLayer = new ol.layer.Vector({
+    source: this.vectorSource_
+  });
+
+  /**
    * @type {ol.Map}
    * @export
    */
@@ -48,7 +62,8 @@ app.MainController = function(gmfObjectEditingManager, ngeoToolActivateMgr) {
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()
-      })
+      }),
+      vectorLayer
     ],
     view: new ol.View({
       projection: projection,
@@ -88,6 +103,9 @@ app.MainController = function(gmfObjectEditingManager, ngeoToolActivateMgr) {
 
   gmfObjectEditingManager.getFeature().then(function(feature) {
     this.objectEditingFeature = feature;
+    if (feature) {
+      this.vectorSource_.addFeature(feature);
+    }
   }.bind(this));
 
 };
