@@ -145,7 +145,8 @@ gmf.TreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
  * Add some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param {Array.<gmfThemes.GmfGroup>} firstLevelGroups An array of gmf theme group.
+ * @param {Array.<gmfThemes.GmfGroup>} firstLevelGroups An array of gmf theme
+ *     group.
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
  * @return{boolean} True if the group has been added. False otherwise.
@@ -156,7 +157,7 @@ gmf.TreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
   var groupNotAdded = [];
 
   firstLevelGroups.slice().reverse().forEach(function(group) {
-    if (!this.addFirstLevelGroup(group)) {
+    if (!this.addFirstLevelGroup_(group)) {
       groupNotAdded.push(group);
     }
   }.bind(this));
@@ -187,17 +188,18 @@ gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
  * Add it only if it's not already in the tree.
  * @param {gmfThemes.GmfGroup} group The group to add.
  * @return {boolean} true if the group has been added.
- * @export
+ * @private
  */
-gmf.TreeManager.prototype.addFirstLevelGroup = function(group) {
+gmf.TreeManager.prototype.addFirstLevelGroup_ = function(group) {
   var alreadyAdded = false;
+  var groupID = group.id;
   this.root.children.some(function(rootChild) {
-    if (group.id === rootChild.id) {
+    if (groupID === rootChild.id) {
       return alreadyAdded = true;
     }
   }, this);
   this.groupsToAddInThisDigestLoop_.some(function(grp) {
-    if (group.id === grp.id) {
+    if (groupID === grp.id) {
       return alreadyAdded = true;
     }
   }, this);

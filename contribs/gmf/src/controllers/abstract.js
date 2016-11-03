@@ -505,7 +505,9 @@ gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
     }
     if (themeName) {
       var theme = gmf.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
-      this.gmfThemeManager.addTheme(theme, true);
+      if (theme) {
+        this.gmfThemeManager.addTheme(theme, true);
+      }
     }
   }.bind(this));
 };

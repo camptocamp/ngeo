@@ -812,17 +812,22 @@ gmf.Permalink.prototype.initLayers_ = function() {
      * @type {Array<(gmfThemes.GmfGroup)>}
      */
     var firstLevelGroups = [];
+    var theme;
     // check if we have the groups in the permalink
     var groupsNames = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.TREE_GROUPS);
     if (!groupsNames) {
-      firstLevelGroups = gmf.Themes.findThemeByName(
+      theme = gmf.Themes.findThemeByName (
         themes, /** @type {string} */ (themeName)
-      ).children;
+      );
+      if (theme) {
+        firstLevelGroups = theme.children;
+      }
     } else {
       groupsNames.split(',').forEach(function(groupName) {
-        firstLevelGroups.push(gmf.Themes.findGroupByName(
-          themes, groupName
-        ));
+        var group = gmf.Themes.findGroupByName(themes, groupName);
+        if (group) {
+          firstLevelGroups.push(group);
+        }
       });
     }
 

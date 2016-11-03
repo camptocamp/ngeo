@@ -173,7 +173,7 @@ gmf.Themes.findGroupByName = function(themes, name) {
  * Find an object by its name. Return null if not found.
  * @param {Array.<T>} objects Array of objects with a 'name' attribute.
  * @param {string} objectName The object name.
- * @return {T} The object.
+ * @return {?T} The object or null.
  * @template T
  * @private
  */
@@ -188,7 +188,7 @@ gmf.Themes.findObjectByName_ = function(objects, objectName) {
  * Find a theme object by its name. Return null if not found.
  * @param {Array.<gmfThemes.GmfTheme>} themes Array of "theme" objects.
  * @param {string} themeName The theme name.
- * @return {gmfThemes.GmfTheme} The theme object.
+ * @return {?gmfThemes.GmfTheme} The theme object or null.
  */
 gmf.Themes.findThemeByName = function(themes, themeName) {
   return gmf.Themes.findObjectByName_(themes, themeName);
@@ -377,8 +377,8 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
       /**
        * @param {gmfThemes.GmfThemesResponse} data The "themes" web service
        *     response.
-       * @return {gmfThemes.GmfTheme} The theme object for themeName, or null if
-       *     not found.
+       * @return {gmfThemes.GmfTheme?} The theme object for themeName, or null
+       *     if not found.
        */
       function(data) {
         return gmf.Themes.findThemeByName(data.themes, themeName);

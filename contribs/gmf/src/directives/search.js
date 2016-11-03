@@ -805,7 +805,10 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
       var actionData = action['data'];
       if (actionName == 'add_theme') {
         this.gmfThemes_.getThemesObject().then(function(themes) {
-          this.gmfTreeManager_.addFirstLevelGroups(gmf.Themes.findThemeByName(themes, actionData).children);
+          var theme = gmf.Themes.findThemeByName(themes, actionData);
+          if (theme) {
+            this.gmfTreeManager_.addFirstLevelGroups(theme.children);
+          }
         }.bind(this));
       } else if (actionName == 'add_group') {
         this.gmfTreeManager_.addGroupByName(actionData, true);
