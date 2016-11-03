@@ -19,7 +19,7 @@ goog.require('ol.Map');
  *      <div>
  *      <input type="checkbox" ng-model="ctrl.open" />
  *
- * See our live example: {@link ../examples/animation.html}
+ * See our live example: [../examples/animation.html](../examples/animation.html)
  *
  * @param {angular.$window} $window Angular window service.
  * @return {angular.Directive} The directive specs.

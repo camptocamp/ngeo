@@ -15,7 +15,7 @@ goog.require('ngeo');
  *      <input type="file" ngeo-filereader="ctrl.fileContent"
  *        ngeo-filereader-supported="ctrl.supported"/>
  *
- * See our live example: {@link ../examples/importfeatures.html}
+ * See our live example: [../examples/importfeatures.html](../examples/importfeatures.html)
  *
  * @htmlAttribute {string} ngeo-filereader The content of the file read.
  * @htmlAttribute {boolean=} ngeo-filereader-supported Whether the FileReader API is supported.

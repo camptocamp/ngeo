@@ -29,7 +29,7 @@ goog.require('ngeo');
  * Note: for z-indexing purpose, the modal DOM element is automatically moved
  * to document body element.
  *
- * See our live example: {@link ../examples/modal.html}
+ * See our live example: [../examples/modal.html](../examples/modal.html)
  *
  * @param {angular.$parse} $parse Angular parse service.
  * @return {angular.Directive} The directive specs.

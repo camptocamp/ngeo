@@ -23,7 +23,7 @@ goog.require('ngeo');
  *        <option ngeo-extent="[727681, 5784754, 1094579, 6029353]">B</option>
  *      </select>
  *
- * See our live example: {@link ../examples/locationchooser.html}
+ * See our live example: [../examples/locationchooser.html](../examples/locationchooser.html)
  *
  * @htmlAttribute {ol.Map} ngeo-recenter-map The map.
  * @return {angular.Directive} Directive Definition Object.

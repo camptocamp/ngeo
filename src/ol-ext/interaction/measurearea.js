@@ -9,7 +9,7 @@ goog.require('ol.interaction.Draw');
  * @classdesc
  * Interaction dedicated to measure length.
  *
- * See our live example: {@link ../examples/measure.html}
+ * See our live example: [../examples/measure.html](../examples/measure.html)
  *
  * @constructor
  * @struct

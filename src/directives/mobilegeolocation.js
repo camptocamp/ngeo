@@ -34,7 +34,7 @@ ngeo.MobileGeolocationEventType = {
  *        ngeo-mobile-geolocation-options="ctrl.mobileGeolocationOptions">
  *      </button>
  *
- * See our live example: {@link ../examples/mobilegeolocation.html}
+ * See our live example: [../examples/mobilegeolocation.html](../examples/mobilegeolocation.html)
  *
  * @htmlAttribute {ol.Map} ngeo-mobile-geolocation-map The map.
  * @htmlAttribute {ngeox.MobileGeolocationDirectiveOptions} ngeo-mobile-geolocation-options The options.

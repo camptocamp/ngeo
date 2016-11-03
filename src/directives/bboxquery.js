@@ -25,7 +25,7 @@ goog.require('ol.interaction.DragBox');
  *        ngeo-bbox-query-autoclear="ctrl.queryAutoClear">
  *      </span>
  *
- * See the live example: {@link ../examples/bboxquery.html}
+ * See the live example: [../examples/bboxquery.html](../examples/bboxquery.html)
  *
  * @param {ngeo.Query} ngeoQuery The ngeo Query service.
  * @return {angular.Directive} The Directive Definition Object.

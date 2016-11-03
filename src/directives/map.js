@@ -14,8 +14,8 @@ goog.require('ol.Map');
  *      <div ngeo-map="ctrl.map"></div>
  *
  * See our live examples:
- * {@link ../examples/permalink.html}
- * {@link ../examples/simple.html}
+ * [../examples/permalink.html](../examples/permalink.html)
+ * [../examples/simple.html](../examples/simple.html)
  *
  * @htmlAttribute {ol.Map} ngeo-map The map.
  * @return {angular.Directive} Directive Definition Object.

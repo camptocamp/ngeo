@@ -9,7 +9,7 @@ goog.require('ngeo');
  * Provides a debounce service. That service is a function
  * used to debounce calls to a user-provided function.
  *
- * See our live example: {@link ../examples/permalink.html}
+ * See our live example: [../examples/permalink.html](../examples/permalink.html)
  *
  * @typedef {function(function(?), number, boolean):function()}
  * @ngdoc service
