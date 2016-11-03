@@ -255,6 +255,7 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   }.bind(this));
 };
 
+
 /**
  * @param {ngeo.LayertreeController} treeCtrl Layer tree controller.
  * @private
@@ -537,6 +538,37 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
       infoPopup.setOpen(true);
     });
   }
+};
+
+
+/**
+ * Update the layers order in the map and the treeCtrl in the treeManager after
+ * a reorder of the first-level groups.
+ * @export
+ */
+gmf.LayertreeController.prototype.syncTreeAndLayers = function() {
+  var groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
+  var currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
+  var treeCtrls = [];
+
+  // Get order of first-level groups for treectrl and layers;
+  groupNodes.forEach(function(node) {
+    currentTreeCtrls.some(function(treeCtrl) {
+      if (treeCtrl.node === node) {
+        treeCtrls.push(treeCtrl);
+        return;
+      }
+    });
+  }, this);
+
+  // Update gmfTreeManager rootctrl children order
+  this.gmfTreeManager_.rootCtrl.children = treeCtrls;
+
+  // Update map 'data' groupe layers order
+  this.layers.length = 0;
+  this.gmfTreeManager_.rootCtrl.children.forEach(function(child) {
+    this.layers.push(child.layer);
+  }, this);
 };
 
 

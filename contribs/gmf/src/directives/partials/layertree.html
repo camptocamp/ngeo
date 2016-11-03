@@ -5,7 +5,7 @@
 
   <div
     class="ngeo-sortable-handle"
-    ng-show="layertreeCtrl.depth === 1 && gmfLayertreeCtrl.layers.length > 1">
+    ng-show="layertreeCtrl.depth === 1 && layertreeCtrl.parent.children.length > 1">
     <i class="gmf-layertree-sortable-handle-icon fa fa-ellipsis-v"></i>
   </div>
 
@@ -180,8 +180,10 @@
   id="gmf-layertree-layer-group-{{::layertreeCtrl.uid}}"
   ng-if="::layertreeCtrl.node.children"
   ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded}"
-  ngeo-sortable="::layertreeCtrl.isRoot && gmfLayertreeCtrl.layers"
-  ngeo-sortable-options="{handleClassName: 'ngeo-sortable-handle', draggerClassName: 'gmf-layertree-dragger', currDragItemClassName : 'gmf-layertree-curr-drag-item'}">
+  ngeo-sortable="::layertreeCtrl.isRoot && layertreeCtrl.node.children"
+  ngeo-sortable-options="{handleClassName: 'ngeo-sortable-handle', draggerClassName: 'gmf-layertree-dragger', currDragItemClassName : 'gmf-layertree-curr-drag-item'}"
+  ngeo-sortable-callback="::gmfLayertreeCtrl.syncTreeAndLayers"
+  ngeo-sortable-callback-ctx="::gmfLayertreeCtrl">
 
   <li
     class="gmf-layertree-node"
