@@ -255,6 +255,7 @@ gmf.ObjecteditingController = function($scope, gettextCatalog, gmfEditFeature,
   this.toggle_(true);
   this.resetGeometryChanges_();
 
+  $scope.$on('$destroy', this.handleDestroy_.bind(this));
 };
 
 
@@ -395,6 +396,17 @@ gmf.ObjecteditingController.prototype.registerInteractions_ = function() {
 
 
 /**
+ * Unregister interactions, i.e. remove them from the map
+ * @private
+ */
+gmf.ObjecteditingController.prototype.unregisterInteractions_ = function() {
+  this.interactions_.forEach(function(interaction) {
+    this.map.removeInteraction(interaction);
+  }, this);
+};
+
+
+/**
  * Activate or deactivate this directive.
  * @param {boolean} active Whether to activate this directive or not.
  * @private
@@ -528,6 +540,19 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
   ];
 
 };
+
+
+/**
+ * @private
+ */
+gmf.ObjecteditingController.prototype.handleDestroy_ = function() {
+  this.features.clear();
+  this.toggle_(false);
+  this.unregisterInteractions_();
+};
+
+
+// == Static methods and type definitions ==
 
 
 /**
