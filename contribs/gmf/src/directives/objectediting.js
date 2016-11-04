@@ -9,6 +9,10 @@ goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.Collection');
 goog.require('ol.interaction.Modify');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
 
 
 /**
@@ -116,6 +120,32 @@ gmf.ObjecteditingController = function($scope, gmfEditFeature,
   this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
   /**
+   * @type {ngeo.FeatureHelper}
+   * @private
+   */
+  this.ngeoFeatureHelper_ = ngeoFeatureHelper;
+
+  /**
+   * @type {ngeo.ToolActivateMgr}
+   * @private
+   */
+  this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
+
+
+  // == Other properties ==
+
+  var geometry = this.feature.getGeometry();
+
+  /**
+   * The state of the feature determines whether the next 'save' request
+   * should be an 'insert' or 'update' one.
+   * @type {string}
+   * @private
+   */
+  this.state_ = geometry ? gmf.ObjecteditingController.State.UPDATE :
+    gmf.ObjecteditingController.State.INSERT;
+
+  /**
    * @type {Array.<?ol.geom.Geometry>}
    * @private
    */
@@ -137,36 +167,39 @@ gmf.ObjecteditingController = function($scope, gmfEditFeature,
   );
 
   /**
+   * @type {gmf.ObjecteditingController.Styles}
+   * @private
+   */
+  this.defaultStyles_ = {};
+  this.initializeStyles_(this.defaultStyles_, [39, 155, 145]);
+
+  /**
+   * @type {gmf.ObjecteditingController.Styles}
+   * @private
+   */
+  this.dirtyStyles_ = {};
+  this.initializeStyles_(this.dirtyStyles_, [153, 51, 51]);
+
+  /**
    * @type {boolean}
    * @private
    */
-  this.dirty = false; // FIXME
+  this.dirty = false;
 
-  /**
-   * @type {ngeo.FeatureHelper}
-   * @private
-   */
-  this.featureHelper_ = ngeoFeatureHelper;
-
-  /**
-   * @type {ngeo.ToolActivateMgr}
-   * @private
-   */
-  this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
-
-
-  // == Other properties ==
-
-  var geometry = this.feature.getGeometry();
-
-  /**
-   * The state of the feature determines whether the next 'save' request
-   * should be an 'insert' or 'update' one.
-   * @type {string}
-   * @private
-   */
-  this.state_ = geometry ? gmf.ObjecteditingController.State.UPDATE :
-    gmf.ObjecteditingController.State.INSERT;
+  $scope.$watch(
+    function() {
+      return this.dirty;
+    }.bind(this),
+    function(newVal, oldVal) {
+      var geometry = this.feature.getGeometry();
+      if (geometry) {
+        var geomType = geometry.getType();
+        var style = newVal ? this.dirtyStyles_[geomType] :
+            this.defaultStyles_[geomType];
+        this.feature.setStyle(style);
+      }
+    }.bind(this)
+  );
 
   /**
    * @type {Array.<ol.EventsKey>}
@@ -343,12 +376,90 @@ gmf.ObjecteditingController.prototype.handleModifyInteractionModifyEnd_ = functi
 
 
 /**
+ * @param {gmf.ObjecteditingController.Styles} styles Hash of style.
+ * @param {ol.Color} color Color.
+ * @private
+ */
+gmf.ObjecteditingController.prototype.initializeStyles_ = function(
+  styles, color
+) {
+
+  var rgbaColor = color.slice();
+  rgbaColor.push(0.3);
+
+  var image = new ol.style.Circle({
+    radius: 8,
+    stroke: new ol.style.Stroke({color: color, width: 1}),
+    fill: new ol.style.Fill({color: rgbaColor})
+  });
+
+  styles[ol.geom.GeometryType.POINT] = new ol.style.Style({
+    image: image
+  });
+  styles[ol.geom.GeometryType.MULTI_POINT] = new ol.style.Style({
+    image: image
+  });
+
+  styles[ol.geom.GeometryType.LINE_STRING] = [
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: color,
+        width: 3
+      })
+    }),
+    this.ngeoFeatureHelper_.getVertexStyle(true)
+  ];
+  styles[ol.geom.GeometryType.MULTI_LINE_STRING] = [
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: color,
+        width: 3
+      })
+    }),
+    this.ngeoFeatureHelper_.getVertexStyle(true)
+  ];
+
+  styles[ol.geom.GeometryType.POLYGON] = [
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: color,
+        width: 2
+      }),
+      fill: new ol.style.Fill({
+        color: rgbaColor
+      })
+    }),
+    this.ngeoFeatureHelper_.getVertexStyle(true)
+  ];
+  styles[ol.geom.GeometryType.MULTI_POLYGON] = [
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: color,
+        width: 2
+      }),
+      fill: new ol.style.Fill({
+        color: rgbaColor
+      })
+    }),
+    this.ngeoFeatureHelper_.getVertexStyle(true)
+  ];
+
+};
+
+
+/**
  * @enum {string}
  */
 gmf.ObjecteditingController.State = {
   INSERT: 'insert',
   UPDATE: 'update'
 };
+
+
+/**
+ * @typedef {Object.<string, ol.style.Style|Array.<ol.style.Style>>}
+ */
+gmf.ObjecteditingController.Styles;
 
 
 gmf.module.controller(
