@@ -17,6 +17,12 @@
       ng-disabled="!oeCtrl.dirty"
       title="{{'Undo latest modifications | translate'}}"
       href>{{'Undo' | translate}}</a>
+    <a
+      class="btn btn-sm btn-link gmf-objectediting-btn-delete"
+      ng-click="oeCtrl.delete()"
+      ng-disabled="oeCtrl.isStateInsert()"
+      title="{{'Delete the feature | translate'}}"
+      href>{{'Delete' | translate}}</a>
   </form>
 
 </div>

@@ -58,6 +58,7 @@ gmf.module.directive('gmfObjectediting', gmf.objecteditingDirective);
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
@@ -69,7 +70,7 @@ gmf.module.directive('gmfObjectediting', gmf.objecteditingDirective);
  * @ngdoc controller
  * @ngname GmfObjecteditingController
  */
-gmf.ObjecteditingController = function($scope, gmfEditFeature,
+gmf.ObjecteditingController = function($scope, gettextCatalog, gmfEditFeature,
     ngeoDecorateInteraction, ngeoFeatureHelper, ngeoToolActivateMgr) {
 
   // == Scope properties ==
@@ -106,6 +107,11 @@ gmf.ObjecteditingController = function($scope, gmfEditFeature,
    * @private
    */
   this.scope_ = $scope;
+
+  /**
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {gmf.EditFeature}
@@ -250,6 +256,28 @@ gmf.ObjecteditingController = function($scope, gmfEditFeature,
 
 
 /**
+ * Delete the feature after asking for a confirmation.
+ * @export
+ */
+gmf.ObjecteditingController.prototype.delete = function() {
+  var msg = this.gettextCatalog_.getString(
+      'Do you really want to delete the feature?');
+  // Confirm deletion first
+  if (confirm(msg)) {
+    this.dirty = false;
+
+    this.gmfEditFeature_.deleteFeature(
+      this.layerNodeId,
+      this.feature
+    ).then(
+      this.handleDeleteFeature_.bind(this)
+    );
+  }
+
+};
+
+
+/**
  * Save the current modifications.
  * @export
  */
@@ -291,7 +319,29 @@ gmf.ObjecteditingController.prototype.undo = function() {
 };
 
 
+/**
+ * Undo the latest modifications.
+ * @return {boolean} Whether the state is INSERT or not.
+ * @export
+ */
+gmf.ObjecteditingController.prototype.isStateInsert = function() {
+  return this.state_ == gmf.ObjecteditingController.State.INSERT;
+};
+
+
 // == Private methods ==
+
+
+/**
+ * Called after a delete request.
+ * @param {angular.$http.Response} resp Ajax response.
+ * @private
+ */
+gmf.ObjecteditingController.prototype.handleDeleteFeature_ = function(resp) {
+  this.feature.setGeometry(null);
+  this.resetGeometryChanges_();
+  this.state_ = gmf.ObjecteditingController.State.INSERT;
+};
 
 
 /**
