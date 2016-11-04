@@ -187,6 +187,12 @@ gmf.ObjecteditingController = function($scope, gettextCatalog, gmfEditFeature,
   this.initializeStyles_(this.dirtyStyles_, [153, 51, 51]);
 
   /**
+   * Flag that is toggled while a request is pending.
+   * @private
+   */
+  this.pending = false;
+
+  /**
    * @type {boolean}
    * @private
    */
@@ -265,6 +271,7 @@ gmf.ObjecteditingController.prototype.delete = function() {
   // Confirm deletion first
   if (confirm(msg)) {
     this.dirty = false;
+    this.pending = true;
 
     this.gmfEditFeature_.deleteFeature(
       this.layerNodeId,
@@ -282,6 +289,9 @@ gmf.ObjecteditingController.prototype.delete = function() {
  * @export
  */
 gmf.ObjecteditingController.prototype.save = function() {
+
+  this.pending = true;
+
   if (this.state_ === gmf.ObjecteditingController.State.INSERT) {
     this.gmfEditFeature_.insertFeatures(
       this.layerNodeId,
@@ -341,6 +351,7 @@ gmf.ObjecteditingController.prototype.handleDeleteFeature_ = function(resp) {
   this.feature.setGeometry(null);
   this.resetGeometryChanges_();
   this.state_ = gmf.ObjecteditingController.State.INSERT;
+  this.pending = false;
 };
 
 
@@ -356,6 +367,7 @@ gmf.ObjecteditingController.prototype.handleEditFeature_ = function(resp) {
   } else {
     this.state_ = gmf.ObjecteditingController.State.INSERT;
   }
+  this.pending = false;
 };
 
 
