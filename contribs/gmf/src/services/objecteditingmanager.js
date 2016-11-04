@@ -90,6 +90,16 @@ gmf.ObjectEditingManager.prototype.getFeature = function() {
 
 
 /**
+ * @return {?number} The gmf layer node id.
+ * @export
+ */
+gmf.ObjectEditingManager.prototype.getLayerNodeId = function() {
+  return this.ngeoLocation_.getParamAsInt(
+    gmf.ObjectEditingManager.Param.LAYER) || null;
+};
+
+
+/**
  * Called after getting features with comparison filters. Resolve the defered
  * promise with the first returned feature (if any), otherwise resolve it
  * with a feature created with an empty geometry and the property key + value

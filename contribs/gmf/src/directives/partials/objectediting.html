@@ -1,1 +1,16 @@
-<div>ObjectEditing</div>
+<div>
+
+  <form
+    novalidate
+    name="form"
+    class="form gmf-objectediting-form">
+    <input
+      type="submit"
+      value="{{'Save' | translate}}"
+      class="btn btn-sm btn-default gmf-objectediting-btn-save"
+      ng-click="form.$valid && oeCtrl.save()"
+      ng-disabled="!oeCtrl.dirty"
+      title="{{'Save modifications | translate'}}"></input>
+  </form>
+
+</div>

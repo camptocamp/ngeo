@@ -74,6 +74,12 @@ app.MainController = function(gmfObjectEditingManager, ngeoToolActivateMgr) {
   });
 
   /**
+   * @type {?number}
+   * @export
+   */
+  this.objectEditingLayerNodeId = gmfObjectEditingManager.getLayerNodeId();
+
+  /**
    * @type {boolean}
    * @export
    */
