@@ -256,6 +256,7 @@ gmf.ObjecteditingController = function($scope, gettextCatalog, gmfEditFeature,
   this.resetGeometryChanges_();
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
+
 };
 
 
@@ -426,6 +427,15 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
       )
     );
 
+    keys.push(
+      ol.events.listen(
+        window,
+        'beforeunload',
+        this.handleWindowBeforeUnload_,
+        this
+      )
+    );
+
   } else {
 
     keys.forEach(function(key) {
@@ -539,6 +549,23 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     this.ngeoFeatureHelper_.getVertexStyle(true)
   ];
 
+};
+
+
+/**
+ * Called before the window unloads. Show a confirmation message if there are
+ * unsaved modifications.
+ * @param {Event} e Event.
+ * @return {string} Message
+ * @private
+ */
+gmf.ObjecteditingController.prototype.handleWindowBeforeUnload_ = function(e) {
+  if (this.dirty) {
+    var msg = this.gettextCatalog_.getString('There are unsaved changes.');
+    (e || window.event).returnValue = msg;
+    return msg;
+  }
+  return '';
 };
 
 
