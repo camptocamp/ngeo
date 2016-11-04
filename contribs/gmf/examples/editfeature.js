@@ -146,7 +146,7 @@ app.MainController.prototype.handleMapSingleClick_ = function(evt) {
     buffer
   );
 
-  this.editFeature_.getFeatures([this.layerId_], extent).then(
+  this.editFeature_.getFeaturesInExtent([this.layerId_], extent).then(
     this.handleGetFeatures_.bind(this));
 
   // (2) Clear any previously selected feature
