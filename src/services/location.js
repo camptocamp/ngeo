@@ -128,11 +128,12 @@ ngeo.Location.prototype.getParam = function(key) {
 /**
  * Get a param from the fragment of the location's URI.
  * @param {string} key Param key.
- * @return {string} Param value.
+ * @return {string|undefined} Param value.
  * @export
  */
 ngeo.Location.prototype.getFragmentParam = function(key) {
-  return /** @type {string} */ (this.getFragmentUri_().getQueryData().get(key));
+  var val = /** @type {string} */ (this.getFragmentUri_().getQueryData().get(key));
+  return val !== undefined ? goog.string.urlDecode(val) : undefined;
 };
 
 
@@ -240,6 +241,7 @@ ngeo.Location.prototype.updateFragmentParams = function(params) {
   var fragmentUri = this.getFragmentUri_();
   var qd = fragmentUri.getQueryData();
   goog.object.forEach(params, function(val, key) {
+    val = val !== undefined ? goog.string.urlEncode(val) : undefined;
     qd.set(key, val);
   });
   this.updateFragmentFromUri_(fragmentUri);

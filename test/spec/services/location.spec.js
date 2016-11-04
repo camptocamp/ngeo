@@ -120,6 +120,11 @@ describe('ngeo.Location', function() {
         var value = ngeoLocation.getFragmentParam('key1');
         expect(value).toBe('value1');
       });
+
+      it('returns undefined for missing keys', function() {
+        var value = ngeoLocation.getFragmentParam('no-existing-key');
+        expect(value).toBe(undefined);
+      });
     });
 
     describe('#getFragmentParamAsInt', function() {
@@ -158,6 +163,12 @@ describe('ngeo.Location', function() {
         ngeoLocation.updateFragmentParams({'key1': 'new value'});
         var value = ngeoLocation.getFragmentParam('key1');
         expect(value).toBe('new value');
+      });
+
+      it('updates an existing param key with special chars', function() {
+        ngeoLocation.updateFragmentParams({'key1': '6+,7a+'});
+        var value = ngeoLocation.getFragmentParam('key1');
+        expect(value).toBe('6+,7a+');
       });
 
       it('adds a new param key', function() {
