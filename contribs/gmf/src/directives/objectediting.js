@@ -273,6 +273,28 @@ gmf.ObjecteditingController.prototype.save = function() {
 
 
 /**
+ * Undo the latest modifications.
+ * @export
+ */
+gmf.ObjecteditingController.prototype.undo = function() {
+
+  if (this.geometryChanges_.length <= 1) {
+    return;
+  }
+
+  this.geometryChanges_.pop();
+  var clone = gmf.ObjecteditingController.cloneGeometry_(
+    this.geometryChanges_[this.geometryChanges_.length - 1]);
+
+  this.feature.setGeometry(clone);
+
+};
+
+
+// == Private methods ==
+
+
+/**
  * Called after an 'insert' or 'update' request.
  * @param {angular.$http.Response} resp Ajax response.
  * @private
@@ -343,20 +365,19 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
 
 
 /**
- * Reset the array of geometry changes.  If the array is empty, that means
- * the array hasn't been initialized yet. If there's only one item, no need
- * to do anything (i.e. the geometry in there is the same as the feature).
- * If there's more than one, that means there's mo
+ * Reset the array of geometry changes.  If there are more than one changes,
+ * reset them entirely. Then, if there's no changes, clone the current geometry
+ * as the first entry. One entry means that there's no changes.
  * @private
  */
 gmf.ObjecteditingController.prototype.resetGeometryChanges_ = function() {
-  if (this.geometryChanges_.length === 0) {
-    this.geometryChanges_.push(this.feature.getGeometry());
-  } else if (this.geometryChanges_.length > 1) {
-    var firstGeom = this.geometryChanges_[0];
-    this.feature.setGeometry(firstGeom);
+  if (this.geometryChanges_.length > 1) {
     this.geometryChanges_.length = 0;
-    this.geometryChanges_.push(firstGeom);
+  }
+  if (this.geometryChanges_.length === 0) {
+    var geometry = this.feature.getGeometry();
+    var clone = gmf.ObjecteditingController.cloneGeometry_(geometry);
+    this.geometryChanges_.push(clone);
   }
 };
 
@@ -368,9 +389,9 @@ gmf.ObjecteditingController.prototype.resetGeometryChanges_ = function() {
 gmf.ObjecteditingController.prototype.handleModifyInteractionModifyEnd_ = function(
   evt
 ) {
-  this.geometryChanges_.push(
-    this.feature.getGeometry()
-  );
+  var geometry = this.feature.getGeometry();
+  var clone = gmf.ObjecteditingController.cloneGeometry_(geometry);
+  this.geometryChanges_.push(clone);
   this.scope_.$apply();
 };
 
@@ -444,6 +465,24 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     this.ngeoFeatureHelper_.getVertexStyle(true)
   ];
 
+};
+
+
+/**
+ * Utility method that gets the clone of a geometry, which can be null or
+ * undefined. In the latter case, a null value is returned instead of a
+ * geometry.
+ * @param {ol.geom.Geometry|null|undefined} geometry A geometry, undefined or
+ *     null value.
+ * @return {?ol.geom.Geometry} A geometry clone or null value.
+ * @private
+ */
+gmf.ObjecteditingController.cloneGeometry_ = function(geometry) {
+  var clone = null;
+  if (geometry) {
+    clone = geometry.clone();
+  }
+  return clone;
 };
 
 

@@ -11,6 +11,12 @@
       ng-click="form.$valid && oeCtrl.save()"
       ng-disabled="!oeCtrl.dirty"
       title="{{'Save modifications | translate'}}"></input>
+    <a
+      class="btn btn-sm btn-link gmf-objectediting-btn-undo"
+      ng-click="oeCtrl.undo()"
+      ng-disabled="!oeCtrl.dirty"
+      title="{{'Undo latest modifications | translate'}}"
+      href>{{'Undo' | translate}}</a>
   </form>
 
 </div>
