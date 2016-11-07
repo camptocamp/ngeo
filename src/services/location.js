@@ -4,6 +4,7 @@ goog.provide('ngeo.MockLocationProvider');
 goog.require('goog.Uri');
 goog.require('goog.object');
 goog.require('ngeo');
+goog.require('ngeo.string');
 
 
 /**
@@ -133,7 +134,7 @@ ngeo.Location.prototype.getParam = function(key) {
  */
 ngeo.Location.prototype.getFragmentParam = function(key) {
   var val = /** @type {string} */ (this.getFragmentUri_().getQueryData().get(key));
-  return val !== undefined ? goog.string.urlDecode(val) : undefined;
+  return val !== undefined ? ngeo.string.urlDecode(val) : undefined;
 };
 
 
@@ -241,7 +242,7 @@ ngeo.Location.prototype.updateFragmentParams = function(params) {
   var fragmentUri = this.getFragmentUri_();
   var qd = fragmentUri.getQueryData();
   goog.object.forEach(params, function(val, key) {
-    val = val !== undefined ? goog.string.urlEncode(val) : undefined;
+    val = val !== undefined ? ngeo.string.urlEncode(val) : undefined;
     qd.set(key, val);
   });
   this.updateFragmentFromUri_(fragmentUri);
