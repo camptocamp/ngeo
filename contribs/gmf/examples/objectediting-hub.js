@@ -4,6 +4,7 @@ goog.require('ngeo.proj.EPSG21781');
 goog.require('gmf');
 goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
+goog.require('gmf.XSDAttributes');
 goog.require('ol.format.WFS');
 
 
@@ -19,14 +20,19 @@ app.module.value('gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
 
 
+app.module.value('gmfLayersUrl',
+    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
+
+
 /**
  * @param {angular.$http} $http Angular $http service.
  * @param {angular.$q} $q Angular $q service.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {gmf.Themes} gmfThemes The gmf themes service.
+ * @param {gmf.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
  * @constructor
  */
-app.MainController = function($http, $q, $scope, gmfThemes) {
+app.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {angular.$http}
@@ -45,6 +51,12 @@ app.MainController = function($http, $q, $scope, gmfThemes) {
    * @private
    */
   this.gmfThemes_ = gmfThemes;
+
+  /**
+   * @type {gmf.XSDAttributes}
+   * @private
+   */
+  this.gmfXSDAttributes_ = gmfXSDAttributes;
 
   /**
    * @type {Array.<string>} List of example and application urls that contain
@@ -103,6 +115,18 @@ app.MainController = function($http, $q, $scope, gmfThemes) {
    */
   this.selectedFeature = null;
 
+  /**
+   * @type {Object.<number, string>}
+   * @export
+   */
+  this.geomTypeCache_ = {};
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.selectedGeomType = null;
+
   $scope.$watch(
     function() {
       return this.selectedGmfLayerNode;
@@ -113,6 +137,9 @@ app.MainController = function($http, $q, $scope, gmfThemes) {
       if (newVal) {
         this.getFeatures_(newVal).then(
           this.handleGetFeatures_.bind(this, newVal)
+        );
+        this.getGeometryType_(newVal).then(
+          this.handleGetGeometryType_.bind(this, newVal)
         );
       }
     }.bind(this)
@@ -178,12 +205,14 @@ app.MainController = function($http, $q, $scope, gmfThemes) {
  */
 app.MainController.prototype.run = function() {
 
+  var geomType = this.selectedGeomType;
   var feature = this.selectedFeature;
   var layer = this.selectedGmfLayerNode.id;
   var property = 'name';
   var id = feature.get(property);
 
   var params = {};
+  params[gmf.ObjectEditingManager.Param.GEOM_TYPE] = geomType;
   params[gmf.ObjectEditingManager.Param.ID] = id;
   params[gmf.ObjectEditingManager.Param.LAYER] = layer;
   params[gmf.ObjectEditingManager.Param.THEME] = this.themeName;
@@ -264,6 +293,74 @@ app.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
   var id = gmfLayerNode.id;
   var features = this.featuresCache_[id] || null;
   return features;
+};
+
+
+/**
+ * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @return {angular.$q.Promise} The promise attached to the deferred object.
+ * @export
+ */
+app.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
+
+  this.getGeometryTypeDeferred_ = this.q_.defer();
+
+  var geomType = this.getGeometryTypeFromCache_(gmfLayerNode);
+
+  if (geomType) {
+    this.getGeometryTypeDeferred_.resolve();
+  } else {
+    this.issueGetAttributesRequest_(gmfLayerNode);
+  }
+
+  return this.getGeometryTypeDeferred_.promise;
+};
+
+
+/**
+ * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @export
+ */
+app.MainController.prototype.issueGetAttributesRequest_ = function(
+  gmfLayerNode
+) {
+
+  this.gmfXSDAttributes_.getAttributes(gmfLayerNode.id).then(
+    function(gmfLayerNode, attributes) {
+      // Get geom type from attributes and set
+      var geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(attributes);
+      if (geomAttr && geomAttr.geomType) {
+        this.geomTypeCache_[gmfLayerNode.id] = geomAttr.geomType;
+        this.getGeometryTypeDeferred_.resolve();
+      }
+    }.bind(this, gmfLayerNode)
+  );
+
+};
+
+
+/**
+ * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @export
+ */
+app.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
+  var geomType = /** @type {string} */ (
+    this.getGeometryTypeFromCache_(gmfLayerNode));
+  this.selectedGeomType = geomType;
+};
+
+
+/**
+ * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @return {?string} The type of geometry.
+ * @export
+ */
+app.MainController.prototype.getGeometryTypeFromCache_ = function(
+  gmfLayerNode
+) {
+  var id = gmfLayerNode.id;
+  var geomType = this.geomTypeCache_[id] || null;
+  return geomType;
 };
 
 

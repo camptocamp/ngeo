@@ -131,6 +131,11 @@ gmf.ObjectEditingManager.Param = {
    * @type {string}
    * @export
    */
+  GEOM_TYPE: 'objectediting_geomtype',
+  /**
+   * @type {string}
+   * @export
+   */
   ID: 'objectediting_id',
   /**
    * @type {string}
