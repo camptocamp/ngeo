@@ -127,10 +127,10 @@ To export a symbol, the `@export` annotation can be used:
  *
  * @constructor
  * @extends {ol.source.WMTS}
- * @param {gmfx.source.SomeLayerOptions} options Layer options.
+ * @param {ngeox.source.SomeLayerOptions} options Layer options.
  * @export
  */
-gmf.source.SomeLayer = function(options) {
+ngeo.source.SomeLayer = function(options) {
   ...
 };
 ```
