@@ -726,9 +726,8 @@ gmf.Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
 gmf.Permalink.prototype.refreshFirstLevelGroups = function() {
   // Get first-level-groups order
   var groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
-  var orderedNames = [];
-  groupNodes.forEach(function(node) {
-    orderedNames.push(node.name);
+  var orderedNames = groupNodes.map(function(node) {
+    return node.name;
   });
 
   // set it in state
@@ -816,7 +815,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
     // check if we have the groups in the permalink
     var groupsNames = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.TREE_GROUPS);
     if (!groupsNames) {
-      theme = gmf.Themes.findThemeByName (
+      theme = gmf.Themes.findThemeByName(
         themes, /** @type {string} */ (themeName)
       );
       if (theme) {
