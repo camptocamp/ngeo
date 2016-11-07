@@ -441,12 +441,12 @@ ngeo.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
             'validateLayerParams option.'
         );
         var layerLayers = layerSource.getParams()['LAYERS'].split(',');
-        var cfgLayer = item.source.wmsSource.getParams()['LAYERS'].split(',');
+        var cfgLayer = item.source.layers.split(',');
 
-        var every = cfgLayer.every(function(layer) {
-          return layerLayers.indexOf(layer) != -1;
+        var layerIsOnTheMap = cfgLayer.some(function(layer) {
+          return layerLayers.indexOf(layer) > -1;
         });
-        if (!every) {
+        if (!layerIsOnTheMap) {
           continue;
         }
       }
