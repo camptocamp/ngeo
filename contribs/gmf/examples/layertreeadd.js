@@ -105,7 +105,7 @@ app.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, ngeoLo
    * @export
    */
   this.getSetTheme = function(value) {
-    if (value !== undefined) {
+    if (value) {
       this.gmfThemeManager.addTheme(value);
     }
     return this.themes;
