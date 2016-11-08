@@ -117,10 +117,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   var userChange = function(evt) {
     var roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
-    // Reload theme when login status changes.
-    this.updateCurrentTheme_();
-    // Reload background layer when login status changes.
+    // Reload theme and background layer when login status changes.
     if (evt.type !== gmf.AuthenticationEventType.READY) {
+      this.updateCurrentTheme_();
       this.updateCurrentBackgroundLayer_(true);
     }
     // Reload themes when login status changes.

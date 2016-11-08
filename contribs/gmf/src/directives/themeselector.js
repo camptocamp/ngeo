@@ -131,9 +131,6 @@ gmf.ThemeselectorController = function($scope, gmfThemeManager, gmfThemes) {
  * @private
  */
 gmf.ThemeselectorController.prototype.setThemes_ = function() {
-
-  this.gmfThemeManager.removeAll();
-
   this.gmfThemes_.getThemesObject().then(function(themes) {
     // Keep only the themes dedicated to the theme switcher
     this.themes = this.filter ? themes.filter(this.filter) : themes;

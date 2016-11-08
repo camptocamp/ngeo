@@ -784,16 +784,6 @@ gmf.Permalink.prototype.initLayers_ = function() {
       themeName = pathElements[pathElements.length - 1];
     }
 
-    // check if we have a theme in the user functionalities
-    if (!themeName && this.gmfUser_) {
-      var functionalities = this.gmfUser_.functionalities;
-      if (functionalities && 'default_theme' in functionalities) {
-        var defaultTheme = functionalities.default_theme;
-        if (defaultTheme.length > 0) {
-          themeName = defaultTheme[0];
-        }
-      }
-    }
     if (!themeName) {
       // check if we have a theme in the local storage
       themeName = /** @type {string} */ (this.ngeoStateManager_.getInitialValue('theme'));
