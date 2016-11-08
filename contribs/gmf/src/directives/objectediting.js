@@ -5,6 +5,7 @@ goog.require('gmf');
 goog.require('gmf.EditFeature');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.FeatureHelper');
+goog.require('ngeo.LayerHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.Collection');
@@ -58,11 +59,15 @@ gmf.module.directive('gmfObjectediting', gmf.objecteditingDirective);
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
+ * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+goog.require('ngeo.LayerHelper');
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -70,8 +75,9 @@ gmf.module.directive('gmfObjectediting', gmf.objecteditingDirective);
  * @ngdoc controller
  * @ngname GmfObjecteditingController
  */
-gmf.ObjecteditingController = function($scope, gettextCatalog, gmfEditFeature,
-    ngeoDecorateInteraction, ngeoFeatureHelper, ngeoToolActivateMgr) {
+gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
+    gmfEditFeature, gmfTreeManager, ngeoDecorateInteraction, ngeoFeatureHelper,
+    ngeoLayerHelper, ngeoToolActivateMgr) {
 
   // == Scope properties ==
 
@@ -109,6 +115,12 @@ gmf.ObjecteditingController = function($scope, gettextCatalog, gmfEditFeature,
   this.scope_ = $scope;
 
   /**
+   * @type {angular.$timeout}
+   * @private
+   */
+  this.timeout_ = $timeout;
+
+  /**
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -118,6 +130,38 @@ gmf.ObjecteditingController = function($scope, gettextCatalog, gmfEditFeature,
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
+
+  /**
+   * @type {ngeo.LayerHelper}
+   * @private
+   */
+  this.ngeoLayerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {gmf.TreeManager}
+   * @private
+   */
+  this.gmfTreeManager_ = gmfTreeManager;
+
+  $scope.$watchCollection(
+    function() {
+      if (this.gmfTreeManager_.rootCtrl) {
+        return this.gmfTreeManager_.rootCtrl.children;
+      }
+    }.bind(this),
+    function(value) {
+      // Timeout required, because the collection event is fired before the
+      // leaf nodes are created and they are the ones we're looking for here.
+      this.timeout_(function() {
+        if (value) {
+          this.unregisterAllTreeCtrl_();
+          this.gmfTreeManager_.rootCtrl.traverseDepthFirst(
+            this.registerTreeCtrl_.bind(this)
+          );
+        }
+      }.bind(this), 0);
+    }.bind(this)
+  );
 
   /**
    * @type {ngeo.DecorateInteraction}
@@ -139,6 +183,12 @@ gmf.ObjecteditingController = function($scope, gettextCatalog, gmfEditFeature,
 
 
   // == Other properties ==
+
+  /**
+   * @type {null|ol.layer.Image|ol.layer.Tile}
+   * @private
+   */
+  this.editableWMSLayer_ = null;
 
   var geometry = this.feature.getGeometry();
 
@@ -354,6 +404,7 @@ gmf.ObjecteditingController.prototype.handleDeleteFeature_ = function(resp) {
   this.resetGeometryChanges_();
   this.state_ = gmf.ObjecteditingController.State.INSERT;
   this.pending = false;
+  this.refreshWMSLayer_();
 };
 
 
@@ -370,6 +421,7 @@ gmf.ObjecteditingController.prototype.handleEditFeature_ = function(resp) {
     this.state_ = gmf.ObjecteditingController.State.INSERT;
   }
   this.pending = false;
+  this.refreshWMSLayer_();
 };
 
 
@@ -549,6 +601,61 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     this.ngeoFeatureHelper_.getVertexStyle(true)
   ];
 
+};
+
+
+/**
+ * Registers a newly added Layertree controller 'leaf', i.e. groups are
+ * excluded.
+ *
+ * If the Layertree controller node id is equal to the `layerNodeId` configured
+ * with this directive, then find the WMS layer associated with it for
+ * for refresh purpose.
+ *
+ * @param {ngeo.LayertreeController} treeCtrl Layertree controller to register
+ * @private
+ */
+gmf.ObjecteditingController.prototype.registerTreeCtrl_ = function(treeCtrl) {
+
+  // Skip any Layertree controller that has a node that is not a leaf
+  var node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (
+    treeCtrl.node);
+  if (node.children && node.children.length) {
+    return;
+  }
+
+  // Set editable WMS layer for refresh purpose
+  if (node.id === this.layerNodeId) {
+    var layer = gmf.SyncLayertreeMap.getLayer(treeCtrl);
+    goog.asserts.assert(
+      layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile);
+    this.editableWMSLayer_ = layer;
+  }
+
+};
+
+
+/**
+ * Unregisters all currently registered Layertree controllers.
+ *
+ * Unset the WMS layer associated with the `layerNodeId` configured with
+ * this directive.
+ *
+ * @private
+ */
+gmf.ObjecteditingController.prototype.unregisterAllTreeCtrl_ = function() {
+  this.editableWMSLayer_ = null;
+};
+
+
+/**
+ * Refresh the WMS layer, if set.
+ * @private
+ */
+gmf.ObjecteditingController.prototype.refreshWMSLayer_ = function() {
+  if (this.editableWMSLayer_) {
+    this.ngeoLayerHelper_.refreshWMSLayer(this.editableWMSLayer_);
+  }
 };
 
 

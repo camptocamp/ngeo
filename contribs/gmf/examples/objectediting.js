@@ -85,14 +85,6 @@ app.MainController = function(gmfObjectEditingManager, gmfThemes,
 
   gmfThemes.getThemesObject().then(function(themes) {
     if (themes) {
-      // Add 'ObjectEditing' theme, i.e. the one with id 168
-      for (var i = 0, ii = themes.length; i < ii; i++) {
-        if (themes[i].id === 168) {
-          this.gmfTreeManager_.setFirstLevelGroups(themes[i].children);
-          break;
-        }
-      }
-
       // Add layer vector after
       this.map.addLayer(this.vectorLayer_);
     }
