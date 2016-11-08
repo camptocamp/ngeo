@@ -2,7 +2,6 @@ goog.provide('gmf.Permalink');
 
 goog.require('gmf');
 goog.require('ngeo.AutoProjection');
-goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
 goog.require('gmf.ThemeManager');
 goog.require('gmf.TreeManager');
@@ -73,8 +72,6 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
- * @param {gmf.ObjectEditingManager} gmfObjectEditingManager The gmf
- *     ObjectEditing manager service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.ThemeManager} gmfThemeManager The gmf ThemeManager service.
  * @param {gmf.TreeManager} gmfTreeManager The gmf gmfTreeManager service.
@@ -92,7 +89,7 @@ gmf.module.value('gmfPermalinkOptions',
  */
 gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     ngeoFeatureOverlayMgr, ngeoFeatureHelper, ngeoFeatures, ngeoLayerHelper,
-    ngeoStateManager, gmfObjectEditingManager, gmfThemes, gmfThemeManager,
+    ngeoStateManager, gmfThemes, gmfThemeManager,
     gmfTreeManager, gmfPermalinkOptions, defaultTheme,
     ngeoLocation, ngeoWfsPermalink, ngeoAutoProjection, $rootScope, $injector) {
 
@@ -160,10 +157,11 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   }
 
   /**
-   * @type {gmf.ObjectEditingManager}
+   * @type {?gmf.ObjectEditingManager}
    * @private
    */
-  this.gmfObjectEditingManager_ = gmfObjectEditingManager;
+  this.gmfObjectEditingManager_ = $injector.has('gmfObjectEditingManager') ?
+    $injector.get('gmfObjectEditingManager') : null;
 
   /**
    * @type {gmf.Themes}
@@ -575,9 +573,13 @@ gmf.Permalink.prototype.setMap = function(map) {
 
   if (map) {
     this.map_ = map;
-    this.gmfObjectEditingManager_.getFeature().then(function(feature) {
-      this.registerMap_(map, feature);
-    }.bind(this));
+    if (this.gmfObjectEditingManager_) {
+      this.gmfObjectEditingManager_.getFeature().then(function(feature) {
+        this.registerMap_(map, feature);
+      }.bind(this));
+    } else {
+      this.registerMap_(map, null);
+    }
   }
 
 };
@@ -592,8 +594,6 @@ gmf.Permalink.prototype.setMap = function(map) {
 gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
 
   var view = map.getView();
-  var size = map.getSize();
-  goog.asserts.assert(size);
   var center;
   var zoom;
 
@@ -601,6 +601,8 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
   //     a) the given ObjectEditing feature
   //     b) the X, Y and Z available within the permalink service, if available
   if (oeFeature && oeFeature.getGeometry()) {
+    var size = map.getSize();
+    goog.asserts.assert(size);
     view.fit(oeFeature.getGeometry().getExtent(), size);
   } else {
     center = this.getMapCenter();

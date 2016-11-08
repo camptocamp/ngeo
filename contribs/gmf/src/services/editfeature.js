@@ -14,11 +14,10 @@ goog.require('ol.format.GeoJSON');
  * @constructor
  * @struct
  * @param {angular.$http} $http Angular http service.
- * @param {angular.$injector} $injector Main injector.
- * @param {angular.$q} $q Angular $q service.
+ * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject
  */
-gmf.EditFeature = function($http, $injector, $q) {
+gmf.EditFeature = function($http, gmfLayersUrl) {
 
   /**
    * @type {angular.$http}
@@ -27,21 +26,14 @@ gmf.EditFeature = function($http, $injector, $q) {
   this.http_ = $http;
 
   /**
-   * @type {angular.$q}
-   * @private
-   */
-  this.q_ = $q;
-
-  /**
    * Url to the GeoMapFish layers service. Required in applications that use:
    * - the editfeature tools
    * - the objectediting tools
    *
-   * @type {?string}
+   * @type {string}
    * @private
    */
-  this.baseUrl_ = $injector.has('gmfLayersUrl') ?
-    $injector.get('gmfLayersUrl') : null;
+  this.baseUrl_ = gmfLayersUrl;
 
 };
 
@@ -56,7 +48,6 @@ gmf.EditFeature = function($http, $injector, $q) {
  * @export
  */
 gmf.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
-  goog.asserts.assert(this.baseUrl_, 'GMF layers url must be defined');
   var ids = layerIds.join(',');
   var url = goog.uri.utils.appendParam(
     goog.uri.utils.appendPath(this.baseUrl_, ids),
@@ -79,41 +70,31 @@ gmf.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
  * @param {Array.<number>} layerIds List of layer ids to get the features from.
  * @param {Array.<gmfx.ComparisonFilter>} filters List of comparison filters
  * @return {angular.$q.Promise} Promise.
- * @export
  */
 gmf.EditFeature.prototype.getFeaturesWithComparisonFilters = function(
   layerIds, filters
 ) {
 
-  if (this.baseUrl_) {
-    goog.asserts.assert(filters.length, 'Should have at least one filter.');
+  var ids = layerIds.join(',');
 
-    var ids = layerIds.join(',');
+  var properties = [];
+  var params = {};
 
-    var properties = [];
-    var params = {};
-
-    var filter;
-    for (var i = 0, ii = filters.length; i < ii; i++) {
-      filter = filters[i];
-      params[filter.property + '__' + filter.operator] = filter.value;
-      properties.push(filter.property);
-    }
-
-    params['queryable'] = properties.join(',');
-
-    var url = ol.uri.appendParams(
-      goog.uri.utils.appendPath(this.baseUrl_, ids),
-      params
-    );
-
-    return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
-  } else {
-    // Dummy promise
-    var deferred = this.q_.defer();
-    deferred.resolve([]);
-    return deferred.promise;
+  var filter;
+  for (var i = 0, ii = filters.length; i < ii; i++) {
+    filter = filters[i];
+    params[filter.property + '__' + filter.operator] = filter.value;
+    properties.push(filter.property);
   }
+
+  params['queryable'] = properties.join(',');
+
+  var url = ol.uri.appendParams(
+    goog.uri.utils.appendPath(this.baseUrl_, ids),
+    params
+  );
+
+  return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
 
 
@@ -134,7 +115,6 @@ gmf.EditFeature.prototype.handleGetFeatures_ = function(resp) {
  * @export
  */
 gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
-  goog.asserts.assert(this.baseUrl_, 'GMF layers url must be defined');
   var url = goog.uri.utils.appendPath(this.baseUrl_, layerId.toString());
   var geoJSON = new ol.format.GeoJSON().writeFeatures(features);
   return this.http_.post(url, geoJSON, {
@@ -151,7 +131,6 @@ gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
  * @export
  */
 gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
-  goog.asserts.assert(this.baseUrl_, 'GMF layers url must be defined');
   var url = goog.uri.utils.appendPath(
     this.baseUrl_,
     layerId.toString() + '/' + feature.getId()
@@ -171,7 +150,6 @@ gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
  * @export
  */
 gmf.EditFeature.prototype.deleteFeature = function(layerId, feature) {
-  goog.asserts.assert(this.baseUrl_, 'GMF layers url must be defined');
   var url = goog.uri.utils.appendPath(
     this.baseUrl_,
     layerId.toString() + '/' + feature.getId()

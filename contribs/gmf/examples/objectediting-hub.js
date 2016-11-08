@@ -228,7 +228,7 @@ app.MainController.prototype.run = function() {
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @return {angular.$q.Promise} The promise attached to the deferred object.
- * @export
+ * @private
  */
 app.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
 
@@ -248,7 +248,7 @@ app.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
 
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
- * @export
+ * @private
  */
 app.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
 
@@ -274,7 +274,7 @@ app.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
 
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
- * @export
+ * @private
  */
 app.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
   var features = /** @type Array.<ol.Feature> */ (
@@ -287,7 +287,7 @@ app.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @return {?Array.<ol.Feature>} List of features
- * @export
+ * @private
  */
 app.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
   var id = gmfLayerNode.id;
@@ -299,7 +299,7 @@ app.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @return {angular.$q.Promise} The promise attached to the deferred object.
- * @export
+ * @private
  */
 app.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
 
@@ -319,7 +319,7 @@ app.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
 
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
- * @export
+ * @private
  */
 app.MainController.prototype.issueGetAttributesRequest_ = function(
   gmfLayerNode
@@ -341,7 +341,7 @@ app.MainController.prototype.issueGetAttributesRequest_ = function(
 
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
- * @export
+ * @private
  */
 app.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
   var geomType = /** @type {string} */ (
@@ -353,7 +353,7 @@ app.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @return {?string} The type of geometry.
- * @export
+ * @private
  */
 app.MainController.prototype.getGeometryTypeFromCache_ = function(
   gmfLayerNode

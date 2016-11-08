@@ -1,6 +1,8 @@
 goog.provide('gmf-objectediting');
 
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.ObjectEditingManager');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
