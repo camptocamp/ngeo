@@ -27,6 +27,11 @@
   <body ng-controller="MainController as ctrl">
     <gmf-map gmf-map-map="ctrl.map"></gmf-map>
 
+    <gmf-layertree
+        class="panel panel-default panel-body"
+        gmf-layertree-map="::ctrl.map">
+    </gmf-layertree>
+
     <input type="checkbox"
        id="checkbox-objectediting"
        ng-model="ctrl.objectEditingActive" />
