@@ -1338,3 +1338,55 @@ ngeox.GridColumnDef;
  * @type {String}
  */
 ngeox.GridColumnDef.prototype.name;
+
+
+/**
+ * @typedef {{layer: string}}
+ */
+ngeox.source.AsitVDOptions;
+
+
+/**
+ * Layer name. Possible values are `asitvd.fond_couleur`, `asitvd.fond_gris`
+ * and `asitvd.fond_pourortho`.
+ * @type {string}
+ */
+ngeox.source.AsitVDOptions.prototype.layer;
+
+
+/**
+ * @typedef {{
+ *    layer: string,
+ *    format: (string|undefined),
+ *    timestamp: string
+ * }}
+ */
+ngeox.source.SwisstopoOptions;
+
+
+/**
+ * Layer name.
+ * @type {string}
+ */
+ngeox.source.SwisstopoOptions.prototype.layer;
+
+
+/**
+ * Projection code. Possible values are `EPSG:21781` and `EPSG:2056`.
+ * @type {string|undefined}
+ */
+ngeox.source.SwisstopoOptions.prototype.projection;
+
+
+/**
+ * Image format. Default is `png`.
+ * @type {string}
+ */
+ngeox.source.SwisstopoOptions.prototype.format;
+
+
+/**
+ * The `Time` dimension of the source.
+ * @type {string}
+ */
+ngeox.source.SwisstopoOptions.prototype.timestamp;

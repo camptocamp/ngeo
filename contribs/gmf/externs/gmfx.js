@@ -388,51 +388,6 @@ gmfx.SearchDirectiveDatasource.prototype.url;
 
 
 /**
- * @typedef {{layer: string}}
- */
-gmfx.source.AsitVDOptions;
-
-
-/**
- * Layer name. Possible values are `asitvd.fond_couleur`, `asitvd.fond_gris`
- * and `asitvd.fond_pourortho`.
- * @type {string}
- */
-gmfx.source.AsitVDOptions.prototype.layer;
-
-
-/**
- * @typedef {{
- *    layer: string,
- *    format: (string|undefined),
- *    timestamp: string
- * }}
- */
-gmfx.source.SwisstopoOptions;
-
-
-/**
- * Layer name.
- * @type {string}
- */
-gmfx.source.SwisstopoOptions.prototype.layer;
-
-
-/**
- * Image format. Default is `png`.
- * @type {string}
- */
-gmfx.source.SwisstopoOptions.prototype.format;
-
-
-/**
- * The `Time` dimension of the source.
- * @type {string}
- */
-gmfx.source.SwisstopoOptions.prototype.timestamp;
-
-
-/**
  * @typedef {{
  *     exportgpxkml: string
  * }}

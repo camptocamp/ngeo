@@ -1,7 +1,7 @@
-goog.provide('gmf-asitvd');
+goog.provide('ngeo-asitvd');
 
-goog.require('gmf.mapDirective');
-goog.require('gmf.source.AsitVD');
+goog.require('ngeo.mapDirective');
+goog.require('ngeo.source.AsitVD');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -12,7 +12,7 @@ var app = {};
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+app.module = angular.module('app', ['ngeo']);
 
 
 /**
@@ -27,7 +27,7 @@ app.MainController = function() {
   this.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
-        source: new gmf.source.AsitVD({
+        source: new ngeo.source.AsitVD({
           layer: 'asitvd.fond_couleur'
         })
       })
