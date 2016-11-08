@@ -26,17 +26,6 @@ var app = {};
 app.module = angular.module('app', ['gmf']);
 
 
-app.module.value('gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
-
-
-app.module.value('gmfLayersUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
-
-
-gmf.module.value('gmfTreeManagerModeFlush', true);
-
-
 /**
  * @param {gmf.ObjectEditingManager} gmfObjectEditingManager The gmf
  *     ObjectEditing manager service.
