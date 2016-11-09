@@ -1,8 +1,11 @@
-goog.provide('gmf-search');
+goog.provide('app.gmfsearch');
 
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ngeo.FeatureOverlayMgr');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+/** @suppress {extraRequire} */
 goog.require('gmf.searchDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -10,17 +13,13 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
-goog.require('ol.style.RegularShape');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 
-/** @const **/
-var app = {};
-
-
 /** @type {!angular.Module} **/
 app.module = angular.module('app', ['gmf']);
+
 
 app.module.value('gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');

@@ -1,26 +1,22 @@
-goog.provide('profile');
+goog.provide('app.profile');
 
-
-goog.require('ngeo');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
-goog.require('ol');
+/** @suppress {extraRequire} */
+goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Attribution');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.geom.GeometryLayout');
 goog.require('ol.geom.LineString');
+goog.require('ol.geom.Point');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Vector');
-goog.require('ol.proj');
-goog.require('ol.proj.Projection');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.Vector');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -31,6 +27,7 @@ app.module = angular.module('app', ['ngeo']);
  * @constructor
  * @param {angular.$http} $http The $http angular service.
  * @param {angular.Scope} $scope The $scope angular service.
+ * @ngInject
  */
 app.MainController = function($http, $scope) {
 
@@ -39,13 +36,6 @@ app.MainController = function($http, $scope) {
    * @private
    */
   this.scope_ = $scope;
-
-  var projection = new ol.proj.Projection({
-    code: 'EPSG:21781',
-    units: 'meters',
-    extent: [485869.5728, 76443.1884, 837076.5648, 299941.7864]
-  });
-  var extent = [420000, 30000, 900000, 350000];
 
   var source = new ol.source.Vector();
 
@@ -77,8 +67,8 @@ app.MainController = function($http, $scope) {
       })
     ],
     view: new ol.View({
-      projection: projection,
-      extent: extent,
+      projection: 'EPSG:21781',
+      extent: [420000, 30000, 900000, 350000],
       zoom: 0,
       center: [0, 0]
     })

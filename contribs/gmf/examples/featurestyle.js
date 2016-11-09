@@ -1,6 +1,8 @@
-goog.provide('gmf-featurestyle');
+goog.provide('app.featurestyle');
 
+/** @suppress {extraRequire} */
 goog.require('gmf.featurestyleDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ol.Feature');
 goog.require('ol.Map');
@@ -10,15 +12,14 @@ goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
 goog.require('ol.layer.Tile');
+goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
+goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', ['gmf']);
+
 
 app.module.value('ngeoMeasureDecimals', 2);
 
@@ -27,6 +28,7 @@ app.module.value('ngeoMeasureDecimals', 2);
  * @constructor
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @ngInject
  */
 app.MainController = function($scope, ngeoFeatureHelper) {
 

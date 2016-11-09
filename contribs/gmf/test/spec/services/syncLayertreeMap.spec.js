@@ -1,12 +1,10 @@
-/* global themes capabilities*/
+/* global themes capabilities */
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.test.data.themes');
 
 describe('gmf.SyncLayertreeMap', function() {
-  var gmfSyncLayertreeMap;
-  var gmfThemes;
-  var treeUrl;
-  var $httpBackend;
+  var $httpBackend_;
+  var gmfSyncLayertreeMap_;
   var element;
   var map;
   var roottreeCtrl;
@@ -31,18 +29,17 @@ describe('gmf.SyncLayertreeMap', function() {
       '</div>'
     );
 
-    inject(function($injector, $rootScope, $compile) {
-      gmfSyncLayertreeMap = $injector.get('gmfSyncLayertreeMap');
-      gmfThemes = $injector.get('gmfThemes');
+    inject(function($rootScope, $compile, $httpBackend, gmfSyncLayertreeMap, gmfThemes, gmfTreeUrl) {
+      $httpBackend_ = $httpBackend;
+      gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
+      var reGmfTreeUrl = new RegExp('^' + gmfTreeUrl);
       // Prepare request simulation
-      treeUrl = $injector.get('gmfTreeUrl') + '?cache_version=0';
-      $httpBackend = $injector.get('$httpBackend');
-      $httpBackend.when('GET', treeUrl).respond(themes);
+      $httpBackend.when('GET', reGmfTreeUrl).respond(themes);
       $httpBackend.when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr').respond(capabilities.swisstopo);
 
       // Prepare themes
-      $httpBackend.expectGET(treeUrl);
+      $httpBackend.expectGET(reGmfTreeUrl);
       gmfThemes.loadThemes();
       $httpBackend.flush();
 
@@ -122,7 +119,7 @@ describe('gmf.SyncLayertreeMap', function() {
       $rootScope.$digest();
     });
 
-    $httpBackend.flush(); // To get capabilities (and source) for the WMTS layer.
+    $httpBackend_.flush(); // To get capabilities (and source) for the WMTS layer.
     roottreeCtrl = element.scope().layertreeCtrl;
     var treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
     var treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
@@ -147,12 +144,12 @@ describe('gmf.SyncLayertreeMap', function() {
     var wmsParamLayers;
 
     roottreeCtrl.setState('off');
-    gmfSyncLayertreeMap.sync_(map, treeGroup);
+    gmfSyncLayertreeMap_.sync_(map, treeGroup);
     expect(treeLeaf.layer.getVisible()).toBe(false);
 
-    gmfSyncLayertreeMap.sync_(map, treeGroup);
+    gmfSyncLayertreeMap_.sync_(map, treeGroup);
     treeLeaf.setState('on');
-    gmfSyncLayertreeMap.sync_(map, treeLeaf);
+    gmfSyncLayertreeMap_.sync_(map, treeLeaf);
     wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
     expect(wmsParamLayers).toBe('osm_scale');
   });
@@ -172,17 +169,17 @@ describe('gmf.SyncLayertreeMap', function() {
     var wmsParamLayers;
 
     roottreeCtrl.setState('off');
-    gmfSyncLayertreeMap.sync_(map, treeGroup);
+    gmfSyncLayertreeMap_.sync_(map, treeGroup);
     expect(treeGroup.layer.getVisible()).toBe(false);
 
     treeLeaf.setState('on');
-    gmfSyncLayertreeMap.sync_(map, treeLeaf);
+    gmfSyncLayertreeMap_.sync_(map, treeLeaf);
     wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
     expect(wmsParamLayers).toBe('cinema');
 
     // Group is on, original order must be kept.
     treeGroup.setState('on');
-    gmfSyncLayertreeMap.sync_(map, treeGroup);
+    gmfSyncLayertreeMap_.sync_(map, treeGroup);
     wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
     expect(wmsParamLayers).toEqual('hospitals,sustenance,entertainment,' +
             'osm_time,post_office,police,cinema');
@@ -197,17 +194,17 @@ describe('gmf.SyncLayertreeMap', function() {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-    $httpBackend.flush(); // To get capabilities (and source) for the WMTS layer.
+    $httpBackend_.flush(); // To get capabilities (and source) for the WMTS layer.
     roottreeCtrl = element.scope().layertreeCtrl;
     var treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
     var treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
 
     treeGroup.setState('off');
-    gmfSyncLayertreeMap.sync_(map, treeGroup);
+    gmfSyncLayertreeMap_.sync_(map, treeGroup);
     expect(treeLeaf.layer.getVisible()).toBe(false);
 
     treeLeaf.setState('on');
-    gmfSyncLayertreeMap.sync_(map, treeLeaf);
+    gmfSyncLayertreeMap_.sync_(map, treeLeaf);
     expect(treeLeaf.layer.getVisible()).toBe(true);
   });
 });

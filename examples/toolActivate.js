@@ -1,14 +1,16 @@
-goog.provide('toolActivate');
+goog.provide('app.toolActivate');
 
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
-goog.require('ol.geom.Point');
 goog.require('ol.interaction.Draw');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
@@ -16,10 +18,6 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/

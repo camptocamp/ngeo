@@ -1,6 +1,7 @@
 goog.provide('ngeo.filters');
 
 goog.require('ngeo');
+goog.require('goog.math');
 
 /**
  * Format a number as a localized scale.

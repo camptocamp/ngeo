@@ -1,11 +1,8 @@
-goog.provide('gmf-timeslider');
+goog.provide('app.timeslider');
 
+/** @suppress {extraRequire} */
 goog.require('gmf.TimeSliderDirective');
 goog.require('gmf.WMSTime');
-goog.require('goog.asserts');
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/

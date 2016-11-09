@@ -1,20 +1,22 @@
-goog.provide('createfeature');
+goog.provide('app.createfeature');
 
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.createfeatureDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
+goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
+goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
@@ -25,6 +27,7 @@ app.module = angular.module('app', ['ngeo']);
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
+ * @ngInject
  */
 app.MainController = function(ngeoToolActivateMgr) {
 

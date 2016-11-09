@@ -1,11 +1,8 @@
-goog.provide('gmf-timeselector');
+goog.provide('app.gmfdatepicker');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
 goog.require('gmf.WMSTime');
-goog.require('goog.asserts');
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/

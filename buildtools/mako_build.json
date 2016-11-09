@@ -1,12 +1,9 @@
 <%doc>
 lib:            Set to true to create the libraries files (ngeo or gmf)
 src:            An additional source directory, used by apps
-src_components: An additional source directory for components, used by apps
-src_set:        The used source set (ngeo|contribs_gmf)
+src_set:        The used source set (undefined(ngeo)|contribs_gmf)
 examples:       Add the examples files
 entry_point:    The entry point
-js:             An evantual additional js file
-strict:         Set to false to don't do a strict validation
 ngeo_folder:    The folder where ngeo is intaled, reqired to use it in the project
 source_map:     The source map destination file
 </%doc>
@@ -21,34 +18,25 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % endif
   "cwd": ".",
   "src": [
-% if src_components is not UNDEFINED:
-    "${src_components}",
-% endif
 % if src is not UNDEFINED:
-    "${src}",
+% for s in src.split(","):
+    "${s}",
+% endfor
 % endif
-% if src_set == 'ngeo':
-% if examples != 'true':
+    "${_ngeo_folder}src/**/*.js",
     ".build/templatecache.js",
-% endif
-% elif src_set == 'contribs_gmf':
+% if src_set == 'contribs_gmf':
     "${_ngeo_folder}contribs/gmf/src/**/*.js",
-% if examples != 'true':
     ".build/gmftemplatecache.js",
 % endif
-% endif
     "node_modules/openlayers/src/**/*.js",
-    "node_modules/openlayers/build/ol.ext/*.js",
-    "${_ngeo_folder}src/**/*.js"
+    "node_modules/openlayers/build/ol.ext/*.js"
   ],
   "compile": {
 % if entry_point:
-    "closure_entry_point": "${entry_point}",
+    "entry_point": "${entry_point}",
 % endif
     "externs": [
-% if examples == 'true':
-      "node_modules/openlayers/externs/example.js",
-%endif
       "node_modules/openlayers/externs/bingmaps.js",
       "node_modules/openlayers/externs/cartodb.js",
       "node_modules/openlayers/externs/closure-compiler.js",
@@ -68,18 +56,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       ".build/externs/angular-1.5.js",
       ".build/externs/angular-1.5-q_templated.js",
       ".build/externs/angular-1.5-http-promise_templated.js",
-      ".build/externs/jquery-1.9.js"
-% if lib != "true":
-    ],
-    "js": [
-% else:
-      ,
-% endif
-% if js is not UNDEFINED:
-      "${js}",
-% endif
-      "node_modules/openlayers/externs/olx.js",
-      "node_modules/openlayers/externs/oli.js",
+      ".build/externs/jquery-1.9.js",
 % if src_set == 'contribs_gmf':
       "${_ngeo_folder}contribs/gmf/externs/gmfx.js",
       "${_ngeo_folder}contribs/gmf/externs/gmf-themes.js",
@@ -87,8 +64,12 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "${_ngeo_folder}externs/ngeox.js",
       "${_ngeo_folder}externs/mapfish-print-v3.js"
     ],
+    "js": [
+      "node_modules/openlayers/externs/olx.js",
+      "node_modules/openlayers/externs/oli.js",
+      "node_modules/openlayers/src/ol/typedefs.js"
+    ],
     "define": [
-      "goog.dom.ASSUME_STANDARDS_MODE=true",
       "ol.DEBUG=false",
       "ol.ENABLE_WEBGL=false"
     ],
@@ -96,19 +77,15 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "*"
     ],
     "jscomp_off": [
-% if strict == 'false':
-      "extraRequire",
+% if examples == 'true':
       "missingProvide",
 % endif
-      "lintChecks",
-      "analyzerChecks"
+      "lintChecks"
     ],
     "extra_annotation_name": [
       "api", "observable", "ngdoc", "ngname", "htmlAttribute"
     ],
-% if lib == "true" or generate_exports == 'true':
     "generate_exports": true,
-% endif
 % if source_map is not UNDEFINED:
     "create_source_map": "${source_map}",
     "source_map_format": "V3",
@@ -116,10 +93,17 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "language_in": "ECMASCRIPT6_STRICT",
     "language_out": "ECMASCRIPT5_STRICT",
     "angular_pass": true,
+% if development == 'true':
+    "compilation_level": "WHITESPACE_ONLY",
+    "formatting": "PRETTY_PRINT",
+    "output_manifest": "/tmp/manifest.MF",
+% else:
     "compilation_level": "ADVANCED",
+    "output_wrapper": "(function(){%output%}).call(window);",
+% endif
     "warning_level": "VERBOSE",
     "export_local_property_definitions": true,
-    "output_wrapper": "(function(){%output%}).call(window);",
+    "dependency_mode": "LOOSE",
     "use_types_for_optimization": true
   }
 }

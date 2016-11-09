@@ -1,16 +1,18 @@
-goog.provide('ngeo-mobile-geolocation');
+goog.provide('app.mobilegeolocation');
 
 goog.require('ngeo.FeatureOverlayMgr');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mobileGeolocationDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
+goog.require('ol.style.Circle');
+goog.require('ol.style.Style');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Stroke');
 
 
 /** @type {!angular.Module} **/

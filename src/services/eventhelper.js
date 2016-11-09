@@ -1,6 +1,7 @@
 goog.provide('ngeo.EventHelper');
 
 goog.require('ngeo');
+goog.require('goog.events');
 
 
 /**

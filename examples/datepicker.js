@@ -1,10 +1,8 @@
-goog.provide('ngeo-timeselector');
+goog.provide('app.datepicker');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
 goog.require('ngeo.Time');
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/

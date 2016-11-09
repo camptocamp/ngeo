@@ -1,24 +1,24 @@
-goog.provide('measure');
+goog.provide('app.measure');
 
 goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.MeasureEvent');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ngeo.interaction.MeasureLength');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ol.Map');
-goog.require('ol.Observable');
-goog.require('ol.Overlay');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
+goog.require('ol.style.Style');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Fill');
 
 
 /** @type {!angular.Module} **/
@@ -31,6 +31,7 @@ app.module = angular.module('app', ['ngeo']);
  * map.
  *
  * @return {angular.Directive} The directive specs.
+ * @ngInject
  */
 app.measuretoolsDirective = function() {
   return {
@@ -228,6 +229,7 @@ app.module.controller('AppMeasuretoolsController', app.MeasuretoolsController);
 
 /**
  * @constructor
+ * @ngInject
  */
 app.MainController = function() {
 

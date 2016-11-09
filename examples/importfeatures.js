@@ -1,6 +1,8 @@
-goog.provide('importfeatures');
+goog.provide('app.importfeatures');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.filereaderDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -10,10 +12,6 @@ goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/

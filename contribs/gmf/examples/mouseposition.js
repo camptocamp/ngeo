@@ -1,18 +1,17 @@
-goog.provide('gmf-mouseposition');
+goog.provide('app.mouseposition');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mousepositionDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/

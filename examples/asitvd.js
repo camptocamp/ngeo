@@ -1,14 +1,11 @@
-goog.provide('ngeo-asitvd');
+goog.provide('app.asitvd');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ngeo.source.AsitVD');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -17,9 +14,9 @@ app.module = angular.module('app', ['ngeo']);
 
 /**
  * @constructor
+ * @ngInject
  */
 app.MainController = function() {
-
   /**
    * @type {ol.Map}
    * @export

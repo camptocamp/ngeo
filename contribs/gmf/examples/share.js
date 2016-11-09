@@ -1,12 +1,9 @@
-goog.provide('gmf-share');
+goog.provide('app.share');
 
+/** @suppress {extraRequire} */
 goog.require('gmf.shareDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.modalDirective');
-goog.require('ngeo.Location');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -15,9 +12,9 @@ app.module = angular.module('app', ['gmf']);
 
 /**
  * @constructor
+ * @ngInject
  */
 app.MainController = function() {
-
 
   /**
    * Model attached to the modal to toggle it

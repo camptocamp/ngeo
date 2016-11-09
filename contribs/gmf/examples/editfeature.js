@@ -1,7 +1,10 @@
-goog.provide('gmf-editfeature');
+goog.provide('app.editfeature');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+/** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('gmf.EditFeature');
 goog.require('ol.Feature');
@@ -10,11 +13,9 @@ goog.require('ol.View');
 goog.require('ol.extent');
 goog.require('ol.geom.Point');
 goog.require('ol.layer.Tile');
+goog.require('ol.layer.Image');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
+goog.require('ol.source.ImageWMS');
 
 
 /** @type {!angular.Module} **/
@@ -35,6 +36,7 @@ app.module.value('gmfLayersUrl',
  * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmfx.User} gmfUser User.
  * @constructor
+ * @ngInject
  */
 app.MainController = function($scope, gmfEditFeature, gmfUser) {
 
@@ -55,9 +57,6 @@ app.MainController = function($scope, gmfEditFeature, gmfUser) {
    * @export
    */
   this.gmfUser = gmfUser;
-
-  var projection = ol.proj.get('EPSG:21781');
-  projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
    * @type {ol.source.ImageWMS}
@@ -112,7 +111,7 @@ app.MainController = function($scope, gmfEditFeature, gmfUser) {
       this.wmsLayer_
     ],
     view: new ol.View({
-      projection: projection,
+      projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 2

@@ -2,6 +2,7 @@ goog.provide('ngeo.CreatePopup');
 goog.provide('ngeo.Popup');
 
 goog.require('ngeo');
+goog.require('goog.asserts');
 
 /**
  * This goog.require is needed because of 'ngeo-popup' used in

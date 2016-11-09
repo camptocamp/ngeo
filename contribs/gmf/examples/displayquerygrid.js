@@ -1,29 +1,29 @@
-goog.provide('gmf-displayquerygrid');
+goog.provide('app.displayquerygrid');
 
 goog.require('gmf.QueryManager');
 goog.require('gmf.Themes');
+/** @suppress {extraRequire} */
 goog.require('gmf.displayquerygridDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo');
-goog.require('ngeo.Query');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.gridDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
-goog.require('ol.proj');
 goog.require('ol.source.OSM');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -46,6 +46,7 @@ app.module.constant(
  * A sample directive to display the result.
  *
  * @return {angular.Directive} The directive specs.
+ * @ngInject
  */
 app.queryresultDirective = function() {
   return {
@@ -87,14 +88,12 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
  * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
+ * @ngInject
  */
 app.MainController = function(gmfThemes, gmfQueryManager,
     ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
-
-  var projection = ol.proj.get('EPSG:21781');
-  projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   var fill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
   var stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
@@ -121,7 +120,7 @@ app.MainController = function(gmfThemes, gmfQueryManager,
       })
     ],
     view: new ol.View({
-      projection: projection,
+      projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 3

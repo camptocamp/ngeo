@@ -1,10 +1,7 @@
-goog.provide('gmf-authentication');
+goog.provide('app.authentication');
 
+/** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -18,6 +15,7 @@ app.module.value(
 
 /**
  * @constructor
+ * @ngInject
  */
 app.MainController = function() {};
 

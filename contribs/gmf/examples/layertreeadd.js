@@ -1,23 +1,22 @@
-goog.provide('gmf-layertree-add');
+goog.provide('app.layertreeadd');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.TreeManager');
+/** @suppress {extraRequire} */
 goog.require('gmf.disclaimerDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ngeo.Location');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
-goog.require('ol.proj');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -34,13 +33,11 @@ app.module.value('gmfTreeUrl',
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmf.ThemeManager} gmfThemeManager gmf Tree Manager service.
  * @param {ngeo.Location} ngeoLocation ngeo location service.
+ * @ngInject
  */
 app.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, ngeoLocation) {
 
   gmfThemes.loadThemes();
-
-  var projection = ol.proj.get('EPSG:21781');
-  projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
    * @type {ol.Map}
@@ -53,7 +50,7 @@ app.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, ngeoLo
       })
     ],
     view: new ol.View({
-      projection: projection,
+      projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 3

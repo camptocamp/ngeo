@@ -1,10 +1,8 @@
-goog.provide('ngeogrid');
+goog.provide('app.grid');
 
 goog.require('ngeo.GridConfig');
+/** @suppress {extraRequire} */
 goog.require('ngeo.gridDirective');
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/

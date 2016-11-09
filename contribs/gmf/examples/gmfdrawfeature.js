@@ -1,8 +1,11 @@
-goog.provide('gmf-drawfeature');
+goog.provide('app.gmfdrawfeature');
 
+/** @suppress {extraRequire} */
 goog.require('gmf.drawfeatureDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ngeo.FeatureHelper');
+/** @suppress {extraRequire} */
 goog.require('ngeo.Features');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
@@ -10,10 +13,6 @@ goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -35,6 +34,7 @@ app.module.value('ngeoExportFeatureFormats', [
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
  *     manager
  * @constructor
+ * @ngInject
  */
 app.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
     ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {

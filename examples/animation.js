@@ -1,15 +1,13 @@
-goog.provide('animation');
+goog.provide('app.animation');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.resizemapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} */
@@ -22,6 +20,7 @@ app.module = angular.module('app', ['ngeo']);
  * map.
  *
  * @return {angular.Directive} The directive specs.
+ * @ngInject
  */
 app.mapDirective = function() {
   return {

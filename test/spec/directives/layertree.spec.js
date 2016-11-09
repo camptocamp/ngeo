@@ -50,7 +50,6 @@ describe('ngeo.layertreeDirective', function() {
     });
 
     roottreeCtrl = element.scope().layertreeCtrl;
-
   });
 
   it('Get state', function() {

@@ -1,24 +1,20 @@
-goog.provide('gmf-profile');
+goog.provide('app.gmfprofile');
 
 goog.require('ngeo.FeatureOverlayMgr');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.profileDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
-goog.require('ol.geom.Point');
 goog.require('ol.interaction.Draw');
 goog.require('ol.layer.Tile');
-goog.require('ol.proj');
 goog.require('ol.source.OSM');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -41,9 +37,6 @@ app.module.value(
  * @ngInject
  */
 app.MainController = function($scope, ngeoFeatureOverlayMgr) {
-
-  var projection = ol.proj.get('EPSG:21781');
-
   /**
    * @type {ol.geom.LineString}
    * @export
@@ -78,7 +71,7 @@ app.MainController = function($scope, ngeoFeatureOverlayMgr) {
       })
     ],
     view: new ol.View({
-      projection: projection,
+      projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
       zoom: 3
@@ -94,7 +87,6 @@ app.MainController = function($scope, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {ol.Collection.<ol.Feature>}
-   * @export
    */
   var features = new ol.Collection();
 

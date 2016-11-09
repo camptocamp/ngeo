@@ -1,15 +1,10 @@
-goog.provide('gmf-xsdattributes');
+goog.provide('app.xsdattributes');
 
-goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.XSDAttributes');
-goog.require('ngeo');
+/** @suppress {extraRequire} */
 goog.require('ngeo.attributesDirective');
 goog.require('ol.Feature');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -29,6 +24,7 @@ app.module.value('gmfLayersUrl',
  * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmf.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
  * @constructor
+ * @ngInject
  */
 app.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
 

@@ -1,15 +1,11 @@
-goog.provide('gmf-objectediting-hub');
+goog.provide('app.objecteditinghub');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('gmf');
 goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
 goog.require('gmf.XSDAttributes');
 goog.require('ol.format.WFS');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -31,6 +27,7 @@ app.module.value('gmfLayersUrl',
  * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmf.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
  * @constructor
+ * @ngInject
  */
 app.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 

@@ -1,12 +1,11 @@
-goog.provide('attributes');
+goog.provide('app.attributes');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ngeo.format.XSDAttribute');
+/** @suppress {extraRequire} */
 goog.require('ngeo.attributesDirective');
-
-
-/** @const **/
-var app = {};
+goog.require('ol.Feature');
 
 
 /** @type {!angular.Module} **/
@@ -16,6 +15,7 @@ app.module = angular.module('app', ['ngeo']);
 /**
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @ngInject
  * @constructor
  */
 app.MainController = function($http, $timeout) {
