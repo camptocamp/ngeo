@@ -1357,6 +1357,7 @@ ngeox.source.AsitVDOptions.prototype.layer;
 /**
  * @typedef {{
  *    layer: string,
+ *    projection: string,
  *    format: (string|undefined),
  *    timestamp: string
  * }}
@@ -1373,13 +1374,13 @@ ngeox.source.SwisstopoOptions.prototype.layer;
 
 /**
  * Projection code. Possible values are `EPSG:21781` and `EPSG:2056`.
- * @type {string|undefined}
+ * @type {string}
  */
 ngeox.source.SwisstopoOptions.prototype.projection;
 
 
 /**
- * Image format. Default is `png`.
+ * Image format. Default is `image/png`.
  * @type {string}
  */
 ngeox.source.SwisstopoOptions.prototype.format;
