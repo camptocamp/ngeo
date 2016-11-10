@@ -177,7 +177,10 @@
           </div>
           <gmf-disclaimer
             gmf-disclaimer-map="::mainCtrl.map"
-            gmf-disclaimer-modal="::true">
+            gmf-disclaimer-external="::true"
+            gmf-disclaimer-external-msg="disclaimerMsg"
+            gmf-disclaimer-external-visibility="disclaimerVisibility"
+            >
           </gmf-disclaimer>
         </div>
         <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"
@@ -216,6 +219,14 @@
       </div>
       <ngeo-modal ng-model="mainCtrl.modalShareShown" ngeo-modal-destroy-content-on-hide="true">
         <gmf-share gmf-share-email="false"/>
+      </ngeo-modal>
+      <ngeo-modal ng-model="disclaimerVisibility" ngeo-modal-destroy-content-on-hide="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div ng-bind-html="disclaimerMsg"></div>
+        </div>
       </ngeo-modal>
     </main>
     <footer>

@@ -17,8 +17,41 @@ goog.require('ngeo.LayerHelper');
  *        gmf-disclaimer-map="::ctrl.map">
  *      </gmf-disclaimer>
  *
+ * You can also display the disclaimer messages in popups or use them in another
+ * context. The example below show you how to display the disclaimer messages
+ * in a ngeo-modal window (external case).
+ *
+ * Example:
+ *
+ *      <gmf-disclaimer
+ *        gmf-disclaimer-map="::ctrl.map"
+ *        gmf-disclaimer-external="::true"
+ *        gmf-disclaimer-external-msg="disclaimerMsg"
+ *        gmf-disclaimer-external-visibility="disclaimerVisibility">
+ *      </gmf-disclaimer>
+ *      <ngeo-modal ng-model="disclaimerVisibility"
+ *                  ngeo-modal-destroy-content-on-hide="true">
+ *       <div class="modal-header">
+ *         <button type="button" class="close" data-dismiss="modal"
+ *                 aria-hidden="true">&times;</button>
+ *       </div>
+ *       <div class="modal-body">
+ *         <div ng-bind-html="disclaimerMsg"></div>
+ *       </div>
+ *     </ngeo-modal>
+ *
  * @htmlAttribute {boolean} gmf-disclaimer-modal Whether to show the disclaimer
  *     messages in modals or not. Defaults to `false`.
+ * @htmlAttribute {boolean?} gmf-disclaimer-external Whether to use disclaimer
+ *     messages elsewhere or not. Default to `false`. If true, you should use
+ *     the gmf-disclaimer-external-msg and the
+ *     gmf-disclaimer-external-visibility too.
+ * @htmlAttribute {boolean?} gmf-disclaimer-external-visibility variable that
+ *     will be set to true if the disclaimers contain a new message. To uses it,
+ *     you must set the gmf-disclaimer-external to true.
+ * @htmlAttribute {string?} gmf-disclaimer-external-msg variable that will
+ *     contains the disclaimer messages. To uses it, you must set the
+ *     gmf-disclaimer-external to true.
  * @htmlAttribute {ol.Map=} gmf-disclaimer-map The map.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
@@ -31,7 +64,10 @@ gmf.disclaimerDirective = function() {
     restrict: 'E',
     scope: {
       'modalIn': '<?gmfDisclaimerModal',
-      'map': '=gmfDisclaimerMap'
+      'map': '=gmfDisclaimerMap',
+      'external': '<?gmfDisclaimerExternal',
+      'visibility': '=?gmfDisclaimerExternalVisibility',
+      'msg': '=?gmfDisclaimerExternalMsg'
     },
     bindToController: true,
     controller: 'GmfDisclaimerController',
@@ -47,6 +83,7 @@ gmf.module.directive('gmfDisclaimer', gmf.disclaimerDirective);
  * @constructor
  * @param {angular.JQLite} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
+ * @param {angular.$sce} $sce Angular sce service.
  * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {ngeo.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
@@ -56,8 +93,14 @@ gmf.module.directive('gmfDisclaimer', gmf.disclaimerDirective);
  * @ngdoc controller
  * @ngname GmfDisclaimerController
  */
-gmf.DisclaimerController = function($element, $scope, ngeoCreatePopup,
+gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
     ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
+
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map;
 
   /**
    * @type {boolean}
@@ -66,10 +109,36 @@ gmf.DisclaimerController = function($element, $scope, ngeoCreatePopup,
   this.modal = this['modalIn'] === true;
 
   /**
-   * @type {ol.Map}
+   * @type {boolean}
+   * @private
+   */
+  this.external_ = this['external'] === true;
+
+  /**
+   * Visibility that is set to true when a new msg is there.
+   * @type {boolean}
    * @export
    */
-  this.map;
+  this.visibility = false;
+
+  /**
+   * Trusted html messages that can be displayed as html.
+   * @type {string}
+   * @export
+   */
+  this.msg;
+
+  /**
+   * @type {Array<string>}
+   * @export
+   */
+  this.msgs_ = [];
+
+  /**
+   * @private
+   * @type {angular.$sce}
+   */
+  this.sce_ = $sce;
 
   /**
    * @type {angular.JQLite}
@@ -221,12 +290,20 @@ gmf.DisclaimerController.prototype.handleDestroy_ = function() {
  * @private
  */
 gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
-  this.disclaimer_.alert({
-    modal: this.modal,
-    msg: msg,
-    target: this.element_,
-    type: ngeo.MessageType.WARNING
-  });
+  if (this.external) {
+    if (this.msgs_.indexOf(msg) < 0) {
+      this.msgs_.push(msg);
+    }
+    this.msg = '' + this.sce_.trustAsHtml(this.msgs_.join('<br />'));
+    this.visibility = true;
+  } else {
+    this.disclaimer_.alert({
+      modal: this.modal,
+      msg: msg,
+      target: this.element_,
+      type: ngeo.MessageType.WARNING
+    });
+  }
 };
 
 
@@ -235,12 +312,18 @@ gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
  * @private
  */
 gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
-  this.disclaimer_.close({
-    modal: this.modal,
-    msg: msg,
-    target: this.element_,
-    type: ngeo.MessageType.WARNING
-  });
+  if (this.external) {
+    this.visibility = false;
+    this.msgs_.length = 0;
+    this.msg = '';
+  } else {
+    this.disclaimer_.close({
+      modal: this.modal,
+      msg: msg,
+      target: this.element_,
+      type: ngeo.MessageType.WARNING
+    });
+  }
 };
 
 
