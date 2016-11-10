@@ -40,8 +40,8 @@ goog.require('ngeo.LayerHelper');
  *       </div>
  *     </ngeo-modal>
  *
- * @htmlAttribute {boolean} gmf-disclaimer-modal Whether to show the disclaimer
- *     messages in modals or not. Defaults to `false`.
+ * @htmlAttribute {boolean} gmf-disclaimer-popup Whether to show the disclaimer
+ *     messages in popups or not. Defaults to `false`.
  * @htmlAttribute {boolean?} gmf-disclaimer-external Whether to use disclaimer
  *     messages elsewhere or not. Default to `false`. If true, you should use
  *     the gmf-disclaimer-external-msg and the
@@ -63,7 +63,7 @@ gmf.disclaimerDirective = function() {
   return {
     restrict: 'E',
     scope: {
-      'modalIn': '<?gmfDisclaimerModal',
+      'popupIn': '<?gmfDisclaimerPopup',
       'map': '=gmfDisclaimerMap',
       'external': '<?gmfDisclaimerExternal',
       'visibility': '=?gmfDisclaimerExternalVisibility',
@@ -106,7 +106,7 @@ gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
    * @type {boolean}
    * @export
    */
-  this.modal = this['modalIn'] === true;
+  this.popup = this['popupIn'] === true;
 
   /**
    * @type {boolean}
@@ -298,7 +298,7 @@ gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
     this.visibility = true;
   } else {
     this.disclaimer_.alert({
-      modal: this.modal,
+      popup: this.popup,
       msg: msg,
       target: this.element_,
       type: ngeo.MessageType.WARNING
@@ -318,7 +318,7 @@ gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
     this.msg = '';
   } else {
     this.disclaimer_.close({
-      modal: this.modal,
+      popup: this.popup,
       msg: msg,
       target: this.element_,
       type: ngeo.MessageType.WARNING

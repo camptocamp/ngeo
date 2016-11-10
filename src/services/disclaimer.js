@@ -103,10 +103,10 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
     return;
   }
 
-  var showInModal = message.modal === true;
+  var showInPopup = message.popup === true;
 
-  if (showInModal) {
-    // display the message in a modal, i.e. using the ngeo create popup
+  if (showInPopup) {
+    // display the message in a popup, i.e. using the ngeo create popup
     var popup = this.createPopup_();
     var content = this.sce_.trustAsHtml(message.msg);
     popup.open({
