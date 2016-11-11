@@ -3,7 +3,6 @@ goog.provide('gmf.Permalink');
 goog.require('gmf');
 goog.require('ngeo.AutoProjection');
 goog.require('gmf.Themes');
-goog.require('gmf.ThemeManager');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
@@ -73,7 +72,6 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
- * @param {gmf.ThemeManager} gmfThemeManager The gmf ThemeManager service.
  * @param {gmf.TreeManager} gmfTreeManager The gmf gmfTreeManager service.
  * @param {gmfx.PermalinkOptions} gmfPermalinkOptions The options to configure
  *     the gmf permalink service with.
@@ -89,7 +87,8 @@ gmf.module.value('gmfPermalinkOptions',
  */
 gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     ngeoFeatureOverlayMgr, ngeoFeatureHelper, ngeoFeatures, ngeoLayerHelper,
-    ngeoStateManager, gmfThemes, gmfThemeManager, gmfTreeManager, gmfPermalinkOptions, defaultTheme,
+    ngeoStateManager, gmfThemes,
+    gmfTreeManager, gmfPermalinkOptions, defaultTheme,
     ngeoLocation, ngeoWfsPermalink, ngeoAutoProjection, $rootScope, $injector) {
 
   // == listener keys ==
@@ -156,6 +155,13 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   }
 
   /**
+   * @type {?gmf.ObjectEditingManager}
+   * @private
+   */
+  this.gmfObjectEditingManager_ = $injector.has('gmfObjectEditingManager') ?
+    $injector.get('gmfObjectEditingManager') : null;
+
+  /**
    * @type {gmf.Themes}
    * @private
    */
@@ -171,13 +177,15 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @type {gmf.ThemeManager}
    * @private
    */
-  this.gmfThemeManager_ = gmfThemeManager;
+  this.gmfThemeManager_ = $injector.has('gmfThemeManager') ?
+    $injector.get('gmfThemeManager') : undefined;
 
   /**
    * @type {gmfx.User|undefined}
    * @private
    */
-  this.gmfUser_ = $injector.has('gmfUser') ? $injector.get('gmfUser') : undefined;
+  this.gmfUser_ = $injector.has('gmfUser') ?
+    $injector.get('gmfUser') : undefined;
 
   /**
    * @type {string}
@@ -356,11 +364,13 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     }, this);
   }.bind(this));
 
-  $rootScope.$watch(function() {
-    return this.gmfThemeManager_.themeName;
-  }.bind(this), function(name) {
-    this.setThemeInUrl_();
-  }.bind(this));
+  if (this.gmfThemeManager_) {
+    $rootScope.$watch(function() {
+      return this.gmfThemeManager_.themeName;
+    }.bind(this), function(name) {
+      this.setThemeInUrl_();
+    }.bind(this));
+  }
 
   this.initLayers_();
 };
@@ -565,7 +575,13 @@ gmf.Permalink.prototype.setMap = function(map) {
 
   if (map) {
     this.map_ = map;
-    this.registerMap_(map);
+    if (this.gmfObjectEditingManager_) {
+      this.gmfObjectEditingManager_.getFeature().then(function(feature) {
+        this.registerMap_(map, feature);
+      }.bind(this));
+    } else {
+      this.registerMap_(map, null);
+    }
   }
 
 };
@@ -574,21 +590,31 @@ gmf.Permalink.prototype.setMap = function(map) {
 /**
  * Listen to the map view property change and update the state accordingly.
  * @param {ol.Map} map The ol3 map object.
+ * @param {?ol.Feature} oeFeature ObjectEditing feature
  * @private
  */
-gmf.Permalink.prototype.registerMap_ = function(map) {
+gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
 
   var view = map.getView();
+  var center;
+  var zoom;
 
-  // (1) Initialize the map view with the X, Y and Z available within the
-  //     permalink service, if available
-  var center = this.getMapCenter();
-  if (center !== null) {
-    view.setCenter(center);
-  }
-  var zoom = this.getMapZoom();
-  if (zoom !== null) {
-    view.setZoom(zoom);
+  // (1) Initialize the map view with either:
+  //     a) the given ObjectEditing feature
+  //     b) the X, Y and Z available within the permalink service, if available
+  if (oeFeature && oeFeature.getGeometry()) {
+    var size = map.getSize();
+    goog.asserts.assert(size);
+    view.fit(oeFeature.getGeometry().getExtent(), size);
+  } else {
+    center = this.getMapCenter();
+    if (center !== null) {
+      view.setCenter(center);
+    }
+    zoom = this.getMapZoom();
+    if (zoom !== null) {
+      view.setZoom(zoom);
+    }
   }
 
 
@@ -753,7 +779,7 @@ gmf.Permalink.prototype.themeInUrl_ = function(pathElements) {
  * @private
  */
 gmf.Permalink.prototype.setThemeInUrl_ = function() {
-  if (this.gmfThemeManager_.themeName) {
+  if (this.gmfThemeManager_ && this.gmfThemeManager_.themeName) {
     var pathElements = this.ngeoLocation_.getPath().split('/');
     goog.asserts.assert(pathElements.length > 1);
     if (pathElements[pathElements.length - 1] === '') {
@@ -793,7 +819,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
       // fallback to the default theme
       themeName = this.defaultTheme_;
     }
-    if (this.gmfThemeManager_.modeFlush) {
+    if (this.gmfThemeManager_ && this.gmfThemeManager_.modeFlush) {
       this.gmfThemeManager_.themeName = themeName;
     }
 

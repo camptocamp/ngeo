@@ -850,8 +850,10 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
     );
 
     // (3) Launch query to fetch features
-    this.editFeatureService_.getFeatures([this.editableNode_.id], extent).then(
-      this.handleGetFeatures_.bind(this));
+    this.editFeatureService_.getFeaturesInExtent(
+      [this.editableNode_.id],
+      extent
+    ).then(this.handleGetFeatures_.bind(this));
 
     // (4) Clear any previously selected feature
     this.cancel();

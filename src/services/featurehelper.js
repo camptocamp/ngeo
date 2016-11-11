@@ -436,15 +436,29 @@ ngeo.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
         return;
       }
 
-      var coordinates;
+      var multiCoordinates = [];
+      var coordinates = [];
+      var i, ii;
       if (geom instanceof ol.geom.LineString) {
-        coordinates = feature.getGeometry().getCoordinates();
-        return new ol.geom.MultiPoint(coordinates);
+        coordinates = geom.getCoordinates();
+      } else if (geom instanceof ol.geom.MultiLineString) {
+        multiCoordinates = geom.getCoordinates();
       } else if (geom instanceof ol.geom.Polygon) {
-        coordinates = feature.getGeometry().getCoordinates()[0];
+        coordinates = geom.getCoordinates()[0];
+      } else if (geom instanceof ol.geom.MultiPolygon) {
+        multiCoordinates = geom.getCoordinates()[0];
+      }
+
+      if (multiCoordinates.length) {
+        for (i = 0, ii = multiCoordinates.length; i < ii; i++) {
+          coordinates = coordinates.concat(multiCoordinates[i]);
+        }
+      }
+
+      if (coordinates.length) {
         return new ol.geom.MultiPoint(coordinates);
       } else {
-        return feature.getGeometry();
+        return geom;
       }
     };
   }
