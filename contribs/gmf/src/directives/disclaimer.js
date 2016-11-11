@@ -63,7 +63,7 @@ gmf.disclaimerDirective = function() {
   return {
     restrict: 'E',
     scope: {
-      'popupIn': '<?gmfDisclaimerPopup',
+      'popup': '<?gmfDisclaimerPopup',
       'map': '=gmfDisclaimerMap',
       'external': '<?gmfDisclaimerExternal',
       'visibility': '=?gmfDisclaimerExternalVisibility',
@@ -89,6 +89,7 @@ gmf.module.directive('gmfDisclaimer', gmf.disclaimerDirective);
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @export
+ * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDisclaimerController
@@ -106,13 +107,13 @@ gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
    * @type {boolean}
    * @export
    */
-  this.popup = this['popupIn'] === true;
+  this.external;
 
   /**
    * @type {boolean}
-   * @private
+   * @export
    */
-  this.external_ = this['external'] === true;
+  this.popup;
 
   /**
    * Visibility that is set to true when a new msg is there.
