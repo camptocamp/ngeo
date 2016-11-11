@@ -34,7 +34,7 @@
     "closure-util": "1.15.1",
     "coveralls": "2.11.14",
     "d3": "3.5.17",
-    "eslint": "3.9.0",
+    "eslint": "3.10.0",
     "eslint-config-openlayers": "5.0.0",
     "floatthead": "1.4.5",
     "font-awesome": "4.7.0",
