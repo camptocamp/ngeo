@@ -39,8 +39,7 @@
       max-width: @fullscreenpopup-tablet-width;
       width: @fullscreenpopup-tablet-width;
       margin-left: - @fullscreenpopup-tablet-width / 2;
-      left: 50%;
-      right: 50%;
+      left: calc(~"50% -" @fullscreenpopup-tablet-width / 2);
       max-height: @fullscreenpopup-tablet-width + @map-tools-size;
       position: fixed;
     }

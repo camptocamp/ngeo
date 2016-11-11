@@ -140,7 +140,7 @@ ngeox.MenuActionOptions.prototype.name;
  * A message to display by the Ngeo notification service.
  * @typedef {{
  *     delay: (number|undefined),
- *     modal: (boolean|undefined),
+ *     popup: (boolean|undefined),
  *     msg: (string),
  *     target: (angular.JQLite|Element|string|undefined),
  *     type: (string|undefined)
@@ -157,11 +157,11 @@ ngeox.Message.prototype.delay;
 
 
 /**
- * Whether the message should be displayed inside a modal window or not.
+ * Whether the message should be displayed inside a popup window or not.
  * Defaults to `false`.
  * @type {boolean|undefined}
  */
-ngeox.Message.prototype.modal;
+ngeox.Message.prototype.popup;
 
 
 /**
