@@ -35,7 +35,7 @@
     "coveralls": "2.11.15",
     "d3": "3.5.17",
     "eslint": "3.10.1",
-    "eslint-config-openlayers": "5.0.0",
+    "eslint-config-openlayers": "6.0.0",
     "floatthead": "1.4.5",
     "font-awesome": "4.7.0",
     "fs-extra": "1.0.0",
