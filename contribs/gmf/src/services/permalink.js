@@ -89,7 +89,8 @@ gmf.module.value('gmfPermalinkOptions',
  */
 gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     ngeoFeatureOverlayMgr, ngeoFeatureHelper, ngeoFeatures, ngeoLayerHelper,
-    ngeoStateManager, gmfThemes, gmfThemeManager, gmfTreeManager, gmfPermalinkOptions, defaultTheme,
+    ngeoStateManager, gmfThemes, gmfThemeManager,
+    gmfTreeManager, gmfPermalinkOptions, defaultTheme,
     ngeoLocation, ngeoWfsPermalink, ngeoAutoProjection, $rootScope, $injector) {
 
   // == listener keys ==
@@ -154,6 +155,13 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   if (gmfPermalinkOptions.useLocalStorage === false) {
     this.ngeoStateManager_.localStorage.isAvailable = ol.functions.FALSE;
   }
+
+  /**
+   * @type {?gmf.ObjectEditingManager}
+   * @private
+   */
+  this.gmfObjectEditingManager_ = $injector.has('gmfObjectEditingManager') ?
+    $injector.get('gmfObjectEditingManager') : null;
 
   /**
    * @type {gmf.Themes}
@@ -565,7 +573,13 @@ gmf.Permalink.prototype.setMap = function(map) {
 
   if (map) {
     this.map_ = map;
-    this.registerMap_(map);
+    if (this.gmfObjectEditingManager_) {
+      this.gmfObjectEditingManager_.getFeature().then(function(feature) {
+        this.registerMap_(map, feature);
+      }.bind(this));
+    } else {
+      this.registerMap_(map, null);
+    }
   }
 
 };
@@ -574,21 +588,31 @@ gmf.Permalink.prototype.setMap = function(map) {
 /**
  * Listen to the map view property change and update the state accordingly.
  * @param {ol.Map} map The ol3 map object.
+ * @param {?ol.Feature} oeFeature ObjectEditing feature
  * @private
  */
-gmf.Permalink.prototype.registerMap_ = function(map) {
+gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
 
   var view = map.getView();
+  var center;
+  var zoom;
 
-  // (1) Initialize the map view with the X, Y and Z available within the
-  //     permalink service, if available
-  var center = this.getMapCenter();
-  if (center !== null) {
-    view.setCenter(center);
-  }
-  var zoom = this.getMapZoom();
-  if (zoom !== null) {
-    view.setZoom(zoom);
+  // (1) Initialize the map view with either:
+  //     a) the given ObjectEditing feature
+  //     b) the X, Y and Z available within the permalink service, if available
+  if (oeFeature && oeFeature.getGeometry()) {
+    var size = map.getSize();
+    goog.asserts.assert(size);
+    view.fit(oeFeature.getGeometry().getExtent(), size);
+  } else {
+    center = this.getMapCenter();
+    if (center !== null) {
+      view.setCenter(center);
+    }
+    zoom = this.getMapZoom();
+    if (zoom !== null) {
+      view.setZoom(zoom);
+    }
   }
 
 
