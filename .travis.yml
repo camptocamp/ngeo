@@ -142,7 +142,7 @@ after_success:
 
 before_deploy:
 - export GIT_BRANCH=${TRAVIS_BRANCH}
-- .build/python-venv/bin/pip install jsongrep
+- .build/python-venv/bin/pip install jsongrep || true
 - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
 - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
 
