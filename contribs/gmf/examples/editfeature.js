@@ -1,4 +1,4 @@
-goog.provide('app.editfeature');
+goog.provide('gmfapp.editfeature');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -19,15 +19,15 @@ goog.require('ol.source.ImageWMS');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value(
+gmfapp.module.value(
     'authenticationBaseUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
 
 
-app.module.value('gmfLayersUrl',
+gmfapp.module.value('gmfLayersUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
 
 
@@ -38,7 +38,7 @@ app.module.value('gmfLayersUrl',
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, gmfEditFeature, gmfUser) {
+gmfapp.MainController = function($scope, gmfEditFeature, gmfUser) {
 
   /**
    * @type {!angular.Scope}
@@ -132,7 +132,7 @@ app.MainController = function($scope, gmfEditFeature, gmfUser) {
  * @param {ol.MapBrowserEvent} evt MapBrowser event
  * @private
  */
-app.MainController.prototype.handleMapSingleClick_ = function(evt) {
+gmfapp.MainController.prototype.handleMapSingleClick_ = function(evt) {
 
   // (1) Launch query to fetch new features
   var coordinate = evt.coordinate;
@@ -162,7 +162,7 @@ app.MainController.prototype.handleMapSingleClick_ = function(evt) {
  * @param {Array.<ol.Feature>} features Features.
  * @private
  */
-app.MainController.prototype.handleGetFeatures_ = function(features) {
+gmfapp.MainController.prototype.handleGetFeatures_ = function(features) {
   this.pending = false;
 
   if (features.length) {
@@ -175,7 +175,7 @@ app.MainController.prototype.handleGetFeatures_ = function(features) {
  * Insert a new feature at a random location.
  * @export
  */
-app.MainController.prototype.insertFeature = function() {
+gmfapp.MainController.prototype.insertFeature = function() {
 
   this.pending = true;
 
@@ -221,7 +221,7 @@ app.MainController.prototype.insertFeature = function() {
  * Update the currently selected feature with a new name.
  * @export
  */
-app.MainController.prototype.updateFeature = function() {
+gmfapp.MainController.prototype.updateFeature = function() {
 
   console.assert(this.feature);
 
@@ -247,7 +247,7 @@ app.MainController.prototype.updateFeature = function() {
  * Delete currently selected feature.
  * @export
  */
-app.MainController.prototype.deleteFeature = function() {
+gmfapp.MainController.prototype.deleteFeature = function() {
 
   console.assert(this.feature);
 
@@ -269,7 +269,7 @@ app.MainController.prototype.deleteFeature = function() {
  * @param {angular.$http.Response} resp Ajax response.
  * @private
  */
-app.MainController.prototype.handleEditFeature_ = function(resp) {
+gmfapp.MainController.prototype.handleEditFeature_ = function(resp) {
   this.pending = false;
   this.refreshWMSLayer_();
 };
@@ -278,11 +278,11 @@ app.MainController.prototype.handleEditFeature_ = function(resp) {
 /**
  * @private
  */
-app.MainController.prototype.refreshWMSLayer_ = function() {
+gmfapp.MainController.prototype.refreshWMSLayer_ = function() {
   this.wmsSource_.updateParams({
     'random': Math.random()
   });
 };
 
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

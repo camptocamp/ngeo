@@ -1,4 +1,4 @@
-goog.provide('app.gmfdrawfeature');
+goog.provide('gmfapp.drawfeature');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.drawfeatureDirective');
@@ -16,10 +16,10 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value('ngeoExportFeatureFormats', [
+gmfapp.module.value('ngeoExportFeatureFormats', [
   ngeo.FeatureHelper.FormatType.KML,
   ngeo.FeatureHelper.FormatType.GPX
 ]);
@@ -36,7 +36,7 @@ app.module.value('ngeoExportFeatureFormats', [
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
+gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
     ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
 
   /**
@@ -116,7 +116,7 @@ app.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
  * @param {ol.MapBrowserEvent} evt MapBrowser event
  * @private
  */
-app.MainController.prototype.handleMapPointerMove_ = function(evt) {
+gmfapp.MainController.prototype.handleMapPointerMove_ = function(evt) {
   var pixel = evt.pixel;
 
   var feature = this.map.forEachFeatureAtPixel(pixel, function(feature) {
@@ -131,4 +131,4 @@ app.MainController.prototype.handleMapPointerMove_ = function(evt) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

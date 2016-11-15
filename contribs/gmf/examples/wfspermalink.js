@@ -1,4 +1,4 @@
-goog.provide('app.wfspermalink');
+goog.provide('gmfapp.wfspermalink');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
@@ -17,10 +17,10 @@ goog.require('ol.style.Circle');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value('ngeoWfsPermalinkOptions',
+gmfapp.module.value('ngeoWfsPermalinkOptions',
     /** @type {ngeox.WfsPermalinkOptions} */ ({
       url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
       wfsTypes: [
@@ -35,7 +35,7 @@ app.module.value('ngeoWfsPermalinkOptions',
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+gmfapp.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
@@ -69,4 +69,4 @@ app.MainController = function() {
   });
 };
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

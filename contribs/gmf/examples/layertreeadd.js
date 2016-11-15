@@ -1,4 +1,4 @@
-goog.provide('app.layertreeadd');
+goog.provide('gmfapp.layertreeadd');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.Themes');
@@ -20,10 +20,10 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value('gmfTreeUrl',
+gmfapp.module.value('gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background&interface=desktop');
 
 
@@ -35,7 +35,7 @@ app.module.value('gmfTreeUrl',
  * @param {ngeo.Location} ngeoLocation ngeo location service.
  * @ngInject
  */
-app.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, ngeoLocation) {
+gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, ngeoLocation) {
 
   gmfThemes.loadThemes();
 
@@ -192,4 +192,4 @@ app.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, ngeoLo
   };
 };
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

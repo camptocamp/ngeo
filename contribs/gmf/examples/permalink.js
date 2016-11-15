@@ -1,4 +1,4 @@
-goog.provide('app.gmfpermalink');
+goog.provide('gmfapp.permalink');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
@@ -14,10 +14,10 @@ goog.require('ol.style.Style');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value('gmfPermalinkOptions',
+gmfapp.module.value('gmfPermalinkOptions',
     /** @type {gmfx.PermalinkOptions} */ ({
       crosshairStyle: new ol.style.Style({
         image: new ol.style.RegularShape({
@@ -37,7 +37,7 @@ app.module.value('gmfPermalinkOptions',
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+gmfapp.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
@@ -57,4 +57,4 @@ app.MainController = function() {
   });
 };
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

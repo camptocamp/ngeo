@@ -712,7 +712,7 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 	mkdir -p $(dir $@)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		$(CLOSURE_VARS) \
-		--var entry_point=app.$* \
+		--var entry_point=gmfapp.$* \
 		--var src=contribs/gmf/examples/$*.js \
 		--var src_set=contribs_gmf \
 		--var examples=true \

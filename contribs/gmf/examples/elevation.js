@@ -1,4 +1,4 @@
-goog.provide('app.elevation');
+goog.provide('gmfapp.elevation');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.elevationDirective');
@@ -13,10 +13,10 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value(
+gmfapp.module.value(
     'gmfRasterUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
 
@@ -25,7 +25,7 @@ app.module.value(
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+gmfapp.MainController = function() {
   /**
    * @type {Array.<string>}
    * @export
@@ -57,4 +57,4 @@ app.MainController = function() {
   });
 };
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

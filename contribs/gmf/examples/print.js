@@ -1,4 +1,4 @@
-goog.provide('app.print');
+goog.provide('gmfapp.print');
 
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
@@ -16,20 +16,20 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value(
+gmfapp.module.value(
     'gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
         'version=2&background=background');
 
 
-app.module.value('gmfPrintUrl',
+gmfapp.module.value('gmfPrintUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
 
 
-app.module.value(
+gmfapp.module.value(
     'authenticationBaseUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi'
 );
@@ -42,7 +42,7 @@ app.module.value(
  *   overlay manager service.
  * @ngInject
  */
-app.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
+gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
 
@@ -86,4 +86,4 @@ app.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
   ngeoFeatureOverlayMgr.init(this.map);
 };
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

@@ -1,4 +1,4 @@
-goog.provide('app.gmfsimple');
+goog.provide('gmfapp.simple');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
@@ -9,14 +9,14 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+gmfapp.MainController = function() {
 
   /**
    * @type {ol.Map}
@@ -36,4 +36,4 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

@@ -1,4 +1,4 @@
-goog.provide('app.mobilemeasure');
+goog.provide('gmfapp.mobilemeasure');
 
 goog.require('gmf.Permalink');
 /** @suppress {extraRequire} */
@@ -19,10 +19,10 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value(
+gmfapp.module.value(
     'gmfRasterUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
 
@@ -32,7 +32,7 @@ app.module.value(
  * @constructor
  * @ngInject
  */
-app.MainController = function(gmfPermalink) {
+gmfapp.MainController = function(gmfPermalink) {
 
   var center = gmfPermalink.getMapCenter() || [537635, 152640];
   var zoom = gmfPermalink.getMapZoom() || 3;
@@ -78,4 +78,4 @@ app.MainController = function(gmfPermalink) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

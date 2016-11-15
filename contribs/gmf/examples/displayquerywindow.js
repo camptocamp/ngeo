@@ -1,4 +1,4 @@
-goog.provide('app.displayquerywindow');
+goog.provide('gmfapp.displayquerywindow');
 
 goog.require('gmf.QueryManager');
 goog.require('gmf.Themes');
@@ -25,15 +25,15 @@ goog.require('ol.style.Style');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value('ngeoQueryOptions', {
+gmfapp.module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
 
-app.module.value(
+gmfapp.module.value(
     'gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
         'version=2&background=background');
@@ -45,7 +45,7 @@ app.module.value(
  *
  * @return {angular.Directive} The directive specs.
  */
-app.queryresultDirective = function() {
+gmfapp.queryresultDirective = function() {
   return {
     restrict: 'E',
     scope: {},
@@ -56,7 +56,7 @@ app.queryresultDirective = function() {
   };
 };
 
-app.module.directive('appQueryresult', app.queryresultDirective);
+gmfapp.module.directive('appQueryresult', gmfapp.queryresultDirective);
 
 
 /**
@@ -65,7 +65,7 @@ app.module.directive('appQueryresult', app.queryresultDirective);
  * @constructor
  * @ngInject
  */
-app.QueryresultController = function(ngeoQueryResult) {
+gmfapp.QueryresultController = function(ngeoQueryResult) {
 
   /**
    * @type {ngeox.QueryResult}
@@ -76,7 +76,7 @@ app.QueryresultController = function(ngeoQueryResult) {
 };
 
 
-app.module.controller('AppQueryresultController', app.QueryresultController);
+gmfapp.module.controller('AppQueryresultController', gmfapp.QueryresultController);
 
 
 /**
@@ -87,7 +87,7 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
  *   overlay manager service.
  * @ngInject
  */
-app.MainController = function(gmfThemes, gmfQueryManager,
+gmfapp.MainController = function(gmfThemes, gmfQueryManager,
     ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
@@ -152,4 +152,4 @@ app.MainController = function(gmfThemes, gmfQueryManager,
   ngeoFeatureOverlayMgr.init(this.map);
 };
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

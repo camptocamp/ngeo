@@ -1,4 +1,4 @@
-goog.provide('app.gmfsearch');
+goog.provide('gmfapp.search');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
@@ -18,10 +18,10 @@ goog.require('ol.style.Style');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value('gmfTreeUrl',
+gmfapp.module.value('gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
 
 
@@ -31,7 +31,7 @@ app.module.value('gmfTreeUrl',
  * @constructor
  * @ngInject
  */
-app.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
+gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
 
@@ -101,4 +101,4 @@ app.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

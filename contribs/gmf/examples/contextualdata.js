@@ -1,4 +1,4 @@
-goog.provide('app.contextualdata');
+goog.provide('gmfapp.contextualdata');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdataDirective');
@@ -13,14 +13,14 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value(
+gmfapp.module.value(
     'gmfRasterUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
 
-app.module.value(
+gmfapp.module.value(
     'gmfContextualdatacontentTemplateUrl',
     'partials/contextualdata.html');
 
@@ -29,7 +29,7 @@ app.module.value(
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+gmfapp.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
@@ -57,10 +57,10 @@ app.MainController = function() {
  * @return {Object} The additional data to add to the scope for the
  *     contextualdata popover.
  */
-app.MainController.prototype.onRasterData = function(coordinate, data) {
+gmfapp.MainController.prototype.onRasterData = function(coordinate, data) {
   return {
     'elelvation_diff': data['srtm'] - data['aster']
   };
 };
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

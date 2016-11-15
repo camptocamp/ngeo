@@ -18,6 +18,7 @@
     "ngeo": false,
     "gmf": false,
     "app": false,
+    "gmfapp": false,
     "inject": false
   }
 }

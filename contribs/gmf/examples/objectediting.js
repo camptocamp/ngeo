@@ -1,4 +1,4 @@
-goog.provide('app.objectediting');
+goog.provide('gmfapp.objectediting');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
@@ -13,14 +13,14 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value('gmfTreeUrl',
+gmfapp.module.value('gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
 
 
-app.module.value('gmfLayersUrl',
+gmfapp.module.value('gmfLayersUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
 
 
@@ -28,7 +28,7 @@ app.module.value('gmfLayersUrl',
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+gmfapp.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
@@ -48,4 +48,4 @@ app.MainController = function() {
   });
 };
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

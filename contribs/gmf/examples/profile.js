@@ -1,4 +1,4 @@
-goog.provide('app.gmfprofile');
+goog.provide('gmfapp.profile');
 
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
@@ -18,14 +18,14 @@ goog.require('ol.style.Style');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value(
+gmfapp.module.value(
     'gmfProfileJsonUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.json');
 
-app.module.value(
+gmfapp.module.value(
     'gmfProfileCsvUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.csv');
 
@@ -36,7 +36,7 @@ app.module.value(
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoFeatureOverlayMgr) {
+gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
   /**
    * @type {ol.geom.LineString}
    * @export
@@ -142,4 +142,4 @@ app.MainController = function($scope, ngeoFeatureOverlayMgr) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

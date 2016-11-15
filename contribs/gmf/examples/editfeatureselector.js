@@ -1,4 +1,4 @@
-goog.provide('app.editfeatureselector');
+goog.provide('gmfapp.editfeatureselector');
 
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
@@ -25,23 +25,23 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value('gmfTreeUrl',
+gmfapp.module.value('gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
 
 
-app.module.value(
+gmfapp.module.value(
     'authenticationBaseUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
 
 
-app.module.value('gmfTreeUrl',
+gmfapp.module.value('gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
 
 
-app.module.value('gmfLayersUrl',
+gmfapp.module.value('gmfLayersUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
 
 
@@ -56,7 +56,7 @@ app.module.value('gmfLayersUrl',
  * @ngInject
  * @constructor
  */
-app.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
+gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
     ngeoFeatureHelper, ngeoToolActivateMgr) {
 
   /**
@@ -164,4 +164,4 @@ app.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
 };
 
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);
