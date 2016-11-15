@@ -1,19 +1,18 @@
-goog.provide('layerorder');
+goog.provide('app.layerorder');
 
 goog.require('ngeo.DecorateLayer');
+/** @suppress {extraRequire} */
 goog.require('ngeo.SortableOptions');
 goog.require('ngeo.SyncArrays');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.sortableDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 goog.require('ol.source.TileWMS');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/

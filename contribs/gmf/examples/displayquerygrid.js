@@ -1,20 +1,24 @@
-goog.provide('gmf-displayquerygrid');
+goog.provide('gmfapp.displayquerygrid');
 
 goog.require('gmf.QueryManager');
 goog.require('gmf.Themes');
+/** @suppress {extraRequire} */
 goog.require('gmf.displayquerygridDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo');
-goog.require('ngeo.Query');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.gridDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
-goog.require('ol.proj');
 goog.require('ol.source.OSM');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
@@ -22,20 +26,16 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 
-/** @const **/
-var app = {};
-
-
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.constant('ngeoQueryOptions', {
+gmfapp.module.constant('ngeoQueryOptions', {
   'limit': 20
 });
 
 
-app.module.constant(
+gmfapp.module.constant(
     'gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
         'version=2&background=background');
@@ -46,19 +46,20 @@ app.module.constant(
  * A sample directive to display the result.
  *
  * @return {angular.Directive} The directive specs.
+ * @ngInject
  */
-app.queryresultDirective = function() {
+gmfapp.queryresultDirective = function() {
   return {
     restrict: 'E',
     scope: {},
-    controller: 'AppQueryresultController',
+    controller: 'gmfappQueryresultController',
     controllerAs: 'qrCtrl',
     bindToController: true,
     templateUrl: 'partials/queryresult.html'
   };
 };
 
-app.module.directive('appQueryresult', app.queryresultDirective);
+gmfapp.module.directive('gmfappQueryresult', gmfapp.queryresultDirective);
 
 
 /**
@@ -67,7 +68,7 @@ app.module.directive('appQueryresult', app.queryresultDirective);
  * @constructor
  * @ngInject
  */
-app.QueryresultController = function(ngeoQueryResult) {
+gmfapp.QueryresultController = function(ngeoQueryResult) {
 
   /**
    * @type {ngeox.QueryResult}
@@ -78,7 +79,7 @@ app.QueryresultController = function(ngeoQueryResult) {
 };
 
 
-app.module.controller('AppQueryresultController', app.QueryresultController);
+gmfapp.module.controller('gmfappQueryresultController', gmfapp.QueryresultController);
 
 
 /**
@@ -87,14 +88,12 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
  * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
+ * @ngInject
  */
-app.MainController = function(gmfThemes, gmfQueryManager,
+gmfapp.MainController = function(gmfThemes, gmfQueryManager,
     ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
-
-  var projection = ol.proj.get('EPSG:21781');
-  projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   var fill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
   var stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
@@ -121,7 +120,7 @@ app.MainController = function(gmfThemes, gmfQueryManager,
       })
     ],
     view: new ol.View({
-      projection: projection,
+      projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 3
@@ -162,4 +161,4 @@ app.MainController = function(gmfThemes, gmfQueryManager,
   ngeoFeatureOverlayMgr.init(this.map);
 };
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

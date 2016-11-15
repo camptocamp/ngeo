@@ -1,16 +1,16 @@
-goog.provide('scaleselector');
+goog.provide('app.scaleselector');
 
 goog.require('ngeo.ScaleselectorOptions');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.scaleselectorDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filters');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -22,6 +22,7 @@ app.module = angular.module('app', ['ngeo']);
  * ngeo-scaleselector directive.
  *
  * @return {angular.Directive} Directive Definition Object.
+ * @ngInject
  */
 app.scaleselectorDirective = function() {
   return {

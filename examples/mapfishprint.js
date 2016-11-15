@@ -1,23 +1,19 @@
-goog.provide('mapfishprint');
+goog.provide('app.mapfishprint');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.CreatePrint');
 goog.require('ngeo.Print');
 goog.require('ngeo.PrintUtils');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
-goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Vector');
-goog.require('ol.proj');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.Vector');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -85,10 +81,6 @@ app.PRINT_PAPER_SIZE_ = [555, 675];
  * @export
  */
 app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
-
-  var projection = ol.proj.get('EPSG:21781');
-  projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
-
   /**
    * @type {ol.Map}
    * @export
@@ -114,7 +106,7 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
       })
     ],
     view: new ol.View({
-      projection: projection,
+      projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1],
       center: [537635, 152640],
       zoom: 3

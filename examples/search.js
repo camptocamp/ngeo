@@ -1,8 +1,11 @@
-goog.provide('search');
+goog.provide('app.search');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.CreateGeoJSONBloodhound');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.searchDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -13,16 +16,13 @@ goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 
 
-/** @const **/
-var app = {};
-
-
 /** @type {!angular.Module} **/
 app.module = angular.module('app', ['ngeo']);
 
 
 /**
  * @return {angular.Directive} Directive Definition Object.
+ * @ngInject
  */
 app.searchDirective = function() {
   return {
@@ -193,6 +193,7 @@ app.module.controller('AppSearchController', app.SearchController);
 
 /**
  * @constructor
+ * @ngInject
  */
 app.MainController = function() {
   /**

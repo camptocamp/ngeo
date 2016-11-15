@@ -1,15 +1,12 @@
-goog.provide('disclaimer');
+goog.provide('app.disclaimer');
 
 goog.require('ngeo.Disclaimer');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -18,6 +15,7 @@ app.module = angular.module('app', ['ngeo']);
 
 /**
  * @param {ngeo.Disclaimer} ngeoDisclaimer Ngeo disclaimer service.
+ * @ngInject
  * @constructor
  */
 app.MainController = function(ngeoDisclaimer) {

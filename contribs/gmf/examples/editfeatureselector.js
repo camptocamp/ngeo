@@ -1,15 +1,19 @@
-goog.provide('gmf-editfeatureselector');
+goog.provide('gmfapp.editfeatureselector');
 
-goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
+/** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.editfeatureselectorDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Collection');
 goog.require('ol.Map');
@@ -20,28 +24,24 @@ goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 
 
-/** @const **/
-var app = {};
-
-
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value('gmfTreeUrl',
+gmfapp.module.value('gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
 
 
-app.module.value(
+gmfapp.module.value(
     'authenticationBaseUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
 
 
-app.module.value('gmfTreeUrl',
+gmfapp.module.value('gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
 
 
-app.module.value('gmfLayersUrl',
+gmfapp.module.value('gmfLayersUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
 
 
@@ -53,9 +53,10 @@ app.module.value('gmfLayersUrl',
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
+ * @ngInject
  * @constructor
  */
-app.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
+gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
     ngeoFeatureHelper, ngeoToolActivateMgr) {
 
   /**
@@ -84,9 +85,6 @@ app.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
    */
   this.gmfTreeManager = gmfTreeManager;
 
-  var projection = ol.proj.get('EPSG:21781');
-  projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
-
 
   /**
    * @type {ol.layer.Vector}
@@ -113,7 +111,7 @@ app.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
       })
     ],
     view: new ol.View({
-      projection: projection,
+      projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 2
@@ -166,4 +164,4 @@ app.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
 };
 
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

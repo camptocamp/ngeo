@@ -1,11 +1,6 @@
-goog.provide('notification');
+goog.provide('app.notification');
 
-goog.require('ngeo');
 goog.require('ngeo.Notification');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -14,6 +9,7 @@ app.module = angular.module('app', ['ngeo']);
 
 /**
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+ * @ngInject
  * @constructor
  */
 app.MainController = function(ngeoNotification) {

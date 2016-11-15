@@ -8,7 +8,9 @@ goog.require('ol.layer.Group');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
+goog.require('ol.source.TileWMS');
 goog.require('ol.source.WMTS');
+goog.require('goog.uri.utils');
 
 
 /**
@@ -52,6 +54,7 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
 /**
  * Create and return a basic WMS layer with only a source URL and a comma
  * separated layers names (see {@link ol.source.ImageWMS}).
+ *
  * @param {string} sourceURL The source URL.
  * @param {string} sourceLayersName A comma separated names string.
  * @param {string=} opt_serverType Type of the server ("mapserver",
@@ -318,11 +321,12 @@ ngeo.LayerHelper.prototype.isLayerVisible = function(layer, map) {
  * @param {ol.layer.Image|ol.layer.Tile} layer Layer to refresh.
  */
 ngeo.LayerHelper.prototype.refreshWMSLayer = function(layer) {
-  var source = layer.getSource();
+  var source_ = layer.getSource();
   goog.asserts.assert(
-    source instanceof ol.source.ImageWMS ||
-    source instanceof ol.source.TileWMS
+    source_ instanceof ol.source.ImageWMS ||
+    source_ instanceof ol.source.TileWMS
   );
+  var source = /** @type{ol.source.ImageWMS|ol.source.TileWMS} */ (source_);
   var params = source.getParams();
   params[ngeo.LayerHelper.REFRESH_PARAM] = Math.random();
   source.updateParams(params);

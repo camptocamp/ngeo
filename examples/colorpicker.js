@@ -1,11 +1,9 @@
-goog.provide('colorpicker');
+goog.provide('app.colorpicker');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.colorpickerDirective');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -17,6 +15,7 @@ app.module = angular.module('app', ['ngeo']);
  * ngeo-colorpicker directive.
  *
  * @return {angular.Directive} Directive Definition Object.
+ * @ngInject
  */
 app.colorpickerDirective = function() {
   return {

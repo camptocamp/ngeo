@@ -1,24 +1,22 @@
-goog.provide('query');
+goog.provide('app.mapquery');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo');
 goog.require('ngeo.Query');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
-goog.require('ol.proj');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -34,6 +32,7 @@ app.module.value('ngeoQueryOptions', {
  * A sample directive to display the result.
  *
  * @return {angular.Directive} The directive specs.
+ * @ngInject
  */
 app.queryresultDirective = function() {
   return {
@@ -90,9 +89,6 @@ app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
    */
   this.queryActive = true;
 
-  var projection = ol.proj.get('EPSG:21781');
-  projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
-
   var busStopSourceId = 'bus_stop';
   var busStopLayer = new ol.layer.Image({
     'querySourceIds': [busStopSourceId],
@@ -132,7 +128,7 @@ app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
       busStopLayer
     ],
     view: new ol.View({
-      projection: projection,
+      projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 0

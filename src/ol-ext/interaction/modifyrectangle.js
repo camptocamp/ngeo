@@ -41,21 +41,6 @@ ngeo.interaction.ModifyRectangle = function(options) {
    */
   this.modified_ = false;
 
-  /**
-   * Indicate whether the interaction is currently changing a feature's
-   * coordinates.
-   * @type {boolean}
-   * @private
-   */
-  this.changingFeature_ = false;
-
-  /**
-   * @type {number}
-   * @private
-   */
-  this.pixelTolerance_ = options.pixelTolerance !== undefined ?
-      options.pixelTolerance : 10;
-
   // Get the style for the box and the points
   var style = options.style ? options.style : ol.interaction.Modify.getDefaultStyleFunction();
 

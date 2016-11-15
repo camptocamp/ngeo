@@ -1,11 +1,6 @@
-goog.provide('popup-service');
+goog.provide('app.popupservice');
 
-goog.require('ngeo');
 goog.require('ngeo.CreatePopup');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -15,6 +10,7 @@ app.module = angular.module('app', ['ngeo']);
 /**
  * @param {angular.$sce} $sce Angular sce service.
  * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
+ * @ngInject
  * @constructor
  */
 app.MainController = function($sce, ngeoCreatePopup) {

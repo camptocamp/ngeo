@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.ModifyCircle');
 
 goog.require('goog.asserts');
+goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.Feature');

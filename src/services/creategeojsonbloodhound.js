@@ -1,6 +1,7 @@
 
 goog.provide('ngeo.CreateGeoJSONBloodhound');
 
+goog.require('goog.object');
 goog.require('ngeo');
 goog.require('ol.format.GeoJSON');
 

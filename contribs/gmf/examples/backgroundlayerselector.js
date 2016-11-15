@@ -1,25 +1,21 @@
-goog.provide('gmf-backgroundlayerselector');
+goog.provide('gmfapp.backgroundlayerselector');
 
-goog.require('gmf.LayertreeController');
 goog.require('gmf.Themes');
+/** @suppress {extraRequire} */
 goog.require('gmf.backgroundlayerselectorDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value(
+gmfapp.module.value(
     'gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
         'version=2&background=background');
@@ -30,7 +26,7 @@ app.module.value(
  * @constructor
  * @ngInject
  */
-app.MainController = function(gmfThemes) {
+gmfapp.MainController = function(gmfThemes) {
 
   gmfThemes.loadThemes();
 
@@ -48,7 +44,7 @@ app.MainController = function(gmfThemes) {
     layers: [],
     view: new ol.View({
       center: [632464, 185457],
-      projection: ol.proj.get('epsg:21781'),
+      projection: 'EPSG:21781',
       minZoom: 3,
       zoom: 3
     })
@@ -56,4 +52,4 @@ app.MainController = function(gmfThemes) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

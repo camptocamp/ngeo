@@ -4,27 +4,38 @@ language: node_js
 
 env:
   global:
-    - CXX=g++-4.8
-    - secure: "l/McmiK4djffT04/+5MxW9sy4yO80Rf6vq+nZb5P647A6pXpPLdoRLGo50CtYRiKnFLiChHk2QxUOspeKuIKE+UQAm9dGmyMgfYkj/jwxIBd0YQqavaGzoWo5U1ZSGKeVd3kJlIaUJyLlnKbBOmFCY00c4JLveAagsV53lbephY="
+  - CXX=g++-4.8
+  - secure: "l/McmiK4djffT04/+5MxW9sy4yO80Rf6vq+nZb5P647A6pXpPLdoRLGo50CtYRiKnFLiChHk2QxUOspeKuIKE+UQAm9dGmyMgfYkj/jwxIBd0YQqavaGzoWo5U1ZSGKeVd3kJlIaUJyLlnKbBOmFCY00c4JLveAagsV53lbephY="
 
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
-      - python-virtualenv
+    - g++-4.8
+    - python-virtualenv
 
-node_js:
-- "4"
-- "6"
+matrix:
+  include:
+  - node_js: "4"
+    env: NODE=4
+  - node_js: "6"
+    env: P=1
+  - node_js: "6"
+    env: P=2
+  - node_js: "6"
+    env: P=3
+  - node_js: "6"
+    env: P=4
+  - node_js: "6"
+    env: EXAMPLES=TRUE
 
 cache:
   apt: true
   directories:
   - node_modules
 
-before_script:
+before_install:
 - npm prune
 - if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ] ; then openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in secrets.tar.enc -out secrets.tar -d; fi
 - if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ] ; then tar xvf secrets.tar; fi
@@ -40,23 +51,98 @@ script:
 - if [ "`git grep @fileoverview src contribs`" != "" ] ; then echo "Using @fileoverview breaks the documentation main page" ; false ; fi
 - if [ "`git grep @example src contribs`" != "" ] ; then echo "We don't use @example to have the example in the description" ; false ; fi
 - make git-attributes
-- make lint
-- make .build/contribs/gmf/apps/mobile.check.timestamp
-- make .build/contribs/gmf/apps/desktop.check.timestamp
-- make .build/contribs/gmf/apps/desktop_alt.check.timestamp
-- make check-examples
-- make test
-- make other-check
-- make .build/examples-hosted/index.html
-- make .build/examples-hosted/contribs/gmf/index.html
-- make apidoc
+- '[ "$EXAMPLES" = TRUE ] || make lint'
+- '[ "$P" = 1 ] && make .build/contribs/gmf/apps/mobile.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/contribs/gmf/apps/desktop.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/contribs/gmf/apps/desktop_alt.check.timestamp || true'
+
+# examples one by one to do not stop on first failure
+- '[ "$P" = 4 ] && make .build/animation.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/asitvd.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/attributes.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/backgroundlayerdropdown.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/backgroundlayer.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/bboxquery.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/colorpicker.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/control.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/createfeature.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/datepicker.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/desktopgeolocation.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/disclaimer.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/drawfeature.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/geolocation.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/grid.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/importfeatures.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/interactionbtngroup.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/interactiontoggle.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/layerloading.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/layeropacity.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/layerorder.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/layertree.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/layervisibility.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/locationchooser.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/mapfishprint.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/mapquery.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/measure.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/mobilegeolocation.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/modal.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/modifycircle.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/modifyrectangle.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/notification.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/permalink.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/popover.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/popupservice.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/profile.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/rotate.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/scaleselector.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/search.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/simple.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/toolActivate.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/contribs/gmf/authentication.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/contribs/gmf/backgroundlayerselector.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/contribs/gmf/contextualdata.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/contribs/gmf/displayquerygrid.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/contribs/gmf/displayquerywindow.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/contribs/gmf/editfeature.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/contribs/gmf/editfeatureselector.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/contribs/gmf/elevation.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/contribs/gmf/featurestyle.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/contribs/gmf/gmfdatepicker.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/contribs/gmf/gmfdrawfeature.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/contribs/gmf/gmflayertree.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/contribs/gmf/gmfpermalink.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/contribs/gmf/gmfprofile.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/contribs/gmf/gmfsearch.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/contribs/gmf/gmfsimple.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/contribs/gmf/layertreeadd.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/contribs/gmf/mobilemeasure.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/contribs/gmf/mouseposition.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/contribs/gmf/objectediting.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/contribs/gmf/objecteditinghub.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/contribs/gmf/print.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/contribs/gmf/share.check.timestamp || true'
+- '[ "$P" = 4 ] && make .build/contribs/gmf/themeselector.check.timestamp || true'
+- '[ "$P" = 1 ] && make .build/contribs/gmf/timeslider.check.timestamp || true'
+- '[ "$P" = 2 ] && make .build/contribs/gmf/wfspermalink.check.timestamp || true'
+- '[ "$P" = 3 ] && make .build/contribs/gmf/xsdattributes.check.timestamp || true'
+
+- '[ "$P" = 4 ] && make dist/ngeo.js || true'
+- '[ "$P" = 1 ] && make dist/ngeo-debug.js || true'
+- '[ "$P" = 2 ] && make dist/gmf.js || true'
+
+- '[ "$P" = 3 ] && make test || true'
+- '[ "$P" = 4 ] && make .build/examples-hosted/index.html || true'
+- '[ "$P" = 1 ] && make .build/examples-hosted/contribs/gmf/index.html || true'
+- '[ "$P" = 2 ] && make apidoc || true'
+
+- '[ "$NODE" = 4 ] && make test || true'
 
 after_success:
 - 'cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js'
 
 before_deploy:
 - export GIT_BRANCH=${TRAVIS_BRANCH}
-- .build/python-venv/bin/pip install jsongrep
+- .build/python-venv/bin/pip install jsongrep || true
 - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
 - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
 
@@ -67,7 +153,7 @@ deploy:
   on:
     repo: camptocamp/ngeo
     all_branches: true
-    node: "4"
+    condition: $EXAMPLES = TRUE
 - provider: script
   script: npm publish
   skip_cleanup: true

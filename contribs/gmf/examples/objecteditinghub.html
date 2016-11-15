@@ -52,7 +52,7 @@
 
       <div class="form-group">
         <button
-          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null"
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === null"
           ng-click="ctrl.run()"
           type="button"
           class="form-control btn btn-primary"
@@ -77,7 +77,7 @@
     <script src="../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
     <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
     <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
-    <script src="/@?main=objectediting-hub.js"></script>
+    <script src="/@?main=objecteditinghub.js"></script>
     <script src="default.js"></script>
     <script src="../../../utils/watchwatchers.js"></script>
     <script>

@@ -1,39 +1,35 @@
-goog.provide('gmf-contextualdata');
+goog.provide('gmfapp.contextualdata');
 
+/** @suppress {extraRequire} */
 goog.require('gmf.contextualdataDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
-goog.require('ol.proj');
 goog.require('ol.source.OSM');
 
 
-/** @const **/
-var app = {};
-
-
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value(
+gmfapp.module.value(
     'gmfRasterUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
 
-app.module.value(
+gmfapp.module.value(
     'gmfContextualdatacontentTemplateUrl',
     'partials/contextualdata.html');
 
 
 /**
  * @constructor
+ * @ngInject
  */
-app.MainController = function() {
-
-  var projection = ol.proj.get('EPSG:21781');
-
+gmfapp.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
@@ -45,7 +41,7 @@ app.MainController = function() {
       })
     ],
     view: new ol.View({
-      projection: projection,
+      projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
       zoom: 3
@@ -61,11 +57,10 @@ app.MainController = function() {
  * @return {Object} The additional data to add to the scope for the
  *     contextualdata popover.
  */
-app.MainController.prototype.onRasterData = function(coordinate, data) {
+gmfapp.MainController.prototype.onRasterData = function(coordinate, data) {
   return {
-    'elelvation_diff': data.srtm - data.aster
+    'elelvation_diff': data['srtm'] - data['aster']
   };
 };
 
-
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

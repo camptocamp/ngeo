@@ -1,10 +1,7 @@
-goog.provide('modal');
+goog.provide('app.modal');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.modalDirective');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -13,6 +10,7 @@ app.module = angular.module('app', ['ngeo']);
 
 /**
  * @constructor
+ * @ngInject
  */
 app.MainController = function() {
 

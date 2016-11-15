@@ -7,6 +7,7 @@ goog.require('ngeo.interaction.Measure');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ngeo.Download');
 goog.require('ol.Feature');
+goog.require('ol.animation');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.MultiPoint');
 goog.require('ol.geom.Point');

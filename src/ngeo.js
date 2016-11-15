@@ -3,6 +3,23 @@
  */
 goog.provide('ngeo');
 
+// Required by olx
+/** @suppress {extraRequire} */
+goog.require('ol.format.IGC');
+/** @suppress {extraRequire} */
+goog.require('ol.Overlay');
+/** @suppress {extraRequire} */
+goog.require('ol.control.ScaleLine');
+/** @suppress {extraRequire} */
+goog.require('ol.source.WMTS');
+/** @suppress {extraRequire} */
+goog.require('ol.style.Icon');
+/** @suppress {extraRequire} */
+goog.require('ol.layer.VectorTile');
+// Required by ol3
+/** @suppress {extraRequire} */
+goog.require('ol.Map');
+
 
 /** @type {!angular.Module} */
 ngeo.module = angular.module('ngeo', ['gettext', 'ui.date', 'floatThead']);

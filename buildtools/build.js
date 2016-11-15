@@ -179,8 +179,8 @@ function build(config, paths, callback) {
     concatenate(paths, callback);
   } else {
     log.info('ol', 'Compiling ' + paths.length + ' sources');
-    paths = paths.concat('node_modules/openlayers/src/ol/typedefs.js');
-    options.compile.js = paths.concat(options.compile.js || []);
+    paths = paths.concat(options.compile.js || []);
+    options.compile.js = paths;
     closure.compile(options, callback);
   }
 }
@@ -248,7 +248,6 @@ if (require.main === module) {
     }
   });
 }
-
 
 /**
  * Export main function.

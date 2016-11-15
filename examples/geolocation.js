@@ -1,18 +1,17 @@
-goog.provide('geolocation');
+goog.provide('app.geolocation');
 
 goog.require('ngeo.DecorateGeolocation');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Feature');
 goog.require('ol.Geolocation');
 goog.require('ol.Map');
 goog.require('ol.View');
+goog.require('ol.geom.Point');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
+goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/

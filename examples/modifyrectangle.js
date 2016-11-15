@@ -1,6 +1,7 @@
-goog.provide('modifyrectangle');
+goog.provide('app.modifyrectangle');
 
 goog.require('ngeo.interaction.ModifyRectangle');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -9,10 +10,12 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 goog.require('ol.geom.Polygon');
-
-
-/** @const **/
-var app = {};
+goog.require('ol.Collection');
+goog.require('ol.Feature');
+goog.require('ol.style.Style');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Stroke');
 
 
 /** @type {!angular.Module} **/

@@ -3,21 +3,20 @@
  * on ngeo's ngeoLayertree directive.
  */
 
-goog.provide('layertree');
+goog.provide('app.layertree');
 
 goog.require('ngeo.CreatePopup');
+/** @suppress {extraRequire} */
 goog.require('ngeo.layertreeDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.popupDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Stamen');
-
-
-/** @const */
-var app = {};
 
 
 /** @type {!angular.Module} */
@@ -28,6 +27,7 @@ app.module = angular.module('app', ['ngeo']);
  * An application-specific directive wrapping the ngeo tree layer directive.
  * The directive includes a controller defining the tree tree.
  * @return {angular.Directive} The Directive Definition Object.
+ * @ngInject
  */
 app.layertreeDirective = function() {
   return {
@@ -213,6 +213,7 @@ app.module.value('appGetLayer', app.getLayer);
 /**
  * The application's main directive.
  * @constructor
+ * @ngInject
  */
 app.MainController = function() {
 

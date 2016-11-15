@@ -1,6 +1,7 @@
-goog.provide('backgroundlayer');
+goog.provide('app.backgroundlayer');
 
 goog.require('ngeo.BackgroundLayerMgr');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -9,10 +10,6 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Stamen');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -31,6 +28,7 @@ app.module = angular.module('app', ['ngeo']);
  * is because ngModel doesn't actually watch the ngModel expression.
  *
  * @return {angular.Directive} Directive Defintion Object.
+ * @ngInject
  */
 app.backgroundlayerDirective = function() {
   return {

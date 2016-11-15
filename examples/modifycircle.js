@@ -1,6 +1,7 @@
-goog.provide('modifycircle');
+goog.provide('app.modifycircle');
 
 goog.require('ngeo.interaction.ModifyCircle');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -9,10 +10,8 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 goog.require('ol.geom.Circle');
-
-
-/** @const **/
-var app = {};
+goog.require('ol.Collection');
+goog.require('ol.Feature');
 
 
 /** @type {!angular.Module} **/

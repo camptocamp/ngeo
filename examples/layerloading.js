@@ -1,6 +1,7 @@
-goog.provide('layerloading');
+goog.provide('app.layerloading');
 
 goog.require('ngeo.DecorateLayerLoading');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -8,10 +9,6 @@ goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/

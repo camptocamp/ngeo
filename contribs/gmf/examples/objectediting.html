@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app='app'>
   <head>
-    <title>Simple GeoMapFish example</title>
+    <title>ObjectEditing example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
@@ -17,7 +17,10 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <gmf-map gmf-map-map="ctrl.map"></gmf-map>
-    <p id="desc">This example shows how to use the <code>gmf-map</code> directive to insert an OpenLayers map in a GeoMapFish page.</p>
+    <p id="desc">
+      This example shows how to use the <code>gmf-objectediting</code>
+      directive to edit a single feature with advanced editing tools.
+    </p>
     <script src="../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
     <script src="../../../node_modules/angular/angular.js"></script>
@@ -27,10 +30,11 @@
     <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
     <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
     <script src="../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
+    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
     <script src="../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
     <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
     <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
-    <script src="/@?main=gmfsimple.js"></script>
+    <script src="/@?main=objectediting.js"></script>
     <script src="default.js"></script>
     <script src="../../../utils/watchwatchers.js"></script>
     <script>

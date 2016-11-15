@@ -1,15 +1,13 @@
-goog.provide('locationchooser');
+goog.provide('app.locationchooser');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.recenterDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -18,6 +16,7 @@ app.module = angular.module('app', ['ngeo']);
 
 /**
  * @constructor
+ * @ngInject
  */
 app.MainController = function() {
 

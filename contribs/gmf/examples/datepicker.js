@@ -1,15 +1,12 @@
-goog.provide('gmf-timeselector');
+goog.provide('gmfapp.datepicker');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
 goog.require('gmf.WMSTime');
-goog.require('goog.asserts');
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 /**
@@ -18,7 +15,7 @@ app.module = angular.module('app', ['gmf']);
  * @param {!gmf.WMSTime} gmfWMSTime wmstime service.
  * @ngInject
  */
-app.MainController = function($scope, gmfWMSTime) {
+gmfapp.MainController = function($scope, gmfWMSTime) {
 
   /**
    * @type {gmf.WMSTime}
@@ -79,4 +76,4 @@ app.MainController = function($scope, gmfWMSTime) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

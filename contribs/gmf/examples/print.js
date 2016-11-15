@@ -1,37 +1,35 @@
-goog.provide('gmf-print');
+goog.provide('gmfapp.print');
 
 goog.require('gmf.Themes');
+/** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.printDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
-goog.require('ol.proj');
 goog.require('ol.source.OSM');
 
 
-/** @const **/
-var app = {};
-
-
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['gmf']);
+gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
-app.module.value(
+gmfapp.module.value(
     'gmfTreeUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
         'version=2&background=background');
 
 
-app.module.value('gmfPrintUrl',
+gmfapp.module.value('gmfPrintUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
 
 
-app.module.value(
+gmfapp.module.value(
     'authenticationBaseUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi'
 );
@@ -42,13 +40,11 @@ app.module.value(
  * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
+ * @ngInject
  */
-app.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
+gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
-
-  var projection = ol.proj.get('EPSG:21781');
-  projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
    * @type {ol.Map}
@@ -61,7 +57,7 @@ app.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
       })
     ],
     view: new ol.View({
-      projection: projection,
+      projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 3
@@ -90,4 +86,4 @@ app.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
   ngeoFeatureOverlayMgr.init(this.map);
 };
 
-app.module.controller('MainController', app.MainController);
+gmfapp.module.controller('MainController', gmfapp.MainController);

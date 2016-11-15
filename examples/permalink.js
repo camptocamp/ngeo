@@ -1,12 +1,12 @@
-goog.provide('permalink');
+goog.provide('app.permalink');
 
 goog.require('ngeo.Debounce');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.Location');
 goog.require('ngeo.format.FeatureHash');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
-goog.require('ol.View');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
 goog.require('ol.layer.Tile');
@@ -15,10 +15,6 @@ goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/
@@ -34,6 +30,7 @@ app.module = angular.module('app', ['ngeo']);
  * attribute.
  *
  * @return {angular.Directive} The directive specs.
+ * @ngInject
  */
 app.mapDirective = function() {
   return {

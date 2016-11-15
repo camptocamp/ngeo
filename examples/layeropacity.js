@@ -1,15 +1,12 @@
-goog.provide('layeropacity');
+goog.provide('app.layeropacity');
 
 goog.require('ngeo.DecorateLayer');
+/** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
-
-
-/** @const **/
-var app = {};
 
 
 /** @type {!angular.Module} **/

@@ -5,6 +5,7 @@ goog.provide('ngeo.interaction.Rotate');
 goog.require('goog.asserts');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
+goog.require('goog.events.KeyCodes');
 goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
