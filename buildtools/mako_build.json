@@ -95,6 +95,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "language_out": "ECMASCRIPT5_STRICT",
     "angular_pass": true,
 % if development == 'true':
+    "process_closure_primitives": false,
     "compilation_level": "WHITESPACE_ONLY",
     "formatting": "PRETTY_PRINT",
     "output_manifest": "/tmp/manifest.MF",
