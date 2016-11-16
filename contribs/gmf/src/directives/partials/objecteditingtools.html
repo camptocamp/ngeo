@@ -1,0 +1,112 @@
+<div class="btn-group" role="group" aria-label="">
+  <a
+    href
+    ngeo-btn
+    ngeo-createfeature
+    ngeo-createfeature-active="oetCtrl.drawActive"
+    ngeo-createfeature-features="::oetCtrl.sketchFeatures"
+    ngeo-createfeature-geom-type="::oetCtrl.geomType"
+    ngeo-createfeature-map="::oetCtrl.map"
+    class="btn btn-default"
+    ng-class="{active: oetCtrl.drawActive}"
+    ng-model="oetCtrl.drawActive">
+    <span ng-switch="::oetCtrl.geomType">
+      <span
+        class="gmf-icon gmf-icon-point"
+        title="{{'Add a point to the geometry' | translate}}"
+        ng-switch-when="MultiPoint">
+        {{'Draw' | translate}}
+      </span>
+      <span
+        class="gmf-icon gmf-icon-line"
+        title="{{'Add a linestring to the geometry' | translate}}"
+        ng-switch-when="MultiLineString">
+        {{'Draw' | translate}}
+      </span>
+      <span
+        class="gmf-icon gmf-icon-polygon"
+        title="{{'Add a polygon to the geometry' | translate}}"
+        ng-switch-when="MultiPolygon">
+        {{'Draw' | translate}}
+      </span>
+    </span>
+  </a>
+
+  <a
+    href
+    ngeo-btn
+    ngeo-createfeature
+    ngeo-createfeature-active="oetCtrl.eraseActive"
+    ngeo-createfeature-features="::oetCtrl.sketchFeatures"
+    ngeo-createfeature-geom-type="::oetCtrl.geomTypePolygon"
+    ngeo-createfeature-map="::oetCtrl.map"
+    class="btn btn-default"
+    ng-class="{active: oetCtrl.eraseActive}"
+    ng-model="oetCtrl.eraseActive">
+    <span
+      class="gmf-icon gmf-icon-polygon"
+      title="{{'Erase geometry' | translate}}">
+      {{'Erase' | translate}}
+    </span>
+  </a>
+
+  <a
+    href
+    translate
+    ng-if="::oetCtrl.geomType === 'MultiPolygon'"
+    ngeo-btn
+    ngeo-createregularpolygonfromclick
+    ngeo-createregularpolygonfromclick-active="oetCtrl.drawTriangleActive"
+    ngeo-createregularpolygonfromclick-angle="oetCtrl.triangleAngle"
+    ngeo-createregularpolygonfromclick-features="::oetCtrl.sketchFeatures"
+    ngeo-createregularpolygonfromclick-map="::oetCtrl.map"
+    ngeo-createregularpolygonfromclick-radius="::oetCtrl.triangleRadius"
+    class="btn btn-default ngeo-createregularpolygonfromclick"
+    ng-class="{active: oetCtrl.drawTriangleActive}"
+    ng-model="oetCtrl.drawTriangleActive">
+    <span
+      class="gmf-icon gmf-icon-polygon"
+      title="{{'Draw a triangle' | translate}}">
+      {{'Triangle' | translate}}
+    </span>
+  </a>
+
+  <a
+    href
+    translate
+    ngeo-btn
+    gmf-objecteditinggetwmsfeature
+    gmf-objecteditinggetwmsfeature-active="oetCtrl.copyFromActive"
+    gmf-objecteditinggetwmsfeature-features="::oetCtrl.sketchFeatures"
+    gmf-objecteditinggetwmsfeature-layerinfo="oetCtrl.queryableLayerInfo"
+    gmf-objecteditinggetwmsfeature-map="::oetCtrl.map"
+    class="btn btn-default gmf-objecteditinggetwmsfeature-add"
+    ng-class="{active: oetCtrl.copyFromActive}"
+    ng-model="oetCtrl.copyFromActive">
+    <span
+      class="gmf-icon gmf-icon-polygon"
+      title="{{'Copy from external WMS feature' | translate}}">
+      {{'Copy from' | translate}}
+    </span>
+  </a>
+
+  <a
+    href
+    translate
+    ngeo-btn
+    gmf-objecteditinggetwmsfeature
+    gmf-objecteditinggetwmsfeature-active="oetCtrl.deleteFromActive"
+    gmf-objecteditinggetwmsfeature-features="::oetCtrl.sketchFeatures"
+    gmf-objecteditinggetwmsfeature-layerinfo="oetCtrl.queryableLayerInfo"
+    gmf-objecteditinggetwmsfeature-map="::oetCtrl.map"
+    class="btn btn-default gmf-objecteditinggetwmsfeature-delete"
+    ng-class="{active: oetCtrl.deleteFromActive}"
+    ng-model="oetCtrl.deleteFromActive">
+    <span
+      class="gmf-icon gmf-icon-polygon"
+      title="{{'Delete from external WMS feature' | translate}}">
+      {{'Delete from' | translate}}
+    </span>
+  </a>
+
+</div>

@@ -114,7 +114,7 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
 
   /**
    * @type {Object.<number, string>}
-   * @export
+   * @private
    */
   this.geomTypeCache_ = {};
 

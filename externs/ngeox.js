@@ -660,6 +660,43 @@ ngeox.WfsPermalinkOptions.prototype.maxFeatures;
 
 
 /**
+ * DrawRegularPolygonFromClick Interaction
+ * @typedef {{
+ *     angle: (number|undefined),
+ *     radius: (number),
+ *     sides: (number|undefined),
+ * }}
+ */
+ngeox.interaction.DrawRegularPolygonFromClickOptions;
+
+
+/**
+ * Angle in radians. A value of 0 will have one of the shape's point facing up.
+ * Default value is 0.
+ * @type {number|undefined}
+ * @api
+ */
+ngeox.interaction.DrawRegularPolygonFromClickOptions.prototype.angle;
+
+
+/**
+ * Radius size in map units.
+ * @type {number|undefined}
+ * @api
+ */
+ngeox.interaction.DrawRegularPolygonFromClickOptions.prototype.radius;
+
+
+/**
+ * The number of sides for the regular polygon.
+ * Default value is 3.
+ * @type {number|undefined}
+ * @api
+ */
+ngeox.interaction.DrawRegularPolygonFromClickOptions.prototype.sides;
+
+
+/**
  * MobileDraw Interaction
  * @typedef {{
  *     minPoints: (number|undefined),
