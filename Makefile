@@ -335,6 +335,7 @@ dist/gmf.js.map: dist/gmf.js
 		$(SRC_JS_FILES) \
 		$(EXTERNS_FILES) \
 		examples/%.js \
+		.build/templatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
@@ -346,6 +347,7 @@ dist/gmf.js.map: dist/gmf.js
 		$(GMF_SRC_JS_FILES) \
 		$(EXTERNS_FILES) \
 		contribs/gmf/examples/%.js \
+		.build/gmftemplatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
@@ -796,6 +798,7 @@ $(EXTERNS_JQUERY): github_versions
 # The keys in the template cache begin with "../src/directives/partials". This
 # is done so ngeo.js works for the examples on github.io. If another key
 # pattern is needed this should be changed.
+.PRECIOUS: .build/templatecache.js
 .build/templatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES)
@@ -803,6 +806,7 @@ $(EXTERNS_JQUERY): github_versions
 		--var "partials=ngeo:src/directives/partials" \
 		--var "app=ngeo" $< > $@
 
+.PRECIOUS: .build/gmftemplatecache.js
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(GMF_DIRECTIVES_PARTIALS_FILES)
