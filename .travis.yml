@@ -124,12 +124,10 @@ script:
 - if [ "${DEVELOPMENT}-${TRAVIS_PULL_REQUEST}" = TRUE-true ]; then make dist/ngeo-debug.js; fi
 - if [ "${DEVELOPMENT}-${TRAVIS_PULL_REQUEST}" = TRUE-true ]; then make dist/gmf.js; fi
 
-- if [ "${DEVELOPMENT}-${TRAVIS_PULL_REQUEST}" = TRUE-true ]; then make test; fi
-- if [ "${DEVELOPMENT}-${TRAVIS_PULL_REQUEST}" = TRUE-true ]; then make .build/examples-hosted/index.html; fi
-- if [ "${DEVELOPMENT}-${TRAVIS_PULL_REQUEST}" = TRUE-true ]; then make .build/examples-hosted/contribs/gmf/index.html; fi
-- if [ "${DEVELOPMENT}-${TRAVIS_PULL_REQUEST}" = TRUE-true ]; then make apidoc; fi
-
+- if [ "${DEVELOPMENT}" = TRUE ]; then make test; fi
 - if [ "${NODE}" = 4 ]; then make test; fi
+
+- if [ "${EXAMPLES}-${TRAVIS_PULL_REQUEST}" = TRUE-false ]; then make apidoc; fi
 - if [ "${EXAMPLES}-${TRAVIS_PULL_REQUEST}" = TRUE-false ]; then make examples-hosted; fi
 
 after_success:
