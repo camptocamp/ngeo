@@ -31,108 +31,108 @@ cache:
 
 before_install:
 - npm prune
-- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ] ; then openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in secrets.tar.enc -out secrets.tar -d; fi
-- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ] ; then tar xvf secrets.tar; fi
-- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ] ; then cp .transifexrc $HOME/.transifexrc; fi
-- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ] ; then cp ngeo_deploy_key $HOME/.ssh/id_rsa; fi
-- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ] ; then chmod 600 $HOME/.ssh/id_rsa; fi
+- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ]; then openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in secrets.tar.enc -out secrets.tar -d; fi
+- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ]; then tar xvf secrets.tar; fi
+- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ]; then cp .transifexrc $HOME/.transifexrc; fi
+- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ]; then cp ngeo_deploy_key $HOME/.ssh/id_rsa; fi
+- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ]; then chmod 600 $HOME/.ssh/id_rsa; fi
 - git config --global user.name "Travis"
 - git config --global user.email "travis@travis-ci.org"
 
 script:
-- if [ ${TRAVIS_PULL_REQUEST} != "false" ] ; then git fetch origin ${TRAVIS_BRANCH}:${TRAVIS_BRANCH}; fi
-- if [ ${TRAVIS_PULL_REQUEST} != "false" ] ; then git diff --check ${TRAVIS_BRANCH} -- ; fi
-- if [ "`git grep @fileoverview src contribs`" != "" ] ; then echo "Using @fileoverview breaks the documentation main page" ; false ; fi
-- if [ "`git grep @example src contribs`" != "" ] ; then echo "We don't use @example to have the example in the description" ; false ; fi
+- if [ ${TRAVIS_PULL_REQUEST} != "false" ]; then git fetch origin ${TRAVIS_BRANCH}:${TRAVIS_BRANCH}; fi
+- if [ ${TRAVIS_PULL_REQUEST} != "false" ]; then git diff --check ${TRAVIS_BRANCH} --; fi
+- if [ "`git grep @fileoverview src contribs`" != "" ]; then echo "Using @fileoverview breaks the documentation main page"; false; fi
+- if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; false; fi
 - make git-attributes
-- '[ "$EXAMPLES" = TRUE ] || make lint'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/apps/mobile.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/apps/desktop.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/apps/desktop_alt.check.timestamp || true'
+- if [ "${EXAMPLES}" != TRUE ]; then make lint; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/apps/mobile.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/apps/desktop.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/apps/desktop_alt.check.timestamp; fi
 
 # examples one by one to do not stop on first failure
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/animation.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/asitvd.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/attributes.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/backgroundlayerdropdown.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/backgroundlayer.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/bboxquery.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/colorpicker.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/control.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/createfeature.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/datepicker.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/desktopgeolocation.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/disclaimer.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/drawfeature.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/geolocation.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/grid.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/importfeatures.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/interactionbtngroup.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/interactiontoggle.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/layerloading.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/layeropacity.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/layerorder.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/layertree.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/layervisibility.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/locationchooser.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/mapfishprint.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/mapquery.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/measure.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/mobilegeolocation.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/modal.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/modifycircle.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/modifyrectangle.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/notification.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/permalink.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/popover.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/popupservice.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/profile.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/rotate.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/scaleselector.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/search.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/simple.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/toolActivate.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/authentication.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/backgroundlayerselector.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/contextualdata.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/displayquerygrid.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/displayquerywindow.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/editfeature.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/editfeatureselector.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/elevation.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/featurestyle.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/gmfdatepicker.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/gmfdrawfeature.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/gmflayertree.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/gmfpermalink.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/gmfprofile.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/gmfsearch.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/gmfsimple.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/layertreeadd.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/mobilemeasure.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/mouseposition.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/objectediting.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/objecteditinghub.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/print.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/share.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/themeselector.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/timeslider.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/wfspermalink.check.timestamp || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/contribs/gmf/xsdattributes.check.timestamp || true'
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/animation.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/asitvd.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/attributes.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/backgroundlayerdropdown.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/backgroundlayer.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/bboxquery.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/colorpicker.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/control.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/createfeature.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/datepicker.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/desktopgeolocation.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/disclaimer.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/drawfeature.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/geolocation.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/grid.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/importfeatures.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/interactionbtngroup.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/interactiontoggle.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/layerloading.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/layeropacity.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/layerorder.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/layertree.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/layervisibility.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/locationchooser.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/mapfishprint.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/mapquery.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/measure.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/mobilegeolocation.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/modal.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/modifycircle.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/modifyrectangle.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/notification.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/permalink.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/popover.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/popupservice.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/profile.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/rotate.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/scaleselector.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/search.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/simple.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/toolActivate.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/authentication.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/backgroundlayerselector.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/contextualdata.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/displayquerygrid.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/displayquerywindow.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/editfeature.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/editfeatureselector.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/elevation.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/featurestyle.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/gmfdatepicker.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/gmfdrawfeature.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/gmflayertree.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/gmfpermalink.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/gmfprofile.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/gmfsearch.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/gmfsimple.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/layertreeadd.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/mobilemeasure.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/mouseposition.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/objectediting.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/objecteditinghub.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/print.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/share.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/themeselector.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/timeslider.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/wfspermalink.check.timestamp; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/contribs/gmf/xsdattributes.check.timestamp; fi
 
-- '[ "$DEVELOPMENT" = TRUE ] && make dist/ngeo.js || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make dist/ngeo-debug.js || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make dist/gmf.js || true'
+- if [ "${DEVELOPMENT}" = TRUE ]; then make dist/ngeo.js; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make dist/ngeo-debug.js; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make dist/gmf.js; fi
 
-- '[ "$DEVELOPMENT" = TRUE ] && make test || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/examples-hosted/index.html || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make .build/examples-hosted/contribs/gmf/index.html || true'
-- '[ "$DEVELOPMENT" = TRUE ] && make apidoc || true'
+- if [ "${DEVELOPMENT}" = TRUE ]; then make test; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/examples-hosted/index.html; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make .build/examples-hosted/contribs/gmf/index.html; fi
+- if [ "${DEVELOPMENT}" = TRUE ]; then make apidoc; fi
 
-- '[ "$NODE" = 4 ] && make test || true'
+- if [ "${NODE}" = 4 ]; then make test; fi
 
 after_success:
-- 'cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js'
+- cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
 
 before_deploy:
 - export GIT_BRANCH=${TRAVIS_BRANCH}
@@ -147,7 +147,7 @@ deploy:
   on:
     repo: camptocamp/ngeo
     all_branches: true
-    condition: $EXAMPLES = TRUE
+    condition: '"${EXAMPLES}" = TRUE'
 - provider: script
   script: npm publish
   skip_cleanup: true
