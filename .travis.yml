@@ -130,13 +130,14 @@ script:
 - if [ "${DEVELOPMENT}" = TRUE ]; then make apidoc; fi
 
 - if [ "${NODE}" = 4 ]; then make test; fi
+- if [ "${EXAMPLES}" = TRUE ]; then make examples-hosted; fi
 
 after_success:
 - cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
 
 before_deploy:
 - export GIT_BRANCH=${TRAVIS_BRANCH}
-- .build/python-venv/bin/pip install jsongrep || true
+- .build/python-venv/bin/pip install jsongrep
 - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
 - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
 
