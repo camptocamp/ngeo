@@ -1,6 +1,5 @@
 goog.provide('gmfapp.objectediting');
 
-goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('gmf.layertreeDirective');

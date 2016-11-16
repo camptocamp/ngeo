@@ -192,7 +192,6 @@ gmf.ObjectEditingQuery.prototype.getFeatureInfo = function(
       return (features && features[0]) ? features[0] : null;
     }.bind(this, format)
   );
-
 };
 
 
