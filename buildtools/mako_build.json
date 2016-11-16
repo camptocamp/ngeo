@@ -66,9 +66,11 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "${_ngeo_folder}externs/mapfish-print-v3.js"
     ],
     "js": [
+% if development != 'true':
       "node_modules/openlayers/externs/olx.js",
-      "node_modules/openlayers/externs/oli.js",
-      "node_modules/openlayers/src/ol/typedefs.js"
+      "node_modules/openlayers/src/ol/typedefs.js",
+% endif
+      "node_modules/openlayers/externs/oli.js"
     ],
     "define": [
       "ol.DEBUG=false",
