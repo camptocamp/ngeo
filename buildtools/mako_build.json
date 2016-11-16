@@ -101,6 +101,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "compilation_level": "WHITESPACE_ONLY",
     "formatting": "PRETTY_PRINT",
     "output_manifest": "/tmp/manifest.MF",
+    "output_wrapper": "window.CLOSURE_NO_DEPS = true; %output%",
 % else:
     "compilation_level": "ADVANCED",
     "output_wrapper": "(function(){%output%}).call(window);",
