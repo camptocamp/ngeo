@@ -353,7 +353,7 @@ dist/gmf.js.map: dist/gmf.js
 	node buildtools/build.js $< $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
 
-.PRECIOUS: .build/examples-hosted/lib/%
+.PRECIOUS: .build/examples-hosted/lib/%.css
 .build/examples-hosted/lib/%.css: dist/%.css
 	mkdir -p $(dir $@)
 	cp $< $@
