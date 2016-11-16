@@ -2,6 +2,8 @@ SRC_JS_FILES := $(shell find src -type f -name '*.js')
 TEST_JS_FILES := $(shell find test -type f -name '*.js')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
+NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
+GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
 
 OS := $(shell uname)
 
@@ -66,7 +68,7 @@ endif
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES)) \
 	$(addprefix .build/contribs/gmf/apps/,$(addsuffix .check.timestamp,$(GMF_APPS)))
-EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
+EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/angular.min.js \
 	.build/examples-hosted/lib/angular-animate.min.js \
 	.build/examples-hosted/lib/angular-floatThead.js \
@@ -92,8 +94,12 @@ EXAMPLE_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/https.js \
 	.build/examples-hosted/lib/font-awesome.min.css \
 	$(addprefix .build/examples-hosted/fonts/fontawesome-webfont.,eot ttf woff woff2) \
-	$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur) \
-	.build/examples-hosted/data \
+	$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur)
+NGEO_EXAMPLES_HOSTED_REQUIREMENTS = $(EXAMPLES_HOSTED_REQUIREMENTS) \
+	$(subst examples,.build/examples-hosted,$(NGEO_EXAMPLES_PARTIALS_FILES)) \
+	.build/examples-hosted/data
+GMF_EXAMPLES_PARTIALS_FILES = $(EXAMPLES_PARTIALS_FILES) \
+	$(subst contibs/gmf/examples,.build/examples-hosted/contribs/gmf,$(GMF_EXAMPLES_PARTIALS_FILES)) \
 	.build/examples-hosted/contribs/gmf/data
 
 # Git
@@ -495,7 +501,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .PRECIOUS: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: examples/%.html \
 		.build/examples-hosted/%.js \
-		$(EXAMPLE_HOSTED_REQUIREMENTS)
+		$(NGEO_EXAMPLES_HOSTED_REQUIREMENTS)
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
@@ -524,7 +530,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
 .build/examples-hosted/contribs/gmf/%.html: contribs/gmf/examples/%.html \
 		.build/examples-hosted/contribs/gmf/%.js \
-		$(EXAMPLE_HOSTED_REQUIREMENTS)
+		$(GMF_EXAMPLES_HOSTED_REQUIREMENTS)
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol\.css|lib/ngeo.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap\.css|lib/bootstrap.min.css|' \
@@ -579,6 +585,16 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.PRECIOUS: .build/examples-hosted/partials/%.html
+.build/examples-hosted/partials/%.html: examples/partials/%.html
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.PRECIOUS: .build/examples-hosted/contribs/gmf/partials/%.html
+.build/examples-hosted/contribs/gmf/partials/%.html: contribs/gmf/examples/partials/%.html
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/image/favicon.ico
 .build/examples-hosted/contribs/gmf/apps/%/image/favicon.ico: contribs/gmf/apps/%/image/favicon.ico
 	mkdir -p $(dir $@)
@@ -630,7 +646,6 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
 		.build/examples-hosted/%.js \
-		$(EXAMPLE_HOSTED_REQUIREMENTS) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
@@ -638,7 +653,6 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .build/contribs/gmf/%.check.timestamp: .build/examples-hosted/contribs/gmf/%.html \
 		.build/examples-hosted/contribs/gmf/%.js \
-		$(EXAMPLE_HOSTED_REQUIREMENTS) \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
