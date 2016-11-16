@@ -130,7 +130,7 @@ script:
 - if [ "${DEVELOPMENT}" = TRUE ]; then make apidoc; fi
 
 - if [ "${NODE}" = 4 ]; then make test; fi
-- if [ "${EXAMPLES}" = TRUE ]; then make examples-hosted; fi
+- if [ "${EXAMPLES}-${TRAVIS_PULL_REQUEST}" = TRUE-false ]; then make examples-hosted; fi
 
 after_success:
 - cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
@@ -148,7 +148,7 @@ deploy:
   on:
     repo: camptocamp/ngeo
     all_branches: true
-    condition: '"${EXAMPLES}" = TRUE'
+    condition: '"${EXAMPLES}-${TRAVIS_PULL_REQUEST}" = TRUE-false'
 - provider: script
   script: npm publish
   skip_cleanup: true
