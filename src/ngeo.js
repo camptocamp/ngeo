@@ -114,6 +114,21 @@ ngeo.GeometryType = {
    * @type {string}
    * @export
    */
+  MULTI_LINE_STRING: 'MultiLineString',
+  /**
+   * @type {string}
+   * @export
+   */
+  MULTI_POINT: 'MultiPoint',
+  /**
+   * @type {string}
+   * @export
+   */
+  MULTI_POLYGON: 'MultiPolygon',
+  /**
+   * @type {string}
+   * @export
+   */
   POINT: 'Point',
   /**
    * @type {string}

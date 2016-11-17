@@ -61,6 +61,8 @@ gmf.ObjectEditingManager.prototype.getFeature = function() {
   if (!this.getFeatureDefered_) {
     this.getFeatureDefered_ = this.q_.defer();
 
+    var geomType = this.ngeoLocation_.getParam(
+      gmf.ObjectEditingManager.Param.GEOM_TYPE);
     var id = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.ID);
     var layer = this.ngeoLocation_.getParam(
@@ -70,7 +72,7 @@ gmf.ObjectEditingManager.prototype.getFeature = function() {
     var theme = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.THEME);
 
-    if (id && layer && property && theme) {
+    if (geomType && id && layer && property && theme) {
       this.gmfEditFeature_.getFeaturesWithComparisonFilters(
         [layer],
         [{
@@ -86,6 +88,26 @@ gmf.ObjectEditingManager.prototype.getFeature = function() {
 
   return this.getFeatureDefered_.promise;
 
+};
+
+
+/**
+ * @return {?string} The geometry type.
+ * @export
+ */
+gmf.ObjectEditingManager.prototype.getGeomType = function() {
+  return this.ngeoLocation_.getParam(
+    gmf.ObjectEditingManager.Param.GEOM_TYPE) || null;
+};
+
+
+/**
+ * @return {?number} The gmf layer node id.
+ * @export
+ */
+gmf.ObjectEditingManager.prototype.getLayerNodeId = function() {
+  return this.ngeoLocation_.getParamAsInt(
+    gmf.ObjectEditingManager.Param.LAYER) || null;
 };
 
 

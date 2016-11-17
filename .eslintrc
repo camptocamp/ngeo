@@ -19,6 +19,7 @@
     "gmf": false,
     "app": false,
     "gmfapp": false,
-    "inject": false
+    "inject": false,
+    "jsts": false
   }
 }

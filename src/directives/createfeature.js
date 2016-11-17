@@ -124,11 +124,15 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
   var interaction;
   var helpMsg;
   var contMsg;
-  if (this.geomType === ngeo.GeometryType.POINT) {
+  if (this.geomType === ngeo.GeometryType.POINT ||
+      this.geomType === ngeo.GeometryType.MULTI_POINT
+  ) {
     interaction = new ol.interaction.Draw({
       type: ol.geom.GeometryType.POINT
     });
-  } else if (this.geomType === ngeo.GeometryType.LINE_STRING) {
+  } else if (this.geomType === ngeo.GeometryType.LINE_STRING ||
+      this.geomType === ngeo.GeometryType.MULTI_LINE_STRING
+  ) {
     helpMsg = gettext('Click to start drawing length');
     contMsg = gettext(
       'Click to continue drawing<br/>' +
@@ -143,7 +147,9 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
         continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]
       }
     );
-  } else if (this.geomType === ngeo.GeometryType.POLYGON) {
+  } else if (this.geomType === ngeo.GeometryType.POLYGON ||
+      this.geomType === ngeo.GeometryType.MULTI_POLYGON
+  ) {
     helpMsg = gettext('Click to start drawing area');
     contMsg = gettext(
       'Click to continue drawing<br/>' +
