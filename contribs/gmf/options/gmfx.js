@@ -1,6 +1,6 @@
 /**
- * Externs for GeoMapFish
- *
+ * This file contains the typedefs of the options of the methods.
+ * It can be included as extern if you want to prevent renaming.
  * @externs
  */
 
