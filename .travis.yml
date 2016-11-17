@@ -17,10 +17,13 @@ addons:
 
 matrix:
   include:
+  # Just do the tests
   - node_js: "4"
     env: NODE=4
+  # Test the examples in white space mode on the pull requests
   - node_js: "6"
     env: DEVELOPMENT=TRUE
+  # Deploy the examples in advance mode on the commit on a branch
   - node_js: "6"
     env: EXAMPLES=TRUE
 
