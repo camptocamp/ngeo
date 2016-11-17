@@ -2,12 +2,16 @@ goog.provide('gmfapp.objectediting');
 
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
+/** @suppress {extraRequire} */
 goog.require('gmf.layertreeDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.objecteditingDirective');
 goog.require('gmf.ObjectEditingManager');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Collection');
 goog.require('ol.Map');
