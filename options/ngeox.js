@@ -1062,7 +1062,6 @@ ngeox.profile.PoiExtractor.prototype.sort;
 ngeox.profile.PoiExtractor.prototype.title;
 
 
-
 /**
  * @typedef {{
  *   xhover: function(number, string): string,
