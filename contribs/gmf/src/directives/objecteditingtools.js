@@ -73,6 +73,7 @@ gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
 
 
 /**
+ * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Scope.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
@@ -83,8 +84,8 @@ gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
  * @ngdoc controller
  * @ngname GmfObjecteditingtoolsController
  */
-gmf.ObjecteditingtoolsController = function($scope, ngeoDecorateInteraction,
-    ngeoToolActivateMgr) {
+gmf.ObjecteditingtoolsController = function($injector, $scope,
+    ngeoDecorateInteraction, ngeoToolActivateMgr) {
 
   // == Scope properties ==
 
@@ -201,11 +202,16 @@ gmf.ObjecteditingtoolsController = function($scope, ngeoDecorateInteraction,
    */
   this.triangleAngle = Math.PI / 180 * 90; // 90 degrees
 
+  var oeToolsOptions = /** @type {gmfx.ObjectEditingToolsOptions} */ (
+    $injector.has('gmfObjectEditingToolsOptions') ?
+      $injector.get('gmfObjectEditingToolsOptions') : {});
+
   /**
    * @type {number}
    * @export
    */
-  this.triangleRadius = 100;
+  this.triangleRadius = oeToolsOptions.regularPolygonRadius !== undefined ?
+    oeToolsOptions.regularPolygonRadius : 100;
 
   this.registerTool_('drawTriangleActive',
     gmf.ObjecteditingtoolsController.ProcessType.ADD);

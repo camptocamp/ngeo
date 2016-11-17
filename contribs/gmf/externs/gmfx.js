@@ -130,6 +130,24 @@ gmfx.MousePositionProjection.prototype.filter;
 
 
 /**
+ * Additional configuration options for the object editing tools directive.
+ * @typedef {{
+ *     regularPolygonRadius: (number|undefined)
+ * }}
+ */
+gmfx.ObjectEditingToolsOptions;
+
+
+/**
+ * The radius of the shapes created by the regular polygon radius creation
+ * tool. Default value is `100`. The value is in map units.
+ * @type {number|undefined}
+ */
+gmfx.ObjectEditingToolsOptions.prototype.regularPolygonRadius;
+
+
+
+/**
  * Configuration options for the permalink service.
  * @typedef {{
  *     crosshairStyle: (Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined),
