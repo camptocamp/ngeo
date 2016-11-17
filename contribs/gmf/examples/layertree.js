@@ -1,9 +1,8 @@
 goog.provide('gmfapp.layertree');
 
-/** @suppress {extraRequire} */
 goog.require('gmf.Themes');
-/** @suppress {extraRequire} */
 goog.require('gmf.TreeManager');
+goog.require('gmf.ThemeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.disclaimerDirective');
 /** @suppress {extraRequire} */
