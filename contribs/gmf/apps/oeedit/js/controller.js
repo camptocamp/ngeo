@@ -18,9 +18,14 @@ goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 
+goog.require('gmf.objecteditingDirective');
+goog.require('gmf.ObjectEditingManager');
+goog.require('gmf.Themes');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
-
+goog.require('ol.Collection');
+goog.require('ol.layer.Vector');
+goog.require('ol.source.Vector');
 
 /**
  * @param {angular.Scope} $scope Scope.
@@ -32,6 +37,8 @@ goog.require('ngeo.ToolActivateMgr');
  * @export
  */
 app.OEEditController = function($scope, $injector, $timeout) {
+
+  console.log(this);
 
   /**
    * @type {boolean}
@@ -65,6 +72,83 @@ app.OEEditController = function($scope, $injector, $timeout) {
   // Set edit tool as default active one
   $timeout(function() {
     this.oeEditActive = true;
+  }.bind(this));
+
+  /**
+   * @type {ol.source.Vector}
+   * @private
+   */
+  this.vectorSource_ = new ol.source.Vector({
+    wrapX: false
+  });
+
+  /**
+   * @type {ol.layer.Vector}
+   * @private
+   */
+  this.vectorLayer_ = new ol.layer.Vector({
+    source: this.vectorSource_
+  });
+
+  /**
+   * @type {ol.Collection.<ol.Feature>}
+   * @export
+   */
+  this.sketchFeatures = new ol.Collection();
+
+  /**
+   * @type {ol.layer.Vector}
+   * @private
+   */
+  this.sketchLayer_ = new ol.layer.Vector({
+    source: new ol.source.Vector({
+      features: this.sketchFeatures,
+      wrapX: false
+    })
+  });
+
+  /**
+   * @type {gmf.Themes} gmfObjectEditingManager The gmf theme service
+   */
+  var gmfThemes = $injector.get('gmfThemes');
+
+  gmfThemes.getThemesObject().then(function(themes) {
+    if (themes) {
+      // Add layer vector after
+      this.map.addLayer(this.vectorLayer_);
+      this.map.addLayer(this.sketchLayer_);
+    }
+  }.bind(this));
+
+  /**
+   * @type {gmf.ObjectEditingManager} gmfObjectEditingManager The gmf
+   *     ObjectEditing manager service.
+   */
+  var gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.oeGeomType = gmfObjectEditingManager.getGeomType();
+
+  /**
+   * @type {?number}
+   * @export
+   */
+  this.oeLayerNodeId = gmfObjectEditingManager.getLayerNodeId();
+
+  /**
+   * @type {?ol.Feature}
+   * @export
+   */
+  this.oeFeature = null;
+
+  gmfObjectEditingManager.getFeature().then(function(feature) {
+    this.oeFeature = feature;
+    if (feature) {
+      this.vectorSource_.addFeature(feature);
+    }
   }.bind(this));
 
   /**
