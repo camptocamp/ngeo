@@ -895,12 +895,17 @@ gmf.ObjecteditingController.prototype.handleSketchFeaturesAdd_ = function(evt) {
     if (this.process === gmf.ObjecteditingtoolsController.ProcessType.ADD) {
       jstsProcessedGeom = jstsGeom.union(jstsSketchGeom);
     } else {
-      jstsProcessedGeom = jstsGeom.difference(jstsSketchGeom);
+      if (jstsGeom.intersects(jstsSketchGeom)) {
+        jstsProcessedGeom = jstsGeom.difference(jstsSketchGeom);
+      }
     }
 
-    var processedGeom = this.jstsOL3Parser_.write(jstsProcessedGeom);
-    var multiGeom = gmf.ObjecteditingController.toMultiGeometry_(processedGeom);
-    this.feature.setGeometry(multiGeom.clone());
+    if (jstsProcessedGeom) {
+      var processedGeom = this.jstsOL3Parser_.write(jstsProcessedGeom);
+      var multiGeom = gmf.ObjecteditingController.toMultiGeometry_(
+        processedGeom);
+      this.feature.setGeometry(multiGeom.clone());
+    }
 
   } else if (this.process === gmf.ObjecteditingtoolsController.ProcessType.ADD) {
     this.feature.setGeometry(sketchGeom.clone());
