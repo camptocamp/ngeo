@@ -136,7 +136,6 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
   var meta = /** @type {gmfThemes.GmfMetaData} */ (node.metadata);
   var identifierAttributeField = meta.identifierAttributeField;
   var layers;
-  var childLayers;
   var name = node.name;
   var validateLayerParams = false;
   var gmfLayer = /** @type gmfThemes.GmfLayer */ (node);
@@ -158,7 +157,6 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
   if (gmfLayer.type === 'WMS') {
     gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
     layers = gmfLayerWMS.layers;
-    childLayers = layers;
     if (firstLevelGroup.mixed) {
       goog.asserts.assert(gmfLayerWMS.ogcServer);
       ogcServer = ogcServers[/** @type string */ (gmfLayerWMS.ogcServer)];
@@ -167,6 +165,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
       ogcServer = ogcServers[/** @type string */ (firstLevelGroup.ogcServer)];
     }
   }
+  var childLayers = layers;
   if (!this.cache_[id]) {
     if (validateLayerParams) {
       // Some nodes have child layers, i.e. a list of layer names that are
