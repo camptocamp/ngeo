@@ -1,6 +1,7 @@
 /**
  * @const
  * @suppress {const|duplicate}
+ * @externs
  */
 var jsts = {};
 
