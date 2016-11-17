@@ -424,7 +424,7 @@ ngeox.QueryOptions.prototype.geometryName;
 
 
 /**
- * The configuration of a source for the Query service
+ * The configuration of a source for the Query service.
  * @typedef {{
  *     format: (ol.format.Feature|undefined),
  *     id: (number|string),
@@ -660,11 +660,11 @@ ngeox.WfsPermalinkOptions.prototype.maxFeatures;
 
 
 /**
- * DrawRegularPolygonFromClick Interaction
+ * DrawRegularPolygonFromClick Interaction.
  * @typedef {{
  *     angle: (number|undefined),
  *     radius: (number),
- *     sides: (number|undefined),
+ *     sides: (number|undefined)
  * }}
  */
 ngeox.interaction.DrawRegularPolygonFromClickOptions;
@@ -697,7 +697,7 @@ ngeox.interaction.DrawRegularPolygonFromClickOptions.prototype.sides;
 
 
 /**
- * MobileDraw Interaction
+ * MobileDraw Interaction.
  * @typedef {{
  *     minPoints: (number|undefined),
  *     style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),

@@ -130,7 +130,7 @@ gmf.ObjecteditingtoolsController = function($scope, ngeoDecorateInteraction,
   // == Injected properties ==
 
   /**
-   * @type {!angular.Scope} $scope Scope.
+   * @type {!angular.Scope}
    * @private
    */
   this.scope_ = $scope;
