@@ -5,10 +5,13 @@
   gmf-objecteditingtools-map="::oeCtrl.map"
   gmf-objecteditingtools-process="oeCtrl.process"
   gmf-objecteditingtools-queryablelayerinfo="oeCtrl.selectedQueryableLayerInfo"
+  gmf-objecteditingtools-requireslayer="oeCtrl.queryableLayerListShown"
   gmf-objecteditingtools-sketchfeatures="::oeCtrl.sketchFeatures">
 </gmf-objecteditingtools>
 
-<div class="form-group">
+<div
+  class="form-group"
+  ng-show="oeCtrl.queryableLayerListShown">
   <select
     class="form-control"
     ng-model="oeCtrl.selectedQueryableLayerInfo"
