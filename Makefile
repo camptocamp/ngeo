@@ -42,6 +42,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/d3/d3.js \
 	node_modules/file-saver/FileSaver.js \
 	node_modules/typeahead.js/dist/typeahead.bundle.js \
+	node_modules/jsts/dist/jsts.min.js \
 	third-party/jquery-ui/jquery-ui.js
 else
 GMF_APPS_LIBS_JS_FILES += \
@@ -62,6 +63,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/d3/d3.min.js \
 	node_modules/file-saver/FileSaver.min.js \
 	node_modules/typeahead.js/dist/typeahead.bundle.min.js \
+	node_modules/jsts/dist/jsts.min.js \
 	third-party/jquery-ui/jquery-ui.min.js
 endif
 
@@ -91,6 +93,7 @@ EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/watchwatchers.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
 	.build/examples-hosted/lib/proj4.js \
+	.build/examples-hosted/lib/jsts.min.js \
 	.build/examples-hosted/https.js \
 	.build/examples-hosted/lib/font-awesome.min.css \
 	$(addprefix .build/examples-hosted/fonts/fontawesome-webfont.,eot ttf woff woff2) \
@@ -335,6 +338,7 @@ dist/gmf.js.map: dist/gmf.js
 		$(SRC_JS_FILES) \
 		$(EXTERNS_FILES) \
 		examples/%.js \
+		.build/templatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
@@ -346,12 +350,13 @@ dist/gmf.js.map: dist/gmf.js
 		$(GMF_SRC_JS_FILES) \
 		$(EXTERNS_FILES) \
 		contribs/gmf/examples/%.js \
+		.build/gmftemplatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	node buildtools/build.js $< $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
 
-.PRECIOUS: .build/examples-hosted/lib/%
+.PRECIOUS: .build/examples-hosted/lib/%.css
 .build/examples-hosted/lib/%.css: dist/%.css
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -444,6 +449,10 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/jsts.min.js: node_modules/jsts/dist/jsts.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/font-awesome.min.css: node_modules/font-awesome/css/font-awesome.min.css
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -522,6 +531,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/file-saver/FileSaver.min.js|lib/FileSaver.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
+		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
 		-e 's|/@?main=$*.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
@@ -553,6 +563,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/file-saver/FileSaver.min.js|lib/FileSaver.min.js|' \
 		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
+		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
 		-e 's|/@?main=$*\.js|$*.js|' \
 		-e '/default\.js/d' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
@@ -796,6 +807,7 @@ $(EXTERNS_JQUERY): github_versions
 # The keys in the template cache begin with "../src/directives/partials". This
 # is done so ngeo.js works for the examples on github.io. If another key
 # pattern is needed this should be changed.
+.PRECIOUS: .build/templatecache.js
 .build/templatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES)
@@ -803,6 +815,7 @@ $(EXTERNS_JQUERY): github_versions
 		--var "partials=ngeo:src/directives/partials" \
 		--var "app=ngeo" $< > $@
 
+.PRECIOUS: .build/gmftemplatecache.js
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(GMF_DIRECTIVES_PARTIALS_FILES)
