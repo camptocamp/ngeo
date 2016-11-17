@@ -17,8 +17,6 @@ if (typeof proj4 == 'function') {
   ].join(' ');
   var epsg2056extent = [2420000, 1030000, 2900000, 1350000];
 
-  proj4.defs('epsg:2056', epsg2056def);
   proj4.defs('EPSG:2056', epsg2056def);
-  ol.proj.get('epsg:2056').setExtent(epsg2056extent);
   ol.proj.get('EPSG:2056').setExtent(epsg2056extent);
 }

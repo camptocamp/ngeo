@@ -148,7 +148,7 @@ gmfx.PermalinkOptions.prototype.crosshairStyle;
 
 
 /**
- * EPSG codes (e.g. 'EPSG:3857', 'epsg:3857' or '3857'). The permalink service
+ * EPSG codes (e.g. 'EPSG:3857' or '3857'). The permalink service
  * will accept coordinates in these projections and try to detect which projection
  * the given coordinates are in.
  * @type {Array.<string>|undefined}
