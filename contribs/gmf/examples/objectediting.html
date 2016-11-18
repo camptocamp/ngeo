@@ -80,8 +80,7 @@
     <h2>ObjectEditing</h2>
 
     <gmf-objectediting
-      ng-if="ctrl.objectEditingFeature && ctrl.objectEditingLayerNodeId"
-      ng-show="ctrl.objectEditingActive === true"
+      ng-if="ctrl.objectEditingActive === true && ctrl.objectEditingFeature && ctrl.objectEditingLayerNodeId"
       gmf-objectediting-active="ctrl.objectEditingActive"
       gmf-objectediting-feature="ctrl.objectEditingFeature"
       gmf-objectediting-geomtype="::ctrl.objectEditingGeomType"

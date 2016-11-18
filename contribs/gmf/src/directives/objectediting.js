@@ -614,6 +614,8 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
 
   } else {
 
+    this.undoAllChanges_();
+
     keys.forEach(function(key) {
       ol.events.unlistenByKey(key);
     }, this);
@@ -624,6 +626,21 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
   }
 
   this.modify_.setActive(active);
+};
+
+
+/**
+ * Undo all current changes.
+ * @private
+ */
+gmf.ObjecteditingController.prototype.undoAllChanges_ = function() {
+  var clone = gmf.ObjecteditingController.cloneGeometry_(
+    this.geometryChanges_[0]);
+  this.feature.setGeometry(clone);
+
+  this.resetGeometryChanges_();
+  this.dirty = false;
+  this.setFeatureStyle_();
 };
 
 
@@ -961,7 +978,7 @@ gmf.ObjecteditingController.prototype.handleGetQueryableLayersInfo_ = function(
  * @private
  */
 gmf.ObjecteditingController.prototype.handleDestroy_ = function() {
-  this.features.clear();
+  this.features_.clear();
   this.toggle_(false);
   this.unregisterInteractions_();
 };
