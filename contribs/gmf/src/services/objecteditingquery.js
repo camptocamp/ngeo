@@ -62,14 +62,20 @@ gmf.ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
           return;
         }
 
-        var queryableLayersInfo =
+        // Get all queryable nodes
+        var allQueryableLayersInfo =
             gmf.ObjectEditingQuery.getQueryableLayersInfoFromThemes(
               themes,
               ogcServers
             );
 
-        // FIXME - missing checking of ObjectEditing config. Do this here...
-        // ...
+        // Narrow down to only those that have the 'copyable' metadata set
+        var queryableLayersInfo = [];
+        for (var i = 0, ii = allQueryableLayersInfo.length; i < ii; i++) {
+          if (allQueryableLayersInfo[i].layerNode.metadata.copyable) {
+            queryableLayersInfo.push(allQueryableLayersInfo[i]);
+          }
+        }
 
         this.getQueryableLayerNodesDefered_.resolve(queryableLayersInfo);
       }.bind(this));

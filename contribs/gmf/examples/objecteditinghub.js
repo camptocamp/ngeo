@@ -161,9 +161,11 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
         return;
       }
 
+      var i, ii;
+
       // (2) Find OE theme
       var theme;
-      for (var i = 0, ii = themes.length; i < ii; i++) {
+      for (i = 0, ii = themes.length; i < ii; i++) {
         if (themes[i].name === this.themeName) {
           theme = themes[i];
           break;
@@ -185,8 +187,15 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
         return;
       }
 
+      var gmfLayerNodes = [];
+      for (i = 0, ii = groupNode.children.length; i < ii; i++) {
+        if (groupNode.children[i].metadata.identifierAttributeField) {
+          gmfLayerNodes.push(groupNode.children[i]);
+        }
+      }
+
       // (5) Set layer nodes
-      this.gmfLayerNodes = groupNode.children;
+      this.gmfLayerNodes = gmfLayerNodes;
 
       // (6) Select 'polygon' for the purpose of simplifying the demo
       this.selectedGmfLayerNode = this.gmfLayerNodes[1];
@@ -205,7 +214,7 @@ gmfapp.MainController.prototype.run = function() {
   var geomType = this.selectedGeomType;
   var feature = this.selectedFeature;
   var layer = this.selectedGmfLayerNode.id;
-  var property = 'name';
+  var property = this.selectedGmfLayerNode.metadata.identifierAttributeField;
   var id = feature.get(property);
 
   var params = {};
