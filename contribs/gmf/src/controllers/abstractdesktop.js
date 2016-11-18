@@ -80,7 +80,7 @@ goog.require('ngeo.SortableOptions');
 gmf.AbstractDesktopController = function(config, $scope, $injector) {
 
   var viewConfig = {
-    projection: ol.proj.get('epsg:' + (config.srid || 21781))
+    projection: ol.proj.get('EPSG:' + (config.srid || 21781))
   };
   goog.object.extend(viewConfig, config.mapViewConfig || {});
 

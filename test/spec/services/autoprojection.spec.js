@@ -25,7 +25,7 @@ describe('ngeo.AutoProjection', function() {
   });
 
   it('Get Projection list from codes', function() {
-    var codes = ['epsg:4326', '3857', 'EPSG:1234'];
+    var codes = ['EPSG:4326', '3857', 'EPSG:1234'];
     spyOn(console, 'error');
     var projections = ngeoAutoProjection.getProjectionList(codes);
     expect(console.error).toHaveBeenCalled();
