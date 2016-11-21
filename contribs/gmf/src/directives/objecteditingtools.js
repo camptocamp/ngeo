@@ -15,6 +15,15 @@ goog.require('ngeo.ToolActivateMgr');
 
 
 /**
+ * A list of additional options for this directive that are not defined as
+ * html attributes. All keys of this hash are optional. For the complete list
+ * of keys and their possible values, see in gmfx.js, under:
+ * `gmfx.ObjectEditingToolsOptions`.
+ */
+gmf.module.value('gmfObjectEditingToolsOptions', {});
+
+
+/**
  * Directive used to edit the geometry of a single feature using advanced
  * tools.
  *
@@ -203,8 +212,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
   this.triangleAngle = Math.PI / 180 * 90; // 90 degrees
 
   var oeToolsOptions = /** @type {gmfx.ObjectEditingToolsOptions} */ (
-    $injector.has('gmfObjectEditingToolsOptions') ?
-      $injector.get('gmfObjectEditingToolsOptions') : {});
+      $injector.get('gmfObjectEditingToolsOptions'));
 
   /**
    * @type {number}
