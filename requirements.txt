@@ -4,3 +4,4 @@ Mako==1.0.6
 htmlmin==0.1.10
 beautifulsoup4==4.5.1
 transifex-client==0.12.2
+glob2==0.5

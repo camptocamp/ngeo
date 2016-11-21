@@ -228,6 +228,10 @@ examples-hosted: \
 		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
+.build/python-venv/lib/python2.7/site-packages/glob2: requirements.txt .build/python-venv
+	.build/python-venv/bin/pip install `grep ^glob2== $< --colour=never`
+	touch $@
+
 .build/python-venv/lib/python2.7/site-packages/requests: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^requests== $< --colour=never`
 	touch $@
@@ -809,6 +813,7 @@ $(EXTERNS_JQUERY): github_versions
 # pattern is needed this should be changed.
 .PRECIOUS: .build/templatecache.js
 .build/templatecache.js: buildtools/templatecache.mako.js \
+		.build/python-venv/lib/python2.7/site-packages/glob2 \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
@@ -817,6 +822,7 @@ $(EXTERNS_JQUERY): github_versions
 
 .PRECIOUS: .build/gmftemplatecache.js
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
+		.build/python-venv/lib/python2.7/site-packages/glob2 \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(GMF_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
