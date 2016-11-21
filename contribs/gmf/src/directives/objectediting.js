@@ -182,6 +182,15 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.selectedQueryableLayerInfo;
 
   /**
+   * Whether to show or hide the queryable list of layers. It is shown only
+   * when a tool requires it, which is managed in the `gmf-objecteditingtools`
+   * directive.
+   * @type {boolean}
+   * @export
+   */
+  this.queryableLayerListShown = false;
+
+  /**
    * @type {ngeo.LayerHelper}
    * @private
    */

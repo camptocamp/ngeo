@@ -27,6 +27,7 @@ goog.require('ngeo.ToolActivateMgr');
  *         gmf-objecteditingtools-map="::ctrl.map"
  *         gmf-objecteditingtools-process="::ctrl.process"
  *         gmf-objecteditingtools-queryablelayerinfo="::ctrl.queryableLayerInfo"
+ *         gmf-objecteditingtools-requireslayer="ctrl.requiresLayer"
  *         gmf-objecteditingtools-sketchfeatures="::ctrl.sketchFeatures">
  *     </gmf-objecteditingtools>
  *
@@ -40,6 +41,8 @@ goog.require('ngeo.ToolActivateMgr');
  *     behavior to adopt when sketch features are added.
  * @htmlAttribute {gmf.ObjectEditingQuery.QueryableLayerInfo} gmf-objectediting-queryablelayerinfo
  *     Queryable layer information.
+ * @htmlAttribute {boolean} gmf-objectediting-requireslayer Flag that determines
+ *     if the currently active tool requires a queryable layer or not.
  * @htmlAttribute {ol.Collection.<ol.Feature>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
  * @return {angular.Directive} The directive specs.
@@ -57,6 +60,7 @@ gmf.objecteditingtoolsDirective = function() {
       'map': '<gmfObjecteditingtoolsMap',
       'process': '=gmfObjecteditingtoolsProcess',
       'queryableLayerInfo': '=gmfObjecteditingtoolsQueryablelayerinfo',
+      'requiresLayer': '=gmfObjecteditingtoolsRequireslayer',
       'sketchFeatures': '<gmfObjecteditingtoolsSketchfeatures'
     },
     bindToController: true,
@@ -119,6 +123,12 @@ gmf.ObjecteditingtoolsController = function($scope, ngeoDecorateInteraction,
    * @export
    */
   this.process;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.requiresLayer;
 
   /**
    * @type {ol.Collection.<ol.Feature>}
@@ -207,7 +217,7 @@ gmf.ObjecteditingtoolsController = function($scope, ngeoDecorateInteraction,
   this.copyFromActive = false;
 
   this.registerTool_('copyFromActive',
-    gmf.ObjecteditingtoolsController.ProcessType.ADD);
+    gmf.ObjecteditingtoolsController.ProcessType.ADD, true);
 
   /**
    * @type {boolean}
@@ -216,7 +226,7 @@ gmf.ObjecteditingtoolsController = function($scope, ngeoDecorateInteraction,
   this.deleteFromActive = false;
 
   this.registerTool_('deleteFromActive',
-    gmf.ObjecteditingtoolsController.ProcessType.DELETE);
+    gmf.ObjecteditingtoolsController.ProcessType.DELETE, true);
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 };
@@ -237,17 +247,21 @@ gmf.ObjecteditingtoolsController = function($scope, ngeoDecorateInteraction,
  * @param {string} toolActiveName The name of the active property for the tool.
  * @param {string} process The behavior the tool should use when active
  *     and when sketch features are added.
+ * @param {boolean=} opt_requiresLayer Whether the tool requires the queryable
+ *     layer or not. Defaults to `false`.
  * @private
  */
 gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
-  toolActiveName, process
+  toolActiveName, process, opt_requiresLayer
 ) {
+
+  var requiresLayer = opt_requiresLayer === true;
 
   this.scope_.$watch(
     function() {
       return this[toolActiveName];
     }.bind(this),
-    this.handleToolActiveChange_.bind(this, process)
+    this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
 
   var group = gmf.ObjecteditingtoolsController.NAMESPACE_ +
@@ -263,16 +277,19 @@ gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
 /**
  * Called when any of the tool 'active' property changes.
  * @param {string} process The behavior the tool should use when active.
+ * @param {boolean} requiresLayer Whether the tool requires the queryable
+ *     layer or not.
  * @param {boolean|undefined} newVal New value.
  * @private
  */
 gmf.ObjecteditingtoolsController.prototype.handleToolActiveChange_ = function(
-  process, newVal
+  process, requiresLayer, newVal
 ) {
 
   // Update process if a tool was activated.
   if (newVal) {
     this.process = process;
+    this.requiresLayer = requiresLayer;
   }
 
   // Update active property
@@ -284,6 +301,10 @@ gmf.ObjecteditingtoolsController.prototype.handleToolActiveChange_ = function(
     }
   }
   this.active = active;
+
+  if (!this.active) {
+    this.requiresLayer = false;
+  }
 };
 
 
