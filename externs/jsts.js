@@ -32,6 +32,13 @@ jsts.geom.Geometry.prototype.difference = function(jstsGeom) {};
 
 /**
  * @param {jsts.geom.Geometry} jstsGeom A JSTS geometry object.
+ * @return {boolean} Whether the geometries intersect with one an other.
+ */
+jsts.geom.Geometry.prototype.intersects = function(jstsGeom) {};
+
+
+/**
+ * @param {jsts.geom.Geometry} jstsGeom A JSTS geometry object.
  * @return {jsts.geom.Geometry} A JSTS geometry object.
  */
 jsts.geom.Geometry.prototype.union = function(jstsGeom) {};
