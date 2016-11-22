@@ -8,14 +8,14 @@
 <%
   import re
   import os
-  import glob
+  import glob2
   import htmlmin
   _partials = {}
   for p in partials.strip().split():
       dest_folder, source_folder = p.split(":")
       filenames = []
-      filenames += glob.glob("{}/*.html".format(source_folder))
-      filenames += glob.glob("{}/**/*.html".format(source_folder))
+      filenames += glob2.glob("{}/*.html".format(source_folder))
+      filenames += glob2.glob("{}/**/*.html".format(source_folder))
       for filename in filenames:
           f = file(filename)
           content = unicode(f.read().decode('utf8'))
