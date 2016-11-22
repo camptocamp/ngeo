@@ -15,6 +15,15 @@ goog.require('ngeo.ToolActivateMgr');
 
 
 /**
+ * A list of additional options for this directive that are not defined as
+ * html attributes. All keys of this hash are optional. For the complete list
+ * of keys and their possible values, see in gmfx.js, under:
+ * `gmfx.ObjectEditingToolsOptions`.
+ */
+gmf.module.value('gmfObjectEditingToolsOptions', {});
+
+
+/**
  * Directive used to edit the geometry of a single feature using advanced
  * tools.
  *
@@ -73,6 +82,7 @@ gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
 
 
 /**
+ * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Scope.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
@@ -83,8 +93,8 @@ gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
  * @ngdoc controller
  * @ngname GmfObjecteditingtoolsController
  */
-gmf.ObjecteditingtoolsController = function($scope, ngeoDecorateInteraction,
-    ngeoToolActivateMgr) {
+gmf.ObjecteditingtoolsController = function($injector, $scope,
+    ngeoDecorateInteraction, ngeoToolActivateMgr) {
 
   // == Scope properties ==
 
@@ -201,11 +211,15 @@ gmf.ObjecteditingtoolsController = function($scope, ngeoDecorateInteraction,
    */
   this.triangleAngle = Math.PI / 180 * 90; // 90 degrees
 
+  var oeToolsOptions = /** @type {gmfx.ObjectEditingToolsOptions} */ (
+      $injector.get('gmfObjectEditingToolsOptions'));
+
   /**
    * @type {number}
    * @export
    */
-  this.triangleRadius = 100;
+  this.triangleRadius = oeToolsOptions.regularPolygonRadius !== undefined ?
+    oeToolsOptions.regularPolygonRadius : 100;
 
   this.registerTool_('drawTriangleActive',
     gmf.ObjecteditingtoolsController.ProcessType.ADD);
