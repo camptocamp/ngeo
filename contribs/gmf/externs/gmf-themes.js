@@ -365,13 +365,6 @@ gmfThemes.GmfMetaData.prototype.disclaimer;
 
 
 /**
- * The name of the attribute to be used as identifier for the ObjectEditing.
- * @type {string|undefined}
- */
-gmfThemes.GmfMetaData.prototype.identifierAttributeField;
-
-
-/**
  * The icon URL visible in the layer tree.
  * @type {string|undefined}
  */
