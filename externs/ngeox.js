@@ -45,7 +45,7 @@ ngeox.Attribute.prototype.name;
 
 
 /**
- * Whether the attribure required to have a value set or not. Defaults to
+ * Whether the attribute required to have a value set or not. Defaults to
  * `false`.
  * @type {boolean|undefined}
  */
@@ -137,7 +137,7 @@ ngeox.MenuActionOptions.prototype.name;
 
 
 /**
- * A message to display by the Ngeo notification service.
+ * A message to display by the ngeo notification service.
  * @typedef {{
  *     delay: (number|undefined),
  *     popup: (boolean|undefined),
@@ -218,7 +218,7 @@ ngeox.PopupOptions.prototype.cls;
 
 
 /**
- * The content of the popup. Either the content or url must be set.
+ * The content of the popup. Either the content or URL must be set.
  * @type {*|undefined}
  */
 ngeox.PopupOptions.prototype.content;
@@ -239,7 +239,7 @@ ngeox.PopupOptions.prototype.title;
 
 
 /**
- * The url to use for the iframe to include as content for the popup.
+ * The URL to use for the iframe to include as content for the popup.
  * @type {string|undefined}
  */
 ngeox.PopupOptions.prototype.url;
@@ -366,7 +366,7 @@ ngeox.QueryOptions;
 
 /**
  * The maximum number of records per request the query service should ask.
- * Defaults to `50`. Note that sources sharing the same url are combined
+ * Defaults to `50`. Note that sources sharing the same URL are combined
  * together in a single request. This limit will still apply to those.
  * @type {number|undefined}
  */
@@ -513,7 +513,7 @@ ngeox.QuerySource.prototype.serverType;
 
 
 /**
- * Url to use for the request. Required if the layer object doesn't support
+ * URL to use for the request. Required if the layer object doesn't support
  * WMS GetFeatureInfo requests.
  * @type {string|undefined}
  */
@@ -600,7 +600,7 @@ ngeox.WfsType.prototype.featurePrefix;
 
 
 /**
- * The options for the wfs query service (permalink).
+ * The options for the WFS query service (permalink).
  * @typedef {{
  *     url: (string),
  *     wfsTypes: (!Array.<ngeox.WfsType>),
