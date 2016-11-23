@@ -59,13 +59,15 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       ".build/externs/angular-1.5-http-promise_templated.js",
       ".build/externs/jquery-1.9.js",
 % if src_set == 'contribs_gmf':
-      "${_ngeo_folder}contribs/gmf/externs/gmfx.js",
       "${_ngeo_folder}contribs/gmf/externs/gmf-themes.js",
 % endif
-      "${_ngeo_folder}externs/ngeox.js",
       "${_ngeo_folder}externs/mapfish-print-v3.js"
     ],
     "js": [
+% if src_set == 'contribs_gmf':
+      "${_ngeo_folder}contribs/gmf/options/gmfx.js",
+% endif
+      "${_ngeo_folder}options/ngeox.js",
 % if development != 'true':
       "node_modules/openlayers/externs/olx.js",
       "node_modules/openlayers/src/ol/typedefs.js",

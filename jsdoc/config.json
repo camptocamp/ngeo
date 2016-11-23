@@ -3,8 +3,8 @@
         "include": [
             "contribs/gmf/src",
             "src",
-            "contribs/gmf/externs/gmfx.js",
-            "externs/ngeox.js",
+            "contribs/gmf/options/gmfx.js",
+            "options/ngeox.js",
             "contribs/gmf/externs/gmf-themes.js"
         ],
         "includePattern": ".+\\.js$"

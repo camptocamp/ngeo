@@ -1,4 +1,6 @@
 /**
+ * This file contains the typedefs of the options of the methods.
+ * It can be included as extern if you want to prevent renaming.
  * @externs
  */
 
@@ -1058,7 +1060,6 @@ ngeox.profile.PoiExtractor.prototype.sort;
  * @type {function(Object): string}
  */
 ngeox.profile.PoiExtractor.prototype.title;
-
 
 
 /**
