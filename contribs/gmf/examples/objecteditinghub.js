@@ -61,6 +61,7 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
    * @export
    */
   this.urls = [
+    '../apps/oeedit/',
     'objectediting.html'
   ];
 
