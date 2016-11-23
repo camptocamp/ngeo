@@ -350,6 +350,14 @@ gmfThemes.GmfMetaData = function() {};
 
 
 /**
+ * Whether the data of of this layer node can be queried in order to be copied
+ * in an other layer.
+ * @type {boolean|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.copyable;
+
+
+/**
  * The disclaimer.
  * @type {string|undefined}
  */
