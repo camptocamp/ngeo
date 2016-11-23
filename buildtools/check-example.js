@@ -44,7 +44,14 @@ page.open(examplePath, function(s) {
 
   setTimeout(function() {
 //    page.render(examplePath + '.png')
-    console.log("EXIT " + exitCode)
+    var consoleControl = require('console-control-strings');
+
+    var color = exitCode == 0 ? 'green' : 'red';
+    console.log(
+      consoleControl.color([color, "bold"]) +
+      "EXIT with " + exitCode +
+      consoleControl.color('reset')
+    );
     phantom.exit(exitCode);
   }, 3000)
 });
