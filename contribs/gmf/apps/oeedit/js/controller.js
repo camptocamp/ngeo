@@ -18,6 +18,7 @@ goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 
+/** @suppress {extraRequire} */
 goog.require('gmf.objecteditingDirective');
 goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
@@ -37,8 +38,6 @@ goog.require('ol.source.Vector');
  * @export
  */
 app.OEEditController = function($scope, $injector, $timeout) {
-
-  console.log(this);
 
   /**
    * @type {boolean}
