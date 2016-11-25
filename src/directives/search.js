@@ -1,7 +1,5 @@
 goog.provide('ngeo.searchDirective');
 
-goog.require('ngeo');
-
 
 /**
  * Provides the "ngeoSearch" directive, which uses Twitter's
@@ -145,6 +143,3 @@ ngeo.searchDirective.adaptListeners_ = function(object) {
   }
   return typeaheadListeners;
 };
-
-
-ngeo.module.directive('ngeoSearch', ngeo.searchDirective);

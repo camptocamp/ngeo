@@ -5,8 +5,7 @@ goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.CreateGeoJSONBloodhound');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.searchDirective');
+goog.require('ngeo');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -17,7 +16,7 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [ngeo.module.name]);
 
 
 /**

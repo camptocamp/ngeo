@@ -12,12 +12,6 @@ goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.colorpickerDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.popoverDirective');
-/**
- * This goog.require is needed because it provides 'ngeo-search' used in
- * the template.
- * @suppress {extraRequire}
- */
-goog.require('ngeo.searchDirective');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
