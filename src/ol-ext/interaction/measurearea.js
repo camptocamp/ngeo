@@ -30,9 +30,9 @@ ngeo.interaction.MeasureArea = function(format, opt_options) {
    * @type {Element}
    */
   this.continueMsg = options.continueMsg !== undefined ? options.continueMsg :
-      goog.dom.createDom(goog.dom.TagName.SPAN, {},
+      goog.dom.createDom('SPAN', {},
           'Click to continue drawing the polygon.',
-          goog.dom.createDom(goog.dom.TagName.BR),
+          goog.dom.createDom('BR'),
           'Double-click or click starting point to finish.');
 
   /**

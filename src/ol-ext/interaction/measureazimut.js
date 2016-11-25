@@ -45,7 +45,7 @@ ngeo.interaction.MeasureAzimut = function(format, opt_options) {
    * @type {Element}
    */
   this.continueMsg = options.continueMsg !== undefined ? options.continueMsg :
-      goog.dom.createDom(goog.dom.TagName.SPAN, {}, 'Click to finish.');
+      goog.dom.createDom('SPAN', {}, 'Click to finish.');
 
   /**
    * The format function
