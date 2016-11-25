@@ -67,6 +67,12 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
   ];
 
   /**
+   * @type {string} OE viewer application base url.
+   * @private
+   */
+  this.viewerUrl_ = '../apps/oeview/';
+
+  /**
    * @type {string}
    * @export
    */
@@ -211,7 +217,7 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
 /**
  * @export
  */
-gmfapp.MainController.prototype.run = function() {
+gmfapp.MainController.prototype.runEditor = function() {
 
   var geomType = this.selectedGeomType;
   var feature = this.selectedFeature;
@@ -228,9 +234,34 @@ gmfapp.MainController.prototype.run = function() {
   params[gmf.ObjectEditingManager.Param.PROPERTY] = property;
 
   var url = gmfapp.MainController.appendParams(this.selectedUrl, params);
-
   window.open(url);
+};
 
+
+/**
+ * @export
+ */
+gmfapp.MainController.prototype.runViewer = function() {
+
+  var node = this.selectedGmfLayerNode;
+  var nodeId = node.id;
+  var nodeName = node.name;
+  var nodeIdAttrFieldName = node.metadata.identifierAttributeField;
+  var ids = [];
+
+  var features = this.featuresCache_[nodeId];
+  for (var i = 0, ii = features.length; i < ii; i++) {
+    ids.push(
+      features[i].get(nodeIdAttrFieldName)
+    );
+  }
+
+  var params = {};
+  params['wfs_layer'] = nodeName;
+  params['wfs_' + nodeIdAttrFieldName] = ids.join(',');
+
+  var url = gmfapp.MainController.appendParams(this.viewerUrl_, params);
+  window.open(url);
 };
 
 

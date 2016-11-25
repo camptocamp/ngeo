@@ -18,7 +18,7 @@ GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
-GMF_APPS += mobile desktop desktop_alt oeedit
+GMF_APPS += mobile desktop desktop_alt oeedit oeview
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 DEVELOPMENT ?= FALSE
