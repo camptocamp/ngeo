@@ -53,11 +53,24 @@
       <div class="form-group">
         <button
           ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === null"
-          ng-click="ctrl.run()"
+          ng-click="ctrl.runEditor()"
           type="button"
           class="form-control btn btn-primary"
+          title="Load selected feature in OE editor"
           aria-label="Left Align">
-          </span> Launch
+          </span> Launch Editor
+        </button>
+      </div>
+
+      <div class="form-group">
+        <button
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === null"
+          ng-click="ctrl.runViewer()"
+          type="button"
+          class="form-control btn btn-info"
+          title="Load all features of selected layer in OE viewer"
+          aria-label="Left Align">
+          </span> Launch Viewer
         </button>
       </div>
 
