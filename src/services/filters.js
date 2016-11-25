@@ -1,7 +1,7 @@
 goog.provide('ngeo.filters');
 
 goog.require('ngeo');
-goog.require('goog.math');
+goog.require('ol.math');
 
 /**
  * Format a number as a localized scale.
@@ -257,7 +257,7 @@ ngeo.module.filter('ngeoNumberCoordinates', ngeo.NumberCoordinates);
  */
 ngeo.DMSCoordinates = function() {
   var degreesToStringHDMS = function(degrees, hemispheres, fractionDigits) {
-    var normalizedDegrees = goog.math.modulo(degrees + 180, 360) - 180;
+    var normalizedDegrees = ol.math.modulo(degrees + 180, 360) - 180;
     var dms = Math.abs(3600 * normalizedDegrees);
     var d = Math.floor(dms / 3600);
     var m = Math.floor((dms / 60) % 60);
