@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.MobileDraw');
 
 goog.require('ol.Feature');
+goog.require('ol.functions');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.SimpleGeometry');
@@ -40,7 +41,7 @@ ngeo.interaction.MobileDrawProperty = {
 ngeo.interaction.MobileDraw = function(options) {
 
   ol.interaction.Interaction.call(this, {
-    handleEvent: goog.functions.TRUE
+    handleEvent: ol.functions.TRUE
   });
 
   /**

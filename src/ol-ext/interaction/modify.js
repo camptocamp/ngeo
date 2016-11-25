@@ -2,6 +2,7 @@ goog.provide('ngeo.interaction.Modify');
 
 goog.require('ngeo.interaction.ModifyCircle');
 goog.require('ngeo.interaction.ModifyRectangle');
+goog.require('ol.functions');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.Collection');
 goog.require('ol.interaction.Modify');
@@ -90,7 +91,7 @@ ngeo.interaction.Modify = function(options) {
 
 
   ol.interaction.Interaction.call(this, {
-    handleEvent: goog.functions.TRUE
+    handleEvent: ol.functions.TRUE
   });
 
 };
