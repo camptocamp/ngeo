@@ -183,11 +183,13 @@
       <button
         ng-show="ctrl.fields.formats.png"
         class="btn btn-primary"
+        ng-disabled="ctrl.isState('PRINTING')"
         ng-click="ctrl.print('png')">Image</button>
 
       <button
         ng-show="ctrl.fields.formats.pdf"
         class="btn btn-primary"
+        ng-disabled="ctrl.isState('PRINTING')"
         ng-click="ctrl.print('pdf')">PDF</button>
     </div>
 
