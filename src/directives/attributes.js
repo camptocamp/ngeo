@@ -104,7 +104,7 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
   };
 
   // Listen to the feature inner properties change and apply them to the form
-  var uid = goog.getUid(this);
+  var uid = ol.getUid(this);
   this.ngeoEventHelper_.addListenerKey(
     uid,
     ol.events.listen(
@@ -151,7 +151,7 @@ ngeo.AttributesController.prototype.handleInputChange = function(name) {
  * @private
  */
 ngeo.AttributesController.prototype.handleDestroy_ = function() {
-  var uid = goog.getUid(this);
+  var uid = ol.getUid(this);
   this.ngeoEventHelper_.clearListenerKey(uid);
 };
 

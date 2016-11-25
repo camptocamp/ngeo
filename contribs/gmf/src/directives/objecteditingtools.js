@@ -278,8 +278,7 @@ gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
     this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
 
-  var group = gmf.ObjecteditingtoolsController.NAMESPACE_ +
-      '-' + goog.getUid(this);
+  var group = gmf.ObjecteditingtoolsController.NAMESPACE_ + '-' + ol.getUid(this);
   var toolActivate = new ngeo.ToolActivate(this, toolActiveName);
   this.ngeoToolActivateMgr_.registerTool(group, toolActivate, false);
 

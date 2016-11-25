@@ -305,7 +305,7 @@ ngeo.interaction.ModifyCircle.handleDownEvent_ = function(evt) {
     for (var i = 0, ii = segmentDataMatches.length; i < ii; ++i) {
       var segmentDataMatch = segmentDataMatches[i];
       var segment = segmentDataMatch.segment;
-      var uid = goog.getUid(segmentDataMatch.feature);
+      var uid = ol.getUid(segmentDataMatch.feature);
       var depth = segmentDataMatch.depth;
       if (depth) {
         uid += '-' + depth.join('-'); // separate feature components
@@ -453,7 +453,7 @@ ngeo.interaction.ModifyCircle.prototype.handlePointerAtPixel_ = function(pixel, 
             closestSegment[1] : closestSegment[0];
         this.createOrUpdateVertexFeature_(vertex);
         var vertexSegments = {};
-        vertexSegments[goog.getUid(closestSegment)] = true;
+        vertexSegments[ol.getUid(closestSegment)] = true;
         var segment;
         for (var i = 1, ii = nodes.length; i < ii; ++i) {
           segment = nodes[i].segment;
@@ -461,7 +461,7 @@ ngeo.interaction.ModifyCircle.prototype.handlePointerAtPixel_ = function(pixel, 
               ol.coordinate.equals(closestSegment[1], segment[1]) ||
               (ol.coordinate.equals(closestSegment[0], segment[1]) &&
               ol.coordinate.equals(closestSegment[1], segment[0])))) {
-            vertexSegments[goog.getUid(segment)] = true;
+            vertexSegments[ol.getUid(segment)] = true;
           } else {
             break;
           }

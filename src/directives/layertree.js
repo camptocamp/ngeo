@@ -210,7 +210,7 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
    * @type {number}
    * @export
    */
-  this.uid = goog.getUid(this);
+  this.uid = ol.getUid(this);
 
   /**
    * @type {number}

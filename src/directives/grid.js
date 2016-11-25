@@ -55,7 +55,7 @@ ngeo.GridConfig = function(data, columnDefs) {
  * @export
  */
 ngeo.GridConfig.getRowUid = function(attributes) {
-  return '' + goog.getUid(attributes);
+  return '' + ol.getUid(attributes);
 };
 
 

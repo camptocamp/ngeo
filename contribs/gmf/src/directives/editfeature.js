@@ -492,7 +492,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   gmfXSDAttributes.getAttributes(this.editableNode_.id).then(
     this.setAttributes_.bind(this));
 
-  var uid = goog.getUid(this);
+  var uid = ol.getUid(this);
   this.eventHelper_.addListenerKey(
     uid,
     ol.events.listen(
@@ -719,8 +719,8 @@ gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
 gmf.EditfeatureController.prototype.toggle_ = function(active) {
 
   var keys = this.listenerKeys_;
-  var createUid = ['create-', goog.getUid(this)].join('-');
-  var otherUid = ['other-', goog.getUid(this)].join('-');
+  var createUid = ['create-', ol.getUid(this)].join('-');
+  var otherUid = ['other-', ol.getUid(this)].join('-');
   var toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
@@ -1081,7 +1081,7 @@ gmf.EditfeatureController.prototype.handleDestroy_ = function() {
   this.features.clear();
   this.handleFeatureChange_(null, this.feature);
   this.feature = null;
-  var uid = goog.getUid(this);
+  var uid = ol.getUid(this);
   this.eventHelper_.clearListenerKey(uid);
   this.toggle_(false);
   this.handleMapSelectActiveChange_(false);

@@ -601,7 +601,7 @@ gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
   /** @type {Array.<ngeox.GridColumnDef>} */
   var columnDefs = [];
   columns.forEach(function(column) {
-    if (column.lastIndexOf('closure_uid_', 0) !== 0) {
+    if (column !== 'ol_uid') {
       columnDefs.push(/** @type {ngeox.GridColumnDef} */ ({
         name: column
       }));

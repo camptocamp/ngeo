@@ -109,7 +109,7 @@ ol.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.get = function(map) {
-  var mapUid = goog.getUid(map).toString();
+  var mapUid = ol.getUid(map).toString();
   return mapUid in this.mapUids_ ? map.getLayers().item(0) : null;
 };
 
@@ -123,7 +123,7 @@ ngeo.BackgroundLayerMgr.prototype.get = function(map) {
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
-  var mapUid = goog.getUid(map).toString();
+  var mapUid = ol.getUid(map).toString();
   var previous = this.get(map);
   if (previous !== null) {
     goog.asserts.assert(mapUid in this.mapUids_);

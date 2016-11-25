@@ -69,7 +69,7 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
    */
   this.element_ = $element;
 
-  var uid = goog.getUid(this);
+  var uid = ol.getUid(this);
   var id = ['ngeo-exportfeature', uid].join('-');
 
   /**

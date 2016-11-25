@@ -446,7 +446,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
       var isOriginalFeatureAdded = false;
       for (var j = 0, jj = styles.length; j < jj; ++j) {
         var style = styles[j];
-        var styleId = goog.getUid(style).toString();
+        var styleId = ol.getUid(style).toString();
         var geometry = style.getGeometry();
         var geojsonFeature;
         if (!geometry) {

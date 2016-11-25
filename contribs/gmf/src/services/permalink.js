@@ -937,7 +937,7 @@ gmf.Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {
  * @private
  */
 gmf.Permalink.prototype.addNgeoFeature_ = function(feature) {
-  var uid = goog.getUid(feature);
+  var uid = ol.getUid(feature);
   this.addListenerKey_(
     uid,
     ol.events.listen(feature, ol.events.EventType.CHANGE,
@@ -953,7 +953,7 @@ gmf.Permalink.prototype.addNgeoFeature_ = function(feature) {
  * @private
  */
 gmf.Permalink.prototype.removeNgeoFeature_ = function(feature) {
-  var uid = goog.getUid(feature);
+  var uid = ol.getUid(feature);
   this.initListenerKey_(uid); // clear event listeners
   this.handleNgeoFeaturesChange_();
 };

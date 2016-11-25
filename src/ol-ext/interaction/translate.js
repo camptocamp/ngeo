@@ -189,7 +189,7 @@ ngeo.interaction.Translate.prototype.handleFeaturesRemove_ = function(evt) {
  * @private
  */
 ngeo.interaction.Translate.prototype.addFeature_ = function(feature) {
-  var uid = goog.getUid(feature);
+  var uid = ol.getUid(feature);
   var geometry = feature.getGeometry();
   goog.asserts.assertInstanceof(geometry, ol.geom.Geometry);
 
@@ -212,7 +212,7 @@ ngeo.interaction.Translate.prototype.addFeature_ = function(feature) {
  * @private
  */
 ngeo.interaction.Translate.prototype.removeFeature_ = function(feature) {
-  var uid = goog.getUid(feature);
+  var uid = ol.getUid(feature);
   if (this.featureListenerKeys_[uid]) {
     ol.events.unlistenByKey(this.featureListenerKeys_[uid]);
     delete this.featureListenerKeys_[uid];
@@ -234,7 +234,7 @@ ngeo.interaction.Translate.prototype.handleGeometryChange_ = function(feature,
   goog.asserts.assertInstanceof(geometry, ol.geom.Geometry);
 
   var point = this.getGeometryCenterPoint_(geometry);
-  var uid = goog.getUid(feature);
+  var uid = ol.getUid(feature);
   this.centerFeatures_[uid].setGeometry(point);
 };
 
