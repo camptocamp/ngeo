@@ -1,5 +1,6 @@
 goog.provide('gmfapp.objecteditinghub');
 
+goog.require('goog.asserts');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('gmf.ObjectEditingManager');
@@ -216,6 +217,7 @@ gmfapp.MainController.prototype.run = function() {
   var feature = this.selectedFeature;
   var layer = this.selectedGmfLayerNode.id;
   var property = this.selectedGmfLayerNode.metadata.identifierAttributeField;
+  goog.asserts.assert(property !== undefined);
   var id = feature.get(property);
 
   var params = {};
