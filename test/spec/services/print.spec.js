@@ -410,11 +410,11 @@ describe('ngeo.CreatePrint', function() {
         var spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
 
-        var styleId0 = goog.getUid(style0).toString();
-        var styleId1 = goog.getUid(style1).toString();
-        var styleId2 = goog.getUid(style2).toString();
-        var styleId3 = goog.getUid(style3).toString();
-        var styleId4 = goog.getUid(style4).toString();
+        var styleId0 = ol.getUid(style0).toString();
+        var styleId1 = ol.getUid(style1).toString();
+        var styleId2 = ol.getUid(style2).toString();
+        var styleId3 = ol.getUid(style3).toString();
+        var styleId4 = ol.getUid(style4).toString();
 
         var expectedStyle = {
           version: 2

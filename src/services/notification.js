@@ -129,7 +129,7 @@ ngeo.Notification.prototype.showMessage = function(message) {
 
   // Keep a reference to the promise, in case we want to manually cancel it
   // before the delay
-  var uid = goog.getUid(el);
+  var uid = ol.getUid(el);
   item.promise = this.timeout_(function() {
     el.alert('close');
     delete this.cache_[uid];
@@ -147,7 +147,7 @@ ngeo.Notification.prototype.showMessage = function(message) {
 ngeo.Notification.prototype.clearMessageByCacheItem_ = function(item) {
   var el = item.el;
   var promise = item.promise;
-  var uid = goog.getUid(el);
+  var uid = ol.getUid(el);
 
   // Close the message
   el.alert('close');

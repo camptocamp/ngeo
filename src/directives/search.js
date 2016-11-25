@@ -123,24 +123,24 @@ ngeo.searchDirective.adaptListeners_ = function(object) {
   var typeaheadListeners;
   if (object === undefined) {
     typeaheadListeners = {
-      open: goog.nullFunction,
-      close: goog.nullFunction,
-      cursorchange: goog.nullFunction,
-      select: goog.nullFunction,
-      autocomplete: goog.nullFunction
+      open: ol.nullFunction,
+      close: ol.nullFunction,
+      cursorchange: ol.nullFunction,
+      select: ol.nullFunction,
+      autocomplete: ol.nullFunction
     };
   } else {
     typeaheadListeners = {
       open: object.open !== undefined ?
-          object.open : goog.nullFunction,
+          object.open : ol.nullFunction,
       close: object.close !== undefined ?
-          object.close : goog.nullFunction,
+          object.close : ol.nullFunction,
       cursorchange: object.cursorchange !== undefined ?
-          object.cursorchange : goog.nullFunction,
+          object.cursorchange : ol.nullFunction,
       select: object.select !== undefined ?
-          object.select : goog.nullFunction,
+          object.select : ol.nullFunction,
       autocomplete: object.autocomplete !== undefined ?
-          object.autocomplete : goog.nullFunction
+          object.autocomplete : ol.nullFunction
     };
   }
   return typeaheadListeners;

@@ -238,7 +238,7 @@ gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
   if (snappingConfig) {
     var wfsConfig = this.getWFSConfig_(treeCtrl);
     if (wfsConfig) {
-      var uid = goog.getUid(treeCtrl);
+      var uid = ol.getUid(treeCtrl);
 
       var stateWatcherUnregister = this.rootScope_.$watch(
         function() {
@@ -375,7 +375,7 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
  */
 gmf.Snapping.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
 
-  var uid = goog.getUid(treeCtrl);
+  var uid = ol.getUid(treeCtrl);
   var item = this.cache_[uid];
 
   // Note: a snappable treeCtrl can only be a leaf, therefore the only possible

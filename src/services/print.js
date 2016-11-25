@@ -4,7 +4,6 @@ goog.provide('ngeo.Print');
 
 goog.require('goog.color');
 goog.require('goog.color.alpha');
-goog.require('goog.math');
 goog.require('goog.object');
 goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
@@ -14,6 +13,7 @@ goog.require('ol.geom.GeometryType');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
+goog.require('ol.math');
 goog.require('ol.size');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
@@ -446,14 +446,14 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
       var isOriginalFeatureAdded = false;
       for (var j = 0, jj = styles.length; j < jj; ++j) {
         var style = styles[j];
-        var styleId = goog.getUid(style).toString();
+        var styleId = ol.getUid(style).toString();
         var geometry = style.getGeometry();
         var geojsonFeature;
         if (!geometry) {
           geojsonFeature = origGeojsonFeature;
           geometry = originalFeature.getGeometry();
           // no need to encode features with no geometry
-          if (!goog.isDefAndNotNull(geometry)) {
+          if (!geometry) {
             continue;
           }
           if (!isOriginalFeatureAdded) {
@@ -634,7 +634,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
       if (isNaN(rotation)) {
         rotation = 0;
       }
-      symbolizer.rotation = goog.math.toDegrees(rotation);
+      symbolizer.rotation = ol.math.toDegrees(rotation);
     }
   } else if (imageStyle instanceof ol.style.RegularShape) {
     /**
@@ -662,7 +662,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
       }
       var rotationShape = imageStyle.getRotation();
       if (!isNaN(rotationShape) && rotationShape !== 0) {
-        symbolizer.rotation = goog.math.toDegrees(rotationShape);
+        symbolizer.rotation = ol.math.toDegrees(rotationShape);
       }
       var opacityShape = imageStyle.getOpacity();
       if (opacityShape !== null) {

@@ -190,7 +190,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
     }.bind(this)
   );
 
-  var uid = goog.getUid(this);
+  var uid = ol.getUid(this);
   if (interaction instanceof ol.interaction.Draw) {
     this.ngeoEventHelper_.addListenerKey(
       uid,
@@ -243,7 +243,7 @@ ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
  */
 ngeo.CreatefeatureController.prototype.handleDestroy_ = function() {
   this.timeout_(function() {
-    var uid = goog.getUid(this);
+    var uid = ol.getUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);
     this.interaction_.setActive(false);
     this.map.removeInteraction(this.interaction_);

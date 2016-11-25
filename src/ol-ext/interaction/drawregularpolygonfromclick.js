@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.DrawRegularPolygonFromClick');
 
 goog.require('ol.Feature');
+goog.require('ol.functions');
 goog.require('ol.geom.Circle');
 goog.require('ol.interaction.Draw');
 goog.require('ol.interaction.Interaction');
@@ -45,7 +46,7 @@ ngeo.interaction.DrawRegularPolygonFromClick = function(options) {
   this.listenerKeys_ = [];
 
   ol.interaction.Interaction.call(this, {
-    handleEvent: goog.functions.TRUE
+    handleEvent: ol.functions.TRUE
   });
 
 };

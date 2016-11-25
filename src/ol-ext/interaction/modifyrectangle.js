@@ -102,7 +102,7 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
   if (featureGeom instanceof ol.geom.Polygon) {
 
     // If the feature's corners are already set, no need to set them again
-    var uid = goog.getUid(feature);
+    var uid = ol.getUid(feature);
     var item = this.cache_[uid];
     if (item) {
       return;
@@ -188,7 +188,7 @@ ngeo.interaction.ModifyRectangle.prototype.willModifyFeatures_ = function(evt) {
  * @private
  */
 ngeo.interaction.ModifyRectangle.prototype.removeFeature_ = function(feature) {
-  var uid = goog.getUid(feature);
+  var uid = ol.getUid(feature);
   var item = this.cache_[uid];
   var corners = item.corners;
   for (var i = 0; i < corners.length; i++) {
@@ -316,7 +316,7 @@ ngeo.interaction.ModifyRectangle.prototype.handleDrag_ = function(evt) {
     // 4 - The point opposite of the handle we dragged
     var opposite = siblingY.get('siblingY');
     goog.asserts.assertInstanceof(opposite, ol.Feature);
-    if (goog.getUid(feature) == goog.getUid(opposite)) {
+    if (ol.getUid(feature) == ol.getUid(opposite)) {
       opposite = siblingY.get('siblingX');
     }
 

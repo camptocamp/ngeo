@@ -379,8 +379,8 @@ gmf.DrawfeatureController.prototype.unregisterInteractions_ = function() {
 gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
 
   var keys = this.listenerKeys_;
-  var drawUid = ['draw-', goog.getUid(this)].join('-');
-  var otherUid = ['other-', goog.getUid(this)].join('-');
+  var drawUid = ['draw-', ol.getUid(this)].join('-');
+  var otherUid = ['other-', ol.getUid(this)].join('-');
   var toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {

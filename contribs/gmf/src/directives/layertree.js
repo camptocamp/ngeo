@@ -491,7 +491,7 @@ gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
   }
 
   var layer = treeCtrl.layer;
-  if (gmfLayer.type === 'WMTS' && goog.isDefAndNotNull(layer)) {
+  if (gmfLayer.type === 'WMTS' && layer) {
     goog.asserts.assertInstanceof(layer, ol.layer.Tile);
     return this.layerHelper_.getWMTSLegendURL(layer);
   } else {

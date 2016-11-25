@@ -54,7 +54,7 @@ ngeo.resizemapDirective = function($window) {
                 map.updateSize();
                 map.renderSync();
 
-                if (goog.now() - start < duration) {
+                if (Date.now() - start < duration) {
                   animationDelay.start();
                 }
               }, $window);
@@ -68,7 +68,7 @@ ngeo.resizemapDirective = function($window) {
 
           scope.$watch(stateExpr, function(newVal, oldVal) {
             if (newVal != oldVal) {
-              start = goog.now();
+              start = Date.now();
               animationDelay.stop();
               animationDelay.start();
             }

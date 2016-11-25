@@ -2,12 +2,12 @@ goog.provide('ngeo.interaction.DrawAzimut');
 goog.provide('ngeo.interaction.MeasureAzimut');
 
 goog.require('goog.asserts');
-goog.require('goog.functions');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.MapBrowserEvent.EventType');
 goog.require('ol.events');
+goog.require('ol.functions');
 goog.require('ol.geom.Circle');
 goog.require('ol.geom.GeometryCollection');
 goog.require('ol.geom.LineString');
@@ -389,7 +389,7 @@ ngeo.interaction.DrawAzimut.prototype.abortDrawing_ = function() {
 /**
  * @inheritDoc
  */
-ngeo.interaction.DrawAzimut.prototype.shouldStopEvent = goog.functions.FALSE;
+ngeo.interaction.DrawAzimut.prototype.shouldStopEvent = ol.functions.FALSE;
 
 
 /**

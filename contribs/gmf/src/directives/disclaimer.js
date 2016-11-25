@@ -206,7 +206,7 @@ gmf.DisclaimerController.prototype.handleLayersRemove_ = function(evt) {
  */
 gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
 
-  var layerUid = goog.getUid(layer);
+  var layerUid = ol.getUid(layer);
 
   if (layer instanceof ol.layer.Group) {
 
@@ -254,7 +254,7 @@ gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
  */
 gmf.DisclaimerController.prototype.unregisterLayer_ = function(layer) {
 
-  var layerUid = goog.getUid(layer);
+  var layerUid = ol.getUid(layer);
 
   if (layer instanceof ol.layer.Group) {
 

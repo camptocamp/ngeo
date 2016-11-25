@@ -87,7 +87,7 @@ ngeo.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
     },
     // datumTokenizer is required by the Bloodhound constructor but it
     // is not used when only a remote is passsed to Bloodhound.
-    datumTokenizer: goog.nullFunction,
+    datumTokenizer: ol.nullFunction,
     queryTokenizer: Bloodhound.tokenizers.whitespace
   });
 

@@ -14,6 +14,7 @@ goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 goog.require('ol.sphere.WGS84');
+goog.require('ol.string');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
@@ -293,8 +294,8 @@ ngeo.interaction.Measure.getFormattedPoint = function(
   var x = coordinates[0];
   var y = coordinates[1];
   decimals = decimals !== null ? decimals : 0;
-  x = goog.string.padNumber(x, 0, decimals);
-  y = goog.string.padNumber(y, 0, decimals);
+  x = ol.string.padNumber(x, 0, decimals);
+  y = ol.string.padNumber(y, 0, decimals);
   return ['X: ', x, ', Y: ', y].join('');
 };
 
@@ -336,14 +337,15 @@ ngeo.interaction.Measure.prototype.getDrawInteraction = function() {
 
 
 /**
+ * @abstract
  * Creates the draw interaction.
  * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  *     style The sketchStyle used for the drawing interaction.
  * @param {ol.source.Vector} source Vector source.
- * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw}
+ * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw} The interaction
  * @protected
  */
-ngeo.interaction.Measure.prototype.createDrawInteraction = goog.abstractMethod;
+ngeo.interaction.Measure.prototype.createDrawInteraction = function(style, source) {};
 
 
 /**
@@ -503,13 +505,14 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
 
 
 /**
+ * @abstract
  * Function implemented in inherited classes to compute measurement, determine
  * where to place the tooltip and determine which help message to display.
  * @param {function(string, ?ol.Coordinate)} callback The function
  *     to be called.
  * @protected
  */
-ngeo.interaction.Measure.prototype.handleMeasure = goog.abstractMethod;
+ngeo.interaction.Measure.prototype.handleMeasure = function(callback) {};
 
 
 /**

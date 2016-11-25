@@ -4,7 +4,7 @@ goog.require('ngeo.GridConfig');
 
 /**
  * Compare two list of objects using only the properties of the expected objects.
- * For example to ignore 'closure_uid_*'.
+ * For example to ignore 'ol_uid'.
  * @param {Array} data The data.
  * @param {Array} expectedData Expected data.
  */

@@ -39,11 +39,12 @@ ngeo.Message = function() {};
 
 
 /**
+ * @abstract
  * Show the message.
  * @param {ngeox.Message} message Message.
  * @protected
  */
-ngeo.Message.prototype.showMessage = goog.abstractMethod;
+ngeo.Message.prototype.showMessage = function(message) {};
 
 
 /**

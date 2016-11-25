@@ -567,7 +567,7 @@ gmf.ObjecteditingController.prototype.unregisterInteractions_ = function() {
 gmf.ObjecteditingController.prototype.toggle_ = function(active) {
 
   var keys = this.listenerKeys_;
-  var uid = gmf.ObjecteditingController.NAMESPACE_ + '-' + goog.getUid(this);
+  var uid = gmf.ObjecteditingController.NAMESPACE_ + '-' + ol.getUid(this);
   var toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {

@@ -211,7 +211,7 @@ ngeo.interaction.Rotate.prototype.addFeature_ = function(feature) {
   feature.set('angle', 0);
 
   // Add the center icon to the overlay
-  var uid = goog.getUid(feature);
+  var uid = ol.getUid(feature);
   var point = new ol.geom.Point(this.getCenterCoordinate_(geometry));
   var centerFeature = new ol.Feature(point);
   this.centerFeatures_[uid] = centerFeature;
@@ -242,7 +242,7 @@ ngeo.interaction.Rotate.prototype.removeFeature_ = function(feature) {
   //this.overlay_.getSource().removeFeature(feature);
 
   if (feature) {
-    var uid = goog.getUid(feature);
+    var uid = ol.getUid(feature);
 
     if (this.centerFeatures_[uid]) {
       this.overlay_.getSource().removeFeature(this.centerFeatures_[uid]);
@@ -299,7 +299,7 @@ ngeo.interaction.Rotate.prototype.handleDown_ = function(evt) {
   if (feature) {
     var found = false;
     this.features_.forEach(function(f) {
-      if (goog.getUid(f) == goog.getUid(feature)) {
+      if (ol.getUid(f) == ol.getUid(feature)) {
         found = true;
       }
     });
