@@ -44,7 +44,7 @@ module.exports = function(config) {
       'node_modules/proj4/dist/proj4-src.js',
       'node_modules/d3/d3.js',
       'node_modules/file-saver/FileSaver.js',
-      'node_modules/typeahead.js/dist/typeahead.bundle.js',
+      'node_modules/corejs-typeahead/dist/typeahead.bundle.js',
       'third-party/jquery-ui/jquery-ui.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'test/spec/beforeeach.js',

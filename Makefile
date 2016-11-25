@@ -41,7 +41,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/proj4/dist/proj4-src.js \
 	node_modules/d3/d3.js \
 	node_modules/file-saver/FileSaver.js \
-	node_modules/typeahead.js/dist/typeahead.bundle.js \
+	node_modules/corejs-typeahead/dist/typeahead.bundle.js \
 	node_modules/jsts/dist/jsts.min.js \
 	third-party/jquery-ui/jquery-ui.js
 else
@@ -62,7 +62,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/proj4/dist/proj4.js \
 	node_modules/d3/d3.min.js \
 	node_modules/file-saver/FileSaver.min.js \
-	node_modules/typeahead.js/dist/typeahead.bundle.min.js \
+	node_modules/corejs-typeahead/dist/typeahead.bundle.min.js \
 	node_modules/jsts/dist/jsts.min.js \
 	third-party/jquery-ui/jquery-ui.min.js
 endif
@@ -445,7 +445,7 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/lib/typeahead.bundle.min.js: node_modules/typeahead.js/dist/typeahead.bundle.min.js
+.build/examples-hosted/lib/typeahead.bundle.min.js: node_modules/corejs-typeahead/dist/typeahead.bundle.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
@@ -533,7 +533,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
 		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/file-saver/FileSaver.min.js|lib/FileSaver.min.js|' \
-		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
+		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
 		-e 's|/@?main=$*.js|$*.js|' \
@@ -565,7 +565,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/angular-ui-slider/src/slider.js|lib/slider.min.js|' \
 		-e 's|\.\./node_modules/d3/d3\.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/file-saver/FileSaver.min.js|lib/FileSaver.min.js|' \
-		-e 's|\.\./node_modules/typeahead.js/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
+		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
 		-e 's|/@?main=$*\.js|$*.js|' \
