@@ -337,14 +337,15 @@ ngeo.interaction.Measure.prototype.getDrawInteraction = function() {
 
 
 /**
+ * @abstract
  * Creates the draw interaction.
  * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  *     style The sketchStyle used for the drawing interaction.
  * @param {ol.source.Vector} source Vector source.
- * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw}
+ * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw} The interaction
  * @protected
  */
-ngeo.interaction.Measure.prototype.createDrawInteraction = goog.abstractMethod;
+ngeo.interaction.Measure.prototype.createDrawInteraction = function(style, source) {};
 
 
 /**
@@ -504,13 +505,14 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
 
 
 /**
+ * @abstract
  * Function implemented in inherited classes to compute measurement, determine
  * where to place the tooltip and determine which help message to display.
  * @param {function(string, ?ol.Coordinate)} callback The function
  *     to be called.
  * @protected
  */
-ngeo.interaction.Measure.prototype.handleMeasure = goog.abstractMethod;
+ngeo.interaction.Measure.prototype.handleMeasure = function(callback) {};
 
 
 /**
