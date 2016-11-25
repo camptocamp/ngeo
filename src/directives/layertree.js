@@ -276,7 +276,7 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   this.listenersExpr = listenersExpr;
 
   // Eval function to bind functions to this tree's events.
-  if (goog.isDefAndNotNull(listenersExpr)) {
+  if (listenersExpr) {
     $scope.$eval(listenersExpr, {'treeScope': $scope, 'treeCtrl': this});
   }
 

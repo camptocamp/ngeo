@@ -453,7 +453,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
           geojsonFeature = origGeojsonFeature;
           geometry = originalFeature.getGeometry();
           // no need to encode features with no geometry
-          if (!goog.isDefAndNotNull(geometry)) {
+          if (!geometry) {
             continue;
           }
           if (!isOriginalFeatureAdded) {

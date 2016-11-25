@@ -822,15 +822,15 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
           }
         });
         if (datasourcesActionsHaveAddLayer) {
-          this.gmfTreeManager_.addGroupByLayerName(actionData, true,
-              goog.isDefAndNotNull(featureGeometry));
+          var silent = !!featureGeometry;
+          this.gmfTreeManager_.addGroupByLayerName(actionData, true, silent);
         }
       }
     }
   }
 
   var mapSize = this.map_.getSize();
-  if (goog.isDefAndNotNull(featureGeometry) && mapSize) {
+  if (featureGeometry && mapSize) {
     var view = this.map_.getView();
     this.featureOverlay_.clear();
     this.featureOverlay_.addFeature(feature);

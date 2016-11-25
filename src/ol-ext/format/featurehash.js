@@ -1122,7 +1122,7 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
 
   var encodedGeometry = '';
   var geometry = feature.getGeometry();
-  if (goog.isDefAndNotNull(geometry)) {
+  if (geometry) {
     encodedGeometry = this.writeGeometryText(geometry, opt_options);
   }
 

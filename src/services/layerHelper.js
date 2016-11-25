@@ -151,7 +151,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
  */
 ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
   var group = new ol.layer.Group();
-  if (goog.isDefAndNotNull(opt_layers)) {
+  if (opt_layers) {
     group.setLayers(opt_layers);
   }
   return group;
