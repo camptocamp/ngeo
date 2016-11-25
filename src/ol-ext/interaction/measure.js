@@ -14,6 +14,7 @@ goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 goog.require('ol.sphere.WGS84');
+goog.require('ol.string');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
@@ -293,8 +294,8 @@ ngeo.interaction.Measure.getFormattedPoint = function(
   var x = coordinates[0];
   var y = coordinates[1];
   decimals = decimals !== null ? decimals : 0;
-  x = goog.string.padNumber(x, 0, decimals);
-  y = goog.string.padNumber(y, 0, decimals);
+  x = ol.string.padNumber(x, 0, decimals);
+  y = ol.string.padNumber(y, 0, decimals);
   return ['X: ', x, ', Y: ', y].join('');
 };
 

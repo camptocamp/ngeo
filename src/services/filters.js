@@ -2,6 +2,7 @@ goog.provide('ngeo.filters');
 
 goog.require('ngeo');
 goog.require('ol.math');
+goog.require('ol.string');
 
 /**
  * Format a number as a localized scale.
@@ -263,8 +264,8 @@ ngeo.DMSCoordinates = function() {
     var m = Math.floor((dms / 60) % 60);
     var s = (dms % 60);
     return d + '\u00b0 ' +
-        goog.string.padNumber(m, 2) + '\u2032 ' +
-        goog.string.padNumber(s, 2, fractionDigits) + '\u2033 ' +
+        ol.string.padNumber(m, 2) + '\u2032 ' +
+        ol.string.padNumber(s, 2, fractionDigits) + '\u2033 ' +
         hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0);
   };
 
