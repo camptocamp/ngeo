@@ -64,8 +64,9 @@ after_success:
 - export GIT_BRANCH=${TRAVIS_BRANCH}
 - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
 - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
-- pip install jsongrep
-- export PACKAGE_VERSION=`jsongrep -e version package.json`
+- make .build/python-venv
+- .build/python-venv/bin/pip install jsongrep
+- export PACKAGE_VERSION=`.build/python-venv/bin/jsongrep -e version package.json`
 
 deploy:
 - provider: script
