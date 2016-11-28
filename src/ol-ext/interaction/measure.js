@@ -5,6 +5,7 @@ goog.provide('ngeo.interaction.Measure');
 goog.require('goog.asserts');
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
+goog.require('ol.dom');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Overlay');
@@ -318,8 +319,8 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
   }
 
   if (this.displayHelpTooltip_) {
-    goog.dom.removeChildren(this.helpTooltipElement_);
-    goog.dom.appendChild(this.helpTooltipElement_, helpMsg);
+    ol.dom.removeChildren(this.helpTooltipElement_);
+    this.helpTooltipElement_.appendChild(helpMsg);
     this.helpTooltipOverlay_.setPosition(evt.coordinate);
   }
 

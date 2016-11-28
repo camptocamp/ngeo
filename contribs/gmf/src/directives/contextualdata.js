@@ -189,13 +189,13 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
  */
 gmf.ContextualdataController.prototype.preparePopover_ = function() {
 
-  var container = goog.dom.createElement('DIV');
+  var container = document.createElement('DIV');
   container.classList.add('popover', 'bottom', 'gmf-contextualdata');
   angular.element(container).css('position', 'relative');
-  var arrow = goog.dom.createElement('DIV');
+  var arrow = document.createElement('DIV');
   arrow.classList.add('arrow');
   container.appendChild(arrow);
-  this.content_ = goog.dom.createElement('DIV');
+  this.content_ = document.createElement('DIV');
   this.content_.setAttribute('gmf-contextualdatacontent', '');
   this.content_.classList.add('popover-content');
   container.appendChild(this.content_);
