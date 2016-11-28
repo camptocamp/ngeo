@@ -247,6 +247,7 @@ gmfapp.MainController.prototype.runViewer = function() {
   var nodeId = node.id;
   var nodeName = node.name;
   var nodeIdAttrFieldName = node.metadata.identifierAttributeField;
+  goog.asserts.assert(nodeIdAttrFieldName !== undefined);
   var ids = [];
 
   var features = this.featuresCache_[nodeId];
