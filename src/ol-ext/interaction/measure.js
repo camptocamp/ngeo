@@ -319,7 +319,7 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
 
   if (this.displayHelpTooltip_) {
     goog.dom.removeChildren(this.helpTooltipElement_);
-    goog.dom.appendChild(this.helpTooltipElement_, helpMsg);
+    this.helpTooltipElement_.appendChild(helpMsg);
     this.helpTooltipOverlay_.setPosition(evt.coordinate);
   }
 
