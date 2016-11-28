@@ -1,11 +1,11 @@
 goog.provide('ngeo.FeatureOverlay');
 goog.provide('ngeo.FeatureOverlayMgr');
 
-goog.require('goog.object');
 goog.require('ngeo');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
 goog.require('ol.layer.Vector');
+goog.require('ol.obj');
 goog.require('ol.source.Vector');
 goog.require('ol.style.Style');
 
@@ -119,7 +119,7 @@ ngeo.FeatureOverlayMgr.prototype.clear = function(groupIndex) {
   for (var featureUid in group.features) {
     this.removeFeature(group.features[featureUid], groupIndex);
   }
-  goog.asserts.assert(goog.object.isEmpty(group.features));
+  goog.asserts.assert(ol.obj.isEmpty(group.features));
 };
 
 

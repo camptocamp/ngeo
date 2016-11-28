@@ -154,7 +154,7 @@ ngeo.interaction.Measure = function(opt_options) {
    * @type {Element}
    */
   this.startMsg = options.startMsg !== undefined ? options.startMsg :
-      goog.dom.createDom(goog.dom.TagName.SPAN, {}, 'Click to start drawing.');
+      goog.dom.createDom('SPAN', {}, 'Click to start drawing.');
 
   /**
    * The key for geometry change event.
@@ -418,7 +418,7 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
 ngeo.interaction.Measure.prototype.createHelpTooltip_ = function() {
   this.removeHelpTooltip_();
   if (this.displayHelpTooltip_) {
-    this.helpTooltipElement_ = goog.dom.createDom(goog.dom.TagName.DIV);
+    this.helpTooltipElement_ = goog.dom.createDom('DIV');
     goog.dom.classlist.add(this.helpTooltipElement_, 'tooltip');
     this.helpTooltipOverlay_ = new ol.Overlay({
       element: this.helpTooltipElement_,
@@ -452,7 +452,7 @@ ngeo.interaction.Measure.prototype.removeHelpTooltip_ = function() {
  */
 ngeo.interaction.Measure.prototype.createMeasureTooltip_ = function() {
   this.removeMeasureTooltip_();
-  this.measureTooltipElement_ = goog.dom.createDom(goog.dom.TagName.DIV);
+  this.measureTooltipElement_ = goog.dom.createDom('DIV');
   goog.dom.classlist.addAll(this.measureTooltipElement_,
       ['tooltip', 'ngeo-tooltip-measure']);
   this.measureTooltipOverlay_ = new ol.Overlay({
