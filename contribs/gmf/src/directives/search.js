@@ -5,7 +5,6 @@ goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.AutoProjection');
-goog.require('ngeo.CreateGeoJSONBloodhound');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */

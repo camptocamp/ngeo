@@ -2,7 +2,6 @@ goog.provide('app.search');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.CreateGeoJSONBloodhound');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ngeo');
