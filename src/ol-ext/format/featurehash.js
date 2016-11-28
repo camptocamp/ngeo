@@ -1142,7 +1142,10 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
        * @param {string} key Key.
        */
       function(value, key) {
-        if (key !== feature.getGeometryName()) {
+        if (value !== undefined &&
+            value !== null &&
+            key !== feature.getGeometryName()
+        ) {
           if (encodedProperties.length !== 0) {
             encodedProperties.push('\'');
           }
