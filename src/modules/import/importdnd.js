@@ -15,7 +15,7 @@ goog.require('ngeo.fileService');
    * @param {Window} $window The window.
    * @param {jQuery} $document The document.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
-   * @param {?} ngeoFile TODO.
+   * @param {ngeo.File} ngeoFile The ngeo file service.
    * @ngInject
    */
   var Directive = function($window, $document, gettextCatalog, ngeoFile) {

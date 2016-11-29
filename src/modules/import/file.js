@@ -1,86 +1,82 @@
-goog.provide('ngeo.fileService');
+goog.provide('ngeo.File');
 
-(function() {
 
-  var module = angular.module('ngeo.fileService', []);
-  ngeo.fileService.module = module;
+/**
+ * @constructor
+ * @param {angular.$q} $q .
+ * @param {angular.$http} $http .
+ * @param {Window} $window .
+ */
+ngeo.File = function($q, $http, $window) {
+  var fileReader, canceler;
+
+  // Test the validity of the file size
+  this.isValidFileSize = function(fileSize) {
+    return !(fileSize > 20000000); // 20 Mo
+  };
+
+  this.isWmsGetCap = function(fileContent) {
+    return /<(WMT_MS_Capabilities|WMS_Capabilities)/.test(fileContent);
+  };
+
+  this.isKml = function(fileContent) {
+    return /<kml/.test(fileContent) && /<\/kml>/.test(fileContent);
+  };
 
   /**
-   * Read/load a file then returns the content.
+   * @param {!Blob} file .
+   * @return {angular.$q.Promise<string>} .
    */
-  module.provider('ngeoFile', function() {
-
-    var fileReader, canceler;
-
-    this.$get = function($q, $http, $window) {
-
-      /**
-       * @constructor
-       */
-      var FileContent = function() {
-
-        // Test the validity of the file size
-        this.isValidFileSize = function(fileSize) {
-          return !(fileSize > 20000000); // 20 Mo
-        };
-
-        this.isWmsGetCap = function(fileContent) {
-          return /<(WMT_MS_Capabilities|WMS_Capabilities)/.test(fileContent);
-        };
-
-        this.isKml = function(fileContent) {
-          return /<kml/.test(fileContent) && /<\/kml>/.test(fileContent);
-        };
-
-        this.read = function(file) {
-          var defer = $q.defer();
-          if (fileReader) {
-            fileReader.abort();
-          }
-          fileReader = new FileReader();
-          fileReader.onload = function(evt) {
-            defer.resolve(evt.target.result);
-          };
-          fileReader.onerror = function(evt) {
-            var err = evt.target.error;
-            $window.console.error('Reading file failed: ', err);
-            defer.reject({
-              message: err.code == 20 ? 'operation_canceled' : 'read_failed',
-              reason: err.message
-            });
-          };
-          fileReader.onprogress = function(evt) {
-            defer.notify(evt);
-          };
-          // Read the file
-          fileReader.readAsText(file);
-          return defer.promise;
-        };
-
-        this.load = function(url, cancelP) {
-
-          if (canceler) {
-            canceler.resolve();
-          }
-          canceler = cancelP || $q.defer();
-
-          // Angularjs doesn't handle onprogress event
-          var defer = $q.defer();
-          $http.get(url, {
-            timeout: canceler.promise
-          }).then(function(response) {
-            defer.resolve(response.data);
-          }, function(reason) {
-            $window.console.error('Uploading file failed: ', reason);
-            defer.reject({
-              message: 'upload_failed',
-              reason: reason
-            });
-          });
-          return defer.promise;
-        };
-      };
-      return new FileContent();
+  this.read = function(file) {
+    var defer = $q.defer();
+    if (fileReader) {
+      fileReader.abort();
+    }
+    fileReader = new FileReader();
+    fileReader.onload = function(evt) {
+      defer.resolve(evt.target.result);
     };
-  });
-})();
+    fileReader.onerror = function(evt) {
+      var err = evt.target.error;
+      $window.console.error('Reading file failed: ', err);
+      defer.reject({
+        message: err.code == 20 ? 'operation_canceled' : 'read_failed',
+        reason: err.message
+      });
+    };
+    fileReader.onprogress = function(evt) {
+      defer.notify(evt);
+    };
+    // Read the file
+    fileReader.readAsText(file);
+    return defer.promise;
+  };
+
+  /**
+   * @param {string} url .
+   * @param {angular.$q=} opt_cancelP .
+   * @return {angular.$q.Promise<Blob>} .
+   */
+  this.load = function(url, opt_cancelP) {
+
+    if (canceler) {
+      canceler.resolve();
+    }
+    canceler = opt_cancelP || $q.defer();
+
+    // Angularjs doesn't handle onprogress event
+    var defer = $q.defer();
+    $http.get(url, {
+      timeout: canceler.promise
+    }).then(function(response) {
+      defer.resolve(response.data);
+    }, function(reason) {
+      $window.console.error('Uploading file failed: ', reason);
+      defer.reject({
+        message: 'upload_failed',
+        reason: reason
+      });
+    });
+    return defer.promise;
+  };
+};
