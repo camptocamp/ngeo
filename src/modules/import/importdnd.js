@@ -28,13 +28,16 @@ goog.require('ngeo.fileService');
       },
       link: function(scope, elt) {
 
-        if (!scope.options ||
-            !angular.isFunction(scope.options.handleFileContent)) {
+        /**
+         * @type {ngeox.ImportDndOptions}
+         */
+        var options = scope.options;
+        if (!options || (typeof options.handleFileContent !== 'function')) {
           elt.remove();
           return;
         }
 
-        scope.handleFileContent = scope.options.handleFileContent;
+        scope.handleFileContent = options.handleFileContent;
 
         elt.click(function() {
           // Hide the drop zone on click,
@@ -65,7 +68,7 @@ goog.require('ngeo.fileService');
             // dropped
             var text = evt.originalEvent.dataTransfer.getData('text/plain');
 
-            if (scope.options.isValidUrl(text)) {
+            if (options.isValidUrl(text)) {
               ngeoFile.load(text).then(function(fileContent) {
                 return scope.handleFileContent(fileContent, {
                   url: text
@@ -79,7 +82,7 @@ goog.require('ngeo.fileService');
           }
         });
 
-        // Diplay the drop zone if the content dragged is dropable.
+        // Display the drop zone if the content dragged is dropable.
         var onDragEnter = function(evt) {
           evt.stopPropagation();
           evt.preventDefault();
@@ -106,7 +109,6 @@ goog.require('ngeo.fileService');
       }
     };
   };
-
 
   module.directive('ngeoImportDnd', Directive);
 })();

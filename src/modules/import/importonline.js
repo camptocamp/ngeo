@@ -30,14 +30,16 @@ goog.require('ngeo.fileService');
         options: '=ngeoImportOnlineOptions'
       },
       link: function(scope, elt) {
-
-        if (!scope.options ||
-            !angular.isFunction(scope.options.handleFileContent)) {
+        /**
+         * @type {ngeox.ImportOnlineOptions}
+         */
+        var options = scope.options;
+        if (!options || (typeof options.handleFileContent !== 'function')) {
           elt.remove();
           return;
         }
 
-        scope.handleFileContent = scope.options.handleFileContent;
+        scope.handleFileContent = options.handleFileContent;
 
         var initUserMsg = function() {
           scope.userMessage = 'connect';
@@ -48,7 +50,7 @@ goog.require('ngeo.fileService');
 
         // Create the typeAhead input for the list of urls available
         var taElt = elt.find('input[name=url]').typeahead({
-          local: scope.options.urls,
+          local: options.urls,
           limit: 500
         });
 
@@ -102,8 +104,8 @@ goog.require('ngeo.fileService');
         };
 
         scope.isValid = function(url) {
-          if (scope.options.isValidUrl) {
-            scope.options.isValidUrl(url);
+          if (options.isValidUrl) {
+            return options.isValidUrl(url);
           }
           return true;
         };
@@ -112,8 +114,8 @@ goog.require('ngeo.fileService');
         scope.handleFileUrl = function() {
           var url = scope.fileUrl;
 
-          if (scope.options.transformUrl) {
-            url = scope.options.transformUrl(url);
+          if (options.transformUrl) {
+            url = options.transformUrl(url);
           }
 
           scope.canceler = $q.defer();

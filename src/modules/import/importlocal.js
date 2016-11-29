@@ -28,8 +28,11 @@ goog.require('ngeo.fileService');
       },
       link: function(scope, elt) {
 
-        if (!scope.options ||
-            !angular.isFunction(scope.options.handleFileContent)) {
+        /**
+         * @type {ngeox.ImportLocalOptions}
+         */
+        var options = scope.options;
+        if (!options || (typeof options.handleFileContent !== 'function')) {
           elt.remove();
           return;
         }
