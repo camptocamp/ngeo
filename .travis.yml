@@ -61,12 +61,12 @@ script:
 
 after_success:
 - cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
-
-before_deploy:
 - export GIT_BRANCH=${TRAVIS_BRANCH}
-- .build/python-venv/bin/pip install jsongrep || true
 - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
 - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
+- make .build/python-venv
+- .build/python-venv/bin/pip install jsongrep
+- export PACKAGE_VERSION=`.build/python-venv/bin/jsongrep -e version package.json`
 
 deploy:
 - provider: script
@@ -83,7 +83,7 @@ deploy:
     node: "4"
     repo: camptocamp/ngeo
     tags: true
-    condition: '"`.build/python-venv/bin/jsongrep -e version package.json`" == "${TRAVIS_TAG}"'
+    condition: '"${PACKAGE_VERSION}" == "${TRAVIS_TAG}"'
 - &transifex
   provider: script
   script: make transifex-send
