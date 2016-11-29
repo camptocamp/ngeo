@@ -48,45 +48,40 @@ goog.require('ngeo.fileService');
         };
         initUserMsg();
 
-        // Create the typeAhead input for the list of urls available
-        var taElt = elt.find('input[name=url]').typeahead({
-          local: options.urls,
-          limit: 500
-        });
-
-        // Fill the list of suggestions with all the data
-        var initSuggestions = function() {
-          var taView = $(taElt).data('ttView');
-          var dataset = taView.datasets[0];
-          dataset.getSuggestions('http', function(suggestions) {
-            taView.dropdownView.renderSuggestions(dataset, suggestions);
-          });
+        var substringMatcher = function(urls) {
+          return function(q, cb) {
+            var matches = [];
+            if (!q) {
+              matches = urls;
+            } else {
+              var regex = new RegExp(q, 'i');
+              urls.forEach(function(url) {
+                if (regex.test(url)) {
+                  matches.push(url);
+                }
+              });
+            }
+            cb(matches);
+          };
         };
 
-        taElt.on('typeahead:initialized', function(evt) {
-          // Re-initialize the list of suggestions
-          initSuggestions();
-        }).on('typeahead:selected', function(evt, datum) {
+        // Create the typeAhead input for the list of urls available
+        var taElt = elt.find('input[name=url]').typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 0
+        }, {
+          name: 'wms',
+          limit: 500,
+          source: substringMatcher(scope.options.urls)
+        }).on('typeahead:selected', function(evt, url) {
+          taElt.typeahead('close');
           // When a WMS is selected in the list, start downloading the
           // GetCapabilities
-          scope.fileUrl = datum.value;
+          scope.fileUrl = url;
           scope.handleFileUrl();
           scope.$digest();
-          // Re-initialize the list of suggestions
-          initSuggestions();
-        });
-
-        // Toggle list of suggestions
-        var taMenu = elt.find('.tt-dropdown-menu');
-        elt.find('.ngeo-import-open').on('mousedown', function(evt) {
-          if (taMenu.css('display') == 'none') {
-            taElt.focus();
-          } else {
-            taElt.blur();
-          }
-          // Re-initialize the list of suggestions
-          initSuggestions();
-          evt.preventDefault();
+        }).on('focus', function() {
         });
 
         scope.$on('gettextLanguageChanged', function() {
