@@ -5,13 +5,20 @@ goog.require('ngeo.fileService');
 (function() {
 
   var module = angular.module('ngeo.importDndDirective', [
-    ngeo.fileService.module.name,
-    'pascalprecht.translate'
+    'gettext',
+    ngeo.fileService.module.name
   ]);
   ngeo.importDndDirective.module = module;
 
-  module.directive('ngeoImportDnd', function($window, $document, $translate,
-      ngeoFile) {
+  /**
+   * @constructor
+   * @param {Window} $window The window.
+   * @param {jQuery} $document The document.
+   * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @param {?} ngeoFile TODO.
+   * @ngInject
+   */
+  var Directive = function($window, $document, gettextCatalog, ngeoFile) {
 
     return {
       restrict: 'A',
@@ -64,10 +71,10 @@ goog.require('ngeo.fileService');
                   url: text
                 });
               })['catch'](function(err) {
-                $window.alert($translate.instant(err.message));
+                $window.alert(gettextCatalog.getString(err.message));
               });
             } else {
-              $window.alert($translate.instant('invalid_url') + text);
+              $window.alert(gettextCatalog.getString('invalid_url') + text);
             }
           }
         });
@@ -98,5 +105,8 @@ goog.require('ngeo.fileService');
         });
       }
     };
-  });
+  };
+
+
+  module.directive('ngeoImportDnd', Directive);
 })();

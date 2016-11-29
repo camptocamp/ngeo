@@ -5,15 +5,16 @@ goog.require('ol.format.WMSCapabilities');
 (function() {
 
   var module = angular.module('ngeo.wmsGetCapDirective', [
-    'pascalprecht.translate'
+    'gettext'
   ]);
   ngeo.wmsGetCapDirective.module = module;
 
   /**
-   * This directive displays the list of layers available in the
-   * GetCapabilities object.
+   * @constructor
+   * @param {Window} $window The window.
+   * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    */
-  module.directive('ngeoWmsGetCap', function($window, $translate) {
+  var Directive = function($window, gettextCatalog) {
 
     // Get the layer extent defines in the GetCapabilities
     var getLayerExtentFromGetCap = function(getCapLayer, proj) {
@@ -31,21 +32,17 @@ goog.require('ol.format.WMSCapabilities');
         }
       }
 
-      var wgs84Extent = layer.EX_GeographicBoundingBox ||
-          layer.LatLonBoundingBox;
+      var wgs84Extent = layer.EX_GeographicBoundingBox || layer.LatLonBoundingBox;
       if (wgs84Extent) {
         // If only an extent in wgs 84 is available, we use the
         // intersection between proj extent and layer extent as the new
         // layer extent. We compare extients in wgs 84 to avoid
         // transformations errors of large wgs 84 extent like
         // (-180,-90,180,90)
-        var projWgs84Extent = ol.proj.transformExtent(proj.getExtent(),
-            projCode, wgs84);
-        var layerWgs84Extent = ol.extent.getIntersection(projWgs84Extent,
-            wgs84Extent);
+        var projWgs84Extent = ol.proj.transformExtent(proj.getExtent(), projCode, wgs84);
+        var layerWgs84Extent = ol.extent.getIntersection(projWgs84Extent, wgs84Extent);
         if (layerWgs84Extent) {
-          return ol.proj.transformExtent(layerWgs84Extent, wgs84,
-              projCode);
+          return ol.proj.transformExtent(layerWgs84Extent, wgs84, projCode);
         }
       }
     };
@@ -149,7 +146,7 @@ goog.require('ol.format.WMSCapabilities');
 
           if (val && val.Service && val.Capability) {
             if (val.Service.MaxWidth) {
-              scope.limitations = $translate.instant('wms_max_size_allowed') +
+              scope.limitations = gettextCatalog.getString('wms_max_size_allowed') +
                   ' ' + val.Service.MaxWidth +
                   ' * ' + val.Service.MaxHeight;
             }
@@ -179,17 +176,23 @@ goog.require('ol.format.WMSCapabilities');
               $window.console.error('Add layer failed:' + e);
               msg = 'add_wms_layer_failed' + e.message;
             }
-            $window.alert($translate.instant(msg));
+            $window.alert(gettextCatalog.getString(msg));
           }
         };
 
         // Get the abstract to display in the text area
         scope.getAbstract = function() {
-          var l = scope.options.layerSelected || scope.options.layerHovered ||
-              {};
-          return $translate.instant(l.Abstract) || '';
+          var l = scope.options.layerSelected || scope.options.layerHovered || {};
+          return gettextCatalog.getString(l.Abstract) || '';
         };
       }
     };
-  });
+  };
+
+
+  /**
+   * This directive displays the list of layers available in the
+   * GetCapabilities object.
+   */
+  module.directive('ngeoWmsGetCap', Directive);
 })();
