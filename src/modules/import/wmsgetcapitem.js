@@ -2,13 +2,15 @@ goog.provide('ngeo.wmsGetCapItemDirective');
 
 (function() {
 
-  var module = angular.module('ngeo.wmsGetCapItemDirective', [
-    'pascalprecht.translate'
-  ]);
+  var module = angular.module('ngeo.wmsGetCapItemDirective', []);
   ngeo.wmsGetCapItemDirective.module = module;
 
-  module.controller('NgeoWmsGetCapItemDirectiveController', function($scope,
-      $translate) {
+  /**
+   * @constructor
+   * @param {angular.Scope} $scope .
+   * @ngInject
+   */
+  var Controller = function($scope) {
 
     // Add preview layer
     $scope.addPreviewLayer = function(evt, getCapLayer) {
@@ -35,9 +37,15 @@ goog.provide('ngeo.wmsGetCapItemDirective');
           $scope.options.layerSelected.Name == getCapLayer.Name) ?
           null : getCapLayer;
     };
-  });
+  };
+  module.controller('NgeoWmsGetCapItemDirectiveController', Controller);
 
-  module.directive('ngeoWmsGetCapItem', function($compile) {
+  /**
+   * @param {angular.$compile} $compile .
+   * @ngInject
+   * @return {angular.Directive} .
+   */
+  var directive = function($compile) {
 
     /**** UTILS functions ****/
     // from OL2
@@ -131,5 +139,7 @@ goog.provide('ngeo.wmsGetCapItemDirective');
         };
       }
     };
-  });
+  };
+
+  module.directive('ngeoWmsGetCapItem', directive);
 })();

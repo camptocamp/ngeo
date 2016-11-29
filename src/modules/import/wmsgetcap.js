@@ -13,6 +13,7 @@ goog.require('ol.format.WMSCapabilities');
    * @constructor
    * @param {Window} $window The window.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @ngInject
    */
   var Directive = function($window, gettextCatalog) {
 
