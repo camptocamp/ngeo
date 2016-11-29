@@ -9,7 +9,14 @@ goog.require('ngeo.fileService');
   ]);
   ngeo.importLocalDirective.module = module;
 
-  module.directive('ngeoImportLocal', function($timeout, ngeoFile) {
+  /**
+   * @constructor
+   * @param {angular.$timeout} $timeout .
+   * @param {ngeo.File} ngeoFile .
+   * @ngInject
+   * @struct
+   */
+  var Directive = function($timeout, ngeoFile) {
 
     var timeoutP;
 
@@ -117,5 +124,7 @@ goog.require('ngeo.fileService');
         };
       }
     };
-  });
+  };
+
+  module.directive('ngeoImportLocal', Directive);
 })();

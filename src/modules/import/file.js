@@ -54,7 +54,7 @@ ngeo.File = function($q, $http, $window) {
 
   /**
    * @param {string} url .
-   * @param {angular.$q=} opt_cancelP .
+   * @param {angular.$q.Deferred=} opt_cancelP .
    * @return {angular.$q.Promise<Blob>} .
    */
   this.load = function(url, opt_cancelP) {

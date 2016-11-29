@@ -6,11 +6,20 @@ goog.require('ngeo.fileService');
 
   var module = angular.module('ngeo.importOnlineDirective', [
     ngeo.fileService.module.name,
-    'pascalprecht.translate'
+    'gettext'
   ]);
   ngeo.importOnlineDirective.module = module;
 
-  module.directive('ngeoImportOnline', function($q, $timeout, ngeoFile) {
+  /**
+   * @constructor
+   * @param {angular.$q} $q .
+   * @param {angular.$timeout} $timeout .
+   * @param {ngeo.File} ngeoFile .
+   * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @ngInject
+   * @struct
+   */
+  var Directive = function($q, $timeout, ngeoFile, gettextCatalog) {
 
     var timeoutP;
 
@@ -78,7 +87,7 @@ goog.require('ngeo.fileService');
           evt.preventDefault();
         });
 
-        scope.$on('$translateChangeEnd', function() {
+        scope.$on('gettextLanguageChanged', function() {
           if (scope.fileUrl && /lang=/.test(scope.fileUrl)) {
             scope.handleFileUrl();
           }
@@ -134,5 +143,7 @@ goog.require('ngeo.fileService');
         };
       }
     };
-  });
+  };
+
+  module.directive('ngeoImportOnline', Directive);
 })();
