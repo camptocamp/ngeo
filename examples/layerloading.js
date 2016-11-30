@@ -39,7 +39,7 @@ app.MainController = function($scope, ngeoDecorateLayerLoading) {
    */
   this.wms = new ol.layer.Image({
     source: new ol.source.ImageWMS({
-      url: 'http://demo.boundlessgeo.com/geoserver/wms',
+      url: 'https://demo.boundlessgeo.com/geoserver/wms',
       params: {'LAYERS': 'topp:states'},
       serverType: 'geoserver'
     })
