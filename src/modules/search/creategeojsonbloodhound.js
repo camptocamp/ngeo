@@ -1,7 +1,7 @@
 /**
  * @module ngeo search namespace
  */
-goog.provide('ngeo.modules.search.creategeojsonbloodhound');
+goog.provide('ngeo.search.createGeoJSONBloodhound');
 
 goog.require('ol.format.GeoJSON');
 goog.require('ol.obj');
@@ -13,13 +13,13 @@ goog.require('ol.obj');
  *
  * Example:
  *
- *     var bloodhound = creategeojsonbloodhound(
+ *     var bloodhound = createGeoJSONBloodhound(
  *       'http://example.com/fulltextsearch?query=%QUERY',
  *       aFilterFunction,
  *       ol.proj.get('EPSG:3857'));
  *     bloodhound.initialize();
  *
- *     var bloodhound = creategeojsonbloodhound(
+ *     var bloodhound = createGeoJSONBloodhound(
  *       '',
  *       undefined,
  *       ol.proj.get('EPSG:3857'),
@@ -41,13 +41,13 @@ goog.require('ol.obj');
  * ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=,
  * BloodhoundRemoteOptions=):Bloodhound}
  * @ngdoc service
- * @ngname creategeojsonbloodhound
+ * @ngname search.createGeoJSONBloodhound
  */
-ngeo.CreateGeoJSONBloodhound;
+ngeo.search.CreateGeoJSONBloodhound;
 
 
 /**
- * @param {string} url an URL to a search.creategeojsonbloodhound.
+ * @param {string} url an URL to a search service.
  * @param {(function(GeoJSONFeature): boolean)=} opt_filter function to filter
  *     results.
  * @param {ol.proj.Projection=} opt_featureProjection Feature projection.
@@ -58,7 +58,7 @@ ngeo.CreateGeoJSONBloodhound;
  * remote options. Effective only if `remote` is not defined in `opt_options`.
  * @return {Bloodhound} The Bloodhound object.
  */
-ngeo.modules.search.creategeojsonbloodhound.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
+ngeo.search.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
     opt_dataProjection, opt_options, opt_remoteOptions) {
   var geojsonFormat = new ol.format.GeoJSON();
   var bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
@@ -111,8 +111,8 @@ ngeo.modules.search.creategeojsonbloodhound.createGeoJSONBloodhound = function(u
 /**
  * @type {!angular.Module}
  */
-ngeo.modules.search.creategeojsonbloodhound.module = angular.module('ngeoSearchCreategeojsonbloodhound', []);
+ngeo.search.createGeoJSONBloodhound.module = angular.module('ngeoSearchCreategeojsonbloodhound', []);
 
-ngeo.modules.search.creategeojsonbloodhound.module.value(
-  'ngeoCreateGeoJSONBloodhound',
-  ngeo.modules.search.creategeojsonbloodhound.createGeoJSONBloodhound);
+ngeo.search.createGeoJSONBloodhound.module.value(
+  'ngeoSearchCreateGeoJSONBloodhound',
+  ngeo.search.createGeoJSONBloodhound);

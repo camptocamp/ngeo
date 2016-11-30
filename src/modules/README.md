@@ -9,10 +9,8 @@ The recommended setup from https://docs.angularjs.org/guide/module is:
 
 Example for the search feature:
 - an `ngeoSearchModule` module in `modules/search/searchmodule.js`;
-- an `ngeoSearch` directive (in partials `ngeo-search`) in `modules/search/search.js`;
+- an `ngeoSearch` directive (in partials `ngeo-search`) in `modules/search/searchdirective.js`;
 - an `ngeoCreateGeoJSONBloodhound` service in ``modules/search/creategeojsonbloodhound.js`.
-
-The filenames are directly derived from the names registered in Angular (take away the ngeo prefix).
 
 
 # Google library

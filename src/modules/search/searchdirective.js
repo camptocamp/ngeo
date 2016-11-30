@@ -1,13 +1,7 @@
 /**
  * @module ngeo search.directive namespace
  */
-goog.provide('ngeo.modules.search.search');
-
-
-/**
- * @type {!angular.Module}
- */
-ngeo.modules.search.search.module = angular.module('ngeoSearchDirective', []);
+goog.provide('ngeo.search.searchDirective');
 
 
 /**
@@ -31,7 +25,7 @@ ngeo.modules.search.search.module = angular.module('ngeoSearchDirective', []);
  * @ngdoc directive
  * @ngname ngeoSearch
  */
-ngeo.modules.search.search.Directive = function() {
+ngeo.search.searchDirective = function() {
   return {
     restrict: 'A',
     link:
@@ -63,7 +57,7 @@ ngeo.modules.search.search.Directive = function() {
           /**
            * @type {ngeox.SearchDirectiveListeners}
            */
-          var typeaheadListeners = ngeo.modules.search.search.Directive.adaptListeners_(
+          var typeaheadListeners = ngeo.search.searchDirective.adaptListeners_(
               typeaheadListeners_);
 
           element.on('typeahead:open', function() {
@@ -125,7 +119,7 @@ ngeo.modules.search.search.Directive = function() {
  * @return {ngeox.SearchDirectiveListeners} The listeners object.
  * @private
  */
-ngeo.modules.search.search.Directive.adaptListeners_ = function(object) {
+ngeo.search.searchDirective.adaptListeners_ = function(object) {
   /** @type {ngeox.SearchDirectiveListeners} */
   var typeaheadListeners;
   if (object === undefined) {
@@ -154,5 +148,11 @@ ngeo.modules.search.search.Directive.adaptListeners_ = function(object) {
 };
 
 
+/**
+ * @type {!angular.Module}
+ */
+ngeo.search.searchDirective.module = angular.module('ngeoSearchDirective', []);
+
+
 // Register the directive in the module
-ngeo.modules.search.search.module.directive('ngeoSearch', ngeo.modules.search.search.Directive);
+ngeo.search.searchDirective.module.directive('ngeoSearch', ngeo.search.searchDirective);
