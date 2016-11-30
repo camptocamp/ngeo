@@ -125,7 +125,7 @@ app.MainController = function($scope) {
    */
   var overlay = new ol.layer.Image({
     source: new ol.source.ImageWMS({
-      url: 'http://demo.boundlessgeo.com/geoserver/wms',
+      url: 'https://demo.boundlessgeo.com/geoserver/wms',
       params: {'LAYERS': 'topp:states'},
       serverType: 'geoserver'
     })
