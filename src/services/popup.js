@@ -139,10 +139,12 @@ ngeo.Popup.prototype.setTitle = function(title) {
  * Note: the type of the `content` param is `*` instead of `string`, this
  * is because the content may be trusted using `$sce.trustAsHtml`.
  * @param {*} content The content.
+ * @param {boolean=} opt_trusted Whether the content can be trusted.
+ *     Default is false.
  * @export
  */
-ngeo.Popup.prototype.setContent = function(content) {
-  this.scope['content'] = content;
+ngeo.Popup.prototype.setContent = function(content, opt_trusted) {
+  this.scope['content'] = opt_trusted ? this.sce_.trustAsHtml(/** @type {string} */ (content)) : content;
 };
 
 
