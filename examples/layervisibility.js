@@ -27,7 +27,7 @@ app.MainController = function(ngeoDecorateLayer) {
    */
   this.layer = new ol.layer.Tile({
     source: new ol.source.TileWMS({
-      url: 'https://demo.opengeo.org/geoserver/wms',
+      url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:states'},
       serverType: 'geoserver',
       extent: [-13884991, 2870341, -7455066, 6338219]
