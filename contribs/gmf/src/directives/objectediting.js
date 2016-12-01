@@ -8,6 +8,8 @@ goog.require('gmf.EditFeature');
 goog.require('gmf.ObjectEditingQuery');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.FeatureHelper');
+/** @suppress {extraRequire} */
+goog.require('ngeo.jstsExports');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
