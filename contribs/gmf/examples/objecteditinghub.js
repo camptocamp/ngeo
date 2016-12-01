@@ -62,18 +62,34 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
    * @export
    */
   this.urls = [
-    '../apps/oeedit/',
-    'objectediting.html'
+    {
+      'name': 'oeedit app. (hosted)',
+      'url': 'apps/oeedit/'
+    },
+    {
+      'name': 'oeedit app. (dev)',
+      'url': '../apps/oeedit/'
+    },
+    {
+      'name': 'example',
+      'url': 'objectediting.html'
+    }
   ];
 
   /**
-   * @type {string} OE viewer application base url.
+   * @type {string} OE viewer application base url when developping.
    * @private
    */
-  this.viewerUrl_ = '../apps/oeview/';
+  this.viewerUrlDev_ = '../apps/oeview/';
 
   /**
-   * @type {string}
+   * @type {string} OE viewer application base url when hosted.
+   * @private
+   */
+  this.viewerUrlHosted_ = 'apps/oeview/';
+
+  /**
+   * @type {Object.<string, string>}
    * @export
    */
   this.selectedUrl = this.urls[0];
@@ -233,7 +249,7 @@ gmfapp.MainController.prototype.runEditor = function() {
   params[gmf.ObjectEditingManager.Param.THEME] = this.themeName;
   params[gmf.ObjectEditingManager.Param.PROPERTY] = property;
 
-  var url = gmfapp.MainController.appendParams(this.selectedUrl, params);
+  var url = gmfapp.MainController.appendParams(this.selectedUrl['url'], params);
   window.open(url);
 };
 
@@ -241,7 +257,24 @@ gmfapp.MainController.prototype.runEditor = function() {
 /**
  * @export
  */
-gmfapp.MainController.prototype.runViewer = function() {
+gmfapp.MainController.prototype.runViewerDev = function() {
+  this.runViewer_(this.viewerUrlDev_);
+};
+
+
+/**
+ * @export
+ */
+gmfapp.MainController.prototype.runViewerHosted = function() {
+  this.runViewer_(this.viewerUrlHosted_);
+};
+
+
+/**
+ * @param {string} baseUrl Base url of the viewer.
+ * @private
+ */
+gmfapp.MainController.prototype.runViewer_ = function(baseUrl) {
 
   var node = this.selectedGmfLayerNode;
   var nodeId = node.id;
@@ -261,7 +294,7 @@ gmfapp.MainController.prototype.runViewer = function() {
   params['wfs_layer'] = nodeName;
   params['wfs_' + nodeIdAttrFieldName] = ids.join(',');
 
-  var url = gmfapp.MainController.appendParams(this.viewerUrl_, params);
+  var url = gmfapp.MainController.appendParams(baseUrl, params);
   window.open(url);
 };
 
