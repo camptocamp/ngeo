@@ -5,19 +5,12 @@ goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.AutoProjection');
-goog.require('ngeo.CreateGeoJSONBloodhound');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.colorpickerDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.popoverDirective');
-/**
- * This goog.require is needed because it provides 'ngeo-search' used in
- * the template.
- * @suppress {extraRequire}
- */
-goog.require('ngeo.searchDirective');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
@@ -169,7 +162,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
- * @param {ngeo.CreateGeoJSONBloodhound} ngeoCreateGeoJSONBloodhound The ngeo
+ * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
@@ -181,7 +174,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  * @ngname GmfSearchController
  */
 gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
-    ngeoAutoProjection, ngeoCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
+    ngeoAutoProjection, ngeoSearchCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
     gmfThemes, gmfTreeManager) {
 
 
@@ -222,10 +215,10 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {ngeo.CreateGeoJSONBloodhound}
+   * @type {ngeo.search.CreateGeoJSONBloodhound}
    * @private
    */
-  this.ngeoCreateGeoJSONBloodhound_ = ngeoCreateGeoJSONBloodhound;
+  this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;
 
   /**
    * @type {ngeo.FeatureOverlayMgr}
@@ -570,7 +563,7 @@ gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
     opt_filter) {
   var mapProjectionCode = this.map_.getView().getProjection().getCode();
   var remoteOptions = this.getBloodhoudRemoteOptions_();
-  var bloodhound = this.ngeoCreateGeoJSONBloodhound_(config.url, opt_filter,
+  var bloodhound = this.ngeoSearchCreateGeoJSONBloodhound_(config.url, opt_filter,
       ol.proj.get(mapProjectionCode), ol.proj.get(config.projection),
       config.bloodhoundOptions, remoteOptions);
   bloodhound.initialize();

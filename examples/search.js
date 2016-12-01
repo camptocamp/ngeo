@@ -2,11 +2,9 @@ goog.provide('app.search');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.CreateGeoJSONBloodhound');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.searchDirective');
+goog.require('ngeo');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -17,7 +15,7 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [ngeo.module.name]);
 
 
 /**
@@ -61,12 +59,11 @@ app.module.directive('appSearch', app.searchDirective);
  * @constructor
  * @param {angular.Scope} $rootScope Angular root scope.
  * @param {angular.$compile} $compile Angular compile service.
- * @param {ngeo.CreateGeoJSONBloodhound} ngeoCreateGeoJSONBloodhound The ngeo
+ * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @ngInject
  */
-app.SearchController = function($rootScope, $compile,
-    ngeoCreateGeoJSONBloodhound) {
+app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
 
   /**
    * @type {ol.Map}
@@ -82,7 +79,7 @@ app.SearchController = function($rootScope, $compile,
 
   /** @type {Bloodhound} */
   var bloodhoundEngine = this.createAndInitBloodhound_(
-      ngeoCreateGeoJSONBloodhound);
+      ngeoSearchCreateGeoJSONBloodhound);
 
   /**
    * @type {TypeaheadOptions}
@@ -153,14 +150,14 @@ app.SearchController.prototype.createVectorLayer_ = function() {
 
 
 /**
- * @param {ngeo.CreateGeoJSONBloodhound} ngeoCreateGeoJSONBloodhound The ngeo
+ * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateGeoJSONBloodhound) {
+app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
   var url = 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch?query=%QUERY';
-  var bloodhound = ngeoCreateGeoJSONBloodhound(
+  var bloodhound = ngeoSearchCreateGeoJSONBloodhound(
       url, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
   bloodhound.initialize();
   return bloodhound;

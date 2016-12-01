@@ -1,10 +1,10 @@
+/**
+ * @module ngeo search namespace
+ */
+goog.provide('ngeo.search.createGeoJSONBloodhound');
 
-goog.provide('ngeo.CreateGeoJSONBloodhound');
-
-goog.require('goog.object');
-goog.require('ngeo');
 goog.require('ol.format.GeoJSON');
-
+goog.require('ol.obj');
 
 /**
  * Provides a function that creates a Bloodhound engine
@@ -13,13 +13,13 @@ goog.require('ol.format.GeoJSON');
  *
  * Example:
  *
- *     var bloodhound = ngeoCreateGeoJSONBloodhound(
+ *     var bloodhound = createGeoJSONBloodhound(
  *       'http://example.com/fulltextsearch?query=%QUERY',
  *       aFilterFunction,
  *       ol.proj.get('EPSG:3857'));
  *     bloodhound.initialize();
  *
- *     var bloodhound = ngeoCreateGeoJSONBloodhound(
+ *     var bloodhound = createGeoJSONBloodhound(
  *       '',
  *       undefined,
  *       ol.proj.get('EPSG:3857'),
@@ -41,9 +41,9 @@ goog.require('ol.format.GeoJSON');
  * ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=,
  * BloodhoundRemoteOptions=):Bloodhound}
  * @ngdoc service
- * @ngname ngeoCreateGeoJSONBloodhound
+ * @ngname search.createGeoJSONBloodhound
  */
-ngeo.CreateGeoJSONBloodhound;
+ngeo.search.CreateGeoJSONBloodhound;
 
 
 /**
@@ -58,7 +58,7 @@ ngeo.CreateGeoJSONBloodhound;
  * remote options. Effective only if `remote` is not defined in `opt_options`.
  * @return {Bloodhound} The Bloodhound object.
  */
-ngeo.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
+ngeo.search.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
     opt_dataProjection, opt_options, opt_remoteOptions) {
   var geojsonFormat = new ol.format.GeoJSON();
   var bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
@@ -92,20 +92,27 @@ ngeo.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
   });
 
   // the options objects are cloned to avoid updating the passed object
-  var options = goog.object.clone(opt_options || {});
-  var remoteOptions = goog.object.clone(opt_remoteOptions || {});
+  var options = ol.obj.assign({}, opt_options || {});
+  var remoteOptions = ol.obj.assign({}, opt_remoteOptions || {});
 
   if (options.remote) {
     // move the remote options to opt_remoteOptions
-    goog.object.extend(remoteOptions, options.remote);
+    ol.obj.assign(remoteOptions, options.remote);
     delete options.remote;
   }
 
-  goog.object.extend(bloodhoundOptions, options);
-  goog.object.extend(bloodhoundOptions.remote, remoteOptions);
+  ol.obj.assign(bloodhoundOptions, options);
+  ol.obj.assign(bloodhoundOptions.remote, remoteOptions);
 
   return new Bloodhound(bloodhoundOptions);
 };
 
 
-ngeo.module.value('ngeoCreateGeoJSONBloodhound', ngeo.createGeoJSONBloodhound);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.search.createGeoJSONBloodhound.module = angular.module('ngeoSearchCreategeojsonbloodhound', []);
+
+ngeo.search.createGeoJSONBloodhound.module.value(
+  'ngeoSearchCreateGeoJSONBloodhound',
+  ngeo.search.createGeoJSONBloodhound);
