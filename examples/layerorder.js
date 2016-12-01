@@ -38,7 +38,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   /** @type {ol.layer.Tile} */
   var boundaries = new ol.layer.Tile({
     source: new ol.source.TileWMS({
-      url: 'https://demo.opengeo.org/geoserver/wms',
+      url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:tasmania_state_boundaries'},
       serverType: 'geoserver'
     })
@@ -48,7 +48,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   /** @type {ol.layer.Tile} */
   var waterBodies = new ol.layer.Tile({
     source: new ol.source.TileWMS({
-      url: 'https://demo.opengeo.org/geoserver/wms',
+      url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:tasmania_water_bodies'},
       serverType: 'geoserver'
     })
@@ -58,7 +58,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   /** @type {ol.layer.Tile} */
   var cities = new ol.layer.Tile({
     source: new ol.source.TileWMS({
-      url: 'https://demo.opengeo.org/geoserver/wms',
+      url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:tasmania_cities'},
       serverType: 'geoserver'
     })
@@ -90,7 +90,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
    */
   this.roads_ = new ol.layer.Tile({
     source: new ol.source.TileWMS({
-      url: 'https://demo.opengeo.org/geoserver/wms',
+      url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:tasmania_roads'},
       serverType: 'geoserver'
     })
