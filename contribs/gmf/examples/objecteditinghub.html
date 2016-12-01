@@ -28,7 +28,7 @@
         <select
           class="form-control"
           ng-model="ctrl.selectedUrl"
-          ng-options="url as url for url in ctrl.urls">
+          ng-options="url.name for url in ctrl.urls">
         </select>
       </div>
 
@@ -65,12 +65,24 @@
       <div class="form-group">
         <button
           ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === null"
-          ng-click="ctrl.runViewer()"
+          ng-click="ctrl.runViewerHosted()"
           type="button"
           class="form-control btn btn-info"
           title="Load all features of selected layer in OE viewer"
           aria-label="Left Align">
-          </span> Launch Viewer
+          </span> Launch Viewer (hosted)
+        </button>
+      </div>
+
+      <div class="form-group">
+        <button
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === null"
+          ng-click="ctrl.runViewerDev()"
+          type="button"
+          class="form-control btn btn-info"
+          title="Load all features of selected layer in OE viewer"
+          aria-label="Left Align">
+          </span> Launch Viewer (dev)
         </button>
       </div>
 
