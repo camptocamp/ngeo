@@ -75,6 +75,8 @@ gmf.module.value('gmfPrintTemplateUrl',
  *        gmf-print-rotatemask="true">
  *      </gmf-print>
  *
+ * Note: The 'print' and 'cancel' functions can also be called via globals
+ * events 'gmfStartPrint' and 'gmfCancelPrint'.
  *
  * @htmlAttribute {ol.Map} gmf-print-map The map.
  * @htmlAttribute {boolean} gmf-print-active A boolean that informs if the
@@ -118,6 +120,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
 
 
 /**
+ * @param {angular.Scope} $rootScope Angular root scope.
  * @param {angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angular.$q} $q The Angular $q service.
@@ -139,10 +142,10 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @ngdoc Controller
  * @ngname GmfPrintController
  */
-gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,
-    ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils, ngeoCreatePrint,
-    gmfPrintUrl, gmfAuthentication, ngeoQueryResult, ngeoFeatureHelper,
-    $filter) {
+gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
+    gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils,
+    ngeoCreatePrint, gmfPrintUrl, gmfAuthentication, ngeoQueryResult,
+    ngeoFeatureHelper, $filter) {
 
 
   /**
@@ -360,6 +363,14 @@ gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,
   }, function() {
     this.printState = gmf.PrintState.CAPABILITIES_NOT_LOADED;
     this.capabilities_ = null;
+  }.bind(this));
+
+  // Print on event.
+  $rootScope.$on('gmfStartPrint', function(event, format) {
+    this.print('' + format);
+  }.bind(this));
+  $rootScope.$on('gmfCancelPrint', function() {
+    this.cancel();
   }.bind(this));
 };
 
@@ -633,6 +644,10 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
  * @export
  */
 gmf.PrintController.prototype.print = function(format) {
+  // Do not print if a print task is already processing.
+  if (this.printState === gmf.PrintState.PRINTING) {
+    return;
+  }
   this.requestCanceler_ = this.$q_.defer();
   this.printState = gmf.PrintState.PRINTING;
 
@@ -691,8 +706,9 @@ gmf.PrintController.prototype.print = function(format) {
  */
 gmf.PrintController.prototype.cancel = function() {
   // Cancel the latest request, if it's not finished yet.
-  goog.asserts.assert(this.requestCanceler_ !== null);
-  this.requestCanceler_.resolve();
+  if (this.requestCanceler_ !== null) {
+    this.requestCanceler_.resolve();
+  }
 
   // Cancel the status timeout if there's one set, to make sure no other
   // status request is sent.
@@ -700,9 +716,9 @@ gmf.PrintController.prototype.cancel = function() {
     this.$timeout_.cancel(this.statusTimeoutPromise_);
   }
 
-  goog.asserts.assert(this.curRef_.length > 0);
-
-  this.ngeoPrint_.cancel(this.curRef_);
+  if (this.curRef_.length > 0) {
+    this.ngeoPrint_.cancel(this.curRef_);
+  }
 
   this.resetPrintStates_();
 };
