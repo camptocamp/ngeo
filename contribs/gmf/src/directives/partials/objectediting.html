@@ -14,7 +14,7 @@
   ng-show="oeCtrl.queryableLayerListShown">
   <label class="control-label">{{'Copy from:' | translate}}</label>
   <select
-    class="form-control "
+    class="form-control"
     ng-model="oeCtrl.selectedQueryableLayerInfo"
     ng-options="layerInfo.layerNode.name | translate for layerInfo in oeCtrl.queryableLayersInfo">
   </select>
