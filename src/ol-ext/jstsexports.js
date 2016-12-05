@@ -48,6 +48,11 @@ goog.exportSymbol(
 
 goog.exportProperty(
   ol.geom.MultiLineString.prototype,
+  'getCoordinates',
+  ol.geom.MultiLineString.prototype.getCoordinates);
+
+goog.exportProperty(
+  ol.geom.MultiLineString.prototype,
   'getLineStrings',
   ol.geom.MultiLineString.prototype.getLineStrings);
 
@@ -57,12 +62,22 @@ goog.exportSymbol(
 
 goog.exportProperty(
   ol.geom.MultiPoint.prototype,
+  'getCoordinates',
+  ol.geom.MultiPoint.prototype.getCoordinates);
+
+goog.exportProperty(
+  ol.geom.MultiPoint.prototype,
   'getPoints',
   ol.geom.MultiPoint.prototype.getPoints);
 
 goog.exportSymbol(
   'ol.geom.MultiPolygon',
   ol.geom.MultiPolygon);
+
+goog.exportProperty(
+  ol.geom.MultiPolygon.prototype,
+  'getCoordinates',
+  ol.geom.MultiPolygon.prototype.getCoordinates);
 
 goog.exportProperty(
   ol.geom.MultiPolygon.prototype,
@@ -86,3 +101,8 @@ goog.exportProperty(
   ol.geom.Polygon.prototype,
   'getLinearRings',
   ol.geom.Polygon.prototype.getLinearRings);
+
+goog.exportProperty(
+    ol.geom.LineString.prototype,
+    'getCoordinates',
+    ol.geom.LineString.prototype.getCoordinates);
