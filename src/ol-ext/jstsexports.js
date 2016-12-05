@@ -103,6 +103,6 @@ goog.exportProperty(
   ol.geom.Polygon.prototype.getLinearRings);
 
 goog.exportProperty(
-    ol.geom.LineString.prototype,
+    ol.geom.Polygon.prototype,
     'getCoordinates',
-    ol.geom.LineString.prototype.getCoordinates);
+    ol.geom.Polygon.prototype.getCoordinates);
