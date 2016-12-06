@@ -7,6 +7,7 @@ goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
+goog.require('ol.obj');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('ol.source.WMTS');
@@ -121,7 +122,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
         layer: layerName
       });
       var source = new ol.source.WMTS(options);
-      if (opt_dimensions) {
+      if (opt_dimensions && !ol.obj.isEmpty(opt_dimensions)) {
         source.updateDimensions(opt_dimensions);
       }
       layer.setSource(source);
