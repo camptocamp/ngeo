@@ -64,10 +64,11 @@ angularGettext.Catalog.getStringForm = function(string, n) {};
 
 /**
  * @param {string} string
+ * @param {Object.<string, string>=} opt_scope
  * @param {Object.<string, string>=} opt_context
  * @return {string}
  */
-angularGettext.Catalog.getString = function(string, opt_context) {};
+angularGettext.Catalog.getString = function(string, opt_scope, opt_context) {};
 
 
 /**
