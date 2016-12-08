@@ -37,9 +37,8 @@ app.backgroundlayerDirective = function() {
       'map': '=appBackgroundlayerMap'
     },
     templateUrl: 'partials/backgroundlayer.html',
-    controllerAs: 'ctrl',
     bindToController: true,
-    controller: 'AppBackgroundlayerController'
+    controller: 'AppBackgroundlayerController as ctrl'
   };
 };
 

@@ -36,8 +36,7 @@ app.queryresultDirective = function() {
   return {
     restrict: 'E',
     scope: {},
-    controller: 'AppQueryresultController',
-    controllerAs: 'qrCtrl',
+    controller: 'AppQueryresultController as qrCtrl',
     bindToController: true,
     templateUrl: 'partials/queryresult.html'
   };

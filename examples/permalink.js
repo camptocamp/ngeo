@@ -38,8 +38,7 @@ app.mapDirective = function() {
     scope: {
       'map': '=appMap'
     },
-    controller: 'AppMapController',
-    controllerAs: 'ctrl',
+    controller: 'AppMapController as ctrl',
     bindToController: true,
     template: '<div ngeo-map=ctrl.map></div>'
   };
@@ -114,8 +113,7 @@ app.drawDirective = function() {
       'map': '=appDrawMap',
       'layer': '=appDrawLayer'
     },
-    controller: 'AppDrawController',
-    controllerAs: 'ctrl',
+    controller: 'AppDrawController as ctrl',
     bindToController: true,
     template:
         '<label>Enable drawing:' +

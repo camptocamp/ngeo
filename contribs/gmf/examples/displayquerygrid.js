@@ -52,8 +52,7 @@ gmfapp.queryresultDirective = function() {
   return {
     restrict: 'E',
     scope: {},
-    controller: 'gmfappQueryresultController',
-    controllerAs: 'qrCtrl',
+    controller: 'gmfappQueryresultController as qrCtrl',
     bindToController: true,
     templateUrl: 'partials/queryresult.html'
   };

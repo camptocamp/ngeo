@@ -32,9 +32,8 @@ app.backgroundlayerDirective = function() {
       'map': '=appBackgroundlayerMap'
     },
     templateUrl: 'partials/backgroundlayerdropdown.html',
-    controllerAs: 'ctrl',
     bindToController: true,
-    controller: 'AppBackgroundlayerController'
+    controller: 'AppBackgroundlayerController as ctrl'
   };
 };
 

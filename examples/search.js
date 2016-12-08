@@ -28,9 +28,8 @@ app.searchDirective = function() {
     scope: {
       'map': '=appSearchMap'
     },
-    controller: 'AppSearchController',
+    controller: 'AppSearchController as ctrl',
     bindToController: true,
-    controllerAs: 'ctrl',
     template:
         '<input type="text" placeholder="search…" ' +
         'ngeo-search="ctrl.options" ' +
