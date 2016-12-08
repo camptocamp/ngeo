@@ -35,8 +35,7 @@ app.layertreeDirective = function() {
     scope: {
       'map': '=appLayertreeMap'
     },
-    controller: 'AppLayertreeController',
-    controllerAs: 'ctrl',
+    controller: 'AppLayertreeController as ctrl',
     bindToController: true,
     // use "::ctrl.tree" for the "tree" expression as we know the
     // layer tree won't change

@@ -40,8 +40,7 @@ app.measuretoolsDirective = function() {
       'map': '=appMeasuretoolsMap',
       'lang': '=appMeasuretoolsLang'
     },
-    controller: 'AppMeasuretoolsController',
-    controllerAs: 'ctrl',
+    controller: 'AppMeasuretoolsController as ctrl',
     bindToController: true,
     templateUrl: 'partials/measuretools.html'
   };

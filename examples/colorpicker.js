@@ -22,9 +22,8 @@ app.colorpickerDirective = function() {
     restrict: 'E',
     scope: true,
     template: '<div ngeo-colorpicker="ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
-    controllerAs: 'ctrl',
     bindToController: true,
-    controller: 'AppColorpickerController'
+    controller: 'AppColorpickerController as ctrl'
   };
 };
 
