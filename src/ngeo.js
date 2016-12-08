@@ -28,6 +28,14 @@ ngeo.module = angular.module('ngeo', [
   'gettext', 'ui.date', 'floatThead'
 ]);
 
+ngeo.module.config(['$compileProvider',
+  /**
+   * @param {angular.$compileProvider} $compileProvider
+   */
+  function($compileProvider) {
+    $compileProvider.preAssignBindingsEnabled(true);
+  }
+]);
 
 /**
  * The default template based URL, used as it by the template cache.

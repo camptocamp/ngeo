@@ -32,3 +32,11 @@ angular.NUMBER_FORMATS;
  * @type {angular.NUMBER_FORMATS}
  */
 angular.$locale.prototype.NUMBER_FORMATS;
+
+
+// See https://github.com/google/closure-compiler/pull/2201
+/**
+ * @param {boolean=} opt_enabled
+ * @return {boolean|!angular.$compileProvider}
+ */
+angular.$compileProvider.prototype.preAssignBindingsEnabled = function(opt_enabled) {};
