@@ -193,6 +193,18 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.queryableLayerListShown = false;
 
   /**
+   * @type {boolean}
+   * @export
+   */
+  this.copyFromActive = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.deleteFromActive = false;
+
+  /**
    * @type {ngeo.LayerHelper}
    * @private
    */

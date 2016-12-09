@@ -1,5 +1,7 @@
 <gmf-objecteditingtools
   gmf-objecteditingtools-active="oeCtrl.toolsActive"
+  gmf-objecteditingtools-copyfromactive="oeCtrl.copyFromActive"
+  gmf-objecteditingtools-deletefromactive="oeCtrl.deleteFromActive"
   gmf-objecteditingtools-feature="oeCtrl.feature"
   gmf-objecteditingtools-geomtype="::oeCtrl.geomType"
   gmf-objecteditingtools-map="::oeCtrl.map"
@@ -12,7 +14,12 @@
 <div
   class="form-group"
   ng-show="oeCtrl.queryableLayerListShown">
-  <label class="control-label">{{'Copy from:' | translate}}</label>
+  <label
+    ng-show="oeCtrl.copyFromActive === true"
+    class="control-label">{{'Copy from:' | translate}}</label>
+  <label
+    ng-show="oeCtrl.deleteFromActive === true"
+    class="control-label">{{'Cut from:' | translate}}</label>
   <select
     class="form-control"
     ng-model="oeCtrl.selectedQueryableLayerInfo"

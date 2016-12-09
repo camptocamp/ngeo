@@ -31,6 +31,8 @@ gmf.module.value('gmfObjectEditingToolsOptions', {});
  *
  *     <gmf-objecteditingtools
  *         gmf-objecteditingtools-active="ctrl.objectEditingActive"
+ *         gmf-objecteditingtools-copyfromactive="ctrl.objectEditingCopyFromActive"
+ *         gmf-objecteditingtools-deletefromactive="ctrl.objectEditingDeleteFromActive"
  *         gmf-objecteditingtools-feature="ctrl.objectEditingFeature"
  *         gmf-objecteditingtools-geomtype="ctrl.objectEditingGeomType"
  *         gmf-objecteditingtools-map="::ctrl.map"
@@ -42,6 +44,10 @@ gmf.module.value('gmfObjectEditingToolsOptions', {});
  *
  * @htmlAttribute {boolean} gmf-objecteditingtools-active Whether the
  *     directive is active or not.
+ * @htmlAttribute {boolean} gmf-objecteditingtools-copyfromactive Whether the
+ *     'Copy from' tool is active or not.
+ * @htmlAttribute {boolean} gmf-objecteditingtools-deletefromactive Whether the
+ *     'Delete from' tool is active or not.
  * @htmlAttribute {ol.Feature} gmf-objecteditingtools-feature The feature to
  *     edit.
  * @htmlAttribute {string} gmf-objecteditingtools-geomtype The geometry type.
@@ -64,6 +70,8 @@ gmf.objecteditingtoolsDirective = function() {
     controller: 'GmfObjecteditingtoolsController',
     scope: {
       'active': '=gmfObjecteditingtoolsActive',
+      'copyFromActive': '=gmfObjecteditingtoolsCopyfromactive',
+      'deleteFromActive': '=gmfObjecteditingtoolsDeletefromactive',
       'feature': '<gmfObjecteditingtoolsFeature',
       'geomType': '<gmfObjecteditingtoolsGeomtype',
       'map': '<gmfObjecteditingtoolsMap',
@@ -103,6 +111,18 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
    * @export
    */
   this.active;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.copyFromActive;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.deleteFromActive;
 
   /**
    * @type {ol.Feature}
@@ -224,20 +244,8 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
   this.registerTool_('drawTriangleActive',
     gmf.ObjecteditingtoolsController.ProcessType.ADD);
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.copyFromActive = false;
-
   this.registerTool_('copyFromActive',
     gmf.ObjecteditingtoolsController.ProcessType.ADD, true);
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.deleteFromActive = false;
 
   this.registerTool_('deleteFromActive',
     gmf.ObjecteditingtoolsController.ProcessType.DELETE, true);
