@@ -11,14 +11,30 @@
 var gmfThemes;
 
 /**
- * @typedef {{
- *     background_layers: Array.<gmfThemes.GmfLayer>,
- *     errors: Array.<string>,
- *     ogcServers: gmfThemes.GmfOgcServers,
- *     themes: Array.<gmfThemes.GmfTheme>
- * }}
+ * @constructor
+ * @struct
  */
-gmfThemes.GmfThemesResponse;
+gmfThemes.GmfThemesResponse = function() {};
+
+/**
+ * @type Array.<gmfThemes.GmfLayer>
+ */
+gmfThemes.GmfThemesResponse.prototype.background_layers;
+
+/**
+ * @type Array.<string>
+ */
+gmfThemes.GmfThemesResponse.prototype.errors;
+
+/**
+ * @type gmfThemes.GmfOgcServers
+ */
+gmfThemes.GmfThemesResponse.prototype.ogcServers;
+
+/**
+ * @type Array.<gmfThemes.GmfTheme>
+ */
+gmfThemes.GmfThemesResponse.prototype.themes;
 
 
 /**
@@ -34,7 +50,7 @@ gmfThemes.GmfRootNode = function() {};
 gmfThemes.GmfRootNode.prototype.children;
 
 /**
- * Contains the common element of all the elements of the GeoMapFisf layer tree.
+ * Contains the common element of all the elements of the GeoMapFish layer tree.
  * @constructor
  * @struct
  */
