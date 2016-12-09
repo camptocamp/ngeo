@@ -220,3 +220,17 @@ gmf.ObjectEditingQuery.GetQueryableLayerNodesResponse;
  * }}
  */
 gmf.ObjectEditingQuery.QueryableLayerInfo;
+
+
+/**
+ * @type {gmfThemes.GmfOgcServer}
+ * @export
+ */
+gmf.ObjectEditingQuery.QueryableLayerInfo.prototype.ogcServer;
+
+
+/**
+ * @type {gmfThemes.GmfLayerWMS}
+ * @export
+ */
+gmf.ObjectEditingQuery.QueryableLayerInfo.prototype.layerNode;
