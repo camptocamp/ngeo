@@ -11,11 +11,16 @@ goog.provide('app');
 goog.require('gmf');
 goog.require('goog.Uri');
 
+goog.require('ngeo.import.importModule');
+
 
 /**
  * @type {!angular.Module}
  */
-app.module = angular.module('app', [gmf.module.name]);
+app.module = angular.module('app', [
+  ngeo.import.importModule.module.name,
+  gmf.module.name
+]);
 
 app.module.config(['$compileProvider', function($compileProvider) {
   var uri = goog.Uri.parse(location);

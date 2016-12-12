@@ -23,6 +23,10 @@ ngeo.File = function($q, $http, $window) {
     return /<kml/.test(fileContent) && /<\/kml>/.test(fileContent);
   };
 
+  this.isGpx = function(fileContent) {
+    return /<gpx/.test(fileContent) && /<\/gpx>/.test(fileContent);
+  };
+
   /**
    * @param {!Blob} file .
    * @return {angular.$q.Promise<string>} .

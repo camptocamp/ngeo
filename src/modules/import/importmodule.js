@@ -1,4 +1,4 @@
-goog.provide('ngeo.import');
+goog.provide('ngeo.import.importModule');
 
 goog.require('ngeo.fileService');
 goog.require('ngeo.importDndDirective');
@@ -8,7 +8,6 @@ goog.require('ngeo.wmsGetCapDirective');
 goog.require('ngeo.wmsGetCapItemDirective');
 
 (function() {
-
   var module = angular.module('ngeo.import', [
     ngeo.fileService.module.name,
     ngeo.importDndDirective.module.name,
@@ -17,5 +16,5 @@ goog.require('ngeo.wmsGetCapItemDirective');
     ngeo.wmsGetCapDirective.module.name,
     ngeo.wmsGetCapItemDirective.module.name
   ]);
-  ngeo.import.module = module;
+  ngeo.import.importModule.module = module;
 })();

@@ -21,12 +21,12 @@ goog.require('ol.layer.VectorTile');
 goog.require('ol.Map');
 
 goog.require('ngeo.search.searchModule');
-goog.require('ngeo.import');
+goog.require('ngeo.import.importModule');
 
 /** @type {!angular.Module} */
 ngeo.module = angular.module('ngeo', [
   ngeo.search.searchModule.module.name,
-  ngeo.import.module.name,
+  ngeo.import.importModule.module.name,
   'gettext', 'ui.date', 'floatThead'
 ]);
 
