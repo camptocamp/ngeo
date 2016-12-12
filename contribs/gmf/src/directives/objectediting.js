@@ -936,7 +936,8 @@ gmf.ObjecteditingController.prototype.handleSketchFeaturesAdd_ = function(evt) {
     }
 
   } else if (this.process === gmf.ObjecteditingtoolsController.ProcessType.ADD) {
-    this.feature.setGeometry(sketchGeom.clone());
+    this.feature.setGeometry(
+      gmf.ObjecteditingController.toMultiGeometry_(sketchGeom.clone()));
   }
 
   this.sketchFeatures.clear();
