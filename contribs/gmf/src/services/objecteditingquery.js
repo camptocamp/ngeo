@@ -218,6 +218,7 @@ gmf.ObjectEditingQuery.GetQueryableLayerNodesResponse;
  *     ogcServer: (gmfThemes.GmfOgcServer),
  *     layerNode: (gmfThemes.GmfLayerWMS)
  * }}
+ * @export
  */
 gmf.ObjectEditingQuery.QueryableLayerInfo;
 
