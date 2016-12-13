@@ -186,21 +186,21 @@ ngeo.module.filter('ngeoUnitPrefix', ngeo.UnitPrefix);
  *
  * Example with defined fractionDigits and template (en-US localization):
  *
- *      <p>{{[7.1234, 46.9876] | ngeoNumberCoordinates:2:co {x} E; {y} N}}</p>
+ *      <p>{{[7.1234, 46.9876] | ngeoNumberCoordinates:2:'co {x} E; {y} N'}}</p>
  *      <!-- will Become co 7.12 E; 46.99 N -->
  *
  * Example without fractionDigits but with defined template and localize:
  *
  *      <!-- With en-US localization (opt_localize can be true or undefined) -->
- *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates::{x}, {y}}}</p>
+ *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:'{x}, {y}'}}</p>
  *      <!-- will Become 2,600,000, 1,600,000 -->
  *      <br/>
  *      <!-- With fr-CH localization (opt_localize can be true or undefined) -->
- *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates::{x}, {y}}}</p>
+ *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:'{x}, {y}'}}</p>
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *      <br/>
  *      <!-- With en-US localization but with localization to false -->
- *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates::{x}, {y}}}</p>
+ *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:'{x}, {y}'}}</p>
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *
  * @param {angular.$filter} $filter Angular filter
@@ -247,7 +247,7 @@ ngeo.module.filter('ngeoNumberCoordinates', ngeo.NumberCoordinates);
  *
  * Example with defined fractionDigits and a template.
  *
- *      <p>{{[7.1234, 46.9876] | ngeoDMSCoordinates:2:[{x}; {y}]}}</p>
+ *      <p>{{[7.1234, 46.9876] | ngeoDMSCoordinates:2:'[{x}; {y}]'}}</p>
  *      <!-- will Become [46° 59' 15.36'' N; 7° 07' 24.24'' E] -->
  *
  * @return {function(ol.Coordinate, (number|string)=, string=): string} A

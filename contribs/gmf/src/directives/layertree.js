@@ -58,7 +58,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *
  *      <gmf-layertree
  *        gmf-layertree-dimensions="ctrl.dimensions"
- *        gmf-layertree-map="ctrl.map"
+ *        gmf-layertree-map="ctrl.map">
  *      </gmf-layertree>
  *
  * You can add an attribute 'gmf-layertree-openlinksinnewwindow="true"' to open

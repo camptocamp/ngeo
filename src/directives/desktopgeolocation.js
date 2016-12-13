@@ -18,7 +18,7 @@ goog.require('ol.geom.Point');
  */
 ngeo.DesktopGeolocationEventType = {
   /**
-   * Triggered when an error occures.
+   * Triggered when an error occurs.
    */
   ERROR: 'desktop-geolocation-error'
 };

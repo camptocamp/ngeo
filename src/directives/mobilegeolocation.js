@@ -19,7 +19,7 @@ goog.require('ol.geom.Point');
  */
 ngeo.MobileGeolocationEventType = {
   /**
-   * Triggered when an error occures.
+   * Triggered when an error occurs.
    */
   ERROR: 'mobile-geolocation-error'
 };
