@@ -41,6 +41,7 @@
   }
 
   .ngeo-message {
+    display: none;
     text-align: center;
     padding-top: 10px;
   }
@@ -48,7 +49,6 @@
   .ngeo-container {
     border: 1px solid #dddddd;
     border-collapse: separate;
-    border-radius: 4px;
     z-index: 50;
 
     @media (max-width: @screen-tablet) {
@@ -106,7 +106,11 @@
     }
   }
 
-  .ngeo-container, .ngeo-descr {
+  .ngeo-container {
+    display: inline-block;
+    position: relative;
+  }
+  .ngeo-descr {
     display: inline-block;
     position: relative;
     margin: 10px 0px 0px 0px;
