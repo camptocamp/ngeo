@@ -571,8 +571,7 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
         ret = feature;
       }
       return ret;
-    }.bind(this),
-    null
+    }.bind(this)
   );
 
   feature = feature ? feature : null;
@@ -624,8 +623,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
         ret = feature;
       }
       return ret;
-    }.bind(this),
-    null
+    }.bind(this)
   );
 
   feature = feature ? feature : null;
