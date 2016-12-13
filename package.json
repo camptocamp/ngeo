@@ -56,7 +56,7 @@
     "less-plugin-autoprefix": "1.5.1",
     "less-plugin-clean-css": "1.5.1",
     "nomnom": "1.8.1",
-    "openlayers": "git://github.com/openlayers/ol3#8f6e07b",
+    "openlayers": "3.20.0",
     "phantomjs-prebuilt": "2.1.14",
     "proj4": "2.3.15",
     "svg2ttf": "4.0.2",

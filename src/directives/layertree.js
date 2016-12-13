@@ -4,6 +4,7 @@ goog.provide('ngeo.layertreeDirective');
 goog.require('ngeo');
 goog.require('ngeo.DecorateLayer');
 goog.require('ngeo.DecorateLayerLoading');
+goog.require('ol.layer.Base');
 
 ngeo.module.value('ngeoLayertreeTemplateUrl',
     /**
@@ -256,7 +257,7 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
 
     ol.events.listen(
       this.layer,
-      ol.Object.getChangeEventType(ol.layer.LayerProperty.OPACITY),
+      ol.Object.getChangeEventType(ol.layer.Base.Property.OPACITY),
       function(evt) {
         this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
       }, this
