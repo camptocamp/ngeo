@@ -10,19 +10,33 @@ goog.require('ngeo.fileService');
   ]);
   ngeo.importDndDirective.module = module;
 
+  module.value('ngeoImportDndTemplateUrl',
+      /**
+       * @param {angular.JQLite} element Element.
+       * @param {angular.Attributes} attrs Attributes.
+       * @return {boolean} Template URL.
+       */
+      function(element, attrs) {
+        var templateUrl = attrs['ngeoImportDndTemplateUrl'];
+        return templateUrl !== undefined ? templateUrl :
+            ngeo.baseTemplateUrl + '/../../modules/import/partials/import-dnd.html';
+      });
+
   /**
    * @constructor
    * @param {Window} $window The window.
    * @param {jQuery} $document The document.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {ngeo.File} ngeoFile The ngeo file service.
+   * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
+   *     ngeoImportDndTemplateUrl The template url.
    * @ngInject
    */
-  var Directive = function($window, $document, gettextCatalog, ngeoFile) {
+  var Directive = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTemplateUrl) {
 
     return {
       restrict: 'A',
-      templateUrl: 'modules/import/partials/import-dnd.html',
+      templateUrl: ngeoImportDndTemplateUrl,
       scope: {
         options: '=ngeoImportDndOptions'
       },
