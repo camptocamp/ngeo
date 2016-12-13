@@ -258,7 +258,7 @@ ngeo.MobileGeolocationController.prototype.untrack_ = function() {
 
 
 /**
- * @param {ol.ObjectEvent} event Event.
+ * @param {ol.Object.Event} event Event.
  * @private
  */
 ngeo.MobileGeolocationController.prototype.setPosition_ = function(event) {
@@ -279,7 +279,7 @@ ngeo.MobileGeolocationController.prototype.setPosition_ = function(event) {
 
 
 /**
- * @param {ol.ObjectEvent} event Event.
+ * @param {ol.Object.Event} event Event.
  * @private
  */
 ngeo.MobileGeolocationController.prototype.handleViewChange_ = function(event) {

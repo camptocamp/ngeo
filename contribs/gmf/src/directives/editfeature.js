@@ -963,7 +963,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
   if (oldFeature) {
     ol.events.unlisten(
       oldFeature,
-      ol.ObjectEventType.PROPERTYCHANGE,
+      ol.Object.EventType.PROPERTYCHANGE,
       this.handleFeaturePropertyChange_,
       this
     );
@@ -982,7 +982,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
     this.featureId = newFeature.getId() || null;
     ol.events.listen(
       newFeature,
-      ol.ObjectEventType.PROPERTYCHANGE,
+      ol.Object.EventType.PROPERTYCHANGE,
       this.handleFeaturePropertyChange_,
       this
     );

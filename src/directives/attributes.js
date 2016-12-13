@@ -109,7 +109,7 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
     uid,
     ol.events.listen(
       this.feature,
-      ol.ObjectEventType.PROPERTYCHANGE,
+      ol.Object.EventType.PROPERTYCHANGE,
       this.handleFeaturePropertyChange_,
       this
     ),
@@ -157,7 +157,7 @@ ngeo.AttributesController.prototype.handleDestroy_ = function() {
 
 
 /**
- * @param {ol.ObjectEvent} evt Event.
+ * @param {ol.Object.Event} evt Event.
  * @private
  */
 ngeo.AttributesController.prototype.handleFeaturePropertyChange_ = function(
