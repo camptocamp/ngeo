@@ -1,20 +1,19 @@
-goog.provide('ngeo.import.importModule');
+goog.module('ngeo.import.importModule');
+goog.module.declareLegacyNamespace();
 
-goog.require('ngeo.fileService');
-goog.require('ngeo.importDndDirective');
-goog.require('ngeo.importLocalDirective');
-goog.require('ngeo.importOnlineDirective');
-goog.require('ngeo.wmsGetCapDirective');
-goog.require('ngeo.wmsGetCapItemDirective');
+var fileService = goog.require('ngeo.fileService');
+var dnd = goog.require('ngeo.importDndDirective');
+var local = goog.require('ngeo.importLocalDirective');
+var online = goog.require('ngeo.importOnlineDirective');
+var wmsGetCap = goog.require('ngeo.wmsGetCapDirective');
+var wmsGetCapItem = goog.require('ngeo.wmsGetCapItemDirective');
 
-(function() {
-  var module = angular.module('ngeo.import', [
-    ngeo.fileService.module.name,
-    ngeo.importDndDirective.module.name,
-    ngeo.importLocalDirective.module.name,
-    ngeo.importOnlineDirective.module.name,
-    ngeo.wmsGetCapDirective.module.name,
-    ngeo.wmsGetCapItemDirective.module.name
-  ]);
-  ngeo.import.importModule.module = module;
-})();
+
+exports.module = angular.module('ngeo.import', [
+  fileService.module.name,
+  dnd.module.name,
+  local.module.name,
+  online.module.name,
+  wmsGetCap.module.name,
+  wmsGetCapItem.module.name
+]);
