@@ -25,11 +25,8 @@ app.GmfImportHelper = function(map, $scope, ngeoFile, $q) {
   this.kmlFormat_ = new ol.format.KML();
 
   this.urls = [
-    'https://wms.geo.admin.ch/',
-    'http://ogc.heig-vd.ch/mapserver/wms',
-    'http://owsproxy.lgl-bw.de/owsproxy/ows/WMS_Maps4BW',
-    'https://www.gis.stadt-zuerich.ch/maps/services/wms/WMS-ZH-STZH-OGD/MapServer/WMSServer',
-    'https://wms.geo.gl.ch/'
+    {'name': 'geoadmin', 'url': 'https://wms.geo.admin.ch/'},
+    {'name': 'heig', 'url': 'http://ogc.heig-vd.ch/mapserver/wms'}
   ];
 };
 

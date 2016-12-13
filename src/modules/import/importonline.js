@@ -62,22 +62,40 @@ goog.require('ngeo.fileService');
         };
         initUserMsg();
 
-        var substringMatcher = function(urls) {
+        /**
+         * @param {Array<{name: string, url: string}>} nameUrls .
+         * @return {function(string, function())} The matching function.
+         */
+        var substringMatcher = function(nameUrls) {
           return function(q, cb) {
             var matches = [];
             if (!q) {
-              matches = urls;
+              matches = nameUrls;
             } else {
               var regex = new RegExp(q, 'i');
-              urls.forEach(function(url) {
-                if (regex.test(url)) {
-                  matches.push(url);
+              nameUrls.forEach(function(nameUrl) {
+                if (regex.test(nameUrl['name'])) {
+                  matches.push(nameUrl);
                 }
               });
             }
             cb(matches);
           };
         };
+
+        var nameUrls;
+        if (nameUrls && nameUrls.length > 0 && nameUrls[0]['name']) {
+          nameUrls = scope.options.urls.reduce(function(nameUrls, url) {
+            nameUrls.push({
+              'name': url,
+              'url': url
+            });
+            return nameUrls;
+          },
+          []);
+        } else {
+          nameUrls = scope.options.urls;
+        }
 
         // Create the typeAhead input for the list of urls available
         var taElt = elt.find('input[name=url]').typeahead({
@@ -86,13 +104,14 @@ goog.require('ngeo.fileService');
           minLength: 0
         }, {
           name: 'wms',
+          displayKey: 'name',
           limit: 500,
-          source: substringMatcher(scope.options.urls)
-        }).on('typeahead:selected', function(evt, url) {
+          source: substringMatcher(nameUrls)
+        }).on('typeahead:selected', function(evt, nameUrl) {
           taElt.typeahead('close');
           // When a WMS is selected in the list, start downloading the
           // GetCapabilities
-          scope.fileUrl = url;
+          scope.fileUrl = nameUrl['url'];
           scope.handleFileUrl();
           scope.$digest();
         }).on('focus', function() {
