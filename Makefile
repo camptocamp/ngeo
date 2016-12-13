@@ -20,7 +20,7 @@ GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type 
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 GMF_APPS += mobile desktop desktop_alt oeedit oeview
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
-GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
+GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less src/modules/import/style -type f -name '*.less')
 DEVELOPMENT ?= FALSE
 ifeq ($(DEVELOPMENT), TRUE)
 CLOSURE_VARS += --var development=true

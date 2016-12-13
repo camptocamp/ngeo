@@ -9,13 +9,27 @@ goog.require('ol.format.WMSCapabilities');
   ]);
   ngeo.wmsGetCapDirective.module = module;
 
+  module.value('ngeoWmsGetCapTemplateUrl',
+      /**
+       * @param {angular.JQLite} element Element.
+       * @param {angular.Attributes} attrs Attributes.
+       * @return {boolean} Template URL.
+       */
+      function(element, attrs) {
+        var templateUrl = attrs['ngeoWmsGetCapTemplateUrl'];
+        return templateUrl !== undefined ? templateUrl :
+            ngeo.baseTemplateUrl + '/../../modules/import/partials/wms-get-cap.html';
+      });
+
   /**
    * @constructor
    * @param {Window} $window The window.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
+   *     ngeoWmsGetCapTemplateUrl The template url.
    * @ngInject
    */
-  var Directive = function($window, gettextCatalog) {
+  var Directive = function($window, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
     // Get the layer extent defines in the GetCapabilities
     var getLayerExtentFromGetCap = function(getCapLayer, proj) {
@@ -113,7 +127,7 @@ goog.require('ol.format.WMSCapabilities');
 
     return {
       restrict: 'A',
-      templateUrl: 'modules/import/partials/wms-get-cap.html',
+      templateUrl: ngeoWmsGetCapTemplateUrl,
       scope: {
         getCap: '=ngeoWmsGetCap',
         map: '=ngeoWmsGetCapMap',

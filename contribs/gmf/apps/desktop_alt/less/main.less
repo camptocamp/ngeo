@@ -1,4 +1,5 @@
 @import '../../../less/desktop.less';
+@import '../../../../../src/modules/import/style/import.less';
 
 @brand-primary: #9FB6CC;
 @brand-secondary: #D3DBE3;
@@ -19,6 +20,14 @@ header div span {
 .import {
   input[type="file"] {
     display: none;
+  }
+  .tt-menu {
+    background-color: white;
+    color: black;
+    line-height: 1.6em;
+    .tt-suggestion {
+      cursor: pointer;
+    }
   }
 }
 

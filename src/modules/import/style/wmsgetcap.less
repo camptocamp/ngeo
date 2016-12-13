@@ -1,5 +1,6 @@
 [ngeo-wms-get-cap] {
   position: relative;
+  margin-top: 5px;
   background-color: white;
   width: 100%;
 
@@ -39,8 +40,12 @@
     }
   }
 
+  .ngeo-message {
+    text-align: center;
+    padding-top: 10px;
+  }
+
   .ngeo-container {
-    width: 330px;
     border: 1px solid #dddddd;
     border-collapse: separate;
     border-radius: 4px;
@@ -111,7 +116,7 @@
   .ngeo-descr {
     vertical-align: top;
     margin-left: 20px;
-    width: ~"calc(100% - 355px)";
+    width: ~"calc(100% - 40px)";
 
     @media (max-width: @screen-tablet) {
       width: 100%;
@@ -122,5 +127,6 @@
   .ngeo-add {
     width: 100%;
     margin-top: 10px;
+    margin-bottom: 10px;
   }
 }

@@ -10,22 +10,36 @@ goog.require('ngeo.fileService');
   ]);
   ngeo.importOnlineDirective.module = module;
 
+  module.value('ngeoImportOnlineTemplateUrl',
+      /**
+       * @param {angular.JQLite} element Element.
+       * @param {angular.Attributes} attrs Attributes.
+       * @return {boolean} Template URL.
+       */
+      function(element, attrs) {
+        var templateUrl = attrs['ngeoImportOnlineTemplateUrl'];
+        return templateUrl !== undefined ? templateUrl :
+            ngeo.baseTemplateUrl + '/../../modules/import/partials/import-online.html';
+      });
+
   /**
    * @constructor
    * @param {angular.$q} $q .
    * @param {angular.$timeout} $timeout .
    * @param {ngeo.File} ngeoFile .
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
+         ngeoImportOnlineTemplateUrl The template url.
    * @ngInject
    * @struct
    */
-  var Directive = function($q, $timeout, ngeoFile, gettextCatalog) {
+  var Directive = function($q, $timeout, ngeoFile, gettextCatalog, ngeoImportOnlineTemplateUrl) {
 
     var timeoutP;
 
     return {
       restrict: 'A',
-      templateUrl: 'modules/import/partials/import-online.html',
+      templateUrl: ngeoImportOnlineTemplateUrl,
       scope: {
         options: '=ngeoImportOnlineOptions'
       },
@@ -115,7 +129,7 @@ goog.require('ngeo.fileService');
 
           scope.canceler = $q.defer();
           scope.loading = true;
-          scope.userMessage = 'uploading_file';
+          scope.userMessage = 'dowloading_file';
           $timeout.cancel(timeoutP);
 
           // Angularjs doesn't handle onprogress event
@@ -132,7 +146,7 @@ goog.require('ngeo.fileService');
           }, function(err) {
             scope.userMessage = err.message;
 
-          })['finally'](function() {
+          }).finally(function() {
             scope.canceler = null;
             scope.loading = false;
             timeoutP = $timeout(initUserMsg, 10000);

@@ -5,6 +5,18 @@ goog.provide('ngeo.wmsGetCapItemDirective');
   var module = angular.module('ngeo.wmsGetCapItemDirective', []);
   ngeo.wmsGetCapItemDirective.module = module;
 
+  module.value('ngeoWmsGetCapItemTemplateUrl',
+      /**
+       * @param {angular.JQLite} element Element.
+       * @param {angular.Attributes} attrs Attributes.
+       * @return {boolean} Template URL.
+       */
+      function(element, attrs) {
+        var templateUrl = attrs['ngeoWmsGetCapItemTemplateUrl'];
+        return templateUrl !== undefined ? templateUrl :
+            ngeo.baseTemplateUrl + '/../../modules/import/partials/wms-get-cap-item.html';
+      });
+
   /**
    * @constructor
    * @param {angular.Scope} $scope .
@@ -42,10 +54,12 @@ goog.provide('ngeo.wmsGetCapItemDirective');
 
   /**
    * @param {angular.$compile} $compile .
+   * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
+   *     ngeoWmsGetCapItemTemplateUrl The template url.
    * @ngInject
    * @return {angular.Directive} .
    */
-  var directive = function($compile) {
+  var directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
 
     /**** UTILS functions ****/
     // from OL2
@@ -63,7 +77,10 @@ goog.provide('ngeo.wmsGetCapItemDirective');
 
     // Zoom to layer extent
     var zoomToLayerExtent = function(scope, layer, map) {
-      var extent = scope.options.transformExtent(layer.extent);
+      var extent = layer.extent;
+      if (scope.options.transformExtent) {
+        extent = scope.options.transformExtent(layer.extent);
+      }
       var view = map.getView();
       var mapSize = map.getSize();
 
@@ -106,7 +123,7 @@ goog.provide('ngeo.wmsGetCapItemDirective');
 
     return {
       restrict: 'A',
-      templateUrl: 'modules/import/partials/wms-get-cap-item.html',
+      templateUrl: ngeoWmsGetCapItemTemplateUrl,
       controller: 'NgeoWmsGetCapItemDirectiveController',
       compile: function(elt) {
         var contents = elt.contents().remove();

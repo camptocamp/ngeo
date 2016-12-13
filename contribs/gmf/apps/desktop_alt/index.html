@@ -24,9 +24,22 @@
               <span class="caret"></span>
             </a>
             <div class="import">
+              <div>local</div>
               <div class="import-local"
                 ngeo-import-local
                 ngeo-import-local-options="::mainCtrl.importOptions">
+              </div>
+              <div>online</div>
+              <div
+                ngeo-import-online
+                ngeo-import-online-options="::mainCtrl.importOptions">
+              </div>
+
+              <!-- Display WMS GetCapabilities results -->
+              <div ng-if="wmsGetCap"
+                   ngeo-wms-get-cap="wmsGetCap"
+                   ngeo-wms-get-cap-map="::map"
+                   ngeo-wms-get-cap-options="::mainCtrl.importOptions">
               </div>
             </div>
             <gmf-themeselector class="dropdown-menu"
