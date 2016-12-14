@@ -32,15 +32,14 @@ goog.require('gmf.ObjectEditingQuery');
  */
 gmf.objecteditinggetwmsfeatureDirective = function() {
   return {
-    controller: 'GmfObjecteditinggetwmsfeatureController',
+    controller: 'GmfObjecteditinggetwmsfeatureController as gwfCtrl',
     scope: {
       'active': '=gmfObjecteditinggetwmsfeatureActive',
       'features': '<gmfObjecteditinggetwmsfeatureFeatures',
       'layerInfo': '=gmfObjecteditinggetwmsfeatureLayerinfo',
       'map': '<gmfObjecteditinggetwmsfeatureMap'
     },
-    bindToController: true,
-    controllerAs: 'gwfCtrl'
+    bindToController: true
   };
 };
 

@@ -40,8 +40,7 @@ goog.require('ol.events.EventType');
 gmf.elevationDirective = function() {
   return {
     restrict: 'A',
-    controller: 'GmfElevationController',
-    controllerAs: 'ctrl',
+    controller: 'GmfElevationController as ctrl',
     bindToController: true,
     scope: {
       'active': '<gmfElevationActive',
@@ -258,8 +257,7 @@ gmf.elevationwidgetDirective = function() {
       'layers': '<gmfElevationwidgetLayers',
       'active': '<gmfElevationwidgetActive'
     },
-    controller: 'gmfElevationwidgetController',
-    controllerAs: 'ctrl',
+    controller: 'gmfElevationwidgetController as ctrl',
     bindToController: true,
     templateUrl: gmf.baseTemplateUrl + '/elevationwidget.html'
   };

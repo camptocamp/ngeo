@@ -60,8 +60,7 @@ gmf.mobileMeasureLengthDirective =
           'map': '=gmfMobileMeasurelengthMap',
           'sketchStyle': '=?gmfMobileMeasureLengthSketchstyle'
         },
-        controller: 'GmfMobileMeasureLengthController',
-        controllerAs: 'ctrl',
+        controller: 'GmfMobileMeasureLengthController as ctrl',
         bindToController: true,
         templateUrl: gmfMobileMeasureLengthTemplateUrl
       };

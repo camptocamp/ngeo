@@ -58,8 +58,7 @@ gmf.backgroundlayerselectorDirective = function(
       'select': '&?gmfBackgroundlayerselectorSelect'
     },
     bindToController: true,
-    controller: 'GmfBackgroundlayerselectorController',
-    controllerAs: 'ctrl',
+    controller: 'GmfBackgroundlayerselectorController as ctrl',
     templateUrl: gmfBackgroundlayerselectorTemplateUrl
   };
 };

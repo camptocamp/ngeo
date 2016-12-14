@@ -90,13 +90,12 @@ goog.require('ol.Feature');
  */
 ngeo.drawfeatureDirective = function() {
   return {
-    controller: 'ngeoDrawfeatureController',
+    controller: 'ngeoDrawfeatureController as dfCtrl',
     scope: true,
     bindToController: {
       'active': '=ngeoDrawfeatureActive',
       'map': '=ngeoDrawfeatureMap'
-    },
-    controllerAs: 'dfCtrl'
+    }
   };
 };
 

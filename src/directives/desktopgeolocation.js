@@ -50,8 +50,7 @@ ngeo.desktopGeolocationDirective = function() {
       'getDesktopMapFn': '&ngeoDesktopGeolocationMap',
       'getDesktopGeolocationOptionsFn': '&ngeoDesktopGeolocationOptions'
     },
-    controller: 'NgeoDesktopGeolocationController',
-    controllerAs: 'ctrl'
+    controller: 'NgeoDesktopGeolocationController as ctrl'
   };
 };
 

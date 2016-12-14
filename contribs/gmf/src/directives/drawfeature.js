@@ -42,13 +42,12 @@ goog.require('ol.style.Text');
  */
 gmf.drawfeatureDirective = function() {
   return {
-    controller: 'GmfDrawfeatureController',
+    controller: 'GmfDrawfeatureController as efCtrl',
     scope: {
       'active': '=gmfDrawfeatureActive',
       'map': '<gmfDrawfeatureMap'
     },
     bindToController: true,
-    controllerAs: 'efCtrl',
     templateUrl: gmf.baseTemplateUrl + '/drawfeature.html'
   };
 };

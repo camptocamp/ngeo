@@ -30,12 +30,11 @@ goog.require('ngeo');
  */
 ngeo.exportfeaturesDirective = function() {
   return {
-    controller: 'ngeoExportfeaturesController',
+    controller: 'ngeoExportfeaturesController as efCtrl',
     scope: true,
     bindToController: {
       'features': '=ngeoExportfeaturesFeatures'
-    },
-    controllerAs: 'efCtrl'
+    }
   };
 };
 

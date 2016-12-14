@@ -28,13 +28,12 @@ goog.require('ol.control.MousePosition');
 gmf.mousepositionDirective = function() {
   return {
     restrict: 'E',
-    controller: 'gmfMousepositionController',
+    controller: 'gmfMousepositionController as ctrl',
     scope: {
       'map': '<gmfMousepositionMap',
       'projections': '<gmfMousepositionProjections'
     },
     bindToController: true,
-    controllerAs: 'ctrl',
     templateUrl: gmf.baseTemplateUrl + '/mouseposition.html'
   };
 };

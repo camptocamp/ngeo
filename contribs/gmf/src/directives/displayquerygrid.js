@@ -69,8 +69,7 @@ gmf.displayquerygridDirective = function(
     gmfDisplayquerygridTemplateUrl) {
   return {
     bindToController: true,
-    controller: 'GmfDisplayquerygridController',
-    controllerAs: 'ctrl',
+    controller: 'GmfDisplayquerygridController as ctrl',
     templateUrl: gmfDisplayquerygridTemplateUrl,
     replace: true,
     restrict: 'E',

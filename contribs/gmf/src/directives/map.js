@@ -34,8 +34,7 @@ gmf.mapDirective = function() {
     scope: {
       'getMapFn': '&gmfMapMap'
     },
-    controller: 'GmfMapController',
-    controllerAs: 'ctrl',
+    controller: 'GmfMapController as ctrl',
     template: '<div ngeo-map="ctrl.map"></div>'
   };
 };

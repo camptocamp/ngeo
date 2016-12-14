@@ -53,7 +53,7 @@ goog.require('ol.Feature');
  */
 ngeo.createregularpolygonfromclickDirective = function() {
   return {
-    controller: 'ngeoCreateregularpolygonfromclickController',
+    controller: 'ngeoCreateregularpolygonfromclickController as crpfcCtrl',
     bindToController: true,
     scope: {
       'active': '=ngeoCreateregularpolygonfromclickActive',
@@ -62,8 +62,7 @@ ngeo.createregularpolygonfromclickDirective = function() {
       'map': '=ngeoCreateregularpolygonfromclickMap',
       'radius': '<ngeoCreateregularpolygonfromclickRadius',
       'sides': '<?ngeoCreateregularpolygonfromclickSides'
-    },
-    controllerAs: 'crpfcCtrl'
+    }
   };
 };
 

@@ -320,7 +320,7 @@ the DOM tree, at the `<html>` element for example.
 
 And instead of `ng-controller` instances use application-specific directives,
 and store the directive-specific data in the directive itself. For that, use
-a directive controller, with `controllerAs` and `bindToController`.
+a directive controller, with `controller` and `bindToController`.
 
 [The `permalink`
 example](https://github.com/camptocamp/ngeo/tree/master/examples/permalink.js)

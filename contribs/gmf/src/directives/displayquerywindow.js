@@ -61,8 +61,7 @@ gmf.displayquerywindowDirective = function(
     gmfDisplayquerywindowTemplateUrl) {
   return {
     bindToController: true,
-    controller: 'GmfDisplayquerywindowController',
-    controllerAs: 'ctrl',
+    controller: 'GmfDisplayquerywindowController as ctrl',
     templateUrl: gmfDisplayquerywindowTemplateUrl,
     replace: true,
     restrict: 'E',

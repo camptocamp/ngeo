@@ -24,12 +24,11 @@ goog.require('ngeo.colorpickerDirective');
  */
 gmf.featurestyleDirective = function() {
   return {
-    controller: 'GmfFeaturestyleController',
+    controller: 'GmfFeaturestyleController as fsCtrl',
     scope: {
       'feature': '=gmfFeaturestyleFeature'
     },
     bindToController: true,
-    controllerAs: 'fsCtrl',
     templateUrl: gmf.baseTemplateUrl + '/featurestyle.html'
   };
 };

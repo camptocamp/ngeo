@@ -67,7 +67,7 @@ gmf.module.value('gmfObjectEditingToolsOptions', {});
  */
 gmf.objecteditingtoolsDirective = function() {
   return {
-    controller: 'GmfObjecteditingtoolsController',
+    controller: 'GmfObjecteditingtoolsController as oetCtrl',
     scope: {
       'active': '=gmfObjecteditingtoolsActive',
       'copyFromActive': '=gmfObjecteditingtoolsCopyfromactive',
@@ -81,7 +81,6 @@ gmf.objecteditingtoolsDirective = function() {
       'sketchFeatures': '<gmfObjecteditingtoolsSketchfeatures'
     },
     bindToController: true,
-    controllerAs: 'oetCtrl',
     templateUrl: gmf.baseTemplateUrl + '/objecteditingtools.html'
   };
 };

@@ -26,14 +26,13 @@ goog.require('ngeo.EventHelper');
  */
 ngeo.attributesDirective = function() {
   return {
-    controller: 'ngeoAttributesController',
+    controller: 'ngeoAttributesController as attrCtrl',
     scope: true,
     bindToController: {
       'attributes': '=ngeoAttributesAttributes',
       'disabled': '<ngeoAttributesDisabled',
       'feature': '=ngeoAttributesFeature'
     },
-    controllerAs: 'attrCtrl',
     templateUrl: ngeo.baseTemplateUrl + '/attributes.html'
   };
 };

@@ -91,8 +91,7 @@ gmf.module.value('gmfPrintTemplateUrl',
 gmf.printDirective = function(gmfPrintTemplateUrl) {
   return {
     bindToController: true,
-    controller: 'GmfPrintController',
-    controllerAs: 'ctrl',
+    controller: 'GmfPrintController as ctrl',
     templateUrl: gmfPrintTemplateUrl,
     replace: true,
     restrict: 'E',

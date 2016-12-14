@@ -91,8 +91,7 @@ gmf.layertreeDirective = function(gmfLayertreeTemplate) {
       'openLinksInNewWindowFn': '&gmfLayertreeOpenlinksinnewwindow'
     },
     bindToController: true,
-    controller: 'GmfLayertreeController',
-    controllerAs: 'gmfLayertreeCtrl',
+    controller: 'GmfLayertreeController as gmfLayertreeCtrl',
     template: gmfLayertreeTemplate
   };
 };
