@@ -141,7 +141,7 @@ exports.module.value('ngeoImportLocalTemplateUrl',
     function(element, attrs) {
       var templateUrl = attrs['ngeoImportLocalTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/../../modules/import/partials/import-local.html';
+          ngeo.baseModuleTemplateUrl + '/import/partials/import-local.html';
     });
 
 exports.module.directive('ngeoImportLocal', exports);

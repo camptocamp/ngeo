@@ -200,7 +200,7 @@ exports.module.value('ngeoWmsGetCapTemplateUrl',
     function(element, attrs) {
       var templateUrl = attrs['ngeoWmsGetCapTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/../../modules/import/partials/wms-get-cap.html';
+          ngeo.baseModuleTemplateUrl + '/import/partials/wms-get-cap.html';
     });
 
 /**

@@ -12,6 +12,7 @@ goog.require('ngeo.fileService');
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoImportDndTemplateUrl The template url.
  * @ngInject
+ * @struct
  */
 exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTemplateUrl) {
 
@@ -120,7 +121,7 @@ exports.module.value('ngeoImportDndTemplateUrl',
     function(element, attrs) {
       var templateUrl = attrs['ngeoImportDndTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/../../modules/import/partials/import-dnd.html';
+          ngeo.baseModuleTemplateUrl + '/import/partials/import-dnd.html';
     });
 
 exports.module.directive('ngeoImportDnd', exports);

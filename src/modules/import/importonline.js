@@ -171,7 +171,7 @@ exports.module.value('ngeoImportOnlineTemplateUrl',
     function(element, attrs) {
       var templateUrl = attrs['ngeoImportOnlineTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/../../modules/import/partials/import-online.html';
+          ngeo.baseModuleTemplateUrl + '/import/partials/import-online.html';
     });
 
 exports.module.directive('ngeoImportOnline', exports);

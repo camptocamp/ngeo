@@ -6,6 +6,7 @@ goog.provide('ngeo.File');
  * @param {angular.$q} $q .
  * @param {angular.$http} $http .
  * @param {Window} $window .
+ * @ngInject
  */
 ngeo.File = function($q, $http, $window) {
   var fileReader, canceler;
