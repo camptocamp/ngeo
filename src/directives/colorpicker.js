@@ -40,8 +40,7 @@ ngeo.colorpickerDirective = function(ngeoColorpickerTemplateUrl) {
       colors: '<?ngeoColorpicker',
       color: '=?ngeoColorpickerColor'
     },
-    controller: 'NgeoColorpickerController',
-    controllerAs: 'ctrl',
+    controller: 'NgeoColorpickerController as ctrl',
     bindToController: true,
     templateUrl: ngeoColorpickerTemplateUrl
   };

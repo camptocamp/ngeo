@@ -22,8 +22,7 @@ goog.require('gmf.ShareService');
 gmf.shareDirective = function() {
   return {
     restrict: 'E',
-    controller: 'GmfShareController',
-    controllerAs: 'shareCtrl',
+    controller: 'GmfShareController as shareCtrl',
     templateUrl: gmf.baseTemplateUrl + '/share.html'
   };
 };

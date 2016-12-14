@@ -54,7 +54,7 @@ goog.require('ol.style.Style');
  */
 gmf.objecteditingDirective = function() {
   return {
-    controller: 'GmfObjecteditingController',
+    controller: 'GmfObjecteditingController as oeCtrl',
     scope: {
       'active': '=gmfObjecteditingActive',
       'feature': '<gmfObjecteditingFeature',
@@ -64,7 +64,6 @@ gmf.objecteditingDirective = function() {
       'sketchFeatures': '<gmfObjecteditingSketchfeatures'
     },
     bindToController: true,
-    controllerAs: 'oeCtrl',
     templateUrl: gmf.baseTemplateUrl + '/objectediting.html'
   };
 };

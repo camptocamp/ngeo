@@ -173,8 +173,7 @@ ngeo.GridConfig.prototype.invertSelection = function() {
 ngeo.gridDirective = function(ngeoGridTemplateUrl) {
   return {
     bindToController: true,
-    controller: 'ngeoGridController',
-    controllerAs: 'ctrl',
+    controller: 'ngeoGridController as ctrl',
     restrict: 'E',
     scope: {
       'configuration': '=ngeoGridConfiguration'

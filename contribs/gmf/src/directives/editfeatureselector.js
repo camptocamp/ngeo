@@ -37,7 +37,7 @@ goog.require('gmf.editfeatureDirective');
  */
 gmf.editfeatureselectorDirective = function() {
   return {
-    controller: 'GmfEditfeatureselectorController',
+    controller: 'GmfEditfeatureselectorController as efsCtrl',
     scope: {
       'active': '=gmfEditfeatureselectorActive',
       'map': '<gmfEditfeatureselectorMap',
@@ -45,7 +45,6 @@ gmf.editfeatureselectorDirective = function() {
       'vectorLayer': '<gmfEditfeatureselectorVector'
     },
     bindToController: true,
-    controllerAs: 'efsCtrl',
     templateUrl: gmf.baseTemplateUrl + '/editfeatureselector.html'
   };
 };

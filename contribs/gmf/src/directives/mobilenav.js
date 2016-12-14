@@ -47,9 +47,8 @@ goog.require('gmf');
 gmf.mobileNavDirective = function() {
   return {
     restrict: 'A',
-    controller: 'gmfMobileNavController',
+    controller: 'gmfMobileNavController as navCtrl',
     bindToController: true,
-    controllerAs: 'navCtrl',
     scope: true,
     link:
         /**

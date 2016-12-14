@@ -37,8 +37,7 @@ goog.require('ngeo.DecorateInteraction');
 gmf.drawprofilelineDirective = function() {
   return {
     scope: true,
-    controller: 'GmfDrawprofilelineController',
-    controllerAs: 'ctrl',
+    controller: 'GmfDrawprofilelineController as ctrl',
     restrict: 'A',
     bindToController: {
       'getMapFn': '&gmfDrawprofilelineMap',

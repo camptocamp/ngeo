@@ -50,8 +50,7 @@ ngeo.mobileGeolocationDirective = function() {
       'getMobileMapFn': '&ngeoMobileGeolocationMap',
       'getMobileGeolocationOptionsFn': '&ngeoMobileGeolocationOptions'
     },
-    controller: 'NgeoMobileGeolocationController',
-    controllerAs: 'ctrl'
+    controller: 'NgeoMobileGeolocationController as ctrl'
   };
 };
 

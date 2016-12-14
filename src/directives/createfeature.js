@@ -53,15 +53,14 @@ goog.require('ol.style.Style');
  */
 ngeo.createfeatureDirective = function() {
   return {
-    controller: 'ngeoCreatefeatureController',
+    controller: 'ngeoCreatefeatureController as cfCtrl',
     bindToController: true,
     scope: {
       'active': '=ngeoCreatefeatureActive',
       'features': '=ngeoCreatefeatureFeatures',
       'geomType': '=ngeoCreatefeatureGeomType',
       'map': '=ngeoCreatefeatureMap'
-    },
-    controllerAs: 'cfCtrl'
+    }
   };
 };
 

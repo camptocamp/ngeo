@@ -75,7 +75,7 @@ goog.require('ol.style.Text');
  */
 gmf.editfeatureDirective = function() {
   return {
-    controller: 'GmfEditfeatureController',
+    controller: 'GmfEditfeatureController as efCtrl',
     scope: {
       'dirty': '=gmfEditfeatureDirty',
       'layer': '=gmfEditfeatureLayer',
@@ -86,7 +86,6 @@ gmf.editfeatureDirective = function() {
       'vectorLayer': '<gmfEditfeatureVector'
     },
     bindToController: true,
-    controllerAs: 'efCtrl',
     templateUrl: gmf.baseTemplateUrl + '/editfeature.html'
   };
 };

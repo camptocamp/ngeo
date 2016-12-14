@@ -130,8 +130,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
       'additionalListeners': '=gmfSearchListeners'
     },
-    controller: 'GmfSearchController',
-    controllerAs: 'ctrl',
+    controller: 'GmfSearchController as ctrl',
     templateUrl: gmfSearchTemplateUrl,
     link:
         /**

@@ -70,8 +70,7 @@ gmf.disclaimerDirective = function() {
       'msg': '=?gmfDisclaimerExternalMsg'
     },
     bindToController: true,
-    controller: 'GmfDisclaimerController',
-    controllerAs: 'dclCtrl'
+    controller: 'GmfDisclaimerController as dclCtrl'
   };
 };
 

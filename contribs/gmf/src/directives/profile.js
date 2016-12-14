@@ -72,8 +72,7 @@ ngeo.module.value('gmfProfileTemplateUrl',
 gmf.profileDirective = function(gmfProfileTemplateUrl) {
   return {
     bindToController: true,
-    controller: 'GmfProfileController',
-    controllerAs: 'ctrl',
+    controller: 'GmfProfileController as ctrl',
     templateUrl: gmfProfileTemplateUrl,
     replace: true,
     restrict: 'E',

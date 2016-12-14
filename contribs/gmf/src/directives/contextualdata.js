@@ -47,8 +47,7 @@ gmf.contextualdataDirective = function() {
   return {
     restrict: 'A',
     scope: false,
-    controller: 'GmfContextualdataController',
-    controllerAs: 'cdCtrl',
+    controller: 'GmfContextualdataController as cdCtrl',
     bindToController: {
       'map': '<gmfContextualdataMap',
       'projections': '<gmfContextualdataProjections',

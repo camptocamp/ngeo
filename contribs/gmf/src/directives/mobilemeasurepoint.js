@@ -65,8 +65,7 @@ gmf.mobileMeasurePointDirective =
           'map': '=gmfMobileMeasurepointMap',
           'sketchStyle': '=?gmfMobileMeasurepointSketchstyle'
         },
-        controller: 'GmfMobileMeasurePointController',
-        controllerAs: 'ctrl',
+        controller: 'GmfMobileMeasurePointController as ctrl',
         bindToController: true,
         templateUrl: gmfMobileMeasurePointTemplateUrl
       };

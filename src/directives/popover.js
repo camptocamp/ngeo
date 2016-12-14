@@ -27,8 +27,7 @@ ngeo.popoverDirective = function() {
   return {
     restrict: 'A',
     scope: true,
-    controller: 'NgeoPopoverController',
-    controllerAs : 'popoverCtrl',
+    controller: 'NgeoPopoverController as popoverCtrl',
     link: function(scope, elem, attrs, ngeoPopoverCtrl) {
       ngeoPopoverCtrl.anchorElm.on('hidden.bs.popover', function() {
         /**

@@ -63,12 +63,11 @@ goog.require('gmf.ThemesEventType');
 gmf.themeselectorDirective = function() {
   return {
     restrict: 'E',
-    controller: 'gmfThemeselectorController',
+    controller: 'gmfThemeselectorController as tsCtrl',
     scope: {
       'filter': '=gmfThemeselectorFilter'
     },
     bindToController: true,
-    controllerAs: 'tsCtrl',
     templateUrl: gmf.baseTemplateUrl + '/themeselector.html'
   };
 };

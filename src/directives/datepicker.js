@@ -37,8 +37,7 @@ ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
       time : '='
     },
     bindToController : true,
-    controller : 'ngeoDatePickerController',
-    controllerAs : 'datepickerCtrl',
+    controller: 'ngeoDatePickerController as datepickerCtrl',
     restrict: 'AE',
     templateUrl : ngeoDatePickerTemplateUrl,
     link: function(scope, element, attrs, ctrl) {

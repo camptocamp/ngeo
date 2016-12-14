@@ -34,8 +34,7 @@ gmf.timeSliderDirective = function($timeout, $filter) {
       time : '=gmfTimeSliderTime'
     },
     bindToController : true,
-    controller : 'gmfTimeSliderController',
-    controllerAs : 'sliderCtrl',
+    controller: 'gmfTimeSliderController as sliderCtrl',
     restrict: 'AE',
     templateUrl : gmf.baseTemplateUrl + '/timeslider.html',
     link: function(scope, element, attrs, ctrl) {
