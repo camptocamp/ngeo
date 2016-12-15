@@ -78,7 +78,7 @@ gmf.ThemeManager = function(gmfThemes, gmfTreeManagerModeFlush, gmfTreeManager, 
 gmf.ThemeManager.prototype.addTheme = function(theme, opt_silent) {
   if (this.modeFlush) {
     this.ngeoStateManager_.updateState({
-      'theme' : theme.name
+      'theme': theme.name
     });
     this.themeName = theme.name;
     this.gmfTreeManager_.setFirstLevelGroups(theme.children);

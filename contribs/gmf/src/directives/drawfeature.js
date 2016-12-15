@@ -343,7 +343,7 @@ gmf.DrawfeatureController.prototype.initializeInteractions_ = function() {
   this.interactions_.forEach(function(interaction) {
     interaction.setActive(false);
     this.ngeoDecorateInteraction_(interaction);
-  },this);
+  }, this);
 };
 
 
@@ -354,7 +354,7 @@ gmf.DrawfeatureController.prototype.initializeInteractions_ = function() {
 gmf.DrawfeatureController.prototype.registerInteractions_ = function() {
   this.interactions_.forEach(function(interaction) {
     this.map.addInteraction(interaction);
-  },this);
+  }, this);
 };
 
 
@@ -365,7 +365,7 @@ gmf.DrawfeatureController.prototype.registerInteractions_ = function() {
 gmf.DrawfeatureController.prototype.unregisterInteractions_ = function() {
   this.interactions_.forEach(function(interaction) {
     this.map.removeInteraction(interaction);
-  },this);
+  }, this);
 };
 
 

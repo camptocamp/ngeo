@@ -248,7 +248,7 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
    * @export
    */
   this.layer = isRoot ? null : /** @type {ol.layer.Layer} */
-      ($scope.$eval(nodelayerExpr, {'treeCtrl' : this}));
+      ($scope.$eval(nodelayerExpr, {'treeCtrl': this}));
 
   if (this.layer) {
     ngeoDecorateLayerLoading(this.layer, $scope);

@@ -20,7 +20,7 @@ describe('Permalink service', function() {
     StateManagerService = $injector.get('ngeoStateManager');
     PermalinkService = $injector.get('gmfPermalink');
     ngeoLocation = $injector.get('ngeoLocation');
-    var map = new ol.Map({layers : [], view: new ol.View({projection: ol.proj.get('EPSG:2056')})});
+    var map = new ol.Map({layers: [], view: new ol.View({projection: ol.proj.get('EPSG:2056')})});
     PermalinkService.setMap(map);
     // need to work on a clone of themes, because the permalink service
     // seems to change the original object?!

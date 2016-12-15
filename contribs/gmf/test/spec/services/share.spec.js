@@ -5,7 +5,7 @@ describe('gmf.ShareService', function() {
   var $httpBackend;
   var shortenerUrl;
   var successResponse = {
-    short_url : 'http://fake/gmf'
+    short_url: 'http://fake/gmf'
   };
 
   afterEach(function() {
@@ -23,7 +23,7 @@ describe('gmf.ShareService', function() {
 
     var permalink = 'htpp://fake/c2c/permalink';
     var params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
-      url : permalink
+      url: permalink
     });
 
     $httpBackend.expectPOST(shortenerUrl, $.param(params));

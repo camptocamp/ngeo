@@ -61,7 +61,7 @@ ngeo.resizemapDirective = function($window) {
 
           // Make sure the map is resized when the animation ends.
           // It may help in case the animation didn't start correctly.
-          element.bind('transitionend',function() {
+          element.bind('transitionend', function() {
             map.updateSize();
             map.renderSync();
           });

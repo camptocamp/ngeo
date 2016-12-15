@@ -103,7 +103,7 @@ describe('gmf.SyncLayertreeMap', function() {
     roottreeCtrl = element.scope().layertreeCtrl;
     var treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
     var wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
-    var checkedLayers = ['cinema', 'police', 'post_office','entertainment',
+    var checkedLayers = ['cinema', 'police', 'post_office', 'entertainment',
       'sustenance', 'hospitals']; // order count !
 
     expect(wmsParamLayers).toEqual(checkedLayers.reverse().join(','));

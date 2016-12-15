@@ -1,4 +1,5 @@
 /*eslint no-unused-vars: ['error', { 'varsIgnorePattern': 'themes|capabilities' }] */
+/* eslint comma-spacing: 0, key-spacing: 0 */
 goog.provide('gmf.test.data.themes');
 
 var themes = {

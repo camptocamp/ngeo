@@ -35,7 +35,7 @@ gmfapp.MainController = function($scope, gmfWMSTime) {
     minDefValue: null,
     resolution: /** @type {ngeox.TimePropertyResolutionEnum}*/ ('day'),
     mode: /** @type {ngeox.TimePropertyModeEnum} */('range'),
-    interval : [0,1,0,0]
+    interval: [0, 1, 0, 0]
   };
 
   /**
@@ -50,7 +50,7 @@ gmfapp.MainController = function($scope, gmfWMSTime) {
     minDefValue: null,
     resolution: /** @type {ngeox.TimePropertyResolutionEnum}*/ ('year'),
     mode: /** @type {ngeox.TimePropertyModeEnum} */ ('value'),
-    interval : [0,0,1,0]
+    interval: [0, 0, 1, 0]
   };
 
   /**

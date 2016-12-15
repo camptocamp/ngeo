@@ -40,15 +40,15 @@ gmf.ShareService = function($http, gmfShortenerCreateUrl) {
  */
 gmf.ShareService.prototype.getShortUrl = function(url) {
   var params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
-    url : url
+    url: url
   });
 
   if (!this.gmfShortenerCreateUrl_) {
     return {
-      data : {
-        short_url : url
+      data: {
+        short_url: url
       },
-      status : 200
+      status: 200
     };
   }
 
@@ -66,8 +66,8 @@ gmf.ShareService.prototype.getShortUrl = function(url) {
  */
 gmf.ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
   var params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
-    url : shortUrl,
-    email : email
+    url: shortUrl,
+    email: email
   });
 
   if (opt_message) {

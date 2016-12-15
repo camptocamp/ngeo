@@ -101,7 +101,7 @@ describe('ngeo.WfsPermalink', function() {
           {
             'filters': [
               {'property': 'osm_id', 'condition': '12345'},
-              {'property': 'type', 'condition':['diesel', 'gas']}
+              {'property': 'type', 'condition': ['diesel', 'gas']}
             ]
           },
           {

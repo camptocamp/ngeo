@@ -14,7 +14,7 @@ describe('GmfPrintController', function() {
     gmfPrintCtrl = $controller('GmfPrintController',
       {
         $scope: $scope,
-        gmfPrintUrl : ''
+        gmfPrintUrl: ''
       }
     );
     gmfPrintCtrl.map = new ol.Map({
