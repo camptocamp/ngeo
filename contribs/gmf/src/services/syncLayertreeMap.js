@@ -257,7 +257,7 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map
 /**
  * Update a WMS layer with the given treeCtrl node information. Assumes that
  * the first parent with ogcServer information is linked to the layer to update
- * and that this treeCtrl nod is a leafNode.
+ * and that this treeCtrl node is a leafNode.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
  * @param {ol.Map} map A map that contains the layer to update.
  * @private
@@ -273,6 +273,8 @@ gmf.SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl
   if (leafNode.metadata.isChecked) {
     treeCtrl.setState('on', false);
     this.updateLayerState_(layer, firstLevelGroup);
+  } else {
+    treeCtrl.parent.refreshState();
   }
 };
 
