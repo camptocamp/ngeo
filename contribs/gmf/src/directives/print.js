@@ -495,6 +495,9 @@ gmf.PrintController.prototype.updateFields_ = function() {
   this.formats_.forEach(function(format) {
     this.fields.formats[format] = true;
   }.bind(this));
+
+  // Force the update of the mask
+  this.map.render();
 };
 
 
