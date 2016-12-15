@@ -179,7 +179,7 @@ ngeo.format.XSDAttributeType = {
   /**
    * @type {string}
    */
-  SELECT: 'select' ,
+  SELECT: 'select',
   /**
    * @type {string}
    */

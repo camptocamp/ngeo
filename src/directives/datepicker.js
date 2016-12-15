@@ -32,21 +32,21 @@ ngeo.module.value('ngeoDatePickerTemplateUrl',
  */
 ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
   return {
-    scope : {
-      onDateSelected : '&',
-      time : '='
+    scope: {
+      onDateSelected: '&',
+      time: '='
     },
-    bindToController : true,
+    bindToController: true,
     controller: 'ngeoDatePickerController as datepickerCtrl',
     restrict: 'AE',
-    templateUrl : ngeoDatePickerTemplateUrl,
+    templateUrl: ngeoDatePickerTemplateUrl,
     link: function(scope, element, attrs, ctrl) {
 
       var lang =  ctrl.gettextCatalog_.getCurrentLanguage();
       $['datepicker']['setDefaults']($['datepicker']['regional'][lang]);
 
       ctrl.sdateOptions = angular.extend({}, ctrl.sdateOptions, {
-        'onClose' : function(selectedDate) {
+        'onClose': function(selectedDate) {
           if (selectedDate) {
             $(element[0]).find('input[name="edate"]').datepicker('option', 'minDate', selectedDate);
           }
@@ -54,7 +54,7 @@ ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
       });
 
       ctrl.edateOptions = angular.extend({}, ctrl.edateOptions, {
-        'onClose' : function(selectedDate) {
+        'onClose': function(selectedDate) {
           if (selectedDate) {
             $(element[0]).find('input[name="sdate"]').datepicker('option', 'maxDate', selectedDate);
           }
@@ -151,8 +151,8 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime) {
    * @export
    */
   this.edateOptions = {
-    'minDate' : this.initialMinDate,
-    'maxDate' : this.initialMaxDate,
+    'minDate': this.initialMinDate,
+    'maxDate': this.initialMaxDate,
     'changeMonth': true,
     'changeYear': true
   };
@@ -163,8 +163,8 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime) {
    * @export
    */
   this.sdateOptions = {
-    'minDate' : this.initialMinDate,
-    'maxDate' : this.initialMaxDate,
+    'minDate': this.initialMinDate,
+    'maxDate': this.initialMaxDate,
     'changeMonth': true,
     'changeYear': true
   };
@@ -198,9 +198,9 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime) {
 
     if (angular.isDate(sDate) && (!this.isModeRange || angular.isDate(eDate))) {
       this.onDateSelected({
-        time : {
-          start : sDate.getTime(),
-          end : eDate ? eDate.getTime() : null
+        time: {
+          start: sDate.getTime(),
+          end: eDate ? eDate.getTime() : null
         }
       });
     }

@@ -13,7 +13,7 @@ describe('gmfWMSTime service', function() {
     minDefValue: null,
     resolution: /** @type {ngeox.TimePropertyResolutionEnum}*/ ('year'),
     mode: /** @type {ngeox.TimePropertyModeEnum} */ ('value'),
-    interval : [0,0,1,0]
+    interval: [0, 0, 1, 0]
   };
 
   beforeEach(function() {
@@ -25,25 +25,25 @@ describe('gmfWMSTime service', function() {
   it('should format the time regarding the resolution and with a mode set on value', function() {
     var timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
     var timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
-      start :  timeValues
+      start: timeValues
     });
     expect(timeParam).toBe('2014');
 
     wmsTime.resolution = 'month';
     timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
-      start :  timeValues
+      start: timeValues
     });
     expect(timeParam).toBe('2014-01');
 
     wmsTime.resolution = 'day';
     timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
-      start :  timeValues
+      start: timeValues
     });
     expect(timeParam).toBe('2014-01-01');
 
     wmsTime.resolution = 'second';
     timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
-      start :  timeValues
+      start: timeValues
     });
     expect(timeParam).toBe('2014-01-01T00:00:00Z');
   });
@@ -54,29 +54,29 @@ describe('gmfWMSTime service', function() {
     wmsTime.resolution = 'year';
     var timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
     var timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
-      start :  timeValues[0],
-      end : timeValues[1]
+      start: timeValues[0],
+      end: timeValues[1]
     });
     expect(timeParam).toBe('2014/2015');
 
     wmsTime.resolution = 'month';
     timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
-      start :  timeValues[0],
-      end : timeValues[1]
+      start: timeValues[0],
+      end: timeValues[1]
     });
     expect(timeParam).toBe('2014-01/2015-12');
 
     wmsTime.resolution = 'day';
     timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
-      start :  timeValues[0],
-      end : timeValues[1]
+      start: timeValues[0],
+      end: timeValues[1]
     });
     expect(timeParam).toBe('2014-01-01/2015-12-31');
 
     wmsTime.resolution = 'second';
     timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
-      start :  timeValues[0],
-      end : timeValues[1]
+      start: timeValues[0],
+      end: timeValues[1]
     });
     expect(timeParam).toBe('2014-01-01T00:00:00Z/2015-12-31T00:00:00Z');
   });

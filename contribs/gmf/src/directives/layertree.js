@@ -614,7 +614,7 @@ gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
   $(legendNodeId).toggle({
-    toggle : true
+    toggle: true
   });
 };
 

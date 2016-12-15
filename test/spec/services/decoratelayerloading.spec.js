@@ -19,7 +19,7 @@ describe('DecorateLayerLoading test suite', function() {
 
   it('should increment layerLoadingCount recursively', function() {
     var imageSource = new ol.source.Image({});
-    var layer = new ol.layer.Image({source : imageSource});
+    var layer = new ol.layer.Image({source: imageSource});
     var lg_1 = new ol.layer.Group();
     var lg_2 = new ol.layer.Group();
 

@@ -31,7 +31,7 @@ goog.require('ol.style.Style');
  * @enum {string}
  */
 gmf.PermalinkOpenLayersLayerProperties = {
-  OPACITY : 'opacity'
+  OPACITY: 'opacity'
 };
 
 /**
@@ -447,7 +447,7 @@ gmf.Permalink.prototype.getMapCenter = function() {
     gmf.PermalinkParam.MAP_Y));
 
   if (x !== undefined && y !== undefined) {
-    center = [x,y];
+    center = [x, y];
     if (this.sourceProjections_ !== null) {
       var targetProjection = this.map_.getView().getProjection();
       var reprojectedCenter = this.ngeoAutoProjection_.tryProjectionsWithInversion(

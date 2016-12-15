@@ -29,14 +29,14 @@ goog.require('gmf.WMSTime');
  */
 gmf.timeSliderDirective = function($timeout, $filter) {
   return {
-    scope : {
-      onDateSelected : '&gmfTimeSliderOnDateSelected',
-      time : '=gmfTimeSliderTime'
+    scope: {
+      onDateSelected: '&gmfTimeSliderOnDateSelected',
+      time: '=gmfTimeSliderTime'
     },
-    bindToController : true,
+    bindToController: true,
     controller: 'gmfTimeSliderController as sliderCtrl',
     restrict: 'AE',
-    templateUrl : gmf.baseTemplateUrl + '/timeslider.html',
+    templateUrl: gmf.baseTemplateUrl + '/timeslider.html',
     link: function(scope, element, attrs, ctrl) {
 
       ctrl.sliderOptions['stop'] = onSliderReleased_;
@@ -44,7 +44,7 @@ gmf.timeSliderDirective = function($timeout, $filter) {
 
       function onSliderReleased_(e, sliderUi) {
         ctrl.onDateSelected({
-          time : computeDates_(e, sliderUi)
+          time: computeDates_(e, sliderUi)
         });
       }
 
@@ -55,14 +55,14 @@ gmf.timeSliderDirective = function($timeout, $filter) {
           eDate = new Date(ctrl.getClosestValue_(sliderUi.values[1]));
           ctrl.dates = [sDate, eDate];
           wmstime = {
-            start : sDate.getTime(),
-            end : eDate.getTime()
+            start: sDate.getTime(),
+            end: eDate.getTime()
           };
         } else {
           sDate = new Date(ctrl.getClosestValue_(sliderUi.value));
           ctrl.dates = sDate;
           wmstime = {
-            start : sDate.getTime()
+            start: sDate.getTime()
           };
         }
         scope.$apply();
@@ -147,9 +147,9 @@ gmf.TimeSliderController = function($scope, gmfWMSTime) {
    * @export
    */
   this.sliderOptions = {
-    range : this.isModeRange,
-    min : this.minValue,
-    max : this.maxValue
+    range: this.isModeRange,
+    min: this.minValue,
+    max: this.maxValue
   };
 
   /**

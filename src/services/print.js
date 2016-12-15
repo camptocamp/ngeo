@@ -615,7 +615,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
          * TODO: Need a way to find the mime type of the image.
          * Providing a fake mimetype works but it's not the right way to do.
          */
-        graphicFormat : 'image/png'
+        graphicFormat: 'image/png'
       });
       var opacity = imageStyle.getOpacity();
       if (opacity !== null) {

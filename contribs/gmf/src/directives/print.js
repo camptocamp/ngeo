@@ -724,7 +724,7 @@ gmf.PrintController.prototype.resetPrintStates_ = function(opt_printState) {
  * the print report
  */
 gmf.PrintController.prototype.getDataSource_ = function() {
-  var datasourceObj,data,columns;
+  var datasourceObj, data, columns;
   var datasourceArr = [];
   var sources = this.ngeoQueryResult_.sources;
   sources.forEach(function(source) {
@@ -743,15 +743,15 @@ gmf.PrintController.prototype.getDataSource_ = function() {
     }, this);
     if (columns.length) {
       datasourceObj = /** @type {gmfx.DataSourcePrintReportObject} */({
-        title : this.translate_(source.label),
-        table : {
-          columns : columns,
-          data : data
+        title: this.translate_(source.label),
+        table: {
+          columns: columns,
+          data: data
         }
       });
       datasourceArr.push(datasourceObj);
     }
-  },this);
+  }, this);
   return datasourceArr;
 };
 
