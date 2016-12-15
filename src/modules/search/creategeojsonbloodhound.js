@@ -8,7 +8,7 @@ goog.require('ol.obj');
 
 /**
  * Provides a function that creates a Bloodhound engine
- * expecting GeoJSON responses from the search web service, and creating
+ * expecting GeoJSON responses from the search web service, which creates
  * `ol.Feature` objects as suggestions.
  *
  * Example:

@@ -1429,3 +1429,67 @@ ngeox.source.SwisstopoOptions.prototype.format;
  * @type {string}
  */
 ngeox.source.SwisstopoOptions.prototype.timestamp;
+
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+ngeox.search;
+
+
+/**
+ * @typedef {{
+ *    limit: (number|undefined),
+ *    origins: (string|undefined),
+ *    targetProjection: (!ol.proj.Projection|undefined),
+ *    options: (!BloodhoundOptions|undefined),
+ *    remoteOptions: (!BloodhoundRemoteOptions|undefined),
+ *    prepare: ((function(string, jQueryAjaxSettings):jQueryAjaxSettings)|undefined)
+ * }}
+ */
+ngeox.search.LocationSearchOptions;
+
+
+/**
+ * The maximum number of results to retrieve per request (max. and default limit=50).
+ * @type {number|undefined}
+ */
+ngeox.search.LocationSearchOptions.prototype.limit;
+
+
+/**
+ * A comma separated list of origins.
+ * Possible origins are: zipcode,gg25,district,kantone,gazetteer,address,parcel
+ * Per default all origins are used.
+ * @type {string|undefined}
+ */
+ngeox.search.LocationSearchOptions.prototype.origins;
+
+
+/**
+ * Target projection.
+ * @type {!ol.proj.Projection|undefined}
+ */
+ngeox.search.LocationSearchOptions.prototype.targetProjection;
+
+
+/**
+ * Optional Bloodhound options. If `undefined`, the default Bloodhound config will be used.
+ * @type {!BloodhoundOptions|undefined}
+ */
+ngeox.search.LocationSearchOptions.prototype.options;
+
+
+/**
+ * Optional Bloodhound remote options. Only used if `remote` is not defined in `options`.
+ * @type {!BloodhoundRemoteOptions|undefined}
+ */
+ngeox.search.LocationSearchOptions.prototype.remoteOptions;
+
+
+/**
+ * Optional function to prepare the request.
+ * @type {(function(string, jQueryAjaxSettings):jQueryAjaxSettings)|undefined}
+ */
+ngeox.search.LocationSearchOptions.prototype.prepare;
