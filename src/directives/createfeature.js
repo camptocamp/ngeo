@@ -228,7 +228,15 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
  * @export
  */
 ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
-  var feature = new ol.Feature(event.feature.getGeometry());
+  // convert to multi if geomType is multi and feature is not
+  var geometry = event.feature.getGeometry();
+  var type = geometry.getType();
+  if (this.geomType.indexOf('Multi') != type.indexOf('Multi')) {
+    var multiType = 'Multi' +
+        type.substring(type.lastIndexOf('.') + 1, type.length);
+    geometry = new ol.geom[multiType]([geometry.getCoordinates()]);
+  }
+  var feature = new ol.Feature(geometry);
   if (this.features instanceof ol.Collection) {
     this.features.push(feature);
   } else {
