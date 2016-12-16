@@ -214,9 +214,22 @@ gmf.ObjectEditingQuery.GetQueryableLayerNodesResponse;
 
 
 /**
- * @typedef {{
- *     ogcServer: (gmfThemes.GmfOgcServer),
- *     layerNode: (gmfThemes.GmfLayerWMS)
- * }}
+ * @constructor
+ * @struct
+ * @export
  */
-gmf.ObjectEditingQuery.QueryableLayerInfo;
+gmf.ObjectEditingQuery.QueryableLayerInfo = function() {};
+
+
+/**
+ * @type {gmfThemes.GmfOgcServer}
+ * @export
+ */
+gmf.ObjectEditingQuery.QueryableLayerInfo.prototype.ogcServer;
+
+
+/**
+ * @type {gmfThemes.GmfLayerWMS}
+ * @export
+ */
+gmf.ObjectEditingQuery.QueryableLayerInfo.prototype.layerNode;
