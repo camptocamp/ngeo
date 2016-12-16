@@ -214,13 +214,11 @@ gmf.ObjectEditingQuery.GetQueryableLayerNodesResponse;
 
 
 /**
- * @typedef {{
- *     ogcServer: (gmfThemes.GmfOgcServer),
- *     layerNode: (gmfThemes.GmfLayerWMS)
- * }}
+ * @constructor
+ * @struct
  * @export
  */
-gmf.ObjectEditingQuery.QueryableLayerInfo;
+gmf.ObjectEditingQuery.QueryableLayerInfo = function() {};
 
 
 /**
