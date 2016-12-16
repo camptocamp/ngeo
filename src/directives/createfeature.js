@@ -7,6 +7,7 @@ goog.require('ngeo.EventHelper');
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureLength');
+goog.require('ngeo.utils');
 goog.require('ol.Feature');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
@@ -232,9 +233,7 @@ ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
   var geometry = event.feature.getGeometry();
   var type = geometry.getType();
   if (this.geomType.indexOf('Multi') != type.indexOf('Multi')) {
-    var multiType = 'Multi' +
-        type.substring(type.lastIndexOf('.') + 1, type.length);
-    geometry = new ol.geom[multiType]([geometry.getCoordinates()]);
+    geometry = ngeo.utils.toMulti(geometry);
   }
   var feature = new ol.Feature(geometry);
   if (this.features instanceof ol.Collection) {
