@@ -261,8 +261,8 @@ gmf.DisplayquerywindowController.prototype.updateFeatures_ = function() {
 /**
  * Select a source and a feature depending of the given position.
  * @param {number} position The index of the feature. If the position is bigger
- * @param {boolean} setHighlight True to set the highlight automatically.
  * than the length of the first source, get it in the next source. Etc.
+ * @param {boolean} setHighlight True to set the highlight automatically.
  * @return {boolean} True if result has changed. False else.
  * @private
  */
