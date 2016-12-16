@@ -551,7 +551,7 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
 
 
 /**
- * @param {MapFishPrintSymbolizer} symbolizer MapFish Print symbolizer.
+ * @param {MapFishPrintSymbolizerPoint|MapFishPrintSymbolizerPolygon} symbolizer MapFish Print symbolizer.
  * @param {!ol.style.Fill} fillStyle Fill style.
  * @private
  */
@@ -704,7 +704,8 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle
 
 
 /**
- * @param {MapFishPrintSymbolizer} symbolizer MapFish Print symbolizer.
+ * @param {MapFishPrintSymbolizerPoint|MapFishPrintSymbolizerLine|MapFishPrintSymbolizerPolygon}
+ *      symbolizer MapFish Print symbolizer.
  * @param {!ol.style.Stroke} strokeStyle Stroke style.
  * @private
  */
@@ -729,7 +730,7 @@ ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle
 
 
 /**
- * @param {Array.<MapFishPrintSymbolizer>} symbolizers Array of MapFish Print
+ * @param {Array.<MapFishPrintSymbolizerText>} symbolizers Array of MapFish Print
  *     symbolizers.
  * @param {!ol.style.Text} textStyle Text style.
  * @private

@@ -25,6 +25,11 @@ MapFishPrintSpec.prototype.attributes;
 MapFishPrintSpec.prototype.layout;
 
 
+/**
+ * @type {string}
+ */
+MapFishPrintSpec.prototype.format;
+
 
 /**
  * @record
@@ -584,12 +589,12 @@ MapFishPrintSymbolizerText.prototype.fontFamily;
 /**
  * @type {number}
  */
-MapFishPrintSymbolizerText.prototype.XOffset;
+MapFishPrintSymbolizerText.prototype.labelXOffset;
 
 /**
  * @type {number}
  */
-MapFishPrintSymbolizerText.prototype.YOffset;
+MapFishPrintSymbolizerText.prototype.labelYOffset;
 
 /**
  * @type {string}
