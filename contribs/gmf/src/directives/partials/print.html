@@ -3,7 +3,7 @@
 
     <div
       ng-repeat="customField in ctrl.fields.customs"
-      class="form-group">
+      class="gmf-print-custom-fields form-group">
 
       <input
         ng-if="customField.type === 'number'"
@@ -40,7 +40,7 @@
 
     <div
       ng-show="ctrl.fields.legend !== undefined"
-      class="checkbox">
+      class="gmf-print-legend checkbox">
       <label>
         <input
           ng-model="ctrl.fields.legend"
@@ -49,7 +49,7 @@
       </label>
     </div>
 
-    <div class="form-horizontal">
+    <div class="gmf-print-layout-selector form-horizontal">
       <div
         ng-show="ctrl.fields.layouts.length !== 1"
         class="form-group">
@@ -82,7 +82,7 @@
 
       <div
         ng-show="ctrl.fields.scales.length !== 1"
-        class="form-group">
+        class="gmf-print-scale-selector form-group">
 
         <label
           class="control-label col-md-5"
@@ -113,7 +113,7 @@
 
       <div
         ng-show="ctrl.fields.dpis.length !== 1"
-        class="form-group">
+        class="gmf-print-dpi-selector form-group">
 
         <label
           class="control-label col-md-3"
@@ -140,7 +140,7 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="gmf-print-rotation-selector form-group">
         <label
           class="control-label col-md-3"
           translate>Rotation</label>
@@ -168,47 +168,47 @@
 
     </div>
 
-    <div class="form-group pull-right">
+    <div class="gmf-print-actions form-group pull-right">
       <span ng-show="ctrl.isState('PRINTING')">
         <i class="fa fa-refresh fa-spin"></i>
       </span>
 
       <a
         ng-show="ctrl.isState('PRINTING')"
-        class="btn btn-link"
+        class="gmf-print-cancel btn btn-link"
         href=""
         ng-click="ctrl.cancel()"
         translate>Abort</a>
 
       <button
         ng-show="ctrl.fields.formats.png"
-        class="btn btn-primary"
+        class="gmf-print-image btn btn-primary"
         ng-disabled="ctrl.isState('PRINTING')"
         ng-click="ctrl.print('png')">Image</button>
 
       <button
         ng-show="ctrl.fields.formats.pdf"
-        class="btn btn-primary"
+        class="gmf-print-pdf btn btn-primary"
         ng-disabled="ctrl.isState('PRINTING')"
         ng-click="ctrl.print('pdf')">PDF</button>
     </div>
 
     <div
       ng-show="ctrl.isState('ERROR_ON_REPORT')"
-      class="form-group pull-left text-danger">
+      class="gmf-print-error-report form-group pull-left text-danger">
       <p>{{'Error during the print, please try again.' | translate}}</p>
     </div>
   </div>
 
   <div
     ng-show="ctrl.isState('CAPABILITIES_NOT_LOADED')"
-    class="form-group pull-left">
+    class="gmf-print-wait form-group pull-left">
     <p>{{'Connecting to the print server, please wait.' | translate}}</p>
   </div>
 
   <div
     ng-show="ctrl.isState('ERROR_ON_GETCAPABILITIES')"
-    class="form-group pull-left text-danger">
+    class="gmf-print-error-capabilities form-group pull-left text-danger">
     <p>{{'The print server is unavailable. Please, try later.' | translate}}</p>
   </div>
 </div>
