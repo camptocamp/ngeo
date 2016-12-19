@@ -18,7 +18,7 @@
     "ngeo-build": "buildtools/build.js"
   },
   "devDependencies": {
-    "angular": "1.5.9",
+    "angular": "1.6.0",
     "angular-animate": "1.5.8",
     "angular-dynamic-locale": "0.1.32",
     "angular-float-thead": "0.1.2",

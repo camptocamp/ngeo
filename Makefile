@@ -129,9 +129,9 @@ endif
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
 GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
 
-EXTERNS_ANGULAR = .build/externs/angular-1.5.js
-EXTERNS_ANGULAR_Q = .build/externs/angular-1.5-q_templated.js
-EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.5-http-promise_templated.js
+EXTERNS_ANGULAR = .build/externs/angular-1.6.js
+EXTERNS_ANGULAR_Q = .build/externs/angular-1.6-q_templated.js
+EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.6-http-promise_templated.js
 EXTERNS_JQUERY = .build/externs/jquery-1.9.js
 EXTERNS_FILES = $(EXTERNS_ANGULAR) $(EXTERNS_ANGULAR_Q) $(EXTERNS_ANGULAR_HTTP_PROMISE) $(EXTERNS_JQUERY)
 

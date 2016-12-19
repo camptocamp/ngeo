@@ -12,16 +12,22 @@ gmf.module = angular.module('gmf', [
   'tmh.dynamicLocale', 'ui.date', 'ui.slider'
 ]);
 
-gmf.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
+gmf.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript', '$compileProvider',
   /**
    * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider
    * @param {string} angularLocaleScript the script.
+   * @param {angular.$compileProvider} $compileProvider
    */
-  function(tmhDynamicLocaleProvider, angularLocaleScript) {
+  function(tmhDynamicLocaleProvider, angularLocaleScript, $compileProvider) {
     // configure the script URL
     tmhDynamicLocaleProvider.localeLocationPattern(angularLocaleScript);
+    $compileProvider.preAssignBindingsEnabled(true);
   }
 ]);
+
+ngeo.module.config(function($compileProvider) {
+  $compileProvider.preAssignBindingsEnabled(true);
+});
 
 /**
  * The default template based URL, used as it by the template cache.
