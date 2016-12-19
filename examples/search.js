@@ -12,6 +12,7 @@ goog.require('ol.layer.Vector');
 goog.require('ol.proj');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
+goog.require('goog.asserts');
 
 
 /** @type {!angular.Module} **/
@@ -171,16 +172,15 @@ app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCre
  * @private
  */
 app.SearchController.select_ = function(event, suggestion, dataset) {
-  var map = /** @type {ol.Map} */ (this.map);
   var feature = /** @type {ol.Feature} */ (suggestion);
   var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
-  var mapSize = /** @type {ol.Size} */ (map.getSize());
+  var mapSize = this.map.getSize();
+  goog.asserts.assert(mapSize !== undefined);
   var source = this.vectorLayer_.getSource();
   source.clear(true);
   source.addFeature(feature);
-  map.getView().fit(featureGeometry, mapSize,
-      /** @type {olx.view.FitOptions} */ ({maxZoom: 16}));
+  this.map.getView().fit(featureGeometry, mapSize, {maxZoom: 16});
 };
 
 
