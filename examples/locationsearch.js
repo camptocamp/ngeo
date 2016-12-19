@@ -134,13 +134,11 @@ app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLoc
  * @private
  */
 app.SearchController.select_ = function(event, suggestion, dataset) {
-  var map = /** @type {ol.Map} */ (this.map);
   var feature = /** @type {ol.Feature} */ (suggestion);
-  var bbox = /** @type {ol.Extent} */
-      (feature.get('bbox'));
-  var mapSize = /** @type {ol.Size} */ (map.getSize());
-  map.getView().fit(bbox, mapSize,
-      /** @type {olx.view.FitOptions} */ ({maxZoom: 16}));
+  var bbox = /** @type {ol.Extent} */ (feature.get('bbox'));
+  var mapSize = this.map.getSize();
+  goog.asserts.assert(mapSize !== undefined);
+  this.map.getView().fit(bbox, mapSize, {maxZoom: 16});
 };
 
 
