@@ -103,7 +103,8 @@ app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
   const busStopLayer = new ol.layer.Image({
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
-      params: {'LAYERS': 'bus_stop'}
+      params: {'LAYERS': 'bus_stop'},
+      crossOrigin: 'anonymous'
     })
   });
 
@@ -120,7 +121,8 @@ app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
   const informationLayer = new ol.layer.Image({
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
-      params: {'LAYERS': 'information'}
+      params: {'LAYERS': 'information'},
+      crossOrigin: 'anonymous'
     })
   });
 
