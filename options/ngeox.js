@@ -1445,7 +1445,7 @@ ngeox.search;
  *    targetProjection: (!ol.proj.Projection|undefined),
  *    options: (!BloodhoundOptions|undefined),
  *    remoteOptions: (!BloodhoundRemoteOptions|undefined),
- *    prepare: ((function(string, jQueryAjaxSettings):jQueryAjaxSettings)|undefined)
+ *    prepare: (undefined|function(string, jQueryAjaxSettings):jQueryAjaxSettings)
  * }}
  */
 ngeox.search.LocationSearchOptions;
@@ -1490,6 +1490,6 @@ ngeox.search.LocationSearchOptions.prototype.remoteOptions;
 
 /**
  * Optional function to prepare the request.
- * @type {(function(string, jQueryAjaxSettings):jQueryAjaxSettings)|undefined}
+ * @type {undefined|function(string, jQueryAjaxSettings):jQueryAjaxSettings}
  */
 ngeox.search.LocationSearchOptions.prototype.prepare;
