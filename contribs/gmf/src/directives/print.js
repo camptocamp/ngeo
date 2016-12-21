@@ -86,6 +86,12 @@ gmf.module.value('gmfPrintTemplateUrl',
  *     panel is open or not.
  * @htmlAttribute {boolean} gmf-print-rotatemask Optional. True to apply
  *     rotation on the mask instead of the map. By default, the map rotates.
+ * @htmlAttribute {Object.<string, string|number|boolean>}
+ *     gmf-print-fieldvalues optional. Key, value object to define default
+ *     value in each of your print panel field. The key refers to the
+ *     property's name of the field.
+ *     Example: {'comments': 'demo', 'legend': false}. Don't work for the dpi
+ *     and the scale. Server's values are used in priorty.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfPrintTemplateUrl Template url for the directive.
  * @return {angular.Directive} Directive Definition Object.
@@ -103,7 +109,8 @@ gmf.printDirective = function(gmfPrintTemplateUrl) {
     scope: {
       'map': '=gmfPrintMap',
       'active': '=gmfPrintActive',
-      'rotateMask': '&?gmfPrintRotatemask'
+      'rotateMask': '&?gmfPrintRotatemask',
+      'fieldValues': '&?gmfPrintFieldvalues'
     },
     link: function(scope, element, attr) {
       var ctrl = scope['ctrl'];
@@ -174,10 +181,17 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   this.active;
 
   /**
-   * @type{boolean}
+   * @type {boolean}
    * @private
    */
   this.rotateMask_ = this['rotateMask'] ? this['rotateMask']() : false;
+
+  /**
+   * @type {Object.<string, string|number|boolean>!}
+   * @private
+   */
+  this.fieldValues_ = this['fieldValues'] ?
+      this['fieldValues']() : {};
 
   /**
    * @type {angular.Scope}
@@ -476,8 +490,10 @@ gmf.PrintController.prototype.updateFields_ = function() {
   this.updateCustomFields_();
 
   var legend = this.isAttributeInCurrentLayout_('legend');
+  var customLegendField = this.fieldValues_['legend'] !== undefined ?
+      false : true; // default is true, so if it's defined it's to get false.
   this.fields.legend = legend !== null ?
-      this.fields.legend || true : undefined;
+      this.fields.legend || customLegendField : undefined;
 
   this.fields.scales = clientInfo['scales'] || [];
   this.fields.dpis = clientInfo['dpiSuggestions'] || [];
@@ -517,7 +533,7 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
   this.layout_.attributes.forEach(function(attribute) {
     if (!attribute['clientParams']) {
       name = '' + attribute.name;
-      value = attribute.default;
+      value = attribute.default || this.fieldValues_[name];
 
       // Try to use existing form field type
       rawType = '' + attribute.type;
