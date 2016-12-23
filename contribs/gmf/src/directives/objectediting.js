@@ -527,13 +527,22 @@ gmf.ObjecteditingController.prototype.handleDeleteFeature_ = function(resp) {
  * @private
  */
 gmf.ObjecteditingController.prototype.handleEditFeature_ = function(resp) {
+  // (1) Update the id
+  var features = new ol.format.GeoJSON().readFeatures(resp.data);
+  if (features.length) {
+    this.feature.setId(features[0].getId());
+  }
+  // (2) Reset geometry changes
   this.resetGeometryChanges_();
+  // (3) Update state
   if (this.feature.getGeometry()) {
     this.state_ = gmf.ObjecteditingController.State.UPDATE;
   } else {
     this.state_ = gmf.ObjecteditingController.State.INSERT;
   }
+  // (4) No longer pending
   this.pending = false;
+  // (5) Refresh WMS layer
   this.refreshWMSLayer_();
 };
 
