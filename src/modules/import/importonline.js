@@ -36,7 +36,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
         return;
       }
 
-      scope.handleFileContent = options.handleFileContent;
+      scope['handleFileContent'] = options.handleFileContent;
 
       var initUserMsg = function() {
         scope.userMessage = 'connect';
@@ -94,14 +94,14 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
         taElt.typeahead('close');
         // When a WMS is selected in the list, start downloading the
         // GetCapabilities
-        scope.fileUrl = nameUrl['url'];
+        scope['fileUrl'] = nameUrl['url'];
         scope.handleFileUrl();
         scope.$digest();
       }).on('focus', function() {
       });
 
       scope.$on('gettextLanguageChanged', function() {
-        if (scope.fileUrl && /lang=/.test(scope.fileUrl)) {
+        if (scope['fileUrl'] && /lang=/.test(scope['fileUrl'])) {
           scope.handleFileUrl();
         }
       });
@@ -123,7 +123,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
 
       // Handle URL of WMS
       scope.handleFileUrl = function() {
-        var url = scope.fileUrl;
+        var url = scope['fileUrl'];
 
         if (options.transformUrl) {
           url = options.transformUrl(url);
@@ -138,8 +138,8 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
         ngeoFile.load(url, scope.canceler).then(function(fileContent) {
           scope.canceler = null;
 
-          return scope.handleFileContent(fileContent, {
-            url: scope.fileUrl
+          return scope['handleFileContent'](fileContent, {
+            url: scope['fileUrl']
           });
 
         }).then(function(result) {

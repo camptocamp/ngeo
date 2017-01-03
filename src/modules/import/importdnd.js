@@ -33,7 +33,7 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
         return;
       }
 
-      scope.handleFileContent = options.handleFileContent;
+      scope['handleFileContent'] = options.handleFileContent;
 
       elt.click(function() {
         // Hide the drop zone on click,
@@ -56,7 +56,7 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
 
         if (files && files.length > 0) {
           ngeoFile.read(files[0]).then(function(fileContent) {
-            scope.handleFileContent(fileContent, files[0]);
+            scope['handleFileContent'](fileContent, files[0]);
           });
 
         } else if (evt.originalEvent.dataTransfer.types) {
@@ -66,7 +66,7 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
 
           if (options.isValidUrl(text)) {
             ngeoFile.load(text).then(function(fileContent) {
-              return scope.handleFileContent(fileContent, {
+              return scope['handleFileContent'](fileContent, {
                 url: text
               });
             })['catch'](function(err) {

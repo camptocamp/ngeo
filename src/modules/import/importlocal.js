@@ -34,7 +34,7 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
         return;
       }
 
-      scope.handleFileContent = scope.options.handleFileContent;
+      scope['handleFileContent'] = scope.options.handleFileContent;
 
 
       var initUserMsg = function() {
@@ -57,7 +57,7 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
       elt.find('input[type=file]').bind('change', function(evt) {
         if (evt.target.files && evt.target.files.length > 0) {
           scope.$apply(function() {
-            scope.files = evt.target.files;
+            scope['files'] = evt.target.files;
           });
         }
       });
@@ -66,8 +66,8 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
       scope.$watchCollection('files', function() {
         // Handle a FileList (from input[type=file] or DnD),
         // works only with FileAPI
-        if (scope.files && scope.files.length > 0) {
-          var file = scope.files[0];
+        if (scope['files'] && scope['files'].length > 0) {
+          var file = scope['files'][0];
           scope.file = file;
           scope.fileSize = file.size;
           if (scope.isDropped) {
@@ -106,7 +106,7 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
         ngeoFile.read(scope.file).then(function(fileContent) {
           scope.fileReader = null;
           scope.userMessage = gettextCatalog.getString('parsing file');
-          return scope.handleFileContent(fileContent, scope.file);
+          return scope['handleFileContent'](fileContent, scope.file);
 
         }).then(function(parsingResults) {
           scope.userMessage = gettextCatalog.getString('parse succeeded');

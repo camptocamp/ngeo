@@ -122,7 +122,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
       // List of layers available in the GetCapabilities.
       // The layerXXXX properties use layer objects from the parsing of
       // a  GetCapabilities file, not ol layer object.
-      scope.layers = [];
+      scope['layers'] = [];
       scope.options = scope.options || {};
       scope.$watch('getCap', function(val) {
         var err;
@@ -139,7 +139,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
         }
 
         scope.limitations = '';
-        scope.layers = [];
+        scope['layers'] = [];
         scope.options.layerSelected = null; // the layer selected on click
         scope.options.layerHovered = null;
 
@@ -154,7 +154,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
             var root = getChildLayers(val, val.Capability.Layer,
                 scope.map.getView().getProjection());
             if (root) {
-              scope.layers = root.Layer || [root];
+              scope['layers'] = root.Layer || [root];
             }
           }
         }
