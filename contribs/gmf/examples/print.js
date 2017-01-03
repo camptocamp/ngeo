@@ -65,6 +65,15 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
   });
 
   /**
+   * @type {Object.<string, string|number|boolean>}
+   * export
+   */
+  this.defaulPrintFieldstValues = {
+    'comments': 'Default comments example',
+    'legend': true
+  };
+
+  /**
    * @type {Array.<Object>|undefined}
    * export
    */
