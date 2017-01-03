@@ -1,5 +1,5 @@
 @import '../../../less/desktop.less';
-@import '../../../../../src/modules/import/style/import.less';
+@import '../../../less/import.less';
 
 @brand-primary: #9FB6CC;
 @brand-secondary: #D3DBE3;
@@ -15,25 +15,6 @@ header div span {
 
 .gmf-theme-selector li {
   flex-direction: column;
-}
-
-.import {
-  input[type="file"] {
-    display: none;
-  }
-  .tt-menu {
-    width: 100%;
-    padding: 5px;
-    background-color: white;
-    color: black;
-    line-height: 1.6em;
-    .tt-suggestion {
-     &:hover {
-       background-color: @onhover-color;
-     }
-     cursor: pointer;
-    }
-  }
 }
 
 @theme-selector-columns: 3;
