@@ -14,6 +14,7 @@ goog.require('ngeo.LayerHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.Collection');
+goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.MultiLineString');
 goog.require('ol.geom.MultiPoint');
 goog.require('ol.geom.MultiPolygon');
