@@ -12,10 +12,11 @@ goog.require('ol.layer.Vector');
  * @constructor
  * @param {ol.Map} map The map.
  * @param {angular.Scope} $scope The scope.
+ * @param {gettext} gettext .
  * @param {ngeo.File} ngeoFile Ngeo file.
  * @param {angular.$q} $q Q.
  */
-app.GmfImportHelper = function(map, $scope, ngeoFile, $q) {
+app.GmfImportHelper = function(map, $scope, gettext, ngeoFile, $q) {
   this.map_ = map;
   this.$scope_ = $scope;
   $scope['map'] = map;
@@ -23,6 +24,7 @@ app.GmfImportHelper = function(map, $scope, ngeoFile, $q) {
   this.$q_ = $q;
   this.gpxFormat_ = new ol.format.GPX();
   this.kmlFormat_ = new ol.format.KML();
+  this.gettext_ = gettext;
 
   this.urls = [
     {'name': 'geoadmin', 'url': 'https://wms.geo.admin.ch/'},
@@ -38,8 +40,7 @@ app.GmfImportHelper = function(map, $scope, ngeoFile, $q) {
  */
 app.GmfImportHelper.prototype.createWmsLayer = function(params, options) {
   options = options || {};
-  options.id = 'WMS||' + options.label + '||' + options.url + '||' +
-      params.LAYERS;
+  options.id = 'WMS||' + options.label + '||' + options.url + '||' + params['LAYERS'];
 
   // If the WMS has a version specified, we add it in
   // the id. It's important that the layer keeps the same id as the
@@ -48,7 +49,7 @@ app.GmfImportHelper.prototype.createWmsLayer = function(params, options) {
   if (params.VERSION) {
     options.id += '||' + params.VERSION;
 
-    if (options.useReprojection) {
+    if (options['useReprojection']) {
       options.projection = 'EPSG:4326';
       options.id += '||true';
     }
@@ -84,14 +85,14 @@ app.GmfImportHelper.prototype.createWmsLayer = function(params, options) {
  */
 app.GmfImportHelper.prototype.getOlLayerFromGetCapLayer = function(getCapLayer) {
   var wmsParams = {
-    LAYERS: getCapLayer.Name,
-    VERSION: getCapLayer.wmsVersion
+    'LAYERS': getCapLayer.Name,
+    'VERSION': getCapLayer['wmsVersion']
   };
   var wmsOptions = {
-    url: getCapLayer.wmsUrl,
-    label: getCapLayer.Title,
+    url: getCapLayer['wmsUrl'],
+    label: getCapLayer['Title'],
     //extent: gaMapUtils.intersectWithDefaultExtent(getCapLayer.extent),
-    useReprojection: getCapLayer.useReprojection
+    'useReprojection': getCapLayer['useReprojection']
   };
   return this.createWmsLayer(wmsParams, wmsOptions);
 };
@@ -130,15 +131,15 @@ app.GmfImportHelper.prototype.handleFileContent = function(data, file) {
   var ngeoFile = this.ngeoFile_;
   var features;
 
-  $scope.gpxContent = null;
-  $scope.kmlContent = null;
-  $scope.wmsGetCap = null;
-  $scope.wmtsGetCap = null;
+  $scope['gpxContent'] = null;
+  $scope['kmlContent'] = null;
+  $scope['wmsGetCap'] = null;
+  $scope['wmtsGetCap'] = null;
 
   if (ngeoFile.isWmsGetCap(data)) {
-    $scope.wmsGetCap = data;
+    $scope['wmsGetCap'] = data;
     defer.resolve({
-      message: 'download_succeeded'
+      'message': this.gettext_('download succeeded')
     });
   } else if (ngeoFile.isKml(data)) {
     features = this.kmlFormat_.readFeatures(data, {
@@ -147,8 +148,8 @@ app.GmfImportHelper.prototype.handleFileContent = function(data, file) {
 
     this.addFeatures(map, features);
     defer.reject({
-      message: 'parse_failed',
-      reason: 'not_implemented_yet'
+      'message': this.gettext_('parsing failed'),
+      'reason': this.gettext_('not implemented yet')
     });
   } else if (ngeoFile.isGpx(data)) {
     features = this.gpxFormat_.readFeatures(data, {
@@ -157,14 +158,14 @@ app.GmfImportHelper.prototype.handleFileContent = function(data, file) {
 
     this.addFeatures(map, features);
     defer.resolve({
-      message: 'parse_succeeded'
+      'message': this.gettext_('parsing succeeded')
     });
 
   } else {
     console.error('Unparseable content: ', data);
     defer.reject({
-      message: 'parse_failed',
-      reason: 'format_not_supported'
+      'message': this.gettext_('parsing failed'),
+      'reason': this.gettext_('unsupported format')
     });
   }
   // WMTS

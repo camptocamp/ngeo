@@ -20,14 +20,14 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
     restrict: 'A',
     templateUrl: ngeoImportDndTemplateUrl,
     scope: {
-      options: '=ngeoImportDndOptions'
+      'options': '=ngeoImportDndOptions'
     },
     link: function(scope, elt) {
 
       /**
        * @type {ngeox.ImportDndOptions}
        */
-      var options = scope.options;
+      var options = scope['options'];
       if (!options || (typeof options.handleFileContent !== 'function')) {
         elt.remove();
         return;

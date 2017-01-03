@@ -144,6 +144,7 @@ var TypeaheadTemplates;
  *   name: (string|undefined),
  *   limit: (number|undefined),
  *   display: (string|function(Object):string|undefined),
+ *   displayKey: (string|undefined),
  *   templates: (TypeaheadTemplates|undefined)
  * }}
  */

@@ -21,17 +21,17 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
     var layer = getCapLayer;
     var projCode = proj.getCode();
 
-    if (layer.BoundingBox) {
-      for (var i = 0, ii = layer.BoundingBox.length; i < ii; i++) {
-        var bbox = layer.BoundingBox[i];
-        var code = bbox.crs || bbox.srs;
+    if (layer['BoundingBox']) {
+      for (var i = 0, ii = layer['BoundingBox'].length; i < ii; i++) {
+        var bbox = layer['BoundingBox'][i];
+        var code = bbox['crs'] || bbox['srs'];
         if (code && code.toUpperCase() == projCode.toUpperCase()) {
-          return bbox.extent;
+          return bbox['extent'];
         }
       }
     }
 
-    var wgs84Extent = layer.EX_GeographicBoundingBox || layer.LatLonBoundingBox;
+    var wgs84Extent = layer['EX_GeographicBoundingBox'] || layer['LatLonBoundingBox'];
     if (wgs84Extent) {
       // If only an extent in wgs 84 is available, we use the
       // intersection between proj extent and layer extent as the new
@@ -48,7 +48,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
   // Test if the layer can be displayed with a specific projection
   var canUseProj = function(layer, projCode) {
-    var projCodeList = layer.CRS || layer.SRS || [];
+    var projCodeList = layer['CRS'] || layer['SRS'] || [];
     return (projCodeList.indexOf(projCode.toUpperCase()) != -1 ||
         projCodeList.indexOf(projCode.toLowerCase()) != -1);
   };
@@ -59,28 +59,28 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
   var getChildLayers = function(getCap, layer, proj) {
 
     // If the WMS layer has no name, it can't be displayed
-    if (!layer.Name) {
-      layer.isInvalid = true;
-      layer.Abstract = gettext('invalid layer: missing name');
+    if (!layer['Name']) {
+      layer['isInvalid'] = true;
+      layer['Abstract'] = gettext('invalid layer: missing name');
     }
 
-    if (!layer.isInvalid) {
-      layer.wmsUrl = getCap.Service.OnlineResource;
-      layer.wmsVersion = getCap.version;
-      layer.id = 'WMS||' + layer.wmsUrl + '||' + layer.Name;
-      layer.extent = getLayerExtentFromGetCap(layer, proj);
+    if (!layer['isInvalid']) {
+      layer['wmsUrl'] = getCap['Service']['OnlineResource'];
+      layer['wmsVersion'] = getCap['version'];
+      layer['id'] = 'WMS||' + layer['wmsUrl'] + '||' + layer['Name'];
+      layer['extent'] = getLayerExtentFromGetCap(layer, proj);
 
       // if the layer has no extent, it is set as invalid.
       // We don't have proj codes list for wms 1.1.1 so we assume the
       // layer can be displayed (wait for
       // https://github.com/openlayers/ol3/pull/2944)
       var projCode = proj.getCode();
-      if (getCap.version == '1.3.0' && !canUseProj(layer, projCode)) {
-        layer.useReprojection = true;
+      if (getCap['version'] == '1.3.0' && !canUseProj(layer, projCode)) {
+        layer['useReprojection'] = true;
 
-        if (!layer.extent) {
-          layer.isInvalid = true;
-          layer.Abstract = gettext('invalid layer outside the map');
+        if (!layer['extent']) {
+          layer['isInvalid'] = true;
+          layer['Abstract'] = gettext('invalid layer outside the map');
         }
       }
     }
@@ -102,7 +102,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
       }
     }
 
-    if (layer.isInvalid && !layer.Layer) {
+    if (layer['isInvalid'] && !layer.Layer) {
       return undefined;
     }
 
@@ -113,9 +113,9 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
     restrict: 'A',
     templateUrl: ngeoWmsGetCapTemplateUrl,
     scope: {
-      getCap: '=ngeoWmsGetCap',
-      map: '=ngeoWmsGetCapMap',
-      options: '=ngeoWmsGetCapOptions'
+      'getCap': '=ngeoWmsGetCap',
+      'map': '=ngeoWmsGetCapMap',
+      'options': '=ngeoWmsGetCapOptions'
     },
     link: function(scope) {
 
@@ -123,7 +123,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
       // The layerXXXX properties use layer objects from the parsing of
       // a  GetCapabilities file, not ol layer object.
       scope['layers'] = [];
-      scope.options = scope.options || {};
+      scope['options'] = scope['options'] || {};
       scope.$watch('getCap', function(val) {
         var err;
         try {
@@ -134,41 +134,41 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
         if (err || !val) {
           $window.console.error('WMS GetCap parsing failed: ', err || val);
-          scope.userMsg = gettext('parsing failed');
+          scope['userMsg'] = gettext('parsing failed');
           return;
         }
 
-        scope.limitations = '';
+        scope['limitations'] = '';
         scope['layers'] = [];
-        scope.options.layerSelected = null; // the layer selected on click
-        scope.options.layerHovered = null;
+        scope['options'].layerSelected = null; // the layer selected on click
+        scope['options'].layerHovered = null;
 
-        if (val && val.Service && val.Capability) {
-          if (val.Service.MaxWidth) {
-            scope.limitations = gettextCatalog.getString('maximum WMS size allowed') +
-                ' ' + val.Service.MaxWidth +
-                ' * ' + val.Service.MaxHeight;
+        if (val && val['Service'] && val['Capability']) {
+          if (val['Service']['MaxWidth']) {
+            scope['limitations'] = gettextCatalog.getString('maximum WMS size allowed') +
+                ' ' + val['Service']['MaxWidth'] +
+                ' * ' + val['Service']['MaxHeight'];
           }
 
-          if (val.Capability.Layer) {
-            var root = getChildLayers(val, val.Capability.Layer,
-                scope.map.getView().getProjection());
+          if (val['Capability']['Layer']) {
+            var root = getChildLayers(val, val['Capability']['Layer'],
+                scope['map'].getView().getProjection());
             if (root) {
-              scope['layers'] = root.Layer || [root];
+              scope['layers'] = root['Layer'] || [root];
             }
           }
         }
       });
 
       // Add the selected layer to the map
-      scope.addLayerSelected = function() {
-        var getCapLay = scope.options.layerSelected;
-        if (getCapLay && scope.options.getOlLayerFromGetCapLayer) {
+      scope['addLayerSelected'] = function() {
+        var getCapLay = scope['options'].layerSelected;
+        if (getCapLay && scope['options']['getOlLayerFromGetCapLayer']) {
           var msg = gettextCatalog.getString('WMS layer added succesfully');
           try {
-            var olLayer = scope.options.getOlLayerFromGetCapLayer(getCapLay);
+            var olLayer = scope['options']['getOlLayerFromGetCapLayer'](getCapLay);
             if (olLayer) {
-              scope.map.addLayer(olLayer);
+              scope['map'].addLayer(olLayer);
             }
 
           } catch (e) {
@@ -180,8 +180,8 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
       };
 
       // Get the abstract to display in the text area
-      scope.getAbstract = function() {
-        var l = scope.options.layerSelected || scope.options.layerHovered || {};
+      scope['getAbstract'] = function() {
+        var l = scope['options'].layerSelected || scope['options'].layerHovered || {};
         return gettextCatalog.getString(l.Abstract) || '';
       };
     }

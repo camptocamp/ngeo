@@ -8,30 +8,34 @@ goog.module.declareLegacyNamespace();
  * @ngInject
  */
 exports.Controller = function($scope) {
+  /**
+   * @type {ngeox.ImportWmsGetCapItemOptions}
+   */
+  var options = $scope['options'];
 
   // Add preview layer
-  $scope.addPreviewLayer = function(evt, getCapLayer) {
+  $scope['addPreviewLayer'] = function(evt, getCapLayer) {
     evt.stopPropagation();
-    $scope.options.layerHovered = getCapLayer;
-    if (getCapLayer.isInvalid) {
+    options.layerHovered = getCapLayer;
+    if (getCapLayer['isInvalid']) {
       return;
     }
-    $scope.options.addPreviewLayer($scope.map, getCapLayer);
+    options.addPreviewLayer($scope['map'], getCapLayer);
   };
 
   // Remove preview layer
-  $scope.removePreviewLayer = function(evt) {
+  $scope['removePreviewLayer'] = function(evt) {
     evt.stopPropagation();
-    $scope.options.layerHovered = null;
-    $scope.options.removePreviewLayer($scope.map);
+    options.layerHovered = null;
+    options.removePreviewLayer($scope['map']);
   };
 
   // Select the layer clicked
-  $scope.toggleLayerSelected = function(evt, getCapLayer) {
+  $scope['toggleLayerSelected'] = function(evt, getCapLayer) {
     evt.stopPropagation();
 
-    $scope.options.layerSelected = ($scope.options.layerSelected &&
-        $scope.options.layerSelected.Name == getCapLayer.Name) ?
+    options.layerSelected = (options.layerSelected &&
+        options.layerSelected.Name == getCapLayer['Name']) ?
         null : getCapLayer;
   };
 };
@@ -62,8 +66,8 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
   // Zoom to layer extent
   var zoomToLayerExtent = function(scope, layer, map) {
     var extent = layer.extent;
-    if (scope.options.transformExtent) {
-      extent = scope.options.transformExtent(layer.extent);
+    if (scope['options'].transformExtent) {
+      extent = scope['options'].transformExtent(layer.extent);
     }
     var view = map.getView();
     var mapSize = map.getSize();
@@ -88,7 +92,7 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
           layerExtentCenter[0] + width / 2,
           layerExtentCenter[1] + height / 2
         ];
-        extent = scope.options.transformExtent(extent);
+        extent = scope['options'].transformExtent(extent);
 
         if (extent) {
           var res = view.constrainResolution(
@@ -126,7 +130,7 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
 
         headerGroup.find('.fa-zoom-in').on('click', function(evt) {
           evt.stopPropagation();
-          zoomToLayerExtent(scope, scope.layer, scope.map);
+          zoomToLayerExtent(scope, scope.layer, scope['map']);
         });
 
         toggleBt.on('click', function(evt) {

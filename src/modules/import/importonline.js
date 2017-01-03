@@ -24,13 +24,13 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
     restrict: 'A',
     templateUrl: ngeoImportOnlineTemplateUrl,
     scope: {
-      options: '=ngeoImportOnlineOptions'
+      'options': '=ngeoImportOnlineOptions'
     },
     link: function(scope, elt) {
       /**
        * @type {ngeox.ImportOnlineOptions}
        */
-      var options = scope.options;
+      var options = scope['options'];
       if (!options || (typeof options.handleFileContent !== 'function')) {
         elt.remove();
         return;
@@ -39,9 +39,9 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
       scope['handleFileContent'] = options.handleFileContent;
 
       var initUserMsg = function() {
-        scope.userMessage = 'connect';
-        scope.progress = 0;
-        scope.loading = false;
+        scope['userMessage'] = 'connect';
+        scope['progress'] = 0;
+        scope['loading'] = false;
       };
       initUserMsg();
 
@@ -66,18 +66,14 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
         };
       };
 
-      var nameUrls;
-      if (nameUrls && nameUrls.length > 0 && nameUrls[0]['name']) {
-        nameUrls = scope.options.urls.reduce(function(nameUrls, url) {
-          nameUrls.push({
+      var nameUrls = scope['options'].urls;
+      if (nameUrls && nameUrls.length > 0 && !nameUrls[0]['name']) {
+        nameUrls = nameUrls.map(function(url) {
+          return {
             'name': url,
             'url': url
-          });
-          return nameUrls;
-        },
-        []);
-      } else {
-        nameUrls = scope.options.urls;
+          };
+        });
       }
 
       // Create the typeAhead input for the list of urls available
@@ -95,26 +91,26 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
         // When a WMS is selected in the list, start downloading the
         // GetCapabilities
         scope['fileUrl'] = nameUrl['url'];
-        scope.handleFileUrl();
+        scope['handleFileUrl']();
         scope.$digest();
       }).on('focus', function() {
       });
 
       scope.$on('gettextLanguageChanged', function() {
         if (scope['fileUrl'] && /lang=/.test(scope['fileUrl'])) {
-          scope.handleFileUrl();
+          scope['handleFileUrl']();
         }
       });
 
-      scope.cancel = function() {
-        scope.progress = 0;
-        if (scope.canceler) {
-          scope.canceler.resolve();
-          scope.canceler = null;
+      scope['cancel'] = function() {
+        scope['progress'] = 0;
+        if (scope['canceler']) {
+          scope['canceler'].resolve();
+          scope['canceler'] = null;
         }
       };
 
-      scope.isValid = function(url) {
+      scope['isValid'] = function(url) {
         if (options.isValidUrl) {
           return options.isValidUrl(url);
         }
@@ -122,35 +118,35 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
       };
 
       // Handle URL of WMS
-      scope.handleFileUrl = function() {
+      scope['handleFileUrl'] = function() {
         var url = scope['fileUrl'];
 
         if (options.transformUrl) {
           url = options.transformUrl(url);
         }
 
-        scope.canceler = $q.defer();
-        scope.loading = true;
-        scope.userMessage = gettext('dowloading file');
+        scope['canceler'] = $q.defer();
+        scope['loading'] = true;
+        scope['userMessage'] = gettext('dowloading file');
         $timeout.cancel(timeoutP);
 
         // Angularjs doesn't handle onprogress event
-        ngeoFile.load(url, scope.canceler).then(function(fileContent) {
-          scope.canceler = null;
+        ngeoFile.load(url, scope['canceler']).then(function(fileContent) {
+          scope['canceler'] = null;
 
           return scope['handleFileContent'](fileContent, {
             url: scope['fileUrl']
           });
 
         }).then(function(result) {
-          scope.userMessage = result.message;
+          scope['userMessage'] = result.message;
 
         }, function(err) {
-          scope.userMessage = err.message;
+          scope['userMessage'] = err.message;
 
         }).finally(function() {
-          scope.canceler = null;
-          scope.loading = false;
+          scope['canceler'] = null;
+          scope['loading'] = false;
           timeoutP = $timeout(initUserMsg, 10000);
         });
       };

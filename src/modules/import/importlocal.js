@@ -21,26 +21,26 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
     restrict: 'A',
     templateUrl: ngeoImportLocalTemplateUrl,
     scope: {
-      options: '=ngeoImportLocalOptions'
+      'options': '=ngeoImportLocalOptions'
     },
     link: function(scope, elt) {
 
       /**
        * @type {ngeox.ImportLocalOptions}
        */
-      var options = scope.options;
+      var options = scope['options'];
       if (!options || (typeof options.handleFileContent !== 'function')) {
         elt.remove();
         return;
       }
 
-      scope['handleFileContent'] = scope.options.handleFileContent;
+      scope['handleFileContent'] = scope['options'].handleFileContent;
 
 
       var initUserMsg = function() {
-        scope.userMessage = gettextCatalog.getString('load local file');
-        scope.progress = 0;
-        scope.fileReader = null;
+        scope['userMessage'] = gettextCatalog.getString('load local file');
+        scope['progress'] = 0;
+        scope['fileReader'] = null;
       };
       initUserMsg();
 
@@ -68,60 +68,60 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
         // works only with FileAPI
         if (scope['files'] && scope['files'].length > 0) {
           var file = scope['files'][0];
-          scope.file = file;
-          scope.fileSize = file.size;
-          if (scope.isDropped) {
-            scope.handleFile();
+          scope['file'] = file;
+          scope['fileSize'] = file.size;
+          if (scope['isDropped']) {
+            scope['handleFile']();
           }
         }
       });
 
-      scope.isLoading = function() {
-        return 0 < scope.progress && scope.progress < 100;
+      scope['isLoading'] = function() {
+        return 0 < scope['progress'] && scope['progress'] < 100;
       };
 
-      scope.isValid = function(file) {
+      scope['isValid'] = function(file) {
         return !file || ngeoFile.isValidFileSize(file.size);
       };
 
 
-      scope.cancel = function() {
+      scope['cancel'] = function() {
         // Kill file reading
-        if (scope.fileReader) {
-          scope.fileReader.abort();
-          scope.fileReader = null;
+        if (scope['fileReader']) {
+          scope['fileReader'].abort();
+          scope['fileReader'] = null;
         }
       };
 
       // Handle a File (from a FileList),
       // works only with FileAPI
-      scope.handleFile = function() {
-        if (!scope.file) {
+      scope['handleFile'] = function() {
+        if (!scope['file']) {
           return;
         }
-        scope.loading = true;
-        scope.userMessage = gettextCatalog.getString('reading file');
+        scope['loading'] = true;
+        scope['userMessage'] = gettextCatalog.getString('reading file');
         $timeout.cancel(timeoutP);
 
-        ngeoFile.read(scope.file).then(function(fileContent) {
-          scope.fileReader = null;
-          scope.userMessage = gettextCatalog.getString('parsing file');
+        ngeoFile.read(scope['file']).then(function(fileContent) {
+          scope['fileReader'] = null;
+          scope['userMessage'] = gettextCatalog.getString('parsing file');
           return scope['handleFileContent'](fileContent, scope.file);
 
         }).then(function(parsingResults) {
-          scope.userMessage = gettextCatalog.getString('parse succeeded');
+          scope['userMessage'] = gettextCatalog.getString('parse succeeded');
 
         }, function(err) {
-          scope.userMessage = err.message;
+          scope['userMessage'] = err.message;
 
         }, function(evt) {
-          if (!scope.fileReader) {
-            scope.fileReader = evt.target;
+          if (!scope['fileReader']) {
+            scope['fileReader'] = evt.target;
           }
 
         }).finally(function() {
-          scope.fileReader = null;
-          scope.loading = false;
+          scope['fileReader'] = null;
+          scope['loading'] = false;
           timeoutP = $timeout(initUserMsg, 5000);
         });
       };
