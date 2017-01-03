@@ -27,7 +27,7 @@
     "angular-jsdoc": "1.5.0",
     "angular-mocks": "1.5.9",
     "angular-sanitize": "1.6.0",
-    "angular-touch": "1.6.0",
+    "angular-touch": "1.6.1",
     "async": "2.1.4",
     "bootstrap": "3.3.7",
     "clean-css": "3.4.23",
