@@ -9,13 +9,14 @@ goog.require('ngeo.fileService');
  * @param {angular.$q} $q .
  * @param {angular.$timeout} $timeout .
  * @param {ngeo.File} ngeoFile .
+ * @param {gettext} gettext .
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
        ngeoImportOnlineTemplateUrl The template url.
  * @ngInject
  * @struct
  */
-exports = function($q, $timeout, ngeoFile, gettextCatalog, ngeoImportOnlineTemplateUrl) {
+exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOnlineTemplateUrl) {
 
   var timeoutP;
 
@@ -130,7 +131,7 @@ exports = function($q, $timeout, ngeoFile, gettextCatalog, ngeoImportOnlineTempl
 
         scope.canceler = $q.defer();
         scope.loading = true;
-        scope.userMessage = 'dowloading_file';
+        scope.userMessage = gettext('dowloading file');
         $timeout.cancel(timeoutP);
 
         // Angularjs doesn't handle onprogress event

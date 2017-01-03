@@ -7,12 +7,13 @@ goog.require('ol.format.WMSCapabilities');
 /**
  * @constructor
  * @param {Window} $window The window.
+ * @param {gettext} gettext Gettext.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoWmsGetCapTemplateUrl The template url.
  * @ngInject
  */
-exports = function($window, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
+exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
   // Get the layer extent defines in the GetCapabilities
   var getLayerExtentFromGetCap = function(getCapLayer, proj) {
@@ -60,7 +61,7 @@ exports = function($window, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
     // If the WMS layer has no name, it can't be displayed
     if (!layer.Name) {
       layer.isInvalid = true;
-      layer.Abstract = 'layer_invalid_no_name';
+      layer.Abstract = gettext('invalid layer: missing name');
     }
 
     if (!layer.isInvalid) {
@@ -79,7 +80,7 @@ exports = function($window, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
         if (!layer.extent) {
           layer.isInvalid = true;
-          layer.Abstract = 'layer_invalid_outside_map';
+          layer.Abstract = gettext('invalid layer outside the map');
         }
       }
     }
@@ -133,7 +134,7 @@ exports = function($window, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
         if (err || !val) {
           $window.console.error('WMS GetCap parsing failed: ', err || val);
-          scope.userMsg = 'parse_failed';
+          scope.userMsg = gettext('parsing failed');
           return;
         }
 
@@ -144,7 +145,7 @@ exports = function($window, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
         if (val && val.Service && val.Capability) {
           if (val.Service.MaxWidth) {
-            scope.limitations = gettextCatalog.getString('wms_max_size_allowed') +
+            scope.limitations = gettextCatalog.getString('maximum WMS size allowed') +
                 ' ' + val.Service.MaxWidth +
                 ' * ' + val.Service.MaxHeight;
           }
@@ -163,7 +164,7 @@ exports = function($window, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
       scope.addLayerSelected = function() {
         var getCapLay = scope.options.layerSelected;
         if (getCapLay && scope.options.getOlLayerFromGetCapLayer) {
-          var msg = 'add_wms_layer_succeeded';
+          var msg = gettextCatalog.getString('WMS layer added succesfully');
           try {
             var olLayer = scope.options.getOlLayerFromGetCapLayer(getCapLay);
             if (olLayer) {
@@ -172,9 +173,9 @@ exports = function($window, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
           } catch (e) {
             $window.console.error('Add layer failed:' + e);
-            msg = 'add_wms_layer_failed' + e.message;
+            msg = gettextCatalog.getString('WMS layer could not be added') + ' ' + e.message;
           }
-          $window.alert(gettextCatalog.getString(msg));
+          $window.alert(msg);
         }
       };
 

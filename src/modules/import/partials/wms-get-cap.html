@@ -19,10 +19,10 @@
 </div>
 <div class="ngeo-descr">
   <label translate>description</label>
-  <textarea  placeholder="{{'description_instructions' | translate}}"
+  <textarea placeholder="{{'description instructions' | translate}}"
              class="form-control"
              readonly>{{getAbstract()}}</textarea>
   <button type="button" class="btn btn-default btn-sm ngeo-add"
           ng-disabled="(!options.layerSelected || options.layerSelected.isInvalid)"
-          ng-click="addLayerSelected()" translate>add_layer</button>
+          ng-click="addLayerSelected()" translate>add layer</button>
 </div>
