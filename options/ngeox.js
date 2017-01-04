@@ -1493,3 +1493,41 @@ ngeox.search.LocationSearchOptions.prototype.remoteOptions;
  * @type {undefined|function(string, jQueryAjaxSettings):jQueryAjaxSettings}
  */
 ngeox.search.LocationSearchOptions.prototype.prepare;
+
+/**
+ * @typedef {{
+ *   handleFileContent: function(string, File),
+ *   isValidUrl: function(string): boolean
+ * }}
+ */
+ngeox.ImportDndOptions;
+
+
+/**
+ * @typedef {{
+ *   handleFileContent: function(string, File)
+ * }}
+ */
+ngeox.ImportLocalOptions;
+
+
+/**
+ * @typedef {{
+ *   handleFileContent: function(string, File),
+ *   transformUrl: function(string): string,
+ *   urls: Array<string>,
+ *   isValidUrl: function(string): boolean
+ * }}
+ */
+ngeox.ImportOnlineOptions;
+
+/**
+ * @typedef {{
+ * layerHovered: Function,
+ * addPreviewLayer: Function,
+ * removePreviewLayer: function(ol.Map),
+ * layerSelected: {Name: string, Abstract: String, isInvalid: boolean, Layer: Object},
+ * transformExtent: function(ol.Extent): ol.Extent
+ * }}
+ */
+ngeox.ImportWmsGetCapItemOptions;

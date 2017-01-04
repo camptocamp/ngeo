@@ -1,6 +1,7 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 TEST_JS_FILES := $(shell find test -type f -name '*.js')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
+NGEO_MODULES_PARTIALS_FILES := $(shell find src/modules/ -name '*.html')
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
 NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
 GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
@@ -20,7 +21,7 @@ GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type 
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 GMF_APPS += mobile desktop desktop_alt oeedit oeview
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
-GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
+GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less src/modules -type f -name '*.less')
 DEVELOPMENT ?= FALSE
 ifeq ($(DEVELOPMENT), TRUE)
 CLOSURE_VARS += --var development=true
@@ -224,8 +225,6 @@ serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGUL
 
 .PHONY: examples-hosted
 examples-hosted: \
-		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(EXAMPLES_HTML_FILES)) \
-		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
 .build/python-venv/lib/python2.7/site-packages/glob2: requirements.txt .build/python-venv
@@ -815,18 +814,18 @@ $(EXTERNS_JQUERY): github_versions
 .build/templatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/lib/python2.7/site-packages/glob2 \
 		.build/python-venv/bin/mako-render \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES)
+		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src/directives/partials" \
+		--var "partials=ngeo:src/directives/partials ngeomodule:src/modules" \
 		--var "app=ngeo" $< > $@
 
 .PRECIOUS: .build/gmftemplatecache.js
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/lib/python2.7/site-packages/glob2 \
 		.build/python-venv/bin/mako-render \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(GMF_DIRECTIVES_PARTIALS_FILES)
+		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES) $(GMF_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src/directives/partials gmf:contribs/gmf/src/directives/partials" \
+		--var "partials=ngeo:src/directives/partials ngeomodule:src/modules gmf:contribs/gmf/src/directives/partials" \
 		--var "app=gmf" $< > $@
 
 .build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp

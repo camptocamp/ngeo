@@ -21,19 +21,27 @@ goog.require('ol.layer.VectorTile');
 goog.require('ol.Map');
 
 goog.require('ngeo.search.searchModule');
+goog.require('ngeo.import.importModule');
 
 /** @type {!angular.Module} */
 ngeo.module = angular.module('ngeo', [
   ngeo.search.searchModule.module.name,
+  ngeo.import.importModule.module.name,
   'gettext', 'ui.date', 'floatThead'
 ]);
 
 
 /**
- * The default template based URL, used as it by the template cache.
+ * The default template base URL for directive partials, used as-is by the template cache.
  * @type {string}
  */
 ngeo.baseTemplateUrl = 'ngeo';
+
+/**
+ * The default template base URL for modules, used as-is by the template cache.
+ * @type {string}
+ */
+ngeo.baseModuleTemplateUrl = 'ngeomodule';
 
 
 /**
