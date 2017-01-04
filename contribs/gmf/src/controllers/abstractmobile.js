@@ -30,10 +30,6 @@ goog.require('ol.style.Style');
 
 gmf.module.value('isMobile', true);
 
-gmf.module.value(
-    'gmfRasterUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
-
 
 /**
  * Mobile application abstract controller.
