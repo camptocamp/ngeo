@@ -1,7 +1,7 @@
 <div class="ngeo-message">{{limitations}}</div>
 <div class="ngeo-container">
   <div class="ngeo-header" ng-click="reverse = !reverse">
-    <label translate>title</label>
+    <label translate>Layer</label>
     <button class="pull-right fa" ng-class="{'fa-sort-by-alphabet': !reverse, 'fa-sort-by-alphabet-alt': reverse}"></button>
   </div>
   <div class="ngeo-content">
@@ -18,11 +18,11 @@
   </div>
 </div>
 <div class="ngeo-descr">
-  <label translate>description</label>
+  <label translate>Description</label>
   <textarea placeholder="{{'description instructions' | translate}}"
              class="form-control"
              readonly>{{getAbstract()}}</textarea>
   <button type="button" class="btn btn-default btn-sm ngeo-add"
           ng-disabled="(!options.layerSelected || options.layerSelected.isInvalid)"
-          ng-click="addLayerSelected()" translate>add layer</button>
+          ng-click="addLayerSelected()" translate>Add layer</button>
 </div>

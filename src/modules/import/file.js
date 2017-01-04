@@ -46,7 +46,7 @@ ngeo.File = function($q, $http, $window, gettext) {
       var err = evt.target.error;
       $window.console.error('Reading file failed: ', err);
       defer.reject({
-        'message': err.code == 20 ? gettext('operation canceled') : gettext('read failed'),
+        'message': err.code == 20 ? gettext('Operation canceled') : gettext('Read failed'),
         'reason': err.message
       });
     };
@@ -79,7 +79,7 @@ ngeo.File = function($q, $http, $window, gettext) {
     }, function(reason) {
       $window.console.error('Uploading file failed: ', reason);
       defer.reject({
-        'message': gettext('upload failed'),
+        'message': gettext('Upload failed'),
         'reason': reason
       });
     });

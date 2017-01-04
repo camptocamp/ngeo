@@ -61,7 +61,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
     // If the WMS layer has no name, it can't be displayed
     if (!layer['Name']) {
       layer['isInvalid'] = true;
-      layer['Abstract'] = gettext('invalid layer: missing name');
+      layer['Abstract'] = gettext('Invalid layer: missing name');
     }
 
     if (!layer['isInvalid']) {
@@ -80,7 +80,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
         if (!layer['extent']) {
           layer['isInvalid'] = true;
-          layer['Abstract'] = gettext('invalid layer outside the map');
+          layer['Abstract'] = gettext('Invalid layer outside the map');
         }
       }
     }
@@ -134,7 +134,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
         if (err || !val) {
           $window.console.error('WMS GetCap parsing failed: ', err || val);
-          scope['userMsg'] = gettext('parsing failed');
+          scope['userMsg'] = gettext('Parsing failed');
           return;
         }
 
@@ -145,7 +145,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
         if (val && val['Service'] && val['Capability']) {
           if (val['Service']['MaxWidth']) {
-            scope['limitations'] = gettextCatalog.getString('maximum WMS size allowed') +
+            scope['limitations'] = gettextCatalog.getString('Maximum WMS size allowed') +
                 ' ' + val['Service']['MaxWidth'] +
                 ' * ' + val['Service']['MaxHeight'];
           }

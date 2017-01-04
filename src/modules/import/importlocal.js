@@ -38,7 +38,7 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
 
 
       var initUserMsg = function() {
-        scope['userMessage'] = gettextCatalog.getString('load local file');
+        scope['userMessage'] = gettextCatalog.getString('Load local file');
         scope['progress'] = 0;
         scope['fileReader'] = null;
       };
@@ -100,16 +100,16 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
           return;
         }
         scope['loading'] = true;
-        scope['userMessage'] = gettextCatalog.getString('reading file');
+        scope['userMessage'] = gettextCatalog.getString('Reading file');
         $timeout.cancel(timeoutP);
 
         ngeoFile.read(scope['file']).then(function(fileContent) {
           scope['fileReader'] = null;
-          scope['userMessage'] = gettextCatalog.getString('parsing file');
+          scope['userMessage'] = gettextCatalog.getString('Parsing file');
           return scope['handleFileContent'](fileContent, scope.file);
 
         }).then(function(parsingResults) {
-          scope['userMessage'] = gettextCatalog.getString('parse succeeded');
+          scope['userMessage'] = gettextCatalog.getString('Parsing succeeded');
 
         }, function(err) {
           scope['userMessage'] = err.message;

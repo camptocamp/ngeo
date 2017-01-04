@@ -39,7 +39,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
       scope['handleFileContent'] = options.handleFileContent;
 
       var initUserMsg = function() {
-        scope['userMessage'] = 'connect';
+        scope['userMessage'] = gettext('Connect');
         scope['progress'] = 0;
         scope['loading'] = false;
       };
@@ -127,7 +127,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
 
         scope['canceler'] = $q.defer();
         scope['loading'] = true;
-        scope['userMessage'] = gettext('dowloading file');
+        scope['userMessage'] = gettext('Dowloading file');
         $timeout.cancel(timeoutP);
 
         // Angularjs doesn't handle onprogress event

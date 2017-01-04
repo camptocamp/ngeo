@@ -139,7 +139,7 @@ app.GmfImportHelper.prototype.handleFileContent = function(data, file) {
   if (ngeoFile.isWmsGetCap(data)) {
     $scope['wmsGetCap'] = data;
     defer.resolve({
-      'message': this.gettext_('download succeeded')
+      'message': this.gettext_('Download succeeded')
     });
   } else if (ngeoFile.isKml(data)) {
     features = this.kmlFormat_.readFeatures(data, {
@@ -148,8 +148,8 @@ app.GmfImportHelper.prototype.handleFileContent = function(data, file) {
 
     this.addFeatures(map, features);
     defer.reject({
-      'message': this.gettext_('parsing failed'),
-      'reason': this.gettext_('not implemented yet')
+      'message': this.gettext_('Parsing failed'),
+      'reason': this.gettext_('Not implemented yet')
     });
   } else if (ngeoFile.isGpx(data)) {
     features = this.gpxFormat_.readFeatures(data, {
@@ -158,13 +158,13 @@ app.GmfImportHelper.prototype.handleFileContent = function(data, file) {
 
     this.addFeatures(map, features);
     defer.resolve({
-      'message': this.gettext_('parsing succeeded')
+      'message': this.gettext_('Parsing succeeded')
     });
 
   } else {
     console.error('Unparseable content: ', data);
     defer.reject({
-      'message': this.gettext_('parsing failed'),
+      'message': this.gettext_('Parsing failed'),
       'reason': this.gettext_('unsupported format')
     });
   }
