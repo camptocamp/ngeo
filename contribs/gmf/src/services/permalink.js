@@ -1,6 +1,7 @@
 goog.provide('gmf.Permalink');
 
 goog.require('gmf');
+goog.require('ngeo');
 goog.require('ngeo.AutoProjection');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
@@ -49,6 +50,19 @@ gmf.PermalinkParamPrefix = {
 
 gmf.module.value('gmfPermalinkOptions',
     /** @type {gmfx.PermalinkOptions} */ ({}));
+
+
+/** Configure the ngeo state manager */
+(function() {
+  var regexp = [];
+  for (const key in gmf.PermalinkParamPrefix) {
+    regexp.push(new RegExp(gmf.PermalinkParamPrefix[key] + '.*'));
+  }
+  for (const key in gmf.PermalinkParam) {
+    regexp.push(new RegExp(gmf.PermalinkParamPrefix[key]));
+  }
+  ngeo.module.value('ngeoUsedKeyRegexp', regexp);
+})();
 
 
 /**
