@@ -65,7 +65,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
         var key = this.localStorage.key(i);
         goog.asserts.assert(key !== null);
 
-        for (const keyRegexp of this.usedKeyRegexp) {
+        this.usedKeyRegexp.some(function(keyRegexp) {
           if (key.match(keyRegexp)) {
             var value = this.localStorage.get(key);
             goog.asserts.assert(value !== null);
@@ -75,23 +75,23 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
             if (this.excludedKeyListForURL.indexOf(key) < 0) {
               locationInitState[key] = this.initialState[key];
             }
-            break;
+            return true;
           }
-        }
+        }, this);
       }
       this.ngeoLocation.updateParams(locationInitState);
     }
   } else {
-    for (const key of paramKeys) {
-      for (const keyRegexp of this.usedKeyRegexp) {
+    paramKeys.forEach(function(key) {
+      this.usedKeyRegexp.some(function(keyRegexp) {
         if (key.match(keyRegexp)) {
           var value = this.ngeoLocation.getParam(key);
           goog.asserts.assert(value !== null);
           this.initialState[key] = value;
-          break;
+          return true;
         }
-      }
-    }
+      }, this);
+    }, this);
     //Retrieve selected theme in url path
     theme = urlPath.match(themeRegex);
     if (theme) {

@@ -55,11 +55,11 @@ gmf.module.value('gmfPermalinkOptions',
 /** Configure the ngeo state manager */
 (function() {
   var regexp = [];
-  for (const key in gmf.PermalinkParamPrefix) {
-    regexp.push(new RegExp(gmf.PermalinkParamPrefix[key] + '.*'));
+  for (var key1 in gmf.PermalinkParamPrefix) {
+    regexp.push(new RegExp(gmf.PermalinkParamPrefix[key1] + '.*'));
   }
-  for (const key in gmf.PermalinkParam) {
-    regexp.push(new RegExp(gmf.PermalinkParamPrefix[key]));
+  for (var key2 in gmf.PermalinkParam) {
+    regexp.push(new RegExp(gmf.PermalinkParamPrefix[key2]));
   }
   ngeo.module.value('ngeoUsedKeyRegexp', regexp);
 })();
