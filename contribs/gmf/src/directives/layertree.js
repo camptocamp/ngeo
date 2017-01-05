@@ -134,7 +134,6 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
    */
   this.dimensions;
 
-
   /**
    * @type {angular.Scope}
    * @private
