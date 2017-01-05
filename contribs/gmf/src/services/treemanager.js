@@ -64,6 +64,12 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
    */
   this.gmfThemes_ = gmfThemes;
 
+  /**
+   * The root node and its children used to generate the layertree (with the
+   * same ordre).
+   * @type {gmfThemes.GmfRootNode}
+   * @public
+   */
   this.root = /** @type {gmfThemes.GmfRootNode} */ ({
     children: []
   });
@@ -71,6 +77,7 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
   /**
    * The controller of the (unique) root layer tree.
    * The array of top level layer trees is avaible through `rootCtrl.children`.
+   * The order doesn't match with the ordre of the displayed layertree.
    * @type {ngeo.LayertreeController}
    * @export
    */
@@ -120,12 +127,20 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
 /**
  * Called when the themes change. Get the OGC servers, then listen to the
  * tree manager Layertree controllers array changes.
+ * The themes could have been changed so it also call a refresh of the
+ * layertree.
  * @private
  */
 gmf.TreeManager.prototype.handleThemesChange_ = function() {
   this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
     this.ogcServers_ = ogcServers;
   }.bind(this));
+
+  if (this.rootCtrl && this.rootCtrl.children) {
+    this.gmfThemes_.getThemesObject().then(function(themes) {
+      this.refreshFirstLevelGroups_(themes);
+    }.bind(this));
+  }
 };
 
 /**
@@ -437,5 +452,140 @@ gmf.TreeManager.prototype.getOgcServer = function(treeCtrl) {
     return this.ogcServers_[gmfGroup.ogcServer];
   }
 };
+
+
+/**
+ * Keep the state of each existing first-level-groups in the layertree then
+ * remove it and recreate it with nodes that come from the new theme and
+ * the corresponding saved state (when possible, otherwise, juste take the
+ * corresponding new node).
+ * FIXME: Currently doesn't save nor restore the opacity.
+ * @param {Array.<gmfThemes.GmfTheme>} themes the array of themes to be based on.
+ * @private
+ */
+gmf.TreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
+  var firstLevelGroupsFullState = {};
+
+  // Save state of each child
+  this.rootCtrl.children.map(function(treeCtrl) {
+    var name = treeCtrl.node.name;
+    firstLevelGroupsFullState[name] = this.getFirstLevelGroupFullState_(treeCtrl);
+  }.bind(this));
+
+  // Get nodes and set their state
+  var nodesToRestore = [];
+  // Iterate on the root to keep the same order in the tree as before.
+  this.root.children.map(function(node) {
+    var name = node.name;
+
+    // Find the right firstlevelgroup in the new theme or take the old one.
+    var nodeToRestore = gmf.Themes.findGroupByName(themes, name);
+    if (!nodeToRestore) {
+      nodeToRestore = node;
+    }
+    // Restore state.
+    var fullState = firstLevelGroupsFullState[name];
+    if (fullState) {
+      this.setNodeMetadataFromFullState_(nodeToRestore, fullState);
+    }
+    nodesToRestore.push(nodeToRestore);
+  }.bind(this));
+
+  // Readd the firstlevelgroups.
+  this.setFirstLevelGroups(nodesToRestore);
+
+  // Wait that Angular has created the layetree, then update the permalink.
+  this.$timeout_(function() {
+    this.updateTreeGroupsState_(this.root.children);
+  }.bind(this));
+};
+
+
+/**
+ * Return a gmf.TreeManager.fullState that keeps the state of the given
+ * treeCtrl including the state of its children.
+ * @param {ngeo.LayertreeController} treeCtrl the ngeo layertree controller to
+ *     save.
+ * @return {gmf.TreeManager.fullState!} the fullState object.
+ * @private
+ */
+gmf.TreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
+  var children = {};
+  // Get the state of the treeCtrl children recursively.
+  treeCtrl.children.map(function(child) {
+    children[child.node.name] = this.getFirstLevelGroupFullState_(child);
+  }.bind(this));
+
+  var isChecked, isExpanded, isLegendExpanded;
+  if (treeCtrl.children.length > 0) {
+    var nodeElement = $('#gmf-layertree-layer-group-' + treeCtrl.uid);
+    // Set isExpanded only in groups.
+    if (nodeElement) {
+      isExpanded = nodeElement.hasClass('in');
+    }
+  } else {
+    // Set state and isLegendExpanded only in leaves.
+    isChecked = treeCtrl.getState();
+    if (isChecked === 'on') {
+      isChecked = true;
+    } else if (isChecked === 'off') {
+      isChecked = false;
+    } else {
+      isChecked = undefined;
+    }
+    var legendElement = $('#gmf-layertree-node-' + treeCtrl.uid + '-legend');
+    if (legendElement) {
+      isLegendExpanded = legendElement.is(':visible');
+    }
+  }
+
+  return {
+    children: children,
+    isChecked: isChecked,
+    isExpanded: isExpanded,
+    isLegendExpanded: isLegendExpanded
+  };
+};
+
+
+/**
+ * Set a node's metadata with the given fullState. Update also its children
+ * recursively with the fullState children.
+ * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node to update.
+ * @param {gmf.TreeManager.fullState|undefined} fullState the fullState object
+ *     to use.
+ * @return {gmfThemes.GmfGroup|gmfThemes.GmfLayer} the node with modification.
+ * @private
+ */
+gmf.TreeManager.prototype.setNodeMetadataFromFullState_ = function(node, fullState) {
+  if (!fullState) {
+    return node;
+  }
+
+  // Set the metadata of the node children recursively.
+  if (node.children) {
+    node.children.map(function(child) {
+      this.setNodeMetadataFromFullState_(child, fullState.children[child.name]);
+    }.bind(this));
+  }
+
+  // Set the metadata with the fullState object informations.
+  var metadata = node.metadata;
+  metadata.isChecked = fullState.isChecked;
+  metadata.isExpanded = fullState.isExpanded;
+  metadata.isLegendExpanded = fullState.isLegendExpanded;
+
+  return node;
+};
+
+/**
+ * @typedef {{
+ *     children: (Object.<string, gmf.TreeManager.fullState>|undefined),
+ *     isChecked: (boolean|undefined),
+ *     isExpanded: (boolean|undefined),
+ *     isLegendExpanded: (boolean|undefined)
+ * }}
+ */
+gmf.TreeManager.fullState;
 
 gmf.module.service('gmfTreeManager', gmf.TreeManager);
