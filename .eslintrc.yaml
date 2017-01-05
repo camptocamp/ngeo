@@ -1,0 +1,22 @@
+extends:
+- openlayers
+- .eslintrc-es6.yaml
+env:
+    jquery: true
+    jasmine: true
+rules:
+    no-console: 0
+globals:
+    angular: false
+    goog: false
+    d3: false
+    Bloodhound: false
+    ol: false
+    proj4: false
+    saveAs: false
+    ngeo: false
+    gmf: false
+    app: false
+    gmfapp: false
+    inject: false
+    jsts: false
