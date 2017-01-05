@@ -124,16 +124,16 @@ app.LayertreeController.prototype.getLayer = function(node) {
  * @export
  */
 app.LayertreeController.prototype.onButtonClick = function(node, layer) {
-  var layerType = node['layerType'];
+  const layerType = node['layerType'];
   if (!(layerType in this.promises_)) {
     this.promises_[layerType] = this.http_.get('data/metadata.html').then(
         function(resp) {
-          var html = this.sce_.trustAsHtml(resp.data);
+          const html = this.sce_.trustAsHtml(resp.data);
           return html;
         }.bind(this)
     );
   }
-  var infoPopup = this.infoPopup_;
+  const infoPopup = this.infoPopup_;
   this.promises_[layerType].then(function(html) {
     infoPopup.setTitle(node['name']);
     infoPopup.setContent(html);
@@ -158,7 +158,7 @@ app.getLayer = (function() {
   /**
    * @type {Object.<string, ol.layer.Layer>}
    */
-  var layerCache = {};
+  const layerCache = {};
   return (
       /**
        * @param {Object} node Tree node.
@@ -168,11 +168,11 @@ app.getLayer = (function() {
         if (!('layerType' in node)) {
           return null;
         }
-        var type = node['layerType'];
+        const type = node['layerType'];
         if (type in layerCache) {
           return layerCache[type];
         }
-        var source;
+        let source;
         if (type == 'stamenWatercolor') {
           source = new ol.source.Stamen({
             layer: 'watercolor'
@@ -196,7 +196,7 @@ app.getLayer = (function() {
         } else {
           source = new ol.source.OSM();
         }
-        var layer = new ol.layer.Tile({
+        const layer = new ol.layer.Tile({
           source: source
         });
         layer.set('type', type);

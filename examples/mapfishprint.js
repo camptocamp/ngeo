@@ -141,7 +141,7 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   /**
    * @type {function(ol.render.Event)}
    */
-  var postcomposeListener = ngeoPrintUtils.createPrintMaskPostcompose(
+  const postcomposeListener = ngeoPrintUtils.createPrintMaskPostcompose(
       /**
        * @return {ol.Size} Size in dots of the map to print.
        */
@@ -153,8 +153,8 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
        * @return {number} Scale of the map to print.
        */
       function(frameState) {
-        var mapSize = frameState.size;
-        var mapResolution = frameState.viewState.resolution;
+        const mapSize = frameState.size;
+        const mapResolution = frameState.viewState.resolution;
         // we test mapSize and mapResolution just to please the compiler
         return mapSize !== undefined && mapResolution !== undefined ?
             ngeoPrintUtils.getOptimalScale(mapSize, mapResolution,
@@ -173,24 +173,24 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
  * @export
  */
 app.MainController.prototype.print = function() {
-  var map = this.map;
+  const map = this.map;
 
-  var mapSize = map.getSize();
-  var viewResolution = map.getView().getResolution();
+  const mapSize = map.getSize();
+  const viewResolution = map.getView().getResolution();
 
   // we test mapSize and viewResolution just to please the compiler
-  var scale = mapSize !== undefined && viewResolution !== undefined ?
+  const scale = mapSize !== undefined && viewResolution !== undefined ?
       this.printUtils_.getOptimalScale(mapSize, viewResolution,
           app.PRINT_PAPER_SIZE_, app.PRINT_SCALES_) :
       app.PRINT_SCALES_[0];
 
-  var dpi = app.PRINT_DPI_;
-  var format = app.PRINT_FORMAT_;
-  var layout = app.PRINT_LAYOUT_;
+  const dpi = app.PRINT_DPI_;
+  const format = app.PRINT_FORMAT_;
+  const layout = app.PRINT_LAYOUT_;
 
   this.printState = 'Printing...';
 
-  var spec = this.print_.createSpec(map, scale, dpi, layout, format, {
+  const spec = this.print_.createSpec(map, scale, dpi, layout, format, {
     'datasource': [],
     'debug': 0,
     'comments': 'My comments',
@@ -209,7 +209,7 @@ app.MainController.prototype.print = function() {
  * @private
  */
 app.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
-  var mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
+  const mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
   this.getStatus_(mfResp.ref);
 };
 
@@ -241,15 +241,15 @@ app.MainController.prototype.handleCreateReportError_ = function(resp) {
  * @private
  */
 app.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
-  var mfResp = /** @type {MapFishPrintStatusResponse} */ (resp.data);
-  var done = mfResp.done;
+  const mfResp = /** @type {MapFishPrintStatusResponse} */ (resp.data);
+  const done = mfResp.done;
   if (done) {
     // The report is ready. Open it by changing the window location.
     this.printState = '';
     window.location.href = this.print_.getReportUrl(ref);
   } else {
     // The report is not ready yet. Check again in 1s.
-    var that = this;
+    const that = this;
     this.$timeout_(function() {
       that.getStatus_(ref);
     }, 1000, false);

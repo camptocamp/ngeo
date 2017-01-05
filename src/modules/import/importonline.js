@@ -18,7 +18,7 @@ goog.require('ngeo.fileService');
  */
 exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOnlineTemplateUrl) {
 
-  var timeoutP;
+  let timeoutP;
 
   return {
     restrict: 'A',
@@ -30,7 +30,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
       /**
        * @type {ngeox.ImportOnlineOptions}
        */
-      var options = scope['options'];
+      const options = scope['options'];
       if (!options || (typeof options.handleFileContent !== 'function')) {
         elt.remove();
         return;
@@ -38,7 +38,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
 
       scope['handleFileContent'] = options.handleFileContent;
 
-      var initUserMsg = function() {
+      const initUserMsg = function() {
         scope['userMessage'] = gettext('Connect');
         scope['progress'] = 0;
         scope['loading'] = false;
@@ -49,13 +49,13 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
        * @param {Array<{name: string, url: string}>} nameUrls .
        * @return {function(string, function())} The matching function.
        */
-      var substringMatcher = function(nameUrls) {
+      const substringMatcher = function(nameUrls) {
         return function(q, cb) {
-          var matches = [];
+          let matches = [];
           if (!q) {
             matches = nameUrls;
           } else {
-            var regex = new RegExp(q, 'i');
+            const regex = new RegExp(q, 'i');
             nameUrls.forEach(function(nameUrl) {
               if (regex.test(nameUrl['name'])) {
                 matches.push(nameUrl);
@@ -66,7 +66,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
         };
       };
 
-      var nameUrls = scope['options'].urls;
+      let nameUrls = scope['options'].urls;
       if (nameUrls && nameUrls.length > 0 && !nameUrls[0]['name']) {
         nameUrls = nameUrls.map(function(url) {
           return {
@@ -77,7 +77,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
       }
 
       // Create the typeAhead input for the list of urls available
-      var taElt = elt.find('input[name=url]').typeahead({
+      const taElt = elt.find('input[name=url]').typeahead({
         hint: true,
         highlight: true,
         minLength: 0
@@ -119,7 +119,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
 
       // Handle URL of WMS
       scope['handleFileUrl'] = function() {
-        var url = scope['fileUrl'];
+        let url = scope['fileUrl'];
 
         if (options.transformUrl) {
           url = options.transformUrl(url);
@@ -166,7 +166,7 @@ exports.module.value('ngeoImportOnlineTemplateUrl',
      * @return {boolean} Template URL.
      */
     function(element, attrs) {
-      var templateUrl = attrs['ngeoImportOnlineTemplateUrl'];
+      const templateUrl = attrs['ngeoImportOnlineTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseModuleTemplateUrl + '/import/partials/import-online.html';
     });

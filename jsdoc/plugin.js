@@ -1,6 +1,6 @@
 'use strict';
 
-var jsdocType = require("jsdoc/tag/type")
+let jsdocType = require("jsdoc/tag/type")
 
 exports.defineTags = function(dictionary) {
 
@@ -15,7 +15,7 @@ exports.defineTags = function(dictionary) {
       if (!doclet.htmlAttributes) {
           doclet.htmlAttributes = [];
       }
-      var type = jsdocType.parse(tag.value, true, true)
+      let type = jsdocType.parse(tag.value, true, true)
       doclet.htmlAttributes.push({
           'name': type.name,
           'type': {

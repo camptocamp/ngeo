@@ -58,14 +58,14 @@ app.OEEditController = function($scope, $injector, $timeout) {
    * The ngeo ToolActivate manager service.
    * @type {ngeo.ToolActivateMgr}
    */
-  var ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+  const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
   ngeoToolActivateMgr.unregisterGroup('mapTools');
 
-  var oeEditToolActivate = new ngeo.ToolActivate(this, 'oeEditActive');
+  const oeEditToolActivate = new ngeo.ToolActivate(this, 'oeEditActive');
   ngeoToolActivateMgr.registerTool('mapTools', oeEditToolActivate, true);
 
-  var queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+  const queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, false);
 
   // Set edit tool as default active one
@@ -109,7 +109,7 @@ app.OEEditController = function($scope, $injector, $timeout) {
   /**
    * @type {gmf.Themes} gmfObjectEditingManager The gmf theme service
    */
-  var gmfThemes = $injector.get('gmfThemes');
+  const gmfThemes = $injector.get('gmfThemes');
 
   gmfThemes.getThemesObject().then(function(themes) {
     if (themes) {
@@ -123,7 +123,7 @@ app.OEEditController = function($scope, $injector, $timeout) {
    * @type {gmf.ObjectEditingManager} gmfObjectEditingManager The gmf
    *     ObjectEditing manager service.
    */
-  var gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');
+  const gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');
 
   /**
    * @type {?string}
@@ -203,7 +203,7 @@ app.OEEditController = function($scope, $injector, $timeout) {
 
   // Allow angular-gettext-tools to collect the strings to translate
   /** @type {angularGettext.Catalog} */
-  var gettextCatalog = $injector.get('gettextCatalog');
+  const gettextCatalog = $injector.get('gettextCatalog');
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');

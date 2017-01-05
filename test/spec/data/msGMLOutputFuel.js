@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "msGMLOutputFuel" }] */
 goog.provide('ngeo.test.data.msGMLOutputFuel');
 
-var msGMLOutputFuel = '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
+const msGMLOutputFuel = '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
 '<wfs:FeatureCollection' +
 '   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"' +
 '   xmlns:gml="http://www.opengis.net/gml"' +

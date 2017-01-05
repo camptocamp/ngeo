@@ -128,12 +128,12 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
   /**
    * @param {Array.<ngeo.LayertreeController>} value First level controllers.
    */
-  var updateEditableTreeCtrls = function(value) {
+  const updateEditableTreeCtrls = function(value) {
     // Timeout required, because the collection event is fired before the
     // leaf nodes are created and they are the ones we're looking for here.
     this.$timeout_(function() {
       if (value) {
-        var editables = this.editableTreeCtrls;
+        const editables = this.editableTreeCtrls;
 
         editables.length = 0;
         this.gmfTreeManager_.rootCtrl.traverseDepthFirst(function(treeCtrl) {

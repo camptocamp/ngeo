@@ -28,11 +28,11 @@ ngeo.measurelengthDirective = function($compile, gettext, $filter) {
      */
     link: function($scope, element, attrs, drawFeatureCtrl) {
 
-      var helpMsg = gettext('Click to start drawing line');
-      var contMsg = gettext('Click to continue drawing<br/>' +
+      const helpMsg = gettext('Click to start drawing line');
+      const contMsg = gettext('Click to continue drawing<br/>' +
                             'Double-click or click last point to finish');
 
-      var measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), {
+      const measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), {
         style: new ol.style.Style(),
         startMsg: $compile('<div translate>' + helpMsg + '</div>')($scope)[0],
         continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]

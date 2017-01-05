@@ -45,7 +45,7 @@ gmf.XSDAttributes = function($http, gmfLayersUrl) {
  */
 gmf.XSDAttributes.prototype.getAttributes = function(id) {
   if (!this.promises_[id]) {
-    var url = goog.uri.utils.appendPath(
+    const url = goog.uri.utils.appendPath(
       this.baseUrl_,
       id.toString()
     ) + '/md.xsd';

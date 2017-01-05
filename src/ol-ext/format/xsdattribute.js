@@ -36,7 +36,7 @@ ngeo.format.XSDAttribute.prototype.read = function(source) {
 ngeo.format.XSDAttribute.prototype.readFromDocument = function(doc) {
   goog.asserts.assert(doc.nodeType == Node.DOCUMENT_NODE,
       'doc.nodeType should be DOCUMENT');
-  for (var n = doc.firstChild; n; n = n.nextSibling) {
+  for (let n = doc.firstChild; n; n = n.nextSibling) {
     if (n.nodeType == Node.ELEMENT_NODE) {
       return this.readFromNode(n);
     }
@@ -55,14 +55,14 @@ ngeo.format.XSDAttribute.prototype.readFromNode = function(node) {
   goog.asserts.assert(node.localName == 'schema',
       'localName should be schema');
 
-  var elements = node.getElementsByTagName('element');
+  let elements = node.getElementsByTagName('element');
   if (!elements.length) {
     elements = node.getElementsByTagName('xsd:element');
   }
-  var attributes = [];
+  const attributes = [];
 
-  var attribute;
-  for (var i = 0, ii = elements.length; i < ii; i++) {
+  let attribute;
+  for (let i = 0, ii = elements.length; i < ii; i++) {
     attribute = this.readFromElementNode_(elements[i]);
     if (attribute) {
       attributes.push(attribute);
@@ -80,20 +80,20 @@ ngeo.format.XSDAttribute.prototype.readFromNode = function(node) {
  */
 ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
-  var name = node.getAttribute('name');
+  const name = node.getAttribute('name');
   goog.asserts.assert(name, 'name should be defined in element node.');
 
-  var nillable = node.getAttribute('nillable');
-  var required = !(nillable === true || nillable === 'true');
+  const nillable = node.getAttribute('nillable');
+  const required = !(nillable === true || nillable === 'true');
 
-  var attribute = {
+  const attribute = {
     name: name,
     required: required
   };
 
-  var type = node.getAttribute('type');
+  const type = node.getAttribute('type');
   if (type) {
-    var geomRegex =
+    const geomRegex =
       /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
     if (geomRegex.exec(type)) {
       attribute.type = ngeo.format.XSDAttributeType.GEOMETRY;
@@ -120,14 +120,14 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
       return null;
     }
   } else {
-    var enumerations = node.getElementsByTagName('enumeration');
+    let enumerations = node.getElementsByTagName('enumeration');
     if (!enumerations.length) {
       enumerations = node.getElementsByTagName('xsd:enumeration');
     }
     if (enumerations.length) {
       attribute.type = ngeo.format.XSDAttributeType.SELECT;
-      var choices = [];
-      for (var i = 0, ii = enumerations.length; i < ii; i++) {
+      const choices = [];
+      for (let i = 0, ii = enumerations.length; i < ii; i++) {
         choices.push(enumerations[i].getAttribute('value'));
       }
       attribute.choices = choices;
@@ -149,8 +149,8 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
  * @export
  */
 ngeo.format.XSDAttribute.getGeometryAttribute = function(attributes) {
-  var geomAttribute = null;
-  for (var i = 0, ii = attributes.length; i < ii; i++) {
+  let geomAttribute = null;
+  for (let i = 0, ii = attributes.length; i < ii; i++) {
     if (attributes[i].type === ngeo.format.XSDAttributeType.GEOMETRY) {
       geomAttribute = attributes[i];
       break;

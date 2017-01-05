@@ -74,7 +74,7 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
    */
   this.line;
 
-  var map = this['getMapFn']();
+  const map = this['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
 
   /**
@@ -96,11 +96,11 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
    */
   this.features_ = new ol.Collection();
 
-  var overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(this.features_);
 
-  var style;
-  var styleFn = this['getStyleFn'];
+  let style;
+  const styleFn = this['getStyleFn'];
   if (styleFn) {
     style = styleFn();
     goog.asserts.assertInstanceof(style, ol.style.Style);

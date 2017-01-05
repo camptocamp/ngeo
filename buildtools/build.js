@@ -1,18 +1,18 @@
 /**
  * This task builds OpenLayers with the Closure Compiler.
  */
-var path = require('path');
+let path = require('path');
 
-var async = require('async');
-var closure = require('closure-util');
-var fs = require('fs-extra');
-var nomnom = require('nomnom');
-var temp = require('temp').track();
+let async = require('async');
+let closure = require('closure-util');
+let fs = require('fs-extra');
+let nomnom = require('nomnom');
+let temp = require('temp').track();
 
-var generateExports = require('./generate-exports');
+let generateExports = require('./generate-exports');
 
-var log = closure.log;
-var root = path.join(__dirname, '..');
+let log = closure.log;
+let root = path.join(__dirname, '..');
 
 
 /**
@@ -61,7 +61,7 @@ function readConfig(configPath, callback) {
       callback(err);
       return;
     }
-    var config;
+    let config;
     try {
       config = JSON.parse(String(data));
     } catch (err2) {
@@ -117,7 +117,7 @@ function getDependencies(config, exports, callback) {
       return;
     }
     log.info('ol', 'Parsing dependencies');
-    var options;
+    let options;
     if (config.src) {
       options = {
         lib: config.src,
@@ -150,10 +150,10 @@ function getDependencies(config, exports, callback) {
 function concatenate(paths, callback) {
   async.map(paths, fs.readFile, function(err, results) {
     if (err) {
-      var msg = 'Trouble concatenating sources.  ' + err.message;
+      let msg = 'Trouble concatenating sources.  ' + err.message;
       callback(new Error(msg));
     } else {
-      var preamble = 'var CLOSURE_NO_DEPS = true;\n';
+      let preamble = 'var CLOSURE_NO_DEPS = true;\n';
       callback(null, preamble + results.join('\n'));
     }
   });
@@ -168,7 +168,7 @@ function concatenate(paths, callback) {
  *     any error.
  */
 function build(config, paths, callback) {
-  var options = {
+  let options = {
     compile: config.compile,
     cwd: config.cwd || root,
     jvm: config.jvm
@@ -208,7 +208,7 @@ function main(config, callback) {
  * function.
  */
 if (require.main === module) {
-  var options = nomnom.options({
+  let options = nomnom.options({
     config: {
       position: 0,
       required: true,

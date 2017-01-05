@@ -68,8 +68,8 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
 ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
     sourceLayersName, opt_serverType, opt_time, opt_params) {
 
-  var params = {'LAYERS': sourceLayersName};
-  var olServerType;
+  const params = {'LAYERS': sourceLayersName};
+  let olServerType;
   if (opt_time) {
     params['TIME'] = opt_time;
   }
@@ -78,7 +78,7 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
     // OpenLayers expects 'qgis' insteads of 'qgisserver'
     olServerType = opt_serverType.replace('qgisserver', 'qgis');
   }
-  var source = new ol.source.ImageWMS({
+  const source = new ol.source.ImageWMS({
     url: sourceURL,
     params: params,
     serverType: olServerType
@@ -106,30 +106,30 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
  * @export
  */
 ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_dimensions) {
-  var parser = new ol.format.WMTSCapabilities();
-  var layer = new ol.layer.Tile({
+  const parser = new ol.format.WMTSCapabilities();
+  const layer = new ol.layer.Tile({
     preload: Infinity
   });
-  var $q = this.$q_;
+  const $q = this.$q_;
 
   return this.$http_.get(capabilitiesURL).then(function(response) {
-    var result;
+    let result;
     if (response.data) {
       result = parser.read(response.data);
     }
     if (result) {
-      var options = ol.source.WMTS.optionsFromCapabilities(result, {
+      const options = ol.source.WMTS.optionsFromCapabilities(result, {
         layer: layerName
       });
-      var source = new ol.source.WMTS(options);
+      const source = new ol.source.WMTS(options);
       if (opt_dimensions && !ol.obj.isEmpty(opt_dimensions)) {
         source.updateDimensions(opt_dimensions);
       }
       layer.setSource(source);
 
       // Add styles from capabilities as param of the layer
-      var layers = result['Contents']['Layer'];
-      var l = ol.array.find(layers, function(elt, index, array) {
+      const layers = result['Contents']['Layer'];
+      const l = ol.array.find(layers, function(elt, index, array) {
         return elt['Identifier'] == layerName;
       });
       layer.set('capabilitiesStyles', l['Style']);
@@ -151,7 +151,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
-  var group = new ol.layer.Group();
+  const group = new ol.layer.Group();
   if (opt_layers) {
     group.setLayers(opt_layers);
   }
@@ -170,8 +170,8 @@ ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
  * @export
  */
 ngeo.LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
-  var groups = map.getLayerGroup().getLayers();
-  var group;
+  const groups = map.getLayerGroup().getLayers();
+  let group;
   groups.getArray().some(function(existingGroup) {
     if (existingGroup.get(ngeo.LayerHelper.GROUP_KEY) === groupName) {
       group = /** @type {ol.layer.Group} */ (existingGroup);
@@ -211,7 +211,7 @@ ngeo.LayerHelper.prototype.getFlatLayers = function(layer) {
  */
 ngeo.LayerHelper.prototype.getFlatLayers_ = function(layer, array) {
   if (layer instanceof ol.layer.Group) {
-    var sublayers = layer.getLayers();
+    const sublayers = layer.getLayers();
     sublayers.forEach(function(l) {
       this.getFlatLayers_(l, array);
     }, this);
@@ -234,10 +234,10 @@ ngeo.LayerHelper.prototype.getFlatLayers_ = function(layer, array) {
  * @export
  */
 ngeo.LayerHelper.prototype.getLayerByName = function(layerName, layers) {
-  var found = null;
+  let found = null;
   layers.some(function(layer) {
     if (layer instanceof ol.layer.Group) {
-      var sublayers = layer.getLayers().getArray();
+      const sublayers = layer.getLayers().getArray();
       found = this.getLayerByName(layerName, sublayers);
     } else if (layer.get('layerNodeName') === layerName) {
       found = layer;
@@ -258,10 +258,10 @@ ngeo.LayerHelper.prototype.getLayerByName = function(layerName, layers) {
  */
 ngeo.LayerHelper.prototype.getWMTSLegendURL = function(layer) {
   // FIXME case of multiple styles ?  case of multiple legendUrl ?
-  var url;
-  var styles = layer.get('capabilitiesStyles');
+  let url;
+  const styles = layer.get('capabilitiesStyles');
   if (styles !== undefined) {
-    var legendURL = styles[0]['legendURL'];
+    const legendURL = styles[0]['legendURL'];
     if (legendURL !== undefined) {
       url = legendURL[0]['href'];
     }
@@ -311,7 +311,7 @@ ngeo.LayerHelper.prototype.isLayerVisible = function(layer, map) {
     return false;
   }
 
-  var currentResolution = map.getView().getResolution();
+  const currentResolution = map.getView().getResolution();
   return currentResolution > layer.getMinResolution() &&
       currentResolution < layer.getMaxResolution();
 };
@@ -322,13 +322,13 @@ ngeo.LayerHelper.prototype.isLayerVisible = function(layer, map) {
  * @param {ol.layer.Image|ol.layer.Tile} layer Layer to refresh.
  */
 ngeo.LayerHelper.prototype.refreshWMSLayer = function(layer) {
-  var source_ = layer.getSource();
+  const source_ = layer.getSource();
   goog.asserts.assert(
     source_ instanceof ol.source.ImageWMS ||
     source_ instanceof ol.source.TileWMS
   );
-  var source = /** @type{ol.source.ImageWMS|ol.source.TileWMS} */ (source_);
-  var params = source.getParams();
+  const source = /** @type{ol.source.ImageWMS|ol.source.TileWMS} */ (source_);
+  const params = source.getParams();
   params[ngeo.LayerHelper.REFRESH_PARAM] = Math.random();
   source.updateParams(params);
 };
@@ -351,7 +351,7 @@ ngeo.LayerHelper.prototype.updateWMSLayerState = function(layer,
     layer.setVisible(false);
   } else {
     layer.setVisible(true);
-    var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
+    const source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
     if (opt_time) {
       source.updateParams({'LAYERS': names, 'TIME': opt_time});
     } else {

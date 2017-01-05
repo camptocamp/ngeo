@@ -57,7 +57,7 @@ gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, nge
   });
 
   // How should disclaimer message be displayed: in modals or alerts
-  var modal = ngeoLocation.getParam('modal');
+  const modal = ngeoLocation.getParam('modal');
 
   /**
    * @type {boolean}
@@ -149,7 +149,7 @@ gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, nge
       this.themes = themes;
 
       // Get an array with all nodes entities existing in "themes".
-      var flatNodes = [];
+      const flatNodes = [];
       this.themes.forEach(function(theme) {
         theme.children.forEach(function(group) {
           this.groups.push(group); // get a list of all groups
@@ -172,14 +172,14 @@ gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, nge
    * @export
    */
   this.getDistinctFlatNodes_ = function(node, nodes) {
-    var i;
-    var children = node.children;
+    let i;
+    const children = node.children;
     if (children !== undefined) {
       for (i = 0; i < children.length; i++) {
         this.getDistinctFlatNodes_(children[i], nodes);
       }
     }
-    var alreadyAdded = false;
+    let alreadyAdded = false;
     nodes.some(function(n) {
       if (n.id === node.id) {
         return alreadyAdded = true;

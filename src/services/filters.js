@@ -23,9 +23,9 @@ goog.require('ol.string');
  * @ngname ngeoScalify
  */
 ngeo.Scalify = function($filter) {
-  var numberFilter = $filter('number');
+  const numberFilter = $filter('number');
   return function(scale) {
-    var text = numberFilter(scale, 0);
+    const text = numberFilter(scale, 0);
     return text ? '1\u00a0:\u00a0' + text : '';
   };
 };
@@ -53,16 +53,16 @@ ngeo.module.filter('ngeoScalify', ngeo.Scalify);
  * @ngname ngeoNumber
  */
 ngeo.Number = function($locale) {
-  var formats = $locale.NUMBER_FORMATS;
+  const formats = $locale.NUMBER_FORMATS;
 
   /**
    * @param {number} number The number to format.
    * @param {number=} opt_precision The used precision, default is 3.
    * @return {string} The formatted string.
    */
-  var result = function(number, opt_precision) {
-    var groupSep = formats.GROUP_SEP;
-    var decimalSep = formats.DECIMAL_SEP;
+  const result = function(number, opt_precision) {
+    const groupSep = formats.GROUP_SEP;
+    const decimalSep = formats.DECIMAL_SEP;
     if (opt_precision === undefined) {
       opt_precision = 3;
     }
@@ -75,17 +75,17 @@ ngeo.Number = function($locale) {
       // 0 will creates infinity values
       return '0';
     }
-    var sign = number < 0;
+    const sign = number < 0;
     number = Math.abs(number);
 
-    var nb_decimal = opt_precision - Math.floor(Math.log(number) / Math.log(10)) - 1;
-    var factor = Math.pow(10, nb_decimal);
+    const nb_decimal = opt_precision - Math.floor(Math.log(number) / Math.log(10)) - 1;
+    const factor = Math.pow(10, nb_decimal);
     number = Math.round(number * factor);
-    var decimal = '';
-    var unit = Math.floor(number / factor);
+    let decimal = '';
+    const unit = Math.floor(number / factor);
 
     if (nb_decimal > 0) {
-      var str_number = number + '';
+      let str_number = number + '';
       // 0 padding
       while (str_number.length < nb_decimal) {
         str_number = '0' + str_number;
@@ -96,10 +96,10 @@ ngeo.Number = function($locale) {
       }
     }
 
-    var groups = [];
-    var str_unit = unit + '';
+    const groups = [];
+    let str_unit = unit + '';
     while (str_unit.length > 3) {
-      var index = str_unit.length - 3;
+      const index = str_unit.length - 3;
       groups.unshift(str_unit.substring(index));
       str_unit = str_unit.substring(0, index);
     }
@@ -137,9 +137,9 @@ ngeo.module.filter('ngeoNumber', ngeo.Number);
  * @ngname ngeoUnitPrefix
  */
 ngeo.UnitPrefix = function($filter) {
-  var numberFilter = $filter('ngeoNumber');
-  var standardPrefix = ['', 'k', 'M', 'G', 'T', 'P'];
-  var binaryPrefix = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
+  const numberFilter = $filter('ngeoNumber');
+  const standardPrefix = ['', 'k', 'M', 'G', 'T', 'P'];
+  const binaryPrefix = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
   /**
    * @param {number} number The number to format.
    * @param {string=} opt_unit The unit to used, default is ''.
@@ -147,12 +147,12 @@ ngeo.UnitPrefix = function($filter) {
    * @param {number=} opt_precision The used precision, default is 3.
    * @return {string} The formated string.
    */
-  var result = function(number, opt_unit, opt_type, opt_precision) {
+  const result = function(number, opt_unit, opt_type, opt_precision) {
     if (opt_unit === undefined) {
       opt_unit = '';
     }
-    var divisor = 1000;
-    var prefix = standardPrefix;
+    let divisor = 1000;
+    let prefix = standardPrefix;
     if (opt_type === 'square') {
       divisor = 1000000;
     } else if (opt_type === 'binary') {
@@ -160,15 +160,15 @@ ngeo.UnitPrefix = function($filter) {
       prefix = binaryPrefix;
     }
 
-    var index = 0;
-    var index_max = prefix.length - 1;
+    let index = 0;
+    const index_max = prefix.length - 1;
     while (number >= divisor && index < index_max) {
       number = number / divisor;
       index++;
     }
 
-    var postfix = prefix[index] + opt_unit;
-    var space = postfix.length == 0 ? '' : '\u00a0';
+    const postfix = prefix[index] + opt_unit;
+    const space = postfix.length == 0 ? '' : '\u00a0';
     return numberFilter(number, opt_precision) + space + postfix;
   };
   return result;
@@ -222,11 +222,11 @@ ngeo.NumberCoordinates = function($filter) {
    *     into a template.
    * @return {string} Number formated coordinates.
    */
-  var filterFn = function(coordinates, opt_fractionDigits, opt_template) {
-    var template = opt_template ? opt_template : '{x} {y}';
-    var x = coordinates[0];
-    var y = coordinates[1];
-    var fractionDigits = parseInt(opt_fractionDigits, 10) | 0;
+  const filterFn = function(coordinates, opt_fractionDigits, opt_template) {
+    const template = opt_template ? opt_template : '{x} {y}';
+    let x = coordinates[0];
+    let y = coordinates[1];
+    const fractionDigits = parseInt(opt_fractionDigits, 10) | 0;
     x = $filter('number')(x, fractionDigits);
     y = $filter('number')(y, fractionDigits);
     return template.replace('{x}', x).replace('{y}', y);
@@ -257,12 +257,12 @@ ngeo.module.filter('ngeoNumberCoordinates', ngeo.NumberCoordinates);
  * @ngname ngeoDMSCoordinates
  */
 ngeo.DMSCoordinates = function() {
-  var degreesToStringHDMS = function(degrees, hemispheres, fractionDigits) {
-    var normalizedDegrees = ol.math.modulo(degrees + 180, 360) - 180;
-    var dms = Math.abs(3600 * normalizedDegrees);
-    var d = Math.floor(dms / 3600);
-    var m = Math.floor((dms / 60) % 60);
-    var s = (dms % 60);
+  const degreesToStringHDMS = function(degrees, hemispheres, fractionDigits) {
+    const normalizedDegrees = ol.math.modulo(degrees + 180, 360) - 180;
+    const dms = Math.abs(3600 * normalizedDegrees);
+    const d = Math.floor(dms / 3600);
+    const m = Math.floor((dms / 60) % 60);
+    const s = (dms % 60);
     return d + '\u00b0 ' +
         ol.string.padNumber(m, 2) + '\u2032 ' +
         ol.string.padNumber(s, 2, fractionDigits) + '\u2033 ' +
@@ -279,13 +279,13 @@ ngeo.DMSCoordinates = function() {
    *     semicolon symbole into a template.
    * @return {string} DMS formated coordinates.
    */
-  var filterFn = function(coordinates, opt_fractionDigits, opt_template) {
-    var fractionDigits = parseInt(opt_fractionDigits, 10) | 0;
+  const filterFn = function(coordinates, opt_fractionDigits, opt_template) {
+    const fractionDigits = parseInt(opt_fractionDigits, 10) | 0;
 
-    var template = opt_template ? opt_template : '{x} {y}';
+    const template = opt_template ? opt_template : '{x} {y}';
 
-    var xdms = degreesToStringHDMS(coordinates[1], 'NS', fractionDigits);
-    var ydms = degreesToStringHDMS(coordinates[0], 'EW', fractionDigits);
+    const xdms = degreesToStringHDMS(coordinates[1], 'NS', fractionDigits);
+    const ydms = degreesToStringHDMS(coordinates[0], 'EW', fractionDigits);
 
     return template.replace('{x}', xdms).replace('{y}', ydms);
   };

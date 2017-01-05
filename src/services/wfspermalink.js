@@ -88,7 +88,7 @@ ngeo.module.value('ngeoWfsPermalinkOptions',
  */
 ngeo.WfsPermalink = function($http, ngeoQueryResult, ngeoWfsPermalinkOptions) {
 
-  var options = ngeoWfsPermalinkOptions;
+  const options = ngeoWfsPermalinkOptions;
 
   /**
    * @type {string}
@@ -168,13 +168,13 @@ ngeo.WfsPermalink.prototype.issue = function(queryData, map) {
       'set the value `ngeoWfsPermalinkOptions`');
   this.clearResult_();
 
-  var typeName = queryData.wfsType;
+  const typeName = queryData.wfsType;
   if (!this.wfsTypes_.hasOwnProperty(typeName)) {
     return;
   }
-  var wfsType = this.wfsTypes_[typeName];
+  const wfsType = this.wfsTypes_[typeName];
 
-  var filters = this.createFilters_(queryData.filterGroups);
+  const filters = this.createFilters_(queryData.filterGroups);
   if (filters === null) {
     return;
   }
@@ -191,8 +191,8 @@ ngeo.WfsPermalink.prototype.issue = function(queryData, map) {
  * @private
  */
 ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showFeatures) {
-  var wfsFormat = new ol.format.WFS();
-  var featureRequestXml = wfsFormat.writeGetFeature({
+  const wfsFormat = new ol.format.WFS();
+  const featureRequestXml = wfsFormat.writeGetFeature({
     srsName: map.getView().getProjection().getCode(),
     featureNS: (wfsType.featureNS !== undefined) ?
         wfsType.featureNS : this.defaultFeatureNS_,
@@ -204,15 +204,15 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
     maxFeatures: this.maxFeatures_
   });
 
-  var featureRequest = new XMLSerializer().serializeToString(featureRequestXml);
+  const featureRequest = new XMLSerializer().serializeToString(featureRequestXml);
   this.$http_.post(this.url_, featureRequest).then(function(response) {
-    var features = wfsFormat.readFeatures(response.data);
+    const features = wfsFormat.readFeatures(response.data);
     if (features.length == 0) {
       return;
     }
 
     // zoom to features
-    var mapSize = map.getSize();
+    const mapSize = map.getSize();
     if (mapSize !== undefined) {
       map.getView().fit(
           this.getExtent_(features),
@@ -222,7 +222,7 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
 
     // then show if requested
     if (showFeatures) {
-      var resultSource = /** @type {ngeox.QueryResultSource} */ ({
+      const resultSource = /** @type {ngeox.QueryResultSource} */ ({
         'features': features,
         'id': wfsType.featureType,
         'identifierAttributeField': wfsType.label,
@@ -259,10 +259,10 @@ ngeo.WfsPermalink.prototype.createFilters_ = function(filterGroups) {
   if (filterGroups.length == 0) {
     return null;
   }
-  var f = ol.format.filter;
-  var createFiltersForGroup = function(filterGroup) {
-    var filters = filterGroup.filters.map(function(filterDef) {
-      var condition = filterDef.condition;
+  const f = ol.format.filter;
+  const createFiltersForGroup = function(filterGroup) {
+    const filters = filterGroup.filters.map(function(filterDef) {
+      const condition = filterDef.condition;
       if (Array.isArray(condition)) {
         return ngeo.WfsPermalink.or_(condition.map(function(cond) {
           return f.equalTo(filterDef.property, cond);

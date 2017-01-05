@@ -1,12 +1,12 @@
-var urlElements = window.location.pathname.split('/');
+const urlElements = window.location.pathname.split('/');
 
-var gmfUrlElements = urlElements.slice(0, urlElements.length - 3);
+const gmfUrlElements = urlElements.slice(0, urlElements.length - 3);
 gmfUrlElements.push('src', 'directives', 'partials');
 
-var ngeoUrlElements = urlElements.slice(0, urlElements.length - 5);
+const ngeoUrlElements = urlElements.slice(0, urlElements.length - 5);
 ngeoUrlElements.push('src', 'directives', 'partials');
 
-var ngeoModuleUrlElements = urlElements.slice(0, urlElements.length - 5);
+const ngeoModuleUrlElements = urlElements.slice(0, urlElements.length - 5);
 ngeoModuleUrlElements.push('src', 'modules');
 
 /**

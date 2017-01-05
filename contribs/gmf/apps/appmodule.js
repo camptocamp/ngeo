@@ -23,7 +23,7 @@ app.module = angular.module('app', [
 ]);
 
 app.module.config(['$compileProvider', function($compileProvider) {
-  var uri = goog.Uri.parse(location);
+  const uri = goog.Uri.parse(location);
   if (!uri.getQueryData().containsKey('debug')) {
     // Disable the debug info
     $compileProvider.debugInfoEnabled(false);

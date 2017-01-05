@@ -8,7 +8,7 @@
 /**
  * @type {Object}
  */
-var gmfx;
+let gmfx;
 
 
 /**

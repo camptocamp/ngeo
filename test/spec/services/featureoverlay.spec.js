@@ -1,9 +1,9 @@
 goog.require('ngeo.FeatureOverlayMgr');
 
 describe('ngeo.FeatureOverlayMgr', function() {
-  var ngeoFeatureOverlayMgr;
-  var map;
-  var layer;
+  let ngeoFeatureOverlayMgr;
+  let map;
+  let layer;
 
   beforeEach(function() {
     map = new ol.Map({});
@@ -21,8 +21,8 @@ describe('ngeo.FeatureOverlayMgr', function() {
   });
 
   it('adds and removes features', function() {
-    var overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var feature = new ol.Feature();
+    const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const feature = new ol.Feature();
     overlay.addFeature(feature);
     expect(layer.getSource().getFeatures().length).toBe(1);
 
@@ -31,20 +31,20 @@ describe('ngeo.FeatureOverlayMgr', function() {
   });
 
   it('removes all the features', function() {
-    var overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var feature = new ol.Feature();
+    const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const feature = new ol.Feature();
     overlay.addFeature(feature);
     overlay.clear();
     expect(layer.getSource().getFeatures().length).toBe(0);
   });
 
   it('doesn\'t remove features from other overlays', function() {
-    var overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var feature1 = new ol.Feature();
+    const overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const feature1 = new ol.Feature();
     overlay1.addFeature(feature1);
 
-    var overlay2 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var feature2 = new ol.Feature();
+    const overlay2 = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const feature2 = new ol.Feature();
     overlay2.addFeature(feature2);
 
     expect(layer.getSource().getFeatures().length).toBe(2);
@@ -55,24 +55,24 @@ describe('ngeo.FeatureOverlayMgr', function() {
   });
 
   it('correctly sets styles', function() {
-    var overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var style1 = new ol.style.Style();
+    const overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const style1 = new ol.style.Style();
     overlay1.setStyle(style1);
 
-    var overlay2 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var style2 = new ol.style.Style();
+    const overlay2 = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const style2 = new ol.style.Style();
     overlay2.setStyle(style2);
 
-    var feature1 = new ol.Feature();
+    const feature1 = new ol.Feature();
     overlay1.addFeature(feature1);
 
-    var feature2 = new ol.Feature();
+    const feature2 = new ol.Feature();
     overlay2.addFeature(feature2);
 
-    var styleFunction = ngeoFeatureOverlayMgr.getLayer().getStyleFunction();
+    const styleFunction = ngeoFeatureOverlayMgr.getLayer().getStyleFunction();
 
-    var resolution = 1;
-    var styles;
+    const resolution = 1;
+    let styles;
 
     styles = styleFunction(feature1, resolution);
     expect(styles.length).toEqual(1);
@@ -84,12 +84,12 @@ describe('ngeo.FeatureOverlayMgr', function() {
   });
 
   describe('feature overlay configured with a feature collection', function() {
-    var overlay, features;
+    let overlay, features;
 
     beforeEach(function() {
       overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-      var feature1 = new ol.Feature();
-      var feature2 = new ol.Feature();
+      const feature1 = new ol.Feature();
+      const feature2 = new ol.Feature();
       features = new ol.Collection([feature1, feature2]);
       overlay.setFeatures(features);
     });
@@ -121,7 +121,7 @@ describe('ngeo.FeatureOverlayMgr', function() {
 
     describe('replace the collection by another one', function() {
       it('uses the new collection and ignores the old one', function() {
-        var newFeatures = new ol.Collection();
+        const newFeatures = new ol.Collection();
         overlay.setFeatures(newFeatures);
         expect(layer.getSource().getFeatures().length).toBe(0);
         newFeatures.push(new ol.Feature());

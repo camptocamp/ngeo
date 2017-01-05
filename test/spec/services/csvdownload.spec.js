@@ -2,7 +2,7 @@ goog.require('ngeo.CsvDownload');
 
 describe('ngeo.csvdownload', function() {
 
-  var ngeoCsvDownload;
+  let ngeoCsvDownload;
 
   beforeEach(inject(function(_ngeoCsvDownload_) {
     ngeoCsvDownload = _ngeoCsvDownload_;
@@ -14,8 +14,8 @@ describe('ngeo.csvdownload', function() {
     });
 
     it('generates a CSV', function() {
-      var columnDefs = [{name: 'col 1'}, {name: 'col 2'}, {name: 'col 3'}];
-      var data = [{
+      const columnDefs = [{name: 'col 1'}, {name: 'col 2'}, {name: 'col 3'}];
+      const data = [{
         'col 1': 'some text',
         'col 2': 123,
         'col 3': true,
@@ -25,9 +25,9 @@ describe('ngeo.csvdownload', function() {
         'col 2': null,
         'col 3': undefined
       }];
-      var csv = ngeoCsvDownload.generateCsv(data, columnDefs);
+      const csv = ngeoCsvDownload.generateCsv(data, columnDefs);
 
-      var expectedCsv =
+      const expectedCsv =
           '"col 1","col 2","col 3"\n' +
           '"some text","123","true"\n' +
           '"some ""more"" text",,\n';

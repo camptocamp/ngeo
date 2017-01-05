@@ -121,7 +121,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   gmfThemes.getThemesObject().then(function(themes) {
     if (themes) {
       // Add 'Edit' theme, i.e. the one with id 73
-      for (var i = 0, ii = themes.length; i < ii; i++) {
+      for (let i = 0, ii = themes.length; i < ii; i++) {
         if (themes[i].id === 73) {
           this.gmfTreeManager.setFirstLevelGroups(themes[i].children);
           break;
@@ -139,7 +139,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
    */
   this.editFeatureSelectorActive = true;
 
-  var editFeatureSelectorToolActivate = new ngeo.ToolActivate(
+  const editFeatureSelectorToolActivate = new ngeo.ToolActivate(
       this, 'editFeatureSelectorActive');
   ngeoToolActivateMgr.registerTool(
       'mapTools', editFeatureSelectorToolActivate, true);
@@ -150,7 +150,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
    */
   this.dummyActive = false;
 
-  var dummyToolActivate = new ngeo.ToolActivate(
+  const dummyToolActivate = new ngeo.ToolActivate(
       this, 'dummyActive');
   ngeoToolActivateMgr.registerTool(
       'mapTools', dummyToolActivate, false);

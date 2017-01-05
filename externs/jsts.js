@@ -3,7 +3,7 @@
  * @suppress {const|duplicate}
  * @externs
  */
-var jsts = {};
+let jsts = {};
 
 
 /** @const */

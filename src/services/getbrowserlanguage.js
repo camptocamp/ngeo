@@ -29,8 +29,8 @@ ngeo.getBrowserLanguageFactory = function($window) {
        * @return {string} The "best" language code.
        */
       function(availableLanguages) {
-        var nav = $window.navigator;
-        var browserLanguages = nav.languages || nav.language ||
+        const nav = $window.navigator;
+        let browserLanguages = nav.languages || nav.language ||
             nav.browserLanguage || nav.systemLanguage || nav.userLanguage;
         if (!Array.isArray(browserLanguages)) {
           browserLanguages = [browserLanguages];
@@ -42,7 +42,7 @@ ngeo.getBrowserLanguageFactory = function($window) {
         browserLanguages = browserLanguages.filter(function(item, index, arr) {
           return arr.indexOf(item) == index;
         });
-        var supportedLanguages = browserLanguages.filter(function(item) {
+        const supportedLanguages = browserLanguages.filter(function(item) {
           return availableLanguages.indexOf(item) != -1;
         });
         return supportedLanguages[0];

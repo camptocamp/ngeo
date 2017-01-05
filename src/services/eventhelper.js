@@ -41,7 +41,7 @@ ngeo.EventHelper.prototype.addListenerKey = function(uid, key, opt_isol) {
     this.initListenerKey_(uid);
   }
 
-  var isol = opt_isol !== undefined ? opt_isol : true;
+  const isol = opt_isol !== undefined ? opt_isol : true;
   if (isol) {
     this.listenerKeys_[uid].ol.push(/** @type {ol.EventsKey} */ (key));
   } else {

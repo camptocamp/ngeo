@@ -5,8 +5,8 @@ goog.require('ngeo.test.data.msGMLOutputFuel');
 
 describe('ngeo.WfsPermalink', function() {
 
-  var ngeoWfsPermalink;
-  var ngeoQueryResult;
+  let ngeoWfsPermalink;
+  let ngeoQueryResult;
 
   beforeEach(function() {
     module('ngeo', function($provide) {
@@ -30,18 +30,18 @@ describe('ngeo.WfsPermalink', function() {
 
   describe('#issue', function() {
 
-    var $httpBackend;
-    var map;
+    let $httpBackend;
+    let map;
 
     beforeEach(function() {
-      var url = 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy';
+      const url = 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy';
       inject(function($injector) {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('POST', url).respond(msGMLOutputFuel);
         $httpBackend = $injector.get('$httpBackend');
       });
 
-      var projection = ol.proj.get('EPSG:21781');
+      const projection = ol.proj.get('EPSG:21781');
       projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
       map = new ol.Map({
@@ -61,7 +61,7 @@ describe('ngeo.WfsPermalink', function() {
     });
 
     it('makes a query and adds the result', function() {
-      var queryData = {
+      const queryData = {
         'wfsType': 'fuel',
         'showFeatures': true,
         'filterGroups': [
@@ -82,7 +82,7 @@ describe('ngeo.WfsPermalink', function() {
   });
 
   describe('#createFilters_', function() {
-    var expectFiltersToEqual = function(filter1, filter2) {
+    const expectFiltersToEqual = function(filter1, filter2) {
       expect(filter1.constructor).toBe(filter2.constructor, 'same filter type');
       if (filter1 instanceof ol.format.filter.LogicalBinary) {
         expectFiltersToEqual(filter1.conditionA, filter2.conditionA);
@@ -95,7 +95,7 @@ describe('ngeo.WfsPermalink', function() {
     };
 
     it('creates filters', function() {
-      var queryData = {
+      const queryData = {
         'wfsType': 'fuel',
         'filterGroups': [
           {
@@ -116,8 +116,8 @@ describe('ngeo.WfsPermalink', function() {
           }
         ]
       };
-      var f = ol.format.filter;
-      var expectedFilters = f.or(
+      const f = ol.format.filter;
+      const expectedFilters = f.or(
           f.or(
             f.and(
                 f.equalTo('osm_id', '12345'),

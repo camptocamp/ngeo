@@ -377,10 +377,10 @@ gmf.DrawfeatureController.prototype.unregisterInteractions_ = function() {
  */
 gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
 
-  var keys = this.listenerKeys_;
-  var drawUid = ['draw-', ol.getUid(this)].join('-');
-  var otherUid = ['other-', ol.getUid(this)].join('-');
-  var toolMgr = this.ngeoToolActivateMgr_;
+  const keys = this.listenerKeys_;
+  const drawUid = ['draw-', ol.getUid(this)].join('-');
+  const otherUid = ['other-', ol.getUid(this)].join('-');
+  const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
     // when activated
@@ -464,7 +464,7 @@ gmf.DrawfeatureController.prototype.getFeaturesArray = function() {
  * @export
  */
 gmf.DrawfeatureController.prototype.clearFeatures = function() {
-  var msg = this.gettextCatalog_.getString(
+  const msg = this.gettextCatalog_.getString(
       'Do you really want to delete all the features?');
   if (confirm(msg)) {
     this.features.clear();
@@ -477,7 +477,7 @@ gmf.DrawfeatureController.prototype.clearFeatures = function() {
  * @export
  */
 gmf.DrawfeatureController.prototype.removeFeature = function(feature) {
-  var msg = this.gettextCatalog_.getString(
+  const msg = this.gettextCatalog_.getString(
       'Do you really want to delete the selected feature?');
   if (confirm(msg)) {
     this.features.remove(feature);
@@ -516,7 +516,7 @@ gmf.DrawfeatureController.prototype.handleFeaturesRemove_ = function(evt) {
 gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
     active) {
 
-  var mapDiv = this.map.getViewport();
+  const mapDiv = this.map.getViewport();
   goog.asserts.assertElement(mapDiv);
 
   if (active) {
@@ -560,12 +560,12 @@ gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
  */
 gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
 
-  var pixel = evt.pixel;
+  const pixel = evt.pixel;
 
-  var feature = this.map.forEachFeatureAtPixel(
+  let feature = this.map.forEachFeatureAtPixel(
     pixel,
     function(feature) {
-      var ret = false;
+      let ret = false;
       if (ol.array.includes(this.features.getArray(), feature)) {
         ret = feature;
       }
@@ -612,13 +612,13 @@ gmf.DrawfeatureController.prototype.handleMapTouchEnd_ = function(evt) {
  * @private
  */
 gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
-  var pixel = this.map.getEventPixel(evt);
-  var coordinate = this.map.getCoordinateFromPixel(pixel);
+  const pixel = this.map.getEventPixel(evt);
+  const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-  var feature = this.map.forEachFeatureAtPixel(
+  let feature = this.map.forEachFeatureAtPixel(
     pixel,
     function(feature) {
-      var ret = false;
+      let ret = false;
       if (ol.array.includes(this.features.getArray(), feature)) {
         ret = feature;
       }
@@ -631,9 +631,9 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
 
   // show contextual menu when clicking on certain types of features
   if (feature) {
-    var actions = [];
+    let actions = [];
 
-    var type = this.featureHelper_.getType(feature);
+    const type = this.featureHelper_.getType(feature);
     if (type == ngeo.GeometryType.CIRCLE ||
         type == ngeo.GeometryType.LINE_STRING ||
         type == ngeo.GeometryType.POLYGON ||
@@ -687,7 +687,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
  * @private
  */
 gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
-  var action = evt.action;
+  const action = evt.action;
 
   switch (action) {
     case gmf.DrawfeatureController.MenuActionType.DELETE:

@@ -78,14 +78,14 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  * - getCapabilities: get the capabilities of the server
  *
  *
- *     var printBaseUrl = 'http://example.com/print';
- *     var print = new ngeo.Print(printBaseUrl);
+ *     let printBaseUrl = 'http://example.com/print';
+ *     let print = new ngeo.Print(printBaseUrl);
  *
- *     var scale = 5000;
- *     var dpi = 72;
- *     var layout = 'A4 portrait';
- *     var format = 'pdf';
- *     var reportSpec = print.createSpec(map, scale, dpi, layout, format {
+ *     let scale = 5000;
+ *     let dpi = 72;
+ *     let layout = 'A4 portrait';
+ *     let format = 'pdf';
+ *     let reportSpec = print.createSpec(map, scale, dpi, layout, format {
  *       'title': 'A title for my report',
  *       'rotation': 45 // degree
  *     });
@@ -144,9 +144,9 @@ ngeo.Print.FEAT_STYLE_PROP_PREFIX_ = '_ngeo_style_';
  * @export
  */
 ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
-  var httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
+  const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
       /** @type {angular.$http.Config} */ ({});
-  var url = this.url_ + '/cancel/' + ref;
+  const url = this.url_ + '/cancel/' + ref;
   // "delete" is a reserved word, so use ['delete']
   return this.$http_['delete'](url, httpConfig);
 };
@@ -166,19 +166,19 @@ ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
 ngeo.Print.prototype.createSpec = function(
     map, scale, dpi, layout, format, customAttributes) {
 
-  var specMap = /** @type {MapFishPrintMap} */ ({
+  const specMap = /** @type {MapFishPrintMap} */ ({
     dpi: dpi,
     rotation: /** number */ (customAttributes['rotation'])
   });
 
   this.encodeMap_(map, scale, specMap);
 
-  var attributes = /** @type {MapFishPrintAttributes} */ ({
+  const attributes = /** @type {MapFishPrintAttributes} */ ({
     map: specMap
   });
   goog.object.extend(attributes, customAttributes);
 
-  var spec = /** @type {MapFishPrintSpec} */ ({
+  const spec = /** @type {MapFishPrintSpec} */ ({
     attributes: attributes,
     format: format,
     layout: layout
@@ -195,11 +195,11 @@ ngeo.Print.prototype.createSpec = function(
  * @private
  */
 ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
-  var view = map.getView();
-  var viewCenter = view.getCenter();
-  var viewProjection = view.getProjection();
-  var viewResolution = view.getResolution();
-  var viewRotation = object.rotation || ol.math.toDegrees(view.getRotation());
+  const view = map.getView();
+  const viewCenter = view.getCenter();
+  const viewProjection = view.getProjection();
+  const viewResolution = view.getResolution();
+  const viewRotation = object.rotation || ol.math.toDegrees(view.getRotation());
 
   goog.asserts.assert(viewCenter !== undefined);
   goog.asserts.assert(viewProjection !== undefined);
@@ -210,9 +210,9 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   object.scale = scale;
   object.layers = [];
 
-  var mapLayerGroup = map.getLayerGroup();
+  const mapLayerGroup = map.getLayerGroup();
   goog.asserts.assert(mapLayerGroup !== null);
-  var layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
+  let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
   layers = layers.slice().reverse();
 
   layers.forEach(function(layer) {
@@ -247,7 +247,7 @@ ngeo.Print.prototype.encodeLayer = function(arr, layer, resolution) {
  */
 ngeo.Print.prototype.encodeImageLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Image);
-  var source = layer.getSource();
+  const source = layer.getSource();
   if (source instanceof ol.source.ImageWMS) {
     this.encodeImageWmsLayer_(arr, layer);
   }
@@ -260,12 +260,12 @@ ngeo.Print.prototype.encodeImageLayer_ = function(arr, layer) {
  * @private
  */
 ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
-  var source = layer.getSource();
+  const source = layer.getSource();
 
   goog.asserts.assertInstanceof(layer, ol.layer.Image);
   goog.asserts.assertInstanceof(source, ol.source.ImageWMS);
 
-  var url = source.getUrl();
+  const url = source.getUrl();
   if (url !== undefined) {
     this.encodeWmsLayer_(
         arr, layer.getOpacity(), url, source.getParams());
@@ -281,7 +281,7 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
  * @private
  */
 ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
-  var customParams = {'TRANSPARENT': true};
+  const customParams = {'TRANSPARENT': true};
   goog.object.extend(customParams, params);
 
   delete customParams['LAYERS'];
@@ -289,7 +289,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   delete customParams['SERVERTYPE'];
   delete customParams['VERSION'];
 
-  var object = /** @type {MapFishPrintWmsLayer} */ ({
+  const object = /** @type {MapFishPrintWmsLayer} */ ({
     baseURL: ngeo.Print.getAbsoluteUrl_(url),
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
@@ -309,7 +309,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
  * @private
  */
 ngeo.Print.getAbsoluteUrl_ = function(url) {
-  var a = document.createElement('a');
+  const a = document.createElement('a');
   a.href = encodeURI(url);
   return decodeURI(a.href);
 };
@@ -322,7 +322,7 @@ ngeo.Print.getAbsoluteUrl_ = function(url) {
  */
 ngeo.Print.prototype.encodeTileLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Tile);
-  var source = layer.getSource();
+  const source = layer.getSource();
   if (source instanceof ol.source.WMTS) {
     this.encodeTileWmtsLayer_(arr, layer);
   } else if (source instanceof ol.source.TileWMS) {
@@ -338,19 +338,19 @@ ngeo.Print.prototype.encodeTileLayer_ = function(arr, layer) {
  */
 ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Tile);
-  var source = layer.getSource();
+  const source = layer.getSource();
   goog.asserts.assertInstanceof(source, ol.source.WMTS);
 
-  var projection = source.getProjection();
-  var tileGrid = source.getTileGrid();
+  const projection = source.getProjection();
+  const tileGrid = source.getTileGrid();
   goog.asserts.assertInstanceof(tileGrid, ol.tilegrid.WMTS);
-  var matrixIds = tileGrid.getMatrixIds();
+  const matrixIds = tileGrid.getMatrixIds();
 
   /** @type {Array.<MapFishPrintWmtsMatrix>} */
-  var matrices = [];
+  const matrices = [];
 
-  for (var i = 0, ii = matrixIds.length; i < ii; ++i) {
-    var tileRange = tileGrid.getFullTileRange(i);
+  for (let i = 0, ii = matrixIds.length; i < ii; ++i) {
+    const tileRange = tileGrid.getFullTileRange(i);
     matrices.push(/** @type {MapFishPrintWmtsMatrix} */ ({
       identifier: matrixIds[i],
       scaleDenominator: tileGrid.getResolution(i) *
@@ -364,10 +364,10 @@ ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
     }));
   }
 
-  var dimensions = source.getDimensions();
-  var dimensionKeys = Object.keys(dimensions);
+  const dimensions = source.getDimensions();
+  const dimensionKeys = Object.keys(dimensions);
 
-  var object = /** @type {MapFishPrintWmtsLayer} */ ({
+  const object = /** @type {MapFishPrintWmtsLayer} */ ({
     baseURL: this.getWmtsUrl_(source),
     dimensions: dimensionKeys,
     dimensionParams: dimensions,
@@ -392,7 +392,7 @@ ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
  * @private
  */
 ngeo.Print.prototype.encodeTileWmsLayer_ = function(arr, layer) {
-  var source = layer.getSource();
+  const source = layer.getSource();
 
   goog.asserts.assertInstanceof(layer, ol.layer.Tile);
   goog.asserts.assertInstanceof(source, ol.source.TileWMS);
@@ -409,23 +409,23 @@ ngeo.Print.prototype.encodeTileWmsLayer_ = function(arr, layer) {
  * @private
  */
 ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
-  var source = layer.getSource();
+  const source = layer.getSource();
   goog.asserts.assertInstanceof(source, ol.source.Vector);
 
-  var features = source.getFeatures();
+  const features = source.getFeatures();
 
-  var geojsonFormat = new ol.format.GeoJSON();
+  const geojsonFormat = new ol.format.GeoJSON();
 
-  var /** @type {Array.<GeoJSONFeature>} */ geojsonFeatures = [];
-  var mapfishStyleObject = /** @type {MapFishPrintVectorStyle} */ ({
+  const /** @type {Array.<GeoJSONFeature>} */ geojsonFeatures = [];
+  const mapfishStyleObject = /** @type {MapFishPrintVectorStyle} */ ({
     version: 2
   });
 
-  for (var i = 0, ii = features.length; i < ii; ++i) {
-    var originalFeature = features[i];
+  for (let i = 0, ii = features.length; i < ii; ++i) {
+    const originalFeature = features[i];
 
-    var styleData = null;
-    var styleFunction = originalFeature.getStyleFunction();
+    let styleData = null;
+    let styleFunction = originalFeature.getStyleFunction();
     if (styleFunction !== undefined) {
       styleData = styleFunction.call(originalFeature, resolution);
     } else {
@@ -434,21 +434,21 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
         styleData = styleFunction.call(layer, originalFeature, resolution);
       }
     }
-    var origGeojsonFeature = geojsonFormat.writeFeatureObject(originalFeature);
+    const origGeojsonFeature = geojsonFormat.writeFeatureObject(originalFeature);
     /**
      * @type {Array<ol.style.Style>}
      */
-    var styles = (styleData !== null && !Array.isArray(styleData)) ?
+    const styles = (styleData !== null && !Array.isArray(styleData)) ?
         [styleData] : styleData;
     goog.asserts.assert(Array.isArray(styles));
 
     if (styles !== null && styles.length > 0) {
-      var isOriginalFeatureAdded = false;
-      for (var j = 0, jj = styles.length; j < jj; ++j) {
-        var style = styles[j];
-        var styleId = ol.getUid(style).toString();
-        var geometry = style.getGeometry();
-        var geojsonFeature;
+      let isOriginalFeatureAdded = false;
+      for (let j = 0, jj = styles.length; j < jj; ++j) {
+        const style = styles[j];
+        const styleId = ol.getUid(style).toString();
+        let geometry = style.getGeometry();
+        let geojsonFeature;
         if (!geometry) {
           geojsonFeature = origGeojsonFeature;
           geometry = originalFeature.getGeometry();
@@ -461,7 +461,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
             isOriginalFeatureAdded = true;
           }
         } else {
-          var styledFeature = originalFeature.clone();
+          let styledFeature = originalFeature.clone();
           styledFeature.setGeometry(geometry);
           geojsonFeature = geojsonFormat.writeFeatureObject(styledFeature);
           geometry = styledFeature.getGeometry();
@@ -469,12 +469,12 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
           geojsonFeatures.push(geojsonFeature);
         }
 
-        var geometryType = geometry.getType();
+        const geometryType = geometry.getType();
         if (geojsonFeature.properties === null) {
           geojsonFeature.properties = {};
         }
 
-        var featureStyleProp = ngeo.Print.FEAT_STYLE_PROP_PREFIX_ + j;
+        const featureStyleProp = ngeo.Print.FEAT_STYLE_PROP_PREFIX_ + j;
         this.encodeVectorStyle_(
             mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
         geojsonFeature.properties[featureStyleProp] = styleId;
@@ -488,11 +488,11 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
   // See https://github.com/mapfish/mapfish-print/issues/279
 
   if (geojsonFeatures.length > 0) {
-    var geojsonFeatureCollection = /** @type {GeoJSONFeatureCollection} */ ({
+    const geojsonFeatureCollection = /** @type {GeoJSONFeatureCollection} */ ({
       type: 'FeatureCollection',
       features: geojsonFeatures
     });
-    var object = /** @type {MapFishPrintVectorLayer} */ ({
+    const object = /** @type {MapFishPrintVectorLayer} */ ({
       geoJson: geojsonFeatureCollection,
       opacity: layer.getOpacity(),
       style: mapfishStyleObject,
@@ -516,20 +516,20 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
     // unsupported geometry type
     return;
   }
-  var styleType = ngeo.PrintStyleTypes_[geometryType];
-  var key = '[' + featureStyleProp + ' = \'' + styleId + '\']';
+  const styleType = ngeo.PrintStyleTypes_[geometryType];
+  const key = '[' + featureStyleProp + ' = \'' + styleId + '\']';
   if (key in object) {
     // do nothing if we already have a style object for this CQL rule
     return;
   }
-  var styleObject = /** @type {MapFishPrintSymbolizers} */ ({
+  const styleObject = /** @type {MapFishPrintSymbolizers} */ ({
     symbolizers: []
   });
   object[key] = styleObject;
-  var fillStyle = style.getFill();
-  var imageStyle = style.getImage();
-  var strokeStyle = style.getStroke();
-  var textStyle = style.getText();
+  const fillStyle = style.getFill();
+  const imageStyle = style.getImage();
+  const strokeStyle = style.getStroke();
+  const textStyle = style.getText();
   if (styleType == ngeo.PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
       this.encodeVectorStylePolygon_(
@@ -556,10 +556,10 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
  * @private
  */
 ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
-  var fillColor = fillStyle.getColor();
+  let fillColor = fillStyle.getColor();
   if (fillColor !== null) {
     if (typeof (fillColor) === 'string') {
-      var hex = goog.color.alpha.parse(fillColor).hex;
+      const hex = goog.color.alpha.parse(fillColor).hex;
       fillColor = goog.color.alpha.hexToRgba(hex);
     }
     goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
@@ -576,7 +576,7 @@ ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
  * @private
  */
 ngeo.Print.prototype.encodeVectorStyleLine_ = function(symbolizers, strokeStyle) {
-  var symbolizer = /** @type {MapFishPrintSymbolizerLine} */ ({
+  const symbolizer = /** @type {MapFishPrintSymbolizerLine} */ ({
     type: 'line'
   });
   this.encodeVectorStyleStroke_(symbolizer, strokeStyle);
@@ -591,41 +591,41 @@ ngeo.Print.prototype.encodeVectorStyleLine_ = function(symbolizers, strokeStyle)
  * @private
  */
 ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle) {
-  var symbolizer;
+  let symbolizer;
   if (imageStyle instanceof ol.style.Circle) {
     symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
       type: 'point'
     });
     symbolizer.pointRadius = imageStyle.getRadius();
-    var fillStyle = imageStyle.getFill();
+    const fillStyle = imageStyle.getFill();
     if (fillStyle !== null) {
       this.encodeVectorStyleFill_(symbolizer, fillStyle);
     }
-    var strokeStyle = imageStyle.getStroke();
+    const strokeStyle = imageStyle.getStroke();
     if (strokeStyle !== null) {
       this.encodeVectorStyleStroke_(symbolizer, strokeStyle);
     }
   } else if (imageStyle instanceof ol.style.Icon) {
-    var src = imageStyle.getSrc();
+    const src = imageStyle.getSrc();
     if (src !== undefined) {
       symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
         type: 'point',
         externalGraphic: src
       });
-      var opacity = imageStyle.getOpacity();
+      const opacity = imageStyle.getOpacity();
       if (opacity !== null) {
         symbolizer.graphicOpacity = opacity;
       }
-      var size = imageStyle.getSize();
+      const size = imageStyle.getSize();
       if (size !== null) {
-        var scale = imageStyle.getScale();
+        let scale = imageStyle.getScale();
         if (isNaN(scale)) {
           scale = 1;
         }
         symbolizer.graphicWidth = size[0] * scale;
         symbolizer.graphicHeight = size[1] * scale;
       }
-      var rotation = imageStyle.getRotation();
+      let rotation = imageStyle.getRotation();
       if (isNaN(rotation)) {
         rotation = 0;
       }
@@ -636,7 +636,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
      * Mapfish Print does not support image defined with ol.style.RegularShape.
      * As a workaround, I try to map the image on a well-known image name.
      */
-    var points = /** @type{ol.style.RegularShape} */ (imageStyle).getPoints();
+    const points = /** @type{ol.style.RegularShape} */ (imageStyle).getPoints();
     if (points !== null) {
       symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
         type: 'point'
@@ -650,24 +650,24 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
       } else if (points === 8) {
         symbolizer.graphicName = 'cross';
       }
-      var sizeShape = imageStyle.getSize();
+      const sizeShape = imageStyle.getSize();
       if (sizeShape !== null) {
         symbolizer.graphicWidth = sizeShape[0];
         symbolizer.graphicHeight = sizeShape[1];
       }
-      var rotationShape = imageStyle.getRotation();
+      const rotationShape = imageStyle.getRotation();
       if (!isNaN(rotationShape) && rotationShape !== 0) {
         symbolizer.rotation = ol.math.toDegrees(rotationShape);
       }
-      var opacityShape = imageStyle.getOpacity();
+      const opacityShape = imageStyle.getOpacity();
       if (opacityShape !== null) {
         symbolizer.graphicOpacity = opacityShape;
       }
-      var strokeShape = imageStyle.getStroke();
+      const strokeShape = imageStyle.getStroke();
       if (strokeShape !== null) {
         this.encodeVectorStyleStroke_(symbolizer, strokeShape);
       }
-      var fillShape = imageStyle.getFill();
+      const fillShape = imageStyle.getFill();
       if (fillShape !== null) {
         this.encodeVectorStyleFill_(symbolizer, fillShape);
       }
@@ -687,7 +687,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
  * @private
  */
 ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle, strokeStyle) {
-  var symbolizer = /** @type {MapFishPrintSymbolizerPolygon} */ ({
+  const symbolizer = /** @type {MapFishPrintSymbolizerPolygon} */ ({
     type: 'polygon'
   });
   this.encodeVectorStyleFill_(symbolizer, fillStyle);
@@ -705,19 +705,19 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle
  * @private
  */
 ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle) {
-  var strokeColor = strokeStyle.getColor();
+  const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
     goog.asserts.assert(Array.isArray(strokeColor));
-    var strokeColorRgba = ol.color.asArray(strokeColor);
+    const strokeColorRgba = ol.color.asArray(strokeColor);
     goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
     symbolizer.strokeColor = goog.color.rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
   }
-  var strokeDashstyle = strokeStyle.getLineDash();
+  const strokeDashstyle = strokeStyle.getLineDash();
   if (strokeDashstyle !== null) {
     symbolizer.strokeDashstyle = strokeDashstyle.join(' ');
   }
-  var strokeWidth = strokeStyle.getWidth();
+  const strokeWidth = strokeStyle.getWidth();
   if (strokeWidth !== undefined) {
     symbolizer.strokeWidth = strokeWidth;
   }
@@ -731,19 +731,19 @@ ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle
  * @private
  */
 ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
-  var symbolizer = /** @type {MapFishPrintSymbolizerText} */ ({
+  const symbolizer = /** @type {MapFishPrintSymbolizerText} */ ({
     type: 'Text'
   });
-  var label = textStyle.getText();
+  const label = textStyle.getText();
   if (label !== undefined) {
     symbolizer.label = label;
 
-    var labelAlign = textStyle.getTextAlign();
+    const labelAlign = textStyle.getTextAlign();
     if (labelAlign !== undefined) {
       symbolizer.labelAlign = labelAlign;
     }
 
-    var labelRotation = textStyle.getRotation();
+    const labelRotation = textStyle.getRotation();
     if (labelRotation !== undefined) {
       // Mapfish Print expects a string, not a number to rotate text
       symbolizer.labelRotation = (labelRotation * 180 / Math.PI).toString();
@@ -751,9 +751,9 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
       symbolizer.labelAlign = 'cm';
     }
 
-    var fontStyle = textStyle.getFont();
+    const fontStyle = textStyle.getFont();
     if (fontStyle !== undefined) {
-      var font = fontStyle.split(' ');
+      const font = fontStyle.split(' ');
       if (font.length >= 3) {
         symbolizer.fontWeight = font[0];
         symbolizer.fontSize = font[1];
@@ -761,25 +761,25 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
       }
     }
 
-    var strokeStyle = textStyle.getStroke();
+    const strokeStyle = textStyle.getStroke();
     if (strokeStyle !== null) {
-      var strokeColor = strokeStyle.getColor();
+      const strokeColor = strokeStyle.getColor();
       goog.asserts.assert(Array.isArray(strokeColor));
-      var strokeColorRgba = ol.color.asArray(strokeColor);
+      const strokeColorRgba = ol.color.asArray(strokeColor);
       goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
       symbolizer.haloColor = goog.color.rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
-      var width = strokeStyle.getWidth();
+      const width = strokeStyle.getWidth();
       if (width !== undefined) {
         symbolizer.haloRadius = width;
       }
     }
 
-    var fillStyle = textStyle.getFill();
+    const fillStyle = textStyle.getFill();
     if (fillStyle !== null) {
-      var fillColor = fillStyle.getColor();
+      const fillColor = fillStyle.getColor();
       goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
-      var fillColorRgba = ol.color.asArray(fillColor);
+      const fillColorRgba = ol.color.asArray(fillColor);
       goog.asserts.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
       symbolizer.fontColor = goog.color.rgbArrayToHex(fillColorRgba);
     }
@@ -804,12 +804,12 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
  * @private
  */
 ngeo.Print.prototype.getWmtsUrl_ = function(source) {
-  var urls = source.getUrls();
+  const urls = source.getUrls();
   goog.asserts.assert(urls.length > 0);
-  var url = urls[0];
+  let url = urls[0];
   // Replace {Layer} in the URL
   // See <https://github.com/mapfish/mapfish-print/issues/236>
-  var layer = source.getLayer();
+  const layer = source.getLayer();
   if (url.indexOf('{Layer}') >= 0) {
     url = url.replace('{Layer}', layer);
   }
@@ -825,9 +825,9 @@ ngeo.Print.prototype.getWmtsUrl_ = function(source) {
  * @export
  */
 ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
-  var format = printSpec.format || 'pdf';
-  var url = this.url_ + '/report.' + format;
-  var httpConfig = /** @type {angular.$http.Config} */ ({
+  const format = printSpec.format || 'pdf';
+  const url = this.url_ + '/report.' + format;
+  const httpConfig = /** @type {angular.$http.Config} */ ({
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'
     }
@@ -846,9 +846,9 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
  * @export
  */
 ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
-  var httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
+  const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
       /** @type {angular.$http.Config} */ ({});
-  var url = this.url_ + '/status/' + ref + '.json';
+  const url = this.url_ + '/status/' + ref + '.json';
   return this.$http_.get(url, httpConfig);
 };
 
@@ -870,11 +870,11 @@ ngeo.Print.prototype.getReportUrl = function(ref) {
  * @return {angular.$http.HttpPromise} HTTP promise.
  */
 ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
-  var httpConfig =
+  const httpConfig =
     opt_httpConfig !== undefined ? opt_httpConfig : /** @type {angular.$http.Config} */ ({
       withCredentials: true
     });
-  var url = this.url_ + '/capabilities.json';
+  const url = this.url_ + '/capabilities.json';
   return this.$http_.get(url, httpConfig);
 };
 

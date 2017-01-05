@@ -182,7 +182,7 @@ gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
  * @private
  */
 gmf.DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
-  var layer = evt.element;
+  const layer = evt.element;
   goog.asserts.assertInstanceof(layer, ol.layer.Base);
   this.registerLayer_(layer);
 };
@@ -193,7 +193,7 @@ gmf.DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
  * @private
  */
 gmf.DisclaimerController.prototype.handleLayersRemove_ = function(evt) {
-  var layer = evt.element;
+  const layer = evt.element;
   goog.asserts.assertInstanceof(layer, ol.layer.Base);
   this.unregisterLayer_(layer);
 };
@@ -205,7 +205,7 @@ gmf.DisclaimerController.prototype.handleLayersRemove_ = function(evt) {
  */
 gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
 
-  var layerUid = ol.getUid(layer);
+  const layerUid = ol.getUid(layer);
 
   if (layer instanceof ol.layer.Group) {
 
@@ -237,7 +237,7 @@ gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
   } else {
 
     // Show disclaimer messages for this layer
-    var disclaimers = layer.get('disclaimers');
+    const disclaimers = layer.get('disclaimers');
     if (disclaimers && Array.isArray(disclaimers)) {
       disclaimers.forEach(function(disclaimer) {
         this.showDisclaimerMessage_(disclaimer);
@@ -253,7 +253,7 @@ gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
  */
 gmf.DisclaimerController.prototype.unregisterLayer_ = function(layer) {
 
-  var layerUid = ol.getUid(layer);
+  const layerUid = ol.getUid(layer);
 
   if (layer instanceof ol.layer.Group) {
 
@@ -266,7 +266,7 @@ gmf.DisclaimerController.prototype.unregisterLayer_ = function(layer) {
   } else {
 
     // Close disclaimer messages for this layer
-    var disclaimers = layer.get('disclaimers');
+    const disclaimers = layer.get('disclaimers');
     if (disclaimers && Array.isArray(disclaimers)) {
       disclaimers.forEach(function(disclaimer) {
         this.closeDisclaimerMessage_(disclaimer);

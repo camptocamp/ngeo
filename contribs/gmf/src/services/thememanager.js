@@ -19,7 +19,7 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * 'add', children will be just pushed in this array. The default state can be
  * changed by setting the value `gmfTreeManagerModeFlush`, e.g.:
  *
- *    var module = angular.module('app');
+ *    let module = angular.module('app');
  *    module.value('gmfTreeManagerModeFlush', false);
  *
  * This service's theme is a GmfTheme with only children and a name.

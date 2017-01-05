@@ -58,8 +58,8 @@ app.MainController = function($http, $timeout) {
  * @private
  */
 app.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
-  var format = new ngeo.format.XSDAttribute();
-  var attributes = format.read(resp.data);
+  const format = new ngeo.format.XSDAttribute();
+  const attributes = format.read(resp.data);
   this.attributes = attributes;
   return attributes;
 };

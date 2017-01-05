@@ -83,7 +83,7 @@ ol.inherits(ngeo.MeasureEvent, ol.events.Event);
  */
 ngeo.interaction.Measure = function(opt_options) {
 
-  var options = opt_options !== undefined ? opt_options : {};
+  const options = opt_options !== undefined ? opt_options : {};
 
   ol.interaction.Interaction.call(this, {
     handleEvent: ngeo.interaction.Measure.handleEvent_
@@ -164,7 +164,7 @@ ngeo.interaction.Measure = function(opt_options) {
    */
   this.changeEventKey_ = null;
 
-  var style = options.style !== undefined ? options.style : [
+  const style = options.style !== undefined ? options.style : [
     new ol.style.Style({
       fill: new ol.style.Fill({
         color: 'rgba(255, 255, 255, 0.2)'
@@ -235,10 +235,10 @@ ol.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
  */
 ngeo.interaction.Measure.getFormattedArea = function(
     polygon, projection, decimals, format) {
-  var geom = /** @type {ol.geom.Polygon} */ (
+  const geom = /** @type {ol.geom.Polygon} */ (
       polygon.clone().transform(projection, 'EPSG:4326'));
-  var coordinates = geom.getLinearRing(0).getCoordinates();
-  var area = Math.abs(ol.sphere.WGS84.geodesicArea(coordinates));
+  const coordinates = geom.getLinearRing(0).getCoordinates();
+  const area = Math.abs(ol.sphere.WGS84.geodesicArea(coordinates));
   return format(area, 'm²', 'square');
 };
 
@@ -254,7 +254,7 @@ ngeo.interaction.Measure.getFormattedArea = function(
  */
 ngeo.interaction.Measure.getFormattedCircleArea = function(
     circle, decimals, format) {
-  var area = Math.PI * Math.pow(circle.getRadius(), 2);
+  const area = Math.PI * Math.pow(circle.getRadius(), 2);
   return format(area, 'm²', 'square');
 };
 
@@ -271,11 +271,11 @@ ngeo.interaction.Measure.getFormattedCircleArea = function(
  */
 ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
     decimals, format) {
-  var length = 0;
-  var coordinates = lineString.getCoordinates();
-  for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-    var c1 = ol.proj.transform(coordinates[i], projection, 'EPSG:4326');
-    var c2 = ol.proj.transform(coordinates[i + 1], projection, 'EPSG:4326');
+  let length = 0;
+  const coordinates = lineString.getCoordinates();
+  for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+    const c1 = ol.proj.transform(coordinates[i], projection, 'EPSG:4326');
+    const c2 = ol.proj.transform(coordinates[i + 1], projection, 'EPSG:4326');
     length += ol.sphere.WGS84.haversineDistance(c1, c2);
   }
   return format(length, 'm');
@@ -291,9 +291,9 @@ ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
  */
 ngeo.interaction.Measure.getFormattedPoint = function(
     point, projection, decimals) {
-  var coordinates = point.getCoordinates();
-  var x = coordinates[0];
-  var y = coordinates[1];
+  const coordinates = point.getCoordinates();
+  let x = coordinates[0];
+  let y = coordinates[1];
   decimals = decimals !== null ? decimals : 0;
   x = ol.string.padNumber(x, 0, decimals);
   y = ol.string.padNumber(y, 0, decimals);
@@ -313,7 +313,7 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
     return true;
   }
 
-  var helpMsg = this.startMsg;
+  let helpMsg = this.startMsg;
   if (this.sketchFeature !== null) {
     helpMsg = this.continueMsg;
   }
@@ -358,7 +358,7 @@ ngeo.interaction.Measure.prototype.setMap = function(map) {
 
   this.vectorLayer_.setMap(map);
 
-  var prevMap = this.drawInteraction_.getMap();
+  const prevMap = this.drawInteraction_.getMap();
   if (prevMap !== null) {
     prevMap.removeInteraction(this.drawInteraction_);
   }
@@ -379,7 +379,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
   this.vectorLayer_.getSource().clear(true);
   this.createMeasureTooltip_();
 
-  var geometry = this.sketchFeature.getGeometry();
+  const geometry = this.sketchFeature.getGeometry();
 
   goog.asserts.assert(geometry !== undefined);
   this.changeEventKey_ = ol.events.listen(geometry,
@@ -484,7 +484,7 @@ ngeo.interaction.Measure.prototype.removeMeasureTooltip_ = function() {
  * @private
  */
 ngeo.interaction.Measure.prototype.updateState_ = function() {
-  var active = this.getActive();
+  const active = this.getActive();
   this.shouldHandleDrawInteractionActiveChange_ = false;
   this.drawInteraction_.setActive(active);
   this.shouldHandleDrawInteractionActiveChange_ = true;

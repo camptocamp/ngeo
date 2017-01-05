@@ -2,12 +2,12 @@ goog.require('gmf.Authentication');
 goog.require('gmf.AuthenticationEventType');
 
 describe('gmf.Authentication', function() {
-  var gmfAuthentication;
-  var authenticationBaseUrl;
-  var isLoggedInUrl;
-  var loginUrl;
-  var logoutUrl;
-  var $httpBackend;
+  let gmfAuthentication;
+  let authenticationBaseUrl;
+  let isLoggedInUrl;
+  let loginUrl;
+  let logoutUrl;
+  let $httpBackend;
 
   beforeEach(function() {
     inject(function($injector) {
@@ -36,8 +36,8 @@ describe('gmf.Authentication', function() {
   });
 
   it('emits READY after login status check', function() {
-    var spy = jasmine.createSpy();
-    var event;
+    const spy = jasmine.createSpy();
+    let event;
     ol.events.listenOnce(
       gmfAuthentication, gmf.AuthenticationEventType.READY, function(evt) {
         event = evt;
@@ -56,8 +56,8 @@ describe('gmf.Authentication', function() {
   });
 
   it('logins successful', function() {
-    var spy = jasmine.createSpy();
-    var event;
+    const spy = jasmine.createSpy();
+    let event;
     ol.events.listenOnce(
       gmfAuthentication, gmf.AuthenticationEventType.LOGIN, function(evt) {
         event = evt;
@@ -76,7 +76,7 @@ describe('gmf.Authentication', function() {
   });
 
   it('trys to login with wrong credentials', function() {
-    var spy = jasmine.createSpy();
+    const spy = jasmine.createSpy();
     ol.events.listenOnce(
       gmfAuthentication, gmf.AuthenticationEventType.LOGIN, spy);
 
@@ -89,7 +89,7 @@ describe('gmf.Authentication', function() {
   });
 
   it('logs out', function() {
-    var spy = jasmine.createSpy();
+    const spy = jasmine.createSpy();
     ol.events.listenOnce(
       gmfAuthentication, gmf.AuthenticationEventType.LOGOUT, spy);
 

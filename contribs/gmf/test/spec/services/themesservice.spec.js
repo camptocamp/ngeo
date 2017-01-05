@@ -4,9 +4,9 @@ goog.require('gmf.ThemesEventType');
 goog.require('gmf.test.data.themes');
 
 describe('gmf.Themes', function() {
-  var gmfThemes;
-  var treeUrl;
-  var $httpBackend;
+  let gmfThemes;
+  let treeUrl;
+  let $httpBackend;
 
   beforeEach(function() {
     inject(function($injector) {
@@ -23,12 +23,12 @@ describe('gmf.Themes', function() {
   });
 
   it('Get background layers', function() {
-    var spy = jasmine.createSpy();
+    const spy = jasmine.createSpy();
     gmfThemes.getBgLayers({}).then(spy);
 
     $httpBackend.expectGET(treeUrl);
     themes.background_layers.forEach(function(bgLayer) {
-      var response = bgLayer.name == 'map' ? capabilities.map :
+      const response = bgLayer.name == 'map' ? capabilities.map :
           capabilities.asitvd;
       $httpBackend.when('GET', bgLayer.url).respond(response);
       $httpBackend.expectGET(bgLayer.url);
@@ -37,16 +37,16 @@ describe('gmf.Themes', function() {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    var response = spy.calls.mostRecent().args[0];
+    const response = spy.calls.mostRecent().args[0];
     expect(response.length).toBe(4);
-    var responseFirstBgName = response[1].get('label');
-    var firstBgName = themes.background_layers[0].name;
+    const responseFirstBgName = response[1].get('label');
+    const firstBgName = themes.background_layers[0].name;
     expect(responseFirstBgName).toBe(firstBgName);
     expect(response[1].get('querySourceIds')).toBeDefined();
   });
 
   it('Returns hasEditableLayers', function() {
-    var spy = jasmine.createSpy();
+    const spy = jasmine.createSpy();
     gmfThemes.hasEditableLayers().then(spy);
 
     $httpBackend.expectGET(treeUrl);
@@ -54,13 +54,13 @@ describe('gmf.Themes', function() {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    var response = spy.calls.mostRecent().args;
+    const response = spy.calls.mostRecent().args;
     expect(response[0]).toBe(true);
   });
 
   it('Emit change event', function() {
-    var spy = jasmine.createSpy();
-    var eventSpy = jasmine.createSpy();
+    const spy = jasmine.createSpy();
+    const eventSpy = jasmine.createSpy();
     ol.events.listen(gmfThemes, gmf.ThemesEventType.CHANGE, eventSpy);
 
     gmfThemes.promise_.then(spy);
@@ -72,7 +72,7 @@ describe('gmf.Themes', function() {
   });
 
   it('Load themes', function() {
-    var spy = jasmine.createSpy();
+    const spy = jasmine.createSpy();
     gmfThemes.promise_.then(spy);
 
     $httpBackend.expectGET(treeUrl);
@@ -80,12 +80,12 @@ describe('gmf.Themes', function() {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    var data = spy.calls.mostRecent().args[0];
+    const data = spy.calls.mostRecent().args[0];
     expect(Object.keys(data)[0]).toBe(Object.keys(themes)[0]);
   });
 
   it('Get themes object', function() {
-    var spy = jasmine.createSpy();
+    const spy = jasmine.createSpy();
     gmfThemes.getThemesObject().then(spy);
 
     $httpBackend.expectGET(treeUrl);
@@ -93,15 +93,15 @@ describe('gmf.Themes', function() {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    var resultThemes = spy.calls.mostRecent().args[0];
-    var dataFirstKey = Object.keys(resultThemes[0])[0];
-    var themesThemesFirstKey = Object.keys(themes.themes[0])[0];
+    const resultThemes = spy.calls.mostRecent().args[0];
+    const dataFirstKey = Object.keys(resultThemes[0])[0];
+    const themesThemesFirstKey = Object.keys(themes.themes[0])[0];
     expect(dataFirstKey).toBe(themesThemesFirstKey);
   });
 
   it('Get a theme object (find a specific theme)', function() {
-    var themeName = 'Enseignement';
-    var spy = jasmine.createSpy();
+    const themeName = 'Enseignement';
+    const spy = jasmine.createSpy();
     gmfThemes.getThemeObject(themeName).then(spy);
 
     $httpBackend.expectGET(treeUrl);
@@ -109,7 +109,7 @@ describe('gmf.Themes', function() {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    var resultTheme = spy.calls.mostRecent().args[0];
+    const resultTheme = spy.calls.mostRecent().args[0];
     expect(resultTheme.name).toBe(themeName);
   });
 });

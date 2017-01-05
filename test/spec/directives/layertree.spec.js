@@ -3,9 +3,9 @@ goog.require('ngeo.LayertreeController');
 
 describe('ngeo.layertreeDirective', function() {
 
-  var element;
-  var map;
-  var roottreeCtrl;
+  let element;
+  let map;
+  let roottreeCtrl;
 
   beforeEach(function() {
 
@@ -23,7 +23,7 @@ describe('ngeo.layertreeDirective', function() {
       '</div>'
     );
 
-    var tree = {
+    const tree = {
       'name': 'Root',
       'children': [{
         'name': 'Node 0',
@@ -37,7 +37,7 @@ describe('ngeo.layertreeDirective', function() {
       }]
     };
 
-    var getLayer = function(node) {
+    const getLayer = function(node) {
       return new ol.layer.Image();
     };
 
@@ -53,10 +53,10 @@ describe('ngeo.layertreeDirective', function() {
   });
 
   it('Get state', function() {
-    var treeNode0 = roottreeCtrl.children[0];
-    var treeLeaf00 = treeNode0.children[0];
-    var treeLeaf01 = treeNode0.children[1];
-    var treeLeaf1 = roottreeCtrl.children[1];
+    const treeNode0 = roottreeCtrl.children[0];
+    const treeLeaf00 = treeNode0.children[0];
+    const treeLeaf01 = treeNode0.children[1];
+    const treeLeaf1 = roottreeCtrl.children[1];
     expect(roottreeCtrl.getState()).toBe('off');
     expect(treeNode0.getState()).toBe('off');
     expect(treeLeaf00.getState()).toBe('off');
@@ -65,10 +65,10 @@ describe('ngeo.layertreeDirective', function() {
   });
 
   it('Set state', function() {
-    var treeNode0 = roottreeCtrl.children[0];
-    var treeLeaf00 = treeNode0.children[0];
-    var treeLeaf01 = treeNode0.children[1];
-    var treeLeaf1 = roottreeCtrl.children[1];
+    const treeNode0 = roottreeCtrl.children[0];
+    const treeLeaf00 = treeNode0.children[0];
+    const treeLeaf01 = treeNode0.children[1];
+    const treeLeaf1 = roottreeCtrl.children[1];
 
     treeLeaf01.setState('on');
     expect(roottreeCtrl.getState()).toBe('indeterminate');
@@ -107,8 +107,8 @@ describe('ngeo.layertreeDirective', function() {
   });
 
   it('Refresh state', function() {
-    var treeNode0 = roottreeCtrl.children[0];
-    var treeLeaf01 = treeNode0.children[1];
+    const treeNode0 = roottreeCtrl.children[0];
+    const treeLeaf01 = treeNode0.children[1];
     treeLeaf01.state_ = 'on';
     treeNode0.refreshState();
     expect(treeNode0.getState()).toBe('indeterminate');
@@ -116,8 +116,8 @@ describe('ngeo.layertreeDirective', function() {
   });
 
   it('Get calculate state', function() {
-    var treeNode0 = roottreeCtrl.children[0];
-    var treeLeaf01 = treeNode0.children[1];
+    const treeNode0 = roottreeCtrl.children[0];
+    const treeLeaf01 = treeNode0.children[1];
     treeLeaf01.state_ = 'on';
     expect(roottreeCtrl.getCalculateState()).toBe('indeterminate');
     expect(treeNode0.getCalculateState()).toBe('indeterminate');
@@ -125,16 +125,16 @@ describe('ngeo.layertreeDirective', function() {
   });
 
   it('Get first parent tree', function() {
-    var treeNode0 = roottreeCtrl.children[0];
-    var treeLeaf01 = treeNode0.children[1];
-    var treeLeaf1 = roottreeCtrl.children[1];
+    const treeNode0 = roottreeCtrl.children[0];
+    const treeLeaf01 = treeNode0.children[1];
+    const treeLeaf1 = roottreeCtrl.children[1];
     expect(ngeo.LayertreeController.getFirstParentTree(treeLeaf01).node.name).toBe(treeNode0.node.name);
     expect(ngeo.LayertreeController.getFirstParentTree(treeLeaf1).node.name).toBe(treeLeaf1.node.name);
   });
 
   it('Traverse tree', function() {
     // All nodes of the graph
-    var visited = '';
+    let visited = '';
     roottreeCtrl.traverseDepthFirst(function(treeCtrl) {
       visited += ', ' + treeCtrl.node.name;
     });

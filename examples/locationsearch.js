@@ -53,9 +53,9 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
    */
   this.map;
 
-  var limit = 10;
+  const limit = 10;
   /** @type {Bloodhound} */
-  var bloodhoundEngine = this.createAndInitBloodhound_(
+  const bloodhoundEngine = this.createAndInitBloodhound_(
       ngeoCreateLocationSearchBloodhound, limit);
 
   /**
@@ -76,7 +76,7 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
     source: bloodhoundEngine.ttAdapter(),
     limit: limit,
     display: function(suggestion) {
-      var feature = /** @type {ol.Feature} */ (suggestion);
+      const feature = /** @type {ol.Feature} */ (suggestion);
       return feature.get('label_no_html');
     },
     templates: {
@@ -84,7 +84,7 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
         return '<div class="ngeo-header">Locations</div>';
       },
       suggestion: function(suggestion) {
-        var feature = /** @type {ol.Feature} */ (suggestion);
+        const feature = /** @type {ol.Feature} */ (suggestion);
         return '<p>' + feature.get('label') + '</p>';
       }
     }
@@ -108,15 +108,15 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
  * @private
  */
 app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
-  var proj = ol.proj.get('EPSG:3857');
+  const proj = ol.proj.get('EPSG:3857');
   goog.asserts.assert(proj !== null);
-  var bloodhound = ngeoCreateLocationSearchBloodhound({
+  const bloodhound = ngeoCreateLocationSearchBloodhound({
     targetProjection: proj,
     limit: limit,
     origins: 'gazetteer',
     prepare: function(query, settings) {
       // in a real application the interface language could be used here
-      var lang = 'fr';
+      const lang = 'fr';
       settings.url += '&lang=' + lang;
       return settings;
     }
@@ -134,9 +134,9 @@ app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLoc
  * @private
  */
 app.SearchController.select_ = function(event, suggestion, dataset) {
-  var feature = /** @type {ol.Feature} */ (suggestion);
-  var bbox = /** @type {ol.Extent} */ (feature.get('bbox'));
-  var mapSize = this.map.getSize();
+  const feature = /** @type {ol.Feature} */ (suggestion);
+  const bbox = /** @type {ol.Extent} */ (feature.get('bbox'));
+  const mapSize = this.map.getSize();
   goog.asserts.assert(mapSize !== undefined);
   this.map.getView().fit(bbox, mapSize, {maxZoom: 16});
 };

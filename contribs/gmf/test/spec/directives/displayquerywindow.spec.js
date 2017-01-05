@@ -2,17 +2,17 @@ goog.require('gmf.displayquerywindowDirective');
 
 describe('gmf.displayquerywindowDirective', function() {
 
-  var displayQueriesController;
-  var ngeoQueryResult;
-  var $scope;
-  var $rootScope;
+  let displayQueriesController;
+  let ngeoQueryResult;
+  let $scope;
+  let $rootScope;
 
   beforeEach(inject(function($injector, _$controller_, _$rootScope_) {
     ngeoQueryResult = $injector.get('ngeoQueryResult');
-    var $controller = _$controller_;
+    const $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
-    var data = {
+    const data = {
       featuresStyleFn: function() {
         return new ol.style.Style();
       },

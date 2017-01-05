@@ -2,19 +2,19 @@ goog.require('ngeo.filters');
 
 describe('ngeo.Filters', function() {
 
-  var $filter;
+  let $filter;
 
   beforeEach(inject(function(_$filter_) {
     $filter = _$filter_;
   }));
 
   it('Ngeo Scalify', function() {
-    var ngeoScalify = $filter('ngeoScalify');
+    const ngeoScalify = $filter('ngeoScalify');
     expect(ngeoScalify(25000)).toBe('1\u00a0:\u00a025,000');
   });
 
   it('Ngeo Number format', function() {
-    var number = $filter('ngeoNumber');
+    const number = $filter('ngeoNumber');
     expect(number(0)).toBe('0');
     expect(number(Infinity)).toBe('\u221e');
     expect(number(-Infinity)).toBe('-\u221e');
@@ -33,7 +33,7 @@ describe('ngeo.Filters', function() {
 
 
   it('Ngeo Unit Prefix', function() {
-    var unitPrefix = $filter('ngeoUnitPrefix');
+    const unitPrefix = $filter('ngeoUnitPrefix');
     expect(unitPrefix(10)).toBe('10');
     expect(unitPrefix(10, 'm')).toBe('10\u00a0m');
     expect(unitPrefix(1000)).toBe('1\u00a0k');
@@ -47,8 +47,8 @@ describe('ngeo.Filters', function() {
   });
 
   it('Ngeo Number coordinates', function() {
-    var ngeoNumberCoordinates = $filter('ngeoNumberCoordinates');
-    var co = [7.1234, 46.9876];
+    const ngeoNumberCoordinates = $filter('ngeoNumberCoordinates');
+    let co = [7.1234, 46.9876];
     expect(ngeoNumberCoordinates(co)).toBe('7 47');
     expect(ngeoNumberCoordinates(co, 2, 'co {x} E; {y} N')).toBe(
         'co 7.12 E; 46.99 N');
@@ -59,8 +59,8 @@ describe('ngeo.Filters', function() {
   });
 
   it('Ngeo DMS coordinates', function() {
-    var ngeoDMSCoordinates = $filter('ngeoDMSCoordinates');
-    var co = [7.1234, 46.9876];
+    const ngeoDMSCoordinates = $filter('ngeoDMSCoordinates');
+    const co = [7.1234, 46.9876];
     expect(ngeoDMSCoordinates(co)).toBe(
         '46\u00b0 59\u2032 15\u2033 N 7\u00b0 07\u2032 24\u2033 E');
     expect(ngeoDMSCoordinates(co, 2, '[{x}; {y}]')).toBe(

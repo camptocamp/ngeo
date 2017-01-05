@@ -20,7 +20,7 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
      * @return {string} The template url.
      */
     function(element, attrs) {
-      var templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
+      const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           gmf.baseTemplateUrl + '/mobilemeasurelength.html';
     });
@@ -156,7 +156,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
   this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
       this.measure.getDrawInteraction());
 
-  var drawInteraction = this.drawInteraction;
+  const drawInteraction = this.drawInteraction;
   ngeoDecorateInteraction(drawInteraction);
 
   Object.defineProperty(this, 'hasPoints', {

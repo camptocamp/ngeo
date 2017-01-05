@@ -1,10 +1,10 @@
 goog.require('gmf.ShareService');
 
 describe('gmf.ShareService', function() {
-  var gmfShareService;
-  var $httpBackend;
-  var shortenerUrl;
-  var successResponse = {
+  let gmfShareService;
+  let $httpBackend;
+  let shortenerUrl;
+  const successResponse = {
     short_url: 'http://fake/gmf'
   };
 
@@ -21,8 +21,8 @@ describe('gmf.ShareService', function() {
       shortenerUrl = $injector.get('gmfShortenerCreateUrl');
     });
 
-    var permalink = 'htpp://fake/c2c/permalink';
-    var params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
+    const permalink = 'htpp://fake/c2c/permalink';
+    const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
       url: permalink
     });
 

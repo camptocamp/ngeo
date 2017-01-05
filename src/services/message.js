@@ -55,7 +55,7 @@ ngeo.Message.prototype.showMessage = function(message) {};
  * @export
  */
 ngeo.Message.prototype.show = function(object) {
-  var msgObjects = this.getMessageObjects(object);
+  const msgObjects = this.getMessageObjects(object);
   msgObjects.forEach(this.showMessage, this);
 };
 
@@ -112,9 +112,9 @@ ngeo.Message.prototype.warn = function(message) {
  * @protected
  */
 ngeo.Message.prototype.getMessageObjects = function(object, opt_type) {
-  var msgObjects = [];
-  var msgObject = null;
-  var defaultType = ngeo.MessageType.INFORMATION;
+  const msgObjects = [];
+  let msgObject = null;
+  const defaultType = ngeo.MessageType.INFORMATION;
 
   if (typeof object === 'string') {
     msgObjects.push({

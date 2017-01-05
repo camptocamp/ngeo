@@ -107,7 +107,7 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
 
   // Allow angular-gettext-tools to collect the strings to translate
   /** @type {angularGettext.Catalog} */
-  var gettextCatalog = $injector.get('gettextCatalog');
+  const gettextCatalog = $injector.get('gettextCatalog');
   gettextCatalog.getString('merged_osm_times');
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');

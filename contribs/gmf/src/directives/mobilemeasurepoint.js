@@ -20,7 +20,7 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
      * @return {string} The template url.
      */
     function(element, attrs) {
-      var templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
+      const templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           gmf.baseTemplateUrl + '/mobilemeasurepoint.html';
     });
@@ -134,7 +134,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, gmfAltitude,
    */
   this.decimals;
 
-  var layers = this['getLayersFn']();
+  const layers = this['getLayersFn']();
   goog.asserts.assertArray(layers);
 
   /**
@@ -233,7 +233,7 @@ gmf.MobileMeasurePointController.prototype.translate = function(str) {
 gmf.MobileMeasurePointController.prototype.handleMeasureActiveChange_ =
     function() {
       if (this.measure.getActive()) {
-        var view = this.map.getView();
+        const view = this.map.getView();
         this.mapViewPropertyChangeEventKey_ = ol.events.listen(
             view,
             'propertychange',
@@ -254,23 +254,23 @@ gmf.MobileMeasurePointController.prototype.handleMeasureActiveChange_ =
  * @private
  */
 gmf.MobileMeasurePointController.prototype.getAltitude_ = function() {
-  var center = this.map.getView().getCenter();
+  const center = this.map.getView().getCenter();
   goog.asserts.assertArray(center);
-  var params = {
+  const params = {
     'layers': this.layers.join(',')
   };
   this.gmfAltitude_.getAltitude(center, params).then(function(object) {
-    var el = this.measure.getTooltipElement();
-    var ctn = document.createElement('div');
-    var className = 'gmf-mobile-measure-point-altitude';
+    const el = this.measure.getTooltipElement();
+    const ctn = document.createElement('div');
+    const className = 'gmf-mobile-measure-point-altitude';
     ctn.className = className;
 
     goog.object.forEach(object, function(height, key) {
       if (height !== null) {
-        var childEl = document.createElement('div');
-        var className = 'gmf-mobile-measure-altitude';
+        const childEl = document.createElement('div');
+        const className = 'gmf-mobile-measure-altitude';
         childEl.className = className;
-        var value;
+        let value;
         if (height > 1000) {
           value = parseFloat((height / 1000).toPrecision(3)) + ' km';
         } else {
@@ -281,7 +281,7 @@ gmf.MobileMeasurePointController.prototype.getAltitude_ = function() {
       }
     }, this);
 
-    var previousCtn = goog.dom.getElementByClass(className, el);
+    const previousCtn = goog.dom.getElementByClass(className, el);
     if (previousCtn) {
       previousCtn.remove();
     }

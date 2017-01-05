@@ -1,5 +1,5 @@
 beforeEach(function() {
-  var gmfModule = angular.module('gmf');
+  const gmfModule = angular.module('gmf');
   gmfModule.constant('angularLocaleScript', 'http://fake');
 
   module('gmf', function($provide) {

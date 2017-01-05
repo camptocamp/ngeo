@@ -78,8 +78,8 @@ app.MainController = function($scope, ngeoQuery) {
    */
   this.queryActive = true;
 
-  var busStopSourceId = 'bus_stop';
-  var busStopLayer = new ol.layer.Image({
+  const busStopSourceId = 'bus_stop';
+  const busStopLayer = new ol.layer.Image({
     'querySourceId': busStopSourceId,
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
@@ -92,8 +92,8 @@ app.MainController = function($scope, ngeoQuery) {
     'wfsQuery': true
   });
 
-  var informationSourceId = 'information';
-  var informationLayer = new ol.layer.Image({
+  const informationSourceId = 'information';
+  const informationLayer = new ol.layer.Image({
     'querySourceId': informationSourceId,
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',

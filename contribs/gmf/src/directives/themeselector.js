@@ -27,7 +27,7 @@ goog.require('gmf.ThemesEventType');
  *      </gmf-themeselector>
  *      <script>
  *        (function() {
- *          var module = angular.module('app');
+ *          let module = angular.module('app');
  *          module.value('gmfTreeManagerModeFlush', true);
  *        })();
  *      </script>
@@ -49,7 +49,7 @@ goog.require('gmf.ThemesEventType');
  *      </gmf-themeselector>
  *      <script>
  *        (function() {
- *          var module = angular.module('app');
+ *          let module = angular.module('app');
  *          module.value('gmfTreeManagerModeFlush', false);
  *        })();
  *      </script>

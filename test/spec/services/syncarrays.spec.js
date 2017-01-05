@@ -1,7 +1,7 @@
 goog.require('ngeo.SyncArrays');
 
 describe('ngeo.SyncArrays', function() {
-  var $rootScope;
+  let $rootScope;
 
   beforeEach(function() {
     inject(function($injector) {
@@ -10,15 +10,15 @@ describe('ngeo.SyncArrays', function() {
   });
 
   describe('arr1 and arr2 in same order', function() {
-    var arr1, arr2;
-    var dereg;
+    let arr1, arr2;
+    let dereg;
 
     beforeEach(function() {
       inject(function($injector) {
-        var ngeoSyncArrays = $injector.get('ngeoSyncArrays');
+        const ngeoSyncArrays = $injector.get('ngeoSyncArrays');
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
-        var filter = function(n) {
+        const filter = function(n) {
           return n < 10;
         };
         dereg = ngeoSyncArrays(arr1, arr2, false, $rootScope, filter);
@@ -40,7 +40,7 @@ describe('ngeo.SyncArrays', function() {
     });
 
     it('updates arr1 when the order changes in arr2', function() {
-      var second = arr2[1];
+      const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;
       expect(arr2).toEqual([0, 3, 2, 1]);
@@ -49,7 +49,7 @@ describe('ngeo.SyncArrays', function() {
     });
 
     it('stops synchronizing when dereg is called', function() {
-      var second = arr2[1];
+      const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;
       expect(arr2).toEqual([0, 3, 2, 1]);
@@ -61,15 +61,15 @@ describe('ngeo.SyncArrays', function() {
   });
 
   describe('arr1 and arr2 in reverse order', function() {
-    var arr1, arr2;
-    var dereg;
+    let arr1, arr2;
+    let dereg;
 
     beforeEach(function() {
       inject(function($injector) {
-        var ngeoSyncArrays = $injector.get('ngeoSyncArrays');
+        const ngeoSyncArrays = $injector.get('ngeoSyncArrays');
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
-        var filter = function(n) {
+        const filter = function(n) {
           return n < 10;
         };
         dereg = ngeoSyncArrays(arr1, arr2, true, $rootScope, filter);
@@ -91,7 +91,7 @@ describe('ngeo.SyncArrays', function() {
     });
 
     it('updates arr1 when the order changes in arr2', function() {
-      var second = arr2[1];
+      const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;
       expect(arr2).toEqual([3, 0, 1, 2]);
@@ -100,7 +100,7 @@ describe('ngeo.SyncArrays', function() {
     });
 
     it('stops synchronizing when dereg is called', function() {
-      var second = arr2[1];
+      const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;
       expect(arr2).toEqual([3, 0, 1, 2]);

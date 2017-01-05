@@ -2,7 +2,7 @@ goog.require('ngeo.PrintUtils');
 
 describe('ngeo.PrintUtils', function() {
 
-  var ngeoPrintUtils;
+  let ngeoPrintUtils;
 
   beforeEach(function() {
     inject(function($injector) {
@@ -12,7 +12,7 @@ describe('ngeo.PrintUtils', function() {
 
   describe('#getOptimalResolution', function() {
 
-    var inchesPerMeter, dotsPerInch;
+    let inchesPerMeter, dotsPerInch;
 
     beforeEach(function() {
       inchesPerMeter = ngeo.PrintUtils.INCHES_PER_METER_;
@@ -29,10 +29,10 @@ describe('ngeo.PrintUtils', function() {
     });
 
     it('returns the optimal resolution', function() {
-      var mapSize = [2, 1];  // px
-      var printMapSize = [640, 320];  // dots
-      var printScale = 10;  // scale denominator
-      var optimalResolution = ngeoPrintUtils.getOptimalResolution(
+      const mapSize = [2, 1];  // px
+      const printMapSize = [640, 320];  // dots
+      const printScale = 10;  // scale denominator
+      const optimalResolution = ngeoPrintUtils.getOptimalResolution(
           mapSize, printMapSize, printScale);
       expect(optimalResolution).toBe(1);
     });

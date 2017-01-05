@@ -14,7 +14,7 @@ goog.require('ngeo.LayertreeController');
  * 'add', children will be just pushed in this array. The default state can be
  * changed by setting the value `gmfTreeManagerModeFlush`, e.g.:
  *
- *     var module = angular.module('app');
+ *     let module = angular.module('app');
  *     module.value('gmfTreeManagerModeFlush', false);
  *
  * This service's theme is a GmfTheme with only children and a name.
@@ -170,7 +170,7 @@ gmf.TreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
  */
 gmf.TreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
     opt_add, opt_silent) {
-  var groupNotAdded = [];
+  const groupNotAdded = [];
 
   firstLevelGroups.slice().reverse().forEach(function(group) {
     if (!this.addFirstLevelGroup_(group)) {
@@ -191,7 +191,7 @@ gmf.TreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
  * @private
  */
 gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
-  var treeGroupsParam = {};
+  const treeGroupsParam = {};
   treeGroupsParam[gmf.PermalinkParam.TREE_GROUPS] = groups.map(function(node) {
     return node.name;
   }).join(',');
@@ -207,8 +207,8 @@ gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
  * @private
  */
 gmf.TreeManager.prototype.addFirstLevelGroup_ = function(group) {
-  var alreadyAdded = false;
-  var groupID = group.id;
+  let alreadyAdded = false;
+  const groupID = group.id;
   this.root.children.some(function(rootChild) {
     if (groupID === rootChild.id) {
       return alreadyAdded = true;
@@ -266,7 +266,7 @@ gmf.TreeManager.prototype.addFirstLevelGroup_ = function(group) {
  */
 gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
   this.gmfThemes_.getThemesObject().then(function(themes) {
-    var group = gmf.Themes.findGroupByName(themes, groupName);
+    const group = gmf.Themes.findGroupByName(themes, groupName);
     if (group) {
       this.addFirstLevelGroups([group], opt_add, false);
     }
@@ -285,16 +285,16 @@ gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
  */
 gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent) {
   this.gmfThemes_.getThemesObject().then(function(themes) {
-    var group = gmf.Themes.findGroupByLayerNodeName(themes, layerName);
+    const group = gmf.Themes.findGroupByLayerNodeName(themes, layerName);
     if (group) {
-      var groupAdded = this.addFirstLevelGroups([group], opt_add, opt_silent);
+      const groupAdded = this.addFirstLevelGroups([group], opt_add, opt_silent);
       this.$timeout_(function() {
-        var treeCtrl = this.getTreeCtrlByNodeId(group.id);
+        const treeCtrl = this.getTreeCtrlByNodeId(group.id);
         if (!treeCtrl) {
           console.warn('Tree controler not found, unable to add the group');
           return;
         }
-        var treeCtrlToActive;
+        let treeCtrlToActive;
         treeCtrl.traverseDepthFirst(function(treeCtrl) {
           if (treeCtrl.node.name === layerName) {
             treeCtrlToActive = treeCtrl;
@@ -324,8 +324,8 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
  * @export
  */
 gmf.TreeManager.prototype.removeGroup = function(group) {
-  var children = this.root.children;
-  var index = 0, found = false;
+  const children = this.root.children;
+  let index = 0, found = false;
   children.some(function(child) {
     if (child.name === group.name) {
       return found = true;
@@ -360,7 +360,7 @@ gmf.TreeManager.prototype.removeAll = function() {
  * @private
  */
 gmf.TreeManager.prototype.cloneGroupNode_ = function(group, names) {
-  var clone = /** @type {gmfThemes.GmfGroup} */ (goog.object.unsafeClone(group));
+  const clone = /** @type {gmfThemes.GmfGroup} */ (goog.object.unsafeClone(group));
   this.toggleNodeCheck_(clone, names);
   return clone;
 };
@@ -396,12 +396,12 @@ gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
  * @private
  */
 gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
-  var names = [];
-  var gettextCatalog = this.gettextCatalog_;
+  const names = [];
+  const gettextCatalog = this.gettextCatalog_;
   groups.forEach(function(group) {
     names.push(group.name);
   });
-  var msg = (names.length < 2) ?
+  const msg = (names.length < 2) ?
       gettextCatalog.getString('group is already loaded.') :
       gettextCatalog.getString('groups are already loaded.');
   this.ngeoNotification_.notify({
@@ -418,7 +418,7 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
  * @public
  */
 gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
-  var correspondingTreeCtrl = null;
+  let correspondingTreeCtrl = null;
   if (this.rootCtrl && this.rootCtrl.traverseDepthFirst) {
     this.rootCtrl.traverseDepthFirst(function(treeCtrl) {
       if (treeCtrl.node.id === id) {
@@ -439,15 +439,15 @@ gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
  */
 gmf.TreeManager.prototype.getOgcServer = function(treeCtrl) {
   if (treeCtrl.parent.node.mixed) {
-    var gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
+    const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
     goog.asserts.assert(gmfLayerWMS.ogcServer);
     return this.ogcServers_[gmfLayerWMS.ogcServer];
   } else {
-    var firstLevelGroupCtrl = treeCtrl;
+    let firstLevelGroupCtrl = treeCtrl;
     while (!firstLevelGroupCtrl.parent.isRoot) {
       firstLevelGroupCtrl = firstLevelGroupCtrl.parent;
     }
-    var gmfGroup = /** @type {gmfThemes.GmfGroup} */ (firstLevelGroupCtrl.node);
+    const gmfGroup = /** @type {gmfThemes.GmfGroup} */ (firstLevelGroupCtrl.node);
     goog.asserts.assert(gmfGroup.ogcServer);
     return this.ogcServers_[gmfGroup.ogcServer];
   }
@@ -464,27 +464,27 @@ gmf.TreeManager.prototype.getOgcServer = function(treeCtrl) {
  * @private
  */
 gmf.TreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
-  var firstLevelGroupsFullState = {};
+  const firstLevelGroupsFullState = {};
 
   // Save state of each child
   this.rootCtrl.children.map(function(treeCtrl) {
-    var name = treeCtrl.node.name;
+    const name = treeCtrl.node.name;
     firstLevelGroupsFullState[name] = this.getFirstLevelGroupFullState_(treeCtrl);
   }.bind(this));
 
   // Get nodes and set their state
-  var nodesToRestore = [];
+  const nodesToRestore = [];
   // Iterate on the root to keep the same order in the tree as before.
   this.root.children.map(function(node) {
-    var name = node.name;
+    const name = node.name;
 
     // Find the right firstlevelgroup in the new theme or take the old one.
-    var nodeToRestore = gmf.Themes.findGroupByName(themes, name);
+    let nodeToRestore = gmf.Themes.findGroupByName(themes, name);
     if (!nodeToRestore) {
       nodeToRestore = node;
     }
     // Restore state.
-    var fullState = firstLevelGroupsFullState[name];
+    const fullState = firstLevelGroupsFullState[name];
     if (fullState) {
       this.setNodeMetadataFromFullState_(nodeToRestore, fullState);
     }
@@ -510,15 +510,15 @@ gmf.TreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
  * @private
  */
 gmf.TreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
-  var children = {};
+  const children = {};
   // Get the state of the treeCtrl children recursively.
   treeCtrl.children.map(function(child) {
     children[child.node.name] = this.getFirstLevelGroupFullState_(child);
   }.bind(this));
 
-  var isChecked, isExpanded, isLegendExpanded;
+  let isChecked, isExpanded, isLegendExpanded;
   if (treeCtrl.children.length > 0) {
-    var nodeElement = $('#gmf-layertree-layer-group-' + treeCtrl.uid);
+    const nodeElement = $('#gmf-layertree-layer-group-' + treeCtrl.uid);
     // Set isExpanded only in groups.
     if (nodeElement) {
       isExpanded = nodeElement.hasClass('in');
@@ -533,7 +533,7 @@ gmf.TreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
     } else {
       isChecked = undefined;
     }
-    var legendElement = $('#gmf-layertree-node-' + treeCtrl.uid + '-legend');
+    const legendElement = $('#gmf-layertree-node-' + treeCtrl.uid + '-legend');
     if (legendElement) {
       isLegendExpanded = legendElement.is(':visible');
     }
@@ -570,7 +570,7 @@ gmf.TreeManager.prototype.setNodeMetadataFromFullState_ = function(node, fullSta
   }
 
   // Set the metadata with the fullState object informations.
-  var metadata = node.metadata;
+  const metadata = node.metadata;
   metadata.isChecked = fullState.isChecked;
   metadata.isExpanded = fullState.isExpanded;
   metadata.isLegendExpanded = fullState.isLegendExpanded;

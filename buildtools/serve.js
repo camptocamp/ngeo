@@ -1,14 +1,14 @@
-var path = require('path');
-var url = require('url');
+let path = require('path');
+let url = require('url');
 
-var closure = require('closure-util');
-var nomnom = require('nomnom');
-var gaze = require('gaze');
-var exec = require('child_process').exec;
+let closure = require('closure-util');
+let nomnom = require('nomnom');
+let gaze = require('gaze');
+let exec = require('child_process').exec;
 
-var log = closure.log;
+let log = closure.log;
 
-var options = nomnom.options({
+let options = nomnom.options({
   port: {
     abbr: 'p',
     'default': 3000,
@@ -44,7 +44,7 @@ function compileCss() {
 compileCss();
 
 log.info('ngeo', 'Parsing dependencies ...');
-var manager = new closure.Manager({
+let manager = new closure.Manager({
   closure: true, // use the bundled Closure Library
   lib: [
     'src/**/*.js',
@@ -59,7 +59,7 @@ manager.on('error', function(e) {
   log.error('ngeo', e.message);
 });
 manager.on('ready', function() {
-  var server = new closure.Server({
+  let server = new closure.Server({
     manager: manager
   });
   server.listen(options.port, function() {

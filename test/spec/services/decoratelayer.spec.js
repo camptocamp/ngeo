@@ -4,7 +4,7 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
 describe('ngeo.DecorateLayer', function() {
-  var ngeoDecorateLayer;
+  let ngeoDecorateLayer;
 
   beforeEach(function() {
     inject(function($injector) {
@@ -13,7 +13,7 @@ describe('ngeo.DecorateLayer', function() {
   });
 
   it('can change the visibility', function() {
-    var layer = new ol.layer.Tile({
+    const layer = new ol.layer.Tile({
       source: new ol.source.OSM(),
       visible: false
     });
@@ -25,7 +25,7 @@ describe('ngeo.DecorateLayer', function() {
   });
 
   it('can change the opacity', function() {
-    var layer = new ol.layer.Tile({
+    const layer = new ol.layer.Tile({
       source: new ol.source.OSM(),
       opacity: 0.5
     });

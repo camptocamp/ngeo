@@ -3,7 +3,7 @@ goog.provide('ngeo.proj.EPSG2056');
 goog.require('ol.proj');
 
 if (typeof proj4 == 'function') {
-  var epsg2056def = [
+  const epsg2056def = [
     '+proj=somerc',
     '+lat_0=46.95240555555556',
     '+lon_0=7.439583333333333',
@@ -15,7 +15,7 @@ if (typeof proj4 == 'function') {
     '+units=m',
     '+no_defs'
   ].join(' ');
-  var epsg2056extent = [2420000, 1030000, 2900000, 1350000];
+  const epsg2056extent = [2420000, 1030000, 2900000, 1350000];
 
   proj4.defs('EPSG:2056', epsg2056def);
   ol.proj.get('EPSG:2056').setExtent(epsg2056extent);

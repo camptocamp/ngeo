@@ -37,11 +37,11 @@ ngeo.controlDirective = function() {
          */
         function(scope, element, attrs) {
 
-          var control = /** @type {ol.control.Control} */
+          const control = /** @type {ol.control.Control} */
               (scope.$eval(attrs['ngeoControl']));
           goog.asserts.assertInstanceof(control, ol.control.Control);
 
-          var map = /** @type {ol.Map} */
+          const map = /** @type {ol.Map} */
               (scope.$eval(attrs['ngeoControlMap']));
           goog.asserts.assertInstanceof(map, ol.Map);
 

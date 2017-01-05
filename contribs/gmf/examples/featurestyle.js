@@ -45,9 +45,9 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   this.featureHelper_ = ngeoFeatureHelper;
 
   // create features
-  var features = [];
+  const features = [];
 
-  var pointProperties = {
+  const pointProperties = {
     geometry: new ol.geom.Point([-8458215, 6672646])
   };
   pointProperties[ngeo.FeatureProperties.COLOR] = '#009D57';
@@ -55,7 +55,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   pointProperties[ngeo.FeatureProperties.SIZE] = '6';
   features.push(new ol.Feature(pointProperties));
 
-  var textProperties = {
+  const textProperties = {
     geometry: new ol.geom.Point([-8007848, 6209744])
   };
   textProperties[ngeo.FeatureProperties.ANGLE] = '0';
@@ -65,7 +65,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   textProperties[ngeo.FeatureProperties.SIZE] = '16';
   features.push(new ol.Feature(textProperties));
 
-  var lineProperties = {
+  const lineProperties = {
     geometry: new ol.geom.LineString([
       [-8321240, 6523441],
       [-8103547, 6726458],
@@ -78,7 +78,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   lineProperties[ngeo.FeatureProperties.STROKE] = '4';
   features.push(new ol.Feature(lineProperties));
 
-  var poly1Properties = {
+  const poly1Properties = {
     geometry: new ol.geom.Polygon([
       [
         [-8512027, 6359560],
@@ -96,7 +96,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   poly1Properties[ngeo.FeatureProperties.STROKE] = '1';
   features.push(new ol.Feature(poly1Properties));
 
-  var poly2Properties = {
+  const poly2Properties = {
     geometry: new ol.geom.Polygon([
       [
         [-7952508, 6096617],
@@ -113,7 +113,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   poly2Properties[ngeo.FeatureProperties.STROKE] = '3';
   features.push(new ol.Feature(poly2Properties));
 
-  var rectProperties = {
+  const rectProperties = {
     geometry: ol.geom.Polygon.fromExtent([-7874848, 6496535, -7730535, 6384020])
   };
   rectProperties[ngeo.FeatureProperties.COLOR] = '#000000';
@@ -123,7 +123,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   rectProperties[ngeo.FeatureProperties.STROKE] = '2';
   features.push(new ol.Feature(rectProperties));
 
-  var circleProperties = {
+  const circleProperties = {
     geometry: ol.geom.Polygon.fromCircle(
         new ol.geom.Circle([-7691093, 6166327], 35000), 64)
   };
@@ -134,7 +134,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   circleProperties[ngeo.FeatureProperties.STROKE] = '2';
   features.push(new ol.Feature(circleProperties));
 
-  var view = new ol.View({
+  const view = new ol.View({
     center: [-8174482, 6288627],
     zoom: 6
   });
@@ -180,9 +180,9 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
  * @private
  */
 gmfapp.MainController.prototype.handleMapSingleClick_ = function(evt) {
-  var pixel = evt.pixel;
+  const pixel = evt.pixel;
 
-  var feature = this.map.forEachFeatureAtPixel(pixel, function(feature) {
+  const feature = this.map.forEachFeatureAtPixel(pixel, function(feature) {
     return feature;
   });
 

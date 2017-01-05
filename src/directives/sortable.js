@@ -69,20 +69,20 @@ ngeo.sortableDirective = function($timeout) {
          */
         function(scope, element, attrs) {
 
-          var sortable = /** @type {Array} */
+          const sortable = /** @type {Array} */
               (scope.$eval(attrs['ngeoSortable'])) || [];
           goog.asserts.assert(Array.isArray(sortable));
 
-          var optionsObject = scope.$eval(attrs['ngeoSortableOptions']);
-          var options = getOptions(optionsObject);
+          const optionsObject = scope.$eval(attrs['ngeoSortableOptions']);
+          const options = getOptions(optionsObject);
 
-          var callbackFn = scope.$eval(attrs['ngeoSortableCallback']);
-          var callbackCtx = scope.$eval(attrs['ngeoSortableCallbackCtx']);
+          const callbackFn = scope.$eval(attrs['ngeoSortableCallback']);
+          const callbackCtx = scope.$eval(attrs['ngeoSortableCallbackCtx']);
 
           /**
            * @type {goog.fx.DragListGroup}
            */
-          var dragListGroup = null;
+          let dragListGroup = null;
 
           scope.$watchCollection(function() {
             return sortable;
@@ -98,10 +98,10 @@ ngeo.sortableDirective = function($timeout) {
             // Save the current nodes in order to restore the state if the node
             // is dropped at the same place
             // In this case the comments and element nodes are messed up
-            var savedNodes = element.contents();
+            const savedNodes = element.contents();
 
-            var children = element.children();
-            for (var i = 0; i < children.length; ++i) {
+            const children = element.children();
+            for (let i = 0; i < children.length; ++i) {
               angular.element(children[i]).data('idx', i);
             }
 
@@ -118,7 +118,7 @@ ngeo.sortableDirective = function($timeout) {
                  * @return {Element} The handle.
                  */
                 function(dragItem) {
-                  var className = options['handleClassName'];
+                  const className = options['handleClassName'];
                   return goog.dom.getElementByClass(className, dragItem);
                 });
 
@@ -131,10 +131,10 @@ ngeo.sortableDirective = function($timeout) {
             }
 
             /** @type {number} */
-            var hoverNextItemIdx = -1;
+            let hoverNextItemIdx = -1;
 
             /** @type {Element} */
-            var hoverList = null;
+            let hoverList = null;
 
             goog.events.listen(dragListGroup, 'dragstart', function(e) {
               hoverNextItemIdx = -1;
@@ -147,15 +147,15 @@ ngeo.sortableDirective = function($timeout) {
             });
 
             goog.events.listen(dragListGroup, 'dragmove', function(e) {
-              var next = e.hoverNextItem;
+              const next = e.hoverNextItem;
               hoverNextItemIdx = next === null ? -1 :
                   /** @type {number} */ (angular.element(next).data('idx'));
               hoverList = e.hoverList;
             });
 
             goog.events.listen(dragListGroup, 'dragend', function(e) {
-              var li = e.currDragItem;
-              var idx = /** @type {number} */
+              const li = e.currDragItem;
+              const idx = /** @type {number} */
                   (angular.element(li).data('idx'));
               if (hoverList === null ||
                   hoverNextItemIdx == idx + 1 ||
@@ -198,8 +198,8 @@ ngeo.sortableDirective = function($timeout) {
            * @private
            */
           function getOptions(options) {
-            var ret;
-            var defaultHandleClassName = 'ngeo-sortable-handle';
+            let ret;
+            const defaultHandleClassName = 'ngeo-sortable-handle';
             if (options === undefined) {
               ret = {'handleClassName': defaultHandleClassName};
             } else {

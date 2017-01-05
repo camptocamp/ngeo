@@ -8,7 +8,7 @@
 /**
  * @type {Object}
  */
-var gmfThemes;
+let gmfThemes;
 
 /**
  * @record

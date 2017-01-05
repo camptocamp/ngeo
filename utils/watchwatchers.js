@@ -11,10 +11,10 @@
  */
 (function () {
 
-  var root = angular.element(document.getElementsByTagName('body'));
+  let root = angular.element(document.getElementsByTagName('body'));
 
-  var countWatchers_ = function(element, scopes, count) {
-    var scope;
+  let countWatchers_ = function(element, scopes, count) {
+    let scope;
     scope = element.data().$scope;
     if (scope && !(scope.$id in scopes)) {
         scopes[scope.$id] = true;

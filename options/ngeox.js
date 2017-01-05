@@ -8,7 +8,7 @@
  * @private
  * @type {Object}
  */
-var ngeox;
+let ngeox;
 
 
 /**

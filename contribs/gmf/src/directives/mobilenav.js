@@ -119,7 +119,7 @@ gmf.module.controller('gmfMobileNavController', gmf.MobileNavController);
  * @param {angular.JQLite} element Element.
  */
 gmf.MobileNavController.prototype.init = function(element) {
-  var cls = gmf.MobileNavController.ClassName_;
+  const cls = gmf.MobileNavController.ClassName_;
   this.active_ = $(element.find('.' + cls.ACTIVE + '.' + cls.SLIDE));
   this.header_ = $(element.find('> header'));
   this.backButton_ = $(element.find('header > .' + cls.GO_BACK));
@@ -127,10 +127,10 @@ gmf.MobileNavController.prototype.init = function(element) {
   // watch for clicks on "slide-in" elements
   element.find('[data-toggle=slide-in]').on('click', function(evt) {
 
-    var cls = gmf.MobileNavController.ClassName_;
+    const cls = gmf.MobileNavController.ClassName_;
 
     // the element to slide out is the div.slide parent
-    var slideOut = $(evt.currentTarget).parents('.' + cls.SLIDE);
+    const slideOut = $(evt.currentTarget).parents('.' + cls.SLIDE);
     goog.asserts.assert(slideOut.length === 1);
 
     // push the item to the selected stack
@@ -140,7 +140,7 @@ gmf.MobileNavController.prototype.init = function(element) {
     slideOut.addClass(cls.SLIDE_OUT).removeClass(cls.ACTIVE);
 
     // element to slide in
-    var slideIn = $($(evt.currentTarget).attr('data-target'));
+    const slideIn = $($(evt.currentTarget).attr('data-target'));
     goog.asserts.assert(slideIn.length === 1);
 
     // slide the "new" element in
@@ -164,7 +164,7 @@ gmf.MobileNavController.prototype.init = function(element) {
  */
 gmf.MobileNavController.prototype.updateNavigationHeader_ = function(
     active, back) {
-  var cls = gmf.MobileNavController.ClassName_;
+  const cls = gmf.MobileNavController.ClassName_;
   this.header_.toggleClass(cls.BACK, back);
 
   // remove any inactive nav
@@ -178,7 +178,7 @@ gmf.MobileNavController.prototype.updateNavigationHeader_ = function(
   this.backButton_.toggleClass(cls.ACTIVE, this.slid_.length > 0);
 
   // create a new nav
-  var nav = $('<nav>');
+  const nav = $('<nav>');
   nav.append($('<span>', {
     text: active.attr('data-header-title')
   }));
@@ -216,13 +216,13 @@ gmf.MobileNavController.prototype.back_ = function() {
     return;
   }
 
-  var cls = gmf.MobileNavController.ClassName_;
+  const cls = gmf.MobileNavController.ClassName_;
 
   // slide active item to the right
   this.active_.removeClass(cls.ACTIVE);
 
   // get the previously active item
-  var slideBack = this.slid_.pop();
+  const slideBack = this.slid_.pop();
 
   // slide previous item to the right
   slideBack.addClass(cls.ACTIVE).removeClass(cls.SLIDE_OUT);

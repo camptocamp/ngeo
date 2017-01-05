@@ -48,7 +48,7 @@ gmf.Altitude = function($http, gmfRasterUrl) {
  */
 gmf.Altitude.prototype.getAltitude = function(coordinate, opt_params) {
 
-  var params = opt_params || {};
+  const params = opt_params || {};
   params[gmf.AltitudeParam.X] = coordinate[0];
   params[gmf.AltitudeParam.Y] = coordinate[1];
 

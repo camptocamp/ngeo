@@ -12,32 +12,32 @@ goog.require('gmf.test.data.themes');
 
 
 describe('Permalink service', function() {
-  var PermalinkService;
-  var StateManagerService;
-  var ngeoLocation;
+  let PermalinkService;
+  let StateManagerService;
+  let ngeoLocation;
 
   beforeEach(inject(function($injector) {
     StateManagerService = $injector.get('ngeoStateManager');
     PermalinkService = $injector.get('gmfPermalink');
     ngeoLocation = $injector.get('ngeoLocation');
-    var map = new ol.Map({layers: [], view: new ol.View({projection: ol.proj.get('EPSG:2056')})});
+    const map = new ol.Map({layers: [], view: new ol.View({projection: ol.proj.get('EPSG:2056')})});
     PermalinkService.setMap(map);
     // need to work on a clone of themes, because the permalink service
     // seems to change the original object?!
-    var themesClone = goog.object.unsafeClone(themes);
+    const themesClone = goog.object.unsafeClone(themes);
     PermalinkService.themes_ = themesClone['themes'];
 
 
     //create fake layerTree
-    var LayerHelper = $injector.get('ngeoLayerHelper');
+    const LayerHelper = $injector.get('ngeoLayerHelper');
 
-    var dataGroup = LayerHelper.getGroupFromMap(map, gmf.DATALAYERGROUP_NAME);
-    var firstLevelGroup = LayerHelper.createBasicGroup(new ol.Collection([
+    const dataGroup = LayerHelper.getGroupFromMap(map, gmf.DATALAYERGROUP_NAME);
+    const firstLevelGroup = LayerHelper.createBasicGroup(new ol.Collection([
       LayerHelper.createBasicWMSLayer('', 'l_g1_1'),
       LayerHelper.createBasicWMSLayer('', 'l_g1_2')
     ]));
 
-    var secondLevelGroup = LayerHelper.createBasicGroup(new ol.Collection([
+    const secondLevelGroup = LayerHelper.createBasicGroup(new ol.Collection([
       LayerHelper.createBasicWMSLayer('', 'l_g2_1'),
       LayerHelper.createBasicWMSLayer('', 'l_g2_2')
     ]));
@@ -61,7 +61,7 @@ describe('Permalink service', function() {
     it('works with a single filter', function() {
       // ?wfs_layer=fuel&wfs_osm_id=1420918679
       ngeoLocation.updateParams({wfs_layer: 'fuel', wfs_osm_id: '1420918679'});
-      var expectedQueryParams = {
+      const expectedQueryParams = {
         wfsType: 'fuel',
         showFeatures: true,
         filterGroups: [
@@ -82,7 +82,7 @@ describe('Permalink service', function() {
       // ?wfs_layer=fuel&wfs_osm_id=1420918679,441134960&wfs_showFeatures=0
       ngeoLocation.updateParams({
         wfs_layer: 'fuel', wfs_osm_id: '1420918679,441134960', wfs_showFeatures: '0'});
-      var expectedQueryParams = {
+      const expectedQueryParams = {
         wfsType: 'fuel',
         showFeatures: false,
         filterGroups: [
@@ -104,7 +104,7 @@ describe('Permalink service', function() {
       ngeoLocation.updateParams({
         wfs_layer: 'osm_scale', wfs_highway: 'bus_stop', wfs_name: 'Grand-Pont',
         wfs_operator: 'TL'});
-      var expectedQueryParams = {
+      const expectedQueryParams = {
         wfsType: 'osm_scale',
         showFeatures: true,
         filterGroups: [
@@ -137,7 +137,7 @@ describe('Permalink service', function() {
         wfs_0_ele: '380', wfs_0_highway: 'bus_stop', wfs_0_operator: 'TL',
         wfs_1_highway: 'bus_stop', wfs_1_name: 'Grand-Pont', wfs_1_operator: 'TL'
       });
-      var expectedQueryParams = {
+      const expectedQueryParams = {
         wfsType: 'osm_scale',
         showFeatures: true,
         filterGroups: [
@@ -190,7 +190,7 @@ describe('Permalink service', function() {
       PermalinkService.sourceProjections_ = [ol.proj.get('EPSG:2056'), ol.proj.get('EPSG:4326')];
       StateManagerService.initialState['map_x'] = 46.7685575;
       StateManagerService.initialState['map_y'] = 6.6144562;
-      var center = PermalinkService.getMapCenter();
+      const center = PermalinkService.getMapCenter();
       expect(center[0]).toBeCloseTo(2537046, 0);
       expect(center[1]).toBeCloseTo(1180040, 0);
     });
@@ -199,7 +199,7 @@ describe('Permalink service', function() {
       PermalinkService.sourceProjections_ = [ol.proj.get('EPSG:2056'), ol.proj.get('EPSG:4326')];
       StateManagerService.initialState['map_x'] = 6.6144562;
       StateManagerService.initialState['map_y'] = 46.7685575;
-      var center = PermalinkService.getMapCenter();
+      const center = PermalinkService.getMapCenter();
       expect(center[0]).toBeCloseTo(2537046, 0);
       expect(center[1]).toBeCloseTo(1180040, 0);
     });

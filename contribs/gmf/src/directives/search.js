@@ -29,7 +29,7 @@ gmf.module.value('gmfSearchTemplateUrl',
      * @return {string} Template URL.
      */
     function(element, attrs) {
-      var templateUrl = attrs['gmfSearchTemplateurl'];
+      const templateUrl = attrs['gmfSearchTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           gmf.baseTemplateUrl + '/search.html';
     });
@@ -57,7 +57,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *      </gmf-search>
  *      <script>
  *        (function() {
- *          var module = angular.module('app');
+ *          let module = angular.module('app');
  *          module.value('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 20}) | n}');
  *          module.value('gmfSearchGroups', []);
  *          module.constant('gmfSearchActions', [
@@ -80,7 +80,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *      </gmf-search>
  *      <script>
  *        (function() {
- *          var module = angular.module('app');
+ *          let module = angular.module('app');
  *          module.value('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 30, "partitionlimit": 5}) | n}');
  *          module.value('gmfSearchGroups', ${dumps(fulltextsearch_groups) | n});
  *          module.value('gmfSearchActions', []);
@@ -140,7 +140,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
          */
         function(scope, element, attrs) {
           if (!scope['clearbutton']) {
-            var ctrl = scope['ctrl'];
+            const ctrl = scope['ctrl'];
             // Empty the search field on focus and blur.
             element.find('input').on('focus blur', function() {
               ctrl.clear();
@@ -231,7 +231,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    */
   this.ngeoAutoProjection_ = ngeoAutoProjection;
 
-  var map = this.scope_['getMapFn']();
+  const map = this.scope_['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
 
   /**
@@ -266,7 +266,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    */
   this.placeholder = '';
 
-  var coordProj = this.scope_['coordinatesProjections'];
+  let coordProj = this.scope_['coordinatesProjections'];
   if (coordProj === undefined) {
     coordProj = [this.map_.getView().getProjection()];
   } else {
@@ -288,7 +288,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
   this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
 
-  var datasources = this.scope_['getDatasourcesFn']();
+  const datasources = this.scope_['getDatasourcesFn']();
   goog.asserts.assertArray(datasources);
 
   /**
@@ -320,14 +320,14 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.inputValue = '';
 
   // Create each datasource
-  for (var i = 0; i < this.datasources_.length; i++) {
-    var datasource = this.datasources_[i];
+  for (let i = 0; i < this.datasources_.length; i++) {
+    const datasource = this.datasources_[i];
 
     /** @type {Array.<string>} */
-    var groupValues = datasource.groupValues !== undefined ? datasource.groupValues : [];
+    const groupValues = datasource.groupValues !== undefined ? datasource.groupValues : [];
     /** @type {Array.<string>} */
-    var groupActions = datasource.groupActions ? datasource.groupActions : [];
-    var filters = [];
+    const groupActions = datasource.groupActions ? datasource.groupActions : [];
+    const filters = [];
 
     if (groupValues.length === 0) {
       filters.push({
@@ -370,13 +370,13 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     display: 'label',
     templates: {
       header: function() {
-        var header = gettextCatalog.getString('Recenter to');
+        const header = gettextCatalog.getString('Recenter to');
         return '<div class="gmf-search-header" translate>' + header + '</div>';
       },
       suggestion: function(suggestion) {
-        var coordinates = suggestion['label'];
+        const coordinates = suggestion['label'];
 
-        var html = '<p class="gmf-search-label">' + coordinates + '</p>';
+        let html = '<p class="gmf-search-label">' + coordinates + '</p>';
         html = '<div class="gmf-search-datum">' + html + '</div>';
         return html;
       }
@@ -453,15 +453,15 @@ gmf.SearchController.prototype.mergeListeners_ = function(additionalListeners, l
  * @private
  */
 gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
-  var gettextCatalog = this.gettextCatalog_;
-  var directiveScope = this.scope_;
-  var compile = this.compile_;
-  var bloodhoundEngine = this.createAndInitBloodhound_(config, opt_filter);
-  var typeaheadDataset = /** @type {TypeaheadDataset} */ ({
+  const gettextCatalog = this.gettextCatalog_;
+  const directiveScope = this.scope_;
+  const compile = this.compile_;
+  const bloodhoundEngine = this.createAndInitBloodhound_(config, opt_filter);
+  const typeaheadDataset = /** @type {TypeaheadDataset} */ ({
     limit: Infinity,
     source: bloodhoundEngine.ttAdapter(),
     display: function(suggestion) {
-      var feature = /** @type {ol.Feature} */ (suggestion);
+      const feature = /** @type {ol.Feature} */ (suggestion);
       return feature.get(config.labelKey);
     },
     templates: /* TypeaheadTemplates */ ({
@@ -469,17 +469,17 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
         if (config.datasetTitle === undefined) {
           return '';
         } else {
-          var header = gettextCatalog.getString(config.datasetTitle);
+          const header = gettextCatalog.getString(config.datasetTitle);
           return '<div class="gmf-search-header">' + header + '</div>';
         }
       },
       suggestion: function(suggestion) {
-        var feature = /** @type {ol.Feature} */ (suggestion);
+        const feature = /** @type {ol.Feature} */ (suggestion);
 
-        var scope = directiveScope.$new(true);
+        const scope = directiveScope.$new(true);
         scope['feature'] = feature;
 
-        var html = '<p class="gmf-search-label">' +
+        let html = '<p class="gmf-search-label">' +
                    feature.get(config.labelKey) + '</p>';
         html += '<p class="gmf-search-group">' + (feature.get('layer_name') ||
                 config.datasetTitle) + '</p>';
@@ -508,7 +508,7 @@ gmf.SearchController.prototype.filterAction_ = function(action) {
        * @return {boolean}
        */
       function(feature) {
-        var properties = feature['properties'];
+        const properties = feature['properties'];
         if (properties['actions']) {
           // result is an action (add_theme, add_group, ...)
           // add it to the corresponding group
@@ -537,7 +537,7 @@ gmf.SearchController.prototype.filterLayername_ = function(layerName) {
        * @return {boolean}
        */
       function(feature) {
-        var featureLayerName = feature['properties']['layer_name'];
+        const featureLayerName = feature['properties']['layer_name'];
         // Keep only layers with layer_name (don't keep action layers).
         if (featureLayerName === undefined) {
           return false;
@@ -560,9 +560,9 @@ gmf.SearchController.prototype.filterLayername_ = function(layerName) {
  */
 gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
     opt_filter) {
-  var mapProjectionCode = this.map_.getView().getProjection().getCode();
-  var remoteOptions = this.getBloodhoudRemoteOptions_();
-  var bloodhound = this.ngeoSearchCreateGeoJSONBloodhound_(config.url, opt_filter,
+  const mapProjectionCode = this.map_.getView().getProjection().getCode();
+  const remoteOptions = this.getBloodhoudRemoteOptions_();
+  const bloodhound = this.ngeoSearchCreateGeoJSONBloodhound_(config.url, opt_filter,
       ol.proj.get(mapProjectionCode), ol.proj.get(config.projection),
       config.bloodhoundOptions, remoteOptions);
   bloodhound.initialize();
@@ -575,13 +575,13 @@ gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
  * @private
  */
 gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
-  var gettextCatalog = this.gettextCatalog_;
+  const gettextCatalog = this.gettextCatalog_;
   return {
     rateLimitWait: 50,
     prepare: function(query, settings) {
-      var url = settings.url;
-      var lang = gettextCatalog.currentLanguage;
-      var interfaceName = 'mobile'; // FIXME dynamic interfaces
+      let url = settings.url;
+      const lang = gettextCatalog.currentLanguage;
+      const interfaceName = 'mobile'; // FIXME dynamic interfaces
       url = goog.uri.utils.setParam(url, 'query', query);
       url = goog.uri.utils.setParam(url, 'lang', lang);
       url = goog.uri.utils.setParam(url, 'interface', interfaceName);
@@ -601,16 +601,15 @@ gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
  * @private
 */
 gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
-  var viewProjection = view.getProjection();
-  var extent = viewProjection.getExtent();
+  const viewProjection = view.getProjection();
+  const extent = viewProjection.getExtent();
   return function(query, callback) {
-    var suggestions = [];
-    var coordinates = this.ngeoAutoProjection_.stringToCoordinates(query);
-    var position;
+    const suggestions = [];
+    const coordinates = this.ngeoAutoProjection_.stringToCoordinates(query);
     if (coordinates === null) {
       return;
     }
-    position = this.ngeoAutoProjection_.tryProjectionsWithInversion(coordinates,
+    const position = this.ngeoAutoProjection_.tryProjectionsWithInversion(coordinates,
         extent, viewProjection, this.coordinatesProjections_);
     if (position === null) {
       return;
@@ -642,10 +641,10 @@ gmf.SearchController.prototype.initStyles_ = function() {
       angle: 0
     })
   });
-  var fill = new ol.style.Fill({
+  const fill = new ol.style.Fill({
     color: [65, 134, 240, 0.5]
   });
-  var stroke = new ol.style.Stroke({
+  const stroke = new ol.style.Stroke({
     color: [65, 134, 240, 1],
     width: 2
   });
@@ -658,7 +657,7 @@ gmf.SearchController.prototype.initStyles_ = function() {
       stroke: stroke
     })
   });
-  var customStyles = this.scope_['featuresStyles'] || {};
+  const customStyles = this.scope_['featuresStyles'] || {};
   goog.object.extend(this.styles_, customStyles);
 };
 
@@ -671,20 +670,20 @@ gmf.SearchController.prototype.initStyles_ = function() {
  */
 gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
   goog.asserts.assert(feature);
-  var style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
+  const style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
   if (this.color) {
-    var color = ol.color.asArray(this.color);
-    var strokeStyle = style.getStroke();
+    const color = ol.color.asArray(this.color);
+    const strokeStyle = style.getStroke();
     if (strokeStyle) {
       // 100% opacity for the stroke color
-      var strokeColor = color.slice();
+      const strokeColor = color.slice();
       strokeColor[3] = 1;
       strokeStyle.setColor(strokeColor);
 
-      var fillStyle = style.getFill();
+      const fillStyle = style.getFill();
       if (fillStyle) {
         // 50% opacity for the fill color
-        var fillColor = color.slice();
+        const fillColor = color.slice();
         fillColor[3] = 0.5;
         fillStyle.setColor(fillColor);
       }
@@ -710,7 +709,7 @@ gmf.SearchController.prototype.setStyleColor = function(color) {
  */
 gmf.SearchController.prototype.setTTDropdownVisibility_ = function() {
   if (this.clearButton) {
-    var ttDropdown = $('.twitter-typeahead .tt-menu');
+    const ttDropdown = $('.twitter-typeahead .tt-menu');
     (this.inputValue) ? ttDropdown.show() : ttDropdown.hide();
   }
 };
@@ -729,9 +728,9 @@ gmf.SearchController.prototype.onClearButton = function() {
  * @export
  */
 gmf.SearchController.prototype.clear = function() {
-  var typeahead = $('.twitter-typeahead');
-  var ttmenu = typeahead.children('.tt-menu');
-  var inputs = typeahead.children('input');
+  const typeahead = $('.twitter-typeahead');
+  const ttmenu = typeahead.children('.tt-menu');
+  const inputs = typeahead.children('input');
   // clear model value, the 'real' input value and tt's suggestions
   this.inputValue = '';
   $(inputs[1]).typeahead('val', '');
@@ -745,8 +744,8 @@ gmf.SearchController.prototype.clear = function() {
  * @export
  */
 gmf.SearchController.prototype.blur = function() {
-  var typeahead = $('.twitter-typeahead');
-  var inputs = typeahead.children('input');
+  const typeahead = $('.twitter-typeahead');
+  const inputs = typeahead.children('input');
   // Blur as soon as possible in digest loops
   this.timeout_(function() {
     $(inputs[1]).blur();
@@ -763,7 +762,7 @@ gmf.SearchController.prototype.blur = function() {
  */
 gmf.SearchController.select_ = function(event, suggestion, dataset) {
   if (suggestion['tt_source'] === 'coordinates') {
-    var geom = new ol.geom.Point(suggestion['position']);
+    const geom = new ol.geom.Point(suggestion['position']);
 
     this.featureOverlay_.clear();
     this.featureOverlay_.addFeature(new ol.Feature({
@@ -787,17 +786,17 @@ gmf.SearchController.select_ = function(event, suggestion, dataset) {
  * @private
  */
 gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset) {
-  var actions = feature.get('actions');
-  var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
+  const actions = feature.get('actions');
+  const featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
   if (actions) {
-    for (var i = 0, ii = actions.length; i < ii; i++) {
-      var action = actions[i];
-      var actionName = action['action'];
-      var actionData = action['data'];
+    for (let i = 0, ii = actions.length; i < ii; i++) {
+      const action = actions[i];
+      const actionName = action['action'];
+      const actionData = action['data'];
       if (actionName == 'add_theme') {
         this.gmfThemes_.getThemesObject().then(function(themes) {
-          var theme = gmf.Themes.findThemeByName(themes, actionData);
+          const theme = gmf.Themes.findThemeByName(themes, actionData);
           if (theme) {
             this.gmfTreeManager_.addFirstLevelGroups(theme.children);
           }
@@ -805,29 +804,29 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
       } else if (actionName == 'add_group') {
         this.gmfTreeManager_.addGroupByName(actionData, true);
       } else if (actionName == 'add_layer') {
-        var groupActions = /** @type {Array.<string>} */ (
+        const groupActions = /** @type {Array.<string>} */ (
             this.datasources_[0].groupActions);
-        var datasourcesActionsHaveAddLayer;
+        let datasourcesActionsHaveAddLayer;
         groupActions.forEach(function(groupAction) {
           if (groupAction['action'] === 'add_layer') {
             return datasourcesActionsHaveAddLayer = true;
           }
         });
         if (datasourcesActionsHaveAddLayer) {
-          var silent = !!featureGeometry;
+          const silent = !!featureGeometry;
           this.gmfTreeManager_.addGroupByLayerName(actionData, true, silent);
         }
       }
     }
   }
 
-  var mapSize = this.map_.getSize();
+  const mapSize = this.map_.getSize();
   if (featureGeometry && mapSize) {
-    var view = this.map_.getView();
+    const view = this.map_.getView();
     this.featureOverlay_.clear();
     this.featureOverlay_.addFeature(feature);
     this.displayColorPicker = true;
-    var fitArray = featureGeometry.getType() === 'GeometryCollection' ?
+    const fitArray = featureGeometry.getType() === 'GeometryCollection' ?
         featureGeometry.getExtent() : featureGeometry;
     view.fit(fitArray, mapSize, /** @type {olx.view.FitOptions} */ ({
       maxZoom: 16}));

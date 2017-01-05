@@ -24,14 +24,14 @@ ngeo.drawrectangleDirective = function() {
      */
     link: function($scope, element, attrs, drawFeatureCtrl) {
 
-      var drawRectangle = new ol.interaction.Draw({
+      const drawRectangle = new ol.interaction.Draw({
         type: ol.geom.GeometryType.LINE_STRING,
         geometryFunction: function(coordinates, geometry) {
           if (!geometry) {
             geometry = new ol.geom.Polygon(null);
           }
-          var start = coordinates[0];
-          var end = coordinates[1];
+          const start = coordinates[0];
+          const end = coordinates[1];
           geometry.setCoordinates([
             [start, [start[0], end[1]], end, [end[0], start[1]], start]
           ]);

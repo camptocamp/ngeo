@@ -3,7 +3,7 @@
 <header>
     <?js if (children.length > 0) { ?>
     <ul><?js
-        var self = this;
+        let self = this;
         children.forEach(function(t) { ?>
         <li><?js= self.tutoriallink(t.name) ?></li>
     <?js }); ?></ul>

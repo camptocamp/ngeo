@@ -47,7 +47,7 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
 
   gmfThemes.loadThemes();
 
-  var projection = ol.proj.get('EPSG:21781');
+  const projection = ol.proj.get('EPSG:21781');
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
@@ -127,7 +127,7 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
    */
   this.objectEditingActive = true;
 
-  var objectEditingToolActivate = new ngeo.ToolActivate(
+  const objectEditingToolActivate = new ngeo.ToolActivate(
     this, 'objectEditingActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', objectEditingToolActivate, true);
@@ -138,7 +138,7 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
    */
   this.dummyActive = false;
 
-  var dummyToolActivate = new ngeo.ToolActivate(
+  const dummyToolActivate = new ngeo.ToolActivate(
     this, 'dummyActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', dummyToolActivate, false);

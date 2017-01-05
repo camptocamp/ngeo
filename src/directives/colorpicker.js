@@ -11,7 +11,7 @@ ngeo.module.value('ngeoColorpickerTemplateUrl',
      * @return {string} Template URL.
      */
     function(element, attrs) {
-      var templateUrl = attrs['ngeoColorpickerTemplateurl'];
+      const templateUrl = attrs['ngeoColorpickerTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseTemplateUrl + '/colorpicker.html';
     });
@@ -53,7 +53,7 @@ ngeo.module.directive('ngeoColorpicker', ngeo.colorpickerDirective);
  * @type {Array.<Array.<string>>}
  * @const
  */
-var defaultColors = [
+const defaultColors = [
   ['#F4EB37', '#CDDC39', '#62AF44', '#009D57', '#0BA9CC', '#4186F0', '#3F5BA9', '#7C3592', '#A61B4A', '#DB4436', '#F8971B', '#F4B400', '#795046'],
   ['#F9F7A6', '#E6EEA3', '#B7DBAB', '#7CCFA9', '#93D7E8', '#9FC3FF', '#A7B5D7', '#C6A4CF', '#D698AD', '#EE9C96', '#FAD199', '#FFDD5E', '#B29189'],
   ['#ffffff', '#CCCCCC', '#777', '#000000']

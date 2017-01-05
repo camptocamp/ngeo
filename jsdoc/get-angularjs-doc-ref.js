@@ -1,5 +1,5 @@
-var https = require("https");
-var data = "";
+let https = require("https");
+let data = "";
 
 https.get('https://docs.angularjs.org/js/search-data.json', function (result) {
 
@@ -10,8 +10,8 @@ https.get('https://docs.angularjs.org/js/search-data.json', function (result) {
     });
 
     result.on('end', function() {
-        var json = JSON.parse(data);
-        var i, ref;
+        let json = JSON.parse(data);
+        let i, ref;
         console.log("exports.registerAngularJSLink = function(helper) {");
         for (i = 0; i < json.length; i++) {
             ref = json[i];

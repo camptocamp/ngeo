@@ -78,7 +78,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
 
   $element.on('click', this.toggleTracking.bind(this));
 
-  var map = $scope['getMobileMapFn']();
+  const map = $scope['getMobileMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
 
   /**
@@ -93,7 +93,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
    */
   this.map_ = map;
 
-  var options = $scope['getMobileGeolocationOptionsFn']() || {};
+  const options = $scope['getMobileGeolocationOptionsFn']() || {};
   goog.asserts.assertObject(options);
 
   /**
@@ -181,7 +181,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
       },
       this);
 
-  var view = map.getView();
+  const view = map.getView();
 
   ol.events.listen(
       view,
@@ -211,7 +211,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
 ngeo.MobileGeolocationController.prototype.toggleTracking = function() {
   if (this.geolocation_.getTracking()) {
     // if map center is different than geolocation position, then track again
-    var currentPosition = this.geolocation_.getPosition();
+    const currentPosition = this.geolocation_.getPosition();
     // if user is using Firefox and selects the "not now" option, OL geolocation
     // doesn't return an error
     if (currentPosition === undefined) {
@@ -220,7 +220,7 @@ ngeo.MobileGeolocationController.prototype.toggleTracking = function() {
       return;
     }
     goog.asserts.assert(currentPosition !== undefined);
-    var center = this.map_.getView().getCenter();
+    const center = this.map_.getView().getCenter();
     if (currentPosition[0] === center[0] &&
         currentPosition[1] === center[1]) {
       this.untrack_();
@@ -261,8 +261,8 @@ ngeo.MobileGeolocationController.prototype.untrack_ = function() {
  * @private
  */
 ngeo.MobileGeolocationController.prototype.setPosition_ = function(event) {
-  var position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
-  var point = new ol.geom.Point(position);
+  const position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
+  const point = new ol.geom.Point(position);
 
   this.positionFeature_.setGeometry(point);
 

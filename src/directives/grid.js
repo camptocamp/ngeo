@@ -15,7 +15,7 @@ ngeo.module.value('ngeoGridTemplateUrl',
      * @return {boolean} Template URL.
      */
     function(element, attrs) {
-      var templateUrl = attrs['ngeoGridTemplateurl'];
+      const templateUrl = attrs['ngeoGridTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseTemplateUrl + '/grid.html';
     });
@@ -97,7 +97,7 @@ ngeo.GridConfig.prototype.getSelectedRows = function() {
  * @public
  */
 ngeo.GridConfig.prototype.selectRow = function(attributes) {
-  var uid = ngeo.GridConfig.getRowUid(attributes);
+  const uid = ngeo.GridConfig.getRowUid(attributes);
   this.selectedRows[uid] = attributes;
 };
 
@@ -107,8 +107,8 @@ ngeo.GridConfig.prototype.selectRow = function(attributes) {
  * @public
  */
 ngeo.GridConfig.prototype.toggleRow = function(attributes) {
-  var uid = ngeo.GridConfig.getRowUid(attributes);
-  var isSelected = this.isRowSelected(attributes);
+  const uid = ngeo.GridConfig.getRowUid(attributes);
+  const isSelected = this.isRowSelected(attributes);
   if (isSelected) {
     delete this.selectedRows[uid];
   } else {
@@ -133,7 +133,7 @@ ngeo.GridConfig.prototype.selectAll = function() {
  * @export
  */
 ngeo.GridConfig.prototype.unselectAll = function() {
-  for (var rowId in this.selectedRows) {
+  for (const rowId in this.selectedRows) {
     delete this.selectedRows[rowId];
   }
 };
@@ -252,7 +252,7 @@ ngeo.GridController.prototype.sort = function(columnName) {
   this.sortAscending = this.sortedBy === columnName ? !this.sortAscending : true;
   this.sortedBy = columnName;
 
-  var asc = this.sortAscending ? 1 : -1;
+  const asc = this.sortAscending ? 1 : -1;
   this.configuration.data.sort(function(attributes1, attributes2) {
     if (!attributes1[columnName]) {
       return 1;
@@ -272,8 +272,8 @@ ngeo.GridController.prototype.sort = function(columnName) {
  * @export
  */
 ngeo.GridController.prototype.clickRow = function(attributes, event) {
-  var shiftKey = this.isShiftKeyOnly_(event);
-  var platformModifierKey = this.isPlatformModifierKeyOnly_(event);
+  const shiftKey = this.isShiftKeyOnly_(event);
+  const platformModifierKey = this.isPlatformModifierKeyOnly_(event);
 
   this.clickRow_(attributes, shiftKey, platformModifierKey);
 };
@@ -293,7 +293,7 @@ ngeo.GridController.prototype.clickRow_ = function(
   } else if (!shiftKey && platformModifierKey) {
     this.configuration.toggleRow(attributes);
   } else {
-    var isSelected = this.configuration.isRowSelected(attributes);
+    const isSelected = this.configuration.isRowSelected(attributes);
     this.configuration.unselectAll();
     if (!isSelected) {
       this.configuration.selectRow(attributes);
@@ -308,8 +308,8 @@ ngeo.GridController.prototype.clickRow_ = function(
  * @private
  */
 ngeo.GridController.prototype.selectRange_ = function(attributes) {
-  var targetUid = ngeo.GridConfig.getRowUid(attributes);
-  var data = this.configuration.data;
+  const targetUid = ngeo.GridConfig.getRowUid(attributes);
+  const data = this.configuration.data;
 
   if (this.configuration.isRowSelected(attributes)) {
     return;
@@ -317,11 +317,11 @@ ngeo.GridController.prototype.selectRange_ = function(attributes) {
 
   // get the position of the clicked and all already selected rows
   /** @type {number|undefined} */
-  var posClickedRow = undefined;
-  var posSelectedRows = [];
-  for (var i = 0; i < data.length; i++) {
-    var currentRow = data[i];
-    var currentUid = ngeo.GridConfig.getRowUid(currentRow);
+  let posClickedRow = undefined;
+  const posSelectedRows = [];
+  for (let i = 0; i < data.length; i++) {
+    const currentRow = data[i];
+    const currentUid = ngeo.GridConfig.getRowUid(currentRow);
 
     if (targetUid === currentUid) {
       posClickedRow = i;
@@ -337,11 +337,11 @@ ngeo.GridController.prototype.selectRange_ = function(attributes) {
   }
 
   // find the selected row which is the closest to the clicked row
-  var distance = Infinity;
-  var posClosestRow = posSelectedRows[0];
-  for (var j = 0; j < posSelectedRows.length; j++) {
-    var currentPos = posSelectedRows[j];
-    var currentDistance = Math.abs(currentPos - posClickedRow);
+  let distance = Infinity;
+  let posClosestRow = posSelectedRows[0];
+  for (let j = 0; j < posSelectedRows.length; j++) {
+    const currentPos = posSelectedRows[j];
+    const currentDistance = Math.abs(currentPos - posClickedRow);
     if (distance > currentDistance) {
       distance = currentDistance;
       posClosestRow = currentPos;
@@ -350,10 +350,10 @@ ngeo.GridController.prototype.selectRange_ = function(attributes) {
   }
 
   // then select all rows between the clicked one and the closest
-  var rangeStart = (posClickedRow < posClosestRow) ? posClickedRow : posClosestRow;
-  var rangeEnd = (posClickedRow > posClosestRow) ? posClickedRow : posClosestRow;
+  const rangeStart = (posClickedRow < posClosestRow) ? posClickedRow : posClosestRow;
+  const rangeEnd = (posClickedRow > posClosestRow) ? posClickedRow : posClosestRow;
 
-  for (var l = rangeStart; l <= rangeEnd; l++) {
+  for (let l = rangeStart; l <= rangeEnd; l++) {
     this.configuration.selectRow(data[l]);
   }
 };
@@ -366,8 +366,8 @@ ngeo.GridController.prototype.selectRange_ = function(attributes) {
  * @export
  */
 ngeo.GridController.prototype.preventTextSelection = function(event) {
-  var shiftKey = this.isShiftKeyOnly_(event);
-  var platformModifierKey = this.isPlatformModifierKeyOnly_(event);
+  const shiftKey = this.isShiftKeyOnly_(event);
+  const platformModifierKey = this.isPlatformModifierKeyOnly_(event);
 
   if (shiftKey || platformModifierKey) {
     event.preventDefault();

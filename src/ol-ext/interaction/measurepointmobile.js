@@ -17,7 +17,7 @@ goog.require('ol.geom.Point');
  */
 ngeo.interaction.MeasurePointMobile = function(opt_options) {
 
-  var options = opt_options !== undefined ? opt_options : {};
+  const options = opt_options !== undefined ? opt_options : {};
 
   goog.object.extend(options, {displayHelpTooltip: false});
 
@@ -45,11 +45,11 @@ ngeo.interaction.MeasurePointMobile.prototype.createDrawInteraction = function(
  */
 ngeo.interaction.MeasurePointMobile.prototype.handleMeasure = function(
     callback) {
-  var geom = /** @type {ol.geom.Point} */
+  const geom = /** @type {ol.geom.Point} */
       (this.sketchFeature.getGeometry());
-  var proj = this.getMap().getView().getProjection();
-  var dec = this.decimals;
-  var output = ngeo.interaction.Measure.getFormattedPoint(geom, proj, dec);
-  var coord = geom.getLastCoordinate();
+  const proj = this.getMap().getView().getProjection();
+  const dec = this.decimals;
+  const output = ngeo.interaction.Measure.getFormattedPoint(geom, proj, dec);
+  const coord = geom.getLastCoordinate();
   callback(output, coord);
 };

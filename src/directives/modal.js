@@ -59,9 +59,9 @@ ngeo.modalDirective = function($parse) {
          * controller.
          */
         function(scope, element, attrs, ngModelController, transcludeFn) {
-          var modal = element.children();
-          var destroyContent = attrs['ngeoModalDestroyContentOnHide'] === 'true';
-          var childScope = scope.$new();
+          const modal = element.children();
+          const destroyContent = attrs['ngeoModalDestroyContentOnHide'] === 'true';
+          let childScope = scope.$new();
 
           // move the modal to document body to ensure that it is on top of
           // other elements even if in a positioned element initially.
@@ -72,7 +72,7 @@ ngeo.modalDirective = function($parse) {
           };
 
           modal.on('shown.bs.modal hidden.bs.modal', function(e) {
-            var type = e.type;
+            const type = e.type;
             goog.asserts.assert(type == 'shown' || type == 'hidden');
             scope.$apply(function() {
               ngModelController.$setViewValue(type == 'shown');

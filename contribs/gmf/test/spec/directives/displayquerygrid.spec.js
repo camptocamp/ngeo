@@ -8,9 +8,9 @@ goog.require('ngeo.GridConfig');
  * @param {Array} data The data.
  * @param {Array} expectedData Expected data.
  */
-var compareGridData = function(data, expectedData) {
+const compareGridData = function(data, expectedData) {
   expect(data.length).toBe(expectedData.length);
-  for (var i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     expect(data[i]).toEqual(jasmine.objectContaining(expectedData[i]));
   }
 };
@@ -18,11 +18,11 @@ var compareGridData = function(data, expectedData) {
 
 describe('gmf.displayquerygridDirective', function() {
 
-  var queryGridController;
-  var ngeoQueryResult;
-  var $scope;
-  var $rootScope;
-  var $timeout;
+  let queryGridController;
+  let ngeoQueryResult;
+  let $scope;
+  let $rootScope;
+  let $timeout;
 
   beforeEach(function() {
     module('ngeo', function($provide) {
@@ -32,10 +32,10 @@ describe('gmf.displayquerygridDirective', function() {
     inject(function($injector, _$controller_, _$rootScope_) {
       ngeoQueryResult = $injector.get('ngeoQueryResult');
       $timeout = $injector.get('$timeout');
-      var $controller = _$controller_;
+      const $controller = _$controller_;
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
-      var data = {
+      const data = {
         featuresStyleFn: function() {
           return new ol.style.Style();
         },
@@ -91,14 +91,14 @@ describe('gmf.displayquerygridDirective', function() {
       expect(queryGridController.active).toBe(true);
       expect(queryGridController.selectedTab).toBe(123);
 
-      var featuresForSource = queryGridController.featuresForSources_['123'];
+      const featuresForSource = queryGridController.featuresForSources_['123'];
       expect(Object.keys(featuresForSource).length).toBe(2);
 
-      var gridSource = queryGridController.gridSources['123'];
+      const gridSource = queryGridController.gridSources['123'];
       expect(gridSource).toBeDefined();
 
-      var gridConfig = gridSource.configuration;
-      var expectedGridData = [
+      const gridConfig = gridSource.configuration;
+      const expectedGridData = [
         {
           'osm_id': 1234,
           'name': 'A',
@@ -112,7 +112,7 @@ describe('gmf.displayquerygridDirective', function() {
       ];
       compareGridData(gridConfig.data, expectedGridData);
 
-      var expectedColumnDefs = [
+      const expectedColumnDefs = [
         {'name': 'osm_id'},
         {'name': 'name'},
         {'name': 'empty_column'}
@@ -146,11 +146,11 @@ describe('gmf.displayquerygridDirective', function() {
       $timeout.flush();
       expect(queryGridController.active).toBe(true);
 
-      var gridSource = queryGridController.gridSources['123'];
+      const gridSource = queryGridController.gridSources['123'];
       expect(gridSource).toBeDefined();
 
-      var gridConfig = gridSource.configuration;
-      var expectedGridData = [
+      const gridConfig = gridSource.configuration;
+      const expectedGridData = [
         {
           'osm_id': 1234,
           'name': 'A'
@@ -162,7 +162,7 @@ describe('gmf.displayquerygridDirective', function() {
       ];
       compareGridData(gridConfig.data, expectedGridData);
 
-      var expectedColumnDefs = [
+      const expectedColumnDefs = [
         {'name': 'osm_id'},
         {'name': 'name'}
       ];
@@ -193,7 +193,7 @@ describe('gmf.displayquerygridDirective', function() {
       $timeout.flush();
       expect(queryGridController.active).toBe(false);
 
-      var gridSource = queryGridController.gridSources['123'];
+      const gridSource = queryGridController.gridSources['123'];
       expect(gridSource).toBeUndefined();
     });
 
@@ -237,11 +237,11 @@ describe('gmf.displayquerygridDirective', function() {
       expect(queryGridController.active).toBe(true);
 
       // grid source 1
-      var gridSource1 = queryGridController.gridSources['123'];
+      const gridSource1 = queryGridController.gridSources['123'];
       expect(gridSource1).toBeDefined();
 
-      var gridConfig1 = gridSource1.configuration;
-      var expectedGridData1 = [
+      const gridConfig1 = gridSource1.configuration;
+      const expectedGridData1 = [
         {
           'osm_id': 1234,
           'name': 'A'
@@ -253,22 +253,22 @@ describe('gmf.displayquerygridDirective', function() {
       ];
       compareGridData(gridConfig1.data, expectedGridData1);
 
-      var expectedColumnDefs1 = [
+      const expectedColumnDefs1 = [
         {'name': 'osm_id'},
         {'name': 'name'}
       ];
       expect(gridConfig1.columnDefs).toEqual(expectedColumnDefs1);
 
       // grid source 2
-      var gridSource2 = queryGridController.gridSources['234'];
+      const gridSource2 = queryGridController.gridSources['234'];
       expect(gridSource2).not.toBeDefined();
 
       // grid source 3
-      var gridSource3 = queryGridController.gridSources['345'];
+      const gridSource3 = queryGridController.gridSources['345'];
       expect(gridSource3).toBeDefined();
 
-      var gridConfig3 = gridSource3.configuration;
-      var expectedGridData3 = [
+      const gridConfig3 = gridSource3.configuration;
+      const expectedGridData3 = [
         {
           'id': 1234,
           'label': 'C'
@@ -276,7 +276,7 @@ describe('gmf.displayquerygridDirective', function() {
       ];
       compareGridData(gridConfig3.data, expectedGridData3);
 
-      var expectedColumnDefs3 = [
+      const expectedColumnDefs3 = [
         {'name': 'id'},
         {'name': 'label'}
       ];
@@ -314,11 +314,11 @@ describe('gmf.displayquerygridDirective', function() {
       expect(queryGridController.active).toBe(true);
 
       // grid source 1
-      var gridSource1 = queryGridController.gridSources['123'];
+      const gridSource1 = queryGridController.gridSources['123'];
       expect(gridSource1).toBeDefined();
 
       // grid source 2
-      var gridSource2 = queryGridController.gridSources['345'];
+      const gridSource2 = queryGridController.gridSources['345'];
       expect(gridSource2).toBeDefined();
       expect(gridSource2.configuration).toBe(null);
     });
@@ -347,12 +347,12 @@ describe('gmf.displayquerygridDirective', function() {
       expect(queryGridController.active).toBe(true);
 
       // grid source 1
-      var gridSource1 = queryGridController.gridSources['123'];
+      const gridSource1 = queryGridController.gridSources['123'];
       expect(gridSource1).toBeDefined();
       expect(gridSource1.configuration).toBe(null);
 
       // grid source 2
-      var gridSource2 = queryGridController.gridSources['345'];
+      const gridSource2 = queryGridController.gridSources['345'];
       expect(gridSource2).toBeDefined();
       expect(gridSource2.configuration).toBe(null);
     });
@@ -407,11 +407,11 @@ describe('gmf.displayquerygridDirective', function() {
       expect(queryGridController.active).toBe(true);
 
       // merged source
-      var gridSource1 = queryGridController.gridSources['merged_source'];
+      const gridSource1 = queryGridController.gridSources['merged_source'];
       expect(gridSource1).toBeDefined();
 
-      var gridConfig1 = gridSource1.configuration;
-      var expectedGridData1 = [
+      const gridConfig1 = gridSource1.configuration;
+      const expectedGridData1 = [
         {
           'osm_id': 1234,
           'name': 'A'
@@ -427,18 +427,18 @@ describe('gmf.displayquerygridDirective', function() {
       ];
       compareGridData(gridConfig1.data, expectedGridData1);
 
-      var expectedColumnDefs1 = [
+      const expectedColumnDefs1 = [
         {'name': 'osm_id'},
         {'name': 'name'}
       ];
       expect(gridConfig1.columnDefs).toEqual(expectedColumnDefs1);
 
       // grid source 3
-      var gridSource3 = queryGridController.gridSources['345'];
+      const gridSource3 = queryGridController.gridSources['345'];
       expect(gridSource3).toBeDefined();
 
-      var gridConfig3 = gridSource3.configuration;
-      var expectedGridData3 = [
+      const gridConfig3 = gridSource3.configuration;
+      const expectedGridData3 = [
         {
           'id': 1234,
           'label': 'D'
@@ -446,7 +446,7 @@ describe('gmf.displayquerygridDirective', function() {
       ];
       compareGridData(gridConfig3.data, expectedGridData3);
 
-      var expectedColumnDefs3 = [
+      const expectedColumnDefs3 = [
         {'name': 'id'},
         {'name': 'label'}
       ];
@@ -500,7 +500,7 @@ describe('gmf.displayquerygridDirective', function() {
       expect(queryGridController.active).toBe(true);
 
       // merged source
-      var gridSource1 = queryGridController.gridSources['merged_source'];
+      const gridSource1 = queryGridController.gridSources['merged_source'];
       expect(gridSource1).toBeDefined();
       expect(gridSource1.configuration).toBe(null);
       expect(gridSource1.source.tooManyResults).toBe(true);
@@ -508,7 +508,7 @@ describe('gmf.displayquerygridDirective', function() {
       expect(gridSource1.source.features).toEqual([]);
 
       // grid source 3
-      var gridSource3 = queryGridController.gridSources['345'];
+      const gridSource3 = queryGridController.gridSources['345'];
       expect(gridSource3).toBeDefined();
     });
 
@@ -560,8 +560,8 @@ describe('gmf.displayquerygridDirective', function() {
     });
 
     it('remembers selected rows when switching tabs', function() {
-      var gridSource1 = queryGridController.gridSources['123'];
-      var row1 = gridSource1.configuration.data[0];
+      const gridSource1 = queryGridController.gridSources['123'];
+      const row1 = gridSource1.configuration.data[0];
       gridSource1.configuration.selectRow(row1);
       $rootScope.$digest();
       $timeout.flush();

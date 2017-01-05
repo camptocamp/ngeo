@@ -27,8 +27,8 @@ ngeo.source.swisstopoResolutions_ = [
  */
 ngeo.source.createSwisstopoMatrixSet_ = function(level) {
   goog.asserts.assert(level < ngeo.source.swisstopoResolutions_.length);
-  var matrixSet = new Array(level);
-  for (var i = 0; i <= level; ++i) {
+  const matrixSet = new Array(level);
+  for (let i = 0; i <= level; ++i) {
     matrixSet[i] = String(i);
   }
   return matrixSet;
@@ -85,12 +85,12 @@ ngeo.source.swisstopoCreateUrl_ = function(projection, format) {
  * @export
  */
 ngeo.source.Swisstopo = function(options) {
-  var format = options.format || 'image/png';
-  var projection = options.projection;
+  const format = options.format || 'image/png';
+  const projection = options.projection;
   goog.asserts.assert(projection === 'EPSG:21781' || projection === 'EPSG:2056');
-  var tilegrid = ngeo.source.swisstopoTileGrids_[projection];
-  var projectionCode = projection.split(':')[1];
-  var extension = format.split('/')[1];
+  const tilegrid = ngeo.source.swisstopoTileGrids_[projection];
+  const projectionCode = projection.split(':')[1];
+  const extension = format.split('/')[1];
   goog.asserts.assert(projectionCode);
   goog.asserts.assert(extension);
 

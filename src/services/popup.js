@@ -24,7 +24,7 @@ ngeo.CreatePopup;
  *
  * Example:
  *
- *     var popup = ngeoCreatePopup();
+ *     let popup = ngeoCreatePopup();
  *     popup.setTitle("A title");
  *     popup.setContent("Some content");
  *     popup.setOpen(true);
@@ -129,7 +129,7 @@ ngeo.Popup.prototype.destroy = function() {
  * @export
  */
 ngeo.Popup.prototype.setTitle = function(title) {
-  var trustedTitle = this.sce_.trustAsHtml(title);
+  const trustedTitle = this.sce_.trustAsHtml(title);
   this.scope['title'] = trustedTitle;
 };
 
@@ -154,7 +154,7 @@ ngeo.Popup.prototype.setContent = function(content, opt_trusted) {
  * @export
  */
 ngeo.Popup.prototype.setUrl = function(url) {
-  var content = this.sce_.trustAsHtml(
+  const content = this.sce_.trustAsHtml(
     '<iframe src="' + url + '" width="100%" height="100%"></iframe>'
   );
   this.setContent(content);

@@ -50,7 +50,7 @@ gmf.elevationDirective = function() {
       'map': '=gmfElevationMap'
     },
     link: function(scope, element, attr) {
-      var ctrl = scope['ctrl'];
+      const ctrl = scope['ctrl'];
 
       // Watch active or not.
       scope.$watch(function() {
@@ -178,7 +178,7 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
         }, this));
   } else {
     this.elevation = undefined;
-    for (var i = 0, ii = this.listenerKeys_.length; i < ii; ++i) {
+    for (let i = 0, ii = this.listenerKeys_.length; i < ii; ++i) {
       ol.events.unlistenByKey(this.listenerKeys_[i]);
     }
   }
@@ -194,7 +194,7 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
 gmf.ElevationController.prototype.pointerStop_ = function(e) {
   if (this.inViewport_) {
     this.loading = true;
-    var params = {
+    const params = {
       'layers': this.layer
     };
     this.gmfAltitude_.getAltitude(e.coordinate, params).then(

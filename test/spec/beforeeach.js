@@ -18,13 +18,13 @@ beforeEach(function() {
             expected = [];
           }
 
-          var result = {pass: true};
+          const result = {pass: true};
 
-          var len1 = actual.length;
+          const len1 = actual.length;
           if (len1 !== expected.length) {
             result.pass = false;
           } else {
-            for (var i = 0; i < len1; i++) {
+            for (let i = 0; i < len1; i++) {
               if (!(Math.abs(actual[i] - expected[i]) < (Math.pow(10, -precision) / 2))) {
                 result.pass = false;
                 break;

@@ -72,9 +72,9 @@ ol.inherits(ngeo.BackgroundEvent, ol.events.Event);
  *
  *     ngeoBackgroundLayerMgr.on('change', function(e) {
  *       // do something with the layer
- *       var layer = ngeoBackgroundLayerMgr.get();
+ *       let layer = ngeoBackgroundLayerMgr.get();
  *       // know which layer was used before
- *       var previous = e.previous
+ *       let previous = e.previous
  *     });
  *
  * See our live examples:
@@ -109,7 +109,7 @@ ol.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.get = function(map) {
-  var mapUid = ol.getUid(map).toString();
+  const mapUid = ol.getUid(map).toString();
   return mapUid in this.mapUids_ ? map.getLayers().item(0) : null;
 };
 
@@ -123,8 +123,8 @@ ngeo.BackgroundLayerMgr.prototype.get = function(map) {
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
-  var mapUid = ol.getUid(map).toString();
-  var previous = this.get(map);
+  const mapUid = ol.getUid(map).toString();
+  const previous = this.get(map);
   if (previous !== null) {
     goog.asserts.assert(mapUid in this.mapUids_);
     if (layer !== null) {
@@ -149,9 +149,9 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
-  var baseBgLayer = this.get(map);
+  const baseBgLayer = this.get(map);
   if (baseBgLayer) {
-    var layers = [baseBgLayer];
+    let layers = [baseBgLayer];
     if (baseBgLayer instanceof ol.layer.Group) {
       // Handle the first level of layers of the base background layer.
       layers = baseBgLayer.getLayers().getArray();
@@ -160,17 +160,17 @@ ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
     layers.forEach(function(layer) {
       goog.asserts.assertInstanceof(layer, ol.layer.Layer);
       if (layer) {
-        var hasUpdates = false;
-        var updatedDimensions = {};
-        for (var key in layer.get('dimensions')) {
-          var value = dimensions[key];
+        let hasUpdates = false;
+        const updatedDimensions = {};
+        for (const key in layer.get('dimensions')) {
+          const value = dimensions[key];
           if (value !== undefined) {
             updatedDimensions[key] = value;
             hasUpdates = true;
           }
         }
         if (hasUpdates) {
-          var source = layer.getSource();
+          const source = layer.getSource();
           if (source instanceof ol.source.WMTS) {
             source.updateDimensions(updatedDimensions);
             source.refresh();

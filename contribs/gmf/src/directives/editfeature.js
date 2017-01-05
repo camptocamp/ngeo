@@ -153,7 +153,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
       return this.state;
     }.bind(this),
     function(newValue, oldValue) {
-      var state = gmf.EditfeatureController.State;
+      const state = gmf.EditfeatureController.State;
       if (newValue === state.STOP_EDITING_PENDING) {
         this.confirmCancel().then(function() {
           this.state = state.STOP_EDITING_EXECUTE;
@@ -186,7 +186,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
     this.editableTreeCtrl.node);
 
 
-  var layer = gmf.SyncLayertreeMap.getLayer(this.editableTreeCtrl);
+  const layer = gmf.SyncLayertreeMap.getLayer(this.editableTreeCtrl);
   goog.asserts.assert(
     layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile);
 
@@ -491,7 +491,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   gmfXSDAttributes.getAttributes(this.editableNode_.id).then(
     this.setAttributes_.bind(this));
 
-  var uid = ol.getUid(this);
+  const uid = ol.getUid(this);
   this.eventHelper_.addListenerKey(
     uid,
     ol.events.listen(
@@ -522,8 +522,8 @@ gmf.EditfeatureController.MenuActionType = {
  * @export
  */
 gmf.EditfeatureController.prototype.save = function() {
-  var feature = this.feature;
-  var id = this.featureId;
+  const feature = this.feature;
+  const id = this.featureId;
 
   this.dirty = false;
   this.pending = true;
@@ -610,7 +610,7 @@ gmf.EditfeatureController.prototype.continueWithoutSaving = function() {
  * @export
  */
 gmf.EditfeatureController.prototype.delete = function() {
-  var msg = this.gettextCatalog_.getString(
+  const msg = this.gettextCatalog_.getString(
       'Do you really want to delete the selected feature?');
   // Confirm deletion first
   if (confirm(msg)) {
@@ -652,7 +652,7 @@ gmf.EditfeatureController.prototype.submit = function() {
  */
 gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
   this.pending = false;
-  var features = new ol.format.GeoJSON().readFeatures(resp.data);
+  const features = new ol.format.GeoJSON().readFeatures(resp.data);
   if (features.length) {
     this.feature.setId(features[0].getId());
     this.layerHelper_.refreshWMSLayer(this.editableWMSLayer_);
@@ -683,7 +683,7 @@ gmf.EditfeatureController.prototype.setAttributes_ = function(attributes) {
   this.attributes = attributes;
 
   // Get geom type from attributes and set
-  var geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(
+  const geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(
     this.attributes
   );
   if (geomAttr && geomAttr.geomType) {
@@ -698,7 +698,7 @@ gmf.EditfeatureController.prototype.setAttributes_ = function(attributes) {
  */
 gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
   this.timeout_(function() {
-    var feature = evt.element;
+    const feature = evt.element;
     goog.asserts.assertInstanceof(feature, ol.Feature);
     this.feature = feature;
     this.createActive = false;
@@ -717,10 +717,10 @@ gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
  */
 gmf.EditfeatureController.prototype.toggle_ = function(active) {
 
-  var keys = this.listenerKeys_;
-  var createUid = ['create-', ol.getUid(this)].join('-');
-  var otherUid = ['other-', ol.getUid(this)].join('-');
-  var toolMgr = this.ngeoToolActivateMgr_;
+  const keys = this.listenerKeys_;
+  const createUid = ['create-', ol.getUid(this)].join('-');
+  const otherUid = ['other-', ol.getUid(this)].join('-');
+  const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
 
@@ -776,7 +776,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
 gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
     active) {
 
-  var mapDiv = this.map.getViewport();
+  const mapDiv = this.map.getViewport();
   goog.asserts.assertElement(mapDiv);
 
   if (active) {
@@ -814,15 +814,15 @@ gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
  * @private
  */
 gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
-  var coordinate = evt.coordinate;
-  var pixel = evt.pixel;
+  const coordinate = evt.coordinate;
+  const pixel = evt.pixel;
 
   // (1) Check if we clicked on an existing vector feature, i.e the one
   //     selected. In that case, no need to do any further action.
-  var feature = this.map.forEachFeatureAtPixel(
+  const feature = this.map.forEachFeatureAtPixel(
     pixel,
     function(feature) {
-      var ret = false;
+      let ret = false;
       if (ol.array.includes(this.features.getArray(), feature)) {
         ret = feature;
       }
@@ -839,11 +839,11 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
   //     to let the user decide what to do
   this.checkForModifications_(true).then(function() {
 
-    var map = this.map;
-    var view = map.getView();
-    var resolution = view.getResolution();
-    var buffer = resolution * this.tolerance;
-    var extent = ol.extent.buffer(
+    const map = this.map;
+    const view = map.getView();
+    const resolution = view.getResolution();
+    const buffer = resolution * this.tolerance;
+    const extent = ol.extent.buffer(
       [coordinate[0], coordinate[1], coordinate[0], coordinate[1]],
       buffer
     );
@@ -868,13 +868,13 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
  * @private
  */
 gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
-  var pixel = this.map.getEventPixel(evt);
-  var coordinate = this.map.getCoordinateFromPixel(pixel);
+  const pixel = this.map.getEventPixel(evt);
+  const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-  var feature = this.map.forEachFeatureAtPixel(
+  let feature = this.map.forEachFeatureAtPixel(
     pixel,
     function(feature) {
-      var ret = false;
+      let ret = false;
       if (ol.array.includes(this.features.getArray(), feature)) {
         ret = feature;
       }
@@ -887,7 +887,7 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
 
   // show contextual menu when clicking on certain types of features
   if (feature) {
-    var type = this.featureHelper_.getType(feature);
+    const type = this.featureHelper_.getType(feature);
     if (type === ngeo.GeometryType.POLYGON ||
         type === ngeo.GeometryType.LINE_STRING) {
       this.menu_.open(coordinate);
@@ -907,7 +907,7 @@ gmf.EditfeatureController.prototype.handleGetFeatures_ = function(features) {
 
   this.timeout_(function() {
     if (features.length) {
-      var feature = features[0];
+      const feature = features[0];
       this.feature = feature;
       this.features.push(feature);
     }
@@ -958,7 +958,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
   newFeature, oldFeature
 ) {
 
-  var geom;
+  let geom;
   if (oldFeature) {
     ol.events.unlisten(
       oldFeature,
@@ -1036,7 +1036,7 @@ gmf.EditfeatureController.prototype.handleFeatureGeometryChange_ = function() {
  * @private
  */
 gmf.EditfeatureController.prototype.handleMenuActionClick_ = function(evt) {
-  var action = evt.action;
+  const action = evt.action;
 
   switch (action) {
     case gmf.EditfeatureController.MenuActionType.MOVE:
@@ -1080,7 +1080,7 @@ gmf.EditfeatureController.prototype.handleDestroy_ = function() {
   this.features.clear();
   this.handleFeatureChange_(null, this.feature);
   this.feature = null;
-  var uid = ol.getUid(this);
+  const uid = ol.getUid(this);
   this.eventHelper_.clearListenerKey(uid);
   this.toggle_(false);
   this.handleMapSelectActiveChange_(false);

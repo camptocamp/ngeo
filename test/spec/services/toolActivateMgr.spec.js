@@ -1,9 +1,9 @@
 goog.require('ngeo.ToolActivateMgr');
 
 describe('ngeo.ToolActivateMgr', function() {
-  var interaction1, interaction2, interaction3, tool1, tool2, tool3;
-  var ngeoToolActivateMgr;
-  var $rootScope;
+  let interaction1, interaction2, interaction3, tool1, tool2, tool3;
+  let ngeoToolActivateMgr;
+  let $rootScope;
 
   beforeEach(function() {
     interaction1 = {active: true};

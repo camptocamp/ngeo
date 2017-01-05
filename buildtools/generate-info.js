@@ -1,15 +1,15 @@
-var fs = require('fs');
-var path = require('path');
-var spawn = require('child_process').spawn;
+let fs = require('fs');
+let path = require('path');
+let spawn = require('child_process').spawn;
 
-var async = require('async');
-var fse = require('fs-extra');
-var walk = require('walk').walk;
+let async = require('async');
+let fse = require('fs-extra');
+let walk = require('walk').walk;
 
-var sourceDir = path.join(__dirname, '..', 'node_modules', 'openlayers', 'src');
-var infoPath = path.join(__dirname, '..', '.build', 'info.json');
-var jsdoc = path.join(__dirname, '..', 'node_modules', '.bin', 'jsdoc');
-var jsdocConfig = path.join(__dirname, '..', 'buildtools', 'jsdoc', 'info',
+let sourceDir = path.join(__dirname, '..', 'node_modules', 'openlayers', 'src');
+let infoPath = path.join(__dirname, '..', '.build', 'info.json');
+let jsdoc = path.join(__dirname, '..', 'node_modules', '.bin', 'jsdoc');
+let jsdocConfig = path.join(__dirname, '..', 'buildtools', 'jsdoc', 'info',
     'conf.json');
 
 
@@ -49,7 +49,7 @@ function readInfo(callback) {
 
 
 function makeUnique(array) {
-  var values = {};
+  let values = {};
   array.forEach(function(value) {
     values[value] = true;
   });
@@ -66,12 +66,12 @@ function makeUnique(array) {
  *     error, the info object, and the array of newer source paths.
  */
 function getNewer(info, date, callback) {
-  var allPaths = [];
-  var newerPaths = [];
+  let allPaths = [];
+  let newerPaths = [];
 
-  var walker = walk(sourceDir);
+  let walker = walk(sourceDir);
   walker.on('file', function(root, stats, next) {
-    var sourcePath = path.join(root, stats.name);
+    let sourcePath = path.join(root, stats.name);
     if (/\.js$/.test(sourcePath)) {
       allPaths.push(sourcePath);
       if (stats.mtime > date) {
@@ -85,7 +85,7 @@ function getNewer(info, date, callback) {
   });
   walker.on('end', function() {
     // prune symbols if file no longer exists or has been modified
-    var lookup = {};
+    let lookup = {};
     info.symbols.forEach(function(symbol) {
       lookup[symbol.name] = symbol;
     });
@@ -99,7 +99,7 @@ function getNewer(info, date, callback) {
       if (symbol.extends) {
         symbol.extends.forEach(function(name) {
           if (name in lookup) {
-            var parent = lookup[name];
+            let parent = lookup[name];
             paths.push(parent.path);
             gatherParentPaths(parent, paths);
           }
@@ -107,13 +107,13 @@ function getNewer(info, date, callback) {
       }
     }
 
-    var dirtyPaths = [];
+    let dirtyPaths = [];
 
     info.symbols = info.symbols.filter(function(symbol) {
-      var dirty = allPaths.indexOf(symbol.path) < 0;
+      let dirty = allPaths.indexOf(symbol.path) < 0;
       if (!dirty) {
         // confirm that symbol and all parent paths are not newer
-        var paths = [symbol.path];
+        let paths = [symbol.path];
         gatherParentPaths(symbol, paths);
         dirty = paths.some(function(p) {
           return newerPaths.indexOf(p) >= 0;
@@ -126,7 +126,7 @@ function getNewer(info, date, callback) {
     });
 
     info.defines = info.defines.filter(function(define) {
-      var dirty = allPaths.indexOf(define.path) < 0 ||
+      let dirty = allPaths.indexOf(define.path) < 0 ||
           newerPaths.indexOf(define.path) >= 0;
       if (dirty) {
         dirtyPaths.push(define.path);
@@ -152,9 +152,9 @@ function spawnJSDoc(info, newerSources, callback) {
     return;
   }
 
-  var output = '';
-  var errors = '';
-  var child = spawn(jsdoc, ['-c', jsdocConfig].concat(newerSources));
+  let output = '';
+  let errors = '';
+  let child = spawn(jsdoc, ['-c', jsdocConfig].concat(newerSources));
 
   child.stdout.on('data', function(data) {
     output += String(data);
@@ -187,7 +187,7 @@ function parseOutput(info, output, callback) {
     return;
   }
 
-  var newInfo;
+  let newInfo;
   try {
     newInfo = JSON.parse(String(output));
   } catch (err) {
@@ -217,16 +217,16 @@ function parseOutput(info, output, callback) {
  * @param {function(Error, Array.<string>)} callback Called with a list of
  *     provides or any error.
  */
-var getProvides = async.memoize(function(srcPath, callback) {
+let getProvides = async.memoize(function(srcPath, callback) {
   fs.readFile(srcPath, function(err, data) {
     if (err) {
       callback(err);
       return;
     }
-    var provides = [];
-    var matcher = /goog\.provide\('(.*)'\)/;
+    let provides = [];
+    let matcher = /goog\.provide\('(.*)'\)/;
     String(data).split('\n').forEach(function(line) {
-      var match = line.match(matcher);
+      let match = line.match(matcher);
       if (match) {
         provides.push(match[1]);
       }
@@ -278,7 +278,7 @@ function writeInfo(info, newInfo, callback) {
     return a.name < b.name ? -1 : 1;
   });
 
-  var str = JSON.stringify(info, null, '  ');
+  let str = JSON.stringify(info, null, '  ');
   fse.outputFile(infoPath, str, callback);
 }
 

@@ -20,10 +20,10 @@ ngeo.AutoProjection = function() {};
  * @export
  */
 ngeo.AutoProjection.prototype.stringToCoordinates = function(str) {
-  var coords = str.match(/([\d\.']+)[\s,]+([\d\.']+)/);
+  const coords = str.match(/([\d\.']+)[\s,]+([\d\.']+)/);
   if (coords) {
-    var x = parseFloat(coords[1].replace('\'', ''));
-    var y = parseFloat(coords[2].replace('\'', ''));
+    const x = parseFloat(coords[1].replace('\'', ''));
+    const y = parseFloat(coords[2].replace('\'', ''));
     if (!isNaN(x) && !isNaN(y)) {
       return [x, y];
     }
@@ -41,8 +41,8 @@ ngeo.AutoProjection.prototype.stringToCoordinates = function(str) {
  * @export
  */
 ngeo.AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
-  var code, proj;
-  var projections = [];
+  let code, proj;
+  const projections = [];
   projectionsCodes.forEach(function(projection) {
     code = projection.toUpperCase();
     if (code.substr(0, 5) != 'EPSG:') {
@@ -74,7 +74,7 @@ ngeo.AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
  */
 ngeo.AutoProjection.prototype.tryProjections = function(coordinates,
     extent, viewProjection, opt_projections) {
-  var position;
+  let position;
   if (opt_projections === undefined) {
     opt_projections = [viewProjection];
   }
@@ -104,7 +104,7 @@ ngeo.AutoProjection.prototype.tryProjections = function(coordinates,
  */
 ngeo.AutoProjection.prototype.tryProjectionsWithInversion = function(
     coordinates, extent, viewProjection, opt_projections) {
-  var position = this.tryProjections(coordinates, extent, viewProjection,
+  let position = this.tryProjections(coordinates, extent, viewProjection,
         opt_projections);
   if (position === null) {
     position = this.tryProjections(coordinates.reverse(), extent,

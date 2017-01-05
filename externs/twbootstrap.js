@@ -88,7 +88,7 @@ angular.JQLite.prototype.tab = function(action) {};
    * viewport: (string|Object.<string,*>|function(Element)|undefined)
  * }}
  */
-var TooltipOptions;
+let TooltipOptions;
 
 
 /**

@@ -24,7 +24,7 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
  */
 gmfapp.MainController = function() {
 
-  var epsg2056template = 'Coordinates (m)&#58; {x}, {y}';
+  const epsg2056template = 'Coordinates (m)&#58; {x}, {y}';
 
   /**
    * @type {Array.<gmfx.MousePositionProjection>}

@@ -11,7 +11,7 @@ exports.Controller = function($scope) {
   /**
    * @type {ngeox.ImportWmsGetCapItemOptions}
    */
-  var options = $scope['options'];
+  const options = $scope['options'];
 
   // Add preview layer
   $scope['addPreviewLayer'] = function(evt, getCapLayer) {
@@ -53,7 +53,7 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
   // from OL2
   //TO FIX: utils function to get scale from an extent, should be
   //elsewhere?
-  var getScaleFromExtent = function(view, extent, mapSize) {
+  const getScaleFromExtent = function(view, extent, mapSize) {
     // Constants get from OpenLayers 2, see:
     // https://github.com/openlayers/openlayers/blob/master/lib/OpenLayers/Util.js
     //
@@ -64,13 +64,13 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
   };
 
   // Zoom to layer extent
-  var zoomToLayerExtent = function(scope, layer, map) {
-    var extent = layer.extent;
+  const zoomToLayerExtent = function(scope, layer, map) {
+    let extent = layer.extent;
     if (scope['options'].transformExtent) {
       extent = scope['options'].transformExtent(layer.extent);
     }
-    var view = map.getView();
-    var mapSize = map.getSize();
+    const view = map.getView();
+    const mapSize = map.getSize();
 
     // Test this with this wms:
     // http://wms.vd.ch/public/services/VD_WMS/Mapserver/Wmsserver
@@ -79,13 +79,13 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
 
       // We test if the layer extent specified in the
       // getCapabilities fit the minScale value.
-      var layerExtentScale = getScaleFromExtent(view, extent, mapSize);
+      const layerExtentScale = getScaleFromExtent(view, extent, mapSize);
 
       if (layerExtentScale > layer.MaxScaleDenominator) {
-        var layerExtentCenter = ol.extent.getCenter(extent);
-        var factor = layerExtentScale / layer.MaxScaleDenominator;
-        var width = ol.extent.getWidth(extent) / factor;
-        var height = ol.extent.getHeight(extent) / factor;
+        const layerExtentCenter = ol.extent.getCenter(extent);
+        const factor = layerExtentScale / layer.MaxScaleDenominator;
+        const width = ol.extent.getWidth(extent) / factor;
+        const height = ol.extent.getHeight(extent) / factor;
         extent = [
           layerExtentCenter[0] - width / 2,
           layerExtentCenter[1] - height / 2,
@@ -95,7 +95,7 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
         extent = scope['options'].transformExtent(extent);
 
         if (extent) {
-          var res = view.constrainResolution(
+          const res = view.constrainResolution(
               view.getResolutionForExtent(extent, mapSize), 0, -1);
           view.setCenter(layerExtentCenter);
           view.setResolution(res);
@@ -114,8 +114,8 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
     templateUrl: ngeoWmsGetCapItemTemplateUrl,
     controller: 'NgeoWmsGetCapItemDirectiveController',
     compile: function(elt) {
-      var contents = elt.contents().remove();
-      var compiledContent;
+      const contents = elt.contents().remove();
+      let compiledContent;
       return function(scope, elt) {
         if (!compiledContent) {
           compiledContent = $compile(contents);
@@ -124,9 +124,9 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
           elt.append(clone);
         });
 
-        var headerGroup = elt.find('> .ngeo-header-group');
-        var toggleBt = headerGroup.find('.fa-plus');
-        var childGroup;
+        const headerGroup = elt.find('> .ngeo-header-group');
+        const toggleBt = headerGroup.find('.fa-plus');
+        let childGroup;
 
         headerGroup.find('.fa-zoom-in').on('click', function(evt) {
           evt.stopPropagation();
@@ -155,7 +155,7 @@ exports.module.value('ngeoWmsGetCapItemTemplateUrl',
      * @return {boolean} Template URL.
      */
     function(element, attrs) {
-      var templateUrl = attrs['ngeoWmsGetCapItemTemplateUrl'];
+      const templateUrl = attrs['ngeoWmsGetCapItemTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseModuleTemplateUrl + '/import/partials/wms-get-cap-item.html';
     });

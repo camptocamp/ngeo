@@ -15,7 +15,7 @@ gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
      * @return {string} Template URL.
      */
     function(element, attrs) {
-      var templateUrl = attrs['gmfBackgroundlayerselectorTemplateurl'];
+      const templateUrl = attrs['gmfBackgroundlayerselectorTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           gmf.baseTemplateUrl + '/backgroundlayerselector.html';
     });

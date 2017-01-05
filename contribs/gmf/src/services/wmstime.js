@@ -39,8 +39,8 @@ ol.inherits(gmf.WMSTime, ngeo.Time);
  * @private
  */
 gmf.WMSTime.prototype.formatWMSTimeValue_ = function(time, resolution, opt_toUTC) {
-  var date = new Date(time);
-  var utc = opt_toUTC ? 'UTC' : undefined;
+  const date = new Date(time);
+  const utc = opt_toUTC ? 'UTC' : undefined;
   switch (resolution) {
     case 'year':
       return this.$filter_('date')(date, 'yyyy', utc);

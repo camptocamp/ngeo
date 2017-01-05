@@ -17,7 +17,7 @@ goog.require('ngeo.interaction.MobileDraw');
  */
 ngeo.interaction.MeasureLengthMobile = function(format, opt_options) {
 
-  var options = opt_options !== undefined ? opt_options : {};
+  const options = opt_options !== undefined ? opt_options : {};
 
   goog.object.extend(options, {displayHelpTooltip: false});
 

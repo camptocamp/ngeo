@@ -78,7 +78,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     }.bind(this)
   });
 
-  var positionFeatureStyle = config.positionFeatureStyle || new ol.style.Style({
+  const positionFeatureStyle = config.positionFeatureStyle || new ol.style.Style({
     image: new ol.style.Circle({
       radius: 6,
       fill: new ol.style.Fill({color: 'rgba(230, 100, 100, 1)'}),
@@ -86,7 +86,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     })
   });
 
-  var accuracyFeatureStyle = config.accuracyFeatureStyle || new ol.style.Style({
+  const accuracyFeatureStyle = config.accuracyFeatureStyle || new ol.style.Style({
     fill: new ol.style.Fill({color: 'rgba(100, 100, 230, 0.3)'}),
     stroke: new ol.style.Stroke({color: 'rgba(40, 40, 230, 1)', width: 2})
   });
@@ -101,7 +101,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     zoom: config.geolocationZoom || 9
   };
 
-  var viewConfig = {
+  const viewConfig = {
     projection: ol.proj.get('EPSG:' + (config.srid || 21781))
   };
   goog.object.extend(viewConfig, config.mapViewConfig || {});
@@ -128,8 +128,8 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   gmf.AbstractController.call(this, config, $scope, $injector);
 
 
-  var dragEl = document.querySelector('main');
-  var handleEl = document.querySelector('main .overlay');
+  const dragEl = document.querySelector('main');
+  const handleEl = document.querySelector('main .overlay');
   /**
    * @type {goog.fx.Dragger}
    * @private
@@ -155,7 +155,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     // Reset positioning when finished so that transition can happen correctly
     angular.element(e.target.target).css('transform', '');
     // Hide nav only if dragged sufficiently
-    var deltaX = this.dragger_.limitX(this.dragger_.deltaX);
+    const deltaX = this.dragger_.limitX(this.dragger_.deltaX);
     if (Math.abs(deltaX) > this.navWidth_ / 2) {
       $scope.$apply(function() {
         this.hideNav();
@@ -173,7 +173,7 @@ gmf.AbstractMobileController.prototype.toggleLeftNavVisibility = function() {
   this.leftNavVisible = !this.leftNavVisible;
 
   if (this.leftNavVisible) {
-    var navWidth = this.navWidth_;
+    const navWidth = this.navWidth_;
     // default dragger behavior is to change left/top, override it to change
     // translateX
     this.dragger_.defaultAction = function(x, y) {
@@ -193,7 +193,7 @@ gmf.AbstractMobileController.prototype.toggleRightNavVisibility = function() {
   this.rightNavVisible = !this.rightNavVisible;
 
   if (this.rightNavVisible) {
-    var navWidth = this.navWidth_;
+    const navWidth = this.navWidth_;
     // default dragger behavior is to change left/top, override it to change
     // translateX
     this.dragger_.defaultAction = function(x, y) {

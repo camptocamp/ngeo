@@ -15,7 +15,7 @@ goog.require('ngeo.fileService');
  */
 exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUrl) {
 
-  var timeoutP;
+  let timeoutP;
 
   return {
     restrict: 'A',
@@ -28,7 +28,7 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
       /**
        * @type {ngeox.ImportLocalOptions}
        */
-      var options = scope['options'];
+      const options = scope['options'];
       if (!options || (typeof options.handleFileContent !== 'function')) {
         elt.remove();
         return;
@@ -37,14 +37,14 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
       scope['handleFileContent'] = scope['options'].handleFileContent;
 
 
-      var initUserMsg = function() {
+      const initUserMsg = function() {
         scope['userMessage'] = gettextCatalog.getString('Load local file');
         scope['progress'] = 0;
         scope['fileReader'] = null;
       };
       initUserMsg();
 
-      var triggerInputFileClick = function() {
+      const triggerInputFileClick = function() {
         elt.find('input[type="file"]').click();
       };
 
@@ -67,7 +67,7 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
         // Handle a FileList (from input[type=file] or DnD),
         // works only with FileAPI
         if (scope['files'] && scope['files'].length > 0) {
-          var file = scope['files'][0];
+          const file = scope['files'][0];
           scope['file'] = file;
           scope['fileSize'] = file.size;
           if (scope['isDropped']) {
@@ -140,7 +140,7 @@ exports.module.value('ngeoImportLocalTemplateUrl',
      * @return {boolean} Template URL.
      */
     function(element, attrs) {
-      var templateUrl = attrs['ngeoImportLocalTemplateUrl'];
+      const templateUrl = attrs['ngeoImportLocalTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseModuleTemplateUrl + '/import/partials/import-local.html';
     });
