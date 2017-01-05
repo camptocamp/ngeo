@@ -90,7 +90,7 @@ gmf.module.value('gmfPrintTemplateUrl',
  *     gmf-print-fieldvalues optional. Key, value object to define default
  *     value in each of your print panel field. The key refers to the
  *     property's name of the field.
- *     Example: {'comments': 'demo', 'legend': false}. Don't work for the dpi
+ *     Example: {'comments': 'demo', 'legend': false}. Doesn't work for the dpi
  *     and the scale. Server's values are used in priorty.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfPrintTemplateUrl Template url for the directive.
@@ -490,10 +490,10 @@ gmf.PrintController.prototype.updateFields_ = function() {
   this.updateCustomFields_();
 
   var legend = this.isAttributeInCurrentLayout_('legend');
-  var customLegendField = this.fieldValues_['legend'] !== undefined ?
-      false : true; // default is true, so if it's defined it's to get false.
-  this.fields.legend = legend !== null ?
-      this.fields.legend || customLegendField : undefined;
+  if (this.fields.legend === undefined) {
+    this.fields.legend = !!(legend !== undefined ?
+        legend : this.fieldValues_['legend']);
+  }
 
   this.fields.scales = clientInfo['scales'] || [];
   this.fields.dpis = clientInfo['dpiSuggestions'] || [];
@@ -533,7 +533,9 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
   this.layout_.attributes.forEach(function(attribute) {
     if (!attribute['clientParams']) {
       name = '' + attribute.name;
-      value = attribute.default || this.fieldValues_[name];
+      var defaultValue = attribute.default;
+      value = (defaultValue !== undefined && defaultValue !== '') ?
+          defaultValue : this.fieldValues_[name];
 
       // Try to use existing form field type
       rawType = '' + attribute.type;
@@ -546,6 +548,8 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
           break;
         case 'Number':
           type = 'number';
+          value = parseFloat(value);
+          value = isNaN(value) ? 0 : value;
           break;
         default:
           type = rawType;
