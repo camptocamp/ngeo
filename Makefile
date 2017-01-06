@@ -793,17 +793,17 @@ $(EXTERNS_JQUERY): github_versions
 	git clone http://github.com/google/closure-library/ $@
 	cd $@; git checkout `grep ^closure-library= $< | cut --delimiter = --fields 2`
 
-.build/ol-deps.js: .build/python-venv
+.build/ol-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="node_modules/openlayers/src ../../../../../../openlayers/src" \
 		--root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../openlayers/build/ol.ext" \
 		--output_file=$@
 
-.build/ngeo-deps.js: .build/python-venv
+.build/ngeo-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="src ../../../../../../../src" --output_file=$@
 
-.build/gmf-deps.js: .build/python-venv
+.build/gmf-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="contribs/gmf/src ../../../../../../../contribs/gmf/src" --output_file=$@
 
