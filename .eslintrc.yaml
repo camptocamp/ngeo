@@ -9,7 +9,6 @@ rules:
     # temporary disable some es6 errors
     prefer-arrow-callback: 0
     prefer-template: 0
-    prefer-spread: 0
 globals:
     angular: false
     goog: false

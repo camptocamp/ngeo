@@ -15,11 +15,11 @@ describe('ngeo.Debounce', function() {
     const spy = jasmine.createSpy('debounced');
     const func = ngeoDebounce(spy, 200, false);
     const args = [1, 'foo'];
-    func.apply(null, args);
+    func(...args);
     expect(spy).not.toHaveBeenCalled();
-    func.apply(null, args);
+    func(...args);
     expect(spy).not.toHaveBeenCalled();
-    func.apply(null, args);
+    func(...args);
     expect(spy).not.toHaveBeenCalled();
     $timeout.flush(200);
     expect(spy).toHaveBeenCalledWith(1, 'foo');

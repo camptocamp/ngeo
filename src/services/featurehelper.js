@@ -822,7 +822,7 @@ ngeo.FeatureHelper.prototype.getMeasure = function(feature) {
       const coordinates = geometry.getCoordinates();
       const args = this.pointFilterArgs_.slice(0);
       args.unshift(coordinates);
-      measure = this.pointFilterFn_.apply(this, args);
+      measure = this.pointFilterFn_(...args);
     }
   }
 

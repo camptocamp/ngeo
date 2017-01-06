@@ -46,7 +46,7 @@ ngeo.search.searchDirective = function() {
       const args = typeaheadDatasets.slice();
       args.unshift(typeaheadOptions);
 
-      element.typeahead.apply(element, args);
+      element.typeahead(...args);
 
       const typeaheadListenersExpr = attrs['ngeoSearchListeners'];
       const typeaheadListeners_ =

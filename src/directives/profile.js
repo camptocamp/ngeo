@@ -72,7 +72,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
           if (options.hoverCallback !== undefined) {
             const origHoverCallback = options.hoverCallback;
             options.hoverCallback = function(...args) {
-              origHoverCallback.apply(null, args);
+              origHoverCallback(...args);
               scope.$applyAsync();
             };
           }
