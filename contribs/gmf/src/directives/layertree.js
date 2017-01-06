@@ -265,7 +265,7 @@ gmf.LayertreeController.prototype.updateDimensions_ = function(treeCtrl) {
     if (ctrl.node.dimensions) {
       const layer = ctrl.layer;
       goog.asserts.assertInstanceof(layer, ol.layer.Layer);
-      this.updateLayerDimensions_(layer, ctrl.node);
+      this.updateLayerDimensions_(layer, /** @type gmfThemes.GmfGroup|gmfThemes.GmfLayer */ (ctrl.node));
     }
   });
 };

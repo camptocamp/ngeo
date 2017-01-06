@@ -380,15 +380,15 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
 
 /**
  * Get an array of theme objects.
- * @return {angular.$q.Promise.<Array.<gmfThemes.GmfTheme>>} Promise.
+ * @return {angular.$q.Promise.<!Array.<!gmfThemes.GmfTheme>>} Promise.
  * @export
  */
 gmf.Themes.prototype.getThemesObject = function() {
   return this.promise_.then(
       /**
-       * @param {gmfThemes.GmfThemesResponse} data The "themes" web service
+       * @param {!gmfThemes.GmfThemesResponse} data The "themes" web service
        *     response.
-       * @return {Array.<gmfThemes.GmfTheme>} The themes object.
+       * @return {!Array.<!gmfThemes.GmfTheme>} The themes object.
        */
       data => data.themes);
 };
@@ -396,23 +396,24 @@ gmf.Themes.prototype.getThemesObject = function() {
 
 /**
  * Get an array of background layer objects.
- * @return {angular.$q.Promise.<Array.<gmfThemes.GmfLayer>>} Promise.
+ * @return {angular.$q.Promise.<!Array.<!gmfThemes.GmfLayer>>} Promise.
  */
 gmf.Themes.prototype.getBackgroundLayersObject = function() {
   goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
       /**
-       * @param {gmfThemes.GmfThemesResponse} data The "themes" web service
+       * @param {!gmfThemes.GmfThemesResponse} data The "themes" web service
        *     response.
-       * @return {Array.<gmfThemes.GmfLayer>} The background layers object.
+       * @return {!Array.<!gmfThemes.GmfLayer>} The background layers object.
        */
-      data => data.background_layers);
+      data => data.background_layers
+  );
 };
 
 
 /**
  * Get the `ogcServers` object.
- * @return {angular.$q.Promise.<gmfThemes.GmfOgcServers>} Promise.
+ * @return {angular.$q.Promise.<!gmfThemes.GmfOgcServers>} Promise.
  * @export
  */
 gmf.Themes.prototype.getOgcServersObject = function() {

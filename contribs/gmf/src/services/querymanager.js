@@ -86,18 +86,18 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
     const promiseThemes = this.gmfThemes_.getThemesObject().then((themes) => {
       // create sources for each themes
-      for (let i = 0, leni = themes.length; i < leni; i++) {
-        const theme = themes[i];
-        for (let j = 0, lenj = theme.children.length; j < lenj; j++) {
-          this.createSources_(theme.children[j], theme.children[j], ogcServers);
+      for (const theme of themes) {
+        for (const child of theme.children) {
+          goog.asserts.assert(child);
+          this.createSources_(child, child, ogcServers);
         }
       }
     });
 
     const promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then((backgroundLayers) => {
       // create a source for each background layer
-      for (let i = 0, len = backgroundLayers.length; i < len; i++) {
-        this.createSources_(backgroundLayers[i], backgroundLayers[i], ogcServers);
+      for (const backgroundLayer of backgroundLayers) {
+        this.createSources_(null, backgroundLayer, ogcServers);
       }
     });
 
@@ -114,8 +114,8 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
  * it has no children, otherwise create the sources for each child node if
  * it has any.
  * @param {gmfThemes.GmfGroup} firstLevelGroup A node.
- * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node A node.
- * @param {gmfThemes.GmfOgcServers} ogcServers OGC servers.
+ * @param {!gmfThemes.GmfGroup|!gmfThemes.GmfLayer} node A node.
+ * @param {!gmfThemes.GmfOgcServers} ogcServers OGC servers.
  * @private
  */
 gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcServers) {
@@ -123,8 +123,9 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
 
   // First we handle the groups
   if (children) {
-    for (let i = 0, len = children.length; i < len; i++) {
-      this.createSources_(firstLevelGroup, children[i], ogcServers);
+    for (const child of children) {
+      goog.asserts.assert(child);
+      this.createSources_(firstLevelGroup, child, ogcServers);
     }
     return;
   }
@@ -157,7 +158,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
   if (gmfLayer.type === 'WMS') {
     gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
     layers = gmfLayerWMS.layers;
-    if (firstLevelGroup.mixed) {
+    if (firstLevelGroup && firstLevelGroup.mixed) {
       goog.asserts.assert(gmfLayerWMS.ogcServer);
       ogcServer = ogcServers[/** @type string */ (gmfLayerWMS.ogcServer)];
     } else {

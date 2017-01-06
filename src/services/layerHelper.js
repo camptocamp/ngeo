@@ -270,7 +270,7 @@ ngeo.LayerHelper.prototype.getWMTSLegendURL = function(layer) {
 
 /**
  * Get the WMS legend URL for the given node.
- * @param {string} url The base url of the wms service.
+ * @param {string|undefined} url The base url of the wms service.
  * @param {string} layerName The name of a wms layer.
  * @param {number=} opt_scale A scale.
  * @param {string=} opt_legendRule rule parameters to add to the returned URL.

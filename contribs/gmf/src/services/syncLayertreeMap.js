@@ -45,7 +45,7 @@ gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, gmfThemes, gmfWMSTi
   });
 
   $rootScope.$on('ngeo-layertree-state', (map, treeCtrl, firstParent) => {
-    this.sync_(map, firstParent);
+    this.sync_(/** @type ol.Map */ (map), firstParent);
   });
 };
 
@@ -96,7 +96,7 @@ gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map,
 gmf.SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
   treeCtrl.traverseDepthFirst((treeCtrl) => {
     if (treeCtrl.layer && !treeCtrl.node.mixed) {
-      this.updateLayerState_(treeCtrl.layer, treeCtrl);
+      this.updateLayerState_(/** @type ol.layer.Image|ol.layer.Tile */ (treeCtrl.layer), treeCtrl);
     }
   });
 };
@@ -202,7 +202,7 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
     );
     treeCtrl.traverseDepthFirst((ctrl) => {
       // Update layer information and tree state.
-      this.updateLayerReferences_(ctrl.node, layer);
+      this.updateLayerReferences_(/** @type gmfThemes.GmfLayer */ (ctrl.node), layer);
       if (ctrl.node.metadata.isChecked) {
         ctrl.setState('on', false);
         this.updateLayerState_(/** @type {ol.layer.Image} */ (layer), ctrl);

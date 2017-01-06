@@ -895,9 +895,8 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
   // For each visible layer in reverse order, get the legend url.
   layers.reverse().forEach((layer) => {
     classes = [];
-    const source = layer.getSource();
 
-    if (layer.getVisible() && source !== undefined) {
+    if (layer.getVisible() && layer.getSource()) {
       // For WMTS layers.
       if (layer instanceof ol.layer.Tile) {
         layerName = layer.get('layerNodeName');
@@ -910,6 +909,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
           });
         }
       } else {
+        const source = /** @type ol.source.ImageWMS */ (layer.getSource());
         // For each name in a WMS layer.
         layerNames = source.getParams()['LAYERS'].split(',');
         layerNames.forEach((name) => {

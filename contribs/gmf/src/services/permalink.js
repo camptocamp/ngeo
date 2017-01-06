@@ -853,12 +853,13 @@ gmf.Permalink.prototype.initLayers_ = function() {
           return;
         }
 
-        const opacity = this.ngeoStateManager_.getInitialValue(
+        const opacity = /** @type number|undefined */ (this.ngeoStateManager_.getInitialValue(
           (treeCtrl.parent.node.mixed ? gmf.PermalinkParamPrefix.TREE_OPACITY : gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY)
           + treeCtrl.node.name
-        );
+        ));
         if (opacity !== undefined && treeCtrl.layer) {
-          treeCtrl.layer.opacity = opacity;
+          goog.asserts.assert(opacity);
+          treeCtrl.layer.setOpacity(opacity);
         }
         if (treeCtrl.parent.node && treeCtrl.parent.node.mixed && treeCtrl.node.children == undefined) {
           // Layer of a mixed group

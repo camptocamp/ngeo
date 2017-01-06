@@ -366,7 +366,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
     const map = this.map;
     this.gmfThemes_.getThemeObject(name).then((theme) => {
       if (theme) {
-        const backgrounds = theme['functionalities']['default_basemap'];
+        const backgrounds = theme.functionalities.default_basemap;
         if (backgrounds && backgrounds.length > 0) {
           const background = backgrounds[0];
           this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {

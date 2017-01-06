@@ -106,7 +106,7 @@ gmf.Snapping = function($http, $q, $rootScope, $timeout, gmfThemes,
 
   /**
    * A reference to the OGC servers loaded by the theme service.
-   * @type {gmfThemes.GmfOgcServers}
+   * @type {gmfThemes.GmfOgcServers|null}
    * @private
    */
   this.ogcServers_ = null;
