@@ -117,7 +117,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
       'map': '=ngeoWmsGetCapMap',
       'options': '=ngeoWmsGetCapOptions'
     },
-    link: function(scope) {
+    link(scope) {
 
       // List of layers available in the GetCapabilities.
       // The layerXXXX properties use layer objects from the parsing of

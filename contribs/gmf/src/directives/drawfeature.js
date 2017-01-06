@@ -656,7 +656,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
     }]);
 
     this.menu_ = new ngeo.Menu({
-      actions: actions
+      actions
     });
 
     ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,

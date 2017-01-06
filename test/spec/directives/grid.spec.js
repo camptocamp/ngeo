@@ -61,7 +61,7 @@ describe('ngeo.gridDirective', function() {
       configuration: new ngeo.GridConfig(gridConfigData, columnDefs)
     };
     gridController = $controller(
-        'ngeoGridController', {$scope: $scope}, data);
+        'ngeoGridController', {$scope}, data);
   }));
 
   describe('#sort', function() {

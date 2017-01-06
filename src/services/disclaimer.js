@@ -111,7 +111,7 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
     const content = this.sce_.trustAsHtml(message.msg);
     popup.open({
       autoDestroy: true,
-      content: content,
+      content,
       title: '&nbsp;'
     });
 

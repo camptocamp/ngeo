@@ -87,8 +87,8 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
   const required = !(nillable === true || nillable === 'true');
 
   const attribute = {
-    name: name,
-    required: required
+    name,
+    required
   };
 
   const type = node.getAttribute('type');

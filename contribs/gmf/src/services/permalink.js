@@ -1017,8 +1017,8 @@ gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
 
   return {
     wfsType: wfsLayer,
-    showFeatures: showFeatures,
-    filterGroups: filterGroups
+    showFeatures,
+    filterGroups
   };
 };
 
@@ -1053,12 +1053,12 @@ gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 
     const filter = {
       property: paramKey.replace(prefix, ''),
-      condition: condition
+      condition
     };
     filters.push(filter);
   }.bind(this));
 
-  return (filters.length > 0) ? {filters: filters} : null;
+  return (filters.length > 0) ? {filters} : null;
 };
 
 

@@ -502,7 +502,7 @@ describe('ngeo.format.FeatureHash', function() {
     describe('With a user-provided feature properties function', function() {
       it('encodes feature properties as expected', function() {
         fhFormat = new ngeo.format.FeatureHash({
-          properties: function(feature) {
+          properties(feature) {
             return {foobar: feature.get('foo') + feature.get('bar')};
           }
         });

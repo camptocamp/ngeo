@@ -53,7 +53,7 @@ gmf.Altitude.prototype.getAltitude = function(coordinate, opt_params) {
   params[gmf.AltitudeParam.Y] = coordinate[1];
 
   return this.$http_.get(this.url_, {
-    params: params
+    params
   }).then(this.handleGetAltitude_.bind(this));
 };
 

@@ -40,7 +40,7 @@ ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
     controller: 'ngeoDatePickerController as datepickerCtrl',
     restrict: 'AE',
     templateUrl: ngeoDatePickerTemplateUrl,
-    link: function(scope, element, attrs, ctrl) {
+    link(scope, element, attrs, ctrl) {
 
       const lang =  ctrl.gettextCatalog_.getCurrentLanguage();
       $['datepicker']['setDefaults']($['datepicker']['regional'][lang]);

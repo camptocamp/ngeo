@@ -17,7 +17,7 @@ describe('ngeo.filereaderDirective', function() {
         };
         this.onload(progressEvent);
       };
-      $provide.value('$window', {FileReader: FileReader});
+      $provide.value('$window', {FileReader});
     });
 
     inject(function($rootScope, $compile) {

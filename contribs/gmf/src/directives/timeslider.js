@@ -37,7 +37,7 @@ gmf.timeSliderDirective = function($timeout, $filter) {
     controller: 'gmfTimeSliderController as sliderCtrl',
     restrict: 'AE',
     templateUrl: gmf.baseTemplateUrl + '/timeslider.html',
-    link: function(scope, element, attrs, ctrl) {
+    link(scope, element, attrs, ctrl) {
 
       ctrl.sliderOptions['stop'] = onSliderReleased_;
       ctrl.sliderOptions['slide'] = computeDates_;

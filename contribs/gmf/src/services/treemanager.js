@@ -540,10 +540,10 @@ gmf.TreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
   }
 
   return {
-    children: children,
-    isChecked: isChecked,
-    isExpanded: isExpanded,
-    isLegendExpanded: isLegendExpanded
+    children,
+    isChecked,
+    isExpanded,
+    isLegendExpanded
   };
 };
 

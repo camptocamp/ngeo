@@ -36,13 +36,13 @@ describe('gmf.displayquerygridDirective', function() {
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
       const data = {
-        featuresStyleFn: function() {
+        featuresStyleFn() {
           return new ol.style.Style();
         },
-        selectedFeatureStyleFn: function() {
+        selectedFeatureStyleFn() {
           return undefined;
         },
-        getMapFn: function() {
+        getMapFn() {
           return new ol.Map({
             view: new ol.View({
               center: [0, 0],
@@ -52,7 +52,7 @@ describe('gmf.displayquerygridDirective', function() {
         }
       };
       queryGridController = $controller(
-          'GmfDisplayquerygridController', {$scope: $scope, $element: $('<div></div>')}, data);
+          'GmfDisplayquerygridController', {$scope, $element: $('<div></div>')}, data);
       $rootScope.$digest();
     });
   });

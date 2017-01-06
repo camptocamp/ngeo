@@ -22,11 +22,11 @@ ngeo.drawrectangleDirective = function() {
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
      */
-    link: function($scope, element, attrs, drawFeatureCtrl) {
+    link($scope, element, attrs, drawFeatureCtrl) {
 
       const drawRectangle = new ol.interaction.Draw({
         type: ol.geom.GeometryType.LINE_STRING,
-        geometryFunction: function(coordinates, geometry) {
+        geometryFunction(coordinates, geometry) {
           if (!geometry) {
             geometry = new ol.geom.Polygon(null);
           }

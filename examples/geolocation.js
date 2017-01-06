@@ -40,7 +40,7 @@ app.MainController = function(ngeoDecorateGeolocation) {
         source: new ol.source.OSM()
       })
     ],
-    view: view
+    view
   });
 
   const map = this.map;

@@ -65,7 +65,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
         source: new ol.source.OSM()
       })
     ],
-    view: view
+    view
   });
 
  /**

@@ -229,8 +229,8 @@ ngeo.Query.prototype.addSource = function(source) {
       goog.asserts.assert(params,
           'parmas must be set when no layer or wmsSource is set in the source');
       source.wmsSource = new ol.source.ImageWMS({
-        url: url,
-        params: params
+        url,
+        params
       });
     }
   }
@@ -247,7 +247,7 @@ ngeo.Query.prototype.addSource = function(source) {
 
     if (source.infoFormat === ngeo.QueryInfoFormatType.GML) {
       source.format = new ol.format.WMSGetFeatureInfo({
-        layers: layers
+        layers
       });
     }
   } else if (!source.infoFormat) {
@@ -626,7 +626,7 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
         featurePrefix: this.featurePrefix_,
         featureTypes: layers,
         outputFormat: 'GML3',
-        bbox: bbox,
+        bbox,
         geometryName: this.geometryName_
       };
 

@@ -26,7 +26,7 @@ ngeo.measureareaDirective = function($compile, gettext, $filter) {
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
      */
-    link: function($scope, element, attrs, drawFeatureCtrl) {
+    link($scope, element, attrs, drawFeatureCtrl) {
 
       const helpMsg = gettext('Click to start drawing polygon');
       const contMsg = gettext('Click to continue drawing<br/>' +

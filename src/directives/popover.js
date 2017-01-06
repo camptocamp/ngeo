@@ -28,7 +28,7 @@ ngeo.popoverDirective = function() {
     restrict: 'A',
     scope: true,
     controller: 'NgeoPopoverController as popoverCtrl',
-    link: function(scope, elem, attrs, ngeoPopoverCtrl) {
+    link(scope, elem, attrs, ngeoPopoverCtrl) {
       ngeoPopoverCtrl.anchorElm.on('hidden.bs.popover', function() {
         /**
          * @type {{inState : Object}}
@@ -74,7 +74,7 @@ ngeo.popoverAnchorDirective = function() {
   return {
     restrict: 'A',
     require: '^^ngeoPopover',
-    link: function(scope, elem, attrs, ngeoPopoverCtrl) {
+    link(scope, elem, attrs, ngeoPopoverCtrl) {
       ngeoPopoverCtrl.anchorElm = elem;
     }
   };
@@ -90,7 +90,7 @@ ngeo.popoverContentDirective = function() {
   return {
     restrict: 'A',
     require: '^^ngeoPopover',
-    link: function(scope, elem, attrs, ngeoPopoverCtrl) {
+    link(scope, elem, attrs, ngeoPopoverCtrl) {
       ngeoPopoverCtrl.bodyElm = elem;
       elem.hide();
     }

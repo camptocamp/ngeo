@@ -147,7 +147,7 @@ ngeo.profile = function(options) {
      * @param {string} units Units.
      * @return {string} Distance.
      */
-    xhover: function(dist, units) {
+    xhover(dist, units) {
       return parseFloat(dist.toPrecision(3)) + ' ' + units;
     },
     /**
@@ -155,7 +155,7 @@ ngeo.profile = function(options) {
      * @param {string} units Units.
      * @return {string} Elevation.
      */
-    yhover: function(ele, units) {
+    yhover(ele, units) {
       return Math.round(ele) + ' m';
     },
     /**
@@ -163,7 +163,7 @@ ngeo.profile = function(options) {
      * @param {string} units Units.
      * @return {string|number} Distance.
      */
-    xtick: function(dist, units) {
+    xtick(dist, units) {
       return dist;
     },
     /**
@@ -171,7 +171,7 @@ ngeo.profile = function(options) {
      * @param {string} units Units.
      * @return {string|number} Elevation.
      */
-    ytick: function(ele, units) {
+    ytick(ele, units) {
       return ele;
     }
   };

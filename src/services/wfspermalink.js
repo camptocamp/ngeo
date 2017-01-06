@@ -200,7 +200,7 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
         wfsType.featurePrefix : this.defaultFeaturePrefix_,
     featureTypes: [wfsType.featureType],
     outputFormat: 'GML3',
-    filter: filter,
+    filter,
     maxFeatures: this.maxFeatures_
   });
 

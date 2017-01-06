@@ -113,7 +113,7 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
     restrict: 'A',
     templateUrl: ngeoWmsGetCapItemTemplateUrl,
     controller: 'NgeoWmsGetCapItemDirectiveController',
-    compile: function(elt) {
+    compile(elt) {
       const contents = elt.contents().remove();
       let compiledContent;
       return function(scope, elt) {

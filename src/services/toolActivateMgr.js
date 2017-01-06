@@ -129,9 +129,9 @@ ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
       }).bind(this));
 
   entries.push({
-    tool: tool,
+    tool,
     defaultTool: opt_defaultActivate || false,
-    unlisten: unlisten
+    unlisten
   });
 
   if (goog.asserts.ENABLE_ASSERTS) {

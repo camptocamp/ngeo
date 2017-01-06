@@ -95,7 +95,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
       wrapX: false,
       features: new ol.Collection()
     }),
-    style: function(feature, resolution) {
+    style(feature, resolution) {
       return ngeoFeatureHelper.createEditingStyles(feature);
     }
   });

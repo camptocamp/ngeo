@@ -28,51 +28,50 @@ goog.provide('ngeo.search.searchDirective');
 ngeo.search.searchDirective = function() {
   return {
     restrict: 'A',
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         */
-        function(scope, element, attrs) {
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
 
-          const typeaheadOptionsExpr = attrs['ngeoSearch'];
-          const typeaheadOptions = /** @type {TypeaheadOptions} */
+      const typeaheadOptionsExpr = attrs['ngeoSearch'];
+      const typeaheadOptions = /** @type {TypeaheadOptions} */
               (scope.$eval(typeaheadOptionsExpr));
 
-          const typeaheadDatasetsExpr = attrs['ngeoSearchDatasets'];
-          const typeaheadDatasets = /** @type {Array.<TypeaheadDataset>} */
+      const typeaheadDatasetsExpr = attrs['ngeoSearchDatasets'];
+      const typeaheadDatasets = /** @type {Array.<TypeaheadDataset>} */
               (scope.$eval(typeaheadDatasetsExpr));
 
-          const args = typeaheadDatasets.slice();
-          args.unshift(typeaheadOptions);
+      const args = typeaheadDatasets.slice();
+      args.unshift(typeaheadOptions);
 
-          element.typeahead.apply(element, args);
+      element.typeahead.apply(element, args);
 
-          const typeaheadListenersExpr = attrs['ngeoSearchListeners'];
-          const typeaheadListeners_ =
+      const typeaheadListenersExpr = attrs['ngeoSearchListeners'];
+      const typeaheadListeners_ =
               /** @type {ngeox.SearchDirectiveListeners} */
               (scope.$eval(typeaheadListenersExpr));
 
           /**
            * @type {ngeox.SearchDirectiveListeners}
            */
-          const typeaheadListeners = ngeo.search.searchDirective.adaptListeners_(
+      const typeaheadListeners = ngeo.search.searchDirective.adaptListeners_(
               typeaheadListeners_);
 
-          element.on('typeahead:open', function() {
-            scope.$apply(function() {
-              typeaheadListeners.open();
-            });
-          });
+      element.on('typeahead:open', function() {
+        scope.$apply(function() {
+          typeaheadListeners.open();
+        });
+      });
 
-          element.on('typeahead:close', function() {
-            scope.$apply(function() {
-              typeaheadListeners.close();
-            });
-          });
+      element.on('typeahead:close', function() {
+        scope.$apply(function() {
+          typeaheadListeners.close();
+        });
+      });
 
-          element.on('typeahead:cursorchange',
+      element.on('typeahead:cursorchange',
               /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
@@ -84,7 +83,7 @@ ngeo.search.searchDirective = function() {
                 });
               });
 
-          element.on('typeahead:select',
+      element.on('typeahead:select',
               /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
@@ -96,7 +95,7 @@ ngeo.search.searchDirective = function() {
                 });
               });
 
-          element.on('typeahead:autocomplete',
+      element.on('typeahead:autocomplete',
               /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
@@ -107,7 +106,7 @@ ngeo.search.searchDirective = function() {
                   typeaheadListeners.autocomplete(event, suggestion, dataset);
                 });
               });
-        }
+    }
   };
 };
 

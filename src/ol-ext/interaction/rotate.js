@@ -142,7 +142,7 @@ ngeo.interaction.Rotate = function(options) {
       useSpatialIndex: false,
       wrapX: !!options.wrapX
     }),
-    style: style,
+    style,
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });

@@ -53,16 +53,15 @@ gmf.contextualdataDirective = function() {
       'projections': '<gmfContextualdataProjections',
       'callback': '<gmfContextualdataCallback'
     },
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         * @param {gmf.ContextualdataController} controller Controller.
-         */
-        function(scope, element, attrs, controller) {
-          controller.init();
-        }
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     * @param {gmf.ContextualdataController} controller Controller.
+     */
+    link(scope, element, attrs, controller) {
+      controller.init();
+    }
   };
 };
 

@@ -36,7 +36,7 @@ ngeo.mapQueryDirective = function(ngeoQuery) {
   return {
     restrict: 'A',
     scope: false,
-    link: function(scope, elem, attrs) {
+    link(scope, elem, attrs) {
       const map = scope.$eval(attrs['ngeoMapQueryMap']);
       let clickEventKey_ = null;
 

@@ -13,7 +13,7 @@ describe('GmfPrintController', function() {
     $scope = $rootScope.$new();
     gmfPrintCtrl = $controller('GmfPrintController',
       {
-        $scope: $scope,
+        $scope,
         gmfPrintUrl: ''
       }
     );

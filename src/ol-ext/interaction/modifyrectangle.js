@@ -52,7 +52,7 @@ ngeo.interaction.ModifyRectangle = function(options) {
     source: new ol.source.Vector({
       wrapX: !!options.wrapX
     }),
-    style: style,
+    style,
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });

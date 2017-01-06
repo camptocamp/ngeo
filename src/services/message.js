@@ -125,7 +125,7 @@ ngeo.Message.prototype.getMessageObjects = function(object, opt_type) {
     object.forEach(function(msg) {
       if (typeof object === 'string') {
         msgObject = {
-          msg: msg,
+          msg,
           type: opt_type !== undefined ? opt_type : defaultType
         };
       } else {

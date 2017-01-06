@@ -242,11 +242,11 @@ ngeo.interaction.ModifyCircle.prototype.writeCircleGeometry_ = function(feature,
     for (i = 0, ii = coordinates.length - 1; i < ii; ++i) {
       segment = coordinates.slice(i, i + 2);
       segmentData = /** @type {ol.ModifySegmentDataType} */ ({
-        feature: feature,
-        geometry: geometry,
+        feature,
+        geometry,
         depth: [j],
         index: i,
-        segment: segment
+        segment
       });
       this.rBush_.insert(ol.extent.boundingExtent(segment), segmentData);
     }

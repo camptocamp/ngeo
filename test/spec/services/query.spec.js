@@ -66,8 +66,8 @@ describe('ngeo.Query', function() {
       source: wmsSource
     });
     const source = {
-      id: id,
-      layer: layer
+      id,
+      layer
     };
     ngeoQuery.addSource(source);
     // a source configured with a layer that uses a wms source should
@@ -125,7 +125,7 @@ describe('ngeo.Query', function() {
           busStopLayer
         ],
         view: new ol.View({
-          projection: projection,
+          projection,
           resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
           center: [537635, 152640],
           zoom: 0

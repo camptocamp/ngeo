@@ -123,7 +123,7 @@ app.MainController = function() {
   this.interaction = new ngeo.interaction.ModifyRectangle(
     /** @type {olx.interaction.ModifyOptions} */({
       features: this.features,
-      style: style
+      style
     }));
 
   const interaction = this.interaction;

@@ -23,7 +23,7 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
     scope: {
       'options': '=ngeoImportLocalOptions'
     },
-    link: function(scope, elt) {
+    link(scope, elt) {
 
       /**
        * @type {ngeox.ImportLocalOptions}

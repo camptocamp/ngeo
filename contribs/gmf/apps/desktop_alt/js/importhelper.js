@@ -58,7 +58,7 @@ app.GmfImportHelper.prototype.createWmsLayer = function(params, options) {
   }
 
   const source = new ol.source.ImageWMS({
-    params: params,
+    params,
     url: options.url,
     ratio: options.ratio || 1,
     projection: options.projection
@@ -72,7 +72,7 @@ app.GmfImportHelper.prototype.createWmsLayer = function(params, options) {
     visible: options.visible,
     attribution: options.attribution,
     extent: options.extent,
-    source: source
+    source
   });
   //gaDefinePropertiesForLayer(layer);
   // FIXME: do we need this? layer.label = options.label;
@@ -104,10 +104,10 @@ app.GmfImportHelper.prototype.getOlLayerFromGetCapLayer = function(getCapLayer) 
  */
 app.GmfImportHelper.prototype.addFeatures = function(map, features) {
   const source = new ol.source.Vector({
-    features: features
+    features
   });
   const layer = new ol.layer.Vector({
-    source: source
+    source
   });
   map.addLayer(layer);
   const size = map.getSize();

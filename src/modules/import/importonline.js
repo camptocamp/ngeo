@@ -26,7 +26,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
     scope: {
       'options': '=ngeoImportOnlineOptions'
     },
-    link: function(scope, elt) {
+    link(scope, elt) {
       /**
        * @type {ngeox.ImportOnlineOptions}
        */

@@ -197,7 +197,7 @@ app.getLayer = (function() {
           source = new ol.source.OSM();
         }
         const layer = new ol.layer.Tile({
-          source: source
+          source
         });
         layer.set('type', type);
         layerCache[type] = layer;

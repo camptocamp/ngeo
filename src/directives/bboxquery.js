@@ -37,7 +37,7 @@ ngeo.bboxQueryDirective = function(ngeoQuery) {
   return {
     restrict: 'A',
     scope: false,
-    link: function(scope, elem, attrs) {
+    link(scope, elem, attrs) {
       /**
        * @type {ol.Map}
        */

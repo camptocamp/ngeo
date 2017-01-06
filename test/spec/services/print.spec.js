@@ -196,12 +196,12 @@ describe('ngeo.CreatePrint', function() {
             format: 'image/jpeg',
             layer: 'layer',
             matrixSet: 'matrixset',
-            projection: projection,
+            projection,
             requestEncoding: 'REST',
             style: 'style',
             tileGrid: new ol.tilegrid.WMTS({
               matrixIds: ['00', '01', '02'],
-              extent: extent,
+              extent,
               origin: ol.extent.getTopLeft(extent),
               resolutions: [2000, 1000, 500],
               tileSize: 512

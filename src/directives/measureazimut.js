@@ -28,7 +28,7 @@ ngeo.measureazimutDirective = function($compile, gettext, $filter) {
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
      */
-    link: function($scope, element, attrs, drawFeatureCtrl) {
+    link($scope, element, attrs, drawFeatureCtrl) {
 
       const helpMsg = gettext('Click to start drawing circle');
       const contMsg = gettext('Click to finish');

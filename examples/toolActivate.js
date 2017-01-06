@@ -105,7 +105,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
   this.drawPoint = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Point',
-        features: features
+        features
       }));
   this.drawPoint.setActive(false);
   ngeoDecorateInteraction(this.drawPoint);
@@ -122,7 +122,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
   this.drawLine = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'LineString',
-        features: features
+        features
       }));
   this.drawLine.setActive(false);
   ngeoDecorateInteraction(this.drawLine);
@@ -139,7 +139,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
   this.drawPolygon = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Polygon',
-        features: features
+        features
       }));
   this.drawPolygon.setActive(false);
   ngeoDecorateInteraction(this.drawPolygon);

@@ -33,7 +33,7 @@ goog.require('ngeo');
 ngeo.recenterDirective = function() {
   return {
     restrict: 'A',
-    link: function($scope, $element, $attrs) {
+    link($scope, $element, $attrs) {
       const mapExpr = $attrs['ngeoRecenterMap'];
       const map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
 

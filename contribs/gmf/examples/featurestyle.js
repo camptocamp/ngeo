@@ -158,11 +158,11 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
       new ol.layer.Vector({
         source: new ol.source.Vector({
           wrapX: false,
-          features: features
+          features
         })
       })
     ],
-    view: view
+    view
   });
 
   /**

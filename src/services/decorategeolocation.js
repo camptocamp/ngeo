@@ -30,10 +30,8 @@ ngeo.decorateGeolocation = function(geolocation) {
   goog.asserts.assertInstanceof(geolocation, ol.Geolocation);
 
   Object.defineProperty(geolocation, 'tracking', {
-    get: function() {
-      return geolocation.getTracking();
-    },
-    set: function(val) {
+    get: () => geolocation.getTracking(),
+    set: (val) => {
       geolocation.setTracking(val);
     }
   });

@@ -740,21 +740,21 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
 
   const image = new ol.style.Circle({
     radius: 8,
-    stroke: new ol.style.Stroke({color: color, width: 1}),
+    stroke: new ol.style.Stroke({color, width: 1}),
     fill: new ol.style.Fill({color: rgbaColor})
   });
 
   styles[ol.geom.GeometryType.POINT] = new ol.style.Style({
-    image: image
+    image
   });
   styles[ol.geom.GeometryType.MULTI_POINT] = new ol.style.Style({
-    image: image
+    image
   });
 
   styles[ol.geom.GeometryType.LINE_STRING] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
-        color: color,
+        color,
         width: 3
       })
     })
@@ -767,7 +767,7 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
   styles[ol.geom.GeometryType.MULTI_LINE_STRING] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
-        color: color,
+        color,
         width: 3
       })
     })
@@ -781,7 +781,7 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
   styles[ol.geom.GeometryType.POLYGON] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
-        color: color,
+        color,
         width: 2
       }),
       fill: new ol.style.Fill({
@@ -797,7 +797,7 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
   styles[ol.geom.GeometryType.MULTI_POLYGON] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
-        color: color,
+        color,
         width: 2
       }),
       fill: new ol.style.Fill({

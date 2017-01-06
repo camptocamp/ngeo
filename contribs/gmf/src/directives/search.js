@@ -132,21 +132,20 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
     },
     controller: 'GmfSearchController as ctrl',
     templateUrl: gmfSearchTemplateUrl,
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Atttributes.
-         */
-        function(scope, element, attrs) {
-          if (!scope['clearbutton']) {
-            const ctrl = scope['ctrl'];
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
+      if (!scope['clearbutton']) {
+        const ctrl = scope['ctrl'];
             // Empty the search field on focus and blur.
-            element.find('input').on('focus blur', function() {
-              ctrl.clear();
-            });
-          }
-        }
+        element.find('input').on('focus blur', function() {
+          ctrl.clear();
+        });
+      }
+    }
   };
 };
 
@@ -369,11 +368,11 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     name: 'coordinates',
     display: 'label',
     templates: {
-      header: function() {
+      header() {
         const header = gettextCatalog.getString('Recenter to');
         return '<div class="gmf-search-header" translate>' + header + '</div>';
       },
-      suggestion: function(suggestion) {
+      suggestion(suggestion) {
         const coordinates = suggestion['label'];
 
         let html = '<p class="gmf-search-label">' + coordinates + '</p>';
@@ -460,12 +459,12 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
   const typeaheadDataset = /** @type {TypeaheadDataset} */ ({
     limit: Infinity,
     source: bloodhoundEngine.ttAdapter(),
-    display: function(suggestion) {
+    display(suggestion) {
       const feature = /** @type {ol.Feature} */ (suggestion);
       return feature.get(config.labelKey);
     },
     templates: /* TypeaheadTemplates */ ({
-      header: function() {
+      header() {
         if (config.datasetTitle === undefined) {
           return '';
         } else {
@@ -473,7 +472,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
           return '<div class="gmf-search-header">' + header + '</div>';
         }
       },
-      suggestion: function(suggestion) {
+      suggestion(suggestion) {
         const feature = /** @type {ol.Feature} */ (suggestion);
 
         const scope = directiveScope.$new(true);
@@ -578,7 +577,7 @@ gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
   const gettextCatalog = this.gettextCatalog_;
   return {
     rateLimitWait: 50,
-    prepare: function(query, settings) {
+    prepare(query, settings) {
       let url = settings.url;
       const lang = gettextCatalog.currentLanguage;
       const interfaceName = 'mobile'; // FIXME dynamic interfaces
@@ -616,7 +615,7 @@ gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
     }
     suggestions.push({
       label: coordinates.join(' '),
-      position: position,
+      position,
       'tt_source': 'coordinates'
     });
     callback(suggestions);
@@ -649,12 +648,12 @@ gmf.SearchController.prototype.initStyles_ = function() {
     width: 2
   });
   this.styles_['default'] = new ol.style.Style({
-    fill: fill,
-    stroke: stroke,
+    fill,
+    stroke,
     image: new ol.style.Circle({
       radius: 5,
-      fill: fill,
-      stroke: stroke
+      fill,
+      stroke
     })
   });
   const customStyles = this.scope_['featuresStyles'] || {};

@@ -96,8 +96,8 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
    * @export
    */
   this.mobileGeolocationOptions = {
-    positionFeatureStyle: positionFeatureStyle,
-    accuracyFeatureStyle: accuracyFeatureStyle,
+    positionFeatureStyle,
+    accuracyFeatureStyle,
     zoom: config.geolocationZoom || 9
   };
 

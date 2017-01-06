@@ -92,7 +92,7 @@ app.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
       layer: 'watercolor'
     });
   }
-  return new ol.layer.Tile({source: source});
+  return new ol.layer.Tile({source});
 };
 
 

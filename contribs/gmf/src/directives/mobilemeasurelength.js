@@ -160,7 +160,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
   ngeoDecorateInteraction(drawInteraction);
 
   Object.defineProperty(this, 'hasPoints', {
-    get: function() {
+    get() {
       return this.drawInteraction.getFeature() !== null;
     }
   });

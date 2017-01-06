@@ -50,16 +50,15 @@ gmf.mobileNavDirective = function() {
     controller: 'gmfMobileNavController as navCtrl',
     bindToController: true,
     scope: true,
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Atttributes.
-         * @param {gmf.MobileNavController} navCtrl Controller.
-         */
-        function(scope, element, attrs, navCtrl) {
-          navCtrl.init(element);
-        }
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     * @param {gmf.MobileNavController} navCtrl Controller.
+     */
+    link(scope, element, attrs, navCtrl) {
+      navCtrl.init(element);
+    }
   };
 };
 
@@ -287,20 +286,19 @@ gmf.mobileNavBackDirective = function() {
     require: '^^gmfMobileNav',
     restrict: 'A',
     scope: false,
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Atttributes.
-         * @param {gmf.MobileNavController} navCtrl Controller.
-         */
-        function(scope, element, attrs, navCtrl) {
-          scope.$watch(attrs['gmfMobileNavBack'], function(newVal, oldVal) {
-            if (newVal === true) {
-              navCtrl.backIfActive(element[0]);
-            }
-          });
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     * @param {gmf.MobileNavController} navCtrl Controller.
+     */
+    link(scope, element, attrs, navCtrl) {
+      scope.$watch(attrs['gmfMobileNavBack'], function(newVal, oldVal) {
+        if (newVal === true) {
+          navCtrl.backIfActive(element[0]);
         }
+      });
+    }
   };
 };
 
@@ -330,18 +328,17 @@ gmf.mobileNavBackOnClickDirective = function() {
     require: '^^gmfMobileNav',
     restrict: 'A',
     scope: false,
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Atttributes.
-         * @param {gmf.MobileNavController} navCtrl Controller.
-         */
-        function(scope, element, attrs, navCtrl) {
-          element.on('click', function() {
-            navCtrl.backIfActive(element[0]);
-          });
-        }
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     * @param {gmf.MobileNavController} navCtrl Controller.
+     */
+    link(scope, element, attrs, navCtrl) {
+      element.on('click', function() {
+        navCtrl.backIfActive(element[0]);
+      });
+    }
   };
 };
 

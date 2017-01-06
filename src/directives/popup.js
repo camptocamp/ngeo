@@ -42,31 +42,30 @@ ngeo.popupDirective = function(ngeoPopupTemplateUrl) {
   return {
     restrict: 'A',
     templateUrl: ngeoPopupTemplateUrl,
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         */
-        function(scope, element, attrs) {
-          element.addClass('popover');
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
+      element.addClass('popover');
 
           /**
            * @param {jQuery.Event} evt Event.
            */
-          scope.close = function(evt) {
-            if (evt) {
-              evt.stopPropagation();
-              evt.preventDefault();
-            }
-            element.addClass('hidden');
-          };
+      scope.close = function(evt) {
+        if (evt) {
+          evt.stopPropagation();
+          evt.preventDefault();
+        }
+        element.addClass('hidden');
+      };
 
           // Watch the open property
-          scope.$watch('open', function(newVal, oldVal) {
-            element.css('display', newVal ? 'block' : 'none');
-          });
-        }
+      scope.$watch('open', function(newVal, oldVal) {
+        element.css('display', newVal ? 'block' : 'none');
+      });
+    }
   };
 };
 

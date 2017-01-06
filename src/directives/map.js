@@ -26,21 +26,20 @@ goog.require('ol.Map');
 ngeo.mapDirective = function() {
   return {
     restrict: 'A',
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         */
-        function(scope, element, attrs) {
-          const attr = 'ngeoMap';
-          const prop = attrs[attr];
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
+      const attr = 'ngeoMap';
+      const prop = attrs[attr];
 
-          const map = /** @type {ol.Map} */ (scope.$eval(prop));
-          goog.asserts.assertInstanceof(map, ol.Map);
+      const map = /** @type {ol.Map} */ (scope.$eval(prop));
+      goog.asserts.assertInstanceof(map, ol.Map);
 
-          map.setTarget(element[0]);
-        }
+      map.setTarget(element[0]);
+    }
   };
 };
 

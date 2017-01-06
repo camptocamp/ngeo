@@ -64,8 +64,8 @@ ngeo.interaction.MeasureAzimut.prototype.createDrawInteraction = function(style,
     source) {
 
   return new ngeo.interaction.DrawAzimut({
-    source: source,
-    style: style
+    source,
+    style
   });
 
 

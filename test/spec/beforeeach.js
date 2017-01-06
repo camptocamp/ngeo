@@ -7,9 +7,9 @@ beforeEach(function() {
      * A matcher similar to `expect(...).toBeCloseTo(...)` to check that
      * numbers in two arrays are almost equal.
      */
-    arrayToBeCloseTo: function(util, customEqualityTesters) {
+    arrayToBeCloseTo(util, customEqualityTesters) {
       return {
-        compare: function(actual, expected, precision) {
+        compare(actual, expected, precision) {
           if (precision !== 0) {
             precision = precision || 2;
           }

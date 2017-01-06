@@ -13,15 +13,15 @@ describe('gmf.displayquerywindowDirective', function() {
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
     const data = {
-      featuresStyleFn: function() {
+      featuresStyleFn() {
         return new ol.style.Style();
       },
-      selectedFeatureStyleFn: function() {
+      selectedFeatureStyleFn() {
         return undefined;
       }
     };
     displayQueriesController = $controller(
-        'GmfDisplayquerywindowController', {$scope: $scope}, data);
+        'GmfDisplayquerywindowController', {$scope}, data);
   }));
 
   describe('#show', function() {

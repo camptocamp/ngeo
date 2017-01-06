@@ -106,7 +106,7 @@ gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
   this.drawLine = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'LineString',
-        features: features
+        features
       }));
 
   this.drawLine.setActive(false);

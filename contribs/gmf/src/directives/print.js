@@ -112,7 +112,7 @@ gmf.printDirective = function(gmfPrintTemplateUrl) {
       'rotateMask': '&?gmfPrintRotatemask',
       'fieldValues': '&?gmfPrintFieldvalues'
     },
-    link: function(scope, element, attr) {
+    link(scope, element, attr) {
       const ctrl = scope['ctrl'];
 
       scope.$watch(function() {
@@ -563,9 +563,9 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
       });
 
       this.fields.customs.push(/** gmfx.CustomField */ ({
-        name: name,
-        type: type,
-        value: value
+        name,
+        type,
+        value
       }));
     }
   }.bind(this));
@@ -789,8 +789,8 @@ gmf.PrintController.prototype.getDataSource_ = function() {
       datasourceObj = /** @type {gmfx.DataSourcePrintReportObject} */({
         title: this.translate_(source.label),
         table: {
-          columns: columns,
-          data: data
+          columns,
+          data
         }
       });
       datasourceArr.push(datasourceObj);

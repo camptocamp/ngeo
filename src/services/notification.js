@@ -124,7 +124,7 @@ ngeo.Notification.prototype.showMessage = function(message) {
       ngeo.Notification.DEFAULT_DELAY_;
 
   const item = /** @type {ngeo.Notification.CacheItem} */ ({
-    el: el
+    el
   });
 
   // Keep a reference to the promise, in case we want to manually cancel it

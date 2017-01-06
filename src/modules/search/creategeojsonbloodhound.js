@@ -63,12 +63,12 @@ ngeo.search.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProje
   const geojsonFormat = new ol.format.GeoJSON();
   const bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {
-      url: url,
-      prepare: function(query, settings) {
+      url,
+      prepare(query, settings) {
         settings.url = settings.url.replace('%QUERY', query);
         return settings;
       },
-      transform: function(parsedResponse) {
+      transform(parsedResponse) {
         /** @type {GeoJSONFeatureCollection} */
         let featureCollection = /** @type {GeoJSONFeatureCollection} */
             (parsedResponse);

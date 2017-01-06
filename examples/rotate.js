@@ -120,7 +120,7 @@ app.MainController = function() {
     /** @type {olx.interaction.ModifyOptions} */({
       features: this.features,
       layers: [vectorLayer],
-      style: style
+      style
     }));
 
   const interaction = this.interaction;

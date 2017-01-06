@@ -63,7 +63,7 @@ app.MainController = function($http, $scope) {
         })
       }),
       new ol.layer.Vector({
-        source: source
+        source
       })
     ],
     view: new ol.View({
@@ -185,7 +185,7 @@ app.MainController = function($http, $scope) {
       * @param {number=} opt_z Z value.
       * @return {number} Z value.
       */
-    z: function(item, opt_z) {
+    z(item, opt_z) {
       if (opt_z !== undefined) {
         item['z'] = opt_z;
       }
@@ -213,11 +213,11 @@ app.MainController = function($http, $scope) {
    * @export
    */
   this.profileOptions = {
-    distanceExtractor: distanceExtractor,
-    linesConfiguration: linesConfiguration,
-    poiExtractor: poiExtractor,
-    hoverCallback: hoverCallback,
-    outCallback: outCallback
+    distanceExtractor,
+    linesConfiguration,
+    poiExtractor,
+    hoverCallback,
+    outCallback
   };
 
   /**

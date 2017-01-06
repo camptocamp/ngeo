@@ -22,7 +22,7 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
     scope: {
       'options': '=ngeoImportDndOptions'
     },
-    link: function(scope, elt) {
+    link(scope, elt) {
 
       /**
        * @type {ngeox.ImportDndOptions}

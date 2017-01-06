@@ -36,18 +36,17 @@ app.searchDirective = function() {
         'ngeo-search="ctrl.options" ' +
         'ngeo-search-datasets="ctrl.datasets" ' +
         'ngeo-search-listeners="ctrl.listeners">',
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Atttributes.
-         */
-        function(scope, element, attrs) {
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
           // Empty the search field on focus and blur.
-          element.find('input').on('focus blur', function() {
-            $(this).val('');
-          });
-        }
+      element.find('input').on('focus blur', function() {
+        $(this).val('');
+      });
+    }
   };
 };
 
@@ -97,15 +96,15 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
-    display: function(suggestion) {
+    display(suggestion) {
       const feature = /** @type {ol.Feature} */ (suggestion);
       return feature.get('label');
     },
     templates: {
-      header: function() {
+      header() {
         return '<div class="ngeo-header">Addresses</div>';
       },
-      suggestion: function(suggestion) {
+      suggestion(suggestion) {
         const feature = /** @type {ol.Feature} */ (suggestion);
 
         // A scope for the ng-click on the suggestion's « i » button.

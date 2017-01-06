@@ -78,7 +78,7 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
   const bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {
       url: 'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&searchText=%QUERY',
-      prepare: function(query, settings) {
+      prepare(query, settings) {
         settings.url = settings.url.replace('%QUERY', query);
         if (options.limit !== undefined) {
           settings.url += '&limit=' + options.limit;
@@ -90,7 +90,7 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
         return (options.prepare !== undefined) ?
             options.prepare(query, settings) : settings;
       },
-      transform: function(/** @type{geoAdminx.SearchLocationResponse} */ parsedResponse) {
+      transform(/** @type{geoAdminx.SearchLocationResponse} */ parsedResponse) {
         const features = parsedResponse.results.map(function(/** @type{geoAdminx.SearchLocationResult} */ result) {
           const attrs = result.attrs;
 

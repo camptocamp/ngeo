@@ -104,7 +104,7 @@ app.MainController.prototype.openPopupWithContent = function() {
     'This popup was opened using the <code>open</code> method.');
   popup.open({
     autoDestroy: true,
-    content: content,
+    content,
     height: '200px',
     title: 'Opened with "open"',
     width: '300px'

@@ -103,9 +103,9 @@ gmfapp.MainController = function(gmfThemes, gmfQueryManager,
    * @export
    */
   this.featureStyle = new ol.style.Style({
-    fill: fill,
-    image: new ol.style.Circle({fill: fill, radius: 5, stroke: stroke}),
-    stroke: stroke
+    fill,
+    image: new ol.style.Circle({fill, radius: 5, stroke}),
+    stroke
   });
 
   /**

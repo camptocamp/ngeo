@@ -258,10 +258,10 @@ gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
         interaction: null,
         maxFeatures: 50,
         requestDeferred: null,
-        snappingConfig: snappingConfig,
-        treeCtrl: treeCtrl,
-        wfsConfig: wfsConfig,
-        stateWatcherUnregister: stateWatcherUnregister
+        snappingConfig,
+        treeCtrl,
+        wfsConfig,
+        stateWatcherUnregister
       };
 
       // This extra call is to initialize the treeCtrl with its current state
@@ -500,7 +500,7 @@ gmf.Snapping.prototype.loadItemFeatures_ = function(item) {
     srsName: projCode,
     featureNS: item.featureNS,
     featurePrefix: item.featurePrefix,
-    featureTypes: featureTypes,
+    featureTypes,
     outputFormat: 'GML3',
     bbox: extent,
     geometryName: item.geometryName,

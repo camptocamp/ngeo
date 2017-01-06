@@ -369,56 +369,56 @@ ngeo.mockLocationProvider = function($locationProvider) {
       /**
        * @return {string} Absolute URL.
        */
-      absUrl: function() {
+      absUrl() {
         return '';
       },
       /**
        * @param {string=} opt_path Path.
        * @return {string} Hash.
        */
-      hash: function(opt_path) {
+      hash(opt_path) {
         return opt_path !== undefined ? this : '';
       },
       /**
        * @return {string} Host.
        */
-      host: function() {
+      host() {
         return '';
       },
       /**
        * @param {string=} opt_path Path.
        * @return {string} Path.
        */
-      path: function(opt_path) {
+      path(opt_path) {
         return opt_path !== undefined ? this : '';
       },
       /**
        * @return {number} Port.
        */
-      port: function() {
+      port() {
         return 0;
       },
       /**
        * @return {string} Protocol.
        */
-      protocol: function() {
+      protocol() {
         return '';
       },
-      replace: function() {
+      replace() {
       },
       /**
        * @param {string=} opt_search Search.
        * @param {Object=} opt_paramValue Parameters.
        * @return {Object} Search.
        */
-      search: function(opt_search, opt_paramValue) {
+      search(opt_search, opt_paramValue) {
         return opt_search !== undefined ? this : {};
       },
       /**
        * @param {string=} opt_url URL.
        * @return {string} URL.
        */
-      url: function(opt_url) {
+      url(opt_url) {
         return '';
       }
     });

@@ -80,14 +80,14 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
   }
   const source = new ol.source.ImageWMS({
     url: sourceURL,
-    params: params,
+    params,
     serverType: olServerType
   });
   if (opt_params) {
     source.updateParams(opt_params);
   }
 
-  return new ol.layer.Image({source: source});
+  return new ol.layer.Image({source});
 };
 
 

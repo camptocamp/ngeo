@@ -77,7 +77,7 @@ gmf.ObjectEditingManager.prototype.getFeature = function() {
         [layer],
         [{
           operator: 'eq',
-          property: property,
+          property,
           value: id
         }]
       ).then(this.handleGetFeatures_.bind(this, property, id));

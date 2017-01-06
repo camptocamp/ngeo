@@ -299,7 +299,7 @@ gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
   } else {
     this.disclaimer_.alert({
       popup: this.popup,
-      msg: msg,
+      msg,
       target: this.element_,
       type: ngeo.MessageType.WARNING
     });
@@ -319,7 +319,7 @@ gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
   } else {
     this.disclaimer_.close({
       popup: this.popup,
-      msg: msg,
+      msg,
       target: this.element_,
       type: ngeo.MessageType.WARNING
     });
