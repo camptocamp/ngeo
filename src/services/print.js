@@ -610,12 +610,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
     if (src !== undefined) {
       symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
         type: 'point',
-        externalGraphic: src,
-        /**
-         * TODO: Need a way to find the mime type of the image.
-         * Providing a fake mimetype works but it's not the right way to do.
-         */
-        graphicFormat : 'image/png'
+        externalGraphic: src
       });
       var opacity = imageStyle.getOpacity();
       if (opacity !== null) {
