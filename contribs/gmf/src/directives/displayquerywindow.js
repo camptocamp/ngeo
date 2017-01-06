@@ -20,7 +20,7 @@ ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['gmfDisplayquerywindowTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/displayquerywindow.html';
+          `${gmf.baseTemplateUrl}/displayquerywindow.html`;
     });
 
 

@@ -284,7 +284,7 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
    * @type {string}
    */
   const name = this.gettextCatalog_.getString(type);
-  feature.set(prop.NAME, name + ' ' + (this.features_.getLength() + 1));
+  feature.set(prop.NAME, `${name} ${this.features_.getLength() + 1}`);
 
   /**
    * @type {string}

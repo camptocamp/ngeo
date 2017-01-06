@@ -40,14 +40,14 @@ app.GmfImportHelper = function(map, $scope, gettext, ngeoFile, $q) {
  */
 app.GmfImportHelper.prototype.createWmsLayer = function(params, options) {
   options = options || {};
-  options.id = 'WMS||' + options.label + '||' + options.url + '||' + params['LAYERS'];
+  options.id = `WMS||${options.label}||${options.url}||${params['LAYERS']}`;
 
   // If the WMS has a version specified, we add it in
   // the id. It's important that the layer keeps the same id as the
   // one in the url otherwise it breaks the asynchronous reordering of
   // layers.
   if (params.VERSION) {
-    options.id += '||' + params.VERSION;
+    options.id += `||${params.VERSION}`;
 
     if (options['useReprojection']) {
       options.projection = 'EPSG:4326';

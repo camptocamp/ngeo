@@ -22,12 +22,12 @@ gmf.module.value('gmfLayertreeTemplate',
      * @return {string} Template.
      */
     function(element, attrs) {
-      const subTemplateUrl = gmf.baseTemplateUrl + '/layertree.html';
-      return '<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
+      const subTemplateUrl = `${gmf.baseTemplateUrl}/layertree.html`;
+      return `${'<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
           'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
           'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
-          'ngeo-layertree-templateurl="' + subTemplateUrl + '">' +
+          'ngeo-layertree-templateurl="'}${subTemplateUrl}">` +
           '</div>';
     });
 
@@ -41,7 +41,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
      * @return {string} Template URL.
      */
     function(element, attrs) {
-      return gmf.baseTemplateUrl + '/layertree.html';
+      return `${gmf.baseTemplateUrl}/layertree.html`;
     });
 
 

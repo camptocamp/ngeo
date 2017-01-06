@@ -12,7 +12,7 @@ ngeo.module.value('ngeoPopupTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['ngeoPopupTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/popup.html';
+          `${ngeo.baseTemplateUrl}/popup.html`;
     });
 
 

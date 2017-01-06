@@ -24,7 +24,7 @@ ngeo.module.value('gmfProfileTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['gmfProfileTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/profile.html';
+          `${gmf.baseTemplateUrl}/profile.html`;
     });
 
 
@@ -505,19 +505,19 @@ gmf.ProfileController.prototype.getTooltipHTML_ = function() {
   const number = this.$filter_('number');
   const DistDecimal = this.currentPoint.xUnits === 'm' ? 0 : 2;
   innerHTML.push(
-      this.profileLabels_.xAxis +
+      `${this.profileLabels_.xAxis +
       separator +
-      number(this.currentPoint.distance, DistDecimal) +
-      ' ' +
-      this.currentPoint.xUnits
+      number(this.currentPoint.distance, DistDecimal)
+      } ${
+      this.currentPoint.xUnits}`
   );
   for (elevationName in this.currentPoint.elevations) {
     translatedElevationName = this.gettextCatalog_.getString(elevationName);
     innerHTML.push(
-        translatedElevationName +
+        `${translatedElevationName +
         separator +
-        number(this.currentPoint.elevations[elevationName], 0) +
-        ' ' + this.currentPoint.yUnits
+        number(this.currentPoint.elevations[elevationName], 0)
+        } ${this.currentPoint.yUnits}`
     );
   }
   return innerHTML.join('</br>');

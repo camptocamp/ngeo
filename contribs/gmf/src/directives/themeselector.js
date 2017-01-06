@@ -68,7 +68,7 @@ gmf.themeselectorDirective = function() {
       'filter': '=gmfThemeselectorFilter'
     },
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/themeselector.html'
+    templateUrl: `${gmf.baseTemplateUrl}/themeselector.html`
   };
 };
 

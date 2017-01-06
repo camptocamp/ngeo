@@ -17,7 +17,7 @@ ngeo.module.value('ngeoGridTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['ngeoGridTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/grid.html';
+          `${ngeo.baseTemplateUrl}/grid.html`;
     });
 
 /**
@@ -55,7 +55,7 @@ ngeo.GridConfig = function(data, columnDefs) {
  * @export
  */
 ngeo.GridConfig.getRowUid = function(attributes) {
-  return '' + ol.getUid(attributes);
+  return `${ol.getUid(attributes)}`;
 };
 
 

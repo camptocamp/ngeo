@@ -34,8 +34,8 @@ ngeo.measurelengthDirective = function($compile, gettext, $filter) {
 
       const measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), {
         style: new ol.style.Style(),
-        startMsg: $compile('<div translate>' + helpMsg + '</div>')($scope)[0],
-        continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]
+        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
+        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0]
       });
 
       drawFeatureCtrl.registerInteraction(measureLength);

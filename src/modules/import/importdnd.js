@@ -121,7 +121,7 @@ exports.module.value('ngeoImportDndTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['ngeoImportDndTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseModuleTemplateUrl + '/import/partials/import-dnd.html';
+          `${ngeo.baseModuleTemplateUrl}/import/partials/import-dnd.html`;
     });
 
 exports.module.directive('ngeoImportDnd', exports);

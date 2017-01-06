@@ -294,7 +294,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
           gmfLayer.dimensions
       ));
     }
-    goog.asserts.fail('Unsupported type: ' + gmfLayer.type);
+    goog.asserts.fail(`Unsupported type: ${gmfLayer.type}`);
   };
 
   /**
@@ -510,8 +510,8 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
     withCredentials: true
   }).then(function(response) {
     if (response.data.errors.length != 0) {
-      const message = 'The themes contain some errors:\n' +
-        response.data.errors.join('\n');
+      const message = `The themes contain some errors:\n${
+        response.data.errors.join('\n')}`;
       console.error(message);
       if (this.ngeoLocation_ !== null && this.ngeoLocation_.hasParam('debug')) {
         window.alert(message);

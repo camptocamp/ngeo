@@ -157,7 +157,7 @@ exports.module.value('ngeoWmsGetCapItemTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['ngeoWmsGetCapItemTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseModuleTemplateUrl + '/import/partials/wms-get-cap-item.html';
+          `${ngeo.baseModuleTemplateUrl}/import/partials/wms-get-cap-item.html`;
     });
 
 exports.module.controller('NgeoWmsGetCapItemDirectiveController', exports.Controller);

@@ -136,14 +136,14 @@ describe('ngeo.layertreeDirective', function() {
     // All nodes of the graph
     let visited = '';
     roottreeCtrl.traverseDepthFirst(function(treeCtrl) {
-      visited += ', ' + treeCtrl.node.name;
+      visited += `, ${treeCtrl.node.name}`;
     });
     expect(visited).toBe(', Root, Node 0, Leaf 00, Leaf 01, Leaf 1');
 
     // Stop at first node
     visited = '';
     roottreeCtrl.traverseDepthFirst(function(treeCtrl) {
-      visited = visited + ', ' + treeCtrl.node.name;
+      visited = `${visited}, ${treeCtrl.node.name}`;
       return ngeo.LayertreeController.VisitorDecision.STOP;
     });
     expect(visited).toBe(', Root');
@@ -151,7 +151,7 @@ describe('ngeo.layertreeDirective', function() {
     // Stop at leaf01 node
     visited = '';
     roottreeCtrl.traverseDepthFirst(function(treeCtrl) {
-      visited = visited + ', ' + treeCtrl.node.name;
+      visited = `${visited}, ${treeCtrl.node.name}`;
       if (treeCtrl.node.name === 'Leaf 01') {
         return ngeo.LayertreeController.VisitorDecision.STOP;
       }
@@ -161,7 +161,7 @@ describe('ngeo.layertreeDirective', function() {
     // Skip Node0 children
     visited = '';
     roottreeCtrl.traverseDepthFirst(function(treeCtrl) {
-      visited = visited + ', ' + treeCtrl.node.name;
+      visited = `${visited}, ${treeCtrl.node.name}`;
       if (treeCtrl.node.name === 'Node 0') {
         return ngeo.LayertreeController.VisitorDecision.SKIP;
       }

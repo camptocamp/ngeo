@@ -67,7 +67,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
     if (!layer['isInvalid']) {
       layer['wmsUrl'] = getCap['Service']['OnlineResource'];
       layer['wmsVersion'] = getCap['version'];
-      layer['id'] = 'WMS||' + layer['wmsUrl'] + '||' + layer['Name'];
+      layer['id'] = `WMS||${layer['wmsUrl']}||${layer['Name']}`;
       layer['extent'] = getLayerExtentFromGetCap(layer, proj);
 
       // if the layer has no extent, it is set as invalid.
@@ -145,9 +145,9 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
         if (val && val['Service'] && val['Capability']) {
           if (val['Service']['MaxWidth']) {
-            scope['limitations'] = gettextCatalog.getString('Maximum WMS size allowed') +
-                ' ' + val['Service']['MaxWidth'] +
-                ' * ' + val['Service']['MaxHeight'];
+            scope['limitations'] = `${gettextCatalog.getString('Maximum WMS size allowed')
+                } ${val['Service']['MaxWidth']
+                } * ${val['Service']['MaxHeight']}`;
           }
 
           if (val['Capability']['Layer']) {
@@ -172,8 +172,8 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
             }
 
           } catch (e) {
-            $window.console.error('Add layer failed:' + e);
-            msg = gettextCatalog.getString('WMS layer could not be added') + ' ' + e.message;
+            $window.console.error(`Add layer failed:${e}`);
+            msg = `${gettextCatalog.getString('WMS layer could not be added')} ${e.message}`;
           }
           $window.alert(msg);
         }
@@ -201,7 +201,7 @@ exports.module.value('ngeoWmsGetCapTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['ngeoWmsGetCapTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseModuleTemplateUrl + '/import/partials/wms-get-cap.html';
+          `${ngeo.baseModuleTemplateUrl}/import/partials/wms-get-cap.html`;
     });
 
 /**

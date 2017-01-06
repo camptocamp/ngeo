@@ -34,7 +34,7 @@ gmf.mousepositionDirective = function() {
       'projections': '<gmfMousepositionProjections'
     },
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/mouseposition.html'
+    templateUrl: `${gmf.baseTemplateUrl}/mouseposition.html`
   };
 };
 

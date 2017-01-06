@@ -26,7 +26,7 @@ ngeo.Scalify = function($filter) {
   const numberFilter = $filter('number');
   return function(scale) {
     const text = numberFilter(scale, 0);
-    return text ? '1\u00a0:\u00a0' + text : '';
+    return text ? `1\u00a0:\u00a0${text}` : '';
   };
 };
 
@@ -85,10 +85,10 @@ ngeo.Number = function($locale) {
     const unit = Math.floor(number / factor);
 
     if (nb_decimal > 0) {
-      let str_number = number + '';
+      let str_number = `${number}`;
       // 0 padding
       while (str_number.length < nb_decimal) {
-        str_number = '0' + str_number;
+        str_number = `0${str_number}`;
       }
       decimal = str_number.substring(str_number.length - nb_decimal);
       while (decimal[decimal.length - 1] === '0') {
@@ -97,7 +97,7 @@ ngeo.Number = function($locale) {
     }
 
     const groups = [];
-    let str_unit = unit + '';
+    let str_unit = `${unit}`;
     while (str_unit.length > 3) {
       const index = str_unit.length - 3;
       groups.unshift(str_unit.substring(index));
@@ -263,10 +263,10 @@ ngeo.DMSCoordinates = function() {
     const d = Math.floor(dms / 3600);
     const m = Math.floor((dms / 60) % 60);
     const s = (dms % 60);
-    return d + '\u00b0 ' +
-        ol.string.padNumber(m, 2) + '\u2032 ' +
-        ol.string.padNumber(s, 2, fractionDigits) + '\u2033 ' +
-        hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0);
+    return `${d}\u00b0 ${
+        ol.string.padNumber(m, 2)}\u2032 ${
+        ol.string.padNumber(s, 2, fractionDigits)}\u2033 ${
+        hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0)}`;
   };
 
   /**
@@ -312,7 +312,7 @@ ngeo.module.filter('ngeoDMSCoordinates', ngeo.DMSCoordinates);
 ngeo.trustHtmlFilter = function($sce) {
   return function(input) {
     if (input !== undefined && input !== null) {
-      return $sce.trustAsHtml('' + input);
+      return $sce.trustAsHtml(`${input}`);
     } else {
       return $sce.trustAsHtml('&nbsp;');
     }

@@ -48,7 +48,7 @@ gmf.drawfeatureDirective = function() {
       'map': '<gmfDrawfeatureMap'
     },
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/drawfeature.html'
+    templateUrl: `${gmf.baseTemplateUrl}/drawfeature.html`
   };
 };
 
@@ -706,7 +706,7 @@ gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
       break;
     default:
       // FIXME
-      console.log('FIXME - support: ' + action);
+      console.log(`FIXME - support: ${action}`);
       break;
   }
 };

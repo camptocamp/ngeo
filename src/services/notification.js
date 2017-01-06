@@ -108,7 +108,7 @@ ngeo.Notification.prototype.showMessage = function(message) {
       break;
   }
 
-  const el = angular.element('<div class="' + classNames.join(' ') + '"></div>');
+  const el = angular.element(`<div class="${classNames.join(' ')}"></div>`);
   let container;
 
   if (message.target) {

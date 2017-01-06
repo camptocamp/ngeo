@@ -60,7 +60,7 @@ gmf.module.value('gmfPrintTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['gmfPrintTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/print.html';
+          `${gmf.baseTemplateUrl}/print.html`;
     });
 
 
@@ -383,7 +383,7 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
 
   // Print on event.
   $rootScope.$on('gmfStartPrint', function(event, format) {
-    this.print('' + format);
+    this.print(`${format}`);
   }.bind(this));
 
   // Cancel print task on event.
@@ -532,13 +532,13 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
   // The attributes without 'clientParams' are the custom fields (user-defined).
   this.layout_.attributes.forEach(function(attribute) {
     if (!attribute['clientParams']) {
-      name = '' + attribute.name;
+      name = `${attribute.name}`;
       const defaultValue = attribute.default;
       value = (defaultValue !== undefined && defaultValue !== '') ?
           defaultValue : this.fieldValues_[name];
 
       // Try to use existing form field type
-      rawType = '' + attribute.type;
+      rawType = `${attribute.type}`;
       switch (rawType) {
         case 'String':
           type = (name === 'comments') ? 'textarea' : 'text';
@@ -911,7 +911,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
         // Don't add classes without legend url.
         if (icons !== null) {
           classes.push({
-            'name': gettextCatalog.getString('' + layerName),
+            'name': gettextCatalog.getString(`${layerName}`),
             'icons': [icons]
           });
         }
@@ -925,7 +925,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
           // active name.
           if (icons !== null && name.length !== 0) {
             classes.push({
-              'name': gettextCatalog.getString('' + name),
+              'name': gettextCatalog.getString(`${name}`),
               'icons': [icons]
             });
           }

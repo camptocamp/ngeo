@@ -64,7 +64,7 @@ gmf.objecteditingDirective = function() {
       'sketchFeatures': '<gmfObjecteditingSketchfeatures'
     },
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/objectediting.html'
+    templateUrl: `${gmf.baseTemplateUrl}/objectediting.html`
   };
 };
 
@@ -589,7 +589,7 @@ gmf.ObjecteditingController.prototype.unregisterInteractions_ = function() {
 gmf.ObjecteditingController.prototype.toggle_ = function(active) {
 
   const keys = this.listenerKeys_;
-  const uid = gmf.ObjecteditingController.NAMESPACE_ + '-' + ol.getUid(this);
+  const uid = `${gmf.ObjecteditingController.NAMESPACE_}-${ol.getUid(this)}`;
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {

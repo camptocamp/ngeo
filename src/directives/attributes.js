@@ -33,7 +33,7 @@ ngeo.attributesDirective = function() {
       'disabled': '<ngeoAttributesDisabled',
       'feature': '=ngeoAttributesFeature'
     },
-    templateUrl: ngeo.baseTemplateUrl + '/attributes.html'
+    templateUrl: `${ngeo.baseTemplateUrl}/attributes.html`
   };
 };
 

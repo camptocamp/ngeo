@@ -14,7 +14,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['ngeoLayertreeTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/layertree.html';
+          `${ngeo.baseTemplateUrl}/layertree.html`;
     });
 
 

@@ -292,7 +292,7 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       styles.push(new ol.style.Style({
         geometry: new ol.geom.Point(line.getLastCoordinate()),
         text: this.createTextStyle_({
-          text: azimut + '°',
+          text: `${azimut}°`,
           size: 10,
           offsetX: Math.cos((azimut - 90) * Math.PI / 180) * 20,
           offsetY: Math.sin((azimut - 90) * Math.PI / 180) * 20
@@ -747,7 +747,7 @@ ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
 
   const data = format.writeFeatures(clones, writeOptions);
   this.download_(
-      data, fileName, mimeType + ';charset=utf-8');
+      data, fileName, `${mimeType};charset=utf-8`);
 };
 
 
@@ -767,7 +767,7 @@ ngeo.FeatureHelper.prototype.createTextStyle_ = function(options) {
     delete options.angle;
   }
 
-  options.font = ['normal', (options.size || 10) + 'pt', 'Arial'].join(' ');
+  options.font = ['normal', `${options.size || 10}pt`, 'Arial'].join(' ');
 
   if (options.color) {
     options.fill = new ol.style.Fill({color: options.color || [0, 0, 0, 1]});

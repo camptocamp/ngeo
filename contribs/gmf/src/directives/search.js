@@ -31,7 +31,7 @@ gmf.module.value('gmfSearchTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['gmfSearchTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/search.html';
+          `${gmf.baseTemplateUrl}/search.html`;
     });
 
 
@@ -370,13 +370,13 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     templates: {
       header() {
         const header = gettextCatalog.getString('Recenter to');
-        return '<div class="gmf-search-header" translate>' + header + '</div>';
+        return `<div class="gmf-search-header" translate>${header}</div>`;
       },
       suggestion(suggestion) {
         const coordinates = suggestion['label'];
 
-        let html = '<p class="gmf-search-label">' + coordinates + '</p>';
-        html = '<div class="gmf-search-datum">' + html + '</div>';
+        let html = `<p class="gmf-search-label">${coordinates}</p>`;
+        html = `<div class="gmf-search-datum">${html}</div>`;
         return html;
       }
     }
@@ -469,7 +469,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
           return '';
         } else {
           const header = gettextCatalog.getString(config.datasetTitle);
-          return '<div class="gmf-search-header">' + header + '</div>';
+          return `<div class="gmf-search-header">${header}</div>`;
         }
       },
       suggestion(suggestion) {
@@ -478,11 +478,11 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
         const scope = directiveScope.$new(true);
         scope['feature'] = feature;
 
-        let html = '<p class="gmf-search-label">' +
-                   feature.get(config.labelKey) + '</p>';
-        html += '<p class="gmf-search-group">' + (feature.get('layer_name') ||
-                config.datasetTitle) + '</p>';
-        html = '<div class="gmf-search-datum">' + html + '</div>';
+        let html = `<p class="gmf-search-label">${
+                   feature.get(config.labelKey)}</p>`;
+        html += `<p class="gmf-search-group">${feature.get('layer_name') ||
+                config.datasetTitle}</p>`;
+        html = `<div class="gmf-search-datum">${html}</div>`;
         return compile(html)(scope);
       }
     })

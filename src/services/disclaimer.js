@@ -145,11 +145,11 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
     }
 
     const el = angular.element(
-      '<div role="alert" class="' + classNames.join(' ') + '"></div>');
+      `<div role="alert" class="${classNames.join(' ')}"></div>`);
     const button = angular.element(
-      '<button type="button" class="close" data-dismiss="alert" aria-label="' +
-        this.gettextCatalog_.getString('Close') +
-        '"><span aria-hidden="true" class="fa fa-times"></span></button>');
+      `<button type="button" class="close" data-dismiss="alert" aria-label="${
+        this.gettextCatalog_.getString('Close')
+        }"><span aria-hidden="true" class="fa fa-times"></span></button>`);
     const msg = angular.element('<span />').html(message.msg);
     el.append(button).append(msg);
 
@@ -180,7 +180,7 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
  * @private
  */
 ngeo.Disclaimer.prototype.getMessageUid_ = function(message) {
-  return message.msg + '-' + message.type;
+  return `${message.msg}-${message.type}`;
 };
 
 

@@ -143,8 +143,8 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
       $filter('ngeoUnitPrefix'),
       {
         style: new ol.style.Style(),
-        startMsg: $compile('<div translate>' + helpMsg + '</div>')($scope)[0],
-        continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]
+        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
+        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0]
       }
     );
   } else if (this.geomType === ngeo.GeometryType.POLYGON ||
@@ -160,8 +160,8 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
       $filter('ngeoUnitPrefix'),
       {
         style: new ol.style.Style(),
-        startMsg: $compile('<div translate>' + helpMsg + '</div>')($scope)[0],
-        continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]
+        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
+        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0]
       }
     );
   }

@@ -17,7 +17,7 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['gmfAuthenticationTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/authentication.html';
+          `${gmf.baseTemplateUrl}/authentication.html`;
     });
 
 

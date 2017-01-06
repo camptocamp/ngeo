@@ -32,7 +32,7 @@ beforeEach(function() {
             }
           }
 
-          result.message =  'expected ' + actual + ' to sort of equal ' + expected;
+          result.message =  `expected ${actual} to sort of equal ${expected}`;
 
           return result;
         }

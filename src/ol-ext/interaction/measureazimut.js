@@ -97,8 +97,8 @@ ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius = function(
 
   let output = ngeo.interaction.MeasureAzimut.getFormattedAzimut(line);
 
-  output += ', ' + ngeo.interaction.Measure.getFormattedLength(
-      line, projection, decimals, format);
+  output += `, ${ngeo.interaction.Measure.getFormattedLength(
+      line, projection, decimals, format)}`;
 
   return output;
 };
@@ -111,7 +111,7 @@ ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius = function(
  */
 ngeo.interaction.MeasureAzimut.getFormattedAzimut = function(line) {
   const azimut = ngeo.interaction.MeasureAzimut.getAzimut(line);
-  return azimut + '°';
+  return `${azimut}°`;
 };
 
 

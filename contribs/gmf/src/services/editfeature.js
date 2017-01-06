@@ -83,7 +83,7 @@ gmf.EditFeature.prototype.getFeaturesWithComparisonFilters = function(
   let filter;
   for (let i = 0, ii = filters.length; i < ii; i++) {
     filter = filters[i];
-    params[filter.property + '__' + filter.operator] = filter.value;
+    params[`${filter.property}__${filter.operator}`] = filter.value;
     properties.push(filter.property);
   }
 
@@ -133,7 +133,7 @@ gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
 gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
   const url = goog.uri.utils.appendPath(
     this.baseUrl_,
-    layerId.toString() + '/' + feature.getId()
+    `${layerId.toString()}/${feature.getId()}`
   );
   const geoJSON = new ol.format.GeoJSON().writeFeature(feature);
   return this.http_.put(url, geoJSON, {
@@ -152,7 +152,7 @@ gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
 gmf.EditFeature.prototype.deleteFeature = function(layerId, feature) {
   const url = goog.uri.utils.appendPath(
     this.baseUrl_,
-    layerId.toString() + '/' + feature.getId()
+    `${layerId.toString()}/${feature.getId()}`
   );
   return this.http_.delete(url, {
     headers: {'Content-Type': 'application/json'},

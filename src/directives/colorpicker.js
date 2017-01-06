@@ -13,7 +13,7 @@ ngeo.module.value('ngeoColorpickerTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['ngeoColorpickerTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/colorpicker.html';
+          `${ngeo.baseTemplateUrl}/colorpicker.html`;
     });
 
 /**

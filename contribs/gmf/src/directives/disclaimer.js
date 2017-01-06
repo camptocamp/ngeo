@@ -294,7 +294,7 @@ gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
     if (this.msgs_.indexOf(msg) < 0) {
       this.msgs_.push(msg);
     }
-    this.msg = '' + this.sce_.trustAsHtml(this.msgs_.join('<br />'));
+    this.msg = `${this.sce_.trustAsHtml(this.msgs_.join('<br />'))}`;
     this.visibility = true;
   } else {
     this.disclaimer_.alert({

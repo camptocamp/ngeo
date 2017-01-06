@@ -259,7 +259,7 @@ gmf.elevationwidgetDirective = function() {
     },
     controller: 'gmfElevationwidgetController as ctrl',
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/elevationwidget.html'
+    templateUrl: `${gmf.baseTemplateUrl}/elevationwidget.html`
   };
 };
 

@@ -306,7 +306,7 @@ ngeo.format.FeatureHash.encodeStylePoint_ = function(imageStyle, encodedStyles) 
     if (encodedStyles.length > 0) {
       encodedStyles.push('\'');
     }
-    encodedStyles.push(encodeURIComponent('pointRadius*' + radius));
+    encodedStyles.push(encodeURIComponent(`pointRadius*${radius}`));
     const fillStyle = imageStyle.getFill();
     if (fillStyle !== null) {
       ngeo.format.FeatureHash.encodeStyleFill_(fillStyle, encodedStyles);
@@ -358,7 +358,7 @@ ngeo.format.FeatureHash.encodeStyleFill_ = function(fillStyle, encodedStyles, op
       encodedStyles.push('\'');
     }
     encodedStyles.push(
-        encodeURIComponent(propertyName + '*' + fillColorHex));
+        encodeURIComponent(`${propertyName}*${fillColorHex}`));
   }
 };
 
@@ -380,14 +380,14 @@ ngeo.format.FeatureHash.encodeStyleStroke_ = function(strokeStyle, encodedStyles
     if (encodedStyles.length > 0) {
       encodedStyles.push('\'');
     }
-    encodedStyles.push(encodeURIComponent('strokeColor*' + strokeColorHex));
+    encodedStyles.push(encodeURIComponent(`strokeColor*${strokeColorHex}`));
   }
   const strokeWidth = strokeStyle.getWidth();
   if (strokeWidth !== undefined) {
     if (encodedStyles.length > 0) {
       encodedStyles.push('\'');
     }
-    encodedStyles.push(encodeURIComponent('strokeWidth*' + strokeWidth));
+    encodedStyles.push(encodeURIComponent(`strokeWidth*${strokeWidth}`));
   }
 };
 
@@ -407,7 +407,7 @@ ngeo.format.FeatureHash.encodeStyleText_ = function(textStyle, encodedStyles) {
       if (encodedStyles.length > 0) {
         encodedStyles.push('\'');
       }
-      encodedStyles.push(encodeURIComponent('fontSize*' + font[1]));
+      encodedStyles.push(encodeURIComponent(`fontSize*${font[1]}`));
     }
   }
   const fillStyle = textStyle.getFill();
@@ -620,7 +620,7 @@ ngeo.format.FeatureHash.setStyleInFeature_ = function(text, feature) {
   let textStyle = null;
   if (fontSize !== undefined && fontColor !== undefined) {
     textStyle = new ol.style.Text({
-      font: fontSize + ' sans-serif',
+      font: `${fontSize} sans-serif`,
       fill: new ol.style.Fill({
         color: /** @type {Array<number>|string} */ (fontColor)
       })
@@ -771,7 +771,7 @@ ngeo.format.FeatureHash.writeLineStringGeometry_ = function(geometry) {
   const flatCoordinates = geometry.getFlatCoordinates();
   const stride = geometry.getStride();
   const end = flatCoordinates.length;
-  return 'l(' + this.encodeCoordinates_(flatCoordinates, stride, 0, end) + ')';
+  return `l(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
 };
 
 
@@ -818,7 +818,7 @@ ngeo.format.FeatureHash.writePointGeometry_ = function(geometry) {
   const flatCoordinates = geometry.getFlatCoordinates();
   const stride = geometry.getStride();
   const end = flatCoordinates.length;
-  return 'p(' + this.encodeCoordinates_(flatCoordinates, stride, 0, end) + ')';
+  return `p(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
 };
 
 
@@ -835,7 +835,7 @@ ngeo.format.FeatureHash.writeMultiPointGeometry_ = function(geometry) {
   const flatCoordinates = geometry.getFlatCoordinates();
   const stride = geometry.getStride();
   const end = flatCoordinates.length;
-  return 'P(' + this.encodeCoordinates_(flatCoordinates, stride, 0, end) + ')';
+  return `P(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
 };
 
 
@@ -1030,7 +1030,7 @@ ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_optio
   goog.asserts.assert(text[text.length - 1] === ')');
   let splitIndex = text.indexOf('~');
   const geometryText = splitIndex >= 0 ?
-      text.substring(0, splitIndex) + ')' : text;
+      `${text.substring(0, splitIndex)})` : text;
   const geometry = this.readGeometryFromText(geometryText, opt_options);
   const feature = new ol.Feature(geometry);
   if (splitIndex >= 0) {
@@ -1149,8 +1149,8 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
             encodedProperties.push('\'');
           }
           const encoded = encodeURIComponent(
-              key.replace(/[()'*]/g, '_') + '*' +
-              value.toString().replace(/[()'*]/g, '_'));
+              `${key.replace(/[()'*]/g, '_')}*${
+              value.toString().replace(/[()'*]/g, '_')}`);
           encodedProperties.push(encoded);
         }
       }));

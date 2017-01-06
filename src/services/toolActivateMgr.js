@@ -143,7 +143,7 @@ ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
       }
     });
     goog.asserts.assert(
-        defaultTools <= 1, 'more than one default tool in group ' + groupName);
+        defaultTools <= 1, `more than one default tool in group ${groupName}`);
   }
 };
 

@@ -81,10 +81,10 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
       prepare(query, settings) {
         settings.url = settings.url.replace('%QUERY', query);
         if (options.limit !== undefined) {
-          settings.url += '&limit=' + options.limit;
+          settings.url += `&limit=${options.limit}`;
         }
         if (options.origins !== undefined) {
-          settings.url += '&origins=' + options.origins;
+          settings.url += `&origins=${options.origins}`;
         }
 
         return (options.prepare !== undefined) ?

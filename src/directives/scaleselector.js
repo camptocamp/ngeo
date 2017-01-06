@@ -18,7 +18,7 @@ ngeo.module.value('ngeoScaleselectorTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['ngeoScaleselectorTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/scaleselector.html';
+          `${ngeo.baseTemplateUrl}/scaleselector.html`;
     });
 
 

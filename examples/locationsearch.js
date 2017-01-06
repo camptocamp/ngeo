@@ -85,7 +85,7 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
       },
       suggestion(suggestion) {
         const feature = /** @type {ol.Feature} */ (suggestion);
-        return '<p>' + feature.get('label') + '</p>';
+        return `<p>${feature.get('label')}</p>`;
       }
     }
   }];
@@ -117,7 +117,7 @@ app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLoc
     prepare(query, settings) {
       // in a real application the interface language could be used here
       const lang = 'fr';
-      settings.url += '&lang=' + lang;
+      settings.url += `&lang=${lang}`;
       return settings;
     }
   });

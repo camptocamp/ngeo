@@ -35,8 +35,8 @@ ngeo.measureazimutDirective = function($compile, gettext, $filter) {
 
       const measureAzimut = new ngeo.interaction.MeasureAzimut($filter('ngeoUnitPrefix'), {
         style: new ol.style.Style(),
-        startMsg: $compile('<div translate>' + helpMsg + '</div>')($scope)[0],
-        continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]
+        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
+        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0]
       });
 
       drawFeatureCtrl.registerInteraction(measureAzimut);

@@ -146,7 +146,7 @@ ngeo.Print.FEAT_STYLE_PROP_PREFIX_ = '_ngeo_style_';
 ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
       /** @type {angular.$http.Config} */ ({});
-  const url = this.url_ + '/cancel/' + ref;
+  const url = `${this.url_}/cancel/${ref}`;
   // "delete" is a reserved word, so use ['delete']
   return this.$http_['delete'](url, httpConfig);
 };
@@ -517,7 +517,7 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
     return;
   }
   const styleType = ngeo.PrintStyleTypes_[geometryType];
-  const key = '[' + featureStyleProp + ' = \'' + styleId + '\']';
+  const key = `[${featureStyleProp} = '${styleId}']`;
   if (key in object) {
     // do nothing if we already have a style object for this CQL rule
     return;
@@ -826,7 +826,7 @@ ngeo.Print.prototype.getWmtsUrl_ = function(source) {
  */
 ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
   const format = printSpec.format || 'pdf';
-  const url = this.url_ + '/report.' + format;
+  const url = `${this.url_}/report.${format}`;
   const httpConfig = /** @type {angular.$http.Config} */ ({
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'
@@ -848,7 +848,7 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
 ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
       /** @type {angular.$http.Config} */ ({});
-  const url = this.url_ + '/status/' + ref + '.json';
+  const url = `${this.url_}/status/${ref}.json`;
   return this.$http_.get(url, httpConfig);
 };
 
@@ -860,7 +860,7 @@ ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
  * @export
  */
 ngeo.Print.prototype.getReportUrl = function(ref) {
-  return this.url_ + '/report/' + ref;
+  return `${this.url_}/report/${ref}`;
 };
 
 
@@ -874,7 +874,7 @@ ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
     opt_httpConfig !== undefined ? opt_httpConfig : /** @type {angular.$http.Config} */ ({
       withCredentials: true
     });
-  const url = this.url_ + '/capabilities.json';
+  const url = `${this.url_}/capabilities.json`;
   return this.$http_.get(url, httpConfig);
 };
 

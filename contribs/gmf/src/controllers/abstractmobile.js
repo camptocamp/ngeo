@@ -102,7 +102,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   };
 
   const viewConfig = {
-    projection: ol.proj.get('EPSG:' + (config.srid || 21781))
+    projection: ol.proj.get(`EPSG:${config.srid || 21781}`)
   };
   goog.object.extend(viewConfig, config.mapViewConfig || {});
 
@@ -177,7 +177,7 @@ gmf.AbstractMobileController.prototype.toggleLeftNavVisibility = function() {
     // default dragger behavior is to change left/top, override it to change
     // translateX
     this.dragger_.defaultAction = function(x, y) {
-      this.target.style.transform = 'translateX(' + (navWidth + x) + 'px)';
+      this.target.style.transform = `translateX(${navWidth + x}px)`;
     };
     // Set the limits for dragger so that it's constrained horizontaly to the
     // left.
@@ -197,7 +197,7 @@ gmf.AbstractMobileController.prototype.toggleRightNavVisibility = function() {
     // default dragger behavior is to change left/top, override it to change
     // translateX
     this.dragger_.defaultAction = function(x, y) {
-      this.target.style.transform = 'translateX(' + (-navWidth + x) + 'px)';
+      this.target.style.transform = `translateX(${-navWidth + x}px)`;
     };
     // Set the limits for dragger so that it's constrained horizontaly to the
     // right.

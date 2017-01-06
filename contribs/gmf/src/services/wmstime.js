@@ -71,8 +71,8 @@ gmf.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_
   if (wmsTimeProperty.mode === 'range') {
     goog.asserts.assert(times.end !== undefined);
     return (
-      this.formatWMSTimeValue_(times.start, wmsTimeProperty.resolution, opt_toUTC) + '/' +
-      this.formatWMSTimeValue_(times.end, wmsTimeProperty.resolution, opt_toUTC)
+      `${this.formatWMSTimeValue_(times.start, wmsTimeProperty.resolution, opt_toUTC)}/${
+      this.formatWMSTimeValue_(times.end, wmsTimeProperty.resolution, opt_toUTC)}`
     );
   } else {
     return this.formatWMSTimeValue_(times.start, wmsTimeProperty.resolution, opt_toUTC);

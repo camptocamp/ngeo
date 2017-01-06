@@ -29,7 +29,7 @@ gmf.featurestyleDirective = function() {
       'feature': '=gmfFeaturestyleFeature'
     },
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/featurestyle.html'
+    templateUrl: `${gmf.baseTemplateUrl}/featurestyle.html`
   };
 };
 

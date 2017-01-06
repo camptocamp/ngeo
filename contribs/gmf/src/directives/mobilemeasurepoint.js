@@ -22,7 +22,7 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/mobilemeasurepoint.html';
+          `${gmf.baseTemplateUrl}/mobilemeasurepoint.html`;
     });
 
 
@@ -272,9 +272,9 @@ gmf.MobileMeasurePointController.prototype.getAltitude_ = function() {
         childEl.className = className;
         let value;
         if (height > 1000) {
-          value = parseFloat((height / 1000).toPrecision(3)) + ' km';
+          value = `${parseFloat((height / 1000).toPrecision(3))} km`;
         } else {
-          value = parseFloat((height).toPrecision(3)) + ' m';
+          value = `${parseFloat((height).toPrecision(3))} m`;
         }
         childEl.innerHTML = [this.translate(key), ': ', value].join('');
         ctn.appendChild(childEl);

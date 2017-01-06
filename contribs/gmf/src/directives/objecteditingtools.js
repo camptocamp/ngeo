@@ -81,7 +81,7 @@ gmf.objecteditingtoolsDirective = function() {
       'sketchFeatures': '<gmfObjecteditingtoolsSketchfeatures'
     },
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/objecteditingtools.html'
+    templateUrl: `${gmf.baseTemplateUrl}/objecteditingtools.html`
   };
 };
 
@@ -285,7 +285,7 @@ gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
     this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
 
-  const group = gmf.ObjecteditingtoolsController.NAMESPACE_ + '-' + ol.getUid(this);
+  const group = `${gmf.ObjecteditingtoolsController.NAMESPACE_}-${ol.getUid(this)}`;
   const toolActivate = new ngeo.ToolActivate(this, toolActiveName);
   this.ngeoToolActivateMgr_.registerTool(group, toolActivate, false);
 

@@ -405,7 +405,7 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
       gettextCatalog.getString('group is already loaded.') :
       gettextCatalog.getString('groups are already loaded.');
   this.ngeoNotification_.notify({
-    msg: names.join(', ') + ' ' + msg,
+    msg: `${names.join(', ')} ${msg}`,
     type: ngeo.MessageType.INFORMATION
   });
 };
@@ -518,7 +518,7 @@ gmf.TreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
 
   let isChecked, isExpanded, isLegendExpanded;
   if (treeCtrl.children.length > 0) {
-    const nodeElement = $('#gmf-layertree-layer-group-' + treeCtrl.uid);
+    const nodeElement = $(`#gmf-layertree-layer-group-${treeCtrl.uid}`);
     // Set isExpanded only in groups.
     if (nodeElement) {
       isExpanded = nodeElement.hasClass('in');
@@ -533,7 +533,7 @@ gmf.TreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
     } else {
       isChecked = undefined;
     }
-    const legendElement = $('#gmf-layertree-node-' + treeCtrl.uid + '-legend');
+    const legendElement = $(`#gmf-layertree-node-${treeCtrl.uid}-legend`);
     if (legendElement) {
       isLegendExpanded = legendElement.is(':visible');
     }

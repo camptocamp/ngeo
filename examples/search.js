@@ -115,8 +115,8 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
           event.stopPropagation();
         };
 
-        const html = '<p>' + feature.get('label') +
-            '<button ng-click="click($event)">i</button></p>';
+        const html = `<p>${feature.get('label')
+            }<button ng-click="click($event)">i</button></p>`;
         return $compile(html)(scope);
       }
     }

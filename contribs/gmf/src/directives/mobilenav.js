@@ -119,9 +119,9 @@ gmf.module.controller('gmfMobileNavController', gmf.MobileNavController);
  */
 gmf.MobileNavController.prototype.init = function(element) {
   const cls = gmf.MobileNavController.ClassName_;
-  this.active_ = $(element.find('.' + cls.ACTIVE + '.' + cls.SLIDE));
+  this.active_ = $(element.find(`.${cls.ACTIVE}.${cls.SLIDE}`));
   this.header_ = $(element.find('> header'));
-  this.backButton_ = $(element.find('header > .' + cls.GO_BACK));
+  this.backButton_ = $(element.find(`header > .${cls.GO_BACK}`));
 
   // watch for clicks on "slide-in" elements
   element.find('[data-toggle=slide-in]').on('click', function(evt) {
@@ -129,7 +129,7 @@ gmf.MobileNavController.prototype.init = function(element) {
     const cls = gmf.MobileNavController.ClassName_;
 
     // the element to slide out is the div.slide parent
-    const slideOut = $(evt.currentTarget).parents('.' + cls.SLIDE);
+    const slideOut = $(evt.currentTarget).parents(`.${cls.SLIDE}`);
     goog.asserts.assert(slideOut.length === 1);
 
     // push the item to the selected stack
@@ -167,10 +167,10 @@ gmf.MobileNavController.prototype.updateNavigationHeader_ = function(
   this.header_.toggleClass(cls.BACK, back);
 
   // remove any inactive nav
-  this.header_.find('nav:not(.' + cls.ACTIVE + ' +)').remove();
+  this.header_.find(`nav:not(.${cls.ACTIVE} +)`).remove();
 
   // deactivate the currently active nav
-  this.header_.find('nav.' + cls.ACTIVE).removeClass(cls.ACTIVE)
+  this.header_.find(`nav.${cls.ACTIVE}`).removeClass(cls.ACTIVE)
       .addClass(cls.SLIDE_OUT);
 
   // show the back button when relevant

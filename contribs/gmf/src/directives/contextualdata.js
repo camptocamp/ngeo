@@ -160,10 +160,10 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
 
   const mapProjection = this.map.getView().getProjection().getCode();
   this.projections.forEach(function(proj) {
-    const coord = ol.proj.transform(coordinate, mapProjection, 'EPSG:' + proj);
-    scope['coord_' + proj] = coord;
-    scope['coord_' + proj + '_eastern'] = coord[0];
-    scope['coord_' + proj + '_northern'] = coord[1];
+    const coord = ol.proj.transform(coordinate, mapProjection, `EPSG:${proj}`);
+    scope[`coord_${proj}`] = coord;
+    scope[`coord_${proj}_eastern`] = coord[0];
+    scope[`coord_${proj}_northern`] = coord[1];
   });
 
   const getAltitudeSuccess = function(resp) {

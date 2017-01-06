@@ -155,7 +155,7 @@ ngeo.Popup.prototype.setContent = function(content, opt_trusted) {
  */
 ngeo.Popup.prototype.setUrl = function(url) {
   const content = this.sce_.trustAsHtml(
-    '<iframe src="' + url + '" width="100%" height="100%"></iframe>'
+    `<iframe src="${url}" width="100%" height="100%"></iframe>`
   );
   this.setContent(content);
 };

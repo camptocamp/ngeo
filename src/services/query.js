@@ -750,7 +750,7 @@ ngeo.Query.prototype.getLayersForItems_ = function(items) {
 ngeo.Query.prototype.setUniqueIds_ = function(features, sourceId) {
   features.forEach(function(feature) {
     if (feature.getId() !== undefined) {
-      const id = sourceId + '_' + feature.getId();
+      const id = `${sourceId}_${feature.getId()}`;
       feature.setId(id);
     }
   });

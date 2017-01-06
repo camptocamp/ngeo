@@ -14,7 +14,7 @@ ngeo.module.value('ngeoDatePickerTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['ngeoDatePickerTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/datepicker.html';
+          `${ngeo.baseTemplateUrl}/datepicker.html`;
     });
 
 

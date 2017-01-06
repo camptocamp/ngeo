@@ -308,7 +308,7 @@ ngeo.interaction.ModifyCircle.handleDownEvent_ = function(evt) {
       let uid = ol.getUid(segmentDataMatch.feature);
       const depth = segmentDataMatch.depth;
       if (depth) {
-        uid += '-' + depth.join('-'); // separate feature components
+        uid += `-${depth.join('-')}`; // separate feature components
       }
       if (!componentSegments[uid]) {
         componentSegments[uid] = new Array(2);

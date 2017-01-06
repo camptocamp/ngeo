@@ -113,7 +113,7 @@ ngeo.CsvDownload.prototype.getRow_ = function(values) {
 
   const rowValues = values.map(function(value) {
     if (value !== undefined && value !== null) {
-      value = '' + value;
+      value = `${value}`;
       // wrap each value into quotes and escape quotes with double quotes
       return this.quote_ + value.replace(matchAllQuotesRegex, doubleQuote) + this.quote_;
     } else {
@@ -121,7 +121,7 @@ ngeo.CsvDownload.prototype.getRow_ = function(values) {
     }
   }.bind(this));
 
-  return rowValues.join(this.separator_) + '\n';
+  return `${rowValues.join(this.separator_)}\n`;
 };
 
 
@@ -136,7 +136,7 @@ ngeo.CsvDownload.prototype.getRow_ = function(values) {
 ngeo.CsvDownload.prototype.startDownload = function(data, columnDefs, fileName) {
   const fileContent = this.generateCsv(data, columnDefs);
   this.download_(
-      fileContent, fileName, 'attachment/csv;charset=' + this.encoding_);
+      fileContent, fileName, `attachment/csv;charset=${this.encoding_}`);
 };
 
 ngeo.module.service('ngeoCsvDownload', ngeo.CsvDownload);

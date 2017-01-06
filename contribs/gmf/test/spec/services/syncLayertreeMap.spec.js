@@ -33,7 +33,7 @@ describe('gmf.SyncLayertreeMap', function() {
       $httpBackend_ = $httpBackend;
       gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
-      const reGmfTreeUrl = new RegExp('^' + gmfTreeUrl);
+      const reGmfTreeUrl = new RegExp(`^${gmfTreeUrl}`);
       // Prepare request simulation
       $httpBackend.when('GET', reGmfTreeUrl).respond(themes);
       $httpBackend.when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr').respond(capabilities.swisstopo);

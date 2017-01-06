@@ -89,7 +89,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
   this.map.on('singleclick', (function(evt) {
     if (this.mapClickIsEnabled) {
       const c = ol.coordinate.toStringXY(evt.coordinate);
-      content.innerHTML = '<p>You clicked here: <code>' + c + '</code></p>';
+      content.innerHTML = `<p>You clicked here: <code>${c}</code></p>`;
     }
   }).bind(this));
 

@@ -64,13 +64,13 @@ ngeo.source.swisstopoTileGrids_ = {
  */
 ngeo.source.swisstopoCreateUrl_ = function(projection, format) {
   if (projection === 'EPSG:2056') {
-    return 'https://wmts{10-14}.geo.admin.ch/1.0.0/{Layer}/default/{Time}' +
-      '/2056/{TileMatrix}/{TileCol}/{TileRow}.' + format;
+    return `${'https://wmts{10-14}.geo.admin.ch/1.0.0/{Layer}/default/{Time}' +
+      '/2056/{TileMatrix}/{TileCol}/{TileRow}.'}${format}`;
   } else if (projection === 'EPSG:21781') {
-    return 'https://wmts{5-9}.geo.admin.ch/1.0.0/{Layer}/default/{Time}' +
-      '/21781/{TileMatrix}/{TileRow}/{TileCol}.' + format;
+    return `${'https://wmts{5-9}.geo.admin.ch/1.0.0/{Layer}/default/{Time}' +
+      '/21781/{TileMatrix}/{TileRow}/{TileCol}.'}${format}`;
   }
-  goog.asserts.fail('Unsupported projection ' + projection);
+  goog.asserts.fail(`Unsupported projection ${projection}`);
 };
 
 /**

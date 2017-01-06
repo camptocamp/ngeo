@@ -33,7 +33,7 @@ gmfapp.MainController = function() {
   this.projections = [{
     code: 'EPSG:2056',
     label: 'CH1903+ / LV03',
-    filter: 'ngeoNumberCoordinates:0:' + epsg2056template
+    filter: `ngeoNumberCoordinates:0:${epsg2056template}`
   }, {
     code: 'EPSG:21781',
     label: 'CH1903 / LV03',

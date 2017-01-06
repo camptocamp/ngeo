@@ -24,7 +24,7 @@ ngeo.module.value('gmfDisplayquerygridTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['gmfDisplayquerygridTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/displayquerygrid.html';
+          `${gmf.baseTemplateUrl}/displayquerygrid.html`;
     });
 
 
@@ -339,7 +339,7 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
   }
 
   // keep the first existing navigation tab open
-  if (this.selectedTab === null || !(('' + this.selectedTab) in this.gridSources)) {
+  if (this.selectedTab === null || !((`${this.selectedTab}`) in this.gridSources)) {
     // selecting the tab is done in a timeout, because otherwise in rare cases
     // `ng-class` might set the `active` class on multiple tabs.
     this.$timeout_(function() {
@@ -499,7 +499,7 @@ gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
   if (allProperties.length > 0) {
     const gridCreated = this.makeGrid_(allProperties, source);
     if (gridCreated) {
-      this.featuresForSources_['' + source.id] = featuresForSource;
+      this.featuresForSources_[`${source.id}`] = featuresForSource;
     }
   }
 };
@@ -568,7 +568,7 @@ gmf.DisplayquerygridController.prototype.removeEmptyColumnsFn_ = function(
  * @private
  */
 gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
-  const sourceId = '' + source.id;
+  const sourceId = `${source.id}`;
   let gridConfig = null;
   if (data !== null) {
     gridConfig = this.getGridConfiguration_(data);
@@ -676,7 +676,7 @@ gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceId) {
   // is not yet set on the pane. that's why the class is set manually, and
   // after the pane is shown (in the next digest loop), the grid table can
   // be refreshed.
-  const activePane = this.$element_.find('div.tab-pane#' + sourceId);
+  const activePane = this.$element_.find(`div.tab-pane#${sourceId}`);
   activePane.removeClass('active').addClass('active');
   this.$timeout_(function() {
     activePane.find('div.ngeo-grid-table-container table')['trigger']('reflow');
@@ -693,7 +693,7 @@ gmf.DisplayquerygridController.prototype.onSelectionChanged_ = function() {
     return;
   }
 
-  const gridSource = this.gridSources['' + this.selectedTab];
+  const gridSource = this.gridSources[`${this.selectedTab}`];
   this.updateFeatures_(gridSource);
 };
 
@@ -710,7 +710,7 @@ gmf.DisplayquerygridController.prototype.updateFeatures_ = function(gridSource) 
     return;
   }
 
-  const sourceId = '' + gridSource.source.id;
+  const sourceId = `${gridSource.source.id}`;
   const featuresForSource = this.featuresForSources_[sourceId];
   const selectedRows = gridSource.configuration.selectedRows;
 
@@ -734,7 +734,7 @@ gmf.DisplayquerygridController.prototype.getActiveGridSource = function() {
   if (this.selectedTab === null) {
     return null;
   } else {
-    return this.gridSources['' + this.selectedTab];
+    return this.gridSources[`${this.selectedTab}`];
   }
 };
 

@@ -11,7 +11,7 @@ describe('gmf.ThemeManager', function() {
       gmfThemeManager_ = gmfThemeManager;
       //gmfTreeManager_ = gmfTreeManager;
 
-      const reGmfTreeUrl = new RegExp('^' + gmfTreeUrl);
+      const reGmfTreeUrl = new RegExp(`^${gmfTreeUrl}`);
       $httpBackend.when('GET', reGmfTreeUrl).respond(themes);
       $httpBackend.expectGET(reGmfTreeUrl);
       gmfThemes.loadThemes();

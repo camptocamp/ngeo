@@ -45,10 +45,10 @@ gmf.XSDAttributes = function($http, gmfLayersUrl) {
  */
 gmf.XSDAttributes.prototype.getAttributes = function(id) {
   if (!this.promises_[id]) {
-    const url = goog.uri.utils.appendPath(
+    const url = `${goog.uri.utils.appendPath(
       this.baseUrl_,
       id.toString()
-    ) + '/md.xsd';
+    )}/md.xsd`;
     this.promises_[id] = this.http_.get(url).then(
       this.handleGetAttributes_.bind(this));
   }

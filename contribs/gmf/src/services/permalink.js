@@ -1001,7 +1001,7 @@ gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
     // filter groups are used, e.g. '?wfs_layer=osm_scale&wfs_ngroups=2&wfs_0_ele=380&
     // wfs_0_highway=bus_stop&&wfs_1_name=Grand-Pont'
     for (let i = 0; i < numGroups; i++) {
-      filterGroup = this.createFilterGroup_(gmf.PermalinkParamPrefix.WFS + i + '_', paramKeys);
+      filterGroup = this.createFilterGroup_(`${gmf.PermalinkParamPrefix.WFS + i}_`, paramKeys);
       if (filterGroup !== null) {
         filterGroups.push(filterGroup);
       }

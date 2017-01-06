@@ -22,7 +22,7 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
     function(element, attrs) {
       const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/mobilemeasurelength.html';
+          `${gmf.baseTemplateUrl}/mobilemeasurelength.html`;
     });
 
 

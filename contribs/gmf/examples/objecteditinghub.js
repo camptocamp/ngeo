@@ -292,7 +292,7 @@ gmfapp.MainController.prototype.runViewer_ = function(baseUrl) {
 
   const params = {};
   params['wfs_layer'] = nodeName;
-  params['wfs_' + nodeIdAttrFieldName] = ids.join(',');
+  params[`wfs_${nodeIdAttrFieldName}`] = ids.join(',');
 
   const url = gmfapp.MainController.appendParams(baseUrl, params);
   window.open(url);
@@ -451,14 +451,14 @@ gmfapp.MainController.appendParams = function(uri, params) {
   // Skip any null or undefined parameter values
   Object.keys(params).forEach(function(k) {
     if (params[k] !== null && params[k] !== undefined) {
-      keyParams.push(k + '=' + encodeURIComponent(params[k]));
+      keyParams.push(`${k}=${encodeURIComponent(params[k])}`);
     }
   });
   const qs = keyParams.join('&');
   // remove any trailing ? or &
   uri = uri.replace(/[?&]$/, '');
   // append ? or & depending on whether uri has existing parameters
-  uri = uri.indexOf('?') === -1 ? uri + '?' : uri + '&';
+  uri = uri.indexOf('?') === -1 ? `${uri}?` : `${uri}&`;
   return uri + qs;
 };
 

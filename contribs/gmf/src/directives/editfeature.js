@@ -86,7 +86,7 @@ gmf.editfeatureDirective = function() {
       'vectorLayer': '<gmfEditfeatureVector'
     },
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/editfeature.html'
+    templateUrl: `${gmf.baseTemplateUrl}/editfeature.html`
   };
 };
 

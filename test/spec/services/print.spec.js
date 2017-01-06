@@ -419,7 +419,7 @@ describe('ngeo.CreatePrint', function() {
         const expectedStyle = {
           version: 2
         };
-        expectedStyle['[_ngeo_style_0 = \'' + styleId0 + '\']'] = {
+        expectedStyle[`[_ngeo_style_0 = '${styleId0}']`] = {
           symbolizers: [{
             type: 'point',
             pointRadius: 1,
@@ -428,7 +428,7 @@ describe('ngeo.CreatePrint', function() {
             strokeWidth: 1
           }]
         };
-        expectedStyle['[_ngeo_style_1 = \'' + styleId1 + '\']'] = {
+        expectedStyle[`[_ngeo_style_1 = '${styleId1}']`] = {
           symbolizers: [{
             type: 'line',
             strokeColor: '#020202',
@@ -436,7 +436,7 @@ describe('ngeo.CreatePrint', function() {
             strokeWidth: 2
           }]
         };
-        expectedStyle['[_ngeo_style_0 = \'' + styleId2 + '\']'] = {
+        expectedStyle[`[_ngeo_style_0 = '${styleId2}']`] = {
           symbolizers: [{
             type: 'polygon',
             fillColor: '#030303',
@@ -446,7 +446,7 @@ describe('ngeo.CreatePrint', function() {
             strokeWidth: 3
           }]
         };
-        expectedStyle['[_ngeo_style_0 = \'' + styleId3 + '\']'] = {
+        expectedStyle[`[_ngeo_style_0 = '${styleId3}']`] = {
           symbolizers: [{
             type: 'Text',
             fontColor: '#030303',
@@ -459,7 +459,7 @@ describe('ngeo.CreatePrint', function() {
             labelYOffset: 42
           }]
         };
-        expectedStyle['[_ngeo_style_1 = \'' + styleId4 + '\']'] = {
+        expectedStyle[`[_ngeo_style_1 = '${styleId4}']`] = {
           symbolizers: [{
             type: 'Text',
             fontColor: '#030303',
