@@ -1,3 +1,4 @@
+dist: trusty
 sudo: false
 
 language: node_js
@@ -11,10 +12,11 @@ addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
+    - google-chrome
     packages:
     - g++-4.8
     - python-virtualenv
-    - chromium-browser
+    - google-chrome-stable
 
 matrix:
   include:
@@ -34,7 +36,6 @@ cache:
   - node_modules
 
 before_install:
-- /usr/bin/chromium-browser --version
 - npm prune
 - if [ "${TRAVIS_PULL_REQUEST}" = false ]; then IS_PR=FALSE; else IS_PR=TRUE; fi
 - if [ ${TRAVIS_REPO_SLUG}-${IS_PR} = camptocamp/ngeo-FALSE ]; then openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in secrets.tar.enc -out secrets.tar -d; fi
@@ -46,7 +47,8 @@ before_install:
 - git config --global user.email "travis@travis-ci.org"
 
 script:
-- export CHROME_BIN=/usr/bin/chromium-browser
+- /opt/google/chrome/chrome --version
+- export CHROME_BIN=/opt/google/chrome/chrome
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 - if [ "${IS_PR}" != "FALSE" ]; then git fetch origin ${TRAVIS_BRANCH}:${TRAVIS_BRANCH}; fi
