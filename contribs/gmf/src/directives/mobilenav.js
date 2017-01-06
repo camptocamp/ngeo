@@ -124,7 +124,7 @@ gmf.MobileNavController.prototype.init = function(element) {
   this.backButton_ = $(element.find(`header > .${cls.GO_BACK}`));
 
   // watch for clicks on "slide-in" elements
-  element.find('[data-toggle=slide-in]').on('click', function(evt) {
+  element.find('[data-toggle=slide-in]').on('click', (evt) => {
 
     const cls = gmf.MobileNavController.ClassName_;
 
@@ -149,7 +149,7 @@ gmf.MobileNavController.prototype.init = function(element) {
     this.updateNavigationHeader_(slideIn, false);
 
     this.active_ = slideIn;
-  }.bind(this));
+  });
 
   // watch for clicks on the header "go-back" link
   this.backButton_.click(this.back.bind(this));
@@ -186,7 +186,7 @@ gmf.MobileNavController.prototype.updateNavigationHeader_ = function(
   // Delay the activation of the new navigation so that the previous
   // one is properly deactivated. This prevents weird animation
   // effects.
-  window.setTimeout(function() {
+  window.setTimeout(() => {
     // fix for safari: the following 3 lines force that the position
     // of the newly inserted element is calculated.
     // see http://stackoverflow.com/a/3485654/119937
@@ -194,7 +194,7 @@ gmf.MobileNavController.prototype.updateNavigationHeader_ = function(
     nav.offset();
     nav.css('display', '');
 
-    window.setTimeout(function() {
+    window.setTimeout(() => {
       // fix: calling `position()` makes sure that the animation
       // is always run
       nav.position();
@@ -293,7 +293,7 @@ gmf.mobileNavBackDirective = function() {
      * @param {gmf.MobileNavController} navCtrl Controller.
      */
     link(scope, element, attrs, navCtrl) {
-      scope.$watch(attrs['gmfMobileNavBack'], function(newVal, oldVal) {
+      scope.$watch(attrs['gmfMobileNavBack'], (newVal, oldVal) => {
         if (newVal === true) {
           navCtrl.backIfActive(element[0]);
         }
@@ -335,7 +335,7 @@ gmf.mobileNavBackOnClickDirective = function() {
      * @param {gmf.MobileNavController} navCtrl Controller.
      */
     link(scope, element, attrs, navCtrl) {
-      element.on('click', function() {
+      element.on('click', () => {
         navCtrl.backIfActive(element[0]);
       });
     }

@@ -74,9 +74,7 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
   this.active = this.active === true;
 
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
+    () => this.active,
     this.handleActiveChange_.bind(this)
   );
 
@@ -131,26 +129,26 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
   const updateEditableTreeCtrls = function(value) {
     // Timeout required, because the collection event is fired before the
     // leaf nodes are created and they are the ones we're looking for here.
-    this.$timeout_(function() {
+    this.$timeout_(() => {
       if (value) {
         const editables = this.editableTreeCtrls;
 
         editables.length = 0;
-        this.gmfTreeManager_.rootCtrl.traverseDepthFirst(function(treeCtrl) {
+        this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.node.editable) {
             goog.asserts.assert(treeCtrl.children.length === 0);
             editables.push(treeCtrl);
           }
         });
       }
-    }.bind(this), 0);
+    }, 0);
   };
 
   /**
    * @type {function()}
    * @private
    */
-  this.treeCtrlsWatcherUnregister_ = $scope.$watchCollection(function() {
+  this.treeCtrlsWatcherUnregister_ = $scope.$watchCollection(() => {
     if (gmfTreeManager.rootCtrl) {
       return gmfTreeManager.rootCtrl.children;
     }
@@ -182,13 +180,11 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
   this.selectedEditableTreeCtrl = null;
 
   $scope.$watch(
-    function() {
-      return this.selectedEditableTreeCtrl;
-    }.bind(this),
-    function(newValue, oldValue) {
+    () => this.selectedEditableTreeCtrl,
+    (newValue, oldValue) => {
       this.dirty = false;
       this.state = gmf.EditfeatureController.State.IDLE;
-    }.bind(this)
+    }
   );
 
   /**
@@ -203,10 +199,8 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
   this.state = gmf.EditfeatureController.State.IDLE;
 
   $scope.$watch(
-    function() {
-      return this.state;
-    }.bind(this),
-    function(newValue, oldValue) {
+    () => this.state,
+    (newValue, oldValue) => {
       if (newValue === gmf.EditfeatureController.State.STOP_EDITING_EXECUTE ||
           newValue === gmf.EditfeatureController.State.DEACTIVATE_EXECUTE) {
         this.selectedEditableTreeCtrl = null;
@@ -214,7 +208,7 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
       if (newValue === gmf.EditfeatureController.State.DEACTIVATE_EXECUTE) {
         this.active = false;
       }
-    }.bind(this)
+    }
   );
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
@@ -249,10 +243,10 @@ gmf.EditfeatureselectorController.prototype.handleActiveChange_ = function(activ
       // to manage the unsaved modifications.
       // The changes are made inside a $timeout to be taken into account
       // in the next digest cycle.
-      this.$timeout_(function() {
+      this.$timeout_(() => {
         this.active = true;
         this.stopEditing();
-      }.bind(this));
+      });
     }
   }
 };

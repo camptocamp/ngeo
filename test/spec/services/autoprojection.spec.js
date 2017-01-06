@@ -1,16 +1,16 @@
 goog.require('ngeo.AutoProjection');
 goog.require('ngeo.proj.EPSG21781');
 
-describe('ngeo.AutoProjection', function() {
+describe('ngeo.AutoProjection', () => {
   let ngeoAutoProjection;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       ngeoAutoProjection = $injector.get('ngeoAutoProjection');
     });
   });
 
-  it('Get coordinates from a string', function() {
+  it('Get coordinates from a string', () => {
     let str = '47° 25′ 40″ N 79° 55′ 12″ W';
     let result = ngeoAutoProjection.stringToCoordinates(str);
     expect(result).toBeNull();
@@ -24,7 +24,7 @@ describe('ngeo.AutoProjection', function() {
     expect(result).toEqual([600000, 200000]);
   });
 
-  it('Get Projection list from codes', function() {
+  it('Get Projection list from codes', () => {
     const codes = ['EPSG:4326', '3857', 'EPSG:1234'];
     spyOn(console, 'error');
     const projections = ngeoAutoProjection.getProjectionList(codes);
@@ -34,7 +34,7 @@ describe('ngeo.AutoProjection', function() {
     expect(projections.length).toBe(2);
   });
 
-  it('Try projections', function() {
+  it('Try projections', () => {
     const coordinatesA = [600000, 200000];
     const coordinatesB = [8, 47];
     const viewProjection = ol.proj.get('EPSG:21781');
@@ -56,7 +56,7 @@ describe('ngeo.AutoProjection', function() {
     expect(point).toEqual(coordinatesBTransformed);
   });
 
-  it('Try projections with inversion', function() {
+  it('Try projections with inversion', () => {
     const coordinates = [47, 8];
     const viewProjection = ol.proj.get('EPSG:21781');
     const extent = viewProjection.getExtent();

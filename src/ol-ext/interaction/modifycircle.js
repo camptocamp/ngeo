@@ -187,7 +187,7 @@ ngeo.interaction.ModifyCircle.prototype.removeFeatureSegmentData_ = function(fea
       /**
        * @param {ol.ModifySegmentDataType} node RTree node.
        */
-      function(node) {
+      (node) => {
         if (feature === node.feature) {
           nodesToRemove.push(node);
         }

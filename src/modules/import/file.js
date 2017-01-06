@@ -74,9 +74,9 @@ ngeo.File = function($q, $http, $window, gettext) {
     const defer = $q.defer();
     $http.get(url, {
       timeout: canceler.promise
-    }).then(function(response) {
+    }).then((response) => {
       defer.resolve(response.data);
-    }, function(reason) {
+    }, (reason) => {
       $window.console.error('Uploading file failed: ', reason);
       defer.reject({
         'message': gettext('Upload failed'),

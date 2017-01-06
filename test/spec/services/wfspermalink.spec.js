@@ -3,13 +3,13 @@ goog.require('ngeo.WfsPermalink');
 goog.require('ol.format.filter');
 goog.require('ngeo.test.data.msGMLOutputFuel');
 
-describe('ngeo.WfsPermalink', function() {
+describe('ngeo.WfsPermalink', () => {
 
   let ngeoWfsPermalink;
   let ngeoQueryResult;
 
-  beforeEach(function() {
-    module('ngeo', function($provide) {
+  beforeEach(() => {
+    module('ngeo', ($provide) => {
       $provide.value('ngeoWfsPermalinkOptions', {
         url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
         wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
@@ -18,24 +18,24 @@ describe('ngeo.WfsPermalink', function() {
       });
     });
 
-    inject(function($injector) {
+    inject(($injector) => {
       ngeoWfsPermalink = $injector.get('ngeoWfsPermalink');
       ngeoQueryResult = $injector.get('ngeoQueryResult');
     });
   });
 
-  it('creates a service', function() {
+  it('creates a service', () => {
     expect(ngeoWfsPermalink instanceof ngeo.WfsPermalink).toBe(true);
   });
 
-  describe('#issue', function() {
+  describe('#issue', () => {
 
     let $httpBackend;
     let map;
 
-    beforeEach(function() {
+    beforeEach(() => {
       const url = 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy';
-      inject(function($injector) {
+      inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('POST', url).respond(msGMLOutputFuel);
         $httpBackend = $injector.get('$httpBackend');
@@ -55,12 +55,12 @@ describe('ngeo.WfsPermalink', function() {
       });
     });
 
-    afterEach(function() {
+    afterEach(() => {
       $httpBackend.verifyNoOutstandingExpectation();
       $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('makes a query and adds the result', function() {
+    it('makes a query and adds the result', () => {
       const queryData = {
         'wfsType': 'fuel',
         'showFeatures': true,
@@ -81,7 +81,7 @@ describe('ngeo.WfsPermalink', function() {
     });
   });
 
-  describe('#createFilters_', function() {
+  describe('#createFilters_', () => {
     const expectFiltersToEqual = function(filter1, filter2) {
       expect(filter1.constructor).toBe(filter2.constructor, 'same filter type');
       if (filter1 instanceof ol.format.filter.LogicalBinary) {
@@ -94,7 +94,7 @@ describe('ngeo.WfsPermalink', function() {
       }
     };
 
-    it('creates filters', function() {
+    it('creates filters', () => {
       const queryData = {
         'wfsType': 'fuel',
         'filterGroups': [
@@ -139,7 +139,7 @@ describe('ngeo.WfsPermalink', function() {
       );
     });
 
-    it('handles 0 filter groups', function() {
+    it('handles 0 filter groups', () => {
       expect(ngeoWfsPermalink.createFilters_([])).toBe(null);
     });
   });

@@ -2,33 +2,33 @@
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.test.data.wmtsCapabilities');
 
-describe('ngeo.LayerHelper', function() {
+describe('ngeo.LayerHelper', () => {
   let ngeoLayerHelper;
   let layer;
   const wmtsSrc = 'http://fake/wmts/capabilities.xml';
   const wmtsName = 'layer-7328';
   let $httpBackend;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       ngeoLayerHelper = $injector.get('ngeoLayerHelper');
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.when('GET', wmtsSrc).respond(wmtsCapabilities);
     });
   });
 
-  afterEach(function() {
+  afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('Create a basic WMS layer', function() {
+  it('Create a basic WMS layer', () => {
     layer = ngeoLayerHelper.createBasicWMSLayer('', '');
     expect(layer.constructor).toBe(ol.layer.Image);
     expect(layer.getSource().constructor).toBe(ol.source.ImageWMS);
   });
 
-  it('Create a WMTS layer from capabilitites', function() {
+  it('Create a WMTS layer from capabilitites', () => {
     $httpBackend.expectGET(wmtsSrc);
     const spy = jasmine.createSpy();
     const promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
@@ -41,7 +41,7 @@ describe('ngeo.LayerHelper', function() {
     expect(layer.getSource().getLayer()).toBe(wmtsName);
   });
 
-  it('Create a layergroup with layers', function() {
+  it('Create a layergroup with layers', () => {
     layer = ngeoLayerHelper.createBasicWMSLayer('', '');
     const collection = new ol.Collection();
     collection.push(layer);
@@ -49,7 +49,7 @@ describe('ngeo.LayerHelper', function() {
     expect(group.getLayersArray().length).toBe(1);
   });
 
-  it('Get an array of layer from a group', function() {
+  it('Get an array of layer from a group', () => {
     layer = ngeoLayerHelper.createBasicWMSLayer('', '');
     const collection = new ol.Collection();
     collection.push(layer);
@@ -58,7 +58,7 @@ describe('ngeo.LayerHelper', function() {
     expect(ngeoLayerHelper.getFlatLayers(group).length).toBe(1);
   });
 
-  it('Get WMS legend url', function() {
+  it('Get WMS legend url', () => {
     const url = 'http://test';
     const layerName = 'wmsLayer';
     const scale = 0;
@@ -69,7 +69,7 @@ describe('ngeo.LayerHelper', function() {
     expect(expectedResult).toBe(wmsLegendURL);
   });
 
-  it('Get WMS legend icon url', function() {
+  it('Get WMS legend icon url', () => {
     const url = 'http://test';
     const layerName = 'wmsLayer';
     const legendRule = 'legendRule';
@@ -81,7 +81,7 @@ describe('ngeo.LayerHelper', function() {
     expect(expectedResult).toBe(wmsLegendURL);
   });
 
-  it('Get WMTS legend url', function() {
+  it('Get WMTS legend url', () => {
     $httpBackend.expectGET(wmtsSrc);
     const spy = jasmine.createSpy();
     const promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,

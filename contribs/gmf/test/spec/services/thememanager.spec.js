@@ -2,12 +2,12 @@
 goog.require('gmf.ThemeManager');
 goog.require('gmf.test.data.themes');
 
-describe('gmf.ThemeManager', function() {
+describe('gmf.ThemeManager', () => {
   let gmfThemeManager_;
   //var gmfTreeManager_;
 
-  beforeEach(function() {
-    inject(function(gmfThemeManager, /*gmfTreeManager, */gmfThemes, gmfTreeUrl, $httpBackend) {
+  beforeEach(() => {
+    inject((gmfThemeManager, /*gmfTreeManager, */gmfThemes, gmfTreeUrl, $httpBackend) => {
       gmfThemeManager_ = gmfThemeManager;
       //gmfTreeManager_ = gmfTreeManager;
 
@@ -19,7 +19,7 @@ describe('gmf.ThemeManager', function() {
     });
   });
 
-  it('Add a theme', function() {
+  it('Add a theme', () => {
     const theme0 = themes.themes[0];
     gmfThemeManager_.addTheme(theme0);
     expect(gmfThemeManager_.themeName).toEqual(theme0.name);

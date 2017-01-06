@@ -71,10 +71,10 @@ ngeo.modalDirective = function($parse) {
         modal.modal(ngModelController.$viewValue ? 'show' : 'hide');
       };
 
-      modal.on('shown.bs.modal hidden.bs.modal', function(e) {
+      modal.on('shown.bs.modal hidden.bs.modal', (e) => {
         const type = e.type;
         goog.asserts.assert(type == 'shown' || type == 'hidden');
-        scope.$apply(function() {
+        scope.$apply(() => {
           ngModelController.$setViewValue(type == 'shown');
         });
       });
@@ -88,7 +88,7 @@ ngeo.modalDirective = function($parse) {
 
       function onShow(e) {
         childScope = scope.$new();
-        transcludeFn(childScope, function(clone) {
+        transcludeFn(childScope, (clone) => {
           modal.find('.modal-content').append(clone);
         });
       }

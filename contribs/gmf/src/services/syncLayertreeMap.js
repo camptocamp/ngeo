@@ -40,13 +40,13 @@ gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, gmfThemes, gmfWMSTi
    */
   this.ogcServersObject_;
 
-  gmfThemes.getOgcServersObject().then(function(ogcServersObject) {
+  gmfThemes.getOgcServersObject().then((ogcServersObject) => {
     this.ogcServersObject_ = ogcServersObject;
-  }.bind(this));
+  });
 
-  $rootScope.$on('ngeo-layertree-state', function(map, treeCtrl, firstParent) {
+  $rootScope.$on('ngeo-layertree-state', (map, treeCtrl, firstParent) => {
     this.sync_(map, firstParent);
-  }.bind(this));
+  });
 };
 
 
@@ -94,11 +94,11 @@ gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map,
  * @private
  */
 gmf.SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
-  treeCtrl.traverseDepthFirst(function(treeCtrl) {
+  treeCtrl.traverseDepthFirst((treeCtrl) => {
     if (treeCtrl.layer && !treeCtrl.node.mixed) {
       this.updateLayerState_(treeCtrl.layer, treeCtrl);
     }
-  }.bind(this));
+  });
 };
 
 
@@ -116,7 +116,7 @@ gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
     // First level non mixed group
     goog.asserts.assertInstanceof(layer, ol.layer.Image);
     const names = [];
-    treeCtrl.traverseDepthFirst(function(treeCtrl) {
+    treeCtrl.traverseDepthFirst((treeCtrl) => {
       if (treeCtrl.node.children === undefined && treeCtrl.getState() === 'on') {
         names.push(treeCtrl.node.layers);
       }
@@ -200,14 +200,14 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
     layer = this.layerHelper_.createBasicWMSLayer(
         ogcServer.url, '', ogcServer.type, timeParam
     );
-    treeCtrl.traverseDepthFirst(function(ctrl) {
+    treeCtrl.traverseDepthFirst((ctrl) => {
       // Update layer information and tree state.
       this.updateLayerReferences_(ctrl.node, layer);
       if (ctrl.node.metadata.isChecked) {
         ctrl.setState('on', false);
         this.updateLayerState_(/** @type {ol.layer.Image} */ (layer), ctrl);
       }
-    }.bind(this));
+    });
     layer.set('layerNodeName', groupNode.name); //Really useful ?
   }
   return layer;
@@ -291,7 +291,7 @@ gmf.SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
   goog.asserts.assert(gmfLayerWMTS.url);
   goog.asserts.assert(gmfLayerWMTS.layer);
   this.layerHelper_.createWMTSLayerFromCapabilitites(gmfLayerWMTS.url,
-        gmfLayerWMTS.layer, gmfLayerWMTS.dimensions).then(function(layer) {
+        gmfLayerWMTS.layer, gmfLayerWMTS.dimensions).then((layer) => {
           newLayer.setSource(layer.getSource());
           newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
         });
@@ -341,7 +341,7 @@ gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
   if (node.time) {
     wmsTime = node.time;
   } else if (node.children) {
-    treeCtrl.traverseDepthFirst(function(treeCtrl) {
+    treeCtrl.traverseDepthFirst((treeCtrl) => {
       if (treeCtrl.node.children === undefined && treeCtrl.node.time) {
         wmsTime = treeCtrl.node.time;
         return ngeo.LayertreeController.VisitorDecision.STOP;

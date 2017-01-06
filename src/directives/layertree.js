@@ -11,7 +11,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {boolean} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['ngeoLayertreeTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${ngeo.baseTemplateUrl}/layertree.html`;
@@ -170,9 +170,9 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   this.node = undefined;
 
   if (isRoot) {
-    $scope.$watch(nodeExpr, function(newVal, oldVal) {
+    $scope.$watch(nodeExpr, (newVal, oldVal) => {
       this.node = newVal;
-    }.bind(this));
+    });
   } else {
     this.node = /** @type {Object} */ ($scope.$eval(nodeExpr));
     goog.asserts.assert(this.node !== undefined);
@@ -198,13 +198,13 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
     this.parent.children.push(this);
   }
 
-  $scope.$on('$destroy', function() {
+  $scope.$on('$destroy', () => {
     if (this.parent) {
       const index = this.parent.children.indexOf(this);
       goog.asserts.assert(index >= 0);
       this.parent.children.splice(index, 1);
     }
-  }.bind(this));
+  });
 
   /**
    * @type {number}
@@ -315,9 +315,9 @@ ngeo.LayertreeController.prototype.setState = function(state, opt_broadcast) {
   const firstParents = this.isRoot ? this.children : [ngeo.LayertreeController.getFirstParentTree(this)];
 
   if (opt_broadcast === undefined || opt_broadcast) {
-    firstParents.forEach(function(firstParent) {
+    firstParents.forEach((firstParent) => {
       this.rootScope_.$broadcast('ngeo-layertree-state', this, firstParent);
-    }.bind(this));
+    });
   }
 };
 
@@ -363,7 +363,7 @@ ngeo.LayertreeController.prototype.getCalculateState = function() {
   }
   let childState;
   let previousChildState;
-  this.children.some(function(child) {
+  this.children.some((child) => {
     childState = child.getCalculateState();
     if (previousChildState) {
       if (previousChildState !== childState) {

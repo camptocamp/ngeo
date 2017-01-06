@@ -158,20 +158,20 @@ gmf.Snapping.prototype.setMap = function(map) {
   this.map_ = map;
 
   if (map) {
-    this.treeCtrlsUnregister_ = this.rootScope_.$watchCollection(function() {
+    this.treeCtrlsUnregister_ = this.rootScope_.$watchCollection(() => {
       if (this.gmfTreeManager_.rootCtrl) {
         return this.gmfTreeManager_.rootCtrl.children;
       }
-    }.bind(this), function(value) {
+    }, (value) => {
       // Timeout required, because the collection event is fired before the
       // leaf nodes are created and they are the ones we're looking for here.
-      this.timeout_(function() {
+      this.timeout_(() => {
         if (value) {
           this.unregisterAllTreeCtrl_();
           this.gmfTreeManager_.rootCtrl.traverseDepthFirst(this.registerTreeCtrl_.bind(this));
         }
-      }.bind(this), 0);
-    }.bind(this));
+      }, 0);
+    });
 
     keys.push(
       ol.events.listen(
@@ -210,9 +210,9 @@ gmf.Snapping.prototype.setMap = function(map) {
  */
 gmf.Snapping.prototype.handleThemesChange_ = function() {
   this.ogcServers_ = null;
-  this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
+  this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
     this.ogcServers_ = ogcServers;
-  }.bind(this));
+  });
 };
 
 
@@ -241,9 +241,7 @@ gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
       const uid = ol.getUid(treeCtrl);
 
       const stateWatcherUnregister = this.rootScope_.$watch(
-        function() {
-          return treeCtrl.getState();
-        }.bind(this),
+        () => treeCtrl.getState(),
         this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
       );
 
@@ -516,7 +514,7 @@ gmf.Snapping.prototype.loadItemFeatures_ = function(item) {
   item.requestDeferred = this.q_.defer();
 
   this.http_.post(url, featureRequest, {timeout: item.requestDeferred.promise})
-    .then(function(response) {
+    .then((response) => {
       // (1) Unset requestDeferred
       item.requestDeferred = null;
 
@@ -528,7 +526,7 @@ gmf.Snapping.prototype.loadItemFeatures_ = function(item) {
       if (readFeatures) {
         item.features.extend(readFeatures);
       }
-    }.bind(this));
+    });
 
 };
 

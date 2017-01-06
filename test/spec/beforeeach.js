@@ -1,5 +1,5 @@
 /*eslint valid-jsdoc: 0 */
-beforeEach(function() {
+beforeEach(() => {
   module('ngeo');
 
   jasmine.addMatchers({

@@ -56,8 +56,8 @@ gmf.ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
 
   if (!this.getQueryableLayerNodesDefered_) {
     this.getQueryableLayerNodesDefered_ = this.q_.defer();
-    this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
-      this.gmfThemes_.getThemesObject().then(function(themes) {
+    this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
+      this.gmfThemes_.getThemesObject().then((themes) => {
         if (!themes) {
           return;
         }
@@ -78,8 +78,8 @@ gmf.ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
         }
 
         this.getQueryableLayerNodesDefered_.resolve(queryableLayersInfo);
-      }.bind(this));
-    }.bind(this));
+      });
+    });
   }
 
   return this.getQueryableLayerNodesDefered_.promise;
@@ -193,10 +193,10 @@ gmf.ObjectEditingQuery.prototype.getFeatureInfo = function(
   );
 
   return this.http_.get(url).then(
-    function(format, response) {
+    (response) => {
       const features = format.readFeatures(response.data);
       return (features && features[0]) ? features[0] : null;
-    }.bind(this, format)
+    }
   );
 };
 

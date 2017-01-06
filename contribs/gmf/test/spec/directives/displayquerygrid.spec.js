@@ -16,7 +16,7 @@ const compareGridData = function(data, expectedData) {
 };
 
 
-describe('gmf.displayquerygridDirective', function() {
+describe('gmf.displayquerygridDirective', () => {
 
   let queryGridController;
   let ngeoQueryResult;
@@ -24,12 +24,12 @@ describe('gmf.displayquerygridDirective', function() {
   let $rootScope;
   let $timeout;
 
-  beforeEach(function() {
-    module('ngeo', function($provide) {
+  beforeEach(() => {
+    module('ngeo', ($provide) => {
       $provide.value('ngeoQueryOptions', {});
     });
 
-    inject(function($injector, _$controller_, _$rootScope_) {
+    inject(($injector, _$controller_, _$rootScope_) => {
       ngeoQueryResult = $injector.get('ngeoQueryResult');
       $timeout = $injector.get('$timeout');
       const $controller = _$controller_;
@@ -57,16 +57,16 @@ describe('gmf.displayquerygridDirective', function() {
     });
   });
 
-  describe('#updateData_', function() {
+  describe('#updateData_', () => {
 
-    it('deals with no sources', function() {
+    it('deals with no sources', () => {
       ngeoQueryResult.total = 0;
       ngeoQueryResult.sources = [];
       $rootScope.$digest();
       expect(queryGridController.active).toBe(false);
     });
 
-    it('deals with a single source', function() {
+    it('deals with a single source', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
@@ -120,7 +120,7 @@ describe('gmf.displayquerygridDirective', function() {
       expect(gridConfig.columnDefs).toEqual(expectedColumnDefs);
     });
 
-    it('removes empty columns', function() {
+    it('removes empty columns', () => {
       queryGridController.removeEmptyColumns_ = true;
 
       ngeoQueryResult.total = 2;
@@ -169,7 +169,7 @@ describe('gmf.displayquerygridDirective', function() {
       expect(gridConfig.columnDefs).toEqual(expectedColumnDefs);
     });
 
-    it('does not create a grid if only empty columns', function() {
+    it('does not create a grid if only empty columns', () => {
       queryGridController.removeEmptyColumns_ = true;
 
       ngeoQueryResult.total = 2;
@@ -197,7 +197,7 @@ describe('gmf.displayquerygridDirective', function() {
       expect(gridSource).toBeUndefined();
     });
 
-    it('deals with multiple sources', function() {
+    it('deals with multiple sources', () => {
       ngeoQueryResult.total = 3;
       ngeoQueryResult.sources = [{
         features: [
@@ -283,7 +283,7 @@ describe('gmf.displayquerygridDirective', function() {
       expect(gridConfig3.columnDefs).toEqual(expectedColumnDefs3);
     });
 
-    it('deals with sources with too many features', function() {
+    it('deals with sources with too many features', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
@@ -323,7 +323,7 @@ describe('gmf.displayquerygridDirective', function() {
       expect(gridSource2.configuration).toBe(null);
     });
 
-    it('deals with sources that all have too many features', function() {
+    it('deals with sources that all have too many features', () => {
       ngeoQueryResult.total = 0;
       ngeoQueryResult.sources = [{
         features: [],
@@ -357,7 +357,7 @@ describe('gmf.displayquerygridDirective', function() {
       expect(gridSource2.configuration).toBe(null);
     });
 
-    it('merges sources', function() {
+    it('merges sources', () => {
       ngeoQueryResult.total = 4;
       ngeoQueryResult.sources = [{
         features: [
@@ -453,7 +453,7 @@ describe('gmf.displayquerygridDirective', function() {
       expect(gridConfig3.columnDefs).toEqual(expectedColumnDefs3);
     });
 
-    it('merges sources with too many features', function() {
+    it('merges sources with too many features', () => {
       ngeoQueryResult.total = 4;
       ngeoQueryResult.sources = [{
         features: [
@@ -514,9 +514,9 @@ describe('gmf.displayquerygridDirective', function() {
 
   });
 
-  describe('#selectTab', function() {
+  describe('#selectTab', () => {
 
-    beforeEach(function() {
+    beforeEach(() => {
       ngeoQueryResult.total = 5;
       ngeoQueryResult.sources = [{
         features: [
@@ -545,7 +545,7 @@ describe('gmf.displayquerygridDirective', function() {
       expect(queryGridController.active).toBe(true);
     });
 
-    it('allows to switch between tabs', function() {
+    it('allows to switch between tabs', () => {
       $timeout.flush();
       // check that the first source is selected by default
       expect(queryGridController.selectedTab).toBe(123);
@@ -559,7 +559,7 @@ describe('gmf.displayquerygridDirective', function() {
       expect(queryGridController.highlightFeatures_.getLength()).toBe(0);
     });
 
-    it('remembers selected rows when switching tabs', function() {
+    it('remembers selected rows when switching tabs', () => {
       const gridSource1 = queryGridController.gridSources['123'];
       const row1 = gridSource1.configuration.data[0];
       gridSource1.configuration.selectRow(row1);

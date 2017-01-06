@@ -21,7 +21,7 @@ gmf.module.value('gmfLayertreeTemplate',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const subTemplateUrl = `${gmf.baseTemplateUrl}/layertree.html`;
       return `${'<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
@@ -40,9 +40,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    function(element, attrs) {
-      return `${gmf.baseTemplateUrl}/layertree.html`;
-    });
+    (element, attrs) => `${gmf.baseTemplateUrl}/layertree.html`);
 
 
 /**
@@ -237,28 +235,24 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
    */
   this.gmfThemes_ = gmfThemes;
 
-  ngeoSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, $scope, function() {
-    return true;
-  });
+  ngeoSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, $scope, () => true);
 
   // watch any change on layers array to refresh the map
-  $scope.$watchCollection(function() {
-    return this.layers;
-  }.bind(this),
-  function() {
+  $scope.$watchCollection(() => this.layers,
+  () => {
     this.map.render();
-  }.bind(this));
+  });
 
   // watch any change on dimensions object to refresh the layers
-  $scope.$watchCollection(function() {
+  $scope.$watchCollection(() => {
     if (this.gmfTreeManager_.rootCtrl) {
       return this.dimensions;
     }
-  }.bind(this), function(dimensions) {
+  }, (dimensions) => {
     if (dimensions) {
       this.updateDimensions_(this.gmfTreeManager_.rootCtrl);
     }
-  }.bind(this));
+  });
 };
 
 
@@ -267,13 +261,13 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
  * @private
  */
 gmf.LayertreeController.prototype.updateDimensions_ = function(treeCtrl) {
-  treeCtrl.traverseDepthFirst(function(ctrl) {
+  treeCtrl.traverseDepthFirst((ctrl) => {
     if (ctrl.node.dimensions) {
       const layer = ctrl.layer;
       goog.asserts.assertInstanceof(layer, ol.layer.Layer);
       this.updateLayerDimensions_(layer, ctrl.node);
     }
-  }.bind(this));
+  });
 };
 
 
@@ -299,10 +293,10 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
         source.updateParams(dimensions);
       } else {
         // the source is not ready yet
-        layer.once('change:source', function() {
+        layer.once('change:source', () => {
           goog.asserts.assertInstanceof(layer, ol.layer.Layer);
           this.updateLayerDimensions_(layer, node);
-        }.bind(this));
+        });
       }
     }
   }
@@ -350,10 +344,10 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
   const dataLayerGroup = this.dataLayerGroup_;
-  scope.$on('$destroy', function() {
+  scope.$on('$destroy', () => {
     // Remove the layer from the map.
     dataLayerGroup.getLayers().remove(treeCtrl.layer);
-  }.bind(treeCtrl));
+  });
 };
 
 
@@ -532,13 +526,13 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
   if (metadataURL !== undefined) {
     if (!(treeUid in this.promises_)) {
       this.promises_[treeUid] = this.$http_.get(metadataURL).then(
-          function(resp) {
+          (resp) => {
             const html = this.$sce_.trustAsHtml(resp.data);
             return html;
-          }.bind(this));
+          });
     }
     const infoPopup = this.infoPopup_;
-    this.promises_[treeUid].then(function(html) {
+    this.promises_[treeUid].then((html) => {
       infoPopup.setTitle(node.name);
       infoPopup.setContent(html);
       infoPopup.setOpen(true);
@@ -558,8 +552,8 @@ gmf.LayertreeController.prototype.afterReorder = function() {
   const treeCtrls = [];
 
   // Get order of first-level groups for treectrl and layers;
-  groupNodes.forEach(function(node) {
-    currentTreeCtrls.some(function(treeCtrl) {
+  groupNodes.forEach((node) => {
+    currentTreeCtrls.some((treeCtrl) => {
       if (treeCtrl.node === node) {
         treeCtrls.push(treeCtrl);
         return;

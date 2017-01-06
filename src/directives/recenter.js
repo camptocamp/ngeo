@@ -55,7 +55,7 @@ ngeo.recenterDirective = function() {
       });
 
       // if the children is an option inside a select
-      $element.on('change', function(event) {
+      $element.on('change', (event) => {
         const selected = event.target.options[event.target.selectedIndex];
         recenter(angular.element(selected));
       });

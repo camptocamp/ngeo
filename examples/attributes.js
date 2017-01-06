@@ -69,9 +69,9 @@ app.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
  * @export
  */
 app.MainController.prototype.updateName = function() {
-  this.timeout_(function() {
+  this.timeout_(() => {
     this.feature.set('name', 'An alternate name');
-  }.bind(this), 0);
+  }, 0);
 };
 
 

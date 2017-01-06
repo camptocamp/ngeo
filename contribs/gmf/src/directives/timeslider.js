@@ -177,7 +177,7 @@ gmf.TimeSliderController.prototype.getTimeValueList_ = function() {
 
   if (wmsTime.values) {
     timeValueList = [];
-    wmsTime.values.forEach(function(date) {
+    wmsTime.values.forEach((date) => {
       timeValueList.push(new Date(date).getTime());
     });
   } else {

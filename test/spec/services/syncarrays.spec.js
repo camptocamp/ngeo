@@ -1,20 +1,20 @@
 goog.require('ngeo.SyncArrays');
 
-describe('ngeo.SyncArrays', function() {
+describe('ngeo.SyncArrays', () => {
   let $rootScope;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       $rootScope = $injector.get('$rootScope');
     });
   });
 
-  describe('arr1 and arr2 in same order', function() {
+  describe('arr1 and arr2 in same order', () => {
     let arr1, arr2;
     let dereg;
 
-    beforeEach(function() {
-      inject(function($injector) {
+    beforeEach(() => {
+      inject(($injector) => {
         const ngeoSyncArrays = $injector.get('ngeoSyncArrays');
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
@@ -27,19 +27,19 @@ describe('ngeo.SyncArrays', function() {
       });
     });
 
-    it('updates arr2 when an element is added to arr1', function() {
+    it('updates arr2 when an element is added to arr1', () => {
       arr1.push(4);
       $rootScope.$digest();
       expect(arr2).toEqual([0, 1, 2, 3, 4]);
     });
 
-    it('updates arr2 when an element is removed from arr1', function() {
+    it('updates arr2 when an element is removed from arr1', () => {
       arr1.splice(4, 1);
       $rootScope.$digest();
       expect(arr2).toEqual([0, 1, 3]);
     });
 
-    it('updates arr1 when the order changes in arr2', function() {
+    it('updates arr1 when the order changes in arr2', () => {
       const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;
@@ -48,7 +48,7 @@ describe('ngeo.SyncArrays', function() {
       expect(arr1).toEqual([0, 10, 3, 20, 2, 30, 1]);
     });
 
-    it('stops synchronizing when dereg is called', function() {
+    it('stops synchronizing when dereg is called', () => {
       const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;
@@ -60,12 +60,12 @@ describe('ngeo.SyncArrays', function() {
 
   });
 
-  describe('arr1 and arr2 in reverse order', function() {
+  describe('arr1 and arr2 in reverse order', () => {
     let arr1, arr2;
     let dereg;
 
-    beforeEach(function() {
-      inject(function($injector) {
+    beforeEach(() => {
+      inject(($injector) => {
         const ngeoSyncArrays = $injector.get('ngeoSyncArrays');
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
@@ -78,19 +78,19 @@ describe('ngeo.SyncArrays', function() {
       });
     });
 
-    it('updates arr2 when an element is added to arr1', function() {
+    it('updates arr2 when an element is added to arr1', () => {
       arr1.push(4);
       $rootScope.$digest();
       expect(arr2).toEqual([4, 3, 2, 1, 0]);
     });
 
-    it('updates arr2 when an element is removed from arr1', function() {
+    it('updates arr2 when an element is removed from arr1', () => {
       arr1.splice(4, 1);
       $rootScope.$digest();
       expect(arr2).toEqual([3, 1, 0]);
     });
 
-    it('updates arr1 when the order changes in arr2', function() {
+    it('updates arr1 when the order changes in arr2', () => {
       const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;
@@ -99,7 +99,7 @@ describe('ngeo.SyncArrays', function() {
       expect(arr1).toEqual([2, 10, 1, 20, 0, 30, 3]);
     });
 
-    it('stops synchronizing when dereg is called', function() {
+    it('stops synchronizing when dereg is called', () => {
       const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;

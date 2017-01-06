@@ -76,7 +76,7 @@ app.MainController = function($timeout) {
   // directive working. If we don't, the `ng-class` directive doesn't fire the
   // animation hooks.
   const self = this;
-  $timeout(function() {
+  $timeout(() => {
     self.open = true;
   }, 0);
 };

@@ -121,7 +121,7 @@ ngeo.interaction.Modify.prototype.setMap = function(map) {
 
   const currentMap = this.getMap();
   if (currentMap) {
-    interactions.forEach(function(interaction) {
+    interactions.forEach((interaction) => {
       currentMap.removeInteraction(interaction);
     }, this);
   }
@@ -129,7 +129,7 @@ ngeo.interaction.Modify.prototype.setMap = function(map) {
   ol.interaction.Interaction.prototype.setMap.call(this, map);
 
   if (map) {
-    interactions.forEach(function(interaction) {
+    interactions.forEach((interaction) => {
       map.addInteraction(interaction);
     }, this);
   }
@@ -148,7 +148,7 @@ ngeo.interaction.Modify.prototype.setState_ = function() {
   const interactions = this.interactions_;
   const keys = this.listenerKeys_;
 
-  interactions.forEach(function(interaction) {
+  interactions.forEach((interaction) => {
     interaction.setActive(active && !!map);
   }, this);
 
@@ -159,7 +159,7 @@ ngeo.interaction.Modify.prototype.setState_ = function() {
     keys.push(ol.events.listen(this.features_, ol.Collection.EventType.REMOVE,
         this.handleFeaturesRemove_, this));
   } else {
-    keys.forEach(function(key) {
+    keys.forEach((key) => {
       ol.events.unlistenByKey(key);
     }, this);
     this.features_.forEach(this.removeFeature_, this);

@@ -2,12 +2,12 @@
 goog.require('gmf.PrintController');
 goog.require('gmf.test.data.printcapabilities');
 
-describe('GmfPrintController', function() {
+describe('GmfPrintController', () => {
 
   let $controller, $rootScope, $scope;
   let gmfPrintCtrl;
 
-  beforeEach(inject(function(_$controller_, _$rootScope_) {
+  beforeEach(inject((_$controller_, _$rootScope_) => {
     $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
@@ -27,14 +27,14 @@ describe('GmfPrintController', function() {
     gmfPrintCtrl.parseCapabilities_({data: printCapabilities});
   }));
 
-  it('Get Set rotation', function() {
+  it('Get Set rotation', () => {
     expect(gmfPrintCtrl.rotation).toBe(0);
     gmfPrintCtrl.getSetRotation(25);
     expect(gmfPrintCtrl.rotation).toBe(gmfPrintCtrl.getSetRotation());
     expect(gmfPrintCtrl.rotation).toBe(25);
   });
 
-  it('Set layout and test depending fields changes', function() {
+  it('Set layout and test depending fields changes', () => {
     const title = 'title';
     gmfPrintCtrl.fields.title = title;
 
@@ -44,7 +44,7 @@ describe('GmfPrintController', function() {
     expect(gmfPrintCtrl.fields.layout).toBe(gmfPrintCtrl.fields.layouts[1]);
   });
 
-  it('Set scale and test map resolution change', function() {
+  it('Set scale and test map resolution change', () => {
     const baseScale = gmfPrintCtrl.fields.scales[1];
     const biggerScale = gmfPrintCtrl.fields.scales[2] > baseScale ?
       gmfPrintCtrl.fields.scales[2] : gmfPrintCtrl.fields.scales[0];
@@ -58,13 +58,13 @@ describe('GmfPrintController', function() {
     expect(resolution).toBeLessThan(view.getResolution());
   });
 
-  it('Set dpi', function() {
+  it('Set dpi', () => {
     const dpi = 10;
     gmfPrintCtrl.setDpi(10);
     expect(gmfPrintCtrl.fields.dpi).toBe(dpi);
   });
 
-  it('Is state', function() {
+  it('Is state', () => {
     expect(gmfPrintCtrl.isState('CAPABILITIES_NOT_LOADED')).toBeTruthy();
   });
 });

@@ -1,26 +1,26 @@
 goog.require('ngeo.BackgroundLayerMgr');
 
-describe('ngeo.BackgroundLayerMgr', function() {
+describe('ngeo.BackgroundLayerMgr', () => {
   let ngeoBackgroundLayerMgr;
   let map;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       ngeoBackgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
     });
 
     map = new ol.Map({});
   });
 
-  describe('#set', function() {
+  describe('#set', () => {
 
-    it('sets the background layer #1', function() {
+    it('sets the background layer #1', () => {
       const layer = new ol.layer.Tile();
       ngeoBackgroundLayerMgr.set(map, layer);
       expect(map.getLayers().item(0)).toBe(layer);
     });
 
-    it('sets the background layer #2', function() {
+    it('sets the background layer #2', () => {
       map.addLayer(new ol.layer.Tile());
       const layer = new ol.layer.Tile();
       ngeoBackgroundLayerMgr.set(map, layer);
@@ -28,7 +28,7 @@ describe('ngeo.BackgroundLayerMgr', function() {
       expect(map.getLayers().item(0)).toBe(layer);
     });
 
-    it('sets the background layer #3', function() {
+    it('sets the background layer #3', () => {
       const layer1 = new ol.layer.Tile();
       ngeoBackgroundLayerMgr.set(map, layer1);
       const layer2 = new ol.layer.Tile();
@@ -37,7 +37,7 @@ describe('ngeo.BackgroundLayerMgr', function() {
       expect(map.getLayers().item(0)).toBe(layer2);
     });
 
-    it('unsets the background layer', function() {
+    it('unsets the background layer', () => {
       const layer = new ol.layer.Tile();
       ngeoBackgroundLayerMgr.set(map, layer);
       ngeoBackgroundLayerMgr.set(map, null);
@@ -46,14 +46,14 @@ describe('ngeo.BackgroundLayerMgr', function() {
 
   });
 
-  describe('#get', function() {
+  describe('#get', () => {
 
-    it('returns `null` if no background layer', function() {
+    it('returns `null` if no background layer', () => {
       const layer = ngeoBackgroundLayerMgr.get(map);
       expect(layer).toBe(null);
     });
 
-    it('returns the current background layer', function() {
+    it('returns the current background layer', () => {
       const expectedLayer = new ol.layer.Tile();
       ngeoBackgroundLayerMgr.set(map, expectedLayer);
       const layer = ngeoBackgroundLayerMgr.get(map);

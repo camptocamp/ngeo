@@ -178,9 +178,7 @@ gmf.Themes.findGroupByName = function(themes, name) {
  * @private
  */
 gmf.Themes.findObjectByName_ = function(objects, objectName) {
-  return ol.array.find(objects, function(object) {
-    return object['name'] === objectName;
-  });
+  return ol.array.find(objects, object => object['name'] === objectName);
 };
 
 
@@ -234,7 +232,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   const getIds = function(item, array) {
     array.push(item.id);
     const children = item.children || [];
-    children.forEach(function(child) {
+    children.forEach((child) => {
       getIds(child, array);
     });
   };
@@ -275,7 +273,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
           gmfLayerWMTS.url,
           gmfLayer.name || '',
           gmfLayer.dimensions
-      ).then(callback.bind(null, gmfLayer)).then(null, function(response) {
+      ).then(callback.bind(null, gmfLayer)).then(null, (response) => {
         console.error('unable to get capabilities', response['config']['url']);
         // Continue even if some layers have failed loading.
         return $q.resolve(undefined);
@@ -304,16 +302,12 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    */
   const layerGroupCreationFn = function(ogcServers, item) {
     // We assume no child is a layer group.
-    const orderedChildren = item.children.map(function(x) {
-      return x;
-    }).reverse(); // the order of insertion in OL3 is the contrary of the theme
+    const orderedChildren = item.children.map(x => x).reverse(); // the order of insertion in OL3 is the contrary of the theme
     const promises = orderedChildren.map(layerLayerCreationFn.bind(null, ogcServers));
-    return $q.all(promises).then(function(layers) {
+    return $q.all(promises).then((layers) => {
       let collection;
       if (layers) {
-        layers = layers.filter(function(l) {
-          return l;
-        });
+        layers = layers.filter(l => l);
         collection = new ol.Collection(layers);
       }
       const group = layerHelper.createBasicGroup(collection);
@@ -328,7 +322,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    * @return {angular.$q.Promise.<Array.<ol.layer.Base>>} Promise.
    */
   const promiseSuccessFn = function(data) {
-    const promises = data.background_layers.map(function(item) {
+    const promises = data.background_layers.map((item) => {
       const itemType = item.type;
       if (itemType === 'WMTS' || itemType === 'WMS') {
         return layerLayerCreationFn(data.ogcServers, item);
@@ -342,7 +336,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
     return $q.all(promises);
   }.bind(this);
 
-  this.bgLayerPromise_ = this.promise_.then(promiseSuccessFn).then(function(values) {
+  this.bgLayerPromise_ = this.promise_.then(promiseSuccessFn).then((values) => {
     const layers = [];
 
     // (1) add a blank layer
@@ -354,13 +348,13 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
     }
 
     // (2) add layers that were returned
-    values.forEach(function(layer) {
+    values.forEach((layer) => {
       if (layer) {
         layers.push(layer);
       }
     });
     return layers;
-  }.bind(this));
+  });
 
   return this.bgLayerPromise_;
 };
@@ -380,9 +374,7 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
        * @return {gmfThemes.GmfTheme?} The theme object for themeName, or null
        *     if not found.
        */
-      function(data) {
-        return gmf.Themes.findThemeByName(data.themes, themeName);
-      });
+      data => gmf.Themes.findThemeByName(data.themes, themeName));
 };
 
 
@@ -398,9 +390,7 @@ gmf.Themes.prototype.getThemesObject = function() {
        *     response.
        * @return {Array.<gmfThemes.GmfTheme>} The themes object.
        */
-      function(data) {
-        return data.themes;
-      });
+      data => data.themes);
 };
 
 
@@ -416,9 +406,7 @@ gmf.Themes.prototype.getBackgroundLayersObject = function() {
        *     response.
        * @return {Array.<gmfThemes.GmfLayer>} The background layers object.
        */
-      function(data) {
-        return data.background_layers;
-      });
+      data => data.background_layers);
 };
 
 
@@ -435,9 +423,7 @@ gmf.Themes.prototype.getOgcServersObject = function() {
        *     response.
        * @return {gmfThemes.GmfOgcServers} The `ogcServers` object.
        */
-      function(data) {
-        return data.ogcServers;
-      });
+      data => data.ogcServers);
 };
 
 
@@ -457,10 +443,10 @@ gmf.Themes.prototype.hasEditableLayers = function() {
  * @return {boolean} Editable layers?
  */
 gmf.Themes.prototype.hasEditableLayers_ = function(data) {
-  return data.themes.some(function(theme) {
+  return data.themes.some((theme) => {
     const hasEditableLayers = theme.children.some(this.hasNodeEditableLayers_.bind(this));
     return hasEditableLayers;
-  }.bind(this));
+  });
 };
 
 
@@ -508,7 +494,7 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
     },
     cache: false,
     withCredentials: true
-  }).then(function(response) {
+  }).then((response) => {
     if (response.data.errors.length != 0) {
       const message = `The themes contain some errors:\n${
         response.data.errors.join('\n')}`;
@@ -520,9 +506,9 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
     this.deferred_.resolve(response.data);
     this.dispatchEvent(gmf.ThemesEventType.CHANGE);
     this.loaded_ = true;
-  }.bind(this), function(response) {
+  }, (response) => {
     this.deferred_.reject(response);
-  }.bind(this));
+  });
 };
 
 

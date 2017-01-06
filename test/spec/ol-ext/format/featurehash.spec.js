@@ -13,19 +13,19 @@ goog.require('ol.style.Text');
 goog.require('ngeo.format.FeatureHash');
 
 
-describe('ngeo.format.FeatureHash', function() {
+describe('ngeo.format.FeatureHash', () => {
 
   let fhFormat;
 
-  beforeEach(function() {
+  beforeEach(() => {
     fhFormat = new ngeo.format.FeatureHash();
   });
 
-  describe('decoding', function() {
+  describe('decoding', () => {
 
-    describe('point decoding', function() {
+    describe('point decoding', () => {
 
-      it('correctly decodes a point', function() {
+      it('correctly decodes a point', () => {
         const point = fhFormat.readGeometry('p(__)');
         expect(point instanceof ol.geom.Point).toBeTruthy();
         const coordinate = point.getCoordinates();
@@ -34,9 +34,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('multi point decoding', function() {
+    describe('multi point decoding', () => {
 
-      it('correctly decodes a multi point', function() {
+      it('correctly decodes a multi point', () => {
         const multiPoint = fhFormat.readGeometry('P(..__)');
         expect(multiPoint instanceof ol.geom.MultiPoint).toBeTruthy();
         const coordinates = multiPoint.getCoordinates();
@@ -47,9 +47,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('line decoding', function() {
+    describe('line decoding', () => {
 
-      it('correctly decodes a line', function() {
+      it('correctly decodes a line', () => {
         const lineString = fhFormat.readGeometry('l(..__)');
         expect(lineString instanceof ol.geom.LineString).toBeTruthy();
         const coordinates = lineString.getCoordinates();
@@ -60,9 +60,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('multi line decoding', function() {
+    describe('multi line decoding', () => {
 
-      it('correctly decodes a multi line', function() {
+      it('correctly decodes a multi line', () => {
         const multiLineString = fhFormat.readGeometry('L(..__\'--__)');
         expect(multiLineString instanceof ol.geom.MultiLineString).toBeTruthy();
         const coordinates = multiLineString.getCoordinates();
@@ -75,9 +75,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('polygon decoding', function() {
+    describe('polygon decoding', () => {
 
-      it('correctly decodes a polygon', function() {
+      it('correctly decodes a polygon', () => {
         const polygon = fhFormat.readGeometry('a(..DD.K\'!F_..!-.)');
         expect(polygon instanceof ol.geom.Polygon).toBeTruthy();
         const linearRingCount = polygon.getLinearRingCount();
@@ -93,9 +93,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('multi polygon decoding', function() {
+    describe('multi polygon decoding', () => {
 
-      it('correctly decodes a multi polygon', function() {
+      it('correctly decodes a multi polygon', () => {
         const multiPolygon = fhFormat.readGeometry(
             'A(..DD.K\'!F_..!-.)(!_!!.D)');
         expect(multiPolygon instanceof ol.geom.MultiPolygon).toBeTruthy();
@@ -121,9 +121,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('feature decoding', function() {
+    describe('feature decoding', () => {
 
-      it('correctly decodes a feature', function() {
+      it('correctly decodes a feature', () => {
         const feature = fhFormat.readFeature(
             'p(__~foo*foo\'bar*bar~fillColor*%23ff0101\'' +
             'strokeColor*%2301ff01\'strokeWidth*3\'' +
@@ -159,8 +159,8 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('feature decoding with pointRadius', function() {
-      it('correctly decodes a feature with pointRadius', function() {
+    describe('feature decoding with pointRadius', () => {
+      it('correctly decodes a feature with pointRadius', () => {
         const feature = fhFormat.readFeature(
             'p(__~foo*foo\'bar*bar~fillColor*%23ff0101\'' +
             'strokeColor*%2301ff01\'strokeWidth*3\'' +
@@ -195,8 +195,8 @@ describe('ngeo.format.FeatureHash', function() {
       });
     });
 
-    describe('feature decoding with style, witout attributes', function() {
-      it('correctly decodes a feature with style, witout attributes', function() {
+    describe('feature decoding with style, witout attributes', () => {
+      it('correctly decodes a feature with style, witout attributes', () => {
         const feature = fhFormat.readFeature(
             'p(__~~fillColor*%23ff0101\'' +
             'strokeColor*%2301ff01\'strokeWidth*3\'' +
@@ -229,8 +229,8 @@ describe('ngeo.format.FeatureHash', function() {
       });
     });
 
-    describe('feature decoding with attributes, witout style', function() {
-      it('correctly decodes a feature with attributes, witout style', function() {
+    describe('feature decoding with attributes, witout style', () => {
+      it('correctly decodes a feature with attributes, witout style', () => {
         const feature = fhFormat.readFeature('p(__~foo*foo\'bar*bar~)');
         expect(feature instanceof ol.Feature).toBeTruthy();
         const geometry = feature.getGeometry();
@@ -242,9 +242,9 @@ describe('ngeo.format.FeatureHash', function() {
       });
     });
 
-    describe('features decoding', function() {
+    describe('features decoding', () => {
 
-      it('correctly decodes features', function() {
+      it('correctly decodes features', () => {
         const features = fhFormat.readFeatures('Fp(__)l(..__)');
         expect(features.length).toBe(2);
         let feature, geometry, coordinates;
@@ -268,11 +268,11 @@ describe('ngeo.format.FeatureHash', function() {
 
   });
 
-  describe('encoding', function() {
+  describe('encoding', () => {
 
-    describe('point encoding', function() {
+    describe('point encoding', () => {
 
-      it('correctly encodes a point', function() {
+      it('correctly encodes a point', () => {
         const point = new ol.geom.Point([1, 1]);
         const result = fhFormat.writeGeometry(point);
         expect(result).toBe('p(__)');
@@ -280,9 +280,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('multi point encoding', function() {
+    describe('multi point encoding', () => {
 
-      it('correctly encodes a multi point', function() {
+      it('correctly encodes a multi point', () => {
         const multiPoint = new ol.geom.MultiPoint([[0, 0], [1, 1]]);
         const result = fhFormat.writeGeometry(multiPoint);
         expect(result).toBe('P(..__)');
@@ -290,9 +290,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('line string encoding', function() {
+    describe('line string encoding', () => {
 
-      it('correctly encodes a line', function() {
+      it('correctly encodes a line', () => {
         const lineString = new ol.geom.LineString([[0, 0], [1, 1]]);
         const result = fhFormat.writeGeometry(lineString);
         expect(result).toBe('l(..__)');
@@ -300,9 +300,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('multi line string encoding', function() {
+    describe('multi line string encoding', () => {
 
-      it('correctly encodes a multi line', function() {
+      it('correctly encodes a multi line', () => {
         const multiLineString = new ol.geom.MultiLineString([
             [[0, 0], [1, 1]], [[0, 0], [1, 1]]
         ]);
@@ -312,9 +312,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('polygon encoding', function() {
+    describe('polygon encoding', () => {
 
-      it('correctly encodes a polygon', function() {
+      it('correctly encodes a polygon', () => {
         const polygon = new ol.geom.Polygon([
             [[0, 0], [4, 4], [4, -4], [0, 0]],
             [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]
@@ -325,9 +325,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('multi polygon encoding', function() {
+    describe('multi polygon encoding', () => {
 
-      it('correctly encodes a multi polygon', function() {
+      it('correctly encodes a multi polygon', () => {
         const multiPolygon = new ol.geom.MultiPolygon([
           [[[0, 0], [4, 4], [4, -4], [0, 0]],
           [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]],
@@ -339,9 +339,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('point feature encoding', function() {
+    describe('point feature encoding', () => {
 
-      it('correctly encodes a point feature', function() {
+      it('correctly encodes a point feature', () => {
         const point = new ol.geom.Point([1, 1]);
         const feature = new ol.Feature({
           geometry: point,
@@ -368,9 +368,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('line string feature encoding', function() {
+    describe('line string feature encoding', () => {
 
-      it('correctly encodes a line string feature', function() {
+      it('correctly encodes a line string feature', () => {
         const lineString = new ol.geom.LineString([[0, 0], [1, 1]]);
         const feature = new ol.Feature({
           geometry: lineString,
@@ -390,9 +390,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('polygon feature encoding', function() {
+    describe('polygon feature encoding', () => {
 
-      it('correctly encodes a polygon feature', function() {
+      it('correctly encodes a polygon feature', () => {
         const polygon = new ol.geom.Polygon([
             [[0, 0], [4, 4], [4, -4], [0, 0]],
             [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]
@@ -426,9 +426,9 @@ describe('ngeo.format.FeatureHash', function() {
 
     });
 
-    describe('features encoding', function() {
+    describe('features encoding', () => {
 
-      it('correctly encodes features', function() {
+      it('correctly encodes features', () => {
         const point = new ol.geom.Point([1, 1]);
         const pointFeature = new ol.Feature({
           geometry: point,
@@ -447,7 +447,7 @@ describe('ngeo.format.FeatureHash', function() {
       });
     });
 
-    describe('OpenLayers.Format.URLCompressed compatibility', function() {
+    describe('OpenLayers.Format.URLCompressed compatibility', () => {
 
       //
       // OpenLayers.Format.URLCompressed encodes the polygon
@@ -461,11 +461,11 @@ describe('ngeo.format.FeatureHash', function() {
       // a(huv9Fhmrx_gy-z801u1-z9I1hHh4H1Uh9RgfJhqP)
       //
 
-      beforeEach(function() {
+      beforeEach(() => {
         fhFormat = new ngeo.format.FeatureHash({accuracy: 0.1});
       });
 
-      it('encodes as expected', function() {
+      it('encodes as expected', () => {
         const polygon = new ol.geom.Polygon([[
             [538820, 153580], [538720, 151980], [540400, 151300],
             [541040, 151920], [541080, 153060], [540340, 154120],
@@ -478,7 +478,7 @@ describe('ngeo.format.FeatureHash', function() {
         expect(result).toBe('Fa(huv9Fhmrx_gy-z801u1-z9I1hHh4H1Uh9RgfJhqP)');
       });
 
-      it('decodes as expected', function() {
+      it('decodes as expected', () => {
         const features = fhFormat.readFeatures(
             'Fa(huv9Fhmrx_gy-z801u1-z9I1hHh4H1Uh9RgfJhqP)');
         expect(features.length).toBe(1);
@@ -499,8 +499,8 @@ describe('ngeo.format.FeatureHash', function() {
       });
     });
 
-    describe('With a user-provided feature properties function', function() {
-      it('encodes feature properties as expected', function() {
+    describe('With a user-provided feature properties function', () => {
+      it('encodes feature properties as expected', () => {
         fhFormat = new ngeo.format.FeatureHash({
           properties(feature) {
             return {foobar: feature.get('foo') + feature.get('bar')};

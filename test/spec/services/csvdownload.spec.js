@@ -1,19 +1,19 @@
 goog.require('ngeo.CsvDownload');
 
-describe('ngeo.csvdownload', function() {
+describe('ngeo.csvdownload', () => {
 
   let ngeoCsvDownload;
 
-  beforeEach(inject(function(_ngeoCsvDownload_) {
+  beforeEach(inject((_ngeoCsvDownload_) => {
     ngeoCsvDownload = _ngeoCsvDownload_;
   }));
 
-  describe('#generateCsv', function() {
-    it('deals with no data', function() {
+  describe('#generateCsv', () => {
+    it('deals with no data', () => {
       expect(ngeoCsvDownload.generateCsv([], [])).toBe('');
     });
 
-    it('generates a CSV', function() {
+    it('generates a CSV', () => {
       const columnDefs = [{name: 'col 1'}, {name: 'col 2'}, {name: 'col 3'}];
       const data = [{
         'col 1': 'some text',

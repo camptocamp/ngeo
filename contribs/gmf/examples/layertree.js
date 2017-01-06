@@ -144,26 +144,26 @@ gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, nge
     return this.gmfTreeManager.root.children;
   };
 
-  gmfThemes.getThemesObject().then(function(themes) {
+  gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       this.themes = themes;
 
       // Get an array with all nodes entities existing in "themes".
       const flatNodes = [];
-      this.themes.forEach(function(theme) {
-        theme.children.forEach(function(group) {
+      this.themes.forEach((theme) => {
+        theme.children.forEach((group) => {
           this.groups.push(group); // get a list of all groups
           this.getDistinctFlatNodes_(group, flatNodes);
-        }.bind(this));
-      }.bind(this));
-      flatNodes.forEach(function(node) {
+        });
+      });
+      flatNodes.forEach((node) => {
         // Get an array of all layers
         if (node.children === undefined) {
           this.layers.push(node);
         }
-      }.bind(this));
+      });
     }
-  }.bind(this));
+  });
 
   /**
    * Just for this example
@@ -180,7 +180,7 @@ gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, nge
       }
     }
     let alreadyAdded = false;
-    nodes.some(function(n) {
+    nodes.some((n) => {
       if (n.id === node.id) {
         return alreadyAdded = true;
       }

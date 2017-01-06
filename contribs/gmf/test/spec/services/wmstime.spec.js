@@ -2,7 +2,7 @@
 
 goog.require('gmf.WMSTime');
 
-describe('gmfWMSTime service', function() {
+describe('gmfWMSTime service', () => {
   let gmfWMSTime;
 
   const wmsTime = {
@@ -16,13 +16,13 @@ describe('gmfWMSTime service', function() {
     interval: [0, 0, 1, 0]
   };
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       gmfWMSTime = $injector.get('gmfWMSTime');
     });
   });
 
-  it('should format the time regarding the resolution and with a mode set on value', function() {
+  it('should format the time regarding the resolution and with a mode set on value', () => {
     const timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
     let timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues
@@ -49,7 +49,7 @@ describe('gmfWMSTime service', function() {
   });
 
 
-  it('should format the time regarding the resolution and with a mode set on range', function() {
+  it('should format the time regarding the resolution and with a mode set on range', () => {
     wmsTime.mode = 'range';
     wmsTime.resolution = 'year';
     const timeValues = gmfWMSTime.getOptions(wmsTime)['values'];

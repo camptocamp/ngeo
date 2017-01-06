@@ -1,6 +1,6 @@
 goog.require('gmf.ShareService');
 
-describe('gmf.ShareService', function() {
+describe('gmf.ShareService', () => {
   let gmfShareService;
   let $httpBackend;
   let shortenerUrl;
@@ -8,13 +8,13 @@ describe('gmf.ShareService', function() {
     short_url: 'http://fake/gmf'
   };
 
-  afterEach(function() {
+  afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('Should get a short version of the permalink', function() {
-    inject(function($injector) {
+  it('Should get a short version of the permalink', () => {
+    inject(($injector) => {
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.when('POST', shortenerUrl).respond(successResponse);
       gmfShareService = $injector.get('gmfShareService');
@@ -37,12 +37,12 @@ describe('gmf.ShareService', function() {
 
   });
 
-  it('Should return the permalink if no URL for the shorten service has been provided', function() {
-    module(function($provide) {
+  it('Should return the permalink if no URL for the shorten service has been provided', () => {
+    module(($provide) => {
       $provide.value('gmfShortenerCreateUrl', '');
     });
 
-    inject(function($injector) {
+    inject(($injector) => {
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.when('POST', shortenerUrl).respond(successResponse);
       gmfShareService = $injector.get('gmfShareService');

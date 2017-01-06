@@ -129,9 +129,7 @@ app.MainController = function() {
 
   map.on('singleclick', function(evt) {
     const feature = this.map.forEachFeatureAtPixel(evt.pixel,
-      function(feature) {
-        return feature;
-      });
+      feature => feature);
     if (feature) {
       this.interaction.setActive(true);
     }

@@ -21,7 +21,7 @@ ngeo.module.value('gmfDisplayquerygridTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['gmfDisplayquerygridTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/displayquerygrid.html`;
@@ -265,14 +265,12 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
 
   // Watch the ngeo query result service.
   this.$scope_.$watchCollection(
-      function() {
-        return ngeoQueryResult;
-      },
-      function(newQueryResult, oldQueryResult) {
+      () => ngeoQueryResult,
+      (newQueryResult, oldQueryResult) => {
         if (newQueryResult !== oldQueryResult) {
           this.updateData_();
         }
-      }.bind(this));
+      });
 
   /**
    * An unregister function returned from `$scope.$watchCollection` for
@@ -290,9 +288,7 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
  * @return {Array.<gmfx.GridSource>} Grid sources.
  */
 gmf.DisplayquerygridController.prototype.getGridSources = function() {
-  return this.loadedGridSources.map(function(sourceId) {
-    return this.gridSources[sourceId];
-  }.bind(this));
+  return this.loadedGridSources.map(sourceId => this.gridSources[sourceId]);
 };
 
 
@@ -321,7 +317,7 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
   }
 
   // create grids (only for source with features or with too many results)
-  sources.forEach(function(source) {
+  sources.forEach((source) => {
     if (source.tooManyResults) {
       this.makeGrid_(null, source);
     } else {
@@ -330,7 +326,7 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
         this.collectData_(source);
       }
     }
-  }.bind(this));
+  });
 
   if (this.loadedGridSources.length == 0) {
     // if no grids were created, do not show
@@ -342,11 +338,11 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
   if (this.selectedTab === null || !((`${this.selectedTab}`) in this.gridSources)) {
     // selecting the tab is done in a timeout, because otherwise in rare cases
     // `ng-class` might set the `active` class on multiple tabs.
-    this.$timeout_(function() {
+    this.$timeout_(() => {
       const firstSourceId = this.loadedGridSources[0];
       this.selectTab(this.gridSources[firstSourceId]);
       this.reflowGrid_(firstSourceId);
-    }.bind(this), 0);
+    }, 0);
   }
 };
 
@@ -356,9 +352,7 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
  * @return {boolean} If one of the source has too many results.
  */
 gmf.DisplayquerygridController.prototype.hasOneWithTooManyResults_ = function() {
-  return this.ngeoQueryResult.sources.some(function(source) {
-    return source.tooManyResults;
-  });
+  return this.ngeoQueryResult.sources.some(source => source.tooManyResults);
 };
 
 
@@ -384,7 +378,7 @@ gmf.DisplayquerygridController.prototype.getMergedSources_ = function(sources) {
   /** @type {Object.<string, ngeox.QueryResultSource>} */
   const mergedSources = {};
 
-  sources.forEach(function(source) {
+  sources.forEach((source) => {
     // check if this source can be merged
     const mergedSource = this.getMergedSource_(source, mergedSources);
 
@@ -392,7 +386,7 @@ gmf.DisplayquerygridController.prototype.getMergedSources_ = function(sources) {
       // this source should not be merged, add as is
       allSources.push(source);
     }
-  }.bind(this));
+  });
 
   for (const mergedSourceId in mergedSources) {
     allSources.push(mergedSources[mergedSourceId]);
@@ -417,9 +411,7 @@ gmf.DisplayquerygridController.prototype.getMergedSource_ = function(source, mer
 
   for (const currentMergeSourceId in this.mergeTabs_) {
     const sourceIds = this.mergeTabs_[currentMergeSourceId];
-    const containsSource = sourceIds.some(function(sourceId) {
-      return sourceId == source.id;
-    });
+    const containsSource = sourceIds.some(sourceId => sourceId == source.id);
     if (containsSource) {
       mergeSourceId = currentMergeSourceId;
       break;
@@ -449,7 +441,7 @@ gmf.DisplayquerygridController.prototype.getMergedSource_ = function(source, mer
   }
 
   // add features of source to merge source
-  source.features.forEach(function(feature) {
+  source.features.forEach((feature) => {
     mergeSource.features.push(feature);
   });
 
@@ -481,7 +473,7 @@ gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
   const featureGeometriesNames = [];
   const featuresForSource = {};
   let properties, featureGeometryName;
-  features.forEach(function(feature) {
+  features.forEach((feature) => {
     properties = feature.getProperties();
     if (properties !== undefined) {
       // Keeps distinct geometry names to remove theme later.
@@ -493,7 +485,7 @@ gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
       allProperties.push(properties);
       featuresForSource[ngeo.GridConfig.getRowUid(properties)] = feature;
     }
-  }.bind(this));
+  });
 
   this.cleanProperties_(allProperties, featureGeometriesNames);
   if (allProperties.length > 0) {
@@ -513,8 +505,8 @@ gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
  */
 gmf.DisplayquerygridController.prototype.cleanProperties_ = function(
     allProperties, featureGeometriesNames) {
-  allProperties.forEach(function(properties) {
-    featureGeometriesNames.forEach(function(featureGeometryName) {
+  allProperties.forEach((properties) => {
+    featureGeometriesNames.forEach((featureGeometryName) => {
       delete properties[featureGeometryName];
     });
     delete properties['boundedBy'];
@@ -546,7 +538,7 @@ gmf.DisplayquerygridController.prototype.removeEmptyColumnsFn_ = function(
   }
   // Get all keys that previously always refers always to an empty value.
   let keyToRemove;
-  allProperties.forEach(function(properties) {
+  allProperties.forEach((properties) => {
     keyToRemove = [];
     for (key in properties) {
       if (keysToKeep.indexOf(key) === -1) {
@@ -554,7 +546,7 @@ gmf.DisplayquerygridController.prototype.removeEmptyColumnsFn_ = function(
       }
     }
     // Remove these keys.
-    keyToRemove.forEach(function(key) {
+    keyToRemove.forEach((key) => {
       delete properties[key];
     });
   });
@@ -599,7 +591,7 @@ gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
 
   /** @type {Array.<ngeox.GridColumnDef>} */
   const columnDefs = [];
-  columns.forEach(function(column) {
+  columns.forEach((column) => {
     if (column !== 'ol_uid') {
       columnDefs.push(/** @type {ngeox.GridColumnDef} */ ({
         name: column
@@ -653,14 +645,12 @@ gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
 
   if (gridSource.configuration !== null) {
     this.unregisterSelectWatcher_ = this.$scope_.$watchCollection(
-        function() {
-          return gridSource.configuration.selectedRows;
-        },
-        function(newSelected, oldSelectedRows) {
+        () => gridSource.configuration.selectedRows,
+        (newSelected, oldSelectedRows) => {
           if (Object.keys(newSelected) !== Object.keys(oldSelectedRows)) {
             this.onSelectionChanged_();
           }
-        }.bind(this));
+        });
   }
   this.updateFeatures_(gridSource);
 };
@@ -678,7 +668,7 @@ gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceId) {
   // be refreshed.
   const activePane = this.$element_.find(`div.tab-pane#${sourceId}`);
   activePane.removeClass('active').addClass('active');
-  this.$timeout_(function() {
+  this.$timeout_(() => {
     activePane.find('div.ngeo-grid-table-container table')['trigger']('reflow');
   });
 };
@@ -813,7 +803,7 @@ gmf.DisplayquerygridController.prototype.zoomToSelection = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     const extent = ol.extent.createEmpty();
-    this.highlightFeatures_.forEach(function(feature) {
+    this.highlightFeatures_.forEach((feature) => {
       ol.extent.extend(extent, feature.getGeometry().getExtent());
     });
     const mapSize = this.map_.getSize();

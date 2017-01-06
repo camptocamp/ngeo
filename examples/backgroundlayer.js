@@ -75,11 +75,11 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
   this.bgLayer = null;
 
   $http.get('data/backgroundlayers.json').then(
-      function(resp) {
+      (resp) => {
         this.bgLayers = resp.data;
         // use the first layer by default
         this.bgLayer = this.bgLayers[0];
-      }.bind(this));
+      });
 
   /**
    * @type {ngeo.BackgroundLayerMgr}

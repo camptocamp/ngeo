@@ -1,13 +1,13 @@
 goog.require('ol.Map');
 goog.require('ngeo.scaleselectorDirective');
 
-describe('ngeo.scaleselectorDirective', function() {
+describe('ngeo.scaleselectorDirective', () => {
 
   let element;
   let map;
   let scales;
 
-  beforeEach(function() {
+  beforeEach(() => {
 
     map = new ol.Map({
       view: new ol.View({
@@ -21,7 +21,7 @@ describe('ngeo.scaleselectorDirective', function() {
             'ngeo-scaleselector-map="map">' +
         '</div>');
 
-    inject(function($rootScope, $compile, $sce) {
+    inject(($rootScope, $compile, $sce) => {
       scales = {
         '0': $sce.trustAsHtml('1&nbsp;:&nbsp;200\'000\'000'),
         '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000\'000'),
@@ -38,18 +38,18 @@ describe('ngeo.scaleselectorDirective', function() {
 
   });
 
-  it('creates an element with expected number of li elements', function() {
+  it('creates an element with expected number of li elements', () => {
     const lis = element.find('li');
     expect(lis.length).toBe(5);
   });
 
-  describe('calling setZoom in Angular context', function() {
+  describe('calling setZoom in Angular context', () => {
 
-    it('does not throw', function() {
+    it('does not throw', () => {
       const scope = element.scope();
 
       function test() {
-        scope.$apply(function() {
+        scope.$apply(() => {
           map.getView().setZoom(4);
         });
       }

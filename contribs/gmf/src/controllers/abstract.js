@@ -174,11 +174,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
   const backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
 
   // watch any change on dimensions object to refresh the background layer
-  $scope.$watchCollection(function() {
-    return this.dimensions;
-  }.bind(this), function() {
+  $scope.$watchCollection(() => this.dimensions, () => {
     backgroundLayerMgr.updateDimensions(this.map, this.dimensions);
-  }.bind(this));
+  });
 
   /**
    * @type {boolean}
@@ -243,9 +241,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.ngeoQuery_ = $injector.get('ngeoQuery');
 
   // Don't deactivate ngeoQuery on print activation
-  $scope.$watch(function() {
-    return this.printPanelActive;
-  }.bind(this), function(newVal) {
+  $scope.$watch(() => this.printPanelActive, (newVal) => {
     // Clear queries if another panel is open but not if user go back to the
     // map form the print.
     if (!newVal && !this.queryActive) {
@@ -253,7 +249,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
     }
     this.queryAutoClear = !newVal;
     this.printActive = newVal;
-  }.bind(this));
+  });
 
   /**
    * The active state of the directive responsible of point measurements.
@@ -288,13 +284,11 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.gmfUser = $injector.get('gmfUser');
 
   // close right nave on successful login
-  $scope.$watch(function() {
-    return this.gmfUser.username;
-  }.bind(this), function(newVal) {
+  $scope.$watch(() => this.gmfUser.username, (newVal) => {
     if (newVal !== null && this.navIsVisible) {
       this.rightNavVisible = false;
     }
-  }.bind(this));
+  });
 
   /**
    * @type {ngeo.GetBrowserLanguage}
@@ -368,27 +362,23 @@ gmf.AbstractController = function(config, $scope, $injector) {
   ngeoToolActivateMgr.registerTool('mapTools', printPanelActivate, false);
 
 
-  $scope.$watch(function() {
-    return this.gmfThemeManager.themeName;
-  }.bind(this), function(name) {
+  $scope.$watch(() => this.gmfThemeManager.themeName, (name) => {
     const map = this.map;
-    this.gmfThemes_.getThemeObject(name).then(function(theme) {
+    this.gmfThemes_.getThemeObject(name).then((theme) => {
       if (theme) {
         const backgrounds = theme['functionalities']['default_basemap'];
         if (backgrounds && backgrounds.length > 0) {
           const background = backgrounds[0];
-          this.gmfThemes_.getBgLayers(this.dimensions).then(function(layers) {
-            const layer = ol.array.find(layers, function(layer) {
-              return layer.get('label') === background;
-            });
+          this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
+            const layer = ol.array.find(layers, layer => layer.get('label') === background);
             if (layer) {
               backgroundLayerMgr.set(map, layer);
             }
           });
         }
       }
-    }.bind(this));
-  }.bind(this));
+    });
+  });
 
   /**
    * @param {boolean} skipPermalink If True, don't use permalink
@@ -396,7 +386,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @private
    */
   this.updateCurrentBackgroundLayer_ = function(skipPermalink) {
-    this.gmfThemes_.getBgLayers(this.dimensions).then(function(layers) {
+    this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
       let background;
       if (!skipPermalink) {
         // get the background from the permalink
@@ -409,9 +399,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
           const defaultBasemapArray = functionalities.default_basemap;
           if (defaultBasemapArray.length > 0) {
             const defaultBasemapLabel = defaultBasemapArray[0];
-            background = ol.array.find(layers, function(layer) {
-              return layer.get('label') === defaultBasemapLabel;
-            });
+            background = ol.array.find(layers, layer => layer.get('label') === defaultBasemapLabel);
           }
         }
       }
@@ -424,7 +412,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
       if (background) {
         backgroundLayerMgr.set(this.map, background);
       }
-    }.bind(this));
+    });
   }.bind(this);
 
   this.updateCurrentBackgroundLayer_(false);
@@ -439,9 +427,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @private
    */
   this.updateHasEditableLayers_ = function() {
-    this.gmfThemes_.hasEditableLayers().then(function(hasEditableLayers) {
+    this.gmfThemes_.hasEditableLayers().then((hasEditableLayers) => {
       this.hasEditableLayers = hasEditableLayers;
-    }.bind(this));
+    });
   };
 };
 
@@ -462,13 +450,11 @@ gmf.AbstractController.prototype.switchLanguage = function(lang) {
 /**
  */
 gmf.AbstractController.prototype.initLanguage = function() {
-  this.$scope.$watch(function() {
-    return this['lang'];
-  }.bind(this), function(newValue) {
+  this.$scope.$watch(() => this['lang'], (newValue) => {
     this.stateManager.updateState({
       'lang': newValue
     });
-  }.bind(this));
+  });
 
   const browserLanguage = /** @type {string|undefined} */
       (this.getBrowserLanguage(Object.keys(this.langUrls)));
@@ -495,7 +481,7 @@ gmf.AbstractController.prototype.initLanguage = function() {
  * @private
  */
 gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
-  this.gmfThemes_.getThemesObject().then(function(themes) {
+  this.gmfThemes_.getThemesObject().then((themes) => {
     let themeName;
 
     // check if we have a theme in the user functionalities
@@ -512,7 +498,7 @@ gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
         this.gmfThemeManager.addTheme(theme, true);
       }
     }
-  }.bind(this));
+  });
 };
 
 gmf.module.controller('AbstractController', gmf.AbstractController);

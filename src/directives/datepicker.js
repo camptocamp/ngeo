@@ -11,7 +11,7 @@ ngeo.module.value('ngeoDatePickerTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['ngeoDatePickerTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           `${ngeo.baseTemplateUrl}/datepicker.html`;
@@ -61,15 +61,15 @@ ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
         }
       });
 
-      angular.element('body').on('hidden.bs.popover', function() {
+      angular.element('body').on('hidden.bs.popover', () => {
         const dp = angular.element('#ui-datepicker-div');
         if (dp && dp.css('display') === 'block') {
           $(element[0]).find('input[name$="date"]').datepicker('hide');
         }
       });
 
-      $timeout(function() {
-        angular.element('#ui-datepicker-div').on('mousedown', function(e) {
+      $timeout(() => {
+        angular.element('#ui-datepicker-div').on('mousedown', (e) => {
           e.stopPropagation();
         });
       });
@@ -192,7 +192,7 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime) {
     this.sdate = new Date(initialOptions_.values);
   }
 
-  $scope.$watchGroup(['datepickerCtrl.sdate', 'datepickerCtrl.edate'], function(newDates, oldDates) {
+  $scope.$watchGroup(['datepickerCtrl.sdate', 'datepickerCtrl.edate'], (newDates, oldDates) => {
     const sDate = newDates[0];
     const eDate = newDates[1];
 
@@ -204,7 +204,7 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime) {
         }
       });
     }
-  }.bind(this));
+  });
 };
 
 ngeo.module.controller('ngeoDatePickerController', ngeo.DatePickerController);

@@ -118,7 +118,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
     })
   });
 
-  gmfThemes.getThemesObject().then(function(themes) {
+  gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       // Add 'Edit' theme, i.e. the one with id 73
       for (let i = 0, ii = themes.length; i < ii; i++) {
@@ -131,7 +131,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
       // Add layer vector after
       this.map.addLayer(this.vectorLayer);
     }
-  }.bind(this));
+  });
 
  /**
    * @type {boolean}

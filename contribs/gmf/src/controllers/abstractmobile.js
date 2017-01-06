@@ -136,7 +136,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
    */
   this.dragger_ = new goog.fx.Dragger(dragEl, handleEl);
 
-  goog.events.listen(this.dragger_, 'start', function(e) {
+  goog.events.listen(this.dragger_, 'start', (e) => {
     // Prevent transition to happen while dragging
     angular.element(dragEl).addClass('dragging');
   });
@@ -150,18 +150,18 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   this.navWidth_ = angular.element(document.querySelector(
     '.gmf-mobile-nav-left')).width();
 
-  goog.events.listen(this.dragger_, 'end', (function(e) {
+  goog.events.listen(this.dragger_, 'end', (e) => {
     angular.element(dragEl).removeClass('dragging');
     // Reset positioning when finished so that transition can happen correctly
     angular.element(e.target.target).css('transform', '');
     // Hide nav only if dragged sufficiently
     const deltaX = this.dragger_.limitX(this.dragger_.deltaX);
     if (Math.abs(deltaX) > this.navWidth_ / 2) {
-      $scope.$apply(function() {
+      $scope.$apply(() => {
         this.hideNav();
-      }.bind(this));
+      });
     }
-  }).bind(this));
+  });
 };
 ol.inherits(gmf.AbstractMobileController, gmf.AbstractController);
 

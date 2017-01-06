@@ -17,7 +17,7 @@ ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['gmfDisplayquerywindowTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/displayquerywindow.html`;
@@ -220,16 +220,14 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
   this.open = false;
 
   $scope.$watchCollection(
-      function() {
-        return ngeoQueryResult;
-      },
-      function(newQueryResult, oldQueryResult) {
+      () => ngeoQueryResult,
+      (newQueryResult, oldQueryResult) => {
         if (newQueryResult.total > 0) {
           this.show();
         } else if (oldQueryResult !== newQueryResult) {
           this.close();
         }
-      }.bind(this));
+      });
 };
 
 

@@ -443,9 +443,7 @@ ngeo.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
         const layerLayers = layerSource.getParams()['LAYERS'].split(',');
         const cfgLayer = item.source.layers.split(',');
 
-        const layerIsOnTheMap = cfgLayer.some(function(layer) {
-          return layerLayers.indexOf(layer) > -1;
-        });
+        const layerIsOnTheMap = cfgLayer.some(layer => layerLayers.indexOf(layer) > -1);
         if (!layerIsOnTheMap) {
           continue;
         }
@@ -522,7 +520,7 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
 
   angular.forEach(wmsItemsByUrl, function(items) {
 
-    items.forEach(function(item) {
+    items.forEach((item) => {
       item['resultSource'].pending = true;
       item['resultSource'].queried = true;
     });
@@ -607,8 +605,8 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
   const wfsFormat = new ol.format.WFS();
   const xmlSerializer = new XMLSerializer();
 
-  angular.forEach(wfsItemsByUrl, function(items, url) {
-    items.forEach(function(item) {
+  angular.forEach(wfsItemsByUrl, (items, url) => {
+    items.forEach((item) => {
       const layers = this.getLayersForItem_(item);
 
       if (layers.length == 0 || layers[0] === '') {
@@ -645,14 +643,14 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
 
         const canceler = this.registerCanceler_();
         this.$http_.post(url, featureRequest, {timeout: canceler.promise})
-            .then(function(response) {
+            .then((response) => {
               item['resultSource'].pending = false;
               const features = sourceFormat.readFeatures(response.data);
               this.setUniqueIds_(features, item.source.id);
               item['resultSource'].features = features;
               this.result_.total += features.length;
               this.updatePendingState_();
-            }.bind(this));
+            });
       }.bind(this);
 
       if (this.queryCountFirst_) {
@@ -664,7 +662,7 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
 
         const canceler = this.registerCanceler_();
         this.$http_.post(url, featureCountRequest, {timeout: canceler.promise})
-            .then(function(response) {
+            .then((response) => {
               const meta = sourceFormat.readFeatureCollectionMetadata(response.data);
               if (meta['numberOfFeatures'] > this.limit_) {
                 item['resultSource'].pending = false;
@@ -675,12 +673,12 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
               } else {
                 getFeatures();
               }
-            }.bind(this));
+            });
       } else {
         getFeatures();
       }
-    }.bind(this));
-  }.bind(this));
+    });
+  });
 };
 
 /**
@@ -690,7 +688,7 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
  */
 ngeo.Query.prototype.clearResult_ = function() {
   this.result_.total = 0;
-  this.result_.sources.forEach(function(source) {
+  this.result_.sources.forEach((source) => {
     source.features.length = 0;
     source.pending = false;
     source.queried = false;
@@ -748,7 +746,7 @@ ngeo.Query.prototype.getLayersForItems_ = function(items) {
  * @private
  */
 ngeo.Query.prototype.setUniqueIds_ = function(features, sourceId) {
-  features.forEach(function(feature) {
+  features.forEach((feature) => {
     if (feature.getId() !== undefined) {
       const id = `${sourceId}_${feature.getId()}`;
       feature.setId(id);
@@ -790,7 +788,7 @@ ngeo.Query.prototype.registerCanceler_ = function() {
  * @private
  */
 ngeo.Query.prototype.cancelStillRunningRequests_ = function() {
-  this.requestCancelers_.forEach(function(canceler) {
+  this.requestCancelers_.forEach((canceler) => {
     canceler.resolve();
   });
   this.requestCancelers_.length = 0;
@@ -799,7 +797,7 @@ ngeo.Query.prototype.cancelStillRunningRequests_ = function() {
 
 ngeo.Query.prototype.updatePendingState_ = function() {
   let pendingSources = 0;
-  this.result_.sources.forEach(function(source) {
+  this.result_.sources.forEach((source) => {
     if (source.pending) {
       pendingSources++;
     }

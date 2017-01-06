@@ -116,11 +116,11 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
     });
 
     // Watch the open property
-    popup.scope.$watch('open', function(newVal, oldVal) {
+    popup.scope.$watch('open', (newVal, oldVal) => {
       if (!newVal) {
         this.closeMessage_(message);
       }
-    }.bind(this));
+    });
 
     this.messages_[uid] =  popup;
 
@@ -165,9 +165,9 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
     el.addClass('in');
 
     // Listen when the message gets closed to cleanup the cache of messages
-    el.on('closed.bs.alert', function() {
+    el.on('closed.bs.alert', () => {
       this.closeMessage_(message);
-    }.bind(this));
+    });
 
     this.messages_[uid] =  el;
   }

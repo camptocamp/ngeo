@@ -263,28 +263,22 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
   this.listSelectionInProgress_ = false;
 
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
+    () => this.active,
     this.handleActiveChange_.bind(this)
   );
 
   $scope.$watch(
-    function() {
-      return this.drawActive;
-    }.bind(this),
-    function(active) {
+    () => this.drawActive,
+    (active) => {
       if (active) {
         this.selectedFeature = null;
       }
-    }.bind(this)
+    }
   );
 
   $scope.$watch(
-    function() {
-      return this.selectedFeature;
-    }.bind(this),
-    function(newFeature, previousFeature) {
+    () => this.selectedFeature,
+    (newFeature, previousFeature) => {
       this.selectedFeatures.clear();
       if (previousFeature) {
         this.featureHelper_.setStyle(previousFeature);
@@ -302,13 +296,11 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
         this.map.removeOverlay(this.menu_);
         this.menu_ = null;
       }
-    }.bind(this)
+    }
   );
 
   $scope.$watch(
-    function() {
-      return this.mapSelectActive;
-    }.bind(this),
+    () => this.mapSelectActive,
     this.handleMapSelectActiveChange_.bind(this)
   );
 
@@ -411,7 +403,7 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
   } else {
     // when deactivated
 
-    keys.forEach(function(key) {
+    keys.forEach((key) => {
       ol.events.unlistenByKey(key);
     }, this);
 
@@ -491,11 +483,11 @@ gmf.DrawfeatureController.prototype.removeFeature = function(feature) {
  */
 gmf.DrawfeatureController.prototype.handleFeaturesAdd_ = function(evt) {
   // timeout to prevent double-click to zoom the map
-  this.timeout_(function() {
+  this.timeout_(() => {
     this.selectedFeature = /** @type {ol.Feature} */ (evt.element);
     this.drawActive = false;
     this.scope_.$apply();
-  }.bind(this));
+  });
 };
 
 
@@ -564,13 +556,13 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
 
   let feature = this.map.forEachFeatureAtPixel(
     pixel,
-    function(feature) {
+    (feature) => {
       let ret = false;
       if (ol.array.includes(this.features.getArray(), feature)) {
         ret = feature;
       }
       return ret;
-    }.bind(this),
+    },
     null
   );
 
@@ -617,13 +609,13 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
 
   let feature = this.map.forEachFeatureAtPixel(
     pixel,
-    function(feature) {
+    (feature) => {
       let ret = false;
       if (ol.array.includes(this.features.getArray(), feature)) {
         ret = feature;
       }
       return ret;
-    }.bind(this),
+    },
     null
   );
 

@@ -79,7 +79,7 @@ ngeo.Popover.prototype.setMap = function(map) {
   if (map) {
     const contentEl = this.contentEl_;
     // wait for the overlay to be rendered in the map before poping over
-    window.setTimeout(function() {
+    window.setTimeout(() => {
       $(element)
         .popover({
           'content': contentEl,

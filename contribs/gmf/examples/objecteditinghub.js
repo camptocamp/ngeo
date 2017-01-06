@@ -149,10 +149,8 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
   this.selectedGeomType = null;
 
   $scope.$watch(
-    function() {
-      return this.selectedGmfLayerNode;
-    }.bind(this),
-    function(newVal, oldVal) {
+    () => this.selectedGmfLayerNode,
+    (newVal, oldVal) => {
       this.selectedFeature = null;
 
       if (newVal) {
@@ -163,7 +161,7 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
           this.handleGetGeometryType_.bind(this, newVal)
         );
       }
-    }.bind(this)
+    }
   );
 
   /**
@@ -175,12 +173,12 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
 
   this.gmfThemes_.loadThemes();
 
-  this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
+  this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
 
     // (1) Set OGC servers
     this.gmfServers_ = ogcServers;
 
-    this.gmfThemes_.getThemesObject().then(function(themes) {
+    this.gmfThemes_.getThemesObject().then((themes) => {
       if (!themes) {
         return;
       }
@@ -224,8 +222,8 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
       // (6) Select 'polygon' for the purpose of simplifying the demo
       this.selectedGmfLayerNode = this.gmfLayerNodes[1];
 
-    }.bind(this));
-  }.bind(this));
+    });
+  });
 
 };
 
@@ -338,11 +336,11 @@ gmfapp.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
     }
   );
 
-  this.http_.get(url).then(function(response) {
+  this.http_.get(url).then((response) => {
     const features = new ol.format.WFS().readFeatures(response.data);
     this.featuresCache_[id] = features;
     this.getFeaturesDeferred_.resolve();
-  }.bind(this));
+  });
 };
 
 
@@ -449,7 +447,7 @@ gmfapp.MainController.prototype.getGeometryTypeFromCache_ = function(
 gmfapp.MainController.appendParams = function(uri, params) {
   const keyParams = [];
   // Skip any null or undefined parameter values
-  Object.keys(params).forEach(function(k) {
+  Object.keys(params).forEach((k) => {
     if (params[k] !== null && params[k] !== undefined) {
       keyParams.push(`${k}=${encodeURIComponent(params[k])}`);
     }

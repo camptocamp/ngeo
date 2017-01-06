@@ -120,7 +120,7 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
         if (!compiledContent) {
           compiledContent = $compile(contents);
         }
-        compiledContent(scope, function(clone, scope) {
+        compiledContent(scope, (clone, scope) => {
           elt.append(clone);
         });
 
@@ -128,12 +128,12 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
         const toggleBt = headerGroup.find('.fa-plus');
         let childGroup;
 
-        headerGroup.find('.fa-zoom-in').on('click', function(evt) {
+        headerGroup.find('.fa-zoom-in').on('click', (evt) => {
           evt.stopPropagation();
           zoomToLayerExtent(scope, scope.layer, scope['map']);
         });
 
-        toggleBt.on('click', function(evt) {
+        toggleBt.on('click', (evt) => {
           evt.stopPropagation();
           toggleBt.toggleClass('fa-minus');
           if (!childGroup) {
@@ -154,7 +154,7 @@ exports.module.value('ngeoWmsGetCapItemTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {boolean} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['ngeoWmsGetCapItemTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           `${ngeo.baseModuleTemplateUrl}/import/partials/wms-get-cap-item.html`;

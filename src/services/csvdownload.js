@@ -86,17 +86,13 @@ ngeo.CsvDownload.prototype.generateCsv = function(data, columnDefs) {
     return '';
   }
 
-  const translatedColumnHeaders = columnDefs.map(function(columnHeader) {
-    return this.gettextCatalog_.getString(columnHeader.name);
-  }.bind(this));
+  const translatedColumnHeaders = columnDefs.map(columnHeader => this.gettextCatalog_.getString(columnHeader.name));
 
   const header = this.getRow_(translatedColumnHeaders);
-  const dataRows = data.map(function(values) {
-    const rowValues = columnDefs.map(function(columnHeader) {
-      return values[columnHeader.name];
-    });
+  const dataRows = data.map((values) => {
+    const rowValues = columnDefs.map(columnHeader => values[columnHeader.name]);
     return this.getRow_(rowValues);
-  }.bind(this));
+  });
 
   return this.includeHeader_ ? header + dataRows.join('') : dataRows.join('');
 };
@@ -111,7 +107,7 @@ ngeo.CsvDownload.prototype.getRow_ = function(values) {
   const matchAllQuotesRegex = new RegExp(this.quote_, 'g');
   const doubleQuote = this.quote_ + this.quote_;
 
-  const rowValues = values.map(function(value) {
+  const rowValues = values.map((value) => {
     if (value !== undefined && value !== null) {
       value = `${value}`;
       // wrap each value into quotes and escape quotes with double quotes
@@ -119,7 +115,7 @@ ngeo.CsvDownload.prototype.getRow_ = function(values) {
     } else {
       return '';
     }
-  }.bind(this));
+  });
 
   return `${rowValues.join(this.separator_)}\n`;
 };

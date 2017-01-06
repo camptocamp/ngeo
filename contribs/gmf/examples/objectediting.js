@@ -101,13 +101,13 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
     })
   });
 
-  gmfThemes.getThemesObject().then(function(themes) {
+  gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       // Add layer vector after
       this.map.addLayer(this.vectorLayer_);
       this.map.addLayer(this.sketchLayer_);
     }
-  }.bind(this));
+  });
 
   /**
    * @type {?string}
@@ -149,12 +149,12 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
    */
   this.objectEditingFeature = null;
 
-  gmfObjectEditingManager.getFeature().then(function(feature) {
+  gmfObjectEditingManager.getFeature().then((feature) => {
     this.objectEditingFeature = feature;
     if (feature) {
       this.vectorSource_.addFeature(feature);
     }
-  }.bind(this));
+  });
 
 };
 

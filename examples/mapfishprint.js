@@ -145,14 +145,12 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
       /**
        * @return {ol.Size} Size in dots of the map to print.
        */
-      function() {
-        return app.PRINT_PAPER_SIZE_;
-      },
+      () => app.PRINT_PAPER_SIZE_,
       /**
        * @param {olx.FrameState} frameState Frame state.
        * @return {number} Scale of the map to print.
        */
-      function(frameState) {
+      (frameState) => {
         const mapSize = frameState.size;
         const mapResolution = frameState.viewState.resolution;
         // we test mapSize and mapResolution just to please the compiler
@@ -250,7 +248,7 @@ app.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
   } else {
     // The report is not ready yet. Check again in 1s.
     const that = this;
-    this.$timeout_(function() {
+    this.$timeout_(() => {
       that.getStatus_(ref);
     }, 1000, false);
   }

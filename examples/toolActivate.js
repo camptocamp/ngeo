@@ -86,12 +86,12 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
   // manage clicks on the map
   this.mapClickIsEnabled = true;
   const content = document.getElementById('popup-content');
-  this.map.on('singleclick', (function(evt) {
+  this.map.on('singleclick', (evt) => {
     if (this.mapClickIsEnabled) {
       const c = ol.coordinate.toStringXY(evt.coordinate);
       content.innerHTML = `<p>You clicked here: <code>${c}</code></p>`;
     }
-  }).bind(this));
+  });
 
   const mapClickTool = new ngeo.ToolActivate(this, 'mapClickIsEnabled');
   ngeoToolActivateMgr.registerTool('mapTools', mapClickTool, true);

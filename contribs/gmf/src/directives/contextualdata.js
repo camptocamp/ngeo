@@ -142,7 +142,7 @@ gmf.ContextualdataController.prototype.init = function() {
  * @private
  */
 gmf.ContextualdataController.prototype.handleMapContextMenu_ = function(evt) {
-  this.$scope_.$apply(function() {
+  this.$scope_.$apply(() => {
     const pixel = this.map.getEventPixel(evt);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
     this.setContent_(coordinate);
@@ -150,7 +150,7 @@ gmf.ContextualdataController.prototype.handleMapContextMenu_ = function(evt) {
     this.hidePopover();
     this.showPopover();
     this.overlay_.setPosition(coordinate);
-  }.bind(this));
+  });
 };
 
 
@@ -159,7 +159,7 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
   this.$compile_(this.content_)(scope);
 
   const mapProjection = this.map.getView().getProjection().getCode();
-  this.projections.forEach(function(proj) {
+  this.projections.forEach((proj) => {
     const coord = ol.proj.transform(coordinate, mapProjection, `EPSG:${proj}`);
     scope[`coord_${proj}`] = coord;
     scope[`coord_${proj}_eastern`] = coord[0];

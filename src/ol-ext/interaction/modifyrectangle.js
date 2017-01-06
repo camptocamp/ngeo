@@ -125,7 +125,7 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
     const pointFeatures = [];
     let cornerPoint;
     let cornerFeature;
-    corners.forEach(function(corner) {
+    corners.forEach((corner) => {
       cornerPoint = new ol.geom.Point(corner);
       cornerFeature = new ol.Feature({
         'corner': true,
@@ -144,7 +144,7 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
 
     let previousFeature;
     let nextFeature;
-    pointFeatures.forEach(function(cornerFeature, index) {
+    pointFeatures.forEach((cornerFeature, index) => {
       previousFeature = pointFeatures[index - 1];
       if (!previousFeature) {
         previousFeature = pointFeatures[pointFeatures.length - 1];
@@ -257,9 +257,7 @@ ngeo.interaction.ModifyRectangle.prototype.handleDown_ = function(evt) {
   const map = evt.map;
 
   const feature = map.forEachFeatureAtPixel(evt.pixel,
-      function(feature, layer) {
-        return feature;
-      }, undefined);
+      (feature, layer) => feature, undefined);
 
   if (feature && feature.getGeometry() instanceof ol.geom.Point &&
       feature.get('siblingX') && feature.get('siblingY')) {

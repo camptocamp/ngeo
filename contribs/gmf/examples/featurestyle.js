@@ -142,7 +142,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   ngeoFeatureHelper.setProjection(view.getProjection());
 
   // set style
-  features.forEach(function(feature) {
+  features.forEach((feature) => {
     ngeoFeatureHelper.setStyle(feature);
   }, this);
 
@@ -182,9 +182,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
 gmfapp.MainController.prototype.handleMapSingleClick_ = function(evt) {
   const pixel = evt.pixel;
 
-  const feature = this.map.forEachFeatureAtPixel(pixel, function(feature) {
-    return feature;
-  });
+  const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
 
   if (this.selectedFeature) {
     this.featureHelper_.setStyle(this.selectedFeature);

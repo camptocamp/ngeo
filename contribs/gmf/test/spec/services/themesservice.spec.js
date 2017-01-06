@@ -3,13 +3,13 @@ goog.require('gmf.Themes');
 goog.require('gmf.ThemesEventType');
 goog.require('gmf.test.data.themes');
 
-describe('gmf.Themes', function() {
+describe('gmf.Themes', () => {
   let gmfThemes;
   let treeUrl;
   let $httpBackend;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       gmfThemes = $injector.get('gmfThemes');
       treeUrl = `${$injector.get('gmfTreeUrl')}?cache_version=0`;
       $httpBackend = $injector.get('$httpBackend');
@@ -17,17 +17,17 @@ describe('gmf.Themes', function() {
     });
   });
 
-  afterEach(function() {
+  afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('Get background layers', function() {
+  it('Get background layers', () => {
     const spy = jasmine.createSpy();
     gmfThemes.getBgLayers({}).then(spy);
 
     $httpBackend.expectGET(treeUrl);
-    themes.background_layers.forEach(function(bgLayer) {
+    themes.background_layers.forEach((bgLayer) => {
       const response = bgLayer.name == 'map' ? capabilities.map :
           capabilities.asitvd;
       $httpBackend.when('GET', bgLayer.url).respond(response);
@@ -45,7 +45,7 @@ describe('gmf.Themes', function() {
     expect(response[1].get('querySourceIds')).toBeDefined();
   });
 
-  it('Returns hasEditableLayers', function() {
+  it('Returns hasEditableLayers', () => {
     const spy = jasmine.createSpy();
     gmfThemes.hasEditableLayers().then(spy);
 
@@ -58,7 +58,7 @@ describe('gmf.Themes', function() {
     expect(response[0]).toBe(true);
   });
 
-  it('Emit change event', function() {
+  it('Emit change event', () => {
     const spy = jasmine.createSpy();
     const eventSpy = jasmine.createSpy();
     ol.events.listen(gmfThemes, gmf.ThemesEventType.CHANGE, eventSpy);
@@ -71,7 +71,7 @@ describe('gmf.Themes', function() {
     expect(spy.calls.count()).toBe(1);
   });
 
-  it('Load themes', function() {
+  it('Load themes', () => {
     const spy = jasmine.createSpy();
     gmfThemes.promise_.then(spy);
 
@@ -84,7 +84,7 @@ describe('gmf.Themes', function() {
     expect(Object.keys(data)[0]).toBe(Object.keys(themes)[0]);
   });
 
-  it('Get themes object', function() {
+  it('Get themes object', () => {
     const spy = jasmine.createSpy();
     gmfThemes.getThemesObject().then(spy);
 
@@ -99,7 +99,7 @@ describe('gmf.Themes', function() {
     expect(dataFirstKey).toBe(themesThemesFirstKey);
   });
 
-  it('Get a theme object (find a specific theme)', function() {
+  it('Get a theme object (find a specific theme)', () => {
     const themeName = 'Enseignement';
     const spy = jasmine.createSpy();
     gmfThemes.getThemeObject(themeName).then(spy);

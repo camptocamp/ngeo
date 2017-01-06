@@ -69,9 +69,9 @@ app.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
    */
   this.tree = undefined;
 
-  $http.get('data/tree.json').then(function(resp) {
+  $http.get('data/tree.json').then((resp) => {
     this.tree = resp.data;
-  }.bind(this));
+  });
 
   /**
    * @private
@@ -127,14 +127,14 @@ app.LayertreeController.prototype.onButtonClick = function(node, layer) {
   const layerType = node['layerType'];
   if (!(layerType in this.promises_)) {
     this.promises_[layerType] = this.http_.get('data/metadata.html').then(
-        function(resp) {
+        (resp) => {
           const html = this.sce_.trustAsHtml(resp.data);
           return html;
-        }.bind(this)
+        }
     );
   }
   const infoPopup = this.infoPopup_;
-  this.promises_[layerType].then(function(html) {
+  this.promises_[layerType].then((html) => {
     infoPopup.setTitle(node['name']);
     infoPopup.setContent(html);
     infoPopup.setOpen(true);

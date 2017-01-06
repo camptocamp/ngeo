@@ -122,7 +122,7 @@ ngeo.Message.prototype.getMessageObjects = function(object, opt_type) {
       type: opt_type !== undefined ? opt_type : defaultType
     });
   } else if (Array.isArray(object)) {
-    object.forEach(function(msg) {
+    object.forEach((msg) => {
       if (typeof object === 'string') {
         msgObject = {
           msg,

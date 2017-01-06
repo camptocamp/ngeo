@@ -9,7 +9,7 @@ ngeo.module.value('ngeoPopupTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['ngeoPopupTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${ngeo.baseTemplateUrl}/popup.html`;
@@ -62,7 +62,7 @@ ngeo.popupDirective = function(ngeoPopupTemplateUrl) {
       };
 
           // Watch the open property
-      scope.$watch('open', function(newVal, oldVal) {
+      scope.$watch('open', (newVal, oldVal) => {
         element.css('display', newVal ? 'block' : 'none');
       });
     }

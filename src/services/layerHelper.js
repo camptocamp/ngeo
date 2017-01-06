@@ -112,7 +112,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
   });
   const $q = this.$q_;
 
-  return this.$http_.get(capabilitiesURL).then(function(response) {
+  return this.$http_.get(capabilitiesURL).then((response) => {
     let result;
     if (response.data) {
       result = parser.read(response.data);
@@ -129,9 +129,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
 
       // Add styles from capabilities as param of the layer
       const layers = result['Contents']['Layer'];
-      const l = ol.array.find(layers, function(elt, index, array) {
-        return elt['Identifier'] == layerName;
-      });
+      const l = ol.array.find(layers, (elt, index, array) => elt['Identifier'] == layerName);
       layer.set('capabilitiesStyles', l['Style']);
 
       return $q.resolve(layer);
@@ -172,7 +170,7 @@ ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
 ngeo.LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
   const groups = map.getLayerGroup().getLayers();
   let group;
-  groups.getArray().some(function(existingGroup) {
+  groups.getArray().some((existingGroup) => {
     if (existingGroup.get(ngeo.LayerHelper.GROUP_KEY) === groupName) {
       group = /** @type {ol.layer.Group} */ (existingGroup);
       return true;

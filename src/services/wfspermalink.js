@@ -109,9 +109,9 @@ ngeo.WfsPermalink = function($http, ngeoQueryResult, ngeoWfsPermalinkOptions) {
   this.wfsTypes_ = {};
 
   goog.asserts.assertArray(options.wfsTypes, 'wfsTypes is not correctly set');
-  options.wfsTypes.forEach(function(wfsType) {
+  options.wfsTypes.forEach((wfsType) => {
     this.wfsTypes_[wfsType.featureType] = wfsType;
-  }.bind(this));
+  });
 
   /**
    * @type {string}
@@ -205,7 +205,7 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
   });
 
   const featureRequest = new XMLSerializer().serializeToString(featureRequestXml);
-  this.$http_.post(this.url_, featureRequest).then(function(response) {
+  this.$http_.post(this.url_, featureRequest).then((response) => {
     const features = wfsFormat.readFeatures(response.data);
     if (features.length == 0) {
       return;
@@ -233,7 +233,7 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
       this.result_.sources.push(resultSource);
       this.result_.total = features.length;
     }
-  }.bind(this));
+  });
 };
 
 
@@ -243,9 +243,7 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
  * @private
  */
 ngeo.WfsPermalink.prototype.getExtent_ = function(features) {
-  return features.reduce(function(extent, feature) {
-    return ol.extent.extend(extent, feature.getGeometry().getExtent());
-  }, ol.extent.createEmpty());
+  return features.reduce((extent, feature) => ol.extent.extend(extent, feature.getGeometry().getExtent()), ol.extent.createEmpty());
 };
 
 /**
@@ -261,12 +259,10 @@ ngeo.WfsPermalink.prototype.createFilters_ = function(filterGroups) {
   }
   const f = ol.format.filter;
   const createFiltersForGroup = function(filterGroup) {
-    const filters = filterGroup.filters.map(function(filterDef) {
+    const filters = filterGroup.filters.map((filterDef) => {
       const condition = filterDef.condition;
       if (Array.isArray(condition)) {
-        return ngeo.WfsPermalink.or_(condition.map(function(cond) {
-          return f.equalTo(filterDef.property, cond);
-        }));
+        return ngeo.WfsPermalink.or_(condition.map(cond => f.equalTo(filterDef.property, cond)));
       } else {
         return f.equalTo(filterDef.property, filterDef.condition);
       }
@@ -311,7 +307,7 @@ ngeo.WfsPermalink.or_ = function(filters) {
  * @private
  */
 ngeo.WfsPermalink.joinFilters_ = function(filters, joinFn) {
-  return filters.reduce(function(combinedFilters, currentFilter) {
+  return filters.reduce((combinedFilters, currentFilter) => {
     if (combinedFilters === null) {
       return currentFilter;
     } else {
@@ -329,7 +325,7 @@ ngeo.WfsPermalink.joinFilters_ = function(filters, joinFn) {
  */
 ngeo.WfsPermalink.prototype.clearResult_ = function() {
   this.result_.total = 0;
-  this.result_.sources.forEach(function(source) {
+  this.result_.sources.forEach((source) => {
     source.features.length = 0;
   }, this);
 };

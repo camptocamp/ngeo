@@ -279,9 +279,7 @@ gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
   const requiresLayer = opt_requiresLayer === true;
 
   this.scope_.$watch(
-    function() {
-      return this[toolActiveName];
-    }.bind(this),
+    () => this[toolActiveName],
     this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
 

@@ -2,7 +2,7 @@
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.test.data.themes');
 
-describe('gmf.SyncLayertreeMap', function() {
+describe('gmf.SyncLayertreeMap', () => {
   let $httpBackend_;
   let gmfSyncLayertreeMap_;
   let element;
@@ -11,7 +11,7 @@ describe('gmf.SyncLayertreeMap', function() {
   let group;
   let getLayer;
 
-  beforeEach(function() {
+  beforeEach(() => {
     map = new ol.Map({
       view: new ol.View({
         center: [0, 0],
@@ -29,7 +29,7 @@ describe('gmf.SyncLayertreeMap', function() {
       '</div>'
     );
 
-    inject(function($rootScope, $compile, $httpBackend, gmfSyncLayertreeMap, gmfThemes, gmfTreeUrl) {
+    inject(($rootScope, $compile, $httpBackend, gmfSyncLayertreeMap, gmfThemes, gmfTreeUrl) => {
       $httpBackend_ = $httpBackend;
       gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
@@ -53,8 +53,8 @@ describe('gmf.SyncLayertreeMap', function() {
 
   // ================== miscellaneous ================
 
-  it('Get layer', function() {
-    inject(function($rootScope, $compile) {
+  it('Get layer', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
@@ -74,8 +74,8 @@ describe('gmf.SyncLayertreeMap', function() {
 
   // ================== Create ================
 
-  it('Create WMS Layer in mixed group', function() {
-    inject(function($rootScope, $compile) {
+  it('Create WMS Layer in mixed group', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
@@ -91,8 +91,8 @@ describe('gmf.SyncLayertreeMap', function() {
     expect(treeLeaf.node.name).toEqual(wmsParamLayers);
   });
 
-  it('Create WMS Layer in a not mixed group', function() {
-    inject(function($rootScope, $compile) {
+  it('Create WMS Layer in a not mixed group', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
@@ -109,8 +109,8 @@ describe('gmf.SyncLayertreeMap', function() {
     expect(wmsParamLayers).toEqual(checkedLayers.reverse().join(','));
   });
 
-  it('Create WMTS Layer (in a mixed group)', function() {
-    inject(function($rootScope, $compile) {
+  it('Create WMTS Layer (in a mixed group)', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[2]; // Theme 'Cadastre'
       $rootScope.map = map;
@@ -129,8 +129,8 @@ describe('gmf.SyncLayertreeMap', function() {
 
   // ================== Sync ================
 
-  it('Sync WMS Layer in mixed group', function() {
-    inject(function($rootScope, $compile) {
+  it('Sync WMS Layer in mixed group', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
@@ -153,8 +153,8 @@ describe('gmf.SyncLayertreeMap', function() {
     expect(wmsParamLayers).toBe('osm_scale');
   });
 
-  it('Sync WMS Layer in a not mixed group', function() {
-    inject(function($rootScope, $compile) {
+  it('Sync WMS Layer in a not mixed group', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
@@ -183,8 +183,8 @@ describe('gmf.SyncLayertreeMap', function() {
             'osm_time,post_office,police,cinema');
   });
 
-  it('Sync WMTS Layer (in a mixed group)', function() {
-    inject(function($rootScope, $compile) {
+  it('Sync WMTS Layer (in a mixed group)', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[2]; // Theme 'Cadastre'
       $rootScope.map = map;

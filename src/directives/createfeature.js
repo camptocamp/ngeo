@@ -182,12 +182,10 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
 
   // == Event listeners ==
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
-    function(newVal) {
+    () => this.active,
+    (newVal) => {
       this.interaction_.setActive(newVal);
-    }.bind(this)
+    }
   );
 
   const uid = ol.getUid(this);
@@ -248,12 +246,12 @@ ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
  * @private
  */
 ngeo.CreatefeatureController.prototype.handleDestroy_ = function() {
-  this.timeout_(function() {
+  this.timeout_(() => {
     const uid = ol.getUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);
     this.interaction_.setActive(false);
     this.map.removeInteraction(this.interaction_);
-  }.bind(this), 0);
+  }, 0);
 };
 
 

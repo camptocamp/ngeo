@@ -200,9 +200,7 @@ ngeo.Location.prototype.getFragmentParamKeys = function() {
  * @export
  */
 ngeo.Location.prototype.getParamKeysWithPrefix = function(prefix) {
-  return this.getParamKeys().filter(function(key) {
-    return key.indexOf(prefix) == 0;
-  });
+  return this.getParamKeys().filter(key => key.indexOf(prefix) == 0);
 };
 
 
@@ -214,9 +212,7 @@ ngeo.Location.prototype.getParamKeysWithPrefix = function(prefix) {
  * @export
  */
 ngeo.Location.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
-  return this.getFragmentParamKeys().filter(function(key) {
-    return key.indexOf(prefix) == 0;
-  });
+  return this.getFragmentParamKeys().filter(key => key.indexOf(prefix) == 0);
 };
 
 
@@ -227,7 +223,7 @@ ngeo.Location.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
  */
 ngeo.Location.prototype.updateParams = function(params) {
   const qd = this.uri_.getQueryData();
-  goog.object.forEach(params, function(val, key) {
+  goog.object.forEach(params, (val, key) => {
     qd.set(key, val);
   });
 };
@@ -241,7 +237,7 @@ ngeo.Location.prototype.updateParams = function(params) {
 ngeo.Location.prototype.updateFragmentParams = function(params) {
   const fragmentUri = this.getFragmentUri_();
   const qd = fragmentUri.getQueryData();
-  goog.object.forEach(params, function(val, key) {
+  goog.object.forEach(params, (val, key) => {
     val = val !== undefined ? ngeo.string.urlEncode(val) : undefined;
     qd.set(key, val);
   });
@@ -329,10 +325,10 @@ ngeo.LocationFactory = function($rootScope, $window) {
   const service = new ngeo.Location($window.location, $window.history);
 
   let lastUri = service.getUriString();
-  $rootScope.$watch(function() {
+  $rootScope.$watch(() => {
     const newUri = service.getUriString();
     if (lastUri !== newUri) {
-      $rootScope.$evalAsync(function() {
+      $rootScope.$evalAsync(() => {
         lastUri = newUri;
         if (history !== undefined && history.replaceState !== undefined) {
           history.replaceState(null, '', newUri);

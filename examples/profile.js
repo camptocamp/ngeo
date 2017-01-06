@@ -102,7 +102,7 @@ app.MainController = function($http, $scope) {
    */
   this.profileData = undefined;
 
-  $http.get('data/profile.json').then(function(resp) {
+  $http.get('data/profile.json').then((resp) => {
     const data = resp.data['profile'];
     this.profileData = data;
 
@@ -118,16 +118,16 @@ app.MainController = function($http, $scope) {
 
     map.getView().fit(source.getExtent(),
         /** @type {ol.Size} */ (this.map.getSize()));
-  }.bind(this));
+  });
 
 
-  map.on('pointermove', function(evt) {
+  map.on('pointermove', (evt) => {
     if (evt.dragging) {
       return;
     }
     const coordinate = map.getEventCoordinate(evt.originalEvent);
     this.snapToGeometry(coordinate, source.getFeatures()[0].getGeometry());
-  }.bind(this));
+  });
 
 
   /**

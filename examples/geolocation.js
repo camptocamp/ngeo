@@ -59,7 +59,7 @@ app.MainController = function(ngeoDecorateGeolocation) {
   const positionFeature = new ol.Feature(positionPoint);
 
   const accuracyFeature = new ol.Feature();
-  geolocation.on('change:accuracyGeometry', function() {
+  geolocation.on('change:accuracyGeometry', () => {
     accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
   });
 
@@ -73,7 +73,7 @@ app.MainController = function(ngeoDecorateGeolocation) {
   // makes the vector layer "unmanaged", meaning that it is always on top.
   vectorLayer.setMap(map);
 
-  geolocation.on('change:position', function(e) {
+  geolocation.on('change:position', (e) => {
     const position = /** @type {ol.Coordinate} */ (geolocation.getPosition());
     positionPoint.setCoordinates(position);
     map.getView().setCenter(position);

@@ -86,7 +86,7 @@ app.MapDirectiveController = function(ngeoLocation, ngeoDebounce) {
           /**
            * @param {ol.ObjectEvent} e Object event.
            */
-          function(e) {
+          (e) => {
             const center = view.getCenter();
             const params = {
               'z': view.getZoom(),
@@ -187,7 +187,7 @@ app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLoca
 
   const fhFormat = new ngeo.format.FeatureHash();
 
-  vectorSource.on('addfeature', function(e) {
+  vectorSource.on('addfeature', (e) => {
     const feature = e.feature;
     feature.setStyle(new ol.style.Style({
       stroke: new ol.style.Stroke({
@@ -197,7 +197,7 @@ app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLoca
     }));
     const features = vectorSource.getFeatures();
     const encodedFeatures = fhFormat.writeFeatures(features);
-    $scope.$applyAsync(function() {
+    $scope.$applyAsync(() => {
       ngeoLocation.updateParams({'features': encodedFeatures});
     });
   });

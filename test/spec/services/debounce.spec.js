@@ -1,17 +1,17 @@
 goog.require('ngeo.Debounce');
 
-describe('ngeo.Debounce', function() {
+describe('ngeo.Debounce', () => {
   let ngeoDebounce;
   let $timeout;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       ngeoDebounce = $injector.get('ngeoDebounce');
       $timeout = $injector.get('$timeout');
     });
   });
 
-  it('debounces the function', function() {
+  it('debounces the function', () => {
     const spy = jasmine.createSpy('debounced');
     const func = ngeoDebounce(spy, 200, false);
     const args = [1, 'foo'];

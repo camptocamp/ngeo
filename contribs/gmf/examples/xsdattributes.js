@@ -64,25 +64,25 @@ gmfapp.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
 
   gmfThemes.loadThemes();
 
-  gmfThemes.getThemesObject().then(function(themes) {
+  gmfThemes.getThemesObject().then((themes) => {
     if (!themes) {
       return;
     }
     // Get an array with all nodes entities existing in "themes".
     const flatNodes = [];
-    themes.forEach(function(theme) {
-      theme.children.forEach(function(group) {
+    themes.forEach((theme) => {
+      theme.children.forEach((group) => {
         this.getDistinctFlatNodes_(group, flatNodes);
-      }.bind(this));
-    }.bind(this));
-    flatNodes.forEach(function(node) {
+      });
+    });
+    flatNodes.forEach((node) => {
       // Get an array of all layers
       if (node.children === undefined && layerNames.indexOf(node.name) !== -1) {
         this.layers.push(node);
       }
-    }.bind(this));
+    });
 
-  }.bind(this));
+  });
 };
 
 
@@ -111,10 +111,10 @@ gmfapp.MainController.prototype.setAttributes_ = function(attributes) {
   this.attributes = null;
 
   // (2) Then set
-  this.timeout_(function() {
+  this.timeout_(() => {
     this.feature = new ol.Feature();
     this.attributes = attributes;
-  }.bind(this), 0);
+  }, 0);
 };
 
 
@@ -151,7 +151,7 @@ gmfapp.MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
     }
   }
   let alreadyAdded = false;
-  nodes.some(function(n) {
+  nodes.some((n) => {
     if (n.id === node.id) {
       return alreadyAdded = true;
     }

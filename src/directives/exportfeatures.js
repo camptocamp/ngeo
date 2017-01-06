@@ -203,7 +203,7 @@ ngeo.ExportfeaturesController.prototype.handleDestroy_ = function() {
 
   if (this.menu_) {
     this.menu_.remove();
-    this.items_.forEach(function($item) {
+    this.items_.forEach(($item) => {
       $item.off(['click', id].join('.'));
     }, this);
     this.items_.length = 0;

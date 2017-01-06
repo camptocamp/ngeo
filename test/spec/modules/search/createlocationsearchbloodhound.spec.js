@@ -2,17 +2,17 @@
 goog.require('ngeo.search.createLocationSearchBloodhound');
 goog.require('ngeo.test.data.geoAdminLocationSearch');
 
-describe('ngeo.search.createLocationSearchBloodhound', function() {
+describe('ngeo.search.createLocationSearchBloodhound', () => {
 
   let ngeoCreateLocationSearchBloodhound;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       ngeoCreateLocationSearchBloodhound = $injector.get('ngeoCreateLocationSearchBloodhound');
     });
   });
 
-  it('Parses the features correctly', function() {
+  it('Parses the features correctly', () => {
     const bloodhound = ngeoCreateLocationSearchBloodhound({
       targetProjection: ol.proj.get('EPSG:3857'),
       limit: 5

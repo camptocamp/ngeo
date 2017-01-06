@@ -54,16 +54,16 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
         click(triggerInputFileClick);
 
       // Register input[type=file] onchange event, use HTML5 File api
-      elt.find('input[type=file]').bind('change', function(evt) {
+      elt.find('input[type=file]').bind('change', (evt) => {
         if (evt.target.files && evt.target.files.length > 0) {
-          scope.$apply(function() {
+          scope.$apply(() => {
             scope['files'] = evt.target.files;
           });
         }
       });
 
       // Watchers
-      scope.$watchCollection('files', function() {
+      scope.$watchCollection('files', () => {
         // Handle a FileList (from input[type=file] or DnD),
         // works only with FileAPI
         if (scope['files'] && scope['files'].length > 0) {
@@ -103,23 +103,23 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
         scope['userMessage'] = gettextCatalog.getString('Reading file');
         $timeout.cancel(timeoutP);
 
-        ngeoFile.read(scope['file']).then(function(fileContent) {
+        ngeoFile.read(scope['file']).then((fileContent) => {
           scope['fileReader'] = null;
           scope['userMessage'] = gettextCatalog.getString('Parsing file');
           return scope['handleFileContent'](fileContent, scope.file);
 
-        }).then(function(parsingResults) {
+        }).then((parsingResults) => {
           scope['userMessage'] = gettextCatalog.getString('Parsing succeeded');
 
-        }, function(err) {
+        }, (err) => {
           scope['userMessage'] = err.message;
 
-        }, function(evt) {
+        }, (evt) => {
           if (!scope['fileReader']) {
             scope['fileReader'] = evt.target;
           }
 
-        }).finally(function() {
+        }).finally(() => {
           scope['fileReader'] = null;
           scope['loading'] = false;
           timeoutP = $timeout(initUserMsg, 5000);
@@ -139,7 +139,7 @@ exports.module.value('ngeoImportLocalTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {boolean} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['ngeoImportLocalTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           `${ngeo.baseModuleTemplateUrl}/import/partials/import-local.html`;

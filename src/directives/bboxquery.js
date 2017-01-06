@@ -60,7 +60,7 @@ ngeo.bboxQueryDirective = function(ngeoQuery) {
 
       // watch 'active' property -> activate/deactivate accordingly
       scope.$watch(attrs['ngeoBboxQueryActive'],
-          function(newVal, oldVal) {
+          (newVal, oldVal) => {
             if (newVal) {
               // activate
               map.addInteraction(interaction);

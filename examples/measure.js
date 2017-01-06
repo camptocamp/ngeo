@@ -137,14 +137,12 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
 
   // Watch the "lang" property and update the toolip messages
   // based on the selected language.
-  $scope.$watch(function() {
-    return this.lang;
-  }.bind(this), function(newVal) {
+  $scope.$watch(() => this.lang, (newVal) => {
     this.measureStartMsg = measureStartMsgs[newVal];
     this.measureLengthContinueMsg = measureLengthContinueMsgs[newVal];
     this.measureAreaContinueMsg = measureAreaContinueMsgs[newVal];
     this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
-  }.bind(this));
+  });
 
   const style = new ol.style.Style({
     fill: new ol.style.Fill({
@@ -217,7 +215,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
   // the following code shows how one can add additional information to the
   // tooltip. This can be useful to display the elevation offset from the
   // 2 points of an azimut measurement.
-  measureAzimut.on('measureend', function(evt) {
+  measureAzimut.on('measureend', (evt) => {
     const el = evt.target.getTooltipElement();
     el.innerHTML += '<br>Additional info';
   });

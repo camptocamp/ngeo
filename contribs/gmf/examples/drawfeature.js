@@ -91,17 +91,15 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
       'mapTools', pointerMoveToolActivate, false);
 
   $scope.$watch(
-    function() {
-      return this.pointerMoveActive;
-    }.bind(this),
-    function(newVal) {
+    () => this.pointerMoveActive,
+    (newVal) => {
       if (newVal) {
         this.map.on('pointermove', this.handleMapPointerMove_, this);
       } else {
         this.map.un('pointermove', this.handleMapPointerMove_, this);
         $('#pointermove-feature').html('');
       }
-    }.bind(this)
+    }
   );
 
   // initialize tooltips
@@ -119,9 +117,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
 gmfapp.MainController.prototype.handleMapPointerMove_ = function(evt) {
   const pixel = evt.pixel;
 
-  const feature = this.map.forEachFeatureAtPixel(pixel, function(feature) {
-    return feature;
-  });
+  const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
 
   $('#pointermove-feature').html(
     (feature) ? feature.get(ngeo.FeatureProperties.NAME) : 'None'

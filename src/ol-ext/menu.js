@@ -147,11 +147,11 @@ ngeo.Menu.prototype.setMap = function(map) {
 
   const currentMap = this.getMap();
   if (currentMap) {
-    keys.forEach(function(key) {
+    keys.forEach((key) => {
       goog.events.unlistenByKey(key);
     }, this);
     keys.length = 0;
-    olKeys.forEach(function(key) {
+    olKeys.forEach((key) => {
       ol.events.unlistenByKey(key);
     }, this);
     olKeys.length = 0;

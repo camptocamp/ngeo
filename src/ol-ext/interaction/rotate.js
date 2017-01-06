@@ -192,7 +192,7 @@ ngeo.interaction.Rotate.prototype.setActive = function(active) {
         ol.Collection.EventType.REMOVE, this.handleFeatureRemove_, this));
 
   } else {
-    this.listenerKeys_.forEach(function(key) {
+    this.listenerKeys_.forEach((key) => {
       ol.events.unlistenByKey(key);
     }, this);
     this.features_.forEach(this.removeFeature_, this);
@@ -292,13 +292,11 @@ ngeo.interaction.Rotate.prototype.handleDown_ = function(evt) {
   const map = evt.map;
 
   let feature = map.forEachFeatureAtPixel(evt.pixel,
-      function(feature, layer) {
-        return feature;
-      }, undefined);
+      (feature, layer) => feature, undefined);
 
   if (feature) {
     let found = false;
-    this.features_.forEach(function(f) {
+    this.features_.forEach((f) => {
       if (ol.getUid(f) == ol.getUid(feature)) {
         found = true;
       }

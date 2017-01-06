@@ -45,17 +45,17 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
       }).on('dragleave drop', function(evt) {
         this.style.display = 'none';
 
-      }).on('dragover dragleave drop', function(evt) {
+      }).on('dragover dragleave drop', (evt) => {
         evt.stopPropagation();
         evt.preventDefault();
 
-      }).on('drop', function(evt) {
+      }).on('drop', (evt) => {
 
         // A file, an <a> html tag or a plain text url can be dropped
         const files = evt.originalEvent.dataTransfer.files;
 
         if (files && files.length > 0) {
-          ngeoFile.read(files[0]).then(function(fileContent) {
+          ngeoFile.read(files[0]).then((fileContent) => {
             scope['handleFileContent'](fileContent, files[0]);
           });
 
@@ -65,11 +65,9 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
           const text = evt.originalEvent.dataTransfer.getData('text/plain');
 
           if (options.isValidUrl(text)) {
-            ngeoFile.load(text).then(function(fileContent) {
-              return scope['handleFileContent'](fileContent, {
-                url: text
-              });
-            })['catch'](function(err) {
+            ngeoFile.load(text).then(fileContent => scope['handleFileContent'](fileContent, {
+              url: text
+            }))['catch']((err) => {
               $window.alert(gettextCatalog.getString(err.message));
             });
           } else {
@@ -99,7 +97,7 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
       };
       $document.on('dragstart', onDragStart);
 
-      scope.$on('$destroy', function() {
+      scope.$on('$destroy', () => {
         $document.off('dragEnter', onDragEnter).off('dragstart', onDragStart);
       });
     }
@@ -118,7 +116,7 @@ exports.module.value('ngeoImportDndTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {boolean} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['ngeoImportDndTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           `${ngeo.baseModuleTemplateUrl}/import/partials/import-dnd.html`;

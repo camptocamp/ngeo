@@ -35,16 +35,10 @@ ngeo.getBrowserLanguageFactory = function($window) {
         if (!Array.isArray(browserLanguages)) {
           browserLanguages = [browserLanguages];
         }
-        browserLanguages = browserLanguages.map(function(item) {
-          return item.substring(0, 2);
-        });
+        browserLanguages = browserLanguages.map(item => item.substring(0, 2));
         // remove duplicated language codes
-        browserLanguages = browserLanguages.filter(function(item, index, arr) {
-          return arr.indexOf(item) == index;
-        });
-        const supportedLanguages = browserLanguages.filter(function(item) {
-          return availableLanguages.indexOf(item) != -1;
-        });
+        browserLanguages = browserLanguages.filter((item, index, arr) => arr.indexOf(item) == index);
+        const supportedLanguages = browserLanguages.filter(item => availableLanguages.indexOf(item) != -1);
         return supportedLanguages[0];
       });
 };

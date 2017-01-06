@@ -14,7 +14,7 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {boolean} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['gmfAuthenticationTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/authentication.html`;
@@ -204,10 +204,10 @@ gmf.AuthenticationController.prototype.changePassword = function() {
       //     the old password given is incorrect.
       const error = this.gettextCatalog.getString('Incorrect old password.');
       this.gmfAuthentication_.changePassword(oldPwd, newPwd, confPwd).then(
-          function() {
+          () => {
             this.changePasswordModalShown = true;
             this.changePasswordReset();
-          }.bind(this),
+          },
           this.setError_.bind(this, error));
     }
   }

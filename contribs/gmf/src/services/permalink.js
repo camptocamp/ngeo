@@ -311,13 +311,13 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
       this);
 
   // visibility
-  this.rootScope_.$on('ngeo-layertree-state', function(event, treeCtrl, firstParent) {
+  this.rootScope_.$on('ngeo-layertree-state', (event, treeCtrl, firstParent) => {
     const newState = {};
     if (firstParent.node.mixed) {
       const state = treeCtrl.getState();
       goog.asserts.assert(state === 'on' || state === 'off');
       const visible = state === 'on';
-      treeCtrl.traverseDepthFirst(function(ctrl) {
+      treeCtrl.traverseDepthFirst((ctrl) => {
         if (ctrl.node.children === undefined) {
           const param = gmf.PermalinkParamPrefix.TREE_ENABLE + ctrl.node.name;
           newState[param] = visible;
@@ -325,7 +325,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
       });
     } else {
       const gmfLayerNames = [];
-      firstParent.traverseDepthFirst(function(ctrl) {
+      firstParent.traverseDepthFirst((ctrl) => {
         if (ctrl.node.children === undefined && ctrl.getState() === 'on') {
           gmfLayerNames.push(ctrl.node.name);
         }
@@ -333,8 +333,8 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
       newState[gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + firstParent.node.name] = gmfLayerNames.join(',');
     }
     this.ngeoStateManager_.updateState(newState);
-  }.bind(this));
-  this.rootScope_.$on('ngeo-layertree-opacity', function(event, treeCtrl) {
+  });
+  this.rootScope_.$on('ngeo-layertree-opacity', (event, treeCtrl) => {
     const newState = {};
     const opacity = treeCtrl.layer.opacity;
     const stateName = (treeCtrl.parent.node.mixed ?
@@ -342,7 +342,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     ) + treeCtrl.node.name;
     newState[stateName] = opacity;
     this.ngeoStateManager_.updateState(newState);
-  }.bind(this));
+  });
 
   // ngeoFeatures
   //   (1) read from features from the state manager first, add them
@@ -358,18 +358,16 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   ol.events.listen(this.ngeoFeatures_, ol.Collection.EventType.REMOVE,
     this.handleNgeoFeaturesRemove_, this);
 
-  this.rootScope_.$on('$localeChangeSuccess', function() {
+  this.rootScope_.$on('$localeChangeSuccess', () => {
     features.forEach(function(feature) {
       this.featureHelper_.setStyle(feature);
     }, this);
-  }.bind(this));
+  });
 
   if (this.gmfThemeManager_) {
-    $rootScope.$watch(function() {
-      return this.gmfThemeManager_.themeName;
-    }.bind(this), function(name) {
+    $rootScope.$watch(() => this.gmfThemeManager_.themeName, (name) => {
       this.setThemeInUrl_();
-    }.bind(this));
+    });
   }
 
   this.initLayers_();
@@ -393,13 +391,13 @@ gmf.Permalink.prototype.initListenerKey_ = function(uid) {
     };
   } else {
     if (this.listenerKeys_[uid].goog.length) {
-      this.listenerKeys_[uid].goog.forEach(function(key) {
+      this.listenerKeys_[uid].goog.forEach((key) => {
         goog.events.unlistenByKey(key);
       }, this);
       this.listenerKeys_[uid].goog.length = 0;
     }
     if (this.listenerKeys_[uid].ol.length) {
-      this.listenerKeys_[uid].ol.forEach(function(key) {
+      this.listenerKeys_[uid].ol.forEach((key) => {
         ol.events.unlistenByKey(key);
       }, this);
       this.listenerKeys_[uid].ol.length = 0;
@@ -540,15 +538,13 @@ gmf.Permalink.prototype.setDimensions = function(dimensions) {
     dimensions[key.slice(gmf.PermalinkParamPrefix.DIMENSIONS.length)] = value;
   }
 
-  this.rootScope_.$watchCollection(function() {
-    return dimensions;
-  }.bind(this), function(dimensions) {
+  this.rootScope_.$watchCollection(() => dimensions, (dimensions) => {
     const params = {};
     for (const key in dimensions) {
       params[gmf.PermalinkParamPrefix.DIMENSIONS + key] = dimensions[key];
     }
     this.ngeoLocation_.updateParams(params);
-  }.bind(this));
+  });
 };
 
 
@@ -576,9 +572,9 @@ gmf.Permalink.prototype.setMap = function(map) {
   if (map) {
     this.map_ = map;
     if (this.gmfObjectEditingManager_) {
-      this.gmfObjectEditingManager_.getFeature().then(function(feature) {
+      this.gmfObjectEditingManager_.getFeature().then((feature) => {
         this.registerMap_(map, feature);
-      }.bind(this));
+      });
     } else {
       this.registerMap_(map, null);
     }
@@ -623,7 +619,7 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
   this.mapViewPropertyChangeEventKey_ = ol.events.listen(
       view,
       'propertychange',
-      this.ngeoDebounce_(function() {
+      this.ngeoDebounce_(() => {
         const center = view.getCenter();
         const zoom = view.getZoom();
         const object = {};
@@ -631,7 +627,7 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
         object[gmf.PermalinkParam.MAP_Y] = Math.round(center[1]);
         object[gmf.PermalinkParam.MAP_Z] = zoom;
         this.ngeoStateManager_.updateState(object);
-      }.bind(this), 300, /* invokeApply */ true),
+      }, 300, /* invokeApply */ true),
       this);
 
   // (3) Add map crosshair, if set
@@ -752,9 +748,7 @@ gmf.Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
 gmf.Permalink.prototype.refreshFirstLevelGroups = function() {
   // Get first-level-groups order
   const groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
-  const orderedNames = groupNodes.map(function(node) {
-    return node.name;
-  });
+  const orderedNames = groupNodes.map(node => node.name);
 
   // set it in state
   const object = {};
@@ -800,7 +794,7 @@ gmf.Permalink.prototype.setThemeInUrl_ = function() {
  * @private
  */
 gmf.Permalink.prototype.initLayers_ = function() {
-  this.gmfThemes_.getThemesObject().then(function(themes) {
+  this.gmfThemes_.getThemesObject().then((themes) => {
     /**
      * @type {string}
      */
@@ -838,7 +832,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
         firstLevelGroups = theme.children;
       }
     } else {
-      groupsNames.split(',').forEach(function(groupName) {
+      groupsNames.split(',').forEach((groupName) => {
         const group = gmf.Themes.findGroupByName(themes, groupName);
         if (group) {
           firstLevelGroups.push(group);
@@ -848,13 +842,13 @@ gmf.Permalink.prototype.initLayers_ = function() {
 
     this.gmfTreeManager_.setFirstLevelGroups(firstLevelGroups);
 
-    this.$timeout_(function() {
+    this.$timeout_(() => {
       if (!this.gmfTreeManager_.rootCtrl) {
         // we don't have any layertree
         return;
       }
       // Enable the layers and set the opacity
-      this.gmfTreeManager_.rootCtrl.traverseDepthFirst(function(treeCtrl) {
+      this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
         if (treeCtrl.isRoot) {
           return;
         }
@@ -881,7 +875,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
           ));
           if (groupLayers !== undefined) {
             const groupLayersArray = groupLayers.split(',');
-            treeCtrl.traverseDepthFirst(function(treeCtrl) {
+            treeCtrl.traverseDepthFirst((treeCtrl) => {
               if (treeCtrl.node.children === undefined) {
                 const enable = ol.array.includes(groupLayersArray, treeCtrl.node.name);
                 treeCtrl.setState(enable ? 'on' : 'off', false);
@@ -890,18 +884,18 @@ gmf.Permalink.prototype.initLayers_ = function() {
             return ngeo.LayertreeController.VisitorDecision.STOP;
           }
         }
-      }.bind(this));
+      });
       const firstParents = this.gmfTreeManager_.rootCtrl.children;
-      firstParents.forEach(function(firstParent) {
-        firstParent.traverseDepthFirst(function(treeCtrl) {
+      firstParents.forEach((firstParent) => {
+        firstParent.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.getState() !== 'indeterminate') {
             this.rootScope_.$broadcast('ngeo-layertree-state', treeCtrl, firstParent);
             return ngeo.LayertreeController.VisitorDecision.STOP;
           }
-        }.bind(this));
-      }.bind(this));
-    }.bind(this));
-  }.bind(this));
+        });
+      });
+    });
+  });
 };
 
 
@@ -1036,7 +1030,7 @@ gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
    */
   const filters = [];
 
-  paramKeys.forEach(function(paramKey) {
+  paramKeys.forEach((paramKey) => {
     if (paramKey == gmf.PermalinkParam.WFS_LAYER || paramKey == gmf.PermalinkParam.WFS_SHOW_FEATURES ||
         paramKey == gmf.PermalinkParam.WFS_NGROUPS || paramKey.indexOf(prefix) != 0) {
       return;
@@ -1056,7 +1050,7 @@ gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
       condition
     };
     filters.push(filter);
-  }.bind(this));
+  });
 
   return (filters.length > 0) ? {filters} : null;
 };

@@ -157,7 +157,7 @@ ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
       layers = baseBgLayer.getLayers().getArray();
     }
 
-    layers.forEach(function(layer) {
+    layers.forEach((layer) => {
       goog.asserts.assertInstanceof(layer, ol.layer.Layer);
       if (layer) {
         let hasUpdates = false;

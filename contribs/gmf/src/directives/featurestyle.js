@@ -77,9 +77,7 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
   this.measure = null;
 
   $scope.$watch(
-    function() {
-      return this.color;
-    }.bind(this),
+    () => this.color,
     this.handleColorSet_.bind(this)
   );
 
@@ -96,9 +94,7 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
   this.type;
 
   $scope.$watch(
-    function() {
-      return this.feature;
-    }.bind(this),
+    () => this.feature,
     this.handleFeatureSet_.bind(this)
   );
 
@@ -117,7 +113,7 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
   const keys = this.featureListenerKeys_;
 
   if (previousFeature) {
-    keys.forEach(function(key) {
+    keys.forEach((key) => {
       ol.events.unlistenByKey(key);
     }, this);
     this.type = null;

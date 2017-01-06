@@ -69,9 +69,7 @@ gmf.ObjecteditinggetwmsfeatureController = function($scope,
   this.active;
 
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
+    () => this.active,
     this.handleActiveChange_.bind(this)
   );
 
@@ -144,11 +142,11 @@ gmf.ObjecteditinggetwmsfeatureController.prototype.handleMapClick_ = function(
     this.layerInfo,
     evt.coordinate,
     this.map
-  ).then(function(feature) {
+  ).then((feature) => {
     if (feature) {
       this.features.push(feature);
     }
-  }.bind(this));
+  });
 
 };
 

@@ -52,14 +52,13 @@ ngeo.btngroupDirective = function($parse) {
       const setActive = $parse(attrs['ngeoBtnGroupActive']).assign;
 
       if (setActive) {
-        scope.$watch(function() {
+        scope.$watch(
           // return true if at least one button is active otherwise false
-          return controller.buttons_.some(function(buttonModel) {
-            return (buttonModel(scope) === true);
-          });
-        }, function(newValue) {
-          setActive(scope, newValue);
-        });
+          () => controller.buttons_.some(buttonModel => buttonModel(scope) === true),
+          (newValue) => {
+            setActive(scope, newValue);
+          }
+        );
       }
     }
   };
@@ -162,8 +161,8 @@ ngeo.btnDirective = function($parse) {
       }
 
           // UI -> model
-      element.bind('click', function() {
-        scope.$apply(function() {
+      element.bind('click', () => {
+        scope.$apply(() => {
           ngModelCtrl.$setViewValue(!ngModelCtrl.$viewValue);
           ngModelCtrl.$render();
         });

@@ -43,7 +43,7 @@ ngeo.AutoProjection.prototype.stringToCoordinates = function(str) {
 ngeo.AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
   let code, proj;
   const projections = [];
-  projectionsCodes.forEach(function(projection) {
+  projectionsCodes.forEach((projection) => {
     code = projection.toUpperCase();
     if (code.substr(0, 5) != 'EPSG:') {
       code = `EPSG:${code}`;
@@ -78,7 +78,7 @@ ngeo.AutoProjection.prototype.tryProjections = function(coordinates,
   if (opt_projections === undefined) {
     opt_projections = [viewProjection];
   }
-  opt_projections.some(function(projection) {
+  opt_projections.some((projection) => {
     position = ol.proj.transform(coordinates, projection, viewProjection);
     if (ol.extent.containsCoordinate(extent, position)) {
       return true;

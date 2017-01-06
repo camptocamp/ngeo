@@ -22,9 +22,7 @@ ngeo.source.AsitVDResolutions_ = [
 ngeo.source.AsitVDTileGrid_ = new ol.tilegrid.WMTS({
   extent: [420000, 30000, 900000, 350000],
   resolutions: ngeo.source.AsitVDResolutions_,
-  matrixIds: ngeo.source.AsitVDResolutions_.map(function(value, index) {
-    return String(index);
-  })
+  matrixIds: ngeo.source.AsitVDResolutions_.map((value, index) => `${index}`)
 });
 
 

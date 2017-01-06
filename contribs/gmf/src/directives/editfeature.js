@@ -149,21 +149,19 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   this.state;
 
   $scope.$watch(
-    function() {
-      return this.state;
-    }.bind(this),
-    function(newValue, oldValue) {
+    () => this.state,
+    (newValue, oldValue) => {
       const state = gmf.EditfeatureController.State;
       if (newValue === state.STOP_EDITING_PENDING) {
-        this.confirmCancel().then(function() {
+        this.confirmCancel().then(() => {
           this.state = state.STOP_EDITING_EXECUTE;
-        }.bind(this));
+        });
       } else if (newValue === state.DEACTIVATE_PENDING) {
-        this.confirmCancel().then(function() {
+        this.confirmCancel().then(() => {
           this.state = state.DEACTIVATE_EXECUTE;
-        }.bind(this));
+        });
       }
-    }.bind(this)
+    }
   );
 
   /**
@@ -291,14 +289,12 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
 
   // Reset stop request when closing the confirmation modal
   $scope.$watch(
-    function() {
-      return this.unsavedModificationsModalShown;
-    }.bind(this),
-    function(newValue, oldValue) {
+    () => this.unsavedModificationsModalShown,
+    (newValue, oldValue) => {
       if (oldValue && !newValue) {
         this.state = gmf.EditfeatureController.State.IDLE;
       }
-    }.bind(this)
+    }
   );
 
   /**
@@ -321,14 +317,12 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   this.createActive = false;
 
   $scope.$watch(
-    function() {
-      return this.createActive;
-    }.bind(this),
-    function(newVal, oldVal) {
+    () => this.createActive,
+    (newVal, oldVal) => {
       if (newVal) {
         this.gmfSnapping_.ensureSnapInteractionsOnTop();
       }
-    }.bind(this)
+    }
   );
 
   /**
@@ -344,9 +338,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   this.mapSelectActive = true;
 
   $scope.$watch(
-    function() {
-      return this.mapSelectActive;
-    }.bind(this),
+    () => this.mapSelectActive,
     this.handleMapSelectActiveChange_.bind(this)
   );
 
@@ -363,9 +355,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   this.feature = null;
 
   $scope.$watch(
-    function() {
-      return this.feature;
-    }.bind(this),
+    () => this.feature,
     this.handleFeatureChange_.bind(this)
   );
 
@@ -566,9 +556,9 @@ gmf.EditfeatureController.prototype.cancel = function() {
  * @export
  */
 gmf.EditfeatureController.prototype.confirmCancel = function() {
-  return this.checkForModifications_().then(function() {
+  return this.checkForModifications_().then(() => {
     this.cancel();
-  }.bind(this));
+  });
 };
 
 
@@ -640,9 +630,9 @@ gmf.EditfeatureController.prototype.delete = function() {
 gmf.EditfeatureController.prototype.submit = function() {
   // Use timeout to prevent the digest already in progress
   // due to clicking on the modal button to throw an error.
-  this.timeout_(function() {
+  this.timeout_(() => {
     this.element_.find('input[type="submit"]').click();
-  }.bind(this), 0);
+  }, 0);
 };
 
 /**
@@ -697,7 +687,7 @@ gmf.EditfeatureController.prototype.setAttributes_ = function(attributes) {
  * @private
  */
 gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
-  this.timeout_(function() {
+  this.timeout_(() => {
     const feature = evt.element;
     goog.asserts.assertInstanceof(feature, ol.Feature);
     this.feature = feature;
@@ -706,7 +696,7 @@ gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
       this.dirty = true;
     }
     this.scope_.$apply();
-  }.bind(this), 0);
+  }, 0);
 };
 
 
@@ -745,7 +735,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
 
   } else {
 
-    keys.forEach(function(key) {
+    keys.forEach((key) => {
       ol.events.unlistenByKey(key);
     }, this);
 
@@ -821,13 +811,13 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
   //     selected. In that case, no need to do any further action.
   const feature = this.map.forEachFeatureAtPixel(
     pixel,
-    function(feature) {
+    (feature) => {
       let ret = false;
       if (ol.array.includes(this.features.getArray(), feature)) {
         ret = feature;
       }
       return ret;
-    }.bind(this),
+    },
     null
   );
 
@@ -837,7 +827,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
 
   // (2) If a feature is being edited and has unsaved changes, show modal
   //     to let the user decide what to do
-  this.checkForModifications_(true).then(function() {
+  this.checkForModifications_(true).then(() => {
 
     const map = this.map;
     const view = map.getView();
@@ -859,7 +849,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
 
     // (5) Pending
     this.pending = true;
-  }.bind(this));
+  });
 };
 
 
@@ -873,13 +863,13 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
 
   let feature = this.map.forEachFeatureAtPixel(
     pixel,
-    function(feature) {
+    (feature) => {
       let ret = false;
       if (ol.array.includes(this.features.getArray(), feature)) {
         ret = feature;
       }
       return ret;
-    }.bind(this),
+    },
     null
   );
 
@@ -905,13 +895,13 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
 gmf.EditfeatureController.prototype.handleGetFeatures_ = function(features) {
   this.pending = false;
 
-  this.timeout_(function() {
+  this.timeout_(() => {
     if (features.length) {
       const feature = features[0];
       this.feature = feature;
       this.features.push(feature);
     }
-  }.bind(this), 0);
+  }, 0);
 };
 
 
@@ -1002,10 +992,10 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
     // bypass this, we reset the dirty state here. We do so only if we're
     // editing an existing feature
     if (this.featureId) {
-      this.timeout_(function() {
+      this.timeout_(() => {
         this.dirty = false;
         this.scope_.$apply();
-      }.bind(this), 0);
+      }, 0);
     }
   } else {
     this.featureId = null;

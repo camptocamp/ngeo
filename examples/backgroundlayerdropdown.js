@@ -51,11 +51,11 @@ app.module.directive('appBackgroundlayer', app.backgroundlayerDirective);
  */
 app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
   $http.get('data/backgroundlayers.json').then(
-      function(resp) {
+      (resp) => {
         const bgLayers = resp.data;
         this['bgLayers'] = bgLayers;
         this.setLayer(bgLayers[0]);
-      }.bind(this));
+      });
 
   /**
    * @type {ngeo.BackgroundLayerMgr}

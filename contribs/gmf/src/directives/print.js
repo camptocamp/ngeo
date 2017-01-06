@@ -57,7 +57,7 @@ gmf.module.value('gmfPrintTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['gmfPrintTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/print.html`;
@@ -115,9 +115,7 @@ gmf.printDirective = function(gmfPrintTemplateUrl) {
     link(scope, element, attr) {
       const ctrl = scope['ctrl'];
 
-      scope.$watch(function() {
-        return ctrl.active;
-      }, function(active) {
+      scope.$watch(() => ctrl.active, function(active) {
         this.togglePrintPanel_(active);
       }.bind(ctrl));
     }
@@ -374,22 +372,20 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   this.capabilities_;
 
   // Clear the capabilities if the roleId changes
-  $scope.$watch(function() {
-    return gmfAuthentication.getRoleId();
-  }, function() {
+  $scope.$watch(() => gmfAuthentication.getRoleId(), () => {
     this.gmfPrintState_.state = gmf.PrintStateEnum.CAPABILITIES_NOT_LOADED;
     this.capabilities_ = null;
-  }.bind(this));
+  });
 
   // Print on event.
-  $rootScope.$on('gmfStartPrint', function(event, format) {
+  $rootScope.$on('gmfStartPrint', (event, format) => {
     this.print(`${format}`);
-  }.bind(this));
+  });
 
   // Cancel print task on event.
-  $rootScope.$on('gmfCancelPrint', function() {
+  $rootScope.$on('gmfCancelPrint', () => {
     this.cancel();
-  }.bind(this));
+  });
 };
 
 
@@ -403,7 +399,7 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
     if (!this.capabilities_) {
       this.getCapabilities_();
     }
-    this.capabilities_.then(function(resp) {
+    this.capabilities_.then((resp) => {
       // make sure the panel is still open
       if (!this.active) {
         return;
@@ -416,11 +412,11 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
       this.pointerDragListenerKey_ = this.map.on('pointerdrag',
           this.onPointerDrag_.bind(this));
       this.map.render();
-    }.bind(this), function(resp) {
+    }, (resp) => {
       // Get capabilities - On error
       this.gmfPrintState_.state = gmf.PrintStateEnum.ERROR_ON_GETCAPABILITIES;
       this.capabilities_ = null;
-    }.bind(this));
+    });
   } else {
     this.map.unByKey(this.postComposeListenerKey_);
     this.map.unByKey(this.pointerDragListenerKey_);
@@ -462,9 +458,9 @@ gmf.PrintController.prototype.parseCapabilities_ = function(resp) {
   this.layout_ = data['layouts'][0];
 
   this.fields.layouts = [];
-  this.layouts_.forEach(function(layout) {
+  this.layouts_.forEach((layout) => {
     this.fields.layouts.push(layout.name);
-  }.bind(this));
+  });
 
   this.updateFields_();
 };
@@ -507,9 +503,9 @@ gmf.PrintController.prototype.updateFields_ = function() {
       this.fields.dpi : this.fields.dpis[0];
 
   this.fields.formats = {};
-  this.formats_.forEach(function(format) {
+  this.formats_.forEach((format) => {
     this.fields.formats[format] = true;
-  }.bind(this));
+  });
 
   // Force the update of the mask
   this.map.render();
@@ -530,7 +526,7 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
   const previousCustoms = customs.splice(0, customs.length);
 
   // The attributes without 'clientParams' are the custom fields (user-defined).
-  this.layout_.attributes.forEach(function(attribute) {
+  this.layout_.attributes.forEach((attribute) => {
     if (!attribute['clientParams']) {
       name = `${attribute.name}`;
       const defaultValue = attribute.default;
@@ -556,7 +552,7 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
       }
 
       // If it exists use the value of previous same field.
-      previousCustoms.forEach(function(c) {
+      previousCustoms.forEach((c) => {
         if (c.name === name && c.type === type) {
           return value = c.value;
         }
@@ -568,7 +564,7 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
         value
       }));
     }
-  }.bind(this));
+  });
 };
 
 
@@ -580,7 +576,7 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
  */
 gmf.PrintController.prototype.isAttributeInCurrentLayout_ = function(name) {
   let attr = null;
-  this.layout_.attributes.forEach(function(attribute) {
+  this.layout_.attributes.forEach((attribute) => {
     if (attribute.name === name) {
       return attr = attribute;
     }
@@ -655,9 +651,9 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
       this.$scope_.$digest();
     }
     // Prepare the removal of this session of drags events
-    this.rotationTimeoutPromise_ = this.$timeout_(function() {
+    this.rotationTimeoutPromise_ = this.$timeout_(() => {
       this.rotationTimeoutPromise_ = null;
-    }.bind(this), 500);
+    }, 500);
     // Keep the current position for the next calculation.
     this.onDragPreviousMousePosition_ = pixel;
   }
@@ -692,7 +688,7 @@ gmf.PrintController.prototype.print = function(format) {
   };
 
   if (this.fields.customs) {
-    this.fields.customs.forEach(function(field) {
+    this.fields.customs.forEach((field) => {
       customAttributes[field.name] = field.value;
     });
   }
@@ -781,9 +777,7 @@ gmf.PrintController.prototype.getDataSource_ = function() {
           return this.translate_(prop);
         }, this);
       }
-      data.push(Object.keys(properties).map(function(key) {
-        return properties[key];
-      }));
+      data.push(Object.keys(properties).map(key => properties[key]));
     }, this);
     if (columns.length) {
       datasourceObj = /** @type {gmfx.DataSourcePrintReportObject} */({
@@ -868,9 +862,9 @@ gmf.PrintController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
     }
   } else {
     // The report is not ready yet. Check again in 1s.
-    this.statusTimeoutPromise_ = this.$timeout_(function() {
+    this.statusTimeoutPromise_ = this.$timeout_(() => {
       this.getStatus_(ref);
-    }.bind(this), 1000, false);
+    }, 1000, false);
   }
 };
 
@@ -899,7 +893,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
   const layers = this.ngeoLayerHelper_.getFlatLayers(dataLayerGroup);
 
   // For each visible layer in reverse order, get the legend url.
-  layers.reverse().forEach(function(layer) {
+  layers.reverse().forEach((layer) => {
     classes = [];
     const source = layer.getSource();
 
@@ -918,7 +912,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
       } else {
         // For each name in a WMS layer.
         layerNames = source.getParams()['LAYERS'].split(',');
-        layerNames.forEach(function(name) {
+        layerNames.forEach((name) => {
           icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
               scale);
           // Don't add classes without legend url or from layers without any
@@ -929,7 +923,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
               'icons': [icons]
             });
           }
-        }.bind(this));
+        });
       }
     }
 
@@ -938,7 +932,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
       legend['classes'].push({'classes': classes});
     }
 
-  }.bind(this));
+  });
 
   return legend['classes'].length > 0 ?  legend : null;
 };
@@ -952,7 +946,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
  */
 gmf.PrintController.prototype.setLayout = function(layoutName) {
   let layout;
-  this.layouts_.forEach(function(l) {
+  this.layouts_.forEach((l) => {
     if (l.name === layoutName) {
       layout = l;
       return true; // break;

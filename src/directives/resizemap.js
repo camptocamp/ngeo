@@ -49,7 +49,7 @@ ngeo.resizemapDirective = function($window) {
       let start;
 
       const animationDelay = new goog.async.AnimationDelay(
-              function() {
+              () => {
                 map.updateSize();
                 map.renderSync();
 
@@ -60,12 +60,12 @@ ngeo.resizemapDirective = function($window) {
 
           // Make sure the map is resized when the animation ends.
           // It may help in case the animation didn't start correctly.
-      element.bind('transitionend', function() {
+      element.bind('transitionend', () => {
         map.updateSize();
         map.renderSync();
       });
 
-      scope.$watch(stateExpr, function(newVal, oldVal) {
+      scope.$watch(stateExpr, (newVal, oldVal) => {
         if (newVal != oldVal) {
           start = Date.now();
           animationDelay.stop();

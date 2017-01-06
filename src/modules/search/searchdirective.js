@@ -59,14 +59,14 @@ ngeo.search.searchDirective = function() {
       const typeaheadListeners = ngeo.search.searchDirective.adaptListeners_(
               typeaheadListeners_);
 
-      element.on('typeahead:open', function() {
-        scope.$apply(function() {
+      element.on('typeahead:open', () => {
+        scope.$apply(() => {
           typeaheadListeners.open();
         });
       });
 
-      element.on('typeahead:close', function() {
-        scope.$apply(function() {
+      element.on('typeahead:close', () => {
+        scope.$apply(() => {
           typeaheadListeners.close();
         });
       });
@@ -77,8 +77,8 @@ ngeo.search.searchDirective = function() {
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
-              function(event, suggestion, dataset) {
-                scope.$apply(function() {
+              (event, suggestion, dataset) => {
+                scope.$apply(() => {
                   typeaheadListeners.cursorchange(event, suggestion, dataset);
                 });
               });
@@ -89,8 +89,8 @@ ngeo.search.searchDirective = function() {
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
-              function(event, suggestion, dataset) {
-                scope.$apply(function() {
+              (event, suggestion, dataset) => {
+                scope.$apply(() => {
                   typeaheadListeners.select(event, suggestion, dataset);
                 });
               });
@@ -101,8 +101,8 @@ ngeo.search.searchDirective = function() {
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
-              function(event, suggestion, dataset) {
-                scope.$apply(function() {
+              (event, suggestion, dataset) => {
+                scope.$apply(() => {
                   typeaheadListeners.autocomplete(event, suggestion, dataset);
                 });
               });

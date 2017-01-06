@@ -117,7 +117,7 @@ ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
 
   const unlisten = this.scope_.$watch(
       tool.getActive,
-      (function(newVal, oldVal) {
+      (newVal, oldVal) => {
         if (newVal === oldVal) {
           return;
         }
@@ -126,7 +126,7 @@ ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
         } else {
           this.activateDefault_(groupName);
         }
-      }).bind(this));
+      });
 
   entries.push({
     tool,
@@ -137,7 +137,7 @@ ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
   if (goog.asserts.ENABLE_ASSERTS) {
     // check that only one default tool per group exists
     let defaultTools = 0;
-    entries.forEach(function(entry) {
+    entries.forEach((entry) => {
       if (entry.defaultTool) {
         defaultTools++;
       }

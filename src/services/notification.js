@@ -130,10 +130,10 @@ ngeo.Notification.prototype.showMessage = function(message) {
   // Keep a reference to the promise, in case we want to manually cancel it
   // before the delay
   const uid = ol.getUid(el);
-  item.promise = this.timeout_(function() {
+  item.promise = this.timeout_(() => {
     el.alert('close');
     delete this.cache_[uid];
-  }.bind(this), delay);
+  }, delay);
 
   this.cache_[uid] = item;
 };

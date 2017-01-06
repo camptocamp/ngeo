@@ -150,12 +150,12 @@ gmfapp.MainController = function(gmfThemes, gmfQueryManager,
    */
   this.queryGridActive = true;
 
-  gmfThemes.getThemesObject().then(function(themes) {
+  gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       this.themes = themes;
       this.treeSource = themes[3];
     }
-  }.bind(this));
+  });
 
   ngeoFeatureOverlayMgr.init(this.map);
 };

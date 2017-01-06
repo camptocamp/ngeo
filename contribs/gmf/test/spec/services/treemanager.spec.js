@@ -2,15 +2,15 @@
 goog.require('gmf.TreeManager');
 goog.require('gmf.test.data.themes');
 
-describe('gmf.TreeManager', function() {
+describe('gmf.TreeManager', () => {
   let gmfTreeManager;
   let gmfThemes;
   let treeUrl;
   let $httpBackend;
   let $timeout;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       $timeout = $injector.get('$timeout');
       gmfTreeManager = $injector.get('gmfTreeManager');
       gmfThemes = $injector.get('gmfThemes');
@@ -20,7 +20,7 @@ describe('gmf.TreeManager', function() {
     });
   });
 
-  it('Add some groups', function() {
+  it('Add some groups', () => {
     const group0 = themes.themes[0].children[0];
     const group1 = themes.themes[1].children[0];
     // Add a group
@@ -44,7 +44,7 @@ describe('gmf.TreeManager', function() {
     expect(gmfTreeManager.root.children[1]).toEqual(group1);
   });
 
-  it('Add a group by name', function() {
+  it('Add a group by name', () => {
     const spy = jasmine.createSpy();
     const group0 = themes.themes[0].children[0];
     const group1 = themes.themes[1].children[0];
@@ -62,7 +62,7 @@ describe('gmf.TreeManager', function() {
     expect(gmfTreeManager.root.children[1]).toEqual(group0);
   });
 
-  it('Add a group by layer name', function() {
+  it('Add a group by layer name', () => {
     const spy = jasmine.createSpy();
     const group0 = themes.themes[0].children[0];
     const group1 = themes.themes[1].children[0];
@@ -80,7 +80,7 @@ describe('gmf.TreeManager', function() {
     expect(gmfTreeManager.root.children[1]).toEqual(group0);
   });
 
-  it('Remove a group', function() {
+  it('Remove a group', () => {
     const group0 = themes.themes[0].children[0];
     const group1 = themes.themes[1].children[0];
     gmfTreeManager.setFirstLevelGroups([group0, group1]);

@@ -14,7 +14,7 @@ ngeo.module.value('ngeoGridTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {boolean} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['ngeoGridTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${ngeo.baseTemplateUrl}/grid.html`;
@@ -86,9 +86,7 @@ ngeo.GridConfig.prototype.getSelectedCount = function() {
  * @export
  */
 ngeo.GridConfig.prototype.getSelectedRows = function() {
-  return this.data.filter(function(row) {
-    return this.isRowSelected(row);
-  }.bind(this));
+  return this.data.filter(row => this.isRowSelected(row));
 };
 
 
@@ -122,9 +120,9 @@ ngeo.GridConfig.prototype.toggleRow = function(attributes) {
  * @export
  */
 ngeo.GridConfig.prototype.selectAll = function() {
-  this.data.forEach(function(attributes) {
+  this.data.forEach((attributes) => {
     this.selectRow(attributes);
-  }.bind(this));
+  });
 };
 
 
@@ -144,9 +142,9 @@ ngeo.GridConfig.prototype.unselectAll = function() {
  * @export
  */
 ngeo.GridConfig.prototype.invertSelection = function() {
-  this.data.forEach(function(attributes) {
+  this.data.forEach((attributes) => {
     this.toggleRow(attributes);
-  }.bind(this));
+  });
 };
 
 
@@ -253,7 +251,7 @@ ngeo.GridController.prototype.sort = function(columnName) {
   this.sortedBy = columnName;
 
   const asc = this.sortAscending ? 1 : -1;
-  this.configuration.data.sort(function(attributes1, attributes2) {
+  this.configuration.data.sort((attributes1, attributes2) => {
     if (!attributes1[columnName]) {
       return 1;
     }

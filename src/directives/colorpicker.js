@@ -10,7 +10,7 @@ ngeo.module.value('ngeoColorpickerTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['ngeoColorpickerTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${ngeo.baseTemplateUrl}/colorpicker.html`;

@@ -28,7 +28,7 @@ gmf.module.value('gmfSearchTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['gmfSearchTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/search.html`;
@@ -141,7 +141,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       if (!scope['clearbutton']) {
         const ctrl = scope['ctrl'];
             // Empty the search field on focus and blur.
-        element.find('input').on('focus blur', function() {
+        element.find('input').on('focus blur', () => {
           ctrl.clear();
         });
       }
@@ -395,9 +395,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.displayColorPicker = false;
 
   $scope.$watch(
-    function() {
-      return this.color;
-    }.bind(this),
+    () => this.color,
     this.setStyleColor.bind(this)
   );
 
@@ -511,9 +509,7 @@ gmf.SearchController.prototype.filterAction_ = function(action) {
         if (properties['actions']) {
           // result is an action (add_theme, add_group, ...)
           // add it to the corresponding group
-          return !properties['layer_name'] && properties['actions'].some(function(act) {
-            return act.action === action;
-          });
+          return !properties['layer_name'] && properties['actions'].some(act => act.action === action);
         } else {
           return false;
         }
@@ -746,7 +742,7 @@ gmf.SearchController.prototype.blur = function() {
   const typeahead = $('.twitter-typeahead');
   const inputs = typeahead.children('input');
   // Blur as soon as possible in digest loops
-  this.timeout_(function() {
+  this.timeout_(() => {
     $(inputs[1]).blur();
   });
 };
@@ -794,19 +790,19 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
       const actionName = action['action'];
       const actionData = action['data'];
       if (actionName == 'add_theme') {
-        this.gmfThemes_.getThemesObject().then(function(themes) {
+        this.gmfThemes_.getThemesObject().then((themes) => {
           const theme = gmf.Themes.findThemeByName(themes, actionData);
           if (theme) {
             this.gmfTreeManager_.addFirstLevelGroups(theme.children);
           }
-        }.bind(this));
+        });
       } else if (actionName == 'add_group') {
         this.gmfTreeManager_.addGroupByName(actionData, true);
       } else if (actionName == 'add_layer') {
         const groupActions = /** @type {Array.<string>} */ (
             this.datasources_[0].groupActions);
         let datasourcesActionsHaveAddLayer;
-        groupActions.forEach(function(groupAction) {
+        groupActions.forEach((groupAction) => {
           if (groupAction['action'] === 'add_layer') {
             return datasourcesActionsHaveAddLayer = true;
           }

@@ -69,9 +69,9 @@ app.OEEditController = function($scope, $injector, $timeout) {
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, false);
 
   // Set edit tool as default active one
-  $timeout(function() {
+  $timeout(() => {
     this.oeEditActive = true;
-  }.bind(this));
+  });
 
   /**
    * @type {ol.source.Vector}
@@ -111,13 +111,13 @@ app.OEEditController = function($scope, $injector, $timeout) {
    */
   const gmfThemes = $injector.get('gmfThemes');
 
-  gmfThemes.getThemesObject().then(function(themes) {
+  gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       // Add layer vector after
       this.map.addLayer(this.vectorLayer_);
       this.map.addLayer(this.sketchLayer_);
     }
-  }.bind(this));
+  });
 
   /**
    * @type {gmf.ObjectEditingManager} gmfObjectEditingManager The gmf
@@ -143,12 +143,12 @@ app.OEEditController = function($scope, $injector, $timeout) {
    */
   this.oeFeature = null;
 
-  gmfObjectEditingManager.getFeature().then(function(feature) {
+  gmfObjectEditingManager.getFeature().then((feature) => {
     this.oeFeature = feature;
     if (feature) {
       this.vectorSource_.addFeature(feature);
     }
-  }.bind(this));
+  });
 
   /**
    * @type {Array.<string>}

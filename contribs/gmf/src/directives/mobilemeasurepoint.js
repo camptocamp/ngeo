@@ -19,7 +19,7 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} The template url.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/mobilemeasurepoint.html`;
@@ -121,12 +121,10 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, gmfAltitude,
    */
   this.active;
 
-  $scope.$watch(function() {
-    return this.active;
-  }.bind(this), function(newVal) {
+  $scope.$watch(() => this.active, (newVal) => {
     this.measure.setActive(newVal);
     this.handleMeasureActiveChange_();
-  }.bind(this));
+  });
 
   /**
    * @type {number|undefined}
@@ -259,7 +257,7 @@ gmf.MobileMeasurePointController.prototype.getAltitude_ = function() {
   const params = {
     'layers': this.layers.join(',')
   };
-  this.gmfAltitude_.getAltitude(center, params).then(function(object) {
+  this.gmfAltitude_.getAltitude(center, params).then((object) => {
     const el = this.measure.getTooltipElement();
     const ctn = document.createElement('div');
     const className = 'gmf-mobile-measure-point-altitude';
@@ -287,7 +285,7 @@ gmf.MobileMeasurePointController.prototype.getAltitude_ = function() {
     }
     el.appendChild(ctn);
 
-  }.bind(this));
+  });
 };
 
 

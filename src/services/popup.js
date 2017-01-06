@@ -49,16 +49,14 @@ ngeo.Popup = function($compile, $rootScope, $sce, $timeout) {
 
   // manage the auto destruction of the popup
   this.scope.$watch(
-    function() {
-      return this.scope['open'];
-    }.bind(this),
-    function(open) {
+    () => this.scope['open'],
+    (open) => {
       if (!open && this.autoDestroy_) {
-        this.timeout_(function() {
+        this.timeout_(() => {
           this.destroy();
-        }.bind(this));
+        });
       }
-    }.bind(this)
+    }
   );
 
   /**

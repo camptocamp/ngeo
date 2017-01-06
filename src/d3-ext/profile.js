@@ -103,9 +103,7 @@ ngeo.profile = function(options) {
   /**
    * Method to get the coordinate in pixels from a distance.
    */
-  const bisectDistance = d3.bisector(function(d) {
-    return distanceExtractor(d);
-  }).left;
+  const bisectDistance = d3.bisector(d => distanceExtractor(d)).left;
 
   /**
    * POI data extractor.
@@ -255,11 +253,9 @@ ngeo.profile = function(options) {
       let area;
       if (numberOfLines === 1) {
         area = d3.svg.area()
-            .x(function(d) {
-              return x(distanceExtractor(d));
-            })
+            .x(d => x(distanceExtractor(d)))
             .y0(height)
-            .y1(function(d) {
+            .y1((d) => {
               const firstLineName =  Object.keys(linesConfiguration)[0];
               return y(linesConfiguration[firstLineName].zExtractor(d));
             });
@@ -338,9 +334,7 @@ ngeo.profile = function(options) {
           .attr('transform', `translate(${margin.left},${
               margin.top})`);
 
-      xDomain = d3.extent(data, function(d) {
-        return distanceExtractor(d);
-      });
+      xDomain = d3.extent(data, d => distanceExtractor(d));
       x.domain(xDomain);
 
       // Return an array with the min and max value of the min/max values of
@@ -350,9 +344,7 @@ ngeo.profile = function(options) {
         let extent, name;
         // Get min/max values (extent) of each lines.
         for (name in linesConfiguration) {
-          extent = d3.extent(data, function(d) {
-            return linesConfiguration[name].zExtractor(d);
-          });
+          extent = d3.extent(data, d => linesConfiguration[name].zExtractor(d));
           elevationsValues = elevationsValues.concat(extent);
         }
         return [
@@ -394,12 +386,8 @@ ngeo.profile = function(options) {
 
         // Configure the d3 line.
         line = d3.svg.line()
-            .x(function(d) {
-              return x(distanceExtractor(d));
-            })
-            .y(function(d) {
-              return y(linesConfiguration[name].zExtractor(d));
-            });
+            .x(d => x(distanceExtractor(d)))
+            .y(d => y(linesConfiguration[name].zExtractor(d)));
 
         // Update path for the line.
         g.select(`.line.${name}`)
@@ -416,16 +404,12 @@ ngeo.profile = function(options) {
       }
 
       if (!light) {
-        xAxis.tickFormat(function(d) {
-          return formatter.xtick(d / xFactor, xUnits);
-        });
+        xAxis.tickFormat(d => formatter.xtick(d / xFactor, xUnits));
         if (lightXAxis) {
           xAxis.tickValues([0, x.domain()[1]]);
         }
 
-        yAxis.tickFormat(function(d) {
-          return formatter.ytick(d, 'm');
-        });
+        yAxis.tickFormat(d => formatter.ytick(d, 'm'));
 
         g.select('.x.axis')
           .transition()
@@ -562,7 +546,7 @@ ngeo.profile = function(options) {
     const profileData = svg.datum();
     const ps = g.select('.pois');
 
-    const p = ps.selectAll('.poi').data(pois, function(d) {
+    const p = ps.selectAll('.poi').data(pois, (d) => {
       const i = bisectDistance(profileData, Math.round(pe.dist(d) * 10) / 10, 1);
       const point = profileData[i];
       if (point) {
@@ -596,7 +580,7 @@ ngeo.profile = function(options) {
       .style('opacity', 1);
 
     p.selectAll('text')
-      .attr('transform', function(d) {
+      .attr('transform', (d) => {
         if (light) {
           return ['translate(',
             x(pe.dist(d)), ',',
@@ -609,24 +593,14 @@ ngeo.profile = function(options) {
           ].join('');
         }
       })
-      .text(function(d) {
-        return pe.sort(d) + (light ? '' : (` - ${pe.title(d)}`));
-      });
+      .text(d => pe.sort(d) + (light ? '' : (` - ${pe.title(d)}`)));
 
     p.selectAll('line')
        .style('stroke', 'grey')
-       .attr('x1', function(d) {
-         return x(pe.dist(d));
-       })
-       .attr('y1', function(d) {
-         return y(y.domain()[0]);
-       })
-       .attr('x2', function(d) {
-         return x(pe.dist(d));
-       })
-       .attr('y2', function(d) {
-         return y(pe.z(d));
-       });
+       .attr('x1', d => x(pe.dist(d)))
+       .attr('y1', d => y(y.domain()[0]))
+       .attr('x2', d => x(pe.dist(d)))
+       .attr('y2', d => y(pe.z(d)));
 
     // remove unused pois
     p.exit().remove();

@@ -52,7 +52,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
       const selection = d3.select(element[0]);
       let profile, elevationData, poiData;
 
-      scope.$watchCollection(optionsAttr, function(newVal) {
+      scope.$watchCollection(optionsAttr, (newVal) => {
 
         const options = /** @type {ngeox.profile.ProfileOptions} */
                 (goog.object.clone(newVal));
@@ -90,18 +90,18 @@ ngeo.profileDirective = function(ngeoDebounce) {
         }
       });
 
-      scope.$watch(attrs['ngeoProfile'], function(newVal, oldVal) {
+      scope.$watch(attrs['ngeoProfile'], (newVal, oldVal) => {
         elevationData = newVal;
         refreshData();
       });
 
-      scope.$watch(attrs['ngeoProfilePois'], function(newVal, oldVal) {
+      scope.$watch(attrs['ngeoProfilePois'], (newVal, oldVal) => {
         poiData = newVal;
         refreshData();
       });
 
       scope.$watch(attrs['ngeoProfileHighlight'],
-              function(newVal, oldVal) {
+              (newVal, oldVal) => {
                 if (newVal === undefined) {
                   return;
                 }

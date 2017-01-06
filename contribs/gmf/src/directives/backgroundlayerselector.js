@@ -14,7 +14,7 @@ gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['gmfBackgroundlayerselectorTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/backgroundlayerselector.html`;
@@ -130,9 +130,9 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
   this.listenerKeys_.push(ol.events.listen(gmfThemes,
     gmf.ThemesEventType.CHANGE, this.handleThemesChange_, this));
 
-  gmfThemes.getBgLayers(this.dimensions).then(function(layers) {
+  gmfThemes.getBgLayers(this.dimensions).then((layers) => {
     this.bgLayers = layers;
-  }.bind(this));
+  });
 
   /**
    * @type {ngeo.BackgroundLayerMgr}
@@ -161,9 +161,9 @@ gmf.module.controller('GmfBackgroundlayerselectorController',
  * @private
  */
 gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function() {
-  this.gmfThemes_.getBgLayers(this.dimensions).then(function(layers) {
+  this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
     this.bgLayers = layers;
-  }.bind(this));
+  });
 };
 
 

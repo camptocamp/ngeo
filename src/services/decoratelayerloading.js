@@ -54,7 +54,7 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
   layer.set('load_count', 0, true);
 
   if (layer instanceof ol.layer.Group) {
-    layer.getLayers().on('add', function(olEvent) {
+    layer.getLayers().on('add', (olEvent) => {
       const newLayer = olEvent.element;
       newLayer.set('parent_group', layer);
     });
@@ -74,12 +74,12 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
       goog.asserts.fail('unsupported source type');
     }
 
-    source.on(incrementEvents, function() {
+    source.on(incrementEvents, () => {
       incrementLoadCount_(layer);
       $scope.$applyAsync();
     });
 
-    source.on(decrementEvents, function() {
+    source.on(decrementEvents, () => {
       decrementLoadCount_(layer);
       $scope.$applyAsync();
     });

@@ -83,9 +83,7 @@ ngeo.sortableDirective = function($timeout) {
            */
       let dragListGroup = null;
 
-      scope.$watchCollection(function() {
-        return sortable;
-      }, function() {
+      scope.$watchCollection(() => sortable, () => {
         sortable.length && $timeout(resetUpDragDrop, 0);
       });
 
@@ -116,7 +114,7 @@ ngeo.sortableDirective = function($timeout) {
                  * @param {Element} dragItem Drag item.
                  * @return {Element} The handle.
                  */
-                function(dragItem) {
+                (dragItem) => {
                   const className = options['handleClassName'];
                   return goog.dom.getElementByClass(className, dragItem);
                 });
@@ -135,7 +133,7 @@ ngeo.sortableDirective = function($timeout) {
             /** @type {Element} */
         let hoverList = null;
 
-        goog.events.listen(dragListGroup, 'dragstart', function(e) {
+        goog.events.listen(dragListGroup, 'dragstart', (e) => {
           hoverNextItemIdx = -1;
           hoverList = null;
               /**
@@ -145,14 +143,14 @@ ngeo.sortableDirective = function($timeout) {
           angular.element(e.draggerEl).css('width', e.currDragItem.offsetWidth);
         });
 
-        goog.events.listen(dragListGroup, 'dragmove', function(e) {
+        goog.events.listen(dragListGroup, 'dragmove', (e) => {
           const next = e.hoverNextItem;
           hoverNextItemIdx = next === null ? -1 :
                   /** @type {number} */ (angular.element(next).data('idx'));
           hoverList = e.hoverList;
         });
 
-        goog.events.listen(dragListGroup, 'dragend', function(e) {
+        goog.events.listen(dragListGroup, 'dragend', (e) => {
           const li = e.currDragItem;
           const idx = /** @type {number} */
                   (angular.element(li).data('idx'));
@@ -171,14 +169,14 @@ ngeo.sortableDirective = function($timeout) {
               if (hoverNextItemIdx > idx) {
                 hoverNextItemIdx--;
               }
-              scope.$apply(function() {
+              scope.$apply(() => {
                 sortable.splice(hoverNextItemIdx, 0,
                         sortable.splice(idx, 1)[0]);
               });
             }
           } else {
                 // there's no next item, so push
-            scope.$apply(function() {
+            scope.$apply(() => {
               sortable.push(sortable.splice(idx, 1)[0]);
             });
           }

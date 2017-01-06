@@ -2,7 +2,7 @@ goog.require('gmf.contextualdataDirective');
 goog.require('gmf.mapDirective');
 goog.require('gmf.Altitude');
 
-describe('gmf.contextualdataDirective', function() {
+describe('gmf.contextualdataDirective', () => {
 
   let $compile;
   let $document;
@@ -11,7 +11,7 @@ describe('gmf.contextualdataDirective', function() {
   let $httpBackend;
   let callbackSpy;
 
-  beforeEach(inject(function($injector, _$httpBackend_, _$rootScope_, _$compile_, _$document_) {
+  beforeEach(inject(($injector, _$httpBackend_, _$rootScope_, _$compile_, _$document_) => {
     const $rootScope = _$rootScope_;
     $compile = _$compile_;
     $document = _$document_;
@@ -70,19 +70,19 @@ describe('gmf.contextualdataDirective', function() {
     });
   }));
 
-  afterEach(function() {
+  afterEach(() => {
     map.setTarget(null);
   });
 
-  describe('#init', function() {
-    it('creates a popover container', function() {
+  describe('#init', () => {
+    it('creates a popover container', () => {
       const popover = $document.find('div.popover');
       expect(popover.length).toBe(1);
     });
   });
 
-  describe('#popover', function() {
-    it('popover content is correct', function() {
+  describe('#popover', () => {
+    it('popover content is correct', () => {
       const event = {
         clientX: 100,
         clientY: 200,

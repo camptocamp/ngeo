@@ -21,7 +21,7 @@ ngeo.module.value('gmfProfileTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['gmfProfileTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/profile.html`;
@@ -337,25 +337,21 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
 
   // Watch the active value to activate/deactive events listening.
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
-    function(newValue, oldValue) {
+    () => this.active,
+    (newValue, oldValue) => {
       if (oldValue !== newValue) {
         this.updateEventsListening_();
       }
-    }.bind(this));
+    });
 
   // Watch the line to update the profileData (data for the chart).
   $scope.$watch(
-    function() {
-      return this.line;
-    }.bind(this),
-    function(newLine, oldLine) {
+    () => this.line,
+    (newLine, oldLine) => {
       if (oldLine !== newLine) {
         this.update_();
       }
-    }.bind(this));
+    });
 
   this.updateEventsListening_();
 };
@@ -430,7 +426,7 @@ gmf.ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
     pointOnLine[0] + 0.5,
     pointOnLine[1] + 0.5
   ];
-  this.line.forEachSegment(function(firstPoint, lastPoint) {
+  this.line.forEachSegment((firstPoint, lastPoint) => {
     segment = new ol.geom.LineString([firstPoint, lastPoint]);
     // Is the pointOnLine on this swegement ?
     if (segment.intersectsExtent(fakeExtent)) {

@@ -48,7 +48,7 @@ ngeo.measureazimutDirective = function($compile, gettext, $filter) {
           /**
            * @param {ngeo.MeasureEvent} event Event.
            */
-          function(event) {
+          (event) => {
             // In the case of azimut measure interaction, the feature's
             // geometry is actually a collection (line + circle)
             // For our purpose here, we only need the circle, which gets

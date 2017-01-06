@@ -15,7 +15,7 @@ ngeo.module.value('ngeoScaleselectorTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['ngeoScaleselectorTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${ngeo.baseTemplateUrl}/scaleselector.html`;
@@ -114,12 +114,10 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
    */
   this.zoomLevels;
 
-  $scope.$watch(function() {
-    return Object.keys(this.scales).length;
-  }.bind(this), function(newLength) {
+  $scope.$watch(() => Object.keys(this.scales).length, (newLength) => {
     this.zoomLevels = Object.keys(this.scales).map(Number);
     this.zoomLevels.sort(ol.array.numberSafeCompareFunction);
-  }.bind(this));
+  });
 
   const mapExpr = $attrs['ngeoScaleselectorMap'];
 
@@ -232,9 +230,9 @@ ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
   //
   // For that reason we use $applyAsync instead of $apply here.
 
-  this.$scope_.$applyAsync(function() {
+  this.$scope_.$applyAsync(() => {
     this.currentScale = currentScale;
-  }.bind(this));
+  });
 };
 
 

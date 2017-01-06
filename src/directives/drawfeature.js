@@ -207,16 +207,14 @@ ngeo.DrawfeatureController = function($scope, $compile, $sce, gettext,
   // Watch the "active" property, and disable the draw interactions
   // when "active" gets set to false.
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
-    function(newVal) {
+    () => this.active,
+    (newVal) => {
       if (newVal === false) {
-        this.interactions_.forEach(function(interaction) {
+        this.interactions_.forEach((interaction) => {
           interaction.setActive(false);
         }, this);
       }
-    }.bind(this)
+    }
   );
 
 };
@@ -245,9 +243,7 @@ ngeo.DrawfeatureController.prototype.registerInteraction = function(
  * @export
  */
 ngeo.DrawfeatureController.prototype.handleActiveChange = function(event) {
-  this.active = this.interactions_.some(function(interaction) {
-    return interaction.getActive();
-  }, this);
+  this.active = this.interactions_.some(interaction => interaction.getActive(), this);
 };
 
 

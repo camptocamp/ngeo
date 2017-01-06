@@ -90,12 +90,10 @@ ngeo.CreateregularpolygonfromclickController = function($scope) {
   this.active = this.active === true;
 
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
-    function(newVal) {
+    () => this.active,
+    (newVal) => {
       this.interaction_.setActive(newVal);
-    }.bind(this)
+    }
   );
 
   /**

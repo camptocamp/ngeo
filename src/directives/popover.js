@@ -29,7 +29,7 @@ ngeo.popoverDirective = function() {
     scope: true,
     controller: 'NgeoPopoverController as popoverCtrl',
     link(scope, elem, attrs, ngeoPopoverCtrl) {
-      ngeoPopoverCtrl.anchorElm.on('hidden.bs.popover', function() {
+      ngeoPopoverCtrl.anchorElm.on('hidden.bs.popover', () => {
         /**
          * @type {{inState : Object}}
          */
@@ -37,7 +37,7 @@ ngeo.popoverDirective = function() {
         popover['inState'].click = false;
       });
 
-      ngeoPopoverCtrl.anchorElm.on('inserted.bs.popover', function() {
+      ngeoPopoverCtrl.anchorElm.on('inserted.bs.popover', () => {
         ngeoPopoverCtrl.bodyElm.show();
         ngeoPopoverCtrl.shown = true;
       });
@@ -50,12 +50,12 @@ ngeo.popoverDirective = function() {
       });
 
       if (attrs['ngeoPopoverDismiss']) {
-        $(attrs['ngeoPopoverDismiss']).on('scroll', function() {
+        $(attrs['ngeoPopoverDismiss']).on('scroll', () => {
           ngeoPopoverCtrl.dismissPopover();
         });
       }
 
-      scope.$on('$destroy', function() {
+      scope.$on('$destroy', () => {
         ngeoPopoverCtrl.anchorElm.popover('destroy');
         ngeoPopoverCtrl.anchorElm.unbind('inserted.bs.popover');
         ngeoPopoverCtrl.anchorElm.unbind('hidden.bs.popover');
@@ -137,7 +137,7 @@ ngeo.PopoverController = function($scope) {
 
   angular.element('body').on('mousedown', onMouseDown.bind(this));
 
-  $scope.$on('$destroy', function() {
+  $scope.$on('$destroy', () => {
     angular.element('body').off('mousedown', onMouseDown);
   });
 };

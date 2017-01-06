@@ -11,12 +11,12 @@ goog.require('ngeo.proj.EPSG2056');
 goog.require('gmf.test.data.themes');
 
 
-describe('Permalink service', function() {
+describe('Permalink service', () => {
   let PermalinkService;
   let StateManagerService;
   let ngeoLocation;
 
-  beforeEach(inject(function($injector) {
+  beforeEach(inject(($injector) => {
     StateManagerService = $injector.get('ngeoStateManager');
     PermalinkService = $injector.get('gmfPermalink');
     ngeoLocation = $injector.get('ngeoLocation');
@@ -46,19 +46,19 @@ describe('Permalink service', function() {
     dataGroup.getLayers().insertAt(0, firstLevelGroup);
   }));
 
-  describe('#getWfsPermalinkData_', function() {
-    it('returns null if no query params', function() {
+  describe('#getWfsPermalinkData_', () => {
+    it('returns null if no query params', () => {
       ngeoLocation.updateParams({});
       expect(PermalinkService.getWfsPermalinkData_()).toBe(null);
     });
 
-    it('return null when no filters', function() {
+    it('return null when no filters', () => {
       // ?wfs_layer=fuel&wfs_osm_id=
       ngeoLocation.updateParams({wfs_layer: 'fuel', wfs_osm_id: ''});
       expect(PermalinkService.getWfsPermalinkData_()).toBe(null);
     });
 
-    it('works with a single filter', function() {
+    it('works with a single filter', () => {
       // ?wfs_layer=fuel&wfs_osm_id=1420918679
       ngeoLocation.updateParams({wfs_layer: 'fuel', wfs_osm_id: '1420918679'});
       const expectedQueryParams = {
@@ -78,7 +78,7 @@ describe('Permalink service', function() {
       expect(PermalinkService.getWfsPermalinkData_()).toEqual(expectedQueryParams);
     });
 
-    it('works with a single filter with multiple conditions', function() {
+    it('works with a single filter with multiple conditions', () => {
       // ?wfs_layer=fuel&wfs_osm_id=1420918679,441134960&wfs_showFeatures=0
       ngeoLocation.updateParams({
         wfs_layer: 'fuel', wfs_osm_id: '1420918679,441134960', wfs_showFeatures: '0'});
@@ -99,7 +99,7 @@ describe('Permalink service', function() {
       expect(PermalinkService.getWfsPermalinkData_()).toEqual(expectedQueryParams);
     });
 
-    it('works with multiple filters', function() {
+    it('works with multiple filters', () => {
       // ?wfs_layer=osm_scale&wfs_highway=bus_stop&wfs_name=Grand-Pont&wfs_operator=TL
       ngeoLocation.updateParams({
         wfs_layer: 'osm_scale', wfs_highway: 'bus_stop', wfs_name: 'Grand-Pont',
@@ -129,7 +129,7 @@ describe('Permalink service', function() {
       expect(PermalinkService.getWfsPermalinkData_()).toEqual(expectedQueryParams);
     });
 
-    it('works with multipe filter groups', function() {
+    it('works with multipe filter groups', () => {
       // ?wfs_layer=osm_scale&wfs_ngroups=2&wfs_0_ele=380&wfs_0_highway=bus_stop&
       // wfs_0_operator=TL&wfs_1_highway=bus_stop&wfs_1_name=Grand-Pont&wfs_1_operator=TL
       ngeoLocation.updateParams({
@@ -179,14 +179,14 @@ describe('Permalink service', function() {
     });
   });
 
-  describe('#getMapCenter', function() {
-    it('returns the unprojected center', function() {
+  describe('#getMapCenter', () => {
+    it('returns the unprojected center', () => {
       StateManagerService.initialState['map_x'] = 2537046;
       StateManagerService.initialState['map_y'] = 1180040;
       expect(PermalinkService.getMapCenter()).toEqual([2537046, 1180040]);
     });
 
-    it('accepts flipped coordinates (x/y switched)', function() {
+    it('accepts flipped coordinates (x/y switched)', () => {
       PermalinkService.sourceProjections_ = [ol.proj.get('EPSG:2056'), ol.proj.get('EPSG:4326')];
       StateManagerService.initialState['map_x'] = 46.7685575;
       StateManagerService.initialState['map_y'] = 6.6144562;
@@ -195,7 +195,7 @@ describe('Permalink service', function() {
       expect(center[1]).toBeCloseTo(1180040, 0);
     });
 
-    it('reprojects the center', function() {
+    it('reprojects the center', () => {
       PermalinkService.sourceProjections_ = [ol.proj.get('EPSG:2056'), ol.proj.get('EPSG:4326')];
       StateManagerService.initialState['map_x'] = 6.6144562;
       StateManagerService.initialState['map_y'] = 46.7685575;

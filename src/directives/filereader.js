@@ -43,7 +43,7 @@ ngeo.filereaderDirective = function($window) {
       if (!supported) {
         return;
       }
-      element.bind('change', function(changeEvent) {
+      element.bind('change', (changeEvent) => {
             /** @type {!FileReader} */
         const fileReader = new $window.FileReader();
         fileReader.onload = (
@@ -51,7 +51,7 @@ ngeo.filereaderDirective = function($window) {
                  * @param {!ProgressEvent} evt Event.
                  */
                 function(evt) {
-                  scope.$apply(function() {
+                  scope.$apply(() => {
                     scope['fileContent'] = evt.target.result;
                   });
                 });

@@ -110,9 +110,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
       layerFilter);
 
   // watch any change on layers array to refresh the map
-  $scope.$watchCollection(function() {
-    return selectedLayers;
-  }, function() {
+  $scope.$watchCollection(() => selectedLayers, () => {
     map.render();
   });
 

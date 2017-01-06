@@ -3,16 +3,16 @@ goog.require('gmf.Themes');
 goog.require('gmf.QueryManager');
 goog.require('gmf.test.data.themes');
 
-describe('gmf.QueryManager', function() {
+describe('gmf.QueryManager', () => {
   let queryManager;
   let gmfThemes;
   let $httpBackend;
 
-  beforeEach(function() {
-    module('ngeo', function($provide) {
+  beforeEach(() => {
+    module('ngeo', ($provide) => {
       $provide.value('ngeoQueryOptions', {});
     });
-    inject(function($injector) {
+    inject(($injector) => {
       queryManager = $injector.get('gmfQueryManager');
       queryManager.sources_.length = 0;
       gmfThemes = $injector.get('gmfThemes');
@@ -22,20 +22,18 @@ describe('gmf.QueryManager', function() {
     });
   });
 
-  afterEach(function() {
+  afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
   });
 
   const getSourceById = function(sources, id) {
-    const results = $.grep(sources, function(source) {
-      return source.id === id;
-    });
+    const results = $.grep(sources, source => source.id === id);
     return (results.length > 0) ? results[0] : null;
   };
 
-  describe('#handleThemesLoad_', function() {
-    it('Creates sources when the themes are loaded', function() {
+  describe('#handleThemesLoad_', () => {
+    it('Creates sources when the themes are loaded', () => {
       gmfThemes.loadThemes();
       $httpBackend.flush();
       expect(queryManager.sources_.length).toBeGreaterThan(0);
@@ -52,8 +50,8 @@ describe('gmf.QueryManager', function() {
     });
   });
 
-  describe('#createSources_', function() {
-    it('Creates sources on queryable layers with WFS support', function() {
+  describe('#createSources_', () => {
+    it('Creates sources on queryable layers with WFS support', () => {
       const osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
       const firstLevelGroup = osmTheme.children[3]; // OSM Function
       queryManager.createSources_(firstLevelGroup, firstLevelGroup, themes.ogcServers);
@@ -72,7 +70,7 @@ describe('gmf.QueryManager', function() {
       expect(osmSource).toBeNull();
     });
 
-    it('Creates sources on queryable layer without WFS support', function() {
+    it('Creates sources on queryable layer without WFS support', () => {
       const osmTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
       const firstLevelGroup = osmTheme.children[0]; // 'Cadastre'
       queryManager.createSources_(firstLevelGroup, firstLevelGroup, themes.ogcServers);
@@ -81,9 +79,9 @@ describe('gmf.QueryManager', function() {
       expect(osmSource.wfsQuery).toBe(false);
     });
 
-    it('Creates a source for queryable WMTS overlay layers', function() {
+    it('Creates a source for queryable WMTS overlay layers', () => {
       const cadasterTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
-      cadasterTheme.children.forEach(function(group) {
+      cadasterTheme.children.forEach((group) => {
         queryManager.createSources_(group, group, themes.ogcServers);
       });
 

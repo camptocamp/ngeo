@@ -124,7 +124,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
       // a  GetCapabilities file, not ol layer object.
       scope['layers'] = [];
       scope['options'] = scope['options'] || {};
-      scope.$watch('getCap', function(val) {
+      scope.$watch('getCap', (val) => {
         let err;
         try {
           val = new ol.format.WMSCapabilities().read(val);
@@ -198,7 +198,7 @@ exports.module.value('ngeoWmsGetCapTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {boolean} Template URL.
      */
-    function(element, attrs) {
+    (element, attrs) => {
       const templateUrl = attrs['ngeoWmsGetCapTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           `${ngeo.baseModuleTemplateUrl}/import/partials/wms-get-cap.html`;

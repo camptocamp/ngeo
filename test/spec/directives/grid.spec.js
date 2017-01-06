@@ -1,13 +1,13 @@
 goog.require('ngeo.GridConfig');
 goog.require('ngeo.gridDirective');
 
-describe('ngeo.gridDirective', function() {
+describe('ngeo.gridDirective', () => {
 
   let gridController;
   let $scope;
   let $rootScope;
 
-  beforeEach(inject(function($injector, _$controller_, _$rootScope_) {
+  beforeEach(inject(($injector, _$controller_, _$rootScope_) => {
     const $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
@@ -64,9 +64,9 @@ describe('ngeo.gridDirective', function() {
         'ngeoGridController', {$scope}, data);
   }));
 
-  describe('#sort', function() {
+  describe('#sort', () => {
 
-    it('sorts a column', function() {
+    it('sorts a column', () => {
       const data = gridController.configuration.data;
 
       // sort asc. by 'type'
@@ -80,9 +80,9 @@ describe('ngeo.gridDirective', function() {
 
   });
 
-  describe('#selectRow_', function() {
+  describe('#selectRow_', () => {
 
-    it('selects a row', function() {
+    it('selects a row', () => {
       const data = gridController.configuration.data;
 
       const firstRow = data[0];
@@ -95,7 +95,7 @@ describe('ngeo.gridDirective', function() {
       expect(gridController.configuration.isRowSelected(firstRow)).toBe(false);
     });
 
-    it('selects a different row', function() {
+    it('selects a different row', () => {
       const data = gridController.configuration.data;
 
       const firstRow = data[0];
@@ -109,7 +109,7 @@ describe('ngeo.gridDirective', function() {
       expect(gridController.configuration.isRowSelected(sndRow)).toBe(true);
     });
 
-    it('selects multiple rows', function() {
+    it('selects multiple rows', () => {
       const data = gridController.configuration.data;
 
       const firstRow = data[0];
@@ -139,7 +139,7 @@ describe('ngeo.gridDirective', function() {
       expect(gridController.configuration.isRowSelected(sndRow)).toBe(false);
     });
 
-    it('selects a range of rows (continuous down)', function() {
+    it('selects a range of rows (continuous down)', () => {
       const data = gridController.configuration.data;
 
       const firstRow = data[0];
@@ -157,7 +157,7 @@ describe('ngeo.gridDirective', function() {
       expect(gridController.configuration.isRowSelected(thirdRow)).toBe(true);
     });
 
-    it('selects a range of rows (continuous up)', function() {
+    it('selects a range of rows (continuous up)', () => {
       const data = gridController.configuration.data;
 
       const firstRow = data[0];
@@ -175,7 +175,7 @@ describe('ngeo.gridDirective', function() {
       expect(gridController.configuration.isRowSelected(thirdRow)).toBe(true);
     });
 
-    it('selects a range of rows (no previous selection)', function() {
+    it('selects a range of rows (no previous selection)', () => {
       const data = gridController.configuration.data;
 
       // SHIFT click on row 1 without previous selection
@@ -188,7 +188,7 @@ describe('ngeo.gridDirective', function() {
       expect(gridController.configuration.isRowSelected(data[4])).toBe(false);
     });
 
-    it('selects a range of rows (on already selected row)', function() {
+    it('selects a range of rows (on already selected row)', () => {
       const data = gridController.configuration.data;
 
       // select row 1
@@ -204,7 +204,7 @@ describe('ngeo.gridDirective', function() {
       expect(gridController.configuration.isRowSelected(data[4])).toBe(false);
     });
 
-    it('selects a range of rows (already selected rows, up)', function() {
+    it('selects a range of rows (already selected rows, up)', () => {
       /**
        * Row 1 and 3 are selected:
        * [x] 1
@@ -242,7 +242,7 @@ describe('ngeo.gridDirective', function() {
       expect(gridController.configuration.isRowSelected(row5)).toBe(true);
     });
 
-    it('selects a range of rows (already selected rows, down)', function() {
+    it('selects a range of rows (already selected rows, down)', () => {
       /**
        * Row 3 and 5 are selected:
        * [ ] 1
@@ -281,27 +281,27 @@ describe('ngeo.gridDirective', function() {
     });
   });
 
-  describe('#selectAll', function() {
+  describe('#selectAll', () => {
 
-    it('selects and unselects all rows', function() {
+    it('selects and unselects all rows', () => {
       const data = gridController.configuration.data;
 
       gridController.configuration.selectAll();
-      data.forEach(function(row) {
+      data.forEach((row) => {
         expect(gridController.configuration.isRowSelected(row)).toBe(true);
       });
 
       gridController.configuration.unselectAll();
-      data.forEach(function(row) {
+      data.forEach((row) => {
         expect(gridController.configuration.isRowSelected(row)).toBe(false);
       });
     });
 
   });
 
-  describe('#invertSelection', function() {
+  describe('#invertSelection', () => {
 
-    it('inverts a selection', function() {
+    it('inverts a selection', () => {
       const data = gridController.configuration.data;
 
       gridController.configuration.selectRow(data[0]);

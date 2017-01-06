@@ -83,8 +83,8 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
   this.cache_ = {};
   this.ngeoQuery_.removeAllSources();
 
-  this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
-    const promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
+  this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
+    const promiseThemes = this.gmfThemes_.getThemesObject().then((themes) => {
       // create sources for each themes
       for (let i = 0, leni = themes.length; i < leni; i++) {
         const theme = themes[i];
@@ -92,20 +92,20 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
           this.createSources_(theme.children[j], theme.children[j], ogcServers);
         }
       }
-    }.bind(this));
+    });
 
-    const promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(function(backgroundLayers) {
+    const promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then((backgroundLayers) => {
       // create a source for each background layer
       for (let i = 0, len = backgroundLayers.length; i < len; i++) {
         this.createSources_(backgroundLayers[i], backgroundLayers[i], ogcServers);
       }
-    }.bind(this));
+    });
 
     // then add all sources to the query service
-    this.$q_.all([promiseThemes, promiseBgLayers]).then(function() {
+    this.$q_.all([promiseThemes, promiseBgLayers]).then(() => {
       this.ngeoQuery_.addSources(this.sources_);
-    }.bind(this));
-  }.bind(this));
+    });
+  });
 };
 
 
@@ -184,7 +184,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
         }
 
         const childLayerNames = [];
-        gmfLayerWMS.childLayers.forEach(function(childLayer) {
+        gmfLayerWMS.childLayers.forEach((childLayer) => {
           if (childLayer.queryable) {
             childLayerNames.push(childLayer.name);
           }

@@ -13,13 +13,13 @@ goog.require('ngeo.test.data.msGMLOutputBusStopWfs');
 goog.require('ngeo.test.data.msGMLOutputInformationWfs');
 goog.require('ngeo.test.data.msGMLOutputInformationHitsWfs');
 
-describe('ngeo.Query', function() {
+describe('ngeo.Query', () => {
 
   let ngeoQuery;
   let ngeoQueryResult;
 
-  beforeEach(function() {
-    module('ngeo', function($provide) {
+  beforeEach(() => {
+    module('ngeo', ($provide) => {
       // reset services and values
       $provide.value('ngeoQueryOptions', {});
       $provide.service('ngeoQuery', ngeo.Query);
@@ -29,17 +29,17 @@ describe('ngeo.Query', function() {
       });
     });
 
-    inject(function($injector) {
+    inject(($injector) => {
       ngeoQuery = $injector.get('ngeoQuery');
       ngeoQueryResult = $injector.get('ngeoQueryResult');
     });
   });
 
-  it('Create service', function() {
+  it('Create service', () => {
     expect(ngeoQuery instanceof ngeo.Query).toBe(true);
   });
 
-  it('Add simple source to query', function() {
+  it('Add simple source to query', () => {
     const source = {
       id: 1,
       url: 'foo',
@@ -55,7 +55,7 @@ describe('ngeo.Query', function() {
     expect(source.format instanceof ol.format.WMSGetFeatureInfo).toBe(true);
   });
 
-  it('Add source with wms layer to query', function() {
+  it('Add source with wms layer to query', () => {
     const id = 1;
     const wmsSource = new ol.source.ImageWMS({
       url: 'foo',
@@ -75,7 +75,7 @@ describe('ngeo.Query', function() {
     expect(source.wmsSource).toBe(wmsSource);
   });
 
-  describe('Issue requests', function() {
+  describe('Issue requests', () => {
 
     let map;
     let busStopLayer;
@@ -88,9 +88,9 @@ describe('ngeo.Query', function() {
     const requestUrlBusStop = `${url}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=489100%2C119900.00000000003%2C509300%2C140100.00000000003&LAYERS=bus_stop&QUERY_LAYERS=bus_stop`;
     const requestUrlBusStopAndInformation = `${url}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=523700%2C142900.00000000003%2C543900%2C163100.00000000003&LAYERS=information%2Cbus_stop&QUERY_LAYERS=information%2Cbus_stop`;
 
-    beforeEach(function() {
+    beforeEach(() => {
 
-      inject(function($injector) {
+      inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('GET', requestUrlBusStop).respond(gmlResponseBusStop);
         $httpBackend.when('GET', requestUrlBusStopAndInformation).respond(
@@ -134,12 +134,12 @@ describe('ngeo.Query', function() {
 
     });
 
-    afterEach(function() {
+    afterEach(() => {
       $httpBackend.verifyNoOutstandingExpectation();
       $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('Issue request with one source', function() {
+    it('Issue request with one source', () => {
       const coordinate = [499200, 130000.00000000003];
       ngeoQuery.addSource({
         id: busStopSourceId,
@@ -155,7 +155,7 @@ describe('ngeo.Query', function() {
       expect(ngeoQuery.requestCancelers_.length).toBe(1);
     });
 
-    it('Issue request with two sources', function() {
+    it('Issue request with two sources', () => {
       const coordinate = [533800, 153000.00000000003];
       ngeoQuery.addSource({
         id: busStopSourceId,
@@ -172,7 +172,7 @@ describe('ngeo.Query', function() {
       expect(ngeoQueryResult.total).toBe(7);
     });
 
-    it('When layers are not visible, no request is sent', function() {
+    it('When layers are not visible, no request is sent', () => {
       const coordinate = [533800, 153000.00000000003];
       ngeoQuery.addSource({
         id: busStopSourceId,
@@ -192,7 +192,7 @@ describe('ngeo.Query', function() {
       expect(ngeoQueryResult.total).toBe(0);
     });
 
-    it('Issues WFS request for one source', function() {
+    it('Issues WFS request for one source', () => {
       $httpBackend.when('POST', url).respond(gmlResponseInformationWfs);
 
       const coordinate = [499200, 130000.00000000003];
@@ -214,7 +214,7 @@ describe('ngeo.Query', function() {
       expect(ngeoQueryResult.total).toBe(4);
     });
 
-    it('Issues WFS request for two sources', function() {
+    it('Issues WFS request for two sources', () => {
       $httpBackend.when('POST', url).respond(gmlResponseBusStopWfs);
       $httpBackend.when('POST', `${url}?information`).respond(gmlResponseInformationWfs);
 
@@ -238,17 +238,13 @@ describe('ngeo.Query', function() {
       expect(ngeoQueryResult.sources[0].features[0].getId()).toBe('bus_stop_bus_stop.380835772');
     });
 
-    it('Issues WFS request for one source (get count first)', function() {
+    it('Issues WFS request for one source (get count first)', () => {
       ngeoQuery.queryCountFirst_ = true;
 
       // request to get feature count
-      $httpBackend.when('POST', url, function(body) {
-        return body.indexOf('hits') != -1;
-      }).respond(gmlResponseInformationHitsWfs);
+      $httpBackend.when('POST', url, body => body.indexOf('hits') != -1).respond(gmlResponseInformationHitsWfs);
       // request to get features
-      $httpBackend.when('POST', url, function(body) {
-        return body.indexOf('hits') == -1;
-      }).respond(gmlResponseInformationWfs);
+      $httpBackend.when('POST', url, body => body.indexOf('hits') == -1).respond(gmlResponseInformationWfs);
 
       const coordinate = [499200, 130000.00000000003];
       // make a WFS GetFeature request for this source
@@ -267,14 +263,12 @@ describe('ngeo.Query', function() {
       expect(ngeoQueryResult.total).toBe(3);
     });
 
-    it('Stops if too many features', function() {
+    it('Stops if too many features', () => {
       ngeoQuery.queryCountFirst_ = true;
       ngeoQuery.limit_ = 2;
 
       // request to get feature count
-      $httpBackend.when('POST', url, function(body) {
-        return body.indexOf('hits') != -1;
-      }).respond(gmlResponseInformationHitsWfs);
+      $httpBackend.when('POST', url, body => body.indexOf('hits') != -1).respond(gmlResponseInformationHitsWfs);
 
       const coordinate = [499200, 130000.00000000003];
       // make a WFS GetFeature request for this source
@@ -294,8 +288,8 @@ describe('ngeo.Query', function() {
       expect(ngeoQueryResult.total).toBe(0);
     });
 
-    describe('#getQueryableSources_', function() {
-      it('gets sources for GetFeatureInfo requests', function() {
+    describe('#getQueryableSources_', () => {
+      it('gets sources for GetFeatureInfo requests', () => {
         ngeoQuery.addSource({
           id: busStopSourceId,
           layer: busStopLayer
@@ -311,7 +305,7 @@ describe('ngeo.Query', function() {
         expect(queryableSources.wms[url].length).toBe(2);
       });
 
-      it('gets sources for GetFeature requests', function() {
+      it('gets sources for GetFeature requests', () => {
         ngeoQuery.addSource({
           id: busStopSourceId,
           layer: busStopLayer,
@@ -329,7 +323,7 @@ describe('ngeo.Query', function() {
         expect(queryableSources.wfs[url].length).toBe(1);
       });
 
-      it('only gets visible layers', function() {
+      it('only gets visible layers', () => {
         map.getView().setResolution(50);
         // layer is not visible
         busStopLayer.setVisible(false);
