@@ -34,7 +34,7 @@
     "closure-util": "git://github.com/camptocamp/closure-util#45bd77c64d9212abb5d5af31ce5150814035f470",
     "console-control-strings": "1.1.0",
     "coveralls": "2.11.15",
-    "d3": "3.5.17",
+    "d3": "4.4.1",
     "eslint": "3.12.1",
     "eslint-config-openlayers": "6.0.0",
     "floatthead": "1.4.5",
