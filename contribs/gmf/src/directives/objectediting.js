@@ -13,10 +13,9 @@ goog.require('ngeo.jstsExports');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.utils');
 goog.require('ol.Collection');
 goog.require('ol.format.GeoJSON');
-goog.require('ol.geom.MultiLineString');
-goog.require('ol.geom.MultiPoint');
 goog.require('ol.geom.MultiPolygon');
 goog.require('ol.interaction.Modify');
 goog.require('ol.style.Circle');
@@ -712,9 +711,7 @@ gmf.ObjecteditingController.prototype.handleModifyInteractionModifyEnd_ = functi
   if (geometry instanceof ol.geom.MultiPolygon) {
     var jstsGeom = this.jstsOL3Parser_.read(geometry);
     var jstsBuffered = jstsGeom.buffer(0);
-    geometry = gmf.ObjecteditingController.toMultiGeometry_(
-      this.jstsOL3Parser_.write(jstsBuffered)
-    );
+    geometry = ngeo.utils.toMulti(this.jstsOL3Parser_.write(jstsBuffered));
     this.skipGeometryChange_ = true;
     this.feature.setGeometry(geometry.clone());
     this.skipGeometryChange_ = false;
@@ -951,8 +948,7 @@ gmf.ObjecteditingController.prototype.handleSketchFeaturesAdd_ = function(evt) {
 
     if (jstsProcessedGeom) {
       var processedGeom = this.jstsOL3Parser_.write(jstsProcessedGeom);
-      var multiGeom = gmf.ObjecteditingController.toMultiGeometry_(
-        processedGeom);
+      var multiGeom = ngeo.utils.toMulti(processedGeom);
       this.feature.setGeometry(multiGeom.clone());
     }
 
@@ -1040,31 +1036,6 @@ gmf.ObjecteditingController.cloneGeometry_ = function(geometry) {
     clone = geometry.clone();
   }
   return clone;
-};
-
-
-/**
- * Utility method that converts a simple geometry to its multi equivalent. If
- * the geometry itself is already multi, it is returned as-is.
- * @param {ol.geom.Geometry} geometry A geometry
- * @return {ol.geom.Geometry} A multi geometry
- * @private
- */
-gmf.ObjecteditingController.toMultiGeometry_ = function(geometry) {
-  var multiGeom;
-  if (geometry instanceof ol.geom.Point) {
-    multiGeom = new ol.geom.MultiPoint([]);
-    multiGeom.appendPoint(geometry);
-  } else if (geometry instanceof ol.geom.LineString) {
-    multiGeom = new ol.geom.MultiLineString([]);
-    multiGeom.appendLineString(geometry);
-  } else if (geometry instanceof ol.geom.Polygon) {
-    multiGeom = new ol.geom.MultiPolygon([]);
-    multiGeom.appendPolygon(geometry);
-  } else {
-    multiGeom = geometry;
-  }
-  return multiGeom;
 };
 
 

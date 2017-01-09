@@ -18,11 +18,23 @@
           <span class="gmf-icon gmf-icon-point"></span>
           {{'Draw new point' | translate}}
         </span>
+        <span ng-switch-when="MultiPoint">
+          <span class="gmf-icon gmf-icon-point"></span>
+          {{'Draw new point' | translate}}
+        </span>
         <span ng-switch-when="LineString">
           <span class="gmf-icon gmf-icon-line"></span>
           {{'Draw new linestring' | translate}}
         </span>
+        <span ng-switch-when="MultiLineString">
+          <span class="gmf-icon gmf-icon-line"></span>
+          {{'Draw new linestring' | translate}}
+        </span>
         <span ng-switch-when="Polygon">
+          <span class="gmf-icon gmf-icon-polygon"></span>
+          {{'Draw new polygon' | translate}}
+        </span>
+        <span ng-switch-when="MultiPolygon">
           <span class="gmf-icon gmf-icon-polygon"></span>
           {{'Draw new polygon' | translate}}
         </span>

@@ -11,18 +11,34 @@
 var gmfThemes;
 
 /**
- * @typedef {{
- *     background_layers: Array.<gmfThemes.GmfLayer>,
- *     errors: Array.<string>,
- *     ogcServers: gmfThemes.GmfOgcServers,
- *     themes: Array.<gmfThemes.GmfTheme>
- * }}
+ * @record
+ * @struct
  */
-gmfThemes.GmfThemesResponse;
+gmfThemes.GmfThemesResponse = function() {};
+
+/**
+ * @type Array.<gmfThemes.GmfLayer>
+ */
+gmfThemes.GmfThemesResponse.prototype.background_layers;
+
+/**
+ * @type Array.<string>
+ */
+gmfThemes.GmfThemesResponse.prototype.errors;
+
+/**
+ * @type gmfThemes.GmfOgcServers
+ */
+gmfThemes.GmfThemesResponse.prototype.ogcServers;
+
+/**
+ * @type Array.<gmfThemes.GmfTheme>
+ */
+gmfThemes.GmfThemesResponse.prototype.themes;
 
 
 /**
- * @constructor
+ * @record
  * @struct
  */
 gmfThemes.GmfRootNode = function() {};
@@ -34,8 +50,8 @@ gmfThemes.GmfRootNode = function() {};
 gmfThemes.GmfRootNode.prototype.children;
 
 /**
- * Contains the common element of all the elements of the GeoMapFisf layer tree.
- * @constructor
+ * Contains the common element of all the elements of the GeoMapFish layer tree.
+ * @record
  * @struct
  */
 gmfThemes.GmfBaseNode = function() {};
@@ -62,7 +78,7 @@ gmfThemes.GmfBaseNode.prototype.name;
 
 /**
  * The element we can select in the theme selector.
- * @constructor
+ * @record
  * @struct
  * @extends gmfThemes.GmfBaseNode
  */
@@ -89,7 +105,7 @@ gmfThemes.GmfTheme.prototype.functionalities;
  * neither a WMS group.
  * This represent « first level group » (Block in the layer tree),
  * or all sub nodes that's not al leaf.
- * @constructor
+ * @record
  * @struct
  * @extends gmfThemes.GmfBaseNode
  */
@@ -141,7 +157,7 @@ gmfThemes.GmfGroup.prototype.time;
  * not an OpenLayers layer
  * neither a WMS layer.
  * This is also the leaf of the tree.
- * @constructor
+ * @record
  * @struct
  * @extends gmfThemes.GmfBaseNode
  */
@@ -176,7 +192,7 @@ gmfThemes.GmfLayer.prototype.type;
 
 
 /**
- * @constructor
+ * @record
  * @struct
  * @extends gmfThemes.GmfLayer
  */
@@ -224,7 +240,7 @@ gmfThemes.GmfLayerWMS.prototype.time;
 
 
 /**
- * @constructor
+ * @record
  * @struct
  * @extends gmfThemes.GmfLayer
  */
@@ -258,7 +274,7 @@ gmfThemes.GmfLayerWMTS.prototype.url;
 
 /**
  * Additional attributes related on a WMS layers (or WFS features type).
- * @constructor
+ * @record
  * @struct
  */
 gmfThemes.GmfLayerChildLayer = function() {};
@@ -297,7 +313,7 @@ gmfThemes.GmfOgcServers;
 
 
 /**
- * @constructor
+ * @record
  * @struct
  */
 gmfThemes.GmfOgcServer = function() {};
@@ -343,7 +359,7 @@ gmfThemes.GmfOgcServer.prototype.wfsSupport;
 
 
 /**
- * @constructor
+ * @record
  * @struct
  */
 gmfThemes.GmfMetaData = function() {};
@@ -486,7 +502,7 @@ gmfThemes.GmfMetaData.prototype.wmsLayers;
 
 
 /**
- * @constructor
+ * @record
  * @struct
  */
 gmfThemes.GmfSnappingConfig = function() {};

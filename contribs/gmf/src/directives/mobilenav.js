@@ -254,7 +254,7 @@ gmf.MobileNavController.prototype.backIfActive = function(element) {
 
 gmf.MobileNavController.ClassName_ = {
   ACTIVE: 'gmf-mobile-nav-active',
-  BACK: 'gmf-mobile-nav-go-back',
+  BACK: 'gmf-mobile-nav-back',
   GO_BACK: 'gmf-mobile-nav-go-back',
   SLIDE: 'gmf-mobile-nav-slide',
   SLIDE_OUT: 'gmf-mobile-nav-slide-out'

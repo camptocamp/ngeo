@@ -7,7 +7,8 @@
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  */
 var MapFishPrintSpec = function() {};
 
@@ -24,9 +25,15 @@ MapFishPrintSpec.prototype.attributes;
 MapFishPrintSpec.prototype.layout;
 
 
+/**
+ * @type {string}
+ */
+MapFishPrintSpec.prototype.format;
+
 
 /**
- * @constructor
+ * @record
+ * @struct
  */
 var MapFishPrintAttributes = function() {};
 
@@ -39,7 +46,8 @@ MapFishPrintAttributes.prototype.map;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  */
 var MapFishPrintMap = function() {};
 
@@ -88,7 +96,8 @@ MapFishPrintMap.prototype.rotation;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  */
 var MapFishPrintLayer = function() {};
 
@@ -107,7 +116,8 @@ MapFishPrintLayer.prototype.opacity;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  * @extends {MapFishPrintLayer}
  */
 var MapFishPrintVectorLayer = function() {};
@@ -127,7 +137,7 @@ MapFishPrintVectorLayer.prototype.style;
 
 
 /**
- * @constructor
+ * @record
  */
 var MapFishPrintVectorStyle = function() {};
 
@@ -139,7 +149,8 @@ MapFishPrintVectorStyle.prototype.version;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  * @extends {MapFishPrintLayer}
  */
 var MapFishPrintWmsLayer = function() {};
@@ -183,7 +194,8 @@ MapFishPrintWmsLayer.prototype.version;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  */
 var MapFishPrintWmtsMatrix = function() {};
 
@@ -219,7 +231,8 @@ MapFishPrintWmtsMatrix.prototype.matrixSize;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  * @extends {MapFishPrintLayer}
  */
 var MapFishPrintWmtsLayer = function() {};
@@ -287,7 +300,8 @@ MapFishPrintWmtsLayer.prototype.version;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  */
 var MapFishPrintReportResponse = function() {};
 
@@ -312,7 +326,8 @@ MapFishPrintReportResponse.prototype.downloadURL;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  */
 var MapFishPrintStatusResponse = function() {};
 
@@ -343,7 +358,8 @@ MapFishPrintStatusResponse.prototype.downloadURL;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  */
 var MapFishPrintSymbolizers = function() {};
 
@@ -355,7 +371,8 @@ MapFishPrintSymbolizers.prototype.symbolizers;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  */
 var MapFishPrintSymbolizer = function() {};
 
@@ -368,7 +385,8 @@ MapFishPrintSymbolizer.prototype.type;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  * @extends {MapFishPrintSymbolizer}
  */
 var MapFishPrintSymbolizerLine = function() {};
@@ -400,7 +418,8 @@ MapFishPrintSymbolizerLine.prototype.strokeDashstyle;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  * @extends {MapFishPrintSymbolizer}
  */
 var MapFishPrintSymbolizerPoint = function() {};
@@ -486,7 +505,8 @@ MapFishPrintSymbolizerPoint.prototype.graphicName;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  * @extends {MapFishPrintSymbolizer}
  */
 var MapFishPrintSymbolizerPolygon = function() {};
@@ -530,7 +550,8 @@ MapFishPrintSymbolizerPolygon.prototype.strokeDashstyle;
 
 
 /**
- * @constructor
+ * @record
+ * @struct
  * @extends {MapFishPrintSymbolizer}
  */
 var MapFishPrintSymbolizerText = function() {};
@@ -568,12 +589,12 @@ MapFishPrintSymbolizerText.prototype.fontFamily;
 /**
  * @type {number}
  */
-MapFishPrintSymbolizerText.prototype.XOffset;
+MapFishPrintSymbolizerText.prototype.labelXOffset;
 
 /**
  * @type {number}
  */
-MapFishPrintSymbolizerText.prototype.YOffset;
+MapFishPrintSymbolizerText.prototype.labelYOffset;
 
 /**
  * @type {string}
