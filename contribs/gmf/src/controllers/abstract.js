@@ -115,6 +115,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
    */
   var gmfAuthentication = $injector.get('gmfAuthentication');
 
+  /**
+   * Permalink service
+   * @type {gmf.Permalink}
+   */
+  var permalink = $injector.get('gmfPermalink');
+
   var userChange = function(evt) {
     var roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
     // Reload theme and background layer when login status changes.
@@ -148,8 +154,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @export
    */
   this.dimensions = {};
-
-  var permalink = $injector.get('gmfPermalink');
 
   // watch any change on dimensions object to refresh the url
   permalink.setDimensions(this.dimensions);
