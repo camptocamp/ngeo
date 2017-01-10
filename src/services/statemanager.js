@@ -6,15 +6,19 @@ goog.require('ngeo');
 goog.require('ngeo.Location');
 
 
+ngeo.module.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
+
+
 /**
  * Provides a service for managing the application state.
  * The application state is written to both the URL and the local storage.
  * @constructor
  * @struct
- * @param {ngeo.Location} ngeoLocation ngeo location service.
+ * @param {!ngeo.Location} ngeoLocation ngeo location service.
+ * @param {!Array.<!RegExp>} ngeoUsedKeyRegexp regexp used to identify the used keys.
  * @ngInject
  */
-ngeo.StateManager = function(ngeoLocation) {
+ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
 
   /**
    * Object representing the application's initial state.
@@ -23,7 +27,7 @@ ngeo.StateManager = function(ngeoLocation) {
   this.initialState = {};
 
   /**
-   * @type {ngeo.Location}
+   * @type {!ngeo.Location}
    */
   this.ngeoLocation = ngeoLocation;
 
@@ -31,6 +35,11 @@ ngeo.StateManager = function(ngeoLocation) {
    * @type {goog.storage.mechanism.HTML5LocalStorage}
    */
   this.localStorage = new goog.storage.mechanism.HTML5LocalStorage();
+
+  /**
+   * @type {!Array.<!RegExp>}
+   */
+  this.usedKeyRegexp = ngeoUsedKeyRegexp;
 
 
   /**
@@ -43,7 +52,7 @@ ngeo.StateManager = function(ngeoLocation) {
   // is no state in the location URL.
 
   var paramKeys = ngeoLocation.getParamKeys();
-  var i, key, theme;
+  var i, theme;
   var themeRegex = new RegExp(/\/theme\/([^\?\/]*)/);
   var urlPath = ngeoLocation.getPath();
   var locationInitState = {};
@@ -53,22 +62,36 @@ ngeo.StateManager = function(ngeoLocation) {
     if (this.localStorage.isAvailable()) {
       var count = this.localStorage.getCount();
       for (i = 0; i < count; ++i) {
-        key = this.localStorage.key(i);
+        var key = this.localStorage.key(i);
         goog.asserts.assert(key !== null);
-        this.initialState[key] = this.getItemFromLocalStorage_(key);
 
-        //Do not copy excluded parameters in the URL
-        if (this.excludedKeyListForURL.indexOf(key) < 0) {
-          locationInitState[key] = this.initialState[key];
-        }
+        this.usedKeyRegexp.some(function(keyRegexp) {
+          if (key.match(keyRegexp)) {
+            var value = this.localStorage.get(key);
+            goog.asserts.assert(value !== null);
+            this.initialState[key] = value;
+
+            //Do not copy excluded parameters in the URL
+            if (this.excludedKeyListForURL.indexOf(key) < 0) {
+              locationInitState[key] = this.initialState[key];
+            }
+            return true;
+          }
+        }, this);
       }
       this.ngeoLocation.updateParams(locationInitState);
     }
   } else {
-    for (i = 0; i < paramKeys.length; ++i) {
-      key = paramKeys[i];
-      this.initialState[key] = this.getItemFromLocation_(key);
-    }
+    paramKeys.forEach(function(key) {
+      this.usedKeyRegexp.some(function(keyRegexp) {
+        if (key.match(keyRegexp)) {
+          var value = this.ngeoLocation.getParam(key);
+          goog.asserts.assert(value !== null);
+          this.initialState[key] = value;
+          return true;
+        }
+      }, this);
+    }, this);
     //Retrieve selected theme in url path
     theme = urlPath.match(themeRegex);
     if (theme) {
