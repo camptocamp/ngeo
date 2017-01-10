@@ -28,29 +28,28 @@ goog.require('ol.Map');
  * @ngname ngeoResizemap
  */
 ngeo.resizemapDirective = function($window) {
-  var /** @type {number} */ duration = 1000;
+  const /** @type {number} */ duration = 1000;
 
   return {
     restrict: 'A',
-    link:
-        /**
-         * @param {!angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         */
-        function(scope, element, attrs) {
-          var attr = 'ngeoResizemap';
-          var prop = attrs[attr];
-          var map = scope.$eval(prop);
-          goog.asserts.assertInstanceof(map, ol.Map);
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
+      const attr = 'ngeoResizemap';
+      const prop = attrs[attr];
+      const map = scope.$eval(prop);
+      goog.asserts.assertInstanceof(map, ol.Map);
 
-          var stateExpr = attrs['ngeoResizemapState'];
-          goog.asserts.assert(stateExpr !== undefined);
+      const stateExpr = attrs['ngeoResizemapState'];
+      goog.asserts.assert(stateExpr !== undefined);
 
-          var start;
+      let start;
 
-          var animationDelay = new goog.async.AnimationDelay(
-              function() {
+      const animationDelay = new goog.async.AnimationDelay(
+              () => {
                 map.updateSize();
                 map.renderSync();
 
@@ -61,19 +60,19 @@ ngeo.resizemapDirective = function($window) {
 
           // Make sure the map is resized when the animation ends.
           // It may help in case the animation didn't start correctly.
-          element.bind('transitionend', function() {
-            map.updateSize();
-            map.renderSync();
-          });
+      element.bind('transitionend', () => {
+        map.updateSize();
+        map.renderSync();
+      });
 
-          scope.$watch(stateExpr, function(newVal, oldVal) {
-            if (newVal != oldVal) {
-              start = Date.now();
-              animationDelay.stop();
-              animationDelay.start();
-            }
-          });
+      scope.$watch(stateExpr, (newVal, oldVal) => {
+        if (newVal != oldVal) {
+          start = Date.now();
+          animationDelay.stop();
+          animationDelay.start();
         }
+      });
+    }
   };
 };
 

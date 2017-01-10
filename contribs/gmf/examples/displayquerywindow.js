@@ -91,8 +91,8 @@ gmfapp.MainController = function(gmfThemes, gmfQueryManager,
 
   gmfThemes.loadThemes();
 
-  var fill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
-  var stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
+  const fill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
+  const stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
    * FeatureStyle used by the displayquerywindow directive
@@ -100,9 +100,9 @@ gmfapp.MainController = function(gmfThemes, gmfQueryManager,
    * @export
    */
   this.featureStyle = new ol.style.Style({
-    fill: fill,
-    image: new ol.style.Circle({fill: fill, radius: 5, stroke: stroke}),
-    stroke: stroke
+    fill,
+    image: new ol.style.Circle({fill, radius: 5, stroke}),
+    stroke
   });
 
   /**
@@ -141,12 +141,12 @@ gmfapp.MainController = function(gmfThemes, gmfQueryManager,
    */
   this.queryActive = true;
 
-  gmfThemes.getThemesObject().then(function(themes) {
+  gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       this.themes = themes;
       this.treeSource = themes[3];
     }
-  }.bind(this));
+  });
 
   ngeoFeatureOverlayMgr.init(this.map);
 };

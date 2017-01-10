@@ -32,33 +32,32 @@ ngeo.filereaderDirective = function($window) {
       'fileContent': '=ngeoFilereader',
       'supported': '=?ngeoFilereaderSupported'
     },
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         */
-        function(scope, element, attrs) {
-          var supported = 'FileReader' in $window;
-          scope['supported'] = supported;
-          if (!supported) {
-            return;
-          }
-          element.bind('change', function(changeEvent) {
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
+      const supported = 'FileReader' in $window;
+      scope['supported'] = supported;
+      if (!supported) {
+        return;
+      }
+      element.bind('change', (changeEvent) => {
             /** @type {!FileReader} */
-            var fileReader = new $window.FileReader();
-            fileReader.onload = (
+        const fileReader = new $window.FileReader();
+        fileReader.onload = (
                 /**
                  * @param {!ProgressEvent} evt Event.
                  */
                 function(evt) {
-                  scope.$apply(function() {
+                  scope.$apply(() => {
                     scope['fileContent'] = evt.target.result;
                   });
                 });
-            fileReader.readAsText(changeEvent.target.files[0]);
-          });
-        }
+        fileReader.readAsText(changeEvent.target.files[0]);
+      });
+    }
   };
 };
 

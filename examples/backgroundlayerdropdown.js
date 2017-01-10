@@ -51,11 +51,11 @@ app.module.directive('appBackgroundlayer', app.backgroundlayerDirective);
  */
 app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
   $http.get('data/backgroundlayers.json').then(
-      function(resp) {
-        var bgLayers = resp.data;
+      (resp) => {
+        const bgLayers = resp.data;
         this['bgLayers'] = bgLayers;
         this.setLayer(bgLayers[0]);
-      }.bind(this));
+      });
 
   /**
    * @type {ngeo.BackgroundLayerMgr}
@@ -73,7 +73,7 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
  */
 app.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
   this['currentBgLayer'] = layerSpec;
-  var layer = this.createLayer_(layerSpec['name']);
+  const layer = this.createLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this['map'], layer);
 };
 
@@ -84,7 +84,7 @@ app.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
  * @private
  */
 app.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
-  var source;
+  let source;
   if (layerName === 'osm') {
     source = new ol.source.OSM();
   } else if (layerName === 'stamen') {
@@ -92,7 +92,7 @@ app.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
       layer: 'watercolor'
     });
   }
-  return new ol.layer.Tile({source: source});
+  return new ol.layer.Tile({source});
 };
 
 
@@ -110,7 +110,7 @@ app.MainController = function($scope) {
   /**
    * @type {ol.Map}
    */
-  var map = new ol.Map({
+  const map = new ol.Map({
     view: new ol.View({
       center: [-10635142.37, 4813698.29],
       zoom: 4
@@ -122,7 +122,7 @@ app.MainController = function($scope) {
    * An overlay layer.
    * @type {ol.layer.Image}
    */
-  var overlay = new ol.layer.Image({
+  const overlay = new ol.layer.Image({
     source: new ol.source.ImageWMS({
       url: 'http://demo.boundlessgeo.com/geoserver/wms',
       params: {'LAYERS': 'topp:states'},

@@ -1,11 +1,11 @@
-var fs = require('fs');
-var path = require('path');
+let fs = require('fs');
+let path = require('path');
 
-var async = require('async');
-var fse = require('fs-extra');
-var nomnom = require('nomnom');
+let async = require('async');
+let fse = require('fs-extra');
+let nomnom = require('nomnom');
 
-var generateInfo = require('./generate-info');
+let generateInfo = require('./generate-info');
 
 
 /**
@@ -23,19 +23,19 @@ function getConfig(configPath, callback) {
         callback(err);
         return;
       }
-      var obj;
+      let obj;
       try {
         obj = JSON.parse(String(data));
       } catch (err) {
         callback(new Error('Trouble parsing file as JSON: ' + options.config));
         return;
       }
-      var patterns = obj.exports;
+      let patterns = obj.exports;
       if (patterns && !Array.isArray(patterns)) {
         callback(new Error('Expected an exports array, got: ' + patterns));
         return;
       }
-      var namespace = obj.namespace;
+      let namespace = obj.namespace;
       if (namespace && typeof namespace !== 'string') {
         callback(new Error('Expected an namespace string, got: ' +
             namespace));
@@ -63,7 +63,7 @@ function getSymbols(patterns, callback) {
       callback(new Error('Trouble generating info: ' + err.message));
       return;
     }
-    var symbols = require('../.build/info.json').symbols;
+    let symbols = require('../.build/info.json').symbols;
     callback(null, patterns, symbols);
   });
 }
@@ -82,16 +82,16 @@ function getSymbols(patterns, callback) {
  *     list of symbols (or any error).
  */
 function filterSymbols(patterns, symbols, callback) {
-  var matches = [];
+  let matches = [];
 
-  var lookup = {};
+  let lookup = {};
   symbols.forEach(function(symbol) {
     lookup[symbol.name] = symbol;
   });
 
   patterns.forEach(function(name) {
-    var match = false;
-    var pattern = (name.substr(-1) === '*');
+    let match = false;
+    let pattern = (name.substr(-1) === '*');
     if (pattern) {
       name = name.substr(0, name.length - 1);
       symbols.forEach(function(symbol) {
@@ -101,14 +101,14 @@ function filterSymbols(patterns, symbols, callback) {
         }
       });
     } else {
-      var symbol = lookup[name];
+      let symbol = lookup[name];
       if (symbol) {
         matches.push(symbol);
         match = true;
       }
     }
     if (!match) {
-      var message = 'No matching symbol found: ' + name + (pattern ? '*' : '');
+      let message = 'No matching symbol found: ' + name + (pattern ? '*' : '');
       callback(new Error(message));
     }
   });
@@ -138,9 +138,9 @@ function formatSymbolExport(name, namespace) {
  * @return {string} Export code.
  */
 function formatPropertyExport(name) {
-  var parts = name.split('#');
-  var prototype = parts[0] + '.prototype';
-  var property = parts[1];
+  let parts = name.split('#');
+  let prototype = parts[0] + '.prototype';
+  let property = parts[1];
   return 'goog.exportProperty(\n' +
       '    ' + prototype + ',\n' +
       '    \'' + property + '\',\n' +
@@ -155,13 +155,13 @@ function formatPropertyExport(name) {
  * @return {string} Export code.
  */
 function generateExports(symbols, namespace) {
-  var blocks = [];
-  var requires = {};
+  let blocks = [];
+  let requires = {};
   symbols.forEach(function(symbol) {
     symbol.provides.forEach(function(provide) {
       requires[provide] = true;
     });
-    var name = symbol.name;
+    let name = symbol.name;
     if (name.indexOf('#') > 0) {
       blocks.push(formatPropertyExport(name));
     } else {
@@ -198,7 +198,7 @@ function main(config, callback) {
     getSymbols.bind(null, config.exports),
     filterSymbols,
     function(symbols, done) {
-      var code, err;
+      let code, err;
       try {
         code = generateExports(symbols, config.namespace);
       } catch (e) {
@@ -215,7 +215,7 @@ function main(config, callback) {
  * function, and write the output file.
  */
 if (require.main === module) {
-  var options = nomnom.options({
+  let options = nomnom.options({
     output: {
       position: 0,
       required: true,

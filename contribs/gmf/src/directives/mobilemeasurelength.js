@@ -19,10 +19,10 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} The template url.
      */
-    function(element, attrs) {
-      var templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
+    (element, attrs) => {
+      const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/mobilemeasurelength.html';
+          `${gmf.baseTemplateUrl}/mobilemeasurelength.html`;
     });
 
 
@@ -95,11 +95,9 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
    */
   this.active;
 
-  $scope.$watch(function() {
-    return this.active;
-  }.bind(this), function(newVal) {
+  $scope.$watch(() => this.active, (newVal) => {
     this.measure.setActive(newVal);
-  }.bind(this));
+  });
 
   /**
    * @type {number|undefined}
@@ -156,11 +154,11 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
   this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
       this.measure.getDrawInteraction());
 
-  var drawInteraction = this.drawInteraction;
+  const drawInteraction = this.drawInteraction;
   ngeoDecorateInteraction(drawInteraction);
 
   Object.defineProperty(this, 'hasPoints', {
-    get: function() {
+    get() {
       return this.drawInteraction.getFeature() !== null;
     }
   });

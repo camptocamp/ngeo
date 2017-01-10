@@ -24,7 +24,7 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
  */
 gmfapp.MainController = function() {
 
-  var epsg2056template = 'Coordinates (m)&#58; {x}, {y}';
+  const epsg2056template = 'Coordinates (m)&#58; {x}, {y}';
 
   /**
    * @type {Array.<gmfx.MousePositionProjection>}
@@ -33,7 +33,7 @@ gmfapp.MainController = function() {
   this.projections = [{
     code: 'EPSG:2056',
     label: 'CH1903+ / LV03',
-    filter: 'ngeoNumberCoordinates:0:' + epsg2056template
+    filter: `ngeoNumberCoordinates:0:${epsg2056template}`
   }, {
     code: 'EPSG:21781',
     label: 'CH1903 / LV03',

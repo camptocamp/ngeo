@@ -56,30 +56,30 @@ gmf.ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
 
   if (!this.getQueryableLayerNodesDefered_) {
     this.getQueryableLayerNodesDefered_ = this.q_.defer();
-    this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
-      this.gmfThemes_.getThemesObject().then(function(themes) {
+    this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
+      this.gmfThemes_.getThemesObject().then((themes) => {
         if (!themes) {
           return;
         }
 
         // Get all queryable nodes
-        var allQueryableLayersInfo =
+        const allQueryableLayersInfo =
             gmf.ObjectEditingQuery.getQueryableLayersInfoFromThemes(
               themes,
               ogcServers
             );
 
         // Narrow down to only those that have the 'copyable' metadata set
-        var queryableLayersInfo = [];
-        for (var i = 0, ii = allQueryableLayersInfo.length; i < ii; i++) {
+        const queryableLayersInfo = [];
+        for (let i = 0, ii = allQueryableLayersInfo.length; i < ii; i++) {
           if (allQueryableLayersInfo[i].layerNode.metadata.copyable) {
             queryableLayersInfo.push(allQueryableLayersInfo[i]);
           }
         }
 
         this.getQueryableLayerNodesDefered_.resolve(queryableLayersInfo);
-      }.bind(this));
-    }.bind(this));
+      });
+    });
   }
 
   return this.getQueryableLayerNodesDefered_.promise;
@@ -101,15 +101,15 @@ gmf.ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
 gmf.ObjectEditingQuery.getQueryableLayersInfoFromThemes = function(
   themes, ogcServers
 ) {
-  var queryableLayersInfo = [];
-  var theme;
-  var group;
-  var nodes;
-  var node;
+  const queryableLayersInfo = [];
+  let theme;
+  let group;
+  let nodes;
+  let node;
 
-  for (var i = 0, ii = themes.length; i < ii; i++) {
+  for (let i = 0, ii = themes.length; i < ii; i++) {
     theme = /** @type {gmfThemes.GmfTheme} */ (themes[i]);
-    for (var j = 0, jj = theme.children.length; j < jj; j++) {
+    for (let j = 0, jj = theme.children.length; j < jj; j++) {
       group = /** @type {gmfThemes.GmfGroup} */ (theme.children[j]);
 
       // Skip groups that don't have an ogcServer set
@@ -120,7 +120,7 @@ gmf.ObjectEditingQuery.getQueryableLayersInfoFromThemes = function(
       nodes = [];
       gmf.Themes.getFlatNodes(group, nodes);
 
-      for (var k = 0, kk = nodes.length; k < kk; k++) {
+      for (let k = 0, kk = nodes.length; k < kk; k++) {
         node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayerWMS} */ (
           nodes[k]);
 
@@ -165,26 +165,26 @@ gmf.ObjectEditingQuery.prototype.getFeatureInfo = function(
   map
 ) {
 
-  var view = map.getView();
-  var projCode = view.getProjection().getCode();
-  var resolution = /** @type {number} */(view.getResolution());
-  var infoFormat = ngeo.QueryInfoFormatType.GML;
-  var layerNode = layerInfo.layerNode;
-  var layersParam = layerNode.layers.split(',');
-  var ogcServer = layerInfo.ogcServer;
+  const view = map.getView();
+  const projCode = view.getProjection().getCode();
+  const resolution = /** @type {number} */(view.getResolution());
+  const infoFormat = ngeo.QueryInfoFormatType.GML;
+  const layerNode = layerInfo.layerNode;
+  const layersParam = layerNode.layers.split(',');
+  const ogcServer = layerInfo.ogcServer;
 
-  var format = new ol.format.WMSGetFeatureInfo({
+  const format = new ol.format.WMSGetFeatureInfo({
     layers: layersParam
   });
 
-  var wmsSource = new ol.source.ImageWMS({
+  const wmsSource = new ol.source.ImageWMS({
     url: ogcServer.url,
     params: {
       layers: layersParam
     }
   });
 
-  var url = /** @type {string} */ (
+  const url = /** @type {string} */ (
     wmsSource.getGetFeatureInfoUrl(coordinate, resolution, projCode, {
       'INFO_FORMAT': infoFormat,
       'FEATURE_COUNT': 1,
@@ -193,10 +193,10 @@ gmf.ObjectEditingQuery.prototype.getFeatureInfo = function(
   );
 
   return this.http_.get(url).then(
-    function(format, response) {
-      var features = format.readFeatures(response.data);
+    (response) => {
+      const features = format.readFeatures(response.data);
       return (features && features[0]) ? features[0] : null;
-    }.bind(this, format)
+    }
   );
 };
 

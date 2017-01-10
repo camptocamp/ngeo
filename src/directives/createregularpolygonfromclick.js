@@ -90,12 +90,10 @@ ngeo.CreateregularpolygonfromclickController = function($scope) {
   this.active = this.active === true;
 
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
-    function(newVal) {
+    () => this.active,
+    (newVal) => {
       this.interaction_.setActive(newVal);
-    }.bind(this)
+    }
   );
 
   /**
@@ -166,7 +164,7 @@ ngeo.CreateregularpolygonfromclickController = function($scope) {
  * @private
  */
 ngeo.CreateregularpolygonfromclickController.prototype.handleDrawEnd_ = function(evt) {
-  var feature = new ol.Feature(evt.feature.getGeometry());
+  const feature = new ol.Feature(evt.feature.getGeometry());
   this.features.push(feature);
 };
 

@@ -52,7 +52,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
     })
   });
 
-  var map = this.map;
+  const map = this.map;
 
   // initialize the feature overlay manager with the map
   ngeoFeatureOverlayMgr.init(map);
@@ -62,9 +62,9 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
    * overlay used to render the drawn features.
    * @type {ol.Collection.<ol.Feature>}
    */
-  var features = new ol.Collection();
+  const features = new ol.Collection();
 
-  var overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
   overlay.setStyle(new ol.style.Style({
     fill: new ol.style.Fill({
@@ -85,15 +85,15 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
 
   // manage clicks on the map
   this.mapClickIsEnabled = true;
-  var content = document.getElementById('popup-content');
-  this.map.on('singleclick', (function(evt) {
+  const content = document.getElementById('popup-content');
+  this.map.on('singleclick', (evt) => {
     if (this.mapClickIsEnabled) {
-      var c = ol.coordinate.toStringXY(evt.coordinate);
-      content.innerHTML = '<p>You clicked here: <code>' + c + '</code></p>';
+      const c = ol.coordinate.toStringXY(evt.coordinate);
+      content.innerHTML = `<p>You clicked here: <code>${c}</code></p>`;
     }
-  }).bind(this));
+  });
 
-  var mapClickTool = new ngeo.ToolActivate(this, 'mapClickIsEnabled');
+  const mapClickTool = new ngeo.ToolActivate(this, 'mapClickIsEnabled');
   ngeoToolActivateMgr.registerTool('mapTools', mapClickTool, true);
 
 
@@ -105,13 +105,13 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
   this.drawPoint = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Point',
-        features: features
+        features
       }));
   this.drawPoint.setActive(false);
   ngeoDecorateInteraction(this.drawPoint);
   map.addInteraction(this.drawPoint);
 
-  var drawPointTool = new ngeo.ToolActivate(this.drawPoint, 'active');
+  const drawPointTool = new ngeo.ToolActivate(this.drawPoint, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawPointTool);
 
   // draw line interaction
@@ -122,13 +122,13 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
   this.drawLine = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'LineString',
-        features: features
+        features
       }));
   this.drawLine.setActive(false);
   ngeoDecorateInteraction(this.drawLine);
   map.addInteraction(this.drawLine);
 
-  var drawLineTool = new ngeo.ToolActivate(this.drawLine, 'active');
+  const drawLineTool = new ngeo.ToolActivate(this.drawLine, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawLineTool);
 
   // draw polygon interaction
@@ -139,13 +139,13 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
   this.drawPolygon = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Polygon',
-        features: features
+        features
       }));
   this.drawPolygon.setActive(false);
   ngeoDecorateInteraction(this.drawPolygon);
   map.addInteraction(this.drawPolygon);
 
-  var drawPolygonTool = new ngeo.ToolActivate(this.drawPolygon, 'active');
+  const drawPolygonTool = new ngeo.ToolActivate(this.drawPolygon, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawPolygonTool);
 };
 

@@ -19,7 +19,7 @@ goog.require('ol.Feature');
  *
  * Example:
  *
- *     var bloodhound = ngeoCreateLocationSearchBloodhound({
+ *     let bloodhound = ngeoCreateLocationSearchBloodhound({
  *       targetProjection: ol.proj.get('EPSG:3857'),
  *       limit: 10
  *     });
@@ -37,18 +37,18 @@ ngeo.search.CreateLocationSearchBloodhound;
  * @return {Bloodhound} The Bloodhound object.
  */
 ngeo.search.createLocationSearchBloodhound = function(opt_options) {
-  var options = opt_options || {};
+  const options = opt_options || {};
 
-  var sourceProjection = ol.proj.get('EPSG:21781');
-  var targetProjection = options.targetProjection;
+  const sourceProjection = ol.proj.get('EPSG:21781');
+  const targetProjection = options.targetProjection;
 
   /**
    * @param {string} bbox Bbox string.
    * @return {?ol.Extent} Parsed extent.
    */
-  var parseBbox = function(bbox) {
-    var regex = /BOX\((.*?) (.*?),(.*?) (.*?)\)/g;
-    var match = regex.exec(bbox);
+  const parseBbox = function(bbox) {
+    const regex = /BOX\((.*?) (.*?),(.*?) (.*?)\)/g;
+    const match = regex.exec(bbox);
     if (match !== null) {
       return [
         parseFloat(match[1]),
@@ -61,13 +61,13 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
     }
   };
 
-  var removeHtmlTags = function(label) {
+  const removeHtmlTags = function(label) {
     return label.replace(/<\/?[ib]>/g, '');
   };
 
-  var extractName = function(label) {
-    var regex = /<b>(.*?)<\/b>/g;
-    var match = regex.exec(label);
+  const extractName = function(label) {
+    const regex = /<b>(.*?)<\/b>/g;
+    const match = regex.exec(label);
     if (match !== null) {
       return match[1];
     } else {
@@ -75,28 +75,28 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
     }
   };
 
-  var bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
+  const bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {
       url: 'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&searchText=%QUERY',
-      prepare: function(query, settings) {
+      prepare(query, settings) {
         settings.url = settings.url.replace('%QUERY', query);
         if (options.limit !== undefined) {
-          settings.url += '&limit=' + options.limit;
+          settings.url += `&limit=${options.limit}`;
         }
         if (options.origins !== undefined) {
-          settings.url += '&origins=' + options.origins;
+          settings.url += `&origins=${options.origins}`;
         }
 
         return (options.prepare !== undefined) ?
             options.prepare(query, settings) : settings;
       },
-      transform: function(/** @type{geoAdminx.SearchLocationResponse} */ parsedResponse) {
-        var features = parsedResponse.results.map(function(/** @type{geoAdminx.SearchLocationResult} */ result) {
-          var attrs = result.attrs;
+      transform(/** @type{geoAdminx.SearchLocationResponse} */ parsedResponse) {
+        const features = parsedResponse.results.map((/** @type{geoAdminx.SearchLocationResult} */ result) => {
+          const attrs = result.attrs;
 
           // note that x and y are switched!
-          var point = new ol.geom.Point([attrs.y, attrs.x]);
-          var bbox = parseBbox(attrs.geom_st_box2d);
+          const point = new ol.geom.Point([attrs.y, attrs.x]);
+          let bbox = parseBbox(attrs.geom_st_box2d);
           if (targetProjection !== undefined) {
             point.transform(sourceProjection, targetProjection);
             if (bbox !== null) {
@@ -108,11 +108,11 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
           attrs['bbox'] = bbox;
 
           // create a label without HTML tags
-          var label = attrs.label;
+          const label = attrs.label;
           attrs['label_no_html'] = removeHtmlTags(label);
           attrs['label_simple'] = extractName(label);
 
-          var feature = new ol.Feature(attrs);
+          const feature = new ol.Feature(attrs);
           feature.setId(attrs.featureId);
 
           return feature;
@@ -128,8 +128,8 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
   });
 
   // the options objects are cloned to avoid updating the passed object
-  var bhOptions = ol.obj.assign({}, options.options || {});
-  var remoteOptions = ol.obj.assign({}, options.remoteOptions || {});
+  const bhOptions = ol.obj.assign({}, options.options || {});
+  const remoteOptions = ol.obj.assign({}, options.remoteOptions || {});
 
   if (bhOptions.remote) {
     // move the remote options to opt_remoteOptions

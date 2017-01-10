@@ -22,12 +22,12 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
     scope: {
       'options': '=ngeoImportDndOptions'
     },
-    link: function(scope, elt) {
+    link(scope, elt) {
 
       /**
        * @type {ngeox.ImportDndOptions}
        */
-      var options = scope['options'];
+      const options = scope['options'];
       if (!options || (typeof options.handleFileContent !== 'function')) {
         elt.remove();
         return;
@@ -45,31 +45,29 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
       }).on('dragleave drop', function(evt) {
         this.style.display = 'none';
 
-      }).on('dragover dragleave drop', function(evt) {
+      }).on('dragover dragleave drop', (evt) => {
         evt.stopPropagation();
         evt.preventDefault();
 
-      }).on('drop', function(evt) {
+      }).on('drop', (evt) => {
 
         // A file, an <a> html tag or a plain text url can be dropped
-        var files = evt.originalEvent.dataTransfer.files;
+        const files = evt.originalEvent.dataTransfer.files;
 
         if (files && files.length > 0) {
-          ngeoFile.read(files[0]).then(function(fileContent) {
+          ngeoFile.read(files[0]).then((fileContent) => {
             scope['handleFileContent'](fileContent, files[0]);
           });
 
         } else if (evt.originalEvent.dataTransfer.types) {
           // No files so may be it's HTML link or a URL which has been
           // dropped
-          var text = evt.originalEvent.dataTransfer.getData('text/plain');
+          const text = evt.originalEvent.dataTransfer.getData('text/plain');
 
           if (options.isValidUrl(text)) {
-            ngeoFile.load(text).then(function(fileContent) {
-              return scope['handleFileContent'](fileContent, {
-                url: text
-              });
-            })['catch'](function(err) {
+            ngeoFile.load(text).then(fileContent => scope['handleFileContent'](fileContent, {
+              url: text
+            }))['catch']((err) => {
               $window.alert(gettextCatalog.getString(err.message));
             });
           } else {
@@ -79,11 +77,11 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
       });
 
       // Display the drop zone if the content dragged is dropable.
-      var onDragEnter = function(evt) {
+      const onDragEnter = function(evt) {
         evt.stopPropagation();
         evt.preventDefault();
-        var types = evt.originalEvent.dataTransfer.types || [];
-        for (var i = 0, len = types.length; i < len; ++i) {
+        const types = evt.originalEvent.dataTransfer.types || [];
+        for (let i = 0, len = types.length; i < len; ++i) {
           if (/(files|text\/plain)/i.test(types[i])) {
             elt.css('display', 'table');
             break;
@@ -94,12 +92,12 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
 
       // Block drag of all elements by default to avoid
       // unwanted display of dropzone.
-      var onDragStart = function() {
+      const onDragStart = function() {
         return false;
       };
       $document.on('dragstart', onDragStart);
 
-      scope.$on('$destroy', function() {
+      scope.$on('$destroy', () => {
         $document.off('dragEnter', onDragEnter).off('dragstart', onDragStart);
       });
     }
@@ -118,10 +116,10 @@ exports.module.value('ngeoImportDndTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {boolean} Template URL.
      */
-    function(element, attrs) {
-      var templateUrl = attrs['ngeoImportDndTemplateUrl'];
+    (element, attrs) => {
+      const templateUrl = attrs['ngeoImportDndTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseModuleTemplateUrl + '/import/partials/import-dnd.html';
+          `${ngeo.baseModuleTemplateUrl}/import/partials/import-dnd.html`;
     });
 
 exports.module.directive('ngeoImportDnd', exports);

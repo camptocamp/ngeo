@@ -1,28 +1,28 @@
 goog.require('ngeo.FeatureOverlayMgr');
 
-describe('ngeo.FeatureOverlayMgr', function() {
-  var ngeoFeatureOverlayMgr;
-  var map;
-  var layer;
+describe('ngeo.FeatureOverlayMgr', () => {
+  let ngeoFeatureOverlayMgr;
+  let map;
+  let layer;
 
-  beforeEach(function() {
+  beforeEach(() => {
     map = new ol.Map({});
 
-    inject(function($injector) {
+    inject(($injector) => {
       ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
       ngeoFeatureOverlayMgr.init(map);
       layer = ngeoFeatureOverlayMgr.getLayer();
     });
   });
 
-  it('creates an unmanaged layer', function() {
+  it('creates an unmanaged layer', () => {
     expect(map.getLayers().getLength()).toBe(0);
     expect(layer).toBeDefined();
   });
 
-  it('adds and removes features', function() {
-    var overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var feature = new ol.Feature();
+  it('adds and removes features', () => {
+    const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const feature = new ol.Feature();
     overlay.addFeature(feature);
     expect(layer.getSource().getFeatures().length).toBe(1);
 
@@ -30,21 +30,21 @@ describe('ngeo.FeatureOverlayMgr', function() {
     expect(layer.getSource().getFeatures().length).toBe(0);
   });
 
-  it('removes all the features', function() {
-    var overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var feature = new ol.Feature();
+  it('removes all the features', () => {
+    const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const feature = new ol.Feature();
     overlay.addFeature(feature);
     overlay.clear();
     expect(layer.getSource().getFeatures().length).toBe(0);
   });
 
-  it('doesn\'t remove features from other overlays', function() {
-    var overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var feature1 = new ol.Feature();
+  it('doesn\'t remove features from other overlays', () => {
+    const overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const feature1 = new ol.Feature();
     overlay1.addFeature(feature1);
 
-    var overlay2 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var feature2 = new ol.Feature();
+    const overlay2 = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const feature2 = new ol.Feature();
     overlay2.addFeature(feature2);
 
     expect(layer.getSource().getFeatures().length).toBe(2);
@@ -54,25 +54,25 @@ describe('ngeo.FeatureOverlayMgr', function() {
     expect(layer.getSource().getFeatures().length).toBe(1);
   });
 
-  it('correctly sets styles', function() {
-    var overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var style1 = new ol.style.Style();
+  it('correctly sets styles', () => {
+    const overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const style1 = new ol.style.Style();
     overlay1.setStyle(style1);
 
-    var overlay2 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    var style2 = new ol.style.Style();
+    const overlay2 = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    const style2 = new ol.style.Style();
     overlay2.setStyle(style2);
 
-    var feature1 = new ol.Feature();
+    const feature1 = new ol.Feature();
     overlay1.addFeature(feature1);
 
-    var feature2 = new ol.Feature();
+    const feature2 = new ol.Feature();
     overlay2.addFeature(feature2);
 
-    var styleFunction = ngeoFeatureOverlayMgr.getLayer().getStyleFunction();
+    const styleFunction = ngeoFeatureOverlayMgr.getLayer().getStyleFunction();
 
-    var resolution = 1;
-    var styles;
+    const resolution = 1;
+    let styles;
 
     styles = styleFunction(feature1, resolution);
     expect(styles.length).toEqual(1);
@@ -83,45 +83,45 @@ describe('ngeo.FeatureOverlayMgr', function() {
     expect(styles[0]).toBe(style2);
   });
 
-  describe('feature overlay configured with a feature collection', function() {
-    var overlay, features;
+  describe('feature overlay configured with a feature collection', () => {
+    let overlay, features;
 
-    beforeEach(function() {
+    beforeEach(() => {
       overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-      var feature1 = new ol.Feature();
-      var feature2 = new ol.Feature();
+      const feature1 = new ol.Feature();
+      const feature2 = new ol.Feature();
       features = new ol.Collection([feature1, feature2]);
       overlay.setFeatures(features);
     });
 
-    it('adds features to the overlay', function() {
+    it('adds features to the overlay', () => {
       expect(layer.getSource().getFeatures().length).toBe(2);
     });
 
-    describe('add features to the collection', function() {
-      it('adds features to the overlay', function() {
+    describe('add features to the collection', () => {
+      it('adds features to the overlay', () => {
         features.push(new ol.Feature());
         expect(layer.getSource().getFeatures().length).toBe(3);
       });
     });
 
-    describe('remove features from the collection', function() {
-      it('removes features from the overlay', function() {
+    describe('remove features from the collection', () => {
+      it('removes features from the overlay', () => {
         features.clear();
         expect(layer.getSource().getFeatures().length).toBe(0);
       });
     });
 
-    describe('remove the collection', function() {
-      it('removes the features from the collection', function() {
+    describe('remove the collection', () => {
+      it('removes the features from the collection', () => {
         overlay.setFeatures(null);
         expect(layer.getSource().getFeatures().length).toBe(0);
       });
     });
 
-    describe('replace the collection by another one', function() {
-      it('uses the new collection and ignores the old one', function() {
-        var newFeatures = new ol.Collection();
+    describe('replace the collection by another one', () => {
+      it('uses the new collection and ignores the old one', () => {
+        const newFeatures = new ol.Collection();
         overlay.setFeatures(newFeatures);
         expect(layer.getSource().getFeatures().length).toBe(0);
         newFeatures.push(new ol.Feature());

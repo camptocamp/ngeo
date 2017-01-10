@@ -9,7 +9,7 @@
  * @private
  * @type {Object}
  */
-var geoAdminx;
+let geoAdminx;
 
 
 /**

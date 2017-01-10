@@ -57,7 +57,7 @@ gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, nge
   });
 
   // How should disclaimer message be displayed: in modals or alerts
-  var modal = ngeoLocation.getParam('modal');
+  const modal = ngeoLocation.getParam('modal');
 
   /**
    * @type {boolean}
@@ -144,26 +144,26 @@ gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, nge
     return this.gmfTreeManager.root.children;
   };
 
-  gmfThemes.getThemesObject().then(function(themes) {
+  gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       this.themes = themes;
 
       // Get an array with all nodes entities existing in "themes".
-      var flatNodes = [];
-      this.themes.forEach(function(theme) {
-        theme.children.forEach(function(group) {
+      const flatNodes = [];
+      this.themes.forEach((theme) => {
+        theme.children.forEach((group) => {
           this.groups.push(group); // get a list of all groups
           this.getDistinctFlatNodes_(group, flatNodes);
-        }.bind(this));
-      }.bind(this));
-      flatNodes.forEach(function(node) {
+        });
+      });
+      flatNodes.forEach((node) => {
         // Get an array of all layers
         if (node.children === undefined) {
           this.layers.push(node);
         }
-      }.bind(this));
+      });
     }
-  }.bind(this));
+  });
 
   /**
    * Just for this example
@@ -172,15 +172,15 @@ gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, nge
    * @export
    */
   this.getDistinctFlatNodes_ = function(node, nodes) {
-    var i;
-    var children = node.children;
+    let i;
+    const children = node.children;
     if (children !== undefined) {
       for (i = 0; i < children.length; i++) {
         this.getDistinctFlatNodes_(children[i], nodes);
       }
     }
-    var alreadyAdded = false;
-    nodes.some(function(n) {
+    let alreadyAdded = false;
+    nodes.some((n) => {
       if (n.id === node.id) {
         return alreadyAdded = true;
       }

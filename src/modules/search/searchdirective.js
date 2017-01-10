@@ -28,86 +28,85 @@ goog.provide('ngeo.search.searchDirective');
 ngeo.search.searchDirective = function() {
   return {
     restrict: 'A',
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         */
-        function(scope, element, attrs) {
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
 
-          var typeaheadOptionsExpr = attrs['ngeoSearch'];
-          var typeaheadOptions = /** @type {TypeaheadOptions} */
+      const typeaheadOptionsExpr = attrs['ngeoSearch'];
+      const typeaheadOptions = /** @type {TypeaheadOptions} */
               (scope.$eval(typeaheadOptionsExpr));
 
-          var typeaheadDatasetsExpr = attrs['ngeoSearchDatasets'];
-          var typeaheadDatasets = /** @type {Array.<TypeaheadDataset>} */
+      const typeaheadDatasetsExpr = attrs['ngeoSearchDatasets'];
+      const typeaheadDatasets = /** @type {Array.<TypeaheadDataset>} */
               (scope.$eval(typeaheadDatasetsExpr));
 
-          var args = typeaheadDatasets.slice();
-          args.unshift(typeaheadOptions);
+      const args = typeaheadDatasets.slice();
+      args.unshift(typeaheadOptions);
 
-          element.typeahead.apply(element, args);
+      element.typeahead(...args);
 
-          var typeaheadListenersExpr = attrs['ngeoSearchListeners'];
-          var typeaheadListeners_ =
+      const typeaheadListenersExpr = attrs['ngeoSearchListeners'];
+      const typeaheadListeners_ =
               /** @type {ngeox.SearchDirectiveListeners} */
               (scope.$eval(typeaheadListenersExpr));
 
           /**
            * @type {ngeox.SearchDirectiveListeners}
            */
-          var typeaheadListeners = ngeo.search.searchDirective.adaptListeners_(
+      const typeaheadListeners = ngeo.search.searchDirective.adaptListeners_(
               typeaheadListeners_);
 
-          element.on('typeahead:open', function() {
-            scope.$apply(function() {
-              typeaheadListeners.open();
-            });
-          });
+      element.on('typeahead:open', () => {
+        scope.$apply(() => {
+          typeaheadListeners.open();
+        });
+      });
 
-          element.on('typeahead:close', function() {
-            scope.$apply(function() {
-              typeaheadListeners.close();
-            });
-          });
+      element.on('typeahead:close', () => {
+        scope.$apply(() => {
+          typeaheadListeners.close();
+        });
+      });
 
-          element.on('typeahead:cursorchange',
+      element.on('typeahead:cursorchange',
               /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
-              function(event, suggestion, dataset) {
-                scope.$apply(function() {
+              (event, suggestion, dataset) => {
+                scope.$apply(() => {
                   typeaheadListeners.cursorchange(event, suggestion, dataset);
                 });
               });
 
-          element.on('typeahead:select',
+      element.on('typeahead:select',
               /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
-              function(event, suggestion, dataset) {
-                scope.$apply(function() {
+              (event, suggestion, dataset) => {
+                scope.$apply(() => {
                   typeaheadListeners.select(event, suggestion, dataset);
                 });
               });
 
-          element.on('typeahead:autocomplete',
+      element.on('typeahead:autocomplete',
               /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
-              function(event, suggestion, dataset) {
-                scope.$apply(function() {
+              (event, suggestion, dataset) => {
+                scope.$apply(() => {
                   typeaheadListeners.autocomplete(event, suggestion, dataset);
                 });
               });
-        }
+    }
   };
 };
 
@@ -121,7 +120,7 @@ ngeo.search.searchDirective = function() {
  */
 ngeo.search.searchDirective.adaptListeners_ = function(object) {
   /** @type {ngeox.SearchDirectiveListeners} */
-  var typeaheadListeners;
+  let typeaheadListeners;
   if (object === undefined) {
     typeaheadListeners = {
       open: ol.nullFunction,

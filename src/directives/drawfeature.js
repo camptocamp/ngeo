@@ -207,16 +207,14 @@ ngeo.DrawfeatureController = function($scope, $compile, $sce, gettext,
   // Watch the "active" property, and disable the draw interactions
   // when "active" gets set to false.
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
-    function(newVal) {
+    () => this.active,
+    (newVal) => {
       if (newVal === false) {
-        this.interactions_.forEach(function(interaction) {
+        this.interactions_.forEach((interaction) => {
           interaction.setActive(false);
         }, this);
       }
-    }.bind(this)
+    }
   );
 
 };
@@ -245,9 +243,7 @@ ngeo.DrawfeatureController.prototype.registerInteraction = function(
  * @export
  */
 ngeo.DrawfeatureController.prototype.handleActiveChange = function(event) {
-  this.active = this.interactions_.some(function(interaction) {
-    return interaction.getActive();
-  }, this);
+  this.active = this.interactions_.some(interaction => interaction.getActive(), this);
 };
 
 
@@ -259,9 +255,9 @@ ngeo.DrawfeatureController.prototype.handleActiveChange = function(event) {
  * @export
  */
 ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
-  var feature = new ol.Feature(event.feature.getGeometry());
+  const feature = new ol.Feature(event.feature.getGeometry());
 
-  var prop = ngeo.FeatureProperties;
+  const prop = ngeo.FeatureProperties;
 
   switch (type) {
     case ngeo.GeometryType.CIRCLE:
@@ -283,13 +279,13 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
   /**
    * @type {string}
    */
-  var name = this.gettextCatalog_.getString(type);
-  feature.set(prop.NAME, name + ' ' + (this.features_.getLength() + 1));
+  const name = this.gettextCatalog_.getString(type);
+  feature.set(prop.NAME, `${name} ${this.features_.getLength() + 1}`);
 
   /**
    * @type {string}
    */
-  var color = type !== ngeo.GeometryType.TEXT ? '#DB4436' : '#000000';
+  const color = type !== ngeo.GeometryType.TEXT ? '#DB4436' : '#000000';
   feature.set(prop.COLOR, color);
 
   feature.set(prop.ANGLE, 0);

@@ -14,10 +14,10 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {boolean} Template URL.
      */
-    function(element, attrs) {
-      var templateUrl = attrs['gmfAuthenticationTemplateurl'];
+    (element, attrs) => {
+      const templateUrl = attrs['gmfAuthenticationTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/authentication.html';
+          `${gmf.baseTemplateUrl}/authentication.html`;
     });
 
 
@@ -170,11 +170,11 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
  */
 gmf.AuthenticationController.prototype.changePassword = function() {
 
-  var oldPwd = this.oldPwdVal;
-  var newPwd = this.newPwdVal;
-  var confPwd = this.newPwdConfVal;
+  const oldPwd = this.oldPwdVal;
+  const newPwd = this.newPwdVal;
+  const confPwd = this.newPwdConfVal;
 
-  var errors = [];
+  const errors = [];
   // (1) validation - passwords are required
   if (oldPwd === '') {
     errors.push(this.gettextCatalog.getString('The old password is required.'));
@@ -202,12 +202,12 @@ gmf.AuthenticationController.prototype.changePassword = function() {
     } else {
       // (3) send request with current credentials, which may fail if
       //     the old password given is incorrect.
-      var error = this.gettextCatalog.getString('Incorrect old password.');
+      const error = this.gettextCatalog.getString('Incorrect old password.');
       this.gmfAuthentication_.changePassword(oldPwd, newPwd, confPwd).then(
-          function() {
+          () => {
             this.changePasswordModalShown = true;
             this.changePasswordReset();
-          }.bind(this),
+          },
           this.setError_.bind(this, error));
     }
   }
@@ -219,7 +219,7 @@ gmf.AuthenticationController.prototype.changePassword = function() {
  * @export
  */
 gmf.AuthenticationController.prototype.login = function() {
-  var errors = [];
+  const errors = [];
   if (this.loginVal === '') {
     errors.push(this.gettextCatalog.getString('The username is required.'));
   }
@@ -229,7 +229,7 @@ gmf.AuthenticationController.prototype.login = function() {
   if (errors.length) {
     this.setError_(errors);
   } else {
-    var error = this.gettextCatalog.getString('Incorrect username or password.');
+    const error = this.gettextCatalog.getString('Incorrect username or password.');
     this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
         this.resetError_.bind(this),
         this.setError_.bind(this, error));
@@ -242,7 +242,7 @@ gmf.AuthenticationController.prototype.login = function() {
  * @export
  */
 gmf.AuthenticationController.prototype.logout = function() {
-  var error = this.gettextCatalog.getString('Could not log out.');
+  const error = this.gettextCatalog.getString('Could not log out.');
   this.gmfAuthentication_.logout().then(
       this.resetError_.bind(this),
       this.setError_.bind(this, error));
@@ -260,12 +260,12 @@ gmf.AuthenticationController.prototype.resetPassword = function() {
     return;
   }
 
-  var error = this.gettextCatalog.getString('An error occured while reseting the password.');
+  const error = this.gettextCatalog.getString('An error occured while reseting the password.');
 
   /**
    * @param {gmf.AuthenticationDefaultResponse} respData Response.
    */
-  var resetPasswordSuccessFn = function(respData) {
+  const resetPasswordSuccessFn = function(respData) {
     this.resetPasswordModalShown = true;
     this.resetError_();
   }.bind(this);
@@ -304,7 +304,7 @@ gmf.AuthenticationController.prototype.setError_ = function(errors) {
 
   this.error = true;
 
-  var container = angular.element('.gmf-authentication-error');
+  const container = angular.element('.gmf-authentication-error');
 
   if (!Array.isArray(errors)) {
     errors = [errors];

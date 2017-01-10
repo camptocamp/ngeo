@@ -79,8 +79,8 @@ goog.require('ngeo.SortableOptions');
  */
 gmf.AbstractDesktopController = function(config, $scope, $injector) {
 
-  var viewConfig = {
-    projection: ol.proj.get('EPSG:' + (config.srid || 21781))
+  const viewConfig = {
+    projection: ol.proj.get(`EPSG:${config.srid || 21781}`)
   };
   goog.object.extend(viewConfig, config.mapViewConfig || {});
 
@@ -143,7 +143,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * Collection of features for the draw interaction
    * @type {ol.Collection.<ol.Feature>}
    */
-  var ngeoFeatures = $injector.get('ngeoFeatures');
+  const ngeoFeatures = $injector.get('ngeoFeatures');
 
   /**
    * @type {ngeo.FeatureOverlay}
@@ -153,7 +153,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       .getFeatureOverlay();
   this.drawFeatureLayer.setFeatures(ngeoFeatures);
 
-  var ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
+  const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
 
   /**
    * @type {ol.layer.Vector}
@@ -164,7 +164,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       wrapX: false,
       features: new ol.Collection()
     }),
-    style: function(feature, resolution) {
+    style(feature, resolution) {
       return ngeoFeatureHelper.createEditingStyles(feature);
     }
     // style: ngeoFeatureHelper.createEditingStyles.bind(ngeoFeatureHelper)
@@ -175,9 +175,9 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * The ngeo ToolActivate manager service.
    * @type {ngeo.ToolActivateMgr}
    */
-  var ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+  const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
-  var editFeatureActivate = new ngeo.ToolActivate(this, 'editFeatureActive');
+  const editFeatureActivate = new ngeo.ToolActivate(this, 'editFeatureActive');
   ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
   /**
@@ -197,13 +197,11 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   gmf.AbstractController.call(this, config, $scope, $injector);
 
   // close the login panel on successful login
-  $scope.$watch(function() {
-    return this.gmfUser.username;
-  }.bind(this), function(newVal) {
+  $scope.$watch(() => this.gmfUser.username, (newVal) => {
     if (newVal !== null && this.loginActive) {
       this.loginActive = false;
     }
-  }.bind(this));
+  });
 
 };
 ol.inherits(gmf.AbstractDesktopController, gmf.AbstractController);

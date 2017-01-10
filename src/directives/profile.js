@@ -39,26 +39,25 @@ goog.require('ngeo.Debounce');
 ngeo.profileDirective = function(ngeoDebounce) {
   return {
     restrict: 'A',
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         */
-        function(scope, element, attrs) {
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
 
-          var optionsAttr = attrs['ngeoProfileOptions'];
-          goog.asserts.assert(optionsAttr !== undefined);
+      const optionsAttr = attrs['ngeoProfileOptions'];
+      goog.asserts.assert(optionsAttr !== undefined);
 
-          var selection = d3.select(element[0]);
-          var profile, elevationData, poiData;
+      const selection = d3.select(element[0]);
+      let profile, elevationData, poiData;
 
-          scope.$watchCollection(optionsAttr, function(newVal) {
+      scope.$watchCollection(optionsAttr, (newVal) => {
 
-            var options = /** @type {ngeox.profile.ProfileOptions} */
+        const options = /** @type {ngeox.profile.ProfileOptions} */
                 (goog.object.clone(newVal));
 
-            if (options !== undefined) {
+        if (options !== undefined) {
 
               // proxy the hoverCallback and outCallbackin order to be able to
               // call $applyAsync
@@ -70,39 +69,39 @@ ngeo.profileDirective = function(ngeoDebounce) {
               //
               // For that reason we use $applyAsync instead of $apply here.
 
-              if (options.hoverCallback !== undefined) {
-                var origHoverCallback = options.hoverCallback;
-                options.hoverCallback = function() {
-                  origHoverCallback.apply(null, arguments);
-                  scope.$applyAsync();
-                };
-              }
+          if (options.hoverCallback !== undefined) {
+            const origHoverCallback = options.hoverCallback;
+            options.hoverCallback = function(...args) {
+              origHoverCallback(...args);
+              scope.$applyAsync();
+            };
+          }
 
-              if (options.outCallback !== undefined) {
-                var origOutCallback = options.outCallback;
-                options.outCallback = function() {
-                  origOutCallback();
-                  scope.$applyAsync();
-                };
-              }
+          if (options.outCallback !== undefined) {
+            const origOutCallback = options.outCallback;
+            options.outCallback = function() {
+              origOutCallback();
+              scope.$applyAsync();
+            };
+          }
 
-              profile = ngeo.profile(options);
-              refreshData();
-            }
-          });
+          profile = ngeo.profile(options);
+          refreshData();
+        }
+      });
 
-          scope.$watch(attrs['ngeoProfile'], function(newVal, oldVal) {
-            elevationData = newVal;
-            refreshData();
-          });
+      scope.$watch(attrs['ngeoProfile'], (newVal, oldVal) => {
+        elevationData = newVal;
+        refreshData();
+      });
 
-          scope.$watch(attrs['ngeoProfilePois'], function(newVal, oldVal) {
-            poiData = newVal;
-            refreshData();
-          });
+      scope.$watch(attrs['ngeoProfilePois'], (newVal, oldVal) => {
+        poiData = newVal;
+        refreshData();
+      });
 
-          scope.$watch(attrs['ngeoProfileHighlight'],
-              function(newVal, oldVal) {
+      scope.$watch(attrs['ngeoProfileHighlight'],
+              (newVal, oldVal) => {
                 if (newVal === undefined) {
                   return;
                 }
@@ -113,19 +112,19 @@ ngeo.profileDirective = function(ngeoDebounce) {
                 }
               });
 
-          goog.events.listen(window, goog.events.EventType.RESIZE,
+      goog.events.listen(window, goog.events.EventType.RESIZE,
               ngeoDebounce(refreshData, 50, true),
               false, this);
 
-          function refreshData() {
-            if (profile !== undefined) {
-              selection.datum(elevationData).call(profile);
-              if (elevationData !== undefined) {
-                profile.showPois(poiData);
-              }
-            }
+      function refreshData() {
+        if (profile !== undefined) {
+          selection.datum(elevationData).call(profile);
+          if (elevationData !== undefined) {
+            profile.showPois(poiData);
           }
         }
+      }
+    }
   };
 };
 

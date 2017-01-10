@@ -30,13 +30,13 @@ app.module = angular.module('app', ['ngeo']);
 app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
 
   /** @type {ol.layer.Tile} */
-  var osm = new ol.layer.Tile({
+  const osm = new ol.layer.Tile({
     source: new ol.source.OSM()
   });
   osm.set('name', 'osm');
 
   /** @type {ol.layer.Tile} */
-  var boundaries = new ol.layer.Tile({
+  const boundaries = new ol.layer.Tile({
     source: new ol.source.TileWMS({
       url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:tasmania_state_boundaries'},
@@ -46,7 +46,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   boundaries.set('name', 'Boundaries');
 
   /** @type {ol.layer.Tile} */
-  var waterBodies = new ol.layer.Tile({
+  const waterBodies = new ol.layer.Tile({
     source: new ol.source.TileWMS({
       url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:tasmania_water_bodies'},
@@ -56,7 +56,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   waterBodies.set('name', 'Water bodies');
 
   /** @type {ol.layer.Tile} */
-  var cities = new ol.layer.Tile({
+  const cities = new ol.layer.Tile({
     source: new ol.source.TileWMS({
       url: 'http://demo.opengeo.org/geoserver/wms',
       params: {'LAYERS': 'topp:tasmania_cities'},
@@ -82,7 +82,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
     })
   });
 
-  var map = this.map;
+  const map = this.map;
 
   /**
    * @type {ol.layer.Tile}
@@ -104,15 +104,13 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
    */
   this.selectedLayers = [];
 
-  var selectedLayers = this.selectedLayers;
+  const selectedLayers = this.selectedLayers;
 
   ngeoSyncArrays(map.getLayers().getArray(), selectedLayers, true, $scope,
       layerFilter);
 
   // watch any change on layers array to refresh the map
-  $scope.$watchCollection(function() {
-    return selectedLayers;
-  }, function() {
+  $scope.$watchCollection(() => selectedLayers, () => {
     map.render();
   });
 

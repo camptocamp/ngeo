@@ -2,9 +2,9 @@
  * Generates JSON output based on exportable symbols (those with
  * an api tag) and boolean defines (with a define tag and a default value).
  */
-var assert = require('assert');
-var fs = require('fs');
-var path = require('path');
+let assert = require('assert');
+let fs = require('fs');
+let path = require('path');
 
 
 /**
@@ -13,22 +13,22 @@ var path = require('path');
  * @param {Object} opts Options.
  */
 exports.publish = function(data, opts) {
-  var cwd = process.cwd();
+  let cwd = process.cwd();
 
   // get all doclets with the "api" property or define (excluding enums,
   // typedefs and events)
-  var docs = data(
+  let docs = data(
       [{define: {isObject: true}}, {api: {isString: true}}],
       {isEnum: {'!is': true}},
       {kind: {'!is': 'typedef'}},
       {kind: {'!is': 'event'}}).get();
 
   // get symbols data, filter out those that are members of private classes
-  var symbols = [];
-  var defines = [];
+  let symbols = [];
+  let defines = [];
   docs.filter(function(doc) {
-    var include = true;
-    var constructor = doc.memberof;
+    let include = true;
+    let constructor = doc.memberof;
     if (constructor && constructor.substr(-1) === '_') {
       assert.strictEqual(doc.inherited, true,
           'Unexpected export on private class: ' + doc.longname);

@@ -29,7 +29,7 @@ gmf.featurestyleDirective = function() {
       'feature': '=gmfFeaturestyleFeature'
     },
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/featurestyle.html'
+    templateUrl: `${gmf.baseTemplateUrl}/featurestyle.html`
   };
 };
 
@@ -77,9 +77,7 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
   this.measure = null;
 
   $scope.$watch(
-    function() {
-      return this.color;
-    }.bind(this),
+    () => this.color,
     this.handleColorSet_.bind(this)
   );
 
@@ -96,9 +94,7 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
   this.type;
 
   $scope.$watch(
-    function() {
-      return this.feature;
-    }.bind(this),
+    () => this.feature,
     this.handleFeatureSet_.bind(this)
   );
 
@@ -114,10 +110,10 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
 gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
     newFeature, previousFeature) {
 
-  var keys = this.featureListenerKeys_;
+  const keys = this.featureListenerKeys_;
 
   if (previousFeature) {
-    keys.forEach(function(key) {
+    keys.forEach((key) => {
       ol.events.unlistenByKey(key);
     }, this);
     this.type = null;
@@ -145,7 +141,7 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
       );
     }, this);
 
-    var geometry = newFeature.getGeometry();
+    const geometry = newFeature.getGeometry();
     goog.asserts.assert(geometry, 'Geometry should be thruthy');
 
     keys.push(
@@ -171,7 +167,7 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
 gmf.FeaturestyleController.prototype.handleColorSet_ = function(
     newColor) {
   if (this.feature && newColor) {
-    var currentColor = this.feature.get(ngeo.FeatureProperties.COLOR);
+    const currentColor = this.feature.get(ngeo.FeatureProperties.COLOR);
     if (currentColor !== newColor) {
       this.feature.set(ngeo.FeatureProperties.COLOR, newColor);
     }
@@ -265,7 +261,7 @@ gmf.FeaturestyleController.prototype.getSetProperty_ = function(key, value) {
  * @private
  */
 gmf.FeaturestyleController.prototype.handleFeatureChange_ = function() {
-  var feature = this.feature;
+  const feature = this.feature;
 
   if (!feature) {
     return;
@@ -279,10 +275,10 @@ gmf.FeaturestyleController.prototype.handleFeatureChange_ = function() {
  * @private
  */
 gmf.FeaturestyleController.prototype.handleGeometryChange_ = function() {
-  var feature = this.feature;
+  const feature = this.feature;
   this.measure = this.featureHelper_.getMeasure(feature);
 
-  var showMeasure = this.featureHelper_.getShowMeasureProperty(feature);
+  const showMeasure = this.featureHelper_.getShowMeasureProperty(feature);
   if (showMeasure) {
     this.handleFeatureChange_();
   }

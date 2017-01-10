@@ -68,8 +68,8 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
    */
   this.element_ = $element;
 
-  var uid = ol.getUid(this);
-  var id = ['ngeo-exportfeature', uid].join('-');
+  const uid = ol.getUid(this);
+  const id = ['ngeo-exportfeature', uid].join('-');
 
   /**
    * @type {string}
@@ -83,7 +83,7 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
-  var formats;
+  let formats;
   if ($injector.has('ngeoExportFeatureFormats')) {
     formats = $injector.get('ngeoExportFeatureFormats');
   } else {
@@ -105,13 +105,13 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
   // build the drop-down menu and items if there's more than one format
   if (formats.length > 1) {
     $element.attr('id', id);
-    var $menu = $('<ul />', {
+    const $menu = $('<ul />', {
       'class': 'dropdown-menu',
       'aria-labelledby': id
     }).appendTo($element.parent()[0]);
 
     this.menu_ = $menu;
-    var $item;
+    let $item;
 
     formats.forEach(function(format) {
       $item = $('<li />')
@@ -154,14 +154,14 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
  */
 ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
 
-  var features = this.features.getArray();
+  const features = this.features.getArray();
 
   if (this.formats_.length === 1) {
     this.featureHelper_.export(features, this.formats_[0]);
   } else if (features.length === 1) {
-    var feature = features[0];
-    var geom = feature.getGeometry();
-    var $item;
+    const feature = features[0];
+    const geom = feature.getGeometry();
+    let $item;
     this.formats_.forEach(function(format, i) {
       $item = this.items_[i];
       if (format === ngeo.FeatureHelper.FormatType.GPX) {
@@ -186,7 +186,7 @@ ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
  */
 ngeo.ExportfeaturesController.prototype.handleMenuItemClick_ = function(format, event) {
   if (!$(event.target.parentElement).hasClass('disabled')) {
-    var features = this.features.getArray();
+    const features = this.features.getArray();
     this.featureHelper_.export(features, format);
   }
 };
@@ -197,13 +197,13 @@ ngeo.ExportfeaturesController.prototype.handleMenuItemClick_ = function(format, 
  * @private
  */
 ngeo.ExportfeaturesController.prototype.handleDestroy_ = function() {
-  var id = this.id_;
+  const id = this.id_;
 
   this.element_.off(['click', id].join('.'));
 
   if (this.menu_) {
     this.menu_.remove();
-    this.items_.forEach(function($item) {
+    this.items_.forEach(($item) => {
       $item.off(['click', id].join('.'));
     }, this);
     this.items_.length = 0;

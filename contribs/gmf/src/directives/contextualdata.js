@@ -53,16 +53,15 @@ gmf.contextualdataDirective = function() {
       'projections': '<gmfContextualdataProjections',
       'callback': '<gmfContextualdataCallback'
     },
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         * @param {gmf.ContextualdataController} controller Controller.
-         */
-        function(scope, element, attrs, controller) {
-          controller.init();
-        }
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     * @param {gmf.ContextualdataController} controller Controller.
+     */
+    link(scope, element, attrs, controller) {
+      controller.init();
+    }
   };
 };
 
@@ -131,7 +130,7 @@ gmf.ContextualdataController = function($compile, $scope, gmfAltitude) {
  *
  */
 gmf.ContextualdataController.prototype.init = function() {
-  var mapDiv = this.map.getTargetElement();
+  const mapDiv = this.map.getTargetElement();
   goog.asserts.assertElement(mapDiv);
 
   goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
@@ -143,37 +142,37 @@ gmf.ContextualdataController.prototype.init = function() {
  * @private
  */
 gmf.ContextualdataController.prototype.handleMapContextMenu_ = function(evt) {
-  this.$scope_.$apply(function() {
-    var pixel = this.map.getEventPixel(evt);
-    var coordinate = this.map.getCoordinateFromPixel(pixel);
+  this.$scope_.$apply(() => {
+    const pixel = this.map.getEventPixel(evt);
+    const coordinate = this.map.getCoordinateFromPixel(pixel);
     this.setContent_(coordinate);
     evt.preventDefault();
     this.hidePopover();
     this.showPopover();
     this.overlay_.setPosition(coordinate);
-  }.bind(this));
+  });
 };
 
 
 gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
-  var scope = this.$scope_.$new(true);
+  const scope = this.$scope_.$new(true);
   this.$compile_(this.content_)(scope);
 
-  var mapProjection = this.map.getView().getProjection().getCode();
-  this.projections.forEach(function(proj) {
-    var coord = ol.proj.transform(coordinate, mapProjection, 'EPSG:' + proj);
-    scope['coord_' + proj] = coord;
-    scope['coord_' + proj + '_eastern'] = coord[0];
-    scope['coord_' + proj + '_northern'] = coord[1];
+  const mapProjection = this.map.getView().getProjection().getCode();
+  this.projections.forEach((proj) => {
+    const coord = ol.proj.transform(coordinate, mapProjection, `EPSG:${proj}`);
+    scope[`coord_${proj}`] = coord;
+    scope[`coord_${proj}_eastern`] = coord[0];
+    scope[`coord_${proj}_northern`] = coord[1];
   });
 
-  var getAltitudeSuccess = function(resp) {
+  const getAltitudeSuccess = function(resp) {
     goog.object.extend(scope, resp);
     if (this.callback) {
       goog.object.extend(scope, this.callback.call(this, coordinate, resp));
     }
   }.bind(this);
-  var getAltitudeError = function(resp) {
+  const getAltitudeError = function(resp) {
     console.error('Error on getting altitude.');
   };
   this.gmfAltitude_.getAltitude(coordinate).then(
@@ -188,10 +187,10 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
  */
 gmf.ContextualdataController.prototype.preparePopover_ = function() {
 
-  var container = document.createElement('DIV');
+  const container = document.createElement('DIV');
   container.classList.add('popover', 'bottom', 'gmf-contextualdata');
   angular.element(container).css('position', 'relative');
-  var arrow = document.createElement('DIV');
+  const arrow = document.createElement('DIV');
   arrow.classList.add('arrow');
   container.appendChild(arrow);
   this.content_ = document.createElement('DIV');
@@ -212,12 +211,12 @@ gmf.ContextualdataController.prototype.preparePopover_ = function() {
 };
 
 gmf.ContextualdataController.prototype.showPopover = function() {
-  var element = /** @type {Object} */ (this.overlay_.getElement());
+  const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'block');
 };
 
 gmf.ContextualdataController.prototype.hidePopover = function() {
-  var element = /** @type {Object} */ (this.overlay_.getElement());
+  const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'none');
 };
 

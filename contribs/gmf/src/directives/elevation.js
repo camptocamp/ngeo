@@ -49,20 +49,16 @@ gmf.elevationDirective = function() {
       'layer': '<gmfElevationLayer',
       'map': '=gmfElevationMap'
     },
-    link: function(scope, element, attr) {
-      var ctrl = scope['ctrl'];
+    link(scope, element, attr) {
+      const ctrl = scope['ctrl'];
 
       // Watch active or not.
-      scope.$watch(function() {
-        return ctrl.active;
-      }, function(active) {
+      scope.$watch(() => ctrl.active, function(active) {
         this.toggleActive_(active);
       }.bind(ctrl));
 
       // Watch current layer.
-      scope.$watch(function() {
-        return ctrl.layer;
-      }, function(layer) {
+      scope.$watch(() => ctrl.layer, function(layer) {
         this.layer = layer;
         this.elevation = null;
       }.bind(ctrl));
@@ -154,11 +150,11 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
     // Moving the mouse clears previously displayed elevation
     this.listenerKeys_.push(ol.events.listen(this.map, 'pointermove',
         function(e) {
-          this.scope_.$apply(function() {
+          this.scope_.$apply(() => {
             this.inViewport_ = true;
             this.elevation = undefined;
             this.loading = false;
-          }.bind(this));
+          });
         }, this));
 
     // Launch the elevation service request when the user stops moving the
@@ -170,15 +166,15 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
     this.listenerKeys_.push(ol.events.listen(this.map.getViewport(),
         ol.events.EventType.MOUSEOUT,
         function(e) {
-          this.scope_.$apply(function() {
+          this.scope_.$apply(() => {
             this.elevation = undefined;
             this.inViewport_ = false;
             this.loading = false;
-          }.bind(this));
+          });
         }, this));
   } else {
     this.elevation = undefined;
-    for (var i = 0, ii = this.listenerKeys_.length; i < ii; ++i) {
+    for (let i = 0, ii = this.listenerKeys_.length; i < ii; ++i) {
       ol.events.unlistenByKey(this.listenerKeys_[i]);
     }
   }
@@ -194,7 +190,7 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
 gmf.ElevationController.prototype.pointerStop_ = function(e) {
   if (this.inViewport_) {
     this.loading = true;
-    var params = {
+    const params = {
       'layers': this.layer
     };
     this.gmfAltitude_.getAltitude(e.coordinate, params).then(
@@ -259,7 +255,7 @@ gmf.elevationwidgetDirective = function() {
     },
     controller: 'gmfElevationwidgetController as ctrl',
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/elevationwidget.html'
+    templateUrl: `${gmf.baseTemplateUrl}/elevationwidget.html`
   };
 };
 

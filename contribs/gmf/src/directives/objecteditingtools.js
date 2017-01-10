@@ -81,7 +81,7 @@ gmf.objecteditingtoolsDirective = function() {
       'sketchFeatures': '<gmfObjecteditingtoolsSketchfeatures'
     },
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/objecteditingtools.html'
+    templateUrl: `${gmf.baseTemplateUrl}/objecteditingtools.html`
   };
 };
 
@@ -230,7 +230,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
    */
   this.triangleAngle = Math.PI / 180 * 90; // 90 degrees
 
-  var oeToolsOptions = /** @type {gmfx.ObjectEditingToolsOptions} */ (
+  const oeToolsOptions = /** @type {gmfx.ObjectEditingToolsOptions} */ (
       $injector.get('gmfObjectEditingToolsOptions'));
 
   /**
@@ -276,17 +276,15 @@ gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
   toolActiveName, process, opt_requiresLayer
 ) {
 
-  var requiresLayer = opt_requiresLayer === true;
+  const requiresLayer = opt_requiresLayer === true;
 
   this.scope_.$watch(
-    function() {
-      return this[toolActiveName];
-    }.bind(this),
+    () => this[toolActiveName],
     this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
 
-  var group = gmf.ObjecteditingtoolsController.NAMESPACE_ + '-' + ol.getUid(this);
-  var toolActivate = new ngeo.ToolActivate(this, toolActiveName);
+  const group = `${gmf.ObjecteditingtoolsController.NAMESPACE_}-${ol.getUid(this)}`;
+  const toolActivate = new ngeo.ToolActivate(this, toolActiveName);
   this.ngeoToolActivateMgr_.registerTool(group, toolActivate, false);
 
   this.toolActiveNames_.push(toolActiveName);
@@ -313,8 +311,8 @@ gmf.ObjecteditingtoolsController.prototype.handleToolActiveChange_ = function(
   }
 
   // Update active property
-  var active = false;
-  for (var i = 0, ii = this.toolActiveNames_.length; i < ii; i++) {
+  let active = false;
+  for (let i = 0, ii = this.toolActiveNames_.length; i < ii; i++) {
     active = active || this[this.toolActiveNames_[i]];
     if (active) {
       break;

@@ -57,10 +57,10 @@ gmf.module.value('gmfPrintTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template.
      */
-    function(element, attrs) {
-      var templateUrl = attrs['gmfPrintTemplateurl'];
+    (element, attrs) => {
+      const templateUrl = attrs['gmfPrintTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/print.html';
+          `${gmf.baseTemplateUrl}/print.html`;
     });
 
 
@@ -112,12 +112,10 @@ gmf.printDirective = function(gmfPrintTemplateUrl) {
       'rotateMask': '&?gmfPrintRotatemask',
       'fieldValues': '&?gmfPrintFieldvalues'
     },
-    link: function(scope, element, attr) {
-      var ctrl = scope['ctrl'];
+    link(scope, element, attr) {
+      const ctrl = scope['ctrl'];
 
-      scope.$watch(function() {
-        return ctrl.active;
-      }, function(active) {
+      scope.$watch(() => ctrl.active, function(active) {
         this.togglePrintPanel_(active);
       }.bind(ctrl));
     }
@@ -337,7 +335,7 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   /**
    * @return {ol.Size} Size in dots of the map to print.
    */
-  var getSizeFn = function() {
+  const getSizeFn = function() {
     return this.paperSize_;
   }.bind(this);
 
@@ -345,13 +343,13 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
    * @param {olx.FrameState} frameState Frame state.
    * @return {number} Scale of the map to print.
    */
-  var getScaleFn = function(frameState) {
-    var mapSize = frameState.size;
-    var viewResolution = frameState.viewState.resolution;
+  const getScaleFn = function(frameState) {
+    const mapSize = frameState.size;
+    const viewResolution = frameState.viewState.resolution;
     return this.fields.scale = this.getOptimalScale_(mapSize, viewResolution);
   }.bind(this);
 
-  var getRotationFn;
+  let getRotationFn;
   if (this.rotateMask_) {
     /**
      * @return {number} rotation to apply.
@@ -374,22 +372,20 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   this.capabilities_;
 
   // Clear the capabilities if the roleId changes
-  $scope.$watch(function() {
-    return gmfAuthentication.getRoleId();
-  }, function() {
+  $scope.$watch(() => gmfAuthentication.getRoleId(), () => {
     this.gmfPrintState_.state = gmf.PrintStateEnum.CAPABILITIES_NOT_LOADED;
     this.capabilities_ = null;
-  }.bind(this));
+  });
 
   // Print on event.
-  $rootScope.$on('gmfStartPrint', function(event, format) {
-    this.print('' + format);
-  }.bind(this));
+  $rootScope.$on('gmfStartPrint', (event, format) => {
+    this.print(`${format}`);
+  });
 
   // Cancel print task on event.
-  $rootScope.$on('gmfCancelPrint', function() {
+  $rootScope.$on('gmfCancelPrint', () => {
     this.cancel();
-  }.bind(this));
+  });
 };
 
 
@@ -403,7 +399,7 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
     if (!this.capabilities_) {
       this.getCapabilities_();
     }
-    this.capabilities_.then(function(resp) {
+    this.capabilities_.then((resp) => {
       // make sure the panel is still open
       if (!this.active) {
         return;
@@ -416,11 +412,11 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
       this.pointerDragListenerKey_ = this.map.on('pointerdrag',
           this.onPointerDrag_.bind(this));
       this.map.render();
-    }.bind(this), function(resp) {
+    }, (resp) => {
       // Get capabilities - On error
       this.gmfPrintState_.state = gmf.PrintStateEnum.ERROR_ON_GETCAPABILITIES;
       this.capabilities_ = null;
-    }.bind(this));
+    });
   } else {
     this.map.unByKey(this.postComposeListenerKey_);
     this.map.unByKey(this.pointerDragListenerKey_);
@@ -456,15 +452,15 @@ gmf.PrintController.prototype.getCapabilities_ = function(opt_roleId) {
  * @private
  */
 gmf.PrintController.prototype.parseCapabilities_ = function(resp) {
-  var data = resp['data'];
+  const data = resp['data'];
   this.formats_ = data['formats'] || [];
   this.layouts_ = data['layouts'];
   this.layout_ = data['layouts'][0];
 
   this.fields.layouts = [];
-  this.layouts_.forEach(function(layout) {
+  this.layouts_.forEach((layout) => {
     this.fields.layouts.push(layout.name);
-  }.bind(this));
+  });
 
   this.updateFields_();
 };
@@ -481,15 +477,15 @@ gmf.PrintController.prototype.parseCapabilities_ = function(resp) {
 gmf.PrintController.prototype.updateFields_ = function() {
   this.fields.layout = this.layout_.name;
 
-  var mapInfo = this.isAttributeInCurrentLayout_('map');
+  const mapInfo = this.isAttributeInCurrentLayout_('map');
   goog.asserts.assertObject(mapInfo);
-  var clientInfo = mapInfo['clientInfo'];
+  const clientInfo = mapInfo['clientInfo'];
   goog.asserts.assertObject(clientInfo);
   this.paperSize_ = [clientInfo['width'], clientInfo['height']];
 
   this.updateCustomFields_();
 
-  var legend = this.isAttributeInCurrentLayout_('legend');
+  const legend = this.isAttributeInCurrentLayout_('legend');
   if (this.fields.legend === undefined) {
     this.fields.legend = !!(legend !== undefined ?
         legend : this.fieldValues_['legend']);
@@ -498,8 +494,8 @@ gmf.PrintController.prototype.updateFields_ = function() {
   this.fields.scales = clientInfo['scales'] || [];
   this.fields.dpis = clientInfo['dpiSuggestions'] || [];
 
-  var mapSize = this.map.getSize();
-  var viewResolution = this.map.getView().getResolution();
+  const mapSize = this.map.getSize();
+  const viewResolution = this.map.getView().getResolution();
   this.fields.scale = this.getOptimalScale_(mapSize, viewResolution);
 
   this.fields.dpi =
@@ -507,9 +503,9 @@ gmf.PrintController.prototype.updateFields_ = function() {
       this.fields.dpi : this.fields.dpis[0];
 
   this.fields.formats = {};
-  this.formats_.forEach(function(format) {
+  this.formats_.forEach((format) => {
     this.fields.formats[format] = true;
-  }.bind(this));
+  });
 
   // Force the update of the mask
   this.map.render();
@@ -522,23 +518,23 @@ gmf.PrintController.prototype.updateFields_ = function() {
  * @private
  */
 gmf.PrintController.prototype.updateCustomFields_ = function() {
-  var name, rawType, value, type;
+  let name, rawType, value, type;
   if (!this.fields.customs) {
     this.fields.customs = [];
   }
-  var customs = this.fields.customs;
-  var previousCustoms = customs.splice(0, customs.length);
+  const customs = this.fields.customs;
+  const previousCustoms = customs.splice(0, customs.length);
 
   // The attributes without 'clientParams' are the custom fields (user-defined).
-  this.layout_.attributes.forEach(function(attribute) {
+  this.layout_.attributes.forEach((attribute) => {
     if (!attribute['clientParams']) {
-      name = '' + attribute.name;
-      var defaultValue = attribute.default;
+      name = `${attribute.name}`;
+      const defaultValue = attribute.default;
       value = (defaultValue !== undefined && defaultValue !== '') ?
           defaultValue : this.fieldValues_[name];
 
       // Try to use existing form field type
-      rawType = '' + attribute.type;
+      rawType = `${attribute.type}`;
       switch (rawType) {
         case 'String':
           type = (name === 'comments') ? 'textarea' : 'text';
@@ -556,19 +552,19 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
       }
 
       // If it exists use the value of previous same field.
-      previousCustoms.forEach(function(c) {
+      previousCustoms.forEach((c) => {
         if (c.name === name && c.type === type) {
           return value = c.value;
         }
       });
 
       this.fields.customs.push(/** gmfx.CustomField */ ({
-        name: name,
-        type: type,
-        value: value
+        name,
+        type,
+        value
       }));
     }
-  }.bind(this));
+  });
 };
 
 
@@ -579,8 +575,8 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
  * @private
  */
 gmf.PrintController.prototype.isAttributeInCurrentLayout_ = function(name) {
-  var attr = null;
-  this.layout_.attributes.forEach(function(attribute) {
+  let attr = null;
+  this.layout_.attributes.forEach((attribute) => {
     if (attribute.name === name) {
       return attr = attribute;
     }
@@ -599,7 +595,7 @@ gmf.PrintController.prototype.isAttributeInCurrentLayout_ = function(name) {
  */
 gmf.PrintController.prototype.getSetRotation = function(opt_rotation) {
   if (opt_rotation !== undefined) {
-    var rotation = parseInt(opt_rotation, 10);
+    let rotation = parseInt(opt_rotation, 10);
     if (rotation > 180) {
       rotation = -180;
     } else if (rotation < -180) {
@@ -627,10 +623,10 @@ gmf.PrintController.prototype.getSetRotation = function(opt_rotation) {
  * @private
  */
 gmf.PrintController.prototype.onPointerDrag_ = function(e) {
-  var originalEvent = e.originalEvent;
+  const originalEvent = e.originalEvent;
   if (this.active && originalEvent.altKey && originalEvent.shiftKey) {
-    var center = this.map.getPixelFromCoordinate(this.map.getView().getCenter());
-    var pixel = e.pixel;
+    const center = this.map.getPixelFromCoordinate(this.map.getView().getCenter());
+    const pixel = e.pixel;
     // Reset previous position between two differents sessions of drags events.
     if (this.rotationTimeoutPromise_ === null) {
       this.onDragPreviousMousePosition_ = null;
@@ -638,26 +634,26 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
       // Cancel the timeout to keep this session of drags event
       this.$timeout_.cancel(this.rotationTimeoutPromise_);
       // Calculate angle and sense of rotation.
-      var p0x = this.onDragPreviousMousePosition_[0] - center[0];
-      var p0y = this.onDragPreviousMousePosition_[1] - center[1];
-      var p1x = pixel[0] - center[0];
-      var p1y = pixel[1] - center[1];
-      var centerToP0 = Math.sqrt(Math.pow(p0x, 2) + Math.pow(p0y, 2));
-      var centerToP1 = Math.sqrt(Math.pow(p1x, 2) + Math.pow(p1y, 2));
-      var sense = (p0x * p1y - p0y * p1x) > 0 ? 1 : -1;
-      var angle = (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1);
+      const p0x = this.onDragPreviousMousePosition_[0] - center[0];
+      const p0y = this.onDragPreviousMousePosition_[1] - center[1];
+      const p1x = pixel[0] - center[0];
+      const p1y = pixel[1] - center[1];
+      const centerToP0 = Math.sqrt(Math.pow(p0x, 2) + Math.pow(p0y, 2));
+      const centerToP1 = Math.sqrt(Math.pow(p1x, 2) + Math.pow(p1y, 2));
+      const sense = (p0x * p1y - p0y * p1x) > 0 ? 1 : -1;
+      let angle = (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1);
       angle = angle <= 1 ? sense * Math.acos(angle) : 0;
-      var boost = centerToP1 / 200;
-      var increment = Math.round(ol.math.toDegrees(angle) * boost);
+      const boost = centerToP1 / 200;
+      const increment = Math.round(ol.math.toDegrees(angle) * boost);
 
       // Set rotation then update the view.
       this.getSetRotation(this.rotation + increment);
       this.$scope_.$digest();
     }
     // Prepare the removal of this session of drags events
-    this.rotationTimeoutPromise_ = this.$timeout_(function() {
+    this.rotationTimeoutPromise_ = this.$timeout_(() => {
       this.rotationTimeoutPromise_ = null;
-    }.bind(this), 500);
+    }, 500);
     // Keep the current position for the next calculation.
     this.onDragPreviousMousePosition_ = pixel;
   }
@@ -678,13 +674,13 @@ gmf.PrintController.prototype.print = function(format) {
   this.requestCanceler_ = this.$q_.defer();
   this.gmfPrintState_.state = gmf.PrintStateEnum.PRINTING;
 
-  var mapSize = this.map.getSize();
-  var viewResolution = this.map.getView().getResolution();
-  var scale = this.getOptimalScale_(mapSize, viewResolution);
-  var rotation = this.rotateMask_ ? -this.rotation : this.rotation;
-  var datasource = this.getDataSource_();
+  const mapSize = this.map.getSize();
+  const viewResolution = this.map.getView().getResolution();
+  const scale = this.getOptimalScale_(mapSize, viewResolution);
+  const rotation = this.rotateMask_ ? -this.rotation : this.rotation;
+  const datasource = this.getDataSource_();
 
-  var customAttributes = {
+  const customAttributes = {
     'datasource': datasource,
     'lang': this.gettextCatalog_.currentLanguage,
     'rotation': rotation,
@@ -692,13 +688,13 @@ gmf.PrintController.prototype.print = function(format) {
   };
 
   if (this.fields.customs) {
-    this.fields.customs.forEach(function(field) {
+    this.fields.customs.forEach((field) => {
       customAttributes[field.name] = field.value;
     });
   }
 
   if (this.fields.legend) {
-    var legend = this.getLegend_(scale);
+    const legend = this.getLegend_(scale);
     if (legend !== null) {
       customAttributes['legend'] = this.getLegend_(scale);
     }
@@ -707,11 +703,11 @@ gmf.PrintController.prototype.print = function(format) {
   goog.asserts.assertNumber(this.fields.dpi);
   goog.asserts.assertString(this.fields.layout);
 
-  var spec = this.ngeoPrint_.createSpec(this.map, scale, this.fields.dpi,
+  const spec = this.ngeoPrint_.createSpec(this.map, scale, this.fields.dpi,
       this.fields.layout, format, customAttributes);
 
   // Add feature overlay layer to print spec.
-  var layers = [];
+  const layers = [];
   this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_,
       viewResolution);
   if (layers.length > 0) {
@@ -768,29 +764,27 @@ gmf.PrintController.prototype.resetPrintStates_ = function(opt_printState) {
  * the print report
  */
 gmf.PrintController.prototype.getDataSource_ = function() {
-  var datasourceObj, data, columns;
-  var datasourceArr = [];
-  var sources = this.ngeoQueryResult_.sources;
+  let datasourceObj, data, columns;
+  const datasourceArr = [];
+  const sources = this.ngeoQueryResult_.sources;
   sources.forEach(function(source) {
     data = [];
     columns = [];
     source.features.forEach(function(feature, i) {
-      var properties = this.ngeoFeatureHelper_.getFilteredFeatureValues(feature);
+      const properties = this.ngeoFeatureHelper_.getFilteredFeatureValues(feature);
       if (i === 0) {
         columns = Object.keys(properties).map(function tanslateColumns(prop) {
           return this.translate_(prop);
         }, this);
       }
-      data.push(Object.keys(properties).map(function(key) {
-        return properties[key];
-      }));
+      data.push(Object.keys(properties).map(key => properties[key]));
     }, this);
     if (columns.length) {
       datasourceObj = /** @type {gmfx.DataSourcePrintReportObject} */({
         title: this.translate_(source.label),
         table: {
-          columns: columns,
-          data: data
+          columns,
+          data
         }
       });
       datasourceArr.push(datasourceObj);
@@ -812,7 +806,7 @@ gmf.PrintController.prototype.getDataSource_ = function() {
  */
 gmf.PrintController.prototype.getOptimalScale_ = function(mapSize,
     viewResolution) {
-  var scales = this.fields.scales.slice();
+  const scales = this.fields.scales.slice();
   if (mapSize !== undefined && viewResolution !== undefined) {
     return this.ngeoPrintUtils_.getOptimalScale(mapSize, viewResolution,
         this.paperSize_, scales.reverse());
@@ -826,8 +820,8 @@ gmf.PrintController.prototype.getOptimalScale_ = function(mapSize,
  * @private
  */
 gmf.PrintController.prototype.handleCreateReportSuccess_ = function(resp) {
-  var mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
-  var ref = mfResp.ref;
+  const mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
+  const ref = mfResp.ref;
   goog.asserts.assert(ref.length > 0);
   this.curRef_ = ref;
   this.getStatus_(ref);
@@ -855,8 +849,8 @@ gmf.PrintController.prototype.getStatus_ = function(ref) {
  * @private
  */
 gmf.PrintController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
-  var mfResp = /** @type {MapFishPrintStatusResponse} */ (resp.data);
-  var done = mfResp.done;
+  const mfResp = /** @type {MapFishPrintStatusResponse} */ (resp.data);
+  const done = mfResp.done;
   if (done) {
     if (mfResp.status != 'error') {
       // The report is ready. Open it by changing the window location.
@@ -868,9 +862,9 @@ gmf.PrintController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
     }
   } else {
     // The report is not ready yet. Check again in 1s.
-    this.statusTimeoutPromise_ = this.$timeout_(function() {
+    this.statusTimeoutPromise_ = this.$timeout_(() => {
       this.getStatus_(ref);
-    }.bind(this), 1000, false);
+    }, 1000, false);
   }
 };
 
@@ -889,21 +883,20 @@ gmf.PrintController.prototype.handleCreateReportError_ = function() {
  * @private
  */
 gmf.PrintController.prototype.getLegend_ = function(scale) {
-  var legend = {'classes': []};
-  var classes, layerNames, layerName, icons;
-  var gettextCatalog = this.gettextCatalog_;
+  const legend = {'classes': []};
+  let classes, layerNames, layerName, icons;
+  const gettextCatalog = this.gettextCatalog_;
 
   // Get layers from layertree only.
-  var dataLayerGroup = this.ngeoLayerHelper_.getGroupFromMap(this.map,
+  const dataLayerGroup = this.ngeoLayerHelper_.getGroupFromMap(this.map,
       gmf.DATALAYERGROUP_NAME);
-  var layers = this.ngeoLayerHelper_.getFlatLayers(dataLayerGroup);
+  const layers = this.ngeoLayerHelper_.getFlatLayers(dataLayerGroup);
 
   // For each visible layer in reverse order, get the legend url.
-  layers.reverse().forEach(function(layer) {
+  layers.reverse().forEach((layer) => {
     classes = [];
-    var source = layer.getSource();
 
-    if (layer.getVisible() && source !== undefined) {
+    if (layer.getVisible() && layer.getSource()) {
       // For WMTS layers.
       if (layer instanceof ol.layer.Tile) {
         layerName = layer.get('layerNodeName');
@@ -911,25 +904,26 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
         // Don't add classes without legend url.
         if (icons !== null) {
           classes.push({
-            'name': gettextCatalog.getString('' + layerName),
+            'name': gettextCatalog.getString(`${layerName}`),
             'icons': [icons]
           });
         }
       } else {
+        const source = /** @type ol.source.ImageWMS */ (layer.getSource());
         // For each name in a WMS layer.
         layerNames = source.getParams()['LAYERS'].split(',');
-        layerNames.forEach(function(name) {
+        layerNames.forEach((name) => {
           icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
               scale);
           // Don't add classes without legend url or from layers without any
           // active name.
           if (icons !== null && name.length !== 0) {
             classes.push({
-              'name': gettextCatalog.getString('' + name),
+              'name': gettextCatalog.getString(`${name}`),
               'icons': [icons]
             });
           }
-        }.bind(this));
+        });
       }
     }
 
@@ -938,7 +932,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
       legend['classes'].push({'classes': classes});
     }
 
-  }.bind(this));
+  });
 
   return legend['classes'].length > 0 ?  legend : null;
 };
@@ -951,8 +945,8 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
  * @export
  */
 gmf.PrintController.prototype.setLayout = function(layoutName) {
-  var layout;
-  this.layouts_.forEach(function(l) {
+  let layout;
+  this.layouts_.forEach((l) => {
     if (l.name === layoutName) {
       layout = l;
       return true; // break;
@@ -969,11 +963,11 @@ gmf.PrintController.prototype.setLayout = function(layoutName) {
  * @export
  */
 gmf.PrintController.prototype.setScale = function(scale) {
-  var mapSize = this.map.getSize();
+  const mapSize = this.map.getSize();
   this.fields.scale = scale;
-  var res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_,
+  const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_,
         scale);
-  var contrainRes = this.map.getView().constrainResolution(res, 0, 1);
+  const contrainRes = this.map.getView().constrainResolution(res, 0, 1);
   this.map.getView().setResolution(contrainRes);
 };
 

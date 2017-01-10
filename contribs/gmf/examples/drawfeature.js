@@ -45,14 +45,14 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.scope_ = $scope;
 
-  var view = new ol.View({
+  const view = new ol.View({
     center: [0, 0],
     zoom: 3
   });
 
   ngeoFeatureHelper.setProjection(view.getProjection());
 
-  var featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  const featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   featureOverlay.setFeatures(ngeoFeatures);
 
   /**
@@ -65,7 +65,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
         source: new ol.source.OSM()
       })
     ],
-    view: view
+    view
   });
 
  /**
@@ -74,7 +74,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.drawFeatureActive = true;
 
-  var drawFeatureToolActivate = new ngeo.ToolActivate(
+  const drawFeatureToolActivate = new ngeo.ToolActivate(
       this, 'drawFeatureActive');
   ngeoToolActivateMgr.registerTool(
       'mapTools', drawFeatureToolActivate, true);
@@ -85,23 +85,21 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.pointerMoveActive = false;
 
-  var pointerMoveToolActivate = new ngeo.ToolActivate(
+  const pointerMoveToolActivate = new ngeo.ToolActivate(
       this, 'pointerMoveActive');
   ngeoToolActivateMgr.registerTool(
       'mapTools', pointerMoveToolActivate, false);
 
   $scope.$watch(
-    function() {
-      return this.pointerMoveActive;
-    }.bind(this),
-    function(newVal) {
+    () => this.pointerMoveActive,
+    (newVal) => {
       if (newVal) {
         this.map.on('pointermove', this.handleMapPointerMove_, this);
       } else {
         this.map.un('pointermove', this.handleMapPointerMove_, this);
         $('#pointermove-feature').html('');
       }
-    }.bind(this)
+    }
   );
 
   // initialize tooltips
@@ -117,11 +115,9 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
  * @private
  */
 gmfapp.MainController.prototype.handleMapPointerMove_ = function(evt) {
-  var pixel = evt.pixel;
+  const pixel = evt.pixel;
 
-  var feature = this.map.forEachFeatureAtPixel(pixel, function(feature) {
-    return feature;
-  });
+  const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
 
   $('#pointermove-feature').html(
     (feature) ? feature.get(ngeo.FeatureProperties.NAME) : 'None'

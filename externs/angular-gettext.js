@@ -7,13 +7,13 @@
 /**
  * @typedef {function(string): string}
  */
-var gettext;
+let gettext;
 
 
 /**
  * @const
  */
-var angularGettext = {};
+let angularGettext = {};
 
 
 /**

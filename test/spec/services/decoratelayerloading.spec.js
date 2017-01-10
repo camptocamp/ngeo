@@ -8,20 +8,20 @@ goog.require('ol.source.Image');
 goog.require('ol.Collection');
 
 
-describe('DecorateLayerLoading test suite', function() {
-  var decorateLayerLoading;
-  var scope;
+describe('DecorateLayerLoading test suite', () => {
+  let decorateLayerLoading;
+  let scope;
 
-  beforeEach(inject(function($injector, $rootScope) {
+  beforeEach(inject(($injector, $rootScope) => {
     decorateLayerLoading = $injector.get('ngeoDecorateLayerLoading');
     scope = $rootScope.$new();
   }));
 
-  it('should increment layerLoadingCount recursively', function() {
-    var imageSource = new ol.source.Image({});
-    var layer = new ol.layer.Image({source: imageSource});
-    var lg_1 = new ol.layer.Group();
-    var lg_2 = new ol.layer.Group();
+  it('should increment layerLoadingCount recursively', () => {
+    const imageSource = new ol.source.Image({});
+    const layer = new ol.layer.Image({source: imageSource});
+    const lg_1 = new ol.layer.Group();
+    const lg_2 = new ol.layer.Group();
 
     decorateLayerLoading(layer, scope);
     decorateLayerLoading(lg_1, scope);

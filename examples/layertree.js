@@ -69,9 +69,9 @@ app.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
    */
   this.tree = undefined;
 
-  $http.get('data/tree.json').then(function(resp) {
+  $http.get('data/tree.json').then((resp) => {
     this.tree = resp.data;
-  }.bind(this));
+  });
 
   /**
    * @private
@@ -124,17 +124,17 @@ app.LayertreeController.prototype.getLayer = function(node) {
  * @export
  */
 app.LayertreeController.prototype.onButtonClick = function(node, layer) {
-  var layerType = node['layerType'];
+  const layerType = node['layerType'];
   if (!(layerType in this.promises_)) {
     this.promises_[layerType] = this.http_.get('data/metadata.html').then(
-        function(resp) {
-          var html = this.sce_.trustAsHtml(resp.data);
+        (resp) => {
+          const html = this.sce_.trustAsHtml(resp.data);
           return html;
-        }.bind(this)
+        }
     );
   }
-  var infoPopup = this.infoPopup_;
-  this.promises_[layerType].then(function(html) {
+  const infoPopup = this.infoPopup_;
+  this.promises_[layerType].then((html) => {
     infoPopup.setTitle(node['name']);
     infoPopup.setContent(html);
     infoPopup.setOpen(true);
@@ -158,7 +158,7 @@ app.getLayer = (function() {
   /**
    * @type {Object.<string, ol.layer.Layer>}
    */
-  var layerCache = {};
+  const layerCache = {};
   return (
       /**
        * @param {Object} node Tree node.
@@ -168,11 +168,11 @@ app.getLayer = (function() {
         if (!('layerType' in node)) {
           return null;
         }
-        var type = node['layerType'];
+        const type = node['layerType'];
         if (type in layerCache) {
           return layerCache[type];
         }
-        var source;
+        let source;
         if (type == 'stamenWatercolor') {
           source = new ol.source.Stamen({
             layer: 'watercolor'
@@ -196,8 +196,8 @@ app.getLayer = (function() {
         } else {
           source = new ol.source.OSM();
         }
-        var layer = new ol.layer.Tile({
-          source: source
+        const layer = new ol.layer.Tile({
+          source
         });
         layer.set('type', type);
         layerCache[type] = layer;

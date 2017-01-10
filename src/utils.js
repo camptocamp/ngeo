@@ -15,7 +15,7 @@ goog.require('ol.geom.Polygon');
  * @return {ol.geom.Geometry} A multi geometry
  */
 ngeo.utils.toMulti = function(geometry) {
-  var multiGeom;
+  let multiGeom;
   if (geometry instanceof ol.geom.Point) {
     multiGeom = new ol.geom.MultiPoint([]);
     multiGeom.appendPoint(geometry);

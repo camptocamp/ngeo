@@ -2,36 +2,36 @@
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.test.data.wmtsCapabilities');
 
-describe('ngeo.LayerHelper', function() {
-  var ngeoLayerHelper;
-  var layer;
-  var wmtsSrc = 'http://fake/wmts/capabilities.xml';
-  var wmtsName = 'layer-7328';
-  var $httpBackend;
+describe('ngeo.LayerHelper', () => {
+  let ngeoLayerHelper;
+  let layer;
+  const wmtsSrc = 'http://fake/wmts/capabilities.xml';
+  const wmtsName = 'layer-7328';
+  let $httpBackend;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       ngeoLayerHelper = $injector.get('ngeoLayerHelper');
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.when('GET', wmtsSrc).respond(wmtsCapabilities);
     });
   });
 
-  afterEach(function() {
+  afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('Create a basic WMS layer', function() {
+  it('Create a basic WMS layer', () => {
     layer = ngeoLayerHelper.createBasicWMSLayer('', '');
     expect(layer.constructor).toBe(ol.layer.Image);
     expect(layer.getSource().constructor).toBe(ol.source.ImageWMS);
   });
 
-  it('Create a WMTS layer from capabilitites', function() {
+  it('Create a WMTS layer from capabilitites', () => {
     $httpBackend.expectGET(wmtsSrc);
-    var spy = jasmine.createSpy();
-    var promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
+    const spy = jasmine.createSpy();
+    const promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
             wmtsName);
     promise.then(spy);
     $httpBackend.flush();
@@ -41,59 +41,59 @@ describe('ngeo.LayerHelper', function() {
     expect(layer.getSource().getLayer()).toBe(wmtsName);
   });
 
-  it('Create a layergroup with layers', function() {
+  it('Create a layergroup with layers', () => {
     layer = ngeoLayerHelper.createBasicWMSLayer('', '');
-    var collection = new ol.Collection();
+    const collection = new ol.Collection();
     collection.push(layer);
-    var group = ngeoLayerHelper.createBasicGroup(collection);
+    const group = ngeoLayerHelper.createBasicGroup(collection);
     expect(group.getLayersArray().length).toBe(1);
   });
 
-  it('Get an array of layer from a group', function() {
+  it('Get an array of layer from a group', () => {
     layer = ngeoLayerHelper.createBasicWMSLayer('', '');
-    var collection = new ol.Collection();
+    const collection = new ol.Collection();
     collection.push(layer);
-    var group = new ol.layer.Group();
+    const group = new ol.layer.Group();
     group.setLayers(collection);
     expect(ngeoLayerHelper.getFlatLayers(group).length).toBe(1);
   });
 
-  it('Get WMS legend url', function() {
-    var url = 'http://test';
-    var layerName = 'wmsLayer';
-    var scale = 0;
-    var wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale);
-    var expectedResult = url + '?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=' +
-      'WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + layerName +
-      '&SCALE=' + scale;
+  it('Get WMS legend url', () => {
+    const url = 'http://test';
+    const layerName = 'wmsLayer';
+    const scale = 0;
+    const wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale);
+    const expectedResult = `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=` +
+      `WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=${layerName
+      }&SCALE=${scale}`;
     expect(expectedResult).toBe(wmsLegendURL);
   });
 
-  it('Get WMS legend icon url', function() {
-    var url = 'http://test';
-    var layerName = 'wmsLayer';
-    var legendRule = 'legendRule';
-    var wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, undefined,
+  it('Get WMS legend icon url', () => {
+    const url = 'http://test';
+    const layerName = 'wmsLayer';
+    const legendRule = 'legendRule';
+    const wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, undefined,
         legendRule);
-    var expectedResult = url + '?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=' +
-      'WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + layerName +
-      '&RULE=' + legendRule;
+    const expectedResult = `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=` +
+      `WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=${layerName
+      }&RULE=${legendRule}`;
     expect(expectedResult).toBe(wmsLegendURL);
   });
 
-  it('Get WMTS legend url', function() {
+  it('Get WMTS legend url', () => {
     $httpBackend.expectGET(wmtsSrc);
-    var spy = jasmine.createSpy();
-    var promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
+    const spy = jasmine.createSpy();
+    const promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
             wmtsName);
     promise.then(spy);
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
     layer = spy.calls.mostRecent().args[0];
-    var capabilitiesStyles = [{legendURL: [{href: 'http://legendURL'}]}];
+    const capabilitiesStyles = [{legendURL: [{href: 'http://legendURL'}]}];
     layer.set('capabilitiesStyles', capabilitiesStyles);
-    var legend = ngeoLayerHelper.getWMTSLegendURL(layer);
+    const legend = ngeoLayerHelper.getWMTSLegendURL(layer);
     expect(legend).toBe('http://legendURL');
   });
 });

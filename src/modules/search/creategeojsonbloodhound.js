@@ -13,13 +13,13 @@ goog.require('ol.obj');
  *
  * Example:
  *
- *     var bloodhound = createGeoJSONBloodhound(
+ *     let bloodhound = createGeoJSONBloodhound(
  *       'http://example.com/fulltextsearch?query=%QUERY',
  *       aFilterFunction,
  *       ol.proj.get('EPSG:3857'));
  *     bloodhound.initialize();
  *
- *     var bloodhound = createGeoJSONBloodhound(
+ *     let bloodhound = createGeoJSONBloodhound(
  *       '',
  *       undefined,
  *       ol.proj.get('EPSG:3857'),
@@ -60,17 +60,17 @@ ngeo.search.CreateGeoJSONBloodhound;
  */
 ngeo.search.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
     opt_dataProjection, opt_options, opt_remoteOptions) {
-  var geojsonFormat = new ol.format.GeoJSON();
-  var bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
+  const geojsonFormat = new ol.format.GeoJSON();
+  const bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {
-      url: url,
-      prepare: function(query, settings) {
+      url,
+      prepare(query, settings) {
         settings.url = settings.url.replace('%QUERY', query);
         return settings;
       },
-      transform: function(parsedResponse) {
+      transform(parsedResponse) {
         /** @type {GeoJSONFeatureCollection} */
-        var featureCollection = /** @type {GeoJSONFeatureCollection} */
+        let featureCollection = /** @type {GeoJSONFeatureCollection} */
             (parsedResponse);
         if (opt_filter !== undefined) {
           featureCollection = /** @type {GeoJSONFeatureCollection} */ ({
@@ -92,8 +92,8 @@ ngeo.search.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProje
   });
 
   // the options objects are cloned to avoid updating the passed object
-  var options = ol.obj.assign({}, opt_options || {});
-  var remoteOptions = ol.obj.assign({}, opt_remoteOptions || {});
+  const options = ol.obj.assign({}, opt_options || {});
+  const remoteOptions = ol.obj.assign({}, opt_remoteOptions || {});
 
   if (options.remote) {
     // move the remote options to opt_remoteOptions

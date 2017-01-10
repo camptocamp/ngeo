@@ -62,7 +62,7 @@ ngeo.ToolMgrEntry;
  *
  * Each tool must be registered before using it.
  *
- *     var tool = new ngeo.ToolActivate(interaction, 'active');
+ *     let tool = new ngeo.ToolActivate(interaction, 'active');
  *     ngeoToolActivateMgr.registerTool('mapTools', tool);
  *
  * A tool will be registered in a group identified by a group name.
@@ -110,14 +110,14 @@ ngeo.ToolActivateMgr = function($rootScope) {
  */
 ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
     opt_defaultActivate) {
-  var entries = this.groups_[groupName];
+  let entries = this.groups_[groupName];
   if (!entries) {
     entries = this.groups_[groupName] = [];
   }
 
-  var unlisten = this.scope_.$watch(
+  const unlisten = this.scope_.$watch(
       tool.getActive,
-      (function(newVal, oldVal) {
+      (newVal, oldVal) => {
         if (newVal === oldVal) {
           return;
         }
@@ -126,24 +126,24 @@ ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
         } else {
           this.activateDefault_(groupName);
         }
-      }).bind(this));
+      });
 
   entries.push({
-    tool: tool,
+    tool,
     defaultTool: opt_defaultActivate || false,
-    unlisten: unlisten
+    unlisten
   });
 
   if (goog.asserts.ENABLE_ASSERTS) {
     // check that only one default tool per group exists
-    var defaultTools = 0;
-    entries.forEach(function(entry) {
+    let defaultTools = 0;
+    entries.forEach((entry) => {
       if (entry.defaultTool) {
         defaultTools++;
       }
     });
     goog.asserts.assert(
-        defaultTools <= 1, 'more than one default tool in group ' + groupName);
+        defaultTools <= 1, `more than one default tool in group ${groupName}`);
   }
 };
 
@@ -155,9 +155,9 @@ ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
  * @export
  */
 ngeo.ToolActivateMgr.prototype.unregisterTool = function(groupName, tool) {
-  var entries = this.groups_[groupName];
+  const entries = this.groups_[groupName];
   if (entries) {
-    for (var i = 0; i < entries.length; i++) {
+    for (let i = 0; i < entries.length; i++) {
       if (entries[i].tool == tool) {
         entries[i].unlisten();
         entries.splice(i, 1);
@@ -174,9 +174,9 @@ ngeo.ToolActivateMgr.prototype.unregisterTool = function(groupName, tool) {
  * @export
  */
 ngeo.ToolActivateMgr.prototype.unregisterGroup = function(groupName) {
-  var entries = this.groups_[groupName];
+  const entries = this.groups_[groupName];
   if (entries) {
-    for (var i = 0; i < entries.length; i++) {
+    for (let i = 0; i < entries.length; i++) {
       entries[i].unlisten();
     }
     delete this.groups_[groupName];
@@ -212,8 +212,8 @@ ngeo.ToolActivateMgr.prototype.deactivateTool = function(tool) {
  * @private
  */
 ngeo.ToolActivateMgr.prototype.deactivateTools_ = function(groupName, tool) {
-  var entries = this.groups_[groupName];
-  for (var i = 0; i < entries.length; i++) {
+  const entries = this.groups_[groupName];
+  for (let i = 0; i < entries.length; i++) {
     if (tool != entries[i].tool) {
       entries[i].tool.setActive(false);
     }
@@ -228,11 +228,11 @@ ngeo.ToolActivateMgr.prototype.deactivateTools_ = function(groupName, tool) {
  * @private
  */
 ngeo.ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
-  var entries = this.groups_[groupName];
-  var defaultTool = null;
-  var hasActiveTool = false;
+  const entries = this.groups_[groupName];
+  let defaultTool = null;
+  let hasActiveTool = false;
 
-  for (var i = 0; i < entries.length; i++) {
+  for (let i = 0; i < entries.length; i++) {
     hasActiveTool = hasActiveTool || entries[i].tool.getActive();
 
     if (entries[i].defaultTool) {

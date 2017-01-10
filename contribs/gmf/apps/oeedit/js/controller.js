@@ -58,20 +58,20 @@ app.OEEditController = function($scope, $injector, $timeout) {
    * The ngeo ToolActivate manager service.
    * @type {ngeo.ToolActivateMgr}
    */
-  var ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+  const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
   ngeoToolActivateMgr.unregisterGroup('mapTools');
 
-  var oeEditToolActivate = new ngeo.ToolActivate(this, 'oeEditActive');
+  const oeEditToolActivate = new ngeo.ToolActivate(this, 'oeEditActive');
   ngeoToolActivateMgr.registerTool('mapTools', oeEditToolActivate, true);
 
-  var queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+  const queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, false);
 
   // Set edit tool as default active one
-  $timeout(function() {
+  $timeout(() => {
     this.oeEditActive = true;
-  }.bind(this));
+  });
 
   /**
    * @type {ol.source.Vector}
@@ -109,21 +109,21 @@ app.OEEditController = function($scope, $injector, $timeout) {
   /**
    * @type {gmf.Themes} gmfObjectEditingManager The gmf theme service
    */
-  var gmfThemes = $injector.get('gmfThemes');
+  const gmfThemes = $injector.get('gmfThemes');
 
-  gmfThemes.getThemesObject().then(function(themes) {
+  gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       // Add layer vector after
       this.map.addLayer(this.vectorLayer_);
       this.map.addLayer(this.sketchLayer_);
     }
-  }.bind(this));
+  });
 
   /**
    * @type {gmf.ObjectEditingManager} gmfObjectEditingManager The gmf
    *     ObjectEditing manager service.
    */
-  var gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');
+  const gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');
 
   /**
    * @type {?string}
@@ -143,12 +143,12 @@ app.OEEditController = function($scope, $injector, $timeout) {
    */
   this.oeFeature = null;
 
-  gmfObjectEditingManager.getFeature().then(function(feature) {
+  gmfObjectEditingManager.getFeature().then((feature) => {
     this.oeFeature = feature;
     if (feature) {
       this.vectorSource_.addFeature(feature);
     }
-  }.bind(this));
+  });
 
   /**
    * @type {Array.<string>}
@@ -203,7 +203,7 @@ app.OEEditController = function($scope, $injector, $timeout) {
 
   // Allow angular-gettext-tools to collect the strings to translate
   /** @type {angularGettext.Catalog} */
-  var gettextCatalog = $injector.get('gettextCatalog');
+  const gettextCatalog = $injector.get('gettextCatalog');
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');

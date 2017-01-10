@@ -34,8 +34,8 @@ gmfapp.module.value(
  */
 gmfapp.MainController = function(gmfPermalink) {
 
-  var center = gmfPermalink.getMapCenter() || [537635, 152640];
-  var zoom = gmfPermalink.getMapZoom() || 3;
+  const center = gmfPermalink.getMapCenter() || [537635, 152640];
+  const zoom = gmfPermalink.getMapZoom() || 3;
 
   /**
    * @type {ol.Map}
@@ -50,8 +50,8 @@ gmfapp.MainController = function(gmfPermalink) {
     view: new ol.View({
       projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
-      center: center,
-      zoom: zoom
+      center,
+      zoom
     })
   });
 

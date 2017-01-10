@@ -54,17 +54,17 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
     url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch'
   }];
 
-  var fill = new ol.style.Fill({color: [255, 255, 255, 0.6]});
-  var stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
+  const fill = new ol.style.Fill({color: [255, 255, 255, 0.6]});
+  const stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
   /**
    * @type {Object.<string, ol.style.Style>} Map of styles for search overlay.
    * @export
    */
   this.searchStyles = {
     'osm': new ol.style.Style({
-      fill: fill,
-      image: new ol.style.Circle({fill: fill, radius: 5, stroke: stroke}),
-      stroke: stroke
+      fill,
+      image: new ol.style.Circle({fill, radius: 5, stroke}),
+      stroke
     })
   };
 

@@ -1,20 +1,20 @@
 goog.require('ngeo.PrintUtils');
 
-describe('ngeo.PrintUtils', function() {
+describe('ngeo.PrintUtils', () => {
 
-  var ngeoPrintUtils;
+  let ngeoPrintUtils;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       ngeoPrintUtils = $injector.get('ngeoPrintUtils');
     });
   });
 
-  describe('#getOptimalResolution', function() {
+  describe('#getOptimalResolution', () => {
 
-    var inchesPerMeter, dotsPerInch;
+    let inchesPerMeter, dotsPerInch;
 
-    beforeEach(function() {
+    beforeEach(() => {
       inchesPerMeter = ngeo.PrintUtils.INCHES_PER_METER_;
       dotsPerInch = ngeo.PrintUtils.DOTS_PER_INCH_;
 
@@ -23,16 +23,16 @@ describe('ngeo.PrintUtils', function() {
       ngeo.PrintUtils.DOTS_PER_INCH_ = 80;
     });
 
-    afterEach(function() {
+    afterEach(() => {
       ngeo.PrintUtils.INCHES_PER_METER_ = inchesPerMeter;
       ngeo.PrintUtils.DOTS_PER_INCH_ = dotsPerInch;
     });
 
-    it('returns the optimal resolution', function() {
-      var mapSize = [2, 1];  // px
-      var printMapSize = [640, 320];  // dots
-      var printScale = 10;  // scale denominator
-      var optimalResolution = ngeoPrintUtils.getOptimalResolution(
+    it('returns the optimal resolution', () => {
+      const mapSize = [2, 1];  // px
+      const printMapSize = [640, 320];  // dots
+      const printScale = 10;  // scale denominator
+      const optimalResolution = ngeoPrintUtils.getOptimalResolution(
           mapSize, printMapSize, printScale);
       expect(optimalResolution).toBe(1);
     });

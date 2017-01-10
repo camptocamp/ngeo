@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "gmlResponseInformationHitsWfs" }] */
 goog.provide('ngeo.test.data.msGMLOutputInformationHitsWfs');
 
-var gmlResponseInformationHitsWfs =
+const gmlResponseInformationHitsWfs =
 '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
 '<wfs:FeatureCollection' +
 '   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"' +

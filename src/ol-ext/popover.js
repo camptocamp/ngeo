@@ -15,7 +15,7 @@ goog.require('goog.events');
  */
 ngeo.Popover = function(opt_options) {
 
-  var options = opt_options !== undefined ? opt_options : {};
+  const options = opt_options !== undefined ? opt_options : {};
 
   /**
    * The key for close button 'click' event
@@ -24,7 +24,7 @@ ngeo.Popover = function(opt_options) {
    */
   this.clickKey_ = null;
 
-  var originalEl;
+  let originalEl;
   if (options.element) {
     originalEl = options.element;
     delete options.element;
@@ -63,9 +63,9 @@ ol.inherits(ngeo.Popover, ol.Overlay);
  */
 ngeo.Popover.prototype.setMap = function(map) {
 
-  var element = this.getElement();
+  const element = this.getElement();
 
-  var currentMap = this.getMap();
+  const currentMap = this.getMap();
   if (currentMap) {
     if (this.clickKey_) {
       goog.events.unlistenByKey(this.clickKey_);
@@ -77,9 +77,9 @@ ngeo.Popover.prototype.setMap = function(map) {
   ol.Overlay.prototype.setMap.call(this, map);
 
   if (map) {
-    var contentEl = this.contentEl_;
+    const contentEl = this.contentEl_;
     // wait for the overlay to be rendered in the map before poping over
-    window.setTimeout(function() {
+    window.setTimeout(() => {
       $(element)
         .popover({
           'content': contentEl,
@@ -106,7 +106,7 @@ ngeo.Popover.prototype.setMap = function(map) {
  * @private
  */
 ngeo.Popover.prototype.handleCloseElClick_ = function() {
-  var map = this.getMap();
+  const map = this.getMap();
   if (map) {
     map.removeOverlay(this);
   }

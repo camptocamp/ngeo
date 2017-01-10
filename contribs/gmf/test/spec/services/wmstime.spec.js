@@ -2,10 +2,10 @@
 
 goog.require('gmf.WMSTime');
 
-describe('gmfWMSTime service', function() {
-  var gmfWMSTime;
+describe('gmfWMSTime service', () => {
+  let gmfWMSTime;
 
-  var wmsTime = {
+  const wmsTime = {
     widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('slider'),
     maxValue: '2015-12-31T00:00:00Z',
     minValue: '2014-01-01T00:00:00Z',
@@ -16,15 +16,15 @@ describe('gmfWMSTime service', function() {
     interval: [0, 0, 1, 0]
   };
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       gmfWMSTime = $injector.get('gmfWMSTime');
     });
   });
 
-  it('should format the time regarding the resolution and with a mode set on value', function() {
-    var timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
-    var timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
+  it('should format the time regarding the resolution and with a mode set on value', () => {
+    const timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
+    let timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues
     });
     expect(timeParam).toBe('2014');
@@ -49,11 +49,11 @@ describe('gmfWMSTime service', function() {
   });
 
 
-  it('should format the time regarding the resolution and with a mode set on range', function() {
+  it('should format the time regarding the resolution and with a mode set on range', () => {
     wmsTime.mode = 'range';
     wmsTime.resolution = 'year';
-    var timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
-    var timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
+    const timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
+    let timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues[0],
       end: timeValues[1]
     });

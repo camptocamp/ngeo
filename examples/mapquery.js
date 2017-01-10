@@ -88,8 +88,8 @@ app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
    */
   this.queryActive = true;
 
-  var busStopSourceId = 'bus_stop';
-  var busStopLayer = new ol.layer.Image({
+  const busStopSourceId = 'bus_stop';
+  const busStopLayer = new ol.layer.Image({
     'querySourceIds': [busStopSourceId],
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
@@ -101,8 +101,8 @@ app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
     'layer': busStopLayer
   });
 
-  var informationSourceId = 'information';
-  var informationLayer = new ol.layer.Image({
+  const informationSourceId = 'information';
+  const informationLayer = new ol.layer.Image({
     'querySourceIds': [informationSourceId],
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
@@ -134,10 +134,10 @@ app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
     })
   });
 
-  var queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+  const queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);
 
-  var dummyToolActivate = new ngeo.ToolActivate(this, 'dummyActive');
+  const dummyToolActivate = new ngeo.ToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate);
 
 };

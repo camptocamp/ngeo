@@ -15,7 +15,7 @@ goog.require('ngeo.fileService');
  */
 exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUrl) {
 
-  var timeoutP;
+  let timeoutP;
 
   return {
     restrict: 'A',
@@ -23,12 +23,12 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
     scope: {
       'options': '=ngeoImportLocalOptions'
     },
-    link: function(scope, elt) {
+    link(scope, elt) {
 
       /**
        * @type {ngeox.ImportLocalOptions}
        */
-      var options = scope['options'];
+      const options = scope['options'];
       if (!options || (typeof options.handleFileContent !== 'function')) {
         elt.remove();
         return;
@@ -37,14 +37,14 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
       scope['handleFileContent'] = scope['options'].handleFileContent;
 
 
-      var initUserMsg = function() {
+      const initUserMsg = function() {
         scope['userMessage'] = gettextCatalog.getString('Load local file');
         scope['progress'] = 0;
         scope['fileReader'] = null;
       };
       initUserMsg();
 
-      var triggerInputFileClick = function() {
+      const triggerInputFileClick = function() {
         elt.find('input[type="file"]').click();
       };
 
@@ -54,20 +54,20 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
         click(triggerInputFileClick);
 
       // Register input[type=file] onchange event, use HTML5 File api
-      elt.find('input[type=file]').bind('change', function(evt) {
+      elt.find('input[type=file]').bind('change', (evt) => {
         if (evt.target.files && evt.target.files.length > 0) {
-          scope.$apply(function() {
+          scope.$apply(() => {
             scope['files'] = evt.target.files;
           });
         }
       });
 
       // Watchers
-      scope.$watchCollection('files', function() {
+      scope.$watchCollection('files', () => {
         // Handle a FileList (from input[type=file] or DnD),
         // works only with FileAPI
         if (scope['files'] && scope['files'].length > 0) {
-          var file = scope['files'][0];
+          const file = scope['files'][0];
           scope['file'] = file;
           scope['fileSize'] = file.size;
           if (scope['isDropped']) {
@@ -103,23 +103,23 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
         scope['userMessage'] = gettextCatalog.getString('Reading file');
         $timeout.cancel(timeoutP);
 
-        ngeoFile.read(scope['file']).then(function(fileContent) {
+        ngeoFile.read(scope['file']).then((fileContent) => {
           scope['fileReader'] = null;
           scope['userMessage'] = gettextCatalog.getString('Parsing file');
           return scope['handleFileContent'](fileContent, scope.file);
 
-        }).then(function(parsingResults) {
+        }).then((parsingResults) => {
           scope['userMessage'] = gettextCatalog.getString('Parsing succeeded');
 
-        }, function(err) {
+        }, (err) => {
           scope['userMessage'] = err.message;
 
-        }, function(evt) {
+        }, (evt) => {
           if (!scope['fileReader']) {
             scope['fileReader'] = evt.target;
           }
 
-        }).finally(function() {
+        }).finally(() => {
           scope['fileReader'] = null;
           scope['loading'] = false;
           timeoutP = $timeout(initUserMsg, 5000);
@@ -139,10 +139,10 @@ exports.module.value('ngeoImportLocalTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {boolean} Template URL.
      */
-    function(element, attrs) {
-      var templateUrl = attrs['ngeoImportLocalTemplateUrl'];
+    (element, attrs) => {
+      const templateUrl = attrs['ngeoImportLocalTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseModuleTemplateUrl + '/import/partials/import-local.html';
+          `${ngeo.baseModuleTemplateUrl}/import/partials/import-local.html`;
     });
 
 exports.module.directive('ngeoImportLocal', exports);

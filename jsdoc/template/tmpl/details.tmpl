@@ -1,7 +1,7 @@
 <?js
-var data = obj;
-var self = this;
-var defaultObjectClass = '';
+let data = obj;
+let self = this;
+let defaultObjectClass = '';
 
 // Check if the default value is an object or array; if so, apply code highlighting
 if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvaluetype === 'array')) {
@@ -10,7 +10,7 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
 }
 ?>
 <?js
-    var properties = data.properties;
+    let properties = data.properties;
     if (properties && properties.length && properties.forEach) {
 ?>
 
@@ -115,7 +115,7 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     <?js
-    var baseUrl = 'https://github.com/camptocamp/ngeo/blob/' +
+    let baseUrl = 'https://github.com/camptocamp/ngeo/blob/' +
       (process.env.TRAVIS_COMMIT || 'master') + '/';
     ?>
         <a href="<?js= baseUrl ?><?js= meta.shortpath ?>"><?js= meta.shortpath ?></a>,

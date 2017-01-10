@@ -1,5 +1,5 @@
 /*eslint valid-jsdoc: 0 */
-beforeEach(function() {
+beforeEach(() => {
   module('ngeo');
 
   jasmine.addMatchers({
@@ -7,9 +7,9 @@ beforeEach(function() {
      * A matcher similar to `expect(...).toBeCloseTo(...)` to check that
      * numbers in two arrays are almost equal.
      */
-    arrayToBeCloseTo: function(util, customEqualityTesters) {
+    arrayToBeCloseTo(util, customEqualityTesters) {
       return {
-        compare: function(actual, expected, precision) {
+        compare(actual, expected, precision) {
           if (precision !== 0) {
             precision = precision || 2;
           }
@@ -18,13 +18,13 @@ beforeEach(function() {
             expected = [];
           }
 
-          var result = {pass: true};
+          const result = {pass: true};
 
-          var len1 = actual.length;
+          const len1 = actual.length;
           if (len1 !== expected.length) {
             result.pass = false;
           } else {
-            for (var i = 0; i < len1; i++) {
+            for (let i = 0; i < len1; i++) {
               if (!(Math.abs(actual[i] - expected[i]) < (Math.pow(10, -precision) / 2))) {
                 result.pass = false;
                 break;
@@ -32,7 +32,7 @@ beforeEach(function() {
             }
           }
 
-          result.message =  'expected ' + actual + ' to sort of equal ' + expected;
+          result.message =  `expected ${actual} to sort of equal ${expected}`;
 
           return result;
         }

@@ -48,8 +48,8 @@ gmf.EditFeature = function($http, gmfLayersUrl) {
  * @export
  */
 gmf.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
-  var ids = layerIds.join(',');
-  var url = goog.uri.utils.appendParam(
+  const ids = layerIds.join(',');
+  const url = goog.uri.utils.appendParam(
     goog.uri.utils.appendPath(this.baseUrl_, ids),
     'bbox',
     extent.join(',')
@@ -75,21 +75,21 @@ gmf.EditFeature.prototype.getFeaturesWithComparisonFilters = function(
   layerIds, filters
 ) {
 
-  var ids = layerIds.join(',');
+  const ids = layerIds.join(',');
 
-  var properties = [];
-  var params = {};
+  const properties = [];
+  const params = {};
 
-  var filter;
-  for (var i = 0, ii = filters.length; i < ii; i++) {
+  let filter;
+  for (let i = 0, ii = filters.length; i < ii; i++) {
     filter = filters[i];
-    params[filter.property + '__' + filter.operator] = filter.value;
+    params[`${filter.property}__${filter.operator}`] = filter.value;
     properties.push(filter.property);
   }
 
   params['queryable'] = properties.join(',');
 
-  var url = ol.uri.appendParams(
+  const url = ol.uri.appendParams(
     goog.uri.utils.appendPath(this.baseUrl_, ids),
     params
   );
@@ -115,8 +115,8 @@ gmf.EditFeature.prototype.handleGetFeatures_ = function(resp) {
  * @export
  */
 gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
-  var url = goog.uri.utils.appendPath(this.baseUrl_, layerId.toString());
-  var geoJSON = new ol.format.GeoJSON().writeFeatures(features);
+  const url = goog.uri.utils.appendPath(this.baseUrl_, layerId.toString());
+  const geoJSON = new ol.format.GeoJSON().writeFeatures(features);
   return this.http_.post(url, geoJSON, {
     headers: {'Content-Type': 'application/json'},
     withCredentials: true
@@ -131,11 +131,11 @@ gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
  * @export
  */
 gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
-  var url = goog.uri.utils.appendPath(
+  const url = goog.uri.utils.appendPath(
     this.baseUrl_,
-    layerId.toString() + '/' + feature.getId()
+    `${layerId.toString()}/${feature.getId()}`
   );
-  var geoJSON = new ol.format.GeoJSON().writeFeature(feature);
+  const geoJSON = new ol.format.GeoJSON().writeFeature(feature);
   return this.http_.put(url, geoJSON, {
     headers: {'Content-Type': 'application/json'},
     withCredentials: true
@@ -150,9 +150,9 @@ gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
  * @export
  */
 gmf.EditFeature.prototype.deleteFeature = function(layerId, feature) {
-  var url = goog.uri.utils.appendPath(
+  const url = goog.uri.utils.appendPath(
     this.baseUrl_,
-    layerId.toString() + '/' + feature.getId()
+    `${layerId.toString()}/${feature.getId()}`
   );
   return this.http_.delete(url, {
     headers: {'Content-Type': 'application/json'},

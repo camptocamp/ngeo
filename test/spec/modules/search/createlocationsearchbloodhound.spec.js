@@ -2,27 +2,27 @@
 goog.require('ngeo.search.createLocationSearchBloodhound');
 goog.require('ngeo.test.data.geoAdminLocationSearch');
 
-describe('ngeo.search.createLocationSearchBloodhound', function() {
+describe('ngeo.search.createLocationSearchBloodhound', () => {
 
-  var ngeoCreateLocationSearchBloodhound;
+  let ngeoCreateLocationSearchBloodhound;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       ngeoCreateLocationSearchBloodhound = $injector.get('ngeoCreateLocationSearchBloodhound');
     });
   });
 
-  it('Parses the features correctly', function() {
-    var bloodhound = ngeoCreateLocationSearchBloodhound({
+  it('Parses the features correctly', () => {
+    const bloodhound = ngeoCreateLocationSearchBloodhound({
       targetProjection: ol.proj.get('EPSG:3857'),
       limit: 5
     });
-    var transform = bloodhound.remote.transform;
+    const transform = bloodhound.remote.transform;
 
-    var features = transform(geoAdminLocationSearch);
+    const features = transform(geoAdminLocationSearch);
     expect(features.length).toBe(5);
 
-    var feature = features[0];
+    const feature = features[0];
     expect(feature.getId(), '5586');
     expect(feature.get('label')).toBe('<i>Populated Place</i> <b>Lausanne</b> (VD) - Lausanne');
     expect(feature.get('label_no_html')).toBe('Populated Place Lausanne (VD) - Lausanne');

@@ -10,7 +10,7 @@ goog.provide('ngeo.File');
  * @ngInject
  */
 ngeo.File = function($q, $http, $window, gettext) {
-  var fileReader, canceler;
+  let fileReader, canceler;
 
   // Test the validity of the file size
   this.isValidFileSize = function(fileSize) {
@@ -34,7 +34,7 @@ ngeo.File = function($q, $http, $window, gettext) {
    * @return {angular.$q.Promise<string>} .
    */
   this.read = function(file) {
-    var defer = $q.defer();
+    const defer = $q.defer();
     if (fileReader) {
       fileReader.abort();
     }
@@ -43,7 +43,7 @@ ngeo.File = function($q, $http, $window, gettext) {
       defer.resolve(evt.target.result);
     };
     fileReader.onerror = function(evt) {
-      var err = evt.target.error;
+      const err = evt.target.error;
       $window.console.error('Reading file failed: ', err);
       defer.reject({
         'message': err.code == 20 ? gettext('Operation canceled') : gettext('Read failed'),
@@ -71,12 +71,12 @@ ngeo.File = function($q, $http, $window, gettext) {
     canceler = opt_cancelP || $q.defer();
 
     // Angularjs doesn't handle onprogress event
-    var defer = $q.defer();
+    const defer = $q.defer();
     $http.get(url, {
       timeout: canceler.promise
-    }).then(function(response) {
+    }).then((response) => {
       defer.resolve(response.data);
-    }, function(reason) {
+    }, (reason) => {
       $window.console.error('Uploading file failed: ', reason);
       defer.reject({
         'message': gettext('Upload failed'),

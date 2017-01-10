@@ -2,7 +2,8 @@
 // A PhantomJS script used to check that the hosted examples load
 // without errors. This script is executed by the Makefile's
 // check-examples target.
-//
+
+
 var args = require('system').args;
 if (args.length != 2) {
   phantom.exit(1);

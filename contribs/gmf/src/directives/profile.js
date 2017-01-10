@@ -21,10 +21,10 @@ ngeo.module.value('gmfProfileTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template.
      */
-    function(element, attrs) {
-      var templateUrl = attrs['gmfProfileTemplateurl'];
+    (element, attrs) => {
+      const templateUrl = attrs['gmfProfileTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/profile.html';
+          `${gmf.baseTemplateUrl}/profile.html`;
     });
 
 
@@ -168,8 +168,8 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    */
   this.ngeoDownload_ = ngeoDownload;
 
-  var map = null;
-  var mapFn = this['getMapFn'];
+  let map = null;
+  const mapFn = this['getMapFn'];
   if (mapFn) {
     map = mapFn();
     goog.asserts.assertInstanceof(map, ol.Map);
@@ -181,7 +181,7 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    */
   this.map_ = map;
 
-  var linesConfiguration = this['getLinesConfigurationFn']();
+  const linesConfiguration = this['getLinesConfigurationFn']();
   goog.asserts.assertInstanceof(linesConfiguration, Object);
 
   /**
@@ -196,7 +196,7 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    */
   this.layersNames_ = [];
 
-  var name, lineConfig;
+  let name, lineConfig;
   for (name in this.linesConfiguration_) {
     // Keep an array of all layer names.
     this.layersNames_.push(name);
@@ -207,8 +207,8 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
     }
   }
 
-  var nbPoints = 100;
-  var nbPointsFn = this['getNbPointsFn'];
+  let nbPoints = 100;
+  const nbPointsFn = this['getNbPointsFn'];
   if (nbPointsFn) {
     nbPoints = nbPointsFn();
     goog.asserts.assertNumber(nbPoints);
@@ -272,8 +272,8 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
   this.snappedPoint_ = new ol.Feature();
   this.pointHoverOverlay_.addFeature(this.snappedPoint_);
 
-  var hoverPointStyle;
-  var hoverPointStyleFn = this['getHoverPointStyleFn'];
+  let hoverPointStyle;
+  const hoverPointStyleFn = this['getHoverPointStyleFn'];
   if (hoverPointStyleFn) {
     hoverPointStyle = hoverPointStyleFn();
     goog.asserts.assertInstanceof(hoverPointStyle, ol.style.Style);
@@ -309,9 +309,9 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
     i18n: this.profileLabels_
   });
 
-  var optionsFn = this['getOptionsFn'];
+  const optionsFn = this['getOptionsFn'];
   if (optionsFn) {
-    var options = optionsFn();
+    const options = optionsFn();
     goog.asserts.assertObject(options);
     goog.object.extend(this.profileOptions, options);
   }
@@ -337,25 +337,21 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
 
   // Watch the active value to activate/deactive events listening.
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
-    function(newValue, oldValue) {
+    () => this.active,
+    (newValue, oldValue) => {
       if (oldValue !== newValue) {
         this.updateEventsListening_();
       }
-    }.bind(this));
+    });
 
   // Watch the line to update the profileData (data for the chart).
   $scope.$watch(
-    function() {
-      return this.line;
-    }.bind(this),
-    function(newLine, oldLine) {
+    () => this.line,
+    (newLine, oldLine) => {
       if (oldLine !== newLine) {
         this.update_();
       }
-    }.bind(this));
+    });
 
   this.updateEventsListening_();
 };
@@ -396,11 +392,11 @@ gmf.ProfileController.prototype.onPointerMove_ = function(e) {
   if (e.dragging || !this.line) {
     return;
   }
-  var coordinate = this.map_.getEventCoordinate(e.originalEvent);
-  var closestPoint = this.line.getClosestPoint(coordinate);
+  const coordinate = this.map_.getEventCoordinate(e.originalEvent);
+  const closestPoint = this.line.getClosestPoint(coordinate);
   // compute distance to line in pixels
-  var eventToLine = new ol.geom.LineString([closestPoint, coordinate]);
-  var pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
+  const eventToLine = new ol.geom.LineString([closestPoint, coordinate]);
+  const pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
 
   if (pixelDist < 16) {
     this.profileHighlight = this.getDistanceOnALine_(closestPoint, this.line);
@@ -422,15 +418,15 @@ gmf.ProfileController.prototype.onPointerMove_ = function(e) {
  */
 gmf.ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
     line) {
-  var segment;
-  var distOnLine = 0;
-  var fakeExtent = [
+  let segment;
+  let distOnLine = 0;
+  const fakeExtent = [
     pointOnLine[0] - 0.5,
     pointOnLine[1] - 0.5,
     pointOnLine[0] + 0.5,
     pointOnLine[1] + 0.5
   ];
-  this.line.forEachSegment(function(firstPoint, lastPoint) {
+  this.line.forEachSegment((firstPoint, lastPoint) => {
     segment = new ol.geom.LineString([firstPoint, lastPoint]);
     // Is the pointOnLine on this swegement ?
     if (segment.intersectsExtent(fakeExtent)) {
@@ -458,8 +454,8 @@ gmf.ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
 gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
     elevationsRef, yUnits) {
   // Update information point.
-  var ref;
-  var coordinate = [point.x, point.y];
+  let ref;
+  const coordinate = [point.x, point.y];
   for (ref in elevationsRef) {
     this.currentPoint.elevations[ref] = elevationsRef[ref];
   }
@@ -469,7 +465,7 @@ gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
   this.currentPoint.coordinate = coordinate;
 
   // Update hover.
-  var geom = new ol.geom.Point(coordinate);
+  const geom = new ol.geom.Point(coordinate);
   this.createMeasureTooltip_();
   this.measureTooltipElement_.innerHTML = this.getTooltipHTML_();
   this.measureTooltip_.setPosition(coordinate);
@@ -499,25 +495,25 @@ gmf.ProfileController.prototype.outCallback_ = function() {
  * @private
  */
 gmf.ProfileController.prototype.getTooltipHTML_ = function() {
-  var separator = ' : ';
-  var elevationName, translatedElevationName;
-  var innerHTML = [];
-  var number = this.$filter_('number');
-  var DistDecimal = this.currentPoint.xUnits === 'm' ? 0 : 2;
+  const separator = ' : ';
+  let elevationName, translatedElevationName;
+  const innerHTML = [];
+  const number = this.$filter_('number');
+  const DistDecimal = this.currentPoint.xUnits === 'm' ? 0 : 2;
   innerHTML.push(
-      this.profileLabels_.xAxis +
+      `${this.profileLabels_.xAxis +
       separator +
-      number(this.currentPoint.distance, DistDecimal) +
-      ' ' +
-      this.currentPoint.xUnits
+      number(this.currentPoint.distance, DistDecimal)
+      } ${
+      this.currentPoint.xUnits}`
   );
   for (elevationName in this.currentPoint.elevations) {
     translatedElevationName = this.gettextCatalog_.getString(elevationName);
     innerHTML.push(
-        translatedElevationName +
+        `${translatedElevationName +
         separator +
-        number(this.currentPoint.elevations[elevationName], 0) +
-        ' ' + this.currentPoint.yUnits
+        number(this.currentPoint.elevations[elevationName], 0)
+        } ${this.currentPoint.yUnits}`
     );
   }
   return innerHTML.join('</br>');
@@ -562,7 +558,7 @@ gmf.ProfileController.prototype.removeMeasureTooltip_ = function() {
  * @export
  */
 gmf.ProfileController.prototype.getColor = function(layerName) {
-  var lineConfiguration = this.linesConfiguration_[layerName];
+  const lineConfiguration = this.linesConfiguration_[layerName];
   if (!lineConfiguration) {
     return undefined;
   }
@@ -592,7 +588,7 @@ gmf.ProfileController.prototype.getZFactory_ = function(layerName) {
    * @return {number} The elevation.
    * @private
    */
-  var getZFn = function(item) {
+  const getZFn = function(item) {
     if ('values' in item && layerName in item['values']) {
       return parseFloat(item['values'][layerName]);
     }
@@ -621,12 +617,12 @@ gmf.ProfileController.prototype.getDist_ = function(item) {
  * @private
  */
 gmf.ProfileController.prototype.getJsonProfile_ = function() {
-  var geom = {
+  const geom = {
     'type': 'LineString',
     'coordinates': this.line.getCoordinates()
   };
 
-  var params = {
+  const params = {
     'layers': this.layersNames_.join(','),
     'geom': JSON.stringify(geom),
     'nbPoints': this.nbPoints_
@@ -635,7 +631,7 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
   /** @type {Function} */ (this.$http_)({
     url: this.gmfProfileJsonUrl_,
     method: 'POST',
-    params: params,
+    params,
     paramSerializer: '$httpParamSerializerJQLike',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -652,7 +648,7 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
  * @private
  */
 gmf.ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
-  var profileData = resp.data['profile'];
+  const profileData = resp.data['profile'];
   if (profileData instanceof Array) {
     this.profileData = profileData;
   }
@@ -677,12 +673,12 @@ gmf.ProfileController.prototype.downloadCsv = function() {
   if (this.profileData.length === 0) {
     return;
   }
-  var geom = {
+  const geom = {
     'type': 'LineString',
     'coordinates': this.line.getCoordinates()
   };
 
-  var params = {
+  const params = {
     'layers': this.layersNames_.join(','),
     'geom': JSON.stringify(geom),
     'nbPoints': this.nbPoints_
@@ -691,7 +687,7 @@ gmf.ProfileController.prototype.downloadCsv = function() {
   /** @type {Function} */ (this.$http_)({
     url: this.gmfProfileCsvUrl_,
     method: 'POST',
-    params: params,
+    params,
     paramSerializer: '$httpParamSerializerJQLike',
     headers: {
       'Content-Type': 'text/csv;'

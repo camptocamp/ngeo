@@ -19,28 +19,28 @@ goog.require('ol.tilegrid.WMTS');
 goog.require('ngeo.CreatePrint');
 goog.require('ngeo.Print');
 
-describe('ngeo.CreatePrint', function() {
+describe('ngeo.CreatePrint', () => {
 
-  var ngeoCreatePrint;
+  let ngeoCreatePrint;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       ngeoCreatePrint = $injector.get('ngeoCreatePrint');
     });
 
   });
 
-  it('creates an ngeo.Print instance', function() {
-    var print = ngeoCreatePrint('http://example.com/print');
+  it('creates an ngeo.Print instance', () => {
+    const print = ngeoCreatePrint('http://example.com/print');
     expect(print instanceof ngeo.Print).toBe(true);
   });
 
-  describe('#createSpec', function() {
+  describe('#createSpec', () => {
 
-    var print;
-    var map;
+    let print;
+    let map;
 
-    beforeEach(function() {
+    beforeEach(() => {
       print = ngeoCreatePrint('http://example.com/print');
       map = new ol.Map({
         view: new ol.View({
@@ -50,29 +50,29 @@ describe('ngeo.CreatePrint', function() {
       });
     });
 
-    describe('rotation', function() {
+    describe('rotation', () => {
 
-      beforeEach(function() {
-        var view = map.getView();
+      beforeEach(() => {
+        const view = map.getView();
         view.rotate(Math.PI);
       });
 
-      it('rotation angle is correct', function() {
-        var scale = 500;
-        var dpi = 72;
-        var layout = 'foo layout';
-        var format = 'pdf';
-        var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+      it('rotation angle is correct', () => {
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
         expect(spec.attributes.map.rotation).toEqual(180);
       });
     });
 
-    describe('ImageWMS', function() {
+    describe('ImageWMS', () => {
 
-      beforeEach(function() {
+      beforeEach(() => {
         map.addLayer(new ol.layer.Image({
           source: new ol.source.ImageWMS({
             url: 'http://example.com/wms',
@@ -84,15 +84,15 @@ describe('ngeo.CreatePrint', function() {
         }));
       });
 
-      it('creates a valid spec object', function() {
+      it('creates a valid spec object', () => {
 
-        var scale = 500;
-        var dpi = 72;
-        var layout = 'foo layout';
-        var format = 'pdf';
-        var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
 
         expect(spec).toEqual({
@@ -128,9 +128,9 @@ describe('ngeo.CreatePrint', function() {
     });
 
 
-    describe('TileWMS', function() {
+    describe('TileWMS', () => {
 
-      beforeEach(function() {
+      beforeEach(() => {
         map.addLayer(new ol.layer.Tile({
           source: new ol.source.TileWMS({
             url: 'http://example.com/wms',
@@ -142,15 +142,15 @@ describe('ngeo.CreatePrint', function() {
         }));
       });
 
-      it('creates a valid spec object', function() {
+      it('creates a valid spec object', () => {
 
-        var scale = 500;
-        var dpi = 72;
-        var layout = 'foo layout';
-        var format = 'pdf';
-        var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
         expect(spec).toEqual({
           attributes: {
@@ -184,11 +184,11 @@ describe('ngeo.CreatePrint', function() {
 
     });
 
-    describe('WMTS', function() {
+    describe('WMTS', () => {
 
-      beforeEach(function() {
-        var projection = ol.proj.get('EPSG:3857');
-        var extent = projection.getExtent();
+      beforeEach(() => {
+        const projection = ol.proj.get('EPSG:3857');
+        const extent = projection.getExtent();
         map.addLayer(new ol.layer.Tile({
           opacity: 0.5,
           source: new ol.source.WMTS({
@@ -196,12 +196,12 @@ describe('ngeo.CreatePrint', function() {
             format: 'image/jpeg',
             layer: 'layer',
             matrixSet: 'matrixset',
-            projection: projection,
+            projection,
             requestEncoding: 'REST',
             style: 'style',
             tileGrid: new ol.tilegrid.WMTS({
               matrixIds: ['00', '01', '02'],
-              extent: extent,
+              extent,
               origin: ol.extent.getTopLeft(extent),
               resolutions: [2000, 1000, 500],
               tileSize: 512
@@ -213,15 +213,15 @@ describe('ngeo.CreatePrint', function() {
         }));
       });
 
-      it('creates a valid spec object', function() {
+      it('creates a valid spec object', () => {
 
-        var scale = 500;
-        var dpi = 72;
-        var layout = 'foo layout';
-        var format = 'pdf';
-        var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
 
         expect(spec).toEqual({
@@ -280,27 +280,27 @@ describe('ngeo.CreatePrint', function() {
 
     });
 
-    describe('Vector', function() {
-      var style0, style1, style2, style3, style4;
+    describe('Vector', () => {
+      let style0, style1, style2, style3, style4;
 
-      beforeEach(function() {
+      beforeEach(() => {
 
-        var feature0 = new ol.Feature({
+        const feature0 = new ol.Feature({
           geometry: new ol.geom.Point([0, 0]),
           foo: '0'
         });
 
-        var feature1 = new ol.Feature({
+        const feature1 = new ol.Feature({
           geometry: new ol.geom.LineString([[0, 0], [1, 1]]),
           foo: '1'
         });
 
-        var feature2 = new ol.Feature({
+        const feature2 = new ol.Feature({
           geometry: new ol.geom.Polygon([[[0, 0], [1, 1], [1, 0], [0, 0]]]),
           foo: '2'
         });
 
-        var feature3 = new ol.Feature({
+        const feature3 = new ol.Feature({
           geometry: new ol.geom.Point([0, 0]),
           foo: '3'
         });
@@ -323,7 +323,7 @@ describe('ngeo.CreatePrint', function() {
         });
 
         // styles for feature0
-        var styles0 = [style0];
+        const styles0 = [style0];
 
         style1 = new ol.style.Style({
           stroke: new ol.style.Stroke({
@@ -333,7 +333,7 @@ describe('ngeo.CreatePrint', function() {
         });
 
         // styles for feature1
-        var styles1 = [style0, style1];
+        const styles1 = [style0, style1];
 
         style2 = new ol.style.Style({
           fill: new ol.style.Fill({
@@ -346,7 +346,7 @@ describe('ngeo.CreatePrint', function() {
         });
 
         // styles for features2
-        var styles2 = [style2];
+        const styles2 = [style2];
 
         style3 = new ol.style.Style({
           text: new ol.style.Text({
@@ -375,10 +375,10 @@ describe('ngeo.CreatePrint', function() {
         });
 
         // styles for features3
-        var styles3 = [style3, style4];
+        const styles3 = [style3, style4];
 
-        var styleFunction = function(feature, resolution) {
-          var v = feature.get('foo');
+        const styleFunction = function(feature, resolution) {
+          const v = feature.get('foo');
           if (v == '0') {
             return styles0;
           } else if (v == '1') {
@@ -399,27 +399,27 @@ describe('ngeo.CreatePrint', function() {
         }));
       });
 
-      it('creates a valid spec object', function() {
+      it('creates a valid spec object', () => {
 
-        var scale = 500;
-        var dpi = 72;
-        var layout = 'foo layout';
-        var format = 'pdf';
-        var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
 
-        var styleId0 = ol.getUid(style0).toString();
-        var styleId1 = ol.getUid(style1).toString();
-        var styleId2 = ol.getUid(style2).toString();
-        var styleId3 = ol.getUid(style3).toString();
-        var styleId4 = ol.getUid(style4).toString();
+        const styleId0 = ol.getUid(style0).toString();
+        const styleId1 = ol.getUid(style1).toString();
+        const styleId2 = ol.getUid(style2).toString();
+        const styleId3 = ol.getUid(style3).toString();
+        const styleId4 = ol.getUid(style4).toString();
 
-        var expectedStyle = {
+        const expectedStyle = {
           version: 2
         };
-        expectedStyle['[_ngeo_style_0 = \'' + styleId0 + '\']'] = {
+        expectedStyle[`[_ngeo_style_0 = '${styleId0}']`] = {
           symbolizers: [{
             type: 'point',
             pointRadius: 1,
@@ -428,7 +428,7 @@ describe('ngeo.CreatePrint', function() {
             strokeWidth: 1
           }]
         };
-        expectedStyle['[_ngeo_style_1 = \'' + styleId1 + '\']'] = {
+        expectedStyle[`[_ngeo_style_1 = '${styleId1}']`] = {
           symbolizers: [{
             type: 'line',
             strokeColor: '#020202',
@@ -436,7 +436,7 @@ describe('ngeo.CreatePrint', function() {
             strokeWidth: 2
           }]
         };
-        expectedStyle['[_ngeo_style_0 = \'' + styleId2 + '\']'] = {
+        expectedStyle[`[_ngeo_style_0 = '${styleId2}']`] = {
           symbolizers: [{
             type: 'polygon',
             fillColor: '#030303',
@@ -446,7 +446,7 @@ describe('ngeo.CreatePrint', function() {
             strokeWidth: 3
           }]
         };
-        expectedStyle['[_ngeo_style_0 = \'' + styleId3 + '\']'] = {
+        expectedStyle[`[_ngeo_style_0 = '${styleId3}']`] = {
           symbolizers: [{
             type: 'Text',
             fontColor: '#030303',
@@ -459,7 +459,7 @@ describe('ngeo.CreatePrint', function() {
             labelYOffset: 42
           }]
         };
-        expectedStyle['[_ngeo_style_1 = \'' + styleId4 + '\']'] = {
+        expectedStyle[`[_ngeo_style_1 = '${styleId4}']`] = {
           symbolizers: [{
             type: 'Text',
             fontColor: '#030303',
@@ -471,26 +471,26 @@ describe('ngeo.CreatePrint', function() {
         };
 
         // the expected properties of feature0
-        var properties0 = {
+        const properties0 = {
           foo: '0',
           '_ngeo_style_0': styleId0
         };
 
         // the expected properties of feature1
-        var properties1 = {
+        const properties1 = {
           foo: '1',
           '_ngeo_style_0': styleId0,
           '_ngeo_style_1': styleId1
         };
 
         // the expected properties of feature2
-        var properties2 = {
+        const properties2 = {
           foo: '2',
           '_ngeo_style_0': styleId2
         };
 
         // the expected properties of feature3
-        var properties3 = {
+        const properties3 = {
           foo: '3',
           '_ngeo_style_0': styleId3,
           '_ngeo_style_1': styleId4
@@ -552,9 +552,9 @@ describe('ngeo.CreatePrint', function() {
 
     });
 
-    describe('layer order', function() {
+    describe('layer order', () => {
 
-      beforeEach(function() {
+      beforeEach(() => {
         map.addLayer(new ol.layer.Image({
           source: new ol.source.ImageWMS({
             url: 'http://example.com/wms/bottom',
@@ -577,18 +577,18 @@ describe('ngeo.CreatePrint', function() {
 
       });
 
-      it('reverses the layer order', function() {
+      it('reverses the layer order', () => {
 
-        var scale = 500;
-        var dpi = 72;
-        var layout = 'foo layout';
-        var format = 'pdf';
-        var customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        var spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
 
-        var layers = spec.attributes.map.layers;
+        const layers = spec.attributes.map.layers;
         expect(layers.length).toBe(2);
         expect(layers[0].baseURL).toBe('http://example.com/wms/top');
         expect(layers[1].baseURL).toBe('http://example.com/wms/bottom');
@@ -598,13 +598,13 @@ describe('ngeo.CreatePrint', function() {
 
   });
 
-  describe('#createReport', function() {
+  describe('#createReport', () => {
 
-    var print;
-    var spec;
-    var $httpBackend;
+    let print;
+    let spec;
+    let $httpBackend;
 
-    beforeEach(function() {
+    beforeEach(() => {
       print = ngeoCreatePrint('http://example.com/print');
 
       spec = {
@@ -627,7 +627,7 @@ describe('ngeo.CreatePrint', function() {
         layout: 'foo layout'
       };
 
-      inject(function($injector) {
+      inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('POST', 'http://example.com/print/report.pdf')
             .respond({
@@ -638,16 +638,16 @@ describe('ngeo.CreatePrint', function() {
       });
     });
 
-    afterEach(function() {
+    afterEach(() => {
       $httpBackend.verifyNoOutstandingExpectation();
       $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('triggers the report request and resolves the promise', function() {
+    it('triggers the report request and resolves the promise', () => {
       $httpBackend.expectPOST('http://example.com/print/report.pdf');
-      var promise = print.createReport(spec);
+      const promise = print.createReport(spec);
 
-      var spy = jasmine.createSpy();
+      const spy = jasmine.createSpy();
       promise.then(spy);
 
       $httpBackend.flush();
@@ -660,12 +660,12 @@ describe('ngeo.CreatePrint', function() {
       });
     });
 
-    describe('cancel report request', function() {
+    describe('cancel report request', () => {
 
-      it('cancels the request', inject(function($q) {
+      it('cancels the request', inject(($q) => {
         $httpBackend.expectPOST('http://example.com/print/report.pdf');
 
-        var canceler = $q.defer();
+        const canceler = $q.defer();
         print.createReport(spec, {
           timeout: canceler.promise
         });
@@ -679,15 +679,15 @@ describe('ngeo.CreatePrint', function() {
 
   });
 
-  describe('#getStatus', function() {
+  describe('#getStatus', () => {
 
-    var print;
-    var $httpBackend;
+    let print;
+    let $httpBackend;
 
-    beforeEach(function() {
+    beforeEach(() => {
       print = ngeoCreatePrint('http://example.com/print');
 
-      inject(function($injector) {
+      inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('GET',
             'http://example.com/print/status/deadbeef.json').respond({
@@ -697,16 +697,16 @@ describe('ngeo.CreatePrint', function() {
       });
     });
 
-    afterEach(function() {
+    afterEach(() => {
       $httpBackend.verifyNoOutstandingExpectation();
       $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('triggers the status request and resolves the promise', function() {
+    it('triggers the status request and resolves the promise', () => {
       $httpBackend.expectGET('http://example.com/print/status/deadbeef.json');
-      var promise = print.getStatus('deadbeef');
+      const promise = print.getStatus('deadbeef');
 
-      var spy = jasmine.createSpy();
+      const spy = jasmine.createSpy();
       promise.then(spy);
 
       $httpBackend.flush();
@@ -720,26 +720,26 @@ describe('ngeo.CreatePrint', function() {
 
   });
 
-  describe('#getReportUrl', function() {
-    var print;
+  describe('#getReportUrl', () => {
+    let print;
 
-    beforeEach(function() {
+    beforeEach(() => {
       print = ngeoCreatePrint('http://example.com/print');
     });
 
-    it('returns the report URL', function() {
-      var url = print.getReportUrl('deadbeef');
+    it('returns the report URL', () => {
+      const url = print.getReportUrl('deadbeef');
       expect(url).toBe('http://example.com/print/report/deadbeef');
     });
   });
 
-  describe('#getCapabilities', function() {
-    var print;
-    var $httpBackend;
+  describe('#getCapabilities', () => {
+    let print;
+    let $httpBackend;
     // Only used to test that getCapabilities fetch the json from the proper url
-    var capabilities;
+    let capabilities;
 
-    beforeEach(inject(function(_$httpBackend_) {
+    beforeEach(inject((_$httpBackend_) => {
 
       $httpBackend = _$httpBackend_;
 
@@ -751,13 +751,13 @@ describe('ngeo.CreatePrint', function() {
           .respond(capabilities);
     }));
 
-    beforeEach(function() {
+    beforeEach(() => {
       print = ngeoCreatePrint('http://example.com/print');
     });
 
-    it('gets the correct capabilities', function() {
-      var resp;
-      print.getCapabilities().success(function(data) {
+    it('gets the correct capabilities', () => {
+      let resp;
+      print.getCapabilities().success((data) => {
         resp = data;
       });
       $httpBackend.flush();
@@ -765,27 +765,27 @@ describe('ngeo.CreatePrint', function() {
     });
   });
 
-  describe('#cancel', function() {
-    var print;
-    var $httpBackend;
+  describe('#cancel', () => {
+    let print;
+    let $httpBackend;
 
-    beforeEach(inject(function(_$httpBackend_) {
+    beforeEach(inject((_$httpBackend_) => {
       print = ngeoCreatePrint('http://example.com/print');
       $httpBackend = _$httpBackend_;
       $httpBackend.when('DELETE', 'http://example.com/print/cancel/deadbeef')
           .respond(200);
     }));
 
-    afterEach(function() {
+    afterEach(() => {
       $httpBackend.verifyNoOutstandingExpectation();
       $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('triggers the cancel request and resolves the promise', function() {
+    it('triggers the cancel request and resolves the promise', () => {
       $httpBackend.expectDELETE('http://example.com/print/cancel/deadbeef');
-      var promise = print.cancel('deadbeef');
+      const promise = print.cancel('deadbeef');
 
-      var spy = jasmine.createSpy();
+      const spy = jasmine.createSpy();
       promise.then(spy);
 
       $httpBackend.flush();

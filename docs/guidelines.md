@@ -109,7 +109,7 @@ ngeo.exampleDirective = function(…) {
       map: '=ngeoExampleMap'
     }
     controller: function() {
-      var m = this['map'];
+      let m = this['map'];
       // Then, for Closure-Compiler, assert and type this value.
       // …
     },
@@ -228,7 +228,7 @@ OpenLayers 3 allows passing custom properties to classes inheriting from
 `ol.Object`. For example:
 
 ```js
-var layer = new ol.layer.Tile({
+let layer = new ol.layer.Tile({
   maxResolution: 5000,
   title: 'A title',
   source: new ol.source.OSM()
@@ -241,7 +241,7 @@ ol3 built-in layer property.)
 You can then use the `get` methods to get that property's value:
 
 ```js
-var layerTitle = layer.get('title');
+let layerTitle = layer.get('title');
 ```
 
 **But** this won't work in the case of the ngeo, or any code compiled in with
@@ -252,7 +252,7 @@ One option to work-around the issue involves using the `set` method after
 the construction of the layer:
 
 ```js
-var layer = new ol.layer.Tile({
+let layer = new ol.layer.Tile({
   maxResolution: 5000,
   source: new ol.source.OSM()
 });
@@ -604,7 +604,7 @@ ngeo.module.value('ngeo<Name>TemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      */
     function(element, attrs) {
-      var templateUrl = attrs['ngeo<Name>Templateurl'];
+      let templateUrl = attrs['ngeo<Name>Templateurl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseTemplateUrl + '/<name>.html';
     });
@@ -769,7 +769,7 @@ ngeo.foobarDirective = function() {
  * @export
  */
 ngeo.NgeoFoobarController = function($scope) {
-  var foo = $scope['fooFn']();
+  let foo = $scope['fooFn']();
 };
 ```
 

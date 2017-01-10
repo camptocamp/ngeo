@@ -33,7 +33,7 @@ ngeo.attributesDirective = function() {
       'disabled': '<ngeoAttributesDisabled',
       'feature': '=ngeoAttributesFeature'
     },
-    templateUrl: ngeo.baseTemplateUrl + '/attributes.html'
+    templateUrl: `${ngeo.baseTemplateUrl}/attributes.html`
   };
 };
 
@@ -103,7 +103,7 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
   };
 
   // Listen to the feature inner properties change and apply them to the form
-  var uid = ol.getUid(this);
+  const uid = ol.getUid(this);
   this.ngeoEventHelper_.addListenerKey(
     uid,
     ol.events.listen(
@@ -139,7 +139,7 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
  */
 ngeo.AttributesController.prototype.handleInputChange = function(name) {
   this.updating_ = true;
-  var value = this.properties[name];
+  const value = this.properties[name];
   this.feature.set(name, value);
   this.updating_ = false;
 };
@@ -150,7 +150,7 @@ ngeo.AttributesController.prototype.handleInputChange = function(name) {
  * @private
  */
 ngeo.AttributesController.prototype.handleDestroy_ = function() {
-  var uid = ol.getUid(this);
+  const uid = ol.getUid(this);
   this.ngeoEventHelper_.clearListenerKey(uid);
 };
 

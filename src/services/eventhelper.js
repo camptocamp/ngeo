@@ -41,7 +41,7 @@ ngeo.EventHelper.prototype.addListenerKey = function(uid, key, opt_isol) {
     this.initListenerKey_(uid);
   }
 
-  var isol = opt_isol !== undefined ? opt_isol : true;
+  const isol = opt_isol !== undefined ? opt_isol : true;
   if (isol) {
     this.listenerKeys_[uid].ol.push(/** @type {ol.EventsKey} */ (key));
   } else {
@@ -77,13 +77,13 @@ ngeo.EventHelper.prototype.initListenerKey_ = function(uid) {
     };
   } else {
     if (this.listenerKeys_[uid].goog.length) {
-      this.listenerKeys_[uid].goog.forEach(function(key) {
+      this.listenerKeys_[uid].goog.forEach((key) => {
         goog.events.unlistenByKey(key);
       }, this);
       this.listenerKeys_[uid].goog.length = 0;
     }
     if (this.listenerKeys_[uid].ol.length) {
-      this.listenerKeys_[uid].ol.forEach(function(key) {
+      this.listenerKeys_[uid].ol.forEach((key) => {
         ol.events.unlistenByKey(key);
       }, this);
       this.listenerKeys_[uid].ol.length = 0;

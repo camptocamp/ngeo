@@ -3,17 +3,17 @@ goog.require('ol.Map');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
-describe('ngeo.DecorateLayer', function() {
-  var ngeoDecorateLayer;
+describe('ngeo.DecorateLayer', () => {
+  let ngeoDecorateLayer;
 
-  beforeEach(function() {
-    inject(function($injector) {
+  beforeEach(() => {
+    inject(($injector) => {
       ngeoDecorateLayer = $injector.get('ngeoDecorateLayer');
     });
   });
 
-  it('can change the visibility', function() {
-    var layer = new ol.layer.Tile({
+  it('can change the visibility', () => {
+    const layer = new ol.layer.Tile({
       source: new ol.source.OSM(),
       visible: false
     });
@@ -24,8 +24,8 @@ describe('ngeo.DecorateLayer', function() {
     expect(layer.getVisible()).toBe(false);
   });
 
-  it('can change the opacity', function() {
-    var layer = new ol.layer.Tile({
+  it('can change the opacity', () => {
+    const layer = new ol.layer.Tile({
       source: new ol.source.OSM(),
       opacity: 0.5
     });

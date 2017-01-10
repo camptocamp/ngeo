@@ -41,7 +41,7 @@
 //
 // Code:
 
-var d3 = {
+let d3 = {
     "version": {},
     "map": function () {},
     "functor": function () {},

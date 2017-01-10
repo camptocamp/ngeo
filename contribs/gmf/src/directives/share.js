@@ -23,7 +23,7 @@ gmf.shareDirective = function() {
   return {
     restrict: 'E',
     controller: 'GmfShareController as shareCtrl',
-    templateUrl: gmf.baseTemplateUrl + '/share.html'
+    templateUrl: `${gmf.baseTemplateUrl}/share.html`
   };
 };
 

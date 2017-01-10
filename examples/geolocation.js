@@ -25,7 +25,7 @@ app.module = angular.module('app', ['ngeo']);
  * @ngInject
  */
 app.MainController = function(ngeoDecorateGeolocation) {
-  var view = new ol.View({
+  const view = new ol.View({
     center: [647019, 6239641],
     zoom: 4
   });
@@ -40,10 +40,10 @@ app.MainController = function(ngeoDecorateGeolocation) {
         source: new ol.source.OSM()
       })
     ],
-    view: view
+    view
   });
 
-  var map = this.map;
+  const map = this.map;
 
   /**
    * @type {ol.Geolocation}
@@ -53,17 +53,17 @@ app.MainController = function(ngeoDecorateGeolocation) {
     projection: view.getProjection()
   });
 
-  var geolocation = this.geolocation;
+  const geolocation = this.geolocation;
 
-  var positionPoint = new ol.geom.Point([0, 0]);
-  var positionFeature = new ol.Feature(positionPoint);
+  const positionPoint = new ol.geom.Point([0, 0]);
+  const positionFeature = new ol.Feature(positionPoint);
 
-  var accuracyFeature = new ol.Feature();
-  geolocation.on('change:accuracyGeometry', function() {
+  const accuracyFeature = new ol.Feature();
+  geolocation.on('change:accuracyGeometry', () => {
     accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
   });
 
-  var vectorLayer = new ol.layer.Vector({
+  const vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
       features: [positionFeature, accuracyFeature]
     })
@@ -73,8 +73,8 @@ app.MainController = function(ngeoDecorateGeolocation) {
   // makes the vector layer "unmanaged", meaning that it is always on top.
   vectorLayer.setMap(map);
 
-  geolocation.on('change:position', function(e) {
-    var position = /** @type {ol.Coordinate} */ (geolocation.getPosition());
+  geolocation.on('change:position', (e) => {
+    const position = /** @type {ol.Coordinate} */ (geolocation.getPosition());
     positionPoint.setCoordinates(position);
     map.getView().setCenter(position);
     map.getView().setZoom(17);

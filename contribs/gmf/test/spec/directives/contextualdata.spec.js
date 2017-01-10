@@ -2,22 +2,22 @@ goog.require('gmf.contextualdataDirective');
 goog.require('gmf.mapDirective');
 goog.require('gmf.Altitude');
 
-describe('gmf.contextualdataDirective', function() {
+describe('gmf.contextualdataDirective', () => {
 
-  var $compile;
-  var $document;
-  var contextualdataController;
-  var map;
-  var $httpBackend;
-  var callbackSpy;
+  let $compile;
+  let $document;
+  let contextualdataController;
+  let map;
+  let $httpBackend;
+  let callbackSpy;
 
-  beforeEach(inject(function($injector, _$httpBackend_, _$rootScope_, _$compile_, _$document_) {
-    var $rootScope = _$rootScope_;
+  beforeEach(inject(($injector, _$httpBackend_, _$rootScope_, _$compile_, _$document_) => {
+    const $rootScope = _$rootScope_;
     $compile = _$compile_;
     $document = _$document_;
     $httpBackend = _$httpBackend_;
 
-    var element = angular.element(
+    const element = angular.element(
       '<gmf-map gmf-map-map="map" gmf-contextualdata="" gmf-contextualdata-map="::map" gmf-contextualdata-projections="[4326,3857]" gmf-contextualdata-callback="callback"></gmf-map>');
     element.css({
       position: 'absolute',
@@ -27,7 +27,7 @@ describe('gmf.contextualdataDirective', function() {
       height: 400
     });
     angular.element($document[0].body).append(element);
-    var scope = $rootScope.$new();
+    const scope = $rootScope.$new();
 
     map = new ol.Map({
       view: new ol.View({
@@ -59,7 +59,7 @@ describe('gmf.contextualdataDirective', function() {
     };
 
     // mock the template
-    var html = '';
+    let html = '';
     html += '{{coord_4326_eastern}},{{coord_4326_northern}},';
     html += '{{coord_3857_eastern}},{{elevation}},';
     html += '{{extra_value}}';
@@ -70,28 +70,28 @@ describe('gmf.contextualdataDirective', function() {
     });
   }));
 
-  afterEach(function() {
+  afterEach(() => {
     map.setTarget(null);
   });
 
-  describe('#init', function() {
-    it('creates a popover container', function() {
-      var popover = $document.find('div.popover');
+  describe('#init', () => {
+    it('creates a popover container', () => {
+      const popover = $document.find('div.popover');
       expect(popover.length).toBe(1);
     });
   });
 
-  describe('#popover', function() {
-    it('popover content is correct', function() {
-      var event = {
+  describe('#popover', () => {
+    it('popover content is correct', () => {
+      const event = {
         clientX: 100,
         clientY: 200,
-        preventDefault: function() {}
+        preventDefault() {}
       };
       contextualdataController.handleMapContextMenu_(event);
       // make sure the template for contextualdatacontent directive is loaded
       $httpBackend.flush();
-      var content = $document.find('div.popover-content')[0].innerHTML;
+      const content = $document.find('div.popover-content')[0].innerHTML;
       expect(content).toBe('1,2,111319.49079327358,1234,2468');
       expect(callbackSpy.calls.count()).toBe(1);
     });

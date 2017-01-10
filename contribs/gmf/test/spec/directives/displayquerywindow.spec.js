@@ -1,39 +1,39 @@
 goog.require('gmf.displayquerywindowDirective');
 
-describe('gmf.displayquerywindowDirective', function() {
+describe('gmf.displayquerywindowDirective', () => {
 
-  var displayQueriesController;
-  var ngeoQueryResult;
-  var $scope;
-  var $rootScope;
+  let displayQueriesController;
+  let ngeoQueryResult;
+  let $scope;
+  let $rootScope;
 
-  beforeEach(inject(function($injector, _$controller_, _$rootScope_) {
+  beforeEach(inject(($injector, _$controller_, _$rootScope_) => {
     ngeoQueryResult = $injector.get('ngeoQueryResult');
-    var $controller = _$controller_;
+    const $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
-    var data = {
-      featuresStyleFn: function() {
+    const data = {
+      featuresStyleFn() {
         return new ol.style.Style();
       },
-      selectedFeatureStyleFn: function() {
+      selectedFeatureStyleFn() {
         return undefined;
       }
     };
     displayQueriesController = $controller(
-        'GmfDisplayquerywindowController', {$scope: $scope}, data);
+        'GmfDisplayquerywindowController', {$scope}, data);
   }));
 
-  describe('#show', function() {
+  describe('#show', () => {
 
-    it('deals with no sources', function() {
+    it('deals with no sources', () => {
       ngeoQueryResult.total = 0;
       ngeoQueryResult.sources = [];
       $rootScope.$digest();
       expect(displayQueriesController.open).toBe(false);
     });
 
-    it('deals with a single source', function() {
+    it('deals with a single source', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
@@ -61,7 +61,7 @@ describe('gmf.displayquerywindowDirective', function() {
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[0]);
     });
 
-    it('deals with multiple sources', function() {
+    it('deals with multiple sources', () => {
       ngeoQueryResult.total = 5;
       ngeoQueryResult.sources = [{
         features: [
@@ -122,7 +122,7 @@ describe('gmf.displayquerywindowDirective', function() {
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[0]);
     });
 
-    it('deals with selected sources', function() {
+    it('deals with selected sources', () => {
       ngeoQueryResult.total = 5;
       ngeoQueryResult.sources = [{
         features: [

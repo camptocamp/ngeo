@@ -42,27 +42,25 @@ ngeo.btngroupDirective = function($parse) {
   return {
     restrict: 'A',
     controller: 'ngeoBtnGroupController',
-    link:
-        /**
-         * @param {!angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         * @param {!Object} controller Controller.
-         */
-        function(scope, element, attrs, controller) {
-          var setActive = $parse(attrs['ngeoBtnGroupActive']).assign;
+    /**
+     * @param {!angular.Scope} scope Scope.
+     * @param {!angular.JQLite=} element Element.
+     * @param {!angular.Attributes=} attrs Atttributes.
+     * @param {!ngeo.BtnGroupController=} controller Controller.
+     */
+    link(scope, element, attrs, controller) {
+      const setActive = $parse(attrs['ngeoBtnGroupActive']).assign;
 
-          if (setActive) {
-            scope.$watch(function() {
-              // return true if at least one button is active otherwise false
-              return controller.buttons_.some(function(buttonModel) {
-                return (buttonModel(scope) === true);
-              });
-            }, function(newValue) {
-              setActive(scope, newValue);
-            });
+      if (setActive) {
+        scope.$watch(
+          // return true if at least one button is active otherwise false
+          () => controller.buttons_.some(buttonModel => buttonModel(scope) === true),
+          (newValue) => {
+            setActive(scope, newValue);
           }
-        }
+        );
+      }
+    }
   };
 };
 
@@ -140,45 +138,44 @@ ngeo.btnDirective = function($parse) {
   return {
     require: ['?^ngeoBtnGroup', 'ngModel'],
     restrict: 'A',
-    link:
-        /**
-         * @param {!angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         * @param {!Array.<!Object>} ctrls Controllers.
-         */
-        function(scope, element, attrs, ctrls) {
-          var buttonsCtrl = ctrls[0];
-          var ngModelCtrl = ctrls[1];
-          var indexInGroup = -1;
+    /**
+     * @param {!angular.Scope} scope Scope.
+     * @param {!angular.JQLite=} element Element.
+     * @param {!angular.Attributes=} attrs Atttributes.
+     * @param {!Array.<!Object>=} ctrls Controller.
+     */
+    link(scope, element, attrs, ctrls) {
+      const buttonsCtrl = ctrls[0];
+      const ngModelCtrl = ctrls[1];
+      let indexInGroup = -1;
 
-          var ngModelGet = $parse(attrs['ngModel']);
-          var ngModelSet = ngModelGet.assign;
+      const ngModelGet = $parse(attrs['ngModel']);
+      const ngModelSet = ngModelGet.assign;
 
           // Set ng-model value to false if undefined
-          if (ngModelGet(scope) === undefined) {
-            ngModelSet(scope, false);
-          }
-          if (buttonsCtrl !== null) {
-            indexInGroup = buttonsCtrl.addButton(ngModelGet);
-          }
+      if (ngModelGet(scope) === undefined) {
+        ngModelSet(scope, false);
+      }
+      if (buttonsCtrl !== null) {
+        indexInGroup = buttonsCtrl.addButton(ngModelGet);
+      }
 
           // UI -> model
-          element.bind('click', function() {
-            scope.$apply(function() {
-              ngModelCtrl.$setViewValue(!ngModelCtrl.$viewValue);
-              ngModelCtrl.$render();
-            });
-          });
+      element.bind('click', () => {
+        scope.$apply(() => {
+          ngModelCtrl.$setViewValue(!ngModelCtrl.$viewValue);
+          ngModelCtrl.$render();
+        });
+      });
 
           // model -> UI
-          ngModelCtrl.$render = function() {
-            if (ngModelCtrl.$viewValue && buttonsCtrl !== null) {
-              buttonsCtrl.activate(indexInGroup);
-            }
-            element.toggleClass('active', ngModelCtrl.$viewValue);
-          };
+      ngModelCtrl.$render = function() {
+        if (ngModelCtrl.$viewValue && buttonsCtrl !== null) {
+          buttonsCtrl.activate(indexInGroup);
         }
+        element.toggleClass('active', ngModelCtrl.$viewValue);
+      };
+    }
   };
 };
 

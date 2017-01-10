@@ -17,10 +17,10 @@ ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template.
      */
-    function(element, attrs) {
-      var templateUrl = attrs['gmfDisplayquerywindowTemplateurl'];
+    (element, attrs) => {
+      const templateUrl = attrs['gmfDisplayquerywindowTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/displayquerywindow.html';
+          `${gmf.baseTemplateUrl}/displayquerywindow.html`;
     });
 
 
@@ -148,8 +148,8 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    */
   this.features_ = new ol.Collection();
 
-  var featuresOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-  var featuresStyle = this['featuresStyleFn']();
+  const featuresOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  const featuresStyle = this['featuresStyleFn']();
   if (featuresStyle !== undefined) {
     goog.asserts.assertInstanceof(featuresStyle, ol.style.Style);
     featuresOverlay.setStyle(featuresStyle);
@@ -169,16 +169,16 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
   this.highlightFeatures_ = new ol.Collection();
   this.highlightFeatureOverlay_.setFeatures(this.highlightFeatures_);
 
-  var highlightFeatureStyle = this['selectedFeatureStyleFn']();
+  let highlightFeatureStyle = this['selectedFeatureStyleFn']();
   if (highlightFeatureStyle !== undefined) {
     goog.asserts.assertInstanceof(highlightFeatureStyle, ol.style.Style);
   } else {
-    var fill = new ol.style.Fill({color: [255, 0, 0, 0.6]});
-    var stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
+    const fill = new ol.style.Fill({color: [255, 0, 0, 0.6]});
+    const stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
     highlightFeatureStyle = new ol.style.Style({
-      fill: fill,
-      image: new ol.style.Circle({fill: fill, radius: 5, stroke: stroke}),
-      stroke: stroke
+      fill,
+      image: new ol.style.Circle({fill, radius: 5, stroke}),
+      stroke
     });
   }
   this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
@@ -220,16 +220,14 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
   this.open = false;
 
   $scope.$watchCollection(
-      function() {
-        return ngeoQueryResult;
-      },
-      function(newQueryResult, oldQueryResult) {
+      () => ngeoQueryResult,
+      (newQueryResult, oldQueryResult) => {
         if (newQueryResult.total > 0) {
           this.show();
         } else if (oldQueryResult !== newQueryResult) {
           this.close();
         }
-      }.bind(this));
+      });
 };
 
 
@@ -268,11 +266,11 @@ gmf.DisplayquerywindowController.prototype.updateFeatures_ = function() {
  */
 gmf.DisplayquerywindowController.prototype.setCurrentResult_ = function(
     position, setHighlight) {
-  var hasChanged = false;
+  let hasChanged = false;
   if (position !== this.currentResult) {
-    var i, source, features;
-    var lastFeature = this.feature;
-    var sources = this.ngeoQueryResult.sources;
+    let i, source, features;
+    const lastFeature = this.feature;
+    const sources = this.ngeoQueryResult.sources;
     this.currentResult = position;
     for (i = 0; i < sources.length; i++) {
       source = sources[i];
@@ -304,11 +302,11 @@ gmf.DisplayquerywindowController.prototype.setCurrentResult_ = function(
  * @export
  */
 gmf.DisplayquerywindowController.prototype.previous = function() {
-  var position = this.currentResult - 1;
+  let position = this.currentResult - 1;
   if (position < 0) {
     position = this.getResultLength() - 1;
   }
-  var hasChanged = this.setCurrentResult_(position, true);
+  const hasChanged = this.setCurrentResult_(position, true);
   if (hasChanged) {
     this.animate_(false);
   }
@@ -321,12 +319,12 @@ gmf.DisplayquerywindowController.prototype.previous = function() {
  * @export
  */
 gmf.DisplayquerywindowController.prototype.next = function() {
-  var position = this.currentResult + 1;
-  var positionMax = this.getResultLength() - 1;
+  let position = this.currentResult + 1;
+  const positionMax = this.getResultLength() - 1;
   if (position > positionMax) {
     position = 0;
   }
-  var hasChanged = this.setCurrentResult_(position, true);
+  const hasChanged = this.setCurrentResult_(position, true);
   if (hasChanged) {
     this.animate_(true);
   }
@@ -400,16 +398,16 @@ gmf.DisplayquerywindowController.prototype.animate_ = function(isNext) {
  * @private
  */
 gmf.DisplayquerywindowController.prototype.collectFeatures_ = function() {
-  var sources = this.ngeoQueryResult.sources;
+  const sources = this.ngeoQueryResult.sources;
   this.features_.clear();
-  for (var i = 0; i < sources.length; i++) {
-    var source = sources[i];
+  for (let i = 0; i < sources.length; i++) {
+    const source = sources[i];
     if (this.selectedSource !== null && this.selectedSource !== source) {
       // when filtering on a source, only add features of the selected source
       continue;
     }
-    var features = source.features;
-    for (var ii = 0; ii < features.length; ii++) {
+    const features = source.features;
+    for (let ii = 0; ii < features.length; ii++) {
       this.features_.push(features[ii]);
     }
   }

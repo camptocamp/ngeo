@@ -27,7 +27,7 @@ goog.require('gmf.ThemesEventType');
  *      </gmf-themeselector>
  *      <script>
  *        (function() {
- *          var module = angular.module('app');
+ *          let module = angular.module('app');
  *          module.value('gmfTreeManagerModeFlush', true);
  *        })();
  *      </script>
@@ -49,7 +49,7 @@ goog.require('gmf.ThemesEventType');
  *      </gmf-themeselector>
  *      <script>
  *        (function() {
- *          var module = angular.module('app');
+ *          let module = angular.module('app');
  *          module.value('gmfTreeManagerModeFlush', false);
  *        })();
  *      </script>
@@ -68,7 +68,7 @@ gmf.themeselectorDirective = function() {
       'filter': '=gmfThemeselectorFilter'
     },
     bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/themeselector.html'
+    templateUrl: `${gmf.baseTemplateUrl}/themeselector.html`
   };
 };
 
@@ -130,10 +130,10 @@ gmf.ThemeselectorController = function($scope, gmfThemeManager, gmfThemes) {
  * @private
  */
 gmf.ThemeselectorController.prototype.setThemes_ = function() {
-  this.gmfThemes_.getThemesObject().then(function(themes) {
+  this.gmfThemes_.getThemesObject().then((themes) => {
     // Keep only the themes dedicated to the theme switcher
     this.themes = this.filter ? themes.filter(this.filter) : themes;
-  }.bind(this));
+  });
 };
 
 

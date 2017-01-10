@@ -37,13 +37,13 @@ ngeo.bboxQueryDirective = function(ngeoQuery) {
   return {
     restrict: 'A',
     scope: false,
-    link: function(scope, elem, attrs) {
+    link(scope, elem, attrs) {
       /**
        * @type {ol.Map}
        */
-      var map = scope.$eval(attrs['ngeoBboxQueryMap']);
+      const map = scope.$eval(attrs['ngeoBboxQueryMap']);
 
-      var interaction = new ol.interaction.DragBox({
+      const interaction = new ol.interaction.DragBox({
         condition: ol.events.condition.platformModifierKeyOnly
       });
 
@@ -52,15 +52,15 @@ ngeo.bboxQueryDirective = function(ngeoQuery) {
        * a request to the query service using the extent that was drawn.
        * @param {ol.interaction.DragBox.Event} evt Event.
        */
-      var handleBoxEnd = function(evt) {
-        var extent = interaction.getGeometry().getExtent();
+      const handleBoxEnd = function(evt) {
+        const extent = interaction.getGeometry().getExtent();
         ngeoQuery.issue(map, extent);
       };
       interaction.on('boxend', handleBoxEnd);
 
       // watch 'active' property -> activate/deactivate accordingly
       scope.$watch(attrs['ngeoBboxQueryActive'],
-          function(newVal, oldVal) {
+          (newVal, oldVal) => {
             if (newVal) {
               // activate
               map.addInteraction(interaction);

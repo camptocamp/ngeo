@@ -27,35 +27,35 @@ ngeo.DecorateLayerLoading;
  */
 ngeo.decorateLayerLoading = function(layer, $scope) {
 
-  var source;
+  let source;
 
   /**
    * @type {Array<string>|null}
    */
-  var incrementEvents = null;
+  let incrementEvents = null;
 
   /**
    * @type {Array<string>|null}
    */
-  var decrementEvents = null;
+  let decrementEvents = null;
 
   /**
    * @function
    * @private
    */
-  var incrementLoadCount_ = increment_;
+  const incrementLoadCount_ = increment_;
 
   /**
    * @function
    * @private
    */
-  var decrementLoadCount_ = decrement_;
+  const decrementLoadCount_ = decrement_;
 
   layer.set('load_count', 0, true);
 
   if (layer instanceof ol.layer.Group) {
-    layer.getLayers().on('add', function(olEvent) {
-      var newLayer = olEvent.element;
+    layer.getLayers().on('add', (olEvent) => {
+      const newLayer = olEvent.element;
       newLayer.set('parent_group', layer);
     });
   }
@@ -74,12 +74,12 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
       goog.asserts.fail('unsupported source type');
     }
 
-    source.on(incrementEvents, function() {
+    source.on(incrementEvents, () => {
       incrementLoadCount_(layer);
       $scope.$applyAsync();
     });
 
-    source.on(decrementEvents, function() {
+    source.on(decrementEvents, () => {
       decrementLoadCount_(layer);
       $scope.$applyAsync();
     });
@@ -87,13 +87,9 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
 
   Object.defineProperty(layer, 'loading', {
     configurable: true,
-    get:
-        /**
-         * @return {boolean} Loading.
-         */
-        function() {
-          return /** @type {number} */ (layer.get('load_count')) > 0;
-        }
+    get() {
+      return /** @type {number} */ (layer.get('load_count')) > 0;
+    }
   });
 
   /**
@@ -102,8 +98,8 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
    * @private
    */
   function increment_(layer) {
-    var load_count = /** @type {number} */ (layer.get('load_count'));
-    var parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
+    let load_count = /** @type {number} */ (layer.get('load_count'));
+    const parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
     layer.set('load_count', ++load_count, true);
     if (parent) {
       increment_(parent);
@@ -116,8 +112,8 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
    * @private
    */
   function decrement_(layer) {
-    var load_count = /** @type {number} */ (layer.get('load_count'));
-    var parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
+    let load_count = /** @type {number} */ (layer.get('load_count'));
+    const parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
     layer.set('load_count', --load_count, true);
     if (parent) {
       decrement_(parent);

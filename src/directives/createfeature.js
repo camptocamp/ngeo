@@ -121,9 +121,9 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   // Create the draw or measure interaction depending on the geometry type
-  var interaction;
-  var helpMsg;
-  var contMsg;
+  let interaction;
+  let helpMsg;
+  let contMsg;
   if (this.geomType === ngeo.GeometryType.POINT ||
       this.geomType === ngeo.GeometryType.MULTI_POINT
   ) {
@@ -143,8 +143,8 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
       $filter('ngeoUnitPrefix'),
       {
         style: new ol.style.Style(),
-        startMsg: $compile('<div translate>' + helpMsg + '</div>')($scope)[0],
-        continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]
+        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
+        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0]
       }
     );
   } else if (this.geomType === ngeo.GeometryType.POLYGON ||
@@ -160,8 +160,8 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
       $filter('ngeoUnitPrefix'),
       {
         style: new ol.style.Style(),
-        startMsg: $compile('<div translate>' + helpMsg + '</div>')($scope)[0],
-        continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]
+        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
+        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0]
       }
     );
   }
@@ -182,15 +182,13 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
 
   // == Event listeners ==
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
-    function(newVal) {
+    () => this.active,
+    (newVal) => {
       this.interaction_.setActive(newVal);
-    }.bind(this)
+    }
   );
 
-  var uid = ol.getUid(this);
+  const uid = ol.getUid(this);
   if (interaction instanceof ol.interaction.Draw) {
     this.ngeoEventHelper_.addListenerKey(
       uid,
@@ -229,12 +227,12 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
  */
 ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
   // convert to multi if geomType is multi and feature is not
-  var geometry = event.feature.getGeometry();
-  var type = geometry.getType();
+  let geometry = event.feature.getGeometry();
+  const type = geometry.getType();
   if (this.geomType.indexOf('Multi') != type.indexOf('Multi')) {
     geometry = ngeo.utils.toMulti(geometry);
   }
-  var feature = new ol.Feature(geometry);
+  const feature = new ol.Feature(geometry);
   if (this.features instanceof ol.Collection) {
     this.features.push(feature);
   } else {
@@ -248,12 +246,12 @@ ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
  * @private
  */
 ngeo.CreatefeatureController.prototype.handleDestroy_ = function() {
-  this.timeout_(function() {
-    var uid = ol.getUid(this);
+  this.timeout_(() => {
+    const uid = ol.getUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);
     this.interaction_.setActive(false);
     this.map.removeInteraction(this.interaction_);
-  }.bind(this), 0);
+  }, 0);
 };
 
 

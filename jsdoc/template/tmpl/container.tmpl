@@ -1,6 +1,6 @@
 <?js
-    var self = this;
-    var isGlobalPage;
+    let self = this;
+    let isGlobalPage;
 
     docs.forEach(function(doc, i) {
 ?>
@@ -80,7 +80,7 @@
     <?js } ?>
 
     <?js
-        var classes = self.find({kind: 'class', memberof: doc.longname});
+        let classes = self.find({kind: 'class', memberof: doc.longname});
         if (!isGlobalPage && classes && classes.length) {
     ?>
         <h3 class="subsection-title">Classes</h3>
@@ -92,7 +92,7 @@
     <?js } ?>
 
      <?js
-        var mixins = self.find({kind: 'mixin', memberof: doc.longname});
+        let mixins = self.find({kind: 'mixin', memberof: doc.longname});
         if (!isGlobalPage && mixins && mixins.length) {
     ?>
         <h3 class="subsection-title">Mixins</h3>
@@ -104,7 +104,7 @@
     <?js } ?>
 
     <?js
-        var namespaces = self.find({kind: 'namespace', memberof: doc.longname});
+        let namespaces = self.find({kind: 'namespace', memberof: doc.longname});
         if (!isGlobalPage && namespaces && namespaces.length) {
     ?>
         <h3 class="subsection-title">Namespaces</h3>
@@ -116,7 +116,7 @@
     <?js } ?>
 
     <?js
-        var members = self.find({kind: 'member', memberof: isGlobalPage ? {isUndefined: true} : doc.longname});
+        let members = self.find({kind: 'member', memberof: isGlobalPage ? {isUndefined: true} : doc.longname});
 
         // symbols that are assigned to module.exports are not globals, even though they're not a memberof anything
         if (isGlobalPage && members && members.length && members.forEach) {
@@ -134,7 +134,7 @@
     <?js } ?>
 
     <?js
-        var methods = self.find({kind: 'function', memberof: isGlobalPage ? {isUndefined: true} : doc.longname});
+        let methods = self.find({kind: 'function', memberof: isGlobalPage ? {isUndefined: true} : doc.longname});
         if (methods && methods.length && methods.forEach) {
     ?>
         <h3 class="subsection-title">Methods</h3>
@@ -145,7 +145,7 @@
     <?js } ?>
 
     <?js
-        var typedefs = self.find({kind: 'typedef', memberof: isGlobalPage ? {isUndefined: true} : doc.longname});
+        let typedefs = self.find({kind: 'typedef', memberof: isGlobalPage ? {isUndefined: true} : doc.longname});
         if (typedefs && typedefs.length && typedefs.forEach) {
     ?>
         <h3 class="subsection-title">Type Definitions</h3>
@@ -165,7 +165,7 @@
     <?js } ?>
 
     <?js
-        var events = self.find({kind: 'event', memberof: isGlobalPage ? {isUndefined: true} : doc.longname});
+        let events = self.find({kind: 'event', memberof: isGlobalPage ? {isUndefined: true} : doc.longname});
         if (events && events.length && events.forEach) {
     ?>
         <h3 class="subsection-title">Events</h3>

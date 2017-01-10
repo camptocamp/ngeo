@@ -33,17 +33,17 @@ goog.require('ngeo');
 ngeo.recenterDirective = function() {
   return {
     restrict: 'A',
-    link: function($scope, $element, $attrs) {
-      var mapExpr = $attrs['ngeoRecenterMap'];
-      var map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
+    link($scope, $element, $attrs) {
+      const mapExpr = $attrs['ngeoRecenterMap'];
+      const map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
 
       function recenter(element) {
-        var extent = element.attr('ngeo-extent');
+        const extent = element.attr('ngeo-extent');
         if (extent !== undefined) {
-          var mapSize = /** @type {ol.Size} */ (map.getSize());
+          const mapSize = /** @type {ol.Size} */ (map.getSize());
           map.getView().fit($scope.$eval(extent), mapSize);
         }
-        var zoom = element.attr('ngeo-zoom');
+        const zoom = element.attr('ngeo-zoom');
         if (zoom !== undefined) {
           map.getView().setZoom($scope.$eval(zoom));
         }
@@ -55,8 +55,8 @@ ngeo.recenterDirective = function() {
       });
 
       // if the children is an option inside a select
-      $element.on('change', function(event) {
-        var selected = event.target.options[event.target.selectedIndex];
+      $element.on('change', (event) => {
+        const selected = event.target.options[event.target.selectedIndex];
         recenter(angular.element(selected));
       });
 

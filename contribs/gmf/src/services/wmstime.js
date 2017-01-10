@@ -39,8 +39,8 @@ ol.inherits(gmf.WMSTime, ngeo.Time);
  * @private
  */
 gmf.WMSTime.prototype.formatWMSTimeValue_ = function(time, resolution, opt_toUTC) {
-  var date = new Date(time);
-  var utc = opt_toUTC ? 'UTC' : undefined;
+  const date = new Date(time);
+  const utc = opt_toUTC ? 'UTC' : undefined;
   switch (resolution) {
     case 'year':
       return this.$filter_('date')(date, 'yyyy', utc);
@@ -71,8 +71,8 @@ gmf.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_
   if (wmsTimeProperty.mode === 'range') {
     goog.asserts.assert(times.end !== undefined);
     return (
-      this.formatWMSTimeValue_(times.start, wmsTimeProperty.resolution, opt_toUTC) + '/' +
-      this.formatWMSTimeValue_(times.end, wmsTimeProperty.resolution, opt_toUTC)
+      `${this.formatWMSTimeValue_(times.start, wmsTimeProperty.resolution, opt_toUTC)}/${
+      this.formatWMSTimeValue_(times.end, wmsTimeProperty.resolution, opt_toUTC)}`
     );
   } else {
     return this.formatWMSTimeValue_(times.start, wmsTimeProperty.resolution, opt_toUTC);

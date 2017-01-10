@@ -39,8 +39,8 @@ gmf.ShareService = function($http, gmfShortenerCreateUrl) {
  * the promise attached to the shortener API request
  */
 gmf.ShareService.prototype.getShortUrl = function(url) {
-  var params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
-    url: url
+  const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
+    url
   });
 
   if (!this.gmfShortenerCreateUrl_) {
@@ -65,9 +65,9 @@ gmf.ShareService.prototype.getShortUrl = function(url) {
  * @return {angular.$http.HttpPromise} the promise attached to the shortener API request
  */
 gmf.ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
-  var params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
+  const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
     url: shortUrl,
-    email: email
+    email
   });
 
   if (opt_message) {

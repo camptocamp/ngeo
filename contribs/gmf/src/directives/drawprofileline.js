@@ -74,7 +74,7 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
    */
   this.line;
 
-  var map = this['getMapFn']();
+  const map = this['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
 
   /**
@@ -96,11 +96,11 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
    */
   this.features_ = new ol.Collection();
 
-  var overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(this.features_);
 
-  var style;
-  var styleFn = this['getStyleFn'];
+  let style;
+  const styleFn = this['getStyleFn'];
   if (styleFn) {
     style = styleFn();
     goog.asserts.assertInstanceof(style, ol.style.Style);
@@ -141,34 +141,30 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
   this.interaction.on(ol.interaction.Draw.EventType.DRAWEND, function(e) {
     this.line = e.feature.getGeometry();
     // using timeout to prevent dblclick to zoom the map
-    $timeout(function() {
+    $timeout(() => {
       this.interaction.setActive(false);
-    }.bind(this), 0);
+    }, 0);
   }, this);
 
   // Line may be removed from an an other component
   // for example closing the chart panel
   $scope.$watch(
-    function() {
-      return this.line;
-    }.bind(this),
-    function(newLine, oldLine) {
+    () => this.line,
+    (newLine, oldLine) => {
       if (newLine === null) {
         this.clear_();
       }
-    }.bind(this));
+    });
 
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
-    function(newValue) {
+    () => this.active,
+    (newValue) => {
       if (newValue === false) {
         this.clear_();
       }
       // Will activate the interaction automatically the first time
       this.interaction.setActive(this.active);
-    }.bind(this)
+    }
   );
 };
 

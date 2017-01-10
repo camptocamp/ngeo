@@ -32,38 +32,30 @@ ngeo.decorateLayer = function(layer) {
 
   Object.defineProperty(layer, 'visible', {
     configurable: true,
-    get:
-        /**
-         * @return {boolean} Visible.
-         */
-        function() {
-          return layer.getVisible();
-        },
-    set:
-        /**
-         * @param {boolean} val Visible.
-         */
-        function(val) {
-          layer.setVisible(val);
-        }
+    /**
+     * @return {boolean} Visible.
+     */
+    get: () => layer.getVisible(),
+    /**
+     * @param {boolean} val Visible.
+     */
+    set: (val) => {
+      layer.setVisible(val);
+    }
   });
 
   Object.defineProperty(layer, 'opacity', {
     configurable: true,
-    get:
-        /**
-         * @return {string} Opacity.
-         */
-        function() {
-          return (Math.round(layer.getOpacity() * 100) / 100) + '';
-        },
-    set:
-        /**
-         * @param {string} val Opacity.
-         */
-        function(val) {
-          layer.setOpacity(+val);
-        }
+    /**
+     * @return {string} Opacity.
+     */
+    get: () => `${Math.round(layer.getOpacity() * 100) / 100}`,
+    /**
+     * @param {string} val Opacity.
+     */
+    set: (val) => {
+      layer.setOpacity(+val);
+    }
   });
 };
 

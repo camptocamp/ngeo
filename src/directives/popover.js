@@ -28,16 +28,16 @@ ngeo.popoverDirective = function() {
     restrict: 'A',
     scope: true,
     controller: 'NgeoPopoverController as popoverCtrl',
-    link: function(scope, elem, attrs, ngeoPopoverCtrl) {
-      ngeoPopoverCtrl.anchorElm.on('hidden.bs.popover', function() {
+    link(scope, elem, attrs, ngeoPopoverCtrl) {
+      ngeoPopoverCtrl.anchorElm.on('hidden.bs.popover', () => {
         /**
          * @type {{inState : Object}}
          */
-        var popover = ngeoPopoverCtrl.anchorElm.data('bs.popover');
+        const popover = ngeoPopoverCtrl.anchorElm.data('bs.popover');
         popover['inState'].click = false;
       });
 
-      ngeoPopoverCtrl.anchorElm.on('inserted.bs.popover', function() {
+      ngeoPopoverCtrl.anchorElm.on('inserted.bs.popover', () => {
         ngeoPopoverCtrl.bodyElm.show();
         ngeoPopoverCtrl.shown = true;
       });
@@ -50,12 +50,12 @@ ngeo.popoverDirective = function() {
       });
 
       if (attrs['ngeoPopoverDismiss']) {
-        $(attrs['ngeoPopoverDismiss']).on('scroll', function() {
+        $(attrs['ngeoPopoverDismiss']).on('scroll', () => {
           ngeoPopoverCtrl.dismissPopover();
         });
       }
 
-      scope.$on('$destroy', function() {
+      scope.$on('$destroy', () => {
         ngeoPopoverCtrl.anchorElm.popover('destroy');
         ngeoPopoverCtrl.anchorElm.unbind('inserted.bs.popover');
         ngeoPopoverCtrl.anchorElm.unbind('hidden.bs.popover');
@@ -74,7 +74,7 @@ ngeo.popoverAnchorDirective = function() {
   return {
     restrict: 'A',
     require: '^^ngeoPopover',
-    link: function(scope, elem, attrs, ngeoPopoverCtrl) {
+    link(scope, elem, attrs, ngeoPopoverCtrl) {
       ngeoPopoverCtrl.anchorElm = elem;
     }
   };
@@ -90,7 +90,7 @@ ngeo.popoverContentDirective = function() {
   return {
     restrict: 'A',
     require: '^^ngeoPopover',
-    link: function(scope, elem, attrs, ngeoPopoverCtrl) {
+    link(scope, elem, attrs, ngeoPopoverCtrl) {
       ngeoPopoverCtrl.bodyElm = elem;
       elem.hide();
     }
@@ -137,7 +137,7 @@ ngeo.PopoverController = function($scope) {
 
   angular.element('body').on('mousedown', onMouseDown.bind(this));
 
-  $scope.$on('$destroy', function() {
+  $scope.$on('$destroy', () => {
     angular.element('body').off('mousedown', onMouseDown);
   });
 };

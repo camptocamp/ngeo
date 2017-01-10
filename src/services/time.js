@@ -28,15 +28,15 @@ ngeo.Time  = function() {
  */
 ngeo.Time.prototype.getOptions = function(time) {
 
-  var minDate = new Date(time.minValue);
-  var maxDate = new Date(time.maxValue);
+  const minDate = new Date(time.minValue);
+  const maxDate = new Date(time.maxValue);
 
-  var minDefaultDate = (time.minDefValue) ?
+  const minDefaultDate = (time.minDefValue) ?
       new Date(time.minDefValue) : minDate;
-  var maxDefaultDate = (time.maxDefValue) ?
+  const maxDefaultDate = (time.maxDefValue) ?
       new Date(time.maxDefValue) : maxDate;
 
-  var defaultValues = (time.mode === 'range') ?
+  const defaultValues = (time.mode === 'range') ?
       [minDefaultDate.getTime(), maxDefaultDate.getTime()] :
       minDefaultDate.getTime();
 

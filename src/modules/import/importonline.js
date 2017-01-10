@@ -18,7 +18,7 @@ goog.require('ngeo.fileService');
  */
 exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOnlineTemplateUrl) {
 
-  var timeoutP;
+  let timeoutP;
 
   return {
     restrict: 'A',
@@ -26,11 +26,11 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
     scope: {
       'options': '=ngeoImportOnlineOptions'
     },
-    link: function(scope, elt) {
+    link(scope, elt) {
       /**
        * @type {ngeox.ImportOnlineOptions}
        */
-      var options = scope['options'];
+      const options = scope['options'];
       if (!options || (typeof options.handleFileContent !== 'function')) {
         elt.remove();
         return;
@@ -38,7 +38,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
 
       scope['handleFileContent'] = options.handleFileContent;
 
-      var initUserMsg = function() {
+      const initUserMsg = function() {
         scope['userMessage'] = gettext('Connect');
         scope['progress'] = 0;
         scope['loading'] = false;
@@ -49,14 +49,14 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
        * @param {Array<{name: string, url: string}>} nameUrls .
        * @return {function(string, function())} The matching function.
        */
-      var substringMatcher = function(nameUrls) {
+      const substringMatcher = function(nameUrls) {
         return function(q, cb) {
-          var matches = [];
+          let matches = [];
           if (!q) {
             matches = nameUrls;
           } else {
-            var regex = new RegExp(q, 'i');
-            nameUrls.forEach(function(nameUrl) {
+            const regex = new RegExp(q, 'i');
+            nameUrls.forEach((nameUrl) => {
               if (regex.test(nameUrl['name'])) {
                 matches.push(nameUrl);
               }
@@ -66,9 +66,9 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
         };
       };
 
-      var nameUrls = scope['options'].urls;
+      let nameUrls = scope['options'].urls;
       if (nameUrls && nameUrls.length > 0 && !nameUrls[0]['name']) {
-        nameUrls = nameUrls.map(function(url) {
+        nameUrls = nameUrls.map((url) => {
           return {
             'name': url,
             'url': url
@@ -77,7 +77,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
       }
 
       // Create the typeAhead input for the list of urls available
-      var taElt = elt.find('input[name=url]').typeahead({
+      const taElt = elt.find('input[name=url]').typeahead({
         hint: true,
         highlight: true,
         minLength: 0
@@ -86,17 +86,17 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
         displayKey: 'name',
         limit: 500,
         source: substringMatcher(nameUrls)
-      }).on('typeahead:selected', function(evt, nameUrl) {
+      }).on('typeahead:selected', (evt, nameUrl) => {
         taElt.typeahead('close');
         // When a WMS is selected in the list, start downloading the
         // GetCapabilities
         scope['fileUrl'] = nameUrl['url'];
         scope['handleFileUrl']();
         scope.$digest();
-      }).on('focus', function() {
+      }).on('focus', () => {
       });
 
-      scope.$on('gettextLanguageChanged', function() {
+      scope.$on('gettextLanguageChanged', () => {
         if (scope['fileUrl'] && /lang=/.test(scope['fileUrl'])) {
           scope['handleFileUrl']();
         }
@@ -119,7 +119,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
 
       // Handle URL of WMS
       scope['handleFileUrl'] = function() {
-        var url = scope['fileUrl'];
+        let url = scope['fileUrl'];
 
         if (options.transformUrl) {
           url = options.transformUrl(url);
@@ -131,20 +131,20 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
         $timeout.cancel(timeoutP);
 
         // Angularjs doesn't handle onprogress event
-        ngeoFile.load(url, scope['canceler']).then(function(fileContent) {
+        ngeoFile.load(url, scope['canceler']).then((fileContent) => {
           scope['canceler'] = null;
 
           return scope['handleFileContent'](fileContent, {
             url: scope['fileUrl']
           });
 
-        }).then(function(result) {
+        }).then((result) => {
           scope['userMessage'] = result.message;
 
-        }, function(err) {
+        }, (err) => {
           scope['userMessage'] = err.message;
 
-        }).finally(function() {
+        }).finally(() => {
           scope['canceler'] = null;
           scope['loading'] = false;
           timeoutP = $timeout(initUserMsg, 10000);
@@ -165,10 +165,10 @@ exports.module.value('ngeoImportOnlineTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {boolean} Template URL.
      */
-    function(element, attrs) {
-      var templateUrl = attrs['ngeoImportOnlineTemplateUrl'];
+    (element, attrs) => {
+      const templateUrl = attrs['ngeoImportOnlineTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseModuleTemplateUrl + '/import/partials/import-online.html';
+          `${ngeo.baseModuleTemplateUrl}/import/partials/import-online.html`;
     });
 
 exports.module.directive('ngeoImportOnline', exports);
