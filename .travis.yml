@@ -25,7 +25,9 @@ matrix:
     env: NODE=4
   # Test the examples in white space mode on the pull requests
   - node_js: "6"
-    env: DEVELOPMENT=TRUE
+    env: DEVELOPMENT=TRUE TEST_EXAMPLES=TRUE EXAMPLES_SPLIT=1/2 TEST_DIST_NGEO=TRUE
+  - node_js: "6"
+    env: DEVELOPMENT=TRUE TEST_EXAMPLES=TRUE EXAMPLES_SPLIT=2/2 TEST_DIST_GMF=TRUE
   # Deploy the examples in advance mode on the commit on a branch
   - node_js: "6"
     env: EXAMPLES=TRUE
@@ -58,10 +60,10 @@ script:
 - make git-attributes
 - if [ "${EXAMPLES}" != TRUE ]; then make lint; fi
 
-- if [ "${DEVELOPMENT}-${IS_PR}" = TRUE-TRUE ]; then buildtools/test_examples.py; fi
-- if [ "${DEVELOPMENT}-${IS_PR}" = TRUE-TRUE ]; then make dist/ngeo.js; fi
-- if [ "${DEVELOPMENT}-${IS_PR}" = TRUE-TRUE ]; then make dist/ngeo-debug.js; fi
-- if [ "${DEVELOPMENT}-${IS_PR}" = TRUE-TRUE ]; then make dist/gmf.js; fi
+- if [ "${TEST_EXAMPLES}-${IS_PR}" = TRUE-TRUE ]; then buildtools/test_examples.py ${EXAMPLES_SPLIT}; fi
+- if [ "${TEST_DIST_NGEO}-${IS_PR}" = TRUE-TRUE ]; then make dist/ngeo.js; fi
+- if [ "${TEST_DIST_NGEO}-${IS_PR}" = TRUE-TRUE ]; then make dist/ngeo-debug.js; fi
+- if [ "${TEST_DIST_GMF}-${IS_PR}" = TRUE-TRUE ]; then make dist/gmf.js; fi
 
 - if [ "${DEVELOPMENT}" = TRUE ]; then make test; fi
 - if [ "${NODE}" = 4 ]; then make test; fi
