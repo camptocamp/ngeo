@@ -214,7 +214,7 @@ ngeo.ScaleselectorController.prototype.changeZoom = function(zoom) {
 
 
 /**
- * @param {ol.ObjectEvent} e OpenLayers ObjectEvent.
+ * @param {ol.Object.Event} e OpenLayers object event.
  * @private
  */
 ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
@@ -239,7 +239,7 @@ ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
 
 
 /**
- * @param {ol.ObjectEvent} e OpenLayers ObjectEvent.
+ * @param {ol.Object.Event} e OpenLayers object event.
  * @private
  */
 ngeo.ScaleselectorController.prototype.handleViewChange_ = function(e) {

@@ -241,7 +241,7 @@ ngeo.DrawfeatureController.prototype.registerInteraction = function(
  * Called when any of the draw or measure interaction active property changes.
  * Set the active property of this directive accordingly, i.e. if at least
  * one of the draw or measure is active then the active property is set to true.
- * @param {ol.ObjectEvent} event Event.
+ * @param {ol.Object.Event} event Event.
  * @export
  */
 ngeo.DrawfeatureController.prototype.handleActiveChange = function(event) {

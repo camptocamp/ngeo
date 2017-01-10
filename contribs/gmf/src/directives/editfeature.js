@@ -827,8 +827,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
         ret = feature;
       }
       return ret;
-    }.bind(this),
-    null
+    }.bind(this)
   );
 
   if (feature) {
@@ -879,8 +878,7 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
         ret = feature;
       }
       return ret;
-    }.bind(this),
-    null
+    }.bind(this)
   );
 
   feature = feature ? feature : null;
@@ -962,7 +960,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
   if (oldFeature) {
     ol.events.unlisten(
       oldFeature,
-      ol.ObjectEventType.PROPERTYCHANGE,
+      ol.Object.EventType.PROPERTYCHANGE,
       this.handleFeaturePropertyChange_,
       this
     );
@@ -981,7 +979,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
     this.featureId = newFeature.getId() || null;
     ol.events.listen(
       newFeature,
-      ol.ObjectEventType.PROPERTYCHANGE,
+      ol.Object.EventType.PROPERTYCHANGE,
       this.handleFeaturePropertyChange_,
       this
     );

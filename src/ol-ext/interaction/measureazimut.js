@@ -5,7 +5,6 @@ goog.require('goog.asserts');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
-goog.require('ol.MapBrowserEvent.EventType');
 goog.require('ol.events');
 goog.require('ol.functions');
 goog.require('ol.geom.Circle');

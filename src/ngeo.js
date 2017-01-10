@@ -7,6 +7,10 @@ goog.provide('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ol.format.IGC');
 /** @suppress {extraRequire} */
+goog.require('ol.source.Raster');
+/** @suppress {extraRequire} */
+goog.require('ol.VectorTile');
+/** @suppress {extraRequire} */
 goog.require('ol.Overlay');
 /** @suppress {extraRequire} */
 goog.require('ol.control.ScaleLine');

@@ -394,7 +394,7 @@ ngeo.interaction.MobileDraw.prototype.updateState_ = function() {
 
 
 /**
- * @param {ol.ObjectEvent} evt Event.
+ * @param {ol.Object.Event} evt Event.
  * @private
  */
 ngeo.interaction.MobileDraw.prototype.handleViewCenterChange_ = function(evt) {
