@@ -48,11 +48,15 @@ matrix:
   - node_js: "6"
     env: >
         DO_EXAMPLES_DEPLOY=TRUE
+        GIT_REMOTE_NAME=origin
+        GITHUB_USERNAME=camptocamp
         EXAMPLES_NGEO=TRUE
         API=TRUE
   - node_js: "6"
     env: >
         DO_EXAMPLES_DEPLOY=TRUE
+        GIT_REMOTE_NAME=origin
+        GITHUB_USERNAME=camptocamp
         EXAMPLES_GMF=TRUE
         APPS_GMF=TRUE
 
@@ -100,7 +104,7 @@ after_success:
 
 deploy:
 - provider: script
-  script: make gh-pages
+  script: buildtools/deploy.sh
   skip_cleanup: true
   on:
     repo: camptocamp/ngeo
