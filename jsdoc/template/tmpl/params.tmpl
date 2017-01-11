@@ -1,10 +1,10 @@
 <?js
-    let params = obj;
+    var params = obj;
 
     /* sort subparams under their parent params (like opts.classname) */
-    let parentParam = null;
+    var parentParam = null;
     params.forEach(function(param, i) {
-        let paramRegExp;
+        var paramRegExp;
 
         if (!param) {
             return;
@@ -73,7 +73,7 @@
 
     <tbody>
     <?js
-        let self = this;
+        var self = this;
         params.forEach(function(param) {
             if (!param) { return; }
     ?>
