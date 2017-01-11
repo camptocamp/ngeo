@@ -1,9 +1,9 @@
 <?js
-    let data = obj;
-    let props = data.subprops || data.properties;
+    var data = obj;
+    var props = data.subprops || data.properties;
 
     /* sort subprops under their parent props (like opts.classname) */
-    let parentProp = null;
+    var parentProp = null;
     props.forEach(function(prop, i) {
         if (!prop) { return; }
         if ( parentProp && prop.name && prop.name.indexOf(parentProp.name + '.') === 0 ) {
@@ -64,7 +64,7 @@
 
     <tbody>
     <?js
-        let self = this;
+        var self = this;
         props.forEach(function(prop) {
             if (!prop) { return; }
     ?>

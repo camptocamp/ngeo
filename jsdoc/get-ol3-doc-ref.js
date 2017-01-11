@@ -1,6 +1,6 @@
-let http = require("http");
-let jsdom = require("jsdom");
-let jquery = require("jquery");
+var http = require("http");
+var jsdom = require("jsdom");
+var jquery = require("jquery");
 
 jsdom.env({
     url: "http://openlayers.org/en/master/apidoc/index.html",
