@@ -30,3 +30,11 @@ ngeo.utils.toMulti = function(geometry) {
   }
   return multiGeom;
 };
+
+/**
+ * Checks if on Safari.
+ * @return {boolean} True if on Safari.
+ */
+ngeo.utils.isSafari = function() {
+  return navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+};
