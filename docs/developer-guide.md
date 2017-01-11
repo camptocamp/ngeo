@@ -47,7 +47,7 @@ individually compile the examples.
 Each example can be individually compiled. For example:
 
 ```shell
-$ make .build/examples/simple.min.js
+$ make .build/examples-hosted/simple.js
 ```
 
 ## Publish examples to GitHub Pages
