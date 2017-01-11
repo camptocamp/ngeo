@@ -3,7 +3,7 @@ goog.provide('gmf.contextualdataDirective');
 goog.provide('gmf.contextualdatacontentDirective');
 
 goog.require('gmf');
-goog.require('gmf.Altitude');
+goog.require('gmf.Raster');
 goog.require('ol.Overlay');
 goog.require('ol.proj');
 
@@ -74,12 +74,12 @@ gmf.module.directive('gmfContextualdata', gmf.contextualdataDirective);
  *
  * @param {angular.$compile} $compile Angular compile service.
  * @param {!angular.Scope} $scope Scope.
- * @param {gmf.Altitude} gmfAltitude Gmf altitude service
+ * @param {gmf.Raster} gmfRaster Gmf Raster service
  *
  * @constructor
  * @ngInject
  */
-gmf.ContextualdataController = function($compile, $scope, gmfAltitude) {
+gmf.ContextualdataController = function($compile, $scope, gmfRaster) {
 
   /**
    * @type {ol.Map}
@@ -118,10 +118,10 @@ gmf.ContextualdataController = function($compile, $scope, gmfAltitude) {
   this.$scope_ = $scope;
 
   /**
-   * @type {gmf.Altitude}
+   * @type {gmf.Raster}
    * @private
    */
-  this.gmfAltitude_ = gmfAltitude;
+  this.gmfRaster_ = gmfRaster;
 
   this.preparePopover_();
 
@@ -168,18 +168,18 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
     scope['coord_' + proj + '_northern'] = coord[1];
   });
 
-  var getAltitudeSuccess = function(resp) {
+  var getRasterSuccess = function(resp) {
     goog.object.extend(scope, resp);
     if (this.callback) {
       goog.object.extend(scope, this.callback.call(this, coordinate, resp));
     }
   }.bind(this);
-  var getAltitudeError = function(resp) {
-    console.error('Error on getting altitude.');
+  var getRasterError = function(resp) {
+    console.error('Error on getting the raster.');
   };
-  this.gmfAltitude_.getAltitude(coordinate).then(
-      getAltitudeSuccess,
-      getAltitudeError
+  this.gmfRaster_.getRaster(coordinate).then(
+      getRasterSuccess,
+      getRasterError
   );
 };
 

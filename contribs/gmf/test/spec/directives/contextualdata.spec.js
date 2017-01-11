@@ -1,6 +1,6 @@
 goog.require('gmf.contextualdataDirective');
 goog.require('gmf.mapDirective');
-goog.require('gmf.Altitude');
+goog.require('gmf.Raster');
 
 describe('gmf.contextualdataDirective', function() {
 

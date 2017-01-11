@@ -4,7 +4,7 @@ goog.provide('gmf.elevationDirective');
 goog.provide('gmf.elevationWidgetDirective');
 
 goog.require('gmf');
-goog.require('gmf.Altitude');
+goog.require('gmf.Raster');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Debounce');
 goog.require('ol.events.EventType');
@@ -77,14 +77,14 @@ gmf.module.directive('gmfElevation', gmf.elevationDirective);
 /**
  * @param {!angular.Scope} $scope Scope.
  * @param {ngeo.Debounce} ngeoDebounce Ngeo debounce service
- * @param {gmf.Altitude} gmfAltitude Gmf altitude service
+ * @param {gmf.Raster} gmfRaster Gmf Raster service
  * @constructor
  * @export
  * @ngInject
  * @ngdoc controller
  * @ngname gmfElevationController
  */
-gmf.ElevationController = function($scope, ngeoDebounce, gmfAltitude) {
+gmf.ElevationController = function($scope, ngeoDebounce, gmfRaster) {
 
   /**
    * @type {ngeo.Debounce}
@@ -93,10 +93,10 @@ gmf.ElevationController = function($scope, ngeoDebounce, gmfAltitude) {
   this.ngeoDebounce_ = ngeoDebounce;
 
   /**
-   * @type {gmf.Altitude}
+   * @type {gmf.Raster}
    * @private
    */
-  this.gmfAltitude_ = gmfAltitude;
+  this.gmfRaster_ = gmfRaster;
 
   /**
    * @type {boolean}
@@ -145,7 +145,7 @@ gmf.ElevationController = function($scope, ngeoDebounce, gmfAltitude) {
 };
 
 /**
- * Active or deactive the request of the altitude each 500 ms on pointermove.
+ * Active or deactive the request of the raster each 500 ms on pointermove.
  * @param {boolean} active true to make requests.
  * @private
  */
@@ -187,7 +187,7 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
 
 
 /**
- * Request altitude for a MapBrowserPointerEvent's coordinates.
+ * Request data from a raster from a MapBrowserPointerEvent's coordinates.
  * Called when the user stopped moving the mouse for 500ms.
  * @param {ol.MapBrowserPointerEvent} e An ol map browser pointer event.
  * @private
@@ -198,19 +198,19 @@ gmf.ElevationController.prototype.pointerStop_ = function(e) {
     var params = {
       'layers': this.layer
     };
-    this.gmfAltitude_.getAltitude(e.coordinate, params).then(
-        this.getAltitudeSuccess_.bind(this),
-        this.getAltitudeError_.bind(this)
+    this.gmfRaster_.getRaster(e.coordinate, params).then(
+        this.getRasterSuccess_.bind(this),
+        this.getRasterError_.bind(this)
     );
   }
 };
 
 
 /**
- * @param {Object.<string, number>} resp Response of the get Altitude service.
+ * @param {Object.<string, number>} resp Response of the get Raster service.
  * @private
  */
-gmf.ElevationController.prototype.getAltitudeSuccess_ = function(resp) {
+gmf.ElevationController.prototype.getRasterSuccess_ = function(resp) {
   goog.asserts.assert(this.layer, 'A layer should be selected');
   this.elevation = resp[this.layer];
   this.loading = false;
@@ -220,8 +220,8 @@ gmf.ElevationController.prototype.getAltitudeSuccess_ = function(resp) {
 /**
  * @private
  */
-gmf.ElevationController.prototype.getAltitudeError_ = function() {
-  console.error('Error on getting altitude.');
+gmf.ElevationController.prototype.getRasterError_ = function() {
+  console.error('Error on getting the raster.');
   this.elevation = undefined;
   this.loading = false;
 };

@@ -2,7 +2,7 @@ goog.provide('gmf.MobileMeasurePointController');
 goog.provide('gmf.mobileMeasurepointDirective');
 
 goog.require('gmf');
-goog.require('gmf.Altitude');
+goog.require('gmf.Raster');
 goog.require('ngeo.Debounce');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.interaction.MeasurePointMobile');
@@ -89,8 +89,8 @@ gmf.module.directive('gmfMobileMeasurepoint',
 /**
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.Filter} $filter Angular filter service.
- * @param {gmf.Altitude} gmfAltitude gmf altitude service.
+ * @param {angular.$filter} $filter Angular filter service.
+ * @param {gmf.Raster} gmfRaster gmf Raster service.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
@@ -100,13 +100,13 @@ gmf.module.directive('gmfMobileMeasurepoint',
  * @ngname GmfMobileMeasurePointController
  */
 gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
-    gmfAltitude, ngeoDebounce, ngeoDecorateInteraction) {
+    gmfRaster, ngeoDebounce, ngeoDecorateInteraction) {
 
   /**
-   * @type {gmf.Altitude}
+   * @type {gmf.Raster}
    * @private
    */
-  this.gmfAltitude_ = gmfAltitude;
+  this.gmfRaster_ = gmfRaster;
 
   /**
    * @type {ngeo.Debounce}
@@ -121,7 +121,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {angular.Filter}
+   * @type {angular.$filter}
    * @private
    */
   this.$filter_ = $filter;
@@ -278,7 +278,7 @@ gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
   var params = {
     'layers': Object.keys(this.layersConfig).join(',')
   };
-  this.gmfAltitude_.getAltitude(center, params).then(function(object) {
+  this.gmfRaster_.getRaster(center, params).then(function(object) {
     var el = this.measure.getTooltipElement();
     var ctn = document.createElement('div');
     var className = 'gmf-mobile-measure-point';
