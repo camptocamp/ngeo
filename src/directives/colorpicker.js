@@ -77,7 +77,7 @@ ngeo.ColorpickerController = function($scope, $element, $attrs) {
    * @type {Array.<Array.<string>>}
    * @export
    */
-  this.colors = defaultColors;
+  this.colors = this.colors || defaultColors;
 
   /**
    * The selected color
