@@ -1,3 +1,4 @@
+"use strict";
 /**
  * This task builds OpenLayers with the Closure Compiler.
  */

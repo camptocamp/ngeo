@@ -1,3 +1,4 @@
+"use strict";
 //
 // A PhantomJS script used to check that the hosted examples load
 // without errors. This script is executed by the Makefile's
