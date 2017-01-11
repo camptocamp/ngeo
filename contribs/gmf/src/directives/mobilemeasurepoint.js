@@ -314,7 +314,7 @@ gmf.module.controller('GmfMobileMeasurePointController',
 /**
  * @typedef {{
  *     decimals: (number|undefined),
- *     unit: (string | undefined)
+ *     unit: (string|undefined)
  * }}
  */
 gmf.MobileMeasurePointController.LayerConfig;
