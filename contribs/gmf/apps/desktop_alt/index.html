@@ -296,23 +296,23 @@
     <script src="../../../../utils/watchwatchers.js"></script>
     <script>
       (function() {
-        let cacheVersion = '0';
-        let urlElements = window.location.pathname.split('/');
+        var cacheVersion = '0';
+        var urlElements = window.location.pathname.split('/');
 
-        let angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
+        var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
         angularLocaleScriptUrlElements.push('build', 'angular-locale_{{locale}}.js?cache_version=' + cacheVersion);
 
-        let gmfModule = angular.module('gmf');
+        var gmfModule = angular.module('gmf');
         gmfModule.constant('angularLocaleScript', angularLocaleScriptUrlElements.join('/'));
 
-        let langUrls = {};
+        var langUrls = {};
         ['en', 'fr', 'de'].forEach(function(lang) {
-            let langUrlElements = urlElements.slice(0, urlElements.length - 3);
+            var langUrlElements = urlElements.slice(0, urlElements.length - 3);
             langUrlElements.push('build', 'gmf-' + lang + '.json?cache_version=' + cacheVersion)
             langUrls[lang] = langUrlElements.join('/')
         });
 
-        let module = angular.module('app');
+        var module = angular.module('app');
         module.constant('defaultTheme', 'OSM');
         module.constant('defaultLang', 'en');
         module.constant('langUrls', langUrls);
