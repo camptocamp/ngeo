@@ -71,7 +71,7 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
               $window.alert(gettextCatalog.getString(err.message));
             });
           } else {
-            $window.alert(gettextCatalog.getString('invalid url') + text);
+            $window.alert(gettextCatalog.getString('Invalid URL') + text);
           }
         }
       });
