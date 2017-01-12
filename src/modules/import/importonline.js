@@ -93,7 +93,17 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
         scope['fileUrl'] = nameUrl['url'];
         scope['handleFileUrl']();
         scope.$digest();
-      }).on('focus', () => {
+      });
+
+      const taMenu = elt.find('.tt-menu');
+      elt.find('.ngeo-import-open').on('mousedown', (evt) => {
+        if (taMenu.css('display') == 'none') {
+          taElt.focus();
+          taElt.typeahead('val', '');
+        } else {
+          taElt.blur();
+        }
+        evt.preventDefault();
       });
 
       scope.$on('gettextLanguageChanged', () => {
