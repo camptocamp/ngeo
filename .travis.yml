@@ -119,7 +119,6 @@ deploy:
   script: npm publish
   skip_cleanup: true
   on:
-    node: "4"
     repo: camptocamp/ngeo
     tags: true
     condition: '"${PACKAGE_VERSION}-${DO_NPM_DEPLOY}" = "${TRAVIS_TAG}-TRUE"'
