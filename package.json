@@ -35,7 +35,7 @@
     "clean-css": "3.4.23",
     "closure-util": "git://github.com/camptocamp/closure-util#35ddc88",
     "console-control-strings": "1.1.0",
-    "corejs-typeahead": "1.1.0",
+    "corejs-typeahead": "1.1.1",
     "coveralls": "2.11.15",
     "d3": "3.5.17",
     "eslint": "3.13.1",
