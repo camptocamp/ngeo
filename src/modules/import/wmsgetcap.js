@@ -80,7 +80,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
         if (!layer['extent']) {
           layer['isInvalid'] = true;
-          layer['Abstract'] = gettext('Invalid layer outside the map');
+          layer['Abstract'] = gettext('Invalid layer: outside the map');
         }
       }
     }
