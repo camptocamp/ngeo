@@ -22,15 +22,43 @@ matrix:
   include:
   # Just do the tests
   - node_js: "4"
-    env: NODE=4
+    env: >
+        DO_TEST=TRUE
+        DO_LINT=TRUE
+  - node_js: "6"
+    env: >
+        DO_TEST=TRUE
+        DO_LINT=TRUE
+        DO_NPM_DEPLOY=TRUE
+        DO_TRANSIFEX_DEPLOY=TRUE
   # Test the examples in white space mode on the pull requests
   - node_js: "6"
-    env: DEVELOPMENT=TRUE TEST_EXAMPLES=TRUE EXAMPLES_SPLIT=1/2 TEST_DIST_NGEO=TRUE
+    env: >
+        DEVELOPMENT=TRUE
+        DO_EXAMPLES_TEST=TRUE
+        EXAMPLES_SPLIT=1/2
+        DO_DIST_NGEO=TRUE
   - node_js: "6"
-    env: DEVELOPMENT=TRUE TEST_EXAMPLES=TRUE EXAMPLES_SPLIT=2/2 TEST_DIST_GMF=TRUE
+    env: >
+        DEVELOPMENT=TRUE
+        DO_EXAMPLES_TEST=TRUE
+        EXAMPLES_SPLIT=2/2
+        DO_DIST_GMF=TRUE
   # Deploy the examples in advance mode on the commit on a branch
   - node_js: "6"
-    env: EXAMPLES=TRUE
+    env: >
+        DO_EXAMPLES_DEPLOY=TRUE
+        GIT_REMOTE_NAME=origin
+        GITHUB_USERNAME=camptocamp
+        EXAMPLES_NGEO=TRUE
+        API=TRUE
+  - node_js: "6"
+    env: >
+        DO_EXAMPLES_DEPLOY=TRUE
+        GIT_REMOTE_NAME=origin
+        GITHUB_USERNAME=camptocamp
+        EXAMPLES_GMF=TRUE
+        APPS_GMF=TRUE
 
 cache:
   apt: true
@@ -47,26 +75,23 @@ before_install:
 - if [ ${TRAVIS_REPO_SLUG}-${IS_PR} = camptocamp/ngeo-FALSE ]; then chmod 600 $HOME/.ssh/id_rsa; fi
 - git config --global user.name "Travis"
 - git config --global user.email "travis@travis-ci.org"
-
-script:
 - /opt/google/chrome/chrome --version
 - export CHROME_BIN=/opt/google/chrome/chrome
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 - if [ "${IS_PR}" != "FALSE" ]; then git fetch origin ${TRAVIS_BRANCH}:${TRAVIS_BRANCH}; fi
-- if [ "${IS_PR}" != "FALSE" ]; then git diff --check ${TRAVIS_BRANCH} --; fi
+
+script:
 - if [ "`git grep @fileoverview src contribs`" != "" ]; then echo "Using @fileoverview breaks the documentation main page"; FALSE; fi
 - if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; FALSE; fi
 - make git-attributes
-- if [ "${EXAMPLES}" != TRUE ]; then make lint; fi
+- if [ "${DO_LINT}" = TRUE ]; then make lint; fi
+- if [ "${DO_TEST}" = TRUE ]; then make test; fi
 
-- if [ "${TEST_EXAMPLES}-${IS_PR}" = TRUE-TRUE ]; then buildtools/test_examples.py ${EXAMPLES_SPLIT}; fi
-- if [ "${TEST_DIST_NGEO}-${IS_PR}" = TRUE-TRUE ]; then make dist/ngeo.js; fi
-- if [ "${TEST_DIST_NGEO}-${IS_PR}" = TRUE-TRUE ]; then make dist/ngeo-debug.js; fi
-- if [ "${TEST_DIST_GMF}-${IS_PR}" = TRUE-TRUE ]; then make dist/gmf.js; fi
-
-- if [ "${DEVELOPMENT}" = TRUE ]; then make test; fi
-- if [ "${NODE}" = 4 ]; then make test; fi
+- if [ "${DO_EXAMPLES_TEST}-${IS_PR}" = TRUE-TRUE ]; then buildtools/test_examples.py ${EXAMPLES_SPLIT}; fi
+- if [ "${DO_DIST_NGEO}-${IS_PR}" = TRUE-TRUE ]; then make dist/ngeo.js; fi
+- if [ "${DO_DIST_NGEO}-${IS_PR}" = TRUE-TRUE ]; then make dist/ngeo-debug.js; fi
+- if [ "${DO_DIST_GMF}-${IS_PR}" = TRUE-TRUE ]; then make dist/gmf.js; fi
 
 after_success:
 - cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
@@ -79,12 +104,12 @@ after_success:
 
 deploy:
 - provider: script
-  script: make gh-pages
+  script: buildtools/deploy.sh
   skip_cleanup: true
   on:
     repo: camptocamp/ngeo
     all_branches: true
-    condition: '"${EXAMPLES}-${IS_PR}" = TRUE-FALSE'
+    condition: '"${DO_EXAMPLES_DEPLOY}-${IS_PR}" = TRUE-FALSE'
 - provider: script
   script: npm publish
   skip_cleanup: true
@@ -92,7 +117,7 @@ deploy:
     node: "4"
     repo: camptocamp/ngeo
     tags: true
-    condition: '"${PACKAGE_VERSION}" == "${TRAVIS_TAG}"'
+    condition: '"${PACKAGE_VERSION}-${DO_NPM_DEPLOY}" = "${TRAVIS_TAG}-TRUE"'
 - &transifex
   provider: script
   script: make transifex-send
@@ -100,9 +125,9 @@ deploy:
   on:
     repo: camptocamp/ngeo
     branch: master
-    node: "4"
+    condition: '"${DO_TRANSIFEX_DEPLOY}" = TRUE'
 - <<: *transifex
   on:
     repo: camptocamp/ngeo
     branch: 2.0
-    node: "4"
+    condition: '"${DO_TRANSIFEX_DEPLOY}" = TRUE'

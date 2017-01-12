@@ -113,6 +113,9 @@ GMF_EXAMPLES_PARTIALS_FILES = $(EXAMPLES_PARTIALS_FILES) \
 GITHUB_USERNAME ?= camptocamp
 GIT_BRANCH ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
 GIT_REMOTE_NAME ?= origin
+export GITHUB_USERNAME
+export GIT_BRANCH
+export GIT_REMOTE_NAME
 
 # i18n
 L10N_LANGUAGES = fr de
@@ -228,6 +231,20 @@ serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGUL
 
 .PHONY: examples-hosted
 examples-hosted: \
+		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(EXAMPLES_HTML_FILES)) \
+		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
+		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
+
+.PHONY: examples-hosted-ngeo
+examples-hosted-ngeo: \
+		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(EXAMPLES_HTML_FILES)) \
+
+.PHONY: examples-hosted-gmf
+examples-hosted-gmf: \
+		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
+
+.PHONY: examples-hosted-apps
+examples-hosted-apps: \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
 .build/python-venv/lib/python2.7/site-packages/glob2: requirements.txt .build/python-venv
@@ -243,34 +260,8 @@ examples-hosted: \
 	touch $@
 
 .PHONY: gh-pages
-gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
-		.build/python-venv/lib/python2.7/site-packages/requests \
-		.build/python-venv/lib/python2.7/site-packages/urllib3 \
-		examples-hosted \
-		.build/examples-hosted/index.html \
-		.build/examples-hosted/contribs/gmf/index.html \
-		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS))) \
-		.build/apidoc
-	cd $<; git fetch origin
-	cd $<; git merge --ff-only origin/gh-pages
-	cd $<; git clean --force -d
-
-	.build/python-venv/bin/python buildtools/cleanup-ghpages.py $(GITHUB_USERNAME) $<
-	cd $<; git add -A
-	cd $<; git commit -m 'Cleanup GitHub pages' || true
-
-	cd $<; git rm --ignore-unmatch -r --quiet --force $(GIT_BRANCH)
-	mkdir $</$(GIT_BRANCH)
-
-	cp -r .build/apidoc $</$(GIT_BRANCH)/apidoc
-	mkdir $</$(GIT_BRANCH)/examples
-	cp -r .build/examples-hosted/* $</$(GIT_BRANCH)/examples
-	rm $</$(GIT_BRANCH)/examples/lib/*.js.map || true
-	rm $</$(GIT_BRANCH)/contribs/gmf/examples/build/*.js.map || true
-	cd $<; git add -A
-	cd $<; git status
-	cd $<; git commit -m 'Update GitHub pages' || true
-	cd $<; git push $(GIT_REMOTE_NAME) gh-pages
+gh-pages:
+	EXAMPLES_NGEO=TRUE API=TRUE EXAMPLES_GMF=TRUE APPS_GMF=TRUE buildtools/deploy.sh
 
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages:
@@ -591,7 +582,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		$(addprefix .build/examples-hosted/contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
-		$(addprefix .build/examples-hosted/contribs/gmf/fonts/gmf-icons., eot ttf woff)
+		$(addprefix .build/examples-hosted/contribs/gmf/fonts/gmf-icons., eot ttf woff) \
+		$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur)
 	mkdir -p $(dir $@)
 	sed -e '/stylesheet\/less" href="..\/..\//d' \
 		-e '/\/node_modules\//d' \

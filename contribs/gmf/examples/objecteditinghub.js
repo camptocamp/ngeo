@@ -202,6 +202,7 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
       const groupNode = theme.children[0];
 
       // (4) Set OGC server, which must support WFS for this example to work
+      goog.asserts.assert(groupNode.ogcServer);
       const gmfServer = this.gmfServers_[groupNode.ogcServer];
       if (gmfServer && gmfServer.wfsSupport === true && gmfServer.urlWfs) {
         this.gmfServer_ = gmfServer;
