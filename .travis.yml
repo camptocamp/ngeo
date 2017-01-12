@@ -51,13 +51,18 @@ matrix:
         GIT_REMOTE_NAME=origin
         GITHUB_USERNAME=camptocamp
         EXAMPLES_NGEO=TRUE
-        API=TRUE
   - node_js: "6"
     env: >
         DO_EXAMPLES_DEPLOY=TRUE
         GIT_REMOTE_NAME=origin
         GITHUB_USERNAME=camptocamp
         EXAMPLES_GMF=TRUE
+  - node_js: "6"
+    env: >
+        DO_EXAMPLES_DEPLOY=TRUE
+        GIT_REMOTE_NAME=origin
+        GITHUB_USERNAME=camptocamp
+        API=TRUE
         APPS_GMF=TRUE
 
 cache:
