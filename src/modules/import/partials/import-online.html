@@ -9,6 +9,6 @@
           ng-class="{'btn-danger': canceler}"
           ng-disabled="!fileUrl || !isValid(fileUrl) || (loading && !canceler)"
           ng-click="loading ? cancel() : handleFileUrl()">
-    {{userMessage | translate}}
+    <span>{{userMessage | translate}}</span>
   </button>
 </div>

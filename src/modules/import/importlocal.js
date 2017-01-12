@@ -6,14 +6,14 @@ goog.require('ngeo.fileService');
 /**
  * @constructor
  * @param {angular.$timeout} $timeout .
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {gettext} gettext .
  * @param {ngeo.File} ngeoFile .
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
        ngeoImportLocalTemplateUrl Template URL for the directive.
  * @ngInject
  * @struct
  */
-exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUrl) {
+exports = function($timeout, gettext, ngeoFile, ngeoImportLocalTemplateUrl) {
 
   let timeoutP;
 
@@ -38,7 +38,7 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
 
 
       const initUserMsg = function() {
-        scope['userMessage'] = gettextCatalog.getString('Load local file');
+        scope['userMessage'] = gettext('Load local file');
         scope['progress'] = 0;
         scope['fileReader'] = null;
       };
@@ -100,16 +100,15 @@ exports = function($timeout, gettextCatalog, ngeoFile, ngeoImportLocalTemplateUr
           return;
         }
         scope['loading'] = true;
-        scope['userMessage'] = gettextCatalog.getString('Reading file');
+        scope['userMessage'] = gettext('Reading file');
         $timeout.cancel(timeoutP);
 
         ngeoFile.read(scope['file']).then((fileContent) => {
           scope['fileReader'] = null;
-          scope['userMessage'] = gettextCatalog.getString('Parsing file');
+          scope['userMessage'] = gettext('Parsing file');
           return scope['handleFileContent'](fileContent, scope.file);
-
         }).then((parsingResults) => {
-          scope['userMessage'] = gettextCatalog.getString('Parsing succeeded');
+          scope['userMessage'] = gettext('Parsing succeeded');
 
         }, (err) => {
           scope['userMessage'] = err.message;
