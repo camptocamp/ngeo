@@ -655,6 +655,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \
 		--app 'Desktop application' apps/desktop/index.html 'The desktop example application for GeoMapFish.' \
 		--app 'Alternate desktop application' apps/desktop_alt/index.html 'An alternate desktop example application for GeoMapFish.' \
+		--app 'Object editing viewer' apps/oeview/index.html 'An example application for viewing an object.' \
+		--app 'Object editing editor' apps/oeedit/index.html 'An example application for editing an object.' \
 		$< $(GMF_EXAMPLES_HTML_FILES) > $@
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
