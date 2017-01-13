@@ -132,11 +132,19 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    */
   this.editFeatureActive = false;
 
+  var body = $('body');
+
   // initialize tooltips
-  $('body').tooltip({
+  body.tooltip({
     container: 'body',
     trigger: 'hover',
     selector: '[data-toggle="tooltip"]'
+  });
+
+  // deactivate tooltips on touch device
+  body.on('touchstart.detectTouch', function() {
+    body.tooltip('destroy');
+    body.off('touchstart.detectTouch');
   });
 
   /**
