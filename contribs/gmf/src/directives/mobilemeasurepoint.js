@@ -2,7 +2,7 @@ goog.provide('gmf.MobileMeasurePointController');
 goog.provide('gmf.mobileMeasurepointDirective');
 
 goog.require('gmf');
-goog.require('gmf.Altitude');
+goog.require('gmf.Raster');
 goog.require('ngeo.Debounce');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.interaction.MeasurePointMobile');
@@ -34,16 +34,25 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
  *
  *      <div gmf-mobile-measurepoint=""
  *        gmf-mobile-measurepoint-active="ctrl.measurePointActive"
- *        gmf-mobile-measurepoint-layers="::ctrl.measurePointLayers"
+ *        gmf-mobile-measurepoint-layersconfig="::ctrl.measurePointLayers"
  *        gmf-mobile-measurepoint-map="::ctrl.map">
  *      </div>
  *
+ * Where ctrl.measurePointLayers is an object like this:
+ *
+ *      this.measurePointLayers = {
+ *        'srtm': {unit: 'm', decimals: 2},
+ *        'wind': {unit: 'km/h'},
+ *        'humidity': {}
+ *      }
+ *
  * @htmlAttribute {boolean} gmf-mobile-measurepoint-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurepoint-decimals number of decimal
- *     to display
- * @htmlAttribute {Array.<string>} gmf-mobile-measurepoint-layers Raster
- *     elevation layers to get information under the point.
+ * @htmlAttribute {number=} gmf-mobile-measurepoint-Coordinatedecimals number
+ *     of decimal to display for the coordinate.
+ * @htmlAttribute {Object.<string, gmf.MobileMeasurePointController.LayerConfig>}
+ *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
+ *     information under the point and its configuaration.
  * @htmlAttribute {ol.Map} gmf-mobile-measurepoint-map The map.
  * @htmlAttribute {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction=}
  *     gmf-mobile-measurepoint-sketchstyle A style for the measure point.
@@ -60,8 +69,8 @@ gmf.mobileMeasurePointDirective =
         restrict: 'A',
         scope: {
           'active': '=gmfMobileMeasurepointActive',
-          'decimals': '<?gmfMobileMeasurepointDecimals',
-          'getLayersFn': '&gmfMobileMeasurepointLayers',
+          'getCoordinateDecimalsFn': '&?gmfMobileMeasurepointCoordinatedecimals',
+          'getLayersConfigFn': '&gmfMobileMeasurepointLayersconfig',
           'map': '=gmfMobileMeasurepointMap',
           'sketchStyle': '=?gmfMobileMeasurepointSketchstyle'
         },
@@ -79,7 +88,8 @@ gmf.module.directive('gmfMobileMeasurepoint',
 /**
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {gmf.Altitude} gmfAltitude gmf altitude service.
+ * @param {angular.$filter} $filter Angular filter service.
+ * @param {gmf.Raster} gmfRaster gmf Raster service.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
@@ -88,14 +98,14 @@ gmf.module.directive('gmfMobileMeasurepoint',
  * @ngdoc controller
  * @ngname GmfMobileMeasurePointController
  */
-gmf.MobileMeasurePointController = function(gettextCatalog, $scope, gmfAltitude,
-    ngeoDebounce, ngeoDecorateInteraction) {
+gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
+    gmfRaster, ngeoDebounce, ngeoDecorateInteraction) {
 
   /**
-   * @type {gmf.Altitude}
+   * @type {gmf.Raster}
    * @private
    */
-  this.gmfAltitude_ = gmfAltitude;
+  this.gmfRaster_ = gmfRaster;
 
   /**
    * @type {ngeo.Debounce}
@@ -108,6 +118,12 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, gmfAltitude,
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
+
+  /**
+   * @type {angular.$filter}
+   * @private
+   */
+  this.$filter_ = $filter;
 
   /**
    * @type {ol.Map}
@@ -126,20 +142,22 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, gmfAltitude,
     this.handleMeasureActiveChange_();
   });
 
-  /**
-   * @type {number|undefined}
-   * @export
-   */
-  this.decimals;
-
-  const layers = this['getLayersFn']();
-  goog.asserts.assertArray(layers);
+  const coordinateDecimalsFn = this['getCoordinateDecimalsFn'];
 
   /**
-   * @type {Array.<string>}
+   * @type {number}
    * @private
    */
-  this.layers = layers;
+  this.coordinateDecimals = coordinateDecimalsFn ? coordinateDecimalsFn() : 0;
+
+  const layersConfig = this['getLayersConfigFn']();
+  goog.asserts.assertObject(layersConfig);
+
+  /**
+   * @type {Object.<string, gmf.MobileMeasurePointController.LayerConfig>!}
+   * @private
+   */
+  this.layersConfig = layersConfig;
 
   /**
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
@@ -175,7 +193,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, gmfAltitude,
    * @export
    */
   this.measure = new ngeo.interaction.MeasurePointMobile({
-    decimals: this.decimals,
+    decimals: this.coordinateDecimals,
     sketchStyle: this.sketchStyle
   });
 
@@ -223,7 +241,7 @@ gmf.MobileMeasurePointController.prototype.translate = function(str) {
 
 /**
  * Called when the measure becomes active or inactive. Act accordingly:
- * - on activate, listen to the map property changes to call for altitude
+ * - on activate, listen to the map property changes to call for the elevation
  *   service.
  * - on deactivate, unlisten
  * @private
@@ -236,9 +254,9 @@ gmf.MobileMeasurePointController.prototype.handleMeasureActiveChange_ =
             view,
             'propertychange',
             this.ngeoDebounce_(
-                this.getAltitude_.bind(this), 300, /* invokeApply */ true),
+                this.getMeasure_.bind(this), 300, /* invokeApply */ true),
             this);
-        this.getAltitude_();
+        this.getMeasure_();
       } else if (this.mapViewPropertyChangeEventKey_) {
         ol.events.unlistenByKey(this.mapViewPropertyChangeEventKey_);
         this.mapViewPropertyChangeEventKey_ = null;
@@ -247,34 +265,32 @@ gmf.MobileMeasurePointController.prototype.handleMeasureActiveChange_ =
 
 
 /**
- * Call the altitude service to get information about the altitude at
+ * Call the elevation service to get information about the measure at
  * the current map center location.
  * @private
  */
-gmf.MobileMeasurePointController.prototype.getAltitude_ = function() {
+gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
   const center = this.map.getView().getCenter();
   goog.asserts.assertArray(center);
   const params = {
-    'layers': this.layers.join(',')
+    'layers': Object.keys(this.layersConfig).join(',')
   };
-  this.gmfAltitude_.getAltitude(center, params).then((object) => {
+  this.gmfRaster_.getRaster(center, params).then(function(object) {
     const el = this.measure.getTooltipElement();
     const ctn = document.createElement('div');
-    const className = 'gmf-mobile-measure-point-altitude';
+    const className = 'gmf-mobile-measure-point';
     ctn.className = className;
 
-    goog.object.forEach(object, function(height, key) {
-      if (height !== null) {
+    goog.object.forEach(object, function(value, key) {
+      const layerConfig = this.layersConfig[key];
+      if (value !== null) {
         const childEl = document.createElement('div');
-        const className = 'gmf-mobile-measure-altitude';
+        const className = `gmf-mobile-measure-point-${key}`;
         childEl.className = className;
-        let value;
-        if (height > 1000) {
-          value = `${parseFloat((height / 1000).toPrecision(3))} km`;
-        } else {
-          value = `${parseFloat((height).toPrecision(3))} m`;
-        }
-        childEl.innerHTML = [this.translate(key), ': ', value].join('');
+        const unit = layerConfig.unit || '';
+        const decimals = layerConfig.decimals && layerConfig.decimals > 0 || 0;
+        value = this.$filter_('number')(value, decimals);
+        childEl.innerHTML = [this.translate(key), ': ', value, ' ', unit].join('');
         ctn.appendChild(childEl);
       }
     }, this);
@@ -291,3 +307,11 @@ gmf.MobileMeasurePointController.prototype.getAltitude_ = function() {
 
 gmf.module.controller('GmfMobileMeasurePointController',
                       gmf.MobileMeasurePointController);
+
+/**
+ * @typedef {{
+ *     decimals: (number|undefined),
+ *     unit: (string|undefined)
+ * }}
+ */
+gmf.MobileMeasurePointController.LayerConfig;

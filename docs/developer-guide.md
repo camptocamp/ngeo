@@ -296,6 +296,18 @@ Update the `Makefile`:
 + TX_VERSION ?= x_y+1
 ```
 
+Update the `.travs.yml`:
+```diff
+ - provider: script
+   script: make transifex-send
+   skip_cleanup: true
+   on:
+     repo: camptocamp/ngeo
+-     branch: master
++     branch: x.y
+     node: "4"
+```
+
 Commit and push the changes:
 ```bash
 git add Makefile

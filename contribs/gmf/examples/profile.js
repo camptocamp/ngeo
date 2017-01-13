@@ -25,10 +25,6 @@ gmfapp.module.value(
     'gmfProfileJsonUrl',
     'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.json');
 
-gmfapp.module.value(
-    'gmfProfileCsvUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.csv');
-
 /**
  * @param {angular.Scope} $scope Angular scope.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay

@@ -1,4 +1,4 @@
-goog.provide('gmf.Altitude');
+goog.provide('gmf.Raster');
 
 goog.require('gmf');
 
@@ -6,25 +6,25 @@ goog.require('gmf');
 /**
  * @enum {string}
  */
-gmf.AltitudeParam = {
+gmf.RasterParam = {
   X: 'lon',
   Y: 'lat'
 };
 
 
 /**
- * The Altitude service, uses the
- * c2cgeoportal's raster to obtain different kinds of altitude information
- * at a specific coordinate.
+ * The Raster service.
+ * Uses the c2cgeoportal's raster to obtain different kinds of
+ * information at a specific coordinate.
  * @constructor
  * @struct
  * @param {angular.$http} $http Angular http service.
- * @param {string} gmfRasterUrl URL to a raster service with altitude layers.
+ * @param {string} gmfRasterUrl URL to a the c2cgeoportal raster service.
  * @ngInject
  * @ngdoc service
- * @ngname gmfAltitude
+ * @ngname gmfRaster
  */
-gmf.Altitude = function($http, gmfRasterUrl) {
+gmf.Raster = function($http, gmfRasterUrl) {
 
   /**
    * @type {angular.$http}
@@ -46,7 +46,7 @@ gmf.Altitude = function($http, gmfRasterUrl) {
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.Altitude.prototype.getAltitude = function(coordinate, opt_params) {
+gmf.Raster.prototype.getRaster = function(coordinate, opt_params) {
 
   const params = opt_params || {};
   params[gmf.AltitudeParam.X] = coordinate[0];
@@ -60,12 +60,12 @@ gmf.Altitude.prototype.getAltitude = function(coordinate, opt_params) {
 
 /**
  * @param {angular.$http.Response} resp Ajax response.
- * @return {Object.<string, number>} The altitude object.
+ * @return {Object.<string, number>} The response object.
  * @private
  */
-gmf.Altitude.prototype.handleGetAltitude_ = function(resp) {
+gmf.Raster.prototype.handleGetRaster_ = function(resp) {
   return resp.data;
 };
 
 
-gmf.module.service('gmfAltitude', gmf.Altitude);
+gmf.module.service('gmfRaster', gmf.Raster);

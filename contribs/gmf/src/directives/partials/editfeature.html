@@ -106,7 +106,7 @@
           value="{{'Save' | translate}}"
           class="btn btn-sm btn-default gmf-editfeature-btn-save"
           ng-click="form.$valid && efCtrl.save()"
-          ng-disabled="!efCtrl.dirty"
+          ng-disabled="!efCtrl.dirty || efCtrl.pending"
           title="{{'Save modifications | translate'}}"></input>
         <a
           class="btn btn-sm btn-default gmf-editfeature-btn-cancel"
@@ -126,4 +126,8 @@
       </form>
     </div>
   </div>
+  <ngeo-modal ng-model="efCtrl.showServerError" ngeo-modal-destroy-content-on-hide="true">
+    <div class="modal-header">{{'Server error.' | translate}}</div>
+    <div class="modal-body">{{'Unexpected server error.' | translate}}</div>
+  </ngeo-modal>
 </div>

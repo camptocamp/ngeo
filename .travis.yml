@@ -122,16 +122,10 @@ deploy:
     repo: camptocamp/ngeo
     tags: true
     condition: '"${PACKAGE_VERSION}-${DO_NPM_DEPLOY}" = "${TRAVIS_TAG}-TRUE"'
-- &transifex
-  provider: script
+- provider: script
   script: make transifex-send
   skip_cleanup: true
   on:
     repo: camptocamp/ngeo
     branch: master
-    condition: '"${DO_TRANSIFEX_DEPLOY}" = TRUE'
-- <<: *transifex
-  on:
-    repo: camptocamp/ngeo
-    branch: 2.0
     condition: '"${DO_TRANSIFEX_DEPLOY}" = TRUE'

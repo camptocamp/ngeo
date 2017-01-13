@@ -2,7 +2,7 @@ goog.provide('gmf.ProfileController');
 goog.provide('gmf.profileDirective');
 
 goog.require('gmf');
-goog.require('ngeo.Download');
+goog.require('ngeo.CsvDownload');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
@@ -33,7 +33,7 @@ ngeo.module.value('gmfProfileTemplateUrl',
  * LineString geometry to request the c2cgeoportal profile.json service. The
  * raster used in the request are the keys of the 'linesconfiguration' object.
  * The 'map' attribute is optional and are only used to display on the map the
- * informations that concerne the hovered point (in the profile and on the map)
+ * information that concern the hovered point (in the profile and on the map)
  * of the line.
  * This profile relies on the ngeo.profile (d3) and ngeo.ProfileDirective.
  *
@@ -101,8 +101,7 @@ gmf.module.directive('gmfProfile', gmf.profileDirective);
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
- * @param {string} gmfProfileCsvUrl URL of GMF service CSV profile.
- * @param {ngeo.Download} ngeoDownload Download service.
+ * @param {ngeo.CsvDownload} ngeoCsvDownload CSV Download service.
  * @constructor
  * @export
  * @ngInject
@@ -111,7 +110,7 @@ gmf.module.directive('gmfProfile', gmf.profileDirective);
  */
 gmf.ProfileController = function($scope, $http, $element, $filter,
     gettextCatalog, ngeoFeatureOverlayMgr, gmfProfileJsonUrl,
-    gmfProfileCsvUrl, ngeoDownload) {
+    ngeoCsvDownload) {
 
   /**
    * @type {angular.Scope}
@@ -156,17 +155,10 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
   this.gmfProfileJsonUrl_ = gmfProfileJsonUrl;
 
   /**
-   * @type {string}
+   * @type {ngeo.CsvDownload}
    * @private
    */
-  this.gmfProfileCsvUrl_ = gmfProfileCsvUrl;
-
-  /**
-   * Download service.
-   * @type {ngeo.Download}
-   * @private
-   */
-  this.ngeoDownload_ = ngeoDownload;
+  this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   let map = null;
   const mapFn = this['getMapFn'];
@@ -673,48 +665,40 @@ gmf.ProfileController.prototype.downloadCsv = function() {
   if (this.profileData.length === 0) {
     return;
   }
-  const geom = {
-    'type': 'LineString',
-    'coordinates': this.line.getCoordinates()
-  };
 
-  const params = {
-    'layers': this.layersNames_.join(','),
-    'geom': JSON.stringify(geom),
-    'nbPoints': this.nbPoints_
-  };
+  /** @type {Array.<ngeox.GridColumnDef>} */
+  const headers = [];
+  let hasDistance = false;
+  const firstPoint = this.profileData[0];
+  if ('dist' in firstPoint) {
+    headers.push({name: 'distance'});
+    hasDistance = true;
+  }
+  const layers = [];
+  for (const layer in firstPoint['values']) {
+    headers.push({'name': layer});
+    layers.push(layer);
+  }
+  headers.push({name: 'x'});
+  headers.push({name: 'y'});
 
-  /** @type {Function} */ (this.$http_)({
-    url: this.gmfProfileCsvUrl_,
-    method: 'POST',
-    params,
-    paramSerializer: '$httpParamSerializerJQLike',
-    headers: {
-      'Content-Type': 'text/csv;'
+  const rows = this.profileData.map((point) => {
+    const row = {};
+    if (hasDistance) {
+      row['distance'] = point['dist'];
     }
-  }).then(
-    this.getCsvSuccess_.bind(this),
-    this.getCsvError_.bind(this)
-  );
-};
 
+    layers.forEach((layer) => {
+      row[layer] = point['values'][layer];
+    });
 
-/**
- * @param {!angular.$http.Response} resp Response.
- * @private
- */
-gmf.ProfileController.prototype.getCsvSuccess_ = function(resp) {
-  this.ngeoDownload_(resp.data, 'profile.csv', 'attachment/csv;charset=utf-8');
-};
+    row['x'] = point['x'];
+    row['y'] = point['y'];
 
+    return row;
+  });
 
-/**
- * @param {!angular.$http.Response} resp Response.
- * @private
- */
-gmf.ProfileController.prototype.getCsvError_ = function(resp) {
-  this.isErrored = true;
-  console.error('Can not get CSV profile.');
+  this.ngeoCsvDownload_.startDownload(rows, headers, 'profile.csv');
 };
 
 

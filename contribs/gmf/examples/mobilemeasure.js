@@ -64,10 +64,13 @@ gmfapp.MainController = function(gmfPermalink) {
   this.measureLengthActive = false;
 
   /**
-   * @type {Array.<string>}
+   * @type {Object.<string, gmf.MobileMeasurePointController.LayerConfig>}
    * @export
    */
-  this.measurePointLayers = ['aster', 'srtm'];
+  this.measurePointLayersConfig = {
+    'aster': {unit: 'm', decimals: 2},
+    'srtm': {unit: 'm'}
+  };
 
   /**
    * @type {boolean}

@@ -1,6 +1,7 @@
 goog.provide('ngeo.Download');
 
 goog.require('ngeo');
+goog.require('ngeo.utils');
 
 /**
  * @typedef {function(string, string, string=)}
@@ -23,9 +24,13 @@ ngeo.downloadFactory_ = function() {
    *    `text/plain;charset=utf-8` is used.
    */
   function download(content, fileName, opt_fileType) {
+    // Safari does not properly work with FileSaver. Using the the type 'text/plain'
+    // makes it a least possible to show the file content so that users can
+    // do a manual download with "Save as".
+    // See also: https://github.com/eligrey/FileSaver.js/issues/12
     /** @type{string} */
-    const fileType = (opt_fileType !== undefined) ? opt_fileType :
-        'text/plain;charset=utf-8';
+    const fileType = opt_fileType !== undefined && !ngeo.utils.isSafari() ?
+        opt_fileType : 'text/plain;charset=utf-8';
 
     const blob = new Blob([content], {type: fileType});
     saveAs(blob, fileName);

@@ -495,6 +495,12 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
   this.toggle_(true);
+
+  /**
+   * @type{!boolean}
+   * @export
+   */
+  this.showServerError = false;
 };
 
 
@@ -515,24 +521,28 @@ gmf.EditfeatureController.prototype.save = function() {
   const feature = this.feature;
   const id = this.featureId;
 
-  this.dirty = false;
   this.pending = true;
 
-  if (id) {
+  const promise = id ?
     this.editFeatureService_.updateFeature(
       this.editableNode_.id,
       feature
-    ).then(
-      this.handleEditFeature_.bind(this)
-    );
-  } else {
+    ) :
     this.editFeatureService_.insertFeatures(
       this.editableNode_.id,
       [feature]
-    ).then(
-      this.handleEditFeature_.bind(this)
     );
-  }
+  promise.then(
+    (response) => {
+      this.dirty = false;
+      this.pending = false;
+      this.handleEditFeature_(response);
+    },
+    () => {
+      this.showServerError = true;
+      this.pending = false;
+    }
+  );
 };
 
 
@@ -604,7 +614,6 @@ gmf.EditfeatureController.prototype.delete = function() {
       'Do you really want to delete the selected feature?');
   // Confirm deletion first
   if (confirm(msg)) {
-    this.dirty = false;
     this.pending = true;
 
     // (1) Launch request
@@ -612,11 +621,20 @@ gmf.EditfeatureController.prototype.delete = function() {
       this.editableNode_.id,
       this.feature
     ).then(
-      this.handleDeleteFeature_.bind(this)
+      (response) => {
+        this.dirty = false;
+        this.pending = false;
+        this.layerHelper_.refreshWMSLayer(this.editableWMSLayer_);
+
+        // (2) Reset selected feature
+        this.cancel();
+      },
+      () => {
+        this.showServerError = true;
+        this.pending = false;
+      }
     );
 
-    // (2) Reset selected feature
-    this.cancel();
   }
 };
 
@@ -641,7 +659,6 @@ gmf.EditfeatureController.prototype.submit = function() {
  * @private
  */
 gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
-  this.pending = false;
   const features = new ol.format.GeoJSON().readFeatures(resp.data);
   if (features.length) {
     this.feature.setId(features[0].getId());
@@ -650,17 +667,6 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
   if (this.confirmDeferred_) {
     this.confirmDeferred_.resolve();
   }
-};
-
-
-/**
- * Called after an insert, update or delete request.
- * @param {angular.$http.Response} resp Ajax response.
- * @private
- */
-gmf.EditfeatureController.prototype.handleDeleteFeature_ = function(resp) {
-  this.pending = false;
-  this.layerHelper_.refreshWMSLayer(this.editableWMSLayer_);
 };
 
 
