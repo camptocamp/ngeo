@@ -406,6 +406,14 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.build/examples-hosted/contribs/gmf/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/jquery.min.js: node_modules/jquery/dist/jquery.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -645,11 +653,21 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/index.html: buildtools/examples-index.mako.html $(EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
+.build/examples-hosted/index.html: \
+		buildtools/examples-index.mako.html \
+		$(EXAMPLES_HTML_FILES) \
+		.build/python-venv/bin/mako-render \
+		.build/beautifulsoup4.timestamp \
+		.build/examples-hosted/bootstrap.min.css
 	mkdir -p $(dir $@)
 	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
 
-.build/examples-hosted/contribs/gmf/index.html: buildtools/examples-index.mako.html $(GMF_EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
+.build/examples-hosted/contribs/gmf/index.html: \
+		buildtools/examples-index.mako.html \
+		$(GMF_EXAMPLES_HTML_FILES) \
+		.build/python-venv/bin/mako-render \
+		.build/beautifulsoup4.timestamp \
+		.build/examples-hosted/contribs/gmf/bootstrap.min.css
 	mkdir -p $(dir $@)
 	.build/python-venv/bin/python buildtools/generate-examples-index.py \
 		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \
