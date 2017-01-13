@@ -277,12 +277,45 @@ git pull origin master
 Create the new branch:
 ```bash
 git checkout -b x_y
-git pus origin x_y
+```
+
+Update the `.travis.yml`:
+```diff
+ - provider: script
+   script: make transifex-send
+   skip_cleanup: true
+   on:
+     repo: camptocamp/ngeo
+-     branch: master
++     branch: x.y
+```
+
+Commit and push the changes:
+```bash
+git add .travis.yml
+git commit -m "Update the branch"
+git push origin x_y
 ```
 
 Back on master:
 ```bash
 git checkout master
+```
+
+Do the merge to prepare the future merges:
+```bash
+git checkout merge x.y
+```
+
+Restore the `.travis.yml`:
+```diff
+ - provider: script
+   script: make transifex-send
+   skip_cleanup: true
+   on:
+     repo: camptocamp/ngeo
+-     branch: x.y
++     branch: master
 ```
 
 Get the actual localisation:
@@ -296,21 +329,9 @@ Update the `Makefile`:
 + TX_VERSION ?= x_y+1
 ```
 
-Update the `.travs.yml`:
-```diff
- - provider: script
-   script: make transifex-send
-   skip_cleanup: true
-   on:
-     repo: camptocamp/ngeo
--     branch: master
-+     branch: x.y
-     node: "4"
-```
-
 Commit and push the changes:
 ```bash
-git add Makefile
+git add Makefile .travis.yml
 git commit -m "Start the version x.y+1"
 git push origin master
 ```
