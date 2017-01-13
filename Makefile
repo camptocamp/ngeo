@@ -885,9 +885,9 @@ $(HOME)/.transifexrc:
 		--var "tx_version=$(TX_VERSION)" $< > $@
 
 .build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES)
+		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES) $(NGEO_JS_FILES)
 	mkdir -p $(dir $@)
-	node buildtools/extract-messages $(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
+	node buildtools/extract-messages $(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
 
 .build/locale/gmf.pot: lingua.cfg .build/node_modules.timestamp \
 		$(GMF_DIRECTIVES_PARTIALS_FILES) $(GMF_JS_FILES)
