@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Generates JSON output based on exportable symbols (those with
  * an api tag) and boolean defines (with a define tag and a default value).
