@@ -49,12 +49,12 @@ gmf.Raster = function($http, gmfRasterUrl) {
 gmf.Raster.prototype.getRaster = function(coordinate, opt_params) {
 
   const params = opt_params || {};
-  params[gmf.AltitudeParam.X] = coordinate[0];
-  params[gmf.AltitudeParam.Y] = coordinate[1];
+  params[gmf.RasterParam.X] = coordinate[0];
+  params[gmf.RasterParam.Y] = coordinate[1];
 
   return this.$http_.get(this.url_, {
     params
-  }).then(this.handleGetAltitude_.bind(this));
+  }).then(this.handleGetRaster_.bind(this));
 };
 
 
