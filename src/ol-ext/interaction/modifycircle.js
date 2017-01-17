@@ -5,7 +5,7 @@ goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
-goog.require('ol.MapBrowserEvent.EventType');
+goog.require('ol.MapBrowserEventType');
 goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.View');
 goog.require('ol.coordinate');
@@ -393,7 +393,7 @@ ngeo.interaction.ModifyCircle.handleEvent = function(mapBrowserEvent) {
 
   let handled;
   if (!mapBrowserEvent.map.getView().getHints()[ol.View.Hint.INTERACTING] &&
-      mapBrowserEvent.type == ol.MapBrowserEvent.EventType.POINTERMOVE &&
+      mapBrowserEvent.type == ol.MapBrowserEventType.POINTERMOVE &&
       !this.handlingDownUpSequence) {
     this.handlePointerMove_(mapBrowserEvent);
   }

@@ -106,7 +106,7 @@ ngeo.interaction.DrawRegularPolygonFromClick.prototype.enable_ = function() {
   this.listenerKeys_.push(
     ol.events.listen(
       map,
-      ol.MapBrowserEvent.EventType.CLICK,
+      ol.MapBrowserEventType.CLICK,
       this.handleMapClick_,
       this
     )

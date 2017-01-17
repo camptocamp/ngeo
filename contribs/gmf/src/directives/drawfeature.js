@@ -512,7 +512,7 @@ gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
   goog.asserts.assertElement(mapDiv);
 
   if (active) {
-    ol.events.listen(this.map, ol.MapBrowserEvent.EventType.CLICK,
+    ol.events.listen(this.map, ol.MapBrowserEventType.CLICK,
         this.handleMapClick_, this);
 
     goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
@@ -528,7 +528,7 @@ gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
         this.handleMapTouchEnd_, false, this);
 
   } else {
-    ol.events.unlisten(this.map, ol.MapBrowserEvent.EventType.CLICK,
+    ol.events.unlisten(this.map, ol.MapBrowserEventType.CLICK,
         this.handleMapClick_, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.CONTEXTMENU,

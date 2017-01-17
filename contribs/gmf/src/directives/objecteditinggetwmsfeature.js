@@ -114,14 +114,14 @@ gmf.ObjecteditinggetwmsfeatureController.prototype.handleActiveChange_ = functio
   if (active) {
     ol.events.listen(
       this.map,
-      ol.MapBrowserEvent.EventType.CLICK,
+      ol.MapBrowserEventType.CLICK,
       this.handleMapClick_,
       this
     );
   } else {
     ol.events.unlisten(
       this.map,
-      ol.MapBrowserEvent.EventType.CLICK,
+      ol.MapBrowserEventType.CLICK,
       this.handleMapClick_,
       this
     );
