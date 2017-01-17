@@ -143,9 +143,9 @@ ngeo.interaction.Translate.prototype.setState_ = function() {
 
   if (map && active && features) {
     features.forEach(this.addFeature_, this);
-    keys.push(ol.events.listen(features, ol.Collection.EventType.ADD,
+    keys.push(ol.events.listen(features, ol.CollectionEventType.ADD,
         this.handleFeaturesAdd_, this));
-    keys.push(ol.events.listen(features, ol.Collection.EventType.REMOVE,
+    keys.push(ol.events.listen(features, ol.CollectionEventType.REMOVE,
         this.handleFeaturesRemove_, this));
   } else {
 

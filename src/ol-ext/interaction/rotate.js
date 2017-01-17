@@ -187,9 +187,9 @@ ngeo.interaction.Rotate.prototype.setActive = function(active) {
     );
     this.features_.forEach(this.addFeature_, this);
     this.listenerKeys_.push(ol.events.listen(this.features_,
-        ol.Collection.EventType.ADD, this.handleFeatureAdd_, this));
+        ol.CollectionEventType.ADD, this.handleFeatureAdd_, this));
     this.listenerKeys_.push(ol.events.listen(this.features_,
-        ol.Collection.EventType.REMOVE, this.handleFeatureRemove_, this));
+        ol.CollectionEventType.REMOVE, this.handleFeatureRemove_, this));
 
   } else {
     this.listenerKeys_.forEach((key) => {
