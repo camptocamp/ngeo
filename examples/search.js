@@ -174,12 +174,12 @@ app.SearchController.select_ = function(event, suggestion, dataset) {
   const feature = /** @type {ol.Feature} */ (suggestion);
   const featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
-  const mapSize = this.map.getSize();
-  goog.asserts.assert(mapSize !== undefined);
+  const size = this.map.getSize();
+  goog.asserts.assert(size !== undefined);
   const source = this.vectorLayer_.getSource();
   source.clear(true);
   source.addFeature(feature);
-  this.map.getView().fit(featureGeometry, mapSize, {maxZoom: 16});
+  this.map.getView().fit(featureGeometry, {size, maxZoom: 16});
 };
 
 

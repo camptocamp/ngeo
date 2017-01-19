@@ -603,7 +603,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
       ol.events.listen(
         this.modify_,
         ol.Object.getChangeEventType(
-          ol.interaction.Interaction.Property.ACTIVE),
+          ol.interaction.Property.ACTIVE),
         this.setFeatureStyle_,
         this
       )

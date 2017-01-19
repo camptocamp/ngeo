@@ -5,6 +5,7 @@ goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('gmf.LayertreeController');
 goog.require('ol.Collection');
+goog.require('ol.ViewProperty');
 goog.require('ol.format.WFS');
 goog.require('ol.interaction.Snap');
 
@@ -186,7 +187,7 @@ gmf.Snapping.prototype.setMap = function(map) {
     keys.push(
       ol.events.listen(
         view,
-        ol.Object.getChangeEventType(ol.View.Property.CENTER),
+        ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
         this.handleMapViewChange_,
         this
       )
@@ -194,7 +195,7 @@ gmf.Snapping.prototype.setMap = function(map) {
     keys.push(
       ol.events.listen(
         view,
-        ol.Object.getChangeEventType(ol.View.Property.RESOLUTION),
+        ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
         this.handleMapViewChange_,
         this
       )

@@ -9,7 +9,7 @@ goog.require('ol.interaction.Draw');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
-goog.require('ol.View');
+goog.require('ol.ViewProperty');
 
 
 /**
@@ -107,7 +107,7 @@ ngeo.interaction.MobileDraw = function(options) {
   });
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
       this.updateState_, this);
 
   this.set(ngeo.interaction.MobileDrawProperty.DIRTY, false);
@@ -134,7 +134,7 @@ ngeo.interaction.MobileDraw.prototype.setMap = function(map) {
 
   if (map) {
     this.changeEventKey_ = ol.events.listen(map.getView(),
-        ol.Object.getChangeEventType(ol.View.Property.CENTER),
+        ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
         this.handleViewCenterChange_, this);
   }
 
@@ -394,7 +394,7 @@ ngeo.interaction.MobileDraw.prototype.updateState_ = function() {
 
 
 /**
- * @param {ol.ObjectEvent} evt Event.
+ * @param {ol.Object.Event} evt Event.
  * @private
  */
 ngeo.interaction.MobileDraw.prototype.handleViewCenterChange_ = function(evt) {

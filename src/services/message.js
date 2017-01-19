@@ -34,6 +34,7 @@ ngeo.MessageType = {
  *
  * @constructor
  * @struct
+ * @abstract
  */
 ngeo.Message = function() {};
 

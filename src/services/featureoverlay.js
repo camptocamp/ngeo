@@ -2,12 +2,16 @@ goog.provide('ngeo.FeatureOverlay');
 goog.provide('ngeo.FeatureOverlayMgr');
 
 goog.require('ngeo');
+goog.require('ol');
+goog.require('ol.events');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
 goog.require('ol.layer.Vector');
 goog.require('ol.obj');
 goog.require('ol.source.Vector');
 goog.require('ol.style.Style');
+
+goog.require('goog.asserts');
 
 
 /**

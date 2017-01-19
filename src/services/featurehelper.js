@@ -913,7 +913,11 @@ ngeo.FeatureHelper.prototype.panMapToFeature = function(feature, map,
     } else {
       featureCenter = ol.extent.getCenter(geometry.getExtent());
     }
-    map.getView().setCenter(featureCenter);
+
+    view.animate({
+      center: featureCenter,
+      duration: panDuration
+    });
   }
 };
 

@@ -40,8 +40,8 @@ ngeo.recenterDirective = function() {
       function recenter(element) {
         const extent = element.attr('ngeo-extent');
         if (extent !== undefined) {
-          const mapSize = /** @type {ol.Size} */ (map.getSize());
-          map.getView().fit($scope.$eval(extent), mapSize);
+          const size = /** @type {ol.Size} */ (map.getSize());
+          map.getView().fit($scope.$eval(extent), {size});
         }
         const zoom = element.attr('ngeo-zoom');
         if (zoom !== undefined) {

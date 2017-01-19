@@ -21,6 +21,7 @@ ol.inherits(ngeo.format.XSDAttribute, ol.format.XML);
 /**
  * @param {Document|Node|string} source Source.
  * @return {Array.<ngeox.Attribute>} The parsed result.
+ * @override
  */
 ngeo.format.XSDAttribute.prototype.read = function(source) {
   return /** @type {Array.<ngeox.Attribute>} */ (
@@ -32,6 +33,7 @@ ngeo.format.XSDAttribute.prototype.read = function(source) {
 /**
  * @param {Document} doc Document.
  * @return {Array.<ngeox.Attribute>} List of attributes.
+ * @override
  */
 ngeo.format.XSDAttribute.prototype.readFromDocument = function(doc) {
   goog.asserts.assert(doc.nodeType == Node.DOCUMENT_NODE,
@@ -48,6 +50,7 @@ ngeo.format.XSDAttribute.prototype.readFromDocument = function(doc) {
 /**
  * @param {Node} node Node.
  * @return {Array.<ngeox.Attribute>} List of attributes.
+ * @override
  */
 ngeo.format.XSDAttribute.prototype.readFromNode = function(node) {
   goog.asserts.assert(node.nodeType == Node.ELEMENT_NODE,

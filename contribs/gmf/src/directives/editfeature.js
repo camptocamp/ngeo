@@ -28,9 +28,11 @@ goog.require('ngeo.modalDirective');
 goog.require('ol.Collection');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Modify');
+goog.require('ol.interaction.TranslateEventType');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
+goog.require('ol.ObjectEventType');
 
 
 /**
@@ -724,7 +726,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
         this.handleMenuActionClick_, this));
 
     keys.push(ol.events.listen(this.translate_,
-        ol.interaction.Translate.EventType.TRANSLATEEND,
+        ol.interaction.TranslateEventType.TRANSLATEEND,
         this.handleTranslateEnd_, this));
 
     keys.push(ol.events.listen(this.rotate_,
@@ -823,8 +825,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
         ret = feature;
       }
       return ret;
-    },
-    null
+    }
   );
 
   if (feature) {
@@ -875,8 +876,7 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
         ret = feature;
       }
       return ret;
-    },
-    null
+    }
   );
 
   feature = feature ? feature : null;

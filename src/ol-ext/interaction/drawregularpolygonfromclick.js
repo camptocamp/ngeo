@@ -58,6 +58,7 @@ ol.inherits(
  * Activate or deactivate the interaction.
  * @param {boolean} active Active.
  * @export
+ * @override
  */
 ngeo.interaction.DrawRegularPolygonFromClick.prototype.setActive = function(
   active

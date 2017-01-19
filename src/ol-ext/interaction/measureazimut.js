@@ -13,7 +13,7 @@ goog.require('ol.geom.GeometryCollection');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.interaction.Draw');
-goog.require('ol.interaction.Interaction');
+goog.require('ol.interaction.Property');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -214,7 +214,7 @@ ngeo.interaction.DrawAzimut = function(options) {
 
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
       this.updateState_, this);
 };
 ol.inherits(ngeo.interaction.DrawAzimut, ol.interaction.Pointer);

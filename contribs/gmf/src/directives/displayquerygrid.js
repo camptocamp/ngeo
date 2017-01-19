@@ -812,9 +812,10 @@ gmf.DisplayquerygridController.prototype.zoomToSelection = function() {
     this.highlightFeatures_.forEach((feature) => {
       ol.extent.extend(extent, feature.getGeometry().getExtent());
     });
-    const mapSize = this.map_.getSize();
-    goog.asserts.assert(mapSize !== undefined);
-    this.map_.getView().fit(extent, mapSize, {maxZoom: this.maxRecenterZoom});
+    const size = this.map_.getSize();
+    goog.asserts.assert(size !== undefined);
+    const maxZoom = this.maxRecenterZoom;
+    this.map_.getView().fit(extent, {size, maxZoom});
   }
 };
 

@@ -40,7 +40,7 @@ ngeo.drawpointDirective = function() {
       ol.events.listen(
           drawPoint,
           ol.Object.getChangeEventType(
-              ol.interaction.Interaction.Property.ACTIVE),
+              ol.interaction.Property.ACTIVE),
           drawFeatureCtrl.handleActiveChange,
           drawFeatureCtrl
       );

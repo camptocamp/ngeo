@@ -7,6 +7,10 @@ goog.provide('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ol.format.IGC');
 /** @suppress {extraRequire} */
+goog.require('ol.source.Raster');
+/** @suppress {extraRequire} */
+goog.require('ol.VectorTile');
+/** @suppress {extraRequire} */
 goog.require('ol.Overlay');
 /** @suppress {extraRequire} */
 goog.require('ol.control.ScaleLine');
@@ -19,6 +23,9 @@ goog.require('ol.layer.VectorTile');
 // Required by ol3
 /** @suppress {extraRequire} */
 goog.require('ol.Map');
+/** @suppress {extraRequire} */
+goog.require('ol.source.Vector');
+
 
 goog.require('ngeo.search.searchModule');
 goog.require('ngeo.import.importModule');

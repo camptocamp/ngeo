@@ -20,6 +20,7 @@ goog.require('ol.Collection');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
+goog.require('ol.interaction.TranslateEventType');
 
 
 /**
@@ -383,7 +384,7 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
         this.handleFeaturesRemove_, this));
 
     keys.push(ol.events.listen(this.translate_,
-        ol.interaction.Translate.EventType.TRANSLATEEND,
+        ol.interaction.TranslateEventType.TRANSLATEEND,
         this.handleTranslateEnd_, this));
 
     keys.push(ol.events.listen(this.rotate_,
@@ -562,8 +563,7 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
         ret = feature;
       }
       return ret;
-    },
-    null
+    }
   );
 
   feature = feature ? feature : null;
@@ -615,8 +615,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
         ret = feature;
       }
       return ret;
-    },
-    null
+    }
   );
 
   feature = feature ? feature : null;

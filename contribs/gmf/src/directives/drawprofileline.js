@@ -129,7 +129,7 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
 
   // Clear the line as soon as the interaction is activated.
   this.interaction.on(
-    ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+    ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
     function() {
       if (this.interaction.getActive()) {
         this.clear_();

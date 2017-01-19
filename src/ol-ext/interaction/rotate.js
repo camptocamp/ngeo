@@ -166,6 +166,7 @@ ol.inherits(ngeo.interaction.Rotate, ol.interaction.Pointer);
 /**
  * Activate or deactivate the interaction.
  * @param {boolean} active Active.
+ * @override
  * @export
  */
 ngeo.interaction.Rotate.prototype.setActive = function(active) {

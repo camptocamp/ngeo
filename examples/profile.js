@@ -116,8 +116,8 @@ app.MainController = function($http, $scope) {
     }
     source.addFeature(new ol.Feature(lineString));
 
-    map.getView().fit(source.getExtent(),
-        /** @type {ol.Size} */ (this.map.getSize()));
+    const size = /** @type {ol.Size} */ (this.map.getSize());
+    map.getView().fit(source.getExtent(), {size});
   });
 
 

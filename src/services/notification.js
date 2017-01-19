@@ -16,6 +16,7 @@ goog.require('ngeo.Message');
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @ngdoc service
  * @ngname ngeoNotification
+ * @abstract
  * @ngInject
  */
 ngeo.Notification = function($timeout) {
@@ -82,9 +83,7 @@ ngeo.Notification.prototype.clear = function() {
 
 
 /**
- * Show the message.
- * @param {ngeox.Message} message Message.
- * @protected
+ * @override
  */
 ngeo.Notification.prototype.showMessage = function(message) {
   const type = message.type;

@@ -76,7 +76,6 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "node_modules/openlayers/externs/oli.js"
     ],
     "define": [
-      "ol.DEBUG=false",
       "ol.ENABLE_WEBGL=false"
     ],
     "jscomp_error": [
@@ -86,6 +85,8 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % if examples == 'true':
       "missingProvide",
 % endif
+      "analyzerChecks",
+      "strictMissingRequire",
       "lintChecks"
     ],
     "extra_annotation_name": [

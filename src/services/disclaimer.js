@@ -92,6 +92,7 @@ ngeo.Disclaimer.prototype.close = function(object) {
  * Show the message.
  * @param {ngeox.Message} message Message.
  * @protected
+ * @override
  */
 ngeo.Disclaimer.prototype.showMessage = function(message) {
   const type = message.type;

@@ -112,9 +112,7 @@ app.GmfImportHelper.prototype.addFeatures = function(map, features) {
   map.addLayer(layer);
   const size = map.getSize();
   if (size) {
-    map.getView().fit(source.getExtent(), size, {
-      padding: [30, 30, 30, 30]
-    });
+    map.getView().fit(source.getExtent(), {size, padding: [30, 30, 30, 30]});
   }
 };
 

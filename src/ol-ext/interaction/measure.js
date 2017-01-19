@@ -76,6 +76,7 @@ ol.inherits(ngeo.MeasureEvent, ol.events.Event);
  *
  * @constructor
  * @struct
+ * @abstract
  * @extends {ol.interaction.Interaction}
  * @param {ngeo.interaction.MeasureBaseOptions=} opt_options Options
  */
@@ -212,7 +213,7 @@ ngeo.interaction.Measure = function(opt_options) {
   this.shouldHandleDrawInteractionActiveChange_ = true;
 
   ol.events.listen(this.drawInteraction_,
-      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
       this.handleDrawInteractionActiveChange_, this);
   ol.events.listen(this.drawInteraction_,
       ol.interaction.Draw.EventType.DRAWSTART, this.onDrawStart_, this);
@@ -220,7 +221,7 @@ ngeo.interaction.Measure = function(opt_options) {
       ol.interaction.Draw.EventType.DRAWEND, this.onDrawEnd_, this);
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
       this.updateState_, this);
 };
 ol.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
