@@ -250,6 +250,12 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   this.layer = isRoot ? null : /** @type {ol.layer.Layer} */
       ($scope.$eval(nodelayerExpr, {'treeCtrl': this}));
 
+  /**
+   * @type {?ngeo.DataSource}
+   * @private
+   */
+  this.dataSource_ = null;
+
   if (this.layer) {
     ngeoDecorateLayerLoading(this.layer, $scope);
     ngeoDecorateLayer(this.layer);
@@ -396,6 +402,25 @@ ngeo.LayertreeController.prototype.getSetActive = function(val) {
   } else {
     return map.getLayers().getArray().indexOf(layer) >= 0;
   }
+};
+
+
+/**
+ * @return {?ngeo.DataSource} dataSource The data source bound to this layer
+ *     tree controller.
+ * @export
+ */
+ngeo.LayertreeController.prototype.getDataSource = function() {
+  return this.dataSource_;
+};
+
+
+/**
+ * @param {?ngeo.DataSource} dataSource Data source or null.
+ * @export
+ */
+ngeo.LayertreeController.prototype.setDataSource = function(dataSource) {
+  this.dataSource_ = dataSource;
 };
 
 

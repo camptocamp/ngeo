@@ -62,6 +62,223 @@ ngeox.Attribute.prototype.type;
 
 
 /**
+ * The definition of a single layer (WMS) and/or featureType (WFS).
+ * @record
+ * @struct
+ */
+ngeox.DataSourceLayer = function() {};
+
+
+/**
+ * The maximum resolution the layer should be rendered (when visible).
+ * @type {number|undefined}
+ */
+ngeox.DataSourceLayer.prototype.maxResolution;
+
+
+/**
+ * The minimum resolution the layer should be rendered (when visible).
+ * @type {number|undefined}
+ */
+ngeox.DataSourceLayer.prototype.minResolution;
+
+
+/**
+ * The layer name (WMS) and/or feature type name (WFS)
+ * @type {string}
+ */
+ngeox.DataSourceLayer.prototype.name;
+
+
+/**
+ * Whether the the layer is queryable or not. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceLayer.prototype.queryable;
+
+
+/**
+ * The options to create a ngeo.DataSource with.
+ * @typedef {{
+ *     copyable: (boolean|undefined),
+ *     id: (number),
+ *     idAttribute: (string|undefined),
+ *     maxResolution: (number|undefined),
+ *     minResolution: (number|undefined),
+ *     name: (string),
+ *     ogcImageType: (string|undefined),
+ *     ogcLayers: (Array.<ngeox.DataSourceLayer>|undefined),
+ *     ogcServerType: (string|undefined),
+ *     ogcType: (string|undefined),
+ *     snappable: (boolean|undefined),
+ *     snappingTolerance: (number|undefined),
+ *     snappingToEdges: (boolean|undefined),
+ *     snappingToVertice: (boolean|undefined),
+ *     visible: (boolean|undefined),
+ *     wfsUrl: (string|undefined),
+ *     wmsIsSingleTile: (boolean|undefined),
+ *     wmsUrl: (string|undefined),
+ *     wmtsLayer: (string|undefined),
+ *     wmtsUrl: (string|undefined)
+ * }}
+ */
+ngeox.DataSourceOptions;
+
+
+/**
+ * Whether the geometry from this data source can be copied to other data
+ * sources or not. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.copyable;
+
+
+/**
+ * (Required) The data source id.
+ * @type {number}
+ */
+ngeox.DataSourceOptions.prototype.id;
+
+
+/**
+ * The name of an attribute among the attributes of the data source.
+ * The value of that attribute, in records, can be used to identify
+ * each record individually.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.identifierAtttribute;
+
+
+/**
+ * Maximum resolution where the data source can be displayed or queried.
+ * @type {number|undefined}
+ */
+ngeox.DataSourceOptions.prototype.maxResolution;
+
+
+/**
+ * Minimum resolution where the data source can be displayed or queried.
+ * @type {number|undefined}
+ */
+ngeox.DataSourceOptions.prototype.minResolution;
+
+
+/**
+ * (Required) A human-readable name for the data source.
+ * @type {string}
+ */
+ngeox.DataSourceOptions.prototype.name;
+
+
+/**
+ * The type of images to fetch by queries by the (WMS) or (WMTS) .
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.ogcImageType;
+
+
+/**
+ * A list of layer definitions that are used by (WMS) and (WFS) queries.
+ * These are **not** used by the (WMTS) queries (the wmtsLayers is used
+ * by WMTS queries).
+ * @type {Array.<ngeox.DataSourceLayer>|undefined}
+ */
+ngeox.DataSourceOptions.prototype.ogcLayers;
+
+
+/**
+ * The type of OGC server.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.ogcServerType;
+
+
+/**
+ * The type data source. Can be: 'WMS' or 'WMTS'.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.ogcType;
+
+
+/**
+ * Whether the geometry from this data source can be used to snap the geometry
+ * of features from other data sources that are being edited. Defaults to
+ * `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.snappable;
+
+
+/**
+ * Determines whether external features can be snapped to the edges of
+ * features from this data source or not. Defaults to `true`. Requires
+ * `snappable` to be set.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.snappingToEdges;
+
+
+/**
+ * Determines whether external features can be snapped to the vertice of
+ * features from this data source or not. Defaults to `true`. Requires
+ * `snappable` to be set.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.snappingToVertice;
+
+
+/**
+ * The tolerance in pixels the snapping should occur. Defaults to `10`.
+ * @type {number|undefined}
+ */
+ngeox.DataSourceOptions.prototype.snappingTolerance;
+
+
+/**
+ * Whether the data source is visible or not, i.e. whether its is ON or OFF.
+ * Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.visible;
+
+
+/**
+ * The url to use for (WFS) requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wfsUrl;
+
+
+/**
+ * Whether the (WMS) images returned by this data source should be single tiles
+ * or not. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wmsIsSingleTile;
+
+
+/**
+ * The url to use for (WMS) requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wmsUrl;
+
+
+/**
+ * The layer name to use for the (WMTS) requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wmtsLayer;
+
+
+/**
+ * The url to use for (WMTS) requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wmtsUrl;
+
+
+/**
  * @interface
  */
 ngeox.MenuEvent = function() {};
