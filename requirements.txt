@@ -1,5 +1,5 @@
 requests==2.12.5
-urllib3==1.19.1
+urllib3==1.20
 Mako==1.0.6
 htmlmin==0.1.10
 beautifulsoup4==4.5.3
