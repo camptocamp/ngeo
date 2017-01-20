@@ -51,8 +51,8 @@ gmfapp.MainController = class {
    *     manager service.
    * @param {gmf.Themes} gmfThemes The gmf themes service.
    * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
-   * @param {ol.Collection.<ngeo.DataSource>} ngeoDataSources Ngeo collection
-   *     of data sources objects.
+   * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
+   *     objects.
    * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
    *     service.
    * @ngInject
