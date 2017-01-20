@@ -7,6 +7,7 @@ goog.require('gmf.TreeManager');
 goog.require('ngeo.DataSource');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DataSources');
+goog.require('ol.array');
 goog.require('ol.obj');
 
 
@@ -122,6 +123,7 @@ gmf.DataSourcesManager = class {
     if (this.treeCtrlsUnregister_) {
       this.treeCtrlsUnregister_();
     }
+    this.clearTreeCtrlCache_();
 
     // (2) Re-create data sources and event listeners
     this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
@@ -153,11 +155,42 @@ gmf.DataSourcesManager = class {
           // the leaf nodes are created and they are the ones we're looking
           // for here.
           this.timeout_(() => {
-            if (value) {
-              this.clearTreeCtrlCache_();
-              this.gmfTreeManager_.rootCtrl.traverseDepthFirst(
-                this.addTreeCtrlToCache_.bind(this)
-              );
+
+            // (1) No need to do anything if the value is not set
+            if (!value) {
+              return;
+            }
+
+            // (2) Collect 'leaf' treeCtrls
+            const newTreeCtrls = [];
+            const visitor = (treeCtrls, treeCtrl) => {
+              const node =
+                    /** @type {!gmfThemes.GmfGroup|!gmfThemes.GmfLayer} */ (
+                    treeCtrl.node);
+              const children = node.children;
+              if (!children) {
+                treeCtrls.push(treeCtrl);
+              }
+            };
+            for (let i = 0, ii = value.length; i < ii; i++) {
+              value[i].traverseDepthFirst(visitor.bind(this, newTreeCtrls));
+            }
+
+            // (3) Add new 'treeCtrls'
+            for (let i = 0, ii = newTreeCtrls.length; i < ii; i++) {
+              const newTreeCtrl = newTreeCtrls[i];
+              const cacheItem = this.getTreeCtrlCacheItem_(newTreeCtrl);
+              if (!cacheItem) {
+                this.addTreeCtrlToCache_(newTreeCtrl);
+              }
+            }
+
+            // (4) Remove treeCtrls that are no longer in the newTreeCtrl
+            const cache = this.treeCtrlCache_;
+            for (const id in this.treeCtrlCache_) {
+              if (!ol.array.includes(newTreeCtrls, cache[id].treeCtrl)) {
+                this.removeTreeCtrlCacheItem_(cache[id]);
+              }
             }
           });
         });
@@ -335,18 +368,10 @@ gmf.DataSourcesManager = class {
    */
   addTreeCtrlToCache_(treeCtrl) {
 
-    // Skip any Layertree controller that has a node that is not a leaf
-    const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (
-      treeCtrl.node);
-    if (node.children) {
-      return;
-    }
-
-    const id = node.id;
+    const id = treeCtrl.node.id;
     const dataSource = this.dataSourcesCache_[id];
-    if (dataSource) {
-      treeCtrl.setDataSource(dataSource);
-    }
+    goog.asserts.assert(dataSource, 'DataSource should be set');
+    treeCtrl.setDataSource(dataSource);
 
     const stateWatcherUnregister = this.rootScope_.$watch(
       () => treeCtrl.getState(),
@@ -362,6 +387,28 @@ gmf.DataSourcesManager = class {
   }
 
   /**
+   * Remove a treeCtrl cache item. Unregister event listeners and remove the
+   * data source from the ngeo collection.
+   *
+   * @param {gmf.DataSourcesManager.TreeCtrlCacheItem} item Layertree
+   *     controller cache item
+   * @private
+   */
+  removeTreeCtrlCacheItem_(item) {
+
+    // (1) Remove data source
+    const dataSource = item.treeCtrl.getDataSource();
+    goog.asserts.assert(dataSource, 'DataSource should be set');
+    this.ngeoDataSources_.remove(dataSource);
+
+    // (2) Remove item and clear event listeners
+    const id = dataSource.id;
+    item.treeCtrl.setDataSource(null);
+    item.stateWatcherUnregister();
+    delete this.treeCtrlCache_[id];
+  }
+
+  /**
    * Clears the layer tree controller cache. At the same time, each item gets
    * its data source reference unset and state watcher unregistered.
    *
@@ -370,14 +417,8 @@ gmf.DataSourcesManager = class {
    */
   clearTreeCtrlCache_() {
     for (const id in this.treeCtrlCache_) {
-      const item = this.treeCtrlCache_[id];
-      const dataSource = item.treeCtrl.getDataSource();
-      goog.asserts.assert(dataSource, 'DataSource should be set');
-      this.ngeoDataSources_.remove(dataSource);
-      item.treeCtrl.setDataSource(null);
-      item.stateWatcherUnregister();
+      this.removeTreeCtrlCacheItem_(this.treeCtrlCache_[id]);
     }
-    ol.obj.clear(this.treeCtrlCache_);
   }
 
   /**
@@ -397,6 +438,18 @@ gmf.DataSourcesManager = class {
     goog.asserts.assert(dataSource, 'DataSource should be set');
     const visible = newVal === 'on';
     dataSource.visible = visible;
+  }
+
+  /**
+   * Returns a layertree controller cache item, if it exists.
+   *
+   * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
+   * @return {gmf.DataSourcesManager.TreeCtrlCacheItem} Cache item
+   * @private
+   */
+  getTreeCtrlCacheItem_(treeCtrl) {
+    const id = treeCtrl.node.id;
+    return this.treeCtrlCache_[id] || null;
   }
 
 };
