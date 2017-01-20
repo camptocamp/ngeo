@@ -5,6 +5,7 @@ goog.provide('gmf.DataSourcesManager');
 goog.require('gmf');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.DataSource');
+/** @suppress {extraRequire} */
 goog.require('ngeo.DataSources');
 goog.require('ol.obj');
 

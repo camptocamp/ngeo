@@ -12,8 +12,6 @@ goog.require('gmf.filterselectorComponent');
 goog.require('gmf.layertreeDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
-goog.require('ngeo.DataSource');
-goog.require('ngeo.DataSources');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
