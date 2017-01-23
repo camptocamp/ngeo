@@ -459,7 +459,7 @@ gmf.Permalink.prototype.getMapCenter = function() {
     gmf.PermalinkParam.MAP_Y));
 
   if (x !== undefined && y !== undefined) {
-    center = [x, y];
+    center = [+x, +y];
     if (this.sourceProjections_ !== null) {
       const targetProjection = this.map_.getView().getProjection();
       const reprojectedCenter = this.ngeoAutoProjection_.tryProjectionsWithInversion(
@@ -484,7 +484,7 @@ gmf.Permalink.prototype.getMapZoom = function() {
   const z = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
     gmf.PermalinkParam.MAP_Z));
   if (z !== undefined) {
-    zoom = z;
+    zoom = +z;
   }
   return zoom;
 };
