@@ -85,7 +85,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
     paramKeys.forEach(function(key) {
       this.usedKeyRegexp.some(function(keyRegexp) {
         if (key.match(keyRegexp)) {
-          var value = this.ngeoLocation.getParam(key);
+          var value = this.getItemFromLocalStorage_(key);
           goog.asserts.assert(value !== null);
           this.initialState[key] = value;
           return true;
