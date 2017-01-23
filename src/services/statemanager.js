@@ -106,15 +106,13 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
  * If it cannot be parsed, the raw value (string) is returned
  *
  * @param  {string} key the localStorage key for the item
- * @return {string?} Param value.
+ * @return {*} Param value.
  * @private
  */
 ngeo.StateManager.prototype.getItemFromLocalStorage_ = function(key) {
   var value = this.localStorage.get(key);
   try {
-    var v = angular.fromJson(value);
-    goog.asserts.assertString(v);
-    return v;
+    return angular.fromJson(value);
   } catch (e) {
     return value;
   }
