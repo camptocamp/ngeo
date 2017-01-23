@@ -22,7 +22,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
 
   /**
    * Object representing the application's initial state.
-   * @type {!Object.<string ,string>}
+   * @type {!Object.<string, *>}
    */
   this.initialState = {};
 
