@@ -22,7 +22,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
 
   /**
    * Object representing the application's initial state.
-   * @type {!Object.<string ,string>}
+   * @type {!Object.<string, *>}
    */
   this.initialState = {};
 
@@ -85,7 +85,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
     paramKeys.forEach(function(key) {
       this.usedKeyRegexp.some(function(keyRegexp) {
         if (key.match(keyRegexp)) {
-          var value = this.ngeoLocation.getParam(key);
+          var value = this.getItemFromLocalStorage_(key);
           goog.asserts.assert(value !== null);
           this.initialState[key] = value;
           return true;
@@ -106,15 +106,13 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
  * If it cannot be parsed, the raw value (string) is returned
  *
  * @param  {string} key the localStorage key for the item
- * @return {string?} Param value.
+ * @return {*} Param value.
  * @private
  */
 ngeo.StateManager.prototype.getItemFromLocalStorage_ = function(key) {
   var value = this.localStorage.get(key);
   try {
-    var v = angular.fromJson(value);
-    goog.asserts.assertString(v);
-    return v;
+    return angular.fromJson(value);
   } catch (e) {
     return value;
   }
