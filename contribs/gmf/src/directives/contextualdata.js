@@ -138,15 +138,15 @@ gmf.ContextualdataController.prototype.init = function() {
 };
 
 /**
- * @param {Event} evt Event.
+ * @param {!Event} event Event.
  * @private
  */
-gmf.ContextualdataController.prototype.handleMapContextMenu_ = function(evt) {
+gmf.ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
   this.$scope_.$apply(() => {
-    const pixel = this.map.getEventPixel(evt);
+    const pixel = this.map.getEventPixel(event);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
     this.setContent_(coordinate);
-    evt.preventDefault();
+    event.preventDefault();
     this.hidePopover();
     this.showPopover();
     this.overlay_.setPosition(coordinate);

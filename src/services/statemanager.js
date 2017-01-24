@@ -149,6 +149,48 @@ ngeo.StateManager.prototype.getInitialValue = function(key) {
 
 
 /**
+ * Get the state value for `key`.
+ * @param {string} key State key.
+ * @return {string|undefined} State value.
+ */
+ngeo.StateManager.prototype.getInitialStringValue = function(key) {
+  const value = this.initialState[key];
+  if (value === undefined) {
+    return undefined;
+  }
+  return goog.asserts.assertString(value);
+};
+
+
+/**
+ * Get the state value for `key`.
+ * @param {string} key State key.
+ * @return {number|undefined} State value.
+ */
+ngeo.StateManager.prototype.getInitialNumberValue = function(key) {
+  const value = this.initialState[key];
+  if (value === undefined) {
+    return undefined;
+  }
+  return goog.asserts.assertNumber(value);
+};
+
+
+/**
+ * Get the state value for `key`.
+ * @param {string} key State key.
+ * @return {boolean|undefined} State value.
+ */
+ngeo.StateManager.prototype.getInitialBooleanValue = function(key) {
+  const value = this.initialState[key];
+  if (value === undefined) {
+    return undefined;
+  }
+  return goog.asserts.assertBoolean(value);
+};
+
+
+/**
  * Update the application state with the values in `object`.
  * @param {!Object.<string, string>} object Object.
  */
@@ -164,7 +206,7 @@ ngeo.StateManager.prototype.updateState = function(object) {
   }
 
   function copyWithoutExcludedKeys(key) {
-    //Do not copy excluded parameters in the URL
+    // Do not copy excluded parameters in the URL
     if (this.excludedKeyListForURL.indexOf(key) < 0) {
       locationObject[key] = object[key];
     }

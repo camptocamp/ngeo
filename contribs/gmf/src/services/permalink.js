@@ -350,7 +350,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   });
   this.rootScope_.$on('ngeo-layertree-opacity', (event, treeCtrl) => {
     const newState = {};
-    const opacity = treeCtrl.layer.opacity;
+    const opacity = treeCtrl.layer.getOpacity();
     const stateName = (treeCtrl.parent.node.mixed ?
         gmf.PermalinkParamPrefix.TREE_OPACITY : gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY
     ) + treeCtrl.node.name;
@@ -452,41 +452,33 @@ gmf.Permalink.prototype.addListenerKey_ = function(uid, key, opt_isol) {
  * @export
  */
 gmf.Permalink.prototype.getMapCenter = function() {
-  let center = null;
-  const x = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
-    gmf.PermalinkParam.MAP_X));
-  const y = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
-    gmf.PermalinkParam.MAP_Y));
+  const x = this.ngeoStateManager_.getInitialNumberValue(gmf.PermalinkParam.MAP_X);
+  const y = this.ngeoStateManager_.getInitialNumberValue(gmf.PermalinkParam.MAP_Y);
 
   if (x !== undefined && y !== undefined) {
-    center = [x, y];
+    const center = [x, y];
     if (this.sourceProjections_ !== null) {
       const targetProjection = this.map_.getView().getProjection();
       const reprojectedCenter = this.ngeoAutoProjection_.tryProjectionsWithInversion(
           center, targetProjection.getExtent(), targetProjection,
           this.sourceProjections_);
-      if (reprojectedCenter !== null) {
-        center = reprojectedCenter;
+      if (reprojectedCenter) {
+        return reprojectedCenter;
       }
     }
+    return center;
   }
-  return center;
+  return null;
 };
 
 
 /**
  * Get the zoom level to use to initialize the map view from the state manager.
- * @return {?number} The zoom for the map view.
+ * @return {number|undefined} The zoom for the map view.
  * @export
  */
 gmf.Permalink.prototype.getMapZoom = function() {
-  let zoom = null;
-  const z = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
-    gmf.PermalinkParam.MAP_Z));
-  if (z !== undefined) {
-    zoom = z;
-  }
-  return zoom;
+  return this.ngeoStateManager_.getInitialNumberValue(gmf.PermalinkParam.MAP_Z);
 };
 
 
@@ -499,10 +491,8 @@ gmf.Permalink.prototype.getMapZoom = function() {
  * @export
  */
 gmf.Permalink.prototype.getMapCrosshair = function() {
-  let value = this.ngeoStateManager_.getInitialValue(
-      gmf.PermalinkParam.MAP_CROSSHAIR);
-  value = value === 'true' ? true : false;
-  return value;
+  const crosshair = this.ngeoStateManager_.getInitialBooleanValue(gmf.PermalinkParam.MAP_CROSSHAIR);
+  return crosshair === undefined ? false : crosshair;
 };
 
 
@@ -511,12 +501,11 @@ gmf.Permalink.prototype.getMapCrosshair = function() {
 
 /**
  * Get the tooltip text from the state manager.
- * @return {?string} Tooltip text.
+ * @return {string|undefined} Tooltip text.
  * @export
  */
 gmf.Permalink.prototype.getMapTooltip = function() {
-  return /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
-      gmf.PermalinkParam.MAP_TOOLTIP)) || null;
+  return this.ngeoStateManager_.getInitialStringValue(gmf.PermalinkParam.MAP_TOOLTIP);
 };
 
 
@@ -530,8 +519,7 @@ gmf.Permalink.prototype.getMapTooltip = function() {
  */
 gmf.Permalink.prototype.getFeatures = function() {
   let features = [];
-  const f = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
-    gmf.PermalinkParam.FEATURES));
+  const f = this.ngeoStateManager_.getInitialStringValue(gmf.PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
     features = this.featureHashFormat_.readFeatures(f);
   }
@@ -549,6 +537,7 @@ gmf.Permalink.prototype.setDimensions = function(dimensions) {
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
     const value = this.ngeoLocation_.getParam(key);
+    goog.asserts.assert(value);
     dimensions[key.slice(gmf.PermalinkParamPrefix.DIMENSIONS.length)] = value;
   }
 
@@ -618,11 +607,11 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
     view.fit(oeFeature.getGeometry().getExtent(), size);
   } else {
     center = this.getMapCenter();
-    if (center !== null) {
+    if (center) {
       view.setCenter(center);
     }
     zoom = this.getMapZoom();
-    if (zoom !== null) {
+    if (zoom !== undefined) {
       view.setZoom(zoom);
     }
   }
@@ -709,23 +698,20 @@ gmf.Permalink.prototype.unregisterMap_ = function() {
 /**
  * Get the background layer object to use to initialize the map from the
  * state manager.
- * @param {Array.<ol.layer.Base>} layers Array of background layer objects.
+ * @param {!Array.<!ol.layer.Base>} layers Array of background layer objects.
  * @return {?ol.layer.Base} Background layer.
  * @export
  */
 gmf.Permalink.prototype.getBackgroundLayer = function(layers) {
-  let layer = null;
-  const layerName = this.ngeoStateManager_.getInitialValue(
-      gmf.PermalinkParam.BG_LAYER);
+  const layerName = this.ngeoStateManager_.getInitialStringValue(gmf.PermalinkParam.BG_LAYER);
   if (layerName !== undefined) {
-    for (let i = 0, len = layers.length; i < len; i++) {
-      if (layers[i].get('label') === layerName) {
-        layer = layers[i];
-        break;
+    for (const layer of layers) {
+      if (layer.get('label') === layerName) {
+        return layer;
       }
     }
   }
-  return layer;
+  return null;
 };
 
 
@@ -820,7 +806,10 @@ gmf.Permalink.prototype.initLayers_ = function() {
 
     if (!themeName) {
       // check if we have a theme in the local storage
-      themeName = /** @type {string} */ (this.ngeoStateManager_.getInitialValue('theme'));
+      const tn = this.ngeoStateManager_.getInitialStringValue('theme');
+      if (tn) {
+        themeName = tn;
+      }
     }
 
     if (!themeName) {
@@ -837,11 +826,10 @@ gmf.Permalink.prototype.initLayers_ = function() {
     let firstLevelGroups = [];
     let theme;
     // check if we have the groups in the permalink
-    const groupsNames = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.TREE_GROUPS);
+    const groupsNames = this.ngeoStateManager_.getInitialStringValue(gmf.PermalinkParam.TREE_GROUPS);
     if (!groupsNames) {
-      theme = gmf.Themes.findThemeByName(
-        themes, /** @type {string} */ (themeName)
-      );
+      goog.asserts.assertString(themeName);
+      theme = gmf.Themes.findThemeByName(themes, themeName);
       if (theme) {
         firstLevelGroups = theme.children;
       }
@@ -867,17 +855,17 @@ gmf.Permalink.prototype.initLayers_ = function() {
           return;
         }
 
-        const opacity = /** @type number|undefined */ (this.ngeoStateManager_.getInitialValue(
-          (treeCtrl.parent.node.mixed ? gmf.PermalinkParamPrefix.TREE_OPACITY : gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY)
-          + treeCtrl.node.name
-        ));
+        const opacity = this.ngeoStateManager_.getInitialNumberValue((
+          treeCtrl.parent.node.mixed ?
+          gmf.PermalinkParamPrefix.TREE_OPACITY :
+          gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY
+        ) + treeCtrl.node.name);
         if (opacity !== undefined && treeCtrl.layer) {
-          goog.asserts.assert(opacity);
           treeCtrl.layer.setOpacity(opacity);
         }
         if (treeCtrl.parent.node && treeCtrl.parent.node.mixed && treeCtrl.node.children == undefined) {
           // Layer of a mixed group
-          const enable = this.ngeoStateManager_.getInitialValue(
+          const enable = this.ngeoStateManager_.getInitialBooleanValue(
             gmf.PermalinkParamPrefix.TREE_ENABLE + treeCtrl.node.name
           );
           if (enable !== undefined) {
@@ -885,9 +873,9 @@ gmf.Permalink.prototype.initLayers_ = function() {
           }
         } else if (!treeCtrl.node.mixed && treeCtrl.depth == 1) {
           // First level non mixed group
-          const groupLayers = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
+          const groupLayers = this.ngeoStateManager_.getInitialStringValue(
             gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
-          ));
+          );
           if (groupLayers !== undefined) {
             const groupLayersArray = groupLayers.split(',');
             treeCtrl.traverseDepthFirst((treeCtrl) => {

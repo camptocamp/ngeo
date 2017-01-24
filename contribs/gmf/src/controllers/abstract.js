@@ -151,7 +151,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
   }];
 
   /**
-   * @type {Object.<string, string>}
+   * @type {!Object.<string, string>}
    * @export
    */
   this.dimensions = {};
