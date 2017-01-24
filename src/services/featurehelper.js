@@ -9,9 +9,11 @@ goog.require('ngeo.Download');
 goog.require('ol.Feature');
 goog.require('ol.animation');
 goog.require('ol.geom.LineString');
+goog.require('ol.geom.MultiLineString');
 goog.require('ol.geom.MultiPoint');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
+goog.require('ol.geom.MultiPolygon');
 goog.require('ol.format.GPX');
 goog.require('ol.format.KML');
 goog.require('ol.style.Circle');
@@ -849,6 +851,8 @@ ngeo.FeatureHelper.prototype.getType = function(feature) {
     } else {
       type = ngeo.GeometryType.POINT;
     }
+  } else if (geometry instanceof ol.geom.MultiPoint) {
+    type = ngeo.GeometryType.MULTI_POINT;
   } else if (geometry instanceof ol.geom.Polygon) {
     if (feature.get(ngeo.FeatureProperties.IS_CIRCLE)) {
       type = ngeo.GeometryType.CIRCLE;
@@ -857,8 +861,12 @@ ngeo.FeatureHelper.prototype.getType = function(feature) {
     } else {
       type = ngeo.GeometryType.POLYGON;
     }
+  } else if (geometry instanceof ol.geom.MultiPolygon) {
+    type = ngeo.GeometryType.MULTI_POLYGON;
   } else if (geometry instanceof ol.geom.LineString) {
     type = ngeo.GeometryType.LINE_STRING;
+  } else if (geometry instanceof ol.geom.MultiLineString) {
+    type = ngeo.GeometryType.MULTI_LINE_STRING;
   }
 
   goog.asserts.assert(type, 'Type should be thruthy');
