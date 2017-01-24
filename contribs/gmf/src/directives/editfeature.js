@@ -884,8 +884,8 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
   // show contextual menu when clicking on certain types of features
   if (feature) {
     const type = this.featureHelper_.getType(feature);
-    if (type === ngeo.GeometryType.POLYGON ||
-        type === ngeo.GeometryType.LINE_STRING) {
+    if (type === ngeo.GeometryType.POLYGON || type === ngeo.GeometryType.MULTI_POLYGON ||
+        type === ngeo.GeometryType.LINE_STRING || type === ngeo.GeometryType.MULTI_LINE_STRING) {
       this.menu_.open(coordinate);
     }
     evt.preventDefault();

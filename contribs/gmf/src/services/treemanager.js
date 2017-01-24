@@ -476,17 +476,16 @@ gmf.TreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
   this.root.children.map((node) => {
     const name = node.name;
 
-    // Find the right firstlevelgroup in the new theme or take the old one.
-    let nodeToRestore = gmf.Themes.findGroupByName(themes, name);
-    if (!nodeToRestore) {
-      nodeToRestore = node;
+    // Find the right firstlevelgroup in the new theme.
+    const nodeToRestore = gmf.Themes.findGroupByName(themes, name);
+    if (nodeToRestore) {
+      // Restore state.
+      const fullState = firstLevelGroupsFullState[name];
+      if (fullState) {
+        this.setNodeMetadataFromFullState_(nodeToRestore, fullState);
+      }
+      nodesToRestore.push(nodeToRestore);
     }
-    // Restore state.
-    const fullState = firstLevelGroupsFullState[name];
-    if (fullState) {
-      this.setNodeMetadataFromFullState_(nodeToRestore, fullState);
-    }
-    nodesToRestore.push(nodeToRestore);
   });
 
   // Readd the firstlevelgroups.
