@@ -75,9 +75,6 @@ gmfapp.MainController = class {
      */
     this.gmfTreeManager = gmfTreeManager;
 
-    ngeoDataSources.on('add', this.handleDataSourcesAdd_, this);
-    ngeoDataSources.on('remove', this.handleDataSourcesRemove_, this);
-
     /**
      * @type {ol.Map}
      * @export
@@ -136,26 +133,6 @@ gmfapp.MainController = class {
       trigger: 'hover'
     });
 
-  }
-
-  /**
-   * @param {ol.Collection.Event} evt Event.
-   * @private
-   */
-  handleDataSourcesAdd_(evt) {
-    const dataSource = /** @type {ngeo.dataSource} */ (evt.element);
-    console.log(`DataSource added: ${dataSource.id} - ${dataSource.name}`);
-    console.log(dataSource);
-  }
-
-  /**
-   * @param {ol.Collection.Event} evt Event.
-   * @private
-   */
-  handleDataSourcesRemove_(evt) {
-    const dataSource = /** @type {ngeo.dataSource} */ (evt.element);
-    console.log(`DataSource removed: ${dataSource.id} - ${dataSource.name}`);
-    console.log(dataSource);
   }
 };
 
