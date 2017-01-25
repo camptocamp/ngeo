@@ -9,7 +9,10 @@
     height: calc(~"100vh -" 2 * @app-margin);
     max-height: calc(~"100vh -" 2 * @app-margin);
     margin: @app-margin;
-    border-radius: 0;
+    /* Like bootstrap modal border-radius */
+    border-radius: 6px;
+    /* Under bootstrap modal */
+    z-index: 1040;
   }
   .popover-title {
     background-color: @nav-bg;
@@ -22,17 +25,14 @@
     }
   }
   .popover-content {
-    /*
-     * popup's height - popover-title's height
-     * should be computed using bootstrap variables
-     */
     max-height: 90vh;
+    height: 90vh;
     -webkit-overflow-scrolling: touch;
   }
 }
 
 @media (min-width: @screen-sm-min) {
-  @fullscreenpopup-tablet-width: 8 * @map-tools-size;
+  @fullscreenpopup-tablet-width: 12 * @map-tools-size;
   [ngeo-popup] {
     &.popover {
       top: @app-margin + @map-tools-size;
@@ -45,11 +45,8 @@
     }
     .popover-content {
       overflow: auto;
-      /*
-       * popup's height - popover-title's height
-       * should be computed using bootstrap variables
-       */
       max-height: @fullscreenpopup-tablet-width;
+      height: @fullscreenpopup-tablet-width - @app-margin;
     }
   }
 }
