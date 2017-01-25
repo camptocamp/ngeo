@@ -436,12 +436,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * Ngeo create popup factory
    * @type {ngeo.CreatePopup}
    */
-  var ngeoCreatePopup = $injector.get('ngeoCreatePopup');
+  const ngeoCreatePopup = $injector.get('ngeoCreatePopup');
 
   // Static "not used" functions should be in the window because otherwise
   // closure remove them. "export" tag doens't work on static function below,
   // we "export" them as externs in the gmfx options file.
-  var gmfx = window.gmfx || {};
+  const gmfx = window.gmfx || {};
   window.gmfx = gmfx;
 
   /**
@@ -450,9 +450,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string} title (text).
    */
   gmfx.OpenIframePopup = function(url, title) {
-    var popup = ngeoCreatePopup();
-    popup.setTitle('' + title);
-    popup.setUrl('' + url);
+    const popup = ngeoCreatePopup();
+    popup.setTitle(`${title}`);
+    popup.setUrl(`${url}`);
     popup.setAutoDestroy(true);
     popup.setOpen(true);
   };
@@ -463,9 +463,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string} title (text).
    */
   gmfx.OpenTextPopup = function(content, title) {
-    var popup = ngeoCreatePopup();
-    popup.setTitle('' + title);
-    popup.setContent('' + content, true);
+    const popup = ngeoCreatePopup();
+    popup.setTitle(`${title}`);
+    popup.setContent(`${content}`, true);
     popup.setAutoDestroy(true);
     popup.setOpen(true);
   };
