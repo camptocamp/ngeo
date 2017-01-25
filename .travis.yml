@@ -98,6 +98,24 @@ script:
 - if [ "${DO_DIST_NGEO}-${IS_PR}" = TRUE-TRUE ]; then make dist/ngeo-debug.js; fi
 - if [ "${DO_DIST_GMF}-${IS_PR}" = TRUE-TRUE ]; then make dist/gmf.js; fi
 
+- |
+  if [ "${DO_EXAMPLES_DEPLOY}-${IS_PR}" = TRUE-TRUE ]; then
+    if [ ${TRAVIS_REPO_SLUG} != camptocamp/ngeo ]; then
+      if [ "${EXAMPLES_NGEO}" == TRUE ]; then
+        make examples-hosted-ngeo
+      fi
+      if [ "${EXAMPLES_GMF}" == TRUE ]; then
+        make examples-hosted-gmf
+      fi
+      if [ "${APPS_GMF}" == TRUE ]; then
+        make examples-hosted-apps
+      fi
+      if [ "${API}" == TRUE ]; then
+        make .build/apidoc
+      fi
+    fi
+  fi
+
 after_success:
 - if [ "${DO_TEST}" = TRUE ]; then cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js; fi
 - export GIT_BRANCH=${TRAVIS_BRANCH}
