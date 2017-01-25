@@ -598,3 +598,18 @@ gmfx.ThemesOptions;
  * @type {boolean|undefined}
  */
 gmfx.ThemesOptions.prototype.addBlankBackgroundLayer;
+
+
+/**
+ * Static function to create a popup with an iframe.
+ * @param {string} url an url.
+ * @param {string} title (text).
+ */
+gmfx.OpenIframePopup;
+
+/**
+ * Static function to create a popup with html content.
+ * @param {string} content (text or html).
+ * @param {string} title (text).
+ */
+gmfx.OpenTextPopup;
