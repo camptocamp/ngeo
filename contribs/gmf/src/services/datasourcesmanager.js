@@ -255,13 +255,15 @@ gmf.DataSourcesManager = class {
     let ogcServer;
     let wmtsLayer;
     let wmtsUrl;
+    let ogcImageType;
 
     if (ogcType === gmf.Themes.NodeType.WMTS) {
       // (3) Manage WMTS
+      const gmfLayerWMTS = /** @type {gmfThemes.GmfLayerWMTS} */ (gmfLayer);
 
       // Common options for WMTS
-      wmtsLayer = gmfLayer.layer;
-      wmtsUrl = gmfLayer.url;
+      wmtsLayer = gmfLayerWMTS.layer;
+      wmtsUrl = gmfLayerWMTS.url;
       maxResolution = meta.maxResolution;
       minResolution = meta.minResolution;
 
@@ -282,6 +284,7 @@ gmf.DataSourcesManager = class {
       if (meta.ogcServer && ogcServers[meta.ogcServer]) {
         ogcServer = ogcServers[meta.ogcServer];
       }
+      ogcImageType = gmfLayerWMTS.imageType;
     } else if (ogcType === gmf.Themes.NodeType.WMS) {
       // (4) Manage WMS
       const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
@@ -301,13 +304,11 @@ gmf.DataSourcesManager = class {
       });
 
       // OGC Server
-      if (firstLevelGroup && firstLevelGroup.mixed) {
-        goog.asserts.assert(gmfLayerWMS.ogcServer);
-        ogcServer = ogcServers[/** @type string */ (gmfLayerWMS.ogcServer)];
-      } else {
-        goog.asserts.assert(firstLevelGroup.ogcServer);
-        ogcServer = ogcServers[/** @type string */ (firstLevelGroup.ogcServer)];
-      }
+      const ogcServerName = (firstLevelGroup && firstLevelGroup.mixed) ?
+        gmfLayerWMS.ogcServer : firstLevelGroup.ogcServer;
+      goog.asserts.assert(ogcServerName);
+      ogcServer = ogcServers[ogcServerName];
+      ogcImageType = ogcServer.imageType;
     }
 
     // (5) ogcServer
@@ -330,7 +331,6 @@ gmf.DataSourcesManager = class {
     const copyable = meta.copyable;
     const identifierAttribute = meta.identifierAttributeField;
     const name = gmfLayer.name;
-    const ogcImageType = gmfLayer.imageType;
     const visible = meta.isChecked === true;
 
     // Create the data source and add it to the cache
@@ -402,10 +402,9 @@ gmf.DataSourcesManager = class {
     this.ngeoDataSources_.remove(dataSource);
 
     // (2) Remove item and clear event listeners
-    const id = dataSource.id;
     item.treeCtrl.setDataSource(null);
     item.stateWatcherUnregister();
-    delete this.treeCtrlCache_[id];
+    delete this.treeCtrlCache_[`${dataSource.id}`];
   }
 
   /**
@@ -451,12 +450,11 @@ gmf.DataSourcesManager = class {
     const id = treeCtrl.node.id;
     return this.treeCtrlCache_[id] || null;
   }
-
 };
 
 
 /**
- * @typedef {Object<number, gmf.DataSourcesManager.TreeCtrlCacheItem>}
+ * @typedef {Object<string, gmf.DataSourcesManager.TreeCtrlCacheItem>}
  */
 gmf.DataSourcesManager.TreeCtrlCache;
 

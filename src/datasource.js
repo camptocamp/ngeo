@@ -102,10 +102,10 @@ ngeo.DataSource = class {
      * A list of layer definitions that are used by (WMS) and (WFS) queries.
      * These are **not** used by the (WMTS) queries (the wmtsLayers is used
      * by WMTS queries).
-     * @type {?Array.<ngeox.DataSourceLayer>}
+     * @type {!Array.<!ngeox.DataSourceLayer>|undefined}
      * @private
      */
-    this.ogcLayers_ = options.ogcLayers || null;
+    this.ogcLayers_ = options.ogcLayers;
 
     /**
      * The type of OGC server making the requests.
@@ -117,10 +117,10 @@ ngeo.DataSource = class {
 
     /**
      * The type data source. Can be: 'WMS' or 'WMTS'.
-     * @type {?string}
+     * @type {string}
      * @private
      */
-    this.ogcType_ = options.ogcType || null;
+    this.ogcType_ = options.ogcType;
 
     /**
      * Whether the geometry from this data source can be used to snap the
@@ -271,7 +271,7 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @return {?Array.<ngeox.DataSourceLayer>} OGC layers
+   * @return {!Array.<!ngeox.DataSourceLayer>|undefined} OGC layers
    * @export
    */
   get ogcLayers() {
