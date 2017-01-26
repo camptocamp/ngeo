@@ -162,14 +162,12 @@ ngeo.Popup.prototype.setUrl = function(url) {
 
 
 /**
- * Set the popup's width. The `max-width` is also set to override the one set
- * by the bootstrap popover class.
+ * Set the popup's width.
  * @param {string} width Width the popup should have.
  * @export
  */
 ngeo.Popup.prototype.setWidth = function(width) {
   this.element_.width(width);
-  this.element_.css('max-width', width);
 };
 
 
