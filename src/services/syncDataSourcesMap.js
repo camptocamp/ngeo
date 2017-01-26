@@ -113,7 +113,7 @@ ngeo.SyncDataSourcesMap = class {
    * @private
    */
   handleViewResolutionChange_(evt) {
-    const view = goog.asserts.assetInstanceof(evt.target, ol.View);
+    const view = goog.asserts.assertInstanceof(evt.target, ol.View);
     this.syncDataSourcesToResolution_(view.getResolution());
   }
 
@@ -158,7 +158,7 @@ ngeo.SyncDataSourcesMap = class {
    * @private
    */
   handleDataSourcesAdd_(evt) {
-    const dataSource = goog.asserts.assetInstanceof(
+    const dataSource = goog.asserts.assertInstanceof(
       evt.element, ngeo.DataSource);
     if (this.map_) {
       this.syncDataSourceToResolution_(
