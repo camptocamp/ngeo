@@ -1,10 +1,12 @@
 goog.provide('ngeo.SyncDataSourcesMap');
 
 goog.require('ngeo');
+goog.require('ngeo.DataSource');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DataSources');
 goog.require('ol.Collection');
 goog.require('ol.Observable');
+goog.require('ol.View');
 
 
 ngeo.SyncDataSourcesMap = class {
@@ -111,7 +113,7 @@ ngeo.SyncDataSourcesMap = class {
    * @private
    */
   handleViewResolutionChange_(evt) {
-    const view = /** @type {ol.View} */ (evt.target);
+    const view = goog.asserts.assetInstanceof(evt.target, ol.View);
     this.syncDataSourcesToResolution_(view.getResolution());
   }
 
@@ -156,7 +158,8 @@ ngeo.SyncDataSourcesMap = class {
    * @private
    */
   handleDataSourcesAdd_(evt) {
-    const dataSource = /** @type {ngeo.DataSource} */ (evt.element);
+    const dataSource = goog.asserts.assetInstanceof(
+      evt.element, ngeo.DataSource);
     if (this.map_) {
       this.syncDataSourceToResolution_(
         dataSource,
