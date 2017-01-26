@@ -46,10 +46,10 @@ ngeo.FeatureHelper = function($injector, $filter) {
   this.$filter_ = $filter;
 
   /**
-   * @type {?number}
+   * @type {number|undefined}
    * @private
    */
-  this.decimals_ = null;
+  this.decimals_ = undefined;
 
   if ($injector.has('ngeoMeasureDecimals')) {
     this.decimals_ = $injector.get('ngeoMeasureDecimals');

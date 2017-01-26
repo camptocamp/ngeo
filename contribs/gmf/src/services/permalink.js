@@ -518,12 +518,11 @@ gmf.Permalink.prototype.getMapTooltip = function() {
  * @export
  */
 gmf.Permalink.prototype.getFeatures = function() {
-  let features = [];
   const f = this.ngeoStateManager_.getInitialStringValue(gmf.PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
-    features = this.featureHashFormat_.readFeatures(f);
+    return this.featureHashFormat_.readFeatures(f);
   }
-  return features;
+  return [];
 };
 
 
@@ -596,7 +595,6 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
 
   const view = map.getView();
   let center;
-  let zoom;
 
   // (1) Initialize the map view with either:
   //     a) the given ObjectEditing feature
@@ -610,7 +608,7 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
     if (center) {
       view.setCenter(center);
     }
-    zoom = this.getMapZoom();
+    const zoom = this.getMapZoom();
     if (zoom !== undefined) {
       view.setZoom(zoom);
     }
