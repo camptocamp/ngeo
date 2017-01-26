@@ -460,24 +460,42 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * Static function to create a popup with an iframe.
    * @param {string} url an url.
    * @param {string} title (text).
+   * @param {string=} opt_width CSS width.
+   * @param {string=} opt_height CSS height.
    */
-  gmfx.OpenIframePopup = function(url, title) {
+  gmfx.OpenIframePopup = function(url, title, opt_width, opt_height) {
     var popup = ngeoCreatePopup();
-    popup.setTitle('' + title);
     popup.setUrl('' + url);
-    popup.setAutoDestroy(true);
-    popup.setOpen(true);
+    gmfx.OpenPopup_(popup, title, opt_width, opt_height);
   };
 
   /**
    * Static function to create a popup with html content.
    * @param {string} content (text or html).
    * @param {string} title (text).
+   * @param {string=} opt_width CSS width.
+   * @param {string=} opt_height CSS height.
    */
-  gmfx.OpenTextPopup = function(content, title) {
+  gmfx.OpenTextPopup = function(content, title, opt_width, opt_height) {
     var popup = ngeoCreatePopup();
-    popup.setTitle('' + title);
     popup.setContent('' + content, true);
+    gmfx.OpenPopup_(popup, title, opt_width, opt_height);
+  };
+
+  /**
+   * @param {ngeo.Popup!} popup a ngeoPopup.
+   * @param {string} title (text).
+   * @param {string=} opt_width CSS width.
+   * @param {string=} opt_height CSS height.
+   */
+  gmfx.OpenPopup_ = function(popup, title, opt_width, opt_height) {
+    if (opt_width) {
+      popup.setWidth('' + opt_width);
+    }
+    if (opt_height) {
+      popup.setHeight('' + opt_height);
+    }
+    popup.setTitle('' + title);
     popup.setAutoDestroy(true);
     popup.setOpen(true);
   };

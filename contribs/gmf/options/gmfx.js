@@ -604,12 +604,26 @@ gmfx.ThemesOptions.prototype.addBlankBackgroundLayer;
  * Static function to create a popup with an iframe.
  * @param {string} url an url.
  * @param {string} title (text).
+ * @param {string=} opt_width CSS width.
+ * @param {string=} opt_height CSS height.
  */
 gmfx.OpenIframePopup;
+
 
 /**
  * Static function to create a popup with html content.
  * @param {string} content (text or html).
  * @param {string} title (text).
+ * @param {string=} opt_width CSS width.
+ * @param {string=} opt_height CSS height.
  */
 gmfx.OpenTextPopup;
+
+
+/**
+ * @param {ngeo.Popup!} popup a ngeoPopup.
+ * @param {string} title (text).
+ * @param {string=} opt_width CSS width.
+ * @param {string=} opt_height CSS height.
+ */
+gmfx.OpenPopup_

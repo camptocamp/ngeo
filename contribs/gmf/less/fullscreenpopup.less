@@ -25,7 +25,6 @@
     }
   }
   .popover-content {
-    max-height: 90vh;
     height: 90vh;
     -webkit-overflow-scrolling: touch;
   }
@@ -33,20 +32,21 @@
 
 @media (min-width: @screen-sm-min) {
   @fullscreenpopup-tablet-width: 12 * @map-tools-size;
+  @fullscreenpopup-topbar-height: 4.5rem; // Same value as the topbar-height in desktop.less
+  @fullscreenpopup-tablet-top: @fullscreenpopup-topbar-height + @app-margin + 2 * @map-tools-size;
   [ngeo-popup] {
     &.popover {
-      top: @app-margin + @map-tools-size;
-      max-width: @fullscreenpopup-tablet-width;
-      width: @fullscreenpopup-tablet-width;
-      margin-left: - @fullscreenpopup-tablet-width / 2;
-      left: calc(~"50% -" @fullscreenpopup-tablet-width / 2);
-      max-height: @fullscreenpopup-tablet-width + @map-tools-size;
       position: fixed;
+      top: @fullscreenpopup-tablet-top;
+      left: @nav-width;
+      max-width: calc(~"100vw -" (2 * @nav-width + 2 * @app-margin));
+      width: @fullscreenpopup-tablet-width;
+      max-height: calc(~"100vh -" (@fullscreenpopup-tablet-top + @app-margin));
+      height: @fullscreenpopup-tablet-width + @map-tools-size;
     }
     .popover-content {
       overflow: auto;
-      max-height: @fullscreenpopup-tablet-width;
-      height: @fullscreenpopup-tablet-width - @app-margin;
+      height: calc(~"100% -" 4 * @app-margin);
     }
   }
 }
