@@ -75,6 +75,7 @@ before_install:
 - if [ "${TRAVIS_PULL_REQUEST}" = false ]; then IS_PR=FALSE; else IS_PR=TRUE; fi
 - echo ${IS_PR}
 - echo ${TRAVIS_REPO_SLUG}
+- echo ${TRAVIS_PULL_REQUEST_SLUG}
 - echo ${DO_EXAMPLES_DEPLOY}
 - false
 - if [ ${TRAVIS_REPO_SLUG}-${IS_PR} = camptocamp/ngeo-FALSE ]; then openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in secrets.tar.enc -out secrets.tar -d; fi
@@ -104,7 +105,7 @@ script:
 
 - |
   if [ "${DO_EXAMPLES_DEPLOY}-${IS_PR}" = TRUE-TRUE ]; then
-    if [ ${TRAVIS_REPO_SLUG} != camptocamp/ngeo ]; then
+    if [ "${TRAVIS_PULL_REQUEST_SLUG}" != camptocamp/ngeo ]; then
       if [ "${EXAMPLES_NGEO}" == TRUE ]; then
         make examples-hosted-ngeo
       fi
