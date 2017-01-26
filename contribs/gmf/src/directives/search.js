@@ -487,9 +487,9 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
         var scope = directiveScope.$new(true);
         scope['feature'] = feature;
 
-        var html = '<p class="gmf-search-label">' +
+        var html = '<p class="gmf-search-label" translate>' +
                    feature.get(config.labelKey) + '</p>';
-        html += '<p class="gmf-search-group">' + (feature.get('layer_name') ||
+        html += '<p class="gmf-search-group" translate>' + (feature.get('layer_name') ||
                 config.datasetTitle) + '</p>';
         html = '<div class="gmf-search-datum">' + html + '</div>';
         return compile(html)(scope);
