@@ -2,6 +2,7 @@ goog.provide('ngeo.Querent');
 
 goog.require('ngeo');
 goog.require('ol.format.WFS');
+goog.require('ol.obj');
 goog.require('ol.source.ImageWMS');
 
 
@@ -409,6 +410,7 @@ ngeo.Querent = class {
       let url;
       let LAYERS = [];
       let INFO_FORMAT;
+      const params = {};
 
       // (3) Build query options
       for (const dataSource of dataSources) {
@@ -422,12 +424,21 @@ ngeo.Querent = class {
         // (b) Add queryable layer names in featureTypes array
         LAYERS = LAYERS.concat(
           dataSource.getInRangeOGCLayerNames(resolution, true));
+
+        // (c) Manage active dimensions. Add them directly to the query
+        //     parameters.
+        const dimensions = dataSource.activeDimensions;
+        if (dimensions) {
+          for (const dimensionKey in dimensions) {
+            params[dimensionKey] = dimensions[dimensionKey];
+          }
+        }
       }
 
-      const params = {
+      ol.obj.assign(params, {
         LAYERS,
         QUERY_LAYERS: LAYERS
-      };
+      });
       goog.asserts.assert(url);
       const wmsSource = new ol.source.ImageWMS({
         params,

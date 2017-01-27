@@ -1,7 +1,6 @@
 // TODO == Dynamic Properties ==
 // TODO  - filterCondition (and, or, not)
 // TODO  - filterRules (array of rules)
-// TODO  - inRange (boolean)
 //
 // TODO == Static Properties ==
 // TODO  - attributes
@@ -37,6 +36,13 @@ ngeo.DataSource = class {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
+     * The dimensions that are currently active on the data source.
+     * @type {?Object.<string, string>}
+     * @private
+     */
+    this.activeDimensions_ = options.activeDimensions || null;
+
+    /**
      * A data source is considered 'in range' when it is synchronized to
      * a map view and the resolution of that view is within the range of
      * the `maxResolution` and `minResolution`. These 2 properties are
@@ -68,6 +74,13 @@ ngeo.DataSource = class {
      * @private
      */
     this.copyable_ = options.copyable === true;
+
+    /**
+     * The dimensions this data source supports.
+     * @type {?Object.<string, string>}
+     * @private
+     */
+    this.dimensions_ = options.dimensions || null;
 
     /**
      * The name of the geometry attribute.
@@ -297,6 +310,22 @@ ngeo.DataSource = class {
   // === Dynamic property getters/setters ===
 
   /**
+   * @return {?Object.<string, string>} Active dimensions
+   * @export
+   */
+  get activeDimensions() {
+    return this.activeDimensions_;
+  }
+
+  /**
+   * @param {?Object.<string, string>} activeDimensions Active dimensions
+   * @export
+   */
+  set activeDimensions(activeDimensions) {
+    this.activeDimensions_ = activeDimensions;
+  }
+
+  /**
    * @return {boolean} In range
    * @export
    */
@@ -336,6 +365,14 @@ ngeo.DataSource = class {
    */
   get copyable() {
     return this.copyable_;
+  }
+
+  /**
+   * @return {?Object.<string, string>} Dimensions
+   * @export
+   */
+  get dimensions() {
+    return this.dimensions_;
   }
 
   /**
