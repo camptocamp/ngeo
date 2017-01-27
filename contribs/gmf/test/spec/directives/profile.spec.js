@@ -24,10 +24,10 @@ describe('gmf.GmfProfileController', () => {
         getLinesConfigurationFn() {
           return {
             'aster': {
-              'color':'#0404A0'
+              'color': '#0404A0'
             },
             'srtm': {
-              'color':'#04A004'
+              'color': '#04A004'
             }
           };
         }
