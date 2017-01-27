@@ -343,7 +343,8 @@ ngeox.DataSourceOptions.prototype.wmtsUrl;
  *     limit: (number|undefined),
  *     map: (ol.Map),
  *     queryableDataSources: (ngeox.QueryableDataSources|undefined),
- *     tolerancePx: (number|undefined)
+ *     tolerancePx: (number|undefined),
+ *     wfsCount: (boolean|undefined)
  * }}
  */
 ngeox.IssueGetFeaturesOptions;
@@ -407,6 +408,16 @@ ngeox.IssueGetFeaturesOptions.prototype.tolerancePx;
 
 
 /**
+ * When set, before making WFS GetFeature requests to fetch features,
+ * WFS GetFeature requests with `resultType = 'hits'` are made first. If
+ * the number of records for the request would exceed the limit, then
+ * no features are returned.
+ * @type {boolean|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.wfsCount;
+
+
+/**
  * A hash that contains 2 lists of queryable data sources: `wfs` and `wms`.
  * The same data source can only be in one of the two lists. The `wfs` list
  * has priority, i.e. if the data source supports WFS, it's put in the
@@ -432,6 +443,47 @@ ngeox.QueryableDataSources.prototype.wfs;
  * @type {Array.<ngeo.DataSource>}
  */
 ngeox.QueryableDataSources.prototype.wms;
+
+
+/**
+ * Hash of features by data source ids.
+ * @typedef {!Object.<number, !Array.<!ol.Feature>>}
+ */
+ngeox.QuerentResult;
+
+
+/**
+ * The definition of a result item returned by the querent service.
+ *
+ * @typedef {{
+ *     features: (Array.<ol.Feature>),
+ *     tooManyFeatures: (boolean|undefined),
+ *     totalFeatureCount: (number|undefined),
+ * }}
+ */
+ngeox.QuerentResultItem;
+
+
+/**
+ * The list of features that were returned by the query.
+ * @type {Array.<ol.Feature>}
+ */
+ngeox.QuerentResultItem.prototype.features;
+
+
+/**
+ * Set if the query would have returned to many features. When set, no features
+ * are returned.
+ * @type {boolean|undefined}
+ */
+ngeox.QuerentResultItem.prototype.tooManyFeatures;
+
+
+/**
+ * The total number of features that would have been returned by the query.
+ * @type {number|undefined}
+ */
+ngeox.QuerentResultItem.prototype.totalFeatureCount;
 
 
 /**

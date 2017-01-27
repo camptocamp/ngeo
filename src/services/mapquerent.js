@@ -75,7 +75,11 @@ ngeo.MapQuerent = class {
     this.limit_ = options.limit !== undefined ? options.limit : 50;
 
     /**
-     * FIXME
+     * When set, before making WFS GetFeature requests to fetch features,
+     * WFS GetFeature requests with `resultType = 'hits'` are made first. If
+     * the number of records for the request would exceed the limit, then
+     * no features are returned.
+     *
      * @type {boolean}
      * @private
      */
@@ -116,7 +120,8 @@ ngeo.MapQuerent = class {
     ol.obj.assign(options, {
       queryableDataSources,
       limit: this.limit_,
-      tolerancePx: this.tolerancePx_
+      tolerancePx: this.tolerancePx_,
+      wfsCount: this.queryCountFirst_
     });
     this.result_.pending = true;
     this.ngeoQuerent_.issue(options).then(this.handleResult_.bind(this));
@@ -143,7 +148,7 @@ ngeo.MapQuerent = class {
   /**
    * Called after a request to the querent service. Update the result.
    *
-   * @param {!Object.<number, !Array.<!ol.Feature>>} response Response
+   * @param {ngeox.QuerentResult} response Response
    * @private
    */
   handleResult_(response) {
@@ -156,15 +161,20 @@ ngeo.MapQuerent = class {
       const label = dataSource.name;
       goog.asserts.assert(dataSource);
 
-      const features = response[id];
-      goog.asserts.assert(features);
+
+      const querentResultItem = response[id];
+      const features = querentResultItem.features;
+      const tooManyResults = querentResultItem.tooManyFeatures === true;
+      const totalFeatureCount = querentResultItem.totalFeatureCount;
+
       this.result_.sources.push({
         features,
         id,
         label,
         pending: false,
         queried: true,
-        tooManyResults: false
+        tooManyResults,
+        totalFeatureCount
       });
       total += features.length;
     }

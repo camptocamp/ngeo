@@ -11,6 +11,8 @@ goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
+goog.require('ngeo.bboxQueryDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.gridDirective');
@@ -31,7 +33,8 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.constant('ngeoQueryOptions', {
-  'limit': 20
+  'limit': 20,
+  'queryCountFirst': true
 });
 
 
