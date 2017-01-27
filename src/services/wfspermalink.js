@@ -2,7 +2,7 @@ goog.provide('ngeo.WfsPermalink');
 
 goog.require('ngeo');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
-goog.require('ngeo.Query');
+goog.require('ngeo.MapQuerent');
 goog.require('ol.format.WFS');
 
 

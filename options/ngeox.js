@@ -101,6 +101,7 @@ ngeox.DataSourceLayer.prototype.queryable;
  * The options to create a ngeo.DataSource with.
  * @typedef {{
  *     copyable: (boolean|undefined),
+ *     geometryName: (string|undefined),
  *     id: (number),
  *     idAttribute: (string|undefined),
  *     inRange: (boolean|undefined),
@@ -110,13 +111,17 @@ ngeox.DataSourceLayer.prototype.queryable;
  *     ogcImageType: (string|undefined),
  *     ogcLayers: (!Array.<!ngeox.DataSourceLayer>|undefined),
  *     ogcServerType: (string|undefined),
- *     ogcType: (string),
+ *     ogcType: (string|undefined),
  *     snappable: (boolean|undefined),
  *     snappingTolerance: (number|undefined),
  *     snappingToEdges: (boolean|undefined),
  *     snappingToVertice: (boolean|undefined),
  *     visible: (boolean|undefined),
+ *     wfsFeatureNS: (string|undefined),
+ *     wfsFeaturePrefix: (string|undefined),
+ *     wfsOutputFormat: (string|undefined),
  *     wfsUrl: (string|undefined),
+ *     wmsInfoFormat: (string|undefined),
  *     wmsIsSingleTile: (boolean|undefined),
  *     wmsUrl: (string|undefined),
  *     wmtsLayer: (string|undefined),
@@ -132,6 +137,13 @@ ngeox.DataSourceOptions;
  * @type {boolean|undefined}
  */
 ngeox.DataSourceOptions.prototype.copyable;
+
+
+/**
+ * The name of the geometry attribute.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.geometryName;
 
 
 /**
@@ -258,10 +270,38 @@ ngeox.DataSourceOptions.prototype.visible;
 
 
 /**
+ * The feature namespace to use with WFS requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wfsFeatureNS;
+
+
+/**
+ * The feature prefix to use with WFS requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wfsFeaturePrefix;
+
+
+/**
+ * The OutputFormat to use with WFS requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wfsOutputFormat;
+
+
+/**
  * The url to use for (WFS) requests.
  * @type {string|undefined}
  */
 ngeox.DataSourceOptions.prototype.wfsUrl;
+
+
+/**
+ * The InfoFormat to use with WMS requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wmsInfoFormat;
 
 
 /**
@@ -291,6 +331,107 @@ ngeox.DataSourceOptions.prototype.wmtsLayer;
  * @type {string|undefined}
  */
 ngeox.DataSourceOptions.prototype.wmtsUrl;
+
+
+/**
+ * The options to use when sending GetFeature/GetFeatureInfo requests using
+ * the querent or map query service.
+ * @typedef {{
+ *     coordinate: (ol.Coordinate|undefined),
+ *     dataSources: (Array.<ngeo.DataSource>|undefined),
+ *     extent: (ol.Extent|undefined),
+ *     limit: (number|undefined),
+ *     map: (ol.Map),
+ *     queryableDataSources: (ngeox.QueryableDataSources|undefined),
+ *     tolerancePx: (number|undefined)
+ * }}
+ */
+ngeox.IssueGetFeaturesOptions;
+
+
+/**
+ * The coordinate to issue the requests with, which can end up with either
+ * WMS or WFS requests.
+ * @type {ol.Coordinate|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.coordinate;
+
+
+/**
+ * List of data sources to query. Only those that meet the requirements will
+ * actually be queried. The querent service requires either the `dataSources`
+ * or `queryableDataSources` property to be set.
+ * @type {Array.<ngeo.DataSource>|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.dataSources;
+
+
+/**
+ * The extent to issue the requests with, which can end up with WFS requests
+ * only.
+ * @type {ol.Extent|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.extent;
+
+
+/**
+ * The maximum number of features to get per request.
+ * @type {number|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.limit;
+
+
+/**
+ * The ol3 map object. Used to fill some parameters of the queries, such as
+ * 'srs' and filter the queryable layers within the data sources.
+ * @type {ol.Map}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.map;
+
+
+/**
+ * A hash of queryable data sources, which must meet all requirements. The
+ * querent service requires either the `dataSources` or `queryableDataSources`
+ * property to be set.
+ * @type {ngeox.QueryableDataSources|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.queryableDataSources;
+
+
+/**
+ * A tolerance value in pixels used to create an extent from a coordinate
+ * to issue WFS requests.
+ * @type {number|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.tolerancePx;
+
+
+/**
+ * A hash that contains 2 lists of queryable data sources: `wfs` and `wms`.
+ * The same data source can only be in one of the two lists. The `wfs` list
+ * has priority, i.e. if the data source supports WFS, it's put in the
+ * `wfs` list.
+ *
+ * @typedef {{
+ *     wfs: (!Array.<!ngeo.DataSource>),
+ *     wms: (!Array.<!ngeo.DataSource>)
+ * }}
+ */
+ngeox.QueryableDataSources;
+
+
+/**
+ * List of queryable data sources that support WFS.
+ * @type {Array.<ngeo.DataSource>}
+ */
+ngeox.QueryableDataSources.prototype.wfs;
+
+
+/**
+ * List of queryable data sources that support WMS.
+ * @type {Array.<ngeo.DataSource>}
+ */
+ngeox.QueryableDataSources.prototype.wms;
 
 
 /**
@@ -489,7 +630,7 @@ ngeox.PopupOptions.prototype.width;
 /**
  * Results of the query source.
  * @typedef {{
- *     sources: (Array.<ngeox.QueryResultSource>),
+ *     sources: (!Array.<ngeox.QueryResultSource>),
  *     total: (number),
  *     pending: (boolean)
  * }}
@@ -499,7 +640,7 @@ ngeox.QueryResult;
 
 /**
  * Results for each query source.
- * @type {Array.<ngeox.QueryResultSource>}
+ * @type {!Array.<ngeox.QueryResultSource>}
  */
 ngeox.QueryResult.prototype.sources;
 

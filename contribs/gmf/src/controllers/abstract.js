@@ -6,7 +6,7 @@ goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.backgroundlayerselectorDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.QueryManager');
+goog.require('gmf.DataSourcesManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
@@ -31,7 +31,8 @@ goog.require('ngeo.filters');
 goog.require('ngeo.mapQueryDirective');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.GetBrowserLanguage');
-goog.require('ngeo.Query');
+/** @suppress {extraRequire} */
+goog.require('ngeo.MapQuerent');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
@@ -158,8 +159,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
   // watch any change on dimensions object to refresh the url
   permalink.setDimensions(this.dimensions);
 
-  const queryManager = $injector.get('gmfQueryManager');
-  queryManager.setDimensions(this.dimensions);
+  // FIXME - manage dimensions ...
+  //const queryManager = $injector.get('gmfQueryManager');
+  //queryManager.setDimensions(this.dimensions);
+
+  // Injecting the gmfDataSourcesManager service creates the data sources
+  $injector.get('gmfDataSourcesManager');
 
   if ($injector.has('gmfDefaultDimensions')) {
     // Set defaults
@@ -235,17 +240,17 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.printActive = false;
 
   /**
-   * @type {ngeo.Query}
+   * @type {ngeo.Querent}
    * @private
    */
-  this.ngeoQuery_ = $injector.get('ngeoQuery');
+  this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
 
   // Don't deactivate ngeoQuery on print activation
   $scope.$watch(() => this.printPanelActive, (newVal) => {
     // Clear queries if another panel is open but not if user go back to the
     // map form the print.
     if (!newVal && !this.queryActive) {
-      this.ngeoQuery_.clear();
+      this.ngeoMapQuerent_.clear();
     }
     this.queryAutoClear = !newVal;
     this.printActive = newVal;

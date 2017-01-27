@@ -8,6 +8,8 @@ goog.require('ngeo.GridConfig');
 goog.require('ngeo.gridDirective');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
+/** @suppress {extraRequire} - required for `ngeoQueryResult` */
+goog.require('ngeo.MapQuerent');
 goog.require('ol.Collection');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
@@ -93,13 +95,13 @@ gmf.module.directive('gmfDisplayquerygrid', gmf.displayquerygridDirective);
 /**
  * Controller for the query grid.
  *
+ * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {ngeo.CsvDownload} ngeoCsvDownload CSV download service.
- * @param {ngeo.Query} ngeoQuery Query service.
  * @param {angular.JQLite} $element Element.
  * @constructor
  * @export
@@ -107,8 +109,12 @@ gmf.module.directive('gmfDisplayquerygrid', gmf.displayquerygridDirective);
  * @ngdoc Controller
  * @ngname GmfDisplayquerygridController
  */
-gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
-    ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, ngeoQuery, $element) {
+gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
+    ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
+
+  const queryOptions = /** @type {ngeox.QueryOptions} */ (
+      $injector.has('ngeoQueryOptions') ?
+      $injector.get('ngeoQueryOptions') : {});
 
   /**
    * @type {!angular.Scope}
@@ -144,7 +150,7 @@ gmf.DisplayquerygridController = function($scope, ngeoQueryResult,
    * @type {number}
    * @export
    */
-  this.maxResults = ngeoQuery.getLimit();
+  this.maxResults = queryOptions.limit !== undefined ? queryOptions.limit : 50;
 
   /**
    * @type {boolean}

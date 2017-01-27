@@ -4,6 +4,8 @@ goog.provide('gmf.displayquerywindowDirective');
 goog.require('gmf');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
+/** @suppress {extraRequire} - required for `ngeoQueryResult` */
+goog.require('ngeo.MapQuerent');
 goog.require('ol.Collection');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');

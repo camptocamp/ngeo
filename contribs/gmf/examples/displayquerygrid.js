@@ -1,6 +1,6 @@
 goog.provide('gmfapp.displayquerygrid');
 
-goog.require('gmf.QueryManager');
+goog.require('gmf.DataSourcesManager');
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.displayquerygridDirective');
@@ -84,12 +84,13 @@ gmfapp.module.controller('gmfappQueryresultController', gmfapp.QueryresultContro
 /**
  * @constructor
  * @param {gmf.Themes} gmfThemes The gmf themes service.
- * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
+ * @param {gmf.DataSourcesManager} gmfDataSourcesManager The gmf data sources
+ *     manager service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */
-gmfapp.MainController = function(gmfThemes, gmfQueryManager,
+gmfapp.MainController = function(gmfThemes, gmfDataSourcesManager,
     ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();

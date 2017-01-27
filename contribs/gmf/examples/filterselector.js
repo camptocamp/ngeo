@@ -12,6 +12,10 @@ goog.require('gmf.filterselectorComponent');
 goog.require('gmf.layertreeDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.bboxQueryDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.mapQueryDirective');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
@@ -126,6 +130,12 @@ gmfapp.MainController = class {
       this, 'dummyActive');
     ngeoToolActivateMgr.registerTool(
       'mapTools', dummyToolActivate, false);
+
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.queryActive = true;
 
     // initialize tooltips
     $('[data-toggle="tooltip"]').tooltip({

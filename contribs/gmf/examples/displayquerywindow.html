@@ -301,15 +301,15 @@
 
     <p id="desc">
       This example shows how to use the <code>ngeo-map-query</code>
-      directive in combination with the <code>gmf.QueryManager</code>.
-      The QueryManager fetches the themes returned by the theme service and
-      adds one source to the query service per layer definition found. In this
-      example, the layer tree is responsible of creating the layer. You can
-      switch theme and turn on/off layers to see the impact it has on results
-      returned by the query service.
-      To display results, this example use the <code>gmf-displayquerywindow
-      </code> component. Here, this last directive uses a custom style to
-      display all selected features.</p>
+      directive in combination with the <code>gmf.DataSourcesManager</code>.
+      The DataSourcesManager fetches the themes returned by the theme
+      service and adds one DataSource, which is used by the querent service
+      per layer definition found. In this example, the layer tree is
+      responsible of creating the layer. You can switch theme and turn
+      on/off layers to see the impact it has on results returned by the
+      query service.  To display results, this example use the
+      <code>gmf-displayquerywindow </code> component. Here, this last
+      directive uses a custom style to display all selected features.
     </p>
 
     <input type="checkbox"

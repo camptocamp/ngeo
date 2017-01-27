@@ -10,6 +10,9 @@
 
 goog.provide('ngeo.DataSource');
 
+goog.require('ol.format.WFS');
+goog.require('ol.format.WMSGetFeatureInfo');
+
 
 ngeo.DataSource = class {
 
@@ -65,6 +68,14 @@ ngeo.DataSource = class {
      * @private
      */
     this.copyable_ = options.copyable === true;
+
+    /**
+     * The name of the geometry attribute.
+     * @type {string}
+     * @private
+     */
+    this.geometryName_ = options.geometryName ||
+      ngeo.DataSource.DEFAULT_GEOMETRY_NAME_;
 
     /**
      * (Required) The data source id.
@@ -134,7 +145,7 @@ ngeo.DataSource = class {
      * @type {string}
      * @private
      */
-    this.ogcType_ = options.ogcType;
+    this.ogcType_ = options.ogcType || ngeo.DataSource.OGCType.WMS;
 
     /**
      * Whether the geometry from this data source can be used to snap the
@@ -172,11 +183,43 @@ ngeo.DataSource = class {
       options.snappingTolerance : 10;
 
     /**
+     * The feature namespace to use with WFS requests.
+     * @type {string}
+     * @private
+     */
+    this.wfsFeatureNS_ = options.wfsFeatureNS ||
+      ngeo.DataSource.WFSFeatureNS.MAPSERVER;
+
+    /**
+     * The feature prefix to use with WFS requests.
+     * @type {string}
+     * @private
+     */
+    this.wfsFeaturePrefix_ = options.wfsFeaturePrefix ||
+      ngeo.DataSource.WFSFeaturePrefix.FEATURE;
+
+    /**
+     * The OutputFormat to use with WFS requests.
+     * @type {string}
+     * @private
+     */
+    this.wfsOutputFormat_ = options.wfsOutputFormat ||
+      ngeo.DataSource.WFSOutputFormat.GML3;
+
+    /**
      * The url to use for (WFS) requests.
      * @type {?string}
      * @private
      */
     this.wfsUrl_ = options.wfsUrl || null;
+
+    /**
+     * The InfoFormat to use with WMS requests.
+     * @type {string}
+     * @private
+     */
+    this.wmsInfoFormat_ = options.wmsInfoFormat ||
+      ngeo.DataSource.WMSInfoFormat.GML;
 
     /**
      * Whether the (WMS) images returned by this data source
@@ -206,6 +249,49 @@ ngeo.DataSource = class {
      * @private
      */
     this.wmtsUrl_ = options.wmtsUrl || null;
+
+    // === Calculated properties ===
+
+    // Get queryable ogc layer names
+    const layers = [];
+    if (this.queryable && this.ogcLayers) {
+      for (const ogcLayer of this.ogcLayers) {
+        if (ogcLayer.queryable) {
+          layers.push(ogcLayer.name);
+        }
+      }
+    }
+
+    let wfsFormat = null;
+    if (this.supportsWFS && layers.length) {
+      wfsFormat = new ol.format.WFS({
+        featureNS: this.wfsFeatureNS,
+        featureType: layers
+      });
+    }
+
+    /**
+     * @type {?ol.format.WFS}
+     * @private
+     */
+    this.wfsFormat_ = wfsFormat;
+
+    let wmsFormat = null;
+    if (this.supportsWMS && layers.length) {
+      if (this.wmsInfoFormat === ngeo.DataSource.WMSInfoFormat.GML) {
+        wmsFormat = new ol.format.WMSGetFeatureInfo({
+          layers
+        });
+      }
+      // Todo, support more formats for WMS
+    }
+
+    /**
+     * @type {?ol.format.WMSGetFeatureInfo}
+     * @private
+     */
+    this.wmsFormat_ = wmsFormat;
+
   }
 
   // === Dynamic property getters/setters ===
@@ -250,6 +336,14 @@ ngeo.DataSource = class {
    */
   get copyable() {
     return this.copyable_;
+  }
+
+  /**
+   * @return {string} Geometry name
+   * @export
+   */
+  get geometryName() {
+    return this.geometryName_;
   }
 
   /**
@@ -357,11 +451,43 @@ ngeo.DataSource = class {
   }
 
   /**
+   * @return {string} WFS feature namespace
+   * @export
+   */
+  get wfsFeatureNS() {
+    return this.wfsFeatureNS_;
+  }
+
+  /**
+   * @return {string} WFS feature prefix
+   * @export
+   */
+  get wfsFeaturePrefix() {
+    return this.wfsFeaturePrefix_;
+  }
+
+  /**
+   * @return {string} WFS output format
+   * @export
+   */
+  get wfsOutputFormat() {
+    return this.wfsOutputFormat_;
+  }
+
+  /**
    * @export
    * @return {?string} WFS url
    */
   get wfsUrl() {
     return this.wfsUrl_;
+  }
+
+  /**
+   * @return {string} WMS info format
+   * @export
+   */
+  get wmsInfoFormat() {
+    return this.wmsInfoFormat_;
   }
 
   /**
@@ -399,23 +525,41 @@ ngeo.DataSource = class {
   // === Calculated property getters ===
 
   /**
+   * @return {boolean} Whether the data source can be combined to an other
+   *     data source to fetch features in a single WFS request.
+   * @export
+   */
+  get combinableForWFS() {
+    return true; // TODO
+  }
+
+  /**
+   * @return {boolean} Whether the data source can be combined to an other
+   *     data source to fetch features in a single WMS request.
+   * @export
+   */
+  get combinableForWMS() {
+    return true; // TODO
+  }
+
+  /**
    * Whether the data source is queryable or not. To be queryable, it requires
    * the support of WFS or WMS and at least one ogc layer to be querable.
    * @return {boolean} Whether the data source is queryable or not.
    * @export
    */
-  get isQueryable() {
-    let isQueryable = false;
+  get queryable() {
+    let queryable = false;
     const supportsOGCQueries = this.supportsWMS || this.supportsWFS;
     if (supportsOGCQueries && this.ogcLayers) {
       for (const ogcLayer of this.ogcLayers) {
         if (ogcLayer.queryable === true) {
-          isQueryable = true;
+          queryable = true;
           break;
         }
       }
     }
-    return isQueryable;
+    return queryable;
   }
 
   /**
@@ -453,7 +597,101 @@ ngeo.DataSource = class {
   get supportsWMTS() {
     return this.wmtsUrl !== null;
   }
+
+  /**
+   * @return {?ol.format.WFS} WFS format.
+   * @export
+   */
+  get wfsFormat() {
+    return this.wfsFormat_;
+  }
+
+  /**
+   * @return {?ol.format.WMSGetFeatureInfo} WMS format.
+   * @export
+   */
+  get wmsFormat() {
+    return this.wmsFormat_;
+  }
+
+  // === Other public methods ===
+
+  /**
+   * @param {ngeo.DataSource} dataSource Data source.
+   * @return {boolean} Whether this data source can be combined to the given
+   *     other data source to fetch features in a single WFS request.
+   * @export
+   */
+  combinableWithDataSourceForWFS(dataSource) {
+    return this.combinableForWFS && dataSource.combinableForWFS &&
+      this.supportsWFS && dataSource.supportsWFS &&
+      this.queryable && dataSource.queryable &&
+      this.wfsUrl === dataSource.wfsUrl;
+  }
+
+  /**
+   * @param {ngeo.DataSource} dataSource Data source.
+   * @return {boolean} Whether this data source can be combined to the given
+   *     other data source to fetch features in a single WMS request.
+   * @export
+   */
+  combinableWithDataSourceForWMS(dataSource) {
+    return this.combinableForWMS && dataSource.combinableForWMS &&
+      this.supportsWMS && dataSource.supportsWMS &&
+      this.queryable && dataSource.queryable &&
+      this.wmsUrl === dataSource.wmsUrl;
+  }
+
+  /**
+   * Check if there's at least one OGC layer in range of a given resolution.
+   * @param {number} res Resolution.
+   * @param {boolean} queryableOnly Whether to additionnally check if the
+   *     OGC layer is queryable as well or not. Defaults to `false`.
+   * @return {boolean} At least one OGC layer is in range.
+   * @export
+   */
+  isAnyOGCLayerInRange(res, queryableOnly = false) {
+    return !!(this.getInRangeOGCLayerNames(res, queryableOnly).length);
+  }
+
+  /**
+   * Returns a list of OGC layer names that are in range of a given resolution.
+   * If there's no OGC layers defined, an empty array is returned.
+   * @param {number} res Resolution.
+   * @param {boolean} queryableOnly Whether to additionnally check if the
+   *     OGC layer is queryable as well or not. Defaults to `false`.
+   * @return {Array.<string>} The OGC layer names that are in range.
+   * @export
+   */
+  getInRangeOGCLayerNames(res, queryableOnly = false) {
+
+    const layerNames = [];
+
+    if (this.ogcLayers) {
+      for (const ogcLayer of this.ogcLayers) {
+        const maxRes = ogcLayer.maxResolution;
+        const minRes = ogcLayer.minResolution;
+        const inMinRange = minRes === undefined || res >= minRes;
+        const inMaxRange = maxRes === undefined || res <= maxRes;
+        const inRange = inMinRange && inMaxRange;
+
+        if (inRange && (!queryableOnly || ogcLayer.queryable)) {
+          layerNames.push(ogcLayer.name);
+        }
+      }
+    }
+
+    return layerNames;
+  }
+
 };
+
+
+/**
+ * Default name of the geometry attribute.
+ * @private {string}
+ */
+ngeo.DataSource.DEFAULT_GEOMETRY_NAME_ = 'the_geom';
 
 
 /**
@@ -464,4 +702,50 @@ ngeo.DataSource.OGCServerType = {
   GEOSERVER: 'geoserver',
   MAPSERVER: 'mapserver',
   QGIS: 'qgis'
+};
+
+
+/**
+ * Available OGC types.
+ * @enum {string}
+ */
+ngeo.DataSource.OGCType = {
+  WMS: 'WMS',
+  WMTS: 'WMTS'
+};
+
+
+/**
+ * Available Feature namespace for WFS requests.
+ * @enum {string}
+ */
+ngeo.DataSource.WFSFeatureNS = {
+  MAPSERVER: 'http://mapserver.gis.umn.edu/mapserver'
+};
+
+
+/**
+ * Available Feature namespace for WFS requests.
+ * @enum {string}
+ */
+ngeo.DataSource.WFSFeaturePrefix = {
+  FEATURE: 'feature'
+};
+
+
+/**
+ * Available OutputFormat for WFS requests.
+ * @enum {string}
+ */
+ngeo.DataSource.WFSOutputFormat = {
+  GML3: 'GML3'
+};
+
+
+/**
+ * Available InfoFormat for WMS requests.
+ * @enum {string}
+ */
+ngeo.DataSource.WMSInfoFormat = {
+  GML: 'application/vnd.ogc.gml'
 };
