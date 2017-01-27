@@ -34,6 +34,20 @@ ngeo.DataSource = class {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
+     * A data source is considered 'in range' when it is synchronized to
+     * a map view and the resolution of that view is within the range of
+     * the `maxResolution` and `minResolution`. These 2 properties are
+     * required for the `inRange` property to be dynamic, otherwise its
+     * value is always `true` by default.
+     *
+     * The synchronization is made in the `ngeo.syncDataSourcesMap` service.
+     *
+     * @type {boolean}
+     * @private
+     */
+    this.inRange_ = options.inRange !== false;
+
+    /**
      * Whether the data source is visible or not, i.e. whether its is ON or OFF.
      * Defaults to `false`.
      * @type {boolean}
@@ -195,6 +209,22 @@ ngeo.DataSource = class {
   }
 
   // === Dynamic property getters/setters ===
+
+  /**
+   * @return {boolean} In range
+   * @export
+   */
+  get inRange() {
+    return this.inRange_;
+  }
+
+  /**
+   * @param {boolean} inRange In range
+   * @export
+   */
+  set inRange(inRange) {
+    this.inRange_ = inRange;
+  }
 
   /**
    * @return {boolean} Visible
@@ -386,6 +416,15 @@ ngeo.DataSource = class {
       }
     }
     return isQueryable;
+  }
+
+  /**
+   * @return {boolean} Whether the data source supports a dynamic `inRange`
+   *     property or not, i.e. whether it can be calculated.
+   * @export
+   */
+  get supportsDynamicInRange() {
+    return this.maxResolution !== null || this.minResolution !== null;
   }
 
   /**

@@ -27,8 +27,8 @@ gmf.DataSourcesManager = class {
    * @param {angular.$timeout} $timeout Angular timeout service.
    * @param {gmf.Themes} gmfThemes The gmf Themes service.
    * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
-   * @param {ol.Collection.<ngeo.DataSource>} ngeoDataSources Ngeo collection
-   *     of data sources objects.
+   * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
+   *     objects.
    * @ngInject
    * @ngdoc service
    * @ngname gmfDataSourcesManager

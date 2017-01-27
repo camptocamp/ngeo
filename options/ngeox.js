@@ -103,6 +103,7 @@ ngeox.DataSourceLayer.prototype.queryable;
  *     copyable: (boolean|undefined),
  *     id: (number),
  *     idAttribute: (string|undefined),
+ *     inRange: (boolean|undefined),
  *     maxResolution: (number|undefined),
  *     minResolution: (number|undefined),
  *     name: (string),
@@ -147,6 +148,20 @@ ngeox.DataSourceOptions.prototype.id;
  * @type {string|undefined}
  */
 ngeox.DataSourceOptions.prototype.identifierAtttribute;
+
+
+/**
+ * A data source is considered 'in range' when it is synchronized to
+ * a map view and the resolution of that view is within the range of
+ * the `maxResolution` and `minResolution`. These 2 properties are
+ * required for the `inRange` property to be dynamic, otherwise its
+ * value is always `true` by default.
+ *
+ * The synchronization is made in the `ngeo.syncDataSourcesMap` service.
+ *
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.inRange;
 
 
 /**

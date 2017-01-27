@@ -5,3 +5,9 @@ goog.require('ol.Collection');
 
 
 ngeo.module.value('ngeoDataSources', new ol.Collection());
+
+
+/**
+ * @typedef {ol.Collection.<ngeo.DataSource>}
+ */
+ngeo.DataSources;
