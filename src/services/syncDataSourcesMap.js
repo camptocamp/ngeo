@@ -7,6 +7,7 @@ goog.require('ngeo.DataSources');
 goog.require('ol.Collection');
 goog.require('ol.Observable');
 goog.require('ol.View');
+goog.require('goog.asserts');
 
 
 ngeo.SyncDataSourcesMap = class {
@@ -45,7 +46,7 @@ ngeo.SyncDataSourcesMap = class {
     this.map_ = null;
 
     /**
-     * @type {Array.<ol.EventsKey>}
+     * @type {!Array.<!ol.EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];
@@ -93,7 +94,9 @@ ngeo.SyncDataSourcesMap = class {
     );
 
     // (2) Sync resolution with existing data sources
-    this.syncDataSourcesToResolution_(view.getResolution());
+    const resolution = view.getResolution();
+    goog.asserts.assertNumber(resolution);
+    this.syncDataSourcesToResolution_(resolution);
   }
 
   /**
@@ -103,7 +106,7 @@ ngeo.SyncDataSourcesMap = class {
    */
   unbindMap_(map) {
     ol.Observable.unByKey(this.listenerKeys_);
-    this.listenerKeys_ = 0;
+    this.listenerKeys_ = [];
   }
 
   /**
@@ -113,8 +116,11 @@ ngeo.SyncDataSourcesMap = class {
    * @private
    */
   handleViewResolutionChange_(evt) {
-    const view = goog.asserts.assertInstanceof(evt.target, ol.View);
-    this.syncDataSourcesToResolution_(view.getResolution());
+    const view = evt.target;
+    goog.asserts.assertInstanceof(view, ol.View);
+    const resolution = view.getResolution();
+    goog.asserts.assertNumber(resolution);
+    this.syncDataSourcesToResolution_(resolution);
   }
 
   /**
@@ -154,17 +160,16 @@ ngeo.SyncDataSourcesMap = class {
   /**
    * Called when a new data source is added to the ngeo collection. If there's
    * map bound, update its `inRange` right away.
-   * @param {ol.Collection.Event} evt Event
+   * @param {!ol.Collection.Event} event Event
    * @private
    */
-  handleDataSourcesAdd_(evt) {
+  handleDataSourcesAdd_(event) {
     const dataSource = goog.asserts.assertInstanceof(
-      evt.element, ngeo.DataSource);
+      event.element, ngeo.DataSource);
     if (this.map_) {
-      this.syncDataSourceToResolution_(
-        dataSource,
-        this.map_.getView().getResolution()
-      );
+      const resolution = this.map_.getView().getResolution();
+      goog.asserts.assertNumber(resolution);
+      this.syncDataSourceToResolution_(dataSource, resolution);
     }
   }
 
