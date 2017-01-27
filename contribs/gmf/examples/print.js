@@ -2,7 +2,7 @@ goog.provide('gmfapp.print');
 
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
+goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.printDirective');
 /** @suppress {extraRequire} */

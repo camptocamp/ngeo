@@ -4,7 +4,7 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.backgroundlayerselectorDirective');
+goog.require('gmf.backgroundlayerselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.DataSourcesManager');
 /** @suppress {extraRequire} */
@@ -12,11 +12,11 @@ goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
-goog.require('gmf.disclaimerDirective');
+goog.require('gmf.disclaimerComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerywindowDirective');
+goog.require('gmf.displayquerywindowComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
+goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */

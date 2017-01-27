@@ -1,6 +1,6 @@
-goog.require('gmf.displayquerywindowDirective');
+goog.require('gmf.displayquerywindowComponent');
 
-describe('gmf.displayquerywindowDirective', () => {
+describe('gmf.displayquerywindowComponent', () => {
 
   let displayQueriesController;
   let ngeoQueryResult;

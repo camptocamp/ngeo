@@ -9,7 +9,7 @@ goog.require('gmf.contextualdataDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdatacontentDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerygridDirective');
+goog.require('gmf.displayquerygridComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawfeatureDirective');
 /** @suppress {extraRequire} */
@@ -17,11 +17,11 @@ goog.require('gmf.editfeatureselectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.elevationDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.mousepositionDirective');
+goog.require('gmf.mousepositionComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.printDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.profileDirective');
+goog.require('gmf.profileComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawprofilelineDirective');
 /** @suppress {extraRequire} */

@@ -84,7 +84,7 @@ gmf.ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message)
  * @private
  */
 gmf.ShareService.prototype.postShortUrl_ = function(params) {
-  //Override default behavior of $http.post method (sending data in json format)
+  // Override default behavior of $http.post method (sending data in json format)
   return this.$http_.post(this.gmfShortenerCreateUrl_, $.param(params), {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
   });

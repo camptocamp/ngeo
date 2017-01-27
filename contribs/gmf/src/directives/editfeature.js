@@ -9,11 +9,11 @@ goog.require('gmf.Snapping');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.XSDAttributes');
 /** @suppress {extraRequire} */
-goog.require('ngeo.attributesDirective');
+goog.require('ngeo.attributesComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.createfeatureDirective');
+goog.require('ngeo.createfeatureComponent');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.EventHelper');
 goog.require('ngeo.FeatureHelper');

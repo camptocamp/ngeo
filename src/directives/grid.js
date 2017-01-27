@@ -1,6 +1,6 @@
 goog.provide('ngeo.GridConfig');
 goog.provide('ngeo.GridController');
-goog.provide('ngeo.gridDirective');
+goog.provide('ngeo.gridComponent');
 
 goog.require('ngeo');
 goog.require('ol.has');
@@ -10,15 +10,17 @@ goog.require('ngeo.filters');
 
 ngeo.module.value('ngeoGridTemplateUrl',
     /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {!angular.JQLite} $element Element.
+     * @param {!angular.Attributes} $attrs Attributes.
      * @return {boolean} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoGridTemplateurl'];
+    ($element, $attrs) => {
+      const templateUrl = $attrs['ngeoGridTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${ngeo.baseTemplateUrl}/grid.html`;
-    });
+    }
+);
+
 
 /**
  * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
@@ -149,7 +151,19 @@ ngeo.GridConfig.prototype.invertSelection = function() {
 
 
 /**
- * A grid directive for displaying tabular data. The columns of the grid
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} ngeoGridTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function ngeoGridTemplateUrl($element, $attrs, ngeoGridTemplateUrl) {
+  return ngeoGridTemplateUrl($element, $attrs);
+}
+
+
+/**
+ * A grid component for displaying tabular data. The columns of the grid
  * are sortable, rows can be selected with a single click (also in combination
  * with SHIFT and CTRL/Meta).
  *
@@ -161,26 +175,19 @@ ngeo.GridConfig.prototype.invertSelection = function() {
  *
  * @htmlAttribute {ngeo.GridConfig} ngeo-grid-configuration The
  * configuration to use.
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
- *     ngeoGridTemplateUrl Template URL for the directive.
- * @return {angular.Directive} The directive specs.
- * @ngInject
- * @ngdoc directive
+ *
+ * @ngdoc component
  * @ngname ngeoGrid
  */
-ngeo.gridDirective = function(ngeoGridTemplateUrl) {
-  return {
-    bindToController: true,
-    controller: 'ngeoGridController as ctrl',
-    restrict: 'E',
-    scope: {
-      'configuration': '=ngeoGridConfiguration'
-    },
-    templateUrl: ngeoGridTemplateUrl
-  };
+ngeo.gridComponent = {
+  controller: 'ngeoGridController as ctrl',
+  bindings: {
+    'configuration': '=ngeoGridConfiguration'
+  },
+  templateUrl: ngeoGridTemplateUrl
 };
 
-ngeo.module.directive('ngeoGrid', ngeo.gridDirective);
+ngeo.module.component('ngeoGrid', ngeo.gridComponent);
 
 
 /**
@@ -209,7 +216,7 @@ ngeo.GridController = function($scope) {
    * @type {Object.<string, Object>}
    * @export
    */
-  this.selectedRows = this.configuration.selectedRows;
+  this.selectedRows;
 
   /**
    * The name of the column used to sort the grid.
@@ -234,7 +241,14 @@ ngeo.GridController = function($scope) {
       return $table.closest('.ngeo-grid-table-container');
     }
   };
+};
 
+
+/**
+ * Init the controller
+ */
+ngeo.GridController.prototype.$onInit = function() {
+  this.selectedRows = this.configuration.selectedRows;
 };
 
 

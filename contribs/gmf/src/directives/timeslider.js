@@ -37,38 +37,41 @@ gmf.timeSliderDirective = function($timeout, $filter) {
     controller: 'gmfTimeSliderController as sliderCtrl',
     restrict: 'AE',
     templateUrl: `${gmf.baseTemplateUrl}/timeslider.html`,
-    link(scope, element, attrs, ctrl) {
+    link: /** @type {!angular.LinkingFunctions} */ ({
+      pre: function preLink(scope, element, attrs, ctrl) {
+        ctrl.init();
 
-      ctrl.sliderOptions['stop'] = onSliderReleased_;
-      ctrl.sliderOptions['slide'] = computeDates_;
+        ctrl.sliderOptions['stop'] = onSliderReleased_;
+        ctrl.sliderOptions['slide'] = computeDates_;
 
-      function onSliderReleased_(e, sliderUi) {
-        ctrl.onDateSelected({
-          time: computeDates_(e, sliderUi)
-        });
-      }
-
-      function computeDates_(e, sliderUi) {
-        let sDate, eDate, wmstime;
-        if (sliderUi.values) {
-          sDate = new Date(ctrl.getClosestValue_(sliderUi.values[0]));
-          eDate = new Date(ctrl.getClosestValue_(sliderUi.values[1]));
-          ctrl.dates = [sDate, eDate];
-          wmstime = {
-            start: sDate.getTime(),
-            end: eDate.getTime()
-          };
-        } else {
-          sDate = new Date(ctrl.getClosestValue_(sliderUi.value));
-          ctrl.dates = sDate;
-          wmstime = {
-            start: sDate.getTime()
-          };
+        function onSliderReleased_(e, sliderUi) {
+          ctrl.onDateSelected({
+            time: computeDates_(e, sliderUi)
+          });
         }
-        scope.$apply();
-        return wmstime;
+
+        function computeDates_(e, sliderUi) {
+          let sDate, eDate, wmstime;
+          if (sliderUi.values) {
+            sDate = new Date(ctrl.getClosestValue_(sliderUi.values[0]));
+            eDate = new Date(ctrl.getClosestValue_(sliderUi.values[1]));
+            ctrl.dates = [sDate, eDate];
+            wmstime = {
+              start: sDate.getTime(),
+              end: eDate.getTime()
+            };
+          } else {
+            sDate = new Date(ctrl.getClosestValue_(sliderUi.value));
+            ctrl.dates = sDate;
+            wmstime = {
+              start: sDate.getTime()
+            };
+          }
+          scope.$apply();
+          return wmstime;
+        }
       }
-    }
+    })
   };
 };
 
@@ -91,9 +94,6 @@ gmf.TimeSliderController = function($scope, gmfWMSTime) {
    */
   this.gmfWMSTime_ = gmfWMSTime;
 
-  //fetch the initial options for the component
-  const initialOptions_ = this.gmfWMSTime_.getOptions(this.time);
-
   /**
    * Function called after date(s) changed/selected
    * @function
@@ -114,28 +114,27 @@ gmf.TimeSliderController = function($scope, gmfWMSTime) {
    * @type {boolean}
    * @export
    */
-  this.isModeRange = this.time.mode === 'range';
-
+  this.isModeRange;
 
   /**
    * Minimal value of the slider (time in ms)
    * @type {number}
    * @export
    */
-  this.minValue = initialOptions_.minDate;
+  this.minValue;
 
   /**
    * Maximal value of the slider (time in ms)
    * @type {number}
    * @export
    */
-  this.maxValue = initialOptions_.maxDate;
+  this.maxValue;
 
   /**
    * Used when WMS time object has a property 'values' instead of an interval
-   * @type (Array<number>|null)
+   * @type (?Array<number>)
    */
-  this.timeValueList = this.getTimeValueList_();
+  this.timeValueList;
 
   /**
    * Default Slider options (used by ui-slider directive)
@@ -146,22 +145,36 @@ gmf.TimeSliderController = function($scope, gmfWMSTime) {
    * }}
    * @export
    */
-  this.sliderOptions = {
-    range: this.isModeRange,
-    min: this.minValue,
-    max: this.maxValue
-  };
+  this.sliderOptions;
 
   /**
    * Model for the ui-slider directive (date in ms format)
    * @type {Array.<number>|number}
    * @export
    */
-  this.dates = this.isModeRange ? [initialOptions_.values[0], initialOptions_.values[1]] :
-  initialOptions_.values;
-
+  this.dates;
 };
 
+
+/**
+ * Initialise the controller.
+ */
+gmf.TimeSliderController.prototype.init = function() {
+  this.timeValueList = this.getTimeValueList_();
+
+  // Fetch the initial options for the component
+  const initialOptions_ = this.gmfWMSTime_.getOptions(this.time);
+  this.isModeRange = this.time.mode === 'range';
+  this.minValue = initialOptions_.minDate;
+  this.maxValue = initialOptions_.maxDate;
+  this.dates = this.isModeRange ? [initialOptions_.values[0], initialOptions_.values[1]] :
+      initialOptions_.values;
+  this.sliderOptions = {
+    range: this.isModeRange,
+    min: this.minValue,
+    max: this.maxValue
+  };
+};
 
 /**
  * TimeSliderController.prototype.getTimeValueList_ - Get a list of time value instead

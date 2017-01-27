@@ -3,7 +3,7 @@ goog.provide('gmfapp.mouseposition');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.mousepositionDirective');
+goog.require('gmf.mousepositionComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */

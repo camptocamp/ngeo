@@ -40,8 +40,9 @@ ngeo.Message = function() {};
 
 
 /**
- * @abstract
  * Show the message.
+ *
+ * @abstract
  * @param {ngeox.Message} message Message.
  * @protected
  */
@@ -51,6 +52,7 @@ ngeo.Message.prototype.showMessage = function(message) {};
 /**
  * Show disclaimer message string or object or list of disclame message
  * strings or objects.
+ *
  * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
  *     object A message or list of messages as text or configuration objects.
  * @export
@@ -63,6 +65,7 @@ ngeo.Message.prototype.show = function(object) {
 
 /**
  * Display the given error message or list of error messages.
+ *
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */

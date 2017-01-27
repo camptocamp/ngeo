@@ -4,9 +4,9 @@ goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('gmf.ThemeManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.disclaimerDirective');
+goog.require('gmf.disclaimerComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
+goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ngeo.Location');

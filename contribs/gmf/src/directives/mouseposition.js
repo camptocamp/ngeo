@@ -1,5 +1,5 @@
 goog.provide('gmf.MousepositionController');
-goog.provide('gmf.mousepositionDirective');
+goog.provide('gmf.mousepositionComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
@@ -7,8 +7,8 @@ goog.require('ngeo.filters');
 goog.require('ol.control.MousePosition');
 
 /**
- * Provide a directive to display the mouse position coordinates depending
- * on the chosen projection. The directive also provides a projection picker
+ * Provide a component to display the mouse position coordinates depending
+ * on the chosen projection. The component also provides a projection picker
  * to choose how the coordinates are displayed.
  * service.
  *
@@ -20,31 +20,26 @@ goog.require('ol.control.MousePosition');
  * @htmlAttribute {ol.Map} gmf-mouseposition-map The map.
  * @htmlAttribute {Array.<gmfx.MousePositionProjection>}
  *    gmf-mouseposition-projection The list of the projections.
- * @return {angular.Directive} The directive specs.
- * @ngInject
- * @ngdoc directive
+ *
+ * @ngdoc component
  * @ngname gmfMouseposition
  */
-gmf.mousepositionDirective = function() {
-  return {
-    restrict: 'E',
-    controller: 'gmfMousepositionController as ctrl',
-    scope: {
-      'map': '<gmfMousepositionMap',
-      'projections': '<gmfMousepositionProjections'
-    },
-    bindToController: true,
-    templateUrl: `${gmf.baseTemplateUrl}/mouseposition.html`
-  };
+gmf.mousepositionComponent = {
+  controller: 'gmfMousepositionController as ctrl',
+  bindings: {
+    'map': '<gmfMousepositionMap',
+    'projections': '<gmfMousepositionProjections'
+  },
+  templateUrl: () => `${gmf.baseTemplateUrl}/mouseposition.html`
 };
 
-gmf.module.directive('gmfMouseposition', gmf.mousepositionDirective);
+gmf.module.component('gmfMouseposition', gmf.mousepositionComponent);
 
 
 /**
- * @param {angular.JQLite} $element Element.
- * @param {angular.$filter} $filter Angular filter
- * @param {gettext} gettext Gettext service.
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.$filter} $filter Angular filter
+ * @param {!gettext} gettext Gettext service.
  * @constructor
  * @export
  * @ngInject
@@ -53,19 +48,19 @@ gmf.module.directive('gmfMouseposition', gmf.mousepositionDirective);
  */
 gmf.MousepositionController = function($element, $filter, gettext) {
   /**
-   * @type {ol.Map}
+   * @type {!ol.Map}
    * @export
    */
   this.map;
 
   /**
-   * @type {Array.<gmfx.MousePositionProjection>}
+   * @type {!Array.<!gmfx.MousePositionProjection>}
    * @export
    */
   this.projections;
 
   /**
-   * @type {gmfx.MousePositionProjection}
+   * @type {!gmfx.MousePositionProjection}
    * @export
    */
   this.projection;
@@ -86,7 +81,13 @@ gmf.MousepositionController = function($element, $filter, gettext) {
     target: angular.element('.gmf-mouseposition-control-target', $element)[0],
     undefinedHTML: gettext('Coordinates')
   });
+};
 
+
+/**
+ * Initialise the controller.
+ */
+gmf.MousepositionController.prototype.$onInit = function() {
   this.setProjection(this.projections[0]);
 
   this.map.addControl(this.control);

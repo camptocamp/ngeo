@@ -1,5 +1,5 @@
 goog.provide('gmf.BackgroundlayerselectorController');
-goog.provide('gmf.backgroundlayerselectorDirective');
+goog.provide('gmf.backgroundlayerselectorComponent');
 
 goog.require('goog.asserts');
 goog.require('gmf');
@@ -10,19 +10,32 @@ goog.require('ngeo.BackgroundLayerMgr');
 
 gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
     /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {!angular.JQLite} $element Element.
+     * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['gmfBackgroundlayerselectorTemplateurl'];
+    ($element, $attrs) => {
+      const templateUrl = $attrs['gmfBackgroundlayerselectorTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/backgroundlayerselector.html`;
-    });
+    }
+);
 
 
 /**
- * Provide a "background layer selector" directive.
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfBackgroundlayerselectorTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundlayerselectorTemplateUrl) {
+  return gmfBackgroundlayerselectorTemplateUrl($element, $attrs);
+}
+
+
+/**
+ * Provide a "background layer selector" component.
  *
  * Example:
  *
@@ -41,39 +54,31 @@ gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
  * @htmlAttribute {ol.Map=} gmf-backgroundlayerselector-map The map.
  * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
  *     when a layer was selected by the user.
- * @param {string} gmfBackgroundlayerselectorTemplateUrl Url to template.
- * @return {angular.Directive} The Directive Definition Object.
- * @ngInject
- * @ngdoc directive
+ *
+ * @ngdoc component
  * @ngname gmfBackgroundlayerselector
  */
-gmf.backgroundlayerselectorDirective = function(
-    gmfBackgroundlayerselectorTemplateUrl) {
-
-  return {
-    restrict: 'E',
-    scope: {
-      'dimensions': '=gmfBackgroundlayerselectorDimensions',
-      'map': '=gmfBackgroundlayerselectorMap',
-      'select': '&?gmfBackgroundlayerselectorSelect'
-    },
-    bindToController: true,
-    controller: 'GmfBackgroundlayerselectorController as ctrl',
-    templateUrl: gmfBackgroundlayerselectorTemplateUrl
-  };
+gmf.backgroundlayerselectorComponent = {
+  controller: 'GmfBackgroundlayerselectorController as ctrl',
+  bindings: {
+    'dimensions': '=gmfBackgroundlayerselectorDimensions',
+    'map': '=gmfBackgroundlayerselectorMap',
+    'select': '&?gmfBackgroundlayerselectorSelect'
+  },
+  templateUrl: gmfBackgroundlayerselectorTemplateUrl
 };
 
 
-gmf.module.directive('gmfBackgroundlayerselector',
-    gmf.backgroundlayerselectorDirective);
+gmf.module.component('gmfBackgroundlayerselector',
+    gmf.backgroundlayerselectorComponent);
 
 
 /**
  * @constructor
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
+ * @param {!ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
- * @param {gmf.Themes} gmfThemes Themes service.
+ * @param {!gmf.Themes} gmfThemes Themes service.
  * @export
  * @ngInject
  * @ngdoc controller
@@ -88,41 +93,39 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
    */
   this.dimensions;
 
-  goog.asserts.assert(this.dimensions, 'The dimensions object is required');
-
   /**
-   * @type {ol.Map}
+   * @type {?ol.Map}
    * @export
    */
   this.map;
 
   /**
    * Function called when a layer was selected by the user.
-   * @type {Function}
+   * @type {?Function}
    * @export
    */
   this.select;
 
   /**
-   * @type {ol.layer.Base}
+   * @type {?ol.layer.Base}
    * @export
    */
   this.bgLayer;
 
   /**
-   * @type {Array.<ol.layer.Base>}
+   * @type {?Array.<!ol.layer.Base>}
    * @export
    */
   this.bgLayers;
 
   /**
-   * @type {gmf.Themes}
+   * @type {!gmf.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {Array.<ol.EventsKey>}
+   * @type {!Array.<!ol.EventsKey>}
    * @export
    */
   this.listenerKeys_ = [];
@@ -130,12 +133,8 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
   this.listenerKeys_.push(ol.events.listen(gmfThemes,
     gmf.ThemesEventType.CHANGE, this.handleThemesChange_, this));
 
-  gmfThemes.getBgLayers(this.dimensions).then((layers) => {
-    this.bgLayers = layers;
-  });
-
   /**
-   * @type {ngeo.BackgroundLayerMgr}
+   * @type {!ngeo.BackgroundLayerMgr}
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
@@ -149,11 +148,20 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
       this));
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
-
 };
-
 gmf.module.controller('GmfBackgroundlayerselectorController',
     gmf.BackgroundlayerselectorController);
+
+
+/**
+ * Initialise the controller.
+ */
+gmf.BackgroundlayerselectorController.prototype.$onInit = function() {
+  goog.asserts.assert(this.dimensions, 'The dimensions object is required');
+  this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
+    this.bgLayers = layers;
+  });
+};
 
 
 /**

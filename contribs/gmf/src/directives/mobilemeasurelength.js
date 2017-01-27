@@ -62,7 +62,16 @@ gmf.mobileMeasureLengthDirective =
         },
         controller: 'GmfMobileMeasureLengthController as ctrl',
         bindToController: true,
-        templateUrl: gmfMobileMeasureLengthTemplateUrl
+        templateUrl: gmfMobileMeasureLengthTemplateUrl,
+        /**
+         * @param {angular.Scope} scope Scope.
+         * @param {angular.JQLite} element Element.
+         * @param {angular.Attributes} attrs Attributes.
+         * @param {gmf.ContextualdataController} controller Controller.
+         */
+        link(scope, element, attrs, controller) {
+          controller.init();
+        }
       };
     };
 
@@ -145,7 +154,6 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
 
   this.measure.setActive(this.active);
   ngeoDecorateInteraction(this.measure);
-  this.map.addInteraction(this.measure);
 
   /**
    * @type {ngeo.interaction.MobileDraw}
@@ -219,6 +227,12 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
   );
 };
 
+/**
+ * Initialise the controller.
+ */
+gmf.MobileMeasureLengthController.prototype.init = function() {
+  this.map.addInteraction(this.measure);
+};
 
 /**
  * Add current sketch point to line measure

@@ -2,7 +2,7 @@ goog.provide('gmfapp.backgroundlayerselector');
 
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
-goog.require('gmf.backgroundlayerselectorDirective');
+goog.require('gmf.backgroundlayerselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */

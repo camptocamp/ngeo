@@ -83,7 +83,7 @@ gmfx.GridSource.prototype.source;
 
 
 /**
- * Configuration option for {@link gmf.displayquerygridDirective} to merge
+ * Configuration option for {@link gmf.displayquerygridComponent} to merge
  * grid tabs.
  *
  * E.g. `'my_merged_source': ['123', '234']}` merges the sources with id `123`

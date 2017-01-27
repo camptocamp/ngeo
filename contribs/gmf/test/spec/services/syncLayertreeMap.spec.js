@@ -7,8 +7,6 @@ describe('gmf.SyncLayertreeMap', () => {
   let gmfSyncLayertreeMap_;
   let element;
   let map;
-  let roottreeCtrl;
-  let group;
   let getLayer;
 
   beforeEach(() => {
@@ -19,7 +17,7 @@ describe('gmf.SyncLayertreeMap', () => {
       })
     });
 
-    group = new ol.layer.Group();
+    const group = new ol.layer.Group();
     map.getLayers().push(group);
 
     element = angular.element(
@@ -62,8 +60,8 @@ describe('gmf.SyncLayertreeMap', () => {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-    roottreeCtrl = element.scope().layertreeCtrl;
 
+    const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
     const treeLayer = treeGroup.children[0]; // Leaf 'cinema'
     const layer = gmf.SyncLayertreeMap.getLayer(treeLayer);
@@ -83,7 +81,8 @@ describe('gmf.SyncLayertreeMap', () => {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-    roottreeCtrl = element.scope().layertreeCtrl;
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[0]; // Group 'OSM functions mixed'
     const treeLeaf = treeGroup.children[0]; // osm scale;
     const wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
@@ -100,7 +99,8 @@ describe('gmf.SyncLayertreeMap', () => {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-    roottreeCtrl = element.scope().layertreeCtrl;
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
     const wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
     const checkedLayers = ['cinema', 'police', 'post_office', 'entertainment',
@@ -120,7 +120,8 @@ describe('gmf.SyncLayertreeMap', () => {
     });
 
     $httpBackend_.flush(); // To get capabilities (and source) for the WMTS layer.
-    roottreeCtrl = element.scope().layertreeCtrl;
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
     const treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
 
@@ -138,7 +139,8 @@ describe('gmf.SyncLayertreeMap', () => {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-    roottreeCtrl = element.scope().layertreeCtrl;
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[0]; // Group 'OSM functions mixed'
     const treeLeaf = treeGroup.children[0]; // osm scale;
 
@@ -162,7 +164,8 @@ describe('gmf.SyncLayertreeMap', () => {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-    roottreeCtrl = element.scope().layertreeCtrl;
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
     const treeLeaf = treeGroup.children[0]; // Leaf 'cinema'
 
@@ -192,8 +195,10 @@ describe('gmf.SyncLayertreeMap', () => {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
+
     $httpBackend_.flush(); // To get capabilities (and source) for the WMTS layer.
-    roottreeCtrl = element.scope().layertreeCtrl;
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
     const treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
 

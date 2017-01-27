@@ -76,7 +76,16 @@ gmf.mobileMeasurePointDirective =
         },
         controller: 'GmfMobileMeasurePointController as ctrl',
         bindToController: true,
-        templateUrl: gmfMobileMeasurePointTemplateUrl
+        templateUrl: gmfMobileMeasurePointTemplateUrl,
+        /**
+         * @param {!angular.Scope} scope Scope.
+         * @param {!angular.JQLite} element Element.
+         * @param {!angular.Attributes} attrs Attributes.
+         * @param {!gmf.ContextualdataController} controller Controller.
+         */
+        link(scope, element, attrs, controller) {
+          controller.init();
+        }
       };
     };
 
@@ -150,14 +159,11 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
    */
   this.coordinateDecimals = coordinateDecimalsFn ? coordinateDecimalsFn() : 0;
 
-  const layersConfig = this['getLayersConfigFn']();
-  goog.asserts.assertObject(layersConfig);
-
   /**
-   * @type {Object.<string, gmf.MobileMeasurePointController.LayerConfig>!}
+   * @type {!Object.<string, !gmf.MobileMeasurePointController.LayerConfig>}
    * @private
    */
-  this.layersConfig = layersConfig;
+  this.layersConfig;
 
   /**
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
@@ -199,7 +205,6 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
 
   this.measure.setActive(this.active);
   ngeoDecorateInteraction(this.measure);
-  this.map.addInteraction(this.measure);
 
   /**
    * @type {ngeo.interaction.MobileDraw}
@@ -216,7 +221,18 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;
+};
 
+
+/**
+ * Initialise the controller.
+ */
+gmf.MobileMeasurePointController.prototype.init = function() {
+  const layersConfig = this['getLayersConfigFn']();
+  goog.asserts.assertObject(layersConfig);
+  this.layersConfig = layersConfig;
+
+  this.map.addInteraction(this.measure);
 };
 
 

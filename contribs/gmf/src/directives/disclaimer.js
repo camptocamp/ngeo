@@ -1,5 +1,5 @@
 goog.provide('gmf.DisclaimerController');
-goog.provide('gmf.disclaimerDirective');
+goog.provide('gmf.disclaimerComponent');
 
 goog.require('gmf');
 goog.require('ngeo.Disclaimer');
@@ -8,7 +8,7 @@ goog.require('ngeo.LayerHelper');
 
 
 /**
- * Provide a "disclaimer" directive for GeoMapFish that is bound to the
+ * Provide a "disclaimer" component for GeoMapFish that is bound to the
  * layers added and removed from a map.
  *
  * Example:
@@ -53,40 +53,34 @@ goog.require('ngeo.LayerHelper');
  *     contains the disclaimer messages. To uses it, you must set the
  *     gmf-disclaimer-external to true.
  * @htmlAttribute {ol.Map=} gmf-disclaimer-map The map.
- * @return {angular.Directive} The Directive Definition Object.
- * @ngInject
- * @ngdoc directive
+ *
+ * @ngdoc component
  * @ngname gmfDisclaimer
  */
-gmf.disclaimerDirective = function() {
-
-  return {
-    restrict: 'E',
-    scope: {
-      'popup': '<?gmfDisclaimerPopup',
-      'map': '=gmfDisclaimerMap',
-      'external': '<?gmfDisclaimerExternal',
-      'visibility': '=?gmfDisclaimerExternalVisibility',
-      'msg': '=?gmfDisclaimerExternalMsg'
-    },
-    bindToController: true,
-    controller: 'GmfDisclaimerController as dclCtrl'
-  };
+gmf.disclaimerComponent = {
+  controller: 'GmfDisclaimerController as dclCtrl',
+  bindings: {
+    'popup': '<?gmfDisclaimerPopup',
+    'map': '=gmfDisclaimerMap',
+    'external': '<?gmfDisclaimerExternal',
+    'visibility': '=?gmfDisclaimerExternalVisibility',
+    'msg': '=?gmfDisclaimerExternalMsg'
+  }
 };
 
 
-gmf.module.directive('gmfDisclaimer', gmf.disclaimerDirective);
+gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
 
 
 /**
  * @constructor
- * @param {angular.JQLite} $element Element.
+ * @param {!angular.JQLite} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$sce} $sce Angular sce service.
- * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
- * @param {ngeo.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
- * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!angular.$sce} $sce Angular sce service.
+ * @param {!ngeo.CreatePopup} ngeoCreatePopup Popup service.
+ * @param {!ngeo.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
+ * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
+ * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @export
  * @struct
  * @ngInject
@@ -97,19 +91,19 @@ gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
     ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
 
   /**
-   * @type {ol.Map}
+   * @type {?ol.Map}
    * @export
    */
   this.map;
 
   /**
-   * @type {boolean}
+   * @type {boolean|undefined}
    * @export
    */
   this.external;
 
   /**
-   * @type {boolean}
+   * @type {boolean|undefined}
    * @export
    */
   this.popup;
@@ -123,59 +117,71 @@ gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
 
   /**
    * Trusted html messages that can be displayed as html.
-   * @type {string}
+   * @type {string|undefined}
    * @export
    */
   this.msg;
 
   /**
-   * @type {Array<string>}
+   * @type {!Array<string>}
    * @export
    */
   this.msgs_ = [];
 
   /**
    * @private
-   * @type {angular.$sce}
+   * @type {!angular.$sce}
    */
   this.sce_ = $sce;
 
   /**
-   * @type {angular.JQLite}
+   * @type {!angular.JQLite}
    * @private
    */
   this.element_ = $element;
 
   /**
    * @private
-   * @type {ngeo.CreatePopup}
+   * @type {!ngeo.CreatePopup}
    */
   this.createPopup_ = ngeoCreatePopup;
 
   /**
-   * @type {ngeo.Disclaimer}
+   * @type {!ngeo.Disclaimer}
    * @private
    */
   this.disclaimer_ = ngeoDisclaimer;
 
   /**
-   * @type {ngeo.EventHelper}
+   * @type {!ngeo.EventHelper}
    * @private
    */
   this.eventHelper_ = ngeoEventHelper;
 
   /**
+   * @type {!ngeo.LayerHelper}
+   * @private
+   */
+  this.ngeoLayerHelper_ = ngeoLayerHelper;
+
+  /**
    * @type {?ol.layer.Group}
    * @private
    */
-  this.dataLayerGroup_ = ngeoLayerHelper.getGroupFromMap(this.map,
+  this.dataLayerGroup_ = null;
+};
+
+
+/**
+ * Initialise the controller.
+ */
+gmf.DisclaimerController.prototype.$onInit = function() {
+  this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map,
       gmf.DATALAYERGROUP_NAME);
 
   this.registerLayer_(this.dataLayerGroup_);
 
-  $scope.$on('$destroy', this.handleDestroy_.bind(this));
 };
-
 
 /**
  * @param {ol.Collection.Event} evt Event.
@@ -277,10 +283,7 @@ gmf.DisclaimerController.prototype.unregisterLayer_ = function(layer) {
 };
 
 
-/**
- * @private
- */
-gmf.DisclaimerController.prototype.handleDestroy_ = function() {
+gmf.DisclaimerController.prototype.$onDestroy = function() {
   this.unregisterLayer_(this.dataLayerGroup_);
 };
 

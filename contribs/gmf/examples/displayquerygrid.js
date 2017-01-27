@@ -3,9 +3,9 @@ goog.provide('gmfapp.displayquerygrid');
 goog.require('gmf.DataSourcesManager');
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerygridDirective');
+goog.require('gmf.displayquerygridComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
+goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
@@ -15,7 +15,7 @@ goog.require('ngeo.bboxQueryDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.gridDirective');
+goog.require('ngeo.gridComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');

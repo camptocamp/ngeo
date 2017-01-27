@@ -1,5 +1,5 @@
 goog.provide('gmf.DisplayquerywindowController');
-goog.provide('gmf.displayquerywindowDirective');
+goog.provide('gmf.displayquerywindowComponent');
 
 goog.require('gmf');
 goog.require('ngeo.FeatureOverlay');
@@ -15,26 +15,38 @@ goog.require('ol.style.Style');
 
 ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
     /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {!angular.JQLite} $element Element.
+     * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['gmfDisplayquerywindowTemplateurl'];
+    ($element, $attrs) => {
+      const templateUrl = $attrs['gmfDisplayquerywindowTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/displayquerywindow.html`;
     });
 
 
 /**
- * Provide a directive to display results of the {@link ngeo.queryResult}
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfDisplayquerywindowTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindowTemplateUrl) {
+  return gmfDisplayquerywindowTemplateUrl($element, $attrs);
+}
+
+
+/**
+ * Provide a component to display results of the {@link ngeo.queryResult}
  * and shows related features on the map using the {@link ngeo.FeatureOverlayMgr}.
  *
- * You can override the default directive's template by setting the
+ * You can override the default component's template by setting the
  * value `gmfDisplayquerywindowTemplateUrl`.
  *
  * Features displayed on the map use a default style but you can override these
- * styles by passing ol.style.Style objects as attributes of this directive.
+ * styles by passing ol.style.Style objects as attributes of this component.
  *
  * Example:
  *
@@ -49,43 +61,35 @@ ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
  *     object for the current displayed feature.
  * @htmlAttribute {boolean=} defaultcollapsed If the query result window is
  *     collapsed.
- * @htmlAttribute {boolean} desktop If the directive is used in the desktop
+ * @htmlAttribute {boolean} desktop If the component is used in the desktop
  *     application.
  * @htmlAttribute {boolean} showunqueriedlayers If also layers, that have not
  *     been queried for the last query, should be shown in the filter.
- * @param {string} gmfDisplayquerywindowTemplateUrl URL to a template.
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
- * @ngdoc directive
+ *
+ * @ngdoc component
  * @ngname gmfDisplayquerywindow
  */
-gmf.displayquerywindowDirective = function(
-    gmfDisplayquerywindowTemplateUrl) {
-  return {
-    bindToController: true,
-    controller: 'GmfDisplayquerywindowController as ctrl',
-    templateUrl: gmfDisplayquerywindowTemplateUrl,
-    replace: true,
-    restrict: 'E',
-    scope: {
-      'featuresStyleFn': '&gmfDisplayquerywindowFeaturesstyle',
-      'selectedFeatureStyleFn': '&gmfDisplayquerywindowSelectedfeaturestyle',
-      'defaultCollapsedFn': '&?gmfDisplayquerywindowDefaultcollapsed',
-      'desktopIn': '=gmfDisplayquerywindowDesktop',
-      'showUnqueriedLayersIn': '=gmfDisplayquerywindowShowunqueriedlayers'
-    }
-  };
+gmf.displayquerywindowComponent = {
+  controller: 'GmfDisplayquerywindowController as ctrl',
+  bindings: {
+    'featuresStyleFn': '&gmfDisplayquerywindowFeaturesstyle',
+    'selectedFeatureStyleFn': '&gmfDisplayquerywindowSelectedfeaturestyle',
+    'defaultCollapsedFn': '&?gmfDisplayquerywindowDefaultcollapsed',
+    'desktopIn': '=gmfDisplayquerywindowDesktop',
+    'showUnqueriedLayersIn': '=gmfDisplayquerywindowShowunqueriedlayers'
+  },
+  templateUrl: gmfDisplayquerywindowTemplateUrl
 };
 
 
-gmf.module.directive('gmfDisplayquerywindow', gmf.displayquerywindowDirective);
+gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
 
 
 /**
- * @param {angular.Scope} $scope Angular scope.
- * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper the ngeo FeatureHelper service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!angular.Scope} $scope Angular scope.
+ * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
+ * @param {!ngeo.FeatureHelper} ngeoFeatureHelper the ngeo FeatureHelper service.
+ * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
  * @export
@@ -150,13 +154,11 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    */
   this.features_ = new ol.Collection();
 
-  const featuresOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-  const featuresStyle = this['featuresStyleFn']();
-  if (featuresStyle !== undefined) {
-    goog.asserts.assertInstanceof(featuresStyle, ol.style.Style);
-    featuresOverlay.setStyle(featuresStyle);
-  }
-  featuresOverlay.setFeatures(this.features_);
+  /**
+   * @type {!ngeo.FeatureOverlayMgr}
+   * @private
+   */
+  this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
    * @type {ngeo.FeatureOverlay}
@@ -170,20 +172,6 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    */
   this.highlightFeatures_ = new ol.Collection();
   this.highlightFeatureOverlay_.setFeatures(this.highlightFeatures_);
-
-  let highlightFeatureStyle = this['selectedFeatureStyleFn']();
-  if (highlightFeatureStyle !== undefined) {
-    goog.asserts.assertInstanceof(highlightFeatureStyle, ol.style.Style);
-  } else {
-    const fill = new ol.style.Fill({color: [255, 0, 0, 0.6]});
-    const stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
-    highlightFeatureStyle = new ol.style.Style({
-      fill,
-      image: new ol.style.Circle({fill, radius: 5, stroke}),
-      stroke
-    });
-  }
-  this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
 
   /**
    * @type {ngeox.QueryResultSource?}
@@ -232,6 +220,33 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
       });
 };
 
+/**
+ * Initialise the controller.
+ */
+gmf.DisplayquerywindowController.prototype.$onInit = function() {
+  const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  const featuresStyle = this['featuresStyleFn']();
+  if (featuresStyle !== undefined) {
+    goog.asserts.assertInstanceof(featuresStyle, ol.style.Style);
+    featuresOverlay.setStyle(featuresStyle);
+  }
+  featuresOverlay.setFeatures(this.features_);
+
+  let highlightFeatureStyle = this['selectedFeatureStyleFn']();
+  if (highlightFeatureStyle !== undefined) {
+    goog.asserts.assertInstanceof(highlightFeatureStyle, ol.style.Style);
+  } else {
+    const fill = new ol.style.Fill({color: [255, 0, 0, 0.6]});
+    const stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
+    highlightFeatureStyle = new ol.style.Style({
+      fill,
+      image: new ol.style.Circle({fill, radius: 5, stroke}),
+      stroke
+    });
+  }
+  this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
+};
+
 
 /**
  * Remove current displayed results then get new results from the
@@ -256,7 +271,6 @@ gmf.DisplayquerywindowController.prototype.updateFeatures_ = function() {
     this.open = true;
   }
 };
-
 
 /**
  * Select a source and a feature depending of the given position.

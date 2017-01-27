@@ -755,8 +755,8 @@ describe('ngeo.CreatePrint', () => {
 
     it('gets the correct capabilities', () => {
       let resp;
-      print.getCapabilities().success((data) => {
-        resp = data;
+      print.getCapabilities().then((response) => {
+        resp = response.data;
       });
       $httpBackend.flush();
       expect(resp).toEqual(capabilities);

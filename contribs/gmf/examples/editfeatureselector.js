@@ -7,7 +7,7 @@ goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureselectorDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
+goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ngeo.FeatureHelper');

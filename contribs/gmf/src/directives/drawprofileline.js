@@ -45,6 +45,15 @@ gmf.drawprofilelineDirective = function() {
       'line': '=gmfDrawprofilelineLine',
       'active': '=gmfDrawprofilelineActive',
       'getStyleFn': '&?gmfDrawprofilelineStyle'
+    },
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     * @param {gmf.ContextualdataController} controller Controller.
+     */
+    link(scope, element, attrs, controller) {
+      controller.init();
     }
   };
 };
@@ -54,11 +63,11 @@ gmf.module.directive('gmfDrawprofileline', gmf.drawprofilelineDirective);
 
 /**
  * @param {!angular.Scope} $scope Scope.
- * @param {angular.JQLite} $element Element.
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
+ * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service
  * @constructor
  * @export
@@ -70,19 +79,16 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
     ngeoFeatureOverlayMgr, ngeoDecorateInteraction) {
 
   /**
-   * @type {ol.geom.LineString}
+   * @type {?ol.geom.LineString}
    * @export
    */
   this.line;
 
-  const map = this['getMapFn']();
-  goog.asserts.assertInstanceof(map, ol.Map);
-
   /**
-   * @type {ol.Map}
+   * @type {?ol.Map}
    * @private
    */
-  this.map_ = map;
+  this.map_ = null;
 
 
   /**
@@ -92,7 +98,7 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
   this.active;
 
   /**
-   * @type {ol.Collection}
+   * @type {!ol.Collection}
    * @private
    */
   this.features_ = new ol.Collection();
@@ -116,7 +122,7 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
   overlay.setStyle(style);
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {!ol.interaction.Draw}
    * @export
    */
   this.interaction = new ol.interaction.Draw(
@@ -125,7 +131,6 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
         features: this.features_
       }));
 
-  this.map_.addInteraction(this.interaction);
   ngeoDecorateInteraction(this.interaction);
 
   // Clear the line as soon as the interaction is activated.
@@ -141,13 +146,13 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
   // Update the profile with the new geometry.
   this.interaction.on(ol.interaction.DrawEventType.DRAWEND, function(e) {
     this.line = e.feature.getGeometry();
-    // using timeout to prevent dblclick to zoom the map
+    // using timeout to prevent double click to zoom the map
     $timeout(() => {
       this.interaction.setActive(false);
     }, 0);
   }, this);
 
-  // Line may be removed from an an other component
+  // Line may be removed from an other component
   // for example closing the chart panel
   $scope.$watch(
     () => this.line,
@@ -167,6 +172,16 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
       this.interaction.setActive(this.active);
     }
   );
+};
+
+/**
+ * Initialise the controller.
+ */
+gmf.DrawprofilelineController.prototype.init = function() {
+  const map = this['getMapFn']();
+  goog.asserts.assertInstanceof(map, ol.Map);
+  this.map_ = map;
+  this.map_.addInteraction(this.interaction);
 };
 
 

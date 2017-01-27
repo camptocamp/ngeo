@@ -724,7 +724,8 @@ ngeo.DataSource = class {
 
 /**
  * Default name of the geometry attribute.
- * @private {string}
+ * @type {string}
+ * @private
  */
 ngeo.DataSource.DEFAULT_GEOMETRY_NAME_ = 'the_geom';
 

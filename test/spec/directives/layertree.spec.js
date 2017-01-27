@@ -3,20 +3,18 @@ goog.require('ngeo.LayertreeController');
 
 describe('ngeo.layertreeDirective', () => {
 
-  let element;
-  let map;
   let roottreeCtrl;
 
   beforeEach(() => {
 
-    map = new ol.Map({
+    const map = new ol.Map({
       view: new ol.View({
         center: [0, 0],
         zoom: 0
       })
     });
 
-    element = angular.element(
+    const element = angular.element(
       '<div ngeo-layertree="tree"' +
         'ngeo-layertree-map="map"' +
         'ngeo-layertree-nodelayer="getLayer(node)"' +

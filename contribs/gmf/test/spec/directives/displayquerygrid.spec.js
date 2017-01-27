@@ -1,4 +1,4 @@
-goog.require('gmf.displayquerygridDirective');
+goog.require('gmf.displayquerygridComponent');
 goog.require('ol.Map');
 goog.require('ngeo.GridConfig');
 
@@ -16,7 +16,7 @@ const compareGridData = function(data, expectedData) {
 };
 
 
-describe('gmf.displayquerygridDirective', () => {
+describe('gmf.displayquerygridComponent', () => {
 
   let queryGridController;
   let ngeoQueryResult;

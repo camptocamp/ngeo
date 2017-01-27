@@ -1,7 +1,7 @@
 goog.require('ngeo.GridConfig');
-goog.require('ngeo.gridDirective');
+goog.require('ngeo.gridComponent');
 
-describe('ngeo.gridDirective', () => {
+describe('ngeo.gridComponent', () => {
 
   let gridController;
   let $scope;
