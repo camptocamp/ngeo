@@ -240,7 +240,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.printActive = false;
 
   /**
-   * @type {ngeo.Querent}
+   * @type {ngeo.MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
