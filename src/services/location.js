@@ -223,9 +223,9 @@ ngeo.Location.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
  */
 ngeo.Location.prototype.updateParams = function(params) {
   const qd = this.uri_.getQueryData();
-  goog.object.forEach(params, (val, key) => {
-    qd.set(key, val);
-  });
+  for (const key in params) {
+    qd.set(key, params[key]);
+  }
 };
 
 
@@ -237,10 +237,11 @@ ngeo.Location.prototype.updateParams = function(params) {
 ngeo.Location.prototype.updateFragmentParams = function(params) {
   const fragmentUri = this.getFragmentUri_();
   const qd = fragmentUri.getQueryData();
-  goog.object.forEach(params, (val, key) => {
+  for (const key in params) {
+    let val = params[key];
     val = val !== undefined ? ngeo.string.urlEncode(val) : undefined;
     qd.set(key, val);
-  });
+  }
   this.updateFragmentFromUri_(fragmentUri);
 };
 
