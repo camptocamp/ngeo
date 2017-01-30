@@ -55,7 +55,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
       scope.$watchCollection(optionsAttr, (newVal) => {
 
         const options = /** @type {ngeox.profile.ProfileOptions} */
-                (goog.object.clone(newVal));
+                (ol.obj.assign({}, newVal));
 
         if (options !== undefined) {
 

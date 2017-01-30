@@ -358,7 +358,7 @@ gmf.TreeManager.prototype.removeAll = function() {
  * @private
  */
 gmf.TreeManager.prototype.cloneGroupNode_ = function(group, names) {
-  const clone = /** @type {gmfThemes.GmfGroup} */ (goog.object.unsafeClone(group));
+  const clone = /** @type {gmfThemes.GmfGroup} */ (ol.obj.assign({}, group));
   this.toggleNodeCheck_(clone, names);
   return clone;
 };

@@ -2,7 +2,6 @@ goog.provide('ngeo.Location');
 goog.provide('ngeo.MockLocationProvider');
 
 goog.require('goog.Uri');
-goog.require('goog.object');
 goog.require('ngeo');
 goog.require('ngeo.string');
 
