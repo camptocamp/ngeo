@@ -180,6 +180,10 @@ gmf.AbstractController = function(config, $scope, $injector) {
     backgroundLayerMgr.updateDimensions(this.map, this.dimensions);
   }.bind(this));
 
+  backgroundLayerMgr.on(ngeo.BackgroundEventType.CHANGE, function() {
+    backgroundLayerMgr.updateDimensions(this.map, this.dimensions);
+  }, this);
+
   /**
    * @type {boolean}
    * @export
