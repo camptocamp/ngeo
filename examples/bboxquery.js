@@ -82,7 +82,7 @@ app.MainController = function($scope, ngeoQuery) {
   const busStopLayer = new ol.layer.Image({
     'querySourceId': busStopSourceId,
     'source': new ol.source.ImageWMS({
-      'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+      'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
       params: {'LAYERS': 'bus_stop'}
     })
   });
@@ -96,7 +96,7 @@ app.MainController = function($scope, ngeoQuery) {
   const informationLayer = new ol.layer.Image({
     'querySourceId': informationSourceId,
     'source': new ol.source.ImageWMS({
-      'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+      'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
       params: {'LAYERS': 'information'}
     })
   });

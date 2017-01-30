@@ -10,7 +10,7 @@ describe('gmf.GmfProfileController', () => {
 
   beforeEach(() => {
     module('ngeo', ($provide) => {
-      $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.json');
+      $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
       csvDownloadServiceMock = {
         startDownload(data, columnDefs, fileName) {}
       };

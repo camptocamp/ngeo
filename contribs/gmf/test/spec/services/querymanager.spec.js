@@ -112,7 +112,7 @@ describe('gmf.QueryManager', () => {
     //  let source = getSourceById(queryManager.sources_, 133);
     //  expect(source).not.toBeNull();
     //  expect(source.params.LAYERS).toBe('ch.astra.ausnahmetransportrouten');
-    //  expect(source.url).toBe('https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?');
+    //  expect(source.url).toBe('https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy?');
     //});
   });
 });

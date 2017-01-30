@@ -23,7 +23,7 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 gmfapp.module.value(
     'gmfProfileJsonUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.json');
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
 
 /**
  * @param {angular.Scope} $scope Angular scope.
