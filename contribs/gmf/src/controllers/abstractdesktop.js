@@ -82,7 +82,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   const viewConfig = {
     projection: ol.proj.get(`EPSG:${config.srid || 21781}`)
   };
-  goog.object.extend(viewConfig, config.mapViewConfig || {});
+  ol.obj.assign(viewConfig, config.mapViewConfig || {});
 
   /**
    * @type {ol.Map}

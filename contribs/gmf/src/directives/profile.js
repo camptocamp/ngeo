@@ -305,7 +305,7 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
   if (optionsFn) {
     const options = optionsFn();
     goog.asserts.assertObject(options);
-    goog.object.extend(this.profileOptions, options);
+    ol.obj.assign(this.profileOptions, options);
   }
 
   /**

@@ -4,7 +4,6 @@ goog.provide('ngeo.Print');
 
 goog.require('goog.color');
 goog.require('goog.color.alpha');
-goog.require('goog.object');
 goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
 goog.require('ol.color');
@@ -173,10 +172,10 @@ ngeo.Print.prototype.createSpec = function(
 
   this.encodeMap_(map, scale, specMap);
 
-  const attributes = /** @type {MapFishPrintAttributes} */ ({
+  const attributes = /** @type {!MapFishPrintAttributes} */ ({
     map: specMap
   });
-  goog.object.extend(attributes, customAttributes);
+  ol.obj.assign(attributes, customAttributes);
 
   const spec = /** @type {MapFishPrintSpec} */ ({
     attributes,
@@ -282,7 +281,7 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
  */
 ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   const customParams = {'TRANSPARENT': true};
-  goog.object.extend(customParams, params);
+  ol.obj.assign(customParams, params);
 
   delete customParams['LAYERS'];
   delete customParams['FORMAT'];
@@ -827,12 +826,12 @@ ngeo.Print.prototype.getWmtsUrl_ = function(source) {
 ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
   const format = printSpec.format || 'pdf';
   const url = `${this.url_}/report.${format}`;
-  const httpConfig = /** @type {angular.$http.Config} */ ({
+  const httpConfig = /** @type {!angular.$http.Config} */ ({
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'
     }
   });
-  goog.object.extend(httpConfig,
+  ol.obj.assign(httpConfig,
       opt_httpConfig !== undefined ? opt_httpConfig : {});
   return this.$http_.post(url, printSpec, httpConfig);
 };

@@ -175,7 +175,7 @@ ngeo.profile = function(options) {
   };
 
   if (options.formatter !== undefined) {
-    goog.object.extend(formatter, options.formatter);
+    ol.obj.assign(formatter, options.formatter);
   }
 
   /**

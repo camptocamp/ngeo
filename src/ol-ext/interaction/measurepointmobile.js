@@ -19,7 +19,7 @@ ngeo.interaction.MeasurePointMobile = function(opt_options) {
 
   const options = opt_options !== undefined ? opt_options : {};
 
-  goog.object.extend(options, {displayHelpTooltip: false});
+  ol.obj.assign(options, {displayHelpTooltip: false});
 
   ngeo.interaction.Measure.call(this, options);
 
