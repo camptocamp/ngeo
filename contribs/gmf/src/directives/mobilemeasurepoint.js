@@ -296,9 +296,9 @@ gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
       }
     }
 
-    const previousCtn = goog.dom.getElementByClass(className, el);
-    if (previousCtn) {
-      previousCtn.remove();
+    const previousCtn = el.getElementsByClassName(className);
+    if (previousCtn.length > 0) {
+      previousCtn[0].remove();
     }
     el.appendChild(ctn);
 

@@ -29,11 +29,16 @@ ngeo.interaction.MeasureArea = function(format, opt_options) {
    * Message to show after the first point is clicked.
    * @type {Element}
    */
-  this.continueMsg = options.continueMsg !== undefined ? options.continueMsg :
-      goog.dom.createDom('SPAN', {},
-          'Click to continue drawing the polygon.',
-          goog.dom.createDom('BR'),
-          'Double-click or click starting point to finish.');
+  this.continueMsg;
+  if (options.continueMsg !== undefined) {
+    this.continueMsg = options.continueMsg;
+  } else {
+    this.continueMsg = document.createElement('span');
+    this.continueMsg.textContent = 'Click to continue drawing the polygon.';
+    const br = document.createElement('br');
+    br.textContent = 'Double-click or click starting point to finish.';
+    this.continueMsg.append(br);
+  }
 
   /**
    * The format function

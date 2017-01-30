@@ -44,8 +44,13 @@ ngeo.interaction.MeasureAzimut = function(format, opt_options) {
    * Message to show after the first point is clicked.
    * @type {Element}
    */
-  this.continueMsg = options.continueMsg !== undefined ? options.continueMsg :
-      goog.dom.createDom('SPAN', {}, 'Click to finish.');
+  this.continueMsg;
+  if (options.continueMsg !== undefined) {
+    this.continueMsg = options.continueMsg;
+  } else {
+    this.continueMsg = document.createElement('span');
+    this.continueMsg.textContent = 'Click to finish.';
+  }
 
   /**
    * The format function

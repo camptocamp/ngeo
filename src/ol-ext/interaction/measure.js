@@ -3,8 +3,6 @@ goog.provide('ngeo.MeasureEventType');
 goog.provide('ngeo.interaction.Measure');
 
 goog.require('goog.asserts');
-goog.require('goog.dom');
-goog.require('goog.dom.classlist');
 goog.require('ol.dom');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
@@ -154,8 +152,13 @@ ngeo.interaction.Measure = function(opt_options) {
    * The message to show when user is about to start drawing.
    * @type {Element}
    */
-  this.startMsg = options.startMsg !== undefined ? options.startMsg :
-      goog.dom.createDom('SPAN', {}, 'Click to start drawing.');
+  this.startMsg;
+  if (options.startMsg !== undefined) {
+    this.startMsg = options.startMsg;
+  } else {
+    this.startMsg = document.createElement('span');
+    this.startMsg.textContent =  'Click to start drawing.';
+  }
 
   /**
    * The key for geometry change event.
@@ -401,7 +404,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
-  goog.dom.classlist.add(this.measureTooltipElement_, 'ngeo-tooltip-static');
+  this.measureTooltipElement_.classList.add('ngeo-tooltip-static');
   this.measureTooltipOverlay_.setOffset([0, -7]);
   this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
       this.sketchFeature));
@@ -419,8 +422,8 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
 ngeo.interaction.Measure.prototype.createHelpTooltip_ = function() {
   this.removeHelpTooltip_();
   if (this.displayHelpTooltip_) {
-    this.helpTooltipElement_ = goog.dom.createDom('DIV');
-    goog.dom.classlist.add(this.helpTooltipElement_, 'tooltip');
+    this.helpTooltipElement_ = document.createElement('div');
+    this.helpTooltipElement_.classList.add('tooltip');
     this.helpTooltipOverlay_ = new ol.Overlay({
       element: this.helpTooltipElement_,
       offset: [15, 0],
@@ -453,9 +456,9 @@ ngeo.interaction.Measure.prototype.removeHelpTooltip_ = function() {
  */
 ngeo.interaction.Measure.prototype.createMeasureTooltip_ = function() {
   this.removeMeasureTooltip_();
-  this.measureTooltipElement_ = goog.dom.createDom('DIV');
-  goog.dom.classlist.addAll(this.measureTooltipElement_,
-      ['tooltip', 'ngeo-tooltip-measure']);
+  this.measureTooltipElement_ = document.createElement('div');
+  this.measureTooltipElement_.classList.add('tooltip');
+  this.measureTooltipElement_.classList.add('ngeo-tooltip-measure');
   this.measureTooltipOverlay_ = new ol.Overlay({
     element: this.measureTooltipElement_,
     offset: [0, -15],
