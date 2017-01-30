@@ -22,7 +22,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
 
   /**
    * Object representing the application's initial state.
-   * @type {!Object.<string, *>}
+   * @type {!Object.<string, string>}
    */
   this.initialState = {};
 
@@ -58,7 +58,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
 
         this.usedKeyRegexp.some(function(keyRegexp) {
           if (key.match(keyRegexp)) {
-            var value = this.getItemFromLocalStorage_(key);
+            var value = this.localStorage.get(key);
             goog.asserts.assert(value !== null);
             this.initialState[key] = value;
 
@@ -71,7 +71,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
     paramKeys.forEach(function(key) {
       this.usedKeyRegexp.some(function(keyRegexp) {
         if (key.match(keyRegexp)) {
-          var value = this.getItemFromLocalStorage_(key);
+          var value = this.ngeoLocation.getParam(key);
           if (value !== null) {
             this.initialState[key] = value;
             return true;
@@ -84,45 +84,9 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
 
 
 /**
- * Get the item for the given key  from localStorage and try to parse to the appropriate type
- * If it cannot be parsed, the raw value (string) is returned
- *
- * @param  {string} key the localStorage key for the item
- * @return {*} Param value.
- * @private
- */
-ngeo.StateManager.prototype.getItemFromLocalStorage_ = function(key) {
-  var value = this.localStorage.get(key);
-  try {
-    return angular.fromJson(value);
-  } catch (e) {
-    return value;
-  }
-};
-
-
-/**
- * Get the item for the given key  from Location and try to parse to the appropriate type
- * If it cannot be parsed, the raw value (string) is returned
- *
- * @param  {string} key the localStorage key for the item
- * @return {*} Param value.
- * @private
- */
-ngeo.StateManager.prototype.getItemFromLocation_ = function(key) {
-  var value = this.ngeoLocation.getParam(key);
-  try {
-    return angular.fromJson(value);
-  } catch (e) {
-    return value;
-  }
-};
-
-
-/**
  * Get the state value for `key`.
  * @param {string} key State key.
- * @return {*} State value.
+ * @return {string|undefined} State value.
  */
 ngeo.StateManager.prototype.getInitialValue = function(key) {
   return this.initialState[key];
@@ -138,7 +102,7 @@ ngeo.StateManager.prototype.updateState = function(object) {
   if (this.localStorage.isAvailable()) {
     var key;
     for (key in object) {
-      this.localStorage.set(key, angular.toJson(object[key]));
+      this.localStorage.set(key, object[key]);
     }
   }
 };

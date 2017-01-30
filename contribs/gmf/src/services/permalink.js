@@ -455,10 +455,8 @@ gmf.Permalink.prototype.addListenerKey_ = function(uid, key, opt_isol) {
  */
 gmf.Permalink.prototype.getMapCenter = function() {
   var center = null;
-  var x = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
-    gmf.PermalinkParam.MAP_X));
-  var y = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
-    gmf.PermalinkParam.MAP_Y));
+  var x = parseFloat(this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.MAP_X));
+  var y = parseFloat(this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.MAP_Y));
 
   if (x !== undefined && y !== undefined) {
     center = [x,y];
@@ -483,8 +481,7 @@ gmf.Permalink.prototype.getMapCenter = function() {
  */
 gmf.Permalink.prototype.getMapZoom = function() {
   var zoom = null;
-  var z = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
-    gmf.PermalinkParam.MAP_Z));
+  var z = parseInt(this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.MAP_Z), 10);
   if (z !== undefined) {
     zoom = z;
   }
@@ -513,12 +510,11 @@ gmf.Permalink.prototype.getMapCrosshair = function() {
 
 /**
  * Get the tooltip text from the state manager.
- * @return {?string} Tooltip text.
+ * @return {string|undefined} Tooltip text.
  * @export
  */
 gmf.Permalink.prototype.getMapTooltip = function() {
-  return /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
-      gmf.PermalinkParam.MAP_TOOLTIP)) || null;
+  return this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.MAP_TOOLTIP);
 };
 
 
@@ -532,8 +528,7 @@ gmf.Permalink.prototype.getMapTooltip = function() {
  */
 gmf.Permalink.prototype.getFeatures = function() {
   var features = [];
-  var f = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
-    gmf.PermalinkParam.FEATURES));
+  var f = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
     features = this.featureHashFormat_.readFeatures(f);
   }
@@ -815,9 +810,6 @@ gmf.Permalink.prototype.setThemeInUrl_ = function() {
  */
 gmf.Permalink.prototype.initLayers_ = function() {
   this.gmfThemes_.getThemesObject().then(function(themes) {
-    /**
-     * @type {string}
-     */
     var themeName;
     var pathElements = this.ngeoLocation_.getPath().split('/');
     if (this.themeInUrl_(pathElements)) {
@@ -826,7 +818,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
 
     if (!themeName) {
       // check if we have a theme in the local storage
-      themeName = /** @type {string} */ (this.ngeoStateManager_.getInitialValue('theme'));
+      themeName = this.ngeoStateManager_.getInitialValue('theme');
     }
 
     if (!themeName) {
@@ -845,9 +837,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
     // check if we have the groups in the permalink
     var groupsNames = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.TREE_GROUPS);
     if (!groupsNames) {
-      theme = gmf.Themes.findThemeByName(
-        themes, /** @type {string} */ (themeName)
-      );
+      theme = gmf.Themes.findThemeByName(themes, themeName);
       if (theme) {
         firstLevelGroups = theme.children;
       }
@@ -890,9 +880,9 @@ gmf.Permalink.prototype.initLayers_ = function() {
           }
         } else if (!treeCtrl.node.mixed && treeCtrl.depth == 1) {
           // First level non mixed group
-          var groupLayers = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
+          var groupLayers = this.ngeoStateManager_.getInitialValue(
             gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
-          ));
+          );
           if (groupLayers !== undefined) {
             var groupLayersArray = groupLayers.split(',');
             treeCtrl.traverseDepthFirst(function(treeCtrl) {
