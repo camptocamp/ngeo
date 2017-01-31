@@ -60,10 +60,11 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
         this.usedKeyRegexp.some(function(keyRegexp) {
           if (key.match(keyRegexp)) {
             var value = this.localStorage.get(key);
-            goog.asserts.assert(value !== null);
-            goog.asserts.assert(value !== undefined);
-            this.initialState[key] = value;
-
+            if (value !== null && value !== undefined) {
+              this.initialState[key] = value;
+            } else {
+              this.initialState[key] = '';
+            }
             return true;
           }
         }, this);
