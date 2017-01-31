@@ -458,7 +458,7 @@ ngeox.QuerentResult;
  * @typedef {{
  *     features: (Array.<ol.Feature>),
  *     tooManyFeatures: (boolean|undefined),
- *     totalFeatureCount: (number|undefined),
+ *     totalFeatureCount: (number|undefined)
  * }}
  */
 ngeox.QuerentResultItem;
