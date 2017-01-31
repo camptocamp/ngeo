@@ -4,6 +4,9 @@ goog.require('ngeo');
 goog.require('ngeo.DataSource');
 goog.require('ngeo.DataSources');
 
+goog.require('ol.events');
+goog.require('ol.CollectionEventType');
+
 
 ngeo.DataSourcesHelper = class {
 
@@ -35,13 +38,13 @@ ngeo.DataSourcesHelper = class {
 
     ol.events.listen(
       ngeoDataSources,
-      ol.Collection.EventType.ADD,
+      ol.CollectionEventType.ADD,
       this.handleDataSourcesAdd_,
       this
     );
     ol.events.listen(
       ngeoDataSources,
-      ol.Collection.EventType.REMOVE,
+      ol.CollectionEventType.REMOVE,
       this.handleDataSourcesRemove_,
       this
     );

@@ -8,7 +8,7 @@ goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Overlay');
 goog.require('ol.events');
-goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -216,9 +216,9 @@ ngeo.interaction.Measure = function(opt_options) {
       ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
       this.handleDrawInteractionActiveChange_, this);
   ol.events.listen(this.drawInteraction_,
-      ol.interaction.Draw.EventType.DRAWSTART, this.onDrawStart_, this);
+      ol.interaction.DrawEventType.DRAWSTART, this.onDrawStart_, this);
   ol.events.listen(this.drawInteraction_,
-      ol.interaction.Draw.EventType.DRAWEND, this.onDrawEnd_, this);
+      ol.interaction.DrawEventType.DRAWEND, this.onDrawEnd_, this);
 
   ol.events.listen(this,
       ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),

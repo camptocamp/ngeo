@@ -13,6 +13,7 @@ goog.require('ol.geom.GeometryCollection');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Property');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
@@ -342,7 +343,7 @@ ngeo.interaction.DrawAzimut.prototype.startDrawing_ = function(event) {
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();
   this.dispatchEvent(new ol.interaction.Draw.Event(
-      ol.interaction.Draw.EventType.DRAWSTART, this.sketchFeature_));
+      ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
 };
 
 
@@ -422,7 +423,7 @@ ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
   }
 
   this.dispatchEvent(new ol.interaction.Draw.Event(
-      ol.interaction.Draw.EventType.DRAWEND, sketchFeature));
+      ol.interaction.DrawEventType.DRAWEND, sketchFeature));
 };
 
 

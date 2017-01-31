@@ -3,6 +3,7 @@ goog.provide('ngeo.drawpointDirective');
 goog.require('ngeo');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEventType');
 
 
 /**
@@ -32,7 +33,7 @@ ngeo.drawpointDirective = function() {
 
       ol.events.listen(
           drawPoint,
-          ol.interaction.Draw.EventType.DRAWEND,
+          ol.interaction.DrawEventType.DRAWEND,
           drawFeatureCtrl.handleDrawEnd.bind(
               drawFeatureCtrl, ngeo.GeometryType.POINT),
           drawFeatureCtrl

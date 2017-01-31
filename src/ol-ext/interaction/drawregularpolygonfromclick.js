@@ -4,6 +4,7 @@ goog.require('ol.Feature');
 goog.require('ol.functions');
 goog.require('ol.geom.Circle');
 goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
 
 
@@ -146,7 +147,7 @@ ngeo.interaction.DrawRegularPolygonFromClick.prototype.handleMapClick_ = functio
 
   this.dispatchEvent(
     new ol.interaction.Draw.Event(
-      ol.interaction.Draw.EventType.DRAWEND,
+      ol.interaction.DrawEventType.DRAWEND,
       new ol.Feature(geometry)
     )
   );
