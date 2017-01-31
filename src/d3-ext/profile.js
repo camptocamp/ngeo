@@ -1,7 +1,5 @@
 goog.provide('ngeo.profile');
 
-goog.require('goog.object');
-
 
 /**
  * Provides a D3js component to be used to draw an elevation
@@ -175,7 +173,7 @@ ngeo.profile = function(options) {
   };
 
   if (options.formatter !== undefined) {
-    goog.object.extend(formatter, options.formatter);
+    ol.obj.assign(formatter, options.formatter);
   }
 
   /**

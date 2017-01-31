@@ -14,6 +14,7 @@ goog.require('ngeo.popoverDirective');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
+goog.require('ol.obj');
 goog.require('ol.proj');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
@@ -304,7 +305,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     highlight: true
   });
 
-  goog.object.extend(this.options, this.scope_['typeaheadOptions'] || {});
+  ol.obj.assign(this.options, this.scope_['typeaheadOptions'] || {});
 
   /**
    * @type {Array.<TypeaheadDataset>}
@@ -486,7 +487,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
     })
   });
   if (config.typeaheadDatasetOptions) {
-    goog.object.extend(typeaheadDataset, config.typeaheadDatasetOptions);
+    ol.obj.assign(typeaheadDataset, config.typeaheadDatasetOptions);
   }
   return typeaheadDataset;
 };
@@ -653,7 +654,7 @@ gmf.SearchController.prototype.initStyles_ = function() {
     })
   });
   const customStyles = this.scope_['featuresStyles'] || {};
-  goog.object.extend(this.styles_, customStyles);
+  ol.obj.assign(this.styles_, customStyles);
 };
 
 /**

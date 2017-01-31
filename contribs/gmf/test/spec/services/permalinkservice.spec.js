@@ -24,7 +24,7 @@ describe('Permalink service', () => {
     PermalinkService.setMap(map);
     // need to work on a clone of themes, because the permalink service
     // seems to change the original object?!
-    const themesClone = goog.object.unsafeClone(themes);
+    const themesClone = ol.obj.assign({}, themes);
     PermalinkService.themes_ = themesClone['themes'];
 
 

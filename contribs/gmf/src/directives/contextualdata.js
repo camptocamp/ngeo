@@ -167,9 +167,9 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
   });
 
   const getRasterSuccess = function(resp) {
-    goog.object.extend(scope, resp);
+    ol.obj.assign(scope, resp);
     if (this.callback) {
-      goog.object.extend(scope, this.callback.call(this, coordinate, resp));
+      ol.obj.assign(scope, this.callback.call(this, coordinate, resp));
     }
   }.bind(this);
   const getRasterError = function(resp) {

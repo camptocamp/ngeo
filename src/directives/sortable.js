@@ -1,7 +1,6 @@
 goog.provide('ngeo.SortableOptions');
 goog.provide('ngeo.sortableDirective');
 
-goog.require('goog.dom');
 goog.require('goog.fx.DragListDirection');
 goog.require('goog.fx.DragListGroup');
 goog.require('ngeo');
@@ -116,7 +115,7 @@ ngeo.sortableDirective = function($timeout) {
                  */
                 (dragItem) => {
                   const className = options['handleClassName'];
-                  return goog.dom.getElementByClass(className, dragItem);
+                  return dragItem.getElementsByClassName(className)[0];
                 });
 
         if (options['draggerClassName'] !== undefined) {

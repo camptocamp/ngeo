@@ -267,7 +267,7 @@ ngeo.Menu.prototype.handleMapPointerMove_ = function(evt) {
   const element = this.getElement();
   goog.asserts.assertInstanceof(element, Element);
 
-  if (goog.dom.contains(element, target)) {
+  if (element.contains(target)) {
     evt.coordinate = [Infinity, Infinity];
     evt.pixel = [Infinity, Infinity];
   }

@@ -275,13 +275,14 @@ gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
   const params = {
     'layers': Object.keys(this.layersConfig).join(',')
   };
-  this.gmfRaster_.getRaster(center, params).then(function(object) {
+  this.gmfRaster_.getRaster(center, params).then((object) => {
     const el = this.measure.getTooltipElement();
     const ctn = document.createElement('div');
     const className = 'gmf-mobile-measure-point';
     ctn.className = className;
 
-    goog.object.forEach(object, function(value, key) {
+    for (const key in object) {
+      let value = object[key];
       const layerConfig = this.layersConfig[key];
       if (value !== null) {
         const childEl = document.createElement('div');
@@ -293,11 +294,11 @@ gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
         childEl.innerHTML = [this.translate(key), ': ', value, ' ', unit].join('');
         ctn.appendChild(childEl);
       }
-    }, this);
+    }
 
-    const previousCtn = goog.dom.getElementByClass(className, el);
-    if (previousCtn) {
-      previousCtn.remove();
+    const previousCtn = el.getElementsByClassName(className);
+    if (previousCtn[0]) {
+      previousCtn[0].remove();
     }
     el.appendChild(ctn);
 

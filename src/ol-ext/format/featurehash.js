@@ -1135,25 +1135,19 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
   // encode properties
 
   const /** @type {Array.<string>} */ encodedProperties = [];
-  goog.object.forEach(this.propertiesFunction_(feature), (
-      /**
-       * @param {*} value Value.
-       * @param {string} key Key.
-       */
-      (value, key) => {
-        if (value !== undefined &&
-            value !== null &&
-            key !== feature.getGeometryName()
-        ) {
-          if (encodedProperties.length !== 0) {
-            encodedProperties.push('\'');
-          }
-          const encoded = encodeURIComponent(
-              `${key.replace(/[()'*]/g, '_')}*${
-              value.toString().replace(/[()'*]/g, '_')}`);
-          encodedProperties.push(encoded);
-        }
-      }));
+  const propFunction = this.propertiesFunction_(feature);
+  for (const key in propFunction) {
+    const value = propFunction[key];
+    if (value !== undefined && value !== null && key !== feature.getGeometryName()) {
+      if (encodedProperties.length !== 0) {
+        encodedProperties.push('\'');
+      }
+      const encoded = encodeURIComponent(
+          `${key.replace(/[()'*]/g, '_')}*${
+          value.toString().replace(/[()'*]/g, '_')}`);
+      encodedProperties.push(encoded);
+    }
+  }
 
   if (encodedProperties.length > 0) {
     encodedParts.push('~');

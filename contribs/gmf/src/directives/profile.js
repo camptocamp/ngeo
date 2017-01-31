@@ -7,9 +7,10 @@ goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
 goog.require('ol.Feature');
+goog.require('ol.Overlay');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
-goog.require('ol.Overlay');
+goog.require('ol.obj');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
@@ -305,7 +306,7 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
   if (optionsFn) {
     const options = optionsFn();
     goog.asserts.assertObject(options);
-    goog.object.extend(this.profileOptions, options);
+    ol.obj.assign(this.profileOptions, options);
   }
 
   /**
