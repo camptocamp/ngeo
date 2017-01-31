@@ -12,6 +12,7 @@ goog.require('ol.Feature');
 goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.events');
 goog.require('ol.interaction.Modify');
+goog.require('ol.interaction.ModifyEventType');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.geom.Point');
 goog.require('ol.layer.Vector');
@@ -229,7 +230,7 @@ ngeo.interaction.Rotate.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
     this.dispatchEvent(new ol.interaction.Modify.Event(
-        ol.interaction.Modify.EventType.MODIFYSTART, this.features_, evt));
+        ol.interaction.ModifyEventType.MODIFYSTART, this.features_, evt));
   }
 };
 
