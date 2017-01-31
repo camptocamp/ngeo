@@ -20,3 +20,5 @@ if (typeof proj4 == 'function') {
   proj4.defs('EPSG:21781', epsg21781def);
   ol.proj.get('EPSG:21781').setExtent(epsg21781extent);
 }
+
+ngeo.proj.EPSG21781 = 'EPSG:21781';
