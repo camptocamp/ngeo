@@ -55,11 +55,13 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
       for (var i = 0; i < count; ++i) {
         var key = this.localStorage.key(i);
         goog.asserts.assert(key !== null);
+        goog.asserts.assert(key !== undefined);
 
         this.usedKeyRegexp.some(function(keyRegexp) {
           if (key.match(keyRegexp)) {
             var value = this.localStorage.get(key);
             goog.asserts.assert(value !== null);
+            goog.asserts.assert(value !== undefined);
             this.initialState[key] = value;
 
             return true;
@@ -102,7 +104,12 @@ ngeo.StateManager.prototype.updateState = function(object) {
   if (this.localStorage.isAvailable()) {
     var key;
     for (key in object) {
-      this.localStorage.set(key, object[key]);
+      goog.asserts.assert(key !== undefined);
+      goog.asserts.assert(key !== null);
+      var value = object[key];
+      goog.asserts.assert(value !== undefined);
+      goog.asserts.assert(value !== null);
+      this.localStorage.set(key, value);
     }
   }
 };
