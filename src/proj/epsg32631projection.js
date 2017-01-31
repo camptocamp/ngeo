@@ -18,3 +18,5 @@ if (typeof proj4 == 'function') {
   ol.proj.get('epsg:32631').setExtent(epsg32631extent);
   ol.proj.get('EPSG:32631').setExtent(epsg32631extent);
 }
+
+ngeo.proj.EPSG32631 = 'EPSG:32631';
