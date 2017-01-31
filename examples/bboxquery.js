@@ -2,7 +2,8 @@ goog.provide('app.bboxquery');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.Query');
+goog.require('ngeo.DataSource');
+goog.require('ngeo.DataSources');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
@@ -66,11 +67,12 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.Query} ngeoQuery The ngeo query service
+ * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
+ *     objects.
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoQuery) {
+app.MainController = function($scope, ngeoDataSources) {
 
   /**
    * @type {boolean}
@@ -78,32 +80,38 @@ app.MainController = function($scope, ngeoQuery) {
    */
   this.queryActive = true;
 
-  const busStopSourceId = 'bus_stop';
+  ngeoDataSources.push(new ngeo.DataSource({
+    id: 1,
+    name: 'bus_stop',
+    visible: true,
+    wfsUrl: 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+    ogcLayers: [{
+      name: 'bus_stop',
+      queryable: true
+    }]
+  }));
   const busStopLayer = new ol.layer.Image({
-    'querySourceId': busStopSourceId,
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
       params: {'LAYERS': 'bus_stop'}
     })
   });
-  ngeoQuery.addSource({
-    'id': busStopSourceId,
-    'layer': busStopLayer,
-    'wfsQuery': true
-  });
 
-  const informationSourceId = 'information';
+  ngeoDataSources.push(new ngeo.DataSource({
+    id: 2,
+    name: 'information',
+    visible: true,
+    wfsUrl: 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+    ogcLayers: [{
+      name: 'information',
+      queryable: true
+    }]
+  }));
   const informationLayer = new ol.layer.Image({
-    'querySourceId': informationSourceId,
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
       params: {'LAYERS': 'information'}
     })
-  });
-  ngeoQuery.addSource({
-    'id': informationSourceId,
-    'layer': informationLayer,
-    'wfsQuery': true
   });
 
   /**

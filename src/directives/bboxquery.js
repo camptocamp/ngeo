@@ -1,7 +1,7 @@
 goog.provide('ngeo.bboxQueryDirective');
 
 goog.require('ngeo');
-goog.require('ngeo.Query');
+goog.require('ngeo.MapQuerent');
 goog.require('ol.interaction.DragBox');
 
 
@@ -27,13 +27,13 @@ goog.require('ol.interaction.DragBox');
  *
  * See the live example: [../examples/bboxquery.html](../examples/bboxquery.html)
  *
- * @param {ngeo.Query} ngeoQuery The ngeo Query service.
+ * @param {ngeo.MapQuerent} ngeoMapQuerent The ngeo map querent service.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBboxQuery
  */
-ngeo.bboxQueryDirective = function(ngeoQuery) {
+ngeo.bboxQueryDirective = function(ngeoMapQuerent) {
   return {
     restrict: 'A',
     scope: false,
@@ -54,7 +54,10 @@ ngeo.bboxQueryDirective = function(ngeoQuery) {
        */
       const handleBoxEnd = function(evt) {
         const extent = interaction.getGeometry().getExtent();
-        ngeoQuery.issue(map, extent);
+        ngeoMapQuerent.issue({
+          extent,
+          map
+        });
       };
       interaction.on('boxend', handleBoxEnd);
 
@@ -68,7 +71,7 @@ ngeo.bboxQueryDirective = function(ngeoQuery) {
               // deactivate
               map.removeInteraction(interaction);
               if (scope.$eval(attrs['ngeoBboxQueryAutoclear']) !== false) {
-                ngeoQuery.clear();
+                ngeoMapQuerent.clear();
               }
             }
           }

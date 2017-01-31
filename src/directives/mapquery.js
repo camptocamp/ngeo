@@ -1,7 +1,7 @@
 goog.provide('ngeo.mapQueryDirective');
 
 goog.require('ngeo');
-goog.require('ngeo.Query');
+goog.require('ngeo.MapQuerent');
 
 
 /**
@@ -26,13 +26,13 @@ goog.require('ngeo.Query');
  *
  * See our live example: [../examples/mapquery.html](../examples/mapquery.html)
  *
- * @param {ngeo.Query} ngeoQuery The ngeo Query service.
+ * @param {ngeo.MapQuerent} ngeoMapQuerent The ngeo map querent service.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoMapQuery
  */
-ngeo.mapQueryDirective = function(ngeoQuery) {
+ngeo.mapQueryDirective = function(ngeoMapQuerent) {
   return {
     restrict: 'A',
     scope: false,
@@ -46,7 +46,11 @@ ngeo.mapQueryDirective = function(ngeoQuery) {
        * @param {ol.MapBrowserEvent} evt The map browser event being fired.
        */
       const handleMapClick_ = function(evt) {
-        ngeoQuery.issue(map, evt.coordinate);
+        const coordinate = evt.coordinate;
+        ngeoMapQuerent.issue({
+          coordinate,
+          map
+        });
       };
 
       /**
@@ -67,7 +71,7 @@ ngeo.mapQueryDirective = function(ngeoQuery) {
           clickEventKey_ = null;
         }
         if (scope.$eval(attrs['ngeoMapQueryAutoclear']) !== false) {
-          ngeoQuery.clear();
+          ngeoMapQuerent.clear();
         }
       };
 

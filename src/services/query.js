@@ -1,3 +1,5 @@
+// DEPRECATED
+
 goog.provide('ngeo.Query');
 
 goog.require('ngeo');
@@ -36,15 +38,16 @@ ngeo.QueryCacheItem;
 ngeo.QueryableSources;
 
 
+// Moved to mapquerent.js
 /**
  * The `ngeoQueryResult` is the value service where the features of the query
  * result are added.
  */
-ngeo.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
-  sources: [],
-  total: 0,
-  pending: false
-}));
+//ngeo.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
+//  sources: [],
+//  total: 0,
+//  pending: false
+//}));
 
 
 /**
