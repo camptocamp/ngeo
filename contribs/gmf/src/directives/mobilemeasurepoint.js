@@ -297,7 +297,7 @@ gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
     }
 
     const previousCtn = el.getElementsByClassName(className);
-    if (previousCtn.length > 0) {
+    if (previousCtn[0]) {
       previousCtn[0].remove();
     }
     el.appendChild(ctn);

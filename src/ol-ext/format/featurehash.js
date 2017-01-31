@@ -1138,9 +1138,7 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
   const propFunction = this.propertiesFunction_(feature);
   for (const key in propFunction) {
     const value = propFunction[key];
-    if (value !== undefined &&
-        value !== null &&
-        key !== feature.getGeometryName()) {
+    if (value !== undefined && value !== null && key !== feature.getGeometryName()) {
       if (encodedProperties.length !== 0) {
         encodedProperties.push('\'');
       }

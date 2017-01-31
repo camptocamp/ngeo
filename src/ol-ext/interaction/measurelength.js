@@ -37,7 +37,7 @@ ngeo.interaction.MeasureLength = function(format, opt_options) {
     this.continueMsg.textContent = 'Click to continue drawing the line.';
     const br = document.createElement('br');
     br.textContent = 'Double-click or click last point to finish.';
-    this.continueMsg.append(br);
+    this.continueMsg.appendChild(br);
   }
 
   /**

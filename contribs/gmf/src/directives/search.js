@@ -14,6 +14,7 @@ goog.require('ngeo.popoverDirective');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
+goog.require('ol.obj');
 goog.require('ol.proj');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
