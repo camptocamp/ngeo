@@ -100,7 +100,9 @@ ngeox.DataSourceLayer.prototype.queryable;
 /**
  * The options to create a ngeo.DataSource with.
  * @typedef {{
+ *     activeDimensions: (Object.<string, string>|undefined),
  *     copyable: (boolean|undefined),
+ *     dimensions: (Object.<string, string>|undefined),
  *     geometryName: (string|undefined),
  *     id: (number),
  *     idAttribute: (string|undefined),
@@ -132,11 +134,25 @@ ngeox.DataSourceOptions;
 
 
 /**
+ * The dimensions that are currently active on the data source.
+ * @type {Object.<string, string>|undefined}
+ */
+ngeox.DataSourceOptions.prototype.activeDimensions;
+
+
+/**
  * Whether the geometry from this data source can be copied to other data
  * sources or not. Defaults to `false`.
  * @type {boolean|undefined}
  */
 ngeox.DataSourceOptions.prototype.copyable;
+
+
+/**
+ * The dimensions this data source supports.
+ * @type {Object.<string, string>|undefined}
+ */
+ngeox.DataSourceOptions.prototype.dimensions;
 
 
 /**

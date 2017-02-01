@@ -327,7 +327,11 @@ gmf.DataSourcesManager = class {
     const snappingToVertice = meta.snappingConfig ?
           meta.snappingConfig.vertex : undefined;
 
-    // (7) Common options
+    // (7) Dimensions
+    const dimensions = node.dimensions || firstLevelGroup.dimensions;
+    const activeDimensions = dimensions;
+
+    // (8) Common options
     const copyable = meta.copyable;
     const identifierAttribute = meta.identifierAttributeField;
     const name = gmfLayer.name;
@@ -335,7 +339,9 @@ gmf.DataSourcesManager = class {
 
     // Create the data source and add it to the cache
     cache[id] = new ngeo.DataSource({
+      activeDimensions,
       copyable,
+      dimensions,
       id,
       identifierAttribute,
       maxResolution,
