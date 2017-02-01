@@ -541,8 +541,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
-		-e 's|/@?main=$*.js|$*.js|' \
-		-e 's|default\.js|lib/transpile.js|' \
+		-e 's|/@?main=$*.js|lib/transpile.js|' \
+		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
 		-e '/<head>/a\$(SED_NEW_LINE)    <script src="https.js"></script>$(SED_NEW_LINE)' $< > $@
 
@@ -573,8 +573,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
-		-e 's|/@?main=$*\.js|$*.js|' \
-		-e 's|default\.js|../../lib/transpile.js|' \
+		-e 's|/@?main=$*\.js|../../lib/transpile.js|' \
+		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
 		-e '/<head>/a\$(SED_NEW_LINE)    <script src="../../https.js"></script>$(SED_NEW_LINE)' $< > $@
 
