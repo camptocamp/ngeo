@@ -1,6 +1,7 @@
 /* global msGMLOutputFuel */
 goog.require('ngeo.WfsPermalink');
 goog.require('ol.format.filter');
+goog.require('ol.format.filter.LogicalNary');
 goog.require('ngeo.test.data.msGMLOutputFuel');
 
 describe('ngeo.WfsPermalink', () => {
@@ -84,9 +85,11 @@ describe('ngeo.WfsPermalink', () => {
   describe('#createFilters_', () => {
     const expectFiltersToEqual = function(filter1, filter2) {
       expect(filter1.constructor).toBe(filter2.constructor, 'same filter type');
-      if (filter1 instanceof ol.format.filter.LogicalBinary) {
-        expectFiltersToEqual(filter1.conditionA, filter2.conditionA);
-        expectFiltersToEqual(filter1.conditionB, filter2.conditionB);
+      if (filter1 instanceof ol.format.filter.LogicalNary) {
+        expectFiltersToEqual(filter1.conditions.length, filter2.conditions.length);
+        for (let i = 0; i < filter1.conditions.length; ++i) {
+          expectFiltersToEqual(filter1.conditions[i], filter2.conditions[i]);
+        }
       } else {
         expect(filter1 instanceof ol.format.filter.EqualTo);
         expect(filter1.propertyName).toBe(filter2.propertyName);
