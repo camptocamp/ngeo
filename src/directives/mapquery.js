@@ -39,6 +39,8 @@ ngeo.mapQueryDirective = function(ngeoMapQuerent) {
     link(scope, elem, attrs) {
       const map = scope.$eval(attrs['ngeoMapQueryMap']);
       let clickEventKey_ = null;
+      let queryableLayers_ = [];
+      let pointerMoveEventKey_ = null;
 
       /**
        * Called when the map is clicked while this controller is active. Issue
@@ -54,21 +56,64 @@ ngeo.mapQueryDirective = function(ngeoMapQuerent) {
       };
 
       /**
-       * Listen to the map 'click' event.
+       * Check if layer is queryable.
+       * @param {ol.layer.Base} layer The layer to check.
+       * @return {boolean} true if layer is queryable.
+       */
+      var isLayerQueryable_ = function(layer) {
+        for (var i = 0; i < queryableLayers_.length; i++) {
+          if (queryableLayers_[i] === layer) {
+            return true;
+          }
+        }
+
+        return false;
+      };
+
+      /**
+       * Called when the pointer is moved while this controller is active.
+       * Change the mouse pointer when hovering a non-transparent pixel on the
+       * map.
+       * @param {ol.MapBrowserEvent} evt The map browser event being fired.
+       */
+      var handlePointerMove_ = function(evt) {
+        if (evt.dragging) {
+          return;
+        }
+        var pixel = map.getEventPixel(evt.originalEvent);
+        var hit = map.forEachLayerAtPixel(pixel, function() {
+          return true;
+        },
+        undefined,
+        function(layer) {
+          return isLayerQueryable_(layer);
+        });
+        map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+      };
+
+      /**
+       * Listen to the map events.
        */
       const activate_ = function() {
         clickEventKey_ = ol.events.listen(map,
             ol.events.EventType.CLICK, handleMapClick_);
+
+        queryableLayers_ = ngeoQuery.getQueryableLayers(map);
+        pointerMoveEventKey_ = ol.events.listen(map,
+            'pointermove', handlePointerMove_);
       };
 
-
       /**
-       * Unlisten the map 'click' event.
+       * Unlisten the map events.
        */
       const deactivate_ = function() {
         if (clickEventKey_ !== null) {
           ol.events.unlistenByKey(clickEventKey_);
           clickEventKey_ = null;
+        }
+        if (pointerMoveEventKey_ !== null) {
+          ol.events.unlistenByKey(pointerMoveEventKey_);
+          pointerMoveEventKey_ = null;
         }
         if (scope.$eval(attrs['ngeoMapQueryAutoclear']) !== false) {
           ngeoMapQuerent.clear();

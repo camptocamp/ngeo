@@ -349,6 +349,36 @@ ngeo.Query.prototype.issue = function(map, object) {
 
 
 /**
+ * Return the list of queryable layers
+ *
+ * @param {ol.Map} map The ol3 map object to fetch the layers from.
+ * @return {Array.<ol.layer.Base>} Queryable layers.
+ * @export
+ */
+ngeo.Query.prototype.getQueryableLayers = function(map) {
+  var sources = this.getQueryableSources_(map, false);
+
+  var queryableWmsLayers = [];
+  var queryableWfsLayers = [];
+  var queryableLayers = [];
+
+  queryableWmsLayers = this.doGetQueryableLayers_(sources.wms);
+  queryableWfsLayers = this.doGetQueryableLayers_(sources.wfs);
+
+  if (queryableWmsLayers && queryableWmsLayers.length > 0
+      && queryableWfsLayers && queryableWfsLayers.length > 0) {
+    queryableLayers = queryableWmsLayers.concat(queryableWfsLayers);
+  } else if (queryableWmsLayers && queryableWmsLayers.length > 0) {
+    queryableLayers = queryableWmsLayers;
+  } else if (queryableWfsLayers && queryableWfsLayers.length > 0) {
+    queryableLayers = queryableWfsLayers;
+  }
+
+  return queryableLayers;
+};
+
+
+/**
  * Issue WMS GetFeatureInfo or WFS GetFeature requests using the given
  * coordinate and map.
  * For each visible layer of the map, if that layer has a source configured
@@ -580,6 +610,22 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
 
 
 /**
+ * @param {Object.<string, Array.<ngeo.QueryCacheItem>>} itemsByUrl Queryable
+ *    layers
+ * @return {Array.<ol.layer.Base>} The ol3 queryable layers objects.
+ * @private
+ */
+ngeo.Query.prototype.doGetQueryableLayers_ = function(itemsByUrl) {
+  var layers = null;
+  angular.forEach(itemsByUrl, function(items) {
+    layers = this.getOlLayersForItems_(items);
+  }, this);
+
+  return layers;
+};
+
+
+/**
  * @param {Object.<string, Array.<ngeo.QueryCacheItem>>} wfsItemsByUrl Queryable
  *    layers for GetFeature
  * @param {ol.Coordinate} coordinate Query coordinate
@@ -736,6 +782,30 @@ ngeo.Query.prototype.getLayersForItems_ = function(items) {
   let layers = this.getLayersForItem_(items[0]);
   for (let i = 1, len = items.length; i < len; i++) {
     layers = layers.concat(this.getLayersForItem_(items[i]));
+  }
+  return layers;
+};
+
+
+/**
+ * @param {ngeo.QueryCacheItem} item Cache item
+ * @return {ol.layer.Base} The ol3 queryable layer objects.
+ * @private
+ */
+ngeo.Query.prototype.getOlLayersForItem_ = function(item) {
+  return item.source.layer;
+};
+
+
+/**
+ * @param {Array.<ngeo.QueryCacheItem>} items Cache items
+ * @return {Array.<ol.layer.Base>} The ol3 queryable layers objects.
+ * @private
+ */
+ngeo.Query.prototype.getOlLayersForItems_ = function(items) {
+  var layers = [];
+  for (var i = 0, len = items.length; i < len; i++) {
+    layers.push(this.getOlLayersForItem_(items[i]));
   }
   return layers;
 };
