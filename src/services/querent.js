@@ -151,9 +151,8 @@ ngeo.Querent = class {
    * The keys are always unique, i.e. there can be multiple result objects for
    * the same data source id.
    *
-   * @param {!Array.<!Object.<number, !Array.<!ol.Feature>>>} response Response.
-   * @return {!Object.<number, !Array.<!ol.Feature>>} Hash of features by
-   *     data source ids.
+   * @param {!Array.<ngeox.QuerentResult>} response Response.
+   * @return {ngeox.QuerentResult} Hash of features by data source ids.
    * @private
    */
   handleCombinedQueryResult_(response) {
@@ -175,25 +174,36 @@ ngeo.Querent = class {
    * @param {!Array.<!ngeo.DataSource>} dataSources List of queryable data
    *     sources that were used to do the query.
    * @param {boolean} wfs Whether the query was WFS or WMS.
-   * @param {!angular.$http.Response} response Response.
-   * @return {Object.<number, Array.<ol.Feature>>} Hash of features by
-   *     data source ids.
+   * @param {angular.$http.Response|number} response Response.
+   * @return {ngeox.QuerentResult} Hash of features by data source ids.
    * @private
    */
   handleQueryResult_(dataSources, wfs, response) {
-
     const hash = {};
 
     for (const dataSource of dataSources) {
       let features;
-      if (wfs) {
-        features = dataSource.wfsFormat.readFeatures(response.data);
+      let tooManyFeatures;
+      let totalFeatureCount;
+
+      if (typeof response === 'number') {
+        features = [];
+        tooManyFeatures = true;
+        totalFeatureCount = response;
       } else {
-        features = dataSource.wmsFormat.readFeatures(response.data);
+        if (wfs) {
+          features = dataSource.wfsFormat.readFeatures(response.data);
+        } else {
+          features = dataSource.wmsFormat.readFeatures(response.data);
+        }
       }
       const dataSourceId = dataSource.id;
       this.setUniqueIds_(features, dataSource.id);
-      hash[dataSourceId] = features;
+      hash[dataSourceId] = {
+        features,
+        tooManyFeatures,
+        totalFeatureCount
+      };
     }
 
     return hash;
@@ -219,6 +229,7 @@ ngeo.Querent = class {
     const resolution = goog.asserts.assertNumber(view.getResolution());
     const projection = view.getProjection();
     const srsName = projection.getCode();
+    const wfsCount = options.wfsCount === true;
 
     // (1) Extent (bbox), which is optional, i.e. its value can stay undefined
     let bbox;
@@ -240,7 +251,7 @@ ngeo.Querent = class {
     const xmlSerializer = new XMLSerializer();
     for (const dataSources of combinedDataSources) {
 
-      let getFeatureOptions;
+      let getFeatureCommonOptions;
       let featureNS;
       let featureTypes = [];
       let url;
@@ -249,18 +260,17 @@ ngeo.Querent = class {
       for (const dataSource of dataSources) {
 
         // (a) Create common options, if not done yet
-        if (!getFeatureOptions) {
+        if (!getFeatureCommonOptions) {
           featureNS = dataSource.wfsFeatureNS;
           const featurePrefix = dataSource.wfsFeaturePrefix;
           const geometryName = dataSource.geometryName;
           const outputFormat = dataSource.wfsOutputFormat;
 
-          getFeatureOptions = {
+          getFeatureCommonOptions = {
             bbox,
             featureNS,
             featurePrefix,
             geometryName,
-            maxFeatures,
             outputFormat,
             srsName
           };
@@ -273,26 +283,94 @@ ngeo.Querent = class {
           dataSource.getInRangeOGCLayerNames(resolution, true));
       }
 
-      goog.asserts.assert(getFeatureOptions);
-      getFeatureOptions.featureTypes = featureTypes;
+      goog.asserts.assert(getFeatureCommonOptions);
+      getFeatureCommonOptions.featureTypes = featureTypes;
       goog.asserts.assert(url);
 
       // (4) Build query then launch
-      const featureRequestXml = wfsFormat.writeGetFeature(getFeatureOptions);
-      const featureRequest = xmlSerializer.serializeToString(featureRequestXml);
-
-      const canceler = this.registerCanceler_();
+      //
+      //     If we require to do a WFS GetFeature request with
+      //     `resultType: 'hits'` first, do so. In that case, if there would
+      //     be too many features returned, no GetFeature is done thereafter
+      //     and the data sources will return empty arrays in the returned
+      //     response.
+      //
+      //     If we do not need to count features first, then proceed with
+      //     an normal WFS GetFeature request.
+      const getFeatureDefer = this.q_.defer();
       promises.push(
-        this.http_.post(
-          url,
-          featureRequest,
-          {
-            timeout: canceler.promise
-          }
-        ).then(
+        getFeatureDefer.promise.then(
           this.handleQueryResult_.bind(this, dataSources, true)
         )
       );
+
+      // (4.1) Count, if required
+      let countPromise;
+      if (wfsCount) {
+        const getCountOptions =
+              /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
+                ol.obj.assign(
+                  {
+                    resultType: 'hits'
+                  },
+                  getFeatureCommonOptions
+                )
+              );
+        const featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
+        const featureCountRequest = xmlSerializer.serializeToString(
+          featureCountXml);
+        const canceler = this.registerCanceler_();
+        countPromise = this.http_.post(
+          url,
+          featureCountRequest,
+          {
+            timeout: canceler.promise
+          }
+        ).then(((response) => {
+          const meta = dataSources[0].wfsFormat.readFeatureCollectionMetadata(
+            response.data
+          );
+          return meta['numberOfFeatures'];
+        }).bind(this));
+      } else {
+        countPromise = this.q_.resolve();
+      }
+
+      // (4.2) After count, do GetFeature (if required)
+      countPromise.then((numberOfFeatures) => {
+        // `true` is returned if a count request was made AND there would
+        // be too many features.
+        if (numberOfFeatures === undefined || numberOfFeatures < maxFeatures) {
+
+          const getFeatureOptions =
+              /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
+                ol.obj.assign(
+                  {
+                    maxFeatures
+                  },
+                  getFeatureCommonOptions
+                )
+              );
+          const featureRequestXml = wfsFormat.writeGetFeature(
+            getFeatureOptions);
+          const featureRequest = xmlSerializer.serializeToString(
+            featureRequestXml);
+          goog.asserts.assertString(url);
+          const canceler = this.registerCanceler_();
+          this.http_.post(
+            url,
+            featureRequest,
+            {
+              timeout: canceler.promise
+            }
+          ).then((response) => {
+            getFeatureDefer.resolve(response);
+          });
+
+        } else {
+          getFeatureDefer.resolve(numberOfFeatures);
+        }
+      });
     }
 
     return this.q_.all(promises).then(
