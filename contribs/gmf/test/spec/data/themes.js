@@ -10,7 +10,7 @@ const themes = {
 
       },
       'id':38,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/enseignement.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/enseignement.jpeg',
       'children':[
         {
           'name':'Enseignement 2',
@@ -84,7 +84,7 @@ const themes = {
 
       },
       'id':37,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/transports.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/transports.jpeg',
       'children':[
         {
           'name':'Transport',
@@ -181,7 +181,7 @@ const themes = {
 
       },
       'id':29,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg',
       'children':[
         {
           'mixed':true,
@@ -348,7 +348,7 @@ const themes = {
         ]
       },
       'id':64,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/osm.png',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/osm.png',
       'children':[
         {
           'mixed':true,
@@ -1249,7 +1249,7 @@ const themes = {
 
       },
       'id':73,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/edit.png',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/edit.png',
       'children':[
         {
           'name':'Edit',
@@ -1326,7 +1326,7 @@ const themes = {
               'id':113,
               'imageType':'image/png',
               'metadata':{
-                'metadataUrl':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/htdocs/example.html',
+                'metadataUrl':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/htdocs/example.html',
                 'isChecked':true,
                 'identifierAttributeField':'name',
                 'legend':'true',
@@ -1626,7 +1626,7 @@ const themes = {
 
       },
       'id':5,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/administration.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/administration.jpeg',
       'children':[
         {
           'name':'Administration',
@@ -1700,7 +1700,7 @@ const themes = {
 
       },
       'id':92,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/enseignement2.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/enseignement2.jpeg',
       'children':[
         {
           'name':'Enseignement',
@@ -1750,7 +1750,7 @@ const themes = {
 
       },
       'id':4,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/patrimoine.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/patrimoine.jpeg',
       'children':[
         {
           'name':'Patrimoine',
@@ -1825,7 +1825,7 @@ const themes = {
 
       },
       'id':3,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/gestion_eaux.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/gestion_eaux.jpeg',
       'children':[
         {
           'name':'Gestion des eaux',
@@ -1900,7 +1900,7 @@ const themes = {
 
       },
       'id':2,
-      'icon':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/paysage.jpeg',
+      'icon':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/paysage.jpeg',
       'children':[
         {
           'name':'Paysage',
@@ -2000,13 +2000,13 @@ const themes = {
       'dimensions':{
 
       },
-      'url':'https://geomapfish-demo.camptocamp.net/2.1//tiles/1.0.0/WMTSCapabilities.xml?',
+      'url':'https://geomapfish-demo.camptocamp.net/2.2//tiles/1.0.0/WMTSCapabilities.xml?',
       'name':'map',
       'type':'WMTS',
       'id':134,
       'imageType':'image/jpeg',
       'metadata':{
-        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
+        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
       }
     },
     {
@@ -2021,7 +2021,7 @@ const themes = {
       'id':132,
       'imageType':'image/jpeg',
       'metadata':{
-        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
+        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
       }
     },
     {
@@ -2036,7 +2036,7 @@ const themes = {
       'id':133,
       'imageType':'image/jpeg',
       'metadata':{
-        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
+        'thumbnail':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
       }
     }
   ],
@@ -2053,18 +2053,18 @@ const themes = {
       'imageType':'image/png'
     },
     'Main Jpeg':{
-      'url':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?username=admin&ogcserver=Main+Jpeg&cache_version=276bcfffd75a40debc73e47936bfe884',
+      'url':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy?username=admin&ogcserver=Main+Jpeg&cache_version=276bcfffd75a40debc73e47936bfe884',
       'isSingleTile':false,
       'wfsSupport':true,
-      'urlWfs':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?username=admin&ogcserver=Main+Jpeg&cache_version=276bcfffd75a40debc73e47936bfe884',
+      'urlWfs':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy?username=admin&ogcserver=Main+Jpeg&cache_version=276bcfffd75a40debc73e47936bfe884',
       'type':'mapserver',
       'imageType':'image/jpeg'
     },
     'Main PNG':{
-      'url':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?username=admin&ogcserver=Main+PNG&cache_version=276bcfffd75a40debc73e47936bfe884',
+      'url':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy?username=admin&ogcserver=Main+PNG&cache_version=276bcfffd75a40debc73e47936bfe884',
       'isSingleTile':false,
       'wfsSupport':true,
-      'urlWfs':'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy?username=admin&ogcserver=Main+PNG&cache_version=276bcfffd75a40debc73e47936bfe884',
+      'urlWfs':'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy?username=admin&ogcserver=Main+PNG&cache_version=276bcfffd75a40debc73e47936bfe884',
       'type':'mapserver',
       'imageType':'image/png'
     }

@@ -35,7 +35,7 @@ gmfapp.module.value('ngeoQueryOptions', {
 
 gmfapp.module.value(
     'gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
 

@@ -92,7 +92,7 @@ app.MainController = function($scope, ngeoDataSources) {
   }));
   const busStopLayer = new ol.layer.Image({
     'source': new ol.source.ImageWMS({
-      'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+      'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
       params: {'LAYERS': 'bus_stop'}
     })
   });
@@ -109,7 +109,7 @@ app.MainController = function($scope, ngeoDataSources) {
   }));
   const informationLayer = new ol.layer.Image({
     'source': new ol.source.ImageWMS({
-      'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+      'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
       params: {'LAYERS': 'information'}
     })
   });

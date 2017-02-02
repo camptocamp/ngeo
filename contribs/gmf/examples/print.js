@@ -21,17 +21,17 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 gmfapp.module.value(
     'gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
 
 gmfapp.module.value('gmfPrintUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
 
 
 gmfapp.module.value(
     'authenticationBaseUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi'
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi'
 );
 
 

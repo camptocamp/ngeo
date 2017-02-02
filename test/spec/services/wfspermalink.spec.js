@@ -11,7 +11,7 @@ describe('ngeo.WfsPermalink', () => {
   beforeEach(() => {
     module('ngeo', ($provide) => {
       $provide.value('ngeoWfsPermalinkOptions', {
-        url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
+        url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
         wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
         defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
         defaultFeaturePrefix: 'ms'
@@ -34,7 +34,7 @@ describe('ngeo.WfsPermalink', () => {
     let map;
 
     beforeEach(() => {
-      const url = 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy';
+      const url = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy';
       inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('POST', url).respond(msGMLOutputFuel);
