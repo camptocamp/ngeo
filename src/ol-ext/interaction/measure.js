@@ -8,7 +8,7 @@ goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Overlay');
 goog.require('ol.events');
-goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -76,6 +76,7 @@ ol.inherits(ngeo.MeasureEvent, ol.events.Event);
  *
  * @constructor
  * @struct
+ * @abstract
  * @extends {ol.interaction.Interaction}
  * @param {ngeo.interaction.MeasureBaseOptions=} opt_options Options
  */
@@ -212,15 +213,15 @@ ngeo.interaction.Measure = function(opt_options) {
   this.shouldHandleDrawInteractionActiveChange_ = true;
 
   ol.events.listen(this.drawInteraction_,
-      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
       this.handleDrawInteractionActiveChange_, this);
   ol.events.listen(this.drawInteraction_,
-      ol.interaction.Draw.EventType.DRAWSTART, this.onDrawStart_, this);
+      ol.interaction.DrawEventType.DRAWSTART, this.onDrawStart_, this);
   ol.events.listen(this.drawInteraction_,
-      ol.interaction.Draw.EventType.DRAWEND, this.onDrawEnd_, this);
+      ol.interaction.DrawEventType.DRAWEND, this.onDrawEnd_, this);
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
       this.updateState_, this);
 };
 ol.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
@@ -312,7 +313,7 @@ ngeo.interaction.Measure.getFormattedPoint = function(
  * @private
  */
 ngeo.interaction.Measure.handleEvent_ = function(evt) {
-  if (evt.type != ol.MapBrowserEvent.EventType.POINTERMOVE || evt.dragging) {
+  if (evt.type != ol.MapBrowserEventType.POINTERMOVE || evt.dragging) {
     return true;
   }
 

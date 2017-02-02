@@ -84,7 +84,7 @@ app.MapDirectiveController = function(ngeoLocation, ngeoDebounce) {
   view.on('propertychange',
       ngeoDebounce(
           /**
-           * @param {ol.ObjectEvent} e Object event.
+           * @param {ol.ObjectEventType} e Object event.
            */
           (e) => {
             const center = view.getCenter();

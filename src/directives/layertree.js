@@ -262,7 +262,7 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
 
     ol.events.listen(
       this.layer,
-      ol.Object.getChangeEventType(ol.layer.LayerProperty.OPACITY),
+      ol.Object.getChangeEventType(ol.layer.Property.OPACITY),
       function(evt) {
         this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
       }, this

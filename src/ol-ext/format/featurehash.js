@@ -1023,6 +1023,7 @@ ngeo.format.FeatureHash.prototype.encodeCoordinates_ = function(flatCoordinates,
  * @param {olx.format.ReadOptions=} opt_options Read options.
  * @return {ol.Feature} Feature.
  * @protected
+ * @override
  */
 ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_options) {
   goog.asserts.assert(text.length > 2);
@@ -1073,6 +1074,7 @@ ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_optio
  * @param {olx.format.ReadOptions=} opt_options Read options.
  * @return {Array.<ol.Feature>} Features.
  * @protected
+ * @override
  */
 ngeo.format.FeatureHash.prototype.readFeaturesFromText = function(text, opt_options) {
   goog.asserts.assert(text[0] === 'F');
@@ -1097,6 +1099,7 @@ ngeo.format.FeatureHash.prototype.readFeaturesFromText = function(text, opt_opti
  * @param {olx.format.ReadOptions=} opt_options Read options.
  * @return {ol.geom.Geometry} Geometry.
  * @protected
+ * @override
  */
 ngeo.format.FeatureHash.prototype.readGeometryFromText = function(text, opt_options) {
   const geometryReader = ngeo.format.FeatureHash.GEOMETRY_READERS_[text[0]];
@@ -1113,6 +1116,7 @@ ngeo.format.FeatureHash.prototype.readGeometryFromText = function(text, opt_opti
  * @param {olx.format.ReadOptions=} opt_options Read options.
  * @return {string} Encoded feature.
  * @protected
+ * @override
  */
 ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_options) {
   const /** @type {Array.<string>} */ encodedParts = [];
@@ -1186,6 +1190,7 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
  * @param {olx.format.ReadOptions=} opt_options Read options.
  * @return {string} Encoded features.
  * @protected
+ * @override
  */
 ngeo.format.FeatureHash.prototype.writeFeaturesText = function(features, opt_options) {
   const textArray = [];
@@ -1205,6 +1210,7 @@ ngeo.format.FeatureHash.prototype.writeFeaturesText = function(features, opt_opt
  * @param {olx.format.ReadOptions=} opt_options Read options.
  * @return {string} Encoded geometry.
  * @protected
+ * @override
  */
 ngeo.format.FeatureHash.prototype.writeGeometryText = function(geometry, opt_options) {
   const geometryWriter = ngeo.format.FeatureHash.GEOMETRY_WRITERS_[

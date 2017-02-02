@@ -4,9 +4,10 @@ goog.require('ngeo');
 goog.require('ngeo.DataSource');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DataSources');
-goog.require('ol.Collection');
+goog.require('ol.CollectionEventType');
 goog.require('ol.Observable');
 goog.require('ol.View');
+goog.require('ol.ViewProperty');
 goog.require('goog.asserts');
 
 
@@ -53,7 +54,7 @@ ngeo.SyncDataSourcesMap = class {
 
     ol.events.listen(
       this.ngeoDataSources_,
-      ol.Collection.EventType.ADD,
+      ol.CollectionEventType.ADD,
       this.handleDataSourcesAdd_,
       this
     );
@@ -87,7 +88,7 @@ ngeo.SyncDataSourcesMap = class {
     this.listenerKeys_.push(
       ol.events.listen(
         view,
-        ol.Object.getChangeEventType(ol.View.Property.RESOLUTION),
+        ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
         this.handleViewResolutionChange_,
         this
       )
@@ -112,7 +113,7 @@ ngeo.SyncDataSourcesMap = class {
   /**
    * Called when the resolution of the map view changes. Synchronize the
    * datasources to current resolution of the view.
-   * @param {ol.ObjectEvent} evt Event.
+   * @param {Event} evt Event.
    * @private
    */
   handleViewResolutionChange_(evt) {

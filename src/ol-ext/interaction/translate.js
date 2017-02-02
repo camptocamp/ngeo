@@ -85,6 +85,7 @@ ol.inherits(ngeo.interaction.Translate, ol.interaction.Translate);
  * Activate or deactivate the interaction.
  * @param {boolean} active Active.
  * @export
+ * @override
  */
 ngeo.interaction.Translate.prototype.setActive = function(active) {
 
@@ -114,6 +115,7 @@ ngeo.interaction.Translate.prototype.setActive = function(active) {
  * Subclasses may set up event handlers to get notified about changes to
  * the map here.
  * @param {ol.Map} map Map.
+ * @override
  */
 ngeo.interaction.Translate.prototype.setMap = function(map) {
 
@@ -143,9 +145,9 @@ ngeo.interaction.Translate.prototype.setState_ = function() {
 
   if (map && active && features) {
     features.forEach(this.addFeature_, this);
-    keys.push(ol.events.listen(features, ol.Collection.EventType.ADD,
+    keys.push(ol.events.listen(features, ol.CollectionEventType.ADD,
         this.handleFeaturesAdd_, this));
-    keys.push(ol.events.listen(features, ol.Collection.EventType.REMOVE,
+    keys.push(ol.events.listen(features, ol.CollectionEventType.REMOVE,
         this.handleFeaturesRemove_, this));
   } else {
 

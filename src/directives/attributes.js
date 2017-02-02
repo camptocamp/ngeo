@@ -1,6 +1,7 @@
 goog.provide('ngeo.AttributesController');
 goog.provide('ngeo.attributesDirective');
 
+goog.require('ol.ObjectEventType');
 goog.require('ngeo');
 goog.require('ngeo.EventHelper');
 
@@ -156,7 +157,7 @@ ngeo.AttributesController.prototype.handleDestroy_ = function() {
 
 
 /**
- * @param {ol.ObjectEvent} evt Event.
+ * @param {ol.Object.Event} evt Event.
  * @private
  */
 ngeo.AttributesController.prototype.handleFeaturePropertyChange_ = function(

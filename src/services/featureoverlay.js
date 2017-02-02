@@ -2,12 +2,16 @@ goog.provide('ngeo.FeatureOverlay');
 goog.provide('ngeo.FeatureOverlayMgr');
 
 goog.require('ngeo');
+goog.require('ol');
+goog.require('ol.events');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
 goog.require('ol.layer.Vector');
 goog.require('ol.obj');
 goog.require('ol.source.Vector');
 goog.require('ol.style.Style');
+
+goog.require('goog.asserts');
 
 
 /**
@@ -252,18 +256,18 @@ ngeo.FeatureOverlay.prototype.clear = function() {
 ngeo.FeatureOverlay.prototype.setFeatures = function(features) {
   if (this.features_ !== null) {
     this.features_.clear();
-    ol.events.unlisten(this.features_, ol.Collection.EventType.ADD,
+    ol.events.unlisten(this.features_, ol.CollectionEventType.ADD,
         this.handleFeatureAdd_, this);
-    ol.events.unlisten(this.features_, ol.Collection.EventType.REMOVE,
+    ol.events.unlisten(this.features_, ol.CollectionEventType.REMOVE,
         this.handleFeatureRemove_, this);
   }
   if (features !== null) {
     features.forEach(function(feature) {
       this.addFeature(feature);
     }, this);
-    ol.events.listen(features, ol.Collection.EventType.ADD,
+    ol.events.listen(features, ol.CollectionEventType.ADD,
         this.handleFeatureAdd_, this);
-    ol.events.listen(features, ol.Collection.EventType.REMOVE,
+    ol.events.listen(features, ol.CollectionEventType.REMOVE,
         this.handleFeatureRemove_, this);
   }
   this.features_ = features;

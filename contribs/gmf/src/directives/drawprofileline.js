@@ -5,6 +5,7 @@ goog.require('gmf');
 goog.require('ol.Collection');
 goog.require('ol.geom.LineString');
 goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEventType');
 goog.require('ol.style.Style');
 goog.require('ol.style.Stroke');
 goog.require('ngeo.DecorateInteraction');
@@ -129,7 +130,7 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
 
   // Clear the line as soon as the interaction is activated.
   this.interaction.on(
-    ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+    ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
     function() {
       if (this.interaction.getActive()) {
         this.clear_();
@@ -138,7 +139,7 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
   );
 
   // Update the profile with the new geometry.
-  this.interaction.on(ol.interaction.Draw.EventType.DRAWEND, function(e) {
+  this.interaction.on(ol.interaction.DrawEventType.DRAWEND, function(e) {
     this.line = e.feature.getGeometry();
     // using timeout to prevent dblclick to zoom the map
     $timeout(() => {

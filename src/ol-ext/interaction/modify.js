@@ -102,6 +102,7 @@ ol.inherits(ngeo.interaction.Modify, ol.interaction.Interaction);
  * Activate or deactivate the interaction.
  * @param {boolean} active Active.
  * @export
+ * @override
  */
 ngeo.interaction.Modify.prototype.setActive = function(active) {
   ol.interaction.Interaction.prototype.setActive.call(this, active);
@@ -114,6 +115,7 @@ ngeo.interaction.Modify.prototype.setActive = function(active) {
  * Subclasses may set up event handlers to get notified about changes to
  * the map here.
  * @param {ol.Map} map Map.
+ * @override
  */
 ngeo.interaction.Modify.prototype.setMap = function(map) {
 
@@ -154,9 +156,9 @@ ngeo.interaction.Modify.prototype.setState_ = function() {
 
   if (active && map) {
     this.features_.forEach(this.addFeature_, this);
-    keys.push(ol.events.listen(this.features_, ol.Collection.EventType.ADD,
+    keys.push(ol.events.listen(this.features_, ol.CollectionEventType.ADD,
         this.handleFeaturesAdd_, this));
-    keys.push(ol.events.listen(this.features_, ol.Collection.EventType.REMOVE,
+    keys.push(ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
         this.handleFeaturesRemove_, this));
   } else {
     keys.forEach((key) => {

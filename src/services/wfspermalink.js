@@ -212,12 +212,11 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
     }
 
     // zoom to features
-    const mapSize = map.getSize();
-    if (mapSize !== undefined) {
-      map.getView().fit(
-          this.getExtent_(features),
-          mapSize,
-          {maxZoom: this.pointRecenterZoom_, padding: [10, 10, 10, 10]});
+    const size = map.getSize();
+    if (size !== undefined) {
+      const maxZoom = this.pointRecenterZoom_;
+      const padding = [10, 10, 10, 10];
+      map.getView().fit(this.getExtent_(features), {size, maxZoom, padding});
     }
 
     // then show if requested

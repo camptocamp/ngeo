@@ -3,6 +3,7 @@ goog.provide('ngeo.MenuEvent');
 goog.provide('ngeo.MenuEventType');
 
 goog.require('ol.Overlay');
+goog.require('ol.OverlayPositioning');
 goog.require('ol.events.Event');
 
 
@@ -58,7 +59,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
 
   const options = opt_overlayOptions !== undefined ? opt_overlayOptions : {};
 
-  options.positioning = ol.Overlay.Positioning.TOP_LEFT;
+  options.positioning = ol.OverlayPositioning.TOP_LEFT;
 
   /**
    * @type {Array.<goog.events.Key>}
@@ -139,6 +140,7 @@ ol.inherits(ngeo.Menu, ol.Overlay);
 /**
  * @param {ol.Map|undefined} map Map.
  * @export
+ * @override
  */
 ngeo.Menu.prototype.setMap = function(map) {
 
@@ -177,7 +179,7 @@ ngeo.Menu.prototype.setMap = function(map) {
     olKeys.push(
       ol.events.listen(
         map,
-        ol.MapBrowserEvent.EventType.POINTERMOVE,
+        ol.MapBrowserEventType.POINTERMOVE,
         this.handleMapPointerMove_,
         this
       )

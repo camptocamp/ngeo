@@ -5,9 +5,9 @@ goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
-goog.require('ol.MapBrowserEvent.EventType');
+goog.require('ol.MapBrowserEventType');
 goog.require('ol.MapBrowserPointerEvent');
-goog.require('ol.View');
+goog.require('ol.ViewHint');
 goog.require('ol.coordinate');
 goog.require('ol.events');
 goog.require('ol.extent');
@@ -17,6 +17,7 @@ goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
 goog.require('ol.interaction.Modify');
+goog.require('ol.interaction.ModifyEventType');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -121,9 +122,9 @@ ngeo.interaction.ModifyCircle = function(options) {
   this.features_ = options.features;
 
   this.features_.forEach(this.addFeature_, this);
-  ol.events.listen(this.features_, ol.Collection.EventType.ADD,
+  ol.events.listen(this.features_, ol.CollectionEventType.ADD,
       this.handleFeatureAdd_, this);
-  ol.events.listen(this.features_, ol.Collection.EventType.REMOVE,
+  ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
       this.handleFeatureRemove_, this);
 
 };
@@ -156,7 +157,7 @@ ngeo.interaction.ModifyCircle.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
     this.dispatchEvent(new ol.interaction.Modify.Event(
-        ol.interaction.Modify.EventType.MODIFYSTART, this.features_, evt));
+        ol.interaction.ModifyEventType.MODIFYSTART, this.features_, evt));
   }
 };
 
@@ -371,7 +372,7 @@ ngeo.interaction.ModifyCircle.handleUpEvent_ = function(evt) {
 
   if (this.modified_) {
     this.dispatchEvent(new ol.interaction.Modify.Event(
-        ol.interaction.Modify.EventType.MODIFYEND, this.features_, evt));
+        ol.interaction.ModifyEventType.MODIFYEND, this.features_, evt));
     this.modified_ = false;
   }
   return false;
@@ -392,8 +393,8 @@ ngeo.interaction.ModifyCircle.handleEvent = function(mapBrowserEvent) {
   }
 
   let handled;
-  if (!mapBrowserEvent.map.getView().getHints()[ol.View.Hint.INTERACTING] &&
-      mapBrowserEvent.type == ol.MapBrowserEvent.EventType.POINTERMOVE &&
+  if (!mapBrowserEvent.map.getView().getHints()[ol.ViewHint.INTERACTING] &&
+      mapBrowserEvent.type == ol.MapBrowserEventType.POINTERMOVE &&
       !this.handlingDownUpSequence) {
     this.handlePointerMove_(mapBrowserEvent);
   }

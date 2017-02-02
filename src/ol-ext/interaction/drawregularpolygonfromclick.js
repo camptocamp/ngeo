@@ -4,6 +4,7 @@ goog.require('ol.Feature');
 goog.require('ol.functions');
 goog.require('ol.geom.Circle');
 goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
 
 
@@ -58,6 +59,7 @@ ol.inherits(
  * Activate or deactivate the interaction.
  * @param {boolean} active Active.
  * @export
+ * @override
  */
 ngeo.interaction.DrawRegularPolygonFromClick.prototype.setActive = function(
   active
@@ -106,7 +108,7 @@ ngeo.interaction.DrawRegularPolygonFromClick.prototype.enable_ = function() {
   this.listenerKeys_.push(
     ol.events.listen(
       map,
-      ol.MapBrowserEvent.EventType.CLICK,
+      ol.MapBrowserEventType.CLICK,
       this.handleMapClick_,
       this
     )
@@ -145,7 +147,7 @@ ngeo.interaction.DrawRegularPolygonFromClick.prototype.handleMapClick_ = functio
 
   this.dispatchEvent(
     new ol.interaction.Draw.Event(
-      ol.interaction.Draw.EventType.DRAWEND,
+      ol.interaction.DrawEventType.DRAWEND,
       new ol.Feature(geometry)
     )
   );

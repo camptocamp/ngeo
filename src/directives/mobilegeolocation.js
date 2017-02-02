@@ -8,8 +8,9 @@ goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.Notification');
 goog.require('ol.Feature');
 goog.require('ol.Geolocation');
+goog.require('ol.GeolocationProperty');
 goog.require('ol.Map');
-goog.require('ol.View');
+goog.require('ol.ViewProperty');
 goog.require('ol.geom.Point');
 
 
@@ -166,7 +167,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
 
   ol.events.listen(
       this.geolocation_,
-      ol.Object.getChangeEventType(ol.Geolocation.Property.ACCURACY_GEOMETRY),
+      ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
       function() {
         this.accuracyFeature_.setGeometry(
             this.geolocation_.getAccuracyGeometry());
@@ -175,7 +176,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
 
   ol.events.listen(
       this.geolocation_,
-      ol.Object.getChangeEventType(ol.Geolocation.Property.POSITION),
+      ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
       function(e) {
         this.setPosition_(e);
       },
@@ -185,19 +186,19 @@ ngeo.MobileGeolocationController = function($scope, $element,
 
   ol.events.listen(
       view,
-      ol.Object.getChangeEventType(ol.View.Property.CENTER),
+      ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
       this.handleViewChange_,
       this);
 
   ol.events.listen(
       view,
-      ol.Object.getChangeEventType(ol.View.Property.RESOLUTION),
+      ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
       this.handleViewChange_,
       this);
 
   ol.events.listen(
       view,
-      ol.Object.getChangeEventType(ol.View.Property.ROTATION),
+      ol.Object.getChangeEventType(ol.ViewProperty.ROTATION),
       this.handleViewChange_,
       this);
 
@@ -257,7 +258,7 @@ ngeo.MobileGeolocationController.prototype.untrack_ = function() {
 
 
 /**
- * @param {ol.ObjectEvent} event Event.
+ * @param {ol.Object.Event} event Event.
  * @private
  */
 ngeo.MobileGeolocationController.prototype.setPosition_ = function(event) {
@@ -278,7 +279,7 @@ ngeo.MobileGeolocationController.prototype.setPosition_ = function(event) {
 
 
 /**
- * @param {ol.ObjectEvent} event Event.
+ * @param {ol.Object.Event} event Event.
  * @private
  */
 ngeo.MobileGeolocationController.prototype.handleViewChange_ = function(event) {

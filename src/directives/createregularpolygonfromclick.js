@@ -4,6 +4,7 @@ goog.provide('ngeo.createregularpolygonfromclickDirective');
 goog.require('ngeo');
 goog.require('ngeo.interaction.DrawRegularPolygonFromClick');
 goog.require('ol.Feature');
+goog.require('ol.interaction.DrawEventType');
 
 
 /**
@@ -147,7 +148,7 @@ ngeo.CreateregularpolygonfromclickController = function($scope) {
    */
   this.interactionListenerKey_ = ol.events.listen(
     this.interaction_,
-    ol.interaction.Draw.EventType.DRAWEND,
+    ol.interaction.DrawEventType.DRAWEND,
     this.handleDrawEnd_,
     this
   );

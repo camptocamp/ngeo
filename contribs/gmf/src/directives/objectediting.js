@@ -18,6 +18,7 @@ goog.require('ol.Collection');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.MultiPolygon');
 goog.require('ol.interaction.Modify');
+goog.require('ol.interaction.ModifyEventType');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
@@ -603,7 +604,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
       ol.events.listen(
         this.modify_,
         ol.Object.getChangeEventType(
-          ol.interaction.Interaction.Property.ACTIVE),
+          ol.interaction.Property.ACTIVE),
         this.setFeatureStyle_,
         this
       )
@@ -612,7 +613,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
     keys.push(
       ol.events.listen(
         this.modify_,
-        ol.interaction.Modify.EventType.MODIFYEND,
+        ol.interaction.ModifyEventType.MODIFYEND,
         this.handleModifyInteractionModifyEnd_,
         this
       )
@@ -630,7 +631,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
     keys.push(
       ol.events.listen(
         this.sketchFeatures,
-        ol.Collection.EventType.ADD,
+        ol.CollectionEventType.ADD,
         this.handleSketchFeaturesAdd_,
         this
       )

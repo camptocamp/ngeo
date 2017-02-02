@@ -6,10 +6,11 @@ goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.SimpleGeometry');
 goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
-goog.require('ol.View');
+goog.require('ol.ViewProperty');
 
 
 /**
@@ -107,7 +108,7 @@ ngeo.interaction.MobileDraw = function(options) {
   });
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
       this.updateState_, this);
 
   this.set(ngeo.interaction.MobileDrawProperty.DIRTY, false);
@@ -134,7 +135,7 @@ ngeo.interaction.MobileDraw.prototype.setMap = function(map) {
 
   if (map) {
     this.changeEventKey_ = ol.events.listen(map.getView(),
-        ol.Object.getChangeEventType(ol.View.Property.CENTER),
+        ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
         this.handleViewCenterChange_, this);
   }
 
@@ -223,7 +224,7 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
     if (!this.sketchFeature_) {
       this.sketchFeature_ = new ol.Feature(new ol.geom.Point(coordinate));
       this.dispatchEvent(new ol.interaction.Draw.Event(
-          ol.interaction.Draw.EventType.DRAWSTART, this.sketchFeature_));
+          ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
 
     }
     sketchFeatureGeom = this.sketchFeature_.getGeometry();
@@ -239,7 +240,7 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
       coordinates = [coordinate.slice(), coordinate.slice()];
       this.sketchFeature_ = new ol.Feature(new ol.geom.LineString(coordinates));
       this.dispatchEvent(new ol.interaction.Draw.Event(
-          ol.interaction.Draw.EventType.DRAWSTART, this.sketchFeature_));
+          ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
     } else {
       sketchFeatureGeom = this.sketchFeature_.getGeometry();
       goog.asserts.assertInstanceof(sketchFeatureGeom, ol.geom.SimpleGeometry);
@@ -307,7 +308,7 @@ ngeo.interaction.MobileDraw.prototype.finishDrawing = function() {
   this.set(ngeo.interaction.MobileDrawProperty.DRAWING, false);
 
   this.dispatchEvent(new ol.interaction.Draw.Event(
-      ol.interaction.Draw.EventType.DRAWEND, this.sketchFeature_));
+      ol.interaction.DrawEventType.DRAWEND, this.sketchFeature_));
 };
 
 
@@ -394,7 +395,7 @@ ngeo.interaction.MobileDraw.prototype.updateState_ = function() {
 
 
 /**
- * @param {ol.ObjectEvent} evt Event.
+ * @param {ol.Object.Event} evt Event.
  * @private
  */
 ngeo.interaction.MobileDraw.prototype.handleViewCenterChange_ = function(evt) {

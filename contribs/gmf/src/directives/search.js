@@ -816,16 +816,15 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
     }
   }
 
-  const mapSize = this.map_.getSize();
-  if (featureGeometry && mapSize) {
+  const size = this.map_.getSize();
+  if (featureGeometry && size) {
     const view = this.map_.getView();
     this.featureOverlay_.clear();
     this.featureOverlay_.addFeature(feature);
     this.displayColorPicker = true;
     const fitArray = featureGeometry.getType() === 'GeometryCollection' ?
         featureGeometry.getExtent() : featureGeometry;
-    view.fit(fitArray, mapSize, /** @type {olx.view.FitOptions} */ ({
-      maxZoom: 16}));
+    view.fit(fitArray, {size, maxZoom: 16});
   }
   this.leaveSearch_();
 };

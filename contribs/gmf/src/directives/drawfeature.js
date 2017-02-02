@@ -20,6 +20,7 @@ goog.require('ol.Collection');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
+goog.require('ol.interaction.TranslateEventType');
 
 
 /**
@@ -377,13 +378,13 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
   if (active) {
     // when activated
 
-    keys.push(ol.events.listen(this.features, ol.Collection.EventType.ADD,
+    keys.push(ol.events.listen(this.features, ol.CollectionEventType.ADD,
         this.handleFeaturesAdd_, this));
-    keys.push(ol.events.listen(this.features, ol.Collection.EventType.REMOVE,
+    keys.push(ol.events.listen(this.features, ol.CollectionEventType.REMOVE,
         this.handleFeaturesRemove_, this));
 
     keys.push(ol.events.listen(this.translate_,
-        ol.interaction.Translate.EventType.TRANSLATEEND,
+        ol.interaction.TranslateEventType.TRANSLATEEND,
         this.handleTranslateEnd_, this));
 
     keys.push(ol.events.listen(this.rotate_,
@@ -512,7 +513,7 @@ gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
   goog.asserts.assertElement(mapDiv);
 
   if (active) {
-    ol.events.listen(this.map, ol.MapBrowserEvent.EventType.CLICK,
+    ol.events.listen(this.map, ol.MapBrowserEventType.CLICK,
         this.handleMapClick_, this);
 
     goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
@@ -528,7 +529,7 @@ gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
         this.handleMapTouchEnd_, false, this);
 
   } else {
-    ol.events.unlisten(this.map, ol.MapBrowserEvent.EventType.CLICK,
+    ol.events.unlisten(this.map, ol.MapBrowserEventType.CLICK,
         this.handleMapClick_, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.CONTEXTMENU,
@@ -562,8 +563,7 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
         ret = feature;
       }
       return ret;
-    },
-    null
+    }
   );
 
   feature = feature ? feature : null;
@@ -615,8 +615,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
         ret = feature;
       }
       return ret;
-    },
-    null
+    }
   );
 
   feature = feature ? feature : null;

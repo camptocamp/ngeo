@@ -5,7 +5,7 @@ goog.require('goog.asserts');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
-goog.require('ol.MapBrowserEvent.EventType');
+goog.require('ol.MapBrowserEventType');
 goog.require('ol.events');
 goog.require('ol.functions');
 goog.require('ol.geom.Circle');
@@ -13,7 +13,8 @@ goog.require('ol.geom.GeometryCollection');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.interaction.Draw');
-goog.require('ol.interaction.Interaction');
+goog.require('ol.interaction.DrawEventType');
+goog.require('ol.interaction.Property');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -214,7 +215,7 @@ ngeo.interaction.DrawAzimut = function(options) {
 
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
       this.updateState_, this);
 };
 ol.inherits(ngeo.interaction.DrawAzimut, ol.interaction.Pointer);
@@ -266,9 +267,9 @@ ngeo.interaction.DrawAzimut.handleUpEvent_ = function(event) {
  */
 ngeo.interaction.DrawAzimut.handleEvent_ = function(mapBrowserEvent) {
   let pass = true;
-  if (mapBrowserEvent.type === ol.MapBrowserEvent.EventType.POINTERMOVE) {
+  if (mapBrowserEvent.type === ol.MapBrowserEventType.POINTERMOVE) {
     pass = this.handlePointerMove_(mapBrowserEvent);
-  } else if (mapBrowserEvent.type === ol.MapBrowserEvent.EventType.DBLCLICK) {
+  } else if (mapBrowserEvent.type === ol.MapBrowserEventType.DBLCLICK) {
     pass = false;
   }
   return ol.interaction.Pointer.handleEvent.call(this, mapBrowserEvent) && pass;
@@ -342,7 +343,7 @@ ngeo.interaction.DrawAzimut.prototype.startDrawing_ = function(event) {
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();
   this.dispatchEvent(new ol.interaction.Draw.Event(
-      ol.interaction.Draw.EventType.DRAWSTART, this.sketchFeature_));
+      ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
 };
 
 
@@ -422,7 +423,7 @@ ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
   }
 
   this.dispatchEvent(new ol.interaction.Draw.Event(
-      ol.interaction.Draw.EventType.DRAWEND, sketchFeature));
+      ol.interaction.DrawEventType.DRAWEND, sketchFeature));
 };
 
 

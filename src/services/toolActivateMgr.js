@@ -2,6 +2,7 @@ goog.provide('ngeo.ToolActivate');
 goog.provide('ngeo.ToolActivateMgr');
 
 goog.require('ngeo');
+goog.require('goog.asserts');
 
 
 /**

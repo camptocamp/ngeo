@@ -367,9 +367,9 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     this.addNgeoFeature_(feature);
   }, this);
   this.ngeoFeatures_.extend(features);
-  ol.events.listen(this.ngeoFeatures_, ol.Collection.EventType.ADD,
+  ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.ADD,
     this.handleNgeoFeaturesAdd_, this);
-  ol.events.listen(this.ngeoFeatures_, ol.Collection.EventType.REMOVE,
+  ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.REMOVE,
     this.handleNgeoFeaturesRemove_, this);
 
   this.rootScope_.$on('$localeChangeSuccess', () => {

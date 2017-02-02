@@ -12,6 +12,7 @@ goog.require('ol.Feature');
 goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.events');
 goog.require('ol.interaction.Modify');
+goog.require('ol.interaction.ModifyEventType');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.geom.Point');
 goog.require('ol.layer.Vector');
@@ -166,6 +167,7 @@ ol.inherits(ngeo.interaction.Rotate, ol.interaction.Pointer);
 /**
  * Activate or deactivate the interaction.
  * @param {boolean} active Active.
+ * @override
  * @export
  */
 ngeo.interaction.Rotate.prototype.setActive = function(active) {
@@ -187,9 +189,9 @@ ngeo.interaction.Rotate.prototype.setActive = function(active) {
     );
     this.features_.forEach(this.addFeature_, this);
     this.listenerKeys_.push(ol.events.listen(this.features_,
-        ol.Collection.EventType.ADD, this.handleFeatureAdd_, this));
+        ol.CollectionEventType.ADD, this.handleFeatureAdd_, this));
     this.listenerKeys_.push(ol.events.listen(this.features_,
-        ol.Collection.EventType.REMOVE, this.handleFeatureRemove_, this));
+        ol.CollectionEventType.REMOVE, this.handleFeatureRemove_, this));
 
   } else {
     this.listenerKeys_.forEach((key) => {
@@ -228,7 +230,7 @@ ngeo.interaction.Rotate.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
     this.dispatchEvent(new ol.interaction.Modify.Event(
-        ol.interaction.Modify.EventType.MODIFYSTART, this.features_, evt));
+        ol.interaction.ModifyEventType.MODIFYSTART, this.features_, evt));
   }
 };
 

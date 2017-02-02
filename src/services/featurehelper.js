@@ -7,7 +7,6 @@ goog.require('ngeo.interaction.Measure');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ngeo.Download');
 goog.require('ol.Feature');
-goog.require('ol.animation');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.MultiLineString');
 goog.require('ol.geom.MultiPoint');
@@ -898,10 +897,10 @@ ngeo.FeatureHelper.prototype.panMapToFeature = function(feature, map,
     const mapCenter = view.getCenter();
     goog.asserts.assertArray(mapCenter);
 
-    map.beforeRender(ol.animation.pan({
-      source: mapCenter,
+    view.animate({
+      center: mapCenter,
       duration: panDuration
-    }));
+    });
 
     let featureCenter;
     if (geometry instanceof ol.geom.LineString) {
@@ -913,7 +912,11 @@ ngeo.FeatureHelper.prototype.panMapToFeature = function(feature, map,
     } else {
       featureCenter = ol.extent.getCenter(geometry.getExtent());
     }
-    map.getView().setCenter(featureCenter);
+
+    view.animate({
+      center: featureCenter,
+      duration: panDuration
+    });
   }
 };
 

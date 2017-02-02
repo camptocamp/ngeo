@@ -1,6 +1,8 @@
 goog.module('ngeo.wmsGetCapItemDirective');
 goog.module.declareLegacyNamespace();
 
+goog.require('ol');
+goog.require('ol.extent');
 
 /**
  * @constructor

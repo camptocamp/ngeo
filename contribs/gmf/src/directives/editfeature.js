@@ -28,9 +28,11 @@ goog.require('ngeo.modalDirective');
 goog.require('ol.Collection');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Modify');
+goog.require('ol.interaction.TranslateEventType');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
+goog.require('ol.ObjectEventType');
 
 
 /**
@@ -486,7 +488,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
     uid,
     ol.events.listen(
       this.features,
-      ol.Collection.EventType.ADD,
+      ol.CollectionEventType.ADD,
       this.handleFeatureAdd_,
       this
     )
@@ -724,7 +726,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
         this.handleMenuActionClick_, this));
 
     keys.push(ol.events.listen(this.translate_,
-        ol.interaction.Translate.EventType.TRANSLATEEND,
+        ol.interaction.TranslateEventType.TRANSLATEEND,
         this.handleTranslateEnd_, this));
 
     keys.push(ol.events.listen(this.rotate_,
@@ -776,14 +778,14 @@ gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
   goog.asserts.assertElement(mapDiv);
 
   if (active) {
-    ol.events.listen(this.map, ol.MapBrowserEvent.EventType.CLICK,
+    ol.events.listen(this.map, ol.MapBrowserEventType.CLICK,
         this.handleMapClick_, this);
 
     goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
         this.handleMapContextMenu_, false, this);
 
   } else {
-    ol.events.unlisten(this.map, ol.MapBrowserEvent.EventType.CLICK,
+    ol.events.unlisten(this.map, ol.MapBrowserEventType.CLICK,
         this.handleMapClick_, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.CONTEXTMENU,
@@ -823,8 +825,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
         ret = feature;
       }
       return ret;
-    },
-    null
+    }
   );
 
   if (feature) {
@@ -875,8 +876,7 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
         ret = feature;
       }
       return ret;
-    },
-    null
+    }
   );
 
   feature = feature ? feature : null;
