@@ -24,10 +24,11 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % endfor
 % endif
     "${_ngeo_folder}src/**/*.js",
-    ".build/templatecache.js",
 % if src_set == 'contribs_gmf':
     "${_ngeo_folder}contribs/gmf/src/**/*.js",
     ".build/gmftemplatecache.js",
+% else:
+    ".build/templatecache.js",
 % endif
     "node_modules/openlayers/src/**/*.js",
     "node_modules/openlayers/build/ol.ext/*.js"
