@@ -116,7 +116,7 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
     <dd class="tag-source"><ul class="dummy"><li>
     <?js
     var baseUrl = 'https://github.com/camptocamp/ngeo/blob/' +
-      (process.env.TRAVIS_COMMIT || 'master') + '/';
+      (process.env.TRAVIS_BRANCH || 'master') + '/';
     ?>
         <a href="<?js= baseUrl ?><?js= meta.shortpath ?>"><?js= meta.shortpath ?></a>,
         <a href="<?js= baseUrl ?><?js= meta.shortpath ?>#L<?js= meta.lineno ?>">line <?js= meta.lineno ?></a>
