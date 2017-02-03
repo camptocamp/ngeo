@@ -1,6 +1,9 @@
 goog.provide('ngeo.source.Swisstopo');
 
+goog.require('goog.asserts');
+
 goog.require('ol.Attribution');
+goog.require('ol');
 goog.require('ol.source.WMTS');
 goog.require('ol.tilegrid.WMTS');
 
