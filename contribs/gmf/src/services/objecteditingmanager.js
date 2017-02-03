@@ -92,22 +92,22 @@ gmf.ObjectEditingManager.prototype.getFeature = function() {
 
 
 /**
- * @return {?string} The geometry type.
+ * @return {string|undefined} The geometry type.
  * @export
  */
 gmf.ObjectEditingManager.prototype.getGeomType = function() {
   return this.ngeoLocation_.getParam(
-    gmf.ObjectEditingManager.Param.GEOM_TYPE) || null;
+    gmf.ObjectEditingManager.Param.GEOM_TYPE);
 };
 
 
 /**
- * @return {?number} The gmf layer node id.
+ * @return {number|undefined} The gmf layer node id.
  * @export
  */
 gmf.ObjectEditingManager.prototype.getLayerNodeId = function() {
   return this.ngeoLocation_.getParamAsInt(
-    gmf.ObjectEditingManager.Param.LAYER) || null;
+    gmf.ObjectEditingManager.Param.LAYER);
 };
 
 

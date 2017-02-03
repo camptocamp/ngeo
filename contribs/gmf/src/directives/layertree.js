@@ -355,19 +355,18 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
  * Return 'out-of-resolution' if the current resolution of the map is out of
  * the min/max resolution in the node.
  * @param {gmfThemes.GmfLayerWMS} gmfLayerWMS the GeoMapFish Layer WMS.
- * @return {?string} 'out-of-resolution' or null.
+ * @return {string|undefined} 'out-of-resolution' or null.
  * @export
  */
 gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayerWMS) {
-  let style;
   const resolution = this.map.getView().getResolution();
   const maxExtent = gmfLayerWMS.maxResolutionHint;
   const minExtent = gmfLayerWMS.minResolutionHint;
   if (minExtent !== undefined && resolution < minExtent ||
       maxExtent !== undefined && resolution > maxExtent) {
-    style = 'out-of-resolution';
+    return 'out-of-resolution';
   }
-  return style || null;
+  return undefined;
 };
 
 

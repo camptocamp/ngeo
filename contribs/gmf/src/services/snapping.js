@@ -369,7 +369,7 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
 
 /**
  * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
- * @param {?string} newVal New state value
+ * @param {string|undefined} newVal New state value
  * @private
  */
 gmf.Snapping.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {

@@ -65,10 +65,10 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmf
   this.$http_ = $http;
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @private
    */
-  this.treeUrl_ = null;
+  this.treeUrl_ = undefined;
   if ($injector.has('gmfTreeUrl')) {
     this.treeUrl_ = $injector.get('gmfTreeUrl');
   }

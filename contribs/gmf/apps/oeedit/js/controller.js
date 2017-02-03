@@ -126,13 +126,13 @@ app.OEEditController = function($scope, $injector, $timeout) {
   const gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @export
    */
   this.oeGeomType = gmfObjectEditingManager.getGeomType();
 
   /**
-   * @type {?number}
+   * @type {number|undefined}
    * @export
    */
   this.oeLayerNodeId = gmfObjectEditingManager.getLayerNodeId();

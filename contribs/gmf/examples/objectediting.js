@@ -110,13 +110,13 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
   });
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @export
    */
   this.objectEditingGeomType = gmfObjectEditingManager.getGeomType();
 
   /**
-   * @type {?number}
+   * @type {number|undefined}
    * @export
    */
   this.objectEditingLayerNodeId = gmfObjectEditingManager.getLayerNodeId();

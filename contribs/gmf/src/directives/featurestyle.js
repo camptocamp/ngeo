@@ -65,16 +65,16 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
   this.featureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @export
    */
-  this.color = null;
+  this.color = undefined;
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @export
    */
-  this.measure = null;
+  this.measure = undefined;
 
   $scope.$watch(
     () => this.color,
@@ -88,7 +88,7 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
   this.featureListenerKeys_ = [];
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @export
    */
   this.type;
@@ -116,9 +116,9 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
     keys.forEach((key) => {
       ol.events.unlistenByKey(key);
     }, this);
-    this.type = null;
-    this.color = null;
-    this.measure = null;
+    this.type = undefined;
+    this.color = undefined;
+    this.measure = undefined;
   }
 
   if (newFeature) {
@@ -161,7 +161,7 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
 
 
 /**
- * @param {?string} newColor Color.
+ * @param {string|undefined} newColor Color.
  * @private
  */
 gmf.FeaturestyleController.prototype.handleColorSet_ = function(

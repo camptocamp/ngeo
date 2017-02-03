@@ -136,10 +136,10 @@ ngeo.interaction.Measure = function(opt_options) {
   /**
    * Defines the number of decimals to keep in the measurement. If not defined,
    * then the default behaviour occurs depending on the measure type.
-   * @type {?number}
+   * @type {number|undefined}
    * @protected
    */
-  this.decimals = options.decimals !== undefined ? options.decimals : null;
+  this.decimals = options.decimals;
 
   /**
    * Whether or not to display any tooltip
@@ -231,7 +231,7 @@ ol.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
  * of the area.
  * @param {ol.geom.Polygon} polygon Polygon.
  * @param {ol.proj.Projection} projection Projection of the polygon coords.
- * @param {?number} decimals Decimals.
+ * @param {number|undefined} decimals Decimals.
  * @param {ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  * @export
@@ -251,7 +251,7 @@ ngeo.interaction.Measure.getFormattedArea = function(
  * Calculate the area of the passed circle and return a formatted string
  * of the area.
  * @param {ol.geom.Circle} circle Circle
- * @param {?number} decimals Decimals.
+ * @param {number|undefined} decimals Decimals.
  * @return {string} Formatted string of the area.
  * @param {ngeox.unitPrefix} format The format function.
  * @export
@@ -268,7 +268,7 @@ ngeo.interaction.Measure.getFormattedCircleArea = function(
  * string of the length.
  * @param {ol.geom.LineString} lineString Line string.
  * @param {ol.proj.Projection} projection Projection of the line string coords.
- * @param {?number} decimals Decimals.
+ * @param {number|undefined} decimals Decimals.
  * @param {ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of length.
  * @export
@@ -290,7 +290,7 @@ ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
  * Return a formatted string of the point.
  * @param {ol.geom.Point} point Point.
  * @param {ol.proj.Projection} projection Projection of the line string coords.
- * @param {?number} decimals Decimals.
+ * @param {number|undefined} decimals Decimals.
  * @return {string} Formatted string of coordinate.
  */
 ngeo.interaction.Measure.getFormattedPoint = function(
@@ -298,7 +298,7 @@ ngeo.interaction.Measure.getFormattedPoint = function(
   const coordinates = point.getCoordinates();
   let x = coordinates[0];
   let y = coordinates[1];
-  decimals = decimals !== null ? decimals : 0;
+  decimals = decimals !== undefined ? decimals : 0;
   x = ol.string.padNumber(x, 0, decimals);
   y = ol.string.padNumber(y, 0, decimals);
   return ['X: ', x, ', Y: ', y].join('');

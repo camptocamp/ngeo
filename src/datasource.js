@@ -101,26 +101,24 @@ ngeo.DataSource = class {
      * The name of an attribute among the attributes of the data source.
      * The value of that attribute, in records, can be used to identify
      * each record individually.
-     * @type {?string}
+     * @type {string|undefined}
      * @private
      */
-    this.identifierAttribute_ = options.identifierAttribute || null;
+    this.identifierAttribute_ = options.identifierAttribute;
 
     /**
      * Maximum resolution where the data source can be displayed or queried.
-     * @type {?number}
+     * @type {number|undefined}
      * @private
      */
-    this.maxResolution_ = options.maxResolution !== undefined ?
-      options.maxResolution : null;
+    this.maxResolution_ = options.maxResolution;
 
     /**
      * Minimum resolution where the data source can be displayed or queried.
-     * @type {?number}
+     * @type {number|undefined}
      * @private
      */
-    this.minResolution_ = options.minResolution !== undefined ?
-      options.minResolution : null;
+    this.minResolution_ = options.minResolution;
 
     /**
      * (Required) A human-readable name for the data source.
@@ -221,10 +219,10 @@ ngeo.DataSource = class {
 
     /**
      * The url to use for (WFS) requests.
-     * @type {?string}
+     * @type {string|undefined}
      * @private
      */
-    this.wfsUrl_ = options.wfsUrl || null;
+    this.wfsUrl_ = options.wfsUrl;
 
     /**
      * The InfoFormat to use with WMS requests.
@@ -244,24 +242,24 @@ ngeo.DataSource = class {
 
     /**
      * The url to use for (WMS) requests.
-     * @type {?string}
+     * @type {string|undefined}
      * @private
      */
-    this.wmsUrl_ = options.wmsUrl || null;
+    this.wmsUrl_ = options.wmsUrl;
 
     /**
      * The layer name to use for the (WMTS) requests.
-     * @type {?string}
+     * @type {string|undefined}
      * @private
      */
-    this.wmtsLayer_ = options.wmtsLayer || null;
+    this.wmtsLayer_ = options.wmtsLayer;
 
     /**
      * The url to use for (WMTS) requests.
-     * @type {?string}
+     * @type {string|undefined}
      * @private
      */
-    this.wmtsUrl_ = options.wmtsUrl || null;
+    this.wmtsUrl_ = options.wmtsUrl;
 
     // === Calculated properties ===
 
@@ -392,7 +390,7 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @return {?string} Identifier attribute
+   * @return {string|undefined} Identifier attribute
    * @export
    */
   get identifierAttribute() {
@@ -400,7 +398,7 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @return {?number} Maximum resolution
+   * @return {number|undefined} Maximum resolution
    * @export
    */
   get maxResolution() {
@@ -408,7 +406,7 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @return {?number} Minimum resolution
+   * @return {number|undefined} Minimum resolution
    * @export
    */
   get minResolution() {
@@ -513,7 +511,7 @@ ngeo.DataSource = class {
 
   /**
    * @export
-   * @return {?string} WFS url
+   * @return {string|undefined} WFS url
    */
   get wfsUrl() {
     return this.wfsUrl_;
@@ -536,7 +534,7 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @return {?string} WMS url
+   * @return {string|undefined} WMS url
    * @export
    */
   get wmsUrl() {
@@ -544,7 +542,7 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @return {?string} WMTS layer
+   * @return {string|undefined} WMTS layer
    * @export
    */
   get wmtsLayer() {
@@ -552,7 +550,7 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @return {?string} WMTS url
+   * @return {string|undefined} WMTS url
    * @export
    */
   get wmtsUrl() {
@@ -614,7 +612,7 @@ ngeo.DataSource = class {
    * @export
    */
   get supportsWFS() {
-    return this.wfsUrl !== null;
+    return this.wfsUrl !== undefined;
   }
 
   /**
@@ -623,7 +621,7 @@ ngeo.DataSource = class {
    * @export
    */
   get supportsWMS() {
-    return this.wmsUrl !== null;
+    return this.wmsUrl !== undefined;
   }
 
   /**
@@ -632,7 +630,7 @@ ngeo.DataSource = class {
    * @export
    */
   get supportsWMTS() {
-    return this.wmtsUrl !== null;
+    return this.wmtsUrl !== undefined;
   }
 
   /**

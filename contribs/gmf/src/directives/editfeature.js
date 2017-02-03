@@ -362,10 +362,10 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   );
 
   /**
-   * @type {?number|string}
+   * @type {number|string|undefined}
    * @export
    */
-  this.featureId = null;
+  this.featureId = undefined;
 
   /**
    * @type {ol.Collection}
@@ -451,34 +451,34 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   this.initializeInteractions_();
 
   /**
-   * @type {ngeo.ToolActivate}
+   * @type {!ngeo.ToolActivate}
    * @export
    */
   this.rotateToolActivate = new ngeo.ToolActivate(this.rotate_, 'active');
 
   /**
-   * @type {ngeo.ToolActivate}
+   * @type {!ngeo.ToolActivate}
    * @export
    */
   this.translateToolActivate = new ngeo.ToolActivate(this.translate_, 'active');
 
   /**
-   * @type {Array.<ol.EventsKey>}
+   * @type {!Array.<!ol.EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {?Array.<ngeox.Attribute>}
+   * @type {?Array.<!ngeox.Attribute>}
    * @export
    */
   this.attributes = null;
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @export
    */
-  this.geomType = null;
+  this.geomType;
 
   gmfXSDAttributes.getAttributes(this.editableNode_.id).then(
     this.setAttributes_.bind(this));
@@ -499,7 +499,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   this.toggle_(true);
 
   /**
-   * @type{!boolean}
+   * @type{boolean}
    * @export
    */
   this.showServerError = false;
@@ -974,7 +974,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
   }
 
   if (newFeature) {
-    this.featureId = newFeature.getId() || null;
+    this.featureId = newFeature.getId();
     ol.events.listen(
       newFeature,
       ol.ObjectEventType.PROPERTYCHANGE,
@@ -1004,7 +1004,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
       }, 0);
     }
   } else {
-    this.featureId = null;
+    this.featureId = undefined;
   }
 
 };

@@ -143,10 +143,10 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
   this.geomTypeCache_ = {};
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @export
    */
-  this.selectedGeomType = null;
+  this.selectedGeomType = undefined;
 
   $scope.$watch(
     () => this.selectedGmfLayerNode,
@@ -417,22 +417,21 @@ gmfapp.MainController.prototype.issueGetAttributesRequest_ = function(
  * @private
  */
 gmfapp.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
-  const geomType = /** @type {string} */ (
-    this.getGeometryTypeFromCache_(gmfLayerNode));
+  const geomType = this.getGeometryTypeFromCache_(gmfLayerNode);
   this.selectedGeomType = geomType;
 };
 
 
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
- * @return {?string} The type of geometry.
+ * @return {string|undefined} The type of geometry.
  * @private
  */
 gmfapp.MainController.prototype.getGeometryTypeFromCache_ = function(
   gmfLayerNode
 ) {
   const id = gmfLayerNode.id;
-  const geomType = this.geomTypeCache_[id] || null;
+  const geomType = this.geomTypeCache_[id];
   return geomType;
 };
 

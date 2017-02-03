@@ -36,7 +36,7 @@ goog.require('ol.source.Vector');
  */
 ngeo.interaction.MeasureAzimut = function(format, opt_options) {
 
-  const options = opt_options !== undefined ? opt_options : {};
+  const options = opt_options || {};
 
   ngeo.interaction.Measure.call(this, options);
 
@@ -94,7 +94,7 @@ ngeo.interaction.MeasureAzimut.prototype.handleMeasure = function(callback) {
  * Format measure output of azimut and radius.
  * @param {ol.geom.LineString} line LineString.
  * @param {ol.proj.Projection} projection Projection of the polygon coords.
- * @param {?number} decimals Decimals.
+ * @param {number|undefined} decimals Decimals.
  * @param {ngeox.unitPrefix} format The format function.
  * @return {string} Formated measure.
  */

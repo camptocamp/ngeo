@@ -332,7 +332,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     if (groupValues.length === 0) {
       filters.push({
         'title': '',
-        'filter': this.filterLayername_(null)
+        'filter': this.filterLayername_()
       });
     } else {
       groupValues.forEach(function(layerName) {
@@ -520,13 +520,13 @@ gmf.SearchController.prototype.filterAction_ = function(action) {
 
 
 /**
- * @param {?string} layerName The layerName to keep. If null, keep all layers
+ * @param {string=} opt_layerName The layerName to keep. If null, keep all layers
  *     (In all cases, except actions layers).
  * @return {(function(GeoJSONFeature): boolean)} A filter function based on a
  *     GeoJSONFeaturesCollection's array.
  * @private
  */
-gmf.SearchController.prototype.filterLayername_ = function(layerName) {
+gmf.SearchController.prototype.filterLayername_ = function(opt_layerName) {
   return (
       /**
        * @param {GeoJSONFeature} feature
@@ -538,10 +538,10 @@ gmf.SearchController.prototype.filterLayername_ = function(layerName) {
         if (featureLayerName === undefined) {
           return false;
         }
-        if (layerName === null) {
+        if (opt_layerName === undefined) {
           return true;
         }
-        return featureLayerName === layerName;
+        return featureLayerName === opt_layerName;
       }
   );
 };
