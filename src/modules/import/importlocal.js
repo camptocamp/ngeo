@@ -101,7 +101,7 @@ exports = function($timeout, gettext, ngeoFile, ngeoImportLocalTemplateUrl) {
         }
         scope['loading'] = true;
         scope['userMessage'] = gettext('Reading file');
-        $timeout.cancel(timeoutP);
+        $timeout['cancel'](timeoutP);
 
         ngeoFile.read(scope['file']).then((fileContent) => {
           scope['fileReader'] = null;
