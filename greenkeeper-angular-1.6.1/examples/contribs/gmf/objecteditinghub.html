@@ -53,7 +53,7 @@
 
       <div class="form-group">
         <button
-          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === null"
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType"
           ng-click="ctrl.runEditor()"
           type="button"
           class="form-control btn btn-primary"
@@ -65,7 +65,7 @@
 
       <div class="form-group">
         <button
-          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === null"
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType"
           ng-click="ctrl.runViewerHosted()"
           type="button"
           class="form-control btn btn-info"
@@ -77,7 +77,7 @@
 
       <div class="form-group">
         <button
-          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === null"
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType"
           ng-click="ctrl.runViewerDev()"
           type="button"
           class="form-control btn btn-info"
@@ -103,8 +103,8 @@
     <script src="../../lib/jquery.floatThead.min.js"></script>
     <script src="../../lib/slider.min.js"></script>
     <script src="../../lib/tmhDynamicLocale.min.js"></script>
-    <script src="objecteditinghub.js"></script>
     <script src="../../lib/transpile.js"></script>
+    <script src="objecteditinghub.js"></script>
     <script src="../../lib/watchwatchers.js"></script>
     <script>
       var gmfModule = angular.module('gmf');
