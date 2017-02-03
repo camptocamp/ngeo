@@ -779,17 +779,17 @@ contribs/gmf/build/angular-locale_%.js: github_versions
 
 $(EXTERNS_ANGULAR): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.6.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.6.js
 	touch $@
 
 $(EXTERNS_ANGULAR_Q): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.6-q_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.6-q_templated.js
 	touch $@
 
 $(EXTERNS_ANGULAR_HTTP_PROMISE): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.6-http-promise_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.6-http-promise_templated.js
 	touch $@
 
 $(EXTERNS_JQUERY): github_versions
