@@ -215,8 +215,8 @@ gmf.Themes.getFlatNodes = function(node, nodes) {
 
 /**
  * Get background layers.
- * @param {Object.<string, string>} appDimensions Dimensions.
- * @return {angular.$q.Promise.<Array.<ol.layer.Base>>} Promise.
+ * @param {!Object.<string, string>} appDimensions Dimensions.
+ * @return {!angular.$q.Promise.<!Array.<!ol.layer.Base>>} Promise.
  */
 gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   if (this.bgLayerPromise_) {

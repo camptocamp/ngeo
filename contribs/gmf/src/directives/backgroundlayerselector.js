@@ -83,7 +83,7 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
     gmfThemes) {
 
   /**
-   * @type {Object.<string, string>}
+   * @type {!Object.<string, string>}
    * @export
    */
   this.dimensions;

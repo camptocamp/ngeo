@@ -117,11 +117,15 @@ ngeo.Location.prototype.hasFragmentParam = function(key) {
 /**
  * Get a param in the location's URI.
  * @param {string} key Param key.
- * @return {string} Param value.
+ * @return {string|undefined} Param value.
  * @export
  */
 ngeo.Location.prototype.getParam = function(key) {
-  return /** @type {string} */ (this.uri_.getQueryData().get(key));
+  const param = this.uri_.getQueryData().get(key);
+  if (param === undefined) {
+    return undefined;
+  }
+  return goog.asserts.assertString(param);
 };
 
 
@@ -132,8 +136,12 @@ ngeo.Location.prototype.getParam = function(key) {
  * @export
  */
 ngeo.Location.prototype.getFragmentParam = function(key) {
-  const val = /** @type {string} */ (this.getFragmentUri_().getQueryData().get(key));
-  return val !== undefined ? ngeo.string.urlDecode(val) : undefined;
+  const val = this.getFragmentUri_().getQueryData().get(key);
+  if (val === undefined) {
+    return undefined;
+  }
+  goog.asserts.assertString(val);
+  return ngeo.string.urlDecode(val);
 };
 
 
@@ -145,10 +153,11 @@ ngeo.Location.prototype.getFragmentParam = function(key) {
  * @export
  */
 ngeo.Location.prototype.getParamAsInt = function(key) {
-  const value = /** @type {string} */ (this.getParam(key));
+  const value = this.getParam(key);
   if (value === undefined) {
     return undefined;
   }
+  goog.asserts.assertString(value);
   const valueAsInt = parseInt(value, 10);
   return (isNaN(valueAsInt)) ? undefined : valueAsInt;
 };
@@ -162,10 +171,11 @@ ngeo.Location.prototype.getParamAsInt = function(key) {
  * @export
  */
 ngeo.Location.prototype.getFragmentParamAsInt = function(key) {
-  const value = /** @type {string} */ (this.getFragmentParam(key));
+  const value = this.getFragmentParam(key);
   if (value === undefined) {
     return undefined;
   }
+  goog.asserts.assertString(value);
   const valueAsInt = parseInt(value, 10);
   return (isNaN(valueAsInt)) ? undefined : valueAsInt;
 };
