@@ -166,7 +166,7 @@
     <script src="../../../../lib/watchwatchers.js"></script>
     <script>
       (function() {
-        var cacheVersion = '4b020683020f833c058fb2566a3282b7b2b95c04';
+        var cacheVersion = '38281774604182cbdadce75a9a0f50bd121c32d2';
         var urlElements = window.location.pathname.split('/');
 
         var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
@@ -187,14 +187,14 @@
         module.constant('defaultLang', 'en');
         module.constant('langUrls', langUrls);
         module.constant('cacheVersion', cacheVersion);
-        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
-        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
-        module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
-        module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.json');
-        module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
-        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background&interface=desktop');
-        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
-        module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/short/create');
+        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+        module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+        module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
+        module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
+        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
+        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+        module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/short/create');
         module.constant('gmfSearchGroups', ['osm','district']);
         // Requires that the gmfSearchGroups is specified
         module.constant('gmfSearchActions', [
@@ -205,7 +205,7 @@
         module.constant('gmfContextualdatacontentTemplateUrl', window.location.pathname + 'contextualdata.html');
         module.value('ngeoWfsPermalinkOptions',
             /** @type {ngeox.WfsPermalinkOptions} */ ({
-              url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
+              url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
               wfsTypes: [
                 {featureType: 'fuel', label: 'display_name'},
                 {featureType: 'osm_scale', label: 'display_name'}
