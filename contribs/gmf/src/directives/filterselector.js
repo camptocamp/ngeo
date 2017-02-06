@@ -64,7 +64,6 @@ gmf.FilterselectorController = class {
    * @private
    */
   handleActiveChange_(active) {
-    // Work in progress...
 
     const keys = this.listenerKeys_;
 
