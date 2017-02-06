@@ -1,1 +1,12 @@
-<div>gmf.Filterselector</div>
+<div
+    class="form-group"
+    ng-switch="fsCtrl.filtrableDataSources.length">
+  <span ng-switch-when="0" translate>No filtrable layer available!</span>
+  <select
+      class="form-control"
+      ng-switch-default
+      ng-model="fsCtrl.selectedDataSource"
+      ng-options="dataSource.name | translate for dataSource in fsCtrl.filtrableDataSources">
+    <option value="" translate>-- Layer to filter --</option>
+  </select>
+</div>
