@@ -766,7 +766,7 @@ ngeo.Query.prototype.setUniqueIds_ = function(features, sourceId) {
  * @private
  */
 ngeo.Query.prototype.getQueryBbox_ = function(coordinate, view) {
-  var tolerance = this.tolerancePx_ * view.getResolution();
+  var tolerance = this.tolerancePx_ * view.getResolution() * ol.has.DEVICE_PIXEL_RATIO;
 
   return ol.extent.buffer(
       ol.extent.createOrUpdateFromCoordinate(coordinate),
