@@ -104,10 +104,12 @@ EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur)
 NGEO_EXAMPLES_HOSTED_REQUIREMENTS = $(EXAMPLES_HOSTED_REQUIREMENTS) \
 	$(subst examples,.build/examples-hosted,$(NGEO_EXAMPLES_PARTIALS_FILES)) \
-	.build/examples-hosted/data
+	.build/examples-hosted/data \
+	.build/templatecache.js
 GMF_EXAMPLES_PARTIALS_FILES = $(EXAMPLES_PARTIALS_FILES) \
 	$(subst contibs/gmf/examples,.build/examples-hosted/contribs/gmf,$(GMF_EXAMPLES_PARTIALS_FILES)) \
-	.build/examples-hosted/contribs/gmf/data
+	.build/examples-hosted/contribs/gmf/data \
+	.build/gmftemplatecache.js
 
 # Git
 GITHUB_USERNAME ?= camptocamp
@@ -136,9 +138,9 @@ endif
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
 GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
 
-EXTERNS_ANGULAR = .build/externs/angular-1.5.js
-EXTERNS_ANGULAR_Q = .build/externs/angular-1.5-q_templated.js
-EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.5-http-promise_templated.js
+EXTERNS_ANGULAR = .build/externs/angular-1.6.js
+EXTERNS_ANGULAR_Q = .build/externs/angular-1.6-q_templated.js
+EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.6-http-promise_templated.js
 EXTERNS_JQUERY = .build/externs/jquery-1.9.js
 EXTERNS_FILES = $(EXTERNS_ANGULAR) $(EXTERNS_ANGULAR_Q) $(EXTERNS_ANGULAR_HTTP_PROMISE) $(EXTERNS_JQUERY)
 
@@ -777,17 +779,17 @@ contribs/gmf/build/angular-locale_%.js: github_versions
 
 $(EXTERNS_ANGULAR): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.6.js
 	touch $@
 
 $(EXTERNS_ANGULAR_Q): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5-q_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.6-q_templated.js
 	touch $@
 
 $(EXTERNS_ANGULAR_HTTP_PROMISE): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5-http-promise_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/angular-1.6-http-promise_templated.js
 	touch $@
 
 $(EXTERNS_JQUERY): github_versions
@@ -822,7 +824,10 @@ $(EXTERNS_JQUERY): github_versions
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="src ../../../../../../../src" --output_file=$@
 
-.build/gmf-deps.js: .build/python-venv .build/node_modules.timestamp
+.build/gmf-deps.js: .build/python-venv \
+		.build/node_modules.timestamp \
+		$(SRC_JS_FILES) \
+		$(GMF_SRC_JS_FILES)
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="contribs/gmf/src ../../../../../../../contribs/gmf/src" --output_file=$@
 
@@ -833,7 +838,8 @@ $(EXTERNS_JQUERY): github_versions
 .build/templatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/lib/python2.7/site-packages/glob2 \
 		.build/python-venv/bin/mako-render \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES)
+		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
+		$(NGEO_MODULES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var "partials=ngeo:src/directives/partials ngeomodule:src/modules" \
 		--var "app=ngeo" $< > $@
@@ -842,7 +848,9 @@ $(EXTERNS_JQUERY): github_versions
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/lib/python2.7/site-packages/glob2 \
 		.build/python-venv/bin/mako-render \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES) $(GMF_DIRECTIVES_PARTIALS_FILES)
+		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
+		$(NGEO_MODULES_PARTIALS_FILES) \
+		$(GMF_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var "partials=ngeo:src/directives/partials ngeomodule:src/modules gmf:contribs/gmf/src/directives/partials" \
 		--var "app=gmf" $< > $@

@@ -79,9 +79,14 @@ ngeo.AutoProjection.prototype.tryProjections = function(coordinates,
     opt_projections = [viewProjection];
   }
   opt_projections.some((projection) => {
-    position = ol.proj.transform(coordinates, projection, viewProjection);
-    if (ol.extent.containsCoordinate(extent, position)) {
-      return true;
+    try {
+      position = ol.proj.transform(coordinates, projection, viewProjection);
+      if (ol.extent.containsCoordinate(extent, position)) {
+        return true;
+      }
+    } catch (e) {
+      // wrong transform may throw an exception
+      console.log(e);
     }
     position = null;
   });

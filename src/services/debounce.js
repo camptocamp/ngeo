@@ -45,7 +45,7 @@ ngeo.debounceServiceFactory = function($timeout) {
                 func.apply(context, args);
               };
               if (timeout !== null) {
-                $timeout.cancel(timeout);
+                $timeout['cancel'](timeout);
               }
               timeout = $timeout(later, wait, invokeApply);
             });

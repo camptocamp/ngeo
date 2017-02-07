@@ -3,7 +3,7 @@ goog.provide('gmfapp.objectediting');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
+goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */

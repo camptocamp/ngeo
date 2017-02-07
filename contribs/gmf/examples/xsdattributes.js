@@ -3,7 +3,7 @@ goog.provide('gmfapp.xsdattributes');
 goog.require('gmf.Themes');
 goog.require('gmf.XSDAttributes');
 /** @suppress {extraRequire} */
-goog.require('ngeo.attributesDirective');
+goog.require('ngeo.attributesComponent');
 goog.require('ol.Feature');
 
 

@@ -24,10 +24,11 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % endfor
 % endif
     "${_ngeo_folder}src/**/*.js",
-    ".build/templatecache.js",
 % if src_set == 'contribs_gmf':
     "${_ngeo_folder}contribs/gmf/src/**/*.js",
     ".build/gmftemplatecache.js",
+% else:
+    ".build/templatecache.js",
 % endif
     "node_modules/openlayers/src/**/*.js",
     "node_modules/openlayers/build/ol.ext/*.js"
@@ -55,9 +56,9 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "${_ngeo_folder}externs/file-saver.js",
       "${_ngeo_folder}externs/jsts.js",
       "${_ngeo_folder}externs/geo-admin-api.js",
-      ".build/externs/angular-1.5.js",
-      ".build/externs/angular-1.5-q_templated.js",
-      ".build/externs/angular-1.5-http-promise_templated.js",
+      ".build/externs/angular-1.6.js",
+      ".build/externs/angular-1.6-q_templated.js",
+      ".build/externs/angular-1.6-http-promise_templated.js",
       ".build/externs/jquery-1.9.js",
 % if src_set == 'contribs_gmf':
       "${_ngeo_folder}contribs/gmf/externs/gmf-themes.js",

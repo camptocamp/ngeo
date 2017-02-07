@@ -4,7 +4,7 @@ goog.provide('app.attributes');
 goog.require('ngeo.mapDirective');
 goog.require('ngeo.format.XSDAttribute');
 /** @suppress {extraRequire} */
-goog.require('ngeo.attributesDirective');
+goog.require('ngeo.attributesComponent');
 goog.require('ol.Feature');
 
 

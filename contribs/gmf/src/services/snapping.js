@@ -539,7 +539,7 @@ gmf.Snapping.prototype.loadItemFeatures_ = function(item) {
  */
 gmf.Snapping.prototype.handleMapViewChange_ = function() {
   if (this.mapViewChangePromise_) {
-    this.timeout_.cancel(this.mapViewChangePromise_);
+    this.timeout_['cancel'](this.mapViewChangePromise_);
   }
   this.mapViewChangePromise_ = this.timeout_(
     this.loadAllItems_.bind(this),

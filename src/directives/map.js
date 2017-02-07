@@ -38,7 +38,7 @@ ngeo.mapDirective = function(ngeoSyncDataSourcesMap) {
       const attr = 'ngeoMap';
       const prop = attrs[attr];
 
-      const map = /** @type {ol.Map} */ (scope.$eval(prop));
+      const map = scope.$eval(prop);
       goog.asserts.assertInstanceof(map, ol.Map);
 
       map.setTarget(element[0]);

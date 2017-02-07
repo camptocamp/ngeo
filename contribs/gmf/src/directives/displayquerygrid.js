@@ -1,11 +1,11 @@
 goog.provide('gmf.DisplayquerygridController');
-goog.provide('gmf.displayquerygridDirective');
+goog.provide('gmf.displayquerygridComponent');
 
 goog.require('gmf');
 goog.require('ngeo.CsvDownload');
 goog.require('ngeo.GridConfig');
 /** @suppress {extraRequire} */
-goog.require('ngeo.gridDirective');
+goog.require('ngeo.gridComponent');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
@@ -19,27 +19,40 @@ goog.require('ol.style.Style');
 
 ngeo.module.value('gmfDisplayquerygridTemplateUrl',
     /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @return {string} Template.
+     * @param {!angular.JQLite} $element Element.
+     * @param {!angular.Attributes} $attrs Attributes.
+     * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['gmfDisplayquerygridTemplateurl'];
+    ($element, $attrs) => {
+      const templateUrl = $attrs['gmfDisplayquerygridTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/displayquerygrid.html`;
-    });
+    }
+);
 
 
 /**
- * Provides a directive to display results of the {@link ngeo.queryResult} in a
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfDisplayquerygridTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTemplateUrl) {
+  return gmfDisplayquerygridTemplateUrl($element, $attrs);
+}
+
+
+/**
+ * Provides a component to display results of the {@link ngeo.queryResult} in a
  * grid and shows related features on the map using
  * the {@link ngeo.FeatureOverlayMgr}.
  *
- * You can override the default directive's template by setting the
+ * You can override the default component's template by setting the
  * value `gmfDisplayquerygridTemplateUrl`.
  *
  * Features displayed on the map use a default style but you can override these
- * styles by passing ol.style.Style objects as attributes of this directive.
+ * styles by passing ol.style.Style objects as attributes of this component.
  *
  * Example:
  *
@@ -61,35 +74,27 @@ ngeo.module.value('gmfDisplayquerygridTemplateUrl',
  *     zoom-level to use when zooming to selected features.
  * @htmlAttribute {gmfx.GridMergeTabs?} gmf-displayquerygrid-gridmergetabas Optional.
  *     Configuration to merge grids with the same attributes into a single grid.
- * @param {string} gmfDisplayquerygridTemplateUrl URL to a template.
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
- * @ngdoc directive
+ *
+ * @ngdoc component
  * @ngname gmfDisplayquerygrid
  */
-gmf.displayquerygridDirective = function(
-    gmfDisplayquerygridTemplateUrl) {
-  return {
-    bindToController: true,
-    controller: 'GmfDisplayquerygridController as ctrl',
-    templateUrl: gmfDisplayquerygridTemplateUrl,
-    replace: true,
-    restrict: 'E',
-    scope: {
-      'active': '=gmfDisplayquerygridActive',
-      'featuresStyleFn': '&gmfDisplayquerygridFeaturesstyle',
-      'selectedFeatureStyleFn': '&gmfDisplayquerygridSourceselectedfeaturestyle',
-      'getMapFn': '&gmfDisplayquerygridMap',
-      'removeEmptyColumnsFn': '&?gmfDisplayquerygridRemoveemptycolumns',
-      'maxResultsFn': '&?gmfDisplayquerygridMaxresults',
-      'maxRecenterZoomFn': '&?gmfDisplayquerygridMaxrecenterzoom',
-      'mergeTabsFn': '&?gmfDisplayquerygridMergetabs'
-    }
-  };
+gmf.displayquerygridComponent = {
+  controller: 'GmfDisplayquerygridController as ctrl',
+  bindings: {
+    'active': '=gmfDisplayquerygridActive',
+    'featuresStyleFn': '&gmfDisplayquerygridFeaturesstyle',
+    'selectedFeatureStyleFn': '&gmfDisplayquerygridSourceselectedfeaturestyle',
+    'getMapFn': '&gmfDisplayquerygridMap',
+    'removeEmptyColumnsFn': '&?gmfDisplayquerygridRemoveemptycolumns',
+    'maxResultsFn': '&?gmfDisplayquerygridMaxresults',
+    'maxRecenterZoomFn': '&?gmfDisplayquerygridMaxrecenterzoom',
+    'mergeTabsFn': '&?gmfDisplayquerygridMergetabs'
+  },
+  templateUrl: gmfDisplayquerygridTemplateUrl
 };
 
 
-gmf.module.directive('gmfDisplayquerygrid', gmf.displayquerygridDirective);
+gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
 
 
 /**
@@ -220,14 +225,6 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
    */
   this.features_ = new ol.Collection();
 
-  const featuresOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-  const featuresStyle = this['featuresStyleFn']();
-  if (featuresStyle !== undefined) {
-    goog.asserts.assertInstanceof(featuresStyle, ol.style.Style);
-    featuresOverlay.setStyle(featuresStyle);
-  }
-  featuresOverlay.setFeatures(this.features_);
-
   /**
    * @type {ngeo.FeatureOverlay}
    * @private
@@ -241,33 +238,11 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
   this.highlightFeatures_ = new ol.Collection();
   this.highlightFeatureOverlay_.setFeatures(this.highlightFeatures_);
 
-  let highlightFeatureStyle = this['selectedFeatureStyleFn']();
-  if (highlightFeatureStyle !== undefined) {
-    goog.asserts.assertInstanceof(highlightFeatureStyle, ol.style.Style);
-  } else {
-    const fill = new ol.style.Fill({color: [255, 0, 0, 0.6]});
-    const stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
-    highlightFeatureStyle = new ol.style.Style({
-      fill,
-      image: new ol.style.Circle({fill, radius: 5, stroke}),
-      stroke,
-      zIndex: 10
-    });
-  }
-  this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
-
-  let map = null;
-  const mapFn = this['getMapFn'];
-  if (mapFn) {
-    map = mapFn();
-    goog.asserts.assertInstanceof(map, ol.Map);
-  }
-
   /**
    * @type {ol.Map}
    * @private
    */
-  this.map_ = map;
+  this.map_ = null;
 
   // Watch the ngeo query result service.
   this.$scope_.$watchCollection(
@@ -287,6 +262,39 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
   this.unregisterSelectWatcher_ = null;
 };
 
+/**
+ * Init the controller
+ */
+gmf.DisplayquerygridController.prototype.$onInit = function() {
+  const featuresStyle = this['featuresStyleFn']();
+  if (featuresStyle !== undefined) {
+    goog.asserts.assertInstanceof(featuresStyle, ol.style.Style);
+    this.highlightFeatureOverlay_.setStyle(featuresStyle);
+  }
+  this.highlightFeatureOverlay_.setFeatures(this.features_);
+
+  let highlightFeatureStyle = this['selectedFeatureStyleFn']();
+  if (highlightFeatureStyle !== undefined) {
+    goog.asserts.assertInstanceof(highlightFeatureStyle, ol.style.Style);
+  } else {
+    const fill = new ol.style.Fill({color: [255, 0, 0, 0.6]});
+    const stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
+    highlightFeatureStyle = new ol.style.Style({
+      fill,
+      image: new ol.style.Circle({fill, radius: 5, stroke}),
+      stroke,
+      zIndex: 10
+    });
+  }
+  this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
+
+  const mapFn = this['getMapFn'];
+  if (mapFn) {
+    const map = mapFn();
+    goog.asserts.assertInstanceof(map, ol.Map);
+    this.map_ = map;
+  }
+};
 
 /**
  * Returns a list of grid sources in the order they were loaded.

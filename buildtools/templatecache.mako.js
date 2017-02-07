@@ -34,7 +34,7 @@ goog.require('${app}');
 
 (function() {
   /**
-   * @param {angular.$cacheFactory.Cache} $templateCache
+   * @param {angular.cacheFactory.Cache} $templateCache
    * @ngInject
    */
   let runner = function($templateCache) {

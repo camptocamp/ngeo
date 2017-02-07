@@ -45,7 +45,6 @@ ngeo.MeasureEventType = {
 
 
 /**
- * @classdesc
  * Events emitted by {@link ngeo.interaction.Interaction} instances are
  * instances of this type.
  *
@@ -342,8 +341,9 @@ ngeo.interaction.Measure.prototype.getDrawInteraction = function() {
 
 
 /**
- * @abstract
  * Creates the draw interaction.
+ *
+ * @abstract
  * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  *     style The sketchStyle used for the drawing interaction.
  * @param {ol.source.Vector} source Vector source.
@@ -510,9 +510,10 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
 
 
 /**
- * @abstract
  * Function implemented in inherited classes to compute measurement, determine
  * where to place the tooltip and determine which help message to display.
+ *
+ * @abstract
  * @param {function(string, ?ol.Coordinate)} callback The function
  *     to be called.
  * @protected

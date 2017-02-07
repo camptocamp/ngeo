@@ -1,9 +1,7 @@
 goog.require('gmf.ShareService');
 
 describe('gmf.ShareService', () => {
-  let gmfShareService;
   let $httpBackend;
-  let shortenerUrl;
   const successResponse = {
     short_url: 'http://fake/gmf'
   };
@@ -14,11 +12,14 @@ describe('gmf.ShareService', () => {
   });
 
   it('Should get a short version of the permalink', () => {
+    let shortenerUrl;
+    let gmfShareService;
+
     inject(($injector) => {
       $httpBackend = $injector.get('$httpBackend');
-      $httpBackend.when('POST', shortenerUrl).respond(successResponse);
       gmfShareService = $injector.get('gmfShareService');
       shortenerUrl = $injector.get('gmfShortenerCreateUrl');
+      $httpBackend.when('POST', shortenerUrl).respond(successResponse);
     });
 
     const permalink = 'htpp://fake/c2c/permalink';
@@ -38,15 +39,18 @@ describe('gmf.ShareService', () => {
   });
 
   it('Should return the permalink if no URL for the shorten service has been provided', () => {
+    let shortenerUrl;
+    let gmfShareService;
+
     module(($provide) => {
       $provide.value('gmfShortenerCreateUrl', '');
     });
 
     inject(($injector) => {
       $httpBackend = $injector.get('$httpBackend');
-      $httpBackend.when('POST', shortenerUrl).respond(successResponse);
       gmfShareService = $injector.get('gmfShareService');
       shortenerUrl = $injector.get('gmfShortenerCreateUrl');
+      $httpBackend.when('POST', shortenerUrl).respond(successResponse);
     });
 
     gmfShareService.getShortUrl(shortenerUrl);

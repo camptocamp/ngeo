@@ -9,7 +9,7 @@ goog.require('gmf.DataSourcesManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.filterselectorComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
+goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */

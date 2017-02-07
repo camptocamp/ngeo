@@ -1,5 +1,5 @@
 goog.provide('gmf.LayertreeController');
-goog.provide('gmf.layertreeDirective');
+goog.provide('gmf.layertreeComponent');
 
 goog.require('ngeo.SyncArrays');
 goog.require('gmf');
@@ -17,11 +17,11 @@ goog.require('ngeo.popoverDirective');
 
 gmf.module.value('gmfLayertreeTemplate',
     /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {!angular.JQLite} $element Element.
+     * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template.
      */
-    (element, attrs) => {
+    ($element, $attrs) => {
       const subTemplateUrl = `${gmf.baseTemplateUrl}/layertree.html`;
       return `${'<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
@@ -29,7 +29,20 @@ gmf.module.value('gmfLayertreeTemplate',
           'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
           'ngeo-layertree-templateurl="'}${subTemplateUrl}">` +
           '</div>';
-    });
+    }
+);
+
+
+/**
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfLayertreeTemplate Template function.
+ * @return {string} Template.
+ * @ngInject
+ */
+function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
+  return gmfLayertreeTemplate($element, $attrs);
+}
 
 
 // Overrides the path to the layertree template (used by each node, except
@@ -44,9 +57,9 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
 
 
 /**
- * This directive creates a layertree based on the c2cgeoportal JSON themes
- * source and a {@link ngeo.layertreeDirective}. The controller used by this
- * directive defines some functions for each node that are created by a default
+ * This component creates a layertree based on the c2cgeoportal JSON themes
+ * source and a {@link ngeo.layertreeComponent}. The controller used by this
+ * component defines some functions for each node that are created by a default
  * template. This default template can be overrided by setting the value
  * 'gmf.layertreeTemplateUrl' but you will have to adapt the
  * ngeoLayertreeTemplateUrl value too (to define the children's nodes template
@@ -74,41 +87,35 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {ol.Map} gmf-layertree-map The map.
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
- *     gmfLayertreeTemplate Template for the directive.
- * @return {angular.Directive} The directive specs.
- * @ngInject
- * @ngdoc directive
- * @ngname gmfLayertreeDirective
+ *
+ * @ngdoc component
+ * @ngname gmfLayertreeComponent
  */
-gmf.layertreeDirective = function(gmfLayertreeTemplate) {
-  return {
-    scope: {
-      'map': '=gmfLayertreeMap',
-      'dimensions': '=?gmfLayertreeDimensions',
-      'openLinksInNewWindowFn': '&gmfLayertreeOpenlinksinnewwindow'
-    },
-    bindToController: true,
-    controller: 'GmfLayertreeController as gmfLayertreeCtrl',
-    template: gmfLayertreeTemplate
-  };
+gmf.layertreeComponent = {
+  controller: 'GmfLayertreeController as gmfLayertreeCtrl',
+  bindings: {
+    'map': '=gmfLayertreeMap',
+    'dimensions': '=?gmfLayertreeDimensions',
+    'openLinksInNewWindowFn': '&gmfLayertreeOpenlinksinnewwindow'
+  },
+  template: gmfLayertreeTemplate
 };
 
-gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
+gmf.module.component('gmfLayertree', gmf.layertreeComponent);
 
 
 /**
- * @param {angular.$http} $http Angular http service.
- * @param {angular.$sce} $sce Angular sce service.
+ * @param {!angular.$http} $http Angular http service.
+ * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {gmf.Permalink} gmfPermalink The gmf permalink service.
- * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
- * @param {ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
- * @param {gmf.WMSTime} gmfWMSTime wms time service.
- * @param {gmf.Themes} gmfThemes The gmf Themes service.
+ * @param {!ngeo.CreatePopup} ngeoCreatePopup Popup service.
+ * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!gmf.Permalink} gmfPermalink The gmf permalink service.
+ * @param {!gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {!gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
+ * @param {!ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
+ * @param {!gmf.WMSTime} gmfWMSTime wms time service.
+ * @param {!gmf.Themes} gmfThemes The gmf Themes service.
  * @constructor
  * @export
  * @struct
@@ -121,85 +128,88 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
     ngeoSyncArrays, gmfWMSTime, gmfThemes) {
 
   /**
-   * @type {ol.Map}
+   * @type {?ol.Map}
    * @export
    */
   this.map;
 
   /**
-   * @type {Object<string, string>|undefined}
+   * @type {?Object<string, string>}
    * @export
    */
   this.dimensions;
 
   /**
-   * @type {angular.Scope}
+   * @type {!angular.Scope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
    * @private
-   * @type {angular.$http}
+   * @type {!angular.$http}
    */
   this.$http_ = $http;
 
   /**
    * @private
-   * @type {angular.$sce}
+   * @type {!angular.$sce}
    */
   this.$sce_ = $sce;
 
   /**
-   * @type {ngeo.LayerHelper}
+   * @type {!ngeo.LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {gmf.Permalink}
+   * @type {!gmf.Permalink}
    * @private
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {!gmf.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
-  /**
-   * @type {gmfThemes.GmfRootNode}
-   * @export
-   */
-  this.root = gmfTreeManager.root;
+  const root = gmfTreeManager.root;
+  goog.asserts.assert(root);
 
   /**
-   * @type {gmf.SyncLayertreeMap}
+   * @type {!gmfThemes.GmfRootNode}
+   * @export
+   */
+  this.root = root;
+
+  /**
+   * @type {!gmf.SyncLayertreeMap}
    * @private
    */
   this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
   /**
-   * @type {gmf.WMSTime}
+   * @type {!gmf.WMSTime}
    * @private
    */
   this.gmfWMSTime_ = gmfWMSTime;
 
   /**
    * @private
-   * @type {ngeo.Popup}
+   * @type {!ngeo.Popup}
    */
   this.infoPopup_ = ngeoCreatePopup();
 
   /**
-   * @type {Object.<string, !angular.$q.Promise>}
+   * @type {!Object.<string, !angular.$q.Promise>}
    * @private
    */
   this.promises_ = {};
 
   /**
-   * @type {Object.<number, Array.<string>>}
+   * @type {!Object.<number, !Array.<string>>}
    * @private
    */
   this.groupNodeStates_ = {};
@@ -211,40 +221,55 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   this.openLinksInNewWindowFn;
 
   /**
-   * @type {boolean}
+   * @type {boolean|undefined}
    * @export
    */
-  this.openLinksInNewWindow = this.openLinksInNewWindowFn() === true ? true : false;
+  this.openLinksInNewWindow;
 
   /**
-   * @type {ol.layer.Group}
+   * @type {?ol.layer.Group}
    * @private
    */
-  this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
-        gmf.DATALAYERGROUP_NAME);
+  this.dataLayerGroup_ = null;
 
   /**
-   * @type {Array.<ol.layer.Base>}
+   * @type {!Array.<!ol.layer.Base>}
    * @export
    */
   this.layers = [];
 
   /**
-   * @type {gmf.Themes}
+   * @type {!gmf.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
 
-  ngeoSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, $scope, () => true);
+  /**
+   * @type {!ngeo.SyncArrays}
+   * @private
+   */
+  this.ngeoSyncArrays_ = ngeoSyncArrays;
+};
+
+
+/**
+ * Init the controller,
+ */
+gmf.LayertreeController.prototype.$onInit = function() {
+  this.openLinksInNewWindow = this.openLinksInNewWindowFn() === true ? true : false;
+  this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
+        gmf.DATALAYERGROUP_NAME);
+
+  this.ngeoSyncArrays_(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 
   // watch any change on layers array to refresh the map
-  $scope.$watchCollection(() => this.layers,
+  this.scope_.$watchCollection(() => this.layers,
   () => {
     this.map.render();
   });
 
   // watch any change on dimensions object to refresh the layers
-  $scope.$watchCollection(() => {
+  this.scope_.$watchCollection(() => {
     if (this.gmfTreeManager_.rootCtrl) {
       return this.dimensions;
     }

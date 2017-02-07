@@ -1,5 +1,5 @@
 goog.provide('ngeo.CreatefeatureController');
-goog.provide('ngeo.createfeatureDirective');
+goog.provide('ngeo.createfeatureComponent');
 
 goog.require('ngeo');
 goog.require('ngeo.EventHelper');
@@ -16,7 +16,7 @@ goog.require('ol.style.Style');
 
 
 /**
- * A directive used to draw vector features of a single geometry type using
+ * A component used to draw vector features of a single geometry type using
  * either a 'draw' or 'measure' interaction. Once a feature is finished being
  * drawn, it is added to a collection of features.
  *
@@ -41,41 +41,37 @@ goog.require('ol.style.Style');
  *       ng-model="ctrl.createPointActive">
  *     </a>
  *
- * @htmlAttribute {boolean} ngeo-createfeature-active Whether the directive is
+ * @htmlAttribute {boolean} ngeo-createfeature-active Whether the component is
  *     active or not.
  * @htmlAttribute {ol.Collection} ngeo-createfeature-features The collection of
- *     features where to add those created by this directive.
+ *     features where to add those created by this component.
  * @htmlAttribute {string} ngeo-createfeature-geom-type Determines the type
- *     of geometry this directive should draw.
+ *     of geometry this component should draw.
  * @htmlAttribute {ol.Map} ngeo-createfeature-map The map.
- * @return {angular.Directive} The directive specs.
- * @ngInject
- * @ngdoc directive
+ *
+ * @ngdoc component
  * @ngname ngeoCreatefeature
  */
-ngeo.createfeatureDirective = function() {
-  return {
-    controller: 'ngeoCreatefeatureController as cfCtrl',
-    bindToController: true,
-    scope: {
-      'active': '=ngeoCreatefeatureActive',
-      'features': '=ngeoCreatefeatureFeatures',
-      'geomType': '=ngeoCreatefeatureGeomType',
-      'map': '=ngeoCreatefeatureMap'
-    }
-  };
+ngeo.createfeatureComponent = {
+  controller: 'ngeoCreatefeatureController as cfCtrl',
+  bindings: {
+    'active': '=ngeoCreatefeatureActive',
+    'features': '=ngeoCreatefeatureFeatures',
+    'geomType': '=ngeoCreatefeatureGeomType',
+    'map': '=ngeoCreatefeatureMap'
+  }
 };
 
-ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
+ngeo.module.component('ngeoCreatefeature', ngeo.createfeatureComponent);
 
 
 /**
- * @param {gettext} gettext Gettext service.
- * @param {angular.$compile} $compile Angular compile service.
- * @param {angular.$filter} $filter Angular filter
+ * @param {!gettext} gettext Gettext service.
+ * @param {!angular.$compile} $compile Angular compile service.
+ * @param {!angular.$filter} $filter Angular filter
  * @param {!angular.Scope} $scope Scope.
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @struct
  * @ngInject
@@ -89,10 +85,10 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
    * @type {boolean}
    * @export
    */
-  this.active = this.active === true;
+  this.active;
 
   /**
-   * @type {ol.Collection.<ol.Feature>|ol.source.Vector}
+   * @type {ol.Collection.<!ol.Feature>|!ol.source.Vector}
    * @export
    */
   this.features;
@@ -104,73 +100,46 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
   this.geomType;
 
   /**
-   * @type {ol.Map}
+   * @type {!ol.Map}
    * @export
    */
   this.map;
 
   /**
-   * @type {angular.$timeout}
+   * @type {!gettext}
+   * @private
+   */
+  this.gettext_ = gettext;
+
+  /**
+   * @type {!angular.$compile}
+   * @private
+   */
+  this.compile_ = $compile;
+
+  /**
+   * @type {!angular.$filter}
+   * @private
+   */
+  this.filter_ = $filter;
+
+  /**
+   * @type {!angular.Scope}
+   * @private
+   */
+  this.scope_ = $scope;
+
+  /**
+   * @type {!angular.$timeout}
    * @private
    */
   this.timeout_ = $timeout;
 
   /**
-   * @type {ngeo.EventHelper}
+   * @type {!ngeo.EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
-
-  // Create the draw or measure interaction depending on the geometry type
-  let interaction;
-  let helpMsg;
-  let contMsg;
-  if (this.geomType === ngeo.GeometryType.POINT ||
-      this.geomType === ngeo.GeometryType.MULTI_POINT
-  ) {
-    interaction = new ol.interaction.Draw({
-      type: ol.geom.GeometryType.POINT
-    });
-  } else if (this.geomType === ngeo.GeometryType.LINE_STRING ||
-      this.geomType === ngeo.GeometryType.MULTI_LINE_STRING
-  ) {
-    helpMsg = gettext('Click to start drawing length');
-    contMsg = gettext(
-      'Click to continue drawing<br/>' +
-      'Double-click or click last point to finish'
-    );
-
-    interaction = new ngeo.interaction.MeasureLength(
-      $filter('ngeoUnitPrefix'),
-      {
-        style: new ol.style.Style(),
-        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
-        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0]
-      }
-    );
-  } else if (this.geomType === ngeo.GeometryType.POLYGON ||
-      this.geomType === ngeo.GeometryType.MULTI_POLYGON
-  ) {
-    helpMsg = gettext('Click to start drawing area');
-    contMsg = gettext(
-      'Click to continue drawing<br/>' +
-      'Double-click or click starting point to finish'
-    );
-
-    interaction = new ngeo.interaction.MeasureArea(
-      $filter('ngeoUnitPrefix'),
-      {
-        style: new ol.style.Style(),
-        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
-        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0]
-      }
-    );
-  }
-
-  goog.asserts.assert(interaction);
-
-  interaction.setActive(this.active);
-  this.map.addInteraction(interaction);
 
   /**
    * The draw or measure interaction responsible of drawing the vector feature.
@@ -178,7 +147,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
    * @type {ol.interaction.Interaction}
    * @private
    */
-  this.interaction_ = interaction;
+  this.interaction_;
 
 
   // == Event listeners ==
@@ -188,6 +157,64 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
       this.interaction_.setActive(newVal);
     }
   );
+};
+
+
+/**
+ * Initialise the component.
+ */
+ngeo.CreatefeatureController.prototype.$onInit = function() {
+  this.active = this.active === true;
+
+  // Create the draw or measure interaction depending on the geometry type
+  let interaction;
+  if (this.geomType === ngeo.GeometryType.POINT ||
+      this.geomType === ngeo.GeometryType.MULTI_POINT
+  ) {
+    interaction = new ol.interaction.Draw({
+      type: ol.geom.GeometryType.POINT
+    });
+  } else if (this.geomType === ngeo.GeometryType.LINE_STRING ||
+      this.geomType === ngeo.GeometryType.MULTI_LINE_STRING
+  ) {
+    const helpMsg = this.gettext_('Click to start drawing length');
+    const contMsg = this.gettext_(
+      'Click to continue drawing<br/>' +
+      'Double-click or click last point to finish'
+    );
+
+    interaction = new ngeo.interaction.MeasureLength(
+      this.filter_('ngeoUnitPrefix'),
+      {
+        style: new ol.style.Style(),
+        startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
+        continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0]
+      }
+    );
+  } else if (this.geomType === ngeo.GeometryType.POLYGON ||
+      this.geomType === ngeo.GeometryType.MULTI_POLYGON
+  ) {
+    const helpMsg = this.gettext_('Click to start drawing area');
+    const contMsg = this.gettext_(
+      'Click to continue drawing<br/>' +
+      'Double-click or click starting point to finish'
+    );
+
+    interaction = new ngeo.interaction.MeasureArea(
+      this.filter_('ngeoUnitPrefix'),
+      {
+        style: new ol.style.Style(),
+        startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
+        continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0]
+      }
+    );
+  }
+
+  goog.asserts.assert(interaction);
+
+  interaction.setActive(this.active);
+  this.interaction_ = interaction;
+  this.map.addInteraction(interaction);
 
   const uid = ol.getUid(this);
   if (interaction instanceof ol.interaction.Draw) {
@@ -214,9 +241,6 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
       true
     );
   }
-
-  $scope.$on('$destroy', this.handleDestroy_.bind(this));
-
 };
 
 
@@ -244,9 +268,8 @@ ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
 
 /**
  * Cleanup event listeners and remove the interaction from the map.
- * @private
  */
-ngeo.CreatefeatureController.prototype.handleDestroy_ = function() {
+ngeo.CreatefeatureController.prototype.$onDestroy = function() {
   this.timeout_(() => {
     const uid = ol.getUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);

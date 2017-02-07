@@ -121,8 +121,6 @@ gmf.ContextualdataController = function($compile, $scope, gmfRaster) {
    */
   this.gmfRaster_ = gmfRaster;
 
-  this.preparePopover_();
-
   angular.element('body').on('mousedown', this.hidePopover.bind(this));
 };
 
@@ -130,6 +128,8 @@ gmf.ContextualdataController = function($compile, $scope, gmfRaster) {
  *
  */
 gmf.ContextualdataController.prototype.init = function() {
+  this.preparePopover_();
+
   const mapDiv = this.map.getTargetElement();
   goog.asserts.assertElement(mapDiv);
 

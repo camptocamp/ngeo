@@ -42,7 +42,16 @@ app.measuretoolsDirective = function() {
     },
     controller: 'AppMeasuretoolsController as ctrl',
     bindToController: true,
-    templateUrl: 'partials/measuretools.html'
+    templateUrl: 'partials/measuretools.html',
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     * @param {app.MeasuretoolsController} controller Controller.
+     */
+    link(scope, element, attrs, controller) {
+      controller.init();
+    }
   };
 };
 
@@ -164,8 +173,6 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     })
   });
 
-  const map = this.map;
-
   /**
    * @type {ngeo.interaction.MeasureLength}
    * @export
@@ -176,10 +183,8 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     continueMsg: measureLengthContinueMsg[0]
   });
 
-  const measureLength = this.measureLength;
-  measureLength.setActive(false);
-  ngeoDecorateInteraction(measureLength);
-  map.addInteraction(measureLength);
+  this.measureLength.setActive(false);
+  ngeoDecorateInteraction(this.measureLength);
 
   /**
    * @type {ngeo.interaction.MeasureArea}
@@ -191,10 +196,8 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     continueMsg: measureAreaContinueMsg[0]
   });
 
-  const measureArea = this.measureArea;
-  measureArea.setActive(false);
-  ngeoDecorateInteraction(measureArea);
-  map.addInteraction(measureArea);
+  this.measureArea.setActive(false);
+  ngeoDecorateInteraction(this.measureArea);
 
   /**
    * @type {ngeo.interaction.MeasureAzimut}
@@ -206,16 +209,14 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     continueMsg: measureAzimutContinueMsg[0]
   });
 
-  const measureAzimut = this.measureAzimut;
-  measureAzimut.setActive(false);
-  ngeoDecorateInteraction(measureAzimut);
-  map.addInteraction(measureAzimut);
+  this.measureAzimut.setActive(false);
+  ngeoDecorateInteraction(this.measureAzimut);
 
 
   // the following code shows how one can add additional information to the
   // tooltip. This can be useful to display the elevation offset from the
   // 2 points of an azimut measurement.
-  measureAzimut.on('measureend', (evt) => {
+  this.measureAzimut.on('measureend', (evt) => {
     const el = evt.target.getTooltipElement();
     el.innerHTML += '<br>Additional info';
   });
@@ -223,6 +224,11 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
 
 app.module.controller('AppMeasuretoolsController', app.MeasuretoolsController);
 
+app.MeasuretoolsController.prototype.init = function() {
+  this.map.addInteraction(this.measureLength);
+  this.map.addInteraction(this.measureArea);
+  this.map.addInteraction(this.measureAzimut);
+};
 
 /**
  * @constructor

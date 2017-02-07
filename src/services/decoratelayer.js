@@ -47,14 +47,14 @@ ngeo.decorateLayer = function(layer) {
   Object.defineProperty(layer, 'opacity', {
     configurable: true,
     /**
-     * @return {string} Opacity.
+     * @return {number} Opacity.
      */
-    get: () => `${Math.round(layer.getOpacity() * 100) / 100}`,
+    get: () => layer.getOpacity(),
     /**
-     * @param {string} val Opacity.
+     * @param {number} val Opacity.
      */
     set: (val) => {
-      layer.setOpacity(+val);
+      layer.setOpacity(val);
     }
   });
 };

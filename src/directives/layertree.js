@@ -233,7 +233,9 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   let nodelayerExpr = $attrs['ngeoLayertreeNodelayer'];
   if (nodelayerExpr === undefined) {
     const nodelayerexprExpr = $attrs['ngeoLayertreeNodelayerexpr'];
-    nodelayerExpr = /** @type {string} */ ($scope.$eval(nodelayerexprExpr));
+    const newNodelayerExpr = $scope.$eval(nodelayerexprExpr);
+    goog.asserts.assertString(newNodelayerExpr);
+    nodelayerExpr = newNodelayerExpr;
   }
   goog.asserts.assert(nodelayerExpr !== undefined);
 
@@ -244,11 +246,19 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   this.nodelayerExpr = nodelayerExpr;
 
   /**
-   * @type {ol.layer.Layer}
+   * @type {?ol.layer.Layer|ol.layer.Group}
    * @export
    */
-  this.layer = isRoot ? null : /** @type {ol.layer.Layer} */
-      ($scope.$eval(nodelayerExpr, {'treeCtrl': this}));
+  this.layer = null;
+  if (!isRoot) {
+    const layer = $scope.$eval(nodelayerExpr, {'treeCtrl': this}) || null;
+    if (layer) {
+      goog.asserts.assert(
+        layer instanceof ol.layer.Layer || layer instanceof ol.layer.Group
+      );
+      this.layer = layer;
+    }
+  }
 
   /**
    * @type {?ngeo.DataSource}
@@ -272,11 +282,15 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   let listenersExpr = $attrs['ngeoLayertreeListeners'];
   if (listenersExpr === undefined) {
     const listenersexprExpr = $attrs['ngeoLayertreeListenersexpr'];
-    listenersExpr = /** @type {string} */ ($scope.$eval(listenersexprExpr));
+    listenersExpr = $scope.$eval(listenersexprExpr);
+  }
+
+  if (listenersExpr !== undefined) {
+    goog.asserts.assertString(listenersExpr);
   }
 
   /**
-   * @type {string}
+   * @type {string|undefined}
    * @export
    */
   this.listenersExpr = listenersExpr;

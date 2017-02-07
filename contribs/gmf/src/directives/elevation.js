@@ -226,7 +226,7 @@ gmf.module.controller('GmfElevationController', gmf.ElevationController);
 
 
 /**
- * Provides a directive which encapsulates the elevation directive (see above)
+ * Provides a component which encapsulates the elevation component (see above)
  * in a button with dropdown menu to be included in a application directly.
  *
  * Example:
@@ -240,26 +240,21 @@ gmf.module.controller('GmfElevationController', gmf.ElevationController);
  * @htmlAttribute {Array.<string>} gmf-elevationwidget-layers The list of
  *     layers.
  * @htmlAttribute {boolean} gmf-elevationwidget-active Whether to activate the
- *     elevation directive.
- * @return {angular.Directive} The directive specs.
- * @ngdoc directive
+ *     elevation component.
+ *
+ * @ngdoc component
  * @ngname gmfElevationwidget
  */
-gmf.elevationwidgetDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '<gmfElevationwidgetMap',
-      'layers': '<gmfElevationwidgetLayers',
-      'active': '<gmfElevationwidgetActive'
-    },
-    controller: 'gmfElevationwidgetController as ctrl',
-    bindToController: true,
-    templateUrl: `${gmf.baseTemplateUrl}/elevationwidget.html`
-  };
+gmf.elevationwidgetComponent = {
+  controller: 'gmfElevationwidgetController as ctrl',
+  bindings: {
+    'map': '<gmfElevationwidgetMap',
+    'layers': '<gmfElevationwidgetLayers',
+    'active': '<gmfElevationwidgetActive'
+  },
+  templateUrl: () => `${gmf.baseTemplateUrl}/elevationwidget.html`
 };
-
-gmf.module.directive('gmfElevationwidget', gmf.elevationwidgetDirective);
+gmf.module.component('gmfElevationwidget', gmf.elevationwidgetComponent);
 
 
 /**
@@ -268,13 +263,13 @@ gmf.module.directive('gmfElevationwidget', gmf.elevationwidgetDirective);
  */
 gmf.ElevationwidgetController = function() {
   /**
-   * @type {ol.Map}
+   * @type {!ol.Map}
    * @export
    */
   this.map;
 
   /**
-   * @type {Array.<string>}
+   * @type {!Array.<string>}
    * @export
    */
   this.layers;
@@ -289,8 +284,12 @@ gmf.ElevationwidgetController = function() {
    * @type {string}
    * @export
    */
-  this.selectedElevationLayer = this.layers[0];
+  this.selectedElevationLayer;
 };
-
 gmf.module.controller('gmfElevationwidgetController',
     gmf.ElevationwidgetController);
+
+
+gmf.ElevationwidgetController.prototype.$onInit = function() {
+  this.selectedElevationLayer = this.layers[0];
+};

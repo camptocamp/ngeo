@@ -1,12 +1,12 @@
 goog.provide('ngeo.AttributesController');
-goog.provide('ngeo.attributesDirective');
+goog.provide('ngeo.attributesComponent');
 
 goog.require('ol.ObjectEventType');
 goog.require('ngeo');
 goog.require('ngeo.EventHelper');
 
 /**
- * Directive used to render the attributes of a feature into a form.
+ * Component used to render the attributes of a feature into a form.
  * Example:
  *
  *     <ngeo-attributes
@@ -20,25 +20,21 @@ goog.require('ngeo.EventHelper');
  * @htmlAttribute {boolean} ngeo-attributes-disabled Whether the fieldset should
  *     be disabled or not.
  * @htmlAttribute {ol.Feature} ngeo-attributes-feature The feature.
- * @return {angular.Directive} The directive specs.
- * @ngInject
- * @ngdoc directive
+ *
+ * @ngdoc component
  * @ngname ngeoAttributes
  */
-ngeo.attributesDirective = function() {
-  return {
-    controller: 'ngeoAttributesController as attrCtrl',
-    scope: true,
-    bindToController: {
-      'attributes': '=ngeoAttributesAttributes',
-      'disabled': '<ngeoAttributesDisabled',
-      'feature': '=ngeoAttributesFeature'
-    },
-    templateUrl: `${ngeo.baseTemplateUrl}/attributes.html`
-  };
+ngeo.attributesComponent = {
+  controller: 'ngeoAttributesController as attrCtrl',
+  bindings: {
+    'attributes': '=ngeoAttributesAttributes',
+    'disabled': '<ngeoAttributesDisabled',
+    'feature': '=ngeoAttributesFeature'
+  },
+  templateUrl: () => `${ngeo.baseTemplateUrl}/attributes.html`
 };
 
-ngeo.module.directive('ngeoAttributes', ngeo.attributesDirective);
+ngeo.module.component('ngeoAttributes', ngeo.attributesComponent);
 
 
 /**
@@ -76,10 +72,10 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
   /**
    * The properties bound to the form, initialized with the inner properties
    * of the feature.
-   * @type {Object.<string, *>}
+   * @type {?Object.<string, *>}
    * @export
    */
-  this.properties = this.feature.getProperties();
+  this.properties;
 
   /**
    * @type {!angular.Scope}
@@ -103,6 +99,26 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
     'changeYear': true
   };
 
+  /**
+   * While changes happen from the form (from the template), they are applied
+   * to the feature inner properties. The 'propertychange' event registered
+   * above does the opposite, i.e. it listens to the feature inner properties
+   * changes and apply them to the form. To prevent circular issues, while
+   * applying changes coming from the form, this flag is set. While set, changes
+   * from the feature inner properties are ignored.
+   * @type {boolean}
+   * @private
+   */
+  this.updating_ = false;
+};
+
+
+/**
+ * Initialise the component.
+ */
+ngeo.AttributesController.prototype.$onInit = function() {
+  this.properties = this.feature.getProperties();
+
   // Listen to the feature inner properties change and apply them to the form
   const uid = ol.getUid(this);
   this.ngeoEventHelper_.addListenerKey(
@@ -115,21 +131,6 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
     ),
     true
   );
-
-  /**
-   * While changes happen from the form (from the template), they are applied
-   * to the feature inner properties. The 'propertychange' event registered
-   * above does the opposite, i.e. it listens to the feature inner properties
-   * changes and apply them to the form. To prevent circular issues, while
-   * applying changes coming from the form, this flag is set. While set, changes
-   * from the feature inner properties are ignored.
-   * @type {boolean}
-   * @private
-   */
-  this.updating_ = false;
-
-  $scope.$on('$destroy', this.handleDestroy_.bind(this));
-
 };
 
 
@@ -148,9 +149,8 @@ ngeo.AttributesController.prototype.handleInputChange = function(name) {
 
 /**
  * Cleanup event listeners.
- * @private
  */
-ngeo.AttributesController.prototype.handleDestroy_ = function() {
+ngeo.AttributesController.prototype.$onDestroy = function() {
   const uid = ol.getUid(this);
   this.ngeoEventHelper_.clearListenerKey(uid);
 };

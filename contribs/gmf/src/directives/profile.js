@@ -1,5 +1,5 @@
 goog.provide('gmf.ProfileController');
-goog.provide('gmf.profileDirective');
+goog.provide('gmf.profileComponent');
 
 goog.require('gmf');
 goog.require('ngeo.CsvDownload');
@@ -18,25 +18,37 @@ goog.require('ol.style.Style');
 
 ngeo.module.value('gmfProfileTemplateUrl',
     /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {!angular.JQLite} $element Element.
+     * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['gmfProfileTemplateurl'];
+    ($element, $attrs) => {
+      const templateUrl = $attrs['gmfProfileTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           `${gmf.baseTemplateUrl}/profile.html`;
     });
 
 
 /**
- * Provide a directive that display a profile panel. This profile use the given
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfProfileTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
+  return gmfProfileTemplateUrl($element, $attrs);
+}
+
+
+/**
+ * Provide a component that display a profile panel. This profile use the given
  * LineString geometry to request the c2cgeoportal profile.json service. The
  * raster used in the request are the keys of the 'linesconfiguration' object.
  * The 'map' attribute is optional and are only used to display on the map the
  * information that concern the hovered point (in the profile and on the map)
  * of the line.
- * This profile relies on the ngeo.profile (d3) and ngeo.ProfileDirective.
+ * This profile relies on the ngeo.profile (d3) and ngeo.ProfileComponent.
  *
  * Example:
  *
@@ -61,36 +73,29 @@ ngeo.module.value('gmfProfileTemplateUrl',
  *     points to request. Default to 100.
  * @htmlAttribute {Object.<string, *>?} gmf-profile-options Optional options
  *     object like {@link ngeox.profile.ProfileOptions} but without any
- *     mandatory value. Will be passed to the ngeo profile directive. Providing
+ *     mandatory value. Will be passed to the ngeo profile component. Providing
  *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback
  *     or i18n will override native gmf profile values.
- * @param {string} gmfProfileTemplateUrl URL to a template.
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
- * @ngdoc directive
+ *
+ * @ngdoc component
  * @ngname gmfProfile
  */
-gmf.profileDirective = function(gmfProfileTemplateUrl) {
-  return {
-    bindToController: true,
-    controller: 'GmfProfileController as ctrl',
-    templateUrl: gmfProfileTemplateUrl,
-    replace: true,
-    restrict: 'E',
-    scope: {
-      'active': '=gmfProfileActive',
-      'line': '=gmfProfileLine',
-      'getMapFn': '&?gmfProfileMap',
-      'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
-      'getHoverPointStyleFn': '&?gmfProfileHoverpointstyle',
-      'getNbPointsFn': '&?gmfProfileNumberofpoints',
-      'getOptionsFn': '&?gmfProfileOptions'
-    }
-  };
+gmf.profileComponent = {
+  controller: 'GmfProfileController as ctrl',
+  bindings: {
+    'active': '=gmfProfileActive',
+    'line': '=gmfProfileLine',
+    'getMapFn': '&?gmfProfileMap',
+    'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
+    'getHoverPointStyleFn': '&?gmfProfileHoverpointstyle',
+    'getNbPointsFn': '&?gmfProfileNumberofpoints',
+    'getOptionsFn': '&?gmfProfileOptions'
+  },
+  templateUrl: gmfProfileTemplateUrl
 };
 
 
-gmf.module.directive('gmfProfile', gmf.profileDirective);
+gmf.module.component('gmfProfile', gmf.profileComponent);
 
 
 /**
@@ -174,31 +179,17 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    */
   this.map_ = map;
 
-  const linesConfiguration = this['getLinesConfigurationFn']();
-  goog.asserts.assertInstanceof(linesConfiguration, Object);
-
   /**
-   * @type {Object<string, gmfx.ProfileLineConfiguration>}
+   * @type {?Object<string, !gmfx.ProfileLineConfiguration>}
    * @private
    */
-  this.linesConfiguration_ = linesConfiguration;
+  this.linesConfiguration_ = null;
 
   /**
-   * @type {Array.<string>}
+   * @type {!Array.<string>}
    * @private
    */
   this.layersNames_ = [];
-
-  let name, lineConfig;
-  for (name in this.linesConfiguration_) {
-    // Keep an array of all layer names.
-    this.layersNames_.push(name);
-    // Add generic zExtractor to lineConfiguration object that doesn't have one.
-    lineConfig = this.linesConfiguration_[name];
-    if (!lineConfig.zExtractor) {
-      this.linesConfiguration_[name].zExtractor = this.getZFactory_(name);
-    }
-  }
 
   let nbPoints = 100;
   const nbPointsFn = this['getNbPointsFn'];
@@ -291,23 +282,10 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
   this.pointHoverOverlay_.setStyle(hoverPointStyle);
 
   /**
-   * @type {ngeox.profile.ProfileOptions}
+   * @type {?ngeox.profile.ProfileOptions}
    * @export
    */
-  this.profileOptions = /** @type {ngeox.profile.ProfileOptions} */ ({
-    linesConfiguration: this.linesConfiguration_,
-    distanceExtractor: this.getDist_,
-    hoverCallback: this.hoverCallback_.bind(this),
-    outCallback: this.outCallback_.bind(this),
-    i18n: this.profileLabels_
-  });
-
-  const optionsFn = this['getOptionsFn'];
-  if (optionsFn) {
-    const options = optionsFn();
-    goog.asserts.assertObject(options);
-    ol.obj.assign(this.profileOptions, options);
-  }
+  this.profileOptions = null;
 
   /**
    * @type {boolean}
@@ -347,6 +325,42 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
     });
 
   this.updateEventsListening_();
+};
+
+
+/**
+ * Init the controller
+ */
+gmf.ProfileController.prototype.$onInit = function() {
+  const linesConfiguration = this['getLinesConfigurationFn']();
+  goog.asserts.assertInstanceof(linesConfiguration, Object);
+
+  this.linesConfiguration_ = linesConfiguration;
+
+  for (const name in this.linesConfiguration_) {
+    // Keep an array of all layer names.
+    this.layersNames_.push(name);
+    // Add generic zExtractor to lineConfiguration object that doesn't have one.
+    const lineConfig = this.linesConfiguration_[name];
+    if (!lineConfig.zExtractor) {
+      this.linesConfiguration_[name].zExtractor = this.getZFactory_(name);
+    }
+  }
+
+  this.profileOptions = /** @type {ngeox.profile.ProfileOptions} */ ({
+    linesConfiguration: this.linesConfiguration_,
+    distanceExtractor: this.getDist_,
+    hoverCallback: this.hoverCallback_.bind(this),
+    outCallback: this.outCallback_.bind(this),
+    i18n: this.profileLabels_
+  });
+
+  const optionsFn = this['getOptionsFn'];
+  if (optionsFn) {
+    const options = optionsFn();
+    goog.asserts.assertObject(options);
+    ol.obj.assign(this.profileOptions, options);
+  }
 };
 
 

@@ -78,7 +78,7 @@ ngeo.module.directive('ngeoBtnGroup', ngeo.btngroupDirective);
  */
 ngeo.BtnGroupController = function($scope) {
   /**
-   * @type {Array.<angular.$parse.Expression>}
+   * @type {!Array.<!angular.parse.Expression>}
    * @private
    */
   this.buttons_ = [];
@@ -104,7 +104,7 @@ ngeo.BtnGroupController.prototype.activate = function(index) {
 
 
 /**
- * @param {angular.$parse.Expression} expressionFn Expression function.
+ * @param {angular.parse.Expression} expressionFn Expression function.
  * @return {number} Index of the pushed setter.
  */
 ngeo.BtnGroupController.prototype.addButton = function(expressionFn) {
