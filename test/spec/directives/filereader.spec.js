@@ -17,7 +17,7 @@ describe('ngeo.filereaderDirective', () => {
         };
         this.onload(progressEvent);
       };
-      $provide.value('$window', {FileReader});
+      $provide.value('$window', {FileReader, angular: window.angular});
     });
 
     inject(($rootScope, $compile) => {
@@ -33,5 +33,4 @@ describe('ngeo.filereaderDirective', () => {
     input.dispatchEvent(customEvent);
     expect(rootScope.fileContent).toBe('<kml></kml>');
   });
-
 });
