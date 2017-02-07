@@ -158,7 +158,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
   if (gmfLayer.type === 'WMS') {
     gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
     layers = gmfLayerWMS.layers;
-    if (firstLevelGroup && firstLevelGroup.mixed) {
+    if (!firstLevelGroup || firstLevelGroup.mixed) {
       goog.asserts.assert(gmfLayerWMS.ogcServer);
       ogcServer = ogcServers[/** @type string */ (gmfLayerWMS.ogcServer)];
     } else {

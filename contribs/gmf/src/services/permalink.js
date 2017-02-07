@@ -792,10 +792,7 @@ gmf.Permalink.prototype.setThemeInUrl_ = function() {
  * @private
  */
 gmf.Permalink.prototype.initLayers_ = function() {
-  this.gmfThemes_.getThemesObject().then((themes) => {
-    /**
-     * @type {string}
-     */
+  this.gmfThemes_.getThemesObject().then(function(themes) {
     let themeName;
     const pathElements = this.ngeoLocation_.getPath().split('/');
     if (this.themeInUrl_(pathElements)) {

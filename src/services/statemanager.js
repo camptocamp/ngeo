@@ -22,7 +22,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
 
   /**
    * Object representing the application's initial state.
-   * @type {!Object.<string, *>}
+   * @type {!Object.<string, string>}
    */
   this.initialState = {};
 
@@ -42,50 +42,37 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
   this.usedKeyRegexp = ngeoUsedKeyRegexp;
 
 
-  /**
-   * @type {Array.<string>}
-   */
-  this.excludedKeyListForURL = ['theme'];
-
   // Populate initialState with the application's initial state. The initial
   // state is read from the location URL, or from the local storage if there
   // is no state in the location URL.
 
   const paramKeys = ngeoLocation.getParamKeys();
-  let i, theme;
-  const themeRegex = new RegExp(/\/theme\/([^\?\/]*)/);
-  const urlPath = ngeoLocation.getPath();
-  const locationInitState = {};
 
   if (paramKeys.length === 0 ||
       (paramKeys.length === 1 && paramKeys[0] == 'debug')) {
     if (this.localStorage.isAvailable()) {
-      const count = this.localStorage.getCount();
-      for (i = 0; i < count; ++i) {
-        const key = this.localStorage.key(i);
+      for (const key in this.localStorage) {
         goog.asserts.assert(key !== null);
+        goog.asserts.assert(key !== undefined);
 
         this.usedKeyRegexp.some(function(keyRegexp) {
           if (key.match(keyRegexp)) {
-            const value = this.getItemFromLocalStorage_(key);
-            goog.asserts.assert(value !== null);
-            this.initialState[key] = value;
-
-            //Do not copy excluded parameters in the URL
-            if (this.excludedKeyListForURL.indexOf(key) < 0) {
-              locationInitState[key] = this.initialState[key];
+            const value = this.localStorage.get(key);
+            if (value !== null && value !== undefined) {
+              this.initialState[key] = value;
+            } else {
+              this.initialState[key] = '';
             }
             return true;
           }
         }, this);
       }
-      this.ngeoLocation.updateParams(locationInitState);
     }
   } else {
     paramKeys.forEach(function(key) {
       this.usedKeyRegexp.some(function(keyRegexp) {
         if (key.match(keyRegexp)) {
-          const value = this.getItemFromLocalStorage_(key);
+          const value = this.ngeoLocation.getParam(key);
           if (value !== null) {
             this.initialState[key] = value;
             return true;
@@ -93,47 +80,6 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
         }
       }, this);
     }, this);
-    //Retrieve selected theme in url path
-    theme = urlPath.match(themeRegex);
-    if (theme) {
-      this.initialState['theme'] = theme[1];
-    }
-  }
-};
-
-
-/**
- * Get the item for the given key  from localStorage and try to parse to the appropriate type
- * If it cannot be parsed, the raw value (string) is returned
- *
- * @param  {string} key the localStorage key for the item
- * @return {*} Param value.
- * @private
- */
-ngeo.StateManager.prototype.getItemFromLocalStorage_ = function(key) {
-  const value = this.localStorage.get(key);
-  try {
-    return angular.fromJson(value);
-  } catch (e) {
-    return value;
-  }
-};
-
-
-/**
- * Get the item for the given key  from Location and try to parse to the appropriate type
- * If it cannot be parsed, the raw value (string) is returned
- *
- * @param  {string} key the localStorage key for the item
- * @return {*} Param value.
- * @private
- */
-ngeo.StateManager.prototype.getItemFromLocation_ = function(key) {
-  const value = this.ngeoLocation.getParam(key);
-  try {
-    return angular.fromJson(value);
-  } catch (e) {
-    return value;
   }
 };
 
@@ -141,7 +87,7 @@ ngeo.StateManager.prototype.getItemFromLocation_ = function(key) {
 /**
  * Get the state value for `key`.
  * @param {string} key State key.
- * @return {*} State value.
+ * @return {string|undefined} State value.
  */
 ngeo.StateManager.prototype.getInitialValue = function(key) {
   return this.initialState[key];
@@ -195,20 +141,15 @@ ngeo.StateManager.prototype.getInitialBooleanValue = function(key) {
  * @param {!Object.<string, string>} object Object.
  */
 ngeo.StateManager.prototype.updateState = function(object) {
-  const locationObject = {};
-  Object.keys(object).forEach(copyWithoutExcludedKeys, this);
-  this.ngeoLocation.updateParams(locationObject);
+  this.ngeoLocation.updateParams(object);
   if (this.localStorage.isAvailable()) {
-    let key;
-    for (key in object) {
-      this.localStorage.set(key, angular.toJson(object[key]));
-    }
-  }
-
-  function copyWithoutExcludedKeys(key) {
-    // Do not copy excluded parameters in the URL
-    if (this.excludedKeyListForURL.indexOf(key) < 0) {
-      locationObject[key] = object[key];
+    for (const key in object) {
+      goog.asserts.assert(key !== undefined);
+      goog.asserts.assert(key !== null);
+      const value = object[key];
+      goog.asserts.assert(value !== undefined);
+      goog.asserts.assert(value !== null);
+      this.localStorage.set(key, value);
     }
   }
 };

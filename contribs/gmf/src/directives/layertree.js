@@ -380,18 +380,17 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
  * Return 'out-of-resolution' if the current resolution of the map is out of
  * the min/max resolution in the node.
  * @param {gmfThemes.GmfLayerWMS} gmfLayerWMS the GeoMapFish Layer WMS.
- * @return {string|undefined} 'out-of-resolution' or null.
+ * @return {string|undefined} 'out-of-resolution' or undefined.
  * @export
  */
 gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayerWMS) {
+  let style;
   const resolution = this.map.getView().getResolution();
-  const maxExtent = gmfLayerWMS.maxResolutionHint;
-  const minExtent = gmfLayerWMS.minResolutionHint;
-  if (minExtent !== undefined && resolution < minExtent ||
-      maxExtent !== undefined && resolution > maxExtent) {
-    return 'out-of-resolution';
+  if (gmfLayerWMS.minResolutionHint !== undefined && resolution < gmfLayerWMS.minResolutionHint ||
+      gmfLayerWMS.maxResolutionHint !== undefined && resolution > gmfLayerWMS.maxResolutionHint) {
+    style = 'out-of-resolution';
   }
-  return undefined;
+  return style;
 };
 
 
@@ -617,9 +616,12 @@ gmf.LayertreeController.prototype.removeNode = function(node) {
 gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
   const gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
   const view = this.map.getView();
-  const resolution = gmfLayer.minResolutionHint || gmfLayer.maxResolutionHint;
-  if (resolution !== undefined) {
-    view.setResolution(view.constrainResolution(resolution, 0, 1));
+  const resolution = view.getResolution();
+  if (gmfLayer.minResolutionHint !== undefined && resolution < gmfLayer.minResolutionHint) {
+    view.setResolution(view.constrainResolution(gmfLayer.minResolutionHint, 0, 1));
+  }
+  if (gmfLayer.maxResolutionHint !== undefined && resolution > gmfLayer.maxResolutionHint) {
+    view.setResolution(view.constrainResolution(gmfLayer.maxResolutionHint, 0, -1));
   }
 };
 
