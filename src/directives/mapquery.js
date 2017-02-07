@@ -27,18 +27,20 @@ goog.require('ngeo.MapQuerent');
  * See our live example: [../examples/mapquery.html](../examples/mapquery.html)
  *
  * @param {ngeo.MapQuerent} ngeoMapQuerent The ngeo map querent service.
+ * @param {angular.$injector} $injector Main injector.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoMapQuery
  */
-ngeo.mapQueryDirective = function(ngeoMapQuerent) {
+ngeo.mapQueryDirective = function(ngeoMapQuerent, $injector) {
   return {
     restrict: 'A',
     scope: false,
     link(scope, elem, attrs) {
       const map = scope.$eval(attrs['ngeoMapQueryMap']);
       let clickEventKey_ = null;
+      let pointerMoveEventKey_ = null;
 
       /**
        * Called when the map is clicked while this controller is active. Issue
@@ -54,21 +56,48 @@ ngeo.mapQueryDirective = function(ngeoMapQuerent) {
       };
 
       /**
-       * Listen to the map 'click' event.
+       * Called when the pointer is moved while this controller is active.
+       * Change the mouse pointer when hovering a non-transparent pixel on the
+       * map.
+       * @param {ol.MapBrowserEvent} evt The map browser event being fired.
        */
-      const activate_ = function() {
-        clickEventKey_ = ol.events.listen(map,
-            ol.events.EventType.CLICK, handleMapClick_);
+      const handlePointerMove_ = function(evt) {
+        if (!evt.dragging) {
+          const pixel = map.getEventPixel(evt.originalEvent);
+          const queryable = function(layer) {
+            var visible = layer.get('visible');
+            var sourceids = layer.get('querySourceIds');
+            return visible && !!sourceids;
+          };
+          const hit = map.forEachLayerAtPixel(pixel, () => true, undefined, queryable);
+          map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+        }
       };
 
+      /**
+       * Listen to the map events.
+       */
+      const activate_ = function() {
+        clickEventKey_ = ol.events.listen(map, ol.events.EventType.CLICK, handleMapClick_);
+        const queryOptions = /** @type {ngeox.QueryOptions} */ (
+          $injector.has('ngeoQueryOptions') ? $injector.get('ngeoQueryOptions') : {}
+        );
+        if (queryOptions.cursorHover) {
+          pointerMoveEventKey_ = ol.events.listen(map, 'pointermove', handlePointerMove_);
+        }
+      };
 
       /**
-       * Unlisten the map 'click' event.
+       * Unlisten the map events.
        */
       const deactivate_ = function() {
         if (clickEventKey_ !== null) {
           ol.events.unlistenByKey(clickEventKey_);
           clickEventKey_ = null;
+        }
+        if (pointerMoveEventKey_ !== null) {
+          ol.events.unlistenByKey(pointerMoveEventKey_);
+          pointerMoveEventKey_ = null;
         }
         if (scope.$eval(attrs['ngeoMapQueryAutoclear']) !== false) {
           ngeoMapQuerent.clear();
