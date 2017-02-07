@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <script src="https.js"></script>
+    <title>Layer tree example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="lib/bootstrap.min.css" type="text/css">
+    <style>
+      #map {
+        width: 600px;
+        height: 400px;
+      }
+      app-layertree button {
+        background: none;
+        border: 0;
+      }
+      app-layertree button:hover {
+        opacity: 0.7;
+      }
+      [ngeo-popup] {
+        top: 20px;
+        max-width: 350px;
+        width: 350px;
+        margin-left: -175px;
+        left: 50%;
+        right: 50%;
+        max-height: 400px;
+        position: fixed;
+      }
+      [ngeo-popup] .popover-content {
+        overflow: auto;
+        /*
+         * popup's height - popover-title's height
+         * should be computed using bootstrap variables
+         */
+        max-height: calc(400px - 38px);
+      }
+      @media (max-width: 768px) {
+        #map {
+          height: 200px;
+          width: 200px;
+        }
+        [ngeo-popup] {
+          position: fixed;
+          top: 0;
+          left: auto;
+          right: auto;
+          max-width: 100%;
+          width: calc(100% - 20px);
+          height: calc(100% - 20px);
+          max-height: none;
+          margin: 10px;
+        }
+      }
+      @media (max-width: 768px) {
+        [ngeo-popup] .popover-content {
+          /*
+           * popup's height - popover-title's height
+           * should be computed using bootstrap variables
+           */
+          max-height: calc(100% - 32px);
+          -webkit-overflow-scrolling: touch;
+        }
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as mainCtrl">
+    <div id="map" ngeo-map="mainCtrl.map"></div>
+    <app-layertree app-layertree-map="::mainCtrl.map"></app-layertree>
+    <p id="desc">This example shows how to use ngeo's layer tree directive (<code><a href="../apidoc/ngeo.layertreeDirective.html" title="Read our documentation">ngeo-layertree</a></code>). It also shows how to define an application-specific HTML partial for the tree nodes.</p>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-gettext.min.js"></script>
+    <script src="lib/date.min.js"></script>
+    <script src="lib/angular-floatThead.js"></script>
+    <script src="lib/jquery.floatThead.min.js"></script>
+    <script src="lib/proj4.js"></script>
+    <script src="lib/transpile.js"></script>
+    <script src="layertree.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>
