@@ -39,12 +39,12 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
   /**
    * @type {boolean}
    */
-  this.useLocalStorage;
+  this.useLocalStorage = true;
 
   try {
     if ('localStorage' in window) {
-      window.localStorage.setItem('test', '');
-      window.localStorage.removeItem('test');
+      window.localStorage['test'] = '';
+      delete window.localStorage['test'];
     } else {
       this.useLocalStorage = false;
     }
@@ -61,14 +61,14 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
 
   if (paramKeys.length === 0 ||
       (paramKeys.length === 1 && paramKeys[0] == 'debug')) {
-    if (this.useLocalStorage !== false) {
+    if (this.useLocalStorage) {
       for (const key in window.localStorage) {
         goog.asserts.assert(key);
 
         this.usedKeyRegexp.some(function(keyRegexp) {
           if (key.match(keyRegexp)) {
             const value = window.localStorage[key];
-            if (value !== undefined) {
+            if (value !== undefined || value !== null) {
               this.initialState[key] = value;
             } else {
               this.initialState[key] = '';
@@ -111,7 +111,7 @@ ngeo.StateManager.prototype.getInitialValue = function(key) {
  */
 ngeo.StateManager.prototype.getInitialStringValue = function(key) {
   const value = this.initialState[key];
-  if (value === undefined || value === null) {
+  if (value === undefined) {
     return undefined;
   }
   return value;
@@ -125,7 +125,7 @@ ngeo.StateManager.prototype.getInitialStringValue = function(key) {
  */
 ngeo.StateManager.prototype.getInitialNumberValue = function(key) {
   const value = this.initialState[key];
-  if (value === undefined || value === null) {
+  if (value === undefined) {
     return undefined;
   }
   return parseFloat(value);
@@ -139,7 +139,7 @@ ngeo.StateManager.prototype.getInitialNumberValue = function(key) {
  */
 ngeo.StateManager.prototype.getInitialBooleanValue = function(key) {
   const value = this.initialState[key];
-  if (value === undefined || value === null) {
+  if (value === undefined) {
     return undefined;
   }
   return value === 'true';
@@ -152,13 +152,11 @@ ngeo.StateManager.prototype.getInitialBooleanValue = function(key) {
  */
 ngeo.StateManager.prototype.updateState = function(object) {
   this.ngeoLocation.updateParams(object);
-  if (this.useLocalStorage !== false) {
+  if (this.useLocalStorage) {
     for (const key in object) {
-      goog.asserts.assert(key !== undefined);
-      goog.asserts.assert(key !== null);
+      goog.asserts.assert(key);
       const value = object[key];
       goog.asserts.assert(value !== undefined);
-      goog.asserts.assert(value !== null);
       window.localStorage[key] = value;
     }
   }
@@ -171,7 +169,7 @@ ngeo.StateManager.prototype.updateState = function(object) {
  */
 ngeo.StateManager.prototype.deleteParam = function(key) {
   this.ngeoLocation.deleteParam(key);
-  if (this.useLocalStorage !== false) {
+  if (this.useLocalStorage) {
     delete window.localStorage[key];
   }
 };
