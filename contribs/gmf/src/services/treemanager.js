@@ -228,7 +228,7 @@ gmf.TreeManager.prototype.addFirstLevelGroup_ = function(group) {
 
   // Delete previous timeout promise if it exists to do this action only once.
   if (this.promiseForGroupsToAddInThisDigestLoop_ !== null) {
-    this.$timeout_['cancel'](this.promiseForGroupsToAddInThisDigestLoop_);
+    this.$timeout_.cancel(this.promiseForGroupsToAddInThisDigestLoop_);
   }
 
   // Add the groups only when there is no more group to come during this digest
