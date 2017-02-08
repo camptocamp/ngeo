@@ -20,7 +20,6 @@ goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.WfsPermalink');
 goog.require('goog.asserts');
 goog.require('ol.Feature');
-goog.require('ol.functions');
 goog.require('ol.geom.Point');
 goog.require('ol.proj');
 goog.require('ol.style.Stroke');
@@ -165,7 +164,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   this.ngeoStateManager_ = ngeoStateManager;
 
   if (gmfPermalinkOptions.useLocalStorage === false) {
-    this.ngeoStateManager_.localStorage.isAvailable = ol.functions.FALSE;
+    this.ngeoStateManager_.useLocalStorage = false;
   }
 
   /**
@@ -792,7 +791,7 @@ gmf.Permalink.prototype.setThemeInUrl_ = function() {
  * @private
  */
 gmf.Permalink.prototype.initLayers_ = function() {
-  this.gmfThemes_.getThemesObject().then(function(themes) {
+  this.gmfThemes_.getThemesObject().then((themes) => {
     let themeName;
     const pathElements = this.ngeoLocation_.getPath().split('/');
     if (this.themeInUrl_(pathElements)) {
