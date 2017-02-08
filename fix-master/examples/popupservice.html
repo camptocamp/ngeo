@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <script src="https.js"></script>
+    <title>ngeoCreatePopup service factory example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link href="lib/bootstrap.min.css"
+          rel="stylesheet" type="text/css">
+    <style>
+      .buttons .btn {
+        margin: 0 0 5px 0;
+      }
+      .popup-with-iframe .popover-content {
+        height: calc(100% - 40px);
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">
+      This example shows how to use the <code>ngeoCreatePopup</code>
+      service factory to display all sorts of modals. One can display plain
+      text or display an external web page within an iframe.
+    </p>
+    <div class="buttons">
+      <button
+          ng-click="ctrl.simplePopup();"
+          title="Opens a popup with user-defined content (not using open)"
+          type="button"
+          class="btn btn-default">Simple</button>
+      <button
+          ng-click="ctrl.iframePopup();"
+          title="Opens a popup with an iframe (not using open)"
+          type="button"
+          class="btn btn-default">Iframe</button>
+      <button
+          ng-click="ctrl.heavyPopup();"
+          title="Opens a popup with lots of content (not using open)"
+          type="button"
+          class="btn btn-default">Heavy</button>
+      <button
+          ng-click="ctrl.openPopupWithContent();"
+          title="Opens a popup with user-defined content using the open method"
+          type="button"
+          class="btn btn-primary">Open</button>
+      <button
+          ng-click="ctrl.openPopupWithUrl();"
+          title="Opens a popup with an iframe using the open method"
+          type="button"
+          class="btn btn-primary">Open (iframe)</button>
+    </div>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular-gettext.min.js"></script>
+    <script src="lib/date.min.js"></script>
+    <script src="lib/angular-floatThead.js"></script>
+    <script src="lib/jquery.floatThead.min.js"></script>
+    <script src="lib/proj4.js"></script>
+    <script src="lib/transpile.js"></script>
+    <script src="popupservice.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>
