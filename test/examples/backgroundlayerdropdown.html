@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <script src="https.js"></script>
+    <title>Background layer selection example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="lib/bootstrap.min.css" type="text/css">
+    <style>
+      #map {
+        height: 400px;
+      }
+      .dropdown button {
+        min-width: 100px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as mainCtrl">
+    <div id="map" ngeo-map="mainCtrl.map"></div>
+    <app-backgroundlayer app-backgroundlayer-map="::mainCtrl.map"></app-backgroundlayer>
+    <div>
+      <p id="desc">This example shows how to write an application-specific directive (<code>app-backgroundlayer</code>) to create a background layer selector. The directive is based on Bootstrap's <code>dropdown</code> jQuery plugin, and on the <code><a href="../apidoc/ngeo.BackgroundLayerMgr.html" title="Read our documentation">ngeoBackgroundLayerMgr</a></code> service.</p>
+    </div>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-gettext.min.js"></script>
+    <script src="lib/date.min.js"></script>
+    <script src="lib/angular-floatThead.js"></script>
+    <script src="lib/jquery.floatThead.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/proj4.js"></script>
+    <script src="lib/transpile.js"></script>
+    <script src="backgroundlayerdropdown.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>
