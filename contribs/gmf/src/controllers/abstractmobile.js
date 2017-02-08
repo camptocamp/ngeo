@@ -30,7 +30,7 @@ goog.require('ol.style.Style');
 
 gmf.module.value('isMobile', true);
 
-app.module.value('ngeoQueryOptions', {
+gmf.module.value('ngeoQueryOptions', {
   'tolerance': 10
 });
 
