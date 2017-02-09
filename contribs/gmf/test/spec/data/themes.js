@@ -1,4 +1,4 @@
-/*eslint no-unused-vars: ['error', { 'varsIgnorePattern': 'themes|capabilities' }] */
+/* eslint no-unused-vars: ['error', { 'varsIgnorePattern': 'themes|capabilities' }] */
 /* eslint comma-spacing: 0, key-spacing: 0 */
 goog.provide('gmf.test.data.themes');
 
@@ -1996,12 +1996,11 @@ const themes = {
   ],
   'background_layers':[
     {
-      'layer':null,
+      'layer':'map',
       'dimensions':{
-
       },
       'url':'https://geomapfish-demo.camptocamp.net/2.2//tiles/1.0.0/WMTSCapabilities.xml?',
-      'name':'map',
+      'name':'OSM',
       'type':'WMTS',
       'id':134,
       'imageType':'image/jpeg',
@@ -2010,7 +2009,7 @@ const themes = {
       }
     },
     {
-      'layer':null,
+      'layer':'asitvd.fond_gris',
       'dimensions':{
         'DIM1':'default',
         'ELEVATION':'0'
@@ -2025,7 +2024,7 @@ const themes = {
       }
     },
     {
-      'layer':null,
+      'layer':'asitvd.fond_couleur',
       'dimensions':{
         'DIM1':'default',
         'ELEVATION':'0'
