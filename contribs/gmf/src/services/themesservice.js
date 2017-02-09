@@ -271,10 +271,12 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
       goog.asserts.assert(gmfLayerWMTS.url, 'Layer URL is required');
       return layerHelper.createWMTSLayerFromCapabilitites(
           gmfLayerWMTS.url,
-          gmfLayer.name || '',
+          gmfLayerWMTS.layer || '',
           gmfLayer.dimensions
       ).then(callback.bind(null, gmfLayer)).then(null, (response) => {
-        console.error('unable to get capabilities', response['config']['url']);
+        console.error('unable to get capabilities', gmfLayerWMTS.layer, gmfLayerWMTS.url);
+        console.error(response['message']);
+        console.error(response['stack']);
         // Continue even if some layers have failed loading.
         return $q.resolve(undefined);
       });

@@ -28,7 +28,7 @@ describe('gmf.Themes', () => {
 
     $httpBackend.expectGET(treeUrl);
     themes.background_layers.forEach((bgLayer) => {
-      const response = bgLayer.name == 'map' ? capabilities.map :
+      const response = bgLayer.name == 'OSM' ? capabilities.map :
           capabilities.asitvd;
       $httpBackend.when('GET', bgLayer.url).respond(response);
       $httpBackend.expectGET(bgLayer.url);
