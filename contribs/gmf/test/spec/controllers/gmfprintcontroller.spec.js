@@ -49,12 +49,12 @@ describe('GmfPrintController', () => {
     const biggerScale = gmfPrintCtrl.fields.scales[2] > baseScale ?
       gmfPrintCtrl.fields.scales[2] : gmfPrintCtrl.fields.scales[0];
 
-    gmfPrintCtrl.setScale(baseScale);
+    gmfPrintCtrl.getSetScale(baseScale);
     expect(gmfPrintCtrl.fields.scale).toBe(baseScale);
 
     const view = gmfPrintCtrl.map.getView();
     const resolution = view.getResolution();
-    gmfPrintCtrl.setScale(biggerScale);
+    gmfPrintCtrl.getSetScale(biggerScale);
     expect(resolution).toBeLessThan(view.getResolution());
   });
 
