@@ -252,6 +252,16 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   }
 
   /**
+   * @type {boolean}
+   * @export
+   */
+  this.scaleInput = false;
+
+  if ($injector.has('gmfPrintOptions')) {
+    this.scaleInput = $injector.get('gmfPrintOptions')['scaleInput'];
+  }
+
+  /**
    * @type {?angular.$q.Deferred}
    * @private
    */
@@ -336,28 +346,31 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   /**
    * @return {ol.Size} Size in dots of the map to print.
    */
-  const getSizeFn = function() {
-    return this.paperSize_;
-  }.bind(this);
+  const getSizeFn = () => this.paperSize_;
 
   /**
    * @param {olx.FrameState} frameState Frame state.
    * @return {number} Scale of the map to print.
    */
-  const getScaleFn = function(frameState) {
-    const mapSize = frameState.size;
-    const viewResolution = frameState.viewState.resolution;
-    return this.fields.scale = this.getOptimalScale_(mapSize, viewResolution);
-  }.bind(this);
+  const getScaleFn = (frameState) => {
+    // don't compute an optimal scale if the user manualy choose a value not in
+    // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`)
+    goog.asserts.assert(this.fields.scales);
+    goog.asserts.assert(this.fields.scale !== undefined);
+    if (ol.array.includes(this.fields.scales, this.fields.scale)) {
+      const mapSize = frameState.size;
+      const viewResolution = frameState.viewState.resolution;
+      this.fields.scale = this.getOptimalScale_(mapSize, viewResolution);
+    }
+    return this.fields.scale;
+  };
 
   let getRotationFn;
   if (this.rotateMask_) {
     /**
      * @return {number} rotation to apply.
      */
-    getRotationFn = function() {
-      return this.rotation;
-    }.bind(this);
+    getRotationFn = () => this.rotation;
   }
 
   /**
@@ -805,8 +818,7 @@ gmf.PrintController.prototype.getDataSource_ = function() {
  *     value in printMapScales.
  * @private
  */
-gmf.PrintController.prototype.getOptimalScale_ = function(mapSize,
-    viewResolution) {
+gmf.PrintController.prototype.getOptimalScale_ = function(mapSize, viewResolution) {
   const scales = this.fields.scales.slice();
   if (mapSize !== undefined && viewResolution !== undefined) {
     return this.ngeoPrintUtils_.getOptimalScale(mapSize, viewResolution,
@@ -959,17 +971,20 @@ gmf.PrintController.prototype.setLayout = function(layoutName) {
 
 
 /**
- * Set the print scale value and adapt the zoom to match with this new scale.
- * @param {number} scale A scale value as existing in the scales list field.
+ * Get or set the print scale value and adapt the zoom to match with this new scale.
+ * @param {number=} opt_scale A scale value as existing in the scales list field.
+ * @return {number|undefined} New scale.
  * @export
  */
-gmf.PrintController.prototype.setScale = function(scale) {
-  const mapSize = this.map.getSize();
-  this.fields.scale = scale;
-  const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_,
-        scale);
-  const contrainRes = this.map.getView().constrainResolution(res, 0, 1);
-  this.map.getView().setResolution(contrainRes);
+gmf.PrintController.prototype.getSetScale = function(opt_scale) {
+  if (opt_scale !== undefined) {
+    const mapSize = this.map.getSize();
+    this.fields.scale = opt_scale;
+    const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_, opt_scale);
+    const contrainRes = this.map.getView().constrainResolution(res, 0, 1);
+    this.map.getView().setResolution(contrainRes);
+  }
+  return this.fields.scale;
 };
 
 
