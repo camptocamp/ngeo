@@ -137,7 +137,7 @@ exports = function($q, $timeout, ngeoFile, gettext, ngeoImportOnlineTemplateUrl)
         scope['canceler'] = $q.defer();
         scope['loading'] = true;
         scope['userMessage'] = gettext('Downloading file');
-        $timeout['cancel'](timeoutP);
+        $timeout.cancel(timeoutP);
 
         // Angularjs doesn't handle onprogress event
         ngeoFile.load(url, scope['canceler']).then((fileContent) => {

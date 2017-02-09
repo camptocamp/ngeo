@@ -632,7 +632,7 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
       this.onDragPreviousMousePosition_ = null;
     } else {
       // Cancel the timeout to keep this session of drags event
-      this.$timeout_['cancel'](this.rotationTimeoutPromise_);
+      this.$timeout_.cancel(this.rotationTimeoutPromise_);
       // Calculate angle and sense of rotation.
       const p0x = this.onDragPreviousMousePosition_[0] - center[0];
       const p0y = this.onDragPreviousMousePosition_[1] - center[1];
@@ -736,7 +736,7 @@ gmf.PrintController.prototype.cancel = function() {
   // Cancel the status timeout if there's one set, to make sure no other
   // status request is sent.
   if (this.statusTimeoutPromise_ !== null) {
-    this.$timeout_['cancel'](this.statusTimeoutPromise_);
+    this.$timeout_.cancel(this.statusTimeoutPromise_);
   }
 
   if (this.curRef_.length > 0) {

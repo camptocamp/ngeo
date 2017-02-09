@@ -153,7 +153,7 @@ ngeo.Notification.prototype.clearMessageByCacheItem_ = function(item) {
 
   // Cancel timeout in case we want to stop before delay. If called by the
   // timeout itself, then this has no consequence.
-  this.timeout_['cancel'](promise);
+  this.timeout_.cancel(promise);
 
   // Delete the cache item
   delete this.cache_[uid];
