@@ -3,6 +3,7 @@
   <head>
     <title>{{'Alternative Desktop Application'|translate}}</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <link rel="shortcut icon" href="image/favicon.ico"/>
     <link rel="stylesheet" href="../../build/desktop_alt.css">
   </head>
@@ -14,6 +15,11 @@
       </div>
     </header>
     <main>
+      <div
+         ngeo-import-dnd
+         ngeo-import-dnd-options="::mainCtrl.importOptions">
+      </div>
+
       <div class="gmf-app-data-panel">
         <div class="gmf-app-header">
           <div class="dropdown">
@@ -23,6 +29,25 @@
               <span translate>Themes</span>
               <span class="caret"></span>
             </a>
+            <div class="import">
+              <div>Local</div>
+              <div class="import-local"
+                ngeo-import-local
+                ngeo-import-local-options="::mainCtrl.importOptions">
+              </div>
+              <div>Online</div>
+              <div
+                ngeo-import-online
+                ngeo-import-online-options="::mainCtrl.importOptions">
+              </div>
+
+              <!-- Display WMS GetCapabilities results -->
+              <div ng-if="wmsGetCap"
+                   ngeo-wms-get-cap="wmsGetCap"
+                   ngeo-wms-get-cap-map="::map"
+                   ngeo-wms-get-cap-options="::mainCtrl.importOptions">
+              </div>
+            </div>
             <gmf-themeselector class="dropdown-menu"
               gmf-themeselector-currenttheme="mainCtrl.theme"
               gmf-themeselector-filter="::mainCtrl.filter">
@@ -177,7 +202,10 @@
           </div>
           <gmf-disclaimer
             gmf-disclaimer-map="::mainCtrl.map"
-            gmf-disclaimer-modal="::true">
+            gmf-disclaimer-external="::true"
+            gmf-disclaimer-external-msg="disclaimerMsg"
+            gmf-disclaimer-external-visibility="disclaimerVisibility"
+            >
           </gmf-disclaimer>
         </div>
         <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"
@@ -203,7 +231,7 @@
           <div class="pull-right">
             <gmf-elevationwidget
                 gmf-elevationwidget-map="::mainCtrl.map"
-                gmf-elevationwidget-layers="::mainCtrl.elevationLayers"
+                gmf-elevationwidget-layers="mainCtrl.elevationLayers"
                 gmf-elevationwidget-active="mainCtrl.showInfobar">
             </gmf-elevationwidget>
             <gmf-mouseposition
@@ -216,6 +244,14 @@
       </div>
       <ngeo-modal ng-model="mainCtrl.modalShareShown" ngeo-modal-destroy-content-on-hide="true">
         <gmf-share gmf-share-email="false"/>
+      </ngeo-modal>
+      <ngeo-modal ng-model="disclaimerVisibility" ngeo-modal-destroy-content-on-hide="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div ng-bind-html="disclaimerMsg"></div>
+        </div>
       </ngeo-modal>
     </main>
     <footer>
@@ -242,7 +278,7 @@
     <script src="../../../../lib/watchwatchers.js"></script>
     <script>
       (function() {
-        var cacheVersion = 'bfe9f63a3db108999504f52cb83d430dd272246e';
+        var cacheVersion = '4ac4f0a44efe51a3a517dfece68cc0ddb5884313';
         var urlElements = window.location.pathname.split('/');
 
         var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
@@ -263,14 +299,13 @@
         module.constant('defaultLang', 'en');
         module.constant('langUrls', langUrls);
         module.constant('cacheVersion', cacheVersion);
-        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
-        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
-        module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
-        module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
-        module.constant('gmfProfileCsvUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.csv');
-        module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.json');
-        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background&interface=desktop');
-        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
+        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+        module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+        module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
+        module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
+        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
+        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
         module.constant('gmfShortenerCreateUrl', '');
         module.constant('gmfSearchGroups', ['osm','district']);
         // Requires that the gmfSearchGroups is specified
@@ -283,7 +318,7 @@
         module.value('gmfPermalinkOptions', {projectionCodes: ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'], useLocalStorage: false});
         module.value('ngeoWfsPermalinkOptions',
             /** @type {ngeox.WfsPermalinkOptions} */ ({
-              url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
+              url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
               wfsTypes: [
                 {featureType: 'fuel', label: 'display_name'},
                 {featureType: 'osm_scale', label: 'display_name'}
