@@ -84,7 +84,7 @@ ngeo.CreateregularpolygonfromclickController = function($scope) {
    * @type {boolean}
    * @export
    */
-  this.active = this.active === true;
+  this.active = false;
 
   $scope.$watch(
     () => this.active,
