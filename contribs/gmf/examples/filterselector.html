@@ -12,17 +12,20 @@
     <link rel="stylesheet" href="../../../third-party/jquery-ui/jquery-ui.min.css">
     <style>
       body {
-        padding: 1rem;
+        padding: 0;
       }
       .panel {
         display: block;
-        float: left;
-        margin: 0 1rem 0 0;
         width: 35rem;
       }
       gmf-map > div {
-        width: 60rem;
+        width: 71rem;
         height: 40rem;
+      }
+      gmf-map > div,
+      .panel {
+        float: left;
+        margin: 0.5rem;
       }
       gmf-filterselector {
         display: block;
@@ -41,39 +44,42 @@
       ngeo-bbox-query-active="ctrl.queryActive">
     </gmf-map>
 
-    <p id="desc">
-      This example shows how to use the <code>gmf-filterselector</code>
-      directive to apply filters on the layers on the map.
-    </p>
-
-    <p>
-      You can also issue queries on the map by clicking on it or use the
-      <code>Ctrl</code> key to draw boxes on the map.
-    </p>
-
     <gmf-layertree
         class="panel panel-default panel-body"
         gmf-layertree-map="::ctrl.map">
     </gmf-layertree>
 
-    <div class="panel panel-default panel-body">
-    <input type="checkbox"
-       id="checkbox-filterselector"
-       ng-model="ctrl.filterSelectorActive" />
-    <label for="checkbox-filterselector"> FilterSelector</label>
+    <gmf-authentication
+        class="panel panel-default panel-body">
+    </gmf-authentication>
 
-    <input type="checkbox"
-       id="checkbox-dummy"
-       ng-model="ctrl.dummyActive" />
-    <label for="checkbox-dummy"> Dummy tool</label>
+    <div class="panel panel-default panel-body">
+      <p id="desc">
+        This example shows how to use the <code>gmf-filterselector</code>
+        directive to apply filters on the layers on the map.
+      </p>
+      <p>
+        You can also issue queries on the map by clicking on it or use the
+        <code>Ctrl</code> key to draw boxes on the map.
+      </p>
     </div>
 
-    <gmf-filterselector
-        class="panel panel-default panel-body"
-        ng-show="ctrl.filterSelectorActive === true"
-        active="ctrl.filterSelectorActive">
-    </gmf-filterselector>
+    <div class="panel panel-default panel-body">
+      <input
+          type="checkbox"
+          id="checkbox-filterselector"
+          ng-model="ctrl.filterSelectorActive" />
+      <label for="checkbox-filterselector"> FilterSelector</label>
 
+      <input type="checkbox"
+             id="checkbox-dummy"
+             ng-model="ctrl.dummyActive" />
+      <label for="checkbox-dummy"> Dummy tool</label>
+
+      <gmf-filterselector
+          ng-show="ctrl.filterSelectorActive === true"
+          active="ctrl.filterSelectorActive">
+      </gmf-filterselector>
     </div>
 
     <script src="../../../node_modules/jquery/dist/jquery.js"></script>
@@ -95,7 +101,7 @@
     <script src="../../../utils/watchwatchers.js"></script>
     <script>
       var gmfModule = angular.module('gmf');
-      gmfModule.constant('defaultTheme', 'Edit');
+      gmfModule.constant('defaultTheme', 'OSM');
       gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
     </script>
   </body>

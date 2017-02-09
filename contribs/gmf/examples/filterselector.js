@@ -2,6 +2,8 @@
 
 goog.provide('gmfapp.filterselector');
 
+/** @suppress {extraRequire} */
+goog.require('gmf.authenticationDirective');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
@@ -55,13 +57,14 @@ gmfapp.MainController = class {
    *     manager service.
    * @param {gmf.Themes} gmfThemes The gmf themes service.
    * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+   * @param {gmfx.User} gmfUser User.
    * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
    *     objects.
    * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
    *     service.
    * @ngInject
    */
-  constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager,
+  constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager, gmfUser,
       ngeoDataSources, ngeoToolActivateMgr
   ) {
 
@@ -78,6 +81,12 @@ gmfapp.MainController = class {
      * @export
      */
     this.gmfTreeManager = gmfTreeManager;
+
+    /**
+     * @type {gmfx.User}
+     * @export
+     */
+    this.gmfUser = gmfUser;
 
     /**
      * @type {ol.Map}
@@ -99,9 +108,9 @@ gmfapp.MainController = class {
 
     gmfThemes.getThemesObject().then((themes) => {
       if (themes) {
-        // Add 'Edit' theme, i.e. the one with id 73
+        // Add 'Edit' theme, i.e. the one with id 64
         for (let i = 0, ii = themes.length; i < ii; i++) {
-          if (themes[i].id === 73) {
+          if (themes[i].id === 64) {
             this.gmfTreeManager.setFirstLevelGroups(themes[i].children);
             break;
           }

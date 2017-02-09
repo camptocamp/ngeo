@@ -476,6 +476,14 @@ gmfx.AuthenticationFunctionalities.prototype.default_basemap;
  */
 gmfx.AuthenticationFunctionalities.prototype.default_theme;
 
+
+/**
+ * A list of layer names that can be filtered.
+ * @type {Array.<string>|undefined}
+ */
+gmfx.AuthenticationFunctionalities.prototype.filtrable_layers;
+
+
 /**
  * Availables locations.
  * @type {Array.<string>}
