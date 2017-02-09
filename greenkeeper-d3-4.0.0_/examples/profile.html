@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <script src="https.js"></script>
+    <title>Profile example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="lib/bootstrap.min.css" type="text/css">
+    <style>
+
+        #map {
+          width: 600px;
+          height: 400px;
+        }
+        .profile {
+          width: 450px;
+          height: 250px;
+        }
+
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+    <div class="profile" ngeo-profile="::ctrl.profileData"
+         ngeo-profile-options="::ctrl.profileOptions"
+         ngeo-profile-pois="::ctrl.profilePoisData"
+         ngeo-profile-highlight="ctrl.profileHighlight">
+    </div>
+
+    <ul ng-show="ctrl.point != null">
+      <li>Longitude: {{ctrl.point.x}}</li>
+      <li>Latitude: {{ctrl.point.y}}</li>
+      <li>Elevation: {{ctrl.point.values.mnt}}</li>
+      <li>Distance: {{ctrl.point.dist}}</li>
+    </ul>
+
+    <p id="desc">This example shows how to use <code><a href="../apidoc/ngeo.profileDirective.html" title="Read our documentation">ngeo-profile</a></code> to create a D3-based elevation profile graphic.</p>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-gettext.min.js"></script>
+    <script src="lib/d3.min.js"></script>
+    <script src="lib/date.min.js"></script>
+    <script src="lib/angular-floatThead.js"></script>
+    <script src="lib/jquery.floatThead.min.js"></script>
+    <script src="lib/proj4.js"></script>
+    <script src="lib/transpile.js"></script>
+    <script src="profile.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>
