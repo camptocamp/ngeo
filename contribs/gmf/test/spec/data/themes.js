@@ -1,4 +1,4 @@
-/*eslint no-unused-vars: ['error', { 'varsIgnorePattern': 'themes|capabilities' }] */
+/* eslint no-unused-vars: ['error', { 'varsIgnorePattern': 'themes|capabilities' }] */
 goog.provide('gmf.test.data.themes');
 
 var themes = {
@@ -1995,12 +1995,11 @@ var themes = {
   ],
   'background_layers':[
     {
-      'layer':null,
+      'layer':'map',
       'dimensions':{
-
       },
       'url':'https://geomapfish-demo.camptocamp.net/2.1//tiles/1.0.0/WMTSCapabilities.xml?',
-      'name':'map',
+      'name':'OSM',
       'type':'WMTS',
       'id':134,
       'imageType':'image/jpeg',
@@ -2009,13 +2008,13 @@ var themes = {
       }
     },
     {
-      'layer':null,
+      'layer':'asitvd.fond_gris',
       'dimensions':{
         'DIM1':'default',
         'ELEVATION':'0'
       },
       'url':'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml',
-      'name':'asitvd.fond_gris',
+      'name':'asitvd fond gris',
       'type':'WMTS',
       'id':132,
       'imageType':'image/jpeg',
@@ -2024,13 +2023,13 @@ var themes = {
       }
     },
     {
-      'layer':null,
+      'layer':'asitvd.fond_couleur',
       'dimensions':{
         'DIM1':'default',
         'ELEVATION':'0'
       },
       'url':'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml',
-      'name':'asitvd.fond_couleur',
+      'name':'asitvd fond couleur',
       'type':'WMTS',
       'id':133,
       'imageType':'image/jpeg',
