@@ -457,6 +457,7 @@ gmfx.ServiceUrls.prototype.exportgpxkml;
  * @typedef {{
  *     default_basemap: Array.<string>,
  *     default_theme: Array.<string>,
+ *     filtrable_layers: (Array.<string>|undefined),
  *     location: Array.<string>
  * }}
  */

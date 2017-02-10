@@ -57,14 +57,13 @@ gmfapp.MainController = class {
    *     manager service.
    * @param {gmf.Themes} gmfThemes The gmf themes service.
    * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
-   * @param {gmfx.User} gmfUser User.
    * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
    *     objects.
    * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
    *     service.
    * @ngInject
    */
-  constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager, gmfUser,
+  constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager,
       ngeoDataSources, ngeoToolActivateMgr
   ) {
 
@@ -81,12 +80,6 @@ gmfapp.MainController = class {
      * @export
      */
     this.gmfTreeManager = gmfTreeManager;
-
-    /**
-     * @type {gmfx.User}
-     * @export
-     */
-    this.gmfUser = gmfUser;
 
     /**
      * @type {ol.Map}
