@@ -1,4 +1,3 @@
-goog.provide('gmf.DisplayquerywindowController');
 goog.provide('gmf.displayquerywindowComponent');
 
 goog.require('gmf');
@@ -92,7 +91,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc Controller
  * @ngname GmfDisplayquerywindowController

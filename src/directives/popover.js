@@ -1,7 +1,6 @@
 goog.provide('ngeo.popoverDirective');
 goog.provide('ngeo.popoverAnchorDirective');
 goog.provide('ngeo.popoverContentDirective');
-goog.provide('ngeo.PopoverController');
 
 goog.require('ngeo');
 
@@ -100,9 +99,9 @@ ngeo.popoverContentDirective = function() {
 /**
  * The controller for the 'popover' directive.
  * @constructor
+ * @private
  * @struct
  * @ngInject
- * @export
  * @ngdoc controller
  * @ngname NgeoPopoverController
  * @param {angular.Scope} $scope Scope.

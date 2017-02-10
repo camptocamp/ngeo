@@ -1,4 +1,3 @@
-goog.provide('ngeo.CreateregularpolygonfromclickController');
 goog.provide('ngeo.createregularpolygonfromclickComponent');
 
 goog.require('ngeo');
@@ -71,6 +70,7 @@ ngeo.module.component(
 /**
  * @param {!angular.Scope} $scope Scope.
  * @constructor
+ * @private
  * @struct
  * @ngInject
  * @ngdoc controller

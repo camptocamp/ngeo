@@ -1,4 +1,3 @@
-goog.provide('gmf.DrawprofilelineController');
 goog.provide('gmf.drawprofilelineDirective');
 
 goog.require('gmf');
@@ -70,7 +69,7 @@ gmf.module.directive('gmfDrawprofileline', gmf.drawprofilelineDirective);
  * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfDrawprofilelineController

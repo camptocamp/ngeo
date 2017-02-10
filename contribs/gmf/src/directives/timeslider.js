@@ -1,5 +1,4 @@
 goog.provide('gmf.TimeSliderDirective');
-goog.provide('gmf.TimeSliderController');
 
 goog.require('gmf');
 goog.require('gmf.WMSTime');
@@ -81,7 +80,7 @@ gmf.timeSliderDirective = function($timeout, $filter) {
  * @param {!angular.Scope} $scope Angular scope.
  * @param {gmf.WMSTime} gmfWMSTime WMSTime service.
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfTimeSliderController

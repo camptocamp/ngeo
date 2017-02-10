@@ -1,4 +1,3 @@
-goog.provide('gmf.AuthenticationController');
 goog.provide('gmf.authenticationDirective');
 
 goog.require('gmf');
@@ -63,6 +62,8 @@ gmf.module.directive('gmfAuthentication', gmf.authenticationDirective);
  * @param {gmfx.User} gmfUser User.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @constructor
+ * @private
+ * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname GmfAuthenticationController

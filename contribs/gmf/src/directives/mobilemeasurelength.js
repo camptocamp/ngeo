@@ -1,4 +1,3 @@
-goog.provide('gmf.MobileMeasureLengthController');
 goog.provide('gmf.mobileMeasurelengthDirective');
 
 goog.require('gmf');
@@ -67,7 +66,7 @@ gmf.mobileMeasureLengthDirective =
          * @param {angular.Scope} scope Scope.
          * @param {angular.JQLite} element Element.
          * @param {angular.Attributes} attrs Attributes.
-         * @param {gmf.ContextualdataController} controller Controller.
+         * @param {gmf.MobileMeasureLengthController} controller Controller.
          */
         link(scope, element, attrs, controller) {
           controller.init();
@@ -86,6 +85,8 @@ gmf.module.directive('gmfMobileMeasurelength',
  *     interaction service.
  * @param {angular.$filter} $filter Angular filter
  * @constructor
+ * @private
+ * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileMeasureLengthController

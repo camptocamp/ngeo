@@ -1,5 +1,5 @@
 /* global printCapabilities */
-goog.require('gmf.PrintController');
+goog.require('gmf.printDirective');
 goog.require('gmf.test.data.printcapabilities');
 
 describe('GmfPrintController', () => {

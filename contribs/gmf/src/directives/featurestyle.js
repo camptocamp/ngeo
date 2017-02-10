@@ -1,4 +1,3 @@
-goog.provide('gmf.FeaturestyleController');
 goog.provide('gmf.featurestyleDirective');
 
 goog.require('gmf');
@@ -40,6 +39,7 @@ gmf.module.directive('gmfFeaturestyle', gmf.featurestyleDirective);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfFeaturestyleController

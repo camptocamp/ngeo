@@ -1,4 +1,3 @@
-goog.provide('gmf.MobileNavController');
 goog.provide('gmf.mobileNavDirective');
 
 goog.require('goog.asserts');
@@ -67,7 +66,7 @@ gmf.module.directive('gmfMobileNav', gmf.mobileNavDirective);
 
 /**
 * @constructor
-* @export
+* @private
 * @ngInject
 * @ngdoc controller
 * @ngname gmfMobileNavController

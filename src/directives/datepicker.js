@@ -1,5 +1,4 @@
 goog.provide('ngeo.DatePickerDirective');
-goog.provide('ngeo.DatePickerController');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
@@ -87,8 +86,8 @@ ngeo.module.directive('ngeoDatePicker', ngeo.DatePicker);
  * @param {angular.$injector} $injector injector.
  * @param {ngeo.Time} ngeoTime time service.
  * @constructor
+ * @private
  * @struct
- * @export
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDatePickerController

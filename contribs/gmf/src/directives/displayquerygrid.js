@@ -1,4 +1,3 @@
-goog.provide('gmf.DisplayquerygridController');
 goog.provide('gmf.displayquerygridComponent');
 
 goog.require('gmf');
@@ -109,7 +108,7 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @param {ngeo.CsvDownload} ngeoCsvDownload CSV download service.
  * @param {angular.JQLite} $element Element.
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc Controller
  * @ngname GmfDisplayquerygridController

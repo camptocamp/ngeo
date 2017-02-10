@@ -1,4 +1,3 @@
-goog.provide('gmf.ProfileController');
 goog.provide('gmf.profileComponent');
 
 goog.require('gmf');
@@ -109,7 +108,7 @@ gmf.module.component('gmfProfile', gmf.profileComponent);
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
  * @param {ngeo.CsvDownload} ngeoCsvDownload CSV Download service.
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc Controller
  * @ngname GmfProfileController

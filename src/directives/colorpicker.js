@@ -1,4 +1,3 @@
-goog.provide('ngeo.ColorpickerController');
 goog.provide('ngeo.colorpickerDirective');
 
 goog.require('ngeo');
@@ -61,11 +60,11 @@ const defaultColors = [
 
 /**
  * @constructor
+ * @private
  * @struct
  * @param {angular.Scope} $scope Directive scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.
- * @export
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoScaleselectorController

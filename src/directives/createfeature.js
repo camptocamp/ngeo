@@ -1,4 +1,3 @@
-goog.provide('ngeo.CreatefeatureController');
 goog.provide('ngeo.createfeatureComponent');
 
 goog.require('ngeo');
@@ -73,6 +72,7 @@ ngeo.module.component('ngeoCreatefeature', ngeo.createfeatureComponent);
  * @param {!angular.$timeout} $timeout Angular timeout service.
  * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
+ * @private
  * @struct
  * @ngInject
  * @ngdoc controller

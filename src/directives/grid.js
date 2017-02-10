@@ -1,5 +1,4 @@
 goog.provide('ngeo.GridConfig');
-goog.provide('ngeo.GridController');
 goog.provide('ngeo.gridComponent');
 
 goog.require('ngeo');
@@ -193,6 +192,7 @@ ngeo.module.component('ngeoGrid', ngeo.gridComponent);
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @constructor
+ * @private
  * @struct
  * @ngInject
  * @ngdoc controller

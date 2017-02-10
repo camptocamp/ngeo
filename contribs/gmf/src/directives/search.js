@@ -1,4 +1,3 @@
-goog.provide('gmf.SearchController');
 goog.provide('gmf.searchDirective');
 
 goog.require('gmf');
@@ -157,6 +156,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
 
 /**
  * @constructor
+ * @private
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$timeout} $timeout Angular timeout service.
@@ -168,7 +168,6 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  *     overlay manager service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
- * @export
  * @ngInject
  * @ngdoc controller
  * @ngname GmfSearchController
