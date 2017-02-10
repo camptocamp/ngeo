@@ -1,5 +1,3 @@
-// TODO - Do not always remove all data sources from the ngeo collection
-
 goog.provide('gmf.DataSourcesManager');
 
 goog.require('gmf');
