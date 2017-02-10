@@ -38,3 +38,32 @@ ngeo.utils.toMulti = function(geometry) {
 ngeo.utils.isSafari = function() {
   return navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
 };
+
+/**
+ * Takes a hex value and prepends a zero if it's a single digit.
+ * Small helper method for use by goog.color and friends.
+ * @param {string} hex Hex value to prepend if single digit.
+ * @return {string} hex value prepended with zero if it was single digit,
+ *     otherwise the same value that was passed in.
+ */
+ngeo.utils.colorZeroPadding = function(hex) {
+  return hex.length == 1 ? `0${hex}` : hex;
+};
+
+/**
+ * Converts a color from RGB to hex representation.
+ * @param {!Array.<number>} rgb rgb representation of the color.
+ * @return {string} hex representation of the color.
+ */
+ngeo.utils.rgbArrayToHex = function(rgb) {
+  const r = rgb[0];
+  const g = rgb[1];
+  const b = rgb[2];
+  if (r != (r & 255) || g != (g & 255) || b != (b & 255)) {
+    throw Error(`"(${r},${g},${b})" is not a valid RGB color`);
+  }
+  const hexR = ngeo.utils.colorZeroPadding(r.toString(16));
+  const hexG = ngeo.utils.colorZeroPadding(g.toString(16));
+  const hexB = ngeo.utils.colorZeroPadding(b.toString(16));
+  return `#${hexR}${hexG}${hexB}`;
+};

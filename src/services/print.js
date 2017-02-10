@@ -2,10 +2,10 @@ goog.provide('ngeo.CreatePrint');
 goog.provide('ngeo.Print');
 
 
-goog.require('goog.color');
 goog.require('goog.color.alpha');
 goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
+goog.require('ngeo.utils');
 goog.require('ol.color');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.GeometryType');
@@ -562,7 +562,7 @@ ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
       fillColor = goog.color.alpha.hexToRgba(hex);
     }
     goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
-    symbolizer.fillColor = goog.color.rgbArrayToHex(fillColor);
+    symbolizer.fillColor = ngeo.utils.rgbArrayToHex(fillColor);
     symbolizer.fillOpacity = fillColor[3];
   }
 };
@@ -709,7 +709,7 @@ ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle
     goog.asserts.assert(Array.isArray(strokeColor));
     const strokeColorRgba = ol.color.asArray(strokeColor);
     goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
-    symbolizer.strokeColor = goog.color.rgbArrayToHex(strokeColorRgba);
+    symbolizer.strokeColor = ngeo.utils.rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
   }
   const strokeDashstyle = strokeStyle.getLineDash();
@@ -766,7 +766,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
       goog.asserts.assert(Array.isArray(strokeColor));
       const strokeColorRgba = ol.color.asArray(strokeColor);
       goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
-      symbolizer.haloColor = goog.color.rgbArrayToHex(strokeColorRgba);
+      symbolizer.haloColor = ngeo.utils.rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
       const width = strokeStyle.getWidth();
       if (width !== undefined) {
@@ -780,7 +780,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
       goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
       const fillColorRgba = ol.color.asArray(fillColor);
       goog.asserts.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
-      symbolizer.fontColor = goog.color.rgbArrayToHex(fillColorRgba);
+      symbolizer.fontColor = ngeo.utils.rgbArrayToHex(fillColorRgba);
     }
 
     // Mapfish Print allows offset only if labelAlign is defined.
