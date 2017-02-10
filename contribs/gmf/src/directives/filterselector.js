@@ -1,4 +1,3 @@
-goog.provide('gmf.FilterselectorController');
 goog.provide('gmf.filterselectorComponent');
 
 goog.require('gmf');
@@ -14,6 +13,7 @@ gmf.FilterselectorController = class {
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
    *     objects.
+   * @private
    * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController
