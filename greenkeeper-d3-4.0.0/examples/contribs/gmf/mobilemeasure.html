@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app='app'>
+<html ng-app='gmfapp'>
   <head>
     <script src="../../https.js"></script>
     <title>Mobile Measure Example</title>
@@ -75,8 +75,8 @@
     <div
       gmf-mobile-measure-point=""
       gmf-mobile-measure-point-active="ctrl.measurePointActive"
-      gmf-mobile-measure-point-decimals="2"
-      gmf-mobile-measure-point-layers="::ctrl.measurePointLayers"
+      gmf-mobile-measure-point-coordinateDecimals="2"
+      gmf-mobile-measure-point-layersconfig="::ctrl.measurePointLayersConfig"
       gmf-mobile-measure-point-map="::ctrl.map">
     </div>
 
@@ -85,7 +85,7 @@
       and <code>gmf-mobile-measure-point</code> directives in combination with
       <code>ngeo.interaction.MobileDraw</code> interaction objects to allow
       mobile users to measure distances and know the center coordinate on
-      their devices. The point measure also uses the <code>gmf-altitude</code>
+      their devices. The point measure also uses the <code>gmfRaster</code>
       service to also obtain the height of the location as well.
     </p>
     <script src="../../lib/jquery.min.js"></script>
@@ -99,7 +99,7 @@
     <script src="../../lib/angular-floatThead.js"></script>
     <script src="../../lib/jquery.floatThead.min.js"></script>
     <script src="../../lib/slider.min.js"></script>
-    <script src="../../lib/gmf.js"></script>
+    <script src="../../lib/transpile.js"></script>
     <script src="mobilemeasure.js"></script>
     <script src="../../lib/watchwatchers.js"></script>
     <script>
