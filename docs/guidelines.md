@@ -282,23 +282,23 @@ If the service is an object a `@constructor` must be defined. For example:
 
 ```js
 /**
- * The ngeo Location type.
+ * The ngeo Permalink type.
  * @constructor
- * @param {Location} location Location.
- * @param {History} history History.
+ * @param {!ngeo.Location} ngeoLocation Location.
+ * @param {!History} history History.
  */
-ngeo.Location = function(location, history) {
+ngeo.Permalink = function(ngeoLocation, history) {
   /**
-   * @type {History}
+   * @type {!History}
    * @private
    */
   this.history_ = history;
 
   /**
-   * @type {!goog.Uri}
+   * @type {!ngeo.Location}
    * @private
    */
-  this.uri_ = goog.Uri.parse(location);
+  this.uri_ = ngeoLocation;
 };
 ```
 

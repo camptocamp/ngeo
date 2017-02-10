@@ -67,3 +67,44 @@ ngeo.utils.rgbArrayToHex = function(rgb) {
   const hexB = ngeo.utils.colorZeroPadding(b.toString(16));
   return `#${hexR}${hexG}${hexB}`;
 };
+
+/**
+ * Decode the encoded query string into a query data dictionary.
+ * @param {string|undefined} queryString The queryString.
+ * @return {!Object.<string, string>} The result.
+ */
+ngeo.utils.decodeQueryString = function(queryString) {
+  const queryData = {};
+  if (queryString) {
+    const pairs = queryString.substring(1).split('&');
+    for (const pair of pairs) {
+      const indexOfEquals = pair.indexOf('=');
+      if (indexOfEquals >= 0) {
+        const name = pair.substring(0, indexOfEquals);
+        const value = pair.substring(indexOfEquals + 1);
+        queryData[decodeURIComponent(name)] = decodeURIComponent(value);
+      } else {
+        queryData[pair] = '';
+      }
+    }
+  }
+  return queryData;
+};
+
+/**
+ * Encode the query data dictionary into an encoded query string.
+ * @param {!Object.<string, string>} queryData The queryData,
+ * @return {string} The result.
+ */
+ngeo.utils.encodeQueryString = function(queryData) {
+  const queryItem = [];
+  for (const key in queryData) {
+    const value = queryData[key];
+    if (value) {
+      queryItem.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    } else {
+      queryItem.push(encodeURIComponent(key));
+    }
+  }
+  return queryItem.join('&');
+};

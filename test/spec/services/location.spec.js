@@ -6,7 +6,7 @@ describe('ngeo.Location', () => {
 
   beforeEach(() => {
     win = {
-      'location': 'http://domain.com/some/path?some=param',
+      'location': new URL('http://domain.com/some/path?some=param'),
       'history': {'replaceState': function() {}}
     };
     spyOn(win.history, 'replaceState');
@@ -24,8 +24,8 @@ describe('ngeo.Location', () => {
       expect(uri).toBe('http://domain.com/some/path?some=param');
     });
     it('returns the URI with additional params', () => {
-      const uri = ngeoLocation.getUriString({'another': 'param'});
-      expect(uri).toBe('http://domain.com/some/path?some=param&another=param');
+      const uri = ngeoLocation.getUriString();
+      expect(uri).toBe('http://domain.com/some/path?some=param');
     });
   });
 
@@ -103,7 +103,10 @@ describe('ngeo.Location', () => {
   describe('fragment parameters', () => {
     beforeEach(() => {
       // change url to 'http://domain.com/some/path?some=param#key1=value1&key2=2'
-      ngeoLocation.uri_.setFragment('key1=value1&key2=2');
+      ngeoLocation.updateFragmentParams({
+        'key1': 'value1',
+        'key2': '2'
+      });
     });
 
     describe('#hasFragmentParam', () => {
