@@ -11,7 +11,7 @@ goog.require('ol.obj');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('ol.source.WMTS');
-goog.require('goog.uri.utils');
+goog.require('ol.uri');
 
 
 /**
@@ -282,19 +282,21 @@ ngeo.LayerHelper.prototype.getWMSLegendURL = function(url,
   if (!url) {
     return undefined;
   }
-  url = goog.uri.utils.setParam(url, 'FORMAT', 'image/png');
-  url = goog.uri.utils.setParam(url, 'TRANSPARENT', true);
-  url = goog.uri.utils.setParam(url, 'SERVICE', 'WMS');
-  url = goog.uri.utils.setParam(url, 'VERSION', '1.1.1');
-  url = goog.uri.utils.setParam(url, 'REQUEST', 'GetLegendGraphic');
-  url = goog.uri.utils.setParam(url, 'LAYER', layerName);
+  const queryString = {
+    'FORMAT': 'image/png',
+    'TRANSPARENT': true,
+    'SERVICE': 'WMS',
+    'VERSION': '1.1.1',
+    'REQUEST': 'GetLegendGraphic',
+    'LAYER': layerName
+  };
   if (opt_scale !== undefined) {
-    url = goog.uri.utils.setParam(url, 'SCALE', opt_scale);
+    queryString['SCALE'] = opt_scale;
   }
   if (opt_legendRule !== undefined) {
-    url = goog.uri.utils.setParam(url, 'RULE', opt_legendRule);
+    queryString['RULE'] = opt_legendRule;
   }
-  return url;
+  return ol.uri.appendParams(url, queryString);
 };
 
 

@@ -3,7 +3,6 @@ goog.provide('gmf.AuthenticationEventType');
 goog.provide('gmf.AuthenticationEvent');
 
 goog.require('gmf');
-goog.require('goog.uri.utils');
 goog.require('ol.events.Event');
 goog.require('ol.events.EventTarget');
 
@@ -144,10 +143,10 @@ ol.inherits(gmf.Authentication, ol.events.EventTarget);
  * @private
  */
 gmf.Authentication.prototype.load_ = function() {
-  const url = goog.uri.utils.appendPath(
-      this.baseUrl_, gmf.AuthenticationRouteSuffix.IS_LOGGED_IN);
+  const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.IS_LOGGED_IN}`;
   this.$http_.get(url, {withCredentials: true}).then(
-      this.handleLogin_.bind(this, true));
+    this.handleLogin_.bind(this, true)
+  );
 };
 
 
@@ -161,8 +160,7 @@ gmf.Authentication.prototype.load_ = function() {
 gmf.Authentication.prototype.changePassword = function(oldPwd, newPwd,
     confPwd) {
 
-  const url = goog.uri.utils.appendPath(
-      this.baseUrl_, gmf.AuthenticationRouteSuffix.CHANGE_PASSWORD);
+  const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.CHANGE_PASSWORD}`;
 
   return this.$http_.post(url, $.param({
     'oldPassword': oldPwd,
@@ -183,8 +181,7 @@ gmf.Authentication.prototype.changePassword = function(oldPwd, newPwd,
  */
 gmf.Authentication.prototype.login = function(login, pwd) {
 
-  const url = goog.uri.utils.appendPath(
-      this.baseUrl_, gmf.AuthenticationRouteSuffix.LOGIN);
+  const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.LOGIN}`;
 
   return this.$http_.post(url, $.param({'login': login, 'password': pwd}), {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -199,8 +196,7 @@ gmf.Authentication.prototype.login = function(login, pwd) {
  * @export
  */
 gmf.Authentication.prototype.logout = function() {
-  const url = goog.uri.utils.appendPath(
-      this.baseUrl_, gmf.AuthenticationRouteSuffix.LOGOUT);
+  const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.LOGOUT}`;
   return this.$http_.get(url, {withCredentials: true}).then(
       this.resetUser_.bind(this));
 };
@@ -212,9 +208,7 @@ gmf.Authentication.prototype.logout = function() {
  * @export
  */
 gmf.Authentication.prototype.resetPassword = function(login) {
-
-  const url = goog.uri.utils.appendPath(
-      this.baseUrl_, gmf.AuthenticationRouteSuffix.RESET_PASSWORD);
+  const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.RESET_PASSWORD}`;
 
   /**
    * @param {angular.$http.Response} resp Ajax response.

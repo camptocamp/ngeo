@@ -21,6 +21,7 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+goog.require('ol.uri');
 
 
 gmf.module.value('gmfSearchTemplateUrl',
@@ -575,16 +576,17 @@ gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
   return {
     rateLimitWait: 50,
     prepare(query, settings) {
-      let url = settings.url;
+      const url = settings.url;
       const lang = gettextCatalog.currentLanguage;
       const interfaceName = 'mobile'; // FIXME dynamic interfaces
-      url = goog.uri.utils.setParam(url, 'query', query);
-      url = goog.uri.utils.setParam(url, 'lang', lang);
-      url = goog.uri.utils.setParam(url, 'interface', interfaceName);
       settings.xhrFields = {
         withCredentials: true
       };
-      settings.url = url;
+      settings.url = ol.uri.appendParams(url, {
+        'query': query,
+        'lang': lang,
+        'interface': interfaceName
+      });
       return settings;
     }
   };
