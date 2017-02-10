@@ -238,19 +238,17 @@ ngeo.profile = function(options) {
       }
 
       width = Math.max(this.clientWidth - margin.right - margin.left, 0);
-      x = d3.scale.linear().range([0, width]);
+      x = d3.scaleLinear().range([0, width]);
 
       height = Math.max(this.clientHeight - margin.top - margin.bottom, 0);
-      y = d3.scale.linear().range([height, 0]);
+      y = d3.scaleLinear().range([height, 0]);
 
-      const xAxis = d3.svg.axis().scale(x).orient('bottom');
-      const yAxis = d3.svg.axis()
-          .scale(y)
-          .orient('left');
+      const xAxis = d3.axisBottom(x);
+      const yAxis = d3.axisLeft(y);
 
       let area;
       if (numberOfLines === 1) {
-        area = d3.svg.area()
+        area = d3.area()
             .x(d => x(distanceExtractor(d)))
             .y0(height)
             .y1((d) => {
@@ -261,15 +259,18 @@ ngeo.profile = function(options) {
 
       // Select the svg element, if it exists.
       svg = d3.select(this).selectAll('svg').data([data]);
-
       // Otherwise, create the skeletal chart.
       const svgEnter = svg.enter().append('svg');
+      // Then select it again to get the complete object.
+      svg = d3.select(this).selectAll('svg').data([data]);
+
       if (styleDefs !== undefined) {
         svgEnter.append('defs').append('style')
           .attr('type', 'text/css')
           .text(styleDefs);
       }
       const gEnter = svgEnter.append('g');
+
       clearPois();
 
       gEnter.style('font', '11px Arial');
@@ -383,7 +384,7 @@ ngeo.profile = function(options) {
         yHover.append('text');
 
         // Configure the d3 line.
-        line = d3.svg.line()
+        line = d3.line()
             .x(d => x(distanceExtractor(d)))
             .y(d => y(linesConfiguration[name].zExtractor(d)));
 
@@ -439,6 +440,9 @@ ngeo.profile = function(options) {
           .style('fill', 'none')
           .style('stroke', '#000')
           .style('shape-rendering', 'crispEdges');
+
+      g.select('.grid-y').select('path')
+          .style('stroke', 'none');
 
       g.selectAll('.grid-hover line')
           .style('stroke', '#222')
@@ -571,13 +575,13 @@ ngeo.profile = function(options) {
     poiEnterG.append('line')
       .style('shape-rendering', 'crispEdges');
 
-    p.style('opacity', 0)
+    poiEnterG.style('opacity', 0)
       .transition()
       .duration(1000)
       .delay(100)
       .style('opacity', 1);
 
-    p.selectAll('text')
+    poiEnterG.selectAll('text')
       .attr('transform', (d) => {
         if (light) {
           return ['translate(',
@@ -593,7 +597,7 @@ ngeo.profile = function(options) {
       })
       .text(d => pe.sort(d) + (light ? '' : (` - ${pe.title(d)}`)));
 
-    p.selectAll('line')
+    poiEnterG.selectAll('line')
        .style('stroke', 'grey')
        .attr('x1', d => x(pe.dist(d)))
        .attr('y1', d => y(y.domain()[0]))
@@ -601,7 +605,7 @@ ngeo.profile = function(options) {
        .attr('y2', d => y(pe.z(d)));
 
     // remove unused pois
-    p.exit().remove();
+    poiEnterG.exit().remove();
   };
 
   function clearPois() {
