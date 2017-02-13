@@ -76,33 +76,25 @@ gmf.module.value('gmfPermalinkOptions',
  * @constructor
  * @struct
  * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
- *     manager.
- * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
- * @param {gmf.Themes} gmfThemes The gmf Themes service.
- * @param {gmf.TreeManager} gmfTreeManager The gmf gmfTreeManager service.
- * @param {gmfx.PermalinkOptions} gmfPermalinkOptions The options to configure
- *     the gmf permalink service with.
- * @param {string} defaultTheme the default theme.
- * @param {ngeo.Location} ngeoLocation ngeo location service.
- * @param {ngeo.WfsPermalink} ngeoWfsPermalink ngeo WFS query service.
- * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$injector} $injector Main injector.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */
-gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
-    ngeoFeatureOverlayMgr, ngeoFeatureHelper, ngeoFeatures, ngeoLayerHelper,
-    ngeoStateManager, gmfThemes,
-    gmfTreeManager, gmfPermalinkOptions, defaultTheme,
-    ngeoLocation, ngeoWfsPermalink, ngeoAutoProjection, $rootScope, $injector) {
+gmf.Permalink = function($timeout, $rootScope, $injector) {
+
+  /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.rootScope_ = $rootScope;
+
+  /**
+   * @type {angular.$timeout}
+   * @private
+   */
+  this.$timeout_ = $timeout;
 
   // == listener keys ==
 
@@ -125,13 +117,19 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @type {ngeo.BackgroundLayerMgr}
    * @private
    */
-  this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
+  this.ngeoBackgroundLayerMgr_ = $injector.get('ngeoBackgroundLayerMgr');
 
   /**
    * @type {ngeo.Debounce}
    * @private
    */
-  this.ngeoDebounce_ = ngeoDebounce;
+  this.ngeoDebounce_ = $injector.get('ngeoDebounce');
+
+  /**
+   * The ngeo feature overlay manager.
+   * @type {ngeo.FeatureOverlayMgr}
+   */
+  const ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
 
   /**
    * @type {ngeo.FeatureOverlay}
@@ -143,26 +141,31 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @type {ngeo.FeatureHelper}
    * @private
    */
-  this.featureHelper_ = ngeoFeatureHelper;
+  this.featureHelper_ = $injector.get('ngeoFeatureHelper');
 
   /**
    * @type {ol.Collection.<ol.Feature>}
    * @private
    */
-  this.ngeoFeatures_ = ngeoFeatures;
+  this.ngeoFeatures_ = $injector.get('ngeoFeatures');
 
   /**
    * @type {ngeo.LayerHelper}
    * @private
    */
-  this.layerHelper_ = ngeoLayerHelper;
+  this.layerHelper_ = $injector.get('ngeoLayerHelper');
 
   /**
    * @type {ngeo.StateManager}
    * @private
    */
-  this.ngeoStateManager_ = ngeoStateManager;
+  this.ngeoStateManager_ = $injector.get('ngeoStateManager');
 
+  /**
+   * The options to configure the gmf permalink service with.
+   * @type {gmfx.PermalinkOptions}
+   */
+  const gmfPermalinkOptions = $injector.get('gmfPermalinkOptions');
   if (gmfPermalinkOptions.useLocalStorage === false) {
     this.ngeoStateManager_.useLocalStorage = false;
   }
@@ -178,13 +181,13 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @type {gmf.Themes}
    * @private
    */
-  this.gmfThemes_ = gmfThemes;
+  this.gmfThemes_ = $injector.get('gmfThemes');
 
   /**
    * @type {gmf.TreeManager}
    * @private
    */
-  this.gmfTreeManager_ = gmfTreeManager;
+  this.gmfTreeManager_ = $injector.get('gmfTreeManager');
 
   /**
    * @type {gmf.ThemeManager}
@@ -204,19 +207,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @type {string}
    * @private
    */
-  this.defaultTheme_ = defaultTheme;
-
-  /**
-   * @type {angular.Scope}
-   * @private
-   */
-  this.rootScope_ = $rootScope;
-
-  /**
-   * @type {angular.$timeout}
-   * @private
-   */
-  this.$timeout_ = $timeout;
+  this.defaultTheme_ = $injector.get('defaultTheme');
 
   // == other properties ==
 
@@ -224,13 +215,13 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @type {ngeo.Location}
    * @private
    */
-  this.ngeoLocation_ = ngeoLocation;
+  this.ngeoLocation_ = $injector.get('ngeoLocation');
 
   /**
    * @type {ngeo.WfsPermalink}
    * @private
    */
-  this.ngeoWfsPermalink_ = ngeoWfsPermalink;
+  this.ngeoWfsPermalink_ = $injector.get('ngeoWfsPermalink');
 
   /**
    * @type {?ol.Map}
@@ -242,7 +233,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    * @type {ngeo.AutoProjection}
    * @private
    */
-  this.ngeoAutoProjection_ = ngeoAutoProjection;
+  this.ngeoAutoProjection_ = $injector.get('ngeoAutoProjection');
 
   /**
    * A list of projections that the coordinates in the permalink can be in.
@@ -251,7 +242,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    */
   this.sourceProjections_ = null;
   if (gmfPermalinkOptions.projectionCodes !== undefined) {
-    const projections = ngeoAutoProjection.getProjectionList(gmfPermalinkOptions.projectionCodes);
+    const projections = this.ngeoAutoProjection_.getProjectionList(gmfPermalinkOptions.projectionCodes);
     if (projections.length > 0) {
       this.sourceProjections_ = projections;
     }
