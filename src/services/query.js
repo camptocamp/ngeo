@@ -9,7 +9,6 @@ goog.require('ol.format.WMSGetFeatureInfo');
 goog.require('ol.obj');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
-goog.require('goog.uri.utils');
 
 
 /**
@@ -528,23 +527,14 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
       item['resultSource'].queried = true;
     });
 
-    const infoFormat = items[0].source.infoFormat;
-    let wmsGetFeatureInfoUrl = items[0].source.wmsSource.getGetFeatureInfoUrl(
-        coordinate, resolution, projCode, {
-          'INFO_FORMAT': infoFormat,
-          'FEATURE_COUNT': this.limit_
-        });
-
-    goog.asserts.assert(
-        wmsGetFeatureInfoUrl, 'WMS GetFeatureInfo url should be thruty');
-
     const layers = this.getLayersForItems_(items);
     const lyrStr = layers.join(',');
-
-    wmsGetFeatureInfoUrl =
-        goog.uri.utils.setParam(wmsGetFeatureInfoUrl, 'LAYERS', lyrStr);
-    wmsGetFeatureInfoUrl =
-        goog.uri.utils.setParam(wmsGetFeatureInfoUrl, 'QUERY_LAYERS', lyrStr);
+    const params = {
+      'INFO_FORMAT': items[0].source.infoFormat,
+      'FEATURE_COUNT': this.limit_,
+      'LAYERS': lyrStr,
+      'QUERY_LAYERS': lyrStr
+    };
 
     // add dimensions values
     const dimensions = items[0].source.dimensions;
@@ -557,10 +547,15 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
           value = dimensions[key];
         }
         if (value !== undefined) {
-          wmsGetFeatureInfoUrl = goog.uri.utils.setParam(wmsGetFeatureInfoUrl, key, value);
+          params[key] = value;
         }
       }
     }
+
+    const wmsGetFeatureInfoUrl = items[0].source.wmsSource.getGetFeatureInfoUrl(
+        coordinate, resolution, projCode, params);
+
+    goog.asserts.assert(wmsGetFeatureInfoUrl, 'WMS GetFeatureInfo url should be thruty');
 
     const canceler = this.registerCanceler_();
     this.$http_.get(wmsGetFeatureInfoUrl, {timeout: canceler.promise})
