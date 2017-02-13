@@ -40,8 +40,8 @@ gmf.FilterselectorController = class {
     this.gmfUser_ = gmfUser;
 
     $scope.$watch(
-      () => this.gmfUser_.username,
-      this.handleUsernameChange_.bind(this)
+      () => this.gmfUser_.functionalities,
+      this.handleGmfUserFunctionalitiesChange_.bind(this)
     );
 
     /**
@@ -95,9 +95,8 @@ gmf.FilterselectorController = class {
   /**
    * @private
    */
-  handleUsernameChange_() {
-    if (this.gmfUser_.username &&
-        this.gmfUser_.functionalities &&
+  handleGmfUserFunctionalitiesChange_() {
+    if (this.gmfUser_.functionalities &&
         this.gmfUser_.functionalities.filterable_layers
     ) {
       this.filtrableLayerNodeNames_ =
