@@ -41,7 +41,7 @@
 
     
 
-    <h4 class="name" id=""><span class="type-signature"></span>new <span class="signature">($q, $timeout, ngeoFile, gettext, ngeoImportOnlineTemplateUrl)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=""><span class="type-signature"></span>new <span class="signature">($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTemplateUrl)</span><span class="type-signature"></span></h4>
 
     
 
@@ -80,7 +80,7 @@
 
         <tr>
             
-                <td class="name"><code>$q</code></td>
+                <td class="name"><code>$window</code></td>
             
 
             <td class="type">
@@ -91,14 +91,14 @@
 
             
 
-            <td class="description last"><p>.</p></td>
+            <td class="description last"><p>The window.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>$timeout</code></td>
+                <td class="name"><code>$document</code></td>
             
 
             <td class="type">
@@ -109,7 +109,25 @@
 
             
 
-            <td class="description last"><p>.</p></td>
+            <td class="description last"><p>The document.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gettextCatalog</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Gettext catalog.</p></td>
         </tr>
 
     
@@ -127,32 +145,14 @@
 
             
 
-            <td class="description last"><p>.</p></td>
+            <td class="description last"><p>The ngeo file service.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>gettext</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>ngeoImportOnlineTemplateUrl</code></td>
+                <td class="name"><code>ngeoImportDndTemplateUrl</code></td>
             
 
             <td class="type">
@@ -207,8 +207,8 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/greenkeeper-jsdom-9.11.0/src/modules/import/importonline.js">src/modules/import/importonline.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/greenkeeper-jsdom-9.11.0/src/modules/import/importonline.js#L18">line 18</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/greenkeeper-jsdom-9.11.0/src/modules/import/importdnd.js">src/modules/import/importdnd.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/greenkeeper-jsdom-9.11.0/src/modules/import/importdnd.js#L17">line 17</a>
     </li></ul></dd>
     
 
@@ -725,7 +725,7 @@
 
     
 
-    <h4 class="name" id=""><span class="type-signature"></span>new <span class="signature">($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTemplateUrl)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=""><span class="type-signature"></span>new <span class="signature">($q, $timeout, ngeoFile, gettext, ngeoImportOnlineTemplateUrl)</span><span class="type-signature"></span></h4>
 
     
 
@@ -764,7 +764,7 @@
 
         <tr>
             
-                <td class="name"><code>$window</code></td>
+                <td class="name"><code>$q</code></td>
             
 
             <td class="type">
@@ -775,14 +775,14 @@
 
             
 
-            <td class="description last"><p>The window.</p></td>
+            <td class="description last"><p>.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>$document</code></td>
+                <td class="name"><code>$timeout</code></td>
             
 
             <td class="type">
@@ -793,25 +793,7 @@
 
             
 
-            <td class="description last"><p>The document.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>gettextCatalog</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Gettext catalog.</p></td>
+            <td class="description last"><p>.</p></td>
         </tr>
 
     
@@ -829,14 +811,32 @@
 
             
 
-            <td class="description last"><p>The ngeo file service.</p></td>
+            <td class="description last"><p>.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>ngeoImportDndTemplateUrl</code></td>
+                <td class="name"><code>gettext</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ngeoImportOnlineTemplateUrl</code></td>
             
 
             <td class="type">
@@ -891,8 +891,8 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/greenkeeper-jsdom-9.11.0/src/modules/import/importdnd.js">src/modules/import/importdnd.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/greenkeeper-jsdom-9.11.0/src/modules/import/importdnd.js#L17">line 17</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/greenkeeper-jsdom-9.11.0/src/modules/import/importonline.js">src/modules/import/importonline.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/greenkeeper-jsdom-9.11.0/src/modules/import/importonline.js#L18">line 18</a>
     </li></ul></dd>
     
 
