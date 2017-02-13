@@ -166,18 +166,11 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
-  let map = null;
-  const mapFn = this['getMapFn'];
-  if (mapFn) {
-    map = mapFn();
-    goog.asserts.assertInstanceof(map, ol.Map);
-  }
-
   /**
    * @type {ol.Map}
    * @private
    */
-  this.map_ = map;
+  this.map_ = null;
 
   /**
    * @type {?Object<string, !gmfx.ProfileLineConfiguration>}
@@ -191,18 +184,11 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    */
   this.layersNames_ = [];
 
-  let nbPoints = 100;
-  const nbPointsFn = this['getNbPointsFn'];
-  if (nbPointsFn) {
-    nbPoints = nbPointsFn();
-    goog.asserts.assertNumber(nbPoints);
-  }
-
   /**
    * @type {number}
    * @private
    */
-  this.nbPoints_ = nbPoints;
+  this.nbPoints_ = 100;
 
   /**
    * @type {ol.geom.LineString}
@@ -256,20 +242,6 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
   this.snappedPoint_ = new ol.Feature();
   this.pointHoverOverlay_.addFeature(this.snappedPoint_);
 
-  let hoverPointStyle;
-  const hoverPointStyleFn = this['getHoverPointStyleFn'];
-  if (hoverPointStyleFn) {
-    hoverPointStyle = hoverPointStyleFn();
-    goog.asserts.assertInstanceof(hoverPointStyle, ol.style.Style);
-  } else {
-    hoverPointStyle = new ol.style.Style({
-      image: new ol.style.Circle({
-        fill: new ol.style.Fill({color: '#ffffff'}),
-        radius: 3
-      })
-    });
-  }
-
   /**
    * @type {ngeox.profile.I18n}
    * @private
@@ -279,7 +251,6 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
     yAxis: gettextCatalog.getString('Elevation')
   };
 
-  this.pointHoverOverlay_.setStyle(hoverPointStyle);
 
   /**
    * @type {?ngeox.profile.ProfileOptions}
@@ -291,7 +262,7 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    * @type {boolean}
    * @export
    */
-  this.active = this.active === true;
+  this.active = false;
 
   /**
    * @type {ol.EventsKey}
@@ -332,6 +303,24 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
  * Init the controller
  */
 gmf.ProfileController.prototype.$onInit = function() {
+  this.map_ = this['getMapFn'] ? this['getMapFn']() : null;
+  this.nbPoints_ = this['getNbPointsFn'] ? this['getNbPointsFn']() : 100;
+
+  let hoverPointStyle;
+  const hoverPointStyleFn = this['getHoverPointStyleFn'];
+  if (hoverPointStyleFn) {
+    hoverPointStyle = hoverPointStyleFn();
+    goog.asserts.assertInstanceof(hoverPointStyle, ol.style.Style);
+  } else {
+    hoverPointStyle = new ol.style.Style({
+      image: new ol.style.Circle({
+        fill: new ol.style.Fill({color: '#ffffff'}),
+        radius: 3
+      })
+    });
+  }
+  this.pointHoverOverlay_.setStyle(hoverPointStyle);
+
   const linesConfiguration = this['getLinesConfigurationFn']();
   goog.asserts.assertInstanceof(linesConfiguration, Object);
 

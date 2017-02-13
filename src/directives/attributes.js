@@ -60,7 +60,7 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
    * @type {boolean}
    * @export
    */
-  this.disabled = this.disabled === true;
+  this.disabled = false;
 
   /**
    * The feature containing the values.

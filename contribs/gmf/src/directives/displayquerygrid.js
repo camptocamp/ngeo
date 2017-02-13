@@ -193,21 +193,19 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
    * @type {boolean}
    * @private
    */
-  this.removeEmptyColumns_ = this['removeEmptyColumnsFn'] ?
-      this['removeEmptyColumnsFn']() === true : false;
+  this.removeEmptyColumns_ = false;
 
   /**
    * @type {number|undefined}
    * @export
    */
-  this.maxRecenterZoom = this['maxRecenterZoomFn'] ? this['maxRecenterZoomFn']() : undefined;
+  this.maxRecenterZoom;
 
-  const mergeTabs = this['mergeTabsFn'] ? this['mergeTabsFn']() : {};
   /**
    * @type {!gmfx.GridMergeTabs}
    * @private
    */
-  this.mergeTabs_ = mergeTabs ? mergeTabs : {};
+  this.mergeTabs_ = {};
 
   /**
    * A mapping between row uid and the corresponding feature for each
@@ -266,6 +264,10 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
  * Init the controller
  */
 gmf.DisplayquerygridController.prototype.$onInit = function() {
+  this.removeEmptyColumns_ = this['removeEmptyColumnsFn'] ? this['removeEmptyColumnsFn']() === true : false;
+  this.maxRecenterZoom = this['maxRecenterZoomFn'] ? this['maxRecenterZoomFn']() : undefined;
+  this.mergeTabs_ = this['mergeTabsFn'] ? this['mergeTabsFn']() : {};
+
   const featuresStyle = this['featuresStyleFn']();
   if (featuresStyle !== undefined) {
     goog.asserts.assertInstanceof(featuresStyle, ol.style.Style);

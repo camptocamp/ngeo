@@ -104,7 +104,7 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    * @type {boolean}
    * @export
    */
-  this.desktop = this['desktopIn'] === true;
+  this.desktopIn = false;
 
   /**
    * Is the window currently collapsed?
@@ -112,22 +112,20 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    * @type {boolean}
    * @export
    */
-  this.collapsed = this['defaultCollapsedFn'] !== undefined ?
-    this['defaultCollapsedFn']() === true : !this.desktop;
+  this.collapsed = !this.desktopIn;
 
   /**
    * @type {boolean}
    * @private
    */
-  this.showUnqueriedLayers_ = this['showUnqueriedLayersIn'] !== undefined ?
-    this['showUnqueriedLayersIn'] === true : false;
+  this.showUnqueriedLayers_ = false;
 
   /**
    * Object that is used to filter the source list in the template.
    * @type {Object}
    * @export
    */
-  this.sourcesFilter = this.showUnqueriedLayers ? {} : {'queried': true};
+  this.sourcesFilter = {'queried': true};
 
   /**
    * @type {ngeox.QueryResult}
@@ -224,6 +222,14 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
  * Initialise the controller.
  */
 gmf.DisplayquerywindowController.prototype.$onInit = function() {
+  this.collapsed = this['defaultCollapsedFn'] ?
+    this['defaultCollapsedFn']() === true : !this.desktopIn;
+
+  this.showUnqueriedLayers_ = this['showUnqueriedLayersIn'] ?
+    this['showUnqueriedLayersIn'] === true : false;
+
+  this.sourcesFilter = this.showUnqueriedLayers_ ? {} : {'queried': true};
+
   const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
   const featuresStyle = this['featuresStyleFn']();
   if (featuresStyle !== undefined) {
