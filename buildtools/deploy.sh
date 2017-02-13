@@ -1,5 +1,28 @@
 #!/bin/bash -ex
 
+if [ "${EXAMPLES_NGEO}" == TRUE ]
+then
+    make examples-hosted-ngeo .build/examples-hosted/index.html
+fi
+if [ "${EXAMPLES_GMF}" == TRUE ]
+then
+    make examples-hosted-gmf .build/examples-hosted/contribs/gmf/index.html
+fi
+if [ "${APPS_GMF}" == TRUE ]
+then
+    make examples-hosted-apps
+fi
+if [ "${API}" == TRUE ]
+then
+    make .build/apidoc
+fi
+
+echo ${IS_EXTERNAL}
+if [ "${IS_EXTERNAL}" = TRUE ]
+then
+    exit 0
+fi
+
 make .build/ngeo-${GITHUB_USERNAME}-gh-pages \
     .build/python-venv/lib/python2.7/site-packages/requests \
     .build/python-venv/lib/python2.7/site-packages/urllib3
@@ -18,23 +41,6 @@ git add -A
 git commit -m 'Cleanup GitHub pages' || true
 git push ${GIT_REMOTE_NAME} gh-pages
 cd -
-
-if [ "${EXAMPLES_NGEO}" == TRUE ]
-then
-    make examples-hosted-ngeo .build/examples-hosted/index.html
-fi
-if [ "${EXAMPLES_GMF}" == TRUE ]
-then
-    make examples-hosted-gmf .build/examples-hosted/contribs/gmf/index.html
-fi
-if [ "${APPS_GMF}" == TRUE ]
-then
-    make examples-hosted-apps
-fi
-if [ "${API}" == TRUE ]
-then
-    make .build/apidoc
-fi
 
 cd .build/ngeo-${GITHUB_USERNAME}-gh-pages
 git pull ${GIT_REMOTE_NAME} gh-pages
