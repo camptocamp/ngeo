@@ -457,6 +457,7 @@ gmfx.ServiceUrls.prototype.exportgpxkml;
  * @typedef {{
  *     default_basemap: Array.<string>,
  *     default_theme: Array.<string>,
+ *     filtrable_layers: (Array.<string>|undefined),
  *     location: Array.<string>
  * }}
  */
@@ -475,6 +476,14 @@ gmfx.AuthenticationFunctionalities.prototype.default_basemap;
  * @type {Array.<string>}
  */
 gmfx.AuthenticationFunctionalities.prototype.default_theme;
+
+
+/**
+ * A list of layer names that can be filtered.
+ * @type {Array.<string>|undefined}
+ */
+gmfx.AuthenticationFunctionalities.prototype.filtrable_layers;
+
 
 /**
  * Availables locations.

@@ -2,6 +2,8 @@
 
 goog.provide('gmfapp.filterselector');
 
+/** @suppress {extraRequire} */
+goog.require('gmf.authenticationDirective');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
@@ -99,9 +101,9 @@ gmfapp.MainController = class {
 
     gmfThemes.getThemesObject().then((themes) => {
       if (themes) {
-        // Add 'Edit' theme, i.e. the one with id 73
+        // Add 'Edit' theme, i.e. the one with id 64
         for (let i = 0, ii = themes.length; i < ii; i++) {
-          if (themes[i].id === 73) {
+          if (themes[i].id === 64) {
             this.gmfTreeManager.setFirstLevelGroups(themes[i].children);
             break;
           }

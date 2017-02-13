@@ -2,6 +2,8 @@ goog.provide('gmf.FilterselectorController');
 goog.provide('gmf.filterselectorComponent');
 
 goog.require('gmf');
+/** @suppress {extraRequire} */
+goog.require('gmf.Authentication');
 goog.require('ol.CollectionEventType');
 
 
@@ -9,13 +11,14 @@ gmf.FilterselectorController = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
+   * @param {gmfx.User} gmfUser User.
    * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
    *     objects.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController
    */
-  constructor($scope, ngeoDataSources) {
+  constructor($scope, gmfUser, ngeoDataSources) {
 
     // Binding properties
 
@@ -27,7 +30,18 @@ gmf.FilterselectorController = class {
 
     $scope.$watch(
       () => this.active,
-      this.handleActiveChange_.bind(this)
+      this.toggleDataSourceRegistration_.bind(this)
+    );
+
+    /**
+     * @type {gmfx.User}
+     * @private
+     */
+    this.gmfUser_ = gmfUser;
+
+    $scope.$watch(
+      () => this.gmfUser_.username,
+      this.handleUsernameChange_.bind(this)
     );
 
     /**
@@ -45,6 +59,12 @@ gmf.FilterselectorController = class {
     this.filtrableDataSources = [];
 
     /**
+     * @type {Array.<string>}
+     * @private
+     */
+    this.filtrableLayerNodeNames_ = null;
+
+    /**
      * @type {Array.<ol.EventsKey>}
      * @private
      */
@@ -55,20 +75,60 @@ gmf.FilterselectorController = class {
      * @export
      */
     this.selectedDataSource = null;
+
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.enableDataSourceRegistration_ = false;
+
+    $scope.$watch(
+      () => this.enableDataSourceRegistration_,
+      this.handleEnableDataSourceRegistrationChange_.bind(this)
+    );
+
+    // Initialize the data sources registration
+    this.toggleDataSourceRegistration_();
   }
 
+
   /**
-   * Called when the active property of the this directive changes. Manage
-   * the activation/deactivation accordingly.
-   * @param {boolean} active Whether the directive is active or not.
    * @private
    */
-  handleActiveChange_(active) {
+  handleUsernameChange_() {
+    if (this.gmfUser_.username &&
+        this.gmfUser_.functionalities &&
+        this.gmfUser_.functionalities.filterable_layers
+    ) {
+      this.filtrableLayerNodeNames_ =
+        this.gmfUser_.functionalities.filterable_layers;
+    } else {
+      this.filtrableLayerNodeNames_ = null;
+    }
+    this.toggleDataSourceRegistration_();
+  }
 
+
+  /**
+   * @private
+   */
+  toggleDataSourceRegistration_() {
+    const newDataSourceRegistration = this.active &&
+          !!this.filtrableLayerNodeNames_;
+    if (this.enableDataSourceRegistration_ !== newDataSourceRegistration) {
+      this.enableDataSourceRegistration_ = newDataSourceRegistration;
+    }
+  }
+
+
+  /**
+   * @param {boolean} register Whether register the data sources or not.
+   * @private
+   */
+  handleEnableDataSourceRegistrationChange_(register) {
     const keys = this.listenerKeys_;
 
-    if (active) {
-
+    if (register) {
       // Listen to data sources being added/removed
       keys.push(
         ol.events.listen(
@@ -82,13 +142,13 @@ gmf.FilterselectorController = class {
         ol.events.listen(
           this.ngeoDataSources_,
           ol.CollectionEventType.REMOVE,
-          this.handleDataSourceRemove_,
+          this.handleDataSourcesRemove_,
           this
         )
       );
 
       // Manage the data sources that are already in the collection
-      this.ngeoDataSources_.forEach(this.handleDataSourcesAdd_, this);
+      this.ngeoDataSources_.forEach(this.registerDataSource_, this);
 
     } else {
       ol.Observable.unByKey(keys);
@@ -97,7 +157,6 @@ gmf.FilterselectorController = class {
       // Remove data sources that are in the collection
       this.filtrableDataSources.length = 0;
     }
-
   }
 
 
@@ -112,13 +171,7 @@ gmf.FilterselectorController = class {
   handleDataSourcesAdd_(evt) {
     const dataSource = evt.element;
     goog.asserts.assertInstanceof(dataSource, ngeo.DataSource);
-
-    // Do nothing if data source is not valid
-    if (!this.isValidDataSource_(dataSource)) {
-      return;
-    }
-
-    this.filtrableDataSources.push(dataSource);
+    this.registerDataSource_(dataSource);
   }
 
 
@@ -133,7 +186,29 @@ gmf.FilterselectorController = class {
   handleDataSourcesRemove_(evt) {
     const dataSource = evt.element;
     goog.asserts.assertInstanceof(dataSource, ngeo.DataSource);
+    this.unregisterDataSource_(dataSource);
+  }
 
+
+  /**
+   * @param {ngeo.DataSource} dataSource Data source
+   * @private
+   */
+  registerDataSource_(dataSource) {
+    // Do nothing if data source is not valid
+    if (!this.isValidDataSource_(dataSource)) {
+      return;
+    }
+
+    this.filtrableDataSources.push(dataSource);
+  }
+
+
+  /**
+   * @param {ngeo.DataSource} dataSource Data source
+   * @private
+   */
+  unregisterDataSource_(dataSource) {
     // Do nothing if data source is not valid
     if (!this.isValidDataSource_(dataSource)) {
       return;
@@ -153,10 +228,9 @@ gmf.FilterselectorController = class {
    * @private
    */
   isValidDataSource_(dataSource) {
-    // FIXME - use 'filtrable' instead.
-    return dataSource.queryable;
+    const names = goog.asserts.assert(this.filtrableLayerNodeNames_);
+    return ol.array.includes(names, dataSource.name);
   }
-
 
 };
 
