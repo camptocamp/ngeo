@@ -945,11 +945,11 @@ transifex-init: .build/python-venv/bin/tx .tx/config \
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 
 .build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
-	.build/python-venv/bin/tx pull -l $* --force
+	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
 .build/locale/%/LC_MESSAGES/gmf.po: .tx/config .build/python-venv/bin/tx
-	.build/python-venv/bin/tx pull -l $* --force
+	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po
