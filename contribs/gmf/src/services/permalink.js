@@ -72,11 +72,11 @@ gmf.module.value('gmfPermalinkOptions',
  * - whether to add a crosshair feature in the map or not
  * - the dimensions value
  *
- * To avail the whole possibilities offer by the permalink, these services
+ * To have the whole possibilities offer by the permalink, these services
  * should be instantiated: ngeoBackgroundLayerMgr, ngeoFeatureOverlayMgr,
  * ngeoFeatureHelper, gmfPermalinkOptions, gmfThemes, gmfObjectEditingManager,
  * gmfThemeManager, defaultTheme, gmfTreeManager, ngeoWfsPermalink,
- * ngeoAutoProjection.
+ * ngeoAutoProjection and ngeoFeatures.
  *
  * @constructor
  * @struct
@@ -84,7 +84,6 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$injector} $injector Main injector.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
- * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
  * @param {ngeo.Location} ngeoLocation ngeo location service.
  * @ngInject
@@ -92,7 +91,7 @@ gmf.module.value('gmfPermalinkOptions',
  * @ngname gmfPermalink
  */
 gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
-    ngeoFeatures, ngeoStateManager, ngeoLocation) {
+    ngeoStateManager, ngeoLocation) {
 
   /**
    * @type {angular.Scope}
@@ -124,22 +123,23 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
   // == properties from params ==
 
   /**
-   * @type {!ngeo.Debounce}
+   * @type {ngeo.Debounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
 
   /**
-   * @type {!ol.Collection.<ol.Feature>}
-   * @private
-   */
-  this.ngeoFeatures_ = ngeoFeatures;
-
-  /**
-   * @type {!ngeo.StateManager}
+   * @type {ngeo.StateManager}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
+
+  /**
+   * @type {?ol.Collection.<ol.Feature>}
+   * @private
+   */
+  this.ngeoFeatures_ = $injector.has('ngeoFeatures') ?
+    $injector.get('ngeoFeatures') : null;
 
   /**
    * @type {?ngeo.BackgroundLayerMgr}
@@ -149,7 +149,6 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
     $injector.get('ngeoBackgroundLayerMgr') : null;
 
   /**
-   * The ngeo feature overlay manager.
    * @type {?ngeo.FeatureOverlayMgr}
    */
   const ngeoFeatureOverlayMgr = $injector.has('ngeoFeatureOverlayMgr') ?
@@ -200,11 +199,11 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
     $injector.get('gmfThemeManager') : null;
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @private
    */
   this.defaultTheme_ = $injector.has('defaultTheme') ?
-    $injector.get('defaultTheme') : null;
+    $injector.get('defaultTheme') : undefined;
 
   /**
    * @type {?gmf.TreeManager}
@@ -216,7 +215,7 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
   // == other properties ==
 
   /**
-   * @type {!ngeo.Location}
+   * @type {ngeo.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
@@ -360,17 +359,20 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
   //   (1) read from features from the state manager first, add them
   //   (2) listen for further features added/removed
   const features = this.getFeatures();
-  features.forEach(function(feature) {
-    if (this.featureHelper_) {
-      this.featureHelper_.setStyle(feature);
-    }
-    this.addNgeoFeature_(feature);
-  }, this);
-  this.ngeoFeatures_.extend(features);
-  ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.ADD,
-    this.handleNgeoFeaturesAdd_, this);
-  ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.REMOVE,
-    this.handleNgeoFeaturesRemove_, this);
+  if (this.ngeoFeatures_) {
+    features.forEach(function(feature) {
+      if (this.featureHelper_) {
+        this.featureHelper_.setStyle(feature);
+      }
+      this.addNgeoFeature_(feature);
+    }, this);
+
+    this.ngeoFeatures_.extend(features);
+    ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.ADD,
+      this.handleNgeoFeaturesAdd_, this);
+    ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.REMOVE,
+      this.handleNgeoFeaturesRemove_, this);
+  }
 
   if (this.featureHelper_) {
     this.rootScope_.$on('$localeChangeSuccess', () => {
@@ -820,7 +822,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
       themeName = this.defaultTheme_;
     }
     if (this.gmfThemeManager_ && this.gmfThemeManager_.modeFlush) {
-      this.gmfThemeManager_.themeName = themeName;
+      this.gmfThemeManager_.themeName = `${themeName}`;
     }
 
     /**
@@ -850,7 +852,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
     }
 
     this.$timeout_(() => {
-      if (this.gmfTreeManager_ || !this.gmfTreeManager_.rootCtrl) {
+      if (!this.gmfTreeManager_ || !this.gmfTreeManager_.rootCtrl) {
         // we don't have any layertree
         return;
       }
@@ -968,6 +970,9 @@ gmf.Permalink.prototype.removeNgeoFeature_ = function(feature) {
  * @private
  */
 gmf.Permalink.prototype.handleNgeoFeaturesChange_ = function() {
+  if (!this.ngeoFeatures_) {
+    return;
+  }
   const features = this.ngeoFeatures_.getArray();
   const data = this.featureHashFormat_.writeFeatures(features);
 
