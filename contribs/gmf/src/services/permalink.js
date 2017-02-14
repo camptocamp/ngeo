@@ -72,16 +72,27 @@ gmf.module.value('gmfPermalinkOptions',
  * - whether to add a crosshair feature in the map or not
  * - the dimensions value
  *
+ * To avail the whole possibilities offer by the permalink, these services
+ * should be instantiated: ngeoBackgroundLayerMgr, ngeoFeatureOverlayMgr,
+ * ngeoFeatureHelper, gmfPermalinkOptions, gmfThemes, gmfObjectEditingManager,
+ * gmfThemeManager, defaultTheme, gmfTreeManager, ngeoWfsPermalink,
+ * ngeoAutoProjection.
+ *
  * @constructor
  * @struct
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$injector} $injector Main injector.
+ * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
+ * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
+ * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
+ * @param {ngeo.Location} ngeoLocation ngeo location service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */
-gmf.Permalink = function($timeout, $rootScope, $injector) {
+gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
+    ngeoFeatures, ngeoStateManager, ngeoLocation) {
 
   /**
    * @type {angular.Scope}
@@ -113,25 +124,22 @@ gmf.Permalink = function($timeout, $rootScope, $injector) {
   // == properties from params ==
 
   /**
-   * FIXME required ? YES
    * @type {!ngeo.Debounce}
    * @private
    */
-  this.ngeoDebounce_ = $injector.get('ngeoDebounce');
+  this.ngeoDebounce_ = ngeoDebounce;
 
   /**
-   * FIXME required ? YES
    * @type {!ol.Collection.<ol.Feature>}
    * @private
    */
-  this.ngeoFeatures_ = $injector.get('ngeoFeatures');
+  this.ngeoFeatures_ = ngeoFeatures;
 
   /**
-   * FIXME required ? YES
    * @type {!ngeo.StateManager}
    * @private
    */
-  this.ngeoStateManager_ = $injector.get('ngeoStateManager');
+  this.ngeoStateManager_ = ngeoStateManager;
 
   /**
    * @type {?ngeo.BackgroundLayerMgr}
@@ -208,14 +216,13 @@ gmf.Permalink = function($timeout, $rootScope, $injector) {
   // == other properties ==
 
   /**
-   * FIXME required ? YES
    * @type {!ngeo.Location}
    * @private
    */
-  this.ngeoLocation_ = $injector.get('ngeoLocation');
+  this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {ngeo.WfsPermalink}
+   * @type {?ngeo.WfsPermalink}
    * @private
    */
   this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ?
@@ -228,7 +235,7 @@ gmf.Permalink = function($timeout, $rootScope, $injector) {
   this.map_ = null;
 
   /**
-   * @type {ngeo.AutoProjection}
+   * @type {?ngeo.AutoProjection}
    * @private
    */
   this.ngeoAutoProjection_ = $injector.has('ngeoAutoProjection') ?
