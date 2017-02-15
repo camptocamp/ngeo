@@ -8,6 +8,8 @@ goog.require('ngeo.CreatePrint');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.PrintUtils');
+goog.require('ol.Observable');
+goog.require('ol.math');
 
 
 /**
@@ -275,13 +277,13 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   this.rotationTimeoutPromise_ = null;
 
   /**
-   * @type {goog.events.Key}
+   * @type {ol.EventsKey}
    * @private
    */
   this.postComposeListenerKey_;
 
   /**
-   * @type {goog.events.Key}
+   * @type {ol.EventsKey}
    * @private
    */
   this.pointerDragListenerKey_;
@@ -418,8 +420,8 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
       this.capabilities_ = null;
     });
   } else {
-    this.map.unByKey(this.postComposeListenerKey_);
-    this.map.unByKey(this.pointerDragListenerKey_);
+    ol.Observable.unByKey(this.postComposeListenerKey_);
+    ol.Observable.unByKey(this.pointerDragListenerKey_);
     this.getSetRotation(0);
     this.map.render(); // Redraw (remove) post compose mask;
   }
