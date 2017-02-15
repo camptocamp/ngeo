@@ -584,9 +584,9 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
  * @private
  */
 gmf.DrawfeatureController.prototype.handleMapTouchStart_ = function(evt) {
-  this.longPressTimeout_ = setTimeout(
-      goog.partial(this.handleMapContextMenu_.bind(this), evt),
-      500);
+  this.longPressTimeout_ = setTimeout(() => {
+    this.handleMapContextMenu_(evt);
+  }, 500);
 };
 
 
