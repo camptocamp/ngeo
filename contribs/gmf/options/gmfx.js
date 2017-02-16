@@ -59,6 +59,24 @@ gmfx.Config;
 
 
 /**
+ * The options to create a `gmf.DataSource` with.
+ * @record
+ * @struct
+ * @extends gmfThemes.GmfBaseNode
+ */
+gmfx.DataSource;
+
+
+/**
+ * A reference to the GMF layer node that was used to create the data source.
+ * It may contains additionnal information, such as metadata, about the data
+ * source.
+ * @type {gmfThemes.GmfLayer}
+ */
+gmfx.DataSourceOptions.prototype.gmfLayer;
+
+
+/**
  * Configuration for a grid tab.
  * @typedef {{
  *     configuration: ngeo.GridConfig,

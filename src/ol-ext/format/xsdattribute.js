@@ -1,5 +1,7 @@
 goog.provide('ngeo.format.XSDAttribute');
 
+goog.require('ngeo');
+goog.require('ngeo.Attribute');
 goog.require('ol.format.XML');
 
 
@@ -96,31 +98,16 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
   const type = node.getAttribute('type');
   if (type) {
-    const geomRegex =
-      /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
-    if (geomRegex.exec(type)) {
-      attribute.type = ngeo.format.XSDAttributeType.GEOMETRY;
-      if (/^gml:Point/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.POINT;
-      } else if (/^gml:LineString/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.LINE_STRING;
-      } else if (/^gml:Polygon/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.POLYGON;
-      } else if (/^gml:MultiPoint/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.MULTI_POINT;
-      } else if (/^gml:MultiLineString/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.MULTI_LINE_STRING;
-      } else if (/^gml:MultiPolygon/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.MULTI_POLYGON;
+    if (!ngeo.Attribute.setAttributeGeometryType(attribute, type)) {
+      if (type === 'xsd:string') {
+        attribute.type = ngeo.AttributeType.TEXT;
+      } else if (type === 'xsd:date') {
+        attribute.type = ngeo.AttributeType.DATE;
+      } else if (type === 'xsd:dateTime') {
+        attribute.type = ngeo.AttributeType.DATETIME;
+      } else {
+        return null;
       }
-    } else if (type === 'xsd:string') {
-      attribute.type = ngeo.format.XSDAttributeType.TEXT;
-    } else if (type === 'xsd:date') {
-      attribute.type = ngeo.format.XSDAttributeType.DATE;
-    } else if (type === 'xsd:dateTime') {
-      attribute.type = ngeo.format.XSDAttributeType.DATETIME;
-    } else {
-      return null;
     }
   } else {
     let enumerations = node.getElementsByTagName('enumeration');
@@ -128,7 +115,7 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
       enumerations = node.getElementsByTagName('xsd:enumeration');
     }
     if (enumerations.length) {
-      attribute.type = ngeo.format.XSDAttributeType.SELECT;
+      attribute.type = ngeo.AttributeType.SELECT;
       const choices = [];
       for (let i = 0, ii = enumerations.length; i < ii; i++) {
         choices.push(enumerations[i].getAttribute('value'));
@@ -154,37 +141,10 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 ngeo.format.XSDAttribute.getGeometryAttribute = function(attributes) {
   let geomAttribute = null;
   for (let i = 0, ii = attributes.length; i < ii; i++) {
-    if (attributes[i].type === ngeo.format.XSDAttributeType.GEOMETRY) {
+    if (attributes[i].type === ngeo.AttributeType.GEOMETRY) {
       geomAttribute = attributes[i];
       break;
     }
   }
   return geomAttribute;
-};
-
-
-/**
- * @enum {string}
- */
-ngeo.format.XSDAttributeType = {
-  /**
-   * @type {string}
-   */
-  DATE: 'date',
-  /**
-   * @type {string}
-   */
-  DATETIME: 'datetime',
-  /**
-   * @type {string}
-   */
-  GEOMETRY: 'geometry',
-  /**
-   * @type {string}
-   */
-  SELECT: 'select',
-  /**
-   * @type {string}
-   */
-  TEXT: 'text'
 };

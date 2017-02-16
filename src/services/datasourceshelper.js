@@ -3,7 +3,8 @@ goog.provide('ngeo.DataSourcesHelper');
 goog.require('ngeo');
 goog.require('ngeo.DataSource');
 goog.require('ngeo.DataSources');
-
+goog.require('ngeo.Querent');
+goog.require('ngeo.format.WFSAttribute');
 goog.require('ol.events');
 goog.require('ol.CollectionEventType');
 
@@ -14,19 +15,37 @@ ngeo.DataSourcesHelper = class {
    * A service that provides utility methods to manipulate or get data sources.
    *
    * @struct
-   * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data source
-   *     objects.
+   * @param {angular.$q} $q The Angular $q service.
+   * @param {ngeo.DataSources} ngeoDataSources Ngeo data source collection.
+   * @param {ngeo.Querent} ngeoQuerent Ngeo querent service.
    * @ngdoc service
    * @ngname ngeoDataSourcesHelper
    * @ngInject
    */
-  constructor(ngeoDataSources) {
+  constructor($q, ngeoDataSources, ngeoQuerent) {
+
+    // === Injected properties ===
+
+    /**
+     * @type {angular.$q}
+     * @private
+     */
+    this.q_ = $q;
 
     /**
      * @type {ngeo.DataSources}
      * @private
      */
     this.collection_ = ngeoDataSources;
+
+    /**
+     * @type {ngeo.Querent}
+     * @private
+     */
+    this.ngeoQuerent_ = ngeoQuerent;
+
+
+    // === Other properties ===
 
     /**
      * @type {Object.<number, ngeo.DataSource>}
@@ -66,6 +85,46 @@ ngeo.DataSourcesHelper = class {
    */
   getDataSource(id) {
     return this.cache_[id] || null;
+  }
+
+  /**
+   * Get the attributes of a data source. If they are not set, they are obtained
+   * from the querent service and set first.
+   * @param {gmf.DataSource} dataSource Filtrable data source.
+   * @return {angular.$q.Promise} Promise.
+   * @export
+   */
+  getDataSourceAttributes(dataSource) {
+
+    const wfsDescribeFeatureTypeDefer = this.q_.defer();
+
+    if (dataSource.attributes) {
+      wfsDescribeFeatureTypeDefer.resolve(dataSource.attributes);
+    } else {
+      this.ngeoQuerent_.wfsDescribeFeatureType(
+        dataSource
+      ).then((featureType) => {
+        // We know, at this point, that there's only one definition that
+        // was returned.  Just to be sure, let's do a bunch of assertions.
+        const ogcLayerName = dataSource.getOGCLayerNames()[0];
+        goog.asserts.assertString(
+          ogcLayerName, 'The data source should have only one ogcLayer.');
+        const element = featureType.element[0];
+        goog.asserts.assert(element.name === ogcLayerName);
+        goog.asserts.assert(
+          featureType.complexType[0].name === element.type);
+
+        const complexContent = featureType.complexType[0].complexContent;
+        const attributes = new ngeo.format.WFSAttribute().read(complexContent);
+
+        // Set the attributes in the data source
+        dataSource.attributes = attributes;
+
+        wfsDescribeFeatureTypeDefer.resolve(attributes);
+      });
+    }
+
+    return wfsDescribeFeatureTypeDefer.promise;
   }
 
   /**

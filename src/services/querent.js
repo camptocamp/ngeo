@@ -2,6 +2,7 @@ goog.provide('ngeo.Querent');
 
 goog.require('ngeo');
 goog.require('ol.format.WFS');
+goog.require('ol.format.WFSDescribeFeatureType');
 goog.require('ol.obj');
 goog.require('ol.source.ImageWMS');
 
@@ -135,6 +136,34 @@ ngeo.Querent = class {
     }
 
     return queryableDataSources;
+  }
+
+  /**
+   * @param {ngeo.DataSource} dataSource Data source.
+   * @return {angular.$q.Promise} Promise.
+   * @export
+   */
+  wfsDescribeFeatureType(dataSource) {
+
+    goog.asserts.assert(
+      dataSource.supportsAttributes,
+      `The data source must support WFS, have a single OGCLayer that
+      is queryable in order to issue WFS DescribeFeatureType requests`
+    );
+
+    const ogcLayerNames = dataSource.getOGCLayerNames();
+
+    const url = ol.uri.appendParams(dataSource.wfsUrl, {
+      'REQUEST': 'DescribeFeatureType',
+      'SERVICE': 'WFS',
+      'VERSION': '2.0.0',
+      'TYPENAME': ogcLayerNames
+    });
+
+    return this.http_.get(url).then((response) => {
+      const format = new ol.format.WFSDescribeFeatureType();
+      return format.read(response.data);
+    });
   }
 
 

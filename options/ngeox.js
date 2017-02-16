@@ -98,39 +98,11 @@ ngeox.DataSourceLayer.prototype.queryable;
 
 
 /**
- * The options to create a ngeo.DataSource with.
- * @typedef {{
- *     activeDimensions: (Object.<string, string>|undefined),
- *     copyable: (boolean|undefined),
- *     dimensions: (Object.<string, string>|undefined),
- *     geometryName: (string|undefined),
- *     id: (number),
- *     idAttribute: (string|undefined),
- *     inRange: (boolean|undefined),
- *     maxResolution: (number|undefined),
- *     minResolution: (number|undefined),
- *     name: (string),
- *     ogcImageType: (string|undefined),
- *     ogcLayers: (!Array.<!ngeox.DataSourceLayer>|undefined),
- *     ogcServerType: (string|undefined),
- *     ogcType: (string|undefined),
- *     snappable: (boolean|undefined),
- *     snappingTolerance: (number|undefined),
- *     snappingToEdges: (boolean|undefined),
- *     snappingToVertice: (boolean|undefined),
- *     visible: (boolean|undefined),
- *     wfsFeatureNS: (string|undefined),
- *     wfsFeaturePrefix: (string|undefined),
- *     wfsOutputFormat: (string|undefined),
- *     wfsUrl: (string|undefined),
- *     wmsInfoFormat: (string|undefined),
- *     wmsIsSingleTile: (boolean|undefined),
- *     wmsUrl: (string|undefined),
- *     wmtsLayer: (string|undefined),
- *     wmtsUrl: (string|undefined)
- * }}
+ * The options to create a `ngeo.DataSource` with.
+ * @record
+ * @struct
  */
-ngeox.DataSourceOptions;
+ngeox.DataSourceOptions = function() {};
 
 
 /**
@@ -138,6 +110,13 @@ ngeox.DataSourceOptions;
  * @type {Object.<string, string>|undefined}
  */
 ngeox.DataSourceOptions.prototype.activeDimensions;
+
+
+/**
+ * The attributes of the data source.
+ * @type {Array.<ngeox.Attribute>|undefined}
+ */
+ngeox.DataSourceOptions.prototype.attributes;
 
 
 /**

@@ -542,3 +542,35 @@ gmfThemes.GmfSnappingConfig.prototype.tolerance;
  * @type {boolean|undefined}
  */
 gmfThemes.GmfSnappingConfig.prototype.vertex;
+
+
+/**
+ * @record
+ * @struct
+ */
+gmfThemes.GmfLayerAttributeValuesResponse = function() {};
+
+
+/**
+ * @type {Array.<gmfThemes.GmfLayerAttributeValue>}
+ */
+gmfThemes.GmfLayerAttributeValuesResponse.prototype.items;
+
+
+/**
+ * @record
+ * @struct
+ */
+gmfThemes.GmfLayerAttributeValue = function() {};
+
+
+/**
+ * @type {string}
+ */
+gmfThemes.GmfLayerAttributeValue.prototype.label;
+
+
+/**
+ * @type {string}
+ */
+gmfThemes.GmfLayerAttributeValue.prototype.value;

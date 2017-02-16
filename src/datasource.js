@@ -68,6 +68,13 @@ ngeo.DataSource = class {
     // === STATIC properties (i.e. that never change) ===
 
     /**
+     * The attributes of the data source.
+     * @type {?Array.<ngeox.Attribute>}
+     * @private
+     */
+    this.attributes_ = options.attributes || null;
+
+    /**
      * Whether the geometry from this data source can be copied to other data
      * sources or not. Defaults to `false`.
      * @type {boolean}
@@ -358,6 +365,22 @@ ngeo.DataSource = class {
   // === Static property getters/setters ===
 
   /**
+   * @return {Array.<ngeox.Attribute>} Attributes
+   * @export
+   */
+  get attributes() {
+    return this.attributes_;
+  }
+
+  /**
+   * @param {Array.<ngeox.Attribute>} attributes Attributes
+   * @export
+   */
+  set attributes(attributes) {
+    this.attributes_ = attributes;
+  }
+
+  /**
    * @return {boolean} Copyable
    * @export
    */
@@ -616,6 +639,27 @@ ngeo.DataSource = class {
   }
 
   /**
+   * To be able to do advanced operations on a data source, such as editing
+   * or filtering, a data source must be bound to 1 set of attributes.
+   * These attributes are the ones defined by an ogcLayer.  This means that
+   * to be considered to support having attributes defined, you either need
+   * to define them directly when creating the data source, or if you let
+   * the querent service get them for you using a WFS DescribeFeatureType
+   * request, the data source must have only 1 ogcLayer set, which must
+   * be queryable.
+   * @return {boolean} Supports attributes.
+   * @export
+   */
+  get supportsAttributes() {
+    return !!this.attributes || (
+      this.supportsWFS &&
+      !!this.ogcLayers &&
+      this.ogcLayers.length === 1 &&
+      this.ogcLayers[0].queryable
+    );
+  }
+
+  /**
    * @return {boolean} Whether the data source supports making WMS requests
    *     or not.
    * @export
@@ -711,6 +755,28 @@ ngeo.DataSource = class {
         const inRange = inMinRange && inMaxRange;
 
         if (inRange && (!queryableOnly || ogcLayer.queryable)) {
+          layerNames.push(ogcLayer.name);
+        }
+      }
+    }
+
+    return layerNames;
+  }
+
+  /**
+   * Returns the list of OGC layer names.
+   * @param {boolean} queryableOnly Whether to additionnally check if the
+   *     OGC layer is queryable as well or not. Defaults to `false`.
+   * @return {Array.<string>} The OGC layer names.
+   * @export
+   */
+  getOGCLayerNames(queryableOnly = false) {
+
+    const layerNames = [];
+
+    if (this.ogcLayers) {
+      for (const ogcLayer of this.ogcLayers) {
+        if (!queryableOnly || ogcLayer.queryable) {
           layerNames.push(ogcLayer.name);
         }
       }
