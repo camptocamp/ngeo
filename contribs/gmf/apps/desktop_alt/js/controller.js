@@ -121,4 +121,15 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
 ol.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
 
 
+/**
+ * @param {jQuery.Event} event keydown event.
+ * @export
+ */
+app.AlternativeDesktopController.prototype.onKeydown = function(event) {
+  if (event.ctrlKey && event.key === 'p') {
+    this.printPanelActive = true;
+    event.preventDefault();
+  }
+};
+
 app.module.controller('AlternativeDesktopController', app.AlternativeDesktopController);
