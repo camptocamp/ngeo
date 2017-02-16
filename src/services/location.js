@@ -1,9 +1,8 @@
 goog.provide('ngeo.Location');
 goog.provide('ngeo.MockLocationProvider');
 
-goog.require('goog.Uri');
 goog.require('ngeo');
-goog.require('ngeo.string');
+goog.require('ngeo.utils');
 
 
 /**
@@ -47,48 +46,92 @@ ngeo.Location = function(location, history) {
   this.history_ = history;
 
   /**
-   * @type {!goog.Uri}
+   * @type {string|undefined}
    * @private
    */
-  this.uri_ = goog.Uri.parse(location);
-};
+  this.schema_ = location.protocol.substring(0, location.protocol.length - 1);
 
+  /**
+   * @type {string|undefined}
+   * @private
+   */
+  this.domain_ = location.hostname;
 
-/**
- * Get the location's URI object.
- * @return {!goog.Uri} URI.
- * @export
- */
-ngeo.Location.prototype.getUri = function() {
-  return this.uri_;
+  /**
+   * @type {number|undefined}
+   * @private
+   */
+  this.port_ = location.port ? parseInt(location.port, 10) : undefined;
+
+  /**
+   * @type {string|undefined}
+   * @private
+   */
+  this.path_ = location.pathname;
+
+  /**
+   * @type {!Object.<string, string>}
+   * @private
+   */
+  this.queryData_ = ngeo.utils.decodeQueryString(location.search);
+
+  /**
+   * @type {!Object.<string, string>}
+   * @private
+   */
+  this.fragment_ = ngeo.utils.decodeQueryString(location.hash);
 };
 
 
 /**
  * Get the location's current path.
- * @return {string} The path.
+ * @return {string|undefined} The path.
  * @export
  */
 ngeo.Location.prototype.getPath = function() {
-  return this.uri_.getPath();
+  return this.path_;
 };
 
 
 /**
  * Get the location's URI as a string
- * @param {Object.<string, string>=} opt_params Params.
  * @return {string} The URI.
  * @export
  */
-ngeo.Location.prototype.getUriString = function(opt_params) {
-  let extendedUri;
-  if (opt_params !== undefined) {
-    extendedUri = this.uri_.clone();
-    extendedUri.getQueryData().extend(opt_params);
-  } else {
-    extendedUri = this.uri_;
+ngeo.Location.prototype.getUriString = function() {
+  const out = [];
+
+  if (this.schema_) {
+    out.push(this.schema_, ':');
   }
-  return extendedUri.toString();
+
+  if (this.domain_ || this.schema_ === 'file') {
+    out.push('//');
+
+    out.push(this.domain_);
+
+    if (this.port_ !== undefined) {
+      out.push(':', String(this.port_));
+    }
+  }
+
+  if (this.path_) {
+    if (this.domain_ && this.path_.charAt(0) !== '/') {
+      out.push('/');
+    }
+    out.push(this.path_);
+  }
+
+  const encodedQueryData = ngeo.utils.encodeQueryString(this.queryData_);
+  if (encodedQueryData.length > 0) {
+    out.push('?', encodedQueryData);
+  }
+
+  const encodedFragment = ngeo.utils.encodeQueryString(this.fragment_);
+  if (encodedFragment.length > 0) {
+    out.push('#', encodedFragment);
+  }
+  return out.join('');
 };
 
 
@@ -99,7 +142,7 @@ ngeo.Location.prototype.getUriString = function(opt_params) {
  * @export
  */
 ngeo.Location.prototype.hasParam = function(key) {
-  return this.uri_.getQueryData().containsKey(key);
+  return key in this.queryData_;
 };
 
 
@@ -110,7 +153,7 @@ ngeo.Location.prototype.hasParam = function(key) {
  * @export
  */
 ngeo.Location.prototype.hasFragmentParam = function(key) {
-  return this.getFragmentUri_().getQueryData().containsKey(key);
+  return key in this.fragment_;
 };
 
 
@@ -121,11 +164,7 @@ ngeo.Location.prototype.hasFragmentParam = function(key) {
  * @export
  */
 ngeo.Location.prototype.getParam = function(key) {
-  const param = this.uri_.getQueryData().get(key);
-  if (param === undefined) {
-    return undefined;
-  }
-  return goog.asserts.assertString(param);
+  return this.queryData_[key];
 };
 
 
@@ -136,12 +175,7 @@ ngeo.Location.prototype.getParam = function(key) {
  * @export
  */
 ngeo.Location.prototype.getFragmentParam = function(key) {
-  const val = this.getFragmentUri_().getQueryData().get(key);
-  if (val === undefined) {
-    return undefined;
-  }
-  goog.asserts.assertString(val);
-  return ngeo.string.urlDecode(val);
+  return this.fragment_[key];
 };
 
 
@@ -187,7 +221,11 @@ ngeo.Location.prototype.getFragmentParamAsInt = function(key) {
  * @export
  */
 ngeo.Location.prototype.getParamKeys = function() {
-  return this.uri_.getQueryData().getKeys();
+  const keys = [];
+  for (const key in this.queryData_) {
+    keys.push(key);
+  }
+  return keys;
 };
 
 
@@ -197,7 +235,11 @@ ngeo.Location.prototype.getParamKeys = function() {
  * @export
  */
 ngeo.Location.prototype.getFragmentParamKeys = function() {
-  return this.getFragmentUri_().getQueryData().getKeys();
+  const keys = [];
+  for (const key in this.fragment_) {
+    keys.push(key);
+  }
+  return keys;
 };
 
 
@@ -209,7 +251,13 @@ ngeo.Location.prototype.getFragmentParamKeys = function() {
  * @export
  */
 ngeo.Location.prototype.getParamKeysWithPrefix = function(prefix) {
-  return this.getParamKeys().filter(key => key.indexOf(prefix) == 0);
+  const keys = [];
+  for (const key in this.queryData_) {
+    if (key.indexOf(prefix) == 0) {
+      keys.push(key);
+    }
+  }
+  return keys;
 };
 
 
@@ -221,37 +269,37 @@ ngeo.Location.prototype.getParamKeysWithPrefix = function(prefix) {
  * @export
  */
 ngeo.Location.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
-  return this.getFragmentParamKeys().filter(key => key.indexOf(prefix) == 0);
+  const keys = [];
+  for (const key in this.fragment_) {
+    if (key.indexOf(prefix) == 0) {
+      keys.push(key);
+    }
+  }
+  return keys;
 };
 
 
 /**
  * Set or create a param in the location's URI.
- * @param {Object.<string, string>} params Parameters.
+ * @param {!Object.<string, string>} params Parameters.
  * @export
  */
 ngeo.Location.prototype.updateParams = function(params) {
-  const qd = this.uri_.getQueryData();
   for (const key in params) {
-    qd.set(key, params[key]);
+    this.queryData_[key] = params[key];
   }
 };
 
 
 /**
  * Set or create a param in the fragment of the location's URI.
- * @param {Object.<string, string>} params Parameters.
+ * @param {!Object.<string, string>} params Parameters.
  * @export
  */
 ngeo.Location.prototype.updateFragmentParams = function(params) {
-  const fragmentUri = this.getFragmentUri_();
-  const qd = fragmentUri.getQueryData();
   for (const key in params) {
-    let val = params[key];
-    val = val !== undefined ? ngeo.string.urlEncode(val) : undefined;
-    qd.set(key, val);
+    this.fragment_[key] = params[key];
   }
-  this.updateFragmentFromUri_(fragmentUri);
 };
 
 
@@ -261,7 +309,7 @@ ngeo.Location.prototype.updateFragmentParams = function(params) {
  * @export
  */
 ngeo.Location.prototype.deleteParam = function(key) {
-  this.uri_.getQueryData().remove(key);
+  delete this.queryData_[key];
 };
 
 
@@ -271,9 +319,7 @@ ngeo.Location.prototype.deleteParam = function(key) {
  * @export
  */
 ngeo.Location.prototype.deleteFragmentParam = function(key) {
-  const fragmentUri = this.getFragmentUri_();
-  fragmentUri.getQueryData().remove(key);
-  this.updateFragmentFromUri_(fragmentUri);
+  delete this.fragment_[key];
 };
 
 
@@ -292,33 +338,7 @@ ngeo.Location.prototype.refresh = function() {
  * @export
  */
 ngeo.Location.prototype.setPath = function(path) {
-  this.uri_.setPath(path);
-};
-
-
-/**
- * Return a {@link goog.Uri} instance where the fragment parameters are set
- * as query parameters.
- * @return {goog.Uri} An uri.
- * @private
- */
-ngeo.Location.prototype.getFragmentUri_ = function() {
-  const fragment = this.uri_.getFragment();
-  const uri = new goog.Uri(null);
-  uri.setQueryData(fragment);
-  return uri;
-};
-
-
-/**
- * Update the fragment of the Uri with the given uri which contains
- * fragment parameters as query params.
- * @param {goog.Uri} fragmentUri An uri.
- * @private
- */
-ngeo.Location.prototype.updateFragmentFromUri_ = function(fragmentUri) {
-  const fragment = fragmentUri.getQueryData().toDecodedString();
-  this.uri_.setFragment(fragment);
+  this.path_ = path;
 };
 
 
