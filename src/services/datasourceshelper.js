@@ -89,8 +89,13 @@ ngeo.DataSourcesHelper = class {
 
   /**
    * Get the attributes of a data source. If they are not set, they are obtained
-   * from the querent service and set first.
-   * @param {gmf.DataSource} dataSource Filtrable data source.
+   * from the querent service using a WFS DescribeFeatureType request, then set
+   * in the data source.
+   *
+   * Please, note that in order to be dynamically set, the data source must
+   * only have 1 ogcLayer set and be queryable.
+   *
+   * @param {ngeo.DataSource} dataSource Filtrable data source.
    * @return {angular.$q.Promise} Promise.
    * @export
    */

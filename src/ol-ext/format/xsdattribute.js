@@ -86,7 +86,7 @@ ngeo.format.XSDAttribute.prototype.readFromNode = function(node) {
 ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
   const name = node.getAttribute('name');
-  goog.asserts.assert(name, 'name should be defined in element node.');
+  goog.asserts.assertString(name, 'name should be defined in element node.');
 
   const nillable = node.getAttribute('nillable');
   const required = !(nillable === true || nillable === 'true');
@@ -98,7 +98,7 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
   const type = node.getAttribute('type');
   if (type) {
-    if (!ngeo.Attribute.setAttributeGeometryType(attribute, type)) {
+    if (!ngeo.Attribute.setGeometryType(attribute, type)) {
       if (type === 'xsd:string') {
         attribute.type = ngeo.AttributeType.TEXT;
       } else if (type === 'xsd:date') {

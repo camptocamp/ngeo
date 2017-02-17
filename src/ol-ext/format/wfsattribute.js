@@ -40,7 +40,7 @@ ngeo.format.WFSAttribute = class {
 
     const type = goog.asserts.assertString(object['type']);
 
-    if (!ngeo.Attribute.setAttributeGeometryType(attribute, type)) {
+    if (!ngeo.Attribute.setGeometryType(attribute, type)) {
       if (type === 'gml:TimeInstantType') {
         attribute.type = ngeo.AttributeType.DATETIME;
       } else {

@@ -5,11 +5,11 @@ goog.provide('ngeo.Attribute');
  * Set the `type` and `geomType` properties of an attribute if the given
  * type is a geometry one.
  *
- * @param {ngeox.Attribute} attribute Attribute.
+ * @param {ngeox.AttributeBase} attribute Attribute.
  * @param {string} type Type.
  * @return {boolean} Whether both attribute type and geomType were set.
  */
-ngeo.Attribute.setAttributeGeometryType = function(attribute, type) {
+ngeo.Attribute.setGeometryType = function(attribute, type) {
   const geomRegex =
     /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
   if (geomRegex.exec(type)) {

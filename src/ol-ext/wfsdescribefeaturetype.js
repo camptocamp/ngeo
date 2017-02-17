@@ -50,11 +50,22 @@ ol.format.WFSDescribeFeatureType.prototype.readFromDocument = function(doc) {
  */
 ol.format.WFSDescribeFeatureType.prototype.readFromNode = function(node) {
   let result = {};
-  result = ol.xml.pushParseAndPop(result, ol.format.WFSDescribeFeatureType.PARSERS_, node, []);
+  result = ol.xml.pushParseAndPop(
+    result,
+    ol.format.WFSDescribeFeatureType.PARSERS_,
+    node,
+    []
+  );
   return result;
 };
 
 
+/**
+ * @private
+ * @param {Node} node Node.
+ * @param {Array.<*>} objectStack Object stack.
+ * @return {Object} Attributes.
+ */
 ol.format.WFSDescribeFeatureType.readElement_ = function(node, objectStack) {
   const attributes = {};
   for (let i = 0, len = node.attributes.length; i < len; i++) {
@@ -69,24 +80,77 @@ ol.format.WFSDescribeFeatureType.readElement_ = function(node, objectStack) {
 };
 
 
+/**
+ * @private
+ * @param {Node} node Node.
+ * @param {Array.<*>} objectStack Object stack.
+ * @return {T} Object.
+ * @template T
+ */
 ol.format.WFSDescribeFeatureType.readComplexType_ = function(node, objectStack) {
   const name = node.getAttribute('name');
-  const object = ol.xml.pushParseAndPop({'name': name}, ol.format.WFSDescribeFeatureType.COMPLEX_TYPE_PARSERS_, node, objectStack);
+  const object = ol.xml.pushParseAndPop(
+    {'name': name},
+    ol.format.WFSDescribeFeatureType.COMPLEX_TYPE_PARSERS_,
+    node, objectStack
+  );
   // flatten
-  object['complexContent'] = object['complexContent']['extension']['sequence']['element'];
+  object['complexContent'] =
+    object['complexContent']['extension']['sequence']['element'];
   return object;
 };
 
-ol.format.WFSDescribeFeatureType.readComplexContent_ = function(node, objectStack) {
-  return ol.xml.pushParseAndPop({}, ol.format.WFSDescribeFeatureType.COMPLEX_CONTENT_PARSERS_, node, objectStack);
+
+/**
+ * @private
+ * @param {Node} node Node.
+ * @param {Array.<*>} objectStack Object stack.
+ * @return {T} Object.
+ * @template T
+ */
+ol.format.WFSDescribeFeatureType.readComplexContent_ = function(
+  node, objectStack
+) {
+  return ol.xml.pushParseAndPop(
+    {},
+    ol.format.WFSDescribeFeatureType.COMPLEX_CONTENT_PARSERS_,
+    node,
+    objectStack
+  );
 };
 
+
+/**
+ * @private
+ * @param {Node} node Node.
+ * @param {Array.<*>} objectStack Object stack.
+ * @return {T} Object.
+ * @template T
+ */
 ol.format.WFSDescribeFeatureType.readExtension_ = function(node, objectStack) {
-  return ol.xml.pushParseAndPop({}, ol.format.WFSDescribeFeatureType.EXTENSION_PARSERS_, node, objectStack);
+  return ol.xml.pushParseAndPop(
+    {},
+    ol.format.WFSDescribeFeatureType.EXTENSION_PARSERS_,
+    node,
+    objectStack
+  );
 };
 
+
+/**
+ * @private
+ * @param {Node} node Node.
+ * @param {Array.<*>} objectStack Object stack.
+ * @return {T} Object.
+ * @template T
+ */
 ol.format.WFSDescribeFeatureType.readSequence_ = function(node, objectStack) {
-  return ol.xml.pushParseAndPop({}, ol.format.WFSDescribeFeatureType.SEQUENCE_PARSERS_, node, objectStack);
+  return ol.xml.pushParseAndPop(
+    {},
+    ol.format.WFSDescribeFeatureType.SEQUENCE_PARSERS_,
+    node,
+    objectStack
+  );
 };
 
 
@@ -108,8 +172,12 @@ ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_ = [
  */
 ol.format.WFSDescribeFeatureType.PARSERS_ = ol.xml.makeStructureNS(
     ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_, {
-      'element': ol.xml.makeObjectPropertyPusher(ol.format.WFSDescribeFeatureType.readElement_),
-      'complexType': ol.xml.makeObjectPropertyPusher(ol.format.WFSDescribeFeatureType.readComplexType_)
+      'element': ol.xml.makeObjectPropertyPusher(
+        ol.format.WFSDescribeFeatureType.readElement_
+      ),
+      'complexType': ol.xml.makeObjectPropertyPusher(
+        ol.format.WFSDescribeFeatureType.readComplexType_
+      )
     });
 
 
@@ -120,7 +188,9 @@ ol.format.WFSDescribeFeatureType.PARSERS_ = ol.xml.makeStructureNS(
  */
 ol.format.WFSDescribeFeatureType.COMPLEX_TYPE_PARSERS_ = ol.xml.makeStructureNS(
     ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_, {
-      'complexContent': ol.xml.makeObjectPropertySetter(ol.format.WFSDescribeFeatureType.readComplexContent_)
+      'complexContent': ol.xml.makeObjectPropertySetter(
+        ol.format.WFSDescribeFeatureType.readComplexContent_
+      )
     });
 
 
@@ -131,7 +201,9 @@ ol.format.WFSDescribeFeatureType.COMPLEX_TYPE_PARSERS_ = ol.xml.makeStructureNS(
  */
 ol.format.WFSDescribeFeatureType.COMPLEX_CONTENT_PARSERS_ = ol.xml.makeStructureNS(
     ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_, {
-      'extension': ol.xml.makeObjectPropertySetter(ol.format.WFSDescribeFeatureType.readExtension_)
+      'extension': ol.xml.makeObjectPropertySetter(
+        ol.format.WFSDescribeFeatureType.readExtension_
+      )
     });
 
 
@@ -142,7 +214,9 @@ ol.format.WFSDescribeFeatureType.COMPLEX_CONTENT_PARSERS_ = ol.xml.makeStructure
  */
 ol.format.WFSDescribeFeatureType.EXTENSION_PARSERS_ = ol.xml.makeStructureNS(
     ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_, {
-      'sequence': ol.xml.makeObjectPropertySetter(ol.format.WFSDescribeFeatureType.readSequence_)
+      'sequence': ol.xml.makeObjectPropertySetter(
+        ol.format.WFSDescribeFeatureType.readSequence_
+      )
     });
 
 
@@ -153,5 +227,7 @@ ol.format.WFSDescribeFeatureType.EXTENSION_PARSERS_ = ol.xml.makeStructureNS(
  */
 ol.format.WFSDescribeFeatureType.SEQUENCE_PARSERS_ = ol.xml.makeStructureNS(
     ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_, {
-      'element': ol.xml.makeObjectPropertyPusher(ol.format.WFSDescribeFeatureType.readElement_)
+      'element': ol.xml.makeObjectPropertyPusher(
+        ol.format.WFSDescribeFeatureType.readElement_
+      )
     });

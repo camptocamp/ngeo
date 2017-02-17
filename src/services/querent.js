@@ -153,12 +153,15 @@ ngeo.Querent = class {
 
     const ogcLayerNames = dataSource.getOGCLayerNames();
 
-    const url = ol.uri.appendParams(dataSource.wfsUrl, {
-      'REQUEST': 'DescribeFeatureType',
-      'SERVICE': 'WFS',
-      'VERSION': '2.0.0',
-      'TYPENAME': ogcLayerNames
-    });
+    const url = ol.uri.appendParams(
+      goog.asserts.assertString(dataSource.wfsUrl),
+      {
+        'REQUEST': 'DescribeFeatureType',
+        'SERVICE': 'WFS',
+        'VERSION': '2.0.0',
+        'TYPENAME': ogcLayerNames
+      }
+    );
 
     return this.http_.get(url).then((response) => {
       const format = new ol.format.WFSDescribeFeatureType();

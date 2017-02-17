@@ -3,7 +3,6 @@
 // TODO  - filterRules (array of rules)
 //
 // TODO == Static Properties ==
-// TODO  - attributes
 // TODO  - filterRuleDefinitions
 // TODO  - group
 
@@ -145,10 +144,10 @@ ngeo.DataSource = class {
      * A list of layer definitions that are used by (WMS) and (WFS) queries.
      * These are **not** used by the (WMTS) queries (the wmtsLayers is used
      * by WMTS queries).
-     * @type {!Array.<!ngeox.DataSourceLayer>|undefined}
+     * @type {?Array.<!ngeox.DataSourceLayer>}
      * @private
      */
-    this.ogcLayers_ = options.ogcLayers;
+    this.ogcLayers_ = options.ogcLayers || null;
 
     /**
      * The type of OGC server making the requests.
@@ -365,7 +364,7 @@ ngeo.DataSource = class {
   // === Static property getters/setters ===
 
   /**
-   * @return {Array.<ngeox.Attribute>} Attributes
+   * @return {?Array.<ngeox.Attribute>} Attributes
    * @export
    */
   get attributes() {
@@ -373,7 +372,7 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @param {Array.<ngeox.Attribute>} attributes Attributes
+   * @param {?Array.<ngeox.Attribute>} attributes Attributes
    * @export
    */
   set attributes(attributes) {
@@ -453,7 +452,7 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @return {!Array.<!ngeox.DataSourceLayer>|undefined} OGC layers
+   * @return {?Array.<!ngeox.DataSourceLayer>} OGC layers
    * @export
    */
   get ogcLayers() {
@@ -651,11 +650,11 @@ ngeo.DataSource = class {
    * @export
    */
   get supportsAttributes() {
-    return !!this.attributes || (
+    return this.attributes !== null || (
       this.supportsWFS &&
-      !!this.ogcLayers &&
+      this.ogcLayers !== null &&
       this.ogcLayers.length === 1 &&
-      this.ogcLayers[0].queryable
+      this.ogcLayers[0].queryable === true
     );
   }
 

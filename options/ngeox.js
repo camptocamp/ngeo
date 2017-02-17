@@ -12,23 +12,10 @@ let ngeox;
 
 
 /**
- * A feature attribute definition.
- * @typedef {{
- *     choices: (Array.<string>|undefined),
- *     geomType: (string|undefined),
- *     name: (string),
- *     required: (boolean|undefined),
- *     type: (string)
- * }}
+ * @record
+ * @struct
  */
-ngeox.Attribute;
-
-
-/**
- * The list of possible values for the attribute.
- * @type {Array.<string>|undefined}
- */
-ngeox.Attribute.prototype.choices;
+ngeox.AttributeBase = function() {};
 
 
 /**
@@ -36,7 +23,30 @@ ngeox.Attribute.prototype.choices;
  * geometry.
  * @type {string|undefined}
  */
-ngeox.Attribute.prototype.geomType;
+ngeox.AttributeBase.prototype.geomType;
+
+
+/**
+ * The attribute type, which determines how to render it.
+ * @type {string|undefined}
+ */
+ngeox.AttributeBase.prototype.type;
+
+
+/**
+ * A feature attribute definition.
+ * @record
+ * @struct
+ * @extends ngeox.AttributeBase
+ */
+ngeox.Attribute = function() {};
+
+
+/**
+ * The list of possible values for the attribute.
+ * @type {Array.<string>|undefined}
+ */
+ngeox.Attribute.prototype.choices;
 
 
 /**
@@ -154,7 +164,7 @@ ngeox.DataSourceOptions.prototype.id;
  * each record individually.
  * @type {string|undefined}
  */
-ngeox.DataSourceOptions.prototype.identifierAtttribute;
+ngeox.DataSourceOptions.prototype.identifierAttribute;
 
 
 /**
@@ -203,7 +213,7 @@ ngeox.DataSourceOptions.prototype.ogcImageType;
  * A list of layer definitions that are used by (WMS) and (WFS) queries.
  * These are **not** used by the (WMTS) queries (the wmtsLayers is used
  * by WMTS queries).
- * @type {Array.<ngeox.DataSourceLayer>|undefined}
+ * @type {Array.<!ngeox.DataSourceLayer>|undefined}
  */
 ngeox.DataSourceOptions.prototype.ogcLayers;
 
