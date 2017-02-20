@@ -167,7 +167,7 @@ ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_ = [
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, ol.XmlParser>>}
+ * @type {Object.<string, !Object.<string, ol.XmlParser>>}
  * @private
  */
 ol.format.WFSDescribeFeatureType.PARSERS_ = ol.xml.makeStructureNS(
@@ -183,7 +183,7 @@ ol.format.WFSDescribeFeatureType.PARSERS_ = ol.xml.makeStructureNS(
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, ol.XmlParser>>}
+ * @type {Object.<string, !Object.<string, ol.XmlParser>>}
  * @private
  */
 ol.format.WFSDescribeFeatureType.COMPLEX_TYPE_PARSERS_ = ol.xml.makeStructureNS(
@@ -196,7 +196,7 @@ ol.format.WFSDescribeFeatureType.COMPLEX_TYPE_PARSERS_ = ol.xml.makeStructureNS(
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, ol.XmlParser>>}
+ * @type {Object.<string, !Object.<string, ol.XmlParser>>}
  * @private
  */
 ol.format.WFSDescribeFeatureType.COMPLEX_CONTENT_PARSERS_ = ol.xml.makeStructureNS(
@@ -209,7 +209,7 @@ ol.format.WFSDescribeFeatureType.COMPLEX_CONTENT_PARSERS_ = ol.xml.makeStructure
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, ol.XmlParser>>}
+ * @type {Object.<string, !Object.<string, ol.XmlParser>>}
  * @private
  */
 ol.format.WFSDescribeFeatureType.EXTENSION_PARSERS_ = ol.xml.makeStructureNS(
@@ -222,7 +222,7 @@ ol.format.WFSDescribeFeatureType.EXTENSION_PARSERS_ = ol.xml.makeStructureNS(
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, ol.XmlParser>>}
+ * @type {Object.<string, !Object.<string, ol.XmlParser>>}
  * @private
  */
 ol.format.WFSDescribeFeatureType.SEQUENCE_PARSERS_ = ol.xml.makeStructureNS(
