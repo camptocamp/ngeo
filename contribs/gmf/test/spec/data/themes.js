@@ -2015,7 +2015,7 @@ const themes = {
         'ELEVATION':'0'
       },
       'url':'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml',
-      'name':'asitvd.fond_gris',
+      'name':'asitvd fond gris',
       'type':'WMTS',
       'id':132,
       'imageType':'image/jpeg',
@@ -2030,7 +2030,7 @@ const themes = {
         'ELEVATION':'0'
       },
       'url':'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml',
-      'name':'asitvd.fond_couleur',
+      'name':'asitvd fond couleur',
       'type':'WMTS',
       'id':133,
       'imageType':'image/jpeg',
