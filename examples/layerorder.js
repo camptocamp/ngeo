@@ -8,10 +8,10 @@ goog.require('ngeo.SyncArrays');
 goog.require('ngeo.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.sortableDirective');
+goog.require('ngeo.source.AsitVD');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
 goog.require('ol.source.TileWMS');
 
 
@@ -30,17 +30,19 @@ app.module = angular.module('app', ['ngeo']);
 app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
 
   /** @type {ol.layer.Tile} */
-  const osm = new ol.layer.Tile({
-    source: new ol.source.OSM()
+  const asitvd = new ol.layer.Tile({
+    source: new ngeo.source.AsitVD({
+      layer: 'asitvd.fond_couleur'
+    })
   });
-  osm.set('name', 'osm');
+  asitvd.set('name', 'asitvd');
 
   /** @type {ol.layer.Tile} */
   const boundaries = new ol.layer.Tile({
     source: new ol.source.TileWMS({
-      url: 'http://demo.opengeo.org/geoserver/wms',
-      params: {'LAYERS': 'topp:tasmania_state_boundaries'},
-      serverType: 'geoserver'
+      url: 'https://wms.geo.admin.ch',
+      params: {'LAYERS': 'ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill'},
+      serverType: 'mapserver'
     })
   });
   boundaries.set('name', 'Boundaries');
@@ -48,9 +50,9 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   /** @type {ol.layer.Tile} */
   const waterBodies = new ol.layer.Tile({
     source: new ol.source.TileWMS({
-      url: 'http://demo.opengeo.org/geoserver/wms',
-      params: {'LAYERS': 'topp:tasmania_water_bodies'},
-      serverType: 'geoserver'
+      url: 'https://wms.geo.admin.ch',
+      params: {'LAYERS': 'ich.swisstopo.geologie-gravimetrischer_atlas'},
+      serverType: 'mapserver'
     })
   });
   waterBodies.set('name', 'Water bodies');
@@ -58,9 +60,9 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   /** @type {ol.layer.Tile} */
   const cities = new ol.layer.Tile({
     source: new ol.source.TileWMS({
-      url: 'http://demo.opengeo.org/geoserver/wms',
-      params: {'LAYERS': 'topp:tasmania_cities'},
-      serverType: 'geoserver'
+      url: 'https://wms.geo.admin.ch',
+      params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
+      serverType: 'mapserver'
     })
   });
   cities.set('name', 'Cities');
@@ -71,14 +73,16 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
    */
   this.map = new ol.Map({
     layers: [
-      osm,
+      asitvd,
       boundaries,
       waterBodies,
       cities
     ],
     view: new ol.View({
-      center: [16339075, -5194965],
-      zoom: 7
+      projection: 'EPSG:21781',
+      resolutions: [1000, 500, 200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
+      center: [600000, 200000],
+      zoom: 1
     })
   });
 
@@ -90,9 +94,9 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
    */
   this.roads_ = new ol.layer.Tile({
     source: new ol.source.TileWMS({
-      url: 'http://demo.opengeo.org/geoserver/wms',
-      params: {'LAYERS': 'topp:tasmania_roads'},
-      serverType: 'geoserver'
+      url: 'https://wms.geo.admin.ch',
+      params: {'LAYERS': 'ch.bafu.laerm-strassenlaerm_tag'},
+      serverType: 'mapserver'
     })
   });
   this.roads_.set('name', 'Roads');
@@ -120,7 +124,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
    *     layers.
    */
   function layerFilter(layer) {
-    return layer !== osm;
+    return layer !== asitvd;
   }
 
 };
