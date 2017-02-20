@@ -408,7 +408,8 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
     this.scope_['additionalListeners'],
     /** @type {ngeox.SearchDirectiveListeners} */ ({
       select: gmf.SearchController.select_.bind(this),
-      close: gmf.SearchController.close_.bind(this)
+      close: gmf.SearchController.close_.bind(this),
+      datasetsempty: gmf.SearchController.datasetsempty_.bind(this)
     }));
 };
 
@@ -433,6 +434,7 @@ gmf.SearchController.prototype.mergeListeners_ = function(additionalListeners, l
           additionalListeners.close();
         },
     cursorchange: additionalListeners.cursorchange,
+    datasetsempty: additionalListeners.datasetsempty,
     select: additionalListeners.select === undefined ?
         listeners.select : function(evt, obj, dataset) {
           listeners.select(evt, obj, dataset);
@@ -851,6 +853,35 @@ gmf.SearchController.close_ = function(event) {
   if (!this.clearButton) {
     this.setTTDropdownVisibility_();
   }
+};
+
+
+/**
+ * @param {jQuery.Event} event Event.
+ * @param {string} query Query.
+ * @param {boolean} empty Empty.
+ * @this {gmf.SearchController}
+ * @private
+ */
+gmf.SearchController.datasetsempty_ = function(event, query, empty) {
+  // workaround to display a 'no result found' in the search result when all of
+  // the datasets are empty.
+  // based on https://github.com/twitter/typeahead.js/issues/780#issuecomment-251554452
+  // FIXME: remove this workaround when https://github.com/corejavascript/typeahead.js/issues/60 is fixed
+
+  const menu = $('.twitter-typeahead .tt-menu');
+  const message = menu.children('.gmf-search-no-results');
+  if (message.length == 0) {
+    const div = $('<div class="gmf-search-no-results" translate>No result found</div>');
+    menu.append(div);
+  }
+  if (empty) {
+    message.show();
+    menu.show();
+  } else {
+    message.hide();
+  }
+
 };
 
 

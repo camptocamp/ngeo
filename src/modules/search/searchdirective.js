@@ -106,6 +106,20 @@ ngeo.search.searchDirective = function() {
                   typeaheadListeners.autocomplete(event, suggestion, dataset);
                 });
               });
+
+      element.on('typeahead:asyncreceive',
+              /**
+               * @param {jQuery.Event} event Event.
+               * @param {TypeaheadDataset} dataset Dataset.
+               * @param {string} query Query.
+               */
+              (event, dataset, query) => {
+                scope.$apply(() => {
+                  const empty = element.data('tt-typeahead')['menu']['_allDatasetsEmpty']();
+                  typeaheadListeners.datasetsempty(event, query, empty);
+                });
+              });
+
     }
   };
 };
@@ -126,6 +140,7 @@ ngeo.search.searchDirective.adaptListeners_ = function(object) {
       open: ol.nullFunction,
       close: ol.nullFunction,
       cursorchange: ol.nullFunction,
+      datasetsempty: ol.nullFunction,
       select: ol.nullFunction,
       autocomplete: ol.nullFunction
     };
@@ -137,6 +152,8 @@ ngeo.search.searchDirective.adaptListeners_ = function(object) {
           object.close : ol.nullFunction,
       cursorchange: object.cursorchange !== undefined ?
           object.cursorchange : ol.nullFunction,
+      datasetsempty: object.datasetsempty !== undefined ?
+          object.datasetsempty : ol.nullFunction,
       select: object.select !== undefined ?
           object.select : ol.nullFunction,
       autocomplete: object.autocomplete !== undefined ?

@@ -1665,7 +1665,8 @@ ngeox.DesktopGeolocationDirectiveOptions.prototype.zoom;
  *   select: (function(jQuery.Event, Object,
  *       TypeaheadDataset)|undefined),
  *   autocomplete: (function(jQuery.Event, Object,
- *       TypeaheadDataset)|undefined)
+ *       TypeaheadDataset)|undefined),
+ *   datasetsempty: (function(jQuery.Event, string, boolean)|undefined)
  * }}
  */
 ngeox.SearchDirectiveListeners;
@@ -1699,6 +1700,13 @@ ngeox.SearchDirectiveListeners.prototype.select;
  * @type {function(jQuery.Event, Object, TypeaheadDataset)|undefined}
  */
 ngeox.SearchDirectiveListeners.prototype.autocomplete;
+
+
+/**
+ * @type {function(jQuery.Event, string, boolean)|undefined}
+ */
+ngeox.SearchDirectiveListeners.prototype.datasetsempty;
+
 
 /**
  * Enum for the time property widget
