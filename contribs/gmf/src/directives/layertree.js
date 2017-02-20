@@ -608,6 +608,23 @@ gmf.LayertreeController.prototype.removeNode = function(node) {
 
 
 /**
+ * @export
+ */
+gmf.LayertreeController.prototype.removeAllNodes = function() {
+  this.gmfTreeManager_.removeAll();
+};
+
+
+/**
+ * @return {number} first level node count.
+ * @export
+ */
+gmf.LayertreeController.prototype.nodesCount = function() {
+  return this.gmfTreeManager_.root.children.length;
+};
+
+
+/**
  * Set the resolution of the map with the max or min resolution of the node.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.

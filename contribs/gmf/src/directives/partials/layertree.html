@@ -1,4 +1,14 @@
 <div
+   class="gmf-layertree-root-tools"
+   ng-if="layertreeCtrl.isRoot">
+  <a
+     href
+     ng-if="gmfLayertreeCtrl.nodesCount() > 0"
+     ng-click="gmfLayertreeCtrl.removeAllNodes()">
+    <span class="fa fa-trash"></span> {{'Clear all' | translate}}
+  </a>
+</div>
+<div
   ng-if="::!layertreeCtrl.isRoot"
   id="gmf-layertree-node-{{::layertreeCtrl.uid}}"
   ng-class="[layertreeCtrl.node.children ? 'gmf-layertree-group' : 'gmf-layertree-leaf', 'gmf-layertree-depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
