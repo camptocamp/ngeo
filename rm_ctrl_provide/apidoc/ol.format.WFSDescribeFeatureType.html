@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: gridComponent <small>component:ngeoGrid</small></title>
+    <title>JSDoc: Class: WFSDescribeFeatureType</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: gridComponent <small>component:ngeoGrid</small></h1>
+    <h1 class="page-title">Class: WFSDescribeFeatureType</h1>
 
     
 
@@ -28,9 +28,11 @@
 
 <header>
     
-        <h2 id="gridComponent">
-            <span class="ancestors">ngeo.</span>gridComponent
+        <h2 id="WFSDescribeFeatureType">
+            <span class="ancestors">ol.format.</span>WFSDescribeFeatureType
         </h2>
+        
+            <div class="class-description"><p>Format for reading WFS DescribeFeatureType data.</p></div>
         
     
 </header>
@@ -41,22 +43,15 @@
         
 
     
+    <h2>Constructor</h2>
+    
 
-    <h4 class="name" id="gridComponent"><span class="type-signature"></span>new gridComponent<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="WFSDescribeFeatureType"><span class="type-signature"></span>new WFSDescribeFeatureType<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
-<div class="description">
-    <p>A grid component for displaying tabular data. The columns of the grid
-are sortable, rows can be selected with a single click (also in combination
-with SHIFT and CTRL/Meta).</p>
-<p>Example:</p>
-<pre class="prettyprint source"><code>&lt;ngeo-grid
-  ngeo-grid-configuration=&quot;::ctrl.gridConfiguration&quot;
-&lt;/ngeo-grid></code></pre>
-</div>
 
 
 
@@ -65,57 +60,6 @@ with SHIFT and CTRL/Meta).</p>
 
 
 
-
-
-
-    <h5>HTML attributes:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>ngeo-grid-configuration</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="ngeo.GridConfig.html">ngeo.GridConfig</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The
-configuration to use.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -152,8 +96,8 @@ configuration to use.</td>
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/rm_ctrl_provide/src/directives/grid.js">src/directives/grid.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/rm_ctrl_provide/src/directives/grid.js#L181">line 181</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/rm_ctrl_provide/src/ol-ext/wfsdescribefeaturetype.js">src/ol-ext/wfsdescribefeaturetype.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/rm_ctrl_provide/src/ol-ext/wfsdescribefeaturetype.js#L16">line 16</a>
     </li></ul></dd>
     
 
@@ -183,6 +127,17 @@ configuration to use.</td>
     </div>
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="http://openlayers.org/en/master/apidoc/ol.format.XML.html">ol.format.XML</a></li>
+    </ul>
+
+
+    
 
     
 
@@ -194,6 +149,314 @@ configuration to use.</td>
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="read"><span class="type-signature"></span>read<span class="signature">(source)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Read a WFS DescribeFeatureType document.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>source</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The XML source.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/rm_ctrl_provide/src/ol-ext/wfsdescribefeaturetype.js">src/ol-ext/wfsdescribefeaturetype.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/rm_ctrl_provide/src/ol-ext/wfsdescribefeaturetype.js#L32">line 32</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>An object representing the WFS DescribeFeatureType.</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="readFromDocument"><span class="type-signature"></span>readFromDocument<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/rm_ctrl_provide/src/ol-ext/wfsdescribefeaturetype.js">src/ol-ext/wfsdescribefeaturetype.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/rm_ctrl_provide/src/ol-ext/wfsdescribefeaturetype.js#L38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="readFromNode"><span class="type-signature"></span>readFromNode<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/rm_ctrl_provide/src/ol-ext/wfsdescribefeaturetype.js">src/ol-ext/wfsdescribefeaturetype.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/rm_ctrl_provide/src/ol-ext/wfsdescribefeaturetype.js#L51">line 51</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     
