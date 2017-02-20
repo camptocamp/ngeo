@@ -1,4 +1,3 @@
-goog.provide('gmf.BackgroundlayerselectorController');
 goog.provide('gmf.backgroundlayerselectorComponent');
 
 goog.require('goog.asserts');
@@ -69,23 +68,21 @@ gmf.backgroundlayerselectorComponent = {
 };
 
 
-gmf.module.component('gmfBackgroundlayerselector',
-    gmf.backgroundlayerselectorComponent);
+gmf.module.component('gmfBackgroundlayerselector', gmf.backgroundlayerselectorComponent);
 
 
 /**
  * @constructor
+ * @private
+ * @struct
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
- *     manager.
+ * @param {!ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer manager.
  * @param {!gmf.Themes} gmfThemes Themes service.
- * @export
  * @ngInject
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
  */
-gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
-    gmfThemes) {
+gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr, gmfThemes) {
 
   /**
    * @type {!Object.<string, string>}

@@ -1,4 +1,3 @@
-goog.provide('gmf.ThemeselectorController');
 goog.provide('gmf.themeselectorDirective');
 
 goog.require('gmf');
@@ -80,7 +79,7 @@ gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
  * @param {gmf.ThemeManager} gmfThemeManager Tree manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfThemeselectorController

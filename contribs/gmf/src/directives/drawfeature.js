@@ -1,4 +1,3 @@
-goog.provide('gmf.DrawfeatureController');
 goog.provide('gmf.drawfeatureDirective');
 
 goog.require('gmf');
@@ -67,6 +66,7 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDrawfeatureController

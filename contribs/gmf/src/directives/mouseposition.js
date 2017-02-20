@@ -1,4 +1,3 @@
-goog.provide('gmf.MousepositionController');
 goog.provide('gmf.mousepositionComponent');
 
 goog.require('gmf');
@@ -41,7 +40,7 @@ gmf.module.component('gmfMouseposition', gmf.mousepositionComponent);
  * @param {!angular.$filter} $filter Angular filter
  * @param {!gettext} gettext Gettext service.
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfMousepositionController

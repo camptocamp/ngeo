@@ -1,4 +1,3 @@
-goog.provide('gmf.MobileMeasurePointController');
 goog.provide('gmf.mobileMeasurepointDirective');
 
 goog.require('gmf');
@@ -81,7 +80,7 @@ gmf.mobileMeasurePointDirective =
          * @param {!angular.Scope} scope Scope.
          * @param {!angular.JQLite} element Element.
          * @param {!angular.Attributes} attrs Attributes.
-         * @param {!gmf.ContextualdataController} controller Controller.
+         * @param {!gmf.MobileMeasurePointController} controller Controller.
          */
         link(scope, element, attrs, controller) {
           controller.init();
@@ -103,6 +102,7 @@ gmf.module.directive('gmfMobileMeasurepoint',
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileMeasurePointController

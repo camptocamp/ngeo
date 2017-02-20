@@ -1,4 +1,3 @@
-goog.provide('gmf.ObjecteditinggetwmsfeatureController');
 goog.provide('gmf.objecteditinggetwmsfeatureDirective');
 
 goog.require('gmf');
@@ -53,6 +52,7 @@ gmf.module.directive(
  * @param {gmf.ObjectEditingQuery} gmfObjectEditingQuery GMF ObjectEditing
  *     query service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditinggetwmsfeatureController

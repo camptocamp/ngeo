@@ -1,4 +1,3 @@
-goog.provide('ngeo.MobileGeolocationController');
 goog.provide('ngeo.mobileGeolocationDirective');
 
 goog.require('ngeo');
@@ -61,6 +60,7 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
 
 /**
  * @constructor
+ * @private
  * @struct
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
@@ -69,7 +69,6 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
- * @export
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoMobileGeolocationController

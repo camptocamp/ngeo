@@ -1,4 +1,3 @@
-goog.provide('ngeo.BtnGroupController');
 goog.provide('ngeo.btnDirective');
 goog.provide('ngeo.btngroupDirective');
 
@@ -71,6 +70,7 @@ ngeo.module.directive('ngeoBtnGroup', ngeo.btngroupDirective);
 /**
  * @param {!angular.Scope} $scope Scope.
  * @constructor
+ * @private
  * @struct
  * @ngInject
  * @ngdoc controller

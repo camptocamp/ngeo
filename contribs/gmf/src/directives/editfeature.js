@@ -1,4 +1,3 @@
-goog.provide('gmf.EditfeatureController');
 goog.provide('gmf.editfeatureDirective');
 
 
@@ -113,6 +112,7 @@ gmf.module.directive(
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureController

@@ -1,4 +1,3 @@
-goog.provide('gmf.PrintController');
 goog.provide('gmf.printDirective');
 
 goog.require('gmf');
@@ -147,7 +146,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @param {angular.$filter} $filter Angular $filter service.
  * @param {gmf.PrintStateEnum} gmfPrintState GMF print state.
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc Controller
  * @ngname GmfPrintController

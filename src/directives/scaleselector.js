@@ -1,4 +1,3 @@
-goog.provide('ngeo.ScaleselectorController');
 goog.provide('ngeo.ScaleselectorOptions');
 goog.provide('ngeo.scaleselectorDirective');
 
@@ -86,11 +85,11 @@ ngeo.module.directive('ngeoScaleselector', ngeo.scaleselectorDirective);
 
 /**
  * @constructor
+ * @private
  * @struct
  * @param {angular.Scope} $scope Directive scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.
- * @export
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoScaleselectorController

@@ -1,4 +1,3 @@
-goog.provide('gmf.MapController');
 goog.provide('gmf.mapDirective');
 
 goog.require('gmf');
@@ -48,6 +47,7 @@ gmf.module.directive('gmfMap', gmf.mapDirective);
  * @param {gmf.Permalink} gmfPermalink The gmf permalink service.
  * @param {gmf.Snapping} gmfSnapping The gmf snapping service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMapController

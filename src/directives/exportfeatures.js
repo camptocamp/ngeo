@@ -1,4 +1,3 @@
-goog.provide('ngeo.ExportfeaturesController');
 goog.provide('ngeo.exportfeaturesDirective');
 
 goog.require('ngeo');
@@ -48,6 +47,7 @@ ngeo.module.directive('ngeoExportfeatures', ngeo.exportfeaturesDirective);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @constructor
+ * @private
  * @struct
  * @ngInject
  * @ngdoc controller

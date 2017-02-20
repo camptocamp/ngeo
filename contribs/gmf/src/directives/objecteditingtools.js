@@ -1,4 +1,3 @@
-goog.provide('gmf.ObjecteditingtoolsController');
 goog.provide('gmf.objecteditingtoolsDirective');
 
 /** @suppress {extraRequire} */
@@ -96,6 +95,7 @@ gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditingtoolsController

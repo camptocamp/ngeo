@@ -1,4 +1,3 @@
-goog.provide('gmf.ObjecteditingController');
 goog.provide('gmf.objecteditingDirective');
 
 goog.require('gmf');
@@ -88,6 +87,7 @@ goog.require('ngeo.LayerHelper');
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditingController

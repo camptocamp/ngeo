@@ -1,4 +1,3 @@
-goog.provide('gmf.EditfeatureselectorController');
 goog.provide('gmf.editfeatureselectorDirective');
 
 goog.require('goog.asserts');
@@ -58,6 +57,7 @@ gmf.module.directive('gmfEditfeatureselector', gmf.editfeatureselectorDirective)
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController

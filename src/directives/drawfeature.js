@@ -1,4 +1,3 @@
-goog.provide('ngeo.DrawfeatureController');
 goog.provide('ngeo.drawfeatureDirective');
 
 goog.require('ngeo');
@@ -113,6 +112,7 @@ ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @constructor
+ * @private
  * @struct
  * @ngInject
  * @ngdoc controller

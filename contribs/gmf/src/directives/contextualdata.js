@@ -1,4 +1,3 @@
-goog.provide('gmf.ContextualdataController');
 goog.provide('gmf.contextualdataDirective');
 goog.provide('gmf.contextualdatacontentDirective');
 
@@ -75,6 +74,7 @@ gmf.module.directive('gmfContextualdata', gmf.contextualdataDirective);
  * @param {gmf.Raster} gmfRaster Gmf Raster service
  *
  * @constructor
+ * @private
  * @ngInject
  */
 gmf.ContextualdataController = function($compile, $scope, gmfRaster) {

@@ -1,4 +1,3 @@
-goog.provide('ngeo.AttributesController');
 goog.provide('ngeo.attributesComponent');
 
 goog.require('ol.ObjectEventType');
@@ -41,6 +40,7 @@ ngeo.module.component('ngeoAttributes', ngeo.attributesComponent);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
+ * @private
  * @struct
  * @ngInject
  * @ngdoc controller

@@ -1,4 +1,3 @@
-goog.provide('gmf.DisclaimerController');
 goog.provide('gmf.disclaimerComponent');
 
 goog.require('gmf');
@@ -74,6 +73,7 @@ gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
 
 /**
  * @constructor
+ * @private
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!angular.$sce} $sce Angular sce service.
@@ -81,7 +81,6 @@ gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
  * @param {!ngeo.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @export
  * @struct
  * @ngInject
  * @ngdoc controller
