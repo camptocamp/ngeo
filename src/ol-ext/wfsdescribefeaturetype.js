@@ -64,7 +64,7 @@ ol.format.WFSDescribeFeatureType.prototype.readFromNode = function(node) {
  * @private
  * @param {Node} node Node.
  * @param {Array.<*>} objectStack Object stack.
- * @return {Object} Attributes.
+ * @return {!Object.<string, string>} Attributes.
  */
 ol.format.WFSDescribeFeatureType.readElement_ = function(node, objectStack) {
   const attributes = {};
@@ -84,8 +84,7 @@ ol.format.WFSDescribeFeatureType.readElement_ = function(node, objectStack) {
  * @private
  * @param {Node} node Node.
  * @param {Array.<*>} objectStack Object stack.
- * @return {T} Object.
- * @template T
+ * @return {!Object.<string, string>} Object.
  */
 ol.format.WFSDescribeFeatureType.readComplexType_ = function(node, objectStack) {
   const name = node.getAttribute('name');
@@ -105,8 +104,7 @@ ol.format.WFSDescribeFeatureType.readComplexType_ = function(node, objectStack) 
  * @private
  * @param {Node} node Node.
  * @param {Array.<*>} objectStack Object stack.
- * @return {T} Object.
- * @template T
+ * @return {!Object.<string, string>} Object.
  */
 ol.format.WFSDescribeFeatureType.readComplexContent_ = function(
   node, objectStack
@@ -124,8 +122,7 @@ ol.format.WFSDescribeFeatureType.readComplexContent_ = function(
  * @private
  * @param {Node} node Node.
  * @param {Array.<*>} objectStack Object stack.
- * @return {T} Object.
- * @template T
+ * @return {!Object.<string, string>} Object.
  */
 ol.format.WFSDescribeFeatureType.readExtension_ = function(node, objectStack) {
   return ol.xml.pushParseAndPop(
@@ -141,8 +138,7 @@ ol.format.WFSDescribeFeatureType.readExtension_ = function(node, objectStack) {
  * @private
  * @param {Node} node Node.
  * @param {Array.<*>} objectStack Object stack.
- * @return {T} Object.
- * @template T
+ * @return {!Object.<string, string>} Object.
  */
 ol.format.WFSDescribeFeatureType.readSequence_ = function(node, objectStack) {
   return ol.xml.pushParseAndPop(
@@ -167,10 +163,10 @@ ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_ = [
 
 /**
  * @const
- * @type {Object.<string, !Object.<string, ol.XmlParser>>}
+ * @type {!Object.<string, !Object.<string, !ol.XmlParser>>}
  * @private
  */
-ol.format.WFSDescribeFeatureType.PARSERS_ = ol.xml.makeStructureNS(
+ol.format.WFSDescribeFeatureType.PARSERS_ = goog.asserts.assert(ol.xml.makeStructureNS(
     ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_, {
       'element': ol.xml.makeObjectPropertyPusher(
         ol.format.WFSDescribeFeatureType.readElement_
@@ -178,56 +174,56 @@ ol.format.WFSDescribeFeatureType.PARSERS_ = ol.xml.makeStructureNS(
       'complexType': ol.xml.makeObjectPropertyPusher(
         ol.format.WFSDescribeFeatureType.readComplexType_
       )
-    });
+    }));
 
 
 /**
  * @const
- * @type {Object.<string, !Object.<string, ol.XmlParser>>}
+ * @type {!Object.<string, !Object.<string, !ol.XmlParser>>}
  * @private
  */
-ol.format.WFSDescribeFeatureType.COMPLEX_TYPE_PARSERS_ = ol.xml.makeStructureNS(
+ol.format.WFSDescribeFeatureType.COMPLEX_TYPE_PARSERS_ = goog.asserts.assert(ol.xml.makeStructureNS(
     ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_, {
       'complexContent': ol.xml.makeObjectPropertySetter(
         ol.format.WFSDescribeFeatureType.readComplexContent_
       )
-    });
+    }));
 
 
 /**
  * @const
- * @type {Object.<string, !Object.<string, ol.XmlParser>>}
+ * @type {!Object.<string, !Object.<string, !ol.XmlParser>>}
  * @private
  */
-ol.format.WFSDescribeFeatureType.COMPLEX_CONTENT_PARSERS_ = ol.xml.makeStructureNS(
+ol.format.WFSDescribeFeatureType.COMPLEX_CONTENT_PARSERS_ = goog.asserts.assert(ol.xml.makeStructureNS(
     ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_, {
       'extension': ol.xml.makeObjectPropertySetter(
         ol.format.WFSDescribeFeatureType.readExtension_
       )
-    });
+    }));
 
 
 /**
  * @const
- * @type {Object.<string, !Object.<string, ol.XmlParser>>}
+ * @type {!Object.<string, !Object.<string, !ol.XmlParser>>}
  * @private
  */
-ol.format.WFSDescribeFeatureType.EXTENSION_PARSERS_ = ol.xml.makeStructureNS(
+ol.format.WFSDescribeFeatureType.EXTENSION_PARSERS_ = goog.asserts.assert(ol.xml.makeStructureNS(
     ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_, {
       'sequence': ol.xml.makeObjectPropertySetter(
         ol.format.WFSDescribeFeatureType.readSequence_
       )
-    });
+    }));
 
 
 /**
  * @const
- * @type {Object.<string, !Object.<string, ol.XmlParser>>}
+ * @type {!Object.<string, !Object.<string, !ol.XmlParser>>}
  * @private
  */
-ol.format.WFSDescribeFeatureType.SEQUENCE_PARSERS_ = ol.xml.makeStructureNS(
+ol.format.WFSDescribeFeatureType.SEQUENCE_PARSERS_ = goog.asserts.assert(ol.xml.makeStructureNS(
     ol.format.WFSDescribeFeatureType.NAMESPACE_URIS_, {
       'element': ol.xml.makeObjectPropertyPusher(
         ol.format.WFSDescribeFeatureType.readElement_
       )
-    });
+    }));
