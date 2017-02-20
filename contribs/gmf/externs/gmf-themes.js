@@ -393,6 +393,13 @@ gmfThemes.GmfMetaData.prototype.disclaimer;
 
 
 /**
+ * List of attribute names which have enumerated attribute values.
+ * @type {Array.<string>|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.EnumeratedAttributes;
+
+
+/**
  * The icon URL visible in the layer tree.
  * @type {string|undefined}
  */

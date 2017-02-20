@@ -63,7 +63,9 @@ gmf.DataSourcesHelper = class {
    * @export
    */
   get collection() {
-    return this.ngeoDataSourcesHelper_.collection;
+    return /** @type {gmf.DataSources} */ (
+      this.ngeoDataSourcesHelper_.collection
+    );
   }
 
   /**
@@ -73,7 +75,9 @@ gmf.DataSourcesHelper = class {
    * @export
    */
   getDataSource(id) {
-    return this.ngeoDataSourcesHelper_.getDataSource(id);
+    return /** @type {?gmf.DataSource} */ (
+      this.ngeoDataSourcesHelper_.getDataSource(id)
+    );
   }
 
   /**

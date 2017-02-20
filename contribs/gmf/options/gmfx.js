@@ -62,9 +62,9 @@ gmfx.Config;
  * The options to create a `gmf.DataSource` with.
  * @record
  * @struct
- * @extends gmfThemes.GmfBaseNode
+ * @extends ngeox.DataSourceOptions
  */
-gmfx.DataSource;
+gmfx.DataSourceOptions;
 
 
 /**

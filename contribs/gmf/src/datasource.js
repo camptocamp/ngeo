@@ -10,7 +10,6 @@ gmf.DataSource = class extends ngeo.DataSource {
    * that are proper to GMF only.
    *
    * @struct
-   * @extends {ngeo.DataSource}
    * @param {gmfx.DataSourceOptions} options Options.
    */
   constructor(options) {
