@@ -30,7 +30,7 @@ app.MainController = function(ngeoDecorateLayer) {
   this.layer = new ol.layer.Tile({
     source: new ol.source.TileWMS({
       url: 'https://wms.geo.admin.ch',
-      params: {'LAYERS': 'ich.swisstopo.geologie-gravimetrischer_atlas'},
+      params: {'LAYERS': 'ch.swisstopo.geologie-gravimetrischer_atlas'},
       serverType: 'mapserver'
     })
   });
