@@ -3,12 +3,14 @@ goog.provide('app.layerloading');
 goog.require('ngeo.DecorateLayerLoading');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+goog.require('ngeo.source.AsitVD');
+/** @suppress {extraRequire} */
+goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
-goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
@@ -23,15 +25,16 @@ app.module = angular.module('app', ['ngeo']);
  */
 app.MainController = function($scope, ngeoDecorateLayerLoading) {
 
+  var source = new ngeo.source.AsitVD({
+    layer: 'asitvd.fond_couleur'
+  });
   /**
    * @type {ol.layer.Tile}
    * @export
    */
-  this.osm = new ol.layer.Tile({
-    source: new ol.source.OSM()
-  });
+  this.asitvd = new ol.layer.Tile({source: source});
 
-  ngeoDecorateLayerLoading(this.osm, $scope);
+  ngeoDecorateLayerLoading(this.asitvd, $scope);
 
   /**
    * @type {ol.layer.Image}
@@ -39,9 +42,9 @@ app.MainController = function($scope, ngeoDecorateLayerLoading) {
    */
   this.wms = new ol.layer.Image({
     source: new ol.source.ImageWMS({
-      url: 'http://demo.boundlessgeo.com/geoserver/wms',
-      params: {'LAYERS': 'topp:states'},
-      serverType: 'geoserver'
+      url: 'https://wms.geo.admin.ch',
+      params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
+      serverType: 'mapserver'
     })
   });
 
@@ -52,9 +55,11 @@ app.MainController = function($scope, ngeoDecorateLayerLoading) {
    * @export
    */
   this.map = new ol.Map({
-    layers: [this.osm, this.wms],
+    layers: [this.asitvd, this.wms],
     view: new ol.View({
-      center: [0, 0],
+      projection: 'EPSG:21781',
+      resolutions: [1000, 500, 200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
+      center: [600000, 200000],
       zoom: 1
     })
   });

@@ -3,13 +3,14 @@ goog.provide('app.backgroundlayer');
 goog.require('ngeo.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
+goog.require('ngeo.source.AsitVD');
+/** @suppress {extraRequire} */
+goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Stamen');
 
 
 /** @type {!angular.Module} **/
@@ -109,14 +110,13 @@ app.BackgroundlayerController.prototype.change = function() {
  * @private
  */
 app.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
-  var source;
-  if (layerName === 'osm') {
-    source = new ol.source.OSM();
-  } else if (layerName === 'stamen') {
-    source = new ol.source.Stamen({
-      layer: 'watercolor'
-    });
+  if (layerName === 'blank') {
+    return new ol.layer.Tile();
   }
+
+  var source = new ngeo.source.AsitVD({
+    layer: layerName
+  });
   return new ol.layer.Tile({source: source});
 };
 
@@ -138,8 +138,10 @@ app.MainController = function($scope) {
    */
   this.map = new ol.Map({
     view: new ol.View({
-      center: [-10635142.37, 4813698.29],
-      zoom: 4
+      projection: 'EPSG:21781',
+      resolutions: [1000, 500, 200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
+      center: [600000, 200000],
+      zoom: 1
     })
   });
 
@@ -149,9 +151,9 @@ app.MainController = function($scope) {
    */
   var overlay = new ol.layer.Image({
     source: new ol.source.ImageWMS({
-      url: 'http://demo.boundlessgeo.com/geoserver/wms',
-      params: {'LAYERS': 'topp:states'},
-      serverType: 'geoserver'
+      url: 'https://wms.geo.admin.ch',
+      params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
+      serverType: 'mapserver'
     })
   });
 
