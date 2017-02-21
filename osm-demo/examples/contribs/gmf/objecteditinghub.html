@@ -29,7 +29,7 @@
         <select
           class="form-control"
           ng-model="ctrl.selectedUrl"
-          ng-options="url.name for url in ctrl.urls">
+          ng-options="url as url for url in ctrl.urls">
         </select>
       </div>
 
@@ -53,7 +53,7 @@
 
       <div class="form-group">
         <button
-          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType"
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === null"
           ng-click="ctrl.runEditor()"
           type="button"
           class="form-control btn btn-primary"
@@ -65,25 +65,13 @@
 
       <div class="form-group">
         <button
-          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType"
-          ng-click="ctrl.runViewerHosted()"
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === null"
+          ng-click="ctrl.runViewer()"
           type="button"
           class="form-control btn btn-info"
           title="Load all features of selected layer in OE viewer"
           aria-label="Left Align">
-          </span> Launch Viewer (hosted)
-        </button>
-      </div>
-
-      <div class="form-group">
-        <button
-          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType"
-          ng-click="ctrl.runViewerDev()"
-          type="button"
-          class="form-control btn btn-info"
-          title="Load all features of selected layer in OE viewer"
-          aria-label="Left Align">
-          </span> Launch Viewer (dev)
+          </span> Launch Viewer
         </button>
       </div>
 
@@ -103,7 +91,6 @@
     <script src="../../lib/jquery.floatThead.min.js"></script>
     <script src="../../lib/slider.min.js"></script>
     <script src="../../lib/tmhDynamicLocale.min.js"></script>
-    <script src="../../lib/transpile.js"></script>
     <script src="objecteditinghub.js"></script>
     <script src="../../lib/watchwatchers.js"></script>
     <script>
