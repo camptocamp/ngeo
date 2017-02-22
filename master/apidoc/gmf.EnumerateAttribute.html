@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: themeselectorDirective <small>directive:gmfThemeselector</small></title>
+    <title>JSDoc: Class: EnumerateAttribute <small>service:gmfEnumerateAttribute</small></title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: themeselectorDirective <small>directive:gmfThemeselector</small></h1>
+    <h1 class="page-title">Class: EnumerateAttribute <small>service:gmfEnumerateAttribute</small></h1>
 
     
 
@@ -28,8 +28,8 @@
 
 <header>
     
-        <h2 id="themeselectorDirective">
-            <span class="ancestors">gmf.</span>themeselectorDirective
+        <h2 id="EnumerateAttribute">
+            <span class="ancestors">gmf.</span>EnumerateAttribute
         </h2>
         
     
@@ -42,52 +42,15 @@
 
     
 
-    <h4 class="name" id="themeselectorDirective"><span class="type-signature"></span>new themeselectorDirective<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="EnumerateAttribute"><span class="type-signature"></span>new EnumerateAttribute<span class="signature">($http, gmfLayersUrl)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Note that this directive works with the <a href="gmf.TreeManager.html"><code>gmf.TreeManager</code></a>. Setting the
-theme will update the &quot;tree&quot; object of this <a href="gmf.TreeManager.html"><code>gmf.TreeManager</code></a>.</p>
-<p>Example:</p>
-<pre class="prettyprint source"><code> &lt;a href class=&quot;btn btn-default btn-block btn-primary&quot; data-toggle=&quot;dropdown&quot;>
-     &lt;span class=&quot;fa fa-grid&quot;>&lt;/span>
-     &lt;span translate>Theme:&lt;/span>
-     &lt;b ng-if=&quot;!mainCtrl.gmfThemeManager.themeName&quot; translate>Loading...&lt;/b>
-     &lt;b ng-if=&quot;mainCtrl.gmfThemeManager.themeName&quot;>{{mainCtrl.gmfThemeManager.themeName|translate}}&lt;/b>
-     &lt;span class=&quot;caret&quot;>&lt;/span>
- &lt;/a>
- &lt;gmf-themeselector
-    id=&quot;themes&quot;
-    data-header-title=&quot;Themes&quot;
-    gmf-themeselector-filter=&quot;::mainCtrl.filter&quot;>
- &lt;/gmf-themeselector>
- &lt;script>
-   (function() {
-     let module = angular.module('app');
-     module.value('gmfTreeManagerModeFlush', true);
-   })();
- &lt;/script></code></pre><p>The theme selector can operate in a 'flush' (as above) or 'add' mode. For more information
-about these modes, refer to the documentation of <a href="gmf.TreeManager.html"><code>gmf.TreeManager</code></a>.</p>
-<p>Example in 'add' mode:</p>
-<pre class="prettyprint source"><code> &lt;a href class=&quot;btn btn-default btn-block btn-primary&quot; data-toggle=&quot;dropdown&quot;>
-     &lt;span class=&quot;fa fa-grid&quot;>&lt;/span>
-     &lt;span translate>Themes&lt;/span>
-     &lt;span class=&quot;caret&quot;>&lt;/span>
- &lt;/a>
- &lt;gmf-themeselector
-    id=&quot;themes&quot;
-    data-header-title=&quot;Themes&quot;
-    gmf-themeselector-filter=&quot;::mainCtrl.filter&quot;>
- &lt;/gmf-themeselector>
- &lt;script>
-   (function() {
-     let module = angular.module('app');
-     module.value('gmfTreeManagerModeFlush', false);
-   })();
- &lt;/script></code></pre>
+    <p>The EnumerateAttribute is responsible of fetching all possible of a given
+attribute of a given data source (gmf layer).</p>
 </div>
 
 
@@ -98,9 +61,7 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
 
 
 
-
-
-    <h5>HTML attributes:</h5>
+    <h5>Parameters:</h5>
     
 
 <table class="params">
@@ -125,15 +86,10 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
 
         <tr>
             
-                <td class="name"><code>gmf-themeselector-filter</code></td>
+                <td class="name"><code>$http</code></td>
             
 
             <td class="type">
-            
-                
-<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>
-
-
             
             </td>
 
@@ -141,12 +97,32 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
 
             
 
-            <td class="description last">The themes filter.</td>
+            <td class="description last"><p>Angular $http service.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gmfLayersUrl</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Url to the GeoMapFish layers service.</p></td>
         </tr>
 
     
     </tbody>
 </table>
+
+
 
 
 
@@ -183,8 +159,170 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/directives/themeselector.js">contribs/gmf/src/directives/themeselector.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/directives/themeselector.js#L62">line 62</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/enumerateattribute.js">contribs/gmf/src/services/enumerateattribute.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/enumerateattribute.js#L19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="getAttributeValues"><span class="type-signature"></span>getAttributeValues<span class="signature">(dataSource, attribute)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dataSource</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Data source.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>attribute</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Attribute name.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/enumerateattribute.js">contribs/gmf/src/services/enumerateattribute.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/enumerateattribute.js#L47">line 47</a>
     </li></ul></dd>
     
 
@@ -211,7 +349,7 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
 
         
 <div class="param-desc">
-    <p>The directive specs.</p>
+    <p>Promise.</p>
 </div>
 
 
@@ -220,21 +358,144 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
 
 
 
-    
-    </div>
+        
+            
 
     
 
+    <h4 class="name" id="handleGetAttributeValues_"><span class="type-signature"></span>handleGetAttributeValues_<span class="signature">(resp)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>resp</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Ajax response.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
     
 
     
 
-     
+    
+
+    
 
     
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/enumerateattribute.js">contribs/gmf/src/services/enumerateattribute.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/enumerateattribute.js#L64">line 64</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>List of the attribute
+    values.</p>
+</div>
+
+
+
+    
+
+
+
+        
     
 
     

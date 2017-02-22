@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: themeselectorDirective <small>directive:gmfThemeselector</small></title>
+    <title>JSDoc: Class: DataSourcesHelper <small>service:gmfDataSourcesHelper</small></title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: themeselectorDirective <small>directive:gmfThemeselector</small></h1>
+    <h1 class="page-title">Class: DataSourcesHelper <small>service:gmfDataSourcesHelper</small></h1>
 
     
 
@@ -28,8 +28,8 @@
 
 <header>
     
-        <h2 id="themeselectorDirective">
-            <span class="ancestors">gmf.</span>themeselectorDirective
+        <h2 id="DataSourcesHelper">
+            <span class="ancestors">gmf.</span>DataSourcesHelper
         </h2>
         
     
@@ -42,52 +42,14 @@
 
     
 
-    <h4 class="name" id="themeselectorDirective"><span class="type-signature"></span>new themeselectorDirective<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="DataSourcesHelper"><span class="type-signature"></span>new DataSourcesHelper<span class="signature">($q, gmfEnumerateAttribute, ngeoDataSourcesHelper)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Note that this directive works with the <a href="gmf.TreeManager.html"><code>gmf.TreeManager</code></a>. Setting the
-theme will update the &quot;tree&quot; object of this <a href="gmf.TreeManager.html"><code>gmf.TreeManager</code></a>.</p>
-<p>Example:</p>
-<pre class="prettyprint source"><code> &lt;a href class=&quot;btn btn-default btn-block btn-primary&quot; data-toggle=&quot;dropdown&quot;>
-     &lt;span class=&quot;fa fa-grid&quot;>&lt;/span>
-     &lt;span translate>Theme:&lt;/span>
-     &lt;b ng-if=&quot;!mainCtrl.gmfThemeManager.themeName&quot; translate>Loading...&lt;/b>
-     &lt;b ng-if=&quot;mainCtrl.gmfThemeManager.themeName&quot;>{{mainCtrl.gmfThemeManager.themeName|translate}}&lt;/b>
-     &lt;span class=&quot;caret&quot;>&lt;/span>
- &lt;/a>
- &lt;gmf-themeselector
-    id=&quot;themes&quot;
-    data-header-title=&quot;Themes&quot;
-    gmf-themeselector-filter=&quot;::mainCtrl.filter&quot;>
- &lt;/gmf-themeselector>
- &lt;script>
-   (function() {
-     let module = angular.module('app');
-     module.value('gmfTreeManagerModeFlush', true);
-   })();
- &lt;/script></code></pre><p>The theme selector can operate in a 'flush' (as above) or 'add' mode. For more information
-about these modes, refer to the documentation of <a href="gmf.TreeManager.html"><code>gmf.TreeManager</code></a>.</p>
-<p>Example in 'add' mode:</p>
-<pre class="prettyprint source"><code> &lt;a href class=&quot;btn btn-default btn-block btn-primary&quot; data-toggle=&quot;dropdown&quot;>
-     &lt;span class=&quot;fa fa-grid&quot;>&lt;/span>
-     &lt;span translate>Themes&lt;/span>
-     &lt;span class=&quot;caret&quot;>&lt;/span>
- &lt;/a>
- &lt;gmf-themeselector
-    id=&quot;themes&quot;
-    data-header-title=&quot;Themes&quot;
-    gmf-themeselector-filter=&quot;::mainCtrl.filter&quot;>
- &lt;/gmf-themeselector>
- &lt;script>
-   (function() {
-     let module = angular.module('app');
-     module.value('gmfTreeManagerModeFlush', false);
-   })();
- &lt;/script></code></pre>
+    <p>A service that provides utility methods to manipulate or get data sources.</p>
 </div>
 
 
@@ -98,9 +60,7 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
 
 
 
-
-
-    <h5>HTML attributes:</h5>
+    <h5>Parameters:</h5>
     
 
 <table class="params">
@@ -125,15 +85,10 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
 
         <tr>
             
-                <td class="name"><code>gmf-themeselector-filter</code></td>
+                <td class="name"><code>$q</code></td>
             
 
             <td class="type">
-            
-                
-<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>
-
-
             
             </td>
 
@@ -141,12 +96,52 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
 
             
 
-            <td class="description last">The themes filter.</td>
+            <td class="description last"><p>The Angular $q service.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gmfEnumerateAttribute</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The Gmf enumerate
+    attribute service.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ngeoDataSourcesHelper</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Ngeo data source
+    helper service.</p></td>
         </tr>
 
     
     </tbody>
 </table>
+
+
 
 
 
@@ -183,8 +178,360 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/directives/themeselector.js">contribs/gmf/src/directives/themeselector.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/directives/themeselector.js#L62">line 62</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js">contribs/gmf/src/services/datasourcehelper.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js#L23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="cache_"><span class="type-signature">(protected) </span>cache_<span class="type-signature"> :<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>:<a href="-_.html"></a>.&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>:<a href="-_.html"></a>, <a href="gmf.DataSource.html">gmf.DataSource</a>:<a href="-_.html"></a>></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>:<a href="-_.html"></a>.&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>:<a href="-_.html"></a>, <a href="gmf.DataSource.html">gmf.DataSource</a>:<a href="-_.html"></a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js">contribs/gmf/src/services/datasourcehelper.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js#L58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="collection"><span class="type-signature"></span>collection<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js">contribs/gmf/src/services/datasourcehelper.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js#L65">line 65</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="collection_"><span class="type-signature">(protected) </span>collection_<span class="type-signature"> :<a href="gmf.html#DataSources">gmf.DataSources</a></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="gmf.html#DataSources">gmf.DataSources</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js">contribs/gmf/src/services/datasourcehelper.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js#L52">line 52</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="getDataSource"><span class="type-signature"></span>getDataSource<span class="signature">(id)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Return a data source using its id.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Data source id.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js">contribs/gmf/src/services/datasourcehelper.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js#L77">line 77</a>
     </li></ul></dd>
     
 
@@ -211,7 +558,7 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
 
         
 <div class="param-desc">
-    <p>The directive specs.</p>
+    <p>Data source.</p>
 </div>
 
 
@@ -220,21 +567,143 @@ about these modes, refer to the documentation of <a href="gmf.TreeManager.html">
 
 
 
-    
-    </div>
+        
+            
 
     
 
+    <h4 class="name" id="prepareFiltrableDataSource"><span class="type-signature"></span>prepareFiltrableDataSource<span class="signature">(dataSource)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dataSource</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Filtrable data source.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
     
 
     
 
-     
+    
+
+    
 
     
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js">contribs/gmf/src/services/datasourcehelper.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/datasourcehelper.js#L88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Promise.</p>
+</div>
+
+
+
+    
+
+
+
+        
     
 
     
