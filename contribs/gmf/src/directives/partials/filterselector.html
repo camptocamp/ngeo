@@ -9,4 +9,10 @@
       ng-options="dataSource.name | translate for dataSource in fsCtrl.filtrableDataSources">
     <option value="" translate>-- Layer to filter --</option>
   </select>
+
+  <!-- This is where the ngeo.Filter directive will go... -->
+  <div ng-if="fsCtrl.readyDataSource">
+    {{ fsCtrl.readyDataSource.name }} is ready to be filtered!
+  </div>
+
 </div>

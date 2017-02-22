@@ -12,23 +12,10 @@ let ngeox;
 
 
 /**
- * A feature attribute definition.
- * @typedef {{
- *     choices: (Array.<string>|undefined),
- *     geomType: (string|undefined),
- *     name: (string),
- *     required: (boolean|undefined),
- *     type: (string)
- * }}
+ * @record
+ * @struct
  */
-ngeox.Attribute;
-
-
-/**
- * The list of possible values for the attribute.
- * @type {Array.<string>|undefined}
- */
-ngeox.Attribute.prototype.choices;
+ngeox.AttributeBase = function() {};
 
 
 /**
@@ -36,7 +23,30 @@ ngeox.Attribute.prototype.choices;
  * geometry.
  * @type {string|undefined}
  */
-ngeox.Attribute.prototype.geomType;
+ngeox.AttributeBase.prototype.geomType;
+
+
+/**
+ * The attribute type, which determines how to render it.
+ * @type {string|undefined}
+ */
+ngeox.AttributeBase.prototype.type;
+
+
+/**
+ * A feature attribute definition.
+ * @record
+ * @struct
+ * @extends ngeox.AttributeBase
+ */
+ngeox.Attribute = function() {};
+
+
+/**
+ * The list of possible values for the attribute.
+ * @type {Array.<string>|undefined}
+ */
+ngeox.Attribute.prototype.choices;
 
 
 /**
@@ -98,39 +108,11 @@ ngeox.DataSourceLayer.prototype.queryable;
 
 
 /**
- * The options to create a ngeo.DataSource with.
- * @typedef {{
- *     activeDimensions: (Object.<string, string>|undefined),
- *     copyable: (boolean|undefined),
- *     dimensions: (Object.<string, string>|undefined),
- *     geometryName: (string|undefined),
- *     id: (number),
- *     idAttribute: (string|undefined),
- *     inRange: (boolean|undefined),
- *     maxResolution: (number|undefined),
- *     minResolution: (number|undefined),
- *     name: (string),
- *     ogcImageType: (string|undefined),
- *     ogcLayers: (!Array.<!ngeox.DataSourceLayer>|undefined),
- *     ogcServerType: (string|undefined),
- *     ogcType: (string|undefined),
- *     snappable: (boolean|undefined),
- *     snappingTolerance: (number|undefined),
- *     snappingToEdges: (boolean|undefined),
- *     snappingToVertice: (boolean|undefined),
- *     visible: (boolean|undefined),
- *     wfsFeatureNS: (string|undefined),
- *     wfsFeaturePrefix: (string|undefined),
- *     wfsOutputFormat: (string|undefined),
- *     wfsUrl: (string|undefined),
- *     wmsInfoFormat: (string|undefined),
- *     wmsIsSingleTile: (boolean|undefined),
- *     wmsUrl: (string|undefined),
- *     wmtsLayer: (string|undefined),
- *     wmtsUrl: (string|undefined)
- * }}
+ * The options to create a `ngeo.DataSource` with.
+ * @record
+ * @struct
  */
-ngeox.DataSourceOptions;
+ngeox.DataSourceOptions = function() {};
 
 
 /**
@@ -138,6 +120,13 @@ ngeox.DataSourceOptions;
  * @type {Object.<string, string>|undefined}
  */
 ngeox.DataSourceOptions.prototype.activeDimensions;
+
+
+/**
+ * The attributes of the data source.
+ * @type {Array.<ngeox.Attribute>|undefined}
+ */
+ngeox.DataSourceOptions.prototype.attributes;
 
 
 /**
@@ -175,7 +164,7 @@ ngeox.DataSourceOptions.prototype.id;
  * each record individually.
  * @type {string|undefined}
  */
-ngeox.DataSourceOptions.prototype.identifierAtttribute;
+ngeox.DataSourceOptions.prototype.identifierAttribute;
 
 
 /**
@@ -224,7 +213,7 @@ ngeox.DataSourceOptions.prototype.ogcImageType;
  * A list of layer definitions that are used by (WMS) and (WFS) queries.
  * These are **not** used by the (WMTS) queries (the wmtsLayers is used
  * by WMTS queries).
- * @type {Array.<ngeox.DataSourceLayer>|undefined}
+ * @type {Array.<!ngeox.DataSourceLayer>|undefined}
  */
 ngeox.DataSourceOptions.prototype.ogcLayers;
 

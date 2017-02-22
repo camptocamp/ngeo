@@ -55,6 +55,34 @@ ngeo.baseModuleTemplateUrl = 'ngeomodule';
  * @enum {string}
  * @export
  */
+ngeo.AttributeType = {
+  /**
+   * @type {string}
+   */
+  DATE: 'date',
+  /**
+   * @type {string}
+   */
+  DATETIME: 'datetime',
+  /**
+   * @type {string}
+   */
+  GEOMETRY: 'geometry',
+  /**
+   * @type {string}
+   */
+  SELECT: 'select',
+  /**
+   * @type {string}
+   */
+  TEXT: 'text'
+};
+
+
+/**
+ * @enum {string}
+ * @export
+ */
 ngeo.FeatureProperties = {
   /**
    * @type {string}

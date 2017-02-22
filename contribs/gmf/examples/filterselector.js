@@ -101,9 +101,9 @@ gmfapp.MainController = class {
 
     gmfThemes.getThemesObject().then((themes) => {
       if (themes) {
-        // Add 'Edit' theme, i.e. the one with id 64
+        // Set 'Filters' theme, i.e. the one with id 175
         for (let i = 0, ii = themes.length; i < ii; i++) {
-          if (themes[i].id === 64) {
+          if (themes[i].id === 175) {
             this.gmfTreeManager.setFirstLevelGroups(themes[i].children);
             break;
           }

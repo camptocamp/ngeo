@@ -31,6 +31,11 @@
         display: block;
         width: 30rem;
       }
+
+      /* Override to allow the layer tree to be fully visible */
+      .collapse {
+        display: block;
+      }
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
@@ -101,7 +106,7 @@
     <script src="../../../utils/watchwatchers.js"></script>
     <script>
       var gmfModule = angular.module('gmf');
-      gmfModule.constant('defaultTheme', 'OSM');
+      gmfModule.constant('defaultTheme', 'Filters');
       gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
     </script>
   </body>

@@ -393,6 +393,13 @@ gmfThemes.GmfMetaData.prototype.disclaimer;
 
 
 /**
+ * List of attribute names which have enumerated attribute values.
+ * @type {Array.<string>|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.EnumeratedAttributes;
+
+
+/**
  * The icon URL visible in the layer tree.
  * @type {string|undefined}
  */
@@ -542,3 +549,35 @@ gmfThemes.GmfSnappingConfig.prototype.tolerance;
  * @type {boolean|undefined}
  */
 gmfThemes.GmfSnappingConfig.prototype.vertex;
+
+
+/**
+ * @record
+ * @struct
+ */
+gmfThemes.GmfLayerAttributeValuesResponse = function() {};
+
+
+/**
+ * @type {Array.<gmfThemes.GmfLayerAttributeValue>}
+ */
+gmfThemes.GmfLayerAttributeValuesResponse.prototype.items;
+
+
+/**
+ * @record
+ * @struct
+ */
+gmfThemes.GmfLayerAttributeValue = function() {};
+
+
+/**
+ * @type {string}
+ */
+gmfThemes.GmfLayerAttributeValue.prototype.label;
+
+
+/**
+ * @type {string}
+ */
+gmfThemes.GmfLayerAttributeValue.prototype.value;

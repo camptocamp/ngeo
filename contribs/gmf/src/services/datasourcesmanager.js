@@ -2,7 +2,7 @@ goog.provide('gmf.DataSourcesManager');
 
 goog.require('gmf');
 goog.require('gmf.TreeManager');
-goog.require('ngeo.DataSource');
+goog.require('gmf.DataSource');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DataSources');
 goog.require('ol.array');
@@ -71,7 +71,7 @@ gmf.DataSourcesManager = class {
      * The collection of DataSources from ngeo, which gets updated by this
      * service. When the theme changes, first we remove all data sources, then
      * the 'active' data source are added here.
-     * @type {ol.Collection.<ngeo.DataSource>}
+     * @type {ngeo.DataSources}
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
@@ -336,10 +336,11 @@ gmf.DataSourcesManager = class {
     const visible = meta.isChecked === true;
 
     // Create the data source and add it to the cache
-    cache[id] = new ngeo.DataSource({
+    cache[id] = new gmf.DataSource({
       activeDimensions,
       copyable,
       dimensions,
+      gmfLayer,
       id,
       identifierAttribute,
       maxResolution,
