@@ -145,6 +145,22 @@ ngeox.DataSourceOptions.prototype.dimensions;
 
 
 /**
+ * The filter condition to apply to the filter rules (if any). Defaults to
+ * `ngeo.FilterCondition.AND`.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.filterCondition;
+
+
+/**
+ * A list of filter rules to apply to this data source using the filter
+ * condition.
+ * @type {!Array.<!ngeo.rule.Rule>|undefined}
+ */
+ngeox.DataSourceOptions.prototype.filterRules;
+
+
+/**
  * The name of the geometry attribute.
  * @type {string|undefined}
  */
@@ -1778,6 +1794,167 @@ ngeox.number;
  * @typedef {function(number, string=, string=, number=): string}
  */
 ngeox.unitPrefix;
+
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+ngeox.rule;
+
+
+/**
+ * @record
+ * @struct
+ */
+ngeox.rule.RuleOptions = function() {};
+
+
+/**
+ * The expression of the rule. The expression and boundaries are mutually
+ * exclusives.
+ * @type {boolean|number|string|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.expression;
+
+
+/**
+ * Whether the rule is a custom one or not. Defaults to `true`.
+ * @type {boolean|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.isCustom;
+
+
+/**
+ * The lower boundary of the rule. The expression and boundaries are
+ * mutually exclusives.
+ * @type {number|string|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.lowerBoundary;
+
+
+/**
+ * The human-readable name of the rule.
+ * @type {string}
+ */
+ngeox.rule.RuleOptions.prototype.name;
+
+
+/**
+ * The rule operator.
+ * @type {string|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.operator;
+
+
+/**
+ * The rule operators.
+ * @type {Array.<string>|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.operators;
+
+
+/**
+ * The property name (a.k.a. the attribute name).
+ * @type {string}
+ */
+ngeox.rule.RuleOptions.prototype.propertyName;
+
+
+/**
+ * The type of rule.
+ * @type {string|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.type;
+
+
+/**
+ * The upper boundary of the rule. The expression and boundaries are
+ * mutually exclusives.
+ * @type {string|number|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.upperBoundary;
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleOptions
+ */
+ngeox.rule.SelectOptions = function() {};
+
+
+/**
+ * List of choices available for selection.
+ * @type {Array.<string>}
+ */
+ngeox.rule.SelectOptions.prototype.choices;
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleOptions
+ */
+ngeox.rule.TextOptions = function() {};
+
+
+/**
+ * @record
+ * @struct
+ */
+ngeox.rule.RuleBaseValue = function() {};
+
+
+/**
+ * The operator of the rule value.
+ * @type {string}
+ */
+ngeox.rule.RuleBaseValue.prototype.operator;
+
+
+/**
+ * The property name of the rule value.
+ * @type {string}
+ */
+ngeox.rule.RuleBaseValue.prototype.propertyName;
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleBaseValue
+ */
+ngeox.rule.RuleSimpleValue = function() {};
+
+
+/**
+ * The expression of the rule value.
+ * @type {boolean|number|string}
+ */
+ngeox.rule.RuleSimpleValue.prototype.expression;
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleBaseValue
+ */
+ngeox.rule.RuleRangeValue = function() {};
+
+
+/**
+ * The lower boundary of the rule value.
+ * @type {number|string}
+ */
+ngeox.rule.RuleRangeValue.prototype.lowerBoundary;
+
+
+/**
+ * The upper boundary of the rule value.
+ * @type {number|string}
+ */
+ngeox.rule.RuleRangeValue.prototype.upperBoundary;
 
 
 /**

@@ -386,6 +386,14 @@ gmfThemes.GmfMetaData.prototype.copyable;
 
 
 /**
+ * List of attribute names which should have rules already ready when using
+ * the filter tools.
+ * @type {Array.<string>|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.DirectedFilterAttributes;
+
+
+/**
  * The disclaimer.
  * @type {string|undefined}
  */
