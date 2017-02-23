@@ -19,7 +19,7 @@ goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
 
 /** @suppress {extraRequire} */
-goog.require('gmf.objecteditingDirective');
+goog.require('gmf.objecteditingComponent');
 goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
 goog.require('ngeo.ToolActivate');

@@ -1,4 +1,4 @@
-goog.provide('gmf.objecteditingDirective');
+goog.provide('gmf.objecteditingComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
@@ -24,8 +24,34 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 
+gmf.module.value('gmfObjecteditingTemplateUrl',
+    /**
+     * @param {!angular.JQLite} $element Element.
+     * @param {!angular.Attributes} $attrs Attributes.
+     * @return {string} Template URL.
+     */
+    ($element, $attrs) => {
+      const templateUrl = $attrs['gmfObjecteditingTemplateurl'];
+      return templateUrl !== undefined ? templateUrl :
+          `${gmf.baseTemplateUrl}/objectediting.html`;
+    }
+);
+
+
 /**
- * Directive used to edit the geometry of a single feature using advanced
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfObjecteditingTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateUrl) {
+  return gmfObjecteditingTemplateUrl($element, $attrs);
+}
+
+
+/**
+ * Component used to edit the geometry of a single feature using advanced
  * tools. The geometry must be Multi.
  *
  * Example:
@@ -39,7 +65,7 @@ goog.require('ol.style.Style');
  *         gmf-objectediting-sketchfeatures="::ctrl.sketchFeatures">
  *     </gmf-objectediting>
  *
- * @htmlAttribute {boolean} gmf-objectediting-active Whether the directive is
+ * @htmlAttribute {boolean} gmf-objectediting-active Whether the component is
  *     active or not.
  * @htmlAttribute {ol.Feature} gmf-objectediting-feature The feature to edit.
  * @htmlAttribute {string} gmf-objectediting-geomtype The geometry type.
@@ -47,44 +73,39 @@ goog.require('ol.style.Style');
  * @htmlAttribute {ol.Map} gmf-objectediting-map The map.
  * @htmlAttribute {ol.Collection.<ol.Feature>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
- * @return {angular.Directive} The directive specs.
- * @ngInject
- * @ngdoc directive
+ * @ngdoc component
  * @ngname gmfObjectediting
  */
-gmf.objecteditingDirective = function() {
-  return {
-    controller: 'GmfObjecteditingController as oeCtrl',
-    scope: {
-      'active': '=gmfObjecteditingActive',
-      'feature': '<gmfObjecteditingFeature',
-      'geomType': '<gmfObjecteditingGeomtype',
-      'layerNodeId': '<gmfObjecteditingLayernodeid',
-      'map': '<gmfObjecteditingMap',
-      'sketchFeatures': '<gmfObjecteditingSketchfeatures'
-    },
-    bindToController: true,
-    templateUrl: `${gmf.baseTemplateUrl}/objectediting.html`
-  };
+gmf.objecteditingComponent = {
+  controller: 'GmfObjecteditingController as oeCtrl',
+  bindings: {
+    'active': '=gmfObjecteditingActive',
+    'feature': '<gmfObjecteditingFeature',
+    'geomType': '<gmfObjecteditingGeomtype',
+    'layerNodeId': '<gmfObjecteditingLayernodeid',
+    'map': '<gmfObjecteditingMap',
+    'sketchFeatures': '<gmfObjecteditingSketchfeatures'
+  },
+  templateUrl: gmfObjecteditingTemplateUrl
 };
 
-gmf.module.directive('gmfObjectediting', gmf.objecteditingDirective);
+gmf.module.component('gmfObjectediting', gmf.objecteditingComponent);
 
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
- * @param {gmf.ObjectEditingQuery} gmfObjectEditingQuery Gmf ObjectEditing
+ * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!gmf.EditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {!gmf.ObjectEditingQuery} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
- * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
+ * @param {!gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
 goog.require('ngeo.LayerHelper');
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -145,37 +166,34 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.scope_ = $scope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {!angular.$timeout}
    * @private
    */
   this.timeout_ = $timeout;
 
   /**
+   * @type {!angularGettext.Catalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {gmf.EditFeature}
+   * @type {!gmf.EditFeature}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {gmf.ObjectEditingQuery}
+   * @type {!gmf.ObjectEditingQuery}
    * @private
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
 
   /**
-   * @type {Array.<gmf.ObjectEditingQuery.QueryableLayerInfo>}
+   * @type {Array.<!gmf.ObjectEditingQuery.QueryableLayerInfo>}
    * @export
    */
   this.queryableLayersInfo;
-
-  gmfObjectEditingQuery.getQueryableLayersInfo().then(
-    this.handleGetQueryableLayersInfo_.bind(this)
-  );
 
   /**
    * @type {gmf.ObjectEditingQuery.QueryableLayerInfo}
@@ -186,7 +204,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   /**
    * Whether to show or hide the queryable list of layers. It is shown only
    * when a tool requires it, which is managed in the `gmf-objecteditingtools`
-   * directive.
+   * component.
    * @type {boolean}
    * @export
    */
@@ -205,51 +223,31 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.deleteFromActive = false;
 
   /**
-   * @type {ngeo.LayerHelper}
+   * @type {!ngeo.LayerHelper}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {!gmf.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
-  $scope.$watchCollection(
-    () => {
-      if (this.gmfTreeManager_.rootCtrl) {
-        return this.gmfTreeManager_.rootCtrl.children;
-      }
-    },
-    (value) => {
-      // Timeout required, because the collection event is fired before the
-      // leaf nodes are created and they are the ones we're looking for here.
-      this.timeout_(() => {
-        if (value) {
-          this.unregisterAllTreeCtrl_();
-          this.gmfTreeManager_.rootCtrl.traverseDepthFirst(
-            this.registerTreeCtrl_.bind(this)
-          );
-        }
-      });
-    }
-  );
-
   /**
-   * @type {ngeo.DecorateInteraction}
+   * @type {!ngeo.DecorateInteraction}
    * @private
    */
   this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
   /**
-   * @type {ngeo.FeatureHelper}
+   * @type {!ngeo.FeatureHelper}
    * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {ngeo.ToolActivateMgr}
+   * @type {!ngeo.ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -270,33 +268,146 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.process = gmf.ObjecteditingtoolsController.ProcessType.ADD;
 
   /**
-   * @type {null|ol.layer.Image|ol.layer.Tile}
+   * @type {?ol.layer.Image|ol.layer.Tile}
    * @private
    */
   this.editableWMSLayer_ = null;
 
   /**
-   * @type {jsts.io.OL3Parser}
+   * @type {!jsts.io.OL3Parser}
    * @private
    */
   this.jstsOL3Parser_ = new jsts.io.OL3Parser();
 
-  const geometry = this.feature.getGeometry();
-
   /**
    * The state of the feature determines whether the next 'save' request
    * should be an 'insert' or 'update' one.
-   * @type {string}
+   * @type {string|undefined}
    * @private
    */
-  this.state_ = geometry ? gmf.ObjecteditingController.State.UPDATE :
-    gmf.ObjecteditingController.State.INSERT;
+  this.state_;
 
   /**
-   * @type {Array.<?ol.geom.Geometry>}
+   * @type {!Array.<!ol.geom.Geometry>}
    * @private
    */
   this.geometryChanges_ = [];
+
+  /**
+   * @type {!gmf.ObjecteditingController.Styles}
+   * @private
+   */
+  this.defaultStyles_ = {};
+
+  /**
+   * @type {!gmf.ObjecteditingController.Styles}
+   * @private
+   */
+  this.defaultStylesWoVertice_ = {};
+
+  /**
+   * @type {!gmf.ObjecteditingController.Styles}
+   * @private
+   */
+  this.dirtyStyles_ = {};
+
+  /**
+   * @type {!gmf.ObjecteditingController.Styles}
+   * @private
+   */
+  this.dirtyStylesWoVertice_ = {};
+
+  /**
+   * Flag that is toggled while a request is pending.
+   * @type {boolean}
+   * @export
+   */
+  this.pending = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.dirty = false;
+
+  /**
+   * @type {!Array.<!ol.EventsKey>}
+   * @private
+   */
+  this.listenerKeys_ = [];
+
+  /**
+   * @type {!ol.Collection}
+   * @private
+   */
+  this.features_ = new ol.Collection();
+
+  /**
+   * @type {!ol.Collection}
+   * @private
+   */
+  this.interactions_ = new ol.Collection();
+
+  /**
+   * @type {!ol.interaction.Modify}
+   * @private
+   */
+  this.modify_ = new ol.interaction.Modify({
+    features: this.features_,
+    style: ngeoFeatureHelper.getVertexStyle(false)
+  });
+  this.interactions_.push(this.modify_);
+
+  /**
+   * @type {!ngeo.ToolActivate}
+   * @private
+   */
+  this.modifyToolActivate_ = new ngeo.ToolActivate(this.modify_, 'active');
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.toolsActive = false;
+
+  /**
+   * @type {!ngeo.ToolActivate}
+   * @private
+   */
+  this.toolsToolActivate_ = new ngeo.ToolActivate(this, 'toolsActive');
+};
+
+/**
+ * Init the controller
+ */
+gmf.ObjecteditingController.prototype.$onInit = function() {
+  this.gmfObjectEditingQuery_.getQueryableLayersInfo().then(
+    this.handleGetQueryableLayersInfo_.bind(this)
+  );
+
+  this.scope_.$watchCollection(
+    () => {
+      if (this.gmfTreeManager_.rootCtrl) {
+        return this.gmfTreeManager_.rootCtrl.children;
+      }
+    },
+    (value) => {
+      // Timeout required, because the collection event is fired before the
+      // leaf nodes are created and they are the ones we're looking for here.
+      this.timeout_(() => {
+        if (value) {
+          this.unregisterAllTreeCtrl_();
+          this.gmfTreeManager_.rootCtrl.traverseDepthFirst(
+            this.registerTreeCtrl_.bind(this)
+          );
+        }
+      });
+    }
+  );
+
+  const geometry = this.feature.getGeometry();
+  this.state_ = geometry ? gmf.ObjecteditingController.State.UPDATE :
+    gmf.ObjecteditingController.State.INSERT;
 
   this.scope_.$watchCollection(
     () => this.geometryChanges_,
@@ -313,98 +424,17 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
 
   const defaultColor = [39, 155, 145];
   const dirtyColor = [153, 51, 51];
-
-  /**
-   * @type {gmf.ObjecteditingController.Styles}
-   * @private
-   */
-  this.defaultStyles_ = {};
   this.initializeStyles_(this.defaultStyles_, defaultColor);
-
-  /**
-   * @type {gmf.ObjecteditingController.Styles}
-   * @private
-   */
-  this.defaultStylesWoVertice_ = {};
   this.initializeStyles_(this.defaultStylesWoVertice_, defaultColor, false);
-
-  /**
-   * @type {gmf.ObjecteditingController.Styles}
-   * @private
-   */
-  this.dirtyStyles_ = {};
   this.initializeStyles_(this.dirtyStyles_, dirtyColor);
-
-  /**
-   * @type {gmf.ObjecteditingController.Styles}
-   * @private
-   */
-  this.dirtyStylesWoVertice_ = {};
   this.initializeStyles_(this.dirtyStylesWoVertice_, dirtyColor, false);
 
-  /**
-   * Flag that is toggled while a request is pending.
-   * @export
-   */
-  this.pending = false;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.dirty = false;
-
-  $scope.$watch(
+  this.scope_.$watch(
     () => this.dirty,
     this.setFeatureStyle_.bind(this)
   );
 
-  /**
-   * @type {Array.<ol.EventsKey>}
-   * @private
-   */
-  this.listenerKeys_ = [];
-
-  /**
-   * @type {ol.Collection}
-   * @private
-   */
-  this.features_ = new ol.Collection();
   this.features_.push(this.feature);
-
-  /**
-   * @type {ol.Collection}
-   * @private
-   */
-  this.interactions_ = new ol.Collection();
-
-  /**
-   * @type {ol.interaction.Modify}
-   * @private
-   */
-  this.modify_ = new ol.interaction.Modify({
-    features: this.features_,
-    style: ngeoFeatureHelper.getVertexStyle(false)
-  });
-  this.interactions_.push(this.modify_);
-
-  /**
-   * @type {ngeo.ToolActivate}
-   * @private
-   */
-  this.modifyToolActivate_ = new ngeo.ToolActivate(this.modify_, 'active');
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.toolsActive = false;
-
-  /**
-   * @type {ngeo.ToolActivate}
-   * @private
-   */
-  this.toolsToolActivate_ = new ngeo.ToolActivate(this, 'toolsActive');
 
   // Toggle on
   this.initializeInteractions_();
@@ -412,8 +442,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.toggle_(true);
   this.resetGeometryChanges_();
 
-  $scope.$on('$destroy', this.handleDestroy_.bind(this));
-
+  this.scope_.$on('$destroy', this.handleDestroy_.bind(this));
 };
 
 
@@ -579,8 +608,8 @@ gmf.ObjecteditingController.prototype.unregisterInteractions_ = function() {
 
 
 /**
- * Activate or deactivate this directive.
- * @param {boolean} active Whether to activate this directive or not.
+ * Activate or deactivate this component.
+ * @param {boolean} active Whether to activate this component or not.
  * @private
  */
 gmf.ObjecteditingController.prototype.toggle_ = function(active) {
@@ -685,6 +714,7 @@ gmf.ObjecteditingController.prototype.resetGeometryChanges_ = function() {
   if (this.geometryChanges_.length === 0) {
     const geometry = this.feature.getGeometry();
     const clone = gmf.ObjecteditingController.cloneGeometry_(geometry);
+    goog.asserts.assert(clone);
     this.geometryChanges_.push(clone);
   }
 };
@@ -715,6 +745,7 @@ gmf.ObjecteditingController.prototype.handleModifyInteractionModifyEnd_ = functi
   }
 
   const clone = gmf.ObjecteditingController.cloneGeometry_(geometry);
+  goog.asserts.assert(clone);
   this.geometryChanges_.push(clone);
   this.scope_.$apply();
 };
@@ -814,7 +845,7 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
 /**
  * Set the style of the feature depending on:
  *  - the geometry type
- *  - the dirty state of the directive
+ *  - the dirty state of the component
  *  - whether the modify control is active or not
  *
  * @private
@@ -848,7 +879,7 @@ gmf.ObjecteditingController.prototype.setFeatureStyle_ = function() {
  * excluded.
  *
  * If the Layertree controller node id is equal to the `layerNodeId` configured
- * with this directive, then find the WMS layer associated with it for
+ * with this component, then find the WMS layer associated with it for
  * for refresh purpose.
  *
  * @param {ngeo.LayertreeController} treeCtrl Layertree controller to register
@@ -878,7 +909,7 @@ gmf.ObjecteditingController.prototype.registerTreeCtrl_ = function(treeCtrl) {
  * Unregisters all currently registered Layertree controllers.
  *
  * Unset the WMS layer associated with the `layerNodeId` configured with
- * this directive.
+ * this component.
  *
  * @private
  */
@@ -1057,5 +1088,4 @@ gmf.ObjecteditingController.State = {
 gmf.ObjecteditingController.Styles;
 
 
-gmf.module.controller(
-  'GmfObjecteditingController', gmf.ObjecteditingController);
+gmf.module.controller('GmfObjecteditingController', gmf.ObjecteditingController);

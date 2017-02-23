@@ -7,7 +7,7 @@ goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.objecteditingDirective');
+goog.require('gmf.objecteditingComponent');
 goog.require('gmf.ObjectEditingManager');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
