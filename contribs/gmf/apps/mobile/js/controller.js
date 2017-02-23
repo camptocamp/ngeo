@@ -37,13 +37,13 @@ app.MobileController = function($scope, $injector) {
   }, $scope, $injector);
 
   /**
-   * @type {Object.<string, gmf.MobileMeasurePointController.LayerConfig>}
+   * @type {Array.<gmf.MobileMeasurePointController.LayerConfig>}
    * @export
    */
-  this.elevationLayersConfig = {
-    'aster': {unit: 'm'},
-    'srtm': {unit: 'm'}
-  };
+  this.elevationLayersConfig = [
+    {name: 'aster', unit: 'm'},
+    {name: 'srtm', unit: 'm'}
+  ];
 
   /**
    * @type {Array.<string>}
