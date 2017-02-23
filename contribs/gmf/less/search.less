@@ -16,10 +16,6 @@ gmf-search {
     height: @map-tools-size;
     position: relative;
   }
-  // the container with border decides of search height, not the child elements
-  .twitter-typeahead {
-    height: 100%;
-  }
   // hide the native "clear x" in Edge
   input::-ms-clear {
     display: none;
@@ -55,6 +51,7 @@ gmf-search {
   }
   .twitter-typeahead {
     width: 100%;
+    height: 100%;
   }
   .form-control {
     box-shadow: none;
