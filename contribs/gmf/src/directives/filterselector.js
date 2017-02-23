@@ -371,7 +371,6 @@ gmf.FilterselectorController = class {
 
   /**
    * @param {?gmf.DataSource} dataSource Newly selected data source object.
-   *     object.
    * @private
    */
   handleSelectedDataSourceChange_(dataSource) {
