@@ -1,13 +1,6 @@
-// TODO == Dynamic Properties ==
-// TODO  - filterCondition (and, or, not)
-// TODO  - filterRules (array of rules)
-//
-// TODO == Static Properties ==
-// TODO  - filterRuleDefinitions
-// TODO  - group
-
 goog.provide('ngeo.DataSource');
 
+goog.require('ngeo');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
 
@@ -40,6 +33,21 @@ ngeo.DataSource = class {
      * @private
      */
     this.activeDimensions_ = options.activeDimensions || null;
+
+    /**
+     * The filter condition to apply to the filter rules (if any).
+     * @type {string}
+     * @private
+     */
+    this.filterCondition_ = options.filterCondition || ngeo.FilterCondition.AND;
+
+    /**
+     * A list of filter rules to apply to this data source using the filter
+     * condition.
+     * @type {?Array.<!ngeo.rule.Rule>}
+     * @private
+     */
+    this.filterRules_ = options.filterRules || null;
 
     /**
      * A data source is considered 'in range' when it is synchronized to
@@ -327,6 +335,38 @@ ngeo.DataSource = class {
    */
   set activeDimensions(activeDimensions) {
     this.activeDimensions_ = activeDimensions;
+  }
+
+  /**
+   * @return {string} Filter condition
+   * @export
+   */
+  get filterCondition() {
+    return this.filterCondition_;
+  }
+
+  /**
+   * @param {string} filterCondition Filter condition
+   * @export
+   */
+  set filterCondition(filterCondition) {
+    this.filterCondition_ = filterCondition;
+  }
+
+  /**
+   * @return {?Array.<!ngeo.rule.Rule>} Filter rules
+   * @export
+   */
+  get filterRules() {
+    return this.filterRules_;
+  }
+
+  /**
+   * @param {?Array.<!ngeo.rule.Rule>} filterRules Filter rules
+   * @export
+   */
+  set filterRules(filterRules) {
+    this.filterRules_ = filterRules;
   }
 
   /**

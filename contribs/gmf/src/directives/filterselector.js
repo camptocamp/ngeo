@@ -5,7 +5,10 @@ goog.require('gmf');
 goog.require('gmf.Authentication');
 /** @suppress {extraRequire} */
 goog.require('gmf.DataSourcesHelper');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filterComponent');
 goog.require('ngeo.Notification');
+goog.require('ngeo.RuleHelper');
 goog.require('ol.CollectionEventType');
 
 
@@ -18,13 +21,14 @@ gmf.FilterselectorController = class {
    *     helper service.
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+   * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController
    */
   constructor($scope, gettextCatalog, gmfDataSourcesHelper, gmfUser,
-      ngeoNotification
+      ngeoNotification, ngeoRuleHelper
   ) {
 
     // Binding properties
@@ -39,6 +43,9 @@ gmf.FilterselectorController = class {
       () => this.active,
       this.toggleDataSourceRegistration_.bind(this)
     );
+
+
+    // Injected properties
 
     /**
      * @type {angularGettext.Catalog}
@@ -69,8 +76,26 @@ gmf.FilterselectorController = class {
      */
     this.ngeoNotification_ = ngeoNotification;
 
+    /**
+     * @type {!ngeo.RuleHelper}
+     * @private
+     */
+    this.ngeoRuleHelper_ = ngeoRuleHelper;
+
 
     // Inner properties
+
+    /**
+     * @type {Array.<ngeo.rule.Rule>}
+     * @export
+     */
+    this.customRules = null;
+
+    /**
+     * @type {Array.<ngeo.rule.Rule>}
+     * @export
+     */
+    this.directedRules = null;
 
     /**
      * @type {Array.<gmf.DataSource>}
@@ -103,6 +128,12 @@ gmf.FilterselectorController = class {
      * @export
      */
     this.readyDataSource = null;
+
+    /**
+     * @type {!gmf.FilterselectorController.RuleCache}
+     * @private
+     */
+    this.ruleCache_ = {};
 
     /**
      * The data source that has been selected in the list and that requires
@@ -339,25 +370,89 @@ gmf.FilterselectorController = class {
   }
 
   /**
-   * @param {?gmf.DataSource} dataSource Ngeo data source object
+   * @param {?gmf.DataSource} dataSource Newly selected data source object.
    * @private
    */
   handleSelectedDataSourceChange_(dataSource) {
 
+    this.customRules = null;
+    this.directedRules = null;
+    this.readyDataSource = null;
+
     // No need to do anything if no data source is selected
     if (!dataSource) {
-      this.readyDataSource = null;
       return;
     }
 
     this.gmfDataSourcesHelper_.prepareFiltrableDataSource(
       dataSource
     ).then((dataSource) => {
+
+      // Data source is ready. Get any existing rules or create new ones from
+      // the attributes
+      let item = this.getRuleCacheItem_(dataSource);
+      if (!item) {
+        item = {
+          customRules: [],
+          directedRules: []
+        };
+        this.setRuleCacheItem_(dataSource, item);
+        if (dataSource.gmfLayer.metadata &&
+            dataSource.gmfLayer.metadata.DirectedFilterAttributes &&
+            dataSource.gmfLayer.metadata.DirectedFilterAttributes.length
+        ) {
+          const directedAttributes =
+              dataSource.gmfLayer.metadata.DirectedFilterAttributes;
+          const attributes = goog.asserts.assert(dataSource.attributes);
+          for (const attribute of attributes) {
+            if (ol.array.includes(directedAttributes, attribute.name)) {
+              item.directedRules.push(
+                this.ngeoRuleHelper_.createRule(attribute)
+              );
+            }
+          }
+        }
+      }
+
+      this.customRules = item.customRules;
+      this.directedRules = item.directedRules;
       this.readyDataSource = dataSource;
     });
   }
 
+  /**
+   * @param {ngeo.DataSource} dataSource Data source.
+   * @return {?gmf.FilterselectorController.RuleCacheItem} Rule cache item.
+   * @private
+   */
+  getRuleCacheItem_(dataSource) {
+    return this.ruleCache_[dataSource.id] || null;
+  }
+
+  /**
+   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {gmf.FilterselectorController.RuleCacheItem} item Rule cache item.
+   * @private
+   */
+  setRuleCacheItem_(dataSource, item) {
+    this.ruleCache_[dataSource.id] = item;
+  }
 };
+
+
+/**
+ * @typedef {Object.<number, !gmf.FilterselectorController.RuleCacheItem>}
+ */
+gmf.FilterselectorController.RuleCache;
+
+
+/**
+ * @typedef {{
+ *     customRules: (Array.<ngeo.rule.Rule>),
+ *     directedRules: (Array.<ngeo.rule.Rule>)
+ * }}
+ */
+gmf.FilterselectorController.RuleCacheItem;
 
 
 gmf.module.component('gmfFilterselector', {
