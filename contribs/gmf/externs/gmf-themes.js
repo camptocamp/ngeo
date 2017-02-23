@@ -390,7 +390,7 @@ gmfThemes.GmfMetaData.prototype.copyable;
  * the filter tools.
  * @type {Array.<string>|undefined}
  */
-gmfThemes.GmfMetaData.prototype.DirectedFilterAttributes;
+gmfThemes.GmfMetaData.prototype.directedFilterAttributes;
 
 
 /**
@@ -404,7 +404,7 @@ gmfThemes.GmfMetaData.prototype.disclaimer;
  * List of attribute names which have enumerated attribute values.
  * @type {Array.<string>|undefined}
  */
-gmfThemes.GmfMetaData.prototype.EnumeratedAttributes;
+gmfThemes.GmfMetaData.prototype.enumeratedAttributes;
 
 
 /**

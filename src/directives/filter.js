@@ -1,6 +1,8 @@
 goog.provide('ngeo.filterComponent');
 
 goog.require('ngeo');
+/** @suppress {extraRequire} */
+goog.require('ngeo.ruleComponent');
 goog.require('ngeo.RuleHelper');
 
 
@@ -8,13 +10,14 @@ ngeo.FilterController = class {
 
   /**
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
+   * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoFilterController
    */
-  constructor(gettextCatalog, ngeoRuleHelper) {
+  constructor(gettextCatalog, $timeout, ngeoRuleHelper) {
 
     // Binding properties
 
@@ -36,6 +39,18 @@ ngeo.FilterController = class {
      */
     this.directedRules;
 
+    /**
+     * @type {!ol.Map}
+     * @export
+     */
+    this.map;
+
+    /**
+     * @type {string}
+     * @export
+     */
+    this.toolGroup;
+
     // Injected properties
 
     /**
@@ -43,6 +58,12 @@ ngeo.FilterController = class {
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
+
+    /**
+     * @type {!angular.$timeout}
+     * @private
+     */
+    this.timeout_ = $timeout;
 
     /**
      * @type {!ngeo.RuleHelper}
@@ -79,6 +100,16 @@ ngeo.FilterController = class {
     this.geometryAttributes = [];
 
     /**
+     * Flag that is set after initialization of the filter directive. Before
+     * the initialization is completed, rules are created with the `active`
+     * property set to `false`. After that, newly created rules are created
+     * with the `active` property set to `true`.
+     * @type {boolean}
+     * @export
+     */
+    this.initialized = false;
+
+    /**
      * List of other attribute names.
      * @type {Array.<!ngeox.Attribute>}
      * @export
@@ -104,6 +135,10 @@ ngeo.FilterController = class {
     }
 
     this.apply();
+
+    this.timeout_(() => {
+      this.initialized = true;
+    });
   }
 
 
@@ -176,7 +211,9 @@ ngeo.module.component('ngeoFilter', {
     // It's 'datasource' instead of 'dataSource', because that would require
     // the attribute to be 'data-source', and Angular strips the 'data-'.
     datasource: '<',
-    directedRules: '<'
+    directedRules: '<',
+    map: '<',
+    toolGroup: '<'
   },
   controller: ngeo.FilterController,
   controllerAs: 'filterCtrl',

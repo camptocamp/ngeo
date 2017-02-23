@@ -254,6 +254,25 @@ ngeo.rule.Rule = class {
     return value;
   }
 
+  // === Other utility methods ===
+
+  /**
+   * Reset the following properties to `null`: expression, lowerProperty,
+   * upperProperty.
+   * @export
+   */
+  reset() {
+    if (this.expression !== null) {
+      this.expression = null;
+    }
+    if (this.lowerProperty !== null) {
+      this.lowerProperty = null;
+    }
+    if (this.upperProperty !== null) {
+      this.upperProperty = null;
+    }
+  }
+
 };
 
 

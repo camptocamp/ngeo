@@ -44,6 +44,18 @@ gmf.FilterselectorController = class {
       this.toggleDataSourceRegistration_.bind(this)
     );
 
+    /**
+     * @type {!ol.Map}
+     * @export
+     */
+    this.map;
+
+    /**
+     * @type {string}
+     * @export
+     */
+    this.toolGroup;
+
 
     // Injected properties
 
@@ -398,11 +410,11 @@ gmf.FilterselectorController = class {
         };
         this.setRuleCacheItem_(dataSource, item);
         if (dataSource.gmfLayer.metadata &&
-            dataSource.gmfLayer.metadata.DirectedFilterAttributes &&
-            dataSource.gmfLayer.metadata.DirectedFilterAttributes.length
+            dataSource.gmfLayer.metadata.directedFilterAttributes &&
+            dataSource.gmfLayer.metadata.directedFilterAttributes.length
         ) {
           const directedAttributes =
-              dataSource.gmfLayer.metadata.DirectedFilterAttributes;
+              dataSource.gmfLayer.metadata.directedFilterAttributes;
           const attributes = goog.asserts.assert(dataSource.attributes);
           for (const attribute of attributes) {
             if (ol.array.includes(directedAttributes, attribute.name)) {
@@ -457,7 +469,9 @@ gmf.FilterselectorController.RuleCacheItem;
 
 gmf.module.component('gmfFilterselector', {
   bindings: {
-    active: '<'
+    active: '<',
+    map: '<',
+    toolGroup: '<'
   },
   controller: gmf.FilterselectorController,
   controllerAs: 'fsCtrl',

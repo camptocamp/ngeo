@@ -89,6 +89,70 @@ ngeo.RuleHelper = class {
     return rule;
   }
 
+  /**
+   * Create a new `ngeo.rule.Rule` object using an other given rule.
+   *
+   * @param {!ngeo.rule.Rule} rule Original rule to clone.
+   * @return {!ngeo.rule.Rule} A clone rule.
+   * @export
+   */
+  cloneRule(rule) {
+
+    let clone;
+
+    const options = {
+      expression: rule.expression,
+      isCustom: rule.isCustom,
+      lowerBoundary: rule.lowerBoundary,
+      name: rule.name,
+      operator: rule.operator,
+      operators: rule.operators ? rule.operators.slice(0) : null,
+      propertyName: rule.propertyName,
+      type: rule.type,
+      upperBoundary: rule.upperBoundary
+    };
+
+    if (rule instanceof ngeo.rule.Select) {
+      options.choices = rule.choices.slice(0);
+      clone = new ngeo.rule.Select(options);
+    } else if (rule instanceof ngeo.rule.Text) {
+      clone = new ngeo.rule.Text(options);
+    } else {
+      clone = new ngeo.rule.Rule(options);
+    }
+
+    return clone;
+  }
+
+  /**
+   * Extend the dynamic properties from a source rule to destination rule.
+   * The source rule remains unchanged, while the destination rule changes.
+   *
+   * @param {!ngeo.rule.Rule} sourceRule Source rule to collect the dynamic
+   *     properties from.
+   * @param {!ngeo.rule.Rule} destRule Destination rule where the dynamic
+   *     properties are set.
+   * @export
+   */
+  extendRule(sourceRule, destRule) {
+
+    if (destRule.expression !== sourceRule.expression) {
+      destRule.expression = sourceRule.expression;
+    }
+
+    if (destRule.lowerBoundary !== sourceRule.lowerBoundary) {
+      destRule.lowerBoundary = sourceRule.lowerBoundary;
+    }
+
+    if (destRule.operator !== sourceRule.operator) {
+      destRule.operator = sourceRule.operator;
+    }
+
+    if (destRule.upperBoundary !== sourceRule.upperBoundary) {
+      destRule.upperBoundary = sourceRule.upperBoundary;
+    }
+  }
+
 };
 
 

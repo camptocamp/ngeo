@@ -94,11 +94,11 @@ gmf.DataSourcesHelper = class {
     this.ngeoDataSourcesHelper_.getDataSourceAttributes(
       dataSource
     ).then((attributes) => {
-      // (2) The attribute names that are in the `EnumeratedAttributes`
+      // (2) The attribute names that are in the `enumeratedAttributes`
       //     metadata are the ones that need to have their values fetched.
       //     Do that once then set the type to SELECT and the choices.
       const meta = dataSource.gmfLayer.metadata || {};
-      const enumAttributes = meta.EnumeratedAttributes;
+      const enumAttributes = meta.enumeratedAttributes;
       if (enumAttributes && enumAttributes.length) {
         const promises = [];
         for (const attribute of attributes) {
