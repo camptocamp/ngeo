@@ -302,7 +302,7 @@ gmf.DataSourcesManager = class {
       });
 
       // OGC Server
-      const ogcServerName = (firstLevelGroup && firstLevelGroup.mixed) ?
+      const ogcServerName = (!firstLevelGroup || firstLevelGroup.mixed) ?
         gmfLayerWMS.ogcServer : firstLevelGroup.ogcServer;
       goog.asserts.assert(ogcServerName);
       ogcServer = ogcServers[ogcServerName];
