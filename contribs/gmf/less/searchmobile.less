@@ -1,5 +1,12 @@
 @import "search.less";
 
+// Overrides for tablet devices
+@media (min-width: @screen-sm-min) {
+  gmf-search {
+    left: 2 * @app-margin + @map-tools-size;
+  }
+}
+
 // Overrides for phone devices
 @media (max-width: @screen-sm-min) {
   gmf-search {
@@ -9,6 +16,12 @@
     .gmf-search {
       border-width: 1px 0;
       width: 100%;
+    }
+    .tt-menu {
+      position: fixed !important;
+      top: @app-margin + @map-tools-size !important;
+      right: 0;
+      bottom: 0;
     }
   }
 }
