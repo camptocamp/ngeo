@@ -43,7 +43,7 @@ ngeo.filereaderDirective = function($window) {
       if (!supported) {
         return;
       }
-      element.bind('change', (changeEvent) => {
+      element.on('change', (changeEvent) => {
             /** @type {!FileReader} */
         const fileReader = new $window.FileReader();
         fileReader.onload = (
