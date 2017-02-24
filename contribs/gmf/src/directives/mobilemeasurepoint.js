@@ -39,17 +39,17 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
  *
  * Where ctrl.measurePointLayers is an object like this:
  *
- *      this.measurePointLayers = {
- *        'srtm': {unit: 'm', decimals: 2},
- *        'wind': {unit: 'km/h'},
- *        'humidity': {}
- *      }
+ *      this.measurePointLayers = [
+ *        {name: 'srtm', unit: 'm', decimals: 2},
+ *        {name: 'wind', {unit: 'km/h'},
+ *        {name: 'humidity'}
+ *      ];
  *
  * @htmlAttribute {boolean} gmf-mobile-measurepoint-active Used to active
  * or deactivate the component.
  * @htmlAttribute {number=} gmf-mobile-measurepoint-Coordinatedecimals number
  *     of decimal to display for the coordinate.
- * @htmlAttribute {Object.<string, gmf.MobileMeasurePointController.LayerConfig>}
+ * @htmlAttribute {Array.<gmf.MobileMeasurePointController.LayerConfig>}
  *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
  *     information under the point and its configuaration.
  * @htmlAttribute {ol.Map} gmf-mobile-measurepoint-map The map.
@@ -160,7 +160,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
   this.coordinateDecimals = coordinateDecimalsFn ? coordinateDecimalsFn() : 0;
 
   /**
-   * @type {!Object.<string, !gmf.MobileMeasurePointController.LayerConfig>}
+   * @type {!Array.<gmf.MobileMeasurePointController.LayerConfig>}
    * @private
    */
   this.layersConfig;
@@ -229,7 +229,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
  */
 gmf.MobileMeasurePointController.prototype.init = function() {
   const layersConfig = this['getLayersConfigFn']();
-  goog.asserts.assertObject(layersConfig);
+  goog.asserts.assert(Array.isArray(layersConfig));
   this.layersConfig = layersConfig;
 
   this.map.addInteraction(this.measure);
@@ -289,7 +289,7 @@ gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
   const center = this.map.getView().getCenter();
   goog.asserts.assertArray(center);
   const params = {
-    'layers': Object.keys(this.layersConfig).join(',')
+    'layers': this.layersConfig.map(config => config.name).join(',')
   };
   this.gmfRaster_.getRaster(center, params).then((object) => {
     const el = this.measure.getTooltipElement();
@@ -297,15 +297,14 @@ gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
     const className = 'gmf-mobile-measure-point';
     ctn.className = className;
 
-    for (const key in object) {
-      let value = object[key];
-      const layerConfig = this.layersConfig[key];
-      if (value !== null) {
+    for (const config of this.layersConfig) {
+      const key = config.name;
+      if (key in object) {
+        let value = object[key];
         const childEl = document.createElement('div');
-        const className = `gmf-mobile-measure-point-${key}`;
-        childEl.className = className;
-        const unit = layerConfig.unit || '';
-        const decimals = layerConfig.decimals && layerConfig.decimals > 0 || 0;
+        childEl.className = `gmf-mobile-measure-point-${key}`;
+        const unit = config.unit || '';
+        const decimals = config.decimals && config.decimals > 0 || 0;
         value = this.$filter_('number')(value, decimals);
         childEl.innerHTML = [this.translate(key), ': ', value, ' ', unit].join('');
         ctn.appendChild(childEl);
@@ -327,6 +326,7 @@ gmf.module.controller('GmfMobileMeasurePointController',
 
 /**
  * @typedef {{
+ *     name: string,
  *     decimals: (number|undefined),
  *     unit: (string|undefined)
  * }}
