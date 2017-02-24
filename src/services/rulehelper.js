@@ -100,16 +100,28 @@ ngeo.RuleHelper = class {
 
     let clone;
 
+    const expression = rule.expression !== null ? rule.expression : undefined;
+    const isCustom = rule.isCustom;
+    const lowerBoundary = rule.lowerBoundary !== null ? rule.lowerBoundary :
+          undefined;
+    const name = rule.name;
+    const operator = rule.operator !== null ? rule.operator : undefined;
+    const operators = rule.operators ? rule.operators.slice(0) : undefined;
+    const propertyName = rule.propertyName;
+    const type = rule.type !== null ? rule.type : undefined;
+    const upperBoundary = rule.upperBoundary !== null ? rule.upperBoundary :
+          undefined;
+
     const options = {
-      expression: rule.expression,
-      isCustom: rule.isCustom,
-      lowerBoundary: rule.lowerBoundary,
-      name: rule.name,
-      operator: rule.operator,
-      operators: rule.operators ? rule.operators.slice(0) : null,
-      propertyName: rule.propertyName,
-      type: rule.type,
-      upperBoundary: rule.upperBoundary
+      expression,
+      isCustom,
+      lowerBoundary,
+      name,
+      operator,
+      operators,
+      propertyName,
+      type,
+      upperBoundary
     };
 
     if (rule instanceof ngeo.rule.Select) {

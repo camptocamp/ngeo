@@ -257,19 +257,19 @@ ngeo.rule.Rule = class {
   // === Other utility methods ===
 
   /**
-   * Reset the following properties to `null`: expression, lowerProperty,
-   * upperProperty.
+   * Reset the following properties to `null`: expression, lowerBoundary,
+   * upperBoundary.
    * @export
    */
   reset() {
     if (this.expression !== null) {
       this.expression = null;
     }
-    if (this.lowerProperty !== null) {
-      this.lowerProperty = null;
+    if (this.lowerBoundary !== null) {
+      this.lowerBoundary = null;
     }
-    if (this.upperProperty !== null) {
-      this.upperProperty = null;
+    if (this.upperBoundary !== null) {
+      this.upperBoundary = null;
     }
   }
 
