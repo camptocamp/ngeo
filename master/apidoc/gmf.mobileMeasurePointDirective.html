@@ -57,11 +57,11 @@ mobile devices.</p>
    gmf-mobile-measurepoint-layersconfig=&quot;::ctrl.measurePointLayers&quot;
    gmf-mobile-measurepoint-map=&quot;::ctrl.map&quot;>
  &lt;/div></code></pre><p>Where ctrl.measurePointLayers is an object like this:</p>
-<pre class="prettyprint source"><code> this.measurePointLayers = {
-   'srtm': {unit: 'm', decimals: 2},
-   'wind': {unit: 'km/h'},
-   'humidity': {}
- }</code></pre>
+<pre class="prettyprint source"><code> this.measurePointLayers = [
+   {name: 'srtm', unit: 'm', decimals: 2},
+   {name: 'wind', {unit: 'km/h'},
+   {name: 'humidity'}
+ ];</code></pre>
 </div>
 
 
@@ -173,7 +173,7 @@ or deactivate the component.</td>
             <td class="type">
             
                 
-<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>:<a href="-_.html"></a>.&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>:<a href="-_.html"></a>, <a href="gmf.MobileMeasurePointController.html#LayerConfig">gmf.MobileMeasurePointController.LayerConfig</a>:<a href="-_.html"></a>></span>
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>:<a href="-_.html"></a>.&lt;<a href="gmf.MobileMeasurePointController.html#LayerConfig">gmf.MobileMeasurePointController.LayerConfig</a>:<a href="-_.html"></a>></span>
 
 
             
