@@ -71,6 +71,10 @@ ngeo.AttributeType = {
   /**
    * @type {string}
    */
+  NUMBER: 'number',
+  /**
+   * @type {string}
+   */
   SELECT: 'select',
   /**
    * @type {string}

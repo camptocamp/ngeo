@@ -61,6 +61,14 @@ ngeo.RuleHelper = class {
     // Todo: support geometry
 
     switch (attribute.type) {
+      case ngeo.AttributeType.NUMBER:
+        rule = new ngeo.rule.Rule({
+          name,
+          operator: ngeo.rule.Rule.OperatorType.BETWEEN,
+          propertyName: attribute.name,
+          type: ngeo.AttributeType.TEXT
+        });
+        break;
       case ngeo.AttributeType.DATE:
       case ngeo.AttributeType.DATETIME:
         rule = new ngeo.rule.Rule({
