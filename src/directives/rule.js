@@ -10,6 +10,7 @@ goog.require('ngeo.rule.Select');
 ngeo.RuleController = class {
 
   /**
+   * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
@@ -19,7 +20,7 @@ ngeo.RuleController = class {
    * @ngdoc controller
    * @ngname NgeoRuleController
    */
-  constructor($timeout, ngeoRuleHelper, ngeoToolActivateMgr) {
+  constructor(gettextCatalog, $timeout, ngeoRuleHelper, ngeoToolActivateMgr) {
 
     // Binding properties
 
@@ -81,6 +82,24 @@ ngeo.RuleController = class {
      * @export
      */
     this.clone;
+
+    const ot = ngeo.rule.Rule.OperatorType;
+
+    /**
+     * @type {Object.<string, string>}
+     * @export
+     */
+    this.operators = {
+      [ot.EQUAL_TO]: gettextCatalog.getString('Is equal to'),
+      [ot.GREATER_THAN]: gettextCatalog.getString('Is greater than'),
+      [ot.GREATER_THAN_OR_EQUAL_TO]: gettextCatalog.getString(
+        'Is greater than or equal to'),
+      [ot.LESSER_THAN]: gettextCatalog.getString('Is lesser than'),
+      [ot.LESSER_THAN_OR_EQUAL_TO]: gettextCatalog.getString(
+        'Is lesser than or equal to'),
+      [ot.NOT_EQUAL_TO]: gettextCatalog.getString('Is not equal to'),
+      [ot.LIKE]: gettextCatalog.getString('Contains')
+    };
 
     /**
      * @type {!ngeo.ToolActivate}
