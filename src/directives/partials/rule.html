@@ -11,7 +11,7 @@
   <div class="dropdown-menu form-group">
 
     <select
-        class="form-control input-sm"
+        class="form-control input-sm ngeo-rule-operators-list"
         ng-if="::ruleCtrl.clone.operators"
         ng-model="ruleCtrl.clone.operator"
         ng-options="ruleCtrl.operators[operator] | translate for operator in ::ruleCtrl.clone.operators track by operator">
