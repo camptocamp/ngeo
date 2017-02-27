@@ -161,7 +161,7 @@ ngeo.btnDirective = function($parse) {
       }
 
           // UI -> model
-      element.bind('click', () => {
+      element.on('click', () => {
         scope.$apply(() => {
           ngModelCtrl.$setViewValue(!ngModelCtrl.$viewValue);
           ngModelCtrl.$render();

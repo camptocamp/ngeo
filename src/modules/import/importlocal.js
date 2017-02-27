@@ -54,7 +54,7 @@ exports = function($timeout, gettext, ngeoFile, ngeoImportLocalTemplateUrl) {
         click(triggerInputFileClick);
 
       // Register input[type=file] onchange event, use HTML5 File api
-      elt.find('input[type=file]').bind('change', (evt) => {
+      elt.find('input[type=file]').on('change', (evt) => {
         if (evt.target.files && evt.target.files.length > 0) {
           scope.$apply(() => {
             scope['files'] = evt.target.files;
