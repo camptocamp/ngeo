@@ -44,6 +44,7 @@
     transition: 0.3s ease-in all;
     .gmf-displayquerywindow-slide-animation {
       height: 100%;
+      width: 100%;
       padding: @app-margin @app-margin 0;
       text-align: left;
       white-space: nowrap;
@@ -113,19 +114,15 @@
     }
     .gmf-displayquerywindow-details-key {
       padding-right: @app-margin;
-      /** prevent glitch for swipe animation **/
       min-width: @displayquerywindow-tablet-width * 0.3 - @app-margin;
       max-width: @displayquerywindow-tablet-width * 0.3 - @app-margin;
-      overflow-x: hidden;
-      text-overflow: ellipsis;
     }
-    .gmf-displayquerywindow-details-value {
-      white-space: pre-wrap;
-      word-break: break-all;
-      /** prevent glitch for swipe animation **/
-      min-width: @displayquerywindow-tablet-width * 0.7 - @app-margin;
-      max-width: @displayquerywindow-tablet-width * 0.7 - @app-margin;
+
+    /** word wrapping */
+    .gmf-displayquerywindow-details-key, .gmf-displayquerywindow-details-value {
+      white-space: normal;
     }
+
     .gmf-displayquerywindow-slide-animation.ng-enter-active .gmf-displayquerywindow-details .gmf-displayquerywindow-details-value {
       white-space: nowrap;
     }
