@@ -193,6 +193,14 @@ ngeo.FilterController = class {
     }
   }
 
+  /**
+   * @param {!ngeo.rule.Rule} rule Custom rule to remove.
+   * @export
+   */
+  removeCustomRule(rule) {
+    ol.array.remove(this.customRules, rule);
+  }
+
 };
 
 
