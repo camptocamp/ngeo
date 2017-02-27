@@ -180,11 +180,9 @@ gmf.FilterselectorController = class {
    * @private
    */
   handleGmfUserFunctionalitiesChange_() {
-    if (this.gmfUser_.functionalities &&
-        this.gmfUser_.functionalities.filterable_layers
-    ) {
-      this.filtrableLayerNodeNames_ =
-        this.gmfUser_.functionalities.filterable_layers;
+    const usrFunc = this.gmfUser_.functionalities;
+    if (usrFunc && usrFunc['filterable_layers']) {
+      this.filtrableLayerNodeNames_ = usrFunc['filterable_layers'];
     } else {
       this.filtrableLayerNodeNames_ = null;
     }
