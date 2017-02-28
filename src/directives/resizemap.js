@@ -1,7 +1,6 @@
 goog.provide('ngeo.resizemapDirective');
 
 goog.require('goog.asserts');
-goog.require('goog.async.AnimationDelay');
 goog.require('ngeo');
 goog.require('ol.Map');
 
@@ -47,15 +46,16 @@ ngeo.resizemapDirective = function($window) {
       goog.asserts.assert(stateExpr !== undefined);
 
       let start;
+      let animationDelayKey;
 
-      const animationDelay = new goog.async.AnimationDelay(() => {
+      const animationDelay = () => {
         map.updateSize();
         map.renderSync();
 
         if (Date.now() - start < duration) {
-          animationDelay.start();
+          animationDelayKey = $window.requestAnimationFrame(animationDelay);
         }
-      }, $window);
+      };
 
       // Make sure the map is resized when the animation ends.
       // It may help in case the animation didn't start correctly.
@@ -67,8 +67,8 @@ ngeo.resizemapDirective = function($window) {
       scope.$watch(stateExpr, (newVal, oldVal) => {
         if (newVal != oldVal) {
           start = Date.now();
-          animationDelay.stop();
-          animationDelay.start();
+          $window.cancelAnimationFrame(animationDelayKey);
+          animationDelayKey = $window.requestAnimationFrame(animationDelay);
         }
       });
     }
