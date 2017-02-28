@@ -20,9 +20,25 @@
     <div ng-switch="::ruleCtrl.clone.type">
 
       <div
-          class="ngeo-rule-type-date"
+          class="ngeo-rule-type-date form-group"
+          ng-if="ruleCtrl.active"
           ng-switch-when="date|datetime"
-          ng-switch-when-separator="|">Date or datetime...</div>
+          ng-switch-when-separator="|">
+        <div ng-switch="ruleCtrl.clone.operator">
+          <div ng-switch-when="..">
+            <ngeo-date-picker
+                time="ruleCtrl.timeRangeMode"
+                on-date-selected="ruleCtrl.onDateRangeSelected(time)">
+            </ngeo-date-picker>
+          </div>
+          <div ng-switch-default>
+            <ngeo-date-picker
+                time="ruleCtrl.timeValueMode"
+                on-date-selected="ruleCtrl.onDateSelected(time)">
+            </ngeo-date-picker>
+          </div>
+        </div>
+      </div>
 
       <div
           class="checkbox ngeo-rule-type-select"
@@ -95,8 +111,22 @@
   </a>
 
   <div ng-switch="::ruleCtrl.rule.type">
-    <div ng-switch-when="date|datetime">
-      Datetime value...
+
+    <div
+        ng-switch-when="date|datetime"
+        ng-switch-when-separator="|">
+      <div ng-switch="ruleCtrl.rule.operator">
+        <div ng-switch-when="..">
+          <span translate>From </span>
+          <span>{{ ruleCtrl.timeToDate(ruleCtrl.rule.lowerBoundary) }}</span>
+          <span translate> to </span>
+          <span>{{ ruleCtrl.timeToDate(ruleCtrl.rule.upperBoundary) }}</span>
+        </div>
+        <div ng-switch-default>
+          <span>{{ ruleCtrl.rule.operator }}</span>
+          <span>{{ ruleCtrl.timeToDate(ruleCtrl.rule.expression) }}</span>
+        </div>
+      </div>
     </div>
 
     <div ng-switch-when="select">
@@ -118,5 +148,7 @@
           <span>{{ ruleCtrl.rule.expression }}</span>
         </div>
       </div>
+    </div>
+
   </div>
 </div>

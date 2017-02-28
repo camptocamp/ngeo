@@ -1,6 +1,8 @@
 goog.provide('ngeo.ruleComponent');
 
 goog.require('ngeo');
+/** @suppress {extraRequire} */
+goog.require('ngeo.DatePickerDirective');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
@@ -11,6 +13,7 @@ ngeo.RuleController = class {
 
   /**
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
+   * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
@@ -20,7 +23,9 @@ ngeo.RuleController = class {
    * @ngdoc controller
    * @ngname NgeoRuleController
    */
-  constructor(gettextCatalog, $timeout, ngeoRuleHelper, ngeoToolActivateMgr) {
+  constructor(gettextCatalog, $scope, $timeout, ngeoRuleHelper,
+      ngeoToolActivateMgr
+  ) {
 
     // Binding properties
 
@@ -52,7 +57,14 @@ ngeo.RuleController = class {
      */
     this.toolGroup;
 
+
     // Injected properties
+
+    /**
+     * @type {!angular.Scope}
+     * @private
+     */
+    this.scope_ = $scope;
 
     /**
      * @type {!angular.$timeout}
@@ -62,7 +74,7 @@ ngeo.RuleController = class {
 
     /**
      * @type {!ngeo.RuleHelper}
-     * @private
+      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
@@ -71,6 +83,7 @@ ngeo.RuleController = class {
      * @private
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
+
 
     // Inner properties
 
@@ -102,10 +115,48 @@ ngeo.RuleController = class {
     };
 
     /**
+     * Time property used when the rule is of type 'date|datetime' and uses
+     * a range of date.
+     * @type {ngeox.TimeProperty}
+     * @export
+     */
+    this.timeRangeMode = {
+      widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('datepicker'),
+      maxValue: this.createDate_(),
+      minValue: this.createWeekAgoDate_(),
+      maxDefValue: null,
+      minDefValue: null,
+      mode: /** @type {ngeox.TimePropertyModeEnum} */ ('range'),
+      interval: [0, 1, 0, 0]
+    };
+
+    /**
+     * Time property used when the rule is of type 'date|datetime' and uses
+     * a single date.
+     * @type {ngeox.TimeProperty}
+     * @export
+     */
+    this.timeValueMode = {
+      widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('datepicker'),
+      maxValue: this.createDate_(),
+      minValue: this.createDate_(),
+      maxDefValue: null,
+      minDefValue: null,
+      mode: /** @type {ngeox.TimePropertyModeEnum} */ ('value'),
+      interval: [0, 1, 0, 0]
+    };
+
+    /**
      * @type {!ngeo.ToolActivate}
      * @private
      */
     this.toolActivate_ = new ngeo.ToolActivate(this, 'active');
+
+    /**
+     * @type {Array.<function()>}
+     * @private
+     */
+    this.unlisteners_ = [];
 
   }
 
@@ -119,6 +170,42 @@ ngeo.RuleController = class {
 
     this.ngeoToolActivateMgr_.registerTool(
       this.toolGroup, this.toolActivate_);
+
+    // If the rule is a DATE or DATETIME, then a datepicker directive is used.
+    // It is not possible to set the current values to the datepicker, but you
+    // can set the initial values. This is why it is created when the rule
+    // becomes active (see the partials/rule.html).
+    //
+    // This chunk of code ensures that the rule properties are synchronized
+    // with the TimeProperty objects required to build the datepickers.
+    if (this.clone.type === ngeo.AttributeType.DATE ||
+        this.clone.type === ngeo.AttributeType.DATETIME
+    ) {
+      // Watch 'expression'
+      this.unlisteners_.push(this.scope_.$watch(
+        () => this.clone.expression,
+        (newVal) => {
+          const value = (newVal === null) ? this.createDate_() : newVal;
+          this.timeValueMode.minValue = value;
+        }
+      ));
+      // Watch 'lowerBoundary'
+      this.unlisteners_.push(this.scope_.$watch(
+        () => this.clone.lowerBoundary,
+        (newVal) => {
+          const value = newVal === null ? this.createWeekAgoDate_() : newVal;
+          this.timeRangeMode.minValue = value;
+        }
+      ));
+      // Watch 'upperBoundary'
+      this.unlisteners_.push(this.scope_.$watch(
+        () => this.clone.upperBoundary,
+        (newVal) => {
+          const value = newVal === null ? this.createDate_() : newVal;
+          this.timeRangeMode.maxValue = value;
+        }
+      ));
+    }
 
     // In order to let the tool activate manager do its magic, the setting of
     // of the `active` property must be reset to true if it's true upon
@@ -138,6 +225,10 @@ ngeo.RuleController = class {
     this.active = false;
     this.ngeoToolActivateMgr_.unregisterTool(
       this.toolGroup, this.toolActivate_);
+    for (const unlistener of this.unlisteners_) {
+      unlistener();
+    }
+    this.unlisteners_.length = 0;
   }
 
   /**
@@ -194,6 +285,59 @@ ngeo.RuleController = class {
       choices.push(choice);
     }
     rule.expression = choices.length ? choices.join(',') : null;
+  }
+
+
+  /**
+   * @param {Object} date Date FIXME
+   * @export
+   */
+  onDateSelected(date) {
+    this.clone.expression = date['start'];
+  }
+
+  /**
+   * @param {Object} date Date FIXME
+   * @export
+   */
+  onDateRangeSelected(date) {
+    this.clone.lowerBoundary = date['start'];
+    this.clone.upperBoundary = date['end'];
+  }
+
+  /**
+   * @param {number=} opt_timeDelta Time delta to go back in the past.
+   * @return {string} ISO string of the date
+   * @private
+   */
+  createDate_(opt_timeDelta) {
+
+    const date = new Date();
+
+    if (opt_timeDelta !== undefined) {
+      const time = date.getTime() - opt_timeDelta;
+      date.setTime(time);
+    }
+
+    return date.toISOString();
+  }
+
+  /**
+   * @return {string} ISO string of the date
+   * @private
+   */
+  createWeekAgoDate_() {
+    return this.createDate_(1000 * 60 * 60 * 24 * 7); // A week ago date
+  }
+
+  /**
+   * @param {number} time Time.
+   * @return {string} Date
+   * @export
+   */
+  timeToDate(time) {
+    const date = new Date(time);
+    return date.toLocaleDateString();
   }
 
 };
