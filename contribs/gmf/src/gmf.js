@@ -23,6 +23,17 @@ gmf.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   }
 ]);
 
+gmf.module.config(['$animateProvider',
+  /**
+   * For performance reason, only perform animation on elements that have the
+   * `gmf-animatable` css class.
+   * @param {angular.$animateProvider} $animateProvider
+   */
+  function($animateProvider) {
+    $animateProvider.classNameFilter(/gmf-animatable/);
+  }
+]);
+
 /**
  * The default template based URL, used as it by the template cache.
  * @type {string}

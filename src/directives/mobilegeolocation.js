@@ -268,9 +268,13 @@ ngeo.MobileGeolocationController.prototype.setPosition_ = function(event) {
 
   if (this.follow_) {
     this.viewChangedByMe_ = true;
-    this.map_.getView().setCenter(position);
     if (this.zoom_ !== undefined) {
+      this.map_.getView().setCenter(position);
       this.map_.getView().setZoom(this.zoom_);
+    } else {
+      var polygon = /** @type {!ol.geom.Polygon} */ (this.geolocation_.getAccuracyGeometry());
+      var size = /** @type {!ol.Size} */ (this.map_.getSize());
+      this.map_.getView().fit(polygon, size);
     }
     this.viewChangedByMe_ = false;
   }

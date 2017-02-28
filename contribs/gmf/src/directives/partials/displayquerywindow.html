@@ -28,7 +28,7 @@
 
       <div
         ng-animate-swap="ctrl.animate"
-        class="gmf-displayquerywindow-slide-animation">
+        class="gmf-displayquerywindow-slide-animation gmf-animatable">
 
         <div class="gmf-displayquerywindow-header">
           <p
@@ -46,11 +46,9 @@
               ng-if="value !== undefined">
               <td
                 class="gmf-displayquerywindow-details-key"
-                title="{{key | translate}}"
                 >{{key | translate}}</td>
               <td
                 class="gmf-displayquerywindow-details-value"
-                title="{{value}}"
                 ng-bind-html="value | ngeoTrustHtml"
                 ></td>
             </tr>
