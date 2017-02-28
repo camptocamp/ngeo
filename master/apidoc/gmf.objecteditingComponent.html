@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: EditFeature</title>
+    <title>JSDoc: Class: objecteditingComponent <small>component:gmfObjectediting</small></title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: EditFeature</h1>
+    <h1 class="page-title">Class: objecteditingComponent <small>component:gmfObjectediting</small></h1>
 
     
 
@@ -28,8 +28,8 @@
 
 <header>
     
-        <h2 id="EditFeature">
-            <span class="ancestors">gmf.</span>EditFeature
+        <h2 id="objecteditingComponent">
+            <span class="ancestors">gmf.</span>objecteditingComponent
         </h2>
         
     
@@ -42,16 +42,24 @@
 
     
 
-    <h4 class="name" id="EditFeature"><span class="type-signature"></span>new EditFeature<span class="signature">($http, gmfLayersUrl)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="objecteditingComponent"><span class="type-signature"></span>new objecteditingComponent<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Service that provides methods to get, insert, update and delete vector
-features with the use of a GeoMapFish Protocol as back-end.</p>
-<p>The GeoJSON format is used when obtaining or sending features.</p>
+    <p>Component used to edit the geometry of a single feature using advanced
+tools. The geometry must be Multi.</p>
+<p>Example:</p>
+<pre class="prettyprint source"><code>&lt;gmf-objectediting
+    gmf-objectediting-active=&quot;ctrl.objectEditingActive&quot;
+    gmf-objectediting-feature=&quot;ctrl.objectEditingFeature&quot;
+    gmf-objectediting-geomtype=&quot;ctrl.objectEditingGeomType&quot;
+    gmf-objectediting-layernodeid=&quot;ctrl.objectEditingLayerNodeId&quot;
+    gmf-objectediting-map=&quot;::ctrl.map&quot;
+    gmf-objectediting-sketchfeatures=&quot;::ctrl.sketchFeatures&quot;>
+&lt;/gmf-objectediting></code></pre>
 </div>
 
 
@@ -62,7 +70,9 @@ features with the use of a GeoMapFish Protocol as back-end.</p>
 
 
 
-    <h5>Parameters:</h5>
+
+
+    <h5>HTML attributes:</h5>
     
 
 <table class="params">
@@ -87,10 +97,15 @@ features with the use of a GeoMapFish Protocol as back-end.</p>
 
         <tr>
             
-                <td class="name"><code>$http</code></td>
+                <td class="name"><code>gmf-objectediting-active</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
+
+
             
             </td>
 
@@ -98,17 +113,23 @@ features with the use of a GeoMapFish Protocol as back-end.</p>
 
             
 
-            <td class="description last"><p>Angular http service.</p></td>
+            <td class="description last">Whether the component is
+    active or not.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>gmfLayersUrl</code></td>
+                <td class="name"><code>gmf-objectediting-feature</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type"><a href="http://openlayers.org/en/master/apidoc/ol.Feature.html">ol.Feature</a></span>
+
+
             
             </td>
 
@@ -116,14 +137,104 @@ features with the use of a GeoMapFish Protocol as back-end.</p>
 
             
 
-            <td class="description last"><p>Url to the GeoMapFish layers service.</p></td>
+            <td class="description last">The feature to edit.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gmf-objectediting-geomtype</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The geometry type.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gmf-objectediting-layernodeid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The GMF layer node id.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gmf-objectediting-map</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="http://openlayers.org/en/master/apidoc/ol.Map.html">ol.Map</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The map.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gmf-objectediting-sketchfeatures</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="http://openlayers.org/en/master/apidoc/ol.Collection.html">ol.Collection</a>:<a href="-_.html"></a>.&lt;<a href="http://openlayers.org/en/master/apidoc/ol.Feature.html">ol.Feature</a>:<a href="-_.html"></a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Collection of temporary features being drawn by the tools.</td>
         </tr>
 
     
     </tbody>
 </table>
-
-
 
 
 
@@ -160,8 +271,8 @@ features with the use of a GeoMapFish Protocol as back-end.</p>
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js">contribs/gmf/src/services/editfeature.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js#L19">line 19</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/directives/objectediting.js">contribs/gmf/src/directives/objectediting.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/directives/objectediting.js#L79">line 79</a>
     </li></ul></dd>
     
 
@@ -202,794 +313,6 @@ features with the use of a GeoMapFish Protocol as back-end.</p>
 
     
 
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="deleteFeature"><span class="type-signature"></span>deleteFeature<span class="signature">(layerId, feature)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>layerId</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The layer id that contains the feature.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>feature</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The feature to delete.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-    
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js">contribs/gmf/src/services/editfeature.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js#L134">line 134</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Promise.</p>
-</div>
-
-
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="getFeaturesInExtent"><span class="type-signature"></span>getFeaturesInExtent<span class="signature">(layerIds, extent)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Build a query to the MapFish protocol to fetch features from a list
-of layer ids inside a specified extent.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>layerIds</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>List of layer ids to get the features from.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>extent</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The extent where to get the features from.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-    
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js">contribs/gmf/src/services/editfeature.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js#L49">line 49</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Promise.</p>
-</div>
-
-
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="getFeaturesWithComparisonFilters"><span class="type-signature"></span>getFeaturesWithComparisonFilters<span class="signature">(layerIds, filters)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Build a query to the MapFish protocol to fetch features from a list
-of layer ids and a list of comparison filters.</p>
-<p>This method is called in the ObjectEditing service, which is injected in
-the permalink service, i.e. it's always called. Since we don't have to
-define the url to the GMF Protocol (layers) a dummy promise returns an
-empty array of features if the url is not defined.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>layerIds</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>List of layer ids to get the features from.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>filters</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>List of comparison filters</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-    
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js">contribs/gmf/src/services/editfeature.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js#L68">line 68</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Promise.</p>
-</div>
-
-
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="insertFeatures"><span class="type-signature"></span>insertFeatures<span class="signature">(layerId, features)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>layerId</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The layer id that contains the feature.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>features</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>List of features to insert.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-    
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js">contribs/gmf/src/services/editfeature.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js#L102">line 102</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Promise.</p>
-</div>
-
-
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="updateFeature"><span class="type-signature"></span>updateFeature<span class="signature">(layerId, feature)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>layerId</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The layer id that contains the feature.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>feature</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The feature to update.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-    
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js">contribs/gmf/src/services/editfeature.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/contribs/gmf/src/services/editfeature.js#L118">line 118</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Promise.</p>
-</div>
-
-
-
-    
-
-
-
-        
     
 
     
