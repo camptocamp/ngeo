@@ -24,16 +24,31 @@
   </ul>
 </div>
 
-<div
-    ng-repeat="rule in filterCtrl.directedRules">
-  {{ rule.name }}
-</div>
+<ngeo-rule
+    ng-repeat="rule in filterCtrl.directedRules"
+    active="::filterCtrl.initialized"
+      class="ngeo-filter-rule-directed"
+    map="filterCtrl.map"
+    rule="rule"
+    tool-group="filterCtrl.toolGroup">
+</ngeo-rule>
 
 <hr ng-if="filterCtrl.directedRules.length" />
 
-<div
-    ng-repeat="rule in filterCtrl.customRules">
-  {{ rule.name }}
+<div ng-repeat="rule in filterCtrl.customRules">
+  <a
+      class="btn btn-xs btn-link ngeo-filter-rule-custom-rm-btn"
+      ng-click="filterCtrl.removeCustomRule(rule)"
+      href>
+    <span class="glyphicon glyphicon-remove"></span>
+  </a>
+  <ngeo-rule
+      active="::filterCtrl.initialized"
+      class="ngeo-filter-rule-custom"
+      map="filterCtrl.map"
+      rule="rule"
+      tool-group="filterCtrl.toolGroup">
+  </ngeo-rule>
 </div>
 
 <div class="dropdown">

@@ -112,6 +112,12 @@ gmfapp.MainController = class {
     });
 
     /**
+     * @type {string}
+     * @export
+     */
+    this.toolGroup = 'mapTools';
+
+    /**
      * @type {boolean}
      * @export
      */
@@ -120,7 +126,7 @@ gmfapp.MainController = class {
     const filterSelectorToolActivate = new ngeo.ToolActivate(
       this, 'filterSelectorActive');
     ngeoToolActivateMgr.registerTool(
-      'mapTools', filterSelectorToolActivate, true);
+      'dummyTools', filterSelectorToolActivate, true);
 
     /**
      * @type {boolean}
@@ -131,13 +137,18 @@ gmfapp.MainController = class {
     const dummyToolActivate = new ngeo.ToolActivate(
       this, 'dummyActive');
     ngeoToolActivateMgr.registerTool(
-      'mapTools', dummyToolActivate, false);
+      'dummyTools', dummyToolActivate, false);
 
     /**
      * @type {boolean}
      * @export
      */
     this.queryActive = true;
+
+    const queryToolActivate = new ngeo.ToolActivate(
+      this, 'queryActive');
+    ngeoToolActivateMgr.registerTool(
+      this.toolGroup, queryToolActivate, true);
 
     // initialize tooltips
     $('[data-toggle="tooltip"]').tooltip({

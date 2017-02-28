@@ -119,7 +119,7 @@ ngeo.DataSourcesHelper = class {
         goog.asserts.assert(
           featureType.complexType[0].name === element.type);
 
-        const complexContent = featureType.complexType[0].complexContent;
+        const complexContent = featureType['complexType'][0]['complexContent'];
         const attributes = new ngeo.format.WFSAttribute().read(complexContent);
 
         // Set the attributes in the data source

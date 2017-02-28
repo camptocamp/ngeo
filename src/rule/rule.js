@@ -254,6 +254,25 @@ ngeo.rule.Rule = class {
     return value;
   }
 
+  // === Other utility methods ===
+
+  /**
+   * Reset the following properties to `null`: expression, lowerBoundary,
+   * upperBoundary.
+   * @export
+   */
+  reset() {
+    if (this.expression !== null) {
+      this.expression = null;
+    }
+    if (this.lowerBoundary !== null) {
+      this.lowerBoundary = null;
+    }
+    if (this.upperBoundary !== null) {
+      this.upperBoundary = null;
+    }
+  }
+
 };
 
 

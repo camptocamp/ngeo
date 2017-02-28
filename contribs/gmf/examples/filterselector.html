@@ -39,6 +39,11 @@
 
 
       /* CSS for filter */
+
+      .gmf-filterselector-separator {
+        margin: 1.5rem 0 0.5rem 0;
+      }
+
       .ngeo-filter-condition-button,
       .ngeo-filter-condition-button:hover,
       .ngeo-filter-condition-button:focus {
@@ -56,6 +61,53 @@
 
       .ngeo-filter-condition-criteria-active {
         opacity: 1;
+      }
+
+      .ngeo-filter-rule-custom-rm-btn {
+        float: right;
+        margin: 0.4rem 0;
+      }
+
+      ngeo-rule {
+        display: block;
+        margin: 1rem 2.5rem 1rem 0;
+      }
+
+      ngeo-rule .dropdown > a.btn {
+        display: block;
+        text-align: left;
+      }
+
+      ngeo-rule .dropdown > a.btn > span.caret {
+        float: right;
+        margin: 0.8rem 0 0 0;
+      }
+
+      ngeo-rule .dropdown-menu {
+        padding: 1rem;
+      }
+
+      .ngeo-rule-btns {
+        float: right;
+      }
+
+      .ngeo-rule-type-select label {
+        width: 13.5rem;
+      }
+
+      .ngeo-rule-value {
+        color: #999999;
+        margin: 0.5rem;
+      }
+
+      .ngeo-rule-value a.btn {
+        color: #999999;
+        float: right;
+      }
+
+      .ngeo-rule-value a.btn:hover,
+      .ngeo-rule-value a.btn:focus {
+        color: #666666;
       }
 
 
@@ -106,7 +158,9 @@
 
       <gmf-filterselector
           ng-show="ctrl.filterSelectorActive === true"
-          active="ctrl.filterSelectorActive">
+          active="ctrl.filterSelectorActive"
+          map="ctrl.map"
+          tool-group="ctrl.toolGroup">
       </gmf-filterselector>
     </div>
 

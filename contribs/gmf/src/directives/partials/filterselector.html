@@ -10,10 +10,14 @@
     <option value="" translate>-- Layer to filter --</option>
   </select>
 
-  <ngeo-filter
-      ng-if="fsCtrl.customRules && fsCtrl.directedRules && fsCtrl.readyDataSource"
-      custom-rules="fsCtrl.customRules"
-      datasource="fsCtrl.readyDataSource"
-      directed-rules="fsCtrl.directedRules">
-  </ngeo-filter>
+  <div ng-if="fsCtrl.customRules && fsCtrl.directedRules && fsCtrl.readyDataSource">
+    <hr class="gmf-filterselector-separator" />
+    <ngeo-filter
+        custom-rules="fsCtrl.customRules"
+        datasource="fsCtrl.readyDataSource"
+        directed-rules="fsCtrl.directedRules"
+        map="fsCtrl.map"
+        tool-group="fsCtrl.toolGroup">
+    </ngeo-filter>
+  </div>
 </div>
