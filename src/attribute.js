@@ -16,15 +16,15 @@ ngeo.Attribute.setGeometryType = function(attribute, type) {
     attribute.type = ngeo.AttributeType.GEOMETRY;
     if (/^gml:Point/.exec(type)) {
       attribute.geomType = ol.geom.GeometryType.POINT;
-    } else if (/^gml:LineString/.exec(type)) {
+    } else if (/^gml:LineString|^gml:Curve/.exec(type)) {
       attribute.geomType = ol.geom.GeometryType.LINE_STRING;
-    } else if (/^gml:Polygon/.exec(type)) {
+    } else if (/^gml:Polygon|^gml:Surface/.exec(type)) {
       attribute.geomType = ol.geom.GeometryType.POLYGON;
     } else if (/^gml:MultiPoint/.exec(type)) {
       attribute.geomType = ol.geom.GeometryType.MULTI_POINT;
-    } else if (/^gml:MultiLineString/.exec(type)) {
+    } else if (/^gml:MultiLineString|^gml:MultiCurve/.exec(type)) {
       attribute.geomType = ol.geom.GeometryType.MULTI_LINE_STRING;
-    } else if (/^gml:MultiPolygon/.exec(type)) {
+    } else if (/^gml:MultiPolygon|^gml:MultiSurface/.exec(type)) {
       attribute.geomType = ol.geom.GeometryType.MULTI_POLYGON;
     }
   }
