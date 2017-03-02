@@ -33,7 +33,7 @@
     "async": "2.1.5",
     "bootstrap": "3.3.7",
     "clean-css-cli": "4.0.8",
-    "closure-util": "git://github.com/camptocamp/closure-util#9c108fbdd938df945b52ca4ed5e29a93c24f4ce2",
+    "closure-util": "git://github.com/camptocamp/closure-util#00c2b9b",
     "console-control-strings": "1.1.0",
     "corejs-typeahead": "1.1.1",
     "coveralls": "2.11.16",
