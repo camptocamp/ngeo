@@ -284,7 +284,8 @@ ngeo.rule.Rule.OperatorType = {
   EQUAL_TO: '=',
   GREATER_THAN: '>',
   GREATER_THAN_OR_EQUAL_TO: '>=',
-  LESSER_THAN: '',
+  LESSER_THAN: '<',
   LESSER_THAN_OR_EQUAL_TO: '<=',
-  LIKE: '~'
+  LIKE: '~',
+  NOT_EQUAL_TO: '!='
 };

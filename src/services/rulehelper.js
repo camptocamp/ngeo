@@ -52,6 +52,7 @@ ngeo.RuleHelper = class {
   createRule(attribute, opt_isCustom) {
 
     let rule;
+    const isCustom = opt_isCustom === true;
 
     /**
      * @type {string}
@@ -61,14 +62,56 @@ ngeo.RuleHelper = class {
     // Todo: support geometry
 
     switch (attribute.type) {
+      case ngeo.AttributeType.NUMBER:
+        if (isCustom) {
+          rule = new ngeo.rule.Rule({
+            name,
+            operator: ngeo.rule.Rule.OperatorType.EQUAL_TO,
+            operators: [
+              ngeo.rule.Rule.OperatorType.EQUAL_TO,
+              ngeo.rule.Rule.OperatorType.GREATER_THAN,
+              ngeo.rule.Rule.OperatorType.GREATER_THAN_OR_EQUAL_TO,
+              ngeo.rule.Rule.OperatorType.LESSER_THAN,
+              ngeo.rule.Rule.OperatorType.LESSER_THAN_OR_EQUAL_TO,
+              ngeo.rule.Rule.OperatorType.NOT_EQUAL_TO
+            ],
+            propertyName: attribute.name,
+            type: ngeo.AttributeType.TEXT
+          });
+        } else {
+          rule = new ngeo.rule.Rule({
+            name,
+            operator: ngeo.rule.Rule.OperatorType.BETWEEN,
+            propertyName: attribute.name,
+            type: ngeo.AttributeType.TEXT
+          });
+        }
+        break;
       case ngeo.AttributeType.DATE:
       case ngeo.AttributeType.DATETIME:
-        rule = new ngeo.rule.Rule({
-          name,
-          operator: ngeo.rule.Rule.OperatorType.BETWEEN,
-          propertyName: attribute.name,
-          type: attribute.type
-        });
+        if (isCustom) {
+          rule = new ngeo.rule.Rule({
+            name,
+            operator: ngeo.rule.Rule.OperatorType.EQUAL_TO,
+            operators: [
+              ngeo.rule.Rule.OperatorType.EQUAL_TO,
+              ngeo.rule.Rule.OperatorType.GREATER_THAN,
+              ngeo.rule.Rule.OperatorType.GREATER_THAN_OR_EQUAL_TO,
+              ngeo.rule.Rule.OperatorType.LESSER_THAN,
+              ngeo.rule.Rule.OperatorType.LESSER_THAN_OR_EQUAL_TO,
+              ngeo.rule.Rule.OperatorType.NOT_EQUAL_TO
+            ],
+            propertyName: attribute.name,
+            type: attribute.type
+          });
+        } else {
+          rule = new ngeo.rule.Rule({
+            name,
+            operator: ngeo.rule.Rule.OperatorType.BETWEEN,
+            propertyName: attribute.name,
+            type: attribute.type
+          });
+        }
         break;
       case ngeo.AttributeType.SELECT:
         rule = new ngeo.rule.Select({
@@ -78,11 +121,24 @@ ngeo.RuleHelper = class {
         });
         break;
       default:
-        rule = new ngeo.rule.Text({
-          name,
-          operator: ngeo.rule.Rule.OperatorType.LIKE,
-          propertyName: attribute.name
-        });
+        if (isCustom) {
+          rule = new ngeo.rule.Text({
+            name,
+            operator: ngeo.rule.Rule.OperatorType.LIKE,
+            operators: [
+              ngeo.rule.Rule.OperatorType.LIKE,
+              ngeo.rule.Rule.OperatorType.EQUAL_TO,
+              ngeo.rule.Rule.OperatorType.NOT_EQUAL_TO
+            ],
+            propertyName: attribute.name
+          });
+        } else {
+          rule = new ngeo.rule.Text({
+            name,
+            operator: ngeo.rule.Rule.OperatorType.LIKE,
+            propertyName: attribute.name
+          });
+        }
         break;
     }
 

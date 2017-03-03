@@ -43,6 +43,8 @@ ngeo.format.WFSAttribute = class {
     if (!ngeo.Attribute.setGeometryType(attribute, type)) {
       if (type === 'gml:TimeInstantType') {
         attribute.type = ngeo.AttributeType.DATETIME;
+      } else if (type === 'double') {
+        attribute.type = ngeo.AttributeType.NUMBER;
       } else {
         attribute.type = ngeo.AttributeType.TEXT;
       }
