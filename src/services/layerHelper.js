@@ -112,7 +112,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
   });
   const $q = this.$q_;
 
-  return this.$http_.get(capabilitiesURL).then((response) => {
+  return this.$http_.get(capabilitiesURL, {cache: true}).then((response) => {
     let result;
     if (response.data) {
       result = parser.read(response.data);
@@ -134,8 +134,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
 
       return $q.resolve(layer);
     }
-    return $q.reject(`Failed to get WMTS capabilities from ${
-        capabilitiesURL}`);
+    return $q.reject(`Failed to get WMTS capabilities from ${capabilitiesURL}`);
   });
 };
 

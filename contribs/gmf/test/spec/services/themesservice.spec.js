@@ -25,13 +25,17 @@ describe('gmf.Themes', () => {
   it('Get background layers', () => {
     const spy = jasmine.createSpy();
     gmfThemes.getBgLayers({}).then(spy);
+    const urls = [];
 
     $httpBackend.expectGET(treeUrl);
     themes.background_layers.forEach((bgLayer) => {
       const response = bgLayer.name == 'OSM' ? capabilities.map :
           capabilities.asitvd;
       $httpBackend.when('GET', bgLayer.url).respond(response);
-      $httpBackend.expectGET(bgLayer.url);
+      if (!urls.includes(bgLayer.url)) {
+        urls.push(bgLayer.url);
+        $httpBackend.expectGET(bgLayer.url);
+      }
     });
     gmfThemes.loadThemes();
     $httpBackend.flush();
