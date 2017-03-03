@@ -3,10 +3,16 @@ goog.provide('ngeo.ruleComponent');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
+goog.require('ngeo.DecorateInteraction');
+/** @suppress {extraRequire} */
+goog.require('ngeo.drawfeatureDirective');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.interaction.Modify');
+goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
+goog.require('ol.Collection');
 
 
 ngeo.RuleController = class {
@@ -15,6 +21,9 @@ ngeo.RuleController = class {
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
+   * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
+   *     interaction service.
+   * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
@@ -23,20 +32,17 @@ ngeo.RuleController = class {
    * @ngdoc controller
    * @ngname NgeoRuleController
    */
-  constructor(gettextCatalog, $scope, $timeout, ngeoRuleHelper,
-      ngeoToolActivateMgr
+  constructor(gettextCatalog, $scope, $timeout, ngeoDecorateInteraction,
+      ngeoFeatureHelper, ngeoRuleHelper, ngeoToolActivateMgr
   ) {
 
     // Binding properties
 
     /**
-     * Determines whether the component is active or not. When active, the
-     * dropdown menu is shown and the tool activate manager activates it
-     * as a tool.
-     * @type {boolean}
+     * @type {!ngeo.FeatureOverlay}
      * @export
      */
-    this.active;
+    this.featureOverlay;
 
     /**
      * @type {!ol.Map}
@@ -73,6 +79,18 @@ ngeo.RuleController = class {
     this.timeout_ = $timeout;
 
     /**
+     * @type {!ngeo.DecorateInteraction}
+     * @private
+     */
+    this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
+
+    /**
+     * @type {!ngeo.FeatureHelper}
+     * @private
+     */
+    this.ngeoFeatureHelper_ = ngeoFeatureHelper;
+
+    /**
      * @type {!ngeo.RuleHelper}
      * @private
      */
@@ -97,6 +115,7 @@ ngeo.RuleController = class {
     this.clone;
 
     const ot = ngeo.rule.Rule.OperatorType;
+    const sot = ngeo.rule.Rule.SpatialOperatorType;
 
     /**
      * @type {Object.<string, string>}
@@ -111,7 +130,10 @@ ngeo.RuleController = class {
       [ot.LESSER_THAN_OR_EQUAL_TO]: gettextCatalog.getString(
         'Is lesser than or equal to'),
       [ot.NOT_EQUAL_TO]: gettextCatalog.getString('Is not equal to'),
-      [ot.LIKE]: gettextCatalog.getString('Contains')
+      [ot.LIKE]: gettextCatalog.getString('Contains'),
+      [sot.CONTAINS]: gettextCatalog.getString('Contains'),
+      [sot.INTERSECTS]: gettextCatalog.getString('Intersects'),
+      [sot.WITHIN]: gettextCatalog.getString('Is inside of')
     };
 
     /**
@@ -150,13 +172,77 @@ ngeo.RuleController = class {
      * @type {!ngeo.ToolActivate}
      * @private
      */
-    this.toolActivate_ = new ngeo.ToolActivate(this, 'active');
+    this.toolActivate_;// = new ngeo.ToolActivate(this.rule, 'active');
 
     /**
      * @type {!Array.<Function>}
      * @private
      */
     this.unlisteners_ = [];
+
+
+    // Inner properties when dealing with a `ngeo.rule.Geometry`
+
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.drawActive = false;
+
+    /**
+     * @type {!ngeo.ToolActivate}
+     * @export
+     */
+    this.drawToolActivate = new ngeo.ToolActivate(this, 'drawActive');
+
+    /**
+     * @type {!ol.Collection.<!ol.Feature>}
+     * @export
+     */
+    this.drawnFeatures = new ol.Collection();
+
+    /**
+     * @type {!ol.Collection.<!ol.Feature>}
+     * @export
+     */
+    this.selectedFeatures = new ol.Collection();
+
+    /**
+     * @type {!ol.Collection.<!ol.interaction.Interaction>}
+     * @private
+     */
+    this.interactions_ = new ol.Collection();
+
+    /**
+     * @type {!ngeo.interaction.Modify}
+     * @private
+     */
+    this.modify_ = new ngeo.interaction.Modify({
+      features: this.selectedFeatures,
+      style: ngeoFeatureHelper.getVertexStyle(false)
+    });
+    this.interactions_.push(this.modify_);
+
+    /**
+     * @type {!ngeo.ToolActivate}
+     * @export
+     */
+    this.modifyToolActivate = new ngeo.ToolActivate(this.modify_, 'active');
+
+    /**
+     * The geometry type used by the clone feature.
+     * @type {?string}
+     * @export
+     */
+    this.geomType = null;
+
+    /**
+     * @type {!Array.<!ol.EventsKey>}
+     * @private
+     */
+    this.listenerKeys_ = [];
+
+    this.initializeInteractions_();
 
   }
 
@@ -168,8 +254,15 @@ ngeo.RuleController = class {
   $onInit() {
     this.clone = this.ngeoRuleHelper_.cloneRule(this.rule);
 
+    this.toolActivate_ = new ngeo.ToolActivate(this.rule, 'active');
+
     this.ngeoToolActivateMgr_.registerTool(
       this.toolGroup, this.toolActivate_);
+
+    this.scope_.$watch(
+      () => this.rule.active,
+      this.handleActiveChange_.bind(this)
+    );
 
     // If the rule is a DATE or DATETIME, then a datepicker directive is used.
     // It is not possible to set the current values to the datepicker, but you
@@ -183,7 +276,7 @@ ngeo.RuleController = class {
     ) {
       // Watch 'expression'
       this.unlisteners_.push(this.scope_.$watch(
-        () => this.clone.expression,
+        () => this.clone.getExpression(),
         (newVal) => {
           const value = newVal === null ? this.createDate_() : newVal;
           this.timeValueMode.minValue = value;
@@ -205,16 +298,69 @@ ngeo.RuleController = class {
           this.timeRangeMode.maxValue = value;
         }
       ));
-    }
+    } else if (this.clone.type === ngeo.AttributeType.GEOMETRY) {
 
-    // In order to let the tool activate manager do its magic, the setting of
-    // of the `active` property must be reset to true if it's true upon
-    // initialization.
-    if (this.active) {
-      this.active = false;
-      this.timeout_(() => {
-        this.active = true;
-      });
+      // Watch 'operator' of clone. Make sure any existing geometry is
+      // supported by the newly selected operator. If it doesn't, reset
+      // the expression, i.e. geometry.
+      this.unlisteners_.push(this.scope_.$watch(
+        () => this.clone.operator,
+        (newVal) => {
+          if (newVal &&
+              newVal === ngeo.rule.Rule.SpatialOperatorType.CONTAINS
+          ) {
+            const clone = goog.asserts.assertInstanceof(
+              this.clone, ngeo.rule.Geometry);
+            const geometry = clone.feature.getGeometry();
+            if (geometry) {
+              const geomType = this.ngeoFeatureHelper_.getType(clone.feature);
+              const supportedTypes = [
+                ngeo.GeometryType.CIRCLE,
+                ngeo.GeometryType.POLYGON,
+                ngeo.GeometryType.RECTANGLE
+              ];
+              if (!ol.array.includes(supportedTypes, geomType)) {
+                this.clone.setExpression(null);
+              }
+            }
+          }
+        }
+      ));
+
+      // Watch 'expression' of clone. Set 'geomType' property accordingly.
+      this.unlisteners_.push(this.scope_.$watch(
+        () => this.clone.expression,
+        (newVal) => {
+          if (newVal) {
+            const clone = goog.asserts.assertInstanceof(
+              this.clone, ngeo.rule.Geometry);
+            this.geomType = this.ngeoFeatureHelper_.getType(clone.feature);
+          } else {
+            this.geomType = null;
+          }
+        }
+      ));
+
+      // Watch both 'expression', 'active' and the modify control to be all
+      // thruthy. When that's the case, the clone feature is added to the
+      // selection collection.
+      this.unlisteners_.push(this.scope_.$watch(
+        () => {
+          const hasExpression = this.clone.getExpression() !== null;
+          const isActive = this.rule.active === true;
+          const modifyIsActive = this.modify_.getActive();
+          return hasExpression && isActive && modifyIsActive;
+        },
+        (newVal) => {
+          if (newVal) {
+            const clone = goog.asserts.assertInstanceof(
+              this.clone, ngeo.rule.Geometry);
+            this.selectedFeatures.push(clone.feature);
+          } else {
+            this.selectedFeatures.clear();
+          }
+        }
+      ));
     }
   }
 
@@ -222,23 +368,29 @@ ngeo.RuleController = class {
    * Called on destruction of the controller.
    */
   $onDestroy() {
-    this.active = false;
+    if (this.rule.active) {
+      this.rule.active = false;
+      // in $onDestroy, setting active to false will not call the handler. Call
+      // it manually to let it do its magic
+      this.handleActiveChange_(false, true);
+    }
     this.ngeoToolActivateMgr_.unregisterTool(
       this.toolGroup, this.toolActivate_);
-    for (const unlistener of this.unlisteners_) {
-      unlistener();
+    for (let i = 0, ii = this.unlisteners_.length; i < ii; i++) {
+      this.unlisteners_[i]();
     }
     this.unlisteners_.length = 0;
+    this.clone.destroy();
   }
 
   /**
    * @export
    */
   toggle() {
-    if (this.active) {
+    if (this.rule.active) {
       this.cancel();
     } else {
-      this.active = true;
+      this.rule.active = true;
     }
   }
 
@@ -248,7 +400,7 @@ ngeo.RuleController = class {
    */
   apply() {
     this.ngeoRuleHelper_.extendRule(this.clone, this.rule);
-    this.active = false;
+    this.rule.active = false;
   }
 
   /**
@@ -257,7 +409,7 @@ ngeo.RuleController = class {
    */
   cancel() {
     this.ngeoRuleHelper_.extendRule(this.rule, this.clone);
-    this.active = false;
+    this.rule.active = false;
   }
 
   /**
@@ -277,27 +429,27 @@ ngeo.RuleController = class {
    */
   toggleChoiceSelection(choice) {
     const rule = goog.asserts.assertInstanceof(this.clone, ngeo.rule.Select);
-    const choices = rule.expression ? rule.expression.split(',') : [];
+    const choices = rule.getExpression() ? rule.getExpression().split(',') : [];
     const idx = choices.indexOf(choice);
     if (idx > -1) {
       choices.splice(idx, 1);
     } else {
       choices.push(choice);
     }
-    rule.expression = choices.length ? choices.join(',') : null;
+    rule.setExpression(choices.length ? choices.join(',') : null);
   }
 
 
   /**
-   * @param {Object} date Date FIXME
+   * @param {Object} date Date
    * @export
    */
   onDateSelected(date) {
-    this.clone.expression = date['start'];
+    this.clone.setExpression(date['start']);
   }
 
   /**
-   * @param {Object} date Date FIXME
+   * @param {Object} date Date
    * @export
    */
   onDateRangeSelected(date) {
@@ -340,6 +492,158 @@ ngeo.RuleController = class {
     return date.toLocaleDateString();
   }
 
+
+  // === Methods used when bound to a `ngeo.rule.Geometry`
+
+
+  /**
+   * Called when the active property changes. Only used when this component
+   * is bound to a geometry rule.
+   *
+   * Manage the activation/deactivation of the interactions.
+   *
+   * @param {boolean} active Whether the component is active or not.
+   * @param {boolean} oldActive Whether the component was active or not.
+   * @private
+   */
+  handleActiveChange_(active, oldActive) {
+
+    if (!(this.rule instanceof ngeo.rule.Geometry) ||
+        !(this.clone instanceof ngeo.rule.Geometry) ||
+        active === oldActive
+    ) {
+      return;
+    }
+
+    const keys = this.listenerKeys_;
+    const uid = ['ngeo-rule-', ol.getUid(this)].join('-');
+    const toolMgr = this.ngeoToolActivateMgr_;
+
+    const ruleFeature = this.rule.feature;
+    const cloneFeature = this.clone.feature;
+
+    if (active) {
+      keys.push(
+        ol.events.listen(
+          this.drawnFeatures,
+          ol.CollectionEventType.ADD,
+          this.handleFeaturesAdd_,
+          this
+        )
+      );
+
+      this.featureOverlay.removeFeature(ruleFeature);
+      this.featureOverlay.addFeature(cloneFeature);
+
+      this.registerInteractions_();
+
+      toolMgr.registerTool(uid, this.drawToolActivate, false);
+      toolMgr.registerTool(uid, this.modifyToolActivate, true);
+
+      this.modify_.setActive(true);
+
+      if (cloneFeature.getGeometry()) {
+        this.ngeoFeatureHelper_.setStyle(cloneFeature, true);
+      }
+
+    } else {
+      cloneFeature.setStyle(null);
+
+      ol.Observable.unByKey(keys);
+
+      toolMgr.unregisterTool(uid, this.drawToolActivate);
+      toolMgr.unregisterTool(uid, this.modifyToolActivate);
+
+      this.drawActive = false;
+      this.modify_.setActive(false);
+
+      this.unregisterInteractions_();
+
+      this.featureOverlay.removeFeature(cloneFeature);
+      this.featureOverlay.addFeature(ruleFeature);
+
+      this.selectedFeatures.clear();
+    }
+  }
+
+  /**
+   * Initialize interactions by setting them inactive and decorating them
+   * @private
+   */
+  initializeInteractions_() {
+    this.interactions_.forEach(function(interaction) {
+      interaction.setActive(false);
+      this.ngeoDecorateInteraction_(interaction);
+    }, this);
+  }
+
+  /**
+   * Register interactions by adding them to the map
+   * @private
+   */
+  registerInteractions_() {
+    this.interactions_.forEach(function(interaction) {
+      this.map.addInteraction(interaction);
+    }, this);
+  }
+
+  /**
+   * Register interactions by removing them to the map
+   * @private
+   */
+  unregisterInteractions_() {
+    this.interactions_.forEach(function(interaction) {
+      this.map.removeInteraction(interaction);
+    }, this);
+  }
+
+  /**
+   * @param {ol.Collection.Event} evt Event.
+   * @private
+   */
+  handleFeaturesAdd_(evt) {
+    // timeout to prevent double-click to zoom the map
+    this.timeout_(() => {
+
+      const clone = goog.asserts.assertInstanceof(
+        this.clone, ngeo.rule.Geometry);
+      const feature = clone.feature;
+
+      // (1) Apply geometry
+      const drawnFeature = goog.asserts.assertInstanceof(
+        evt.element,
+        ol.Feature
+      );
+      const geometry = goog.asserts.assertInstanceof(
+        drawnFeature.getGeometry(),
+        ol.geom.Geometry
+      );
+      clone.geometry = geometry;
+
+      // (2) Deactivate draw tools
+      this.drawActive = false;
+
+      // (3) Set properties, then style
+      const properties = this.ngeoFeatureHelper_.getNonSpatialProperties(
+        drawnFeature);
+      this.ngeoFeatureHelper_.clearNonSpatialProperties(feature);
+      feature.setProperties(properties);
+      this.ngeoFeatureHelper_.setStyle(feature, true);
+
+      this.scope_.$apply();
+    });
+  }
+
+  /**
+   * Return the type of geometry used by the rule feature. Used in the template.
+   * @return {string} Geometry type.
+   * @export
+   */
+  getRuleGeometryType() {
+    const rule = goog.asserts.assertInstanceof(this.rule, ngeo.rule.Geometry);
+    return this.ngeoFeatureHelper_.getType(rule.feature);
+  }
+
 };
 
 
@@ -353,7 +657,7 @@ ngeo.RuleController = class {
  */
 ngeo.module.component('ngeoRule', {
   bindings: {
-    active: '<',
+    featureOverlay: '<',
     map: '<',
     rule: '<',
     toolGroup: '<'
