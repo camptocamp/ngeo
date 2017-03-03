@@ -74,7 +74,7 @@ ngeo.RuleController = class {
 
     /**
      * @type {!ngeo.RuleHelper}
-      * @private
+     * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
@@ -117,7 +117,7 @@ ngeo.RuleController = class {
     /**
      * Time property used when the rule is of type 'date|datetime' and uses
      * a range of date.
-     * @type {ngeox.TimeProperty}
+     * @type {!ngeox.TimeProperty}
      * @export
      */
     this.timeRangeMode = {
@@ -133,7 +133,7 @@ ngeo.RuleController = class {
     /**
      * Time property used when the rule is of type 'date|datetime' and uses
      * a single date.
-     * @type {ngeox.TimeProperty}
+     * @type {!ngeox.TimeProperty}
      * @export
      */
     this.timeValueMode = {
@@ -153,7 +153,7 @@ ngeo.RuleController = class {
     this.toolActivate_ = new ngeo.ToolActivate(this, 'active');
 
     /**
-     * @type {Array.<function()>}
+     * @type {!Array.<Function>}
      * @private
      */
     this.unlisteners_ = [];
@@ -185,7 +185,7 @@ ngeo.RuleController = class {
       this.unlisteners_.push(this.scope_.$watch(
         () => this.clone.expression,
         (newVal) => {
-          const value = (newVal === null) ? this.createDate_() : newVal;
+          const value = newVal === null ? this.createDate_() : newVal;
           this.timeValueMode.minValue = value;
         }
       ));
