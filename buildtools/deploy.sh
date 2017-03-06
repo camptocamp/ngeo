@@ -1,5 +1,7 @@
 #!/bin/bash -ex
 
+make .build/node_modules.timestamp
+
 if [ "${EXAMPLES_NGEO}" == TRUE ]
 then
     make examples-hosted-ngeo .build/examples-hosted/index.html
