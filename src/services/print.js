@@ -84,7 +84,7 @@ ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
  *     let dpi = 72;
  *     let layout = 'A4 portrait';
  *     let format = 'pdf';
- *     let reportSpec = print.createSpec(map, scale, dpi, layout, format {
+ *     let reportSpec = print.createSpec(map, scale, dpi, layout, format, {
  *       'title': 'A title for my report',
  *       'rotation': 45 // degree
  *     });
