@@ -5,8 +5,11 @@ goog.require('gmf');
 goog.require('gmf.Authentication');
 /** @suppress {extraRequire} */
 goog.require('gmf.DataSourcesHelper');
+goog.require('gmf.SavedFilters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filterComponent');
+/** @suppress {extraRequire} */
+goog.require('ngeo.modalDirective');
 goog.require('ngeo.Notification');
 goog.require('ngeo.RuleHelper');
 goog.require('ol.CollectionEventType');
@@ -16,9 +19,11 @@ gmf.FilterselectorController = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
+   * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {gmf.DataSourcesHelper} gmfDataSourcesHelper Gmf data sources
    *     helper service.
+   * @param {gmf.SavedFilters} gmfSavedFilters Gmf saved filters service.
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
    * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
@@ -29,8 +34,9 @@ gmf.FilterselectorController = class {
    * @ngdoc controller
    * @ngname GmfFilterselectorController
    */
-  constructor($scope, gettextCatalog, gmfDataSourcesHelper, gmfUser,
-      ngeoNotification, ngeoFeatureOverlayMgr, ngeoRuleHelper
+  constructor($scope, $timeout, gettextCatalog, gmfDataSourcesHelper,
+      gmfSavedFilters, gmfUser, ngeoNotification, ngeoFeatureOverlayMgr,
+      ngeoRuleHelper
   ) {
 
     // Binding properties
@@ -62,6 +68,12 @@ gmf.FilterselectorController = class {
     // Injected properties
 
     /**
+     * @type {!angular.$timeout}
+     * @private
+     */
+    this.timeout_ = $timeout;
+
+    /**
      * @type {angularGettext.Catalog}
      * @private
      */
@@ -72,6 +84,23 @@ gmf.FilterselectorController = class {
      * @private
      */
     this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
+
+    /**
+     * @type {gmf.SavedFilters}
+     * @export
+     */
+    this.gmfSavedFilters = gmfSavedFilters;
+
+    // Close manage modal if the last item is removed.
+    $scope.$watchCollection(
+      () => this.gmfSavedFilters.currentDataSourceItems,
+      () => {
+        if (this.gmfSavedFilters.currentDataSourceItems.length === 0 &&
+           this.saveFilterManageModalShown) {
+          this.saveFilterManageModalShown = false;
+        }
+      }
+    );
 
     /**
      * @type {gmfx.User}
@@ -108,13 +137,19 @@ gmf.FilterselectorController = class {
     // Inner properties
 
     /**
-     * @type {Array.<ngeo.rule.Rule>}
+     * @type {boolean}
+     * @export
+     */
+    this.aRuleIsActive = false;
+
+    /**
+     * @type {?Array.<!ngeo.rule.Rule>}
      * @export
      */
     this.customRules = null;
 
     /**
-     * @type {Array.<ngeo.rule.Rule>}
+     * @type {?Array.<!ngeo.rule.Rule>}
      * @export
      */
     this.directedRules = null;
@@ -156,6 +191,32 @@ gmf.FilterselectorController = class {
      * @private
      */
     this.ruleCache_ = {};
+
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.saveFilterSaveModalShown = false;
+
+    // When the modal closes, reset name
+    $scope.$watch(
+      () => this.saveFilterSaveModalShown,
+      () => {
+        this.saveFilterName = '';
+      }
+    );
+
+    /**
+     * @type {string}
+     * @export
+     */
+    this.saveFilterName = '';
+
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.saveFilterManageModalShown = false;
 
     /**
      * The data source that has been selected in the list and that requires
@@ -398,6 +459,7 @@ gmf.FilterselectorController = class {
     this.customRules = null;
     this.directedRules = null;
     this.readyDataSource = null;
+    this.gmfSavedFilters.currentDataSourceId = null;
 
     // No need to do anything if no data source is selected
     if (!dataSource) {
@@ -427,7 +489,7 @@ gmf.FilterselectorController = class {
           for (const attribute of attributes) {
             if (ol.array.includes(directedAttributes, attribute.name)) {
               item.directedRules.push(
-                this.ngeoRuleHelper_.createRule(attribute)
+                this.ngeoRuleHelper_.createRuleFromAttribute(attribute)
               );
             }
           }
@@ -437,6 +499,8 @@ gmf.FilterselectorController = class {
       this.customRules = item.customRules;
       this.directedRules = item.directedRules;
       this.readyDataSource = dataSource;
+      this.gmfSavedFilters.currentDataSourceId = dataSource.id;
+
     });
   }
 
@@ -457,6 +521,103 @@ gmf.FilterselectorController = class {
   setRuleCacheItem_(dataSource, item) {
     this.ruleCache_[dataSource.id] = item;
   }
+
+  /**
+   * @export
+   */
+  saveFilterShowModal() {
+    this.saveFilterSaveModalShown = true;
+  }
+
+  /**
+   * @export
+   */
+  saveFilterSave() {
+
+    const name = this.saveFilterName;
+    const dataSource = goog.asserts.assert(this.readyDataSource);
+    const dataSourceId = dataSource.id;
+    const alreadyExist = (this.gmfSavedFilters.indexOfItem(
+      name, dataSourceId) !== -1);
+    const condition = dataSource.filterCondition;
+
+    const msg = this.gettextCatalog_.getString(
+      `A filter with the same name already exists.
+      Do you want to overwrite it?`
+    );
+    if (!alreadyExist || confirm(msg)) {
+      // (1) Serialize the existing custom and directed rules
+      const customRules = this.customRules ?
+            this.ngeoRuleHelper_.serializeRules(this.customRules) : [];
+      const directedRules = this.directedRules ?
+            this.ngeoRuleHelper_.serializeRules(this.directedRules) : [];
+
+      // (2) Ask the service to save it
+      const item = /** @type {!gmf.SavedFilters.FilterItem} */ ({
+        condition,
+        customRules,
+        dataSourceId,
+        directedRules,
+        name
+      });
+      this.gmfSavedFilters.save(item);
+
+      // (3) Close popup, which resets the name
+      this.saveFilterSaveModalShown = false;
+    }
+  }
+
+  /**
+   * Load a saved filter item, replacing the current rules.
+   * @param {!gmf.SavedFilters.FilterItem} filterItem Filter item.
+   * @export
+   */
+  saveFilterLoadItem(filterItem) {
+
+    const dataSource = goog.asserts.assert(this.readyDataSource);
+
+    // (1) Reset current rules
+    this.customRules = null;
+    this.directedRules = null;
+
+    const customRules = this.ngeoRuleHelper_.createRules(
+      filterItem.customRules);
+    const directedRules = this.ngeoRuleHelper_.createRules(
+      filterItem.directedRules);
+
+    // Timeout, which ensures the destruction of the previous filter component
+    // and the creation of a new one
+    this.timeout_(() => {
+      // (2) Set rules
+      this.customRules = customRules;
+      this.directedRules = directedRules;
+
+      // (3) Set condition
+      dataSource.filterCondition = filterItem.condition;
+
+      // (4) Update cache item
+      const cacheItem = goog.asserts.assert(this.getRuleCacheItem_(dataSource));
+      cacheItem.customRules = customRules;
+      cacheItem.directedRules = directedRules;
+    });
+  }
+
+  /**
+   * @export
+   */
+  saveFilterManage() {
+    this.saveFilterManageModalShown = true;
+  }
+
+  /**
+   * Remove a saved filter item.
+   * @param {!gmf.SavedFilters.FilterItem} item Filter item.
+   * @export
+   */
+  saveFilterRemoveItem(item) {
+    this.gmfSavedFilters.remove(item);
+  }
+
 };
 
 

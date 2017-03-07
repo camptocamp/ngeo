@@ -497,13 +497,13 @@ ngeo.RuleController = class {
 
 
   /**
-   * Called when the active property changes. Only used when this component
-   * is bound to a geometry rule.
+   * Called when the active property of a rule changes. Only used when this
+   * component is bound to a geometry rule.
    *
    * Manage the activation/deactivation of the interactions.
    *
-   * @param {boolean} active Whether the component is active or not.
-   * @param {boolean} oldActive Whether the component was active or not.
+   * @param {boolean} active Whether the rule is active or not.
+   * @param {boolean} oldActive Whether the rule was active or not.
    * @private
    */
   handleActiveChange_(active, oldActive) {
