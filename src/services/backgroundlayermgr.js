@@ -47,7 +47,7 @@ ol.inherits(ngeo.BackgroundEvent, ol.events.Event);
  * Provides a service for setting/unsetting background layers
  * in maps.
  *
- * The notion of background/base layers doesn't exist in OpenLayers 3. This
+ * The notion of background/base layers doesn't exist in OpenLayers. This
  * service adds that notion.
  *
  * Setting a background layer to map is done with the `set` function:
