@@ -834,8 +834,8 @@ gmf.Permalink.prototype.initLayers_ = function() {
      */
     var firstLevelGroups = [];
     var theme;
-    // check if we have the groups in the permalink
-    var groupsNames = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.TREE_GROUPS);
+    // Check if we have the groups in the permalink
+    var groupsNames = this.ngeoLocation_.getParam(gmf.PermalinkParam.TREE_GROUPS);
     if (!groupsNames) {
       theme = gmf.Themes.findThemeByName(themes, themeName);
       if (theme) {
