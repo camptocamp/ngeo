@@ -38,14 +38,15 @@
     position: relative;
     overflow: hidden;
     // height with 2em: 1em per text (title, subtitle)
-    height: calc(3 * @app-margin + @half-app-margin ~"+ 2em");
-    max-height: 10 * @map-tools-size;
+    height: calc(4 * @app-margin + @half-app-margin ~"+ 2em");
     margin: 0;
     transition: 0.3s ease-in all;
     .gmf-displayquerywindow-slide-animation {
+      display: flex;
+      flex-direction: column;
       height: 100%;
       width: 100%;
-      padding: @app-margin @app-margin 0;
+      padding: @app-margin;
       text-align: left;
       white-space: nowrap;
       overflow: hidden;
@@ -60,6 +61,9 @@
   }
   .gmf-displayquerywindow-animation-container-detailed {
     height: @displayquerywindow-detailed-header-height + @displayquerywindow-detailed-details-height + @app-margin * 3;
+    .gmf-displayquerywindow-details {
+      display: block;
+    }
   }
   .gmf-displayquerywindow-next {
     .gmf-displayquerywindow-slide-animation {
@@ -89,21 +93,12 @@
       }
     }
   }
-  .gmf-displayquerywindow-header {
-    height: @displayquerywindow-detailed-header-height;
-    margin-bottom: @app-margin;
-    p {
-      margin-bottom: @app-margin;
-    }
-  }
   .gmf-displayquerywindow-title {
     font-weight: bold;
   }
-  .gmf-displayquerywindow-subtitle {
-    min-height: 1em;
-  }
   .gmf-displayquerywindow-details {
-    height: @displayquerywindow-detailed-details-height;
+    display: none;
+    flex: 1;
     line-height: @displayquerywindow-detailed-details-line-height;
     overflow-x: hidden;
     overflow-y: auto;
@@ -125,7 +120,6 @@
     }
   }
   .gmf-displayquerywindow-navigate {
-    margin-top: @app-margin;
     border-top: solid 1px @border-color;
     height: @map-tools-size;
     display: flex;
@@ -213,9 +207,6 @@
   .gmf-displayquerywindow-mobile {
     .gmf-displayquerywindow-animation-container-detailed {
       height: (@displayquerywindow-detailed-header-height + @displayquerywindow-detailed-details-height / 2 + @app-margin * 3);
-    }
-    .gmf-displayquerywindow-details {
-      height: @displayquerywindow-detailed-details-height / 2;
     }
   }
 }
