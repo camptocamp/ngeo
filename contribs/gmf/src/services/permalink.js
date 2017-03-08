@@ -458,7 +458,7 @@ gmf.Permalink.prototype.getMapCenter = function() {
   var x = parseFloat(this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.MAP_X));
   var y = parseFloat(this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.MAP_Y));
 
-  if (x !== undefined && y !== undefined) {
+  if (!isNaN(x) && !isNaN(y)) {
     center = [x,y];
     if (this.sourceProjections_ !== null) {
       var targetProjection = this.map_.getView().getProjection();
@@ -480,12 +480,8 @@ gmf.Permalink.prototype.getMapCenter = function() {
  * @export
  */
 gmf.Permalink.prototype.getMapZoom = function() {
-  var zoom = null;
-  var z = parseInt(this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.MAP_Z), 10);
-  if (z !== undefined) {
-    zoom = z;
-  }
-  return zoom;
+  var zoom = parseInt(this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.MAP_Z), 10);
+  return isNaN(zoom) ? null : zoom;
 };
 
 
