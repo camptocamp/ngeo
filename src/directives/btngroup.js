@@ -125,7 +125,7 @@ ngeo.module.controller('ngeoBtnGroupController', ngeo.BtnGroupController);
  *     <button ngeo-btn class="btn" ng-model="ctrl.interaction.active"></button>
  *
  * This example is about creating a Bootstrap button that can pressed/depressed
- * to activate/deactivate an OpenLayers 3 interaction.
+ * to activate/deactivate an OpenLayers interaction.
  *
  * @htmlAttribute {*} ng-model Any property on the scope. Ideally a boolean.
  * @param {angular.$parse} $parse Angular parse service.

@@ -1,13 +1,13 @@
 # ngeo
 
 ngeo is a JS library that aims to ease the development of applications based on
-[AngularJS](https://angularjs.org/) and [OpenLayers 3](http://openlayers.org).
+[AngularJS](https://angularjs.org/) and [OpenLayers](http://openlayers.org).
 
 More specifically, ngeo is a collection of AngularJS Directives and Services
-useful for developing applications combining AngularJS and OpenLayers 3.
+useful for developing applications combining AngularJS and OpenLayers.
 
 Through the Directives, Services and examples it provides, ngeo defines
-a specific way to combine Angular and OpenLayers 3 in an application.
+a specific way to combine Angular and OpenLayers in an application.
 
 ngeo uses [Closure Tools](https://developers.google.com/closure/): the
 JavaScript code of ngeo uses Closure Library, and it is checked and compressed

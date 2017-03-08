@@ -224,7 +224,7 @@ ngeo.module.directive('ngeoControl', ngeo.controlDirective);
 
 ## Custom `ol.Object` properties
 
-OpenLayers 3 allows passing custom properties to classes inheriting from
+OpenLayers allows passing custom properties to classes inheriting from
 `ol.Object`. For example:
 
 ```js
