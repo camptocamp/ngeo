@@ -1811,6 +1811,14 @@ ngeox.rule.RuleOptions = function() {};
 
 
 /**
+ * Whether the rule is active or not. Used by the `ngeo-rule` component.
+ * Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.active;
+
+
+/**
  * The expression of the rule. The expression and boundaries are mutually
  * exclusives.
  * @type {boolean|number|string|undefined}

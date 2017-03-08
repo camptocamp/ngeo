@@ -1,6 +1,7 @@
 goog.provide('ngeo.RuleHelper');
 
 goog.require('ngeo');
+goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Select');
 goog.require('ngeo.rule.Text');
@@ -13,18 +14,25 @@ ngeo.RuleHelper = class {
    * objects.
    *
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
+   * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
    * @struct
    * @ngdoc service
    * @ngname ngeoRuleHelper
    * @ngInject
    */
-  constructor(gettextCatalog) {
+  constructor(gettextCatalog, ngeoFeatureHelper) {
 
     /**
      * @type {!angularGettext.Catalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
+
+    /**
+     * @type {!ngeo.FeatureHelper}
+     * @private
+     */
+    this.ngeoFeatureHelper_ = ngeoFeatureHelper;
   }
 
   /**
@@ -62,31 +70,6 @@ ngeo.RuleHelper = class {
     // Todo: support geometry
 
     switch (attribute.type) {
-      case ngeo.AttributeType.NUMBER:
-        if (isCustom) {
-          rule = new ngeo.rule.Rule({
-            name,
-            operator: ngeo.rule.Rule.OperatorType.EQUAL_TO,
-            operators: [
-              ngeo.rule.Rule.OperatorType.EQUAL_TO,
-              ngeo.rule.Rule.OperatorType.GREATER_THAN,
-              ngeo.rule.Rule.OperatorType.GREATER_THAN_OR_EQUAL_TO,
-              ngeo.rule.Rule.OperatorType.LESSER_THAN,
-              ngeo.rule.Rule.OperatorType.LESSER_THAN_OR_EQUAL_TO,
-              ngeo.rule.Rule.OperatorType.NOT_EQUAL_TO
-            ],
-            propertyName: attribute.name,
-            type: ngeo.AttributeType.TEXT
-          });
-        } else {
-          rule = new ngeo.rule.Rule({
-            name,
-            operator: ngeo.rule.Rule.OperatorType.BETWEEN,
-            propertyName: attribute.name,
-            type: ngeo.AttributeType.TEXT
-          });
-        }
-        break;
       case ngeo.AttributeType.DATE:
       case ngeo.AttributeType.DATETIME:
         if (isCustom) {
@@ -110,6 +93,44 @@ ngeo.RuleHelper = class {
             operator: ngeo.rule.Rule.OperatorType.BETWEEN,
             propertyName: attribute.name,
             type: attribute.type
+          });
+        }
+        break;
+      case ngeo.AttributeType.GEOMETRY:
+        rule = new ngeo.rule.Geometry({
+          name,
+          operator: ngeo.rule.Rule.SpatialOperatorType.WITHIN,
+          operators: [
+            ngeo.rule.Rule.SpatialOperatorType.CONTAINS,
+            ngeo.rule.Rule.SpatialOperatorType.INTERSECTS,
+            ngeo.rule.Rule.SpatialOperatorType.WITHIN
+          ],
+          propertyName: attribute.name,
+          type: attribute.type
+        });
+        break;
+      case ngeo.AttributeType.NUMBER:
+        if (isCustom) {
+          rule = new ngeo.rule.Rule({
+            name,
+            operator: ngeo.rule.Rule.OperatorType.EQUAL_TO,
+            operators: [
+              ngeo.rule.Rule.OperatorType.EQUAL_TO,
+              ngeo.rule.Rule.OperatorType.GREATER_THAN,
+              ngeo.rule.Rule.OperatorType.GREATER_THAN_OR_EQUAL_TO,
+              ngeo.rule.Rule.OperatorType.LESSER_THAN,
+              ngeo.rule.Rule.OperatorType.LESSER_THAN_OR_EQUAL_TO,
+              ngeo.rule.Rule.OperatorType.NOT_EQUAL_TO
+            ],
+            propertyName: attribute.name,
+            type: ngeo.AttributeType.TEXT
+          });
+        } else {
+          rule = new ngeo.rule.Rule({
+            name,
+            operator: ngeo.rule.Rule.OperatorType.BETWEEN,
+            propertyName: attribute.name,
+            type: ngeo.AttributeType.TEXT
           });
         }
         break;
@@ -156,7 +177,10 @@ ngeo.RuleHelper = class {
 
     let clone;
 
-    const expression = rule.expression !== null ? rule.expression : undefined;
+    let expression = rule.getExpression();
+    if (expression === null) {
+      expression = undefined;
+    }
     const isCustom = rule.isCustom;
     const lowerBoundary = rule.lowerBoundary !== null ? rule.lowerBoundary :
           undefined;
@@ -180,7 +204,12 @@ ngeo.RuleHelper = class {
       upperBoundary
     };
 
-    if (rule instanceof ngeo.rule.Select) {
+    if (rule instanceof ngeo.rule.Geometry) {
+      clone = new ngeo.rule.Geometry(options);
+      clone.feature.setProperties(
+        this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature)
+      );
+    } else if (rule instanceof ngeo.rule.Select) {
       options.choices = rule.choices.slice(0);
       clone = new ngeo.rule.Select(options);
     } else if (rule instanceof ngeo.rule.Text) {
@@ -204,8 +233,8 @@ ngeo.RuleHelper = class {
    */
   extendRule(sourceRule, destRule) {
 
-    if (destRule.expression !== sourceRule.expression) {
-      destRule.expression = sourceRule.expression;
+    if (destRule.getExpression() !== sourceRule.getExpression()) {
+      destRule.setExpression(sourceRule.getExpression());
     }
 
     if (destRule.lowerBoundary !== sourceRule.lowerBoundary) {
@@ -218,6 +247,15 @@ ngeo.RuleHelper = class {
 
     if (destRule.upperBoundary !== sourceRule.upperBoundary) {
       destRule.upperBoundary = sourceRule.upperBoundary;
+    }
+
+    if (sourceRule instanceof ngeo.rule.Geometry &&
+       destRule instanceof ngeo.rule.Geometry
+    ) {
+      this.ngeoFeatureHelper_.clearNonSpatialProperties(destRule.feature);
+      destRule.feature.setProperties(
+        this.ngeoFeatureHelper_.getNonSpatialProperties(sourceRule.feature)
+      );
     }
   }
 

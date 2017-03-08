@@ -4,6 +4,7 @@ goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ruleComponent');
 goog.require('ngeo.RuleHelper');
+goog.require('ngeo.rule.Geometry');
 
 
 ngeo.FilterController = class {
@@ -38,6 +39,12 @@ ngeo.FilterController = class {
      * @export
      */
     this.directedRules;
+
+    /**
+     * @type {!ngeo.FeatureOverlay}
+     * @export
+     */
+    this.featureOverlay;
 
     /**
      * @type {!ol.Map}
@@ -100,16 +107,6 @@ ngeo.FilterController = class {
     this.geometryAttributes = [];
 
     /**
-     * Flag that is set after initialization of the filter directive. Before
-     * the initialization is completed, rules are created with the `active`
-     * property set to `false`. After that, newly created rules are created
-     * with the `active` property set to `true`.
-     * @type {boolean}
-     * @export
-     */
-    this.initialized = false;
-
-    /**
      * List of other attribute names.
      * @type {Array.<!ngeox.Attribute>}
      * @export
@@ -125,6 +122,7 @@ ngeo.FilterController = class {
    * lists: geometry and the others. Then, apply the filters to the data source.
    */
   $onInit() {
+    // (1) Separate the attributes in 2: geometry and the others.
     const attributes = goog.asserts.assert(this.datasource.attributes);
     for (const attribute of attributes) {
       if (attribute.type === ngeo.AttributeType.GEOMETRY) {
@@ -134,11 +132,14 @@ ngeo.FilterController = class {
       }
     }
 
-    this.apply();
+    // (2) All rules that have geometry are added in the featureOverlay
+    const rules = [].concat(this.customRules, this.directedRules);
+    for (const rule of rules) {
+      this.registerGeometryRule_(rule);
+    }
 
-    this.timeout_(() => {
-      this.initialized = true;
-    });
+    // (3) Apply the filters
+    this.apply();
   }
 
 
@@ -146,11 +147,13 @@ ngeo.FilterController = class {
    * Called on destruction of the controller.
    *
    * Reset the `filterRules` of the data source back to `null`.
+   * Clear the feature overlay.
    */
   $onDestroy() {
     if (this.datasource.filterRules !== null) {
       this.datasource.filterRules = null;
     }
+    this.featureOverlay.clear();
   }
 
 
@@ -172,14 +175,21 @@ ngeo.FilterController = class {
 
 
   /**
+   * Create and add a new custom rule using an attribute. The rule is activated
+   * after being created.
    * @param {!ngeox.Attribute} attribute Attribute to use to create the custom
    * rule.
    * @export
    */
   createAndAddCustomRule(attribute) {
-    this.customRules.push(
-      this.ngeoRuleHelper_.createRule(attribute, true)
-    );
+    const rule = this.ngeoRuleHelper_.createRule(attribute, true);
+    this.registerGeometryRule_(rule);
+    this.customRules.push(rule);
+
+    // Activate asynchronously allows the toolActivate manager to do its magic,
+    this.timeout_(() => {
+      rule.active = true;
+    }, 1);
   }
 
 
@@ -194,11 +204,40 @@ ngeo.FilterController = class {
   }
 
   /**
+   * Remove a custom rule. Deactivate it first, then give time to the
+   * `ngeo-rule` directive to manage the deactivation of the rule.
    * @param {!ngeo.rule.Rule} rule Custom rule to remove.
    * @export
    */
   removeCustomRule(rule) {
-    ol.array.remove(this.customRules, rule);
+    rule.active = false;
+    this.timeout_(() => {
+      ol.array.remove(this.customRules, rule);
+      this.unregisterGeometryRule_(rule);
+      rule.destroy();
+    });
+  }
+
+  /**
+   * @param {!ngeo.rule.Rule} rule Rule.
+   * @export
+   */
+  registerGeometryRule_(rule) {
+    if (!(rule instanceof ngeo.rule.Geometry)) {
+      return;
+    }
+    this.featureOverlay.addFeature(rule.feature);
+  }
+
+  /**
+   * @param {!ngeo.rule.Rule} rule Rule.
+   * @export
+   */
+  unregisterGeometryRule_(rule) {
+    if (!(rule instanceof ngeo.rule.Geometry)) {
+      return;
+    }
+    this.featureOverlay.removeFeature(rule.feature);
   }
 
 };
@@ -220,6 +259,7 @@ ngeo.module.component('ngeoFilter', {
     // the attribute to be 'data-source', and Angular strips the 'data-'.
     datasource: '<',
     directedRules: '<',
+    featureOverlay: '<',
     map: '<',
     toolGroup: '<'
   },

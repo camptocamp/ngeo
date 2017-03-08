@@ -943,6 +943,41 @@ ngeo.FeatureHelper.prototype.getRadiusLine = function(feature, azimut) {
 };
 
 
+/**
+ * Return the properties of a feature, with the exception of the geometry.
+ * @param {ol.Feature} feature Feature.
+ * @return {Object.<string, *>} Object.
+ * @export
+ */
+ngeo.FeatureHelper.prototype.getNonSpatialProperties = function(feature) {
+  const geometryName = feature.getGeometryName();
+  const nonSpatialProperties = {};
+  const properties = feature.getProperties();
+  for (const key in properties) {
+    if (key !== geometryName) {
+      nonSpatialProperties[key] = properties[key];
+    }
+  }
+  return nonSpatialProperties;
+};
+
+
+/**
+ * Clear all properties of a feature, with the exception of the geometry.
+ * @param {ol.Feature} feature Feature.
+ * @export
+ */
+ngeo.FeatureHelper.prototype.clearNonSpatialProperties = function(feature) {
+  const geometryName = feature.getGeometryName();
+  const properties = feature.getProperties();
+  for (const key in properties) {
+    if (key !== geometryName) {
+      feature.set(key, undefined);
+    }
+  }
+};
+
+
 ngeo.module.service('ngeoFeatureHelper', ngeo.FeatureHelper);
 
 

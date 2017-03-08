@@ -10,7 +10,7 @@ ngeo.rule.Text = class extends ngeo.rule.Rule {
    * default.
    *
    * @struct
-   * @param {ngeox.rule.TextOptions} options Options.
+   * @param {!ngeox.rule.TextOptions} options Options.
    */
   constructor(options) {
 

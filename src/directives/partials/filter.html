@@ -26,8 +26,8 @@
 
 <ngeo-rule
     ng-repeat="rule in filterCtrl.directedRules"
-    active="::filterCtrl.initialized"
-      class="ngeo-filter-rule-directed"
+    feature-overlay="::filterCtrl.featureOverlay"
+    class="ngeo-filter-rule-directed"
     map="filterCtrl.map"
     rule="rule"
     tool-group="filterCtrl.toolGroup">
@@ -43,7 +43,7 @@
     <span class="glyphicon glyphicon-remove"></span>
   </a>
   <ngeo-rule
-      active="::filterCtrl.initialized"
+      feature-overlay="::filterCtrl.featureOverlay"
       class="ngeo-filter-rule-custom"
       map="filterCtrl.map"
       rule="rule"
@@ -63,7 +63,7 @@
     <li ng-repeat="attribute in ::filterCtrl.geometryAttributes">
       <a
           href
-          ng-click="">
+          ng-click="filterCtrl.createAndAddCustomRule(attribute)">
           <span translate>Spatial filter</span>
       </a>
     </li>

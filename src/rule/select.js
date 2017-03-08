@@ -10,7 +10,7 @@ ngeo.rule.Select = class extends ngeo.rule.Rule {
    * of choices.
    *
    * @struct
-   * @param {ngeox.rule.SelectOptions} options Options.
+   * @param {!ngeox.rule.SelectOptions} options Options.
    */
   constructor(options) {
 

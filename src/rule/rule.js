@@ -27,19 +27,33 @@ ngeo.rule.Rule = class {
    * properties are used instead of `expression`.
    *
    * @struct
-   * @param {ngeox.rule.RuleOptions} options Options.
+   * @param {!ngeox.rule.RuleOptions} options Options.
    */
   constructor(options) {
 
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
-     * The expression of the rule. The expression and boundaries are mutually
-     * exclusives.
-     * @type {?boolean|number|string}
+     * Whether the rule is active or not. Used by the `ngeo-rule` component.
+     * Defaults to `false`.
+     * @type {boolean}
      * @private
      */
-    this.expression_ = options.expression !== undefined ?
+    this.active_ = options.active === true;
+
+    /**
+     * The expression of the rule. The expression and boundaries are mutually
+     * exclusives.
+     *
+     * Note: exported (instead of private) due to the problem with the
+     * compiler. See the getter/setter methods below...  As a setter, the
+     * `expression` property would support being bond to an `ng-model`. Without
+     * it, it can't unless we expose the property directly.
+     *
+     * @type {?boolean|number|string}
+     * @export
+     */
+    this.expression = options.expression !== undefined ?
       options.expression : null;
 
     /**
@@ -105,24 +119,55 @@ ngeo.rule.Rule = class {
      */
     this.type_ = goog.asserts.assert(options.type);
 
+
+    // === Other properties ===
+
+    /**
+     * @type {Array.<!ol.EventsKey>}
+     * @protected
+     */
+    this.listenerKeys = [];
+
   }
 
   // === Dynamic property getters/setters ===
 
   /**
+   * @return {boolean} Active
+   * @export
+   */
+  get active() {
+    return this.active_;
+  }
+
+  /**
+   * @param {boolean} active Active
+   * @export
+   */
+  set active(active) {
+    this.active_ = active;
+  }
+
+  /**
+   * The `expression` property does not have conventionnal getter/setters
+   * method because of a limitation of the compiler. It doesn't support
+   * yet having such methods being extended in child classes.
+   *
+   * See: https://github.com/google/closure-compiler/issues/1089
+   *
    * @return {?boolean|number|string} Expression
    * @export
    */
-  get expression() {
-    return this.expression_;
+  getExpression() {
+    return this.expression;
   }
 
   /**
    * @param {?boolean|number|string} expression Expression
    * @export
    */
-  set expression(expression) {
-    this.expression_ = expression;
+  setExpression(expression) {
+    this.expression = expression;
   }
 
   /**
@@ -224,7 +269,7 @@ ngeo.rule.Rule = class {
   get value() {
     let value = null;
 
-    const expression = this.expression;
+    const expression = this.getExpression();
     const lowerBoundary = this.lowerBoundary;
     const operator = this.operator;
     const propertyName = this.propertyName;
@@ -262,8 +307,8 @@ ngeo.rule.Rule = class {
    * @export
    */
   reset() {
-    if (this.expression !== null) {
-      this.expression = null;
+    if (this.getExpression() !== null) {
+      this.setExpression(null);
     }
     if (this.lowerBoundary !== null) {
       this.lowerBoundary = null;
@@ -271,6 +316,14 @@ ngeo.rule.Rule = class {
     if (this.upperBoundary !== null) {
       this.upperBoundary = null;
     }
+  }
+
+  /**
+   * @export
+   */
+  destroy() {
+    ol.Observable.unByKey(this.listenerKeys);
+    this.listenerKeys.length = 0;
   }
 
 };
@@ -288,4 +341,14 @@ ngeo.rule.Rule.OperatorType = {
   LESSER_THAN_OR_EQUAL_TO: '<=',
   LIKE: '~',
   NOT_EQUAL_TO: '!='
+};
+
+
+/**
+ * @enum {string}
+ */
+ngeo.rule.Rule.SpatialOperatorType = {
+  CONTAINS: 'contains',
+  INTERSECTS: 'intersects',
+  WITHIN: 'within'
 };

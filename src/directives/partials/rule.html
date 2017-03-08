@@ -1,6 +1,6 @@
 <div
     class="dropdown"
-    ng-class="{open: ruleCtrl.active}">
+    ng-class="{open: ruleCtrl.rule.active}">
   <a
       class="btn btn-default btn-sm dropdown-toggle"
       type="button"
@@ -12,6 +12,7 @@
 
     <select
         class="form-control input-sm ngeo-rule-operators-list"
+        ng-disabled="ruleCtrl.drawActive"
         ng-if="::ruleCtrl.clone.operators"
         ng-model="ruleCtrl.clone.operator"
         ng-options="ruleCtrl.operators[operator] | translate for operator in ::ruleCtrl.clone.operators track by operator">
@@ -21,7 +22,7 @@
 
       <div
           class="ngeo-rule-type-date form-group"
-          ng-if="ruleCtrl.active"
+          ng-if="ruleCtrl.rule.active"
           ng-switch-when="date|datetime"
           ng-switch-when-separator="|">
         <div ng-switch="ruleCtrl.clone.operator">
@@ -41,6 +42,119 @@
       </div>
 
       <div
+          class="ngeo-rule-type-geometry form-group"
+          ng-switch-when="geometry">
+        <div ng-switch="ruleCtrl.geomType">
+          <span
+              class="gmf-icon gmf-icon-point"
+              ng-switch-when="Point">
+          </span>
+          <span
+              class="gmf-icon gmf-icon-line"
+              ng-switch-when="LineString">
+          </span>
+          <span
+              class="gmf-icon gmf-icon-polygon"
+              ng-switch-when="Polygon">
+          </span>
+          <span
+              class="gmf-icon gmf-icon-circle"
+              ng-switch-when="Circle">
+          </span>
+          <span
+              class="gmf-icon gmf-icon-rectangle"
+              ng-switch-when="Rectangle">
+          </span>
+        </div>
+        <ngeo-drawfeature
+            ngeo-drawfeature-active="ruleCtrl.drawActive"
+            ngeo-drawfeature-features="ruleCtrl.drawnFeatures"
+            ngeo-drawfeature-map="ruleCtrl.map">
+          <div
+              ngeo-btn-group
+              class="btn-group">
+              <a
+                data-toggle="tooltip"
+                title="{{'Draw a point on the map' | translate}}"
+                href
+                ngeo-btn
+                ngeo-drawpoint
+                class="btn btn-xs btn-default ngeo-drawfeature-point"
+                ng-show="['intersects', 'within'].indexOf(ruleCtrl.clone.operator) !== -1"
+                ng-class="{active: dfCtrl.drawPoint.active}"
+                ng-model="dfCtrl.drawPoint.active">
+                <span class="gmf-icon gmf-icon-point"></span>
+              </a>
+              <a
+                data-toggle="tooltip"
+                title="{{'Draw a line on the map' | translate}}"
+                href
+                ngeo-btn
+                ngeo-measurelength
+                class="btn btn-xs btn-default ngeo-drawfeature-linestring"
+                ng-show="['intersects', 'within'].indexOf(ruleCtrl.clone.operator) !== -1"
+                ng-class="{active: dfCtrl.measureLength.active}"
+                ng-model="dfCtrl.measureLength.active">
+                <span class="gmf-icon gmf-icon-line"></span>
+              </a>
+              <a
+                data-toggle="tooltip"
+                title="{{'Draw a polygon on the map' | translate}}"
+                href
+                ngeo-btn
+                ngeo-measurearea
+                class="btn btn-xs btn-default ngeo-drawfeature-polygon"
+                ng-class="{active: dfCtrl.measureArea.active}"
+                ng-model="dfCtrl.measureArea.active">
+                <span class="gmf-icon gmf-icon-polygon"></span>
+              </a>
+              <a
+                data-toggle="tooltip"
+                title="{{'Draw a circle on the map' | translate}}"
+                href
+                ngeo-btn
+                ngeo-measureazimut
+                class="btn btn-xs btn-default ngeo-drawfeature-circle"
+                ng-class="{active: dfCtrl.measureAzimut.active}"
+                ng-model="dfCtrl.measureAzimut.active">
+                <span class="gmf-icon gmf-icon-circle"></span>
+              </a>
+              <a
+                data-toggle="tooltip"
+                title="{{'Draw a rectangle on the map' | translate}}"
+                href
+                ngeo-btn
+                ngeo-drawrectangle
+                class="btn btn-xs btn-default ngeo-drawfeature-rectangle"
+                ng-class="{active: dfCtrl.drawRectangle.active}"
+                ng-model="dfCtrl.drawRectangle.active">
+                <span class="gmf-icon gmf-icon-rectangle"></span>
+              </a>
+          </div>
+
+          <div
+              class="ngeo-rule-type-geometry-instructions"
+              ng-if="ruleCtrl.drawActive">
+            <span ng-if="dfCtrl.drawPoint.active">
+              {{ 'Draw a point on the map.' | translate }}
+            </span>
+            <span ng-if="dfCtrl.measureLength.active">
+              {{ 'Draw a line string on the map.' | translate }}
+            </span>
+            <span ng-if="dfCtrl.measureArea.active">
+              {{ 'Draw a polygon on the map.' | translate }}
+            </span>
+            <span ng-if="dfCtrl.measureAzimut.active">
+              {{ 'Draw a circle on the map.' | translate }}
+            </span>
+            <span ng-if="dfCtrl.drawRectangle.active">
+              {{ 'Draw a rectangle on the map.' | translate }}
+            </span>
+          </div>
+        </ngeo-drawfeature>
+      </div>
+
+      <div
           class="checkbox ngeo-rule-type-select"
           ng-switch-when="select">
         <a
@@ -51,7 +165,7 @@
             class="form-group ol-unselectable"
             ng-repeat="choice in ::ruleCtrl.clone.choices">
           <input
-              ng-checked="ruleCtrl.clone.expression && ruleCtrl.clone.expression.split(',').indexOf(choice) > -1"
+              ng-checked="ruleCtrl.clone.getExpression() && ruleCtrl.clone.getExpression().split(',').indexOf(choice) > -1"
               ng-click="ruleCtrl.toggleChoiceSelection(choice)"
               type="checkbox"
               value="choice" />
@@ -124,13 +238,39 @@
         </div>
         <div ng-switch-default>
           <span>{{ ruleCtrl.rule.operator }}</span>
-          <span>{{ ruleCtrl.timeToDate(ruleCtrl.rule.expression) }}</span>
+          <span>{{ ruleCtrl.timeToDate(ruleCtrl.rule.getExpression()) }}</span>
         </div>
       </div>
     </div>
 
+    <div ng-switch-when="geometry">
+      <span>{{ ruleCtrl.operators[ruleCtrl.rule.operator] }}</span>
+      <span ng-switch="ruleCtrl.getRuleGeometryType()">
+        <span
+            class="gmf-icon gmf-icon-point"
+            ng-switch-when="Point">
+        </span>
+        <span
+            class="gmf-icon gmf-icon-line"
+            ng-switch-when="LineString">
+        </span>
+        <span
+            class="gmf-icon gmf-icon-polygon"
+            ng-switch-when="Polygon">
+        </span>
+        <span
+            class="gmf-icon gmf-icon-circle"
+            ng-switch-when="Circle">
+        </span>
+        <span
+            class="gmf-icon gmf-icon-rectangle"
+            ng-switch-when="Rectangle">
+        </span>
+      </span>
+    </div>
+
     <div ng-switch-when="select">
-      <span ng-repeat="choice in ruleCtrl.rule.expression.split(',')">
+      <span ng-repeat="choice in ruleCtrl.rule.getExpression().split(',')">
         {{ choice | translate }}{{ $last ? '' : ', ' }}
       </span>
     </div>
@@ -145,7 +285,7 @@
         </div>
         <div ng-switch-default>
           <span>{{ ruleCtrl.rule.operator }}</span>
-          <span>{{ ruleCtrl.rule.expression }}</span>
+          <span>{{ ruleCtrl.rule.getExpression() }}</span>
         </div>
       </div>
     </div>

@@ -21,6 +21,8 @@ gmf.FilterselectorController = class {
    *     helper service.
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+   * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+   *     manager
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @ngInject
@@ -28,7 +30,7 @@ gmf.FilterselectorController = class {
    * @ngname GmfFilterselectorController
    */
   constructor($scope, gettextCatalog, gmfDataSourcesHelper, gmfUser,
-      ngeoNotification, ngeoRuleHelper
+      ngeoNotification, ngeoFeatureOverlayMgr, ngeoRuleHelper
   ) {
 
     // Binding properties
@@ -87,6 +89,14 @@ gmf.FilterselectorController = class {
      * @private
      */
     this.ngeoNotification_ = ngeoNotification;
+
+    /**
+     * @type {!ngeo.FeatureOverlay}
+     * @export
+     */
+    this.featureOverlay = goog.asserts.assert(
+      ngeoFeatureOverlayMgr.getFeatureOverlay()
+    );
 
     /**
      * @type {!ngeo.RuleHelper}
