@@ -483,7 +483,7 @@ gmf.Permalink.prototype.getMapCenter = function() {
  */
 gmf.Permalink.prototype.getMapZoom = function() {
   const zoom = this.ngeoStateManager_.getInitialNumberValue(gmf.PermalinkParam.MAP_Z);
-  return isNaN(zoom) ? null : zoom;
+  return isNaN(zoom) ? undefined : zoom;
 };
 
 
@@ -877,7 +877,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
             gmf.PermalinkParamPrefix.TREE_ENABLE + treeCtrl.node.name
           );
           if (enable !== undefined) {
-            treeCtrl.setState(enable === 'true' ? 'on' : 'off', false);
+            treeCtrl.setState(enable ? 'on' : 'off', false);
           }
         } else if (!treeCtrl.node.mixed && treeCtrl.depth == 1) {
           // First level non mixed group
@@ -889,7 +889,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
             treeCtrl.traverseDepthFirst((treeCtrl) => {
               if (treeCtrl.node.children === undefined) {
                 const enable = ol.array.includes(groupLayersArray, treeCtrl.node.name);
-                treeCtrl.setState(enable === 'true' ? 'on' : 'off', false);
+                treeCtrl.setState(enable ? 'on' : 'off', false);
               }
             });
             return ngeo.LayertreeController.VisitorDecision.STOP;
