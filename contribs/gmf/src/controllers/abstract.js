@@ -339,6 +339,14 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   this.initLanguage();
 
+  const mapTools = 'mapTools';
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.mapToolsGroup = mapTools;
+
   /**
    * The ngeo feature overlay manager service
    * @type {ngeo.FeatureOverlayMgr}
@@ -353,22 +361,22 @@ gmf.AbstractController = function(config, $scope, $injector) {
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
   const queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
-  ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);
+  ngeoToolActivateMgr.registerTool(mapTools, queryToolActivate, true);
 
   const measurePointActivate = new ngeo.ToolActivate(this, 'measurePointActive');
-  ngeoToolActivateMgr.registerTool('mapTools', measurePointActivate, false);
+  ngeoToolActivateMgr.registerTool(mapTools, measurePointActivate, false);
 
   const measureLengthActivate = new ngeo.ToolActivate(this, 'measureLengthActive');
-  ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
+  ngeoToolActivateMgr.registerTool(mapTools, measureLengthActivate, false);
 
   const drawFeatureActivate = new ngeo.ToolActivate(this, 'drawFeatureActive');
-  ngeoToolActivateMgr.registerTool('mapTools', drawFeatureActivate, false);
+  ngeoToolActivateMgr.registerTool(mapTools, drawFeatureActivate, false);
 
   const drawProfilePanelActivate = new ngeo.ToolActivate(this, 'drawProfilePanelActive');
-  ngeoToolActivateMgr.registerTool('mapTools', drawProfilePanelActivate, false);
+  ngeoToolActivateMgr.registerTool(mapTools, drawProfilePanelActivate, false);
 
   const printPanelActivate = new ngeo.ToolActivate(this, 'printPanelActive');
-  ngeoToolActivateMgr.registerTool('mapTools', printPanelActivate, false);
+  ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
 
 
   $scope.$watch(() => this.gmfThemeManager.themeName, (name) => {

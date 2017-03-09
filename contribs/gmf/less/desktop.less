@@ -548,3 +548,161 @@ gmf-objecteditingtools {
   margin: 0 0 1rem 0;
   padding: 0 0 1rem 0;
 }
+
+
+/**
+ * GMF FilterSelector component
+ */
+.gmf-filterselector-separator {
+  margin: 1.5rem 0 0.5rem 0;
+}
+
+.gmf-filterselector-savebtn {
+  display: block;
+  text-align: left;
+}
+
+.gmf-filterselector-savefilter-desc {
+  color: #999999;
+}
+
+.gmf-filterselector-savedfilters {
+  z-index: 1;
+
+  a.dropdown-toggle {
+    padding: 0.6rem 0;
+    position: absolute;
+    right: 0;
+  }
+
+  ul.dropdown-menu {
+    top: 3rem;
+
+    a {
+      overflow: hidden;
+      max-width: 25rem;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.gmf-filterselector-managefilter-modal {
+  .modal-body {
+    padding: 0 1.5rem;
+
+    ul {
+      margin: 0;
+
+      li {
+        border-bottom: 1px solid #dddddd;
+        padding: 0.5rem;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        a {
+          float: right;
+        }
+
+        span {
+          float: left;
+          max-width: 48rem;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
+
+/**
+ * Ngeo Filter component
+ */
+
+.ngeo-filter-condition-button,
+.ngeo-filter-condition-button:hover,
+.ngeo-filter-condition-button:focus {
+  text-decoration: none;
+}
+
+.ngeo-filter-condition-criteria-header {
+  color: #999999;
+  padding: 0.3rem 2rem;
+}
+
+.ngeo-filter-condition-criteria {
+  opacity: 0;
+}
+
+.ngeo-filter-condition-criteria-active {
+  opacity: 1;
+}
+
+.ngeo-filter-rule-custom-rm-btn {
+  float: right;
+  margin: 0.4rem 0;
+}
+
+
+/**
+ * Ngeo Rule component
+ */
+ngeo-rule {
+  display: block;
+  margin: 1rem 2.5rem 1rem 0;
+
+  .dropdown > a.btn {
+    display: block;
+    text-align: left;
+
+    span.caret {
+      float: right;
+      margin: 0.8rem 0 0 0;
+    }
+  }
+
+  .dropdown-menu {
+    padding: 1rem;
+  }
+
+  .ngeo-rule-operators-list {
+    margin: 0 0 1rem 0;
+  }
+
+  .ngeo-rule-btns {
+    float: right;
+  }
+
+  .ngeo-rule-type-select label {
+    width: 13.5rem;
+  }
+
+  .ngeo-rule-value {
+    color: #999999;
+    margin: 0.5rem;
+
+    a.btn {
+      color: #999999;
+      float: right;
+    }
+
+    a.btn:hover,
+    a.btn:focus {
+      color: #666666;
+    }
+
+    ngeo-date-picker {
+      display: block;
+      text-align: right;
+    }
+  }
+
+  .ngeo-rule-type-geometry-instructions {
+    font-size: 9pt;
+    font-style: italic;
+    margin: 0.5rem;
+  }
+}
