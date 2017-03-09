@@ -53,7 +53,7 @@ gmf.FilterselectorController = class {
 
     $scope.$watch(
       () => this.active,
-      this.toggleDataSourceRegistration_.bind(this)
+      this.handleActiveChange_.bind(this)
     );
 
     /**
@@ -274,6 +274,20 @@ gmf.FilterselectorController = class {
     if (this.enableDataSourceRegistration_ !== newDataSourceRegistration) {
       this.enableDataSourceRegistration_ = newDataSourceRegistration;
     }
+  }
+
+
+  /**
+   * Called when the active property changes. Toggle data source registration.
+   * Also, when deactivated, unselect data source.
+   * @param {boolean} active Active.
+   * @private
+   */
+  handleActiveChange_(active) {
+    if (!active) {
+      this.selectedDataSource = null;
+    }
+    this.toggleDataSourceRegistration_();
   }
 
 
