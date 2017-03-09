@@ -872,7 +872,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
             gmf.PermalinkParamPrefix.TREE_ENABLE + treeCtrl.node.name
           );
           if (enable !== undefined) {
-            treeCtrl.setState(enable ? 'on' : 'off', false);
+            treeCtrl.setState(enable === 'true' ? 'on' : 'off', false);
           }
         } else if (!treeCtrl.node.mixed && treeCtrl.depth == 1) {
           // First level non mixed group
@@ -884,7 +884,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
             treeCtrl.traverseDepthFirst(function(treeCtrl) {
               if (treeCtrl.node.children === undefined) {
                 var enable = ol.array.includes(groupLayersArray, treeCtrl.node.name);
-                treeCtrl.setState(enable ? 'on' : 'off', false);
+                treeCtrl.setState(enable === 'true' ? 'on' : 'off', false);
               }
             });
             return ngeo.LayertreeController.VisitorDecision.STOP;
