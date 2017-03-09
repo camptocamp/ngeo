@@ -11,6 +11,7 @@ ngeo.FilterController = class {
 
   /**
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
+   * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
@@ -18,9 +19,15 @@ ngeo.FilterController = class {
    * @ngdoc controller
    * @ngname NgeoFilterController
    */
-  constructor(gettextCatalog, $timeout, ngeoRuleHelper) {
+  constructor(gettextCatalog, $scope, $timeout, ngeoRuleHelper) {
 
-    // Binding properties
+    // === Binding properties ===
+
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.aRuleIsActive;
 
     /**
      * @type {Array.<!ngeo.rule.Rule>}
@@ -58,13 +65,20 @@ ngeo.FilterController = class {
      */
     this.toolGroup;
 
-    // Injected properties
+
+    // === Injected properties ===
 
     /**
      * @type {!angularGettext.Catalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
+
+    /**
+     * @type {!angular.Scope}
+     * @private
+     */
+    this.scope_ = $scope;
 
     /**
      * @type {!angular.$timeout}
@@ -78,7 +92,8 @@ ngeo.FilterController = class {
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
-    // Inner properties
+
+    // === Inner properties ===
 
     /**
      * @type {Array.<!ngeo.FilterController.Condition>}
@@ -112,6 +127,12 @@ ngeo.FilterController = class {
      * @export
      */
     this.otherAttributes = [];
+
+    /**
+     * @type {!Object.<number, Function>}
+     * @private
+     */
+    this.ruleUnlisteners_ = {};
   }
 
 
@@ -135,7 +156,7 @@ ngeo.FilterController = class {
     // (2) All rules that have geometry are added in the featureOverlay
     const rules = [].concat(this.customRules, this.directedRules);
     for (const rule of rules) {
-      this.registerGeometryRule_(rule);
+      this.registerRule_(rule);
     }
 
     // (3) Apply the filters
@@ -182,8 +203,8 @@ ngeo.FilterController = class {
    * @export
    */
   createAndAddCustomRule(attribute) {
-    const rule = this.ngeoRuleHelper_.createRule(attribute, true);
-    this.registerGeometryRule_(rule);
+    const rule = this.ngeoRuleHelper_.createRuleFromAttribute(attribute, true);
+    this.registerRule_(rule);
     this.customRules.push(rule);
 
     // Activate asynchronously allows the toolActivate manager to do its magic,
@@ -213,7 +234,7 @@ ngeo.FilterController = class {
     rule.active = false;
     this.timeout_(() => {
       ol.array.remove(this.customRules, rule);
-      this.unregisterGeometryRule_(rule);
+      this.unregisterRule_(rule);
       rule.destroy();
     });
   }
@@ -222,22 +243,49 @@ ngeo.FilterController = class {
    * @param {!ngeo.rule.Rule} rule Rule.
    * @export
    */
-  registerGeometryRule_(rule) {
-    if (!(rule instanceof ngeo.rule.Geometry)) {
-      return;
+  registerRule_(rule) {
+    const uid = ol.getUid(rule);
+    this.ruleUnlisteners_[uid] = this.scope_.$watch(
+      () => rule.active,
+      this.handleRuleActiveChange_.bind(this)
+    );
+
+    if (rule instanceof ngeo.rule.Geometry) {
+      this.featureOverlay.addFeature(rule.feature);
     }
-    this.featureOverlay.addFeature(rule.feature);
   }
 
   /**
    * @param {!ngeo.rule.Rule} rule Rule.
    * @export
    */
-  unregisterGeometryRule_(rule) {
-    if (!(rule instanceof ngeo.rule.Geometry)) {
-      return;
+  unregisterRule_(rule) {
+    const uid = ol.getUid(rule);
+    const unlistener = this.ruleUnlisteners_[uid];
+    goog.asserts.assert(unlistener);
+    unlistener();
+    delete this.ruleUnlisteners_[uid];
+
+    if (rule instanceof ngeo.rule.Geometry) {
+      this.featureOverlay.removeFeature(rule.feature);
     }
-    this.featureOverlay.removeFeature(rule.feature);
+  }
+
+  /**
+   * Called when the active property of a rule changes. Set the `aRuleIsActive`
+   * property accordingly.
+   * @private
+   */
+  handleRuleActiveChange_() {
+    let aRuleIsActive = false;
+    const rules = [].concat(this.customRules, this.directedRules);
+    for (const rule of rules) {
+      if (rule.active) {
+        aRuleIsActive = true;
+        break;
+      }
+    }
+    this.aRuleIsActive = aRuleIsActive;
   }
 
 };
@@ -254,6 +302,7 @@ ngeo.FilterController.Condition;
 
 ngeo.module.component('ngeoFilter', {
   bindings: {
+    aRuleIsActive: '=',
     customRules: '<',
     // It's 'datasource' instead of 'dataSource', because that would require
     // the attribute to be 'data-source', and Angular strips the 'data-'.

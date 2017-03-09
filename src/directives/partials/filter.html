@@ -2,7 +2,8 @@
   <a
       class="btn btn-link dropdown-toggle ngeo-filter-condition-button"
       type="button"
-      data-toggle="dropdown">
+      data-toggle="dropdown"
+      ng-disabled="filterCtrl.aRuleIsActive">
     <span class="glyphicon glyphicon-cog"></span>
     <span class="caret"></span>
   </a>
@@ -39,6 +40,7 @@
   <a
       class="btn btn-xs btn-link ngeo-filter-rule-custom-rm-btn"
       ng-click="filterCtrl.removeCustomRule(rule)"
+      ng-disabled="filterCtrl.aRuleIsActive"
       href>
     <span class="glyphicon glyphicon-remove"></span>
   </a>
@@ -55,7 +57,8 @@
   <a
       class="btn btn-link dropdown-toggle"
       type="button"
-      data-toggle="dropdown">
+      data-toggle="dropdown"
+      ng-disabled="filterCtrl.aRuleIsActive">
     <span translate>+ Add a new criteria</span>
     <span class="caret"></span>
   </a>
@@ -82,7 +85,8 @@
     class="btn btn-link"
     type="button"
     data-toggle="dropdown"
-    ng-click="filterCtrl.apply()">
+    ng-click="filterCtrl.apply()"
+    ng-disabled="filterCtrl.aRuleIsActive">
   <span class="glyphicon glyphicon-ok"></span>
   <span translate>Apply</span>
 </a>

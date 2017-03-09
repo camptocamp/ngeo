@@ -1889,6 +1889,21 @@ ngeox.rule.RuleOptions.prototype.upperBoundary;
  * @struct
  * @extends ngeox.rule.RuleOptions
  */
+ngeox.rule.GeometryOptions = function() {};
+
+
+/**
+ * Properties for the feature.
+ * @type {Object.<string, *>|undefined}
+ */
+ngeox.rule.GeometryOptions.prototype.featureProperties;
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleOptions
+ */
 ngeox.rule.SelectOptions = function() {};
 
 
@@ -1905,6 +1920,13 @@ ngeox.rule.SelectOptions.prototype.choices;
  * @extends ngeox.rule.RuleOptions
  */
 ngeox.rule.TextOptions = function() {};
+
+
+/**
+ * @typedef {!ngeox.rule.RuleOptions|!ngeox.rule.GeometryOptions|!ngeox.rule.SelectOptions|!ngeox.rule.TextOptions}
+ */
+ngeox.rule.AnyOptions;
+
 
 
 /**

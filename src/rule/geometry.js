@@ -12,7 +12,7 @@ ngeo.rule.Geometry = class extends ngeo.rule.Rule {
    * to the geometry are applied to the `expression` property of the rule.
    *
    * @struct
-   * @param {!ngeox.rule.RuleOptions} options Options.
+   * @param {!ngeox.rule.GeometryOptions} options Options.
    */
   constructor(options) {
 
@@ -22,28 +22,19 @@ ngeo.rule.Geometry = class extends ngeo.rule.Rule {
 
     // === STATIC properties ===
 
+    const properties = options.featureProperties || {};
+
     /**
      * @type {!ol.Feature}
      * @private
      */
-    this.feature_ = new ol.Feature();
+    this.feature_ = new ol.Feature(properties);
 
     /**
      * @type {!ol.format.GeoJSON}
      * @private
      */
     this.format_ = new ol.format.GeoJSON();
-
-    this.listenerKeys.push(
-      ol.events.listen(
-        this.feature_,
-        ol.Object.getChangeEventType(this.feature.getGeometryName()),
-        this.handleFeatureGeometryChange_,
-        this
-      )
-    );
-
-    this.setGeometryFromExpression_();
 
     /**
      * @type {boolean}
@@ -62,6 +53,17 @@ ngeo.rule.Geometry = class extends ngeo.rule.Rule {
      * @private
      */
     this.geometryChangeListenerKey_ = null;
+
+    this.listenerKeys.push(
+      ol.events.listen(
+        this.feature_,
+        ol.Object.getChangeEventType(this.feature.getGeometryName()),
+        this.handleFeatureGeometryChange_,
+        this
+      )
+    );
+
+    this.setGeometryFromExpression_();
 
   }
 

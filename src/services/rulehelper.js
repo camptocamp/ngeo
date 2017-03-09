@@ -42,10 +42,10 @@ ngeo.RuleHelper = class {
    * @return {Array.<!ngeo.rule.Rule>} Rules.
    * @export
    */
-  createRules(attributes, opt_isCustom) {
+  createRulesFromAttributes(attributes, opt_isCustom) {
     const rules = [];
     for (const attribute of attributes) {
-      rules.push(this.createRule(attribute, opt_isCustom));
+      rules.push(this.createRuleFromAttribute(attribute, opt_isCustom));
     }
     return rules;
   }
@@ -57,7 +57,7 @@ ngeo.RuleHelper = class {
    * @return {!ngeo.rule.Rule} Rule.
    * @export
    */
-  createRule(attribute, opt_isCustom) {
+  createRuleFromAttribute(attribute, opt_isCustom) {
 
     let rule;
     const isCustom = opt_isCustom === true;
@@ -167,6 +167,47 @@ ngeo.RuleHelper = class {
   }
 
   /**
+   * @param {!Array.<!ngeox.rule.RuleOptions|!ngeox.rule.SelectOptions>} optionsList List of options
+   * @return {Array.<!ngeo.rule.Rule>} Rules.
+   * @export
+   */
+  createRules(optionsList) {
+    const rules = [];
+    for (const options of optionsList) {
+      rules.push(this.createRule(options));
+    }
+    return rules;
+  }
+
+  /**
+   * @param {!ngeox.rule.RuleOptions|!ngeox.rule.SelectOptions} options Options
+   * @return {!ngeo.rule.Rule} Rule.
+   * @export
+   */
+  createRule(options) {
+    let rule;
+    switch (options.type) {
+      case ngeo.AttributeType.DATE:
+      case ngeo.AttributeType.DATETIME:
+        rule = new ngeo.rule.Rule(options);
+        break;
+      case ngeo.AttributeType.GEOMETRY:
+        rule = new ngeo.rule.Geometry(options);
+        break;
+      case ngeo.AttributeType.SELECT:
+        const selectOptions = /** @type {!ngeox.rule.SelectOptions} */ (
+          options);
+        goog.asserts.assert(selectOptions.choices);
+        rule = new ngeo.rule.Select(selectOptions);
+        break;
+      default:
+        rule = new ngeo.rule.Text(options);
+        break;
+    }
+    return rule;
+  }
+
+  /**
    * Create a new `ngeo.rule.Rule` object using an other given rule.
    *
    * @param {!ngeo.rule.Rule} rule Original rule to clone.
@@ -257,6 +298,63 @@ ngeo.RuleHelper = class {
         this.ngeoFeatureHelper_.getNonSpatialProperties(sourceRule.feature)
       );
     }
+  }
+
+  /**
+   * @param {!Array.<!ngeo.rule.Rule>} rules Rules
+   * @return {!Array.<!ngeox.rule.AnyOptions>} List of serialized rule options.
+   * @export
+   */
+  serializeRules(rules) {
+    return rules.map((rule) => {
+      const serializedRule = this.serializeRule(rule);
+      return serializedRule;
+    });
+  }
+
+  /**
+   * Selialize a rule into options to re-create it later.
+   * @param {!ngeo.rule.Rule} rule Rule to serialize.
+   * @return {!ngeox.rule.AnyOptions} Serialized rule options.
+   * @export
+   */
+  serializeRule(rule) {
+    const obj = {
+      name: rule.name,
+      propertyName: rule.propertyName,
+      type: rule.type
+    };
+
+    if (rule.expression !== null) {
+      obj.expression = rule.expression;
+    }
+
+    if (rule.lowerBoundary !== null) {
+      obj.lowerBoundary = rule.lowerBoundary;
+    }
+
+    if (rule.operator !== null) {
+      obj.operator = rule.operator;
+    }
+
+    if (rule.operators !== null) {
+      obj.operators = rule.operators.slice(0);
+    }
+
+    if (rule.upperBoundary !== null) {
+      obj.upperBoundary = rule.upperBoundary;
+    }
+
+    if (rule instanceof ngeo.rule.Geometry) {
+      obj.featureProperties = this.ngeoFeatureHelper_.getNonSpatialProperties(
+        rule.feature);
+    }
+
+    if (rule instanceof ngeo.rule.Select) {
+      obj.choices = rule.choices;
+    }
+
+    return obj;
   }
 
 };
