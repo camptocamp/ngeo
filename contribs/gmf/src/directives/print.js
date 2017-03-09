@@ -903,7 +903,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
         layerName = layer.get('layerNodeName');
         icons = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
         // Don't add classes without legend url.
-        if (icons !== null) {
+        if (icons) {
           classes.push({
             'name': gettextCatalog.getString(`${layerName}`),
             'icons': [icons]
@@ -918,7 +918,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
               scale);
           // Don't add classes without legend url or from layers without any
           // active name.
-          if (icons !== null && name.length !== 0) {
+          if (icons && name.length !== 0) {
             classes.push({
               'name': gettextCatalog.getString(`${name}`),
               'icons': [icons]

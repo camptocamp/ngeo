@@ -459,7 +459,7 @@ gmf.Permalink.prototype.getMapCenter = function() {
   const x = this.ngeoStateManager_.getInitialNumberValue(gmf.PermalinkParam.MAP_X);
   const y = this.ngeoStateManager_.getInitialNumberValue(gmf.PermalinkParam.MAP_Y);
 
-  if (x !== undefined && y !== undefined) {
+  if (!isNaN(x) && !isNaN(y)) {
     const center = [x, y];
     if (this.sourceProjections_ !== null && this.ngeoAutoProjection_) {
       const targetProjection = this.map_.getView().getProjection();
@@ -482,7 +482,8 @@ gmf.Permalink.prototype.getMapCenter = function() {
  * @export
  */
 gmf.Permalink.prototype.getMapZoom = function() {
-  return this.ngeoStateManager_.getInitialNumberValue(gmf.PermalinkParam.MAP_Z);
+  const zoom = this.ngeoStateManager_.getInitialNumberValue(gmf.PermalinkParam.MAP_Z);
+  return isNaN(zoom) ? null : zoom;
 };
 
 
@@ -830,8 +831,8 @@ gmf.Permalink.prototype.initLayers_ = function() {
      */
     let firstLevelGroups = [];
     let theme;
-    // check if we have the groups in the permalink
-    const groupsNames = this.ngeoStateManager_.getInitialStringValue(gmf.PermalinkParam.TREE_GROUPS);
+    // Check if we have the groups in the permalink
+    const groupsNames = this.ngeoLocation_.getParam(gmf.PermalinkParam.TREE_GROUPS);
     if (!groupsNames) {
       goog.asserts.assertString(themeName);
       theme = gmf.Themes.findThemeByName(themes, themeName);
@@ -876,7 +877,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
             gmf.PermalinkParamPrefix.TREE_ENABLE + treeCtrl.node.name
           );
           if (enable !== undefined) {
-            treeCtrl.setState(enable ? 'on' : 'off', false);
+            treeCtrl.setState(enable === 'true' ? 'on' : 'off', false);
           }
         } else if (!treeCtrl.node.mixed && treeCtrl.depth == 1) {
           // First level non mixed group
@@ -888,7 +889,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
             treeCtrl.traverseDepthFirst((treeCtrl) => {
               if (treeCtrl.node.children === undefined) {
                 const enable = ol.array.includes(groupLayersArray, treeCtrl.node.name);
-                treeCtrl.setState(enable ? 'on' : 'off', false);
+                treeCtrl.setState(enable === 'true' ? 'on' : 'off', false);
               }
             });
             return ngeo.LayertreeController.VisitorDecision.STOP;
