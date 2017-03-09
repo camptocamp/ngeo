@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>GeoMapFish Permalink example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <style>
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+      .ngeo-popover .popover-content {
+        padding: 1px 2px;
+      }
+      .gmf-permalink-tooltip {
+        padding: 9px 14px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+
+    <p id="desc">
+      This example demonstrates the use of the <code>gmf-permalink</code>
+      service, which is injected inside the <code>gmf-map</code> directive.
+      The following links demonstrate the different features:
+      <ul>
+        <li>
+          <a href="?map_crosshair=true">map_crosshair=true</a>
+          When set, a marker is added either at the location of the
+          <code>map_x</code> and <code>map_y</code> if those parameters
+          are set, otherwise it is added at the center of the map.
+        </li>
+        <li>
+          <a href="?map_tooltip=hello">map_tooltip=hello</a>
+          When set, a tooltip is added with the content equal to the value
+          set either at the location of the <code>map_x</code> and
+          <code>map_y</code> if those parameters are set, otherwise it is
+          added at the center of the map.
+        </li>
+        <li><a href="?">no param</a></li>
+      </ul>
+      This example also demonstrates the use of the
+      <code>gmfPermalinkOptions</code> to customize the permalink crosshair
+      feature style.
+    </p>
+
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/bootstrap.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+    <script src="../../lib/proj4.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="permalink.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('defaultTheme', 'Demo');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>
