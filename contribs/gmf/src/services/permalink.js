@@ -884,7 +884,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
             treeCtrl.traverseDepthFirst(function(treeCtrl) {
               if (treeCtrl.node.children === undefined) {
                 var enable = ol.array.includes(groupLayersArray, treeCtrl.node.name);
-                treeCtrl.setState(enable === 'true' ? 'on' : 'off', false);
+                treeCtrl.setState(enable ? 'on' : 'off', false);
               }
             });
             return ngeo.LayertreeController.VisitorDecision.STOP;
