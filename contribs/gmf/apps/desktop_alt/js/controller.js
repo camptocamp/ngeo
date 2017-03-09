@@ -26,6 +26,12 @@ gmf.module.value('ngeoQueryOptions', {
   'queryCountFirst': true
 });
 
+
+gmf.module.value('gmfPrintOptions', {
+  'scaleInput': true
+});
+
+
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
