@@ -99,7 +99,8 @@ app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
   });
   ngeoQuery.addSource({
     'id': busStopSourceId,
-    'layer': busStopLayer
+    'layer': busStopLayer,
+    layers: ['bus_stop']
   });
 
   var informationSourceId = 'information';
@@ -112,7 +113,8 @@ app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
   });
   ngeoQuery.addSource({
     'id': informationSourceId,
-    'layer': informationLayer
+    'layer': informationLayer,
+    layers: ['information']
   });
 
   /**

@@ -47,7 +47,7 @@ describe('gmf.QueryManager', function() {
       // background layer
       var bgLayerSource = getSourceById(queryManager.sources_, 115);
       expect(bgLayerSource).not.toBeNull();
-      expect(bgLayerSource.params.LAYERS).toBe('ch.swisstopo.dreiecksvermaschung');
+      expect(bgLayerSource.getLayers(0).join(',')).toBe('ch.swisstopo.dreiecksvermaschung');
       expect(bgLayerSource.url).toBe('https://wms.geo.admin.ch?lang=fr');
     });
   });
@@ -62,14 +62,14 @@ describe('gmf.QueryManager', function() {
       // Child 0 (osm_time) is queryable and has wfs support.
       children = firstLevelGroup.children[0]; // osm_time
       osmSource = getSourceById(queryManager.sources_, children.id);
-      expect(osmSource.params.LAYERS).toBe('osm_time');
+      expect(osmSource.getLayers(0).join(',')).toBe('osm_time');
       expect(osmSource.wfsQuery).toBe(true);
 
       // Child 8 (srtm) is not queryable
       children = firstLevelGroup.children[8];
       osmSource = getSourceById(queryManager.sources_, children.id);
       expect(children.childLayers[0].queryable).toBe(false);
-      expect(osmSource).toBeNull();
+      expect(osmSource.getLayers(0).join(',')).toBe('');
     });
 
     it('Creates sources on queryable layer without WFS support', function() {
@@ -77,7 +77,7 @@ describe('gmf.QueryManager', function() {
       var firstLevelGroup = osmTheme.children[0]; // 'Cadastre'
       queryManager.createSources_(firstLevelGroup, firstLevelGroup, themes.ogcServers);
       var osmSource = getSourceById(queryManager.sources_, 115);
-      expect(osmSource.params.LAYERS).toBe('ch.swisstopo.dreiecksvermaschung');
+      expect(osmSource.getLayers(0).join(',')).toBe('ch.swisstopo.dreiecksvermaschung');
       expect(osmSource.wfsQuery).toBe(false);
     });
 
@@ -95,12 +95,12 @@ describe('gmf.QueryManager', function() {
       // `queryLayers`. (`queryLayers` takes precedence over `wmsLayers`)
       var sourceAlpConvention = getSourceById(queryManager.sources_, 115);
       expect(sourceAlpConvention).not.toBeNull();
-      expect(sourceAlpConvention.params.LAYERS).toBe('ch.swisstopo.dreiecksvermaschung');
+      expect(sourceAlpConvention.getLayers(0).join(',')).toBe('ch.swisstopo.dreiecksvermaschung');
 
       // layer 'ch.astra.ausnahmetransportrouten' with `wmsUrl` and `queryLayers`
       var sourceRoutes = getSourceById(queryManager.sources_, 116);
       expect(sourceRoutes).not.toBeNull();
-      expect(sourceRoutes.params.LAYERS).toBe('ch.swisstopo.geologie-gravimetrischer_atlas');
+      expect(sourceRoutes.getLayers(0).join(',')).toBe('ch.swisstopo.geologie-gravimetrischer_atlas');
     });
 
     // FIXME no data to run this test

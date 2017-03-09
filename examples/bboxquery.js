@@ -90,6 +90,7 @@ app.MainController = function($scope, ngeoQuery) {
   ngeoQuery.addSource({
     'id': busStopSourceId,
     'layer': busStopLayer,
+    'layers': ['bus_stop'],
     'wfsQuery': true
   });
 
@@ -104,6 +105,7 @@ app.MainController = function($scope, ngeoQuery) {
   ngeoQuery.addSource({
     'id': informationSourceId,
     'layer': informationLayer,
+    'layers': ['information'],
     'wfsQuery': true
   });
 
