@@ -78,7 +78,7 @@ gmf.EditFeature.prototype.getFeaturesWithComparisonFilters = function(
 
   params['queryable'] = properties.join(',');
 
-  const url = ol.uri.appendParams(`${this.baseUrl_}/${properties.join(',')}`, params);
+  const url = ol.uri.appendParams(`${this.baseUrl_}/${layerIds.join(',')}`, params);
   return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
 
