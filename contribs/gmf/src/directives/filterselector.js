@@ -3,6 +3,7 @@ goog.provide('gmf.filterselectorComponent');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.Authentication');
+goog.require('gmf.DataSourceBeingFiltered');
 /** @suppress {extraRequire} */
 goog.require('gmf.DataSourcesHelper');
 goog.require('gmf.SavedFilters');
@@ -24,6 +25,9 @@ gmf.FilterselectorController = class {
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @param {gmf.DataSourceBeingFiltered} gmfDataSourceBeingFiltered The
+   *     Gmf value service that determines the data source currently being
+   *     filtered.
    * @param {gmf.DataSourcesHelper} gmfDataSourcesHelper Gmf data sources
    *     helper service.
    * @param {gmf.SavedFilters} gmfSavedFilters Gmf saved filters service.
@@ -38,9 +42,9 @@ gmf.FilterselectorController = class {
    * @ngdoc controller
    * @ngname GmfFilterselectorController
    */
-  constructor($scope, $timeout, gettextCatalog, gmfDataSourcesHelper,
-      gmfSavedFilters, gmfUser, ngeoNotification, ngeoFeatureOverlayMgr,
-      ngeoRuleHelper
+  constructor($scope, $timeout, gettextCatalog, gmfDataSourceBeingFiltered,
+      gmfDataSourcesHelper, gmfSavedFilters, gmfUser, ngeoNotification,
+      ngeoFeatureOverlayMgr, ngeoRuleHelper
   ) {
 
     // Binding properties
@@ -82,6 +86,20 @@ gmf.FilterselectorController = class {
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
+
+    /**
+     * The data source that can either be selected from the list or have
+     * its value set from an external source (for example: the layertree)
+     * and that requires to be ready before it can be filtered.
+     * @type {gmf.DataSourceBeingFiltered}
+     * @export
+     */
+    this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
+
+    $scope.$watch(
+      () => this.gmfDataSourceBeingFiltered.dataSource,
+      this.handleSelectedDataSourceChange_.bind(this)
+    );
 
     /**
      * @type {gmf.DataSourcesHelper}
@@ -223,19 +241,6 @@ gmf.FilterselectorController = class {
     this.saveFilterManageModalShown = false;
 
     /**
-     * The data source that has been selected in the list and that requires
-     * to be ready before it can be filtered.
-     * @type {?gmf.DataSource}
-     * @export
-     */
-    this.selectedDataSource = null;
-
-    $scope.$watch(
-      () => this.selectedDataSource,
-      this.handleSelectedDataSourceChange_.bind(this)
-    );
-
-    /**
      * @type {boolean}
      * @export
      */
@@ -269,8 +274,7 @@ gmf.FilterselectorController = class {
    * @private
    */
   toggleDataSourceRegistration_() {
-    const newDataSourceRegistration = this.active &&
-          !!this.filtrableLayerNodeNames_;
+    const newDataSourceRegistration = !!this.filtrableLayerNodeNames_;
     if (this.enableDataSourceRegistration_ !== newDataSourceRegistration) {
       this.enableDataSourceRegistration_ = newDataSourceRegistration;
     }
@@ -285,9 +289,8 @@ gmf.FilterselectorController = class {
    */
   handleActiveChange_(active) {
     if (!active) {
-      this.selectedDataSource = null;
+      this.gmfDataSourceBeingFiltered.dataSource = null;
     }
-    this.toggleDataSourceRegistration_();
   }
 
 
@@ -361,30 +364,38 @@ gmf.FilterselectorController = class {
 
 
   /**
+   * Register a data source if filtrable.  If it's the first time that the
+   * data source is about to be registered, then the `filtrable` property
+   * is set. Otherwise, it's used.
+   *
    * @param {gmf.DataSource} dataSource Data source
    * @private
    */
   registerDataSource_(dataSource) {
-    // Do nothing if data source is not filtrable
-    if (!this.isDataSourceFiltrable_(dataSource)) {
-      return;
+    if (dataSource.filtrable === null) {
+      dataSource.filtrable = this.isDataSourceFiltrable_(dataSource);
     }
 
-    this.filtrableDataSources.push(dataSource);
+    if (dataSource.filtrable) {
+      this.filtrableDataSources.push(dataSource);
+    }
   }
 
 
   /**
+   * Unregister a data source if it's filtrable. Also, if it's the one
+   * that was currently selected, unselect it.
    * @param {gmf.DataSource} dataSource Data source
    * @private
    */
   unregisterDataSource_(dataSource) {
-    // Do nothing if data source is not filtrable
-    if (!this.isDataSourceFiltrable_(dataSource)) {
-      return;
-    }
+    if (dataSource.filtrable) {
+      ol.array.remove(this.filtrableDataSources, dataSource);
 
-    ol.array.remove(this.filtrableDataSources, dataSource);
+      if (this.gmfDataSourceBeingFiltered.dataSource === dataSource) {
+        this.gmfDataSourceBeingFiltered.dataSource = null;
+      }
+    }
   }
 
 
@@ -482,6 +493,11 @@ gmf.FilterselectorController = class {
     // No need to do anything if no data source is selected
     if (!dataSource) {
       return;
+    }
+
+    // A data source has been selected. Make sure the component is active.
+    if (!this.active) {
+      this.active = true;
     }
 
     this.gmfDataSourcesHelper_.prepareFiltrableDataSource(
@@ -656,7 +672,7 @@ gmf.FilterselectorController.RuleCacheItem;
 
 gmf.module.component('gmfFilterselector', {
   bindings: {
-    active: '<',
+    active: '=',
     map: '<',
     toolGroup: '<'
   },

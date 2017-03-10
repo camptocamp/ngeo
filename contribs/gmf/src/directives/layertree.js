@@ -3,6 +3,7 @@ goog.provide('gmf.layertreeComponent');
 
 goog.require('ngeo.SyncArrays');
 goog.require('gmf');
+goog.require('gmf.DataSourceBeingFiltered');
 goog.require('gmf.Permalink');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
@@ -110,6 +111,9 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {gmf.DataSourceBeingFiltered} gmfDataSourceBeingFiltered The
+ *     Gmf value service that determines the data source currently being
+ *     filtered.
  * @param {!gmf.Permalink} gmfPermalink The gmf permalink service.
  * @param {!gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {!gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
@@ -124,8 +128,8 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
-    ngeoLayerHelper, gmfPermalink, gmfTreeManager, gmfSyncLayertreeMap,
-    ngeoSyncArrays, gmfWMSTime, gmfThemes) {
+    ngeoLayerHelper, gmfDataSourceBeingFiltered, gmfPermalink, gmfTreeManager,
+    gmfSyncLayertreeMap, ngeoSyncArrays, gmfWMSTime, gmfThemes) {
 
   /**
    * @type {?ol.Map}
@@ -162,6 +166,12 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {gmf.DataSourceBeingFiltered}
+   * @export
+   */
+  this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
 
   /**
    * @type {!gmf.Permalink}
@@ -652,6 +662,15 @@ gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
   $(legendNodeId).toggle({
     toggle: true
   });
+};
+
+
+/**
+ * @param {gmf.DataSource} ds Data source to filter.
+ * @export
+ */
+gmf.LayertreeController.prototype.toggleFiltrableDataSource = function(ds) {
+  this.gmfDataSourceBeingFiltered.dataSource = ds;
 };
 
 

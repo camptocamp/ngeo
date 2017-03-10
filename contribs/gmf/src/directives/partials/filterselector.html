@@ -5,7 +5,7 @@
   <select
       class="form-control"
       ng-switch-default
-      ng-model="fsCtrl.selectedDataSource"
+      ng-model="fsCtrl.gmfDataSourceBeingFiltered.dataSource"
       ng-options="dataSource.name | translate for dataSource in fsCtrl.filtrableDataSources">
     <option value="" translate>-- Layer to filter --</option>
   </select>

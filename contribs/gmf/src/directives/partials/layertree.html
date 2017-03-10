@@ -136,6 +136,15 @@
               {{'Show/hide legend'|translate}}
             </a>
           </li>
+          <li ng-if="layertreeCtrl.getDataSource() && layertreeCtrl.getDataSource().filtrable">
+            <i class="fa fa-filter"></i>
+            <a
+              title="{{'Filter'|translate}}"
+              ng-click="gmfLayertreeCtrl.toggleFiltrableDataSource(layertreeCtrl.getDataSource())"
+              href="">
+              {{'Filter'|translate}}
+            </a>
+          </li>
         </ul>
       </div>
     </span>
