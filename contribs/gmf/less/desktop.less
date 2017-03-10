@@ -340,7 +340,7 @@ gmf-backgroundlayerselector {
 /**
  * GMF DrawFeature directive
  */
-gmf-drawfeature h2 {
+.gmf-app-map-messages h2 {
   display: none;
 }
 
@@ -479,6 +479,7 @@ gmf-featurestyle {
   position: absolute;
   top: 0;
   width: 20rem;
+  z-index: 999;
 }
 
 
@@ -521,7 +522,7 @@ gmf-featurestyle {
 
 /** Disclaimer */
 @bgselector-image-size: 48px;
-gmf-disclaimer {
+.gmf-app-map-messages {
   position: absolute;
   vertical-align: bottom;
   left: ~"calc(2 * @{app-margin} + @{bgselector-image-size} + 2 * @{padding-small-vertical})";
