@@ -37,8 +37,12 @@ describe('gmf.displayquerywindowDirective', function() {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature(),
-          new ol.Feature()
+          new ol.Feature({
+            foo: 'bar'
+          }),
+          new ol.Feature({
+            bar: 'baz'
+          })
         ],
         id: 123,
         label: 'Test',
@@ -65,8 +69,12 @@ describe('gmf.displayquerywindowDirective', function() {
       ngeoQueryResult.total = 5;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature(),
-          new ol.Feature()
+          new ol.Feature({
+            foo: 'bar'
+          }),
+          new ol.Feature({
+            bar: 'baz'
+          })
         ],
         id: 123,
         label: 'Test 1',
@@ -80,9 +88,13 @@ describe('gmf.displayquerywindowDirective', function() {
         queried: true
       }, {
         features: [
+          new ol.Feature({
+            foo: 'bar'
+          }),
           new ol.Feature(),
-          new ol.Feature(),
-          new ol.Feature()
+          new ol.Feature({
+            bar: 'baz'
+          })
         ],
         id: 345,
         label: 'Test 3',
@@ -103,16 +115,12 @@ describe('gmf.displayquerywindowDirective', function() {
       displayQueriesController.next();
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[1]);
       displayQueriesController.next();
-      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[2]);
-      displayQueriesController.next();
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[0]);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);
 
       displayQueriesController.previous();
-      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[2]);
-      expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[2]);
-      displayQueriesController.previous();
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[1]);
+      expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[2]);
       displayQueriesController.previous();
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[0]);
       displayQueriesController.previous();
@@ -126,8 +134,12 @@ describe('gmf.displayquerywindowDirective', function() {
       ngeoQueryResult.total = 5;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature(),
-          new ol.Feature()
+          new ol.Feature({
+            foo: 'bar'
+          }),
+          new ol.Feature({
+            bar: 'baz'
+          })
         ],
         id: 123,
         label: 'Test 1',
@@ -141,9 +153,13 @@ describe('gmf.displayquerywindowDirective', function() {
         queried: true
       }, {
         features: [
+          new ol.Feature({
+            foo: 'bar'
+          }),
           new ol.Feature(),
-          new ol.Feature(),
-          new ol.Feature()
+          new ol.Feature({
+            bar: 'baz'
+          })
         ],
         id: 345,
         label: 'Test 3',
@@ -181,32 +197,26 @@ describe('gmf.displayquerywindowDirective', function() {
 
       // select the 3rd source
       displayQueriesController.setSelectedSource(ngeoQueryResult.sources[2]);
-      expect(displayQueriesController.getResultLength()).toBe(3);
+      expect(displayQueriesController.getResultLength()).toBe(2);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[2]);
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[0]);
 
       displayQueriesController.next();
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[1]);
       displayQueriesController.next();
-      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[2]);
-      displayQueriesController.next();
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[0]);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[2]);
 
       displayQueriesController.previous();
-      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[2]);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[2]);
-      displayQueriesController.previous();
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[1]);
       displayQueriesController.previous();
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[0]);
       displayQueriesController.previous();
-      expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[2].features[2]);
-      expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[2]);
 
       // show results for all sources
       displayQueriesController.setSelectedSource(null);
-      expect(displayQueriesController.getResultLength()).toBe(5);
+      expect(displayQueriesController.getResultLength()).toBe(4);
       expect(displayQueriesController.source).toBe(ngeoQueryResult.sources[0]);
       expect(displayQueriesController.feature).toBe(ngeoQueryResult.sources[0].features[0]);
     });
