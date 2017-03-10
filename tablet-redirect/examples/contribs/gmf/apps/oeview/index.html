@@ -60,9 +60,11 @@
               class="dropdown-menu">
             </gmf-backgroundlayerselector>
           </div>
-          <gmf-disclaimer
-            gmf-disclaimer-map="::mainCtrl.map">
-          </gmf-disclaimer>
+          <div class="gmf-app-map-messages">
+            <gmf-disclaimer
+              gmf-disclaimer-map="::mainCtrl.map">
+            </gmf-disclaimer>
+          </div>
           <gmf-displayquerywindow
             gmf-displayquerywindow-featuresstyle="::mainCtrl.queryFeatureStyle"
             gmf-displayquerywindow-desktop="true">
@@ -123,7 +125,7 @@
     <script src="../../../../lib/watchwatchers.js"></script>
     <script>
       (function() {
-        var cacheVersion = 'e8fd70cd5601f0975863c378b3ecd048ab72e0c9';
+        var cacheVersion = 'f79ce63e5c1914a7b33deb9d9097077cb746c32e';
         var urlElements = window.location.pathname.split('/');
 
         var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
