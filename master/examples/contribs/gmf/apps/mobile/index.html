@@ -59,9 +59,13 @@
         ngeo-mobile-geolocation-options="::mainCtrl.mobileGeolocationOptions">
         <span class="fa fa-location-arrow"></span>
       </button>
-      <gmf-disclaimer
-        gmf-disclaimer-map="::mainCtrl.map">
-      </gmf-disclaimer>
+      <div class="gmf-app-map-messages">
+        <gmf-disclaimer gmf-disclaimer-map="::mainCtrl.map"></gmf-disclaimer>
+        <div class="alert alert-info alert-dismissible fade in visible-sm" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="{{'Close' | translate }}"><span aria-hidden="true" class="fa fa-times"></span></button>
+          <span>{{"You're using the mobile version. Check out the" | translate }} <a href="http://camptocamp.github.io/ngeo/master/examples/contribs/gmf/apps/desktop/">{{'standard version' | translate}}</a>.</span>
+        </div>
+      </div>
     </main>
     <nav class="gmf-mobile-nav-left" gmf-mobile-nav>
       <header>
@@ -143,7 +147,7 @@
     <script src="../../../../lib/watchwatchers.js"></script>
     <script>
       (function() {
-        var cacheVersion = '5fc24f372e235f3aebca8f34dc74ab216e806303';
+        var cacheVersion = '705458378eaac8c069a64b0786897a2407fd593d';
         var urlElements = window.location.pathname.split('/');
 
         var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
