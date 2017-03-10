@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="image/favicon.ico"/>
     <link rel="stylesheet" href="../../build/desktop_alt.css">
   </head>
-  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!queryGridActive}">
+  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!queryGridActive}" ng-keydown="mainCtrl.onKeydown($event)">
     <header>
       <div>
         <img src="image/logo.png" />
@@ -279,7 +279,7 @@
     <script src="../../../../lib/watchwatchers.js"></script>
     <script>
       (function() {
-        var cacheVersion = '198a8f8802472e2cae6044e4ac177ec83028b46a';
+        var cacheVersion = '5afbdb3a964688fd1084bfd6adc8f8df029cf3fa';
         var urlElements = window.location.pathname.split('/');
 
         var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
