@@ -130,8 +130,11 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    * @type {ngeox.QueryResult}
    * @export
    */
-  this.ngeoQueryResult = ngeoQueryResult;
-
+  this.ngeoQueryResult = {
+    sources: [],
+    total: 0,
+    pending: false
+  };
 
   /**
    * @type {ngeo.FeatureHelper}
@@ -209,6 +212,7 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
   $scope.$watchCollection(
       () => ngeoQueryResult,
       (newQueryResult, oldQueryResult) => {
+        this.updateQueryResult_(newQueryResult);
         if (newQueryResult.total > 0) {
           this.show();
         } else if (oldQueryResult !== newQueryResult) {
@@ -351,6 +355,24 @@ gmf.DisplayquerywindowController.prototype.next = function() {
   }
 };
 
+
+/**
+ * Remove features without properties from the query result.
+ * @param {ngeox.QueryResult} queryResult ngeo query result.
+ * @private
+ */
+gmf.DisplayquerywindowController.prototype.updateQueryResult_ = function(queryResult) {
+  this.ngeoQueryResult.total = 0;
+  this.ngeoQueryResult.sources.length = 0;
+  for (let i = 0; i < queryResult.sources.length; i++) {
+    const source = queryResult.sources[i];
+    source.features = source.features.filter(function(feature) {
+      return !ol.obj.isEmpty(this.ngeoFeatureHelper_.getFilteredFeatureValues(feature));
+    }, this);
+    this.ngeoQueryResult.sources.push(source);
+    this.ngeoQueryResult.total += source.features.length;
+  }
+};
 
 /**
  * Get the total count of features in the result of the query. If a source

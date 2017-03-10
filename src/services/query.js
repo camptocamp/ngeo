@@ -220,20 +220,16 @@ ngeo.Query.prototype.addSource = function(source) {
       if (wmsSource &&
           (wmsSource instanceof ol.source.ImageWMS ||
            wmsSource instanceof ol.source.TileWMS)) {
-        source.wmsSource =
-            /** @type {ol.source.ImageWMS|ol.source.TileWMS} */ (wmsSource);
+        source.wmsSource = wmsSource;
       }
     } else {
-      const url = source.url;
-      const params = source.params;
-      goog.asserts.assert(url,
+      goog.asserts.assert(source.url,
           'url must be set when no layer or wmsSource is set in the source');
-      goog.asserts.assert(params,
-          'parmas must be set when no layer or wmsSource is set in the source');
       source.wmsSource = new ol.source.ImageWMS({
-        url,
-        params
+        url: source.url,
+        params: {'LAYERS': source.layers}
       });
+      source.getLayers = source.getLayers;
     }
   }
   goog.asserts.assert(source.wmsSource, 'wmsSource should be thruthy');
@@ -245,11 +241,9 @@ ngeo.Query.prototype.addSource = function(source) {
       source.infoFormat = ngeo.QueryInfoFormatType.GML;
     }
 
-    const layers = source.wmsSource.getParams()['LAYERS'].split(',');
-
-    if (source.infoFormat === ngeo.QueryInfoFormatType.GML) {
+    if (source.infoFormat === ngeo.QueryInfoFormatType.GML && source.layers) {
       source.format = new ol.format.WMSGetFeatureInfo({
-        layers
+        layers: source.layers
       });
     }
   } else if (!source.infoFormat) {
@@ -290,12 +284,14 @@ ngeo.Query.prototype.addSource = function(source) {
 
 /**
  * Add multiple sources at once in the order they are given.
- * @param {Array.<ngeox.QuerySource>} sources The sources to add to the query
+ * @param {!Array.<!ngeox.QuerySource>} sources The sources to add to the query
  *     service.
  * @export
  */
 ngeo.Query.prototype.addSources = function(sources) {
-  sources.forEach(this.addSource, this);
+  sources.forEach(function(source) {
+    this.addSource(source);
+  }, this);
 };
 
 
@@ -396,9 +392,9 @@ ngeo.Query.prototype.issueGetFeatureRequests_ = function(map, extent) {
 ngeo.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
 
   const wmsItemsByUrl =
-      /** @type {Object.<string, Array.<ngeo.QueryCacheItem>>} */ ({});
+      /** @type {!Object.<string, !Array.<!ngeo.QueryCacheItem>>} */ ({});
   const wfsItemsByUrl =
-      /** @type {Object.<string, Array.<ngeo.QueryCacheItem>>} */ ({});
+      /** @type {!Object.<string, !Array.<!ngeo.QueryCacheItem>>} */ ({});
 
   const layers = this.ngeoLayerHelper_.getFlatLayers(map.getLayerGroup());
 
@@ -442,8 +438,10 @@ ngeo.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
             'The layer source should be a WMS one when using the ' +
             'validateLayerParams option.'
         );
-        const layerLayers = layerSource.getParams()['LAYERS'].split(',');
-        const cfgLayer = item.source.layers.split(',');
+        const resolution = map.getView().getResolution();
+        goog.asserts.assert(resolution);
+        const layerLayers = item.source.getLayers(resolution);
+        const cfgLayer = item.source.layers;
 
         const layerIsOnTheMap = cfgLayer.some(layer => layerLayers.indexOf(layer) > -1);
         if (!layerIsOnTheMap) {
@@ -554,16 +552,17 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
 
     const wmsGetFeatureInfoUrl = items[0].source.wmsSource.getGetFeatureInfoUrl(
         coordinate, resolution, projCode, params);
-
     goog.asserts.assert(wmsGetFeatureInfoUrl, 'WMS GetFeatureInfo url should be thruty');
 
-    const canceler = this.registerCanceler_();
-    this.$http_.get(wmsGetFeatureInfoUrl, {timeout: canceler.promise})
+    this.$http_.get(wmsGetFeatureInfoUrl, {timeout: this.registerCanceler_().promise})
         .then(function(items, response) {
           items.forEach(function(item) {
             item['resultSource'].pending = false;
-            const format = item.source.format;
-            const features = format.readFeatures(response.data);
+            const features = [];
+            item.source.format.readFeatures(response.data).forEach((feature) => {
+              goog.asserts.assert(feature);
+              features.push(feature);
+            });
             this.setUniqueIds_(features, item.source.id);
             item['resultSource'].features = features;
             this.result_.total += features.length;
@@ -605,7 +604,9 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
 
   angular.forEach(wfsItemsByUrl, (items, url) => {
     items.forEach((item) => {
-      const layers = this.getLayersForItem_(item);
+      const resolution = map.getView().getResolution();
+      goog.asserts.assert(resolution);
+      const layers = this.getLayersForItem_(item, resolution);
 
       if (layers.length == 0 || layers[0] === '') {
         // do not query source if no valid layers
@@ -643,7 +644,11 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
         this.$http_.post(url, featureRequest, {timeout: canceler.promise})
             .then((response) => {
               item['resultSource'].pending = false;
-              const features = sourceFormat.readFeatures(response.data);
+              const features = [];
+              sourceFormat.readFeatures(response.data).forEach((feature) => {
+                goog.asserts.assert(feature);
+                features.push(feature);
+              });
               this.setUniqueIds_(features, item.source.id);
               item['resultSource'].features = features;
               this.result_.total += features.length;
@@ -713,24 +718,31 @@ ngeo.Query.prototype.getLayerSourceIds_ = function(layer) {
 
 
 /**
- * @param {ngeo.QueryCacheItem} item Cache item
- * @return {Array.<string>} Layer names
+ * @param {!ngeo.QueryCacheItem} item Cache item
+ * @param {number} resolution returns the layers visible at this resolution.
+ * @return {!Array.<string>} Layer names
  * @private
  */
-ngeo.Query.prototype.getLayersForItem_ = function(item) {
-  return item.source.wmsSource.getParams()['LAYERS'].split(',');
+ngeo.Query.prototype.getLayersForItem_ = function(item, resolution) {
+  if (item.source.getLayers) {
+    return item.source.getLayers(resolution);
+  } else {
+    goog.asserts.assert(item.source.layers);
+    return item.source.layers;
+  }
 };
 
 
 /**
- * @param {Array.<ngeo.QueryCacheItem>} items Cache items
- * @return {Array.<string>} Layer names
+ * @param {!Array.<!ngeo.QueryCacheItem>} items Cache items
+ * @param {number} resolution returns the layers visible at this resolution.
+ * @return {!Array.<string>} Layer names
  * @private
  */
-ngeo.Query.prototype.getLayersForItems_ = function(items) {
-  let layers = this.getLayersForItem_(items[0]);
+ngeo.Query.prototype.getLayersForItems_ = function(items, resolution) {
+  let layers = this.getLayersForItem_(items[0], resolution);
   for (let i = 1, len = items.length; i < len; i++) {
-    layers = layers.concat(this.getLayersForItem_(items[i]));
+    layers = layers.concat(this.getLayersForItem_(items[i], resolution));
   }
   return layers;
 };
@@ -739,7 +751,7 @@ ngeo.Query.prototype.getLayersForItems_ = function(items) {
 /**
  * Make sure that feature ids are unique, because the same features might
  * be returned for different layers.
- * @param {Array.<ol.Feature>} features Features
+ * @param {!Array.<!ol.Feature>} features Features
  * @param {string|number} sourceId Source id.
  * @private
  */

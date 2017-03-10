@@ -43,7 +43,7 @@ describe('ngeo.Query', () => {
     const source = {
       id: 1,
       url: 'foo',
-      params: {'LAYERS': 'bar'}
+      layers: ['bar']
     };
     ngeoQuery.addSource(source);
     expect(ngeoQueryResult.sources.length).toBe(1);
@@ -67,7 +67,8 @@ describe('ngeo.Query', () => {
     });
     const source = {
       id,
-      layer
+      layer,
+      layers: ['bar']
     };
     ngeoQuery.addSource(source);
     // a source configured with a layer that uses a wms source should
@@ -84,9 +85,9 @@ describe('ngeo.Query', () => {
     const informationSourceId = 'information';
     let $httpBackend;
 
-    const url = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy';
-    const requestUrlBusStop = `${url}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&QUERY_LAYERS=bus_stop&LAYERS=bus_stop&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=489100%2C119900.00000000003%2C509300%2C140100.00000000003`;
-    const requestUrlBusStopAndInformation = `${url}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=information%2Cbus_stop&QUERY_LAYERS=information%2Cbus_stop&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=523700%2C142900.00000000003%2C543900%2C163100.00000000003`;
+    const url = 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy';
+    const requestUrlBusStop = `${url}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=489100%2C119900%2C509300%2C140100&LAYERS=bus_stop&QUERY_LAYERS=bus_stop`;
+    const requestUrlBusStopAndInformation = `${url}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&FORMAT=image%2Fpng&TRANSPARENT=true&INFO_FORMAT=application%2Fvnd.ogc.gml&FEATURE_COUNT=50&I=50&J=50&CRS=EPSG%3A21781&STYLES=&WIDTH=101&HEIGHT=101&BBOX=523700%2C142900%2C543900%2C163100&LAYERS=information%2Cbus_stop&QUERY_LAYERS=information%2Cbus_stop`;
 
     beforeEach(() => {
 
@@ -102,7 +103,8 @@ describe('ngeo.Query', () => {
         'source': new ol.source.ImageWMS({
           'url': url,
           params: {'LAYERS': 'bus_stop'}
-        })
+        }),
+        layers: ['bus_stop']
       });
 
       informationLayer = new ol.layer.Image({
@@ -110,7 +112,8 @@ describe('ngeo.Query', () => {
         'source': new ol.source.ImageWMS({
           'url': url,
           params: {'LAYERS': 'information'}
-        })
+        }),
+        layers: ['information']
       });
 
       const projection = ol.proj.get('EPSG:21781');
@@ -140,10 +143,11 @@ describe('ngeo.Query', () => {
     });
 
     it('Issue request with one source', () => {
-      const coordinate = [499200, 130000.00000000003];
+      const coordinate = [499200, 130000];
       ngeoQuery.addSource({
         id: busStopSourceId,
-        layer: busStopLayer
+        layer: busStopLayer,
+        layers: ['bus_stop']
       });
       ngeoQuery.issue(map, coordinate);
       $httpBackend.flush();
@@ -156,14 +160,16 @@ describe('ngeo.Query', () => {
     });
 
     it('Issue request with two sources', () => {
-      const coordinate = [533800, 153000.00000000003];
+      const coordinate = [533800, 153000];
       ngeoQuery.addSource({
         id: busStopSourceId,
-        layer: busStopLayer
+        layer: busStopLayer,
+        layers: ['bus_stop']
       });
       ngeoQuery.addSource({
         id: informationSourceId,
-        layer: informationLayer
+        layer: informationLayer,
+        layers: ['information']
       });
       ngeoQuery.issue(map, coordinate);
       $httpBackend.flush();
@@ -173,14 +179,16 @@ describe('ngeo.Query', () => {
     });
 
     it('When layers are not visible, no request is sent', () => {
-      const coordinate = [533800, 153000.00000000003];
+      const coordinate = [533800, 153000];
       ngeoQuery.addSource({
         id: busStopSourceId,
-        layer: busStopLayer
+        layer: busStopLayer,
+        layers: ['bus_stop']
       });
       ngeoQuery.addSource({
         id: informationSourceId,
-        layer: informationLayer
+        layer: informationLayer,
+        layers: ['information']
       });
       busStopLayer.setVisible(false);
       informationLayer.setVisible(false);
@@ -195,16 +203,18 @@ describe('ngeo.Query', () => {
     it('Issues WFS request for one source', () => {
       $httpBackend.when('POST', url).respond(gmlResponseInformationWfs);
 
-      const coordinate = [499200, 130000.00000000003];
+      const coordinate = [499200, 130000];
       // make a GetFeatureInfo request for this source
       ngeoQuery.addSource({
         id: busStopSourceId,
-        layer: busStopLayer
+        layer: busStopLayer,
+        layers: ['bus_stop']
       });
       // and a WFS GetFeature request for this one
       ngeoQuery.addSource({
         id: informationSourceId,
         layer: informationLayer,
+        layers: ['information'],
         wfsQuery: true
       });
       ngeoQuery.issue(map, coordinate);
@@ -222,11 +232,13 @@ describe('ngeo.Query', () => {
       ngeoQuery.addSource({
         id: busStopSourceId,
         layer: busStopLayer,
+        layers: ['bus_stop'],
         wfsQuery: true
       });
       ngeoQuery.addSource({
         id: informationSourceId,
         layer: informationLayer,
+        layers: ['information'],
         wfsQuery: true,
         urlWfs: `${url}?information`
       });
@@ -246,11 +258,12 @@ describe('ngeo.Query', () => {
       // request to get features
       $httpBackend.when('POST', url, body => body.indexOf('hits') == -1).respond(gmlResponseInformationWfs);
 
-      const coordinate = [499200, 130000.00000000003];
+      const coordinate = [499200, 130000];
       // make a WFS GetFeature request for this source
       ngeoQuery.addSource({
         id: informationSourceId,
         layer: informationLayer,
+        layers: ['information'],
         wfsQuery: true
       });
 
@@ -270,11 +283,12 @@ describe('ngeo.Query', () => {
       // request to get feature count
       $httpBackend.when('POST', url, body => body.indexOf('hits') != -1).respond(gmlResponseInformationHitsWfs);
 
-      const coordinate = [499200, 130000.00000000003];
+      const coordinate = [499200, 130000];
       // make a WFS GetFeature request for this source
       ngeoQuery.addSource({
         id: informationSourceId,
         layer: informationLayer,
+        layers: ['information'],
         wfsQuery: true
       });
 
@@ -292,11 +306,13 @@ describe('ngeo.Query', () => {
       it('gets sources for GetFeatureInfo requests', () => {
         ngeoQuery.addSource({
           id: busStopSourceId,
-          layer: busStopLayer
+          layer: busStopLayer,
+          layers: ['bus_stop']
         });
         ngeoQuery.addSource({
           id: informationSourceId,
-          layer: informationLayer
+          layer: informationLayer,
+          layers: ['information']
         });
 
         const queryableSources = ngeoQuery.getQueryableSources_(map, false);
@@ -309,11 +325,13 @@ describe('ngeo.Query', () => {
         ngeoQuery.addSource({
           id: busStopSourceId,
           layer: busStopLayer,
+          layers: ['bus_stop'],
           wfsQuery: true
         });
         ngeoQuery.addSource({
           id: informationSourceId,
           layer: informationLayer,
+          layers: ['information'],
           wfsQuery: false
         });
 
@@ -329,13 +347,15 @@ describe('ngeo.Query', () => {
         busStopLayer.setVisible(false);
         ngeoQuery.addSource({
           id: busStopSourceId,
-          layer: busStopLayer
+          layer: busStopLayer,
+          layers: ['bus_stop']
         });
         // layer is out of range
         informationLayer.setMinResolution(60);
         ngeoQuery.addSource({
           id: informationSourceId,
           layer: informationLayer,
+          layers: ['information'],
           wfsQuery: true
         });
         const queryableSources = ngeoQuery.getQueryableSources_(map, false);
@@ -344,5 +364,4 @@ describe('ngeo.Query', () => {
       });
     });
   });
-
 });

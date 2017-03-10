@@ -19,9 +19,9 @@ goog.require('ngeo.Query');
  *
  * @constructor
  * @struct
- * @param {ngeo.Query} ngeoQuery The ngeo Query service.
- * @param {gmf.Themes} gmfThemes The gmf Themes service.
- * @param {angular.$q} $q Angular q service
+ * @param {!ngeo.Query} ngeoQuery The ngeo Query service.
+ * @param {!gmf.Themes} gmfThemes The gmf Themes service.
+ * @param {!angular.$q} $q Angular q service
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes
@@ -29,31 +29,31 @@ goog.require('ngeo.Query');
 gmf.QueryManager = function(ngeoQuery, gmfThemes, $q) {
 
   /**
-   * @type {ngeo.Query}
+   * @type {!ngeo.Query}
    * @private
    */
   this.ngeoQuery_ = ngeoQuery;
 
   /**
-   * @type {gmf.Themes}
+   * @type {!gmf.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {angular.$q}
+   * @type {!angular.$q}
    * @private
    */
   this.$q_ = $q;
 
   /**
-   * @type {Array.<ngeox.QuerySource>}
+   * @type {!Array.<!ngeox.QuerySource>}
    * @private
    */
   this.sources_ = [];
 
   /**
-   * @type {Object.<number|string, ngeox.QuerySource>}
+   * @type {!Object.<number|string, !ngeox.QuerySource>}
    * @private
    */
   this.cache_ = {};
@@ -145,8 +145,9 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
   // Don't create sources for WMTS layers without wmsUrl and ogcServer,
   // they are not queryable.
   if (gmfLayer.type === 'WMTS') {
-    layers = meta.queryLayers || meta.wmsLayers;
-    if (layers && meta.ogcServer && ogcServers[meta.ogcServer]) {
+    const layers_ = meta.queryLayers || meta.wmsLayers;
+    if (layers_ && meta.ogcServer && ogcServers[meta.ogcServer]) {
+      layers = layers_.split(',');
       ogcServer = ogcServers[meta.ogcServer];
     } else {
       return;
@@ -157,7 +158,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
   let gmfLayerWMS;
   if (gmfLayer.type === 'WMS') {
     gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
-    layers = gmfLayerWMS.layers;
+    layers = gmfLayerWMS.layers.split(',');
     if (!firstLevelGroup || firstLevelGroup.mixed) {
       goog.asserts.assert(gmfLayerWMS.ogcServer);
       ogcServer = ogcServers[/** @type string */ (gmfLayerWMS.ogcServer)];
@@ -166,43 +167,44 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
       ogcServer = ogcServers[/** @type string */ (firstLevelGroup.ogcServer)];
     }
   }
-  let childLayers = layers;
   if (!this.cache_[id]) {
-    if (validateLayerParams) {
-      // Some nodes have child layers, i.e. a list of layer names that are
-      // part of a group. The name of the group itself can't be used 'as-is'
-      // as an identifier of the layers for this source. For example, a
-      // group named 'osm' might result in returning 'restaurant' features.
-      // This override makes sure that those layer names are used instead of
-      // the original one.
-      if (gmfLayerWMS.childLayers && gmfLayerWMS.childLayers.length) {
-        // skip layers with no queryable childLayer
-        const isQueryable = function(item) {
-          return item.queryable;
-        };
-        if (!gmfLayerWMS.childLayers.some(isQueryable)) {
-          return;
-        }
-
-        const childLayerNames = [];
-        gmfLayerWMS.childLayers.forEach((childLayer) => {
-          if (childLayer.queryable) {
-            childLayerNames.push(childLayer.name);
-          }
-        }, this);
-        childLayers = childLayerNames.join(',');
-      }
-    }
-
     goog.asserts.assert(ogcServer.urlWfs);
-    goog.asserts.assert(childLayers);
     goog.asserts.assert(layers);
 
     const source = {
       'id': id,
       'identifierAttributeField': identifierAttributeField,
       'label': name,
-      'params': {'LAYERS': childLayers},
+      'getLayers': function(resolution) {
+        let childLayers = layers;
+        goog.asserts.assert(childLayers);
+        if (validateLayerParams) {
+          // Some nodes have child layers, i.e. a list of layer names that are
+          // part of a group. The name of the group itself can't be used 'as-is'
+          // as an identifier of the layers for this source. For example, a
+          // group named 'osm' might result in returning 'restaurant' features.
+          // This override makes sure that those layer names are used instead of
+          // the original one.
+          if (gmfLayerWMS.childLayers && gmfLayerWMS.childLayers.length) {
+            // skip layers with no queryable childLayer
+            const isQueryable = function(item) {
+              return item.queryable && resolution >= item.minResolutionHint && resolution <= item.maxResolutionHint;
+            };
+            if (!gmfLayerWMS.childLayers.some(isQueryable)) {
+              return [];
+            }
+
+            const childLayerNames = [];
+            gmfLayerWMS.childLayers.forEach((childLayer) => {
+              if (childLayer.queryable) {
+                childLayerNames.push(childLayer.name);
+              }
+            }, this);
+            childLayers = childLayerNames;
+          }
+        }
+        return childLayers;
+      },
       'layers': layers,
       'dimensions': node.dimensions || firstLevelGroup.dimensions,
       'url': ogcServer.urlWfs,

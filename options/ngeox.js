@@ -874,18 +874,18 @@ ngeox.QueryOptions.prototype.geometryName;
 /**
  * The configuration of a source for the Query service.
  * @typedef {{
- *     format: (ol.format.Feature|undefined),
+ *     format: (!ol.format.Feature|undefined),
  *     id: (number|string),
  *     identifierAttributeField: (string|undefined),
  *     infoFormat: (string|undefined),
  *     label: (string|undefined),
- *     layer: (ol.layer.Base|undefined),
- *     layers: (string|undefined),
- *     params: (Object.<string, *>|undefined),
+ *     layer: (!ol.layer.Base|undefined),
+ *     layers: (!Array.<string>|undefined),
+ *     getLayers: (function(number): !Array.<string>|undefined),
  *     serverType: (string|undefined),
  *     url: (string|undefined),
  *     validateLayerParams: (boolean|undefined),
- *     wmsSource: (ol.source.ImageWMS|ol.source.TileWMS|undefined),
+ *     wmsSource: (!ol.source.ImageWMS|!ol.source.TileWMS|undefined),
  *     wfsQuery: (boolean|undefined)
  * }}
  */
@@ -894,7 +894,7 @@ ngeox.QuerySource;
 
 /**
  * The used to read the returned features from query requests for this source.
- * @type {ol.format.Feature|undefined}
+ * @type {!ol.format.Feature|undefined}
  */
 ngeox.QuerySource.prototype.format;
 
@@ -933,24 +933,23 @@ ngeox.QuerySource.prototype.label;
  * A reference to the ol3 layer object. If not defined, will be automatically
  * fetched using the source `name` and the according layer property that has
  * the same value.
- * @type {ol.layer.Base|undefined}
+ * @type {!ol.layer.Base|undefined}
  */
 ngeox.QuerySource.prototype.layer;
 
 
 /**
- * A reference to the ol3 layers names. Multiple layers names can be separated
- * by a comma.
- * @type {string|undefined}
+ * A reference to the ol3 layers names. Multiple layers names.
+ * @type {!Array.<string>|undefined}
  */
 ngeox.QuerySource.prototype.layers;
 
 
 /**
  * Additionnal params to use when querying this source.
- * @type {Object.<string, *>|undefined}
+ * @type {function(number): !Array.<string>|undefined}
  */
-ngeox.QuerySource.prototype.params;
+ngeox.QuerySource.prototype.getLayers;
 
 
 /**
@@ -993,7 +992,7 @@ ngeox.QuerySource.prototype.validateLayerParams;
  * the layer source object will be used (if it's WMS), otherwise one will
  * be created by the query service using the `url` and `params` properties of
  * this source.
- * @type {ol.source.ImageWMS|ol.source.TileWMS|undefined}
+ * @type {!ol.source.ImageWMS|!ol.source.TileWMS|undefined}
  */
 ngeox.QuerySource.prototype.wmsSource;
 
