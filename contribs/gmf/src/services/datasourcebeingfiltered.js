@@ -11,11 +11,13 @@ gmf.module.value('gmfDataSourceBeingFiltered', {
 /**
  * @record
  * @struct
+ * @export
  */
 gmf.DataSourceBeingFiltered = function() {};
 
 
 /**
  * @type {?gmf.DataSource}
+ * @export
  */
 gmf.DataSourceBeingFiltered.prototype.dataSource;
