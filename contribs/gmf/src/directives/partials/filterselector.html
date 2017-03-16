@@ -4,6 +4,7 @@
   <span ng-switch-when="0" translate>No filtrable layer available!</span>
   <select
       class="form-control"
+      ng-disabled="fsCtrl.aRuleIsActive"
       ng-switch-default
       ng-model="fsCtrl.gmfDataSourceBeingFiltered.dataSource"
       ng-options="dataSource.name | translate for dataSource in fsCtrl.filtrableDataSources track by dataSource.name">
@@ -16,6 +17,7 @@
     <div class="dropdown gmf-filterselector-savedfilters">
       <a
           class="btn btn-link dropdown-toggle ngeo-filter-condition-button"
+          ng-class="{disabled: fsCtrl.aRuleIsActive || fsCtrl.gmfSavedFilters.currentDataSourceItems.length === 0}"
           type="button"
           data-toggle="dropdown"
           ng-disabled="fsCtrl.aRuleIsActive || fsCtrl.gmfSavedFilters.currentDataSourceItems.length === 0">
@@ -51,15 +53,17 @@
         tool-group="fsCtrl.toolGroup">
     </ngeo-filter>
 
-    <a
-        class="btn btn-link gmf-filterselector-savebtn"
-        type="button"
-        data-toggle="dropdown"
-        ng-click="fsCtrl.saveFilterShowModal()"
-        ng-disabled="fsCtrl.aRuleIsActive">
-      <span class="fa fa-save"></span>
-      <span translate>Save</span>
-    </a>
+    <div>
+      <a
+          class="btn btn-link gmf-filterselector-savebtn"
+          type="button"
+          data-toggle="dropdown"
+          ng-click="!fsCtrl.aRuleIsActive && fsCtrl.saveFilterShowModal()"
+          ng-disabled="fsCtrl.aRuleIsActive">
+        <span class="fa fa-save"></span>
+        <span translate>Save</span>
+      </a>
+    </div>
   </div>
 
   <ngeo-modal ng-model="fsCtrl.saveFilterSaveModalShown">

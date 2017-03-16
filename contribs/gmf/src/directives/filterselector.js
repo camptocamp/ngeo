@@ -289,7 +289,10 @@ gmf.FilterselectorController = class {
    */
   handleActiveChange_(active) {
     if (!active) {
-      this.gmfDataSourceBeingFiltered.dataSource = null;
+      this.aRuleIsActive = false;
+      this.timeout_(() => {
+        this.gmfDataSourceBeingFiltered.dataSource = null;
+      });
     }
   }
 
@@ -485,6 +488,7 @@ gmf.FilterselectorController = class {
    */
   handleSelectedDataSourceChange_(dataSource) {
 
+    this.aRuleIsActive = false;
     this.customRules = null;
     this.directedRules = null;
     this.readyDataSource = null;

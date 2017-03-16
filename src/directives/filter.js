@@ -147,6 +147,12 @@ ngeo.FilterController = class {
    * lists: geometry and the others. Then, apply the filters to the data source.
    */
   $onInit() {
+
+    this.scope_.$watch(
+      () => this.aRuleIsActive,
+      this.handleARuleIsActiveChange_.bind(this)
+    );
+
     // (1) Separate the attributes in 2: geometry and the others.
     const attributes = goog.asserts.assert(this.datasource.attributes);
     for (const attribute of attributes) {
@@ -290,6 +296,24 @@ ngeo.FilterController = class {
       }
     }
     this.aRuleIsActive = aRuleIsActive;
+  }
+
+  /**
+   * Called when the `aRuleIsActive` property changes. Make sure that
+   * no rule is still active if the property is `false`.
+   * @private
+   */
+  handleARuleIsActiveChange_() {
+    if (this.aRuleIsActive) {
+      return;
+    }
+    const rules = [].concat(this.customRules, this.directedRules);
+    for (const rule of rules) {
+      if (rule.active) {
+        rule.active = false;
+        break;
+      }
+    }
   }
 
 };

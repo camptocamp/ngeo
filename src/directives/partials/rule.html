@@ -219,7 +219,7 @@
 
   <a
       class="btn btn-xs btn-link"
-      ng-click="ruleCtrl.reset()"
+      ng-click="!ruleCtrl.rule.active && ruleCtrl.reset()"
       ng-disabled="ruleCtrl.rule.active"
       href>
     <span class="fa fa-remove"></span>

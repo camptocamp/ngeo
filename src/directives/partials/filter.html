@@ -1,6 +1,7 @@
 <div class="dropdown">
   <a
       class="btn btn-link dropdown-toggle ngeo-filter-condition-button"
+      ng-class="{disabled: filterCtrl.aRuleIsActive}"
       type="button"
       data-toggle="dropdown"
       ng-disabled="filterCtrl.aRuleIsActive">
@@ -34,12 +35,14 @@
     tool-group="filterCtrl.toolGroup">
 </ngeo-rule>
 
-<hr ng-if="filterCtrl.directedRules.length" />
+<hr
+  class="ngeo-filter-separator-rules"
+  ng-if="filterCtrl.directedRules.length && filterCtrl.customRules.length" />
 
 <div ng-repeat="rule in filterCtrl.customRules">
   <a
       class="btn btn-xs btn-link ngeo-filter-rule-custom-rm-btn"
-      ng-click="filterCtrl.removeCustomRule(rule)"
+      ng-click="!filterCtrl.aRuleIsActive && filterCtrl.removeCustomRule(rule)"
       ng-disabled="filterCtrl.aRuleIsActive"
       href>
     <span class="fa fa-remove"></span>
@@ -53,9 +56,12 @@
   </ngeo-rule>
 </div>
 
+<hr class="ngeo-filter-separator-criteria" />
+
 <div class="dropdown">
   <a
       class="btn btn-link dropdown-toggle"
+      ng-class="{disabled: filterCtrl.aRuleIsActive}"
       type="button"
       data-toggle="dropdown"
       ng-disabled="filterCtrl.aRuleIsActive">
@@ -81,12 +87,14 @@
   </ul>
 </div>
 
+<hr class="ngeo-filter-separator-criteria" />
+
 <a
     class="btn btn-link"
     type="button"
     data-toggle="dropdown"
-    ng-click="filterCtrl.apply()"
+    ng-click="!filterCtrl.aRuleIsActive && filterCtrl.apply()"
     ng-disabled="filterCtrl.aRuleIsActive">
   <span class="fa fa-check"></span>
-  <span translate>Apply</span>
+  <span translate>Apply filter</span>
 </a>
