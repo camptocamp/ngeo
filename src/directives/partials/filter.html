@@ -35,9 +35,7 @@
     tool-group="filterCtrl.toolGroup">
 </ngeo-rule>
 
-<hr
-  class="ngeo-filter-separator-rules"
-  ng-if="filterCtrl.directedRules.length && filterCtrl.customRules.length" />
+<hr class="ngeo-filter-separator-rules" />
 
 <div ng-repeat="rule in filterCtrl.customRules">
   <a
@@ -55,8 +53,6 @@
       tool-group="filterCtrl.toolGroup">
   </ngeo-rule>
 </div>
-
-<hr class="ngeo-filter-separator-criteria" />
 
 <div class="dropdown">
   <a
