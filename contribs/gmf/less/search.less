@@ -1,5 +1,7 @@
 @import "../../../node_modules/font-awesome/less/variables.less";
 
+@search-results-max-height: calc(~"100vh -" 6 * @app-margin);
+
 gmf-search {
   top: @app-margin;
   z-index: @content-index;
@@ -73,6 +75,7 @@ gmf-search {
 
   .tt-menu {
     width: 100%;
+    max-height: @search-results-max-height;
     overflow-x: hidden;
     overflow-y: auto;
     background-color: @map-tools-bg-color;
