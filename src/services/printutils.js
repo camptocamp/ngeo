@@ -50,14 +50,13 @@ ngeo.PrintUtils.DOTS_PER_INCH_ = 72;
  * @param {function(olx.FrameState):number} getScale User-defined function
  *     returning the scale of the map to print.
  * @param {function():number=} opt_rotation User defined function returning the
- *     inclination of the canevas in degree (-180 to 180).
+ *     inclination of the canvas in degree (-180 to 180).
  * returning the scale of the map to print.
  * @return {function(ol.render.Event)} Function to use as a map postcompose
  * listener.
  * @export
  */
-ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize,
-    getScale, opt_rotation) {
+ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rotation) {
   const self = this;
 
   return (
