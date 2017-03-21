@@ -15,6 +15,9 @@ goog.require('ngeo.RuleHelper');
 goog.require('ol.CollectionEventType');
 
 
+/**
+ * @private
+ */
 gmf.FilterselectorController = class {
 
   /**
@@ -30,6 +33,7 @@ gmf.FilterselectorController = class {
    *     manager
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
+   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController

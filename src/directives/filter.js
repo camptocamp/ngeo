@@ -7,6 +7,9 @@ goog.require('ngeo.RuleHelper');
 goog.require('ngeo.rule.Geometry');
 
 
+/**
+ * @private
+ */
 ngeo.FilterController = class {
 
   /**
@@ -15,6 +18,7 @@ ngeo.FilterController = class {
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
+   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoFilterController

@@ -79,7 +79,7 @@
                 href
                 ngeo-btn
                 ngeo-drawpoint
-                class="btn btn-xs btn-default ngeo-drawfeature-point"
+                class="btn btn-sm btn-default ngeo-drawfeature-point"
                 ng-show="['intersects', 'within'].indexOf(ruleCtrl.clone.operator) !== -1"
                 ng-class="{active: dfCtrl.drawPoint.active}"
                 ng-model="dfCtrl.drawPoint.active">
@@ -91,7 +91,7 @@
                 href
                 ngeo-btn
                 ngeo-measurelength
-                class="btn btn-xs btn-default ngeo-drawfeature-linestring"
+                class="btn btn-sm btn-default ngeo-drawfeature-linestring"
                 ng-show="['intersects', 'within'].indexOf(ruleCtrl.clone.operator) !== -1"
                 ng-class="{active: dfCtrl.measureLength.active}"
                 ng-model="dfCtrl.measureLength.active">
@@ -103,7 +103,7 @@
                 href
                 ngeo-btn
                 ngeo-measurearea
-                class="btn btn-xs btn-default ngeo-drawfeature-polygon"
+                class="btn btn-sm btn-default ngeo-drawfeature-polygon"
                 ng-class="{active: dfCtrl.measureArea.active}"
                 ng-model="dfCtrl.measureArea.active">
                 <span class="gmf-icon gmf-icon-polygon"></span>
@@ -114,7 +114,7 @@
                 href
                 ngeo-btn
                 ngeo-measureazimut
-                class="btn btn-xs btn-default ngeo-drawfeature-circle"
+                class="btn btn-sm btn-default ngeo-drawfeature-circle"
                 ng-class="{active: dfCtrl.measureAzimut.active}"
                 ng-model="dfCtrl.measureAzimut.active">
                 <span class="gmf-icon gmf-icon-circle"></span>
@@ -125,7 +125,7 @@
                 href
                 ngeo-btn
                 ngeo-drawrectangle
-                class="btn btn-xs btn-default ngeo-drawfeature-rectangle"
+                class="btn btn-sm btn-default ngeo-drawfeature-rectangle"
                 ng-class="{active: dfCtrl.drawRectangle.active}"
                 ng-model="dfCtrl.drawRectangle.active">
                 <span class="gmf-icon gmf-icon-rectangle"></span>
@@ -222,7 +222,7 @@
       ng-click="ruleCtrl.reset()"
       ng-disabled="ruleCtrl.rule.active"
       href>
-    <span class="glyphicon glyphicon-remove"></span>
+    <span class="fa fa-remove"></span>
   </a>
 
   <div ng-switch="::ruleCtrl.rule.type">

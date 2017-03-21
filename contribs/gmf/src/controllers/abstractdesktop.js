@@ -17,6 +17,8 @@ goog.require('gmf.editfeatureselectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.elevationDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.filterselectorComponent');
+/** @suppress {extraRequire} */
 goog.require('gmf.mousepositionComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.printDirective');
@@ -125,6 +127,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @export
    */
   this.modalShareShown = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.filterSelectorActive = false;
 
   /**
    * @type {boolean}

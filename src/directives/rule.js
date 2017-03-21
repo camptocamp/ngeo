@@ -15,6 +15,9 @@ goog.require('ngeo.rule.Select');
 goog.require('ol.Collection');
 
 
+/**
+ * @private
+ */
 ngeo.RuleController = class {
 
   /**
@@ -28,6 +31,7 @@ ngeo.RuleController = class {
    * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
    * @private
+   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoRuleController
