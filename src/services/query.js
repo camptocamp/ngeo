@@ -440,10 +440,14 @@ ngeo.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
         );
         const resolution = map.getView().getResolution();
         goog.asserts.assert(resolution);
-        const layerLayers = item.source.getLayers(resolution);
-        const cfgLayer = item.source.layers;
 
-        const layerIsOnTheMap = cfgLayer.some(layer => layerLayers.indexOf(layer) > -1);
+        // check if we have at least one child queryable at this resolution
+        if (item.source.getLayers(resolution).length === 0) {
+          continue;
+        }
+        // check if the layer is displayed
+        const layersFromParams = layerSource.getParams()['LAYERS'].split(',');
+        const layerIsOnTheMap = item.source.layers.some(layer => layersFromParams.indexOf(layer) > -1);
         if (!layerIsOnTheMap) {
           continue;
         }
