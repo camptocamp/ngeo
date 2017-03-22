@@ -1,4 +1,5 @@
-goog.provide('ngeo.proj.EPSG32631');
+goog.module('ngeo.proj.EPSG32631');
+goog.module.declareLegacyNamespace();
 
 goog.require('ol.proj');
 goog.require('ol.proj.proj4');
@@ -22,4 +23,4 @@ if (typeof ol.proj.proj4.get() == 'function') {
   ol.proj.get('EPSG:32631').setExtent(epsg32631extent);
 }
 
-ngeo.proj.EPSG32631 = 'EPSG:32631';
+exports = 'EPSG:32631';

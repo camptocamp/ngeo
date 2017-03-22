@@ -1,4 +1,5 @@
-goog.provide('ngeo.proj.EPSG2056');
+goog.module('ngeo.proj.EPSG2056');
+goog.module.declareLegacyNamespace();
 
 goog.require('ol.proj');
 goog.require('ol.proj.proj4');
@@ -26,4 +27,4 @@ if (typeof ol.proj.proj4.get() == 'function') {
   ol.proj.get('EPSG:2056').setExtent(epsg2056extent);
 }
 
-ngeo.proj.EPSG2056 = 'EPSG:2056';
+exports = 'EPSG:2056';
