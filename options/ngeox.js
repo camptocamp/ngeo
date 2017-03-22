@@ -161,6 +161,13 @@ ngeox.DataSourceOptions.prototype.filterRules;
 
 
 /**
+ * Whether the data source is filtrable or not.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.filtrable;
+
+
+/**
  * The name of the geometry attribute.
  * @type {string|undefined}
  */

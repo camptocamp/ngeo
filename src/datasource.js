@@ -50,6 +50,16 @@ ngeo.DataSource = class {
     this.filterRules_ = options.filterRules || null;
 
     /**
+     * Whether the data source is filtrable or not. When `null`, that means
+     * that we do not know if the data source if filtrable or not, yet. In
+     * that case, the value of the property needs to be determined from an
+     * external way.
+     * @type {?boolean}
+     * @private
+     */
+    this.filtrable_ = options.filtrable || null;
+
+    /**
      * A data source is considered 'in range' when it is synchronized to
      * a map view and the resolution of that view is within the range of
      * the `maxResolution` and `minResolution`. These 2 properties are
@@ -433,6 +443,22 @@ ngeo.DataSource = class {
    */
   get dimensions() {
     return this.dimensions_;
+  }
+
+  /**
+   * @return {?boolean} Filtrable.
+   * @export
+   */
+  get filtrable() {
+    return this.filtrable_;
+  }
+
+  /**
+   * @param {?boolean} filtrable Filtrable.
+   * @export
+   */
+  set filtrable(filtrable) {
+    this.filtrable_ = filtrable;
   }
 
   /**
