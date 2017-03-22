@@ -121,6 +121,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
       const options = ol.source.WMTS.optionsFromCapabilities(result, {
         layer: layerName
       });
+      goog.asserts.assert(options);
       const source = new ol.source.WMTS(options);
       if (opt_dimensions && !ol.obj.isEmpty(opt_dimensions)) {
         source.updateDimensions(opt_dimensions);
