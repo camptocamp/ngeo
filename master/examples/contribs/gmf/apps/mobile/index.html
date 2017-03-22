@@ -61,9 +61,9 @@
       </button>
       <div class="gmf-app-map-messages">
         <gmf-disclaimer gmf-disclaimer-map="::mainCtrl.map"></gmf-disclaimer>
-        <div class="alert alert-info alert-dismissible fade in visible-sm" role="alert">
+        <div class="alert alert-info alert-dismissible fade in hidden-xs" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="{{'Close' | translate }}"><span aria-hidden="true" class="fa fa-times"></span></button>
-          <span>{{"You're using the mobile version. Check out the" | translate }} <a href="http://camptocamp.github.io/ngeo/master/examples/contribs/gmf/apps/desktop/">{{'standard version' | translate}}</a>.</span>
+          <span>{{"You're using the mobile version. Check out the" | translate }} <a href="http://camptocamp.github.io/ngeo/master/examples/contribs/gmf/apps/desktop/?no_redirect">{{'standard version' | translate}}</a>.</span>
         </div>
       </div>
     </main>
@@ -147,7 +147,7 @@
     <script src="../../../../lib/watchwatchers.js"></script>
     <script>
       (function() {
-        var cacheVersion = '84a14875f7a9e9919aab01641cfbbec6aac78d9b';
+        var cacheVersion = 'b77bd87e99ccff9aa505945cc36928ea7927c416';
         var urlElements = window.location.pathname.split('/');
 
         var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
