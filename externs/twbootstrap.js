@@ -103,3 +103,26 @@ jQuery.prototype.tooltip = function(opt_options) {};
  * @return {angular.JQLite}
  */
 angular.JQLite.prototype.tooltip = function(opt_options) {};
+
+
+/**
+ * @typedef {{
+ *   parent: (string|boolean|undefined),
+ *   toggle: (boolean|undefined)
+ * }}
+ */
+let CollapseOptions;
+
+
+/**
+ * @param {string|CollapseOptions} action_or_options
+ * @return {jQuery}
+ */
+jQuery.prototype.collapse = function(action_or_options) {};
+
+
+/**
+ * @param {string|CollapseOptions} action_or_options
+ * @return {angular.JQLite}
+ */
+angular.JQLite.prototype.collapse = function(action_or_options) {};
