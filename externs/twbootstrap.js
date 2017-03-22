@@ -76,16 +76,16 @@ angular.JQLite.prototype.tab = function(action) {};
 
 /**
  * @typedef {{
-   * animation: (boolean|undefined),
-   * container: (string|boolean|undefined),
-   * delay: (number|Object.<string,*>|undefined),
-   * html: (boolean|undefined),
-   * placement: (string|function(Element, Element)|undefined),
-   * selector: (string|undefined),
-   * template: (string|undefined),
-   * title: (string|function()|undefined),
-   * trigger: (string|undefined),
-   * viewport: (string|Object.<string,*>|function(Element)|undefined)
+ *   animation: (boolean|undefined),
+ *   container: (string|boolean|undefined),
+ *   delay: (number|Object.<string,*>|undefined),
+ *   html: (boolean|undefined),
+ *   placement: (string|function(Element, Element)|undefined),
+ *   selector: (string|undefined),
+ *   template: (string|undefined),
+ *   title: (string|function()|undefined),
+ *   trigger: (string|undefined),
+ *   viewport: (string|Object.<string,*>|function(Element)|undefined)
  * }}
  */
 let TooltipOptions;
