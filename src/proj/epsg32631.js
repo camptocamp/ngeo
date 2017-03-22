@@ -1,8 +1,13 @@
 goog.provide('ngeo.proj.EPSG32631');
 
 goog.require('ol.proj');
+goog.require('ol.proj.proj4');
 
-if (typeof proj4 == 'function') {
+if (typeof ol.proj.proj4.get() !== 'function' && typeof proj4 === 'function') {
+  ol.proj.setProj4(proj4);
+}
+
+if (typeof ol.proj.proj4.get() == 'function') {
   const epsg32631def = [
     '+proj=utm',
     '+zone=31',
@@ -13,7 +18,7 @@ if (typeof proj4 == 'function') {
   ].join(' ');
   const epsg32631extent = [166021.44, 0.00, 534994.66, 9329005.18];
 
-  proj4.defs('EPSG:32631', epsg32631def);
+  ol.proj.proj4.get().defs('EPSG:32631', epsg32631def);
   ol.proj.get('EPSG:32631').setExtent(epsg32631extent);
 }
 
