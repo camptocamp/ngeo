@@ -6,10 +6,13 @@ goog.require('ngeo.DatePickerDirective');
 goog.require('ngeo.DecorateInteraction');
 /** @suppress {extraRequire} */
 goog.require('ngeo.drawfeatureDirective');
+goog.require('ngeo.Menu');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Modify');
+goog.require('ngeo.interaction.Rotate');
+goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
 goog.require('ol.Collection');
@@ -69,6 +72,12 @@ ngeo.RuleController = class {
 
 
     // Injected properties
+
+    /**
+     * @type {angularGettext.Catalog}
+     * @private
+     */
+    this.gettextCatalog_ = gettextCatalog;
 
     /**
      * @type {!angular.Scope}
@@ -206,6 +215,12 @@ ngeo.RuleController = class {
     this.drawnFeatures = new ol.Collection();
 
     /**
+     * @type {?ngeo.Menu}
+     * @private
+     */
+    this.menu_ = null;
+
+    /**
      * @type {!ol.Collection.<!ol.Feature>}
      * @export
      */
@@ -228,17 +243,40 @@ ngeo.RuleController = class {
     this.interactions_.push(this.modify_);
 
     /**
-     * @type {!ngeo.ToolActivate}
-     * @export
+     * @type {ngeo.interaction.Rotate}
+     * @private
      */
-    this.modifyToolActivate = new ngeo.ToolActivate(this.modify_, 'active');
+    this.rotate_ = new ngeo.interaction.Rotate({
+      features: this.selectedFeatures,
+      style: new ol.style.Style({
+        text: new ol.style.Text({
+          text: '\uf01e',
+          font: 'normal 18px FontAwesome',
+          fill: new ol.style.Fill({
+            color: '#7a7a7a'
+          })
+        })
+      })
+    });
+    this.interactions_.push(this.rotate_);
 
     /**
-     * The geometry type used by the clone feature.
-     * @type {?string}
-     * @export
+     * @type {ngeo.interaction.Translate}
+     * @private
      */
-    this.geomType = null;
+    this.translate_ = new ngeo.interaction.Translate({
+      features: this.selectedFeatures,
+      style: new ol.style.Style({
+        text: new ol.style.Text({
+          text: '\uf047',
+          font: 'normal 18px FontAwesome',
+          fill: new ol.style.Fill({
+            color: '#7a7a7a'
+          })
+        })
+      })
+    });
+    this.interactions_.push(this.translate_);
 
     /**
      * @type {!Array.<!ol.EventsKey>}
@@ -248,6 +286,39 @@ ngeo.RuleController = class {
 
     this.initializeInteractions_();
 
+    /**
+     * @type {!ngeo.ToolActivate}
+     * @export
+     */
+    this.modifyToolActivate = new ngeo.ToolActivate(
+      this.modify_,
+      'active'
+    );
+
+    /**
+     * @type {ngeo.ToolActivate}
+     * @export
+     */
+    this.rotateToolActivate = new ngeo.ToolActivate(
+      this.rotate_,
+      'active'
+    );
+
+    /**
+     * @type {ngeo.ToolActivate}
+     * @export
+     */
+    this.translateToolActivate = new ngeo.ToolActivate(
+      this.translate_,
+      'active'
+    );
+
+    /**
+     * The geometry type used by the clone feature.
+     * @type {?string}
+     * @export
+     */
+    this.geomType = null;
   }
 
   /**
@@ -352,8 +423,10 @@ ngeo.RuleController = class {
         () => {
           const hasExpression = this.clone.getExpression() !== null;
           const isActive = this.rule.active === true;
-          const modifyIsActive = this.modify_.getActive();
-          return hasExpression && isActive && modifyIsActive;
+          const editToolIsActive = this.modify_.getActive() ||
+                this.rotate_.getActive() ||
+                this.translate_.getActive();
+          return hasExpression && isActive && editToolIsActive;
         },
         (newVal) => {
           if (newVal) {
@@ -526,12 +599,42 @@ ngeo.RuleController = class {
     const ruleFeature = this.rule.feature;
     const cloneFeature = this.clone.feature;
 
+    const mapDiv = this.map.getViewport();
+    goog.asserts.assertElement(mapDiv);
+
     if (active) {
       keys.push(
         ol.events.listen(
           this.drawnFeatures,
           ol.CollectionEventType.ADD,
           this.handleFeaturesAdd_,
+          this
+        )
+      );
+
+      keys.push(
+        ol.events.listen(
+          mapDiv,
+          'contextmenu',
+          this.handleMapContextMenu_,
+          this
+        )
+      );
+
+      keys.push(
+        ol.events.listen(
+          this.translate_,
+          ol.interaction.TranslateEventType.TRANSLATEEND,
+          this.handleTranslateEnd_,
+          this
+        )
+      );
+
+      keys.push(
+        ol.events.listen(
+          this.rotate_,
+          ngeo.RotateEventType.ROTATEEND,
+          this.handleRotateEnd_,
           this
         )
       );
@@ -543,6 +646,8 @@ ngeo.RuleController = class {
 
       toolMgr.registerTool(uid, this.drawToolActivate, false);
       toolMgr.registerTool(uid, this.modifyToolActivate, true);
+      toolMgr.registerTool(uid, this.rotateToolActivate, false);
+      toolMgr.registerTool(uid, this.translateToolActivate, false);
 
       this.modify_.setActive(true);
 
@@ -557,6 +662,8 @@ ngeo.RuleController = class {
 
       toolMgr.unregisterTool(uid, this.drawToolActivate);
       toolMgr.unregisterTool(uid, this.modifyToolActivate);
+      toolMgr.unregisterTool(uid, this.rotateToolActivate);
+      toolMgr.unregisterTool(uid, this.translateToolActivate);
 
       this.drawActive = false;
       this.modify_.setActive(false);
@@ -648,6 +755,149 @@ ngeo.RuleController = class {
     return this.ngeoFeatureHelper_.getType(rule.feature);
   }
 
+  /**
+   * @param {Event} evt Event.
+   * @private
+   */
+  handleMapContextMenu_(evt) {
+
+    // (1) Remove previous menu, if any
+    this.removeMenu_();
+
+    // (2) Get feature at pixel
+    const pixel = this.map.getEventPixel(evt);
+    const coordinate = this.map.getCoordinateFromPixel(pixel);
+
+    let feature = this.map.forEachFeatureAtPixel(
+      pixel,
+      (feature) => {
+        let ret = false;
+        if (ol.array.includes(this.selectedFeatures.getArray(), feature)) {
+          ret = feature;
+        }
+        return ret;
+      }
+    );
+
+    feature = feature ? feature : null;
+
+    // (3) If the clicked feature is the selected one, plus if it has a certain
+    //     type of geometry, then show the menu
+    const actions = [];
+    if (feature) {
+
+      const type = this.ngeoFeatureHelper_.getType(feature);
+
+      if (type == ngeo.GeometryType.CIRCLE ||
+          type == ngeo.GeometryType.LINE_STRING ||
+          type == ngeo.GeometryType.POLYGON ||
+          type == ngeo.GeometryType.RECTANGLE) {
+        actions.push({
+          cls: 'fa fa-arrows',
+          label: this.gettextCatalog_.getString('Move'),
+          name: ngeo.RuleController.MenuActionType.MOVE
+        });
+      }
+      if (type == ngeo.GeometryType.LINE_STRING ||
+          type == ngeo.GeometryType.POLYGON ||
+          type == ngeo.GeometryType.RECTANGLE) {
+        actions.push({
+          cls: 'fa fa-rotate-right',
+          label: this.gettextCatalog_.getString('Rotate'),
+          name: ngeo.RuleController.MenuActionType.ROTATE
+        });
+      }
+    }
+
+    if (actions.length) {
+      // (4) Create and show menu
+      this.menu_ = new ngeo.Menu({
+        actions
+      });
+
+      ol.events.listen(
+        this.menu_,
+        ngeo.MenuEventType.ACTION_CLICK,
+        this.handleMenuActionClick_,
+        this
+      );
+      this.map.addOverlay(this.menu_);
+
+      this.menu_.open(coordinate);
+
+      evt.preventDefault();
+      evt.stopPropagation();
+
+      this.scope_.$apply();
+    }
+  }
+
+  /**
+   * Remove contextual menu, if any.
+   * @private
+   */
+  removeMenu_() {
+    if (this.menu_) {
+      ol.events.unlisten(
+        this.menu_,
+        ngeo.MenuEventType.ACTION_CLICK,
+        this.handleMenuActionClick_,
+        this
+      );
+      this.map.removeOverlay(this.menu_);
+      this.menu_ = null;
+    }
+  }
+
+  /**
+   * @param {ngeo.MenuEvent} evt Event.
+   * @private
+   */
+  handleMenuActionClick_(evt) {
+    const action = evt.action;
+
+    switch (action) {
+      case ngeo.RuleController.MenuActionType.MOVE:
+        this.translate_.setActive(true);
+        this.scope_.$apply();
+        break;
+      case ngeo.RuleController.MenuActionType.ROTATE:
+        this.rotate_.setActive(true);
+        this.scope_.$apply();
+        break;
+      default:
+        console.log(`FIXME - support: ${action}`);
+        break;
+    }
+  }
+
+  /**
+   * @param {ngeo.RotateEvent} evt Event.
+   * @private
+   */
+  handleRotateEnd_(evt) {
+    this.rotate_.setActive(false);
+    this.scope_.$apply();
+  }
+
+  /**
+   * @param {ol.interaction.Translate.Event} evt Event.
+   * @private
+   */
+  handleTranslateEnd_(evt) {
+    this.translate_.setActive(false);
+    this.scope_.$apply();
+  }
+
+};
+
+
+/**
+ * @enum {string}
+ */
+ngeo.RuleController.MenuActionType = {
+  MOVE: 'move',
+  ROTATE: 'rotate'
 };
 
 
