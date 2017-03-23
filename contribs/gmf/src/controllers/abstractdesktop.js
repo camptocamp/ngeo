@@ -58,6 +58,10 @@ goog.require('ol.control.Zoom');
 goog.require('ol.interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
+goog.require('ol.style.Text');
 
 gmf.module.value('isDesktop', true);
 
@@ -140,6 +144,26 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    */
   this.editFeatureActive = false;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.googleStreetViewActive = false;
+
+  /**
+   * @type {!ol.style.Style}
+   * @export
+   */
+  this.googleStreetViewStyle = new ol.style.Style({
+    text: new ol.style.Text({
+      fill: new ol.style.Fill({color: '#279B61'}),
+      font: 'normal 30px FontAwesome',
+      offsetY: -15,
+      stroke: new ol.style.Stroke({color: '#ffffff', width: 3}),
+      text: '\uf041'
+    })
+  });
+
   const body = $('body');
 
   // initialize tooltips
@@ -195,6 +219,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
 
   const editFeatureActivate = new ngeo.ToolActivate(this, 'editFeatureActive');
   ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
+
+  const googleStreetViewActivate = new ngeo.ToolActivate(
+    this,
+    'googleStreetViewActive'
+  );
+  ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
 
   /**
    * @type {ngeo.ScaleselectorOptions}
