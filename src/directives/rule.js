@@ -660,17 +660,20 @@ ngeo.RuleController = class {
 
       ol.Observable.unByKey(keys);
 
+      this.drawActive = false;
+
       toolMgr.unregisterTool(uid, this.drawToolActivate);
       toolMgr.unregisterTool(uid, this.modifyToolActivate);
       toolMgr.unregisterTool(uid, this.rotateToolActivate);
       toolMgr.unregisterTool(uid, this.translateToolActivate);
 
-      this.drawActive = false;
       this.modify_.setActive(false);
 
       this.unregisterInteractions_();
 
-      this.featureOverlay.removeFeature(cloneFeature);
+      if (this.selectedFeatures.getLength()) {
+        this.featureOverlay.removeFeature(cloneFeature);
+      }
       this.featureOverlay.addFeature(ruleFeature);
 
       this.selectedFeatures.clear();
