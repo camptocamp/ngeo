@@ -96,11 +96,6 @@
         margin: 1.5rem 0 0.5rem 0;
       }
 
-      .gmf-filterselector-savebtn {
-        display: block;
-        text-align: left;
-      }
-
       .gmf-filterselector-savefilter-desc {
         color: #999999;
       }
@@ -130,6 +125,15 @@
         margin: 0.4rem 0;
       }
 
+      hr.ngeo-filter-separator-rules {
+        margin: 1rem 0;
+      }
+
+      hr.ngeo-filter-separator-criteria {
+        margin: 0.5rem 0;
+      }
+
+
       ngeo-rule {
         display: block;
         margin: 1rem 2.5rem 1rem 0;
@@ -145,8 +149,9 @@
       }
 
       ngeo-rule .dropdown > a.btn > span.caret {
-        float: right;
-        margin: 0.8rem 0 0 0;
+        position: absolute;
+        right: 1rem;
+        top: 1.4rem;
       }
 
       ngeo-rule .dropdown-menu {
@@ -162,8 +167,12 @@
       }
 
       .ngeo-rule-value {
+        border: 0.1rem solid #aaa;
+        border-radius: 0 0 0.3rem 0.3rem;
+        border-top: 0;
         color: #999999;
-        margin: 0.5rem;
+        padding: 0.4rem 0.3rem 0.2rem 0.5rem;
+        margin: -0.2rem 0 0 0;
       }
 
       .ngeo-rule-value a.btn {
