@@ -180,18 +180,24 @@
         <div ng-switch="ruleCtrl.clone.operator">
           <div ng-switch-when="..">
             <input
-                type="text"
+                type="number"
                 class="form-control input-sm"
                 ng-model="ruleCtrl.clone.lowerBoundary"/>
             <input
-                type="text"
+                type="number"
                 class="form-control input-sm"
                 ng-model="ruleCtrl.clone.upperBoundary"/>
           </div>
           <div ng-switch-default>
             <input
+                type="number"
+                class="form-control input-sm"
+                ng-if="ruleCtrl.clone.type === 'number'"
+                ng-model="ruleCtrl.clone.expression"/>
+            <input
                 type="text"
                 class="form-control input-sm"
+                ng-if="ruleCtrl.clone.type !== 'number'"
                 ng-model="ruleCtrl.clone.expression"/>
           </div>
         </div>

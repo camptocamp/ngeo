@@ -9,6 +9,9 @@ ngeo.rule.Select = class extends ngeo.rule.Rule {
    * A select rule, which allows the selection of multiple values among a list
    * of choices.
    *
+   * The expression property holds the list of selected choices, which is
+   * comma-separated.
+   *
    * @struct
    * @param {!ngeox.rule.SelectOptions} options Options.
    */
@@ -37,6 +40,23 @@ ngeo.rule.Select = class extends ngeo.rule.Rule {
    */
   get choices() {
     return this.choices_;
+  }
+
+  // === Calculated property getters ===
+
+  /**
+   * @return {Array.<string>} Selected choices
+   * @export
+   */
+  get selectedChoices() {
+    let selectedChoices;
+    if (this.expression) {
+      const stringExpression = String(this.expression);
+      selectedChoices = stringExpression.split(',');
+    } else {
+      selectedChoices = [];
+    }
+    return selectedChoices;
   }
 
 };

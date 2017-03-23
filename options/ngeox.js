@@ -368,6 +368,7 @@ ngeox.DataSourceOptions.prototype.wmtsUrl;
  *     coordinate: (ol.Coordinate|undefined),
  *     dataSources: (Array.<ngeo.DataSource>|undefined),
  *     extent: (ol.Extent|undefined),
+ *     filter: (ol.format.filter.Filter|undefined),
  *     limit: (number|undefined),
  *     map: (ol.Map),
  *     queryableDataSources: (ngeox.QueryableDataSources|undefined),
@@ -401,6 +402,15 @@ ngeox.IssueGetFeaturesOptions.prototype.dataSources;
  * @type {ol.Extent|undefined}
  */
 ngeox.IssueGetFeaturesOptions.prototype.extent;
+
+
+/**
+ * A filter to additionnally use with the query. Only used by WFS requests.
+ * If a filter is defined, then it is used instead of the data source's
+ * filter rules.
+ * @type {ol.format.filter.Filter|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.filter;
 
 
 /**
@@ -497,6 +507,13 @@ ngeox.QuerentResultItem;
  * @type {Array.<ol.Feature>}
  */
 ngeox.QuerentResultItem.prototype.features;
+
+
+/**
+ * The maximum number of features to get with the query.
+ * @type {number}
+ */
+ngeox.QuerentResultItem.prototype.limit;
 
 
 /**
@@ -745,6 +762,7 @@ ngeox.QueryResult.prototype.pending;
  *     features: (Array.<ol.Feature>),
  *     id: (number|string),
  *     label: (string),
+ *     limit: (number),
  *     pending: (boolean),
  *     queried: (boolean),
  *     tooManyResults: (boolean),
@@ -773,6 +791,14 @@ ngeox.QueryResultSource.prototype.id;
  * @type {string}
  */
 ngeox.QueryResultSource.prototype.label;
+
+
+/**
+ * The maximum number of features that can be returned for a query with this
+ * source.
+ * @type {number}
+ */
+ngeox.QueryResultSource.prototype.limit;
 
 
 /**
@@ -1827,7 +1853,7 @@ ngeox.rule.RuleOptions.prototype.active;
 /**
  * The expression of the rule. The expression and boundaries are mutually
  * exclusives.
- * @type {boolean|number|string|undefined}
+ * @type {number|string|undefined}
  */
 ngeox.rule.RuleOptions.prototype.expression;
 
@@ -1842,7 +1868,7 @@ ngeox.rule.RuleOptions.prototype.isCustom;
 /**
  * The lower boundary of the rule. The expression and boundaries are
  * mutually exclusives.
- * @type {number|string|undefined}
+ * @type {number|undefined}
  */
 ngeox.rule.RuleOptions.prototype.lowerBoundary;
 
@@ -1885,7 +1911,7 @@ ngeox.rule.RuleOptions.prototype.type;
 /**
  * The upper boundary of the rule. The expression and boundaries are
  * mutually exclusives.
- * @type {string|number|undefined}
+ * @type {number|undefined}
  */
 ngeox.rule.RuleOptions.prototype.upperBoundary;
 
@@ -1966,7 +1992,7 @@ ngeox.rule.RuleSimpleValue = function() {};
 
 /**
  * The expression of the rule value.
- * @type {boolean|number|string}
+ * @type {number|string}
  */
 ngeox.rule.RuleSimpleValue.prototype.expression;
 
@@ -1981,14 +2007,14 @@ ngeox.rule.RuleRangeValue = function() {};
 
 /**
  * The lower boundary of the rule value.
- * @type {number|string}
+ * @type {number}
  */
 ngeox.rule.RuleRangeValue.prototype.lowerBoundary;
 
 
 /**
  * The upper boundary of the rule value.
- * @type {number|string}
+ * @type {number}
  */
 ngeox.rule.RuleRangeValue.prototype.upperBoundary;
 

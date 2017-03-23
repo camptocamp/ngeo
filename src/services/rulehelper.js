@@ -5,6 +5,9 @@ goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Select');
 goog.require('ngeo.rule.Text');
+goog.require('ol.format.WFS');
+goog.require('ol.format.filter');
+goog.require('ol.format.filter.Spatial');
 
 
 ngeo.RuleHelper = class {
@@ -123,14 +126,14 @@ ngeo.RuleHelper = class {
               ngeo.rule.Rule.OperatorType.NOT_EQUAL_TO
             ],
             propertyName: attribute.name,
-            type: ngeo.AttributeType.TEXT
+            type: ngeo.AttributeType.NUMBER
           });
         } else {
           rule = new ngeo.rule.Rule({
             name,
             operator: ngeo.rule.Rule.OperatorType.BETWEEN,
             propertyName: attribute.name,
-            type: ngeo.AttributeType.TEXT
+            type: ngeo.AttributeType.NUMBER
           });
         }
         break;
@@ -357,6 +360,205 @@ ngeo.RuleHelper = class {
     return obj;
   }
 
+  /**
+   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {string=} opt_srsName SRS name. No srsName attribute will be
+   *     set on geometries when this is not provided.
+   * @param {Array.<!ngeo.rule.Rule>=} opt_filterRules Alternative list of
+   *     filter rules.
+   * @return {?ol.format.filter.Filter} filter Filter
+   * @export
+   */
+  createFilter(dataSource, opt_srsName, opt_filterRules) {
+
+    let mainFilter = null;
+    const rules = opt_filterRules || dataSource.filterRules;
+    const conditions = [];
+
+    if (rules && rules.length) {
+      for (const rule of rules) {
+        const filter = this.createFilterFromRule_(
+          rule,
+          dataSource,
+          opt_srsName
+        );
+        if (filter) {
+          conditions.push(filter);
+        }
+      }
+    }
+
+    const condition = dataSource.filterCondition;
+    if (conditions.length === 1) {
+      mainFilter = conditions[0];
+    } else if (conditions.length >= 2) {
+      if (condition === ngeo.FilterCondition.AND ||
+          condition === ngeo.FilterCondition.NOT
+      ) {
+        mainFilter = ol.format.filter.and.apply(null, conditions);
+      } else if (condition === ngeo.FilterCondition.OR) {
+        mainFilter = ol.format.filter.or.apply(null, conditions);
+      }
+    }
+
+    if (mainFilter && condition === ngeo.FilterCondition.NOT) {
+      mainFilter = ol.format.filter.not(mainFilter);
+    }
+
+    return mainFilter;
+  }
+
+  /**
+   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {string=} opt_srsName SRS name. No srsName attribute will be
+   *     set on geometries when this is not provided.
+   * @param {Array.<!ngeo.rule.Rule>=} opt_filterRules Alternative list of
+   *     filter rules.
+   * @return {?string} filter Filter string.
+   * @export
+   */
+  createFilterString(dataSource, opt_srsName, opt_filterRules) {
+    let filterString = null;
+    const filter = this.createFilter(dataSource, opt_srsName, opt_filterRules);
+    if (filter) {
+      const filterNode = ol.format.WFS.writeFilter(filter);
+      const xmlSerializer = new XMLSerializer();
+      filterString = xmlSerializer.serializeToString(filterNode);
+    }
+    return filterString;
+  }
+
+  /**
+   * @param {ngeo.rule.Rule} rule Rule.
+   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {string=} opt_srsName SRS name. No srsName attribute will be
+   *     set on geometries when this is not provided.
+   * @return {?ol.format.filter.Filter} filter Filter;
+   * @private
+   */
+  createFilterFromRule_(rule, dataSource, opt_srsName) {
+
+    let filter = null;
+
+    const value = rule.value;
+    if (!value) {
+      return null;
+    }
+
+    const expression = value.expression;
+    const lowerBoundary = value.lowerBoundary;
+    const operator = value.operator;
+    const propertyName = value.propertyName;
+    const upperBoundary = value.upperBoundary;
+
+    const rot =  ngeo.rule.Rule.OperatorType;
+    const rsot = ngeo.rule.Rule.SpatialOperatorType;
+
+    const spatialTypes = [
+      rsot.CONTAINS,
+      rsot.INTERSECTS,
+      rsot.WITHIN
+    ];
+
+    const numericTypes = [
+      rot.GREATER_THAN,
+      rot.GREATER_THAN_OR_EQUAL_TO,
+      rot.LESSER_THAN,
+      rot.LESSER_THAN_OR_EQUAL_TO
+    ];
+
+    if (rule instanceof ngeo.rule.Select) {
+      const selectedChoices = rule.selectedChoices;
+      if (selectedChoices.length === 1) {
+        filter = ol.format.filter.equalTo(
+          propertyName,
+          selectedChoices[0]
+        );
+      } else if (selectedChoices.length >= 2) {
+        const conditions = [];
+        for (const selectedChoice of selectedChoices) {
+          conditions.push(
+            ol.format.filter.equalTo(
+              propertyName,
+              selectedChoice
+            )
+          );
+        }
+        filter = ol.format.filter.or.apply(null, conditions);
+      }
+    } else if (ol.array.includes(spatialTypes, operator)) {
+      const geometryName = dataSource.geometryName;
+      goog.asserts.assertInstanceof(rule, ngeo.rule.Geometry);
+      const geometry = goog.asserts.assert(rule.geometry);
+      if (operator === rsot.CONTAINS) {
+        filter = new ol.format.filter.Spatial(
+          'Contains',
+          geometryName,
+          geometry,
+          opt_srsName
+        );
+      } else if (operator === rsot.INTERSECTS) {
+        filter = ol.format.filter.intersects(
+          geometryName,
+          geometry,
+          opt_srsName
+        );
+      } else if (operator === rsot.WITHIN) {
+        filter = ol.format.filter.within(
+          geometryName,
+          geometry,
+          opt_srsName
+        );
+      }
+    } else if (ol.array.includes(numericTypes, operator)) {
+      const numericExpression = goog.asserts.assertNumber(expression);
+      if (operator === rot.GREATER_THAN) {
+        filter = ol.format.filter.greaterThan(
+          propertyName,
+          numericExpression
+        );
+      } else if (operator === rot.GREATER_THAN_OR_EQUAL_TO) {
+        filter = ol.format.filter.greaterThanOrEqualTo(
+          propertyName,
+          numericExpression
+        );
+      } else if (operator === rot.LESSER_THAN) {
+        filter = ol.format.filter.lessThan(
+          propertyName,
+          numericExpression
+        );
+      } else if (operator === rot.LESSER_THAN_OR_EQUAL_TO) {
+        filter = ol.format.filter.lessThanOrEqualTo(
+          propertyName,
+          numericExpression
+        );
+      }
+    } else if (operator === rot.BETWEEN) {
+      filter = ol.format.filter.between(
+        propertyName,
+        lowerBoundary,
+        upperBoundary
+      );
+    } else if (operator === rot.EQUAL_TO) {
+      filter = ol.format.filter.equalTo(
+        propertyName,
+        expression
+      );
+    } else if (operator === rot.LIKE) {
+      const stringExpression = String(expression);
+      filter = ol.format.filter.like(
+        propertyName,
+        stringExpression
+      );
+    } else if (operator === rot.NOT_EQUAL_TO) {
+      filter = ol.format.filter.notEqualTo(
+        propertyName,
+        expression
+      );
+    }
+
+    return filter;
+  }
 };
 
 

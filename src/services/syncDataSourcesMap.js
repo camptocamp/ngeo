@@ -151,8 +151,12 @@ ngeo.SyncDataSourcesMap = class {
     const maxResolution = dataSource.maxResolution;
     const minResolution = dataSource.minResolution;
 
-    const inMinRange = minResolution === null || resolution >= minResolution;
-    const inMaxRange = maxResolution === null || resolution <= maxResolution;
+    const inMinRange = minResolution === null ||
+        minResolution === undefined ||
+        resolution >= minResolution;
+    const inMaxRange = maxResolution === null ||
+        maxResolution === undefined ||
+        resolution <= maxResolution;
     const inRange = inMinRange && inMaxRange;
 
     dataSource.inRange = inRange;
