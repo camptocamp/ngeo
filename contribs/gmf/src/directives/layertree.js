@@ -7,7 +7,7 @@ goog.require('gmf.DataSourceBeingFiltered');
 goog.require('gmf.Permalink');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
-goog.require('gmf.WMSTime');
+goog.require('ngeo.WMSTime');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
@@ -118,7 +118,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {!gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {!gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
  * @param {!ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
- * @param {!gmf.WMSTime} gmfWMSTime wms time service.
+ * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
  * @param {!gmf.Themes} gmfThemes The gmf Themes service.
  * @constructor
  * @export
@@ -129,7 +129,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
     ngeoLayerHelper, gmfDataSourceBeingFiltered, gmfPermalink, gmfTreeManager,
-    gmfSyncLayertreeMap, ngeoSyncArrays, gmfWMSTime, gmfThemes) {
+    gmfSyncLayertreeMap, ngeoSyncArrays, ngeoWMSTime, gmfThemes) {
 
   /**
    * @type {?ol.Map}
@@ -201,10 +201,10 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
   /**
-   * @type {!gmf.WMSTime}
+   * @type {!ngeo.WMSTime}
    * @private
    */
-  this.gmfWMSTime_ = gmfWMSTime;
+  this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
    * @private
@@ -448,7 +448,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
     const node = /** @type {gmfThemes.GmfGroup} */ (layertreeCtrl.node);
     const wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
     const source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
-    const timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);
+    const timeParam = this.ngeoWMSTime_.formatWMSTimeParam(wmsTime, time);
     this.layerHelper_.updateWMSLayerState(layer, source.getParams()['LAYERS'], timeParam);
   }
 };

@@ -1,21 +1,21 @@
-goog.provide('gmf.WMSTime');
+goog.provide('ngeo.WMSTime');
 
-goog.require('gmf');
+goog.require('ngeo');
 goog.require('ngeo.Time');
 goog.require('goog.asserts');
 
 
 /**
- * gmf - WMS time service
+ * ngeo - WMS time service
  * @extends {ngeo.Time}
  * @param {angular.$filter} $filter angular filter service.
  * @constructor
  * @struct
  * @ngInject
  * @ngdoc service
- * @ngname gmfWMSTime
+ * @ngname ngeoWMSTime
  */
-gmf.WMSTime  = function($filter) {
+ngeo.WMSTime  = function($filter) {
 
   /**
    * @private
@@ -25,11 +25,11 @@ gmf.WMSTime  = function($filter) {
 
   ngeo.Time.call(this);
 };
-ol.inherits(gmf.WMSTime, ngeo.Time);
+ol.inherits(ngeo.WMSTime, ngeo.Time);
 
 
 /**
- * gmfWMSTime.prototype.formatWMSTimeValue_ - Format time regarding a
+ * ngeoWMSTime.prototype.formatWMSTimeValue_ - Format time regarding a
  * resolution
  *
  * @param  {number} time (in ms format) timestamp to format
@@ -38,7 +38,7 @@ ol.inherits(gmf.WMSTime, ngeo.Time);
  * @return {string} ISO-8601 date string regarding the resolution
  * @private
  */
-gmf.WMSTime.prototype.formatWMSTimeValue_ = function(time, resolution, opt_toUTC) {
+ngeo.WMSTime.prototype.formatWMSTimeValue_ = function(time, resolution, opt_toUTC) {
   const date = new Date(time);
   const utc = opt_toUTC ? 'UTC' : undefined;
   switch (resolution) {
@@ -56,7 +56,7 @@ gmf.WMSTime.prototype.formatWMSTimeValue_ = function(time, resolution, opt_toUTC
 
 
 /**
- * gmfWMSTime.prototype.formatWMSTimeParam - Format time to be used as a
+ * ngeoWMSTime.prototype.formatWMSTimeParam - Format time to be used as a
  * WMS Time query parameter
  *
  * @param  {ngeox.TimeProperty} wmsTimeProperty a wmstime property from a node
@@ -66,7 +66,7 @@ gmf.WMSTime.prototype.formatWMSTimeValue_ = function(time, resolution, opt_toUTC
  * WMS request
  * @export
  */
-gmf.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUTC) {
+ngeo.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUTC) {
   goog.asserts.assert(wmsTimeProperty.resolution !== undefined);
   if (wmsTimeProperty.mode === 'range') {
     goog.asserts.assert(times.end !== undefined);
@@ -80,4 +80,4 @@ gmf.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_
 };
 
 
-gmf.module.service('gmfWMSTime', gmf.WMSTime);
+ngeo.module.service('ngeoWMSTime', ngeo.WMSTime);

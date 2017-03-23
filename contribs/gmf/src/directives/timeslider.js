@@ -1,7 +1,7 @@
 goog.provide('gmf.TimeSliderDirective');
 
 goog.require('gmf');
-goog.require('gmf.WMSTime');
+goog.require('ngeo.WMSTime');
 
 
 /**
@@ -78,20 +78,20 @@ gmf.timeSliderDirective = function($timeout, $filter) {
 /**
  * TimeSliderController - directive controller
  * @param {!angular.Scope} $scope Angular scope.
- * @param {gmf.WMSTime} gmfWMSTime WMSTime service.
+ * @param {ngeo.WMSTime} ngeoWMSTime WMSTime service.
  * @constructor
  * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfTimeSliderController
  */
-gmf.TimeSliderController = function($scope, gmfWMSTime) {
+gmf.TimeSliderController = function($scope, ngeoWMSTime) {
 
   /**
-   * @type {gmf.WMSTime}
+   * @type {ngeo.WMSTime}
    * @private
    */
-  this.gmfWMSTime_ = gmfWMSTime;
+  this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
    * Function called after date(s) changed/selected
@@ -162,7 +162,7 @@ gmf.TimeSliderController.prototype.init = function() {
   this.timeValueList = this.getTimeValueList_();
 
   // Fetch the initial options for the component
-  const initialOptions_ = this.gmfWMSTime_.getOptions(this.time);
+  const initialOptions_ = this.ngeoWMSTime_.getOptions(this.time);
   this.isModeRange = this.time.mode === 'range';
   this.minValue = initialOptions_.minDate;
   this.maxValue = initialOptions_.maxDate;
