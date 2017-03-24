@@ -176,7 +176,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
 
   ol.events.listen(
       this.geolocation_,
-      ol.Object.getChangeEventType(ol.Geolocation.Property.POSITION),
+      ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
       function() {
         this.setPosition_();
       },
