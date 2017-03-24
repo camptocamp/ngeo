@@ -170,14 +170,15 @@ ngeo.MobileGeolocationController = function($scope, $element,
       function() {
         this.accuracyFeature_.setGeometry(
             this.geolocation_.getAccuracyGeometry());
+        this.setPosition_();
       },
       this);
 
   ol.events.listen(
       this.geolocation_,
-      ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
-      function(e) {
-        this.setPosition_(e);
+      ol.Object.getChangeEventType(ol.Geolocation.Property.POSITION),
+      function() {
+        this.setPosition_();
       },
       this);
 
@@ -257,24 +258,23 @@ ngeo.MobileGeolocationController.prototype.untrack_ = function() {
 
 
 /**
- * @param {ol.Object.Event} event Event.
  * @private
  */
-ngeo.MobileGeolocationController.prototype.setPosition_ = function(event) {
+ngeo.MobileGeolocationController.prototype.setPosition_ = function() {
   const position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
   const point = new ol.geom.Point(position);
 
   this.positionFeature_.setGeometry(point);
+  const accuracy = this.accuracyFeature_.getGeometry();
 
   if (this.follow_) {
     this.viewChangedByMe_ = true;
     if (this.zoom_ !== undefined) {
       this.map_.getView().setCenter(position);
       this.map_.getView().setZoom(this.zoom_);
-    } else {
-      const polygon = /** @type {!ol.geom.Polygon} */ (this.geolocation_.getAccuracyGeometry());
+    } else if (accuracy) {
       const size = /** @type {!ol.Size} */ (this.map_.getSize());
-      this.map_.getView().fit(polygon, size);
+      this.map_.getView().fit(/** @type {!ol.geom.Polygon} */ (accuracy), size);
     }
     this.viewChangedByMe_ = false;
   }
@@ -292,5 +292,4 @@ ngeo.MobileGeolocationController.prototype.handleViewChange_ = function(event) {
 };
 
 
-ngeo.module.controller('NgeoMobileGeolocationController',
-    ngeo.MobileGeolocationController);
+ngeo.module.controller('NgeoMobileGeolocationController', ngeo.MobileGeolocationController);
