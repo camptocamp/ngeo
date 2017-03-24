@@ -42,6 +42,7 @@
       <gmf-search gmf-search-map="mainCtrl.map"
         gmf-search-datasources="mainCtrl.searchDatasources"
         gmf-search-clearbutton="true"
+        gmf-search-placeholder="{{'Search…'|translate}}"
         gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
         gmf-search-listeners="::mainCtrl.searchListeners">
       </gmf-search>
@@ -147,7 +148,7 @@
     <script src="../../../../lib/watchwatchers.js"></script>
     <script>
       (function() {
-        var cacheVersion = 'df228f55398df641a7aa213dbff38480b16b2bdb';
+        var cacheVersion = '7d0c90406df1834e941bd69fc08a869a32debb22';
         var urlElements = window.location.pathname.split('/');
 
         var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
