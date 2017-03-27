@@ -1,6 +1,7 @@
 goog.provide('ngeo.RuleHelper');
 
 goog.require('ngeo');
+goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Select');
