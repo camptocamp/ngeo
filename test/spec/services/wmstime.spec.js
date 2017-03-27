@@ -1,9 +1,9 @@
 /*global describe beforeEach inject expect it*/
 
-goog.require('gmf.WMSTime');
+goog.require('ngeo.WMSTime');
 
-describe('gmfWMSTime service', () => {
-  let gmfWMSTime;
+describe('ngeoWMSTime service', () => {
+  let ngeoWMSTime;
 
   const wmsTime = {
     widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('slider'),
@@ -18,31 +18,31 @@ describe('gmfWMSTime service', () => {
 
   beforeEach(() => {
     inject(($injector) => {
-      gmfWMSTime = $injector.get('gmfWMSTime');
+      ngeoWMSTime = $injector.get('ngeoWMSTime');
     });
   });
 
   it('should format the time regarding the resolution and with a mode set on value', () => {
-    const timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
-    let timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
+    const timeValues = ngeoWMSTime.getOptions(wmsTime)['values'];
+    let timeParam = ngeoWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues
     });
     expect(timeParam).toBe('2014');
 
     wmsTime.resolution = 'month';
-    timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
+    timeParam = ngeoWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues
     });
     expect(timeParam).toBe('2014-01');
 
     wmsTime.resolution = 'day';
-    timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
+    timeParam = ngeoWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues
     });
     expect(timeParam).toBe('2014-01-01');
 
     wmsTime.resolution = 'second';
-    timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
+    timeParam = ngeoWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues
     });
     expect(timeParam).toBe('2014-01-01T00:00:00Z');
@@ -52,29 +52,29 @@ describe('gmfWMSTime service', () => {
   it('should format the time regarding the resolution and with a mode set on range', () => {
     wmsTime.mode = 'range';
     wmsTime.resolution = 'year';
-    const timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
-    let timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
+    const timeValues = ngeoWMSTime.getOptions(wmsTime)['values'];
+    let timeParam = ngeoWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues[0],
       end: timeValues[1]
     });
     expect(timeParam).toBe('2014/2015');
 
     wmsTime.resolution = 'month';
-    timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
+    timeParam = ngeoWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues[0],
       end: timeValues[1]
     });
     expect(timeParam).toBe('2014-01/2015-12');
 
     wmsTime.resolution = 'day';
-    timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
+    timeParam = ngeoWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues[0],
       end: timeValues[1]
     });
     expect(timeParam).toBe('2014-01-01/2015-12-31');
 
     wmsTime.resolution = 'second';
-    timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
+    timeParam = ngeoWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues[0],
       end: timeValues[1]
     });
