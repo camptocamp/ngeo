@@ -675,6 +675,16 @@ gmf.LayertreeController.prototype.toggleFiltrableDataSource = function(ds) {
 
 
 /**
+ * @param {string} legendNodeId The DOM node legend id
+ * @return {boolean} Whenever the legend is currently displayed.
+ * @export
+ */
+gmf.LayertreeController.prototype.isNodeLegendVisible = function(legendNodeId) {
+  return $(legendNodeId).is(':visible');
+};
+
+
+/**
  * Get the snapping configuration object from a Layertree controller
  *
  * @param {ngeo.LayertreeController} treeCtrl Layertree controller,

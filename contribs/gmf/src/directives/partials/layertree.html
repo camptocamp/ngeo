@@ -192,7 +192,7 @@
     {{'Hide legend'|translate}}
   </a>
 
-  <img ng-src="{{gmfLayertreeCtrl.getLegendURL(layertreeCtrl)}}"></img>
+  <img ng-if="gmfLayertreeCtrl.isNodeLegendVisible('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')" ng-src="{{gmfLayertreeCtrl.getLegendURL(layertreeCtrl)}}"></img>
 </div>
 
 <ul
