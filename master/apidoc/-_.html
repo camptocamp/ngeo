@@ -233,11 +233,15 @@ WARNING: This tile server is not publicly available: you have to be
 
     
 
-    <h4 class="name" id=""><span class="type-signature"></span>new <span class="signature">($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=""><span class="type-signature"></span>new <span class="signature">(options)</span><span class="type-signature"></span></h4>
 
     
 
 
+
+<div class="description">
+    <p>Layer source for the ASIT VD tile server.</p>
+</div>
 
 
 
@@ -272,7 +276,7 @@ WARNING: This tile server is not publicly available: you have to be
 
         <tr>
             
-                <td class="name"><code>$window</code></td>
+                <td class="name"><code>options</code></td>
             
 
             <td class="type">
@@ -283,61 +287,7 @@ WARNING: This tile server is not publicly available: you have to be
 
             
 
-            <td class="description last"><p>The window.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>gettext</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Gettext.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>gettextCatalog</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Gettext catalog.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>ngeoWmsGetCapTemplateUrl</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The template url.</p></td>
+            <td class="description last"><p>WMTS options.</p></td>
         </tr>
 
     
@@ -381,13 +331,20 @@ WARNING: This tile server is not publicly available: you have to be
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/modules/import/wmsgetcap.js">src/modules/import/wmsgetcap.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/modules/import/wmsgetcap.js#L18">line 18</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/source/asitvd.js">src/source/asitvd.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/source/asitvd.js#L44">line 44</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://www.asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html">https://www.asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -410,6 +367,17 @@ WARNING: This tile server is not publicly available: you have to be
 
     
     </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="http://openlayers.org/en/master/apidoc/ol.source.WMTS.html">ol.source.WMTS</a></li>
+    </ul>
+
 
     
 
@@ -1157,15 +1125,11 @@ WARNING: This tile server is not publicly available: you have to be
 
     
 
-    <h4 class="name" id=""><span class="type-signature"></span>new <span class="signature">(options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=""><span class="type-signature"></span>new <span class="signature">($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl)</span><span class="type-signature"></span></h4>
 
     
 
 
-
-<div class="description">
-    <p>Layer source for the ASIT VD tile server.</p>
-</div>
 
 
 
@@ -1200,7 +1164,7 @@ WARNING: This tile server is not publicly available: you have to be
 
         <tr>
             
-                <td class="name"><code>options</code></td>
+                <td class="name"><code>$window</code></td>
             
 
             <td class="type">
@@ -1211,7 +1175,61 @@ WARNING: This tile server is not publicly available: you have to be
 
             
 
-            <td class="description last"><p>WMTS options.</p></td>
+            <td class="description last"><p>The window.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gettext</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Gettext.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gettextCatalog</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Gettext catalog.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ngeoWmsGetCapTemplateUrl</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The template url.</p></td>
         </tr>
 
     
@@ -1255,20 +1273,13 @@ WARNING: This tile server is not publicly available: you have to be
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/source/asitvd.js">src/source/asitvd.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/source/asitvd.js#L44">line 44</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/modules/import/wmsgetcap.js">src/modules/import/wmsgetcap.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/modules/import/wmsgetcap.js#L18">line 18</a>
     </li></ul></dd>
     
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://www.asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html">https://www.asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html</a></li>
-        </ul>
-    </dd>
     
 
     
@@ -1291,17 +1302,6 @@ WARNING: This tile server is not publicly available: you have to be
 
     
     </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="http://openlayers.org/en/master/apidoc/ol.source.WMTS.html">ol.source.WMTS</a></li>
-    </ul>
-
 
     
 
