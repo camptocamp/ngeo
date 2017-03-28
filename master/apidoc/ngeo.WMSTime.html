@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: UnitPrefix <small>filter:ngeoUnitPrefix</small></title>
+    <title>JSDoc: Class: WMSTime <small>service:ngeoWMSTime</small></title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: UnitPrefix <small>filter:ngeoUnitPrefix</small></h1>
+    <h1 class="page-title">Class: WMSTime <small>service:ngeoWMSTime</small></h1>
 
     
 
@@ -28,8 +28,8 @@
 
 <header>
     
-        <h2 id="UnitPrefix">
-            <span class="ancestors">ngeo.</span>UnitPrefix
+        <h2 id="WMSTime">
+            <span class="ancestors">ngeo.</span>WMSTime
         </h2>
         
     
@@ -42,25 +42,14 @@
 
     
 
-    <h4 class="name" id="UnitPrefix"><span class="type-signature"></span>new UnitPrefix<span class="signature">($filter)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="WMSTime"><span class="type-signature"></span>new WMSTime<span class="signature">($filter)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>A filter used to format a number with the prefix and unit</p>
-<p>Arguments:</p>
-<ul>
-<li>opt_unit: The unit to used, default is ''.</li>
-<li>opt_type: (unit|square|binary) the type of units, default is 'unit'.</li>
-<li>opt_precision: The used precision, default is 3.</li>
-</ul>
-<p>Examples:</p>
-<pre class="prettyprint source"><code> {{25000 | ngeoUnitPrefix}} => 25 k
- {{25000 | ngeoUnitPrefix:m}} => 25 km
- {{25000000 | ngeoUnitPrefix:m²:square}} => 25 km²
- {{2048 | ngeoUnitPrefix:o:binary}} => 2 Kio</code></pre>
+    <p>ngeo - WMS time service</p>
 </div>
 
 
@@ -107,7 +96,7 @@
 
             
 
-            <td class="description last"><p>Angular filter</p></td>
+            <td class="description last"><p>angular filter service.</p></td>
         </tr>
 
     
@@ -151,8 +140,8 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/filters.js">src/services/filters.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/filters.js#L139">line 139</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/wmstime.js">src/services/wmstime.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/wmstime.js#L18">line 18</a>
     </li></ul></dd>
     
 
@@ -175,21 +164,22 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Function used to format number into a string.</p>
-</div>
-
-
-
-    
 
 
 
     
     </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="ngeo.Time.html">ngeo.Time</a></li>
+    </ul>
+
 
     
 
@@ -211,11 +201,16 @@
 
     
 
-    <h4 class="name" id="~result"><span class="type-signature">(inner) </span>result<span class="signature">(number, [opt_unit]<span class="signature-attributes">opt</span>, [opt_type]<span class="signature-attributes">opt</span>, [opt_precision]<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="formatWMSTimeParam"><span class="type-signature"></span>formatWMSTimeParam<span class="signature">(wmsTimeProperty, times, [opt_toUTC]<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
 
+
+<div class="description">
+    <p>ngeoWMSTime.prototype.formatWMSTimeParam - Format time to be used as a
+WMS Time query parameter</p>
+</div>
 
 
 
@@ -252,7 +247,7 @@
 
         <tr>
             
-                <td class="name"><code>number</code></td>
+                <td class="name"><code>wmsTimeProperty</code></td>
             
 
             <td class="type">
@@ -271,14 +266,40 @@
 
             
 
-            <td class="description last"><p>The number to format.</p></td>
+            <td class="description last"><p>a wmstime property from a node</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>[opt_unit]</code></td>
+                <td class="name"><code>times</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>start &amp; end time selected (in ms format)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>[opt_toUTC]</code></td>
             
 
             <td class="type">
@@ -299,63 +320,7 @@
 
             
 
-            <td class="description last"><p>The unit to used, default is ''.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>[opt_type]</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>(unit|square|binary) the type of units, default is 'unit'.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>[opt_precision]</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>The used precision, default is 3.</p></td>
+            <td class="description last"><p>to get the UTC date</p></td>
         </tr>
 
     
@@ -399,8 +364,8 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
     
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/filters.js">src/services/filters.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/filters.js#L150">line 150</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/wmstime.js">src/services/wmstime.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/wmstime.js#L69">line 69</a>
     </li></ul></dd>
     
 
@@ -427,7 +392,288 @@
 
         
 <div class="param-desc">
-    <p>The formated string.</p>
+    <p>ISO-8601 date string ready to be used as a query parameter for a
+WMS request</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getOptions"><span class="type-signature"></span>getOptions<span class="signature">(time)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Get options regarding the time property of a node;</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>time</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the time property of a node</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="ngeo.Time.html#getOptions">ngeo.Time#getOptions</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/time.js">src/services/time.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/time.js#L29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getUTCDate"><span class="type-signature"></span>getUTCDate<span class="signature">(localDate)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Time.prototype.getUTCDate - Get UTC date from a local date object</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>localDate</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>loacl date object in</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="ngeo.Time.html#getUTCDate">ngeo.Time#getUTCDate</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/time.js">src/services/time.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/time.js#L58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>UTC date</p>
 </div>
 
 
