@@ -2,7 +2,7 @@ goog.provide('gmfapp.datepicker');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
-goog.require('gmf.WMSTime');
+goog.require('ngeo.WMSTime');
 
 
 /** @type {!angular.Module} **/
@@ -12,16 +12,16 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 /**
  * @constructor
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!gmf.WMSTime} gmfWMSTime wmstime service.
+ * @param {!ngeo.WMSTime} ngeoWMSTime wmstime service.
  * @ngInject
  */
-gmfapp.MainController = function($scope, gmfWMSTime) {
+gmfapp.MainController = function($scope, ngeoWMSTime) {
 
   /**
-   * @type {gmf.WMSTime}
+   * @type {ngeo.WMSTime}
    * @private
    */
-  this.gmfWMSTime_ = gmfWMSTime;
+  this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
    * @type {ngeox.TimeProperty}
@@ -66,11 +66,11 @@ gmfapp.MainController = function($scope, gmfWMSTime) {
   this.rangeValue;
 
   this.onDateSelected = function(date) {
-    this.value = this.gmfWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
+    this.value = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
   };
 
   this.onDateRangeSelected = function(date) {
-    this.rangeValue = this.gmfWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
+    this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
   };
 
 };
