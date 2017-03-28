@@ -427,6 +427,7 @@ ngeo.DataSource = class {
    */
   set attributes(attributes) {
     this.attributes_ = attributes;
+    this.updateGeometryNameFromAttributes_();
   }
 
   /**
@@ -648,21 +649,31 @@ ngeo.DataSource = class {
   // === Calculated property getters ===
 
   /**
+   * A data source can't be combined to other data source to issue a single
+   * WFS request if:
+   *
+   * - it has filter rules
+   *
    * @return {boolean} Whether the data source can be combined to an other
    *     data source to fetch features in a single WFS request.
    * @export
    */
   get combinableForWFS() {
-    return true; // TODO
+    return this.filterRules_ === null;
   }
 
   /**
+   * A data source can't be combined to other data source to issue a single
+   * WMS request if:
+   *
+   * - it has filter rules
+   *
    * @return {boolean} Whether the data source can be combined to an other
    *     data source to fetch features in a single WMS request.
    * @export
    */
   get combinableForWMS() {
-    return true; // TODO
+    return this.filterRules_ === null;
   }
 
   /**
@@ -848,6 +859,40 @@ ngeo.DataSource = class {
     }
 
     return layerNames;
+  }
+
+  /**
+   * Returns the filtrable OGC layer name. This methods asserts that
+   * the name exists and is filtrable.
+   * @return {string} OGC layer name.
+   * @export
+   */
+  getFiltrableOGCLayerName() {
+    goog.asserts.assert(this.filtrable);
+    const layerNames = this.getOGCLayerNames();
+    goog.asserts.assert(layerNames.length === 1);
+    return layerNames[0];
+  }
+
+  /**
+   * Loop in the attributes of the data source. Update the `geometryName`
+   * property on the first geometry attribute found. If none is found, then
+   * the default geometry name is set.
+   * @private
+   */
+  updateGeometryNameFromAttributes_() {
+    let geometryName = ngeo.DataSource.DEFAULT_GEOMETRY_NAME_;
+
+    if (this.attributes) {
+      for (const attribute of this.attributes) {
+        if (attribute.type === ngeo.AttributeType.GEOMETRY) {
+          geometryName = attribute.name;
+          break;
+        }
+      }
+    }
+
+    this.geometryName_ = geometryName;
   }
 
 };

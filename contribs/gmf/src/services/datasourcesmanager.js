@@ -3,8 +3,10 @@ goog.provide('gmf.DataSourcesManager');
 goog.require('gmf');
 goog.require('gmf.TreeManager');
 goog.require('gmf.DataSource');
+goog.require('gmf.SyncLayertreeMap');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DataSources');
+goog.require('ngeo.RuleHelper');
 goog.require('ol.array');
 goog.require('ol.obj');
 
@@ -27,12 +29,13 @@ gmf.DataSourcesManager = class {
    * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
    * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
    *     objects.
+   * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @ngInject
    * @ngdoc service
    * @ngname gmfDataSourcesManager
    */
   constructor($q, $rootScope, $timeout, gmfThemes, gmfTreeManager,
-      ngeoDataSources
+      ngeoDataSources, ngeoRuleHelper
   ) {
 
     // === Injected properties ===
@@ -75,6 +78,12 @@ gmf.DataSourcesManager = class {
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
+
+    /**
+     * @type {!ngeo.RuleHelper}
+     * @private
+     */
+    this.ngeoRuleHelper_ = ngeoRuleHelper;
 
 
     // === Inner properties ===
@@ -383,7 +392,17 @@ gmf.DataSourcesManager = class {
       this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
     );
 
+    const filterRulesWatcherUnregister = this.rootScope_.$watch(
+      () => {
+        const hasFilters = dataSource.filterRules !== null;
+        const isVisible = dataSource.visible;
+        return hasFilters && isVisible;
+      },
+      this.handleDataSourceFilterRulesChange_.bind(this, dataSource)
+    );
+
     this.treeCtrlCache_[id] = {
+      filterRulesWatcherUnregister,
       stateWatcherUnregister,
       treeCtrl
     };
@@ -408,6 +427,7 @@ gmf.DataSourcesManager = class {
 
     // (2) Remove item and clear event listeners
     item.treeCtrl.setDataSource(null);
+    item.filterRulesWatcherUnregister();
     item.stateWatcherUnregister();
     delete this.treeCtrlCache_[`${dataSource.id}`];
   }
@@ -455,6 +475,86 @@ gmf.DataSourcesManager = class {
     const id = treeCtrl.node.id;
     return this.treeCtrlCache_[id] || null;
   }
+
+  /**
+   * Called when both the 'visible' and 'filterRules' properties of a data
+   * source change.
+   *
+   * If the data source is filtrable, then make sure that when it gets rules
+   * set to apply them as OGC filters to the OpenLayers layer, more precisely
+   * as a `FILTER` parameter in the layer's source parameters.
+   *
+   * @param {!ngeo.DataSource} dataSource Data source.
+   * @param {boolean} value Value.
+   * @private
+   */
+  handleDataSourceFilterRulesChange_(dataSource, value) {
+
+    // Skip data sources that are not filtrables OR those that do not have
+    // the WMS ogcType, i.e. those that do not have an OpenLayers layer
+    // to update
+    if (dataSource.filtrable !== true ||
+        dataSource.ogcType !== ngeo.DataSource.OGCType.WMS
+    ) {
+      return;
+    }
+
+    const id = dataSource.id;
+    const item = this.treeCtrlCache_[String(id)];
+    goog.asserts.assert(item);
+    const treeCtrl = item.treeCtrl;
+
+    const layer = gmf.SyncLayertreeMap.getLayer(treeCtrl);
+    goog.asserts.assert(
+      layer instanceof ol.layer.Image ||
+      layer instanceof ol.layer.Tile
+    );
+
+    const source = layer.getSource();
+    goog.asserts.assert(
+      source instanceof ol.source.ImageWMS ||
+      source instanceof ol.source.TileWMS
+    );
+
+    const filtrableLayerName = dataSource.getFiltrableOGCLayerName();
+    const projCode = treeCtrl.map.getView().getProjection().getCode();
+    const filterString = this.ngeoRuleHelper_.createFilterString(
+      dataSource, projCode);
+
+    const filterParam = 'FILTER';
+    let filterParamValue = null;
+
+    if (filterString) {
+      const params = source.getParams();
+      const layersParam = params['LAYERS'];
+      const layersList = layersParam.split(',');
+      goog.asserts.assert(layersList.length >= 1);
+
+      if (layersList.length === 1) {
+        // When there's only one layer in the `LAYERS` parameters, then
+        // the filter string is given as-is.
+        filterParamValue = filterString;
+      } else {
+        // When there's more then one layer, then each filter must be wrapped
+        // between parenthesis and the order must also match the `LAYERS`
+        // parameter as well.
+        const filterParamValues = [];
+        for (let i = 0, ii = layersList.length; i < ii; i++) {
+          if (layersList[i] === filtrableLayerName) {
+            filterParamValues.push(`(${filterString})`);
+          } else {
+            filterParamValues.push('()');
+          }
+        }
+        filterParamValue = filterParamValues.join('');
+      }
+    }
+
+    source.updateParams({
+      [filterParam]: filterParamValue
+    });
+  }
+
 };
 
 
@@ -466,6 +566,7 @@ gmf.DataSourcesManager.TreeCtrlCache;
 
 /**
  * @typedef {{
+ *     filterRulesWatcherUnregister: (Function),
  *     stateWatcherUnregister: (Function),
  *     treeCtrl: (ngeo.LayertreeController)
  * }}

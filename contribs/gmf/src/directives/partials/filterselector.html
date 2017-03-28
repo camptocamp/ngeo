@@ -7,7 +7,7 @@
       ng-disabled="fsCtrl.aRuleIsActive"
       ng-switch-default
       ng-model="fsCtrl.gmfDataSourceBeingFiltered.dataSource"
-      ng-options="dataSource.name | translate for dataSource in fsCtrl.filtrableDataSources track by dataSource.name">
+      ng-options="dataSource.name | translate for dataSource in fsCtrl.filtrableDataSources">
     <option value="" translate>-- Layer to filter --</option>
   </select>
 

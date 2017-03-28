@@ -1,6 +1,7 @@
 goog.provide('ngeo.filterComponent');
 
 goog.require('ngeo');
+goog.require('ngeo.MapQuerent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ruleComponent');
 goog.require('ngeo.RuleHelper');
@@ -16,6 +17,7 @@ ngeo.FilterController = class {
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
+   * @param {!ngeo.MapQuerent} ngeoMapQuerent The ngeo map querent service.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @struct
@@ -23,7 +25,8 @@ ngeo.FilterController = class {
    * @ngdoc controller
    * @ngname NgeoFilterController
    */
-  constructor(gettextCatalog, $scope, $timeout, ngeoRuleHelper) {
+  constructor(gettextCatalog, $scope, $timeout, ngeoMapQuerent,
+      ngeoRuleHelper) {
 
     // === Binding properties ===
 
@@ -89,6 +92,12 @@ ngeo.FilterController = class {
      * @private
      */
     this.timeout_ = $timeout;
+
+    /**
+     * @type {!ngeo.MapQuerent}
+     * @private
+     */
+    this.ngeoMapQuerent_ = ngeoMapQuerent;
 
     /**
      * @type {!ngeo.RuleHelper}
@@ -194,6 +203,59 @@ ngeo.FilterController = class {
    * @export
    */
   apply() {
+    // (1) Reset
+    this.datasource.filterRules = null;
+
+    // (2) Then set if there are filter rules with value.
+    this.timeout_(() => {
+      const filterRules = this.getRulesWithValue_();
+      if (filterRules.length) {
+        this.datasource.filterRules = filterRules;
+        // The current query results are cleared when we apply a filter.
+        this.ngeoMapQuerent_.clear();
+      }
+    });
+  }
+
+
+  /**
+   * Loop in all directed and custom rules. Issue a request to obtain the data
+   * and show the result.
+   * @export
+   */
+  getData() {
+    const filterRules = this.getRulesWithValue_();
+
+    // No need to do anything if there's no rules.
+    if (!filterRules.length) {
+      return;
+    }
+
+    const dataSource = this.datasource;
+    const limit = 1000;
+    const map = this.map;
+    const projCode = map.getView().getProjection().getCode();
+    const filter = this.ngeoRuleHelper_.createFilter(
+      dataSource,
+      projCode,
+      filterRules
+    );
+    goog.asserts.assert(filter);
+
+    this.ngeoMapQuerent_.issue({
+      filter,
+      limit,
+      map
+    });
+  }
+
+
+  /**
+   * Loop in all directed and custom rules and collect those with a value.
+   * @return {Array.<!ngeo.rule.Rule>} Rules with value.
+   * @private
+   */
+  getRulesWithValue_() {
     const filterRules = [];
     const rules = [].concat(this.customRules, this.directedRules);
     for (const rule of rules) {
@@ -201,7 +263,7 @@ ngeo.FilterController = class {
         filterRules.push(rule);
       }
     }
-    this.datasource.filterRules = filterRules.length ? filterRules : null;
+    return filterRules;
   }
 
 

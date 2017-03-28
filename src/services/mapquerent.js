@@ -109,17 +109,23 @@ ngeo.MapQuerent = class {
     // (1) Clear previous result
     this.clear();
 
-    // (2) Get queryable data sources
-    const queryableDataSources = this.ngeoQuerent_.getQueryableDataSources(
-      this.ngeoDataSources_.getArray(),
-      options.map
-    );
+    // (2) Get queryable data sources, unless they are already set
+    let queryableDataSources;
+    if (options.dataSources === undefined &&
+        options.queryableDataSources === undefined
+    ) {
+      queryableDataSources = this.ngeoQuerent_.getQueryableDataSources(
+        this.ngeoDataSources_.getArray(),
+        options.map
+      );
+    }
 
     // (3) Update query options, update the pending property and issue the
     //     request.
+    const limit = options.limit !== undefined ? options.limit : this.limit_;
     ol.obj.assign(options, {
       queryableDataSources,
-      limit: this.limit_,
+      limit,
       tolerancePx: this.tolerancePx_,
       wfsCount: this.queryCountFirst_
     });
@@ -164,6 +170,7 @@ ngeo.MapQuerent = class {
 
       const querentResultItem = response[id];
       const features = querentResultItem.features;
+      const limit = querentResultItem.limit;
       const tooManyResults = querentResultItem.tooManyFeatures === true;
       const totalFeatureCount = querentResultItem.totalFeatureCount;
 
@@ -171,6 +178,7 @@ ngeo.MapQuerent = class {
         features,
         id,
         label,
+        limit,
         pending: false,
         queried: true,
         tooManyResults,

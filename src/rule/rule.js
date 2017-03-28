@@ -50,7 +50,7 @@ ngeo.rule.Rule = class {
      * `expression` property would support being bond to an `ng-model`. Without
      * it, it can't unless we expose the property directly.
      *
-     * @type {?boolean|number|string}
+     * @type {?number|string}
      * @export
      */
     this.expression = options.expression !== undefined ?
@@ -59,7 +59,7 @@ ngeo.rule.Rule = class {
     /**
      * The lower boundary of the rule. The expression and boundaries are
      * mutually exclusives.
-     * @type {?number|string}
+     * @type {?number}
      * @private
      */
     this.lowerBoundary_ = options. lowerBoundary !== undefined ?
@@ -75,7 +75,7 @@ ngeo.rule.Rule = class {
     /**
      * The upper boundary of the rule. The expression and boundaries are
      * mutually exclusives.
-     * @type {?number|string}
+     * @type {?number}
      * @private
      */
     this.upperBoundary_ = options. upperBoundary !== undefined ?
@@ -155,7 +155,7 @@ ngeo.rule.Rule = class {
    *
    * See: https://github.com/google/closure-compiler/issues/1089
    *
-   * @return {?boolean|number|string} Expression
+   * @return {?number|string} Expression
    * @export
    */
   getExpression() {
@@ -163,7 +163,7 @@ ngeo.rule.Rule = class {
   }
 
   /**
-   * @param {?boolean|number|string} expression Expression
+   * @param {?number|string} expression Expression
    * @export
    */
   setExpression(expression) {
@@ -171,7 +171,7 @@ ngeo.rule.Rule = class {
   }
 
   /**
-   * @return {?number|string} Lower boundary
+   * @return {?number} Lower boundary
    * @export
    */
   get lowerBoundary() {
@@ -179,7 +179,7 @@ ngeo.rule.Rule = class {
   }
 
   /**
-   * @param {?number|string} lowerBoundary Lower boundary
+   * @param {?number} lowerBoundary Lower boundary
    * @export
    */
   set lowerBoundary(lowerBoundary) {
@@ -203,7 +203,7 @@ ngeo.rule.Rule = class {
   }
 
   /**
-   * @return {?number|string} Upper boundary
+   * @return {?number} Upper boundary
    * @export
    */
   get upperBoundary() {
@@ -211,7 +211,7 @@ ngeo.rule.Rule = class {
   }
 
   /**
-   * @param {?number|string} upperBoundary Upper boundary
+   * @param {?number} upperBoundary Upper boundary
    * @export
    */
   set upperBoundary(upperBoundary) {

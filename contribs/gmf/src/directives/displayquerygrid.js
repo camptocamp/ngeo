@@ -447,6 +447,7 @@ gmf.DisplayquerygridController.prototype.getMergedSource_ = function(source, mer
       features: [],
       id: mergeSourceId,
       label: mergeSourceId,
+      limit: this.maxResults,
       pending: false,
       queried: true,
       tooManyResults: false,

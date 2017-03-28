@@ -1,6 +1,7 @@
 goog.provide('ngeo.Querent');
 
 goog.require('ngeo');
+goog.require('ngeo.RuleHelper');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WFSDescribeFeatureType');
 goog.require('ol.obj');
@@ -18,11 +19,12 @@ ngeo.Querent = class {
    * @struct
    * @param {angular.$http} $http Angular $http service.
    * @param {angular.$q} $q The Angular $q service.
+   * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @ngdoc service
    * @ngname ngeoQuerent
    * @ngInject
    */
-  constructor($http, $q) {
+  constructor($http, $q, ngeoRuleHelper) {
 
     // === Injected properties ===
 
@@ -37,6 +39,12 @@ ngeo.Querent = class {
      * @private
      */
     this.q_ = $q;
+
+    /**
+     * @type {!ngeo.RuleHelper}
+     * @private
+     */
+    this.ngeoRuleHelper_ = ngeoRuleHelper;
 
 
     // === Other properties ===
@@ -206,12 +214,13 @@ ngeo.Querent = class {
    *
    * @param {!Array.<!ngeo.DataSource>} dataSources List of queryable data
    *     sources that were used to do the query.
+   * @param {number} limit The maximum number of features to get with the query.
    * @param {boolean} wfs Whether the query was WFS or WMS.
    * @param {angular.$http.Response|number} response Response.
    * @return {ngeox.QuerentResult} Hash of features by data source ids.
    * @private
    */
-  handleQueryResult_(dataSources, wfs, response) {
+  handleQueryResult_(dataSources, limit, wfs, response) {
     const hash = {};
 
     for (const dataSource of dataSources) {
@@ -234,6 +243,7 @@ ngeo.Querent = class {
       this.setUniqueIds_(features, dataSource.id);
       hash[dataSourceId] = {
         features,
+        limit,
         tooManyFeatures,
         totalFeatureCount
       };
@@ -256,7 +266,9 @@ ngeo.Querent = class {
 
     const promises = [];
 
-    const maxFeatures = options.limit;
+    // The 'limit' option is mandatory in the querent service
+    const maxFeatures = goog.asserts.assertNumber(options.limit);
+
     const map = options.map;
     const view = map.getView();
     const resolution = goog.asserts.assertNumber(view.getResolution());
@@ -314,6 +326,19 @@ ngeo.Querent = class {
         // (b) Add queryable layer names in featureTypes array
         featureTypes = featureTypes.concat(
           dataSource.getInRangeOGCLayerNames(resolution, true));
+
+        // (c) Add filter, if any. If the case, then only one data source
+        //     is expected to be used for this request.
+        let filter;
+        if (options.filter) {
+          filter = options.filter;
+        } else if (dataSource.filterRules && dataSource.filterRules.length) {
+          goog.asserts.assert(dataSources.length === 1);
+          filter = this.ngeoRuleHelper_.createFilter(dataSource, srsName);
+        }
+        if (filter) {
+          getFeatureCommonOptions['filter'] = filter;
+        }
       }
 
       goog.asserts.assert(getFeatureCommonOptions);
@@ -333,7 +358,7 @@ ngeo.Querent = class {
       const getFeatureDefer = this.q_.defer();
       promises.push(
         getFeatureDefer.promise.then(
-          this.handleQueryResult_.bind(this, dataSources, true)
+          this.handleQueryResult_.bind(this, dataSources, maxFeatures, true)
         )
       );
 
@@ -425,7 +450,9 @@ ngeo.Querent = class {
 
     const promises = [];
 
-    const FEATURE_COUNT = options.limit;
+    // The 'limit' option is mandatory in the querent service
+    const FEATURE_COUNT = goog.asserts.assertNumber(options.limit);
+
     const map = options.map;
     const view = map.getView();
     const resolution = goog.asserts.assertNumber(view.getResolution());
@@ -443,6 +470,8 @@ ngeo.Querent = class {
       let LAYERS = [];
       let INFO_FORMAT;
       const params = {};
+      let filterString = null;
+      let filtrableLayerName = null;
 
       // (3) Build query options
       for (const dataSource of dataSources) {
@@ -465,12 +494,49 @@ ngeo.Querent = class {
             params[dimensionKey] = dimensions[dimensionKey];
           }
         }
+
+        // (d) Add filter, if any. If there is a filter on the data source,
+        //     then it is expected that one request will be sent for this
+        //     data source only.
+        if (dataSource.filterRules && dataSource.filterRules.length) {
+          goog.asserts.assert(dataSources.length === 1);
+          filtrableLayerName = dataSource.getFiltrableOGCLayerName();
+          filterString = this.ngeoRuleHelper_.createFilterString(
+            dataSource,
+            projCode
+          );
+        }
       }
 
       ol.obj.assign(params, {
         LAYERS,
         QUERY_LAYERS: LAYERS
       });
+
+      // Manage 'FILTER' parameter
+      if (filterString && filtrableLayerName) {
+        let filterParamValue = null;
+        if (LAYERS.length === 1) {
+          // When there's only one layer in the `LAYERS` parameters, then
+          // the filter string is given as-is.
+          filterParamValue = filterString;
+        } else {
+          // When there's more then one layer, then each filter must be wrapped
+          // between parenthesis and the order must also match the `LAYERS`
+          // parameter as well.
+          const filterParamValues = [];
+          for (let i = 0, ii = LAYERS.length; i < ii; i++) {
+            if (LAYERS[i] === filtrableLayerName) {
+              filterParamValues.push(`(${filterString})`);
+            } else {
+              filterParamValues.push('()');
+            }
+          }
+          filterParamValue = filterParamValues.join('');
+        }
+        params['FILTER'] = filterParamValue;
+      }
+
       goog.asserts.assert(url);
       const wmsSource = new ol.source.ImageWMS({
         params,
@@ -495,7 +561,7 @@ ngeo.Querent = class {
             timeout: canceler.promise
           }
         ).then(
-          this.handleQueryResult_.bind(this, dataSources, false)
+          this.handleQueryResult_.bind(this, dataSources, FEATURE_COUNT, false)
         )
       );
     }
