@@ -160,7 +160,7 @@ objects.</p>
     <dd class="tag-source"><ul class="dummy"><li>
     
         <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js">src/services/rulehelper.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L23">line 23</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L27">line 27</a>
     </li></ul></dd>
     
 
@@ -308,7 +308,7 @@ objects.</p>
     <dd class="tag-source"><ul class="dummy"><li>
     
         <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js">src/services/rulehelper.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L217">line 217</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L221">line 221</a>
     </li></ul></dd>
     
 
@@ -336,6 +336,414 @@ objects.</p>
         
 <div class="param-desc">
     <p>A clone rule.</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="createFilter"><span class="type-signature"></span>createFilter<span class="signature">(dataSource, [opt_srsName]<span class="signature-attributes">opt</span>, [opt_filterRules]<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dataSource</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Data source.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>[opt_srsName]</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>SRS name. No srsName attribute will be
+    set on geometries when this is not provided.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>[opt_filterRules]</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Alternative list of
+    filter rules.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js">src/services/rulehelper.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L373">line 373</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>filter Filter</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="createFilterString"><span class="type-signature"></span>createFilterString<span class="signature">(dataSource, [opt_srsName]<span class="signature-attributes">opt</span>, [opt_filterRules]<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dataSource</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Data source.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>[opt_srsName]</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>SRS name. No srsName attribute will be
+    set on geometries when this is not provided.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>[opt_filterRules]</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Alternative list of
+    filter rules.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+    
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js">src/services/rulehelper.js</a>,
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L421">line 421</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>filter Filter string.</p>
 </div>
 
 
@@ -444,7 +852,7 @@ objects.</p>
     <dd class="tag-source"><ul class="dummy"><li>
     
         <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js">src/services/rulehelper.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L187">line 187</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L191">line 191</a>
     </li></ul></dd>
     
 
@@ -619,7 +1027,7 @@ objects.</p>
     <dd class="tag-source"><ul class="dummy"><li>
     
         <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js">src/services/rulehelper.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L60">line 60</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L64">line 64</a>
     </li></ul></dd>
     
 
@@ -755,7 +1163,7 @@ objects.</p>
     <dd class="tag-source"><ul class="dummy"><li>
     
         <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js">src/services/rulehelper.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L174">line 174</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L178">line 178</a>
     </li></ul></dd>
     
 
@@ -930,7 +1338,7 @@ objects.</p>
     <dd class="tag-source"><ul class="dummy"><li>
     
         <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js">src/services/rulehelper.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L45">line 45</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L49">line 49</a>
     </li></ul></dd>
     
 
@@ -1091,7 +1499,7 @@ The source rule remains unchanged, while the destination rule changes.</p>
     <dd class="tag-source"><ul class="dummy"><li>
     
         <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js">src/services/rulehelper.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L275">line 275</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L279">line 279</a>
     </li></ul></dd>
     
 
@@ -1221,7 +1629,7 @@ The source rule remains unchanged, while the destination rule changes.</p>
     <dd class="tag-source"><ul class="dummy"><li>
     
         <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js">src/services/rulehelper.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L321">line 321</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L325">line 325</a>
     </li></ul></dd>
     
 
@@ -1357,7 +1765,7 @@ The source rule remains unchanged, while the destination rule changes.</p>
     <dd class="tag-source"><ul class="dummy"><li>
     
         <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js">src/services/rulehelper.js</a>,
-        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L308">line 308</a>
+        <a href="https://github.com/camptocamp/ngeo/blob/master/src/services/rulehelper.js#L312">line 312</a>
     </li></ul></dd>
     
 
