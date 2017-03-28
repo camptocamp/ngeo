@@ -1,7 +1,7 @@
 goog.provide('gmf.SyncLayertreeMap');
 
 goog.require('gmf');
-goog.require('gmf.WMSTime');
+goog.require('ngeo.WMSTime');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 
@@ -14,13 +14,14 @@ goog.require('ol.layer.Tile');
  * @constructor
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {ngeo.WMSTime} ngeoWMSTime wms time service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
- * @param {gmf.WMSTime} gmfWMSTime wms time service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap
  */
-gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, gmfThemes, gmfWMSTime) {
+gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
+   gmfThemes) {
 
   /**
    * @type {ngeo.LayerHelper}
@@ -29,10 +30,10 @@ gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, gmfThemes, gmfWMSTi
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {gmf.WMSTime}
+   * @type {ngeo.WMSTime}
    * @private
    */
-  this.gmfWMSTime_ = gmfWMSTime;
+  this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
    * @type {gmfThemes.GmfOgcServers}
@@ -349,8 +350,8 @@ gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
     });
   }
   if (wmsTime) {
-    const timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
-    timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, {
+    const timeValues = this.ngeoWMSTime_.getOptions(wmsTime)['values'];
+    timeParam = this.ngeoWMSTime_.formatWMSTimeParam(wmsTime, {
       start: timeValues[0] || timeValues,
       end: timeValues[1]
     });
