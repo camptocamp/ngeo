@@ -47,7 +47,12 @@ gmf.EditFeature = function($http, gmfLayersUrl) {
  * @export
  */
 gmf.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
-  const url = `${this.baseUrl_}/${layerIds.join(',')}/bbox/${extent.join(',')}`;
+  const url = ol.uri.appendParams(
+    `${this.baseUrl_}/${layerIds.join(',')}`,
+    {
+      'bbox': extent.join(',')
+    }
+  );
   return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
 
