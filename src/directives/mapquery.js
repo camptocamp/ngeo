@@ -65,8 +65,8 @@ ngeo.mapQueryDirective = function(ngeoMapQuerent, $injector) {
         if (!evt.dragging) {
           const pixel = map.getEventPixel(evt.originalEvent);
           const queryable = function(layer) {
-            var visible = layer.get('visible');
-            var sourceids = layer.get('querySourceIds');
+            const visible = layer.get('visible');
+            const sourceids = layer.get('querySourceIds');
             return visible && !!sourceids;
           };
           const hit = map.forEachLayerAtPixel(pixel, () => true, undefined, queryable);

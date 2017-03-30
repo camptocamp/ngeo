@@ -82,7 +82,7 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
     url: sourceURL,
     params,
     serverType: olServerType,
-    crossOrigin: 'anonymous'
+    crossOrigin: 'use-credentials'
   });
   if (opt_params) {
     source.updateParams(opt_params);
@@ -122,11 +122,11 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
       let options = ol.source.WMTS.optionsFromCapabilities(result, {
         layer: layerName
       });
-      goog.asserts.assert(options);
       options = ol.obj.assign({
-        crossOrigin: 'anonymous'
+        crossOrigin: 'use-credentials'
       }, options);
-      const source = new ol.source.WMTS(options);
+      goog.asserts.assert(options);
+      const source = new ol.source.WMTS(/** @type {olx.source.WMTSOptions} */ (options));
       if (opt_dimensions && !ol.obj.isEmpty(opt_dimensions)) {
         source.updateDimensions(opt_dimensions);
       }
