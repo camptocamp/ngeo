@@ -4,7 +4,9 @@ goog.require('ngeo');
 goog.require('ngeo.DataSource');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DataSources');
+goog.require('ol.events');
 goog.require('ol.CollectionEventType');
+goog.require('ol.Object');
 goog.require('ol.Observable');
 goog.require('ol.View');
 goog.require('ol.ViewProperty');

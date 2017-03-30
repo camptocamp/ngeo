@@ -1,6 +1,7 @@
 goog.module('ngeo.source.AsitVD');
 goog.module.declareLegacyNamespace();
 
+goog.require('ol');
 goog.require('ol.Attribution');
 goog.require('ol.source.WMTS');
 goog.require('ol.tilegrid.WMTS');
