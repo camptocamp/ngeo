@@ -1,6 +1,7 @@
 goog.provide('ngeo.DataSource');
 
 goog.require('ngeo');
+goog.require('goog.asserts');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
 
