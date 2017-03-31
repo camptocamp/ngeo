@@ -81,7 +81,8 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
   const source = new ol.source.ImageWMS({
     url: sourceURL,
     params,
-    serverType: olServerType
+    serverType: olServerType,
+    crossOrigin: 'use-credentials'
   });
   if (opt_params) {
     source.updateParams(opt_params);
@@ -118,11 +119,14 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
       result = parser.read(response.data);
     }
     if (result) {
-      const options = ol.source.WMTS.optionsFromCapabilities(result, {
+      let options = ol.source.WMTS.optionsFromCapabilities(result, {
         layer: layerName
       });
+      options = ol.obj.assign({
+        crossOrigin: 'use-credentials'
+      }, options);
       goog.asserts.assert(options);
-      const source = new ol.source.WMTS(options);
+      const source = new ol.source.WMTS(/** @type {olx.source.WMTSOptions} */ (options));
       if (opt_dimensions && !ol.obj.isEmpty(opt_dimensions)) {
         source.updateDimensions(opt_dimensions);
       }

@@ -25,7 +25,8 @@ goog.require('app.GmfImportHelper');
 
 gmf.module.value('ngeoQueryOptions', {
   'limit': 20,
-  'queryCountFirst': true
+  'queryCountFirst': true,
+  'cursorHover': true
 });
 
 
