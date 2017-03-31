@@ -9,7 +9,7 @@
   </head>
   <body ng-class="{'gmf-profile-chart-active': !!profileChartActive}">
     <header>
-      <div>
+      <div class="logo">
         <img src="image/logo.png" />
         <span>by Camptocamp</span>
       </div>
@@ -40,13 +40,12 @@
           </gmf-layertree>
         </div>
       </div>
-      <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map"
-        ngeo-resizemap-state="mainCtrl.toolsActive">
+      <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map" ngeo-resizemap-state="mainCtrl.toolsActive">
         <div class="gmf-app-bar">
           <div ngeo-btn-group class="btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
-              <span class="fa fa-user"></span>
+              <span class="fa fa-user" ng-class="mainCtrl.gmfUser.username ? 'fa-user-times' : 'fa-user'"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.printPanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Print'|translate}}">
@@ -55,6 +54,10 @@
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawFeatureActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw & Measure'|translate}}">
               <span class="fa fa-paint-brush"></span>
+            </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
+              <span class="fa fa-filter"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.editFeatureActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Editing'|translate}}"
@@ -65,6 +68,10 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
               <span class="fa fa-area-chart"></span>
             </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.googleStreetViewActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Street View'|translate}}">
+              <span class="fa fa-street-view"></span>
+            </button>
           </div>
           <br/>
           <br/>
@@ -74,7 +81,9 @@
             </button>
           </span>
         </div>
-        <div class="gmf-app-tools-content container-fluid" ng-class="{'gmf-app-active': mainCtrl.toolsActive}">
+        <div
+            class="gmf-app-tools-content container-fluid"
+            ng-class="{'gmf-app-active': mainCtrl.toolsActive,'gmf-app-googlestreetview-active': mainCtrl.googleStreetViewActive }">
           <div ng-show="mainCtrl.loginActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
@@ -107,6 +116,19 @@
                   gmf-drawfeature-layer="::mainCtrl.drawFeatureLayer"
                   gmf-drawfeature-map="::mainCtrl.map">
               </gmf-drawfeature>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.filterSelectorActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Filter'|translate}}
+                <a class="btn close" ng-click="mainCtrl.filterSelectorActive = false">&times;</a>
+              </div>
+              <gmf-filterselector
+                  active="mainCtrl.filterSelectorActive"
+                  map="mainCtrl.map"
+                  tool-group="mainCtrl.mapToolsGroup">
+              </gmf-filterselector>
             </div>
           </div>
           <div ng-show="mainCtrl.editFeatureActive" class="row">
@@ -153,6 +175,19 @@
               </div>
             </div>
           </div>
+          <div ng-show="mainCtrl.googleStreetViewActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Street View'|translate}}
+                <a class="btn close" ng-click="mainCtrl.googleStreetViewActive = false">&times;</a>
+              </div>
+              <ngeo-googlestreetview
+                  active="mainCtrl.googleStreetViewActive"
+                  feature-style="mainCtrl.googleStreetViewStyle"
+                  map="mainCtrl.map">
+              </ngeo-googlestreetview>
+            </div>
+          </div>
         </div>
       </div>
       <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
@@ -176,9 +211,11 @@
               class="dropdown-menu">
             </gmf-backgroundlayerselector>
           </div>
-          <gmf-disclaimer
-            gmf-disclaimer-map="::mainCtrl.map">
-          </gmf-disclaimer>
+          <div class="gmf-app-map-messages">
+            <gmf-disclaimer
+              gmf-disclaimer-map="::mainCtrl.map">
+            </gmf-disclaimer>
+          </div>
           <gmf-displayquerywindow
             gmf-displayquerywindow-featuresstyle="::mainCtrl.queryFeatureStyle"
             gmf-displayquerywindow-desktop="true">
@@ -235,11 +272,12 @@
         ngeo-resizemap-state="profileChartActive">
       </gmf-profile>
     </footer>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCYnqxEQA5sz13sWSgMr97ejzvUeGP8gz4"></script>
     <script src="../../build/desktop.js"></script>
     <script src="../../../../lib/watchwatchers.js"></script>
     <script>
       (function() {
-        var cacheVersion = '8285d9241153973efe1b62984a61129cfec0e286';
+        var cacheVersion = '5ceb407a4eb2d481e9be68ca327788c39755ec7b';
         var urlElements = window.location.pathname.split('/');
 
         var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
@@ -256,7 +294,7 @@
         });
 
         var module = angular.module('app');
-        module.constant('defaultTheme', 'OSM');
+        module.constant('defaultTheme', 'Demo');
         module.constant('defaultLang', 'en');
         module.constant('langUrls', langUrls);
         module.constant('cacheVersion', cacheVersion);
