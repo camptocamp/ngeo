@@ -546,23 +546,9 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
     wmsGetFeatureInfoUrl =
         goog.uri.utils.setParam(wmsGetFeatureInfoUrl, 'QUERY_LAYERS', lyrStr);
 
-    // add dimensions values
-    var dimensions = items[0].source.dimensions;
-    if (dimensions) {
-      for (var key in dimensions) {
-        // get the value from the global dimensions
-        var value = this.dimensions[key];
-        if (value === undefined) {
-          // get the value from the layer default value
-          value = dimensions[key];
-        }
-        if (value !== undefined) {
-          wmsGetFeatureInfoUrl = goog.uri.utils.setParam(wmsGetFeatureInfoUrl, key, value);
-        }
-      }
-    }
+    var params = this.getDimensionsParams_(items[0].source.dimensions);
 
-    this.$http_.get(wmsGetFeatureInfoUrl, {timeout: this.registerCanceler_().promise})
+    this.$http_.get(wmsGetFeatureInfoUrl, {params: params, timeout: this.registerCanceler_().promise})
         .then(function(items, response) {
           items.forEach(function(item) {
             item['resultSource'].pending = false;
@@ -578,6 +564,30 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
           this.updatePendingState_();
         }.bind(this, items));
   }, this);
+};
+
+
+/**
+ * @param {Object.<string, string>} dimensions Source dimensions
+ * @return {Object.<string, string>} Url parameters
+ * @private
+ */
+ngeo.Query.prototype.getDimensionsParams_ = function(dimensions) {
+  var params = {};
+  if (dimensions) {
+    for (var key in dimensions) {
+      // get the value from the global dimensions
+      var value = this.dimensions[key];
+      if (value === undefined) {
+        // get the value from the layer default value
+        value = dimensions[key];
+      }
+      if (value !== undefined) {
+        params[key] = value;
+      }
+    }
+  }
+  return params;
 };
 
 
@@ -640,6 +650,8 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
         featureNS: this.featureNS_
       });
 
+      var params = this.getDimensionsParams_(items[0].source.dimensions);
+
       var getFeatures = function() {
         /** @type{olx.format.WFSWriteGetFeatureOptions} */
         var options = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.obj.assign({
@@ -649,7 +661,7 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
         var featureRequest = xmlSerializer.serializeToString(featureRequestXml);
 
         var canceler = this.registerCanceler_();
-        this.$http_.post(url, featureRequest, {timeout: canceler.promise})
+        this.$http_.post(url, featureRequest, {params: params, timeout: canceler.promise})
             .then(function(response) {
               item['resultSource'].pending = false;
               var features = [];
