@@ -25,9 +25,13 @@ def check(folder, file_postfix, make_prefix, split_current, split_number):
         match = re_.search(ex)
         if match is not None:
             if split_current == 0:
-                return_code = max(return_code, subprocess.call(
+                new_code = subprocess.call(
                     ["make", ".build/{}{}.check.timestamp".format(make_prefix, match.group(1))]
+                )
+                print('The command "make .build/{}{}.check.timestamp" exited with {}'.format(
+                    make_prefix, match.group(1), new_code
                 ))
+                return_code = max(return_code, new_code)
             split_current = (split_current + 1) % split_number
     return return_code, split_current
 
