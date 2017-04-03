@@ -464,6 +464,8 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+$(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js: .build/node_modules.timestamp
+
 .build/examples-hosted/lib/transpile.js: $(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js
 	mkdir -p $(dir $@)
 	cp $< $@
