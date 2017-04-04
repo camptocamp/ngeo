@@ -5,7 +5,7 @@ goog.require('gmf.objecteditinggetwmsfeatureDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.createfeatureComponent');
+goog.require('ngeo.createfeatureDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.createregularpolygonfromclickComponent');
 goog.require('ngeo.DecorateInteraction');

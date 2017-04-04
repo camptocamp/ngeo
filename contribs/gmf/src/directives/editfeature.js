@@ -12,7 +12,7 @@ goog.require('ngeo.attributesComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.createfeatureComponent');
+goog.require('ngeo.createfeatureDirective');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.EventHelper');
 goog.require('ngeo.FeatureHelper');

@@ -1,4 +1,4 @@
-goog.provide('ngeo.createfeatureComponent');
+goog.provide('ngeo.createfeatureDirective');
 
 goog.require('ngeo');
 goog.require('ngeo.EventHelper');
@@ -15,7 +15,7 @@ goog.require('ol.style.Style');
 
 
 /**
- * A component used to draw vector features of a single geometry type using
+ * A directive used to draw vector features of a single geometry type using
  * either a 'draw' or 'measure' interaction. Once a feature is finished being
  * drawn, it is added to a collection of features.
  *
@@ -40,28 +40,32 @@ goog.require('ol.style.Style');
  *       ng-model="ctrl.createPointActive">
  *     </a>
  *
- * @htmlAttribute {boolean} ngeo-createfeature-active Whether the component is
+ * @htmlAttribute {boolean} ngeo-createfeature-active Whether the directive is
  *     active or not.
  * @htmlAttribute {ol.Collection} ngeo-createfeature-features The collection of
- *     features where to add those created by this component.
+ *     features where to add those created by this directive.
  * @htmlAttribute {string} ngeo-createfeature-geom-type Determines the type
- *     of geometry this component should draw.
+ *     of geometry this directive should draw.
  * @htmlAttribute {ol.Map} ngeo-createfeature-map The map.
  *
- * @ngdoc component
+ * @return {angular.Directive} The directive specs.
+ * @ngdoc directive
  * @ngname ngeoCreatefeature
  */
-ngeo.createfeatureComponent = {
-  controller: 'ngeoCreatefeatureController as cfCtrl',
-  bindings: {
-    'active': '=ngeoCreatefeatureActive',
-    'features': '=ngeoCreatefeatureFeatures',
-    'geomType': '=ngeoCreatefeatureGeomType',
-    'map': '=ngeoCreatefeatureMap'
-  }
+ngeo.createfeatureDirective = function() {
+  return {
+    controller: 'ngeoCreatefeatureController as cfCtrl',
+    bindToController: true,
+    scope: {
+      'active': '=ngeoCreatefeatureActive',
+      'features': '=ngeoCreatefeatureFeatures',
+      'geomType': '=ngeoCreatefeatureGeomType',
+      'map': '=ngeoCreatefeatureMap'
+    }
+  };
 };
 
-ngeo.module.component('ngeoCreatefeature', ngeo.createfeatureComponent);
+ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
 
 
 /**
@@ -161,7 +165,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
 
 
 /**
- * Initialise the component.
+ * Initialize the directive.
  */
 ngeo.CreatefeatureController.prototype.$onInit = function() {
   this.active = this.active === true;
