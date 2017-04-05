@@ -7,7 +7,7 @@ goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.createfeatureComponent');
+goog.require('ngeo.createfeatureDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Collection');
