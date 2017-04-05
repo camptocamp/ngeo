@@ -79,7 +79,6 @@ gmf.editfeatureDirective = function() {
     controller: 'GmfEditfeatureController as efCtrl',
     scope: {
       'dirty': '=gmfEditfeatureDirty',
-      'layer': '=gmfEditfeatureLayer',
       'editableTreeCtrl': '=gmfEditfeatureEditabletreectrl',
       'map': '<gmfEditfeatureMap',
       'state': '=gmfEditfeatureState',
@@ -97,9 +96,9 @@ gmf.module.directive(
 
 /**
  * @param {angular.JQLite} $element Element.
+ * @param {angular.$q} $q Angular $q service.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {angular.$q} $q Angular $q service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmf.Snapping} gmfSnapping The gmf snapping service.
@@ -117,10 +116,13 @@ gmf.module.directive(
  * @ngdoc controller
  * @ngname GmfEditfeatureController
  */
-gmf.EditfeatureController = function($element, $scope, $timeout, $q,
+gmf.EditfeatureController = function($element, $q, $scope, $timeout,
     gettextCatalog, gmfEditFeature, gmfSnapping, gmfXSDAttributes,
     ngeoDecorateInteraction, ngeoEventHelper, ngeoFeatureHelper,
     ngeoLayerHelper, ngeoToolActivateMgr) {
+
+
+  // === Binding properties ===
 
   /**
    * Flag that is toggled as soon as the feature changes, i.e. if any of its
@@ -128,7 +130,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @type {boolean}
    * @export
    */
-  this.dirty = this.dirty === true;
+  this.dirty;
 
   /**
    * @type {ngeo.LayertreeController}
@@ -150,27 +152,11 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    */
   this.state;
 
-  $scope.$watch(
-    () => this.state,
-    (newValue, oldValue) => {
-      const state = gmf.EditfeatureController.State;
-      if (newValue === state.STOP_EDITING_PENDING) {
-        this.confirmCancel().then(() => {
-          this.state = state.STOP_EDITING_EXECUTE;
-        });
-      } else if (newValue === state.DEACTIVATE_PENDING) {
-        this.confirmCancel().then(() => {
-          this.state = state.DEACTIVATE_EXECUTE;
-        });
-      }
-    }
-  );
-
   /**
    * @type {number}
    * @export
    */
-  this.tolerance = this.tolerance !== undefined ? this.tolerance : 10;
+  this.tolerance;
 
   /**
    * @type {ol.layer.Vector}
@@ -178,29 +164,20 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    */
   this.vectorLayer;
 
-  /**
-   * @type {gmfThemes.GmfLayer}
-   * @private
-   */
-  this.editableNode_ = /** @type {gmfThemes.GmfLayer} */ (
-    this.editableTreeCtrl.node);
 
-
-  const layer = gmf.SyncLayertreeMap.getLayer(this.editableTreeCtrl);
-  goog.asserts.assert(
-    layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile);
-
-  /**
-   * @type {ol.layer.Image|ol.layer.Tile}
-   * @private
-   */
-  this.editableWMSLayer_ = layer;
+  // === Injected properties ===
 
   /**
    * @type {angular.JQLite}
    * @private
    */
   this.element_ = $element;
+
+  /**
+   * @type {angular.$q}
+   * @private
+   */
+  this.q_ = $q;
 
   /**
    * @type {!angular.Scope}
@@ -215,12 +192,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
   this.timeout_ = $timeout;
 
   /**
-   * @type {angular.$q}
-   * @private
-   */
-  this.q_ = $q;
-
-  /**
+   * @type {angularGettext.Catalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -229,7 +201,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @type {gmf.EditFeature}
    * @private
    */
-  this.editFeatureService_ = gmfEditFeature;
+  this.gmfEditFeature_ = gmfEditFeature;
 
   /**
    * @type {gmf.Snapping}
@@ -241,7 +213,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @type {gmf.XSDAttributes}
    * @private
    */
-  this.xsdAttributes_ = gmfXSDAttributes;
+  this.gmfXSDAttributes_ = gmfXSDAttributes;
 
   /**
    * @type {ngeo.DecorateInteraction}
@@ -253,25 +225,40 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @type {ngeo.EventHelper}
    * @private
    */
-  this.eventHelper_ = ngeoEventHelper;
+  this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
    * @type {ngeo.FeatureHelper}
    * @private
    */
-  this.featureHelper_ = ngeoFeatureHelper;
+  this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
    * @type {ngeo.LayerHelper}
    * @private
    */
-  this.layerHelper_ = ngeoLayerHelper;
+  this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
    * @type {ngeo.ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
+
+
+  // === Private properties ===
+
+  /**
+   * @type {gmfThemes.GmfLayer}
+   * @private
+   */
+  this.editableNode_;
+
+  /**
+   * @type {ol.layer.Image|ol.layer.Tile}
+   * @private
+   */
+  this.editableWMSLayer_;
 
   /**
    * A deferred object resolved after the confirm modal "continue w/o saving" or
@@ -288,16 +275,6 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @export
    */
   this.unsavedModificationsModalShown = false;
-
-  // Reset stop request when closing the confirmation modal
-  $scope.$watch(
-    () => this.unsavedModificationsModalShown,
-    (newValue, oldValue) => {
-      if (oldValue && !newValue) {
-        this.state = gmf.EditfeatureController.State.IDLE;
-      }
-    }
-  );
 
   /**
    * Flag that is toggled while a request is pending, either one to get
@@ -318,15 +295,6 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    */
   this.createActive = false;
 
-  $scope.$watch(
-    () => this.createActive,
-    (newVal, oldVal) => {
-      if (newVal) {
-        this.gmfSnapping_.ensureSnapInteractionsOnTop();
-      }
-    }
-  );
-
   /**
    * @type {ngeo.ToolActivate}
    * @export
@@ -338,11 +306,6 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @export
    */
   this.mapSelectActive = true;
-
-  $scope.$watch(
-    () => this.mapSelectActive,
-    this.handleMapSelectActiveChange_.bind(this)
-  );
 
   /**
    * @type {ngeo.ToolActivate}
@@ -356,7 +319,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    */
   this.feature = null;
 
-  $scope.$watch(
+  this.scope_.$watch(
     () => this.feature,
     this.handleFeatureChange_.bind(this)
   );
@@ -371,7 +334,7 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @type {ol.Collection}
    * @export
    */
-  this.features = this.vectorLayer.getSource().getFeaturesCollection();
+  this.features;
 
   /**
    * @type {ol.Collection}
@@ -383,17 +346,13 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    * @type {ol.interaction.Modify}
    * @private
    */
-  this.modify_ = new ol.interaction.Modify({
-    features: this.features,
-    style: ngeoFeatureHelper.getVertexStyle(false)
-  });
-  this.interactions_.push(this.modify_);
+  this.modify_;
 
   /**
    * @type {ngeo.ToolActivate}
    * @export
    */
-  this.modifyToolActivate = new ngeo.ToolActivate(this.modify_, 'active');
+  this.modifyToolActivate;
 
   /**
    * @type {ngeo.Menu}
@@ -410,57 +369,30 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
       name: gmf.EditfeatureController.MenuActionType.ROTATE
     }]
   });
-  this.map.addOverlay(this.menu_);
 
   /**
    * @type {ngeo.interaction.Translate}
    * @private
    */
-  this.translate_ = new ngeo.interaction.Translate({
-    features: this.features,
-    style: new ol.style.Style({
-      text: new ol.style.Text({
-        text: '\uf047',
-        font: 'normal 18px FontAwesome',
-        fill: new ol.style.Fill({
-          color: '#7a7a7a'
-        })
-      })
-    })
-  });
-  this.interactions_.push(this.translate_);
+  this.translate_;
 
   /**
    * @type {ngeo.interaction.Rotate}
    * @private
    */
-  this.rotate_ = new ngeo.interaction.Rotate({
-    features: this.features,
-    style: new ol.style.Style({
-      text: new ol.style.Text({
-        text: '\uf01e',
-        font: 'normal 18px FontAwesome',
-        fill: new ol.style.Fill({
-          color: '#7a7a7a'
-        })
-      })
-    })
-  });
-  this.interactions_.push(this.rotate_);
-
-  this.initializeInteractions_();
+  this.rotate_;
 
   /**
    * @type {!ngeo.ToolActivate}
    * @export
    */
-  this.rotateToolActivate = new ngeo.ToolActivate(this.rotate_, 'active');
+  this.rotateToolActivate;
 
   /**
    * @type {!ngeo.ToolActivate}
    * @export
    */
-  this.translateToolActivate = new ngeo.ToolActivate(this.translate_, 'active');
+  this.translateToolActivate;
 
   /**
    * @type {!Array.<!ol.EventsKey>}
@@ -480,24 +412,6 @@ gmf.EditfeatureController = function($element, $scope, $timeout, $q,
    */
   this.geomType;
 
-  gmfXSDAttributes.getAttributes(this.editableNode_.id).then(
-    this.setAttributes_.bind(this));
-
-  const uid = ol.getUid(this);
-  this.eventHelper_.addListenerKey(
-    uid,
-    ol.events.listen(
-      this.features,
-      ol.CollectionEventType.ADD,
-      this.handleFeatureAdd_,
-      this
-    )
-  );
-
-  $scope.$on('$destroy', this.handleDestroy_.bind(this));
-
-  this.toggle_(true);
-
   /**
    * @type{boolean}
    * @export
@@ -516,6 +430,135 @@ gmf.EditfeatureController.MenuActionType = {
 
 
 /**
+ * Called on initialization of the controller.
+ */
+gmf.EditfeatureController.prototype.$onInit = function() {
+
+  // (1) Set default values and other properties
+  this.dirty = this.dirty === true;
+  this.editableNode_ = /** @type {gmfThemes.GmfLayer} */ (
+    this.editableTreeCtrl.node);
+  this.features = this.vectorLayer.getSource().getFeaturesCollection();
+  this.tolerance = this.tolerance !== undefined ? this.tolerance : 10;
+
+  // (1.1) Set editable WMS layer
+  const layer = gmf.SyncLayertreeMap.getLayer(this.editableTreeCtrl);
+  goog.asserts.assert(
+    layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile);
+  this.editableWMSLayer_ = layer;
+
+  // (1.2) Create, set and initialize interactions
+  this.modify_ = new ol.interaction.Modify({
+    features: this.features,
+    style: this.ngeoFeatureHelper_.getVertexStyle(false)
+  });
+  this.interactions_.push(this.modify_);
+
+  this.rotate_ = new ngeo.interaction.Rotate({
+    features: this.features,
+    style: new ol.style.Style({
+      text: new ol.style.Text({
+        text: '\uf01e',
+        font: 'normal 18px FontAwesome',
+        fill: new ol.style.Fill({
+          color: '#7a7a7a'
+        })
+      })
+    })
+  });
+  this.interactions_.push(this.rotate_);
+
+  this.translate_ = new ngeo.interaction.Translate({
+    features: this.features,
+    style: new ol.style.Style({
+      text: new ol.style.Text({
+        text: '\uf047',
+        font: 'normal 18px FontAwesome',
+        fill: new ol.style.Fill({
+          color: '#7a7a7a'
+        })
+      })
+    })
+  });
+  this.interactions_.push(this.translate_);
+
+  this.initializeInteractions_();
+
+  this.modifyToolActivate = new ngeo.ToolActivate(this.modify_, 'active');
+  this.rotateToolActivate = new ngeo.ToolActivate(this.rotate_, 'active');
+  this.translateToolActivate = new ngeo.ToolActivate(this.translate_, 'active');
+
+  // (1.3) Add menu to map
+  this.map.addOverlay(this.menu_);
+
+
+  // (2) Watchers and event listeners
+  this.scope_.$watch(
+    () => this.createActive,
+    (newVal, oldVal) => {
+      if (newVal) {
+        this.gmfSnapping_.ensureSnapInteractionsOnTop();
+      }
+    }
+  );
+
+  this.scope_.$on('$destroy', this.handleDestroy_.bind(this));
+
+  const uid = ol.getUid(this);
+  this.ngeoEventHelper_.addListenerKey(
+    uid,
+    ol.events.listen(
+      this.features,
+      ol.CollectionEventType.ADD,
+      this.handleFeatureAdd_,
+      this
+    )
+  );
+
+  this.scope_.$watch(
+    () => this.mapSelectActive,
+    this.handleMapSelectActiveChange_.bind(this)
+  );
+
+  this.scope_.$watch(
+    () => this.state,
+    (newValue, oldValue) => {
+      const state = gmf.EditfeatureController.State;
+      if (newValue === state.STOP_EDITING_PENDING) {
+        this.confirmCancel().then(() => {
+          this.state = state.STOP_EDITING_EXECUTE;
+        });
+      } else if (newValue === state.DEACTIVATE_PENDING) {
+        this.confirmCancel().then(() => {
+          this.state = state.DEACTIVATE_EXECUTE;
+        });
+      }
+    }
+  );
+
+  this.scope_.$watch(
+    () => this.unsavedModificationsModalShown,
+    (newValue, oldValue) => {
+      // Reset stop request when closing the confirmation modal
+      if (oldValue && !newValue) {
+        this.state = gmf.EditfeatureController.State.IDLE;
+      }
+    }
+  );
+
+
+  // (3) Get attributes
+  this.gmfXSDAttributes_.getAttributes(this.editableNode_.id).then(
+    this.setAttributes_.bind(this));
+
+
+  // (4) Toggle
+  this.toggle_(true);
+
+};
+
+
+/**
  * Save the currently selected feature modifications.
  * @export
  */
@@ -526,11 +569,11 @@ gmf.EditfeatureController.prototype.save = function() {
   this.pending = true;
 
   const promise = id ?
-    this.editFeatureService_.updateFeature(
+    this.gmfEditFeature_.updateFeature(
       this.editableNode_.id,
       feature
     ) :
-    this.editFeatureService_.insertFeatures(
+    this.gmfEditFeature_.insertFeatures(
       this.editableNode_.id,
       [feature]
     );
@@ -619,14 +662,14 @@ gmf.EditfeatureController.prototype.delete = function() {
     this.pending = true;
 
     // (1) Launch request
-    this.editFeatureService_.deleteFeature(
+    this.gmfEditFeature_.deleteFeature(
       this.editableNode_.id,
       this.feature
     ).then(
       (response) => {
         this.dirty = false;
         this.pending = false;
-        this.layerHelper_.refreshWMSLayer(this.editableWMSLayer_);
+        this.ngeoLayerHelper_.refreshWMSLayer(this.editableWMSLayer_);
 
         // (2) Reset selected feature
         this.cancel();
@@ -664,7 +707,7 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
   const features = new ol.format.GeoJSON().readFeatures(resp.data);
   if (features.length) {
     this.feature.setId(features[0].getId());
-    this.layerHelper_.refreshWMSLayer(this.editableWMSLayer_);
+    this.ngeoLayerHelper_.refreshWMSLayer(this.editableWMSLayer_);
   }
   if (this.confirmDeferred_) {
     this.confirmDeferred_.resolve();
@@ -722,6 +765,9 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
 
   if (active) {
 
+    // FIXME
+    //this.registerInteractions_();
+
     keys.push(ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
         this.handleMenuActionClick_, this));
 
@@ -742,6 +788,9 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
     toolMgr.registerTool(otherUid, this.rotateToolActivate, false);
 
   } else {
+
+    // FIXME
+    //this.unregisterInteractions_();
 
     keys.forEach((key) => {
       ol.events.unlistenByKey(key);
@@ -846,7 +895,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
     );
 
     // (3) Launch query to fetch features
-    this.editFeatureService_.getFeaturesInExtent(
+    this.gmfEditFeature_.getFeaturesInExtent(
       [this.editableNode_.id],
       extent
     ).then(this.handleGetFeatures_.bind(this));
@@ -883,7 +932,7 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
 
   // show contextual menu when clicking on certain types of features
   if (feature) {
-    const type = this.featureHelper_.getType(feature);
+    const type = this.ngeoFeatureHelper_.getType(feature);
     if (type === ngeo.GeometryType.POLYGON || type === ngeo.GeometryType.MULTI_POLYGON ||
         type === ngeo.GeometryType.LINE_STRING || type === ngeo.GeometryType.MULTI_LINE_STRING) {
       this.menu_.open(coordinate);
@@ -1077,7 +1126,7 @@ gmf.EditfeatureController.prototype.handleDestroy_ = function() {
   this.handleFeatureChange_(null, this.feature);
   this.feature = null;
   const uid = ol.getUid(this);
-  this.eventHelper_.clearListenerKey(uid);
+  this.ngeoEventHelper_.clearListenerKey(uid);
   this.toggle_(false);
   this.handleMapSelectActiveChange_(false);
   this.unregisterInteractions_();
