@@ -115,6 +115,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *      change the style of the feature on the map. Default is false.
  * @htmlAttribute {ngeox.SearchDirectiveListeners} gmf-search-listeners
  *      The listeners.
+ * @htmlAttribute {number} gmf-search-maxzoom The maximum zoom we will zoom on result, default is 16.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -135,7 +136,8 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       'clearbutton': '=gmfSearchClearbutton',
       'colorchooser': '=gmfSearchColorchooser',
       'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
-      'additionalListeners': '=gmfSearchListeners'
+      'additionalListeners': '=gmfSearchListeners',
+      'maxZoom': '<gmfSearchMaxzoom'
     },
     controller: 'GmfSearchController',
     controllerAs: 'ctrl',
@@ -273,6 +275,13 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @export
    */
   this.placeholder = '';
+
+  /**
+   * The maximum zoom we will zoom on result.
+   * @type {number}
+   * @export
+   */
+  this.maxZoom = 16;
 
   var coordProj = this.scope_['coordinatesProjections'];
   if (coordProj === undefined) {
@@ -838,7 +847,7 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
     var fitArray = featureGeometry.getType() === 'GeometryCollection' ?
         featureGeometry.getExtent() : featureGeometry;
     view.fit(fitArray, mapSize, /** @type {olx.view.FitOptions} */ ({
-      maxZoom: 16}));
+      maxZoom: this.maxZoom}));
   }
   this.leaveSearch_();
 };
