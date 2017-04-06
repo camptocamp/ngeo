@@ -224,7 +224,7 @@ ngeo.DataSource = class {
      * @private
      */
     this.wfsFeatureNS_ = options.wfsFeatureNS ||
-      ngeo.DataSource.WFSFeatureNS.MAPSERVER;
+      ngeo.DataSource.WFSFeatureNS[this.ogcServerType_.toUpperCase()];
 
     /**
      * The feature prefix to use with WFS requests.
@@ -914,7 +914,7 @@ ngeo.DataSource.DEFAULT_GEOMETRY_NAME_ = 'the_geom';
 ngeo.DataSource.OGCServerType = {
   GEOSERVER: 'geoserver',
   MAPSERVER: 'mapserver',
-  QGIS: 'qgis'
+  QGISSERVER: 'qgisserver'
 };
 
 
@@ -933,7 +933,9 @@ ngeo.DataSource.OGCType = {
  * @enum {string}
  */
 ngeo.DataSource.WFSFeatureNS = {
-  MAPSERVER: 'http://mapserver.gis.umn.edu/mapserver'
+  GEOSERVER: 'http://www.opengis.net/gml/3.2',
+  MAPSERVER: 'http://mapserver.gis.umn.edu/mapserver',
+  QGISSERVER: 'http://www.qgis.org/gml'
 };
 
 
