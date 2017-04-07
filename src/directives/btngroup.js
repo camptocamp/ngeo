@@ -152,7 +152,7 @@ ngeo.btnDirective = function($parse) {
       const ngModelGet = $parse(attrs['ngModel']);
       const ngModelSet = ngModelGet.assign;
 
-          // Set ng-model value to false if undefined
+      // Set ng-model value to false if undefined
       if (ngModelGet(scope) === undefined) {
         ngModelSet(scope, false);
       }
@@ -160,7 +160,7 @@ ngeo.btnDirective = function($parse) {
         indexInGroup = buttonsCtrl.addButton(ngModelGet);
       }
 
-          // UI -> model
+      // UI -> model
       element.on('click', () => {
         scope.$apply(() => {
           ngModelCtrl.$setViewValue(!ngModelCtrl.$viewValue);
@@ -168,7 +168,7 @@ ngeo.btnDirective = function($parse) {
         });
       });
 
-          // model -> UI
+      // model -> UI
       ngModelCtrl.$render = function() {
         if (ngModelCtrl.$viewValue && buttonsCtrl !== null) {
           buttonsCtrl.activate(indexInGroup);

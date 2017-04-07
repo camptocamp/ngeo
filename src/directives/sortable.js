@@ -77,23 +77,23 @@ ngeo.sortableDirective = function($timeout) {
       const callbackFn = scope.$eval(attrs['ngeoSortableCallback']);
       const callbackCtx = scope.$eval(attrs['ngeoSortableCallbackCtx']);
 
-          /**
-           * @type {goog.fx.DragListGroup}
-           */
+      /**
+       * @type {goog.fx.DragListGroup}
+       */
       let dragListGroup = null;
 
       scope.$watchCollection(() => sortable, () => {
         sortable.length && $timeout(resetUpDragDrop, 0);
       });
 
-          /**
-           * This function resets drag&drop for the list. It is called each
-           * time the sortable array changes (see $watchCollection above).
-           */
+      /**
+       * This function resets drag&drop for the list. It is called each
+       * time the sortable array changes (see $watchCollection above).
+       */
       function resetUpDragDrop() {
-            // Save the current nodes in order to restore the state if the node
-            // is dropped at the same place
-            // In this case the comments and element nodes are messed up
+        // Save the current nodes in order to restore the state if the node
+        // is dropped at the same place
+        // In this case the comments and element nodes are messed up
         const savedNodes = element.contents();
 
         const children = element.children();
@@ -106,17 +106,16 @@ ngeo.sortableDirective = function($timeout) {
         }
 
         dragListGroup = new goog.fx.DragListGroup();
-        dragListGroup.addDragList(element[0],
-                goog.fx.DragListDirection.DOWN);
+        dragListGroup.addDragList(element[0], goog.fx.DragListDirection.DOWN);
         dragListGroup.setFunctionToGetHandleForDragItem(
-                /**
-                 * @param {Element} dragItem Drag item.
-                 * @return {Element} The handle.
-                 */
-                (dragItem) => {
-                  const className = options['handleClassName'];
-                  return dragItem.getElementsByClassName(className)[0];
-                });
+          /**
+           * @param {Element} dragItem Drag item.
+           * @return {Element} The handle.
+           */
+          (dragItem) => {
+            const className = options['handleClassName'];
+            return dragItem.getElementsByClassName(className)[0];
+          });
 
         if (options['draggerClassName'] !== undefined) {
           dragListGroup.setDraggerElClass(options['draggerClassName']);
@@ -126,33 +125,31 @@ ngeo.sortableDirective = function($timeout) {
           dragListGroup.setCurrDragItemClass(options['currDragItemClassName']);
         }
 
-            /** @type {number} */
+        /** @type {number} */
         let hoverNextItemIdx = -1;
 
-            /** @type {Element} */
+        /** @type {Element} */
         let hoverList = null;
 
         goog.events.listen(dragListGroup, 'dragstart', (e) => {
           hoverNextItemIdx = -1;
           hoverList = null;
-              /**
-               * Adding dynamically the width of the draggerEl to fit the currDragItem width.
-               * - > the draggerEl is clipped to the body with an absolute position.
-               */
+          /**
+           * Adding dynamically the width of the draggerEl to fit the currDragItem width.
+           * - > the draggerEl is clipped to the body with an absolute position.
+           */
           angular.element(e.draggerEl).css('width', e.currDragItem.offsetWidth);
         });
 
         goog.events.listen(dragListGroup, 'dragmove', (e) => {
           const next = e.hoverNextItem;
-          hoverNextItemIdx = next === null ? -1 :
-                  /** @type {number} */ (angular.element(next).data('idx'));
+          hoverNextItemIdx = next === null ? -1 : /** @type {number} */ (angular.element(next).data('idx'));
           hoverList = e.hoverList;
         });
 
         goog.events.listen(dragListGroup, 'dragend', (e) => {
           const li = e.currDragItem;
-          const idx = /** @type {number} */
-                  (angular.element(li).data('idx'));
+          const idx = /** @type {number} */ (angular.element(li).data('idx'));
           if (hoverList === null ||
                   hoverNextItemIdx == idx + 1 ||
                   (hoverNextItemIdx == -1 &&
@@ -163,23 +160,22 @@ ngeo.sortableDirective = function($timeout) {
                 // -> restore initial nodes list
             element.append(savedNodes);
           } else if (hoverNextItemIdx != -1) {
-                // there's a next item, so insert
+            // there's a next item, so insert
             if (hoverNextItemIdx != idx) {
               if (hoverNextItemIdx > idx) {
                 hoverNextItemIdx--;
               }
               scope.$apply(() => {
-                sortable.splice(hoverNextItemIdx, 0,
-                        sortable.splice(idx, 1)[0]);
+                sortable.splice(hoverNextItemIdx, 0, sortable.splice(idx, 1)[0]);
               });
             }
           } else {
-                // there's no next item, so push
+            // there's no next item, so push
             scope.$apply(() => {
               sortable.push(sortable.splice(idx, 1)[0]);
             });
           }
-              // Call the callback function if it exists.
+          // Call the callback function if it exists.
           if (callbackFn instanceof Function) {
             callbackFn.apply(callbackCtx, [element, sortable]);
           }
@@ -188,11 +184,11 @@ ngeo.sortableDirective = function($timeout) {
         dragListGroup.init();
       }
 
-          /**
-           * @param {?} options Options after expression evaluation.
-           * @return {!ngeo.SortableOptions} Options object.
-           * @private
-           */
+      /**
+       * @param {?} options Options after expression evaluation.
+       * @return {!ngeo.SortableOptions} Options object.
+       * @private
+       */
       function getOptions(options) {
         let ret;
         const defaultHandleClassName = 'ngeo-sortable-handle';

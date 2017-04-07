@@ -63,8 +63,8 @@ ngeo.modalDirective = function($parse) {
       const destroyContent = attrs['ngeoModalDestroyContentOnHide'] === 'true';
       let childScope = scope.$new();
 
-          // move the modal to document body to ensure that it is on top of
-          // other elements even if in a positioned element initially.
+      // move the modal to document body to ensure that it is on top of
+      // other elements even if in a positioned element initially.
       angular.element(document.body).append(modal);
 
       ngModelController.$render = function() {
