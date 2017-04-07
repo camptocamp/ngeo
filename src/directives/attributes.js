@@ -160,9 +160,7 @@ ngeo.AttributesController.prototype.$onDestroy = function() {
  * @param {ol.Object.Event} evt Event.
  * @private
  */
-ngeo.AttributesController.prototype.handleFeaturePropertyChange_ = function(
-  evt
-) {
+ngeo.AttributesController.prototype.handleFeaturePropertyChange_ = function(evt) {
   if (this.updating_) {
     return;
   }

@@ -50,9 +50,9 @@ ngeo.popupDirective = function(ngeoPopupTemplateUrl) {
     link(scope, element, attrs) {
       element.addClass('popover');
 
-          /**
-           * @param {jQuery.Event} evt Event.
-           */
+      /**
+       * @param {jQuery.Event} evt Event.
+       */
       scope.close = function(evt) {
         if (evt) {
           evt.stopPropagation();
@@ -61,7 +61,7 @@ ngeo.popupDirective = function(ngeoPopupTemplateUrl) {
         element.addClass('hidden');
       };
 
-          // Watch the open property
+      // Watch the open property
       scope.$watch('open', (newVal, oldVal) => {
         element.css('display', newVal ? 'block' : 'none');
       });
