@@ -64,8 +64,7 @@ gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
  * @return {ol.layer.Base|ol.layer.Group} a new layer.
  * @public
  */
-gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map,
-    dataLayerGroup, opt_position) {
+gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map, dataLayerGroup, opt_position) {
   /**
    * @type {ol.layer.Base|ol.layer.Group}
    */
@@ -83,6 +82,11 @@ gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map,
     // First level group non mix
     layer = this.createGroup_(treeCtrl, map, dataLayerGroup, opt_position);
   }
+
+  if (treeCtrl.node.metadata.opacity) {
+    layer.setOpacity(treeCtrl.node.metadata.opacity);
+  }
+
   return layer;
 };
 

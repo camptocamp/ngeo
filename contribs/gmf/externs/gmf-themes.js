@@ -492,6 +492,13 @@ gmfThemes.GmfMetaData.prototype.ogcServer;
 
 
 /**
+ * Layer opacity, default is 1.0
+ * @type {number|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.opacity;
+
+
+/**
  * On GeoMapFish layer WMTS the WMS layers used in the print.
  * @type {string|undefined}
  */
