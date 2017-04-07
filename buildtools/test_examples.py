@@ -6,6 +6,11 @@ import glob
 import subprocess
 
 
+BLACKLIST = [
+    "googlestreetview"
+]
+
+
 def main():
     if len(sys.argv) > 1:
         split_current, split_number = (int(v) for v in sys.argv[1].split("/"))
@@ -23,7 +28,7 @@ def check(folder, file_postfix, make_prefix, split_current, split_number):
     re_ = re.compile(r"^{}/([a-zA-Z_]*){}$".format(re.escape(folder), re.escape(file_postfix)))
     for ex in glob.glob("{}/*{}".format(folder, file_postfix)):
         match = re_.search(ex)
-        if match is not None:
+        if match is not None and match.group(1) not in BLACKLIST:
             if split_current == 0:
                 new_code = subprocess.call(
                     ["make", ".build/{}{}.check.timestamp".format(make_prefix, match.group(1))]
