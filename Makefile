@@ -468,7 +468,7 @@ $(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js: .build/node_modules.timestamp
 
 .build/examples-hosted/lib/transpile.js: $(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js
 	mkdir -p $(dir $@)
-	cp $< $@
+	cp $(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js $@
 
 .PRECIOUS: .build/examples-hosted/fonts/%
 .build/examples-hosted/fonts/%: node_modules/font-awesome/fonts/%

@@ -836,8 +836,9 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
     this.displayColorPicker = true;
     const fitArray = featureGeometry.getType() === 'GeometryCollection' ?
         featureGeometry.getExtent() : featureGeometry;
-    view.fit(fitArray, mapSize, /** @type {olx.view.FitOptions} */ ({
-      maxZoom: this.maxZoom}));
+    view.fit(fitArray, {
+      size,
+      maxZoom: this.maxZoom});
   }
   this.leaveSearch_();
 };
