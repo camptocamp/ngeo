@@ -83,7 +83,7 @@ gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map, dataLayerGr
     layer = this.createGroup_(treeCtrl, map, dataLayerGroup, opt_position);
   }
 
-  if (treeCtrl.node.metadata.opacity) {
+  if (layer && treeCtrl.node.metadata.opacity) {
     layer.setOpacity(treeCtrl.node.metadata.opacity);
   }
 
