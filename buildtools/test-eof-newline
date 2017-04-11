@@ -1,0 +1,16 @@
+#!/usr/bin/python
+
+import os
+import subprocess
+
+exit_code = 0
+FNULL = open(os.devnull, 'w')
+
+for filename in subprocess.check_output(["git", "ls-files"]).split("\n"):
+    if not filename.startswith("third-party/") and filename != "":
+        if subprocess.call("git check-attr -a '{}' | grep ' text: set'".format(filename), shell=True, stdout=FNULL) == 0:
+            if subprocess.call("tail -n 1 '{}' | read -r _".format(filename), shell=True) == 1:
+                print("No new line at end of '{}' file.".format(filename))
+                exit_code = 2
+
+exit(exit_code)

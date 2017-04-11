@@ -5,3 +5,6 @@ Makefile text whitespace=indent-with-non-tab,tabwidth=2 eol=lf
 *.eot binary
 *.woff binary
 *.png binary
+*.gif binary
+*.ico binary
+*.enc binary
