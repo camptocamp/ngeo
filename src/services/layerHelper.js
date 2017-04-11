@@ -74,9 +74,9 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
     params['TIME'] = opt_time;
   }
   if (opt_serverType) {
-    params['SERVERTYPE'] = opt_serverType;
     // OpenLayers expects 'qgis' insteads of 'qgisserver'
     olServerType = opt_serverType.replace('qgisserver', 'qgis');
+    params['SERVERTYPE'] = opt_serverType;
   }
   const source = new ol.source.ImageWMS({
     url: sourceURL,
