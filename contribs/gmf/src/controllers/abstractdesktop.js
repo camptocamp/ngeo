@@ -103,7 +103,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       }),
       new ol.control.Zoom({
         zoomInTipLabel: '',
-        zoomoutTipLabel: ''
+        zoomOutTipLabel: ''
       })
     ],
     interactions: config.mapInteractions || ol.interaction.defaults({
