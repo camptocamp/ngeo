@@ -32,7 +32,7 @@
     "angular-ui-slider": "0.4.0",
     "async": "2.3.0",
     "bootstrap": "3.3.7",
-    "clean-css-cli": "4.0.11",
+    "clean-css-cli": "4.0.12",
     "closure-util": "git://github.com/camptocamp/closure-util#00c2b9b",
     "console-control-strings": "1.1.0",
     "corejs-typeahead": "1.1.1",
