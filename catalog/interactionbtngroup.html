@@ -1,0 +1,37 @@
+<!DOCTYPE>
+<html ng-app='app'>
+  <head>
+    <title>Interaction button group example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="ngeo.css" type="text/css">
+    <style>
+        #map {
+          width: 800px;
+          height: 400px;
+        }
+
+        [ngeo-btn] {
+            width: 100px;
+            margin: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" type="text/css">
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+
+    <div ngeo-btn-group>
+      <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawPoint.active">Point</button>
+      <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawLine.active">Linestring</button>
+      <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawPolygon.active">Polygon</button>
+    </div>
+    <button ngeo-btn class="btn btn-primary" ng-model="ctrl.showInfo">Info</button>
+    <div ng-show="ctrl.showInfo" ng-cloak class="alert alert-success" role="alert"><b>ngeo-btn</b> directive works also outside <b>ngeo-btn-group</b> one</div>
+    <script src="angular.min.js"></script>
+    <script src="ngeo.js"></script>
+    <script src="interactionbtngroup.js"></script>
+  </body>
+</html>
