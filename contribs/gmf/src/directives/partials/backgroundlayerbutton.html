@@ -1,0 +1,13 @@
+<div
+    class="panel panel-default"
+    ng-show="blbCtrl.active">
+  <gmf-backgroundlayerselector
+      gmf-backgroundlayerselector-map="::blbCtrl.map">
+  </gmf-backgroundlayerselector>
+</div>
+<a
+    href="#"
+    ng-click="blbCtrl.toggle();"
+    class="btn btn-default">
+  <img src="{{ blbCtrl.image }}" />
+</a>
