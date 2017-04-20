@@ -52,9 +52,9 @@
             type="text">
         </input>
 
-        <div ng-show="form.$submitted || form[attribute.name].$touched">
+        <div ng-show="attrCtrl.form.$submitted || attrCtrl.form[attribute.name].$touched">
           <p class="text-danger"
-             ng-show="form[attribute.name].$error.required">
+             ng-show="attrCtrl.form[attribute.name].$error.required">
             {{'This field is required' | translate}}
           </p>
         </div>

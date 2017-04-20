@@ -30,6 +30,9 @@ ngeo.attributesComponent = {
     'disabled': '<ngeoAttributesDisabled',
     'feature': '=ngeoAttributesFeature'
   },
+  require: {
+    'form': '^'
+  },
   templateUrl: () => `${ngeo.baseTemplateUrl}/attributes.html`
 };
 
