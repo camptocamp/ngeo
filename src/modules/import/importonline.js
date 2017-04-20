@@ -128,35 +128,33 @@ exports = function($q, $timeout, ngeoFile, gettext, ngeoImportOnlineTemplateUrl)
 
       // Handle URL of WMS
       scope['handleFileUrl'] = function() {
-        let url = scope['fileUrl'];
+        const transformUrl = options.transformUrl || $q.when;
 
-        if (options.transformUrl) {
-          url = options.transformUrl(url);
-        }
+        transformUrl(scope['fileUrl']).then((url) => {
+          scope['canceler'] = $q.defer();
+          scope['loading'] = true;
+          scope['userMessage'] = gettext('Downloading file');
+          $timeout.cancel(timeoutP);
 
-        scope['canceler'] = $q.defer();
-        scope['loading'] = true;
-        scope['userMessage'] = gettext('Downloading file');
-        $timeout.cancel(timeoutP);
+          // Angularjs doesn't handle onprogress event
+          ngeoFile.load(url, scope['canceler']).then((fileContent) => {
+            scope['canceler'] = null;
 
-        // Angularjs doesn't handle onprogress event
-        ngeoFile.load(url, scope['canceler']).then((fileContent) => {
-          scope['canceler'] = null;
+            return scope['handleFileContent'](fileContent, {
+              url: scope['fileUrl']
+            });
 
-          return scope['handleFileContent'](fileContent, {
-            url: scope['fileUrl']
+          }).then((result) => {
+            scope['userMessage'] = result.message;
+
+          }, (err) => {
+            scope['userMessage'] = err.message;
+
+          }).finally(() => {
+            scope['canceler'] = null;
+            scope['loading'] = false;
+            timeoutP = $timeout(initUserMsg, 10000);
           });
-
-        }).then((result) => {
-          scope['userMessage'] = result.message;
-
-        }, (err) => {
-          scope['userMessage'] = err.message;
-
-        }).finally(() => {
-          scope['canceler'] = null;
-          scope['loading'] = false;
-          timeoutP = $timeout(initUserMsg, 10000);
         });
       };
     }
