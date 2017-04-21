@@ -2,6 +2,8 @@ goog.provide('ngeo.DataSource');
 
 goog.require('ngeo');
 goog.require('goog.asserts');
+goog.require('ol.format.GML2');
+goog.require('ol.format.GML3');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
 
@@ -299,9 +301,17 @@ ngeo.DataSource = class {
 
     let wfsFormat = null;
     if (this.supportsWFS && layers.length) {
+      let format = undefined;
+      if (this.wfsOutputFormat_ === ngeo.DataSource.WFSOutputFormat.GML3) {
+        format = new ol.format.GML3();
+      } else if (this.wfsOutputFormat_ === ngeo.DataSource.WFSOutputFormat.GML2) {
+        format = new ol.format.GML2();
+      }
+      goog.asserts.assert(format);
       wfsFormat = new ol.format.WFS({
         featureNS: this.wfsFeatureNS,
-        featureType: layers
+        featureType: layers,
+        gmlFormat: format
       });
     }
 
@@ -952,6 +962,7 @@ ngeo.DataSource.WFSFeaturePrefix = {
  * @enum {string}
  */
 ngeo.DataSource.WFSOutputFormat = {
+  GML2: 'GML2',
   GML3: 'GML3'
 };
 
