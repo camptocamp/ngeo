@@ -325,6 +325,12 @@ gmf.DataSourcesManager = class {
           ogcServer.urlWfs : undefined;
     const wmsUrl = ogcServer ? ogcServer.url : undefined;
 
+    let wfsOutputFormat = ngeo.DataSource.WFSOutputFormat.GML3;
+    // qgis server only supports GML2 output
+    if (ogcServerType === ngeo.DataSource.OGCServerType.QGISSERVER) {
+      wfsOutputFormat = ngeo.DataSource.WFSOutputFormat.GML2;
+    }
+
     // (6) Snapping
     const snappable = !!meta.snappingConfig;
     const snappingTolerance = meta.snappingConfig ?
@@ -364,6 +370,7 @@ gmf.DataSourcesManager = class {
       snappingToEdges,
       snappingToVertice,
       visible,
+      wfsOutputFormat,
       wfsUrl,
       wmsIsSingleTile,
       wmsUrl,
