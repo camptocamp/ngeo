@@ -1,3 +1,15 @@
+# This Makefile is specifically for building NGEO in a Windows requirement.
+# Note that the NGEO documentation is not rebuild using this Makefile, as this is problematic on Windows
+# The requirements are:
+#     - Python 2.7 (not tested on Python 3.x) with virtualenv installed
+#     - NodeJS (LTS)
+#     - make installed through Cygwin (in the devel section)
+#
+# You should add the following folders at the BEGINNING of your path environment variable:
+#    C:\Python27 (or where ever you installed Python)
+#    C:\Python27\Scripts
+#    C:\cygwin64\bin (or where ever you installed Cygwin)
+
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 TEST_JS_FILES := $(shell find test -type f -name '*.js')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
