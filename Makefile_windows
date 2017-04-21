@@ -4,6 +4,7 @@
 #     - Python 2.7 (not tested on Python 3.x) with virtualenv installed
 #     - NodeJS (LTS)
 #     - make installed through Cygwin (in the devel section)
+#     - Image Magick > 7
 #
 # You should add the following folders at the BEGINNING of your path environment variable:
 #    C:\Python27 (or where ever you installed Python)
@@ -18,7 +19,6 @@ GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/parti
 NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
 GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
 
-OS := $(shell uname)
 CLOSURE_LIBRARY_PATH = $(shell node -e 'process.stdout.write(require("closure-util").getLibraryPath())' 2> /dev/null)
 
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
@@ -86,14 +86,6 @@ BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.chec
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES)) \
 	$(addprefix .build/contribs/gmf/apps/,$(addsuffix .check.timestamp,$(GMF_APPS)))
 
-# Git
-GITHUB_USERNAME ?= camptocamp
-GIT_BRANCH ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
-GIT_REMOTE_NAME ?= origin
-export GITHUB_USERNAME
-export GIT_BRANCH
-export GIT_REMOTE_NAME
-
 # i18n
 L10N_LANGUAGES = fr de
 L10N_PO_FILES = \
@@ -119,19 +111,11 @@ EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.6-http-promise_templated
 EXTERNS_JQUERY = .build/externs/jquery-1.9.js
 EXTERNS_FILES = $(EXTERNS_ANGULAR) $(EXTERNS_ANGULAR_Q) $(EXTERNS_ANGULAR_HTTP_PROMISE) $(EXTERNS_JQUERY)
 
-ifeq ($(OS),Darwin)
-	STAT_COMPRESSED = stat -f '  compressed: %z bytes'
-	STAT_UNCOMPRESSED = stat -f 'uncompressed: %z bytes'
-	STAT_LAST_MODIFIED = stat -f '%m'
-	TOUCH_DATE = touch -t
-	SED_NEW_LINE = '$$'\n
-else
-	STAT_COMPRESSED = stat -c '  compressed: %s bytes'
-	STAT_UNCOMPRESSED = stat -c 'uncompressed: %s bytes'
-	STAT_LAST_MODIFIED = stat -c '%y'
-	TOUCH_DATE = touch --date
-	SED_NEW_LINE = ''
-endif
+STAT_COMPRESSED = stat -c '  compressed: %s bytes'
+STAT_UNCOMPRESSED = stat -c 'uncompressed: %s bytes'
+STAT_LAST_MODIFIED = stat -c '%y'
+TOUCH_DATE = touch --date
+SED_NEW_LINE = ''
 
 # Disabling Make built-in rules to speed up execution time
 .SUFFIXES:
@@ -157,15 +141,10 @@ help:
 	@echo "Segondary targets:"
 	@echo
 	@echo "- lint                    Check the code with the linter"
-	@echo "- dist                    Compile the lib into an ngeo.js standalone build (in dist/)"
-	@echo "- gh-pages                Update the GitHub pages"
 	@echo
 
-.PHONY: dist
-dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
-
 .PHONY: check
-check: git-attributes lint check-examples test dist build-gmf-apps
+check: git-attributes lint check-examples test build-gmf-apps
 
 .PHONY: build-gmf-apps
 build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),.js .css)) \
@@ -217,14 +196,6 @@ serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGUL
 	.build/python-venv/Scripts/pip install `grep ^urllib3== $< --colour=never`
 	touch $@
 
-.PHONY: gh-pages
-gh-pages:
-	EXAMPLES_NGEO=TRUE API=TRUE EXAMPLES_GMF=TRUE APPS_GMF=TRUE buildtools/deploy.sh
-
-.build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
-.build/ngeo-$(GITHUB_USERNAME)-gh-pages:
-	git clone --depth=1 --branch gh-pages $(GIT_REMOTE_URL) $@
-
 .build/eslint.timestamp: .build/node_modules.timestamp .eslintrc.yaml .eslintrc-es6.yaml \
 		$(SRC_JS_FILES) \
 		$(TEST_JS_FILES) \
@@ -235,69 +206,6 @@ gh-pages:
 		$(GMF_APPS_JS_FILES)
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp .eslintrc.yaml .eslintrc-es6.yaml, $?)
 	touch $@
-
-dist/ngeo.js: .build/ngeo.json \
-		$(EXTERNS_FILES) \
-		$(SRC_JS_FILES) \
-		.build/templatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
-	echo '//# sourceMappingURL=ngeo.js.map' >> $@
-	@$(STAT_UNCOMPRESSED) $@
-	@cp $@ /tmp/
-	@gzip /tmp/ngeo.js
-	@$(STAT_COMPRESSED) /tmp/ngeo.js.gz
-	@rm /tmp/ngeo.js.gz
-
-dist/ngeo.js.map: dist/ngeo.js
-
-dist/ngeo-debug.js: buildtools/ngeo-debug.json \
-		$(EXTERNS_FILES) \
-		$(SRC_JS_FILES) \
-		.build/templatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
-	@$(STAT_UNCOMPRESSED) $@
-	@cp $@ /tmp/
-	@gzip /tmp/ngeo-debug.js
-	@$(STAT_COMPRESSED) /tmp/ngeo-debug.js.gz
-	@rm /tmp/ngeo-debug.js.gz
-
-# At this point ngeo does not include its own CSS, so dist/ngeo.css is just
-# a minified version of ol.css. This will change in the future.
-dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	./node_modules/.bin/cleancss $< > $@
-
-dist/gmf.js: .build/gmf.json \
-		$(EXTERNS_FILES) \
-		$(SRC_JS_FILES) \
-		$(GMF_SRC_JS_FILES) \
-		.build/gmftemplatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
-	echo '//# sourceMappingURL=gmf.js.map' >> $@
-	@$(STAT_UNCOMPRESSED) $@
-	@cp $@ /tmp/
-	@gzip /tmp/gmf.js
-	@$(STAT_COMPRESSED) /tmp/gmf.js.gz
-	@rm /tmp/gmf.js.gz
-
-dist/gmf.js.map: dist/gmf.js
-
-.PRECIOUS: .build/examples/%.js
-.build/examples/%.js: .build/examples/%.json \
-		$(SRC_JS_FILES) \
-		$(EXTERNS_FILES) \
-		examples/%.js \
-		.build/templatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
-	echo '//# sourceMappingURL=$*.js.map' >> $@
 
 .PRECIOUS: .build/contribs/gmf/examples/%.js
 .build/contribs/gmf/examples/%.js: .build/contribs/gmf/examples/%.json \
@@ -366,20 +274,6 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		--var src_set=contribs_gmf \
 		--var examples=true \
 		--var source_map=.build/examples/$*.js.map $< > $@
-
-.build/ngeo.json: buildtools/mako_build.json .build/python-venv/Scripts/mako-render
-	PYTHONIOENCODING=UTF-8 .build/python-venv/Scripts/mako-render \
-		$(CLOSURE_VARS) \
-		--var lib=true \
-		--var src_set=ngeo \
-		--var source_map=dist/ngeo.js.map $< > $@
-
-.build/gmf.json: buildtools/mako_build.json .build/python-venv/Scripts/mako-render
-	PYTHONIOENCODING=UTF-8 .build/python-venv/Scripts/mako-render \
-		$(CLOSURE_VARS) \
-		--var lib=true \
-		--var src_set=contribs_gmf \
-		--var source_map=dist/gmf.js.map $< > $@
 
 .PRECIOUS: .build/app-%.json
 .build/app-%.json: buildtools/mako_build.json .build/python-venv/Scripts/mako-render
@@ -474,7 +368,7 @@ $(EXTERNS_JQUERY): github_versions
 
 .PRECIOUS: contribs/gmf/cursors/%.cur
 contribs/gmf/cursors/%.cur: contribs/gmf/cursors/%.png
-	convert $< $@
+	magick convert $< $@
 
 .PRECIOUS: .build/%.js
 .build/%.js: .build/app-%.json \
@@ -599,8 +493,6 @@ clean:
 	rm -f .build/ngeo-deps.js
 	rm -f .build/gmf-deps.js
 	rm -f .build/info.json
-	rm -f .build/ngeo.json
-	rm -f .build/gmf.json
 	rm -f .build/app-*.json
 	rm -f .build/templatecache.js
 	rm -f .build/gmftemplatecache.js
@@ -608,7 +500,6 @@ clean:
 	rm -rf .build/contribs
 	rm -f .build/locale/gmf.pot
 	rm -rf contribs/gmf/build
-	rm -f dist/*
 	rm -f $(EXTERNS_FILES)
 	rm -f $(ANGULAR_LOCALES_FILES)
 	rm -f contribs/gmf/fonts/FontAwesome.otf
@@ -620,7 +511,6 @@ clean:
 .PHONY: cleanall
 cleanall: clean
 	rm -rf .build
-	rm -rf dist
 	rm -rf node_modules
 	rm -f .tx/config
 	rm -f $(L10N_PO_FILES)
