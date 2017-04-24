@@ -534,7 +534,7 @@ gmf.Snapping.prototype.loadItemFeatures_ = function(item) {
 
 /**
  * Called when the map view changes. Load all active cache items after a small
- * delay. Cancel any currenly delayed call, if required.
+ * delay. Cancel any currently delayed call, if required.
  * @private
  */
 gmf.Snapping.prototype.handleMapViewChange_ = function() {

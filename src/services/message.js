@@ -107,7 +107,7 @@ ngeo.Message.prototype.warn = function(message) {
 /**
  * Returns an array of message object from any given message string, list of
  * message strings, message object or list message objects. The type can be
- * overriden here as well OR defined (if the message(s) is/are string(s),
+ * overridden here as well OR defined (if the message(s) is/are string(s),
  * defaults to 'information').
  * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
  *     object A message or list of messages as text or configuration objects.

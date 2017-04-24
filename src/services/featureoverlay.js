@@ -25,7 +25,7 @@ ngeo.FeatureOverlayGroup;
 
 /**
  * Provides a service that wraps an "unmanaged" vector layer,
- * used as a shared vector layer accross the application.
+ * used as a shared vector layer across the application.
  *
  * Example:
  *

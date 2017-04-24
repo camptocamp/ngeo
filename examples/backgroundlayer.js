@@ -28,7 +28,7 @@ app.module = angular.module('app', ['ngeo']);
  * for the ngModel expression doesn't actually make a difference. This
  * is because ngModel doesn't actually watch the ngModel expression.
  *
- * @return {angular.Directive} Directive Defintion Object.
+ * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  */
 app.backgroundlayerDirective = function() {

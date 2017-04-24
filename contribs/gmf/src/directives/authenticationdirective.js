@@ -261,7 +261,7 @@ gmf.AuthenticationController.prototype.resetPassword = function() {
     return;
   }
 
-  const error = this.gettextCatalog.getString('An error occured while reseting the password.');
+  const error = this.gettextCatalog.getString('An error occurred while reseting the password.');
 
   /**
    * @param {gmf.AuthenticationDefaultResponse} respData Response.

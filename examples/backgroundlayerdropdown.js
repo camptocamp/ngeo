@@ -23,7 +23,7 @@ app.module = angular.module('app', ['ngeo']);
  * The directive is based on Bootstrap's dropdown jQuery plugin and on
  * the ngeoBackgroundLayerMgr service.
  *
- * @return {angular.Directive} Directive Defintion Object.
+ * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  */
 app.backgroundlayerDirective = function() {
