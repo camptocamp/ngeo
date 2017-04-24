@@ -289,7 +289,7 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
       this.$timeout_(() => {
         const treeCtrl = this.getTreeCtrlByNodeId(group.id);
         if (!treeCtrl) {
-          console.warn('Tree controler not found, unable to add the group');
+          console.warn('Tree controller not found, unable to add the group');
           return;
         }
         let treeCtrlToActive;

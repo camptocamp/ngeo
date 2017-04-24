@@ -486,7 +486,7 @@ gmf.ProfileController.prototype.outCallback_ = function() {
 
 
 /**
- * @return {string} A texte formated to a tooltip.
+ * @return {string} A texte formatted to a tooltip.
  * @private
  */
 gmf.ProfileController.prototype.getTooltipHTML_ = function() {

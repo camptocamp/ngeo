@@ -96,7 +96,7 @@ ngeo.interaction.MeasureAzimut.prototype.handleMeasure = function(callback) {
  * @param {ol.proj.Projection} projection Projection of the polygon coords.
  * @param {number|undefined} decimals Decimals.
  * @param {ngeox.unitPrefix} format The format function.
- * @return {string} Formated measure.
+ * @return {string} Formatted measure.
  */
 ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius = function(
     line, projection, decimals, format) {
@@ -113,7 +113,7 @@ ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius = function(
 /**
  * Format measure output of azimut.
  * @param {ol.geom.LineString} line LineString.
- * @return {string} Formated measure.
+ * @return {string} Formatted measure.
  */
 ngeo.interaction.MeasureAzimut.getFormattedAzimut = function(line) {
   const azimut = ngeo.interaction.MeasureAzimut.getAzimut(line);

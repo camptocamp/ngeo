@@ -745,7 +745,7 @@ gmf.Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
 
 /**
  * Get the current first level node names in the tree manager and update the
- * correspondant state of the permalink.
+ * correspondent state of the permalink.
  * @export
  */
 gmf.Permalink.prototype.refreshFirstLevelGroups = function() {
@@ -966,7 +966,7 @@ gmf.Permalink.prototype.removeNgeoFeature_ = function(feature) {
 
 /**
  * Called once upon initialization of the permalink service if there's at
- * least one feature in the ngeoFeatures collection, then called everytime
+ * least one feature in the ngeoFeatures collection, then called every time
  * the collection changes or any of the features within the collection changes.
  * @private
  */

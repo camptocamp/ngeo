@@ -145,7 +145,7 @@ ngeo.UnitPrefix = function($filter) {
    * @param {string=} opt_unit The unit to used, default is ''.
    * @param {string=} opt_type (unit|square|binary) the type of units, default is 'unit'.
    * @param {number=} opt_precision The used precision, default is 3.
-   * @return {string} The formated string.
+   * @return {string} The formatted string.
    */
   const result = function(number, opt_unit, opt_type, opt_precision) {
     if (opt_unit === undefined) {
@@ -220,7 +220,7 @@ ngeo.NumberCoordinates = function($filter) {
    *     Where "{x}" will be replaced by the first coordinate and "{y}" by the
    *     second one. Note: Use a html entity to use the semicolon symbole
    *     into a template.
-   * @return {string} Number formated coordinates.
+   * @return {string} Number formatted coordinates.
    */
   const filterFn = function(coordinates, opt_fractionDigits, opt_template) {
     const template = opt_template ? opt_template : '{x} {y}';
@@ -277,7 +277,7 @@ ngeo.DMSCoordinates = function() {
    *     '{x} {y}'. Where "{x}" will be replaced by the first
    *     coordinate, {y} by the second one. Note: Use a html entity to use the
    *     semicolon symbole into a template.
-   * @return {string} DMS formated coordinates.
+   * @return {string} DMS formatted coordinates.
    */
   const filterFn = function(coordinates, opt_fractionDigits, opt_template) {
     const fractionDigits = parseInt(opt_fractionDigits, 10) | 0;
