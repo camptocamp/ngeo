@@ -276,9 +276,9 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
           gmfLayerWMTS.layer || '',
           gmfLayer.dimensions
       ).then(callback.bind(null, gmfLayer)).then(null, function(response) {
-        console.error('unable to get capabilities', gmfLayerWMTS.layer, gmfLayerWMTS.url);
-        console.error(response['message']);
-        console.error(response['stack']);
+        var message = 'Unable to build layer "' + gmfLayerWMTS.layer + '" from WMTSCapabilities: ' + gmfLayerWMTS.url + '\n';
+        message += 'OpenLayers error is "' + response['message'];
+        console.error(message);
         // Continue even if some layers have failed loading.
         return $q.resolve(undefined);
       });
