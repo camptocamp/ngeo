@@ -192,15 +192,15 @@ ngeo.module.filter('ngeoUnitPrefix', ngeo.UnitPrefix);
  * Example without fractionDigits but with defined template and localize:
  *
  *      <!-- With en-US localization (opt_localize can be true or undefined) -->
- *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:'{x}, {y}'}}</p>
+ *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:0:'{x}, {y}'}}</p>
  *      <!-- will Become 2,600,000, 1,600,000 -->
  *      <br/>
  *      <!-- With fr-CH localization (opt_localize can be true or undefined) -->
- *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:'{x}, {y}'}}</p>
+ *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:0:'{x}, {y}'}}</p>
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *      <br/>
  *      <!-- With en-US localization but with localization to false -->
- *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:'{x}, {y}'}}</p>
+ *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:0:'{x}, {y}'}}</p>
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *
  * @param {angular.$filter} $filter Angular filter
