@@ -193,7 +193,7 @@ app.GmfImportHelper.prototype.createOptions = function() {
         // Append WMS GetCapabilities default parameters
         url += '?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0';
       }
-      return url;
+      return this.$q_.when(url);
     },
     'handleFileContent': this.handleFileContent.bind(this)
   };

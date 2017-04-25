@@ -2191,7 +2191,7 @@ ngeox.ImportLocalOptions;
 /**
  * @typedef {{
  *   handleFileContent: function(string, File),
- *   transformUrl: function(string): string,
+ *   transformUrl: function(string): Promise,
  *   urls: Array<string>,
  *   isValidUrl: function(string): boolean
  * }}
