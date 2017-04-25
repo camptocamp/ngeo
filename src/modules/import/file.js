@@ -35,7 +35,7 @@ ngeo.File = function($q, $http, $window, gettext) {
    */
   this.read = function(file) {
     const defer = $q.defer();
-    if (fileReader) {
+    if (fileReader && fileReader.readyState === FileReader.LOADING) {
       fileReader.abort();
     }
     fileReader = new FileReader();
