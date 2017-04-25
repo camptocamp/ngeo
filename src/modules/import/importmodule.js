@@ -7,6 +7,8 @@ const local = goog.require('ngeo.importLocalDirective');
 const online = goog.require('ngeo.importOnlineDirective');
 const wmsGetCap = goog.require('ngeo.wmsGetCapDirective');
 const wmsGetCapItem = goog.require('ngeo.wmsGetCapItemDirective');
+const wmtsGetCap = goog.require('ngeo.wmtsGetCapDirective');
+const wmtsGetCapItem = goog.require('ngeo.wmtsGetCapItemDirective');
 
 
 exports.module = angular.module('ngeo.import', [
@@ -15,5 +17,7 @@ exports.module = angular.module('ngeo.import', [
   local.module.name,
   online.module.name,
   wmsGetCap.module.name,
-  wmsGetCapItem.module.name
+  wmsGetCapItem.module.name,
+  wmtsGetCap.module.name,
+  wmtsGetCapItem.module.name
 ]);

@@ -21,6 +21,10 @@ ngeo.File = function($q, $http, $window, gettext) {
     return /<(WMT_MS_Capabilities|WMS_Capabilities)/.test(fileContent);
   };
 
+  this.isWmtsGetCap = function(fileContent) {
+    return /wmtsGetCapabilities/.test(fileContent);
+  };
+
   this.isKml = function(fileContent) {
     return /<kml/.test(fileContent) && /<\/kml>/.test(fileContent);
   };
