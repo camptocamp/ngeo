@@ -7,6 +7,14 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="shortcut icon" href="image/favicon.ico"/>
     <link rel="stylesheet" href="../../build/mobile.css">
+    <script>
+      if (!window.requestAnimationFrame) {
+        alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
+            + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. Vous allez être redirigé.\n\n'
+            + 'TODO DE translation.');
+        window.location = 'http://geomapfish.org/'
+      }
+    </script>
   </head>
   <body ng-class="{'gmf-mobile-nav-is-visible': mainCtrl.navIsVisible(),
                    'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavIsVisible(),

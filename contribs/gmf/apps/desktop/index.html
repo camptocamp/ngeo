@@ -6,6 +6,14 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <link rel="shortcut icon" href="image/favicon.ico"/>
     <link rel="stylesheet" href="../../build/desktop.css">
+    <script>
+      if (!window.requestAnimationFrame) {
+        alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
+            + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. Vous allez être redirigé.\n\n'
+            + 'TODO DE translation.');
+        window.location = 'http://geomapfish.org/'
+      }
+    </script>
   </head>
   <body ng-class="{'gmf-profile-chart-active': !!profileChartActive}">
     <header>
