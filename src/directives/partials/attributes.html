@@ -3,8 +3,27 @@
       class="form-group"
       ng-repeat="attribute in ::attrCtrl.attributes">
     <div ng-if="attribute.type !== 'geometry'">
-      <label class="control-label">{{ ::attribute.name | translate }} <span class="text-muted">{{::attribute.required ? "*" : ""}}</span></label>
-      <div ng-switch="attribute.type">
+      <label
+          ng-if="::attribute.type !== 'boolean'"
+          class="control-label">{{ ::attribute.name | translate }} <span class="text-muted">{{::attribute.required ? "*" : ""}}</span>
+      </label>
+      <div ng-switch="::attribute.type">
+
+        <div
+            ng-switch-when="boolean"
+            class="checkbox">
+          <label>
+            <input
+                name="{{::attribute.name}}"
+                ng-required="attribute.required"
+                ng-model="attrCtrl.properties[attribute.name]"
+                ng-change="attrCtrl.handleInputChange(attribute.name);"
+                type="checkbox">
+            </input>
+            <span> {{ ::attribute.name | translate }} <span class="text-muted">{{::attribute.required ? "*" : ""}}</span></span>
+          </label>
+        </div>
+
         <select
             name="{{::attribute.name}}"
             ng-required="attribute.required"
@@ -42,12 +61,37 @@
             type="text">
         </input>
 
+        <div
+            ng-switch-when="number"
+            ng-switch="::attribute.numType">
+          <input
+              name="{{::attribute.name}}"
+              ng-required="attribute.required"
+              ng-switch-when="integer"
+              ng-model="attrCtrl.properties[attribute.name]"
+              ng-change="attrCtrl.handleInputChange(attribute.name);"
+              class="form-control"
+              step="1"
+              type="number">
+          </input>
+          <input
+              name="{{::attribute.name}}"
+              ng-required="attribute.required"
+              ng-switch-default
+              ng-model="attrCtrl.properties[attribute.name]"
+              ng-change="attrCtrl.handleInputChange(attribute.name);"
+              class="form-control"
+              type="number">
+          </input>
+        </div>
+
         <input
             name="{{::attribute.name}}"
             ng-required="attribute.required"
             ng-switch-default
             ng-model="attrCtrl.properties[attribute.name]"
             ng-change="attrCtrl.handleInputChange(attribute.name);"
+            ng-maxlength="attribute.maxLength"
             class="form-control"
             type="text">
         </input>

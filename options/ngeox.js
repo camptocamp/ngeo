@@ -27,6 +27,13 @@ ngeox.AttributeBase.prototype.geomType;
 
 
 /**
+ * Set only if the attribute is a number type. Determines the type of number.
+ * @type {string|undefined}
+ */
+ngeox.AttributeBase.prototype.numType;
+
+
+/**
  * The attribute type, which determines how to render it.
  * @type {string|undefined}
  */
@@ -47,6 +54,13 @@ ngeox.Attribute = function() {};
  * @type {Array.<string>|undefined}
  */
 ngeox.Attribute.prototype.choices;
+
+
+/**
+ * Specifies the maximum number of character for the attribute value.
+ * @type {number|undefined}
+ */
+ngeox.Attribute.prototype.maxLength;
 
 
 /**
