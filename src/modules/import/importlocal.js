@@ -107,8 +107,9 @@ exports = function($timeout, gettext, ngeoFile, ngeoImportLocalTemplateUrl) {
           scope['fileReader'] = null;
           scope['userMessage'] = gettext('Parsing file');
           return scope['handleFileContent'](fileContent, scope.file);
-        }).then((parsingResults) => {
-          scope['userMessage'] = gettext('Parsing succeeded');
+
+        }).then((result) => {
+          scope['userMessage'] = result.message;
 
         }, (err) => {
           scope['userMessage'] = err.message;
