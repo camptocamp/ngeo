@@ -168,6 +168,7 @@ gmfx.ObjectEditingToolsOptions.prototype.regularPolygonRadius;
  * Configuration options for the permalink service.
  * @typedef {{
  *     crosshairStyle: (Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined),
+ *     crosshairEnabledByDefault: (boolean|undefined),
  *     projectionCodes: (Array.<string>|undefined),
  *     useLocalStorage: (boolean|undefined)
  * }}
@@ -180,6 +181,13 @@ gmfx.PermalinkOptions;
  * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined}
  */
 gmfx.PermalinkOptions.prototype.crosshairStyle;
+
+
+/**
+ * Display the crosshair, gets overridden by the map_crosshair parameter. Default is `false`.
+ * @type {boolean|undefined}
+ */
+gmfx.PermalinkOptions.prototype.crosshairEnabledByDefault;
 
 
 /**
