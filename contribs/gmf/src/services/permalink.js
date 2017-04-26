@@ -179,6 +179,12 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
   }
 
   /**
+   * @type {boolean}
+   * @private
+   */
+  this.crosshairEnabledByDefault_ = !!gmfPermalinkOptions.crosshairEnabledByDefault;
+
+  /**
    * @type {?gmf.Themes}
    * @private
    */
@@ -497,7 +503,7 @@ gmf.Permalink.prototype.getMapZoom = function() {
  */
 gmf.Permalink.prototype.getMapCrosshair = function() {
   const crosshair = this.ngeoStateManager_.getInitialBooleanValue(gmf.PermalinkParam.MAP_CROSSHAIR);
-  return crosshair === undefined ? false : crosshair;
+  return crosshair === undefined ? this.crosshairEnabledByDefault_ : crosshair;
 };
 
 
