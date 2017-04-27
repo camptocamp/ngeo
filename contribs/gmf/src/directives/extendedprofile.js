@@ -4,7 +4,7 @@ goog.require('gmf');
 goog.require('ngeo.CsvDownload');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
-goog.require('ngeo.profileDirective');
+goog.require('ngeo.extendedProfileDirective');
 goog.require('ol.Feature');
 goog.require('ol.Overlay');
 goog.require('ol.geom.LineString');
@@ -24,7 +24,7 @@ ngeo.module.value('gmfProfileTemplateUrl',
     ($element, $attrs) => {
       const templateUrl = $attrs['gmfProfileTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/profile.html`;
+          `${gmf.baseTemplateUrl}/extendedprofile.html`;
     });
 
 
@@ -51,26 +51,26 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  *
  * Example:
  *
- *      <gmf-profile
- *        gmf-profile-active="ctrl.profileActive"
- *        gmf-profile-line="ctrl.profileLine"
- *        gmf-profile-map="::ctrl.map"
- *        gmf-profile-linesconfiguration="::ctrl.profileLinesconfiguration">
- *      </gmf-profile>
+ *      <gmf-extended-profile-
+ *        gmf-extended-profile-active="ctrl.profileActive"
+ *        gmf-extended-profile-line="ctrl.profileLine"
+ *        gmf-extended-profile-map="::ctrl.map"
+ *        gmf-extended-profile-linesconfiguration="::ctrl.profileLinesconfiguration">
+ *      </gmf-extended-profile->
  *
  *
- * @htmlAttribute {boolean} gmf-profile-active Active the component.
- * @htmlAttribute {ol.geom.LineString} gmf-profile-line The linestring geometry
+ * @htmlAttribute {boolean} gmf-extended-profile-active Active the component.
+ * @htmlAttribute {ol.geom.LineString} gmf-extended-profile-line The linestring geometry
  *     to use to draw the profile.
- * @htmlAttribute {ol.Map?} gmf-profile-map An optional map.
+ * @htmlAttribute {ol.Map?} gmf-extended-profile-map An optional map.
  * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
- *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
+ *     gmf-extended-profile-linesconfiguration The configuration of the lines. Each keys
  *     will be used to request elevation layers.
- * @htmlAttribute {ol.style.Style?} gmf-profile-hoverpointstyle Optional style
+ * @htmlAttribute {ol.style.Style?} gmf-extended-profile-hoverpointstyle Optional style
  *     for the 'on Hover' point on the line.
- * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
+ * @htmlAttribute {number?} gmf-extended-profile-numberofpoints Optional maximum limit of
  *     points to request. Default to 100.
- * @htmlAttribute {Object.<string, *>?} gmf-profile-options Optional options
+ * @htmlAttribute {Object.<string, *>?} gmf-extended-profile-options Optional options
  *     object like {@link ngeox.profile.ProfileOptions} but without any
  *     mandatory value. Will be passed to the ngeo profile component. Providing
  *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback

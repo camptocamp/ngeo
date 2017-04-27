@@ -1,12 +1,12 @@
-goog.provide('ngeo.profile');
+goog.provide('ngeo.extendedProfile');
 
 
 /**
  * Provides a D3js component to be used to draw an elevation
- * profile chart.
+ * extendedProfile chart.
  *
  *     let selection = d3.select('#element_id');
- *     let profile = ngeo.profile({
+ *     let extendedProfile = ngeo.extendedProfile({
  *       distanceExtractor: function (item) {return item['dist'];},
  *       linesConfiguration: {
  *         'lineZ1': {
@@ -24,7 +24,7 @@ goog.provide('ngeo.profile');
  *         console.log("out");
  *       }
  *     });
- *     selection.datum(data).call(profile);
+ *     selection.datum(data).call(extendedProfile);
  *
  * The selection data must be an array.
  * The layout for the items of this array is unconstrained: the distance values
@@ -52,12 +52,12 @@ goog.provide('ngeo.profile');
  * @constructor
  * @struct
  * @return {Object} D3js component.
- * @param {ngeox.profile.ProfileOptions} options Profile options.
+ * @param {ngeox.extendedProfile.extendedProfileOptions} options extendedProfile options.
  * @export
  */
-ngeo.profile = function(options) {
+ngeo.extendedProfile = function(options) {
   /**
-   * Whether the simplified profile should be shown.
+   * Whether the simplified extendedProfile should be shown.
    * @type {boolean}
    */
   const light = options.light !== undefined ? options.light : false;
@@ -135,7 +135,7 @@ ngeo.profile = function(options) {
   const yAxisLabel = (i18n.yAxis || 'Elevation');
 
   /**
-   * @type {ngeox.profile.ProfileFormatter}
+   * @type {ngeox.extendedProfile.extendedProfileFormatter}
    */
   const formatter = {
     /**
@@ -230,7 +230,7 @@ ngeo.profile = function(options) {
   let xDomain;
 
 
-  const profile = function(selection) {
+  const extendedProfile = function(selection) {
     selection.each(function(data) {
       d3.select(this).selectAll('svg').remove();
       if (data === undefined) {
@@ -419,7 +419,7 @@ ngeo.profile = function(options) {
           .style('fill', 'grey')
           .style('shape-rendering', 'crispEdges');
 
-        // Avoid too much lines with overlapping labels in small profiles
+        // Avoid too much lines with overlapping labels in small extendedProfiles
         if (height / 15 < 10) {
           yAxis.ticks(height / 15);
         }
@@ -456,11 +456,11 @@ ngeo.profile = function(options) {
         const mouseX = d3.mouse(this)[0];
         const x0 = x.invert(mouseX);
 
-        profile.highlight(x0);
+        extendedProfile.highlight(x0);
       }
 
       function mouseout() {
-        profile.clearHighlight();
+        extendedProfile.clearHighlight();
       }
     });
   };
@@ -469,7 +469,7 @@ ngeo.profile = function(options) {
    * Remove any highlight.
    * Fire the outCallback callback.
    */
-  profile.clearHighlight = function() {
+  extendedProfile.clearHighlight = function() {
     g.selectAll('.grid-hover')
         .style('display', 'none');
     outCallback.call(null);
@@ -480,7 +480,7 @@ ngeo.profile = function(options) {
    * Fire the hoverCallback callback with corresponding point.
    * @param {number} distance Distance.
    */
-  profile.highlight = function(distance) {
+  extendedProfile.highlight = function(distance) {
     const data = svg.datum();
     const i = bisectDistance(data, distance);
     if (i >= data.length) {
@@ -539,18 +539,18 @@ ngeo.profile = function(options) {
   };
 
 
-  profile.showPois = function(pois) {
+  extendedProfile.showPois = function(pois) {
     pois = pois !== undefined ? pois : [];
     goog.asserts.assert(pois.length === 0 || poiExtractor !== undefined);
 
     const pe = poiExtractor;
     const g = svg.select('g');
-    const profileData = svg.datum();
+    const extendedProfileData = svg.datum();
     const ps = g.select('.pois');
 
     const p = ps.selectAll('.poi').data(pois, (d) => {
-      const i = bisectDistance(profileData, Math.round(pe.dist(d) * 10) / 10, 1);
-      const point = profileData[i];
+      const i = bisectDistance(extendedProfileData, Math.round(pe.dist(d) * 10) / 10, 1);
+      const point = extendedProfileData[i];
       if (point) {
         let lineName;
         const elevations = [];
@@ -609,9 +609,9 @@ ngeo.profile = function(options) {
   };
 
   function clearPois() {
-    profile.showPois([]);
+    extendedProfile.showPois([]);
   }
 
 
-  return profile;
+  return extendedProfile;
 };

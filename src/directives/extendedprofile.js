@@ -1,42 +1,42 @@
-goog.provide('ngeo.profileDirective');
+goog.provide('ngeo.extendedextendedProfileDirective');
 
 goog.require('goog.asserts');
 goog.require('goog.events');
 goog.require('ngeo');
-goog.require('ngeo.profile');
+goog.require('ngeo.extendedProfile');
 goog.require('ngeo.Debounce');
 
 
 /**
- * Provides a directive used to insert an elevation profile chart
+ * Provides a directive used to insert an elevation extendedProfile chart
  * in the DOM.
  *
  * Example:
  *
- *      <div ngeo-profile="ctrl.profileData"
- *        ngeo-profile-options="ctrl.profileOptions"
- *        ngeo-profile-pois="ctrl.profilePois">
+ *      <div ngeo-extendedProfile="ctrl.extendedProfileData"
+ *        ngeo-extendedProfile-options="ctrl.extendedProfileOptions"
+ *        ngeo-extendedProfile-pois="ctrl.extendedProfilePois">
  *      </div>
  *
- * Where "ctrl.profileOptions" is of type {@link ngeox.profile.ProfileOptions};
- * "ctrl.profileData" and "ctrl.profilePois" are arrays which will be
- * processed by {@link ngeox.profile.ElevationExtractor} and
- * {@link ngeox.profile.PoiExtractor}.
+ * Where "ctrl.extendedProfileOptions" is of type {@link ngeox.extendedProfile.extendedProfileOptions};
+ * "ctrl.extendedProfileData" and "ctrl.extendedProfilePois" are arrays which will be
+ * processed by {@link ngeox.extendedProfile.ElevationExtractor} and
+ * {@link ngeox.extendedProfile.PoiExtractor}.
  *
- * See our live example: [../examples/profile.html](../examples/profile.html)
+ * See our live example: [../examples/extendedProfile.html](../examples/extendedProfile.html)
  *
- * @htmlAttribute {?Object} ngeo-profile The profile data.
- * @htmlAttribute {ngeox.profile.ProfileOptions} ngeo-profile-options The options.
- * @htmlAttribute {?Array} ngeo-profile-pois The data for POIs.
- * @htmlAttribute {*} ngeo-profile-highlight Any property on the scope which
+ * @htmlAttribute {?Object} ngeo-extendedProfile The extendedProfile data.
+ * @htmlAttribute {ngeox.extendedProfile.extendedProfileOptions} ngeo-extendedProfile-options The options.
+ * @htmlAttribute {?Array} ngeo-extendedProfile-pois The data for POIs.
+ * @htmlAttribute {*} ngeo-extendedProfile-highlight Any property on the scope which
  * evaluated value may correspond to distance from origin.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
- * @ngname ngeoProfile
+ * @ngname ngeoextendedProfile
  */
-ngeo.profileDirective = function(ngeoDebounce) {
+ngeo.extendedextendedProfileDirective = function(ngeoDebounce) {
   return {
     restrict: 'A',
     /**
@@ -46,15 +46,15 @@ ngeo.profileDirective = function(ngeoDebounce) {
      */
     link(scope, element, attrs) {
 
-      const optionsAttr = attrs['ngeoProfileOptions'];
+      const optionsAttr = attrs['ngeoextendedProfileOptions'];
       goog.asserts.assert(optionsAttr !== undefined);
 
       const selection = d3.select(element[0]);
-      let profile, elevationData, poiData;
+      let extendedProfile, elevationData, poiData;
 
       scope.$watchCollection(optionsAttr, (newVal) => {
 
-        const options = /** @type {ngeox.profile.ProfileOptions} */
+        const options = /** @type {ngeox.extendedProfile.extendedProfileOptions} */
                 (ol.obj.assign({}, newVal));
 
         if (options !== undefined) {
@@ -65,7 +65,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
           // We're using $applyAsync here because the callback may be
           // called inside the Angular context. For example, it's the case
           // when the user hover's the line geometry on the map and the
-          // profileHighlight property is changed.
+          // extendedProfileHighlight property is changed.
           //
           // For that reason we use $applyAsync instead of $apply here.
           if (options.hoverCallback !== undefined) {
@@ -84,30 +84,30 @@ ngeo.profileDirective = function(ngeoDebounce) {
             };
           }
 
-          profile = ngeo.profile(options);
+          extendedProfile = ngeo.extendedProfile(options);
           refreshData();
         }
       });
 
-      scope.$watch(attrs['ngeoProfile'], (newVal, oldVal) => {
+      scope.$watch(attrs['ngeoextendedProfile'], (newVal, oldVal) => {
         elevationData = newVal;
         refreshData();
       });
 
-      scope.$watch(attrs['ngeoProfilePois'], (newVal, oldVal) => {
+      scope.$watch(attrs['ngeoextendedProfilePois'], (newVal, oldVal) => {
         poiData = newVal;
         refreshData();
       });
 
-      scope.$watch(attrs['ngeoProfileHighlight'],
+      scope.$watch(attrs['ngeoextendedProfileHighlight'],
               (newVal, oldVal) => {
                 if (newVal === undefined) {
                   return;
                 }
                 if (newVal > 0) {
-                  profile.highlight(newVal);
+                  extendedProfile.highlight(newVal);
                 } else {
-                  profile.clearHighlight();
+                  extendedProfile.clearHighlight();
                 }
               });
 
@@ -116,10 +116,10 @@ ngeo.profileDirective = function(ngeoDebounce) {
               false, this);
 
       function refreshData() {
-        if (profile !== undefined) {
-          selection.datum(elevationData).call(profile);
+        if (extendedProfile !== undefined) {
+          selection.datum(elevationData).call(extendedProfile);
           if (elevationData !== undefined) {
-            profile.showPois(poiData);
+            extendedProfile.showPois(poiData);
           }
         }
       }
@@ -127,4 +127,4 @@ ngeo.profileDirective = function(ngeoDebounce) {
   };
 };
 
-ngeo.module.directive('ngeoProfile', ngeo.profileDirective);
+ngeo.module.directive('ngeoextendedProfile', ngeo.extendedextendedProfileDirective);

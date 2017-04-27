@@ -1,17 +1,17 @@
 <div
-  class="gmf-profile-container panel"
+  class="gmf-extended-profile-container panel"
   ng-show="ctrl.active">
 
   <div
-    class="ngeo-profile"
+    class="ngeo-extended-profile"
     ng-show="!ctrl.isErrored"
-    ngeo-profile="ctrl.profileData"
-    ngeo-profile-highlight="ctrl.profileHighlight"
-    ngeo-profile-options="::ctrl.profileOptions">
+    ngeo-extended-profile="ctrl.profileData"
+    ngeo-extended-profile-highlight="ctrl.profileHighlight"
+    ngeo-extended-profile-options="::ctrl.profileOptions">
   </div>
 
   <ul
-    class="gmf-profile-legend"
+    class="gmf-extended-profile-legend"
     ng-show="!ctrl.isErrored">
 
     <li ng-repeat="name in ::ctrl.getLayersNames()">
@@ -23,7 +23,7 @@
   </ul>
 
   <div
-    class="gmf-profile-export btn-group dropup"
+    class="gmf-extended-profile-export btn-group dropup"
     ng-show="!ctrl.isErrored">
 
     <a
@@ -49,10 +49,10 @@
   </div>
 
   <div
-    class="gmf-profile-error"
+    class="gmf-extended-profile-error"
     ng-show="ctrl.isErrored">
 
-    <p>{{'The profile service does not respond, please try later.' | translate}}</p>
+    <p>{{'The extended profile service does not respond, please try later.' | translate}}</p>
   </div>
   <div
     class="close"

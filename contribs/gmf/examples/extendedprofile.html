@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app='gmfapp'>
   <head>
-    <title>GMF profile example</title>
+    <title>GMF extended profile example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
@@ -15,15 +15,15 @@
           width: 80rem;
           height: 40rem;
         }
-        .gmf-profile-container {
+        .gmf-extended-profile-container {
           display: flex;
         }
-        .gmf-profile-container .ngeo-profile {
+        .gmf-extended-profile-container .ngeo-extended-profile {
           display: inline-block;
           width: calc(100% - 15rem);
           height: 20rem;
         }
-        .gmf-profile-container .gmf-profile-legend {
+        .gmf-extended-profile-container .gmf-extended-profile-legend {
           display: inline-block;
           vertical-align: top;
           list-style-type: none;
@@ -60,19 +60,19 @@
     <gmf-map gmf-map-map="ctrl.map"></gmf-map>
     <button class="btn btn-primary" data-toggle="button" ng-click="ctrl.toggleDrawLineActive()">Draw a line</button>
 
-    <p id="desc">This example shows how to use the <code>gmf-profile</code>.
+    <p id="desc">This example shows how to use the <code>gmf-extended-profile-</code>.
     The draw tool and hover feedback on the map are completely independant of
-    the gmf-profile components. This profile relies on the ngeo.profile (d3) and
-    ngeo.ProfileDirective. It passes a custom css through the optional
-    gmf-profile-options attribute</p>
+    the gmf-extended-profile- components. This profile relies on the ngeo.profile (d3) and
+    ngeo.extendedProfileDirective. It passes a custom css through the optional
+    gmf-extended-profile-options attribute</p>
 
-    <gmf-profile
-      gmf-profile-active="true"
-      gmf-profile-line="ctrl.profileLine"
-      gmf-profile-map="::ctrl.map"
-      gmf-profile-linesconfiguration="::ctrl.profileLinesconfiguration"
-      gmf-profile-options="::ctrl.profileOptions">
-    </gmf-profile>
+    <gmf-extended-profile-
+      gmf-extended-profile-active="true"
+      gmf-extended-profile-line="ctrl.profileLine"
+      gmf-extended-profile-map="::ctrl.map"
+      gmf-extended-profile-linesconfiguration="::ctrl.profileLinesconfiguration"
+      gmf-extended-profile-options="::ctrl.profileOptions">
+    </gmf-extended-profile->
 
     <script src="../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
@@ -90,7 +90,7 @@
     <script src="../../../node_modules/proj4/dist/proj4.js"></script>
     <script src="../../../node_modules/d3/build/d3.js"></script>
     <script src="../../../node_modules/file-saver/FileSaver.min.js"></script>
-    <script src="/@?main=profile.js"></script>
+    <script src="/@?main=extended-profile.js"></script>
     <script src="default.js"></script>
     <script src="../../../utils/watchwatchers.js"></script>
     <script>

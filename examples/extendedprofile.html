@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app='app'>
   <head>
-    <title>Profile example</title>
+    <title>Extended profile example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
@@ -14,7 +14,7 @@
           width: 600px;
           height: 400px;
         }
-        .profile {
+        .extended-profile {
           width: 450px;
           height: 250px;
         }
@@ -23,10 +23,10 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <div id="map" ngeo-map="ctrl.map"></div>
-    <div class="profile" ngeo-profile="::ctrl.profileData"
-         ngeo-profile-options="::ctrl.profileOptions"
-         ngeo-profile-pois="::ctrl.profilePoisData"
-         ngeo-profile-highlight="ctrl.profileHighlight">
+    <div class="extended-profile" ngeo-extended-profile="::ctrl.profileData"
+         ngeo-extended-profile-options="::ctrl.profileOptions"
+         ngeo-extended-profile-pois="::ctrl.profilePoisData"
+         ngeo-extended-profile-highlight="ctrl.profileHighlight">
     </div>
 
     <ul ng-show="ctrl.point != null">
@@ -36,7 +36,7 @@
       <li>Distance: {{ctrl.point.dist}}</li>
     </ul>
 
-    <p id="desc">This example shows how to use <code><a href="../apidoc/ngeo.profileDirective.html" title="Read our documentation">ngeo-profile</a></code> to create a D3-based elevation profile graphic.</p>
+    <p id="desc">This example shows how to use <code><a href="../apidoc/ngeo.extendedProfileDirective.html" title="Read our documentation">ngeo-extended-profile</a></code> to create a D3-based elevation profile graphic.</p>
     <script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
@@ -45,7 +45,7 @@
     <script src="../node_modules/angular-float-thead/angular-floatThead.js"></script>
     <script src="../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
     <script src="../node_modules/proj4/dist/proj4.js"></script>
-    <script src="/@?main=profile.js"></script>
+    <script src="/@?main=extended-profile.js"></script>
     <script src="default.js"></script>
     <script src="../utils/watchwatchers.js"></script>
   </body>

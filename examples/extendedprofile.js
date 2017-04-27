@@ -1,9 +1,9 @@
-goog.provide('app.profile');
+goog.provide('app.extendedProfile');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.profileDirective');
+goog.require('ngeo.extendedProfileDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Attribution');
