@@ -1,4 +1,4 @@
-goog.provide('ngeo.createregularpolygonfromclickComponent');
+goog.provide('ngeo.createregularpolygonfromclickDirective');
 
 goog.require('ngeo');
 goog.require('ngeo.interaction.DrawRegularPolygonFromClick');
@@ -7,7 +7,7 @@ goog.require('ol.interaction.DrawEventType');
 
 
 /**
- * A component used to draw vector features of a single geometry type using
+ * A directive used to draw vector features of a single geometry type using
  * either a 'draw' or 'measure' interaction. Once a feature is finished being
  * drawn, it is added to a collection of features.
  *
@@ -35,36 +35,40 @@ goog.require('ol.interaction.DrawEventType');
  *     </a>
  *
  * @htmlAttribute {boolean} ngeo-createregularpolygonfromclick-active Whether
- *     the component is active or not.
+ *     the directive is active or not.
  * @htmlAttribute {number|undefined} ngeo-createregularpolygonfromclick-angle
  *     Angle in radians. A value of 0 will have one of the shape's point
  *     facing up. Default value is 0.
  * @htmlAttribute {ol.Collection} ngeo-createregularpolygonfromclick-features
- *     The collection of features where to add those created by this component.
+ *     The collection of features where to add those created by this directive.
  * @htmlAttribute {ol.Map} ngeo-createregularpolygonfromclick-map The map.
  * @htmlAttribute {number} ngeo-createregularpolygonfromclick-radius Radius
  *     size in map units.
  * @htmlAttribute {number|undefined} ngeo-createregularpolygonfromclick-sides
  *     The number of sides for the regular polygon. Default value is 3.
  *
- * @ngdoc component
+ * @return {angular.Directive} The directive specs.
+ * @ngdoc directive
  * @ngname ngeoCreateregularpolygonfromclick
  */
-ngeo.createregularpolygonfromclickComponent = {
-  controller: 'ngeoCreateregularpolygonfromclickController as crpfcCtrl',
-  bindings: {
-    'active': '=ngeoCreateregularpolygonfromclickActive',
-    'angle': '<?ngeoCreateregularpolygonfromclickAngle',
-    'features': '=ngeoCreateregularpolygonfromclickFeatures',
-    'map': '=ngeoCreateregularpolygonfromclickMap',
-    'radius': '<ngeoCreateregularpolygonfromclickRadius',
-    'sides': '<?ngeoCreateregularpolygonfromclickSides'
-  }
+ngeo.createregularpolygonfromclickDirective = function() {
+  return {
+    controller: 'ngeoCreateregularpolygonfromclickController as crpfcCtrl',
+    bindToController: true,
+    scope: {
+      'active': '=ngeoCreateregularpolygonfromclickActive',
+      'angle': '<?ngeoCreateregularpolygonfromclickAngle',
+      'features': '=ngeoCreateregularpolygonfromclickFeatures',
+      'map': '=ngeoCreateregularpolygonfromclickMap',
+      'radius': '<ngeoCreateregularpolygonfromclickRadius',
+      'sides': '<?ngeoCreateregularpolygonfromclickSides'
+    }
+  };
 };
 
-ngeo.module.component(
+ngeo.module.directive(
   'ngeoCreateregularpolygonfromclick',
-  ngeo.createregularpolygonfromclickComponent);
+  ngeo.createregularpolygonfromclickDirective);
 
 
 /**
@@ -130,6 +134,23 @@ ngeo.CreateregularpolygonfromclickController = function($scope) {
    * @type {ngeo.interaction.DrawRegularPolygonFromClick}
    * @private
    */
+  this.interaction_;
+
+  /**
+   * @type {ol.EventsKey}
+   * @private
+   */
+  this.interactionListenerKey_;
+
+  $scope.$on('$destroy', this.handleDestroy_.bind(this));
+};
+
+
+/**
+ * Initialize the directive.
+ */
+ngeo.CreateregularpolygonfromclickController.prototype.$onInit = function() {
+
   this.interaction_ = new ngeo.interaction.DrawRegularPolygonFromClick({
     angle: this.angle,
     radius: this.radius,
@@ -137,10 +158,6 @@ ngeo.CreateregularpolygonfromclickController = function($scope) {
   });
   this.interaction_.setActive(this.active);
 
-  /**
-   * @type {ol.EventsKey}
-   * @private
-   */
   this.interactionListenerKey_ = ol.events.listen(
     this.interaction_,
     ol.interaction.DrawEventType.DRAWEND,
@@ -148,14 +165,6 @@ ngeo.CreateregularpolygonfromclickController = function($scope) {
     this
   );
 
-  $scope.$on('$destroy', this.handleDestroy_.bind(this));
-};
-
-
-/**
- * Initialise the component.
- */
-ngeo.CreateregularpolygonfromclickController.prototype.$onInit = function() {
   this.map.addInteraction(this.interaction_);
 };
 

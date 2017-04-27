@@ -7,7 +7,7 @@ goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.createfeatureDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.createregularpolygonfromclickComponent');
+goog.require('ngeo.createregularpolygonfromclickDirective');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
