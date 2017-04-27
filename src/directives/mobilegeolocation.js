@@ -222,9 +222,10 @@ ngeo.MobileGeolocationController.prototype.toggleTracking = function() {
       return;
     }
     goog.asserts.assert(currentPosition !== undefined);
+    // stop tracking if the position is close to the center of the map.
     var center = this.map_.getView().getCenter();
-    if (currentPosition[0] === center[0] &&
-        currentPosition[1] === center[1]) {
+    var diff = Math.abs(currentPosition[0] - center[0]) + Math.abs(currentPosition[1] - center[1]);
+    if (diff < 2) {
       this.untrack_();
     } else {
       this.untrack_();
