@@ -101,6 +101,8 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
     if (!ngeo.Attribute.setGeometryType(attribute, type)) {
       if (type === 'xsd:string') {
         attribute.type = ngeo.AttributeType.TEXT;
+      } else if (type === 'xsd:decimal' || type === 'xsd:integer') {
+        attribute.type = ngeo.AttributeType.NUMBER;
       } else if (type === 'xsd:date') {
         attribute.type = ngeo.AttributeType.DATE;
       } else if (type === 'xsd:dateTime') {
