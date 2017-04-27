@@ -99,17 +99,13 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
   const type = node.getAttribute('type');
   if (type) {
     if (!ngeo.Attribute.setGeometryType(attribute, type)) {
-      if (type === 'xsd:string') {
-        attribute.type = ngeo.AttributeType.TEXT;
-      } else if (type === 'xsd:date') {
-        attribute.type = ngeo.AttributeType.DATE;
-      } else if (type === 'xsd:dateTime') {
-        attribute.type = ngeo.AttributeType.DATETIME;
-      } else {
-        return null;
-      }
+      this.setAttributeByXsdType_(attribute, type);
     }
   } else {
+
+    // Attribute has no type defined on 'element' node.  Try:
+
+    // (1) Enumerations
     let enumerations = node.getElementsByTagName('enumeration');
     if (!enumerations.length) {
       enumerations = node.getElementsByTagName('xsd:enumeration');
@@ -122,13 +118,65 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
       }
       attribute.choices = choices;
     } else {
-      return null;
+      // (2) Other types with restrictions
+      let restrictions = node.getElementsByTagName('restriction');
+      if (!restrictions.length) {
+        restrictions = node.getElementsByTagName('xsd:restriction');
+      }
+      if (restrictions.length && restrictions[0]) {
+        const restrictionNode = restrictions[0];
+        this.setAttributeByXsdType_(
+          attribute,
+          restrictionNode.getAttribute('base')
+        );
+        // MaxLength
+        let maxLengths = node.getElementsByTagName('maxLength');
+        if (!maxLengths.length) {
+          maxLengths = node.getElementsByTagName('xsd:maxLength');
+        }
+        if (maxLengths.length && maxLengths[0]) {
+          attribute.maxLength = Number(maxLengths[0].getAttribute('value'));
+        }
+      }
     }
+  }
+
+  if (!attribute.type) {
+    return null;
   }
 
   goog.asserts.assert(attribute.type);
 
   return attribute;
+};
+
+
+/**
+ * Set the `type` and `numType` properties of an attribute depending on the
+ * given xsdType.
+ *
+ * @param {ngeox.AttributeBase} attribute Attribute.
+ * @param {string} type The xsd type.
+ * @private
+ */
+ngeo.format.XSDAttribute.prototype.setAttributeByXsdType_ = function(
+  attribute, type
+) {
+  if (type === 'xsd:boolean') {
+    attribute.type = ngeo.AttributeType.BOOLEAN;
+  } else if (type === 'xsd:date') {
+    attribute.type = ngeo.AttributeType.DATE;
+  } else if (type === 'xsd:dateTime') {
+    attribute.type = ngeo.AttributeType.DATETIME;
+  } else if (type === 'xsd:decimal') {
+    attribute.type = ngeo.AttributeType.NUMBER;
+    attribute.numType = ngeo.NumberType.FLOAT;
+  } else if (type === 'xsd:integer') {
+    attribute.type = ngeo.AttributeType.NUMBER;
+    attribute.numType = ngeo.NumberType.INTEGER;
+  } else if (type === 'xsd:string') {
+    attribute.type = ngeo.AttributeType.TEXT;
+  }
 };
 
 

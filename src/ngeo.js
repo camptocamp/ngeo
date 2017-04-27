@@ -59,6 +59,10 @@ ngeo.AttributeType = {
   /**
    * @type {string}
    */
+  BOOLEAN: 'boolean',
+  /**
+   * @type {string}
+   */
   DATE: 'date',
   /**
    * @type {string}
@@ -219,4 +223,22 @@ ngeo.GeometryType = {
    * @export
    */
   TEXT: 'Text'
+};
+
+
+/**
+ * @enum {string}
+ * @export
+ */
+ngeo.NumberType = {
+  /**
+   * @type {string}
+   * @export
+   */
+  FLOAT: 'float',
+  /**
+   * @type {string}
+   * @export
+   */
+  INTEGER: 'integer'
 };
