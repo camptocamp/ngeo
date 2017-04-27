@@ -23,7 +23,7 @@ goog.require('ngeo.Debounce');
  * processed by {@link ngeox.extendedProfile.ElevationExtractor} and
  * {@link ngeox.extendedProfile.PoiExtractor}.
  *
- * See our live example: [../examples/extendedProfile.html](../examples/extendedProfile.html)
+ * See our live example: [../examples/extendedprofile.html](../examples/extendedprofile.html)
  *
  * @htmlAttribute {?Object} ngeo-extendedProfile The extendedProfile data.
  * @htmlAttribute {ngeox.extendedProfile.extendedProfileOptions} ngeo-extendedProfile-options The options.
