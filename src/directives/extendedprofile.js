@@ -1,4 +1,4 @@
-goog.provide('ngeo.extendedextendedProfileDirective');
+goog.provide('ngeo.extendedProfileDirective');
 
 goog.require('goog.asserts');
 goog.require('goog.events');
@@ -36,7 +36,8 @@ goog.require('ngeo.Debounce');
  * @ngdoc directive
  * @ngname ngeoextendedProfile
  */
-ngeo.extendedextendedProfileDirective = function(ngeoDebounce) {
+ngeo.extendedProfileDirective = function(ngeoDebounce) {
+  console.log("ngeo.extendedProfileDirective");
   return {
     restrict: 'A',
     /**
@@ -46,7 +47,7 @@ ngeo.extendedextendedProfileDirective = function(ngeoDebounce) {
      */
     link(scope, element, attrs) {
 
-      const optionsAttr = attrs['ngeoextendedProfileOptions'];
+      const optionsAttr = attrs['ngeoExtendedProfileOptions'];
       goog.asserts.assert(optionsAttr !== undefined);
 
       const selection = d3.select(element[0]);
@@ -89,17 +90,17 @@ ngeo.extendedextendedProfileDirective = function(ngeoDebounce) {
         }
       });
 
-      scope.$watch(attrs['ngeoextendedProfile'], (newVal, oldVal) => {
+      scope.$watch(attrs['ngeoExtendedProfile'], (newVal, oldVal) => {
         elevationData = newVal;
         refreshData();
       });
 
-      scope.$watch(attrs['ngeoextendedProfilePois'], (newVal, oldVal) => {
+      scope.$watch(attrs['ngeoExtendedProfilePois'], (newVal, oldVal) => {
         poiData = newVal;
         refreshData();
       });
 
-      scope.$watch(attrs['ngeoextendedProfileHighlight'],
+      scope.$watch(attrs['ngeoExtendedProfileHighlight'],
               (newVal, oldVal) => {
                 if (newVal === undefined) {
                   return;
@@ -116,6 +117,7 @@ ngeo.extendedextendedProfileDirective = function(ngeoDebounce) {
               false, this);
 
       function refreshData() {
+          console.log("refreshData");
         if (extendedProfile !== undefined) {
           selection.datum(elevationData).call(extendedProfile);
           if (elevationData !== undefined) {
@@ -127,4 +129,4 @@ ngeo.extendedextendedProfileDirective = function(ngeoDebounce) {
   };
 };
 
-ngeo.module.directive('ngeoextendedProfile', ngeo.extendedextendedProfileDirective);
+ngeo.module.directive('ngeoExtendedProfile', ngeo.extendedProfileDirective);

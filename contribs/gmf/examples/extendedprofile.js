@@ -1,4 +1,4 @@
-goog.provide('gmfapp.profile');
+goog.provide('gmfapp.extendedProfile');
 
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */

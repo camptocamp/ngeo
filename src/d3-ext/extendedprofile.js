@@ -56,6 +56,8 @@ goog.provide('ngeo.extendedProfile');
  * @export
  */
 ngeo.extendedProfile = function(options) {
+    console.log("d3 ngeo.extendedProfile");
+
   /**
    * Whether the simplified extendedProfile should be shown.
    * @type {boolean}
@@ -231,7 +233,9 @@ ngeo.extendedProfile = function(options) {
 
 
   const extendedProfile = function(selection) {
+      
     selection.each(function(data) {
+      console.log("data");
       d3.select(this).selectAll('svg').remove();
       if (data === undefined) {
         return;

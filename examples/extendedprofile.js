@@ -36,7 +36,7 @@ app.MainController = function($http, $scope) {
    * @private
    */
   this.scope_ = $scope;
-
+  console.log("toto");
   const source = new ol.source.Vector();
 
   /**
@@ -102,7 +102,7 @@ app.MainController = function($http, $scope) {
    */
   this.profileData = undefined;
 
-  $http.get('data/profile.json').then((resp) => {
+  $http.get('data/extendedprofile.json').then((resp) => {
     const data = resp.data['profile'];
     this.profileData = data;
 

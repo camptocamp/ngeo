@@ -1,4 +1,4 @@
-goog.provide('gmf.profileComponent');
+goog.provide('gmf.extendedProfileComponent');
 
 goog.require('gmf');
 goog.require('ngeo.CsvDownload');
