@@ -179,7 +179,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
 /***
 Find the closest neighboor of the mouse coordinates within tolerance
 ***/
-ngeo.extendedProfile.plot2canvas.getClosetPoint = function (points, xs,ys,tolerance) {
+ngeo.extendedProfile.plot2canvas.getClosestPoint = function (points, xs,ys,tolerance) {
   let d = points;
   let tol = tolerance;
   let sx = plotParams.currentScaleX;
@@ -232,7 +232,7 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
   let sx = plotParams.currentScaleX;
   let sy = plotParams.currentScaleY;
 
-  let p = getClosetPoint(profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
+  let p = getClosestPoint(profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
   if (p != undefined) {
 
     cx = sx(p.distance ) + margin.left;

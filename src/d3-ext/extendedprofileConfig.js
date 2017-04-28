@@ -6,9 +6,9 @@ Read client app config from server
 ***/
 
 ngeo.extendedProfile.config.getProfileConfig = function (pytreeserver_url) {
-  
+
   this.profileConfig = {};
-  
+
   // Available point clouds
   $.ajax({
     url: pytreeserver_url + "/get_point_clouds",
@@ -29,7 +29,7 @@ ngeo.extendedProfile.config.getProfileConfig = function (pytreeserver_url) {
     }
     $('#classes').html(html);        
   });
-  
+
   // Default material
   $.ajax({
     url: pytreeserver_url + "/get_default_material",

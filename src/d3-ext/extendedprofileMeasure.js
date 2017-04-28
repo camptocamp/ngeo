@@ -47,7 +47,7 @@ ngeo.extendedProfile.measure.measureHeight = function () {
   let sx = plotParams.currentScaleX;
   let sy = plotParams.currentScaleY;
   let pointSize = 3;
-  let p = getClosetPoint(profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
+  let p = getClosestPoint(profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
 
   if (!this.profileMeasure.pStart.set) {
     if (p != undefined) {

@@ -68,7 +68,6 @@ ngeo.extendedProfile.plot = function(options) {
    */
   const light = options.light !== undefined ? options.light : false;
 
-
   /**
    * The values for margins around the chart defined in pixels.
    */
