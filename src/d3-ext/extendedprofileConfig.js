@@ -11,7 +11,7 @@ ngeo.extendedProfile.config.getProfileConfig = function (pytreeserver_url) {
 
   // Available point clouds
   $.ajax({
-    url: pytreeserver_url + "/get_point_clouds",
+    url: pytreeserver_url + '/get_point_clouds',
   })
   .done(function(data) {
       this.profileConfig.pointclouds = data;
@@ -19,20 +19,20 @@ ngeo.extendedProfile.config.getProfileConfig = function (pytreeserver_url) {
   
   // Classification colors
   $.ajax({
-    url: pytreeserver_url + "/get_classification_colors",
+    url: pytreeserver_url + '/get_classification_colors',
   })
   .done(function(data) {
     this.profileConfig.classification = data;
     let html = '';
     for (let i in data) {
-      html += '<input checked type="checkbox" onchange="setClassActive(this);" value="'+ i +'">classe: '+  data[i].name
+      html += '<input checked type='checkbox' onchange='setClassActive(this);' value=''+ i +''>classe: '+  data[i].name
     }
     $('#classes').html(html);        
   });
 
   // Default material
   $.ajax({
-    url: pytreeserver_url + "/get_default_material",
+    url: pytreeserver_url + '/get_default_material',
   })
   .done(function(data) {
       this.profileConfig.defautMaterial = data;

@@ -6,10 +6,10 @@ goog.provide('ngeo.extendedProfile.loader');
  */
 ngeo.extendedProfile.loader.xhrRequest = function(method, minLOD, maxLOD, iter, coordinates, distanceOffset, clearPlot, lastLOD) {
 
-  let hurl = "http://localhost:5001/get_profile?minLOD=" + minLOD + "&maxLOD=" + maxLOD;
-  hurl += "&width=" + $('#width').val() + "&coordinates=" + coordinates;
-  hurl += "&pointCloud=" + $('#pointCloud').val();
-  hurl += "&attributes=" + $('#attributes').val();
+  let hurl = 'http://localhost:5001/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
+  hurl += '&width=' + $('#width').val() + '&coordinates=' + coordinates;
+  hurl += '&pointCloud=' + $('#pointCloud').val();
+  hurl += '&attributes=' + $('#attributes').val();
 
   let xhr = new XMLHttpRequest();
   xhr.open(method, hurl, true);
@@ -20,14 +20,14 @@ ngeo.extendedProfile.loader.xhrRequest = function(method, minLOD, maxLOD, iter, 
     if (xhr.status === 200 || xhr.status === 0) {
     processBuffer(xhr.response, iter, distanceOffset, clearPlot, lastLOD);
     } else {
-    console.log('Failed to load data! HTTP status: ' + xhr.status + ", file: " + url);
+    console.log('Failed to load data! HTTP status: ' + xhr.status + ', file: ' + url);
     }
   }
   };
   try {
   xhr.send(null);
   } catch(e) {
-  console.log("Error: " + e);
+  console.log('Error: ' + e);
   }
 };
 
@@ -82,7 +82,7 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
 
     let attribute = attributes[k];
 
-    if (attribute.name == "POSITION_PROJECTED_PROFILE") {
+    if (attribute.name == 'POSITION_PROJECTED_PROFILE') {
 
       let ux = view.getUint32(aoffset, true);
       let uy = view.getUint32(aoffset + 4, true);
@@ -116,8 +116,8 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
   }
 
   if (clearPlot) {
-    let ctx = d3.select("#profileCanvas")
-    .node().getContext("2d");
+    let ctx = d3.select('#profileCanvas')
+    .node().getContext('2d');
     ctx.clearRect(0, 0, $('#profileCanvas').width(), $('#profileCanvas').height());
   }
   // draw this LOD
@@ -138,7 +138,7 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
   }
 
   } catch (e) {
-  console.log("error during buffer processing: " + e);
+  console.log('error during buffer processing: ' + e);
   }
 
 }
@@ -167,16 +167,16 @@ ngeo.extendedProfile.loader.loadDeeperLOD = function () {
   if (d3.select('#demdsm').node().checked){
     getGmfProfile(100, line, clip.distanceOffset);
   } else {
-    svg.selectAll("#line_dem").remove();
-    svg.selectAll("#line_dsm").remove();
+    svg.selectAll('#line_dem').remove();
+    svg.selectAll('#line_dsm').remove();
   }
   if (parseInt($('#maxLOD').val()) >= niceLOD) {
     drawPoints(profilePoints, $('#material').val(), plotParams.currentZoom);
-    console.log("no loading required")
+    console.log('no loading required')
     return;
   } else {
 
-    console.log("loading additionnal LOD");
+    console.log('loading additionnal LOD');
     let m = d3.mouse(this);
     if (mousePositionStart[0] !==  m[0] && mousePositionStart[1] !== m[1]){
       xhrRequest('GET', 0, niceLOD, 100, cPotreeLineStr, clip.distanceOffset, true, true);

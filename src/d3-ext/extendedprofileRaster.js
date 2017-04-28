@@ -5,8 +5,8 @@ goog.provide('ngeo.extendedProfile.raster');
 ***/
 ngeo.extendedProfile.raster.generateDemDsm = function() {
 
-  svg.selectAll("#line_js_dem").remove();
-  svg.selectAll("#line_js_dsm").remove();
+  svg.selectAll('#line_js_dem').remove();
+  svg.selectAll('#line_js_dsm').remove();
   let points = [];
   for (let i=0; i<profilePoints.distance.length; i++) {
 
@@ -73,14 +73,14 @@ ngeo.extendedProfile.raster.generateDemDsm = function() {
 
     if (output[i] != undefined) {
 
-      let line = d3.select("svg#profileSVG").append("line")
-      .attr("id", "line_js_dsm")
-      .attr("x1", sx(output[i].distanceDsm) + margin.left)
-      .attr("y1", sy(output[i].dsm) + margin.top)
-      .attr("x2", sx(output[i+1].distanceDsm) + margin.left)
-      .attr("y2", sy(output[i+1].dsm) + margin.top)
-      .attr("stroke-width", 1.5)
-      .attr("stroke", "#a4f442");
+      let line = d3.select('svg#profileSVG').append('line')
+      .attr('id', 'line_js_dsm')
+      .attr('x1', sx(output[i].distanceDsm) + margin.left)
+      .attr('y1', sy(output[i].dsm) + margin.top)
+      .attr('x2', sx(output[i+1].distanceDsm) + margin.left)
+      .attr('y2', sy(output[i+1].dsm) + margin.top)
+      .attr('stroke-width', 1.5)
+      .attr('stroke', '#a4f442');
     }
   }
 }
@@ -88,11 +88,11 @@ ngeo.extendedProfile.raster.generateDemDsm = function() {
 ngeo.extendedProfile.raster.getGmfProfile = function(nbPoints, coordinates, distanceOffset) {
 
   if (distanceOffset > 0) {
-    svg.selectAll("#line_dem").remove();
-    svg.selectAll("#line_dsm").remove();
+    svg.selectAll('#line_dem').remove();
+    svg.selectAll('#line_dsm').remove();
   }
 
-  let gmfurl = "http://localhost:5001/get_gmf_dem_dsm?";
+  let gmfurl = 'http://localhost:5001/get_gmf_dem_dsm?';
 
   gmfurl += 'coord=' + coordinates;
   gmfurl += '&nbPoints=' + nbPoints;
@@ -105,7 +105,7 @@ ngeo.extendedProfile.raster.getGmfProfile = function(nbPoints, coordinates, dist
       if (xhr.status === 200 || xhr.status === 0) {
         drawDem(JSON.parse(xhr.response), distanceOffset);
       } else {
-        console.log('Failed to load data! HTTP status: ' + xhr.status + ", file: " + gmfurl);
+        console.log('Failed to load data! HTTP status: ' + xhr.status + ', file: ' + gmfurl);
       }
     }
   };
@@ -113,7 +113,7 @@ ngeo.extendedProfile.raster.getGmfProfile = function(nbPoints, coordinates, dist
   try {
     xhr.send(null);
   } catch(e) {
-    console.log("Error: " + e);
+    console.log('Error: ' + e);
   }
 }
 
@@ -123,13 +123,13 @@ ngeo.extendedProfile.raster.drawDem = function(data, distanceOffset) {
   let sx = plotParams.currentScaleX;
   let sy = plotParams.currentScaleY;
   for (let i=0; i<d.length-1;i++) {
-    let line = d3.select("svg#profileSVG").append("line")
-    .attr("id", "line_dem")
-    .attr("x1", sx(d[i].dist + distanceOffset) + margin.left)
-    .attr("y1", sy(d[i].values.mnt) + margin.top)
-    .attr("x2", sx(d[i+1].dist + distanceOffset) + margin.left)
-    .attr("y2", sy(d[i+1].values.mnt) + margin.top)
-    .attr("stroke-width", 1.5)
-    .attr("stroke", "#41caf4");
+    let line = d3.select('svg#profileSVG').append('line')
+    .attr('id', 'line_dem')
+    .attr('x1', sx(d[i].dist + distanceOffset) + margin.left)
+    .attr('y1', sy(d[i].values.mnt) + margin.top)
+    .attr('x2', sx(d[i+1].dist + distanceOffset) + margin.left)
+    .attr('y2', sy(d[i+1].values.mnt) + margin.top)
+    .attr('stroke-width', 1.5)
+    .attr('stroke', '#41caf4');
   }
 }

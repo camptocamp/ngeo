@@ -14,32 +14,32 @@ ngeo.extendedProfile.measure.clearMeasure = function () {
     }
   };
 
-  svg.selectAll("#text_m").remove();
-  svg.selectAll("#start_m").remove();
-  svg.selectAll("#end_m").remove();
-  svg.selectAll("#line_m").remove();
+  svg.selectAll('#text_m').remove();
+  svg.selectAll('#start_m').remove();
+  svg.selectAll('#end_m').remove();
+  svg.selectAll('#line_m').remove();
 
-  $('#height_measure').html("");
+  $('#height_measure').html('');
 
 }
 
 ngeo.extendedProfile.measure.startMeasure = function () {
 
   clearMeasure();
-  d3.select("svg#profileSVG").on("click", measureHeight)
+  d3.select('svg#profileSVG').on('click', measureHeight)
 
 }
 
 ngeo.extendedProfile.measure.stopMeasure = function () {
 
   clearMeasure();
-  d3.select("svg#profileSVG").on("click", null)
+  d3.select('svg#profileSVG').on('click', null)
 
 }
 
 ngeo.extendedProfile.measure.measureHeight = function () {
 
-  let canvasCoordinates = d3.mouse(d3.select("#profileCanvas").node());
+  let canvasCoordinates = d3.mouse(d3.select('#profileCanvas').node());
   let svgCoordinates = d3.mouse(this);
   let xs = svgCoordinates[0];
   let ys = svgCoordinates[1];
@@ -64,12 +64,12 @@ ngeo.extendedProfile.measure.measureHeight = function () {
 
     this.profileMeasure.pStart.set = true;
     
-    let highlightCircle = d3.select("svg#profileSVG").append("circle")
-    .attr("id", "start_m")
-    .attr("cx", this.profileMeasure.pStart.cx)
-    .attr("cy", this.profileMeasure.pStart.cy)
-    .attr("r", pointSize)
-    .style("fill", "red");
+    let highlightCircle = d3.select('svg#profileSVG').append('circle')
+    .attr('id', 'start_m')
+    .attr('cx', this.profileMeasure.pStart.cx)
+    .attr('cy', this.profileMeasure.pStart.cy)
+    .attr('r', pointSize)
+    .style('fill', 'red');
 
 
   } else if (!this.profileMeasure.pEnd.set){
@@ -86,21 +86,21 @@ ngeo.extendedProfile.measure.measureHeight = function () {
     }
 
     this.profileMeasure.pEnd.set = true;
-    let highlightCircle = d3.select("svg#profileSVG").append("circle")
-    .attr("id", "end_m")
-    .attr("cx", this.profileMeasure.pEnd.cx)
-    .attr("cy", this.profileMeasure.pEnd.cy)
-    .attr("r", pointSize)
-    .style("fill", "red");
+    let highlightCircle = d3.select('svg#profileSVG').append('circle')
+    .attr('id', 'end_m')
+    .attr('cx', this.profileMeasure.pEnd.cx)
+    .attr('cy', this.profileMeasure.pEnd.cy)
+    .attr('r', pointSize)
+    .style('fill', 'red');
 
-    let line = d3.select("svg#profileSVG").append("line")
-    .attr("id", "line_m")
-    .attr("x1", this.profileMeasure.pStart.cx)
-    .attr("y1", this.profileMeasure.pStart.cy)
-    .attr("x2", this.profileMeasure.pEnd.cx)
-    .attr("y2", this.profileMeasure.pEnd.cy)
-    .attr("stroke-width", 2)
-    .attr("stroke", "red");
+    let line = d3.select('svg#profileSVG').append('line')
+    .attr('id', 'line_m')
+    .attr('x1', this.profileMeasure.pStart.cx)
+    .attr('y1', this.profileMeasure.pStart.cy)
+    .attr('x2', this.profileMeasure.pEnd.cx)
+    .attr('y2', this.profileMeasure.pEnd.cy)
+    .attr('stroke-width', 2)
+    .attr('stroke', 'red');
 
 
   } else {
@@ -114,14 +114,14 @@ ngeo.extendedProfile.measure.measureHeight = function () {
 
   if (!isNaN(height)) {
     $('#height_measure').html('Hauteur: ' + height + '</p>');
-    d3.select("svg#profileSVG").append("text")
-    .attr("id", "text_m")
-    .attr("x", 10 + (profileMeasure.pStart.cx + profileMeasure.pEnd.cx)/2)
-    .attr("y", (profileMeasure.pStart.cy + profileMeasure.pEnd.cy)/2)
+    d3.select('svg#profileSVG').append('text')
+    .attr('id', 'text_m')
+    .attr('x', 10 + (profileMeasure.pStart.cx + profileMeasure.pEnd.cx)/2)
+    .attr('y', (profileMeasure.pStart.cy + profileMeasure.pEnd.cy)/2)
     .text( height + 'm')
-    .attr("font-family", "sans-serif")
-    .attr("font-size", "14px")
-    .attr("fill", "red");
+    .attr('font-family', 'sans-serif')
+    .attr('font-size', '14px')
+    .attr('fill', 'red');
   }
 
 }
