@@ -8,6 +8,7 @@ goog.require('ngeo.extendedProfileDirective');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Attribution');
 goog.require('ol.Feature');
+goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.geom.GeometryLayout');
@@ -101,7 +102,6 @@ app.MainController = function($http, $scope) {
    * @export
    */
   this.profileData = undefined;
-
   $http.get('data/extendedprofile.json').then((resp) => {
     const data = resp.data['profile'];
     this.profileData = data;
@@ -118,6 +118,11 @@ app.MainController = function($http, $scope) {
 
     const size = /** @type {ol.Size} */ (this.map.getSize());
     map.getView().fit(source.getExtent(), {size});
+    
+    // Keep demo profile data for the example build up
+    
+    
+    
   });
 
 

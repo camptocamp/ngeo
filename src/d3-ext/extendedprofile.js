@@ -1,5 +1,10 @@
 goog.provide('ngeo.extendedProfile');
-
+goog.require('ngeo.extendedProfile.loader');
+goog.require('ngeo.extendedProfile.utils');
+goog.require('ngeo.extendedProfile.config');
+goog.require('ngeo.extendedProfile.measure');
+goog.require('ngeo.extendedProfile.plot2canvas');
+goog.require('ngeo.extendedProfile.raster');
 
 /**
  * Provides a D3js component to be used to draw an elevation
@@ -55,8 +60,7 @@ goog.provide('ngeo.extendedProfile');
  * @param {ngeox.extendedProfile.extendedProfileOptions} options extendedProfile options.
  * @export
  */
-ngeo.extendedProfile = function(options) {
-    console.log("d3 ngeo.extendedProfile");
+ngeo.extendedProfile.plot = function(options) {
 
   /**
    * Whether the simplified extendedProfile should be shown.
@@ -235,7 +239,6 @@ ngeo.extendedProfile = function(options) {
   const extendedProfile = function(selection) {
       
     selection.each(function(data) {
-      console.log("data");
       d3.select(this).selectAll('svg').remove();
       if (data === undefined) {
         return;

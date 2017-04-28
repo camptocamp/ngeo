@@ -37,7 +37,7 @@ goog.require('ngeo.Debounce');
  * @ngname ngeoextendedProfile
  */
 ngeo.extendedProfileDirective = function(ngeoDebounce) {
-  console.log("ngeo.extendedProfileDirective");
+
   return {
     restrict: 'A',
     /**
@@ -85,7 +85,7 @@ ngeo.extendedProfileDirective = function(ngeoDebounce) {
             };
           }
 
-          extendedProfile = ngeo.extendedProfile(options);
+          extendedProfile = ngeo.extendedProfile.plot(options);
           refreshData();
         }
       });
@@ -117,7 +117,6 @@ ngeo.extendedProfileDirective = function(ngeoDebounce) {
               false, this);
 
       function refreshData() {
-          console.log("refreshData");
         if (extendedProfile !== undefined) {
           selection.datum(elevationData).call(extendedProfile);
           if (elevationData !== undefined) {
