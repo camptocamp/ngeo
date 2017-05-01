@@ -2174,6 +2174,7 @@ ngeox.search.LocationSearchOptions.prototype.prepare;
 /**
  * @typedef {{
  *   handleFileContent: function(string, File),
+ *   transformUrl: function(string): Promise,
  *   isValidUrl: function(string): boolean
  * }}
  */
