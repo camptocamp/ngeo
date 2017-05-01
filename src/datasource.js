@@ -6,6 +6,9 @@ goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
 
 
+/**
+ * @implements {ngeox.DataSource}
+ */
 ngeo.DataSource = class {
 
   /**
