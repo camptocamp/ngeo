@@ -288,7 +288,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.state_;
 
   /**
-   * @type {!Array.<!ol.geom.Geometry>}
+   * @type {!Array.<?ol.geom.Geometry>}
    * @private
    */
   this.geometryChanges_ = [];
@@ -714,7 +714,6 @@ gmf.ObjecteditingController.prototype.resetGeometryChanges_ = function() {
   if (this.geometryChanges_.length === 0) {
     const geometry = this.feature.getGeometry();
     const clone = gmf.ObjecteditingController.cloneGeometry_(geometry);
-    goog.asserts.assert(clone);
     this.geometryChanges_.push(clone);
   }
 };
