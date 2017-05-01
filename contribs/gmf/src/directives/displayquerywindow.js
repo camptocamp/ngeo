@@ -74,8 +74,8 @@ gmf.displayquerywindowComponent = {
     'featuresStyleFn': '&gmfDisplayquerywindowFeaturesstyle',
     'selectedFeatureStyleFn': '&gmfDisplayquerywindowSelectedfeaturestyle',
     'defaultCollapsedFn': '&?gmfDisplayquerywindowDefaultcollapsed',
-    'desktopIn': '=gmfDisplayquerywindowDesktop',
-    'showUnqueriedLayersIn': '=gmfDisplayquerywindowShowunqueriedlayers'
+    'desktop': '=gmfDisplayquerywindowDesktop',
+    'showUnqueriedLayers': '=gmfDisplayquerywindowShowunqueriedlayers'
   },
   templateUrl: gmfDisplayquerywindowTemplateUrl
 };
@@ -103,7 +103,7 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    * @type {boolean}
    * @export
    */
-  this.desktopIn = false;
+  this.desktop = false;
 
   /**
    * Is the window currently collapsed?
@@ -111,7 +111,7 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    * @type {boolean}
    * @export
    */
-  this.collapsed = !this.desktopIn;
+  this.collapsed = !this.desktop;
 
   /**
    * @type {boolean}
@@ -225,11 +225,12 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
  * Initialise the controller.
  */
 gmf.DisplayquerywindowController.prototype.$onInit = function() {
+  this.desktop = this.desktop;
   this.collapsed = this['defaultCollapsedFn'] ?
-    this['defaultCollapsedFn']() === true : !this.desktopIn;
+    this['defaultCollapsedFn']() === true : !this.desktop;
 
-  this.showUnqueriedLayers_ = this['showUnqueriedLayersIn'] ?
-    this['showUnqueriedLayersIn'] === true : false;
+  this.showUnqueriedLayers_ = this['showUnqueriedLayers'] ?
+    this['showUnqueriedLayers'] === true : false;
 
   this.sourcesFilter = this.showUnqueriedLayers_ ? {} : {'queried': true};
 
