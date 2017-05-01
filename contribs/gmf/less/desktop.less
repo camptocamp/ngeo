@@ -264,6 +264,13 @@ gmf-backgroundlayerselector {
     height: 100%;
     overflow: auto;
 
+    & > div {
+      height: 100%;
+      & > div {
+        height: 100%;
+      }
+    }
+
     &.gmf-app-active {
       margin-right: 0;
     }
@@ -741,6 +748,6 @@ ngeo-rule {
  */
 ngeo-googlestreetview {
   display: block;
-  height: 80rem;
+  height: ~"calc(100% - 6rem)";
   width: 40rem;
 }
