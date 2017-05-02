@@ -393,11 +393,11 @@ ngeo.RuleHelper = class {
     if (conditions.length === 1) {
       mainFilter = conditions[0];
     } else if (conditions.length >= 2) {
-      if (condition === ngeo.FilterCondition.AND ||
-          condition === ngeo.FilterCondition.NOT
-      ) {
+      if (condition === ngeo.FilterCondition.AND) {
         mainFilter = ol.format.filter.and.apply(null, conditions);
-      } else if (condition === ngeo.FilterCondition.OR) {
+      } else if (condition === ngeo.FilterCondition.OR ||
+                 condition === ngeo.FilterCondition.NOT
+      ) {
         mainFilter = ol.format.filter.or.apply(null, conditions);
       }
     }
