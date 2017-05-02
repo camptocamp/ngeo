@@ -110,6 +110,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  * @htmlAttribute {ngeox.SearchDirectiveListeners} gmf-search-listeners
  *      The listeners.
  * @htmlAttribute {number} gmf-search-maxzoom The maximum zoom we will zoom on result, default is 16.
+ * @htmlAttribute {function} gmf-search-on-init Optional function called when the directive is initialized.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -131,7 +132,8 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       'colorchooser': '=gmfSearchColorchooser',
       'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
       'additionalListeners': '=gmfSearchListeners',
-      'maxZoom': '<gmfSearchMaxzoom'
+      'maxZoom': '<gmfSearchMaxzoom',
+      'onInitCallback': '&?gmfSearchOnInit'
     },
     controller: 'GmfSearchController as ctrl',
     templateUrl: gmfSearchTemplateUrl,
@@ -143,10 +145,14 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
     link(scope, element, attrs) {
       if (!scope['clearbutton']) {
         const ctrl = scope['ctrl'];
-            // Empty the search field on focus and blur.
+        // Empty the search field on focus and blur.
         element.find('input').on('focus blur', () => {
           ctrl.clear();
         });
+      }
+      const callback = scope['onInitCallback'];
+      if (callback) {
+        callback();
       }
     }
   };
