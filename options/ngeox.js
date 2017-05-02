@@ -377,8 +377,59 @@ ngeox.DataSourceOptions.prototype.wmtsUrl;
 
 /**
  * @interface
+ * @struct
  */
-ngeox.DataSource;
+ngeox.DataSource = function() {};
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.combinableForWMS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.combinableForWFS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.queryable;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.supportsWFS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.supportsWMS;
+
+/**
+ * @type {string|undefined}
+ */
+ngeox.DataSource.prototype.wmsUrl;
+
+/**
+ * @type {string|undefined}
+ */
+ngeox.DataSource.prototype.wfsUrl;
+
+/**
+ * @param {ngeox.DataSource} dataSource Data source.
+ * @return {boolean} Whether this data source can be combined to the given
+ *     other data source to fetch features in a single WFS request.
+ */
+ngeox.DataSource.prototype.combinableWithDataSourceForWFS = function(dataSource) {}
+
+
+/**
+ * @param {ngeox.DataSource} dataSource Data source.
+ * @return {boolean} Whether this data source can be combined to the given
+ *     other data source to fetch features in a single WMS request.
+ */
+ngeox.DataSource.prototype.combinableWithDataSourceForWMS = function(dataSource) {}
 
 
 /**
@@ -1938,8 +1989,9 @@ ngeox.rule.RuleOptions.prototype.upperBoundary;
 
 /**
  * @interface
+ * @struct
  */
-ngeox.rule.Rule;
+ngeox.rule.Rule = function() {};
 
 
 /**
