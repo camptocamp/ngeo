@@ -143,7 +143,7 @@ ngeo.GooglestreetviewController = class {
      * @type {boolean}
      * @private
      */
-    this.updatingLocation_ = false;
+    this.panoramaPositionChanging_ = false;
   }
 
   /**
@@ -250,7 +250,7 @@ ngeo.GooglestreetviewController = class {
     this.point_.setCoordinates(location);
 
     // (3) Update StreetView location
-    if (location) {
+    if (location && !this.panoramaPositionChanging_) {
       const lonLat = this.toLonLat_(location);
       this.streetViewService_.getPanorama({
         location: {
@@ -323,11 +323,13 @@ ngeo.GooglestreetviewController = class {
    * @private
    */
   handlePanoramaPositionChange_() {
+    this.panoramaPositionChanging_ = true;
     const position = this.panorama_.getPosition();
     const lonLat = [position.lng(), position.lat()];
     const location = this.fromLonLat_(lonLat);
     this.location = location;
     this.scope_.$apply();
+    this.panoramaPositionChanging_ = false;
   }
 
 
