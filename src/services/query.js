@@ -538,27 +538,12 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
       'QUERY_LAYERS': lyrStr
     };
 
-    // add dimensions values
-    const dimensions = items[0].source.dimensions;
-    if (dimensions) {
-      for (const key in dimensions) {
-        // get the value from the global dimensions
-        let value = this.dimensions[key];
-        if (value === undefined) {
-          // get the value from the layer default value
-          value = dimensions[key];
-        }
-        if (value !== undefined) {
-          params[key] = value;
-        }
-      }
-    }
+    Object.assign(params, this.getDimensionsParams_(items[0].source.dimensions));
 
     const wmsGetFeatureInfoUrl = items[0].source.wmsSource.getGetFeatureInfoUrl(
-        coordinate, resolution, projCode, params);
-    goog.asserts.assert(wmsGetFeatureInfoUrl, 'WMS GetFeatureInfo url should be thruty');
+             coordinate, resolution, projCode);
 
-    this.$http_.get(wmsGetFeatureInfoUrl, {timeout: this.registerCanceler_().promise})
+    this.$http_.get(wmsGetFeatureInfoUrl, {params, timeout: this.registerCanceler_().promise})
         .then(function(items, response) {
           items.forEach(function(item) {
             item['resultSource'].pending = false;
@@ -574,6 +559,30 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
           this.updatePendingState_();
         }.bind(this, items));
   }, this);
+};
+
+
+/**
+ * @param {Object.<string, string>} dimensions Source dimensions
+ * @return {Object.<string, string>} Url parameters
+ * @private
+ */
+ngeo.Query.prototype.getDimensionsParams_ = function(dimensions) {
+  const params = {};
+  if (dimensions) {
+    for (const key in dimensions) {
+      // get the value from the global dimensions
+      let value = this.dimensions[key];
+      if (value === undefined) {
+        // get the value from the layer default value
+        value = dimensions[key];
+      }
+      if (value !== undefined) {
+        params[key] = value;
+      }
+    }
+  }
+  return params;
 };
 
 
@@ -636,6 +645,8 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
         featureNS: this.featureNS_
       });
 
+      const params = this.getDimensionsParams_(items[0].source.dimensions);
+
       const getFeatures = function() {
         /** @type{olx.format.WFSWriteGetFeatureOptions} */
         const options = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.obj.assign({
@@ -645,7 +656,7 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
         const featureRequest = xmlSerializer.serializeToString(featureRequestXml);
 
         const canceler = this.registerCanceler_();
-        this.$http_.post(url, featureRequest, {timeout: canceler.promise})
+        this.$http_.post(url, featureRequest, {params, timeout: canceler.promise})
             .then((response) => {
               item['resultSource'].pending = false;
               const features = [];

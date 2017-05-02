@@ -898,7 +898,6 @@ gmf.Permalink.prototype.initLayers_ = function() {
                 treeCtrl.setState(enable ? 'on' : 'off', false);
               }
             });
-            return ngeo.LayertreeController.VisitorDecision.STOP;
           }
         }
       });

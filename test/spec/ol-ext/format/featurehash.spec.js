@@ -18,6 +18,7 @@ describe('ngeo.format.FeatureHash', () => {
   let fhFormat;
 
   beforeEach(() => {
+    ngeo.format.FeatureHash.ACCURACY_ = 1; // Easier to test
     fhFormat = new ngeo.format.FeatureHash();
   });
 
