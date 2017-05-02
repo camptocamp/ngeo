@@ -194,7 +194,7 @@ ngeo.format.FeatureHash.CHAR64_ =
  * @const
  * @private
  */
-ngeo.format.FeatureHash.ACCURACY_ = 1;
+ngeo.format.FeatureHash.ACCURACY_ = 0.1;
 
 
 /**
