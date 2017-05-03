@@ -249,7 +249,6 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
     const ids = [];
     getIds(item, ids);
     layer.set('querySourceIds', ids);
-    layer.set('editableIds', []);
     return layer;
   };
 
