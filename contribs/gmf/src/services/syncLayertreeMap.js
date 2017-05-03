@@ -203,7 +203,12 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
     goog.asserts.assert(ogcServer.url);
     goog.asserts.assert(ogcServer.type);
     layer = this.layerHelper_.createBasicWMSLayer(
-        ogcServer.url, '', ogcServer.type, timeParam
+      ogcServer.url,
+      '',
+      ogcServer.type,
+      timeParam,
+      undefined, // WMS parameters
+      ogcServer.credential ? 'use-credentials' : 'anonymous'
     );
     treeCtrl.traverseDepthFirst((ctrl) => {
       // Update layer information and tree state.
@@ -240,8 +245,14 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map
     goog.asserts.assert(ogcServer.url);
     goog.asserts.assert(ogcServer.type);
     goog.asserts.assert(gmfLayerWMS.layers);
-    layer = this.layerHelper_.createBasicWMSLayer(ogcServer.url,
-            gmfLayerWMS.layers, ogcServer.type, timeParam);
+    layer = this.layerHelper_.createBasicWMSLayer(
+      ogcServer.url,
+      gmfLayerWMS.layers,
+      ogcServer.type,
+      timeParam,
+      undefined, // WMS parameters
+      ogcServer.credential ? 'use-credentials' : 'anonymous'
+    );
   }
   // Update layer information and tree state.
   layer.set('layerNodeName', gmfLayer.name); // Really useful ?

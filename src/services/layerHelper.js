@@ -62,11 +62,12 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
  *     "geoserver", "qgisserver", …).
  * @param {string=} opt_time time parameter for layer queryable by time/periode
  * @param {Object.<string, string>=} opt_params WMS parameters.
+ * @param {string=} opt_crossOrigin crossOrigin.
  * @return {ol.layer.Image} WMS Layer.
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
-    sourceLayersName, opt_serverType, opt_time, opt_params) {
+    sourceLayersName, opt_serverType, opt_time, opt_params, opt_crossOrigin) {
 
   const params = {'LAYERS': sourceLayersName};
   let olServerType;
@@ -82,7 +83,7 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
     url: sourceURL,
     params,
     serverType: olServerType,
-    crossOrigin: 'use-credentials'
+    crossOrigin: opt_crossOrigin
   });
   if (opt_params) {
     source.updateParams(opt_params);
@@ -119,12 +120,10 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
       result = parser.read(response.data);
     }
     if (result) {
-      let options = ol.source.WMTS.optionsFromCapabilities(result, {
+      const options = ol.source.WMTS.optionsFromCapabilities(result, {
+        crossOrigin: 'anonymous',
         layer: layerName
       });
-      options = ol.obj.assign({
-        crossOrigin: 'use-credentials'
-      }, options);
       goog.asserts.assert(options);
       const source = new ol.source.WMTS(/** @type {olx.source.WMTSOptions} */ (options));
       if (opt_dimensions && !ol.obj.isEmpty(opt_dimensions)) {
@@ -348,8 +347,7 @@ ngeo.LayerHelper.prototype.refreshWMSLayer = function(layer) {
  * in a ISO-8601 string datetime or time interval format
  * @export
  */
-ngeo.LayerHelper.prototype.updateWMSLayerState = function(layer,
-    names, opt_time) {
+ngeo.LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time) {
   // Don't send layer without parameters, hide layer instead;
   if (names.length <= 0) {
     layer.setVisible(false);

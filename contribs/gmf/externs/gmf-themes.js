@@ -320,6 +320,11 @@ gmfThemes.GmfOgcServer = function() {};
 
 
 /**
+ * @type {boolean}
+ */
+gmfThemes.GmfOgcServer.prototype.credential;
+
+/**
  * 'image/png' or 'image/jpeg'.
  * @type {string}
  */
