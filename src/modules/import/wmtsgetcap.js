@@ -29,25 +29,17 @@ exports = function($window, gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) 
       }
 
       if (!layer['isInvalid']) {
-        const requestEncoding = getCap['OperationsMetadata']['GetTile']['DCP']
-          .HTTP
-          .Get[0]
-          .Constraint[0]
-          .AllowedValues
-          .Value[0];
+        const getTileMetadata = getCap['OperationsMetadata']['GetTile']['DCP']['HTTP']['Get'][0];
+        const requestEncoding = getTileMetadata['Constraint'][0]['AllowedValues']['Value'][0];
         const layerOptions = {
-          layer: layer['Identifier'],
-          requestEnconding: requestEncoding
+          'layer': layer['Identifier'],
+          'requestEnconding': requestEncoding
         };
         layer['sourceConfig'] = ol.source.WMTS.optionsFromCapabilities(getCap, layerOptions);
         layer['attribution'] = getCap['ServiceProvider']['ProviderName'];
         layer['attributionUrl'] = getCap['ServiceProvider']['ProviderSite'];
-        layer['capabilitiesUrl'] = getCap['OperationsMetadata']
-          .GetCapabilities
-          .DCP
-          .HTTP
-          .Get[0]
-          .href;
+        const getCapMeta = getCap['OperationsMetadata']['GetCapabilities'];
+        layer['capabilitiesUrl'] = getCapMeta['DCP']['HTTP']['Get'][0]['href'];
       }
 
       layers.push(layer);
