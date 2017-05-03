@@ -84,7 +84,7 @@ app.MainController = function($scope, ngeoDataSources) {
     id: 1,
     name: 'bus_stop',
     visible: true,
-    wfsUrl: 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+    wfsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
     ogcLayers: [{
       name: 'bus_stop',
       queryable: true
@@ -101,7 +101,7 @@ app.MainController = function($scope, ngeoDataSources) {
     id: 2,
     name: 'information',
     visible: true,
-    wfsUrl: 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+    wfsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
     ogcLayers: [{
       name: 'information',
       queryable: true
