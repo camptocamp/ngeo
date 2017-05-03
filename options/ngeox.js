@@ -169,7 +169,7 @@ ngeox.DataSourceOptions.prototype.filterCondition;
 /**
  * A list of filter rules to apply to this data source using the filter
  * condition.
- * @type {!Array.<!ngeo.rule.Rule>|undefined}
+ * @type {!Array.<!ngeox.rule.Rule>|undefined}
  */
 ngeox.DataSourceOptions.prototype.filterRules;
 
@@ -376,11 +376,68 @@ ngeox.DataSourceOptions.prototype.wmtsUrl;
 
 
 /**
+ * @interface
+ * @struct
+ */
+ngeox.DataSource = function() {};
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.combinableForWMS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.combinableForWFS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.queryable;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.supportsWFS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.supportsWMS;
+
+/**
+ * @type {string|undefined}
+ */
+ngeox.DataSource.prototype.wmsUrl;
+
+/**
+ * @type {string|undefined}
+ */
+ngeox.DataSource.prototype.wfsUrl;
+
+/**
+ * @param {ngeox.DataSource} dataSource Data source.
+ * @return {boolean} Whether this data source can be combined to the given
+ *     other data source to fetch features in a single WFS request.
+ */
+ngeox.DataSource.prototype.combinableWithDataSourceForWFS = function(dataSource) {}
+
+
+/**
+ * @param {ngeox.DataSource} dataSource Data source.
+ * @return {boolean} Whether this data source can be combined to the given
+ *     other data source to fetch features in a single WMS request.
+ */
+ngeox.DataSource.prototype.combinableWithDataSourceForWMS = function(dataSource) {}
+
+
+/**
  * The options to use when sending GetFeature/GetFeatureInfo requests using
  * the querent or map query service.
  * @typedef {{
  *     coordinate: (ol.Coordinate|undefined),
- *     dataSources: (Array.<ngeo.DataSource>|undefined),
+ *     dataSources: (Array.<ngeox.DataSource>|undefined),
  *     extent: (ol.Extent|undefined),
  *     filter: (ol.format.filter.Filter|undefined),
  *     limit: (number|undefined),
@@ -405,7 +462,7 @@ ngeox.IssueGetFeaturesOptions.prototype.coordinate;
  * List of data sources to query. Only those that meet the requirements will
  * actually be queried. The querent service requires either the `dataSources`
  * or `queryableDataSources` property to be set.
- * @type {Array.<ngeo.DataSource>|undefined}
+ * @type {Array.<ngeox.DataSource>|undefined}
  */
 ngeox.IssueGetFeaturesOptions.prototype.dataSources;
 
@@ -476,8 +533,8 @@ ngeox.IssueGetFeaturesOptions.prototype.wfsCount;
  * `wfs` list.
  *
  * @typedef {{
- *     wfs: (!Array.<!ngeo.DataSource>),
- *     wms: (!Array.<!ngeo.DataSource>)
+ *     wfs: (!Array.<!ngeox.DataSource>),
+ *     wms: (!Array.<!ngeox.DataSource>)
  * }}
  */
 ngeox.QueryableDataSources;
@@ -485,14 +542,14 @@ ngeox.QueryableDataSources;
 
 /**
  * List of queryable data sources that support WFS.
- * @type {Array.<ngeo.DataSource>}
+ * @type {Array.<ngeox.DataSource>}
  */
 ngeox.QueryableDataSources.prototype.wfs;
 
 
 /**
  * List of queryable data sources that support WMS.
- * @type {Array.<ngeo.DataSource>}
+ * @type {Array.<ngeox.DataSource>}
  */
 ngeox.QueryableDataSources.prototype.wms;
 
@@ -1928,6 +1985,13 @@ ngeox.rule.RuleOptions.prototype.type;
  * @type {number|undefined}
  */
 ngeox.rule.RuleOptions.prototype.upperBoundary;
+
+
+/**
+ * @interface
+ * @struct
+ */
+ngeox.rule.Rule = function() {};
 
 
 /**

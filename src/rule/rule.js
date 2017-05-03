@@ -3,6 +3,9 @@ goog.provide('ngeo.rule.Rule');
 goog.require('ngeo');
 
 
+/**
+ * @implements {ngeox.rule.Rule}
+ */
 ngeo.rule.Rule = class {
 
   /**

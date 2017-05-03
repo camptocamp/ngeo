@@ -572,7 +572,7 @@ ngeo.Querent = class {
   }
 
   /**
-   * @param {!Array.<ngeo.DataSource>} dataSources List of queryable data
+   * @param {!Array.<ngeox.DataSource>} dataSources List of queryable data
    *     sources that supports WFS.
    * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
    * @private
@@ -602,7 +602,7 @@ ngeo.Querent = class {
   }
 
   /**
-   * @param {!Array.<ngeo.DataSource>} dataSources List of queryable data
+   * @param {!Array.<ngeox.DataSource>} dataSources List of queryable data
    *     sources that supports WMS.
    * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
    * @private

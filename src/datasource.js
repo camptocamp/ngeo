@@ -6,6 +6,9 @@ goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
 
 
+/**
+ * @implements {ngeox.DataSource}
+ */
 ngeo.DataSource = class {
 
   /**
@@ -625,6 +628,7 @@ ngeo.DataSource = class {
   /**
    * @return {string|undefined} WMS url
    * @export
+   * @override
    */
   get wmsUrl() {
     return this.wmsUrl_;
@@ -641,6 +645,7 @@ ngeo.DataSource = class {
   /**
    * @return {string|undefined} WMTS url
    * @export
+   * @override
    */
   get wmtsUrl() {
     return this.wmtsUrl_;
@@ -657,6 +662,7 @@ ngeo.DataSource = class {
    * @return {boolean} Whether the data source can be combined to an other
    *     data source to fetch features in a single WFS request.
    * @export
+   * @override
    */
   get combinableForWFS() {
     return this.filterRules_ === null;
@@ -671,6 +677,7 @@ ngeo.DataSource = class {
    * @return {boolean} Whether the data source can be combined to an other
    *     data source to fetch features in a single WMS request.
    * @export
+   * @override
    */
   get combinableForWMS() {
     return this.filterRules_ === null;
@@ -709,6 +716,7 @@ ngeo.DataSource = class {
    * @return {boolean} Whether the data source supports making WFS requests
    *     or not.
    * @export
+   * @override
    */
   get supportsWFS() {
     return this.wfsUrl !== undefined;
@@ -739,6 +747,7 @@ ngeo.DataSource = class {
    * @return {boolean} Whether the data source supports making WMS requests
    *     or not.
    * @export
+   * @override
    */
   get supportsWMS() {
     return this.wmsUrl !== undefined;
@@ -772,10 +781,11 @@ ngeo.DataSource = class {
   // === Other public methods ===
 
   /**
-   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {ngeox.DataSource} dataSource Data source.
    * @return {boolean} Whether this data source can be combined to the given
    *     other data source to fetch features in a single WFS request.
    * @export
+   * @override
    */
   combinableWithDataSourceForWFS(dataSource) {
     return this.combinableForWFS && dataSource.combinableForWFS &&
@@ -785,10 +795,11 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {ngeox.DataSource} dataSource Data source.
    * @return {boolean} Whether this data source can be combined to the given
    *     other data source to fetch features in a single WMS request.
    * @export
+   * @override
    */
   combinableWithDataSourceForWMS(dataSource) {
     return this.combinableForWMS && dataSource.combinableForWMS &&
