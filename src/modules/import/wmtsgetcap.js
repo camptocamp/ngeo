@@ -7,14 +7,13 @@ goog.require('ol.source.WMTS');
 
 /**
  * @constructor
- * @param {Window} $window The window.
  * @param {gettext} gettext Gettext.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoWmtsGetCapTemplateUrl The template url.
  * @ngInject
  */
-exports = function($window, gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
+exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
   // Go through all layers, assign needed properties,
   // and remove useless layers (no name or bad crs without children
   // or no intersection between map extent and layer extent)
@@ -72,7 +71,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) 
         }
 
         if (err || !val) {
-          $window.console.error('WMTS GetCap parsing failed: ', err || val);
+          console.error('WMTS GetCap parsing failed: ', err || val);
           scope['userMsg'] = gettext('Parsing failed');
           return;
         }
@@ -98,10 +97,10 @@ exports = function($window, gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) 
             }
 
           } catch (e) {
-            $window.console.error(`Add layer failed:${e}`);
+            console.error(`Add layer failed:${e}`);
             msg = `${gettextCatalog.getString('WMTS layer could not be added')} ${e.message}`;
           }
-          $window.alert(msg);
+          alert(msg);
         }
       };
 
