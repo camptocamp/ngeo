@@ -890,7 +890,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
           const groupLayers = this.ngeoStateManager_.getInitialStringValue(
             gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
           );
-          if (groupLayers !== undefined) {
+          if (groupLayers) {
             const groupLayersArray = groupLayers.split(',');
             treeCtrl.traverseDepthFirst((treeCtrl) => {
               if (treeCtrl.node.children === undefined) {

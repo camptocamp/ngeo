@@ -94,7 +94,7 @@ app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
     id: 1,
     name: 'bus_stop',
     visible: true,
-    wmsUrl: 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+    wmsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
     ogcLayers: [{
       name: 'bus_stop',
       queryable: true
@@ -111,7 +111,7 @@ app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
     id: 2,
     name: 'information',
     visible: true,
-    wmsUrl: 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+    wmsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
     ogcLayers: [{
       name: 'information',
       queryable: true
