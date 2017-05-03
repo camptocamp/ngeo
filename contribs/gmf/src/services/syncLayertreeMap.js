@@ -316,12 +316,6 @@ gmf.SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode, layer
   querySourceIds.push(id);
   layer.set('querySourceIds', querySourceIds);
 
-  if (leafNode.editable) {
-    const editableIds = layer.get('editableIds') || [];
-    editableIds.push(id);
-    layer.set('editableIds', editableIds);
-  }
-
   const disclaimer = leafNode.metadata.disclaimer;
   if (disclaimer) {
     const disclaimers = layer.get('disclaimers') || [];
