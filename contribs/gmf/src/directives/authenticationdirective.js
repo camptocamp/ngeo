@@ -11,7 +11,7 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @return {boolean} Template URL.
+     * @return {string} Template URL.
      */
     (element, attrs) => {
       const templateUrl = attrs['gmfAuthenticationTemplateurl'];
