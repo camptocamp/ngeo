@@ -1,14 +1,18 @@
 goog.provide('gmf.DataSourcesManager');
 
 goog.require('gmf');
-goog.require('gmf.TreeManager');
 goog.require('gmf.DataSource');
 goog.require('gmf.SyncLayertreeMap');
+goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DataSources');
+goog.require('ngeo.LayerHelper');
 goog.require('ngeo.RuleHelper');
+goog.require('ngeo.WMSTime');
 goog.require('ol.array');
 goog.require('ol.obj');
+goog.require('ol.layer.Image');
+goog.require('ol.source.ImageWMS');
 
 
 gmf.DataSourcesManager = class {
@@ -29,13 +33,15 @@ gmf.DataSourcesManager = class {
    * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
    * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
    *     objects.
+   * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
    * @ngInject
    * @ngdoc service
    * @ngname gmfDataSourcesManager
    */
   constructor($q, $rootScope, $timeout, gmfThemes, gmfTreeManager,
-      ngeoDataSources, ngeoRuleHelper
+      ngeoDataSources, ngeoLayerHelper, ngeoRuleHelper, ngeoWMSTime
   ) {
 
     // === Injected properties ===
@@ -80,10 +86,22 @@ gmf.DataSourcesManager = class {
     this.ngeoDataSources_ = ngeoDataSources;
 
     /**
+     * @type {!ngeo.LayerHelper}
+     * @private
+     */
+    this.ngeoLayerHelper_ = ngeoLayerHelper;
+
+    /**
      * @type {!ngeo.RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
+
+    /**
+     * @type {!ngeo.WMSTime}
+     * @private
+     */
+    this.ngeoWMSTime_ = ngeoWMSTime;
 
 
     // === Inner properties ===
@@ -263,6 +281,7 @@ gmf.DataSourcesManager = class {
     let wmtsLayer;
     let wmtsUrl;
     let ogcImageType;
+    let timeProperty;
 
     if (ogcType === gmf.Themes.NodeType.WMTS) {
       // (3) Manage WMTS
@@ -316,6 +335,13 @@ gmf.DataSourcesManager = class {
       goog.asserts.assert(ogcServerName);
       ogcServer = ogcServers[ogcServerName];
       ogcImageType = ogcServer.imageType;
+
+      // Time property
+      if (gmfLayerWMS.time) {
+        timeProperty = gmfLayerWMS.time;
+      } else if (firstLevelGroup && firstLevelGroup.time) {
+        timeProperty = firstLevelGroup.time;
+      }
     }
 
     // (5) ogcServer
@@ -338,10 +364,24 @@ gmf.DataSourcesManager = class {
     const dimensions = node.dimensions || firstLevelGroup.dimensions;
     const activeDimensions = dimensions;
 
-    // (8) Common options
+    // (8) Time values (lower or lower/upper)
+    let timeLowerValue;
+    let timeUpperValue;
+    if (timeProperty) {
+      const timeValues = this.ngeoWMSTime_.getOptions(timeProperty)['values'];
+      if (Array.isArray(timeValues)) {
+        timeLowerValue = timeValues[0];
+        timeUpperValue = timeValues[1];
+      } else {
+        timeLowerValue = timeValues;
+      }
+    }
+
+    // (9) Common options
     const copyable = meta.copyable;
     const identifierAttribute = meta.identifierAttributeField;
     const name = gmfLayer.name;
+    const timeAttributeName = meta.timeAttribute;
     const visible = meta.isChecked === true;
 
     // Create the data source and add it to the cache
@@ -363,6 +403,10 @@ gmf.DataSourcesManager = class {
       snappingTolerance,
       snappingToEdges,
       snappingToVertice,
+      timeAttributeName,
+      timeLowerValue,
+      timeProperty,
+      timeUpperValue,
       visible,
       wfsUrl,
       wmsIsSingleTile,
@@ -401,10 +445,38 @@ gmf.DataSourcesManager = class {
       this.handleDataSourceFilterRulesChange_.bind(this, dataSource)
     );
 
+    // Watch for time values change to update the WMS layer
+    let timeLowerValueWatcherUnregister;
+    let timeUpperValueWatcherUnregister;
+    let wmsLayer;
+    if (dataSource.timeProperty &&
+        dataSource.ogcType === ngeo.DataSource.OGCType.WMS
+    ) {
+      timeLowerValueWatcherUnregister = this.rootScope_.$watch(
+        () => dataSource.timeLowerValue,
+        this.handleDataSourceTimeValueChange_.bind(this, dataSource)
+      );
+
+      if (dataSource.timeProperty.mode === 'range') {
+        timeUpperValueWatcherUnregister = this.rootScope_.$watch(
+          () => dataSource.timeUpperValue,
+          this.handleDataSourceTimeValueChange_.bind(this, dataSource)
+        );
+      }
+
+      wmsLayer = goog.asserts.assertInstanceof(
+        gmf.SyncLayertreeMap.getLayer(treeCtrl),
+        ol.layer.Image
+      );
+    }
+
     this.treeCtrlCache_[id] = {
       filterRulesWatcherUnregister,
       stateWatcherUnregister,
-      treeCtrl
+      timeLowerValueWatcherUnregister,
+      timeUpperValueWatcherUnregister,
+      treeCtrl,
+      wmsLayer
     };
 
     this.ngeoDataSources_.push(dataSource);
@@ -429,6 +501,12 @@ gmf.DataSourcesManager = class {
     item.treeCtrl.setDataSource(null);
     item.filterRulesWatcherUnregister();
     item.stateWatcherUnregister();
+    if (item.timeLowerValueWatcherUnregister) {
+      item.timeLowerValueWatcherUnregister();
+    }
+    if (item.timeUpperValueWatcherUnregister) {
+      item.timeUpperValueWatcherUnregister();
+    }
     delete this.treeCtrlCache_[`${dataSource.id}`];
   }
 
@@ -518,8 +596,10 @@ gmf.DataSourcesManager = class {
 
     const filtrableLayerName = dataSource.getFiltrableOGCLayerName();
     const projCode = treeCtrl.map.getView().getProjection().getCode();
-    const filterString = this.ngeoRuleHelper_.createFilterString(
-      dataSource, projCode);
+    const filterString = this.ngeoRuleHelper_.createFilterString({
+      dataSource,
+      projCode
+    });
 
     const filterParam = 'FILTER';
     let filterParamValue = null;
@@ -555,6 +635,42 @@ gmf.DataSourcesManager = class {
     });
   }
 
+  /**
+   * Called when either the `timeLowerValue` or `timeUpperValue` property of a
+   * data source changes.
+   *
+   * Get the range value from the data source, then update the WMS layer
+   * thereafter.
+   *
+   * @param {!ngeo.DataSource} dataSource Data source.
+   * @private
+   */
+  handleDataSourceTimeValueChange_(dataSource) {
+
+    const item = this.treeCtrlCache_[dataSource.id];
+    goog.asserts.assert(item);
+    const wmsLayer = goog.asserts.assert(item.wmsLayer);
+    const wmsSource = goog.asserts.assertInstanceof(
+      wmsLayer.getSource(),
+      ol.source.ImageWMS
+    );
+
+    const timeProperty = goog.asserts.assert(dataSource.timeProperty);
+    let timeParam;
+    const range = dataSource.timeRangeValue;
+    if (range) {
+      timeParam = this.ngeoWMSTime_.formatWMSTimeParam(timeProperty, range);
+    }
+
+    // The `timeParam` can be undefined, which means that the TIME property
+    // gets reset.
+    this.ngeoLayerHelper_.updateWMSLayerState(
+      wmsLayer,
+      wmsSource.getParams()['LAYERS'],
+      timeParam
+    );
+  }
+
 };
 
 
@@ -568,7 +684,10 @@ gmf.DataSourcesManager.TreeCtrlCache;
  * @typedef {{
  *     filterRulesWatcherUnregister: (Function),
  *     stateWatcherUnregister: (Function),
- *     treeCtrl: (ngeo.LayertreeController)
+ *     timeLowerValueWatcherUnregister: (Function|undefined),
+ *     timeUpperValueWatcherUnregister: (Function|undefined),
+ *     treeCtrl: (ngeo.LayertreeController),
+ *     wmsLayer: (ol.layer.Image|undefined)
  * }}
  */
 gmf.DataSourcesManager.TreeCtrlCacheItem;

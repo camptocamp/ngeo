@@ -86,6 +86,64 @@ ngeox.Attribute.prototype.type;
 
 
 /**
+ * The options to use when creating a filter uwing the `ngeo.RuleHelper`
+ * service.
+ *
+ * @typedef {{
+ *     dataSource: (ngeo.DataSource),
+ *     incTime: (boolean|undefined),
+ *     filter: (ol.format.filter.Filter|undefined),
+ *     filterRules: (!Array.<ngeo.rule.Rule>|undefined),
+ *     srsName: (string|undefined)
+ * }}
+ */
+ngeox.CreateFilterOptions;
+
+
+/**
+ * The data source from which to get the filterRules that will be used to
+ * create the OL filter object.
+ * @type {ngeo.DataSource}
+ */
+ngeox.CreateFilterOptions.prototype.dataSource;
+
+
+/**
+ * Whether to include the data source's time values in the filter created. The
+ * property that contains those values is `timeRangeValue`. Defaults to `false`.
+ * When building a filter for WMS, it should not be included as it is given as
+ * the TIME parameter of the query instead. When used for a WFS request, it
+ * should be included in the filter.
+ * @type {boolean|undefined}
+ */
+ngeox.CreateFilterOptions.prototype.incTime;
+
+
+/**
+ * A filter that is directly given the the method instead of creating one.
+ * Useful to automatically combine the time values.
+ * @type {ol.format.filter.Filter|undefined}
+ */
+ngeox.CreateFilterOptions.prototype.filter;
+
+
+/**
+ * An alternative list of filter rules to use instead of those that are defined
+ * within the data source. Useful when one wants to get the data of a given
+ * filter without applying it to the data source.
+ * @type {Array.<!ngeo.rule.Rule>|undefined}
+ */
+ngeox.CreateFilterOptions.prototype.filterRules;
+
+
+/**
+ * The SRS name used with the spatial filters created by the method.
+ * @type {string|undefined}
+ */
+ngeox.CreateFilterOptions.prototype.srsName;
+
+
+/**
  * The definition of a single layer (WMS) and/or featureType (WFS).
  * @record
  * @struct
@@ -301,6 +359,36 @@ ngeox.DataSourceOptions.prototype.snappingToVertice;
  * @type {number|undefined}
  */
 ngeox.DataSourceOptions.prototype.snappingTolerance;
+
+
+/**
+ * The name of the time attribute.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.timeAttributeName;
+
+
+/**
+ * The time lower value, which can be combined with the time upper value
+ * to determine a range.
+ * @type {number|undefined}
+ */
+ngeox.DataSourceOptions.prototype.timeLowerValue;
+
+
+/**
+ * The time property for the data source. Used to apply time filters.
+ * @type {ngeox.TimeProperty|undefined}
+ */
+ngeox.DataSourceOptions.prototype.timeProperty;
+
+
+/**
+ * The time upper value, which can be combined with the time lower value
+ * to determine a range.
+ * @type {number|undefined}
+ */
+ngeox.DataSourceOptions.prototype.timeUpperValue;
 
 
 /**
@@ -1863,6 +1951,15 @@ ngeox.TimePropertyResolutionEnum = {
  * }}
  */
 ngeox.TimeProperty;
+
+
+/**
+ * @typedef {{
+ *     end: (number|undefined),
+ *     start: number
+ * }}
+ */
+ngeox.TimeRange;
 
 
 /**

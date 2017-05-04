@@ -2,6 +2,7 @@ goog.provide('ngeo.RuleHelper');
 
 goog.require('ngeo');
 goog.require('ngeo.FeatureHelper');
+goog.require('ngeo.WMSTime');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Select');
@@ -19,12 +20,13 @@ ngeo.RuleHelper = class {
    *
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
    * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+   * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
    * @struct
    * @ngdoc service
    * @ngname ngeoRuleHelper
    * @ngInject
    */
-  constructor(gettextCatalog, ngeoFeatureHelper) {
+  constructor(gettextCatalog, ngeoFeatureHelper, ngeoWMSTime) {
 
     /**
      * @type {!angularGettext.Catalog}
@@ -37,6 +39,12 @@ ngeo.RuleHelper = class {
      * @private
      */
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
+
+    /**
+     * @type {!ngeo.WMSTime}
+     * @private
+     */
+    this.ngeoWMSTime_ = ngeoWMSTime;
   }
 
   /**
@@ -362,65 +370,82 @@ ngeo.RuleHelper = class {
   }
 
   /**
-   * @param {ngeo.DataSource} dataSource Data source.
-   * @param {string=} opt_srsName SRS name. No srsName attribute will be
-   *     set on geometries when this is not provided.
-   * @param {Array.<!ngeo.rule.Rule>=} opt_filterRules Alternative list of
-   *     filter rules.
-   * @return {?ol.format.filter.Filter} filter Filter
+   * Create a `ol.format.filter.Filter` object for a given data source.
+   * See the `ngeox.CreateFilterOptions` to learn more.
+   *
+   * @param {ngeox.CreateFilterOptions} options Options.
+   * @return {?ol.format.filter.Filter} Filter.
    * @export
    */
-  createFilter(dataSource, opt_srsName, opt_filterRules) {
+  createFilter(options) {
 
+    const dataSource = options.dataSource;
     let mainFilter = null;
-    const rules = opt_filterRules || dataSource.filterRules;
-    const conditions = [];
 
-    if (rules && rules.length) {
-      for (const rule of rules) {
-        const filter = this.createFilterFromRule_(
-          rule,
-          dataSource,
-          opt_srsName
-        );
-        if (filter) {
-          conditions.push(filter);
+    if (options.filter) {
+      mainFilter = options.filter;
+    } else {
+      const rules = options.filterRules || dataSource.filterRules;
+      const conditions = [];
+
+      if (rules && rules.length) {
+        for (const rule of rules) {
+          const filter = this.createFilterFromRule_(
+            rule,
+            dataSource,
+            options.srsName
+          );
+          if (filter) {
+            conditions.push(filter);
+          }
         }
       }
-    }
 
-    const condition = dataSource.filterCondition;
-    if (conditions.length === 1) {
-      mainFilter = conditions[0];
-    } else if (conditions.length >= 2) {
-      if (condition === ngeo.FilterCondition.AND) {
-        mainFilter = ol.format.filter.and.apply(null, conditions);
-      } else if (condition === ngeo.FilterCondition.OR ||
-                 condition === ngeo.FilterCondition.NOT
-      ) {
-        mainFilter = ol.format.filter.or.apply(null, conditions);
+      const condition = dataSource.filterCondition;
+      if (conditions.length === 1) {
+        mainFilter = conditions[0];
+      } else if (conditions.length >= 2) {
+        if (condition === ngeo.FilterCondition.AND) {
+          mainFilter = ol.format.filter.and.apply(null, conditions);
+        } else if (condition === ngeo.FilterCondition.OR ||
+                   condition === ngeo.FilterCondition.NOT
+        ) {
+          mainFilter = ol.format.filter.or.apply(null, conditions);
+        }
+      }
+      if (mainFilter && condition === ngeo.FilterCondition.NOT) {
+        mainFilter = ol.format.filter.not(mainFilter);
       }
     }
 
-    if (mainFilter && condition === ngeo.FilterCondition.NOT) {
-      mainFilter = ol.format.filter.not(mainFilter);
+    if (options.incTime) {
+      const timeFilter = this.createTimeFilterFromDataSource_(dataSource);
+      if (timeFilter) {
+        if (mainFilter) {
+          mainFilter = ol.format.filter.and.apply(
+            null,
+            [
+              mainFilter,
+              timeFilter
+            ]
+          );
+        } else {
+          mainFilter = timeFilter;
+        }
+      }
     }
 
     return mainFilter;
   }
 
   /**
-   * @param {ngeo.DataSource} dataSource Data source.
-   * @param {string=} opt_srsName SRS name. No srsName attribute will be
-   *     set on geometries when this is not provided.
-   * @param {Array.<!ngeo.rule.Rule>=} opt_filterRules Alternative list of
-   *     filter rules.
-   * @return {?string} filter Filter string.
+   * @param {ngeox.CreateFilterOptions} options Options.
+   * @return {?string} Filter string.
    * @export
    */
-  createFilterString(dataSource, opt_srsName, opt_filterRules) {
+  createFilterString(options) {
     let filterString = null;
-    const filter = this.createFilter(dataSource, opt_srsName, opt_filterRules);
+    const filter = this.createFilter(options);
     if (filter) {
       const filterNode = ol.format.WFS.writeFilter(filter);
       const xmlSerializer = new XMLSerializer();
@@ -556,6 +581,71 @@ ngeo.RuleHelper = class {
         propertyName,
         expression
       );
+    }
+
+    return filter;
+  }
+
+  /**
+   * Create and return an OpenLayers filter object using the available
+   * time properties within the data source.
+   * @param {ngeo.DataSource} dataSource Data source from which to create the
+   *     filter.
+   * @return {?ol.format.filter.Filter} Filter
+   * @private
+   */
+  createTimeFilterFromDataSource_(dataSource) {
+    let filter = null;
+    const range = dataSource.timeRangeValue;
+    const timeProperty = dataSource.timeProperty;
+    const name = dataSource.timeAttributeName;
+
+    if (range && timeProperty && name) {
+
+      if (range.end !== undefined) {
+        // Case 1: the range has both 'start' and 'end' values.  Use them to
+        //         create a During filter.
+
+        const values = this.ngeoWMSTime_.formatWMSTimeParam(
+          timeProperty,
+          range
+        ).split('/');
+
+        filter = ol.format.filter.during(name, values[0], values[1]);
+      } else {
+
+        // Case 2: we only have a 'start' value. We need to calculate the 'end'
+        //         using the resolution of the time property.
+
+        const resolution = timeProperty.resolution || 'seconds';
+        const value = this.ngeoWMSTime_.formatWMSTimeParam(
+          timeProperty,
+          range
+        );
+        let momentEnd;
+
+        switch (resolution) {
+          case 'year':
+            momentEnd = moment(value).add(1, 'years').subtract(1, 'seconds');
+            break;
+          case 'month':
+            momentEnd = moment(value).add(1, 'months').subtract(1, 'seconds');
+            break;
+          case 'day':
+            momentEnd = moment(value).add(1, 'days').subtract(1, 'seconds');
+            break;
+          default:
+            //case "second":
+            // This would require a TContains filter, which neither OpenLayers
+            // and MapServer support. Skip...
+        }
+
+        if (momentEnd) {
+          const startValue = moment(value).format('YYYY-MM-DD HH:mm:ss');
+          const endValue = momentEnd.format('YYYY-MM-DD HH:mm:ss');
+          filter = ol.format.filter.during(name, startValue, endValue);
+        }
+      }
     }
 
     return filter;

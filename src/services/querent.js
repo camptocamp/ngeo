@@ -2,6 +2,7 @@ goog.provide('ngeo.Querent');
 
 goog.require('ngeo');
 goog.require('ngeo.RuleHelper');
+goog.require('ngeo.WMSTime');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WFSDescribeFeatureType');
 goog.require('ol.obj');
@@ -20,11 +21,12 @@ ngeo.Querent = class {
    * @param {angular.$http} $http Angular $http service.
    * @param {angular.$q} $q The Angular $q service.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
    * @ngdoc service
    * @ngname ngeoQuerent
    * @ngInject
    */
-  constructor($http, $q, ngeoRuleHelper) {
+  constructor($http, $q, ngeoRuleHelper, ngeoWMSTime) {
 
     // === Injected properties ===
 
@@ -45,6 +47,12 @@ ngeo.Querent = class {
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
+
+    /**
+     * @type {!ngeo.WMSTime}
+     * @private
+     */
+    this.ngeoWMSTime_ = ngeoWMSTime;
 
 
     // === Other properties ===
@@ -331,11 +339,27 @@ ngeo.Querent = class {
         //     is expected to be used for this request.
         let filter;
         if (options.filter) {
-          filter = options.filter;
-        } else if (dataSource.filterRules && dataSource.filterRules.length) {
-          goog.asserts.assert(dataSources.length === 1);
-          filter = this.ngeoRuleHelper_.createFilter(dataSource, srsName);
+          filter = this.ngeoRuleHelper_.createFilter({
+            dataSource,
+            filter: options.filter,
+            incTime: true
+          });
+        } else if ((dataSource.filterRules && dataSource.filterRules.length) ||
+            dataSource.timeRangeValue) {
+
+          goog.asserts.assert(
+            dataSources.length === 1,
+            `A data source having filterRules or timeRangeValue should issue
+            a single query, alone.`
+          );
+
+          filter = this.ngeoRuleHelper_.createFilter({
+            dataSource,
+            incTime: true,
+            srsName
+          });
         }
+
         if (filter) {
           getFeatureCommonOptions['filter'] = filter;
         }
@@ -501,10 +525,10 @@ ngeo.Querent = class {
         if (dataSource.filterRules && dataSource.filterRules.length) {
           goog.asserts.assert(dataSources.length === 1);
           filtrableLayerName = dataSource.getFiltrableOGCLayerName();
-          filterString = this.ngeoRuleHelper_.createFilterString(
+          filterString = this.ngeoRuleHelper_.createFilterString({
             dataSource,
-            projCode
-          );
+            srsName: projCode
+          });
         }
       }
 

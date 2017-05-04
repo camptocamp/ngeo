@@ -56,6 +56,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "${_ngeo_folder}externs/angular-dynamic-locale.js",
       "${_ngeo_folder}externs/file-saver.js",
       "${_ngeo_folder}externs/jsts.js",
+      "${_ngeo_folder}externs/moment.js",
       "${_ngeo_folder}externs/geo-admin-api.js",
       ".build/externs/angular-1.6.js",
       ".build/externs/angular-1.6-q_templated.js",
