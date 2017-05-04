@@ -290,7 +290,8 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
           gmfLayerWMS.layers || '',
           server.type,
           undefined, // time
-          gmfLayer.dimensions
+          gmfLayer.dimensions,
+          server.credential ? 'use-credentials' : 'anonymous'
       ));
     }
     goog.asserts.fail(`Unsupported type: ${gmfLayer.type}`);
