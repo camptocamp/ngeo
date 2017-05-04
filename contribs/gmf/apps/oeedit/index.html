@@ -67,7 +67,7 @@
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
                 {{'Object Editing' | translate}}
-                <a class="btn close" ng-click="mainCtrl.oeEditActive = false">&times;</a>
+                <a class="btn close" ng-click="mainCtrl.oeEditActive = false; mainCtrl.queryActive = true">&times;</a>
               </div>
               <gmf-objectediting
                 ng-if="mainCtrl.oeFeature && mainCtrl.oeLayerNodeId"
