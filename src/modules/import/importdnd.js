@@ -7,6 +7,7 @@ goog.require('ngeo.fileService');
  * @constructor
  * @param {Window} $window The window.
  * @param {jQuery} $document The document.
+ * @param {angular.$q} $q .
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.File} ngeoFile The ngeo file service.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
@@ -14,7 +15,7 @@ goog.require('ngeo.fileService');
  * @ngInject
  * @struct
  */
-exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTemplateUrl) {
+exports = function($window, $document, $q, gettextCatalog, ngeoFile, ngeoImportDndTemplateUrl) {
 
   return {
     restrict: 'A',
@@ -65,10 +66,15 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
           const text = evt.originalEvent.dataTransfer.getData('text/plain');
 
           if (options.isValidUrl(text)) {
-            ngeoFile.load(text).then(fileContent => scope['handleFileContent'](fileContent, {
-              url: text
-            }))['catch']((err) => {
-              $window.alert(gettextCatalog.getString(err.message));
+
+            const transformUrl = options.transformUrl || $q.when;
+
+            transformUrl(text).then((url) => {
+              ngeoFile.load(url).then(fileContent => scope['handleFileContent'](fileContent, {
+                url
+              }))['catch']((err) => {
+                $window.alert(gettextCatalog.getString(err.message));
+              });
             });
           } else {
             $window.alert(gettextCatalog.getString('Invalid URL') + text);
