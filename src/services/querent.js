@@ -530,6 +530,17 @@ ngeo.Querent = class {
             srsName: projCode
           });
         }
+
+        // (e) Add TIME parameter if the data source has a time range value.
+        //     If that's the case, then it is expected that one request will be
+        //     sent for this data source only.
+        if (dataSource.timeRangeValue !== null && dataSource.timeProperty) {
+          goog.asserts.assert(dataSources.length === 1);
+          params['TIME'] = this.ngeoWMSTime_.formatWMSTimeParam(
+            dataSource.timeProperty,
+            dataSource.timeRangeValue
+          );
+        }
       }
 
       ol.obj.assign(params, {
