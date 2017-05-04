@@ -3,6 +3,13 @@ goog.provide('ngeo.geom');
 goog.require('ngeo.coordinate');
 
 
+/**
+ * Convert all coordinates within a geometry object to XY, i.e. remove any
+ * extra dimension other than X and Y to the coordinates of a geometry.
+ *
+ * @param {ol.geom.Geometry} geom Geometry
+ * @param {number} nesting Nesting level.
+ */
 ngeo.geom.toXY = function(geom) {
   if (geom instanceof ol.geom.Point) {
     geom.setCoordinates(
