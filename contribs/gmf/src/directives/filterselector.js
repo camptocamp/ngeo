@@ -470,6 +470,7 @@ gmf.FilterselectorController = class {
           Here are the reasons: `
         );
         msgs.unshift(`${p1} ${p2} ${p3}`);
+        console.warn(msgs.join(' '));
         this.ngeoNotification_.notify({
           msg: msgs.join(' '),
           type: ngeo.MessageType.WARNING
