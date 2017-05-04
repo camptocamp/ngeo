@@ -8,7 +8,6 @@ goog.require('ngeo.coordinate');
  * extra dimension other than X and Y to the coordinates of a geometry.
  *
  * @param {ol.geom.Geometry} geom Geometry
- * @param {number} nesting Nesting level.
  */
 ngeo.geom.toXY = function(geom) {
   if (geom instanceof ol.geom.Point) {
