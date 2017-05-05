@@ -5,7 +5,7 @@
 let path = require('path');
 
 let async = require('async');
-let closure = require('closure-util');
+let closure = require('@camptocamp/closure-util');
 let fs = require('fs-extra');
 let nomnom = require('nomnom');
 let temp = require('temp').track();

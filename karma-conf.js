@@ -7,7 +7,7 @@ var isDebug = process.argv.some(function(argument) {
 });
 
 module.exports = function(config) {
-  var closureLibPath = 'node_modules/closure-util/.deps/library/**/';
+  var closureLibPath = 'node_modules/@camptocamp/closure-util/.deps/library/**/';
   var olSrcPath = 'node_modules/openlayers/src/';
   var olExtPath = 'node_modules/openlayers/build/ol.ext/';
 
@@ -42,7 +42,7 @@ module.exports = function(config) {
       'node_modules/bootstrap/dist/js/bootstrap.js',
       'node_modules/floatthead/dist/jquery.floatThead.js',
       'node_modules/proj4/dist/proj4-src.js',
-      'node_modules/d3/d3.js',
+      'node_modules/d3/build/d3.js',
       'node_modules/file-saver/FileSaver.js',
       'node_modules/corejs-typeahead/dist/typeahead.bundle.js',
       'third-party/jquery-ui/jquery-ui.js',
