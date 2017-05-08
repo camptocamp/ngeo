@@ -7,6 +7,7 @@ goog.require('gmf.EditFeature');
 goog.require('gmf.ObjectEditingQuery');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.FeatureHelper');
+goog.require('ngeo.geom');
 /** @suppress {extraRequire} */
 goog.require('ngeo.jstsExports');
 goog.require('ngeo.LayerHelper');
@@ -480,17 +481,30 @@ gmf.ObjecteditingController.prototype.save = function() {
 
   this.pending = true;
 
+  // The geometry of the feature may contain Z in its coordinates, which
+  // GMF doesn't support.  This section ensures that the geometry gets purged
+  // of all Z from the coordinates before saving.
+  //
+  // Also, this is only done before saving on a clone of the feature. Doing
+  // it directly on the feature makes JSTS complain.
+  const feature = this.feature.clone();
+  feature.setId(this.feature.getId());
+  const geometry = feature.getGeometry();
+  if (geometry) {
+    ngeo.geom.toXY(geometry);
+  }
+
   if (this.state_ === gmf.ObjecteditingController.State.INSERT) {
     this.gmfEditFeature_.insertFeatures(
       this.layerNodeId,
-      [this.feature]
+      [feature]
     ).then(
       this.handleEditFeature_.bind(this)
     );
   } else if (this.state_ === gmf.ObjecteditingController.State.UPDATE) {
     this.gmfEditFeature_.updateFeature(
       this.layerNodeId,
-      this.feature
+      feature
     ).then(
       this.handleEditFeature_.bind(this)
     );
