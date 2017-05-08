@@ -647,7 +647,7 @@ gmf.DataSourcesManager = class {
    */
   handleDataSourceTimeValueChange_(dataSource) {
 
-    const item = this.treeCtrlCache_[dataSource.id];
+    const item = this.treeCtrlCache_[String(dataSource.id)];
     goog.asserts.assert(item);
     const wmsLayer = goog.asserts.assert(item.wmsLayer);
     const wmsSource = goog.asserts.assertInstanceof(
