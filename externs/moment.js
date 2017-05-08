@@ -5,10 +5,12 @@ var Moment = function() {};
 
 
 /**
- * @param {moment.UnitObject=} opt_add
+ * See: https://momentjs.com/docs/#/manipulating/add/
+ * @param {moment.UnitObject|number} option1
+ * @param {string=} opt_option2
  * @return {Moment}
  */
-Moment.prototype.add = function(opt_add) {};
+Moment.prototype.add = function(option1, opt_option2) {};
 
 
 /**
@@ -19,10 +21,12 @@ Moment.prototype.format = function(opt_options) {};
 
 
 /**
- * @param {moment.UnitObject=} opt_subtract
+ * See: https://momentjs.com/docs/#/manipulating/subtract/
+ * @param {moment.UnitObject|number} option1
+ * @param {string=} opt_option2
  * @return {Moment}
  */
-Moment.prototype.subtract = function(opt_subtract) {};
+Moment.prototype.subtract = function(option1, opt_option2) {};
 
 
 /**

@@ -778,7 +778,7 @@ ngeo.DataSource = class {
    */
   get combinableForWFS() {
     return this.filterRules_ === null &&
-      this.timeRangeValue_ === null;
+      this.timeRangeValue === null;
   }
 
   /**
@@ -795,7 +795,7 @@ ngeo.DataSource = class {
    */
   get combinableForWMS() {
     return this.filterRules_ === null &&
-      this.timeRangeValue_ === null;
+      this.timeRangeValue === null;
   }
 
   /**
