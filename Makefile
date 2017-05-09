@@ -45,6 +45,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/file-saver/FileSaver.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.js \
 	node_modules/jsts/dist/jsts.min.js \
+	node_modules/moment/min/moment.min.js \
 	third-party/jquery-ui/jquery-ui.js \
 	$(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js
 else
@@ -67,6 +68,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/d3/build/d3.min.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.min.js \
 	node_modules/jsts/dist/jsts.min.js \
+	node_modules/moment/min/moment.min.js \
 	third-party/jquery-ui/jquery-ui.min.js
 endif
 
@@ -97,6 +99,7 @@ EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
 	.build/examples-hosted/lib/proj4.js \
 	.build/examples-hosted/lib/jsts.min.js \
+	.build/examples-hosted/lib/moment.min.js \
 	.build/examples-hosted/lib/transpile.js \
 	.build/examples-hosted/https.js \
 	.build/examples-hosted/lib/font-awesome.min.css \
@@ -464,6 +467,10 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/moment.min.js: node_modules/moment/min/moment.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/font-awesome.min.css: node_modules/font-awesome/css/font-awesome.min.css
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -549,6 +556,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
+		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
 		-e 's|/@?main=$*.js|lib/transpile.js|' \
 		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
@@ -581,6 +589,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
+		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
 		-e 's|/@?main=$*\.js|../../lib/transpile.js|' \
 		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
