@@ -280,7 +280,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @type {number}
    * @export
    */
-  this.maxZoom = 16;
+  this.maxZoom = parseInt(this.scope_['maxZoom'], 10) || 16;
 
   let coordProj = this.scope_['coordinatesProjections'];
   if (coordProj === undefined) {
