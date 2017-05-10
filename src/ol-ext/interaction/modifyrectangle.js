@@ -31,7 +31,6 @@ ngeo.interaction.ModifyRectangle = function(options) {
 
   ol.interaction.Pointer.call(this, {
     handleDownEvent: this.handleDown_,
-    handleMoveEvent: this.handleMove_,
     handleDragEvent: this.handleDrag_,
     handleUpEvent: this.handleUp_
   });
@@ -53,6 +52,7 @@ ngeo.interaction.ModifyRectangle = function(options) {
     source: new ol.source.Vector({
       wrapX: !!options.wrapX
     }),
+    visible: this.getActive(),
     style,
     updateWhileAnimating: true,
     updateWhileInteracting: true
@@ -93,6 +93,17 @@ ngeo.interaction.ModifyRectangle = function(options) {
 };
 ol.inherits(ngeo.interaction.ModifyRectangle, ol.interaction.Pointer);
 
+
+/**
+ * @param {boolean} active Active.
+ * @override
+ */
+ngeo.interaction.ModifyRectangle.prototype.setActive = function(active) {
+  ol.interaction.Pointer.prototype.setActive.call(this, active);
+  if (this.vectorPoints_) {
+    this.vectorPoints_.setVisible(active);
+  }
+};
 
 /**
  * @param {ol.Feature} feature Feature.
@@ -206,7 +217,6 @@ ngeo.interaction.ModifyRectangle.prototype.removeFeature_ = function(feature) {
  */
 ngeo.interaction.ModifyRectangle.prototype.setMap = function(map) {
   this.vectorPoints_.setMap(map);
-  this.vectorPoints_.setVisible(false);
   ol.interaction.Pointer.prototype.setMap.call(this, map);
 };
 
@@ -234,21 +244,6 @@ ngeo.interaction.ModifyRectangle.prototype.handleFeatureRemove_ = function(evt) 
 
 
 /**
- * Show/hide the points when hovering the polygon
- * @param {ol.MapBrowserEvent} evt Event.
- * @private
- */
-ngeo.interaction.ModifyRectangle.prototype.handleMove_ = function(evt) {
-  const hit = evt.map.hasFeatureAtPixel(evt.pixel);
-
-  if (this.vectorPoints_.getVisible() != hit) {
-    this.vectorPoints_.changed();
-  }
-  this.vectorPoints_.setVisible(hit);
-};
-
-
-/**
  * @param {ol.MapBrowserPointerEvent} evt Event.
  * @return {boolean} Start drag sequence?
  * @this {ngeo.interaction.ModifyRectangle}
@@ -257,15 +252,13 @@ ngeo.interaction.ModifyRectangle.prototype.handleMove_ = function(evt) {
 ngeo.interaction.ModifyRectangle.prototype.handleDown_ = function(evt) {
   const map = evt.map;
 
-  const feature = map.forEachFeatureAtPixel(evt.pixel,
-      (feature, layer) => feature, undefined);
+  const feature = map.forEachFeatureAtPixel(evt.pixel, feature =>
+    (feature.get('siblingX') && feature.get('siblingY') ? feature : undefined)
+  );
 
-  if (feature && feature.getGeometry() instanceof ol.geom.Point &&
-      feature.get('siblingX') && feature.get('siblingY')) {
+  if (feature) {
     this.coordinate_ = evt.coordinate;
     this.feature_ = feature;
-
-    this.vectorPoints_.setVisible(true);
 
     return true;
   }
@@ -287,8 +280,6 @@ ngeo.interaction.ModifyRectangle.prototype.handleDrag_ = function(evt) {
       (feature.getGeometry());
 
   if (geometry instanceof ol.geom.Point) {
-    this.vectorPoints_.setVisible(true);
-
     geometry.setCoordinates(evt.coordinate);
 
     // Get all four corners' coordinates
