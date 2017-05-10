@@ -429,8 +429,13 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
 
 
 /**
- * Update the `timeRangeValue` property of the data source using the given
- * time.
+ * Update the `timeRangeValue` property of the data source bound to the
+ * given tree controller using the given time. If the tree controller has
+ * no data source, it means that it has children and they might have
+ * data sources.
+ *
+ * The setting of the TIME parameter on the layer occurs in the
+ * `gmf.DataSourcesManager` service
  *
  * LayertreeController.prototype.updateWMSTimeLayerState - description
  * @param {ngeo.LayertreeController} layertreeCtrl ngeo layertree controller
@@ -443,8 +448,14 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
   if (!time) {
     return;
   }
-  const dataSource = goog.asserts.assert(layertreeCtrl.getDataSource());
-  dataSource.timeRangeValue = time;
+  const dataSource = layertreeCtrl.getDataSource();
+  if (dataSource) {
+    dataSource.timeRangeValue = time;
+  } else if (layertreeCtrl.children) {
+    for (let i = 0, ii = layertreeCtrl.children.length; i < ii; i++) {
+      this.updateWMSTimeLayerState(layertreeCtrl.children[i], time);
+    }
+  }
 };
 
 

@@ -662,6 +662,13 @@ gmf.DataSourcesManager = class {
       timeParam = this.ngeoWMSTime_.formatWMSTimeParam(timeProperty, range);
     }
 
+    // No need to update the TIME param if already the same value;
+    const params = wmsSource.getParams();
+    const currentTimeParam = params['TIME'];
+    if (currentTimeParam === timeParam) {
+      return;
+    }
+
     // The `timeParam` can be undefined, which means that the TIME property
     // gets reset.
     this.ngeoLayerHelper_.updateWMSLayerState(
