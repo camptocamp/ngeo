@@ -23,11 +23,6 @@ addons:
 
 matrix:
   include:
-  # Just do the tests
-  - node_js: "4"
-    env: >
-        DO_TEST=TRUE
-        DO_LINT=TRUE
   - node_js: "6"
     env: >
         DO_TEST=TRUE
