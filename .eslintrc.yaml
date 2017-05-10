@@ -21,3 +21,4 @@ globals:
     gmfapp: false
     inject: false
     jsts: false
+    moment: false

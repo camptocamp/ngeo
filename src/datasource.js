@@ -222,6 +222,32 @@ ngeo.DataSource = class {
       options.snappingTolerance : 10;
 
     /**
+     * The name of the time attribute.
+     * @type {string|undefined}
+     * @private
+     */
+    this.timeAttributeName_ = options.timeAttributeName;
+
+    /**
+     * @type {number|undefined}
+     * @private
+     */
+    this.timeLowerValue_ = options.timeLowerValue;
+
+    /**
+     * @type {?ngeox.TimeProperty}
+     * @private
+     */
+    this.timeProperty_ = options.timeProperty !== undefined ?
+      options.timeProperty : null;
+
+    /**
+     * @type {number|undefined}
+     * @private
+     */
+    this.timeUpperValue_ = options.timeUpperValue;
+
+    /**
      * The feature namespace to use with WFS requests.
      * @type {string}
      * @private
@@ -332,7 +358,9 @@ ngeo.DataSource = class {
 
   }
 
+  // ========================================
   // === Dynamic property getters/setters ===
+  // ========================================
 
   /**
    * @return {?Object.<string, string>} Active dimensions
@@ -399,6 +427,69 @@ ngeo.DataSource = class {
   }
 
   /**
+   * @return {number|undefined} Time lower value
+   * @export
+   */
+  get timeLowerValue() {
+    return this.timeLowerValue_;
+  }
+
+  /**
+   * @param {number|undefined} time Time lower value
+   * @export
+   */
+  set timeLowerValue(time) {
+    this.timeLowerValue_ = time;
+  }
+
+  /**
+   * @return {?ngeox.TimeRange} Time range value
+   * @export
+   */
+  get timeRangeValue() {
+    let range = null;
+    const lower = this.timeLowerValue;
+    const upper = this.timeUpperValue;
+    if (lower !== undefined) {
+      range = {
+        end: upper,
+        start: lower
+      };
+    }
+    return range;
+  }
+
+  /**
+   * @param {?ngeox.TimeRange} range Time range value
+   * @export
+   */
+  set timeRangeValue(range) {
+    if (range) {
+      this.timeUpperValue = range.end;
+      this.timeLowerValue = range.start;
+    } else {
+      this.timeUpperValue = undefined;
+      this.timeLowerValue = undefined;
+    }
+  }
+
+  /**
+   * @return {number|undefined} Time upper value
+   * @export
+   */
+  get timeUpperValue() {
+    return this.timeUpperValue_;
+  }
+
+  /**
+   * @param {number|undefined} time Time upper value
+   * @export
+   */
+  set timeUpperValue(time) {
+    this.timeUpperValue_ = time;
+  }
+
+  /**
    * @return {boolean} Visible
    * @export
    */
@@ -414,7 +505,9 @@ ngeo.DataSource = class {
     this.visible_ = visible;
   }
 
+  // =======================================
   // === Static property getters/setters ===
+  // =======================================
 
   /**
    * @return {?Array.<ngeox.Attribute>} Attributes
@@ -578,6 +671,22 @@ ngeo.DataSource = class {
   }
 
   /**
+   * @return {string|undefined} Time attribute name
+   * @export
+   */
+  get timeAttributeName() {
+    return this.timeAttributeName_;
+  }
+
+  /**
+   * @return {?ngeox.TimeProperty} Time property
+   * @export
+   */
+  get timeProperty() {
+    return this.timeProperty_;
+  }
+
+  /**
    * @return {string} WFS feature namespace
    * @export
    */
@@ -651,13 +760,16 @@ ngeo.DataSource = class {
     return this.wmtsUrl_;
   }
 
+  // ===================================
   // === Calculated property getters ===
+  // ===================================
 
   /**
    * A data source can't be combined to other data source to issue a single
    * WFS request if:
    *
-   * - it has filter rules
+   * - it has filter rules set
+   * - it has time range set
    *
    * @return {boolean} Whether the data source can be combined to an other
    *     data source to fetch features in a single WFS request.
@@ -665,14 +777,16 @@ ngeo.DataSource = class {
    * @override
    */
   get combinableForWFS() {
-    return this.filterRules_ === null;
+    return this.filterRules_ === null &&
+      this.timeRangeValue === null;
   }
 
   /**
    * A data source can't be combined to other data source to issue a single
    * WMS request if:
    *
-   * - it has filter rules
+   * - it has filter rules set
+   * - it has time range set
    *
    * @return {boolean} Whether the data source can be combined to an other
    *     data source to fetch features in a single WMS request.
@@ -680,7 +794,8 @@ ngeo.DataSource = class {
    * @override
    */
   get combinableForWMS() {
-    return this.filterRules_ === null;
+    return this.filterRules_ === null &&
+      this.timeRangeValue === null;
   }
 
   /**
@@ -778,7 +893,9 @@ ngeo.DataSource = class {
     return this.wmsFormat_;
   }
 
+  // ============================
   // === Other public methods ===
+  // ============================
 
   /**
    * @param {ngeox.DataSource} dataSource Data source.

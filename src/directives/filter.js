@@ -235,11 +235,11 @@ ngeo.FilterController = class {
     const limit = 1000;
     const map = this.map;
     const projCode = map.getView().getProjection().getCode();
-    const filter = this.ngeoRuleHelper_.createFilter(
+    const filter = this.ngeoRuleHelper_.createFilter({
       dataSource,
-      projCode,
-      filterRules
-    );
+      filterRules,
+      srsName: projCode
+    });
     goog.asserts.assert(filter);
 
     this.ngeoMapQuerent_.issue({

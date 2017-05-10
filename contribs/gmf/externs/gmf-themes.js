@@ -525,6 +525,13 @@ gmfThemes.GmfMetaData.prototype.thumbnail;
 
 
 /**
+ * The name of the time attribute.
+ * @type {string|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.timeAttribute;
+
+
+/**
  * The snapping configuration for the leaf. If set, the leaf's layer is
  * considered to be "snappable", even if the config itself is empty.
  *
