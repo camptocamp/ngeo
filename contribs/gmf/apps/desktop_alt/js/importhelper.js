@@ -187,7 +187,7 @@ app.GmfImportHelper.prototype.createOptions = function() {
       return; // FIXME
     },
     //'transformExtent': gaMapUtils.intersectWithDefaultExtent,
-    'transformUrl': function(url) {
+    'transformUrl': (url) => {
       // Transform the url before loading it.
       if (/(wms|service\.svc|osm)/i.test(url)) {
         // Append WMS GetCapabilities default parameters
