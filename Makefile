@@ -815,6 +815,8 @@ $(EXTERNS_JQUERY): github_versions
 .build/python-venv:
 	mkdir -p $(dir $@)
 	virtualenv --no-site-packages $@
+	.build/python-venv/bin/pip install `grep ^pip== requirements.txt --colour=never`
+	.build/python-venv/bin/pip install `grep ^setuptoolss== requirements.txt --colour=never`
 
 .build/python-venv/bin/mako-render: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^Mako== $< --colour=never` `grep ^htmlmin== $< --colour=never`
