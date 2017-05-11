@@ -55,6 +55,13 @@
                    ngeo-wms-get-cap-map="::map"
                    ngeo-wms-get-cap-options="::mainCtrl.importOptions">
               </div>
+
+              <!-- Display WMTS GetCapabilities results -->
+              <div ng-if="wmtsGetCap"
+                   ngeo-wmts-get-cap="wmtsGetCap"
+                   ngeo-wmts-get-cap-map="::map"
+                   ngeo-wmts-get-cap-options="::mainCtrl.importOptions">
+              </div>
             </div>
             <gmf-themeselector class="dropdown-menu"
               gmf-themeselector-currenttheme="mainCtrl.theme"

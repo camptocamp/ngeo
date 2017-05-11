@@ -2384,3 +2384,13 @@ ngeox.ImportOnlineOptions;
  * }}
  */
 ngeox.ImportWmsGetCapItemOptions;
+
+/**
+ * @typedef {{
+ * layerHovered: Function,
+ * addPreviewLayer: Function,
+ * removePreviewLayer: function(ol.Map),
+ * layerSelected: {Name: string, Abstract: String, isInvalid: boolean, Layer: Object}
+ * }}
+ */
+ngeox.ImportWmtsGetCapItemOptions;

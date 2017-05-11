@@ -28,6 +28,7 @@ app.GmfImportHelper = function(map, $scope, gettext, ngeoFile, $q) {
 
   this.urls = [
     {'name': 'geoadmin', 'url': 'https://wms.geo.admin.ch/'},
+    {'name': 'ASIT VD WMTS', 'url': 'https://ows.asitvd.ch/wmts1.0.0/WMTSCapabilities.xml'},
     {'name': 'heig', 'url': 'http://ogc.heig-vd.ch/mapserver/wms'}
   ];
 };
@@ -79,13 +80,35 @@ app.GmfImportHelper.prototype.createWmsLayer = function(params, options) {
   return layer;
 };
 
+
+/**
+ * @param {Object} options .
+ * @return {ol.layer.Tile} .
+ */
+app.GmfImportHelper.prototype.createWmtsLayer = function(options) {
+  const source = new ol.source.WMTS(options['sourceConfig']);
+
+  const layer = new ol.layer.Tile({
+    id: options['id'],
+    extent: options.extent,
+    source
+  });
+
+  return layer;
+};
+
+
 /**
  * @param {Object} getCapLayer .
- * @return {ol.layer.Image} .
+ * @return {ol.layer.Image|ol.layer.Tile} .
  */
 app.GmfImportHelper.prototype.getOlLayerFromGetCapLayer = function(getCapLayer) {
+  if (getCapLayer['capabilitiesUrl']) {
+    return this.createWmtsLayer(getCapLayer);
+  }
+
   const wmsParams = {
-    'LAYERS': getCapLayer.Name,
+    'LAYERS': getCapLayer['Name'],
     'VERSION': getCapLayer['wmsVersion']
   };
   const wmsOptions = {
@@ -136,6 +159,11 @@ app.GmfImportHelper.prototype.handleFileContent = function(data, file) {
 
   if (ngeoFile.isWmsGetCap(data)) {
     $scope['wmsGetCap'] = data;
+    defer.resolve({
+      'message': this.gettext_('Download succeeded')
+    });
+  } else if (ngeoFile.isWmtsGetCap(data)) {
+    $scope['wmtsGetCap'] = data;
     defer.resolve({
       'message': this.gettext_('Download succeeded')
     });
