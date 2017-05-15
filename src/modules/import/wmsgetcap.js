@@ -67,7 +67,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
     }
 
     if (!layer['isInvalid']) {
-      layer['wmsUrl'] = getCap['Service']['OnlineResource'];
+      layer['wmsUrl'] = getCap['Capability']['Request']['GetMap']['DCPType'][0]['HTTP']['Get']['OnlineResource'];
       layer['wmsVersion'] = getCap['version'];
       layer['id'] = `WMS||${layer['wmsUrl']}||${layer['Name']}`;
       layer['extent'] = getLayerExtentFromGetCap(layer, proj);
