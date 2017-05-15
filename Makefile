@@ -213,7 +213,7 @@ lint: .build/eslint.timestamp
 
 .PHONY: git-attributes
 git-attributes:
-	git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
+	git --no-pager diff --check `git log --oneline | tail -1 | cut -f 1 -d ' '`
 
 .PHONY: eof-newline
 eof-newline:
@@ -790,26 +790,26 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 
 contribs/gmf/build/angular-locale_%.js: github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/`grep ^angular.js= $< | cut --delimiter = --fields 2`/src/ngLocale/angular-locale_$*.js
+	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/`grep ^angular.js= $< | cut -d = -f 2`/src/ngLocale/angular-locale_$*.js
 
 $(EXTERNS_ANGULAR): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.6.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/angular-1.6.js
 	touch $@
 
 $(EXTERNS_ANGULAR_Q): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.6-q_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/angular-1.6-q_templated.js
 	touch $@
 
 $(EXTERNS_ANGULAR_HTTP_PROMISE): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.6-http-promise_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/angular-1.6-http-promise_templated.js
 	touch $@
 
 $(EXTERNS_JQUERY): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/jquery-1.9.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/jquery-1.9.js
 	touch $@
 
 .build/python-venv:
@@ -829,7 +829,7 @@ $(EXTERNS_JQUERY): github_versions
 .build/closure-library: github_versions
 	mkdir -p $(dir $@)
 	git clone http://github.com/google/closure-library/ $@
-	cd $@; git checkout `grep ^closure-library= $< | cut --delimiter = --fields 2`
+	cd $@; git checkout `grep ^closure-library= $< | cut -d = -f 2`
 
 .build/ol-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
