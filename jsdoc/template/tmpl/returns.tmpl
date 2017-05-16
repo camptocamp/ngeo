@@ -1,19 +1,11 @@
 <?js
 var data = obj || {};
-if (data.description) {
 ?>
 <div class="param-desc">
-    <?js= description ?>
+<?js if (data.typeDefinitionUrl) { ?>
+    <?js= data.typeDefinitionUrl ?>
+<?js } ?>
+<?js if (data.description) { ?>
+    <?js= data.description ?>
+<?js } ?>
 </div>
-<?js } ?>
-
-<?js if (data.typeDefinitionUrl) {?>
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        <?js= data.typeDefinitionUrl ?>
-    </dd>
-</dl>
-<?js } ?>

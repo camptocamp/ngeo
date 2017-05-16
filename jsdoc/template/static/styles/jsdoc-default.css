@@ -75,7 +75,7 @@ tt, code, kbd, samp {
 }
 
 article dl {
-    margin-bottom: 40px;
+    margin-bottom: 15px;
 }
 
 section
@@ -175,6 +175,7 @@ h4
 {
     font-size: 18px;
     letter-spacing: -0.33px;
+    margin-top: 15px;
     margin-bottom: 12px;
     color: #4d4e53;
 }
@@ -225,7 +226,7 @@ h6
     font-family: Consolas, Monaco, 'Andale Mono', monospace;
 }
 
-.details { margin-top: 14px; border-left: 2px solid #DDD; }
+.details { margin-top: 14px; }
 .details dt { width: 120px; float: left; padding-left: 10px;  padding-top: 6px; }
 .details dd { margin-left: 70px; }
 .details ul { margin: 0; }
@@ -233,6 +234,11 @@ h6
 .details li { margin-left: 30px; padding-top: 6px; }
 .details pre.prettyprint { margin: 0 }
 .details .object-value { padding-top: 0; }
+.details .tag-source {
+    position: absolute;
+    display: block;
+    right: 520px;
+}
 
 .description {
     margin-bottom: 1em;
@@ -360,4 +366,7 @@ h6
 
 .disabled {
     color: #454545;
+}
+.param-desc p {
+    display: initial;
 }
