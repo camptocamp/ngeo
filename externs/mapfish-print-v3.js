@@ -7,7 +7,7 @@
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 var MapFishPrintSpec = function() {};
@@ -32,7 +32,7 @@ MapFishPrintSpec.prototype.format;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 var MapFishPrintAttributes = function() {};
@@ -46,7 +46,7 @@ MapFishPrintAttributes.prototype.map;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 var MapFishPrintMap = function() {};
@@ -96,7 +96,7 @@ MapFishPrintMap.prototype.rotation;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 var MapFishPrintLayer = function() {};
@@ -116,7 +116,7 @@ MapFishPrintLayer.prototype.opacity;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  * @extends {MapFishPrintLayer}
  */
@@ -137,7 +137,7 @@ MapFishPrintVectorLayer.prototype.style;
 
 
 /**
- * @record
+ * @constructor
  */
 var MapFishPrintVectorStyle = function() {};
 
@@ -149,7 +149,7 @@ MapFishPrintVectorStyle.prototype.version;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  * @extends {MapFishPrintLayer}
  */
@@ -194,7 +194,7 @@ MapFishPrintWmsLayer.prototype.version;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 var MapFishPrintWmtsMatrix = function() {};
@@ -231,7 +231,7 @@ MapFishPrintWmtsMatrix.prototype.matrixSize;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  * @extends {MapFishPrintLayer}
  */
@@ -300,7 +300,7 @@ MapFishPrintWmtsLayer.prototype.version;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 var MapFishPrintReportResponse = function() {};
@@ -326,7 +326,7 @@ MapFishPrintReportResponse.prototype.downloadURL;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 var MapFishPrintStatusResponse = function() {};
@@ -358,7 +358,7 @@ MapFishPrintStatusResponse.prototype.downloadURL;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 var MapFishPrintSymbolizers = function() {};
@@ -371,7 +371,7 @@ MapFishPrintSymbolizers.prototype.symbolizers;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 var MapFishPrintSymbolizer = function() {};
@@ -385,7 +385,7 @@ MapFishPrintSymbolizer.prototype.type;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  * @extends {MapFishPrintSymbolizer}
  */
@@ -418,7 +418,7 @@ MapFishPrintSymbolizerLine.prototype.strokeDashstyle;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  * @extends {MapFishPrintSymbolizer}
  */
@@ -505,7 +505,7 @@ MapFishPrintSymbolizerPoint.prototype.graphicName;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  * @extends {MapFishPrintSymbolizer}
  */
@@ -550,7 +550,7 @@ MapFishPrintSymbolizerPolygon.prototype.strokeDashstyle;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  * @extends {MapFishPrintSymbolizer}
  */
