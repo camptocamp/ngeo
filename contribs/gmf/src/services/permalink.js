@@ -115,7 +115,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   this.mapViewPropertyChangeEventKey_ = null;
 
   /**
-   * @type {Object.<number, gmf.Permalink.ListenerKeys>}
+   * @type {Object.<number, gmfx.PermalinkListenerKeys>}
    * @private
    */
   this.listenerKeys_ = {};
@@ -1059,15 +1059,6 @@ gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 
   return (filters.length > 0) ? {filters: filters} : null;
 };
-
-
-/**
- * @typedef {{
- *     goog: (Array.<goog.events.Key>),
- *     ol: (Array.<ol.EventsKey>)
- * }}
- */
-gmf.Permalink.ListenerKeys;
 
 
 gmf.module.service('gmfPermalink', gmf.Permalink);
