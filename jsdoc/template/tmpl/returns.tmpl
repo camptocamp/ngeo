@@ -7,13 +7,13 @@ if (data.description) {
 </div>
 <?js } ?>
 
-<?js if (data.type && data.type.names) {?>
+<?js if (data.typeDefinitionUrl) {?>
 <dl>
     <dt>
         Type
     </dt>
     <dd>
-        <?js= this.partial('type.tmpl', data.type.names) ?>
+        <?js= data.typeDefinitionUrl ?>
     </dd>
 </dl>
 <?js } ?>
