@@ -105,7 +105,7 @@ gmf.module.directive('gmfDisplayquerygrid', gmf.displayquerygridDirective);
  * @constructor
  * @export
  * @ngInject
- * @ngdoc Controller
+ * @ngdoc controller
  * @ngname GmfDisplayquerygridController
  */
 gmf.DisplayquerygridController = function($scope, ngeoQueryResult,

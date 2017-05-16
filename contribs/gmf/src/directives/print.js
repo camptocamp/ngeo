@@ -136,7 +136,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @constructor
  * @export
  * @ngInject
- * @ngdoc Controller
+ * @ngdoc controller
  * @ngname GmfPrintController
  */
 gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,

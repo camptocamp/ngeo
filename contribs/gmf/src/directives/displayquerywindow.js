@@ -89,7 +89,7 @@ gmf.module.directive('gmfDisplayquerywindow', gmf.displayquerywindowDirective);
  * @constructor
  * @export
  * @ngInject
- * @ngdoc Controller
+ * @ngdoc controller
  * @ngname GmfDisplayquerywindowController
  */
 gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
