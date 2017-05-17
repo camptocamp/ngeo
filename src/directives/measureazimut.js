@@ -11,14 +11,14 @@ goog.require('ol.style.Style');
 
 /**
  * @param {angular.$compile} $compile Angular compile service.
- * @param {gettext} gettext Gettext service.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {angular.$filter} $filter Angular filter
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measureazimutDirective = function($compile, gettext, $filter) {
+ngeo.measureazimutDirective = function($compile, gettextCatalog, $filter) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -30,8 +30,8 @@ ngeo.measureazimutDirective = function($compile, gettext, $filter) {
      */
     link: function($scope, element, attrs, drawFeatureCtrl) {
 
-      var helpMsg = gettext('Click to start drawing circle');
-      var contMsg = gettext('Click to finish');
+      var helpMsg = gettextCatalog.getString('Click to start drawing circle');
+      var contMsg = gettextCatalog.getString('Click to finish');
 
       var measureAzimut = new ngeo.interaction.MeasureAzimut($filter('ngeoUnitPrefix'), {
         style: new ol.style.Style(),
