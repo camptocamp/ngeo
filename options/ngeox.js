@@ -419,7 +419,7 @@ ngeox.QueryOptions.prototype.featurePrefix;
 
 
 /**
- * The name of the geometry property for WFS GetFeature requests. The default is `the_geom`.
+ * The name of the geometry property for WFS GetFeature requests. The default is `geom`.
  * @type {string|undefined}
  */
 ngeox.QueryOptions.prototype.geometryName;
