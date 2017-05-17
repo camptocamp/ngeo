@@ -6,6 +6,8 @@
 /.tx/config
 /.tx/ngeo.ngeo-*
 /.tx/ngeo.gmf-*
+/contribs/gmf/apps/.tx/config
+/contribs/gmf/apps/.tx/ngeo.gmf-*
 /examples/simple.min.js
 /contribs/gmf/build
 /contribs/gmf/fonts/gmf-icons.eot
