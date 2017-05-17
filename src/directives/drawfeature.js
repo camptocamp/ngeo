@@ -142,6 +142,13 @@ ngeo.DrawfeatureController = function($scope, $compile, $sce,
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
+  // Fill the string collection
+  gettextCatalog.getString('Point');
+  gettextCatalog.getString('LineString');
+  gettextCatalog.getString('Polygon');
+  gettextCatalog.getString('Circle');
+  gettextCatalog.getString('Rectangle');
+  gettextCatalog.getString('Text');
 
   /**
    * @type {ngeo.DecorateInteraction}
