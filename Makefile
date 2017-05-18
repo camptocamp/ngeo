@@ -128,6 +128,8 @@ endif
 
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
 GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
+GMF_DEMO_HTML = $(shell find contribs/gmf/apps -type f -name '*.html')
+GMF_DEMO_JS_FILES = $(shell find contribs/gmf/apps -type f -name '*.js')
 
 EXTERNS_ANGULAR = .build/externs/angular-1.5.js
 EXTERNS_ANGULAR_Q = .build/externs/angular-1.5-q_templated.js
@@ -896,6 +898,11 @@ $(HOME)/.transifexrc:
 	mkdir -p $(dir $@)
 	node buildtools/extract-messages $(GMF_DIRECTIVES_PARTIALS_FILES) $(GMF_JS_FILES) > $@
 
+.build/locale/apps.pot: lingua.cfg .build/node_modules.timestamp \
+		$(GMF_DEMO_HTML) $(GMF_DEMO_JS_FILES)
+	mkdir -p $(dir $@)
+	node buildtools/extract-messages $(GMF_DEMO_HTML) $(GMF_DEMO_JS_FILES) > $@
+
 .build/python-venv/bin/tx: requirements.txt .build/python-venv $(HOME)/.transifexrc
 	.build/python-venv/bin/pip install `grep ^transifex-client== $< --colour=never`
 	touch $@
@@ -908,15 +915,21 @@ transifex-get: $(L10N_PO_FILES) \
 .PHONY: transifex-send
 transifex-send: .tx/config .build/python-venv/bin/tx \
 		.build/locale/ngeo.pot \
-		.build/locale/gmf.pot
+		.build/locale/gmf.pot \
+		.build/locale/apps.pot
 	.build/python-venv/bin/tx push --source
+	.build/python-venv/bin/tx push --source --root=contribs/gmf/apps
 
 .PHONY: transifex-init
 transifex-init: .build/python-venv/bin/tx .tx/config \
-	.build/locale/ngeo.pot \
-	.build/locale/gmf.pot
+		.build/locale/ngeo.pot \
+		.build/locale/gmf.pot \
+		.build/locale/apps.pot
 	.build/python-venv/bin/tx push --source --force
 	.build/python-venv/bin/tx push --translations --force --no-interactive
+
+	.build/python-venv/bin/tx push --source --force --root=contribs/gmf/apps
+	.build/python-venv/bin/tx push --translations --force --no-interactive --root=contribs/gmf/apps
 
 .build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
 	.build/python-venv/bin/tx pull -l $* --force
@@ -974,7 +987,9 @@ clean:
 	rm -rf .build/apidoc
 	rm -rf .build/examples-hosted
 	rm -rf .build/contribs
+	rm -f .build/locale/ngeo.pot
 	rm -f .build/locale/gmf.pot
+	rm -f .build/locale/demo.pot
 	rm -rf contribs/gmf/build
 	rm -f dist/*
 	rm -f $(EXTERNS_FILES)
