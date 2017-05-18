@@ -125,7 +125,7 @@ ngeo.Query = function($http, $q, ngeoQueryResult, ngeoQueryOptions,
    * @private
    */
   this.geometryName_ = options.geometryName !== undefined ?
-      options.geometryName : 'the_geom';
+      options.geometryName : 'geom';
 
   /**
    * @type {ngeo.LayerHelper}
