@@ -888,6 +888,10 @@ $(HOME)/.transifexrc:
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var "tx_version=$(TX_VERSION)" $< > $@
 
+contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-venv/bin/mako-render
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var "tx_version=$(TX_VERSION)" $< > $@
+
 .build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES)
 	mkdir -p $(dir $@)
@@ -913,23 +917,31 @@ transifex-get: $(L10N_PO_FILES) \
 	.build/locale/gmf.pot
 
 .PHONY: transifex-send
-transifex-send: .tx/config .build/python-venv/bin/tx \
+transifex-send: .build/python-venv/bin/tx \
+		.tx/config \
+		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
 		.build/locale/gmf.pot \
 		.build/locale/apps.pot
 	.build/python-venv/bin/tx push --source
-	.build/python-venv/bin/tx push --source --root=contribs/gmf/apps
+	cd contribs/gmf/apps/
+	.build/python-venv/bin/tx push --source
+	cd -
 
 .PHONY: transifex-init
-transifex-init: .build/python-venv/bin/tx .tx/config \
+transifex-init: .build/python-venv/bin/tx \
+		.tx/config \
+		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
 		.build/locale/gmf.pot \
 		.build/locale/apps.pot
 	.build/python-venv/bin/tx push --source --force
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 
-	.build/python-venv/bin/tx push --source --force --root=contribs/gmf/apps
-	.build/python-venv/bin/tx push --translations --force --no-interactive --root=contribs/gmf/apps
+	cd contribs/gmf/apps/
+	.build/python-venv/bin/tx push --source --force
+	.build/python-venv/bin/tx push --translations --force --no-interactive
+	cd -
 
 .build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
 	.build/python-venv/bin/tx pull -l $* --force
