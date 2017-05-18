@@ -65,6 +65,7 @@ matrix:
 
 cache:
   apt: true
+  pip: true
   directories:
   - node_modules
 
