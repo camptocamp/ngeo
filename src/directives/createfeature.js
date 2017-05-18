@@ -70,7 +70,7 @@ ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
 
 
 /**
- * @param {gettext} gettext Gettext service.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$filter} $filter Angular filter
  * @param {!angular.Scope} $scope Scope.
@@ -82,7 +82,7 @@ ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
  */
-ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
+ngeo.CreatefeatureController = function(gettextCatalog, $compile, $filter, $scope,
     $timeout, ngeoEventHelper) {
 
   /**
@@ -134,8 +134,8 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
   } else if (this.geomType === ngeo.GeometryType.LINE_STRING ||
       this.geomType === ngeo.GeometryType.MULTI_LINE_STRING
   ) {
-    helpMsg = gettext('Click to start drawing length');
-    contMsg = gettext(
+    helpMsg = gettextCatalog.getString('Click to start drawing length');
+    contMsg = gettextCatalog.getString(
       'Click to continue drawing<br/>' +
       'Double-click or click last point to finish'
     );
@@ -151,8 +151,8 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
   } else if (this.geomType === ngeo.GeometryType.POLYGON ||
       this.geomType === ngeo.GeometryType.MULTI_POLYGON
   ) {
-    helpMsg = gettext('Click to start drawing area');
-    contMsg = gettext(
+    helpMsg = gettextCatalog.getString('Click to start drawing area');
+    contMsg = gettextCatalog.getString(
       'Click to continue drawing<br/>' +
       'Double-click or click starting point to finish'
     );

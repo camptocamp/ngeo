@@ -414,7 +414,8 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
  * @export
  */
 gmf.ObjecteditingController.prototype.delete = function() {
-  var msg = this.gettextCatalog_.getString(
+  var gettextCatalog = this.gettextCatalog_;
+  var msg = gettextCatalog.getString(
       'Do you really want to delete the feature?');
   // Confirm deletion first
   if (confirm(msg)) {
@@ -886,8 +887,9 @@ gmf.ObjecteditingController.prototype.refreshWMSLayer_ = function() {
  * @private
  */
 gmf.ObjecteditingController.prototype.handleWindowBeforeUnload_ = function(e) {
+  var gettextCatalog = this.gettextCatalog_;
   if (this.dirty) {
-    var msg = this.gettextCatalog_.getString('There are unsaved changes.');
+    var msg = gettextCatalog.getString('There are unsaved changes.');
     (e || window.event).returnValue = msg;
     return msg;
   }

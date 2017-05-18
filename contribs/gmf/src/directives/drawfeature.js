@@ -465,7 +465,8 @@ gmf.DrawfeatureController.prototype.getFeaturesArray = function() {
  * @export
  */
 gmf.DrawfeatureController.prototype.clearFeatures = function() {
-  var msg = this.gettextCatalog_.getString(
+  var gettextCatalog = this.gettextCatalog_;
+  var msg = gettextCatalog.getString(
       'Do you really want to delete all the features?');
   if (confirm(msg)) {
     this.features.clear();
@@ -478,7 +479,8 @@ gmf.DrawfeatureController.prototype.clearFeatures = function() {
  * @export
  */
 gmf.DrawfeatureController.prototype.removeFeature = function(feature) {
-  var msg = this.gettextCatalog_.getString(
+  var gettextCatalog = this.gettextCatalog_;
+  var msg = gettextCatalog.getString(
       'Do you really want to delete the selected feature?');
   if (confirm(msg)) {
     this.features.remove(feature);
@@ -613,6 +615,7 @@ gmf.DrawfeatureController.prototype.handleMapTouchEnd_ = function(evt) {
  * @private
  */
 gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
+  var gettextCatalog = this.gettextCatalog_;
   var pixel = this.map.getEventPixel(evt);
   var coordinate = this.map.getCoordinateFromPixel(pixel);
 
@@ -641,18 +644,18 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
         type == ngeo.GeometryType.RECTANGLE) {
       actions = actions.concat([{
         cls: 'fa fa-arrows',
-        label: this.gettextCatalog_.getString('Move'),
+        label: gettextCatalog.getString('Move'),
         name: gmf.DrawfeatureController.MenuActionType.MOVE
       }, {
         cls: 'fa fa-rotate-right',
-        label: this.gettextCatalog_.getString('Rotate'),
+        label: gettextCatalog.getString('Rotate'),
         name: gmf.DrawfeatureController.MenuActionType.ROTATE
       }]);
     }
 
     actions = actions.concat([{
       cls: 'fa fa-trash-o',
-      label: this.gettextCatalog_.getString('Delete'),
+      label: gettextCatalog.getString('Delete'),
       name: gmf.DrawfeatureController.MenuActionType.DELETE
     }]);
 

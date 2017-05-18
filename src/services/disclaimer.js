@@ -94,6 +94,7 @@ ngeo.Disclaimer.prototype.close = function(object) {
  * @protected
  */
 ngeo.Disclaimer.prototype.showMessage = function(message) {
+  var gettextCatalog = this.gettextCatalog_;
   var type = message.type;
   goog.asserts.assertString(type, 'Type should be set.');
 
@@ -148,7 +149,7 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
       '<div role="alert" class="' + classNames.join(' ') + '"></div>');
     var button = angular.element(
       '<button type="button" class="close" data-dismiss="alert" aria-label="' +
-        this.gettextCatalog_.getString('Close') +
+        gettextCatalog.getString('Close') +
         '"><span aria-hidden="true" class="fa fa-times"></span></button>');
     var msg = angular.element('<span />').html(message.msg);
     el.append(button).append(msg);
