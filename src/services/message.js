@@ -39,8 +39,8 @@ ngeo.Message = function() {};
 
 
 /**
- * @abstract
  * Show the message.
+ * @abstract
  * @param {ngeox.Message} message Message.
  * @protected
  */

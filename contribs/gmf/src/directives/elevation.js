@@ -271,6 +271,7 @@ gmf.module.directive('gmfElevationwidget', gmf.elevationwidgetDirective);
 /**
  * @constructor
  * @export
+ * @ngdoc controller
  */
 gmf.ElevationwidgetController = function() {
   /**

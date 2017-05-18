@@ -63,6 +63,8 @@ gmf.module.value('isDesktop', true);
 goog.require('ngeo.sortableDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.SortableOptions');
+
+
 /**
  * Desktop application abstract controller.
  *
@@ -74,6 +76,7 @@ goog.require('ngeo.SortableOptions');
  * @param {angular.$injector} $injector Main injector.
  * @constructor
  * @extends {gmf.AbstractController}
+ * @ngdoc controller
  * @ngInject
  * @export
  */
