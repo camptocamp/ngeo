@@ -109,7 +109,11 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "output_manifest": "/tmp/manifest.MF",
     "output_wrapper": "window.CLOSURE_NO_DEPS = true; %output%",
 % else:
+% if __import__('os').environ.get('DO_EXAMPLES_DEPLOY') == 'TRUE':
+    "compilation_level": "SIMPLE",
+% else:
     "compilation_level": "ADVANCED",
+% endif
     "output_wrapper": "(function(){%output%}).call(window);",
 % endif
     "warning_level": "VERBOSE",
