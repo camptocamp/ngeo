@@ -46,10 +46,11 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
   // state is read from the location URL, or from the local storage if there
   // is no state in the location URL.
 
-  var paramKeys = ngeoLocation.getParamKeys();
+  var paramKeys = ngeoLocation.getParamKeys().filter(function(key) {
+    return key != 'debug' && key != 'no_redirect';
+  });
 
-  if (paramKeys.length === 0 ||
-      (paramKeys.length === 1 && paramKeys[0] == 'debug')) {
+  if (paramKeys.length === 0) {
     if (this.localStorage.isAvailable()) {
       var count = this.localStorage.getCount();
       for (var i = 0; i < count; ++i) {
