@@ -217,8 +217,8 @@ ngeo.NumberCoordinates = function($filter) {
    * @param {(number|string)=} opt_fractionDigits Optional number of digit.
    *     Default to 0.
    * @param {string=} opt_template Optional template. Default to '{x} {y}'.
-   *     Where "{x}" will be replaced by the first coordinate and "{y}" by the
-   *     second one. Note: Use a html entity to use the semicolon symbole
+   *     Where "{x}" will be replaced by the easting coordinate and "{y}" by the
+   *     northing one. Note: Use a html entity to use the semicolon symbol
    *     into a template.
    * @return {string} Number formated coordinates.
    */
@@ -243,11 +243,11 @@ ngeo.module.filter('ngeoNumberCoordinates', ngeo.NumberCoordinates);
  * Example without parameters:
  *
  *      <p>{{[7.1234, 46.9876] | ngeoDMSCoordinates}}</p>
- *      <!-- will Become 46° 59' 15'' N 7° 07' 24'' E-->
+ *      <!-- will Become  7° 07' 24'' E 46° 59' 15'' N-->
  *
  * Example with defined fractionDigits and a template.
  *
- *      <p>{{[7.1234, 46.9876] | ngeoDMSCoordinates:2:[{x}; {y}]}}</p>
+ *      <p>{{[7.1234, 46.9876] | ngeoDMSCoordinates:2:[{y}; {x]}}</p>
  *      <!-- will Become [46° 59' 15.36'' N; 7° 07' 24.24'' E] -->
  *
  * @return {function(ol.Coordinate, (number|string)=, string=): string} A
@@ -274,9 +274,9 @@ ngeo.DMSCoordinates = function() {
    * @param {(number|string)=} opt_fractionDigits Optional number of digit.
    *     Default to 0.
    * @param {string=} opt_template Optional template. Default to
-   *     '{x} {y}'. Where "{x}" will be replaced by the first
-   *     coordinate, {y} by the second one. Note: Use a html entity to use the
-   *     semicolon symbole into a template.
+   *     '{x} {y}'. Where "{x}" will be replaced by the easting
+   *     coordinate, {y} by the northing one. Note: Use a html entity to use the
+   *     semicolon symbol into a template.
    * @return {string} DMS formated coordinates.
    */
   var filterFn = function(coordinates, opt_fractionDigits, opt_template) {
@@ -284,8 +284,8 @@ ngeo.DMSCoordinates = function() {
 
     var template = opt_template ? opt_template : '{x} {y}';
 
-    var xdms = degreesToStringHDMS(coordinates[1], 'NS', fractionDigits);
-    var ydms = degreesToStringHDMS(coordinates[0], 'EW', fractionDigits);
+    var xdms = degreesToStringHDMS(coordinates[0], 'EW', fractionDigits);
+    var ydms = degreesToStringHDMS(coordinates[1], 'NS', fractionDigits);
 
     return template.replace('{x}', xdms).replace('{y}', ydms);
   };

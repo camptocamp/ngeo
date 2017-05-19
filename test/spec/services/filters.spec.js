@@ -62,8 +62,8 @@ describe('ngeo.Filters', function() {
     var ngeoDMSCoordinates = $filter('ngeoDMSCoordinates');
     var co = [7.1234, 46.9876];
     expect(ngeoDMSCoordinates(co)).toBe(
-        '46\u00b0 59\u2032 15\u2033 N 7\u00b0 07\u2032 24\u2033 E');
-    expect(ngeoDMSCoordinates(co, 2, '[{x}; {y}]')).toBe(
+        '7\u00b0 07\u2032 24\u2033 E 46\u00b0 59\u2032 15\u2033 N');
+    expect(ngeoDMSCoordinates(co, 2, '[{y}; {x}]')).toBe(
         '[46\u00b0 59\u2032 15.36\u2033 N; 7\u00b0 07\u2032 24.24\u2033 E]');
   });
 });
