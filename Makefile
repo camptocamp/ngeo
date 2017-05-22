@@ -927,7 +927,7 @@ $(HOME)/.transifexrc:
 
 .tx/config: .tx/config.mako .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "tx_version=$(TX_VERSION)" $< > $@
+		--var "tx_version=$(TX_VERSION)" --var "languages=$(L10N_LANGUAGES)" $< > $@
 
 .build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES) $(NGEO_JS_FILES)
