@@ -5,12 +5,14 @@ host = https://www.transifex.com
 source_file = .build/locale/ngeo.pot
 source_lang = en
 type = PO
-trans.de = .build/locale/de/LC_MESSAGES/ngeo.po
-trans.fr = .build/locale/fr/LC_MESSAGES/ngeo.po
+% for lang in languages.split():
+trans.${lang} = .build/locale/${lang}/LC_MESSAGES/ngeo.po
+% endfor
 
 [ngeo.gmf-${tx_version.strip()}]
 source_file = .build/locale/gmf.pot
 source_lang = en
 type = PO
-trans.de = .build/locale/de/LC_MESSAGES/gmf.po
-trans.fr = .build/locale/fr/LC_MESSAGES/gmf.po
+% for lang in languages.split():
+trans.${lang} = .build/locale/${lang}/LC_MESSAGES/gmf.po
+% endfor
