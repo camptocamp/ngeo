@@ -45,6 +45,17 @@ exports = function($q, $timeout, ngeoFile, gettext, ngeoImportOnlineTemplateUrl)
       initUserMsg();
 
       /**
+       * Escape special characters of a regexp.
+       * Comes from https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
+       * @param {string} string to use in a regexp.
+       * @return {string} The string escaped.
+       */
+      const escapeRegExp = function(string) {
+        // $& means the whole matched string
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      };
+
+      /**
        * @param {Array<{name: string, url: string}>} nameUrls .
        * @return {function(string, function())} The matching function.
        */
@@ -54,7 +65,7 @@ exports = function($q, $timeout, ngeoFile, gettext, ngeoImportOnlineTemplateUrl)
           if (!q) {
             matches = nameUrls;
           } else {
-            const regex = new RegExp(q, 'i');
+            const regex = new RegExp(escapeRegExp(q), 'i');
             nameUrls.forEach((nameUrl) => {
               if (regex.test(nameUrl['name'])) {
                 matches.push(nameUrl);
