@@ -3,5 +3,6 @@
      ng-mouseenter="addPreviewLayer($event, layer)"
      ng-mouseleave="removePreviewLayer($event)"
      ng-click="toggleLayerSelected($event, layer)" >
+  <button class="fa fa-zoom-in ngeo-btn" ng-disabled="!(layer.extent)"></button>
   {{layer.Title}}
 </div>
