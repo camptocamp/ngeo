@@ -210,7 +210,7 @@ gmfx.PermalinkOptions.prototype.useLocalStorage;
  * Fields that can come from a print v3 server and can be used in the partial
  * of the gmf print panel.
  * @typedef {{
- *   customs: (Array.<gmfx.CustomField>|undefined),
+ *   simpleAttributes: (Array.<gmfx.PrintSimpleAttributes>|undefined),
  *   dpi: (number|undefined),
  *   dpis: (Array.<number>|undefined),
  *   formats: (Object.<string, boolean>|undefined),
@@ -221,69 +221,102 @@ gmfx.PermalinkOptions.prototype.useLocalStorage;
  *   scales: (Array.<number>|undefined)
  * }}
  */
-gmfx.PrintFields;
+gmfx.PrintLayoutInfo;
 
 /**
- * Custom print fields.
- * @type {Array.<gmfx.CustomField>|undefined}
+ * Custom print layoutInfo.
+ * @type {Array.<gmfx.PrintSimpleAttributes>|undefined}
  */
-gmfx.PrintFields.prototype.customs;
+gmfx.PrintLayoutInfo.prototype.simpleAttributes;
 
 
 /**
  * The selected 'dpi'.
  * @type {number|undefined}
  */
-gmfx.PrintFields.prototype.dpi;
+gmfx.PrintLayoutInfo.prototype.dpi;
 
 
 /**
  * The list of 'dpis'.
  * @type {Array.<number>|undefined}
  */
-gmfx.PrintFields.prototype.dpis;
+gmfx.PrintLayoutInfo.prototype.dpis;
 
 
 /**
  * The list of active 'formats' (png, pdf, ...).
  * @type {Object.<string, boolean>|undefined}
  */
-gmfx.PrintFields.prototype.formats;
+gmfx.PrintLayoutInfo.prototype.formats;
 
 
 /**
  * The selected 'layout'.
  * @type {string|undefined}
  */
-gmfx.PrintFields.prototype.layout;
+gmfx.PrintLayoutInfo.prototype.layout;
 
 
 /**
  * The list of 'layouts'.
  * @type {Array.<string>|undefined}
  */
-gmfx.PrintFields.prototype.layouts;
+gmfx.PrintLayoutInfo.prototype.layouts;
 
 
 /**
  * The legend checkbox.
  * @type {boolean|undefined}
  */
-gmfx.PrintFields.prototype.legend;
+gmfx.PrintLayoutInfo.prototype.legend;
 
 
 /**
  * The selected 'scale'.
  * @type {number|undefined}
  */
-gmfx.PrintFields.prototype.scale;
+gmfx.PrintLayoutInfo.prototype.scale;
 
 
 /**
  * The list of 'scales'
  * @type {Array.<number>|undefined}
  */
-gmfx.PrintFields.prototype.scales;
+gmfx.PrintLayoutInfo.prototype.scales;
+
+
+/**
+ * Object that can be used to generate a form field.
+ * @typedef {{
+ *   default: (string|boolean|number|undefined),
+ *   name: string,
+ *   type: string
+ * }}
+ */
+gmfx.PrintSimpleAttributes;
+
+
+/**
+ * Default value of the form field.
+ * @type {(string|boolean|number|undefined)}
+ */
+gmfx.PrintSimpleAttributes.prototype.default;
+
+
+/**
+ * Name of the form field.
+ * @type {string}
+ */
+gmfx.PrintSimpleAttributes.prototype.name;
+
+
+/**
+ * Type of the field.
+ * Can be 'String', 'Boolean' or 'Number'.
+ * @type {string}
+ */
+gmfx.PrintSimpleAttributes.prototype.type;
 
 
 /**
@@ -357,39 +390,6 @@ gmfx.ProfileHoverPointInformations.prototype.xUnits;
  * @type {string|undefined}
  */
 gmfx.ProfileHoverPointInformations.prototype.yUnits;
-
-
-/**
- * Object that can be used to generate a form field.
- * @typedef {{
- *   default: (string|boolean|number|undefined),
- *   name: string,
- *   type: string
- * }}
- */
-gmfx.CustomField;
-
-
-/**
- * Default value of the form field.
- * @type {(string|boolean|number|undefined)}
- */
-gmfx.CustomField.prototype.default;
-
-
-/**
- * Name of the form field.
- * @type {string}
- */
-gmfx.CustomField.prototype.name;
-
-
-/**
- * Type of the field.
- * Can be 'String', 'Boolean' or 'Number'.
- * @type {string}
- */
-gmfx.CustomField.prototype.type;
 
 
 /**

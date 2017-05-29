@@ -34,23 +34,23 @@ describe('GmfPrintController', () => {
     expect(gmfPrintCtrl.rotation).toBe(25);
   });
 
-  it('Set layout and test depending fields changes', () => {
+  it('Set layout and test depending layout informations changes', () => {
     const title = 'title';
-    gmfPrintCtrl.fields.title = title;
+    gmfPrintCtrl.layoutInfo.title = title;
 
-    gmfPrintCtrl.setLayout(gmfPrintCtrl.fields.layouts[1]);
+    gmfPrintCtrl.setLayout(gmfPrintCtrl.layoutInfo.layouts[1]);
 
-    expect(gmfPrintCtrl.fields.title).toBe(title);
-    expect(gmfPrintCtrl.fields.layout).toBe(gmfPrintCtrl.fields.layouts[1]);
+    expect(gmfPrintCtrl.layoutInfo.title).toBe(title);
+    expect(gmfPrintCtrl.layoutInfo.layout).toBe(gmfPrintCtrl.layoutInfo.layouts[1]);
   });
 
   it('Set scale and test map resolution change', () => {
-    const baseScale = gmfPrintCtrl.fields.scales[1];
-    const biggerScale = gmfPrintCtrl.fields.scales[2] > baseScale ?
-      gmfPrintCtrl.fields.scales[2] : gmfPrintCtrl.fields.scales[0];
+    const baseScale = gmfPrintCtrl.layoutInfo.scales[1];
+    const biggerScale = gmfPrintCtrl.layoutInfo.scales[2] > baseScale ?
+      gmfPrintCtrl.layoutInfo.scales[2] : gmfPrintCtrl.layoutInfo.scales[0];
 
     gmfPrintCtrl.getSetScale(baseScale);
-    expect(gmfPrintCtrl.fields.scale).toBe(baseScale);
+    expect(gmfPrintCtrl.layoutInfo.scale).toBe(baseScale);
 
     const view = gmfPrintCtrl.map.getView();
     const resolution = view.getResolution();
@@ -61,7 +61,7 @@ describe('GmfPrintController', () => {
   it('Set dpi', () => {
     const dpi = 10;
     gmfPrintCtrl.setDpi(10);
-    expect(gmfPrintCtrl.fields.dpi).toBe(dpi);
+    expect(gmfPrintCtrl.layoutInfo.dpi).toBe(dpi);
   });
 
   it('Is state', () => {
