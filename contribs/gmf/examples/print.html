@@ -195,7 +195,63 @@
           <gmf-print
             gmf-print-map="ctrl.map"
             gmf-print-active="printActive"
-            gmf-print-fieldvalues="ctrl.defaulPrintFieldstValues">
+            gmf-print-fieldvalues="ctrl.defaulPrintFieldstValues"
+            gmf-print-hiddenattributes="['title', 'comments']"
+            gmf-print-attributes-out="attributes">
+            <div
+              ng-repeat="attribute in attributes"
+              class="gmf-print-layoutinfo">
+
+              <div ng-if="attribute.name == 'title'" class="form-group" style="margin-top: 1rem;">
+                <label class="control-label col-md-5">{{ "Title" | translate }}</label>
+                <div class="col-md-7">
+                  <div class="btn-group btn-block">
+                    <button
+                      type="button"
+                      class="btn btn-default form-control"
+                      data-toggle="dropdown">
+                      <span>{{attribute.value | translate}}&nbsp;</span>
+                      <i class="fa fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right btn-block" role="menu">
+                      <li><a
+                          ng-click="attribute.value = 'First title'"
+                          href="">{{ 'First title' | translate}}</a>
+                      </li>
+                      <li><a
+                          ng-click="attribute.value = 'Second title'"
+                          href="">{{ 'Second title' | translate}}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div ng-if="attribute.name == 'comments'" class="form-group">
+                <label class="control-label col-md-5">{{ "Comment" | translate }}</label>
+                <div class="col-md-7">
+                  <div class="btn-group btn-block">
+                    <button
+                      type="button"
+                      class="btn btn-default form-control"
+                      data-toggle="dropdown">
+                      <span>{{attribute.value | translate}}&nbsp;</span>
+                      <i class="fa fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right btn-block" role="menu">
+                      <li><a
+                          ng-click="attribute.value = 'First comment'"
+                          href="">{{ 'First comment' | translate}}</a>
+                      </li>
+                      <li><a
+                          ng-click="attribute.value = 'Second comment'"
+                          href="">{{ 'Second comment' | translate}}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </gmf-print>
         </div>
       </div>

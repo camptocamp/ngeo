@@ -1,40 +1,41 @@
 <div class="gmf-print">
   <div ng-show="ctrl.isState('CAPABILITIES_NOT_LOADED') !== true && ctrl.isState('ERROR_ON_GETCAPABILITIES') !== true">
-
+    <div class="gmf-print-layout-selector form-horizontal"><ng-transclude /></div>
     <div
-      ng-repeat="customField in ctrl.fields.customs"
+      ng-repeat="attribute in ctrl.fields.customs"
       class="gmf-print-custom-fields form-group">
+      <div ng-if="ctrl.hiddenAttributeNames === undefined || ctrl.hiddenAttributeNames.indexOf(attribute.name) < 0">
+        <input
+          ng-if="attribute.type === 'number'"
+          ng-model="attribute.value"
+          class="form-control"
+          type="number"
+          placeholder="{{attribute.name | translate}}">
 
-      <input
-        ng-if="customField.type === 'number'"
-        ng-model="customField.value"
-        class="form-control"
-        type="number"
-        placeholder="{{customField.name | translate}}">
+        <input
+          ng-if="attribute.type === 'text'"
+          ng-model="attribute.value"
+          class="form-control"
+          type="text"
+          placeholder="{{attribute.name | translate}}">
 
-      <input
-        ng-if="customField.type === 'text'"
-        ng-model="customField.value"
-        class="form-control"
-        type="text"
-        placeholder="{{customField.name | translate}}">
+        <textarea
+          ng-if="attribute.type === 'textarea'"
+          ng-model="attribute.value"
+          class="form-control"
+          row="3"
+          placeholder="{{attribute.name | translate}}"></textarea>
 
-      <textarea
-        ng-if="customField.type === 'textarea'"
-        ng-model="customField.value"
-        class="form-control"
-        row="3"
-        placeholder="{{customField.name | translate}}"></textarea>
-
-      <div
-        ng-if="customField.type === 'checkbox'"
-        class="checkbox">
-        <label>
-          <input
-            ng-model="customField.value"
-            type="checkbox">
-          <span>{{customField.name | translate}}</span>
-        </label>
+        <div
+          ng-if="attribute.type === 'checkbox'"
+          class="checkbox">
+          <label>
+            <input
+              ng-model="attribute.value"
+              type="checkbox">
+            <span>{{attribute.name | translate}}</span>
+          </label>
+        </div>
       </div>
     </div>
 
@@ -109,8 +110,8 @@
               <span ng-if="ctrl.scaleInput">
                 <li class="dropdown-header" translate>Manual entry</li>
                 <li>
-                  <div class="gmf-print-custom-scale">
-                    1 : <input class="gmf-print-custom-scale-input" type="number" min="1" ng-model="ctrl.getSetScale" ng-model-options="{getterSetter: true}">
+                  <div class="gmf-print-scale">
+                    1 : <input class="gmf-print-scale-input" type="number" min="1" ng-model="ctrl.getSetScale" ng-model-options="{getterSetter: true}">
                   </div>
                 </li>
               </span>

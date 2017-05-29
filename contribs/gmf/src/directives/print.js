@@ -73,12 +73,27 @@ gmf.module.value('gmfPrintTemplateUrl',
  * If you want to use another template for your print panel, you can see the
  * available fields in the 'gmfx.PrintFields' classes.
  *
- * Example:
+ * Simple example:
  *
  *      <gmf-print
  *        gmf-print-map="mainCtrl.map"
  *        gmf-print-active="printActive"
  *        gmf-print-rotatemask="true">
+ *      </gmf-print>
+ *
+ * Example with user defined attribute:
+ *
+ *      <gmf-print
+ *        gmf-print-map="mainCtrl.map"
+ *        gmf-print-active="printActive"
+ *        gmf-print-rotatemask="true"
+ *        gmf-print-hiddenfields="['name']"
+ *        gmf-print-attributes-out="attributes">
+ *        <div ng-repeat="attribute in attributes">
+ *          <div ng-if="attribute.name == 'name'">
+ *            <input ng-model="attribute.value" placeholder="name" />
+ *          </div>
+ *        </div>
  *      </gmf-print>
  *
  * Note: The 'print' and 'cancel' functions can also be called via globals
@@ -95,6 +110,7 @@ gmf.module.value('gmfPrintTemplateUrl',
  *     property's name of the field.
  *     Example: {'comments': 'demo', 'legend': false}. Doesn't work for the dpi
  *     and the scale. Server's values are used in priorty.
+ * @htmlAttribute {Array.<string>} gmf-print-hiddenattributes The list of attributes that should be hidden.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfPrintTemplateUrl Template url for the directive.
  * @return {angular.Directive} Directive Definition Object.
@@ -109,11 +125,14 @@ gmf.printDirective = function(gmfPrintTemplateUrl) {
     templateUrl: gmfPrintTemplateUrl,
     replace: true,
     restrict: 'E',
+    transclude: true,
     scope: {
       'map': '=gmfPrintMap',
       'active': '=gmfPrintActive',
       'rotateMask': '&?gmfPrintRotatemask',
-      'fieldValues': '&?gmfPrintFieldvalues'
+      'fieldValues': '&?gmfPrintFieldvalues',
+      'hiddenAttributeNames': '=gmfPrintHiddenattributes',
+      'attributesOut': '=gmfPrintAttributesOut'
     },
     link(scope, element, attr) {
       const ctrl = scope['ctrl'];
@@ -347,6 +366,12 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   this.rotation = 0;
 
   /**
+   * @type {Array.<string>}
+   * @export
+   */
+  this.hiddenAttributeNames;
+
+  /**
    * @return {ol.Size} Size in dots of the map to print.
    */
   const getSizeFn = () => this.paperSize_;
@@ -534,6 +559,8 @@ gmf.PrintController.prototype.updateFields_ = function() {
   this.formats_.forEach((format) => {
     this.fields.formats[format] = true;
   });
+
+  this.attributesOut = this.layoutInfo['simpleAttributes'];
 
   // Force the update of the mask
   this.map.render();
