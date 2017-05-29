@@ -224,6 +224,12 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.deleteFromActive = false;
 
   /**
+   * @type {boolean}
+   * @export
+   */
+  this.featureHasGeom;
+
+  /**
    * @type {!ngeo.LayerHelper}
    * @private
    */
@@ -436,6 +442,8 @@ gmf.ObjecteditingController.prototype.$onInit = function() {
   );
 
   this.features_.push(this.feature);
+
+  this.featureHasGeom = !ngeo.geom.isEmpty(geometry);
 
   // Toggle on
   this.initializeInteractions_();
@@ -1014,11 +1022,15 @@ gmf.ObjecteditingController.prototype.handleSketchFeaturesAdd_ = function(evt) {
  */
 gmf.ObjecteditingController.prototype.handleFeatureGeometryChange_ = function() {
 
+  const geom = this.feature.getGeometry();
+  this.timeout_(() => {
+    this.featureHasGeom = !ngeo.geom.isEmpty(geom);
+  });
+
   if (this.skipGeometryChange_) {
     return;
   }
 
-  const geom = this.feature.getGeometry();
   if (geom) {
     // Use a timeout here, because there can be a scope digest already in
     // progress. For example, with tools that requires the user to draw
