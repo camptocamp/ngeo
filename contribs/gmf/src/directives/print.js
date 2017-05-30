@@ -8,6 +8,8 @@ goog.require('ngeo.CreatePrint');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.PrintUtils');
+goog.require('ol.Map');
+goog.require('ol.layer.Group');
 
 
 /**
@@ -133,6 +135,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper the ngeo FeatureHelper service.
  * @param {angular.$filter} $filter Angular $filter service.
+ * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @constructor
  * @export
  * @ngInject
@@ -142,7 +145,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
 gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,
     ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils, ngeoCreatePrint,
     gmfPrintUrl, gmfAuthentication, ngeoQueryResult, ngeoFeatureHelper,
-    $filter) {
+    $filter, gmfThemes) {
 
 
   /**
@@ -361,6 +364,19 @@ gmf.PrintController = function($scope, $timeout, $q, $injector, gettextCatalog,
     this.printState = gmf.PrintState.CAPABILITIES_NOT_LOADED;
     this.capabilities_ = null;
   }.bind(this));
+
+
+  /**
+   * @type {gmfThemes.GmfOgcServers}
+   * @private
+   */
+  this.ogcServers_;
+
+  gmfThemes.getOgcServersObject().then(function(ogcServersObject) {
+    this.ogcServers_ = ogcServersObject;
+  }.bind(this));
+
+
 };
 
 
@@ -665,7 +681,37 @@ gmf.PrintController.prototype.print = function(format) {
   goog.asserts.assertNumber(this.fields.dpi);
   goog.asserts.assertString(this.fields.layout);
 
-  var spec = this.ngeoPrint_.createSpec(this.map, scale, this.fields.dpi,
+  // convert the WMTS layers to WMS
+  var map = new ol.Map({});
+  map.setView(this.map.getView());
+  var ol_layers = this.ngeoLayerHelper_.getFlatLayers(this.map.getLayerGroup());
+  var new_ol_layers = [];
+  for (var i = 0, ii = ol_layers.length; i < ii; i++) {
+    var layer = ol_layers[i];
+    var metadata = layer.get('metadata');
+    if (metadata) {
+      var server_name = metadata.ogcServer;
+      var layer_names = metadata.printLayers || metadata.layers;
+      if (server_name && layer_names) {
+        var server = this.ogcServers_[server_name];
+        if (server) {
+          layer = this.ngeoLayerHelper_.createBasicWMSLayer(
+            server.url,
+            layer_names,
+            server.type
+          );
+        } else {
+          console.error('Missing ogcServer:', server_name);
+        }
+      }
+    }
+    new_ol_layers.push(layer);
+  }
+  map.setLayerGroup(new ol.layer.Group({
+    layers: new_ol_layers
+  }));
+
+  var spec = this.ngeoPrint_.createSpec(map, scale, this.fields.dpi,
       this.fields.layout, format, customAttributes);
 
   // Add feature overlay layer to print spec.
@@ -682,6 +728,10 @@ gmf.PrintController.prototype.print = function(format) {
       this.handleCreateReportSuccess_.bind(this),
       this.handleCreateReportError_.bind(this)
   );
+
+  // remove temporary map
+  map.setTarget(null);
+
 };
 
 
