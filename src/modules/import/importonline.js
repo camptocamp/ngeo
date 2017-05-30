@@ -55,7 +55,7 @@ exports = function($q, $timeout, ngeoFile, gettext, ngeoImportOnlineTemplateUrl)
             matches = nameUrls;
           } else {
             nameUrls.forEach((nameUrl) => {
-              if (nameUrl['name'].indexOf(q) !== -1)) {
+              if (nameUrl['name'].includes(q)) {
                 matches.push(nameUrl);
               }
             });
