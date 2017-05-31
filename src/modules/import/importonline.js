@@ -54,9 +54,8 @@ exports = function($q, $timeout, ngeoFile, gettext, ngeoImportOnlineTemplateUrl)
           if (!q) {
             matches = nameUrls;
           } else {
-            const regex = new RegExp(q, 'i');
             nameUrls.forEach((nameUrl) => {
-              if (regex.test(nameUrl['name'])) {
+              if (nameUrl['name'].includes(q)) {
                 matches.push(nameUrl);
               }
             });
