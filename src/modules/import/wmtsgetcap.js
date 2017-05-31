@@ -24,7 +24,7 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
     if (wgs84Extent) {
       // If only an extent in wgs 84 is available, we use the
       // intersection between proj extent and layer extent as the new
-      // layer extent. We compare extients in wgs 84 to avoid
+      // layer extent. We compare extents in wgs 84 to avoid
       // transformations errors of large wgs 84 extent like
       // (-180,-90,180,90)
       const projWgs84Extent = ol.proj.transformExtent(proj.getExtent(), projCode, wgs84);
