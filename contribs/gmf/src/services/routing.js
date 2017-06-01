@@ -45,7 +45,7 @@ gmf.RoutingService = function($http, gmfOsrmBackendUrl) {
  * @param {?Object} config optional configuration
  * @return {!angular.$http.HttpPromise} promise of the OSRM API request
  */
-gmf.RoutingService.prototype.getRoute = function(coordinates, config){
+gmf.RoutingService.prototype.getRoute = function(coordinates, config) {
 
   config = config || {};
 
@@ -83,6 +83,6 @@ gmf.RoutingService.prototype.getRoute = function(coordinates, config){
   }
 
   return this.$http_.get(url);
-}
+};
 
 gmf.module.service('gmfRoutingService', gmf.RoutingService);

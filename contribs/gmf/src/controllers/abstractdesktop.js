@@ -15,6 +15,8 @@ goog.require('gmf.editfeatureselectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.elevationDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.routingDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.filterselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mousepositionComponent');
@@ -147,6 +149,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @export
    */
   this.editFeatureActive = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.routingfeatureActive = false;
 
   /**
    * @type {boolean}
