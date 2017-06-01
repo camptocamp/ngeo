@@ -49,6 +49,12 @@ gmf.RoutingService.prototype.getRoute = function(coordinates, config){
 
   config = config || {};
 
+  // Service
+  // see: https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#requests
+  if (!config.service) {
+    config.service = 'route'; // default to route
+  }
+
   // Mode of transportation,
   // can be: car, bike, foot
   // see: https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#requests
@@ -58,7 +64,7 @@ gmf.RoutingService.prototype.getRoute = function(coordinates, config){
 
   // build request URL
   let url = this.gmfOsrmBackendUrl_;
-  url += `route/${this.protocolVersion_}/${config.profile}/`;
+  url += `${config.service}/${this.protocolVersion_}/${config.profile}/`;
 
   // [ [a,b] , [c,d] ] -> 'a,b;c,d'
   const coordinateString = coordinates.map(c => c.join(',')).join(';');
