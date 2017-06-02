@@ -110,7 +110,7 @@ ngeo.CreatefeatureController = function(gettextCatalog, $compile, $filter, $scop
   this.map;
 
   /**
-   * @type {!gettext}
+   * @type {!angularGettext.Catalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -169,7 +169,7 @@ ngeo.CreatefeatureController = function(gettextCatalog, $compile, $filter, $scop
  */
 ngeo.CreatefeatureController.prototype.$onInit = function() {
   this.active = this.active === true;
-  const gettextCatalog = this.gettextCatalog;
+  const gettextCatalog = this.gettextCatalog_;
 
   // Create the draw or measure interaction depending on the geometry type
   let interaction;
