@@ -109,7 +109,6 @@ ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
  * @param {!angular.Scope} $scope Scope.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$sce} $sce Angular sce service.
- * @param {gettext} gettext Gettext service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
@@ -122,7 +121,7 @@ ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController
  */
-ngeo.DrawfeatureController = function($scope, $compile, $sce, gettext,
+ngeo.DrawfeatureController = function($scope, $compile, $sce,
     gettextCatalog, ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures) {
 
   /**
@@ -154,6 +153,13 @@ ngeo.DrawfeatureController = function($scope, $compile, $sce, gettext,
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
+  // Fill the string collection
+  gettextCatalog.getString('Point');
+  gettextCatalog.getString('LineString');
+  gettextCatalog.getString('Polygon');
+  gettextCatalog.getString('Circle');
+  gettextCatalog.getString('Rectangle');
+  gettextCatalog.getString('Text');
 
   /**
    * @type {ngeo.DecorateInteraction}

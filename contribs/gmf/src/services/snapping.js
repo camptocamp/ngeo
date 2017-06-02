@@ -253,7 +253,7 @@ gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
         featureNS: 'http://mapserver.gis.umn.edu/mapserver',
         featurePrefix: 'feature',
         features: new ol.Collection(),
-        geometryName: 'the_geom',
+        geometryName: 'geom',
         interaction: null,
         maxFeatures: 50,
         requestDeferred: null,

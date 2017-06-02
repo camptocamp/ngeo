@@ -457,7 +457,8 @@ gmf.DrawfeatureController.prototype.getFeaturesArray = function() {
  * @export
  */
 gmf.DrawfeatureController.prototype.clearFeatures = function() {
-  const msg = this.gettextCatalog_.getString(
+  const gettextCatalog = this.gettextCatalog_;
+  const msg = gettextCatalog.getString(
       'Do you really want to delete all the features?');
   if (confirm(msg)) {
     this.features.clear();
@@ -470,7 +471,8 @@ gmf.DrawfeatureController.prototype.clearFeatures = function() {
  * @export
  */
 gmf.DrawfeatureController.prototype.removeFeature = function(feature) {
-  const msg = this.gettextCatalog_.getString(
+  const gettextCatalog = this.gettextCatalog_;
+  const msg = gettextCatalog.getString(
       'Do you really want to delete the selected feature?');
   if (confirm(msg)) {
     this.features.remove(feature);
@@ -604,6 +606,7 @@ gmf.DrawfeatureController.prototype.handleMapTouchEnd_ = function(evt) {
  * @private
  */
 gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
+  const gettextCatalog = this.gettextCatalog_;
   const pixel = this.map.getEventPixel(evt);
   const coordinate = this.map.getCoordinateFromPixel(pixel);
 
@@ -631,18 +634,18 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
         type == ngeo.GeometryType.RECTANGLE) {
       actions = actions.concat([{
         cls: 'fa fa-arrows',
-        label: this.gettextCatalog_.getString('Move'),
+        label: gettextCatalog.getString('Move'),
         name: gmf.DrawfeatureController.MenuActionType.MOVE
       }, {
         cls: 'fa fa-rotate-right',
-        label: this.gettextCatalog_.getString('Rotate'),
+        label: gettextCatalog.getString('Rotate'),
         name: gmf.DrawfeatureController.MenuActionType.ROTATE
       }]);
     }
 
     actions = actions.concat([{
       cls: 'fa fa-trash-o',
-      label: this.gettextCatalog_.getString('Delete'),
+      label: gettextCatalog.getString('Delete'),
       name: gmf.DrawfeatureController.MenuActionType.DELETE
     }]);
 

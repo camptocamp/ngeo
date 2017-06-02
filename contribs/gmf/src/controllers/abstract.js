@@ -67,6 +67,7 @@ gmf.module.value('ngeoQueryOptions', {
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
+ * @ngdoc controller
  * @ngInject
  * @export
  */

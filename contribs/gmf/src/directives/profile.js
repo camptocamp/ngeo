@@ -110,7 +110,7 @@ gmf.module.component('gmfProfile', gmf.profileComponent);
  * @constructor
  * @private
  * @ngInject
- * @ngdoc Controller
+ * @ngdoc controller
  * @ngname GmfProfileController
  */
 gmf.ProfileController = function($scope, $http, $element, $filter,

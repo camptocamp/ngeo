@@ -170,6 +170,7 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
  * @export
  */
 gmf.AuthenticationController.prototype.changePassword = function() {
+  const gettextCatalog = this.gettextCatalog;
 
   const oldPwd = this.oldPwdVal;
   const newPwd = this.newPwdVal;
@@ -178,13 +179,13 @@ gmf.AuthenticationController.prototype.changePassword = function() {
   const errors = [];
   // (1) validation - passwords are required
   if (oldPwd === '') {
-    errors.push(this.gettextCatalog.getString('The old password is required.'));
+    errors.push(gettextCatalog.getString('The old password is required.'));
   }
   if (newPwd === '') {
-    errors.push(this.gettextCatalog.getString('The new password is required.'));
+    errors.push(gettextCatalog.getString('The new password is required.'));
   }
   if (confPwd === '') {
-    errors.push(this.gettextCatalog.getString('The password confirmation is required.'));
+    errors.push(gettextCatalog.getString('The password confirmation is required.'));
   }
 
   if (errors.length) {
@@ -192,10 +193,10 @@ gmf.AuthenticationController.prototype.changePassword = function() {
   } else {
     // (2) validation - passwords must be new and must also match
     if (oldPwd === newPwd) {
-      errors.push(this.gettextCatalog.getString('The old and new passwords are the same.'));
+      errors.push(gettextCatalog.getString('The old and new passwords are the same.'));
     }
     if (newPwd !== confPwd) {
-      errors.push(this.gettextCatalog.getString('The passwords don\'t match.'));
+      errors.push(gettextCatalog.getString('The passwords don\'t match.'));
     }
 
     if (errors.length) {
@@ -203,7 +204,7 @@ gmf.AuthenticationController.prototype.changePassword = function() {
     } else {
       // (3) send request with current credentials, which may fail if
       //     the old password given is incorrect.
-      const error = this.gettextCatalog.getString('Incorrect old password.');
+      const error = gettextCatalog.getString('Incorrect old password.');
       this.gmfAuthentication_.changePassword(oldPwd, newPwd, confPwd).then(
           () => {
             this.changePasswordModalShown = true;
@@ -220,17 +221,19 @@ gmf.AuthenticationController.prototype.changePassword = function() {
  * @export
  */
 gmf.AuthenticationController.prototype.login = function() {
+  const gettextCatalog = this.gettextCatalog;
+
   const errors = [];
   if (this.loginVal === '') {
-    errors.push(this.gettextCatalog.getString('The username is required.'));
+    errors.push(gettextCatalog.getString('The username is required.'));
   }
   if (this.pwdVal === '') {
-    errors.push(this.gettextCatalog.getString('The password is required.'));
+    errors.push(gettextCatalog.getString('The password is required.'));
   }
   if (errors.length) {
     this.setError_(errors);
   } else {
-    const error = this.gettextCatalog.getString('Incorrect username or password.');
+    const error = gettextCatalog.getString('Incorrect username or password.');
     this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
         this.resetError_.bind(this),
         this.setError_.bind(this, error));
@@ -243,7 +246,8 @@ gmf.AuthenticationController.prototype.login = function() {
  * @export
  */
 gmf.AuthenticationController.prototype.logout = function() {
-  const error = this.gettextCatalog.getString('Could not log out.');
+  const gettextCatalog = this.gettextCatalog;
+  const error = gettextCatalog.getString('Could not log out.');
   this.gmfAuthentication_.logout().then(
       this.resetError_.bind(this),
       this.setError_.bind(this, error));
@@ -255,13 +259,14 @@ gmf.AuthenticationController.prototype.logout = function() {
  * @export
  */
 gmf.AuthenticationController.prototype.resetPassword = function() {
+  const gettextCatalog = this.gettextCatalog;
 
   if (!this.loginVal) {
-    this.setError_(this.gettextCatalog.getString('Please, input a login...'));
+    this.setError_(gettextCatalog.getString('Please, input a login...'));
     return;
   }
 
-  const error = this.gettextCatalog.getString('An error occurred while reseting the password.');
+  const error = gettextCatalog.getString('An error occured while reseting the password.');
 
   /**
    * @param {gmf.AuthenticationDefaultResponse} respData Response.

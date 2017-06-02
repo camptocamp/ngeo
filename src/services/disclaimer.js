@@ -95,6 +95,7 @@ ngeo.Disclaimer.prototype.close = function(object) {
  * @override
  */
 ngeo.Disclaimer.prototype.showMessage = function(message) {
+  const gettextCatalog = this.gettextCatalog_;
   const type = message.type;
   goog.asserts.assertString(type, 'Type should be set.');
 
@@ -149,7 +150,7 @@ ngeo.Disclaimer.prototype.showMessage = function(message) {
       `<div role="alert" class="${classNames.join(' ')}"></div>`);
     const button = angular.element(
       `<button type="button" class="close" data-dismiss="alert" aria-label="${
-        this.gettextCatalog_.getString('Close')
+        gettextCatalog.getString('Close')
         }"><span aria-hidden="true" class="fa fa-times"></span></button>`);
     const msg = angular.element('<span />').html(message.msg);
     el.append(button).append(msg);

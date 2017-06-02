@@ -260,6 +260,7 @@ gmf.module.component('gmfElevationwidget', gmf.elevationwidgetComponent);
 /**
  * @constructor
  * @export
+ * @ngdoc controller
  */
 gmf.ElevationwidgetController = function() {
   /**

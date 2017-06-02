@@ -57,10 +57,9 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
   // state is read from the location URL, or from the local storage if there
   // is no state in the location URL.
 
-  const paramKeys = ngeoLocation.getParamKeys();
+  const paramKeys = ngeoLocation.getParamKeys().filter(key => key != 'debug' && key != 'no_redirect');
 
-  if (paramKeys.length === 0 ||
-      (paramKeys.length === 1 && paramKeys[0] == 'debug')) {
+  if (paramKeys.length === 0) {
     if (this.useLocalStorage) {
       for (const key in window.localStorage) {
         goog.asserts.assert(key);

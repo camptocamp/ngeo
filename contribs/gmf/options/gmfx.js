@@ -662,3 +662,11 @@ gmfx.OpenTextPopup;
  * @param {string=} opt_height CSS height.
  */
 gmfx.OpenPopup_
+
+/**
+ * @typedef {{
+ *     goog: (Array.<goog.events.Key>),
+ *     ol: (Array.<ol.EventsKey>)
+ * }}
+ */
+gmfx.PermalinkListenerKeys;

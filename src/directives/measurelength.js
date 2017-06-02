@@ -9,14 +9,14 @@ goog.require('ol.style.Style');
 
 /**
  * @param {angular.$compile} $compile Angular compile service.
- * @param {gettext} gettext Gettext service.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {angular.$filter} $filter Angular filter
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measurelengthDirective = function($compile, gettext, $filter) {
+ngeo.measurelengthDirective = function($compile, gettextCatalog, $filter) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -28,9 +28,9 @@ ngeo.measurelengthDirective = function($compile, gettext, $filter) {
      */
     link($scope, element, attrs, drawFeatureCtrl) {
 
-      const helpMsg = gettext('Click to start drawing line');
-      const contMsg = gettext('Click to continue drawing<br/>' +
-                            'Double-click or click last point to finish');
+      const helpMsg = gettextCatalog.getString('Click to start drawing line');
+      const contMsg = gettextCatalog.getString('Click to continue drawing<br/>' +
+          'Double-click or click last point to finish');
 
       const measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), {
         style: new ol.style.Style(),

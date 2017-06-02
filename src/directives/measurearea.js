@@ -9,14 +9,14 @@ goog.require('ol.style.Style');
 
 /**
  * @param {angular.$compile} $compile Angular compile service.
- * @param {gettext} gettext Gettext service.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {angular.$filter} $filter Angular filter
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measureareaDirective = function($compile, gettext, $filter) {
+ngeo.measureareaDirective = function($compile, gettextCatalog, $filter) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -28,8 +28,8 @@ ngeo.measureareaDirective = function($compile, gettext, $filter) {
      */
     link($scope, element, attrs, drawFeatureCtrl) {
 
-      const helpMsg = gettext('Click to start drawing polygon');
-      const contMsg = gettext('Click to continue drawing<br/>' +
+      const helpMsg = gettextCatalog.getString('Click to start drawing polygon');
+      const contMsg = gettextCatalog.getString('Click to continue drawing<br/>' +
           'Double-click or click starting point to finish');
 
       const measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), {

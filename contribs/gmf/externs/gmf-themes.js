@@ -11,7 +11,7 @@
 let gmfThemes;
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 gmfThemes.GmfThemesResponse = function() {};
@@ -38,7 +38,7 @@ gmfThemes.GmfThemesResponse.prototype.themes;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 gmfThemes.GmfRootNode = function() {};
@@ -51,7 +51,7 @@ gmfThemes.GmfRootNode.prototype.children;
 
 /**
  * Contains the common element of all the elements of the GeoMapFish layer tree.
- * @record
+ * @constructor
  * @struct
  */
 gmfThemes.GmfBaseNode = function() {};
@@ -78,7 +78,7 @@ gmfThemes.GmfBaseNode.prototype.name;
 
 /**
  * The element we can select in the theme selector.
- * @record
+ * @constructor
  * @struct
  * @extends gmfThemes.GmfBaseNode
  */
@@ -105,7 +105,7 @@ gmfThemes.GmfTheme.prototype.functionalities;
  * neither a WMS group.
  * This represent « first level group » (Block in the layer tree),
  * or all sub nodes that's not al leaf.
- * @record
+ * @constructor
  * @struct
  * @extends gmfThemes.GmfBaseNode
  */
@@ -157,7 +157,7 @@ gmfThemes.GmfGroup.prototype.time;
  * not an OpenLayers layer
  * neither a WMS layer.
  * This is also the leaf of the tree.
- * @record
+ * @constructor
  * @struct
  * @extends gmfThemes.GmfBaseNode
  */
@@ -192,7 +192,7 @@ gmfThemes.GmfLayer.prototype.type;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  * @extends gmfThemes.GmfLayer
  */
@@ -240,7 +240,7 @@ gmfThemes.GmfLayerWMS.prototype.time;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  * @extends gmfThemes.GmfLayer
  */
@@ -274,7 +274,7 @@ gmfThemes.GmfLayerWMTS.prototype.url;
 
 /**
  * Additional attributes related on a WMS layers (or WFS features type).
- * @record
+ * @constructor
  * @struct
  */
 gmfThemes.GmfLayerChildLayer = function() {};
@@ -313,7 +313,7 @@ gmfThemes.GmfOgcServers;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 gmfThemes.GmfOgcServer = function() {};
@@ -376,7 +376,7 @@ gmfThemes.GmfFunctionalities = function() {};
 gmfThemes.GmfFunctionalities.prototype.default_basemap;
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 gmfThemes.GmfMetaData = function() {};
@@ -548,7 +548,7 @@ gmfThemes.GmfMetaData.prototype.wmsLayers;
 
 
 /**
- * @record
+ * @constructor
  * @struct
  */
 gmfThemes.GmfSnappingConfig = function() {};

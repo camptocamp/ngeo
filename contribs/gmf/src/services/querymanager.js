@@ -24,7 +24,7 @@ goog.require('ngeo.Query');
  * @param {!angular.$q} $q Angular q service
  * @ngInject
  * @ngdoc service
- * @ngname gmfThemes
+ * @ngname gmfQueryManager
  */
 gmf.QueryManager = function(ngeoQuery, gmfThemes, $q) {
 

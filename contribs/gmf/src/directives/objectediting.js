@@ -463,7 +463,8 @@ gmf.ObjecteditingController.prototype.$onInit = function() {
  * @export
  */
 gmf.ObjecteditingController.prototype.delete = function() {
-  const msg = this.gettextCatalog_.getString(
+  const gettextCatalog = this.gettextCatalog_;
+  const msg = gettextCatalog.getString(
       'Do you really want to delete the feature?');
   // Confirm deletion first
   if (confirm(msg)) {
@@ -958,8 +959,9 @@ gmf.ObjecteditingController.prototype.refreshWMSLayer_ = function() {
  * @private
  */
 gmf.ObjecteditingController.prototype.handleWindowBeforeUnload_ = function(e) {
+  const gettextCatalog = this.gettextCatalog_;
   if (this.dirty) {
-    const msg = this.gettextCatalog_.getString('There are unsaved changes.');
+    const msg = gettextCatalog.getString('There are unsaved changes.');
     (e || window.event).returnValue = msg;
     return msg;
   }
