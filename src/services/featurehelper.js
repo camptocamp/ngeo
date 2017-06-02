@@ -31,8 +31,8 @@ goog.require('ol.style.Text');
  *
  * @constructor
  * @struct
- * @param {angular.$injector} $injector Main injector.
- * @param {angular.$filter} $filter Angular filter
+ * @param {!angular.$injector} $injector Main injector.
+ * @param {!angular.$filter} $filter Angular filter.
  * @ngdoc service
  * @ngname ngeoFeatureHelper
  * @ngInject
@@ -40,7 +40,7 @@ goog.require('ol.style.Text');
 ngeo.FeatureHelper = function($injector, $filter) {
 
   /**
-   * @type {angular.$filter}
+   * @type {!angular.$filter}
    * @private
    */
   this.$filter_ = $filter;
@@ -50,26 +50,44 @@ ngeo.FeatureHelper = function($injector, $filter) {
    * @private
    */
   this.decimals_ = undefined;
-
   if ($injector.has('ngeoMeasureDecimals')) {
     this.decimals_ = $injector.get('ngeoMeasureDecimals');
   }
 
-  /**
-   * @type {ngeox.unitPrefix}
-   */
-  this.format_ = $injector.get('$filter')('ngeoUnitPrefix');
 
   /**
-   * Filter function to display point coordinates or null to don't use any
-   * filter.
+   * @type {number|undefined}
+   * @private
+   */
+  this.precision_ = undefined;
+  if ($injector.has('ngeoMeasurePrecision')) {
+    this.precision_ = $injector.get('ngeoMeasurePrecision');
+  }
+
+  /**
+   * @type {!ngeox.number}
+   */
+  this.numberFormat_ = /** @type {ngeox.number} */ ($filter('number'));
+
+  /**
+   * @type {!ngeox.unitPrefix}
+   */
+  this.unitPrefixFormat_ = /** @type {ngeox.unitPrefix} */ ($filter('ngeoUnitPrefix'));
+
+  /**
+   * @type {!ngeox.numberCoordinates}
+   */
+  this.ngeoNumberCoordinates_ = /** @type {ngeox.numberCoordinates} */ ($filter('ngeoNumberCoordinates'));
+
+  /**
+   * Filter function to display point coordinates or null to don't use any filter.
    * @type {function(*):string|null}
    * @private
    */
   this.pointFilterFn_ = null;
 
   /**
-   * Arguments to apply to the the point filter function.
+   * Arguments to apply to the point filter function.
    * @type {Array.<*>}
    * @private
    */
@@ -87,7 +105,7 @@ ngeo.FeatureHelper = function($injector, $filter) {
   }
 
   /**
-   * @type {ol.proj.Projection}
+   * @type {!ol.proj.Projection}
    * @private
    */
   this.projection_;
@@ -103,7 +121,7 @@ ngeo.FeatureHelper = function($injector, $filter) {
 
 
 /**
- * @param {ol.proj.Projection} projection Projection.
+ * @param {!ol.proj.Projection} projection Projection.
  * @export
  */
 ngeo.FeatureHelper.prototype.setProjection = function(projection) {
@@ -117,7 +135,7 @@ ngeo.FeatureHelper.prototype.setProjection = function(projection) {
 /**
  * Set the style of a feature using its inner properties and depending on
  * its geometry type.
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @param {boolean=} opt_select Whether the feature should be rendered as
  *     selected, which includes additional vertex and halo styles.
  * @export
@@ -137,8 +155,8 @@ ngeo.FeatureHelper.prototype.setStyle = function(feature, opt_select) {
 /**
  * Create and return a style object from a given feature using its inner
  * properties and depending on its geometry type.
- * @param {ol.Feature} feature Feature.
- * @return {Array.<ol.style.Style>} The style object.
+ * @param {!ol.Feature} feature Feature.
+ * @return {!Array.<!ol.style.Style>} The style object.
  * @export
  */
 ngeo.FeatureHelper.prototype.getStyle = function(feature) {
@@ -168,7 +186,7 @@ ngeo.FeatureHelper.prototype.getStyle = function(feature) {
 
   let styles;
   if (style.constructor === Array) {
-    styles = /** @type {Array.<ol.style.Style>}*/ (style);
+    styles = /** @type {!Array.<!ol.style.Style>}*/ (style);
   } else {
     styles = [style];
   }
@@ -178,8 +196,8 @@ ngeo.FeatureHelper.prototype.getStyle = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature with linestring geometry.
- * @return {ol.style.Style} Style.
+ * @param {!ol.Feature} feature Feature with linestring geometry.
+ * @return {!ol.style.Style} Style.
  * @private
  */
 ngeo.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
@@ -206,8 +224,8 @@ ngeo.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature with point geometry.
- * @return {ol.style.Style} Style.
+ * @param {!ol.Feature} feature Feature with point geometry.
+ * @return {!ol.style.Style} Style.
  * @private
  */
 ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
@@ -238,8 +256,46 @@ ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature with polygon geometry.
- * @return {Array.<ol.style.Style>} Style.
+ * Get an optional number feature attribute.
+ *
+ * @param {!ol.Feature} feature Feature.
+ * @param {string} attrib The attribute name.
+ * @return {number|undefined}, The attribute value
+ */
+ngeo.FeatureHelper.prototype.optNumber = function(feature, attrib) {
+  const value = feature.get(attrib);
+  if (value !== undefined) {
+    if (typeof value == 'string') {
+      return +value;
+    } else {
+      return goog.asserts.assertNumber(value);
+    }
+  } else {
+    return undefined;
+  }
+};
+
+
+/**
+ * Get a number feature attribute.
+ *
+ * @param {!ol.Feature} feature Feature.
+ * @param {string} attrib The attribute name.
+ * @return {number}, The attribute value
+ */
+ngeo.FeatureHelper.prototype.getNumber = function(feature, attrib) {
+  const value = feature.get(attrib);
+  if (typeof value == 'string') {
+    return +value;
+  } else {
+    return goog.asserts.assertNumber(value);
+  }
+};
+
+
+/**
+ * @param {!ol.Feature} feature Feature with polygon geometry.
+ * @return {!Array.<!ol.style.Style>} Style.
  * @private
  */
 ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
@@ -254,8 +310,7 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
   const fillColor = color.slice();
   fillColor[3] = opacity;
 
-  const azimut = /** @type {number} */ (
-    feature.get(ngeo.FeatureProperties.AZIMUT));
+  const azimut = this.optNumber(feature, ngeo.FeatureProperties.AZIMUT);
 
   const styles = [new ol.style.Style({
     fill: new ol.style.Fill({
@@ -272,7 +327,7 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       // Radius style:
       const line = this.getRadiusLine(feature, azimut);
       const length = ngeo.interaction.Measure.getFormattedLength(
-        line, this.projection_, this.decimals_, this.format_);
+        line, this.projection_, this.precision_, this.unitPrefixFormat_);
 
       styles.push(new ol.style.Style({
         geometry: line,
@@ -293,7 +348,7 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       styles.push(new ol.style.Style({
         geometry: new ol.geom.Point(line.getLastCoordinate()),
         text: this.createTextStyle_({
-          text: `${azimut}°`,
+          text: `${this.numberFormat_(azimut, this.decimals_)}°`,
           size: 10,
           offsetX: Math.cos((azimut - 90) * Math.PI / 180) * 20,
           offsetY: Math.sin((azimut - 90) * Math.PI / 180) * 20
@@ -313,8 +368,8 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature with point geometry, rendered as text.
- * @return {ol.style.Style} Style.
+ * @param {!ol.Feature} feature Feature with point geometry, rendered as text.
+ * @return {!ol.style.Style} Style.
  * @private
  */
 ngeo.FeatureHelper.prototype.getTextStyle_ = function(feature) {
@@ -331,8 +386,8 @@ ngeo.FeatureHelper.prototype.getTextStyle_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature to create the editing styles with.
- * @return {Array.<ol.style.Style>} List of style.
+ * @param {!ol.Feature} feature Feature to create the editing styles with.
+ * @return {!Array.<!ol.style.Style>} List of style.
  * @export
  */
 ngeo.FeatureHelper.prototype.createEditingStyles = function(feature) {
@@ -410,7 +465,7 @@ ngeo.FeatureHelper.prototype.createEditingStyles = function(feature) {
  *     want to include the geometry function if you just want to have the
  *     style object itself to be used to draw features that have point
  *     geometries. Defaults to `true`.
- * @return {ol.style.Style} Style.
+ * @return {!ol.style.Style} Style.
  * @export
  */
 ngeo.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
@@ -474,7 +529,7 @@ ngeo.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @return {boolean} Whether the feature supports vertex or not.
  * @private
  */
@@ -490,8 +545,8 @@ ngeo.FeatureHelper.prototype.supportsVertex_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
- * @return {ol.style.Style} Style.
+ * @param {!ol.Feature} feature Feature.
+ * @return {!ol.style.Style} Style.
  * @private
  */
 ngeo.FeatureHelper.prototype.getHaloStyle_ = function(feature) {
@@ -548,7 +603,7 @@ ngeo.FeatureHelper.prototype.getHaloStyle_ = function(feature) {
 /**
  * Delete the unwanted ol3 properties from the current feature then return the
  * properties.
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @return {!Object.<string, *>} Filtered properties of the current feature.
  * @export
  */
@@ -573,13 +628,13 @@ ngeo.FeatureHelper.prototype.getAngleProperty = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @return {string} Color.
  * @export
  */
 ngeo.FeatureHelper.prototype.getColorProperty = function(feature) {
 
-  const color = /** @type {string} */ (feature.get(ngeo.FeatureProperties.COLOR));
+  const color = goog.asserts.assertString(feature.get(ngeo.FeatureProperties.COLOR));
 
   goog.asserts.assertString(color);
 
@@ -588,8 +643,8 @@ ngeo.FeatureHelper.prototype.getColorProperty = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
- * @return {ol.Color} Color.
+ * @param {!ol.Feature} feature Feature.
+ * @return {!ol.Color} Color.
  * @export
  */
 ngeo.FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
@@ -598,33 +653,29 @@ ngeo.FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @return {string} Name.
  * @export
  */
 ngeo.FeatureHelper.prototype.getNameProperty = function(feature) {
-  const name = /** @type {string} */ (feature.get(ngeo.FeatureProperties.NAME));
+  const name = goog.asserts.assertString(feature.get(ngeo.FeatureProperties.NAME));
   goog.asserts.assertString(name);
   return name;
 };
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @return {number} Opacity.
  * @export
  */
 ngeo.FeatureHelper.prototype.getOpacityProperty = function(feature) {
-  const opacityStr = (/** @type {string} */ (
-      feature.get(ngeo.FeatureProperties.OPACITY)));
-  const opacity = opacityStr !== undefined ? +opacityStr : 1;
-  goog.asserts.assertNumber(opacity);
-  return opacity;
+  return this.getNumber(feature, ngeo.FeatureProperties.OPACITY);
 };
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @return {boolean} Show measure.
  * @export
  */
@@ -635,33 +686,27 @@ ngeo.FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
   } else if (typeof showMeasure === 'string') {
     showMeasure = (showMeasure === 'true') ? true : false;
   }
-  goog.asserts.assertBoolean(showMeasure);
-  return /** @type {boolean} */ (showMeasure);
+  return goog.asserts.assertBoolean(showMeasure);
 };
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @return {number} Size.
  * @export
  */
 ngeo.FeatureHelper.prototype.getSizeProperty = function(feature) {
-  const size = +(/** @type {string} */ (feature.get(ngeo.FeatureProperties.SIZE)));
-  goog.asserts.assertNumber(size);
-  return size;
+  return this.getNumber(feature, ngeo.FeatureProperties.SIZE);
 };
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @return {number} Stroke.
  * @export
  */
 ngeo.FeatureHelper.prototype.getStrokeProperty = function(feature) {
-  const stroke = +(/** @type {string} */ (
-      feature.get(ngeo.FeatureProperties.STROKE)));
-  goog.asserts.assertNumber(stroke);
-  return stroke;
+  return this.getNumber(feature, ngeo.FeatureProperties.STROKE);
 };
 
 
@@ -671,7 +716,7 @@ ngeo.FeatureHelper.prototype.getStrokeProperty = function(feature) {
 /**
  * Export features in the given format. The projection of the exported features
  * is: `EPSG:4326`.
- * @param {Array.<ol.Feature>} features Array of vector features.
+ * @param {!Array.<!ol.Feature>} features Array of vector features.
  * @param {string} formatType Format type to export the features.
  * @export
  */
@@ -692,7 +737,7 @@ ngeo.FeatureHelper.prototype.export = function(features, formatType) {
 /**
  * Export features in GPX and download the result to the browser. The
  * projection of the exported features is: `EPSG:4326`.
- * @param {Array.<ol.Feature>} features Array of vector features.
+ * @param {!Array.<!ol.Feature>} features Array of vector features.
  * @export
  */
 ngeo.FeatureHelper.prototype.exportGPX = function(features) {
@@ -706,7 +751,7 @@ ngeo.FeatureHelper.prototype.exportGPX = function(features) {
 /**
  * Export features in KML and download the result to the browser. The
  * projection of the exported features is: `EPSG:4326`.
- * @param {Array.<ol.Feature>} features Array of vector features.
+ * @param {!Array.<!ol.Feature>} features Array of vector features.
  * @export
  */
 ngeo.FeatureHelper.prototype.exportKML = function(features) {
@@ -721,8 +766,8 @@ ngeo.FeatureHelper.prototype.exportKML = function(features) {
  * Export features using a given format to a specific filename and download
  * the result to the browser. The projection of the exported features is:
  * `EPSG:4326`.
- * @param {Array.<ol.Feature>} features Array of vector features.
- * @param {ol.format.Feature} format Format
+ * @param {!Array.<!ol.Feature>} features Array of vector features.
+ * @param {!ol.format.Feature} format Format
  * @param {string} fileName Name of the file.
  * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
  * @private
@@ -756,8 +801,8 @@ ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
 
 
 /**
- * @param {ngeox.style.TextOptions} options Options.
- * @return {ol.style.Text} Style.
+ * @param {!ngeox.style.TextOptions} options Options.
+ * @return {!ol.style.Text} Style.
  * @private
  */
 ngeo.FeatureHelper.prototype.createTextStyle_ = function(options) {
@@ -789,7 +834,7 @@ ngeo.FeatureHelper.prototype.createTextStyle_ = function(options) {
  * Get the measure of the given feature as a string. For points, you can format
  * the result by setting a filter to apply on the coordinate with the function
  * {@link ngeo.FeatureHelper.prototype.setPointFilterFn}.
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @return {string} Measure.
  * @export
  */
@@ -802,23 +847,23 @@ ngeo.FeatureHelper.prototype.getMeasure = function(feature) {
 
   if (geometry instanceof ol.geom.Polygon) {
     if (this.getType(feature) === ngeo.GeometryType.CIRCLE) {
-      const azimut = /** @type {number} */ (
-        feature.get(ngeo.FeatureProperties.AZIMUT));
+      const azimut = this.optNumber(feature, ngeo.FeatureProperties.AZIMUT);
+      goog.asserts.assertNumber(azimut);
       const line = this.getRadiusLine(feature, azimut);
 
       measure = ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius(
-        line, this.projection_, this.decimals_, this.format_);
+        line, this.projection_, this.decimals_, this.precision_, this.unitPrefixFormat_, this.numberFormat_);
     } else {
       measure = ngeo.interaction.Measure.getFormattedArea(
-        geometry, this.projection_, this.decimals_, this.format_);
+        geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
     }
   } else if (geometry instanceof ol.geom.LineString) {
     measure = ngeo.interaction.Measure.getFormattedLength(
-      geometry, this.projection_, this.decimals_, this.format_);
+      geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
   } else if (geometry instanceof ol.geom.Point) {
     if (this.pointFilterFn_ === null) {
       measure = ngeo.interaction.Measure.getFormattedPoint(
-      geometry, this.projection_, this.decimals_);
+        geometry, this.decimals_, this.ngeoNumberCoordinates_);
     } else {
       const coordinates = geometry.getCoordinates();
       const args = this.pointFilterArgs_.slice(0);
@@ -834,7 +879,7 @@ ngeo.FeatureHelper.prototype.getMeasure = function(feature) {
 /**
  * Return the type of geometry of a feature using its geometry property and
  * some inner properties.
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @return {string} The type of geometry.
  * @export
  */
@@ -878,8 +923,8 @@ ngeo.FeatureHelper.prototype.getType = function(feature) {
  * This method first checks if a feature's extent intersects with the map view
  * extent. If it doesn't, then the view gets recentered with an animation to
  * the center of the feature.
- * @param {ol.Feature} feature Feature.
- * @param {ol.Map} map Map.
+ * @param {!ol.Feature} feature Feature.
+ * @param {!ol.Map} map Map.
  * @param {number=} opt_panDuration Pan animation duration. Defaults to `250`.
  * @export
  */
@@ -924,9 +969,9 @@ ngeo.FeatureHelper.prototype.panMapToFeature = function(feature, map,
 /**
  * This method generates a line string geometry that represents the radius for
  * a given azimut. It expects the input geometry to be a circle.
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @param {number} azimut Azimut in degrees.
- * @return {ol.geom.LineString} The line geometry.
+ * @return {!ol.geom.LineString} The line geometry.
  */
 ngeo.FeatureHelper.prototype.getRadiusLine = function(feature, azimut) {
   const geometry = feature.getGeometry();
@@ -945,8 +990,8 @@ ngeo.FeatureHelper.prototype.getRadiusLine = function(feature, azimut) {
 
 /**
  * Return the properties of a feature, with the exception of the geometry.
- * @param {ol.Feature} feature Feature.
- * @return {Object.<string, *>} Object.
+ * @param {!ol.Feature} feature Feature.
+ * @return {!Object.<string, *>} Object.
  * @export
  */
 ngeo.FeatureHelper.prototype.getNonSpatialProperties = function(feature) {
@@ -964,7 +1009,7 @@ ngeo.FeatureHelper.prototype.getNonSpatialProperties = function(feature) {
 
 /**
  * Clear all properties of a feature, with the exception of the geometry.
- * @param {ol.Feature} feature Feature.
+ * @param {!ol.Feature} feature Feature.
  * @export
  */
 ngeo.FeatureHelper.prototype.clearNonSpatialProperties = function(feature) {

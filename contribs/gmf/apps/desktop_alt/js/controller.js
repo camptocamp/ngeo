@@ -34,6 +34,9 @@ gmf.module.value('gmfPrintOptions', {
   'scaleInput': true
 });
 
+gmf.module.value('ngeoMeasurePrecision', 6);
+gmf.module.value('ngeoMeasureDecimals', 2);
+
 
 /**
  * @param {angular.Scope} $scope Scope.

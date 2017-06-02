@@ -12,16 +12,22 @@ goog.require('ol.geom.Point');
  * @constructor
  * @struct
  * @extends {ngeo.interaction.Measure}
+ * @param {ngeox.numberCoordinates} format the Formatter
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
  * @export
  */
-ngeo.interaction.MeasurePointMobile = function(opt_options) {
+ngeo.interaction.MeasurePointMobile = function(format, opt_options) {
 
   const options = opt_options !== undefined ? opt_options : {};
 
   ol.obj.assign(options, {displayHelpTooltip: false});
 
   ngeo.interaction.Measure.call(this, options);
+
+  /**
+   * @type {ngeox.numberCoordinates}
+   */
+  this.format_ = format;
 
 };
 ol.inherits(ngeo.interaction.MeasurePointMobile, ngeo.interaction.Measure);
@@ -30,8 +36,7 @@ ol.inherits(ngeo.interaction.MeasurePointMobile, ngeo.interaction.Measure);
 /**
  * @inheritDoc
  */
-ngeo.interaction.MeasurePointMobile.prototype.createDrawInteraction = function(
-    style, source) {
+ngeo.interaction.MeasurePointMobile.prototype.createDrawInteraction = function(style, source) {
   return new ngeo.interaction.MobileDraw({
     'type': /** @type {ol.geom.GeometryType<string>} */ ('Point'),
     'style': style,
@@ -43,13 +48,10 @@ ngeo.interaction.MeasurePointMobile.prototype.createDrawInteraction = function(
 /**
  * @inheritDoc
  */
-ngeo.interaction.MeasurePointMobile.prototype.handleMeasure = function(
-    callback) {
-  const geom = /** @type {ol.geom.Point} */
-      (this.sketchFeature.getGeometry());
-  const proj = this.getMap().getView().getProjection();
+ngeo.interaction.MeasurePointMobile.prototype.handleMeasure = function(callback) {
+  const geom = goog.asserts.assertInstanceof(this.sketchFeature.getGeometry(), ol.geom.Point);
   const dec = this.decimals;
-  const output = ngeo.interaction.Measure.getFormattedPoint(geom, proj, dec);
+  const output = ngeo.interaction.Measure.getFormattedPoint(geom, dec, this.format_);
   const coord = geom.getLastCoordinate();
   callback(output, coord);
 };

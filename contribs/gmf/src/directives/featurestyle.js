@@ -181,8 +181,7 @@ gmf.FeaturestyleController.prototype.handleColorSet_ = function(
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetAngle = function(value) {
-  return /** @type {number} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.ANGLE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.ANGLE, value));
 };
 
 
@@ -192,8 +191,7 @@ gmf.FeaturestyleController.prototype.getSetAngle = function(value) {
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetName = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.NAME, value));
+  return goog.asserts.assertString(this.getSetProperty_(ngeo.FeatureProperties.NAME, value));
 };
 
 
@@ -203,8 +201,7 @@ gmf.FeaturestyleController.prototype.getSetName = function(value) {
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetOpacity = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.OPACITY, value));
+  return goog.asserts.assertString(this.getSetProperty_(ngeo.FeatureProperties.OPACITY, value));
 };
 
 
@@ -215,8 +212,7 @@ gmf.FeaturestyleController.prototype.getSetOpacity = function(value) {
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetShowMeasure = function(value) {
-  return /** @type {boolean} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.SHOW_MEASURE, value));
+  return goog.asserts.assertBoolean(this.getSetProperty_(ngeo.FeatureProperties.SHOW_MEASURE, value));
 };
 
 
@@ -226,8 +222,7 @@ gmf.FeaturestyleController.prototype.getSetShowMeasure = function(value) {
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetSize = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.SIZE, value));
+  return goog.asserts.assertString(this.getSetProperty_(ngeo.FeatureProperties.SIZE, value));
 };
 
 
@@ -237,8 +232,7 @@ gmf.FeaturestyleController.prototype.getSetSize = function(value) {
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetStroke = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.STROKE, value));
+  return goog.asserts.assertString(this.getSetProperty_(ngeo.FeatureProperties.STROKE, value));
 };
 
 
@@ -275,10 +269,10 @@ gmf.FeaturestyleController.prototype.handleFeatureChange_ = function() {
  * @private
  */
 gmf.FeaturestyleController.prototype.handleGeometryChange_ = function() {
-  const feature = this.feature;
-  this.measure = this.featureHelper_.getMeasure(feature);
+  goog.asserts.assert(this.feature);
+  this.measure = this.featureHelper_.getMeasure(this.feature);
 
-  const showMeasure = this.featureHelper_.getShowMeasureProperty(feature);
+  const showMeasure = this.featureHelper_.getShowMeasureProperty(this.feature);
   if (showMeasure) {
     this.handleFeatureChange_();
   }

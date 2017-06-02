@@ -204,9 +204,7 @@ ngeo.module.filter('ngeoUnitPrefix', ngeo.UnitPrefix);
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *
  * @param {angular.$filter} $filter Angular filter
- * @return {function(ol.Coordinate, (number|string)=, string=,
- *     (boolean|string)=): string} A function to format numbers into
- *     coordinates string.
+ * @return {ngeox.numberCoordinates} A function to format numbers into coordinates string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoNumberCoordinates
@@ -238,7 +236,7 @@ ngeo.module.filter('ngeoNumberCoordinates', ngeo.NumberCoordinates);
 
 
 /**
- * Format a couple of numbers as DMS coordinates.
+ * Format coordinates as DMS coordinates.
  *
  * Example without parameters:
  *
@@ -250,8 +248,7 @@ ngeo.module.filter('ngeoNumberCoordinates', ngeo.NumberCoordinates);
  *      <p>{{[7.1234, 46.9876] | ngeoDMSCoordinates:2:'[{y}; {x]'}}</p>
  *      <!-- will Become [46° 59' 15.36'' N; 7° 07' 24.24'' E] -->
  *
- * @return {function(ol.Coordinate, (number|string)=, string=): string} A
- *     function to format numbers into a DMS coordinates string.
+ * @return {ngeox.dmsCoordinates} A function to format numbers into a DMS coordinates string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoDMSCoordinates

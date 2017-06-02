@@ -139,7 +139,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
     zoom: 6
   });
 
-  ngeoFeatureHelper.setProjection(view.getProjection());
+  ngeoFeatureHelper.setProjection(goog.asserts.assert(view.getProjection()));
 
   // set style
   features.forEach((feature) => {

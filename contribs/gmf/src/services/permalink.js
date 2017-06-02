@@ -525,20 +525,20 @@ gmf.Permalink.prototype.getMapTooltip = function() {
 
 /**
  * Get the ngeo features from the state manager for initialization purpose
- * @return {Array.<ol.Feature>} The features read from the state manager.
+ * @return {!Array.<!ol.Feature>} The features read from the state manager.
  * @export
  */
 gmf.Permalink.prototype.getFeatures = function() {
   const f = this.ngeoStateManager_.getInitialStringValue(gmf.PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
-    return this.featureHashFormat_.readFeatures(f);
+    return goog.asserts.assert(this.featureHashFormat_.readFeatures(f));
   }
   return [];
 };
 
 
 /**
- * @param {Object.<string, string>} dimensions The global dimensions object.
+ * @param {!Object.<string, string>} dimensions The global dimensions object.
  * @export
  */
 gmf.Permalink.prototype.setDimensions = function(dimensions) {

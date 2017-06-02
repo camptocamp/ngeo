@@ -368,6 +368,7 @@ gmf.DisplayquerywindowController.prototype.updateQueryResult_ = function(queryRe
   for (let i = 0; i < queryResult.sources.length; i++) {
     const source = queryResult.sources[i];
     source.features = source.features.filter(function(feature) {
+      goog.asserts.assert(feature);
       return !ol.obj.isEmpty(this.ngeoFeatureHelper_.getFilteredFeatureValues(feature));
     }, this);
     this.ngeoQueryResult.sources.push(source);

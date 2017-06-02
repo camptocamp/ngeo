@@ -1445,7 +1445,7 @@ ngeox.interaction;
  * @typedef {{
  *    startMsg: (Element|undefined),
  *    continueMsg: (Element|undefined),
- *    decimals: (number|undefined),
+ *    precision: (number|undefined),
  *    style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
  *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
  * }}
@@ -1469,12 +1469,12 @@ ngeox.interaction.MeasureOptions.prototype.startMsg;
 ngeox.interaction.MeasureOptions.prototype.continueMsg;
 
 
-/**
+/** TODO
  * Defines the number of decimals to keep in the measurement. If not defined,
  * then the default behaviour occurs depending on the measure type.
  * @type {number|undefined}
  */
-ngeox.interaction.MeasureOptions.prototype.decimals;
+ngeox.interaction.MeasureOptions.prototype.precision;
 
 
 /**
@@ -1995,6 +1995,30 @@ ngeox.number;
  */
 ngeox.unitPrefix;
 
+/**
+ * Format a couple of numbers as number coordinates.
+ *
+ * Arguments:
+ * - coordinates Array of two numbers.
+ * - opt_fractionDigits Optional number of digit. Default to 0.
+ * - opt_template Optional template. Default to '{x} {y}'.
+ *     Where "{x}" will be replaced by the easting coordinate and "{y}" by the northing one. Note:
+ *     Use a html entity to use the semicolon symbol into a template.
+ * @typedef {function(ol.Coordinate, (number|string)=, string=, (boolean|string)=): string}
+ */
+ngeox.numberCoordinates;
+
+/**
+ * Format a coordinates as DMS coordinates.
+ * Arguments:
+ * - coordinates Array of two numbers.
+ * - opt_fractionDigits Optional number of digit. Default to 0.
+ * - opt_template Optional template. Default to '{x} {y}'.
+ *     Where "{x}" will be replaced by the easting coordinate, {y} by the northing one. Note: Use a html
+ *     entity to use the semicolon symbol into a template.
+ * @typedef {function(ol.Coordinate, (number|string)=, string=): string}
+ */
+ngeox.dmsCoordinates;
 
 /**
  * Namespace.

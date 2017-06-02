@@ -70,11 +70,10 @@ ngeo.interaction.MeasureLength.prototype.createDrawInteraction = function(style,
  * @inheritDoc
  */
 ngeo.interaction.MeasureLength.prototype.handleMeasure = function(callback) {
-  const geom = /** @type {ol.geom.LineString} */
-      (this.sketchFeature.getGeometry());
+  const geom = goog.asserts.assertInstanceof(this.sketchFeature.getGeometry(), ol.geom.LineString);
   const proj = this.getMap().getView().getProjection();
-  const dec = this.decimals;
-  const output = ngeo.interaction.Measure.getFormattedLength(geom, proj, dec, this.format);
+  goog.asserts.assert(proj);
+  const output = ngeo.interaction.Measure.getFormattedLength(geom, proj, this.precision, this.format);
   const coord = geom.getLastCoordinate();
   callback(output, coord);
 };
