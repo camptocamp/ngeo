@@ -31,7 +31,7 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
  *
  * Example:
  *
- *      <div gmf-mobile-measurepoint=""
+ *      <div gmf-mobile-measurepoint
  *        gmf-mobile-measurepoint-active="ctrl.measurePointActive"
  *        gmf-mobile-measurepoint-layersconfig="::ctrl.measurePointLayers"
  *        gmf-mobile-measurepoint-map="::ctrl.map">
