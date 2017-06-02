@@ -2,6 +2,7 @@
 lib:            Set to true to create the libraries files (ngeo or gmf)
 src:            An additional source directory, used by apps
 src_set:        The used source set (undefined(ngeo)|contribs_gmf)
+externs:        An additional externs files, used by apps
 examples:       Add the examples files
 entry_point:    The entry point
 ngeo_folder:    The folder where ngeo is intaled, reqired to use it in the project
@@ -38,6 +39,11 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "entry_point": "${entry_point}",
 % endif
     "externs": [
+% if externs is not UNDEFINED:
+% for e in externs.split(","):
+      "${e}",
+% endfor
+% endif
       "node_modules/openlayers/externs/bingmaps.js",
       "node_modules/openlayers/externs/cartodb.js",
       "node_modules/openlayers/externs/closure-compiler.js",
