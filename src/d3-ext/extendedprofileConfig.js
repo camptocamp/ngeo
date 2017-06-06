@@ -25,7 +25,7 @@ ngeo.extendedProfile.config.getProfileConfig = function (pytreeserver_url) {
     this.profileConfig.classification = data;
     let html = '';
     for (let i in data) {
-      html += '<input checked type='checkbox' onchange='setClassActive(this);' value=''+ i +''>classe: '+  data[i].name
+      html += '<input checked type="checkbox" onchange="setClassActive(this);" value=\''+ i +'\'>classe: '+  data[i].name
     }
     $('#classes').html(html);        
   });
