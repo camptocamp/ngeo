@@ -98,6 +98,12 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
   this.startFeature_ = null;
 
   /**
+   * @type {string}
+   * @private
+   */
+  this.startFeatureLabel_ = '';
+
+  /**
    * @type {ol.Feature}
    * @private
    */
@@ -164,7 +170,7 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
 gmf.GmfRoutingController.prototype.setStart = function() {
   if (this.draw_) {
     this.map_.removeInteraction(this.draw_);
-    this.routeSource_.removeFeature(this.startFeature_);
+    this.vectorSource_.removeFeature(this.startFeature_);
   }
 
   this.draw_ = new ol.interaction.Draw({
@@ -173,13 +179,29 @@ gmf.GmfRoutingController.prototype.setStart = function() {
   });
 
   this.draw_.on('drawstart', () => {
-    this.routeSource_.removeFeature(this.startFeature_);
+    if (this.startFeature_) {
+      this.vectorSource_.removeFeature(this.startFeature_);
+    }
+    this.startFeatureLabel_ = '';
   });
 
   this.draw_.on('drawend', (event) => {
     this.startFeature_ = event.feature;
+    this.startFeatureLabel_ = this.formatFeature(this.startFeature_);
+    this.vectorSource_.addFeature(this.startFeature_);
   });
 
+  this.map_.addInteraction(this.draw_);
+};
+
+
+/**
+ * @param {ol.Feature} feature Feature to format
+ * @return {string} Formated feature description
+ */
+gmf.GmfRoutingController.prototype.formatFeature = function(feature) {
+  const geometry = feature.getGeometry();
+  return geometry.getCoordinates().map(Math.round).join('/');
 };
 
 gmf.module.controller('GmfRoutingController', gmf.GmfRoutingController);
