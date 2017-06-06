@@ -201,7 +201,9 @@ gmf.GmfRoutingController.prototype.setStart = function() {
  */
 gmf.GmfRoutingController.prototype.formatFeature = function(feature) {
   const geometry = feature.getGeometry();
-  return geometry.getCoordinates().map(Math.round).join('/');
+  const coords = geometry.getCoordinates();
+  const projection = this.map_.getView().getProjection();
+  return ol.proj.toLonLat(coords, projection).join('/');
 };
 
 gmf.module.controller('GmfRoutingController', gmf.GmfRoutingController);
