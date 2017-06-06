@@ -204,7 +204,7 @@ gmf.GmfRoutingController.prototype.setStart = function() {
  * @return {string} Formated feature description
  */
 gmf.GmfRoutingController.prototype.formatFeature = function(feature) {
-  const geometry = feature.getGeometry();
+  const geometry = /** @type {ol.geom.Point} */ (feature.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map_.getView().getProjection();
   return ol.proj.toLonLat(coords, projection).join('/');
