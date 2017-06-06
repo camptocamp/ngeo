@@ -17,7 +17,7 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
   // Go through all layers, assign needed properties,
   // and remove useless layers (no name or bad crs without children
   // or no intersection between map extent and layer extent)
-  const getLayersList = function(getCap) {
+  const getLayersList = function(getCap, getCapUrl) {
     const layers = [];
 
     for (const layer of getCap['Contents']['Layer']) {
@@ -37,8 +37,7 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
         layer['sourceConfig'] = ol.source.WMTS.optionsFromCapabilities(getCap, layerOptions);
         layer['attribution'] = getCap['ServiceProvider']['ProviderName'];
         layer['attributionUrl'] = getCap['ServiceProvider']['ProviderSite'];
-        const getCapMeta = getCap['OperationsMetadata']['GetCapabilities'];
-        layer['capabilitiesUrl'] = getCapMeta['DCP']['HTTP']['Get'][0]['href'];
+        layer['capabilitiesUrl'] = getCapUrl;
       }
 
       layers.push(layer);
@@ -53,6 +52,7 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
     scope: {
       'getCap': '=ngeoWmtsGetCap',
       'map': '=ngeoWmtsGetCapMap',
+      'url': '=ngeoWmtsGetCapUrl',
       'options': '=ngeoWmtsGetCapOptions'
     },
     link(scope) {
@@ -81,7 +81,7 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
         scope['options'].layerHovered = null;
 
         if (val && val['Contents'] && val['Contents']['Layer']) {
-          scope['layers'] = getLayersList(val);
+          scope['layers'] = getLayersList(val, scope['url']);
         }
       });
 

@@ -75,6 +75,7 @@ gmf.module.directive('gmfContextualdata', gmf.contextualdataDirective);
  *
  * @constructor
  * @private
+ * @ngdoc controller
  * @ngInject
  */
 gmf.ContextualdataController = function($compile, $scope, gmfRaster) {

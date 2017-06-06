@@ -224,6 +224,12 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.deleteFromActive = false;
 
   /**
+   * @type {boolean}
+   * @export
+   */
+  this.featureHasGeom;
+
+  /**
    * @type {!ngeo.LayerHelper}
    * @private
    */
@@ -437,6 +443,8 @@ gmf.ObjecteditingController.prototype.$onInit = function() {
 
   this.features_.push(this.feature);
 
+  this.featureHasGeom = !ngeo.geom.isEmpty(geometry);
+
   // Toggle on
   this.initializeInteractions_();
   this.registerInteractions_();
@@ -455,7 +463,8 @@ gmf.ObjecteditingController.prototype.$onInit = function() {
  * @export
  */
 gmf.ObjecteditingController.prototype.delete = function() {
-  const msg = this.gettextCatalog_.getString(
+  const gettextCatalog = this.gettextCatalog_;
+  const msg = gettextCatalog.getString(
       'Do you really want to delete the feature?');
   // Confirm deletion first
   if (confirm(msg)) {
@@ -950,8 +959,9 @@ gmf.ObjecteditingController.prototype.refreshWMSLayer_ = function() {
  * @private
  */
 gmf.ObjecteditingController.prototype.handleWindowBeforeUnload_ = function(e) {
+  const gettextCatalog = this.gettextCatalog_;
   if (this.dirty) {
-    const msg = this.gettextCatalog_.getString('There are unsaved changes.');
+    const msg = gettextCatalog.getString('There are unsaved changes.');
     (e || window.event).returnValue = msg;
     return msg;
   }
@@ -1014,11 +1024,15 @@ gmf.ObjecteditingController.prototype.handleSketchFeaturesAdd_ = function(evt) {
  */
 gmf.ObjecteditingController.prototype.handleFeatureGeometryChange_ = function() {
 
+  const geom = this.feature.getGeometry();
+  this.timeout_(() => {
+    this.featureHasGeom = !ngeo.geom.isEmpty(geom);
+  });
+
   if (this.skipGeometryChange_) {
     return;
   }
 
-  const geom = this.feature.getGeometry();
   if (geom) {
     // Use a timeout here, because there can be a scope digest already in
     // progress. For example, with tools that requires the user to draw

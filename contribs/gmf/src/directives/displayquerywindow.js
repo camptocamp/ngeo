@@ -93,7 +93,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @constructor
  * @private
  * @ngInject
- * @ngdoc Controller
+ * @ngdoc controller
  * @ngname GmfDisplayquerywindowController
  */
 gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,

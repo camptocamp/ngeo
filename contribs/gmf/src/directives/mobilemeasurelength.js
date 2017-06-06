@@ -30,7 +30,7 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
  *
  * Example:
  *
- *      <div gmf-mobile-measurelength=""
+ *      <div gmf-mobile-measurelength
  *        gmf-mobile-measurelength-active="ctrl.measureLengthActive"
  *        gmf-mobile-measurelength-map="::ctrl.map">
  *      </div>

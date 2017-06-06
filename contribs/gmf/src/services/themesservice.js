@@ -219,6 +219,7 @@ gmf.Themes.getFlatNodes = function(node, nodes) {
  * @return {!angular.$q.Promise.<!Array.<!ol.layer.Base>>} Promise.
  */
 gmf.Themes.prototype.getBgLayers = function(appDimensions) {
+  const gettextCatalog = this.gettextCatalog;
   if (this.bgLayerPromise_) {
     return this.bgLayerPromise_;
   }
@@ -344,7 +345,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
     // (1) add a blank layer
     if (this.addBlankBackgroundLayer_) {
       layers.push(new ol.layer.Tile({
-        'label': this.gettextCatalog.getString('blank'),
+        'label': gettextCatalog.getString('blank'),
         'metadata': {'thumbnail': ''}
       }));
     }

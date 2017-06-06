@@ -110,7 +110,7 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @constructor
  * @private
  * @ngInject
- * @ngdoc Controller
+ * @ngdoc controller
  * @ngname GmfDisplayquerygridController
  */
 gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,

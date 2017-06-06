@@ -69,7 +69,7 @@ ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
 
 
 /**
- * @param {!gettext} gettext Gettext service.
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!angular.$compile} $compile Angular compile service.
  * @param {!angular.$filter} $filter Angular filter
  * @param {!angular.Scope} $scope Scope.
@@ -82,7 +82,7 @@ ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
  */
-ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
+ngeo.CreatefeatureController = function(gettextCatalog, $compile, $filter, $scope,
     $timeout, ngeoEventHelper) {
 
   /**
@@ -110,10 +110,10 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
   this.map;
 
   /**
-   * @type {!gettext}
+   * @type {!angularGettext.Catalog}
    * @private
    */
-  this.gettext_ = gettext;
+  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {!angular.$compile}
@@ -169,6 +169,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
  */
 ngeo.CreatefeatureController.prototype.$onInit = function() {
   this.active = this.active === true;
+  const gettextCatalog = this.gettextCatalog_;
 
   // Create the draw or measure interaction depending on the geometry type
   let interaction;
@@ -181,8 +182,8 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
   } else if (this.geomType === ngeo.GeometryType.LINE_STRING ||
       this.geomType === ngeo.GeometryType.MULTI_LINE_STRING
   ) {
-    const helpMsg = this.gettext_('Click to start drawing length');
-    const contMsg = this.gettext_(
+    const helpMsg = gettextCatalog.getString('Click to start drawing length');
+    const contMsg = gettextCatalog.getString(
       'Click to continue drawing<br/>' +
       'Double-click or click last point to finish'
     );
@@ -198,8 +199,8 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
   } else if (this.geomType === ngeo.GeometryType.POLYGON ||
       this.geomType === ngeo.GeometryType.MULTI_POLYGON
   ) {
-    const helpMsg = this.gettext_('Click to start drawing area');
-    const contMsg = this.gettext_(
+    const helpMsg = gettextCatalog.getString('Click to start drawing area');
+    const contMsg = gettextCatalog.getString(
       'Click to continue drawing<br/>' +
       'Double-click or click starting point to finish'
     );
