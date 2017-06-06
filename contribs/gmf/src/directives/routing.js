@@ -60,10 +60,14 @@ gmf.module.component('gmfRouting', gmf.routingComponent);
 
 /**
  * The controller for the routing directive.
- * @param {angular.Scope} $scope Scope.
- * @param {gmf.RoutingService} gmfRoutingService service for OSRM routing
- * @param {angular.$q} $q Angular q service
+ * @param {!angular.Scope} $scope Scope.
+ * @param {!gmf.RoutingService} gmfRoutingService service for OSRM routing
+ * @param {!angular.$q} $q Angular q service
  * @constructor
+ * @private
+ * @ngInject
+ * @ngdoc controller
+ * @ngname GmfRoutingController
  */
 gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
 
