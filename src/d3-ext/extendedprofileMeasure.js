@@ -25,14 +25,14 @@ ngeo.extendedProfile.measure.clearMeasure = function () {
 
 ngeo.extendedProfile.measure.startMeasure = function () {
 
-  clearMeasure();
+  ngeo.extendedProfile.measure.clearMeasure();
   d3.select('svg#profileSVG').on('click', measureHeight)
 
 }
 
 ngeo.extendedProfile.measure.stopMeasure = function () {
 
-  clearMeasure();
+  ngeo.extendedProfile.measure.clearMeasure();
   d3.select('svg#profileSVG').on('click', null)
 
 }
@@ -44,10 +44,10 @@ ngeo.extendedProfile.measure.measureHeight = function () {
   let xs = svgCoordinates[0];
   let ys = svgCoordinates[1];
   let tolerance = 2; 
-  let sx = plotParams.currentScaleX;
-  let sy = plotParams.currentScaleY;
+  let sx = ngeo.extendedProfile.config.plotParams.currentScaleX;
+  let sy = ngeo.extendedProfile.config.plotParams.currentScaleY;
   let pointSize = 3;
-  let p = getClosestPoint(profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
+  let p = ngeo.extendedProfile.plot2canvas.getClosestPoint(profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
 
   if (!this.profileMeasure.pStart.set) {
     if (p != undefined) {

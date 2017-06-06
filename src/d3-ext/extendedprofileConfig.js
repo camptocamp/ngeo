@@ -1,28 +1,23 @@
 goog.provide('ngeo.extendedProfile.config');
 
+
+ngeo.extendedProfile.config.profileConfig = {};
+ngeo.extendedProfile.config.profileConfig.pointclouds = {};
+ngeo.extendedProfile.config.profileConfig.classification = {};
+
 /***
 @SITN/OM 2017
 Read client app config from server
 ***/
 
 ngeo.extendedProfile.config.getProfileConfig = function (pytreeserver_url) {
-
-  this.profileConfig = {};
-
-  // Available point clouds
-  $.ajax({
-    url: pytreeserver_url + '/get_point_clouds',
-  })
-  .done(function(data) {
-      this.profileConfig.pointclouds = data;
-  });
   
   // Classification colors
   $.ajax({
     url: pytreeserver_url + '/get_classification_colors',
   })
   .done(function(data) {
-    this.profileConfig.classification = data;
+    ngeo.extendedProfile.config.profileConfig.classification = data;
     let html = '';
     for (let i in data) {
       html += '<input checked type="checkbox" onchange="setClassActive(this);" value=\''+ i +'\'>classe: '+  data[i].name
@@ -35,10 +30,15 @@ ngeo.extendedProfile.config.getProfileConfig = function (pytreeserver_url) {
     url: pytreeserver_url + '/get_default_material',
   })
   .done(function(data) {
-      this.profileConfig.defautMaterial = data;
+      ngeo.extendedProfile.config.profileConfig.defautMaterial = data;
   });
 
 }
+
+ngeo.extendedProfile.config.plotParams = {};
+ngeo.extendedProfile.config.plotParams.currentScaleX = {};
+ngeo.extendedProfile.config.plotParams.currentScaleY = {};
+ngeo.extendedProfile.config.plotParams.currentZoom = 1;
 
 ngeo.extendedProfile.config.pointAttributes = {};
 

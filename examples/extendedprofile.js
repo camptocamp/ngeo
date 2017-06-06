@@ -5,7 +5,7 @@ goog.require('ngeo.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.extendedProfileDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+goog.require('ngeo.proj.EPSG2056');
 goog.require('ol.Attribution');
 goog.require('ol.Feature');
 goog.require('ol.Feature');
@@ -37,9 +37,7 @@ app.MainController = function($http, $scope) {
    * @private
    */
   this.scope_ = $scope;
-  console.log("toto");
   const source = new ol.source.Vector();
-
   /**
    * @type {ol.Map}
    * @export
@@ -64,12 +62,18 @@ app.MainController = function($http, $scope) {
         })
       }),
       new ol.layer.Vector({
-        source
+        source,
+        style: new ol.style.Style({
+          stroke: new ol.style.Stroke ({
+            color: 'yellow',
+            width: 4
+          })
+        })
       })
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
-      extent: [420000, 30000, 900000, 350000],
+      projection: 'EPSG:2056',
+      extent: [2420000, 130000,2900000, 1350000],
       zoom: 0,
       center: [0, 0]
     })
@@ -102,37 +106,31 @@ app.MainController = function($http, $scope) {
    * @export
    */
   this.profileData = undefined;
-  $http.get('data/extendedprofile.json').then((resp) => {
-    const data = resp.data['profile'];
-    this.profileData = data;
 
-    let i;
-    const len = data.length;
-    const lineString = new ol.geom.LineString([],
-        /** @type {ol.geom.GeometryLayout} */ ('XYM'));
-    for (i = 0; i < len; i++) {
-      const p = data[i];
-      lineString.appendCoordinate([p.x, p.y, p.dist]);
-    }
-    source.addFeature(new ol.Feature(lineString));
+  
+  // $http.get('data/extendedprofile.json').then((resp) => {
+  // const data = resp.data['profile'];
+  // this.profileData = data;
+  let data = ngeo.extendedProfile.utils.getLinestring();
+  let i;
+  const len = data.length;
+  const lineString = new ol.geom.LineString([],
+      /** @type {ol.geom.GeometryLayout} */ ('XYM'));
+  for (i = 0; i < len; i++) {
+    const p = data[i];
+    lineString.appendCoordinate([p.origX, p.origY, p.startD]);
+  }
+  source.addFeature(new ol.Feature(lineString));
+  const size = /** @type {ol.Size} */ (this.map.getSize());
+  map.getView().fit(source.getExtent(), {size});
 
-    const size = /** @type {ol.Size} */ (this.map.getSize());
-    map.getView().fit(source.getExtent(), {size});
-    
-    // Keep demo profile data for the example build up
-    
-    
-    
-  });
-
-
-  map.on('pointermove', (evt) => {
-    if (evt.dragging) {
-      return;
-    }
-    const coordinate = map.getEventCoordinate(evt.originalEvent);
-    this.snapToGeometry(coordinate, source.getFeatures()[0].getGeometry());
-  });
+  // map.on('pointermove', (evt) => {
+    // if (evt.dragging) {
+      // return;
+    // }
+    // const coordinate = map.getEventCoordinate(evt.originalEvent);
+    // this.snapToGeometry(coordinate, source.getFeatures()[0].getGeometry());
+  // });
 
 
   /**

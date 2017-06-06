@@ -11,7 +11,7 @@
     <style>
 
         #map {
-          width: 600px;
+          width: 800px;
           height: 200px;
         }
         .extended-profile {
@@ -19,15 +19,18 @@
           height: 250px;
           background-color: orange;
         }
-
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
+    <label for="coordinates">Demo coordinates:</label>
+    <input type="text" id="coordinates" style="width: 600px;" value="{2554505.0,1199955.0},{2556905.0,1203075.0},{2557705.0,1203845.0}"></input>
     <div id="map" ngeo-map="ctrl.map"></div>
     <div class="extended-profile" ngeo-extended-profile="::ctrl.profileData"
          ngeo-extended-profile-options="::ctrl.profileOptions"
          ngeo-extended-profile-pois="::ctrl.profilePoisData"
          ngeo-extended-profile-highlight="ctrl.profileHighlight">
+      <canvas id="profileCanvas" style="opacity:1;position:absolute;z-index:0"></canvas>
+      <svg id="profileSVG" style="fill: #ffff00;position:absolute;z-index:1"></svg>
     </div>
 
     <ul ng-show="ctrl.point != null">

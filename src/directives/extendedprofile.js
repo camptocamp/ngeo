@@ -60,7 +60,7 @@ ngeo.extendedProfileDirective = function(ngeoDebounce) {
 
         if (options !== undefined) {
 
-          // proxy the hoverCallback and outCallbackin order to be able to
+          // proxy the hoverCallback and outCallback in order to be able to
           // call $applyAsync
           //
           // We're using $applyAsync here because the callback may be
@@ -105,11 +105,11 @@ ngeo.extendedProfileDirective = function(ngeoDebounce) {
                 if (newVal === undefined) {
                   return;
                 }
-                if (newVal > 0) {
-                  extendedProfile.highlight(newVal);
-                } else {
-                  extendedProfile.clearHighlight();
-                }
+                // if (newVal > 0) {
+                  // extendedProfile.highlight(newVal);
+                // } else {
+                  // extendedProfile.clearHighlight();
+                // }
               });
 
       goog.events.listen(window, goog.events.EventType.RESIZE,

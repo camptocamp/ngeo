@@ -56,19 +56,19 @@ Clip a linestring to a given plot domain
 ***/
 ngeo.extendedProfile.utils.clipLineByMeasure = function (dLeft, dRight) {
 
-  let l = getLinestring();
+  let l = ngeo.extendedProfile.utils.getLinestring();
 
   let clippedLine = [];
   for (let i in l) {
     let startPoint, endPoint;
     // Start point
     if (dLeft > l[i].startD && dLeft < l[i].endD) {
-      clippedLine.push(interpolatePoint(dLeft, l[i]));
+      clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dLeft, l[i]));
     } else if (dLeft <= l[i].startD && i==0) {
       clippedLine.push([l[i].origX, l[i].origY]);
     }
     if (dRight > l[i].startD && dRight < l[i].endD) {
-      clippedLine.push(interpolatePoint(dRight, l[i]));
+      clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dRight, l[i]));
     } else if (dRight >= l[i].endD) {
       clippedLine.push([l[i].endX, l[i].endY]);
     }
@@ -155,9 +155,7 @@ Code adapted from Markus Schuetz @Potree
 ***/
 
 ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function (profilePoints) {
-  console.log(profilePoints)
   if(profilePoints.distance.length === 0){
-    console.log('no points in profile');
     return;
   }
 
@@ -177,7 +175,7 @@ ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function (profilePoints) {
 
   points.sort((a, b) => (a.distance - b.distance));
 
-  { // header-line
+  { 
     let header = '';
     if(points[0].hasOwnProperty('x')){
       header += ', x';

@@ -8,14 +8,14 @@ ngeo.extendedProfile.raster.generateDemDsm = function() {
   svg.selectAll('#line_js_dem').remove();
   svg.selectAll('#line_js_dsm').remove();
   let points = [];
-  for (let i=0; i<profilePoints.distance.length; i++) {
+  for (let i=0; i<ngeo.extendedProfile.loader.profilePoints.distance.length; i++) {
 
     points.push({
-      distance: profilePoints.distance[i],
-      altitude: profilePoints.altitude[i],
-      color_packed: profilePoints.color_packed[i],
-      intensity: profilePoints.intensity[i],
-      classification: profilePoints.classification[i]
+      distance: ngeo.extendedProfile.loader.profilePoints.distance[i],
+      altitude: ngeo.extendedProfile.loader.profilePoints.altitude[i],
+      color_packed: ngeo.extendedProfile.loader.profilePoints.color_packed[i],
+      intensity: ngeo.extendedProfile.loader.profilePoints.intensity[i],
+      classification: ngeo.extendedProfile.loader.profilePoints.classification[i]
     })
 
   }
@@ -67,21 +67,21 @@ ngeo.extendedProfile.raster.generateDemDsm = function() {
     }
   }
 
-  let sx = plotParams.currentScaleX;
-  let sy = plotParams.currentScaleY;
+  let sx = ngeo.extendedProfile.config.plotParams.currentScaleX;
+  let sy = ngeo.extendedProfile.config.plotParams.currentScaleY;
   for (let i=0; i<output.length-1;i++) {
 
-    if (output[i] != undefined) {
+    // if (output[i] != undefined) {
 
-      let line = d3.select('svg#profileSVG').append('line')
-      .attr('id', 'line_js_dsm')
-      .attr('x1', sx(output[i].distanceDsm) + margin.left)
-      .attr('y1', sy(output[i].dsm) + margin.top)
-      .attr('x2', sx(output[i+1].distanceDsm) + margin.left)
-      .attr('y2', sy(output[i+1].dsm) + margin.top)
-      .attr('stroke-width', 1.5)
-      .attr('stroke', '#a4f442');
-    }
+      // let line = d3.select('svg#profileSVG').append('line')
+      // .attr('id', 'line_js_dsm')
+      // .attr('x1', sx(output[i].distanceDsm) + margin.left)
+      // .attr('y1', sy(output[i].dsm) + margin.top)
+      // .attr('x2', sx(output[i+1].distanceDsm) + margin.left)
+      // .attr('y2', sy(output[i+1].dsm) + margin.top)
+      // .attr('stroke-width', 1.5)
+      // .attr('stroke', '#a4f442');
+    // }
   }
 }
 
@@ -103,7 +103,7 @@ ngeo.extendedProfile.raster.getGmfProfile = function(nbPoints, coordinates, dist
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200 || xhr.status === 0) {
-        drawDem(JSON.parse(xhr.response), distanceOffset);
+        ngeo.extendedProfile.raster.drawDem(JSON.parse(xhr.response), distanceOffset);
       } else {
         console.log('Failed to load data! HTTP status: ' + xhr.status + ', file: ' + gmfurl);
       }
@@ -119,9 +119,14 @@ ngeo.extendedProfile.raster.getGmfProfile = function(nbPoints, coordinates, dist
 
 // for gmf dem service
 ngeo.extendedProfile.raster.drawDem = function(data, distanceOffset) {
+  
+  if(data == null) {
+    return;
+  }
+
   let d = data.profile;
-  let sx = plotParams.currentScaleX;
-  let sy = plotParams.currentScaleY;
+  let sx = ngeo.extendedProfile.config.plotParams.currentScaleX;
+  let sy = ngeo.extendedProfile.config.plotParams.currentScaleY;
   for (let i=0; i<d.length-1;i++) {
     let line = d3.select('svg#profileSVG').append('line')
     .attr('id', 'line_dem')
