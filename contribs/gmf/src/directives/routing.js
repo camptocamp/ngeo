@@ -1,27 +1,61 @@
-goog.provide('gmf.routingDirective');
+goog.provide('gmf.routingComponent');
 
 goog.require('gmf');
 goog.require('gmf.RoutingService');
 
 
+gmf.module.value('gmfRoutingTemplateUrl',
+  /**
+   * @param {!angular.JQLite} $element Element.
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} Template URL.
+   */
+  ($element, $attrs) => {
+    const templateUrl = $attrs['gmfRoutingTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/routing.html`;
+  }
+);
+
+
 /**
- * Directive to display routing feature.
- * @return {angular.Directive}  The directive specs.
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfRoutingTemplateUrl Template function.
+ * @return {string} Template URL.
  * @ngInject
- * @ngdoc directive
- * @ngname gmfRouting
  */
-gmf.routingDirective = function() {
-  return {
-    restrict: 'E',
-    controller: 'GmfRoutingController as routeCtrl',
-    scope: {
-      'map_': '<gmfRoutingMap',
-      'active': '=gmfRoutingActive'
-    },
-    templateUrl: `${gmf.baseTemplateUrl}/routing.html`
-  };
+function gmfRoutingTemplateUrl($element, $attrs, gmfRoutingTemplateUrl) {
+  return gmfRoutingTemplateUrl($element, $attrs);
+}
+
+
+/**
+ * Component to provide OSRM routing.
+ *
+ * Example:
+ *
+ *  <gmf-routing
+ *    gmf-routing-active="ctrl.routingActive"
+ *    gmf-routing-map="::ctrl.map">
+ *  </gmf-routing>
+ *
+ * @htmlAttribute {boolean} gmf-routing-active Whether the component is
+ *     active or not.
+ * @htmlAttribute {ol.Map} gmf-routing-map The map.
+ * @ngdoc component
+ * @ngname gmfObjectediting
+ */
+gmf.routingComponent = {
+  controller: 'GmfRoutingController as routeCtrl',
+  bindings: {
+    'active': '=gmfRoutingActive',
+    'map_': '<gmfRoutingMap'
+  },
+  templateUrl: gmfRoutingTemplateUrl
 };
+
+gmf.module.component('gmfRouting', gmf.routingComponent);
 
 
 /**
@@ -148,5 +182,4 @@ gmf.GmfRoutingController.prototype.setStart = function() {
 
 };
 
-gmf.module.directive('gmfRouting', gmf.routingDirective);
 gmf.module.controller('GmfRoutingController', gmf.GmfRoutingController);
