@@ -1,5 +1,15 @@
 goog.provide('ngeo.extendedProfile.loader');
 
+/*Custom point cloud store
+*/
+ngeo.extendedProfile.loader.profilePoints = {
+  distance: [],
+  altitude: [],
+  color_packed: [],
+  intensity: [],
+  classification: []
+}
+
 /**
  * Provides a function that sends xhr requests to cpotree app and parses
  * its binary output format
@@ -32,13 +42,7 @@ ngeo.extendedProfile.loader.xhrRequest = function(method, minLOD, maxLOD, iter, 
 };
 
 ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOffset, clearPlot, lastLOD) {
-  this.profilePoints = {
-    distance: [],
-    altitude: [],
-    color_packed: [],
-    intensity: [],
-    classification: []
-  }
+
   // try {
     // ***Get header size***
     let typedArrayInt32 = new Int32Array(profile, 0,4);
@@ -90,25 +94,25 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
         let y = uy * scale;
         points.distance.push(Math.round(100 * (distanceOffset + x))/100);
         points.altitude.push(Math.round(100 * y)/100);
-        this.profilePoints.distance.push(Math.round(100 * (distanceOffset + x))/100);
-        this.profilePoints.altitude.push(Math.round(100 * y)/100);
+        ngeo.extendedProfile.loader.profilePoints.distance.push(Math.round(100 * (distanceOffset + x))/100);
+        ngeo.extendedProfile.loader.profilePoints.altitude.push(Math.round(100 * y)/100);
         
       } else if (attribute.name == 'CLASSIFICATION') {
         let classif = view.getUint8(aoffset, true);
         points.classification.push(classif);
-        this.profilePoints.classification.push(classif);
+        ngeo.extendedProfile.loader.profilePoints.classification.push(classif);
 
       } else if (attribute.name == 'INTENSITY') {
         let intensity = view.getUint16(aoffset, true);
         points.intensity.push(intensity);
-        this.profilePoints.intensity.push(intensity);
+        ngeo.extendedProfile.loader.profilePoints.intensity.push(intensity);
 
       } else if (attribute.name == 'COLOR_PACKED') {
         let r = view.getUint8(aoffset, true);
         let g = view.getUint8(aoffset + 1, true);
         let b = view.getUint8(aoffset + 2, true);
         points.color_packed.push([r, g, b]);
-        this.profilePoints.color_packed.push([r, g, b]);
+        ngeo.extendedProfile.loader.profilePoints.color_packed.push([r, g, b]);
 
       }
       aoffset = aoffset + attribute.bytes;
@@ -144,19 +148,17 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
 
 ngeo.extendedProfile.loader.loadDeeperLOD = function () {
 
-  // reload only of mouse position changed
-
   let domain = ngeo.extendedProfile.config.plotParams.currentScaleX.domain();
   let clip = ngeo.extendedProfile.utils.clipLineByMeasure(domain[0], domain[1]);
   let line = clip.clippedLine;
-  // create the line String as taken by cpotree
+
   let cPotreeLineStr = '';
   for (let i in line) {
     cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
   }
   cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
   let minLOD = 0;
-  let maxLOD = 10;
+  let maxLOD = 6;
 
   let span = domain[1] - domain[0];
 
@@ -164,34 +166,21 @@ ngeo.extendedProfile.loader.loadDeeperLOD = function () {
 
   // Load gmf dem/dsm from gmf webservice
   // let loadDTM = d3.select('#demdsm').node().checked; FIX THAT!!!
-  let loadDTM = true;
+  let loadDTM = false;
   if (loadDTM){
     ngeo.extendedProfile.raster.getGmfProfile(100, line, clip.distanceOffset);
   } else {
     svg.selectAll('#line_dem').remove();
     svg.selectAll('#line_dsm').remove();
   }
-  if (maxLOD >= niceLOD) { // FIX THAT!!!
-    ngeo.extendedProfile.plot2canvas.drawPoints (ngeo.extendedProfile.loader.profilePoints, 'CLASSIFICATION', ngeo.extendedProfile.config.plotParams.currentZoom);
-    return;
+  
+  // Load additional LOD if useful
+  if (maxLOD >= niceLOD) { // FIX THAT HARDCODED STUFF!!!
+    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, 'CLASSIFICATION', ngeo.extendedProfile.config.plotParams.currentZoom);
   } else {
-
-    let m = d3.mouse(this);
-    if (mousePositionStart[0] !==  m[0] && mousePositionStart[1] !== m[1]){
-      console.log("la");
+    if (mousePositionStart[0] !==  d3.mouse(this)[0] && mousePositionStart[1] !== d3.mouse(this)[1]){
       ngeo.extendedProfile.loader.xhrRequest('GET', 0, niceLOD, 100, cPotreeLineStr, clip.distanceOffset, true, true);
     } 
-
   }
-}
-
-/*Custom store
-*/
-ngeo.extendedProfile.loader.profilePoints = {
-  distance: [],
-  altitude: [],
-  color_packed: [],
-  intensity: [],
-  classification: []
 }
 

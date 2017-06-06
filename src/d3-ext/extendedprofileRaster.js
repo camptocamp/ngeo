@@ -71,17 +71,17 @@ ngeo.extendedProfile.raster.generateDemDsm = function() {
   let sy = ngeo.extendedProfile.config.plotParams.currentScaleY;
   for (let i=0; i<output.length-1;i++) {
 
-    // if (output[i] != undefined) {
+    if (output[i] != undefined) {
 
-      // let line = d3.select('svg#profileSVG').append('line')
-      // .attr('id', 'line_js_dsm')
-      // .attr('x1', sx(output[i].distanceDsm) + margin.left)
-      // .attr('y1', sy(output[i].dsm) + margin.top)
-      // .attr('x2', sx(output[i+1].distanceDsm) + margin.left)
-      // .attr('y2', sy(output[i+1].dsm) + margin.top)
-      // .attr('stroke-width', 1.5)
-      // .attr('stroke', '#a4f442');
-    // }
+      let line = d3.select('svg#profileSVG').append('line')
+      .attr('id', 'line_js_dsm')
+      .attr('x1', sx(output[i].distanceDsm) + margin.left)
+      .attr('y1', sy(output[i].dsm) + margin.top)
+      .attr('x2', sx(output[i+1].distanceDsm) + margin.left)
+      .attr('y2', sy(output[i+1].dsm) + margin.top)
+      .attr('stroke-width', 1.5)
+      .attr('stroke', '#a4f442');
+    }
   }
 }
 
@@ -117,9 +117,8 @@ ngeo.extendedProfile.raster.getGmfProfile = function(nbPoints, coordinates, dist
   }
 }
 
-// for gmf dem service
 ngeo.extendedProfile.raster.drawDem = function(data, distanceOffset) {
-  
+
   if(data == null) {
     return;
   }

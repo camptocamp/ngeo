@@ -25,8 +25,10 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
     let classification = points.classification[i];
     
     if (ngeo.extendedProfile.config.profileConfig.classification[classification] && ngeo.extendedProfile.config.profileConfig.classification[classification].visible) {
+
       cx = ngeo.extendedProfile.config.plotParams.currentScaleX(distance);
       cy = ngeo.extendedProfile.config.plotParams.currentScaleY(altitude);
+
       context.beginPath();
       context.moveTo(cx, cy);
       if (material == 'COLOR_PACKED') {
@@ -54,7 +56,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     'right': 10,
     'bottom': 40
   }
-  
+
   $('#profileCanvas').css('margin-left', margin.left);
   $('#profileCanvas').css('margin-top', margin.top);
 
@@ -72,9 +74,9 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   let rangeProfileHeight = height;
   let rangeRatio = rangeProfileWidth / rangeProfileHeight;
   let scaleX, scaleY;
+
   if(domainRatio < rangeRatio){
     let targetWidth = domainProfileWidth * (rangeProfileHeight / domainProfileHeight);
-    // scale
     let domainScale = rangeRatio / domainRatio;
     let domainScaledWidth = domainProfileWidth * domainScale;
     scaleX = d3.scaleLinear()
@@ -125,19 +127,16 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
 
   }
 
-  // fine-tune d3 events
   d3.select('svg#profileSVG').call(zoom.on('zoom', zoomed));
   d3.select('svg#profileSVG').call(zoom.on('end', ngeo.extendedProfile.loader.loadDeeperLOD));
   d3.select('svg#profileSVG').call(zoom.on('start', function(){
     mousePositionStart = d3.mouse(this);
   }));
 
-
   context = d3.select('#profileCanvas')
     .attr('width', width )
     .attr('height', height)
     .node().getContext('2d');
-  
   
   d3.select('#profileCanvas')
     .style('left', margin.left)
@@ -150,20 +149,16 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   svg = d3.select('svg#profileSVG')
   .attr('width', (width + margin.left + margin.right).toString())
   .attr('height', (height + margin.top + margin.bottom).toString())
-  // .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
   d3.select('svg#profileSVG')
   .on('mousemove', ngeo.extendedProfile.plot2canvas.pointHighlight);
 
-  // Create x axis
   let xAxis = d3.axisBottom(scaleX)
-  // Create y axis
   let yAxis = d3.axisLeft(scaleY)
   .tickSize(-width);
   
-  // d3.select('g.y.axis').selectAll('g.tick line').attr('stroke', '#d8d8d8');
   d3.select('g.y.axis').selectAll('g.tick line').style('stroke', '#d8d8d8');
-  // Append axis to the chart
+
   let gx = svg.append('g')
     .attr('class', 'x axis')
     .call(xAxis);
