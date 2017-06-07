@@ -4,8 +4,8 @@
     <span class="fa fa-map-marker"></span>
   </button><br>
 
-  <input type="text" id="gmfRoutingTo" readonly />
-  <button type="button" id="gmfRoutingToButton" class="btn btn-default">
+  <input type="text" id="gmfRoutingTo" ng-model="routeCtrl.targetFeatureLabel" readonly />
+  <button type="button" id="gmfRoutingToButton" class="btn btn-default" ng-click="routeCtrl.setTarget()">
     <span class="fa fa-map-marker"></span>
   </button>
 </div>

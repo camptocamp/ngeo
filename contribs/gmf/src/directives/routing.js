@@ -114,6 +114,12 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
   this.targetFeature_ = null;
 
   /**
+   * @type {string}
+   * @export
+   */
+  this.targetFeatureLabel = '';
+
+  /**
    * @type {ol.Collection}
    * @private
    */
@@ -172,9 +178,25 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
  * @export
  */
 gmf.GmfRoutingController.prototype.setStart = function() {
+  this.setFeature_('startFeature_', 'startFeatureLabel');
+};
+
+/**
+ * @export
+ */
+gmf.GmfRoutingController.prototype.setTarget = function() {
+  this.setFeature_('targetFeature_', 'targetFeatureLabel');
+};
+
+/**
+ * @param {string} feature Property name of feature
+ * @param {string} label Property name of label
+ * @private
+ */
+gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
   if (this.draw_) {
     this.map_.removeInteraction(this.draw_);
-    this.vectorSource_.removeFeature(this.startFeature_);
+    this.vectorSource_.removeFeature(this[feature]);
   }
 
   this.draw_ = new ol.interaction.Draw({
@@ -183,16 +205,16 @@ gmf.GmfRoutingController.prototype.setStart = function() {
   });
 
   this.draw_.on('drawstart', () => {
-    if (this.startFeature_) {
-      this.vectorSource_.removeFeature(this.startFeature_);
+    if (this[feature]) {
+      this.vectorSource_.removeFeature(this[feature]);
     }
-    this.startFeatureLabel = '';
+    this[label] = '';
   });
 
   this.draw_.on('drawend', (event) => {
-    this.startFeature_ = event.feature;
-    this.startFeatureLabel = this.formatFeature(this.startFeature_);
-    this.vectorSource_.addFeature(this.startFeature_);
+    this[feature] = event.feature;
+    this[label] = this.formatFeature(this[feature]);
+    //this.vectorSource_.addFeature(this[feature]);
   });
 
   this.map_.addInteraction(this.draw_);
