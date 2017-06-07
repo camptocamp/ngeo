@@ -103,9 +103,9 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
 
   /**
    * @type {string}
-   * @private
+   * @export
    */
-  this.startFeatureLabel_ = '';
+  this.startFeatureLabel = '';
 
   /**
    * @type {ol.Feature}
@@ -186,12 +186,12 @@ gmf.GmfRoutingController.prototype.setStart = function() {
     if (this.startFeature_) {
       this.vectorSource_.removeFeature(this.startFeature_);
     }
-    this.startFeatureLabel_ = '';
+    this.startFeatureLabel = '';
   });
 
   this.draw_.on('drawend', (event) => {
     this.startFeature_ = event.feature;
-    this.startFeatureLabel_ = this.formatFeature(this.startFeature_);
+    this.startFeatureLabel = this.formatFeature(this.startFeature_);
     this.vectorSource_.addFeature(this.startFeature_);
   });
 
