@@ -45,7 +45,7 @@
     "font-awesome": "4.7.0",
     "fs-extra": "3.0.0",
     "gaze": "1.1.2",
-    "jasmine-core": "2.6.2",
+    "jasmine-core": "2.6.3",
     "jquery": "3.2.1",
     "jsdoc": "3.4.3",
     "jsdom": "9.12.0",
