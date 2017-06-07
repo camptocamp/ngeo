@@ -66,7 +66,7 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {Object.<string, string|number|boolean>}
-   * export
+   * @export
    */
   this.defaulPrintFieldstValues = {
     'comments': 'Default comments example',
@@ -75,7 +75,7 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {Array.<Object>|undefined}
-   * export
+   * @export
    */
   this.themes = undefined;
 
