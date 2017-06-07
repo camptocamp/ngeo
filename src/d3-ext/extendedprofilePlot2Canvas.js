@@ -10,11 +10,15 @@ Draw the points to canvas
 ***/
 ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) {
 
-  let pointSize = 2.5;
-  if (scale != null) {
-    pointSize = 0.75 * pointSize/scale;
-  }
-  let i = -1, n = points.distance.length, cx, cy
+  let pointSize = 2;
+  // if (scale != null) {
+    // pointSize = 0.75 * pointSize/scale, 2;
+  // }
+
+  let i = -1;
+  let n = points.distance.length;
+  let cx, cy;
+  let context = d3.select('#profileCanvas').node().getContext('2d');
 
   while (++i < n) {
 
@@ -23,11 +27,11 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
     let rgb = points.color_packed[i];
     let intensity = points.intensity[i];
     let classification = points.classification[i];
-    
+
     if (ngeo.extendedProfile.config.profileConfig.classification[classification] && ngeo.extendedProfile.config.profileConfig.classification[classification].visible) {
 
-      cx = ngeo.extendedProfile.config.plotParams.currentScaleX(distance);
-      cy = ngeo.extendedProfile.config.plotParams.currentScaleY(altitude);
+      cx = ngeo.extendedProfile.config.plotParams.scaleX(distance);
+      cy = ngeo.extendedProfile.config.plotParams.scaleY(altitude);
 
       context.beginPath();
       context.moveTo(cx, cy);
@@ -50,6 +54,12 @@ Setup the d3 canvas & svg plot
 ***/
 ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
 
+  let canvasEl = d3.select('#profileCanvas').node();
+  let ctx = d3.select('#profileCanvas')
+  .node().getContext('2d');
+  ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
+
+  // MOVE THAT!
   margin = {
     'left': 40,
     'top': 10,
@@ -57,14 +67,20 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     'bottom': 40
   }
 
-  $('#profileCanvas').css('margin-left', margin.left);
-  $('#profileCanvas').css('margin-top', margin.top);
-
   let containerWidth = $('div.extended-profile').width();
   let containerHeight = $('div.extended-profile').height();
   
   let width = containerWidth - (margin.left + margin.right);
   let height = containerHeight - (margin.top + margin.bottom);
+
+  d3.select("#profileCanvas")
+    .attr("height", height)
+    .attr("width", width)
+    .style('background-color', 'black')
+    .style('z-index', 0)
+    .style('position', 'absolute')
+    .style('margin-left', margin.left.toString() + 'px')
+    .style('margin-top', margin.top.toString() + 'px')
 
   let domainProfileWidth = rangeX[1] - rangeX[0];
   let domainProfileHeight = rangeY[1] - rangeY[0];
@@ -73,57 +89,60 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   let rangeProfileWidth = width;
   let rangeProfileHeight = height;
   let rangeRatio = rangeProfileWidth / rangeProfileHeight;
-  let scaleX, scaleY;
 
   if(domainRatio < rangeRatio){
+    console.log("scale case 1");
     let targetWidth = domainProfileWidth * (rangeProfileHeight / domainProfileHeight);
     let domainScale = rangeRatio / domainRatio;
     let domainScaledWidth = domainProfileWidth * domainScale;
-    scaleX = d3.scaleLinear()
+    ngeo.extendedProfile.config.plotParams.scaleX = d3.scaleLinear()
       .domain([
         domainProfileWidth / 2 - domainScaledWidth / 2 , 
         domainProfileWidth / 2 + domainScaledWidth / 2 ])
       .range([0, width]);
-    scaleY = d3.scaleLinear()
+    ngeo.extendedProfile.config.plotParams.scaleY = d3.scaleLinear()
       .domain(rangeY)
       .range([height, 0]);
   } else {
+    console.log("scale case 2");
 
     let targetHeight = domainProfileHeight* (rangeProfileWidth / domainProfileWidth);
     let domainScale =  domainRatio / rangeRatio;
     let domainScaledHeight = domainProfileHeight * domainScale;
     let domainHeightCentroid = (rangeY[1] + rangeY[0]) / 2;
-    scaleX = d3.scaleLinear()
+    ngeo.extendedProfile.config.plotParams.scaleX = d3.scaleLinear()
       .domain(rangeX)
       .range([0, width]);
-    scaleY = d3.scaleLinear()
+    ngeo.extendedProfile.config.plotParams.scaleY = d3.scaleLinear()
       .domain([
         domainHeightCentroid - domainScaledHeight / 2 , 
         domainHeightCentroid + domainScaledHeight / 2 ])
       .range([height, 0]);
   }
-  ngeo.extendedProfile.config.plotParams.currentScaleX = scaleX;
-  ngeo.extendedProfile.config.plotParams.currentScaleY = scaleY;
+
   let zoom  = d3.zoom();
+
   function zoomed() {
-    let ctx = d3.select('#profileCanvas')
-    .attr('width', width)
-    .attr('height', height)
-    .node().getContext('2d');
+    
     let tr = d3.event.transform;
-    ctx.translate(tr.x, tr.y);
-    ctx.scale(tr.k, tr.k);
+    let ctx = d3.select('#profileCanvas').node().getContext('2d');
+    
+    // ctx.translate(tr.x, tr.y);
+    // ctx.scale(tr.k, tr.k);
     ctx.clearRect(0, 0, width, height);
-    svg.select('canvas').attr('transform', tr);
-    svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(scaleX)));
-    svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(scaleY)));
+
+    svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(ngeo.extendedProfile.config.plotParams.scaleX)));
+    svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(ngeo.extendedProfile.config.plotParams.scaleY)));
+
     ngeo.extendedProfile.config.plotParams.currentZoom = tr.k;
-    ngeo.extendedProfile.config.plotParams.currentScaleX = tr.rescaleX(scaleX);
-    ngeo.extendedProfile.config.plotParams.currentScaleY = tr.rescaleY(scaleY);
+    ngeo.extendedProfile.config.plotParams.scaleX = tr.rescaleX(ngeo.extendedProfile.config.plotParams.scaleX);
+    ngeo.extendedProfile.config.plotParams.scaleY = tr.rescaleY(ngeo.extendedProfile.config.plotParams.scaleY);
     d3.select('g.y.axis').selectAll('g.tick line')
     .style('opacity', '0.5')
-    .style('stroke', '#d8d8d8')
+    .style('stroke', '#d8d8d8');
+
     ngeo.extendedProfile.measure.clearMeasure();
+    // mousePositionEnd = d3.mouse(this);
 
   }
 
@@ -133,17 +152,9 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     mousePositionStart = d3.mouse(this);
   }));
 
-  context = d3.select('#profileCanvas')
-    .attr('width', width )
-    .attr('height', height)
+  let context = d3.select('#profileCanvas')
     .node().getContext('2d');
-  
-  d3.select('#profileCanvas')
-    .style('left', margin.left)
-    .style('bottom', margin.bottom)
-    .style('background-color', 'black')
-    .style('position', 'absolute');
-  
+
   d3.select('svg#profileSVG').selectAll('*').remove();
 
   svg = d3.select('svg#profileSVG')
@@ -153,8 +164,8 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   d3.select('svg#profileSVG')
   .on('mousemove', ngeo.extendedProfile.plot2canvas.pointHighlight);
 
-  let xAxis = d3.axisBottom(scaleX)
-  let yAxis = d3.axisLeft(scaleY)
+  let xAxis = d3.axisBottom(ngeo.extendedProfile.config.plotParams.scaleX)
+  let yAxis = d3.axisLeft(ngeo.extendedProfile.config.plotParams.scaleY)
   .tickSize(-width);
   
   d3.select('g.y.axis').selectAll('g.tick line').style('stroke', '#d8d8d8');
@@ -173,6 +184,8 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   d3.select('g.y.axis').selectAll('g.tick line')
   .style('opacity', '0.5')
   .style('stroke', '#d8d8d8');
+  
+  return true;
 
 };
 
@@ -182,8 +195,8 @@ Find the closest neighboor of the mouse coordinates within tolerance
 ngeo.extendedProfile.plot2canvas.getClosestPoint = function (points, xs,ys,tolerance) {
   let d = points;
   let tol = tolerance;
-  let sx = ngeo.extendedProfile.config.plotParams.currentScaleX;
-  let sy = ngeo.extendedProfile.config.plotParams.currentScaleY;
+  let sx = ngeo.extendedProfile.config.plotParams.scaleX;
+  let sy = ngeo.extendedProfile.config.plotParams.scaleY;
   let distances = [];
   let hP = [];
 
@@ -229,8 +242,8 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
   let xs = svgCoordinates[0];
   let ys = svgCoordinates[1];
   let tolerance = 5; 
-  let sx = ngeo.extendedProfile.config.plotParams.currentScaleX;
-  let sy = ngeo.extendedProfile.config.plotParams.currentScaleY;
+  let sx = ngeo.extendedProfile.config.plotParams.scaleX;
+  let sy = ngeo.extendedProfile.config.plotParams.scaleY;
 
   let p = ngeo.extendedProfile.plot2canvas.getClosestPoint(ngeo.extendedProfile.loader.profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
   if (p != undefined) {

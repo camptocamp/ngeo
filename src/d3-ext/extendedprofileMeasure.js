@@ -5,7 +5,7 @@ Height measure toolbar
 ***/
 ngeo.extendedProfile.measure.clearMeasure = function () {
 
-  this.profileMeasure = {
+  ngeo.extendedProfile.measure.profileMeasure = {
     pStart: {
       set: false
     },
@@ -26,7 +26,7 @@ ngeo.extendedProfile.measure.clearMeasure = function () {
 ngeo.extendedProfile.measure.startMeasure = function () {
 
   ngeo.extendedProfile.measure.clearMeasure();
-  d3.select('svg#profileSVG').on('click', measureHeight)
+  d3.select('svg#profileSVG').on('click', ngeo.extendedProfile.measure.measureHeight);
 
 }
 
@@ -44,80 +44,78 @@ ngeo.extendedProfile.measure.measureHeight = function () {
   let xs = svgCoordinates[0];
   let ys = svgCoordinates[1];
   let tolerance = 2; 
-  let sx = ngeo.extendedProfile.config.plotParams.currentScaleX;
+  let sx = ngeo.extendedProfile.config.plotParams.scaleX;
   let sy = ngeo.extendedProfile.config.plotParams.currentScaleY;
   let pointSize = 3;
-  let p = ngeo.extendedProfile.plot2canvas.getClosestPoint(profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
-
-  if (!this.profileMeasure.pStart.set) {
+  let p = ngeo.extendedProfile.plot2canvas.getClosestPoint(ngeo.extendedProfile.loader.profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
+  if (!ngeo.extendedProfile.measure.profileMeasure.pStart.set) {
     if (p != undefined) {
-      this.profileMeasure.pStart.distance = p.distance;
-      this.profileMeasure.pStart.altitude = p.altitude;
-      this.profileMeasure.pStart.cx = sx(p.distance ) + margin.left;
-      this.profileMeasure.pStart.cy = sy(p.altitude) + margin.top;
+      ngeo.extendedProfile.measure.profileMeasure.pStart.distance = p.distance;
+      ngeo.extendedProfile.measure.profileMeasure.pStart.altitude = p.altitude;
+      ngeo.extendedProfile.measure.profileMeasure.pStart.cx = sx(p.distance ) + margin.left;
+      ngeo.extendedProfile.measure.profileMeasure.pStart.cy = sy(p.altitude) + margin.top;
     } else {
-      this.profileMeasure.pStart.distance = sx.invert(xs);
-      this.profileMeasure.pStart.altitude = sy.invert(ys);
-      this.profileMeasure.pStart.cx = xs ;
-      this.profileMeasure.pStart.cy = ys;
+      ngeo.extendedProfile.measure.profileMeasure.pStart.distance = sx.invert(xs);
+      ngeo.extendedProfile.measure.profileMeasure.pStart.altitude = sy.invert(ys);
+      ngeo.extendedProfile.measure.profileMeasure.pStart.cx = xs ;
+      ngeo.extendedProfile.measure.profileMeasure.pStart.cy = ys;
     }
 
-    this.profileMeasure.pStart.set = true;
+    ngeo.extendedProfile.measure.profileMeasure.pStart.set = true;
     
     let highlightCircle = d3.select('svg#profileSVG').append('circle')
     .attr('id', 'start_m')
-    .attr('cx', this.profileMeasure.pStart.cx)
-    .attr('cy', this.profileMeasure.pStart.cy)
+    .attr('cx', ngeo.extendedProfile.measure.profileMeasure.pStart.cx)
+    .attr('cy', ngeo.extendedProfile.measure.profileMeasure.pStart.cy)
     .attr('r', pointSize)
     .style('fill', 'red');
 
 
-  } else if (!this.profileMeasure.pEnd.set){
+  } else if (!ngeo.extendedProfile.measure.profileMeasure.pEnd.set){
     if (p != undefined) {
-      this.profileMeasure.pEnd.distance = p.distance;
-      this.profileMeasure.pEnd.altitude = p.altitude;
-      this.profileMeasure.pEnd.cxEnd = sx(p.distance ) + margin.left;
-      this.profileMeasure.pEnd.cyEnd = sy(p.altitude) + margin.top;
+      ngeo.extendedProfile.measure.profileMeasure.pEnd.distance = p.distance;
+      ngeo.extendedProfile.measure.profileMeasure.pEnd.altitude = p.altitude;
+      ngeo.extendedProfile.measure.profileMeasure.pEnd.cxEnd = sx(p.distance ) + margin.left;
+      ngeo.extendedProfile.measure.profileMeasure.pEnd.cyEnd = sy(p.altitude) + margin.top;
     } else {
-      this.profileMeasure.pEnd.distance = sx.invert(xs);
-      this.profileMeasure.pEnd.altitude = sy.invert(ys);
-      this.profileMeasure.pEnd.cx = xs;
-      this.profileMeasure.pEnd.cy = ys;
+      ngeo.extendedProfile.measure.profileMeasure.pEnd.distance = sx.invert(xs);
+      ngeo.extendedProfile.measure.profileMeasure.pEnd.altitude = sy.invert(ys);
+      ngeo.extendedProfile.measure.profileMeasure.pEnd.cx = xs;
+      ngeo.extendedProfile.measure.profileMeasure.pEnd.cy = ys;
     }
 
-    this.profileMeasure.pEnd.set = true;
+    ngeo.extendedProfile.measure.profileMeasure.pEnd.set = true;
     let highlightCircle = d3.select('svg#profileSVG').append('circle')
     .attr('id', 'end_m')
-    .attr('cx', this.profileMeasure.pEnd.cx)
-    .attr('cy', this.profileMeasure.pEnd.cy)
+    .attr('cx', ngeo.extendedProfile.measure.profileMeasure.pEnd.cx)
+    .attr('cy', ngeo.extendedProfile.measure.profileMeasure.pEnd.cy)
     .attr('r', pointSize)
     .style('fill', 'red');
 
     let line = d3.select('svg#profileSVG').append('line')
     .attr('id', 'line_m')
-    .attr('x1', this.profileMeasure.pStart.cx)
-    .attr('y1', this.profileMeasure.pStart.cy)
-    .attr('x2', this.profileMeasure.pEnd.cx)
-    .attr('y2', this.profileMeasure.pEnd.cy)
+    .attr('x1', ngeo.extendedProfile.measure.profileMeasure.pStart.cx)
+    .attr('y1', ngeo.extendedProfile.measure.profileMeasure.pStart.cy)
+    .attr('x2', ngeo.extendedProfile.measure.profileMeasure.pEnd.cx)
+    .attr('y2', ngeo.extendedProfile.measure.profileMeasure.pEnd.cy)
     .attr('stroke-width', 2)
     .attr('stroke', 'red');
 
 
   } else {
-    startMeasure();
-
+    ngeo.extendedProfile.measure.startMeasure();
   }
 
-  let dH = profileMeasure.pEnd.altitude-profileMeasure.pStart.altitude;
-  let dD = profileMeasure.pEnd.distance-profileMeasure.pStart.distance;
+  let dH = ngeo.extendedProfile.measure.profileMeasure.pEnd.altitude-ngeo.extendedProfile.measure.profileMeasure.pStart.altitude;
+  let dD = ngeo.extendedProfile.measure.profileMeasure.pEnd.distance-ngeo.extendedProfile.measure.profileMeasure.pStart.distance;
   let height = Math.round(10 * Math.sqrt(Math.pow(dH,2) + Math.pow(dD,2)))/10;
 
   if (!isNaN(height)) {
     $('#height_measure').html('Hauteur: ' + height + '</p>');
     d3.select('svg#profileSVG').append('text')
     .attr('id', 'text_m')
-    .attr('x', 10 + (profileMeasure.pStart.cx + profileMeasure.pEnd.cx)/2)
-    .attr('y', (profileMeasure.pStart.cy + profileMeasure.pEnd.cy)/2)
+    .attr('x', 10 + (ngeo.extendedProfile.measure.profileMeasure.pStart.cx + ngeo.extendedProfile.measure.profileMeasure.pEnd.cx)/2)
+    .attr('y', (ngeo.extendedProfile.measure.profileMeasure.pStart.cy + ngeo.extendedProfile.measure.profileMeasure.pEnd.cy)/2)
     .text( height + 'm')
     .attr('font-family', 'sans-serif')
     .attr('font-size', '14px')

@@ -36,7 +36,7 @@ ngeo.extendedProfile.config.getProfileConfig = function (pytreeserver_url) {
 }
 
 ngeo.extendedProfile.config.plotParams = {};
-ngeo.extendedProfile.config.plotParams.currentScaleX = {};
+ngeo.extendedProfile.config.plotParams.scaleX = {};
 ngeo.extendedProfile.config.plotParams.currentScaleY = {};
 ngeo.extendedProfile.config.plotParams.currentZoom = 1;
 

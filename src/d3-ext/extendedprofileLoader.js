@@ -10,25 +10,47 @@ ngeo.extendedProfile.loader.profilePoints = {
   classification: []
 }
 
+// Load points by LOD
+ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline, distanceOffset, width) {
+
+  let lastLOD = false;
+
+  for (var i=0; i<maxLOD; i++) {
+    if (i==0){
+      // the first 4 levels are usually fast to load
+      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 4, i, polyline, distanceOffset, lastLOD, width);
+      i += 3;
+    } else if (i < maxLOD - 1) {
+      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width);
+    } else {
+      lastLOD = true;
+      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width);
+    }
+  }
+
+}
+
+
 /**
  * Provides a function that sends xhr requests to cpotree app and parses
  * its binary output format
  */
-ngeo.extendedProfile.loader.xhrRequest = function(method, minLOD, maxLOD, iter, coordinates, distanceOffset, clearPlot, lastLOD) {
+ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width) {
+
 
   let hurl = 'http://localhost:5001/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
-  hurl += '&width=100' + '&coordinates=' + coordinates;
+  hurl += '&width=' + width + '&coordinates=' + coordinates;
   hurl += '&pointCloud=sitn2010';
   hurl += '&attributes=';
 
   let xhr = new XMLHttpRequest();
-  xhr.open(method, hurl, true);
+  xhr.open('GET', hurl, true);
   xhr.responseType = 'arraybuffer';
   xhr.overrideMimeType('text/plain; charset=x-user-defined');
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-          ngeo.extendedProfile.loader.processBuffer(xhr.response, iter, distanceOffset, clearPlot, lastLOD);
+          ngeo.extendedProfile.loader.processBuffer(xhr.response, iter, distanceOffset, lastLOD);
       } else {
           console.log('Failed to load data! HTTP status: ' + xhr.status + ', file: ' + url);
       }
@@ -41,7 +63,7 @@ ngeo.extendedProfile.loader.xhrRequest = function(method, minLOD, maxLOD, iter, 
   }
 };
 
-ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOffset, clearPlot, lastLOD) {
+ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOffset, lastLOD) {
 
   // try {
     // ***Get header size***
@@ -53,6 +75,11 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
     let strHeaderLocal = '';
     for (let i =0; i < uInt8header.length; i++) {
       strHeaderLocal += String.fromCharCode(uInt8header[i]);
+    }
+
+    let isEmpty = strHeaderLocal.indexOf('"points": 0');
+    if (isEmpty != -1) {
+      return;
     }
 
     let jHeader = JSON.parse(strHeaderLocal);
@@ -119,26 +146,21 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
       }
     }
 
-    if (clearPlot) {
-      let ctx = d3.select('#profileCanvas')
-      .node().getContext('2d');
-      ctx.clearRect(0, 0, $('#profileCanvas').width(), $('#profileCanvas').height());
-    }
     // draw this LOD
-    if (iter == 0) {
-      let rangeX = [ngeo.extendedProfile.plot2canvas.arrayMin(points.distance), ngeo.extendedProfile.plot2canvas.arrayMax(points.distance)];
-      let rangeY = [ngeo.extendedProfile.plot2canvas.arrayMin(points.altitude), ngeo.extendedProfile.plot2canvas.arrayMax(points.altitude)];
-      ngeo.extendedProfile.plot2canvas.setupPlot(rangeX, rangeY);
-      ngeo.extendedProfile.plot2canvas.drawPoints (points, $('#material').val(), ngeo.extendedProfile.config.plotParams.currentZoom);
+    let rangeX = [ngeo.extendedProfile.plot2canvas.arrayMin(points.distance), ngeo.extendedProfile.plot2canvas.arrayMax(points.distance)];
+    let rangeY = [ngeo.extendedProfile.plot2canvas.arrayMin(points.altitude), ngeo.extendedProfile.plot2canvas.arrayMax(points.altitude)];
+    if (iter==0) {
+      let setup = false;
+      setup = ngeo.extendedProfile.plot2canvas.setupPlot(rangeX, rangeY);
+      ngeo.extendedProfile.plot2canvas.drawPoints(points, "CLASSIFICATION", ngeo.extendedProfile.config.plotParams.currentZoom);
+
     } else {
-      let rangeX = [ngeo.extendedProfile.plot2canvas.arrayMin(points.distance), ngeo.extendedProfile.plot2canvas.arrayMax(points.distance)];
-      let rangeY = [ngeo.extendedProfile.plot2canvas.arrayMin(points.altitude), ngeo.extendedProfile.plot2canvas.arrayMax(points.altitude)];
-      ngeo.extendedProfile.plot2canvas.drawPoints (points, $('#material').val(), ngeo.extendedProfile.config.plotParams.currentZoom);
+      ngeo.extendedProfile.plot2canvas.drawPoints(points, "CLASSIFICATION", ngeo.extendedProfile.config.plotParams.currentZoom);
     }
 
-    if (lastLOD) {
-      ngeo.extendedProfile.raster.generateDemDsm();
-    }
+    // if (lastLOD) {
+      // ngeo.extendedProfile.raster.generateDemDsm();
+    // }
 
   // } catch (e) {
   // console.log('error during buffer processing: ' + e);
@@ -148,8 +170,14 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
 
 ngeo.extendedProfile.loader.loadDeeperLOD = function () {
 
-  let domain = ngeo.extendedProfile.config.plotParams.currentScaleX.domain();
+  let domain = ngeo.extendedProfile.config.plotParams.scaleX.domain();
   let clip = ngeo.extendedProfile.utils.clipLineByMeasure(domain[0], domain[1]);
+  
+  if (clip.clippedLine.length <= 1){
+    console.log("PROBLEM WITH DOMAIN CLIPPING!!!");
+    return;
+  }
+  
   let line = clip.clippedLine;
 
   let cPotreeLineStr = '';
@@ -157,30 +185,12 @@ ngeo.extendedProfile.loader.loadDeeperLOD = function () {
     cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
   }
   cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
-  let minLOD = 0;
   let maxLOD = 6;
 
   let span = domain[1] - domain[0];
 
   let niceLOD = ngeo.extendedProfile.utils.getNiceLOD(span);
-
-  // Load gmf dem/dsm from gmf webservice
-  // let loadDTM = d3.select('#demdsm').node().checked; FIX THAT!!!
-  let loadDTM = false;
-  if (loadDTM){
-    ngeo.extendedProfile.raster.getGmfProfile(100, line, clip.distanceOffset);
-  } else {
-    svg.selectAll('#line_dem').remove();
-    svg.selectAll('#line_dsm').remove();
-  }
-  
-  // Load additional LOD if useful
-  if (maxLOD >= niceLOD) { // FIX THAT HARDCODED STUFF!!!
-    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, 'CLASSIFICATION', ngeo.extendedProfile.config.plotParams.currentZoom);
-  } else {
-    if (mousePositionStart[0] !==  d3.mouse(this)[0] && mousePositionStart[1] !== d3.mouse(this)[1]){
-      ngeo.extendedProfile.loader.xhrRequest('GET', 0, niceLOD, 100, cPotreeLineStr, clip.distanceOffset, true, true);
-    } 
-  }
+  console.log(cPotreeLineStr);
+  ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, 5);
 }
 

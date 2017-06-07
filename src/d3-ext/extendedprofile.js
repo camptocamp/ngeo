@@ -238,17 +238,11 @@ ngeo.extendedProfile.plot = function(options) {
 
   const extendedProfile = function(selection) {
 
-        ngeo.extendedProfile.config.getProfileConfig('http://localhost:5001');
+    ngeo.extendedProfile.config.getProfileConfig('http://localhost:5001');
+    var minLOD = 0;
+    var maxLOD = 6;
+    ngeo.extendedProfile.loader.getProfileByLOD(minLOD, maxLOD, $('#coordinates').val(), 0, 5);
 
-        var minLOD = 0;
-        var maxLOD = 6;
-        for (var i=0; i<maxLOD; i++) {
-            if (i < maxLOD - 1) {
-                ngeo.extendedProfile.loader.xhrRequest('GET', minLOD + i, minLOD + i + 1, i, $('#coordinates').val(), 0, true, false);
-            } else {
-                ngeo.extendedProfile.loader.xhrRequest('GET', minLOD + i, minLOD + i + 1, i, $('#coordinates').val(), 0, true, true);
-            }
-        }
   };
 
   return extendedProfile;

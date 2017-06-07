@@ -17,6 +17,7 @@ ngeo.extendedProfile.utils.getLinestring = function () {
   let lShifted = [];
   let distance = 0;
   for (let k=0; k<linestring.length - 1; k++) {
+
     let shiftedX = linestring[k+1][0]-linestring[k][0];
     let shiftedY = linestring[k+1][1]-linestring[k][1];
 
@@ -41,37 +42,44 @@ ngeo.extendedProfile.utils.getLinestring = function () {
 }
 
 /***
-Interpolate the 2D coodinate from a profile distance (=measure M)
+Interpolate the 2D coordinate from a profile distance (=measure M)
 ***/
 ngeo.extendedProfile.utils.interpolatePoint = function (d, segment) {
+
   let xLocal = Math.round(Math.sqrt(Math.pow(d,2)/(1 + Math.pow(segment.coeffA,2))));
   let yLocal = Math.round(segment.coeffA * xLocal);
   let x = xLocal + segment.origX;
   let y = yLocal + segment.origY;
-  return [x,y]
+  return [x,y];
+
 }
 
 /***
 Clip a linestring to a given plot domain
 ***/
 ngeo.extendedProfile.utils.clipLineByMeasure = function (dLeft, dRight) {
-
   let l = ngeo.extendedProfile.utils.getLinestring();
-
+  console.log(l);
   let clippedLine = [];
+  // CHECK LOGIC HERE!!!
   for (let i in l) {
-    let startPoint, endPoint;
-    // Start point
-    if (dLeft > l[i].startD && dLeft < l[i].endD) {
-      clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dLeft, l[i]));
-    } else if (dLeft <= l[i].startD && i==0) {
-      clippedLine.push([l[i].origX, l[i].origY]);
-    }
-    if (dRight > l[i].startD && dRight < l[i].endD) {
-      clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dRight, l[i]));
-    } else if (dRight >= l[i].endD) {
-      clippedLine.push([l[i].endX, l[i].endY]);
-    }
+    console.log("Segement: ", i);
+    console.log('Dom Left', dLeft, 'M', l[i].startD);
+    console.log('Dom Right', dRight, 'M',  l[i].endD);
+    if (dLeft <= l[i].endD) {
+
+      if (dLeft >= l[i].startD) {
+        clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dLeft, l[i]));
+        console.log("point interpolé à gauche");
+      }
+      if (dRight <= l[i].endD) {
+        clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dRight, l[i]));
+        console.log("point interpolé à droite");
+      } else {
+        clippedLine.push([l[i].endX,l[i].endY]);
+        console.log("added end point");
+      }
+    } 
   }
 
   return {
@@ -94,8 +102,10 @@ ngeo.extendedProfile.utils.getNiceLOD = function(span) {
     maxLOD = 8;
   } else if (span < 2000) {
     maxLOD = 7;
+  } else {
+    maxLOD = 6;
   }
-  return maxLOD
+  return 7 //!!!for dev...
 }
 
 ngeo.extendedProfile.utils.downloadDataUrlFromJavascript = function(filename, dataUrl) {
@@ -142,7 +152,7 @@ ngeo.extendedProfile.utils.exportToImageFile= function (format) {
     canvas.getContext('2d').drawImage(pointsCanvas,margin.left,margin.top,w - (margin.left + margin.right),h - (margin.top + margin.bottom));
     canvas.getContext('2d').drawImage(img,0,0,w,h);
     let dataURL = canvas.toDataURL();
-    downloadDataUrlFromJavascript('sitn_profile.png', dataURL);
+    ngeo.extendedProfile.utils.downloadDataUrlFromJavascript('sitn_profile.png', dataURL);
 
   };
 
@@ -250,7 +260,6 @@ ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function (profilePoints) {
   }
 
   let encodedUri = encodeURI(file);
-  // window.open(encodedUri)
-  downloadDataUrlFromJavascript('sitn_profile.csv', encodedUri);
+  ngeo.extendedProfile.utils.downloadDataUrlFromJavascript('sitn_profile.csv', encodedUri);
 
 }
