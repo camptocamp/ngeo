@@ -6,7 +6,7 @@ goog.require('gmf');
  * Service to provide acces to a Open Source Routing Machine (OSRM)
  * backend and its features.
  * @param {angular.$http} $http Angular http service.
- * @param {string} gmfOsrmBackendUrl URL for OSRM backend API
+ * @param {string=} gmfOsrmBackendUrl URL for OSRM backend API
  * @constructor
  * @struct
  * @ngInject
