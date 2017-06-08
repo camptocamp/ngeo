@@ -140,7 +140,6 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
   this.vectorLayer_ = new ol.layer.Vector({
     source: this.vectorSource_
   });
-  this.vectorLayer_.setMap(this.map_);
 
   /**
    * @type {ol.source.Vector}
@@ -172,6 +171,13 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
    * @private
    */
   this.draw_ = null;
+};
+
+/**
+ * Init the controller
+ */
+gmf.GmfRoutingController.prototype.$onInit = function(){
+  this.map_.addLayer(this.vectorLayer_);
 };
 
 /**
