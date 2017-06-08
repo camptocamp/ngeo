@@ -79,7 +79,7 @@ gmf.RoutingService.prototype.getRoute = function(coordinates, config) {
     for (const option of Object.keys(config.options)) {
       options.push(`${option}=${config.options[option]}`);
     }
-    url += `?${options.join('&')}`;
+    url += options.join('&');
   }
 
   return this.$http_.get(url);
