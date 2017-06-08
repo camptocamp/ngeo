@@ -138,7 +138,21 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
    * @private
    */
   this.vectorLayer_ = new ol.layer.Vector({
-    source: this.vectorSource_
+    source: this.vectorSource_,
+    style: (function(feature, resolution) {
+      return [new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: 7,
+          fill: new ol.style.Fill({
+            color: (feature === this.startFeature_) ? 'rgba(85, 255, 0, 0.5)' : 'rgba(230, 94, 63, 0.5)'
+          }),
+          stroke: new ol.style.Stroke({
+            width: 2,
+            color: (feature === this.startFeature_) ? 'rgba(107, 230, 46, 0.5)' : 'rgba(255, 62, 19, 0.5)'
+          })
+        })
+      })];
+    }).bind(this)
   });
 
   /**
