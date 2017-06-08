@@ -35,8 +35,10 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
           'requestEnconding': requestEncoding
         };
         layer['sourceConfig'] = ol.source.WMTS.optionsFromCapabilities(getCap, layerOptions);
-        layer['attribution'] = getCap['ServiceProvider']['ProviderName'];
-        layer['attributionUrl'] = getCap['ServiceProvider']['ProviderSite'];
+        if ('ServiceProvider' in getCap) {
+          layer['attribution'] =  getCap['ServiceProvider']['ProviderName'];
+          layer['attributionUrl'] = getCap['ServiceProvider']['ProviderSite'];
+        }
         layer['capabilitiesUrl'] = getCapUrl;
       }
 
