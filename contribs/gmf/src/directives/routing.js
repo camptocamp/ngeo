@@ -190,7 +190,7 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
 /**
  * Init the controller
  */
-gmf.GmfRoutingController.prototype.$onInit = function(){
+gmf.GmfRoutingController.prototype.$onInit = function() {
   this.map_.addLayer(this.vectorLayer_);
 };
 
