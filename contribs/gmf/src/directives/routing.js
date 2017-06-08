@@ -2,6 +2,7 @@ goog.provide('gmf.routingComponent');
 
 goog.require('gmf');
 goog.require('gmf.RoutingService');
+goog.require('ol.format.GeoJSON');
 
 
 gmf.module.value('gmfRoutingTemplateUrl',
@@ -192,6 +193,7 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
  */
 gmf.GmfRoutingController.prototype.$onInit = function() {
   this.map_.addLayer(this.vectorLayer_);
+  this.map_.addLayer(this.routeLayer_);
 };
 
 /**
@@ -272,9 +274,17 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
     const coordTo = this.getLonLatFromPoint_(this.targetFeature_);
     const route =  [coordFrom, coordTo];
 
-    const onSuccess_ = function(resp) {
+    const onSuccess_ = (function(resp) {
       console.log(resp);
-    };
+      const format = new ol.format.GeoJSON();
+      const route = format.readGeometry(resp.data.routes[0].geometry, {
+        dataProjection: 'EPSG:4326',
+        featureProjection: this.map_.getView().getProjection()
+      });
+      this.routeSource_.addFeature(new ol.Feature({
+        geometry: route
+      }));
+    }).bind(this);
 
     const onError_ = function(resp) {
       console.log(resp);
@@ -282,7 +292,8 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 
     const config = {
       options: {
-        steps: true
+        steps: true,
+        geometries: 'geojson'
       }
     };
 
