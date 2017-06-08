@@ -267,8 +267,9 @@ gmf.GmfRoutingController.prototype.formatFeature = function(feature) {
 };
 
 /**
- * @param {ol.Feature} point
- * @return {ol.Coordinate}
+ * Converts feature point into LonLat coordinate.
+ * @param {ol.Feature} point Feature point to convert
+ * @return {ol.Coordinate} LonLat coordinate
  * @private
  */
 gmf.GmfRoutingController.prototype.getLonLatFromPoint_ = function(point) {
