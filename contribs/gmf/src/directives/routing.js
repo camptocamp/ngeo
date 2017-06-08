@@ -51,7 +51,7 @@ gmf.routingComponent = {
   controller: 'GmfRoutingController as routeCtrl',
   bindings: {
     'active': '=gmfRoutingActive',
-    'map_': '<gmfRoutingMap'
+    'map': '<gmfRoutingMap'
   },
   templateUrl: gmfRoutingTemplateUrl
 };
@@ -94,7 +94,7 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
    * @type {ol.Map}
    * @private
    */
-  this.map_;
+  this.map;
 
   /**
    * @type {ol.Feature}
@@ -192,8 +192,8 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
  * Init the controller
  */
 gmf.GmfRoutingController.prototype.$onInit = function() {
-  this.map_.addLayer(this.vectorLayer_);
-  this.map_.addLayer(this.routeLayer_);
+  this.map.addLayer(this.vectorLayer_);
+  this.map.addLayer(this.routeLayer_);
 };
 
 /**
@@ -217,7 +217,7 @@ gmf.GmfRoutingController.prototype.setTarget = function() {
  */
 gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
   if (this.draw_) {
-    this.map_.removeInteraction(this.draw_);
+    this.map.removeInteraction(this.draw_);
   }
 
   this.draw_ = new ol.interaction.Draw({
@@ -236,11 +236,11 @@ gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
     this[feature] = event.feature;
     this[label] = this.formatFeature(this[feature]);
     if (this.draw_) {
-      this.map_.removeInteraction(this.draw_);
+      this.map.removeInteraction(this.draw_);
     }
   });
 
-  this.map_.addInteraction(this.draw_);
+  this.map.addInteraction(this.draw_);
 };
 
 
@@ -260,7 +260,7 @@ gmf.GmfRoutingController.prototype.formatFeature = function(feature) {
 gmf.GmfRoutingController.prototype.getLonLatFromPoint_ = function(point) {
   const geometry = /** @type {ol.geom.Point} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
-  const projection = this.map_.getView().getProjection();
+  const projection = this.map.getView().getProjection();
   return ol.proj.toLonLat(coords, projection);
 };
 
@@ -279,7 +279,7 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
       const format = new ol.format.GeoJSON();
       const route = format.readGeometry(resp.data.routes[0].geometry, {
         dataProjection: 'EPSG:4326',
-        featureProjection: this.map_.getView().getProjection()
+        featureProjection: this.map.getView().getProjection()
       });
       this.routeSource_.addFeature(new ol.Feature({
         geometry: route
