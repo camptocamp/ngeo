@@ -247,10 +247,48 @@ gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
  * @return {string} Formated feature description
  */
 gmf.GmfRoutingController.prototype.formatFeature = function(feature) {
-  const geometry = /** @type {ol.geom.Point} */ (feature.getGeometry());
+  return this.getLonLatFromPoint_(feature).join('/');
+};
+
+/**
+ * @param {ol.Feature} point
+ * @return {ol.Coordinate}
+ * @private
+ */
+gmf.GmfRoutingController.prototype.getLonLatFromPoint_ = function(point) {
+  const geometry = /** @type {ol.geom.Point} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map_.getView().getProjection();
-  return ol.proj.toLonLat(coords, projection).join('/');
+  return ol.proj.toLonLat(coords, projection);
+};
+
+
+/**
+ * @export
+ */
+gmf.GmfRoutingController.prototype.calculateRoute = function() {
+  if (this.startFeature_ && this.targetFeature_) {
+    const coordFrom = this.getLonLatFromPoint_(this.startFeature_);
+    const coordTo = this.getLonLatFromPoint_(this.targetFeature_);
+    const route =  [coordFrom, coordTo];
+
+    const onSuccess_ = function(resp) {
+      console.log(resp);
+    };
+
+    const onError_ = function(resp) {
+      console.log(resp);
+    };
+
+    const config = {
+      options: {
+        steps: true
+      }
+    };
+
+    this.$q_.when(this.gmfRoutingService_.getRoute(route, config))
+      .then(onSuccess_.bind(this), onError_.bind(this));
+  }
 };
 
 gmf.module.controller('GmfRoutingController', gmf.GmfRoutingController);
