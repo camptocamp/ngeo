@@ -182,6 +182,20 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
   });
 
   /**
+   * Distance of route in meters
+   * @type {?number}
+   * @export
+   */
+  this.routeDistance = null;
+
+  /**
+   * Duration of route in minutes.
+   * @type {?number}
+   * @export
+   */
+  this.routeDuration = null;
+
+  /**
    * @type {ol.interaction.Draw}
    * @private
    */
@@ -284,6 +298,9 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
       this.routeSource_.addFeature(new ol.Feature({
         geometry: route
       }));
+
+      this.routeDistance = resp.data.routes[0].distance;
+      this.routeDuration = Math.ceil(resp.data.routes[0].duration / 60);
     }).bind(this);
 
     const onError_ = function(resp) {
