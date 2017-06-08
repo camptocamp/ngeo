@@ -80,7 +80,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
 gmf.displayquerygridComponent = {
   controller: 'GmfDisplayquerygridController as ctrl',
   bindings: {
-    'active': '=gmfDisplayquerygridActive',
+    'active': '=?gmfDisplayquerygridActive',
     'featuresStyleFn': '&gmfDisplayquerygridFeaturesstyle',
     'selectedFeatureStyleFn': '&gmfDisplayquerygridSourceselectedfeaturestyle',
     'getMapFn': '&gmfDisplayquerygridMap',
