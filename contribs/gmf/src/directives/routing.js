@@ -252,6 +252,7 @@ gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
     if (this.draw_) {
       this.map.removeInteraction(this.draw_);
     }
+    this.calculateRoute();
   });
 
   this.map.addInteraction(this.draw_);
@@ -285,6 +286,9 @@ gmf.GmfRoutingController.prototype.getLonLatFromPoint_ = function(point) {
  */
 gmf.GmfRoutingController.prototype.calculateRoute = function() {
   if (this.startFeature_ && this.targetFeature_) {
+    // remove rendered routes
+    this.routeSource_.clear();
+
     const coordFrom = this.getLonLatFromPoint_(this.startFeature_);
     const coordTo = this.getLonLatFromPoint_(this.targetFeature_);
     const route =  [coordFrom, coordTo];
