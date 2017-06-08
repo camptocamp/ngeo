@@ -196,7 +196,6 @@ gmf.GmfRoutingController.prototype.setTarget = function() {
 gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
   if (this.draw_) {
     this.map_.removeInteraction(this.draw_);
-    this.vectorSource_.removeFeature(this[feature]);
   }
 
   this.draw_ = new ol.interaction.Draw({
@@ -214,7 +213,9 @@ gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
   this.draw_.on('drawend', (event) => {
     this[feature] = event.feature;
     this[label] = this.formatFeature(this[feature]);
-    //this.vectorSource_.addFeature(this[feature]);
+    if (this.draw_) {
+      this.map_.removeInteraction(this.draw_);
+    }
   });
 
   this.map_.addInteraction(this.draw_);
