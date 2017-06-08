@@ -14,10 +14,31 @@ goog.require('ol.source.WMTS');
  * @ngInject
  */
 exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
+
+  // Get the layer extent defines in the GetCapabilities
+  const getLayerExtentFromGetCap = function(getCapLayer, proj) {
+    const wgs84 = 'EPSG:4326';
+    const layer = getCapLayer;
+    const projCode = proj.getCode();
+    const wgs84Extent = layer['WGS84BoundingBox'];
+    if (wgs84Extent) {
+      // If only an extent in wgs 84 is available, we use the
+      // intersection between proj extent and layer extent as the new
+      // layer extent. We compare extents in wgs 84 to avoid
+      // transformations errors of large wgs 84 extent like
+      // (-180,-90,180,90)
+      const projWgs84Extent = ol.proj.transformExtent(proj.getExtent(), projCode, wgs84);
+      const layerWgs84Extent = ol.extent.getIntersection(projWgs84Extent, wgs84Extent);
+      if (layerWgs84Extent) {
+        return ol.proj.transformExtent(layerWgs84Extent, wgs84, projCode);
+      }
+    }
+  };
+
   // Go through all layers, assign needed properties,
   // and remove useless layers (no name or bad crs without children
   // or no intersection between map extent and layer extent)
-  const getLayersList = function(getCap, getCapUrl) {
+  const getLayersList = function(getCap, getCapUrl, proj) {
     const layers = [];
 
     for (const layer of getCap['Contents']['Layer']) {
@@ -40,6 +61,7 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
           layer['attributionUrl'] = getCap['ServiceProvider']['ProviderSite'];
         }
         layer['capabilitiesUrl'] = getCapUrl;
+        layer['extent'] = getLayerExtentFromGetCap(layer, proj);
       }
 
       layers.push(layer);
@@ -83,7 +105,8 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
         scope['options'].layerHovered = null;
 
         if (val && val['Contents'] && val['Contents']['Layer']) {
-          scope['layers'] = getLayersList(val, scope['url']);
+          scope['layers'] = getLayersList(val, scope['url'],
+              scope['map'].getView().getProjection());
         }
       });
 

@@ -49,6 +49,19 @@ exports.Controller = function($scope) {
  */
 exports.directive = function($compile, ngeoWmtsGetCapItemTemplateUrl) {
 
+  // Zoom to layer extent
+  const zoomToLayerExtent = function(scope, layer, map) {
+    let extent = layer.extent;
+    if (scope['options'].transformExtent) {
+      extent = scope['options'].transformExtent(layer.extent);
+    }
+    const view = map.getView();
+    const mapSize = map.getSize();
+    if (extent) {
+      view.fit(extent, mapSize);
+    }
+  };
+
   return {
     restrict: 'A',
     templateUrl: ngeoWmtsGetCapItemTemplateUrl,
@@ -62,6 +75,12 @@ exports.directive = function($compile, ngeoWmtsGetCapItemTemplateUrl) {
         }
         compiledContent(scope, (clone, scope) => {
           elt.append(clone);
+        });
+
+        const headerGroup = elt.find('> .ngeo-header-group');
+        headerGroup.find('.fa-zoom-in').on('click', (evt) => {
+          evt.stopPropagation();
+          zoomToLayerExtent(scope, scope.layer, scope['map']);
         });
       };
     }
