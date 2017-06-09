@@ -131,7 +131,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   function zoomed() {
     console.log("zoom");
     let tr = d3.event.transform;
-    console.log(d3.event.transform);
+    // console.log(d3.event);
     svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(sx)));
     svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(sy)));
 
@@ -142,7 +142,6 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     .style('stroke', '#d8d8d8');
 
     ngeo.extendedProfile.measure.clearMeasure();
-    ngeo.extendedProfile.loader.loadDeeperLOD();
     ngeo.extendedProfile.config.plotParams.currentZoom = tr.k;
     ngeo.extendedProfile.config.plotParams.scaleX = tr.rescaleX(sx);
     ngeo.extendedProfile.config.plotParams.scaleY = tr.rescaleY(sy);

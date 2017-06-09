@@ -10,12 +10,15 @@ ngeo.extendedProfile.loader.profilePoints = {
   classification: []
 }
 
+ngeo.extendedProfile.loader.requests = [];
+
 // Load points by LOD
 ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline, distanceOffset, width, resetPlot) {
 
   let lastLOD = false;
 
   for (var i=0; i<maxLOD; i++) {
+
     if (i==0){
       // the first 4 levels are usually fast to load
       ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 4, i, polyline, distanceOffset, lastLOD, width, resetPlot);
@@ -166,8 +169,8 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
 }
 
 ngeo.extendedProfile.loader.loadDeeperLOD = function () {
-  console.log(ngeo.extendedProfile.config.plotParams.scaleX.domain());
-  
+  console.log(d3.event);
+  console.log(d3.event.x, d3.event.y);
   let domain = ngeo.extendedProfile.config.plotParams.scaleX.domain();
   let clip = ngeo.extendedProfile.utils.clipLineByMeasure(domain[0], domain[1]);
   

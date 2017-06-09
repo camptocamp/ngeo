@@ -255,3 +255,5 @@ ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function (profilePoints) {
   ngeo.extendedProfile.utils.downloadDataUrlFromJavascript('sitn_profile.csv', encodedUri);
 
 }
+
+
