@@ -341,7 +341,7 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 
     const config = {
       options: {
-        steps: true,
+        steps: false,
         geometries: 'geojson'
       }
     };
