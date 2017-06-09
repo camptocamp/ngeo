@@ -62,6 +62,13 @@ matrix:
         GITHUB_USERNAME=camptocamp
         API=TRUE
         APPS_GMF=TRUE
+  allow_failures:
+  - node_js: "6"
+    env: >
+        DO_EXAMPLES_DEPLOY=TRUE
+        GIT_REMOTE_NAME=origin
+        GITHUB_USERNAME=camptocamp
+        EXAMPLES_NGEO=TRUE
 
 cache:
   apt: true
