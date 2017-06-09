@@ -203,11 +203,12 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
    * @type {ngeo.interaction.MeasureAzimut}
    * @export
    */
-  this.measureAzimut = new ngeo.interaction.MeasureAzimut($filter('ngeoUnitPrefix'), {
-    sketchStyle: style,
-    startMsg: measureStartMsg[0],
-    continueMsg: measureAzimutContinueMsg[0]
-  });
+  this.measureAzimut = new ngeo.interaction.MeasureAzimut(
+        $filter('ngeoUnitPrefix'), $filter('ngeoNumber'), {
+          sketchStyle: style,
+          startMsg: measureStartMsg[0],
+          continueMsg: measureAzimutContinueMsg[0]
+        });
 
   this.measureAzimut.setActive(false);
   ngeoDecorateInteraction(this.measureAzimut);

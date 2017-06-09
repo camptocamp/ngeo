@@ -48,10 +48,6 @@ gmf.module.value('ngeoExportFeatureFormats', [
 ]);
 
 
-// Filter to apply by default on all coordinates (such points in draw).
-gmf.module.value('ngeoPointfilter', 'ngeoNumberCoordinates:0:{x} E, {y} N');
-
-
 gmf.module.value('ngeoQueryOptions', {
   'limit': 20
 });
@@ -90,7 +86,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @type {ngeo.FeatureHelper}
    */
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
-  ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
+  ngeoFeatureHelper.setProjection(goog.asserts.assert(this.map.getView().getProjection()));
 
   /**
    * @type {gmf.ThemeManager}

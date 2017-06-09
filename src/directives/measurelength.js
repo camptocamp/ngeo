@@ -8,15 +8,16 @@ goog.require('ol.style.Style');
 
 
 /**
- * @param {angular.$compile} $compile Angular compile service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {angular.$filter} $filter Angular filter
- * @return {angular.Directive} The directive specs.
+ * @param {!angular.$compile} $compile Angular compile service.
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.$filter} $filter Angular filter.
+ * @param {!angular.$injector} $injector Main injector.
+ * @return {!angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measurelengthDirective = function($compile, gettextCatalog, $filter) {
+ngeo.measurelengthDirective = function($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -35,7 +36,8 @@ ngeo.measurelengthDirective = function($compile, gettextCatalog, $filter) {
       const measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), {
         style: new ol.style.Style(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
-        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0]
+        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
+        precision: $injector.has('ngeoMeasurePrecision') ? $injector.get('ngeoMeasurePrecision') : undefined
       });
 
       drawFeatureCtrl.registerInteraction(measureLength);

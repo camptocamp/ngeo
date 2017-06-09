@@ -17,6 +17,10 @@ page.onError = function(msg, trace) {
   if (trace) {
     msgStack.push('TRACE:');
     trace.forEach(function(t) {
+      if (t.file.startsWith('https://maps.googleapis.com/maps/api/js')) {
+        // Ignore google referer error
+        return;
+      }
       msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function + '")' : ''));
     });
   }

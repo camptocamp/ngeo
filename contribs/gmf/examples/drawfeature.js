@@ -50,7 +50,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
     zoom: 3
   });
 
-  ngeoFeatureHelper.setProjection(view.getProjection());
+  ngeoFeatureHelper.setProjection(goog.asserts.assert(view.getProjection()));
 
   const featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   featureOverlay.setFeatures(ngeoFeatures);

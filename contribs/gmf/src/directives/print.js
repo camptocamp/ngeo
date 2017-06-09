@@ -860,6 +860,7 @@ gmf.PrintController.prototype.getDataSource_ = function() {
     data = [];
     columns = [];
     source.features.forEach(function(feature, i) {
+      goog.asserts.assert(feature);
       const properties = this.ngeoFeatureHelper_.getFilteredFeatureValues(feature);
       if (i === 0) {
         columns = Object.keys(properties).map(function tanslateColumns(prop) {

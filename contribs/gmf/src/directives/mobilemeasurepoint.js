@@ -198,10 +198,11 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
    * @type {ngeo.interaction.MeasurePointMobile}
    * @export
    */
-  this.measure = new ngeo.interaction.MeasurePointMobile({
-    decimals: this.coordinateDecimals,
-    sketchStyle: this.sketchStyle
-  });
+  this.measure = new ngeo.interaction.MeasurePointMobile(
+        /** @type {ngeox.numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')), {
+          decimals: this.coordinateDecimals,
+          sketchStyle: this.sketchStyle
+        });
 
   this.measure.setActive(this.active);
   ngeoDecorateInteraction(this.measure);

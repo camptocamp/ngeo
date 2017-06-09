@@ -13,7 +13,6 @@ goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 goog.require('ol.sphere.WGS84');
-goog.require('ol.string');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
@@ -23,6 +22,7 @@ goog.require('ol.style.Style');
  * Interactions for measure tools base class.
  * @typedef {{
  *    decimals: (number|undefined),
+ *    precision: (number|undefined),
  *    displayHelpTooltip: (boolean|undefined),
  *    startMsg: (Element|undefined),
  *    style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
@@ -141,6 +141,14 @@ ngeo.interaction.Measure = function(opt_options) {
   this.decimals = options.decimals;
 
   /**
+   * Defines the number of precision to keep in the measurement. If not defined,
+   * then the default behaviour occurs depending on the measure type.
+   * @type {number|undefined}
+   * @protected
+   */
+  this.precision = options.precision;
+
+  /**
    * Whether or not to display any tooltip
    * @type {boolean}
    * @private
@@ -228,52 +236,52 @@ ol.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
 /**
  * Calculate the area of the passed polygon and return a formatted string
  * of the area.
- * @param {ol.geom.Polygon} polygon Polygon.
- * @param {ol.proj.Projection} projection Projection of the polygon coords.
- * @param {number|undefined} decimals Decimals.
- * @param {ngeox.unitPrefix} format The format function.
+ * @param {!ol.geom.Polygon} polygon Polygon.
+ * @param {!ol.proj.Projection} projection Projection of the polygon coords.
+ * @param {number|undefined} precision Precision.
+ * @param {!ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  * @export
  * @this {ngeo.interaction.Measure}
  */
 ngeo.interaction.Measure.getFormattedArea = function(
-    polygon, projection, decimals, format) {
+    polygon, projection, precision, format) {
   const geom = /** @type {ol.geom.Polygon} */ (
       polygon.clone().transform(projection, 'EPSG:4326'));
   const coordinates = geom.getLinearRing(0).getCoordinates();
   const area = Math.abs(ol.sphere.WGS84.geodesicArea(coordinates));
-  return format(area, 'm²', 'square');
+  return format(area, 'm²', 'square', precision);
 };
 
 
 /**
  * Calculate the area of the passed circle and return a formatted string
  * of the area.
- * @param {ol.geom.Circle} circle Circle
- * @param {number|undefined} decimals Decimals.
+ * @param {!ol.geom.Circle} circle Circle
+ * @param {number|undefined} precision Precision.
+ * @param {!ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
- * @param {ngeox.unitPrefix} format The format function.
  * @export
  */
 ngeo.interaction.Measure.getFormattedCircleArea = function(
-    circle, decimals, format) {
+    circle, precision, format) {
   const area = Math.PI * Math.pow(circle.getRadius(), 2);
-  return format(area, 'm²', 'square');
+  return format(area, 'm²', 'square', precision);
 };
 
 
 /**
  * Calculate the length of the passed line string and return a formatted
  * string of the length.
- * @param {ol.geom.LineString} lineString Line string.
- * @param {ol.proj.Projection} projection Projection of the line string coords.
- * @param {number|undefined} decimals Decimals.
- * @param {ngeox.unitPrefix} format The format function.
+ * @param {!ol.geom.LineString} lineString Line string.
+ * @param {!ol.proj.Projection} projection Projection of the line string coords.
+ * @param {number|undefined} precision Precision.
+ * @param {!ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of length.
  * @export
  */
 ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
-    decimals, format) {
+    precision, format) {
   let length = 0;
   const coordinates = lineString.getCoordinates();
   for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
@@ -281,26 +289,21 @@ ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
     const c2 = ol.proj.transform(coordinates[i + 1], projection, 'EPSG:4326');
     length += ol.sphere.WGS84.haversineDistance(c1, c2);
   }
-  return format(length, 'm');
+  return format(length, 'm', 'unit', precision);
 };
 
 
 /**
  * Return a formatted string of the point.
- * @param {ol.geom.Point} point Point.
- * @param {ol.proj.Projection} projection Projection of the line string coords.
+ * @param {!ol.geom.Point} point Point.
  * @param {number|undefined} decimals Decimals.
+ * @param {!ngeox.numberCoordinates} format A function to format coordinate into text
+ * @param {string=} opt_template The template.
  * @return {string} Formatted string of coordinate.
  */
 ngeo.interaction.Measure.getFormattedPoint = function(
-    point, projection, decimals) {
-  const coordinates = point.getCoordinates();
-  let x = coordinates[0];
-  let y = coordinates[1];
-  decimals = decimals !== undefined ? decimals : 0;
-  x = ol.string.padNumber(x, 0, decimals);
-  y = ol.string.padNumber(y, 0, decimals);
-  return ['X: ', x, ', Y: ', y].join('');
+    point, decimals, format, opt_template) {
+  return format(point.getCoordinates(), decimals, opt_template);
 };
 
 

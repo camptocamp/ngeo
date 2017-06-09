@@ -37,8 +37,7 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
  *
  * @htmlAttribute {boolean} gmf-mobile-measurelength-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurelength-decimals number of decimal
- *     to display.
+ * @htmlAttribute {number=} gmf-mobile-measurelength-precision the number of significant digits to display.
  * @htmlAttribute {ol.Map} gmf-mobile-measurelength-map The map.
  * @htmlAttribute {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction=}
  *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
@@ -55,7 +54,7 @@ gmf.mobileMeasureLengthDirective =
         restrict: 'A',
         scope: {
           'active': '=gmfMobileMeasurelengthActive',
-          'decimals': '<?gmfMobileMeasurelengthDecimals',
+          'precision': '<?gmfMobileMeasurelengthPrecision',
           'map': '=gmfMobileMeasurelengthMap',
           'sketchStyle': '=?gmfMobileMeasureLengthSketchstyle'
         },
@@ -113,7 +112,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
    * @type {number|undefined}
    * @export
    */
-  this.decimals;
+  this.precision;
 
   /**
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
@@ -149,7 +148,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
    * @export
    */
   this.measure = new ngeo.interaction.MeasureLengthMobile($filter('ngeoUnitPrefix'), {
-    decimals: this.decimals,
+    precision: this.precision,
     sketchStyle: this.sketchStyle
   });
 
