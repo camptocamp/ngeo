@@ -149,15 +149,14 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
     source: this.vectorSource_,
     style: (function(feature, resolution) {
       return [new ol.style.Style({
-        image: new ol.style.Circle({
-          radius: 7,
+        text: new ol.style.Text({
           fill: new ol.style.Fill({
-            color: (feature === this.startFeature_) ? 'rgba(85, 255, 0, 0.5)' : 'rgba(230, 94, 63, 0.5)'
+            color: (feature === this.startFeature_) ? 'rgba(107, 230, 46, 1)' : 'rgba(255, 62, 19, 1)'
           }),
-          stroke: new ol.style.Stroke({
-            width: 2,
-            color: (feature === this.startFeature_) ? 'rgba(107, 230, 46, 0.5)' : 'rgba(255, 62, 19, 0.5)'
-          })
+          font: 'normal 30px FontAwesome',
+          offsetY: -15,
+          stroke: new ol.style.Stroke({color: '#ffffff', width: 3}),
+          text: '\uf041'
         })
       })];
     }).bind(this)
