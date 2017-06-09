@@ -196,6 +196,12 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
   this.routeDuration = null;
 
   /**
+   * @type {RegExp}
+   * @private
+   */
+  this.regexIsFormattedCoord = /\d+\.\d+\/\d+\.\d+/;
+
+  /**
    * @type {ol.interaction.Draw}
    * @private
    */
@@ -299,6 +305,55 @@ gmf.GmfRoutingController.prototype.reverseRoute = function() {
   this.calculateRoute();
 };
 
+/**
+ * Snaps a feature to the street network using the getNearest
+ * function of the routing service. Replaces the feature and
+ * its label.
+ * @param {string} feature Property name of feature
+ * @param {string} label Property name of label
+ * @private
+ */
+gmf.GmfRoutingController.prototype.snapFeature_ = function(feature, label) {
+  const coord = this.getLonLatFromPoint_(this[feature]);
+
+  const onSuccess = (function(resp) {
+    if (resp.data.waypoints.length > 0) {
+      const coords = resp.data.waypoints[0].location;
+      const newLabel = resp.data.waypoints[0].name;
+
+      this.replaceFeature_(feature, label, coords, newLabel);
+    }
+  }).bind(this);
+
+  const onError = (function(resp) {
+    console.log(resp);
+  }).bind(this);
+
+  this.$q_.when(this.gmfRoutingService_.getNearest(coord, {}))
+    .then(onSuccess.bind(this), onError.bind(this));
+};
+
+/**
+ * @param {string} feature Property name of feature
+ * @param {string} label Property name of label
+ * @param {ol.Coordinate} newCoords Coordinates of new feature (in LonLat projection)
+ * @param {string} newLabel New Label
+ * @private
+ */
+gmf.GmfRoutingController.prototype.replaceFeature_ = function(feature, label, newCoords, newLabel) {
+  const transformedCoords = ol.proj.fromLonLat(newCoords, this.map.getView().getProjection());
+  const newFeature = new ol.Feature({
+    geometry: new ol.geom.Point(transformedCoords)
+  });
+  // replace feature
+  this.vectorSource_.removeFeature(this[feature]);
+  this[feature] = newFeature;
+  this.vectorSource_.addFeature(this[feature]);
+
+  //replace label
+  this[label] = (newLabel !== '') ? newLabel : transformedCoords.join('/');
+};
+
 
 /**
  * @export
@@ -313,7 +368,6 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
     const route =  [coordFrom, coordTo];
 
     const onSuccess_ = (function(resp) {
-      console.log(resp);
       const format = new ol.format.GeoJSON();
       const route = format.readGeometry(resp.data.routes[0].geometry, {
         dataProjection: 'EPSG:4326',
@@ -326,13 +380,14 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
       this.routeDistance = resp.data.routes[0].distance;
       this.routeDuration = Math.ceil(resp.data.routes[0].duration / 60);
 
-      // update labels if there is a better name available
-      if (resp.data.waypoints[0].name && resp.data.waypoints[0].name !== '') {
-        this.startFeatureLabel = resp.data.waypoints[0].name;
-      }
-      if (resp.data.waypoints[1].name && resp.data.waypoints[1].name !== '') {
-        this.targetFeatureLabel = resp.data.waypoints[1].name;
-      }
+      // process waypoints to "snap" the features
+      const startCoord = resp.data.waypoints[0].location;
+      const startLabel = resp.data.waypoints[0].name;
+      this.replaceFeature_('startFeature_', 'startFeatureLabel', startCoord, startLabel);
+
+      const targetCoord = resp.data.waypoints[1].location;
+      const targetLabel = resp.data.waypoints[1].name;
+      this.replaceFeature_('targetFeature_', 'targetFeatureLabel', targetCoord, targetLabel);
     }).bind(this);
 
     const onError_ = function(resp) {
@@ -348,6 +403,14 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 
     this.$q_.when(this.gmfRoutingService_.getRoute(route, config))
       .then(onSuccess_.bind(this), onError_.bind(this));
+  }
+  else if (this.startFeature_ || this.targetFeature_) {
+    const feature = (this.startFeature_) ? 'startFeature_' : 'targetFeature_';
+    const label = (this.startFeatureLabel) ? 'startFeatureLabel' : 'targetFeatureLabel';
+    // only snap feature if it is still just a plain coordinate
+    if (this.regexIsFormattedCoord.test(this[label])) {
+      this.snapFeature_(feature, label);
+    }
   }
 };
 
