@@ -280,6 +280,25 @@ gmf.GmfRoutingController.prototype.getLonLatFromPoint_ = function(point) {
   return ol.proj.toLonLat(coords, projection);
 };
 
+/**
+ * Flip start and target and re-calculate route.
+ * @export
+ */
+gmf.GmfRoutingController.prototype.reverseRoute = function() {
+  // swap start and target
+  const tmpFeature = this.startFeature_;
+  const tmpLabel = this.startFeatureLabel;
+  this.startFeature_ = this.targetFeature_;
+  this.startFeatureLabel = this.targetFeatureLabel;
+  this.targetFeature_ = tmpFeature;
+  this.targetFeatureLabel = tmpLabel;
+
+  // refresh source to re-render start and target icons
+  this.vectorSource_.refresh();
+
+  this.calculateRoute();
+};
+
 
 /**
  * @export
