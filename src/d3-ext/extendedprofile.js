@@ -241,8 +241,7 @@ ngeo.extendedProfile.plot = function(options) {
     ngeo.extendedProfile.config.getProfileConfig('http://localhost:5001');
     var minLOD = 0;
     var maxLOD = 6;
-    ngeo.extendedProfile.loader.getProfileByLOD(minLOD, maxLOD, $('#coordinates').val(), 0, 5);
-
+    ngeo.extendedProfile.loader.getProfileByLOD(minLOD, maxLOD, $('#coordinates').val(), 0, 1, true);
   };
 
   return extendedProfile;

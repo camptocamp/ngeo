@@ -11,20 +11,20 @@ ngeo.extendedProfile.loader.profilePoints = {
 }
 
 // Load points by LOD
-ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline, distanceOffset, width) {
+ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline, distanceOffset, width, resetPlot) {
 
   let lastLOD = false;
 
   for (var i=0; i<maxLOD; i++) {
     if (i==0){
       // the first 4 levels are usually fast to load
-      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 4, i, polyline, distanceOffset, lastLOD, width);
+      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 4, i, polyline, distanceOffset, lastLOD, width, resetPlot);
       i += 3;
     } else if (i < maxLOD - 1) {
-      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width);
+      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width, false);
     } else {
       lastLOD = true;
-      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width);
+      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width, false);
     }
   }
 
@@ -35,8 +35,7 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline
  * Provides a function that sends xhr requests to cpotree app and parses
  * its binary output format
  */
-ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width) {
-
+ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot) {
 
   let hurl = 'http://localhost:5001/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
   hurl += '&width=' + width + '&coordinates=' + coordinates;
@@ -50,7 +49,7 @@ ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordina
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-          ngeo.extendedProfile.loader.processBuffer(xhr.response, iter, distanceOffset, lastLOD);
+          ngeo.extendedProfile.loader.processBuffer(xhr.response, iter, distanceOffset, lastLOD, resetPlot);
       } else {
           console.log('Failed to load data! HTTP status: ' + xhr.status + ', file: ' + url);
       }
@@ -63,8 +62,7 @@ ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordina
   }
 };
 
-ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOffset, lastLOD) {
-
+ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOffset, lastLOD, resetPlot) {
   // try {
     // ***Get header size***
     let typedArrayInt32 = new Int32Array(profile, 0,4);
@@ -149,9 +147,8 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
     // draw this LOD
     let rangeX = [ngeo.extendedProfile.plot2canvas.arrayMin(points.distance), ngeo.extendedProfile.plot2canvas.arrayMax(points.distance)];
     let rangeY = [ngeo.extendedProfile.plot2canvas.arrayMin(points.altitude), ngeo.extendedProfile.plot2canvas.arrayMax(points.altitude)];
-    if (iter==0) {
-      let setup = false;
-      setup = ngeo.extendedProfile.plot2canvas.setupPlot(rangeX, rangeY);
+    if (iter==0 && resetPlot) {
+      ngeo.extendedProfile.plot2canvas.setupPlot(rangeX, rangeY);
       ngeo.extendedProfile.plot2canvas.drawPoints(points, "CLASSIFICATION", ngeo.extendedProfile.config.plotParams.currentZoom);
 
     } else {
@@ -169,12 +166,13 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
 }
 
 ngeo.extendedProfile.loader.loadDeeperLOD = function () {
-
+  console.log(ngeo.extendedProfile.config.plotParams.scaleX.domain());
+  
   let domain = ngeo.extendedProfile.config.plotParams.scaleX.domain();
   let clip = ngeo.extendedProfile.utils.clipLineByMeasure(domain[0], domain[1]);
   
   if (clip.clippedLine.length <= 1){
-    console.log("PROBLEM WITH DOMAIN CLIPPING!!!");
+    console.log("Zoomed outside data domain!");
     return;
   }
   
@@ -190,7 +188,6 @@ ngeo.extendedProfile.loader.loadDeeperLOD = function () {
   let span = domain[1] - domain[0];
 
   let niceLOD = ngeo.extendedProfile.utils.getNiceLOD(span);
-  console.log(cPotreeLineStr);
-  ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, 5);
+  ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, 5, false);
 }
 

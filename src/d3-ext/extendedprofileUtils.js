@@ -59,25 +59,17 @@ Clip a linestring to a given plot domain
 ***/
 ngeo.extendedProfile.utils.clipLineByMeasure = function (dLeft, dRight) {
   let l = ngeo.extendedProfile.utils.getLinestring();
-  console.log(l);
   let clippedLine = [];
   // CHECK LOGIC HERE!!!
   for (let i in l) {
-    console.log("Segement: ", i);
-    console.log('Dom Left', dLeft, 'M', l[i].startD);
-    console.log('Dom Right', dRight, 'M',  l[i].endD);
     if (dLeft <= l[i].endD) {
-
       if (dLeft >= l[i].startD) {
         clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dLeft, l[i]));
-        console.log("point interpolé à gauche");
       }
       if (dRight <= l[i].endD) {
         clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dRight, l[i]));
-        console.log("point interpolé à droite");
       } else {
         clippedLine.push([l[i].endX,l[i].endY]);
-        console.log("added end point");
       }
     } 
   }
@@ -91,21 +83,21 @@ ngeo.extendedProfile.utils.clipLineByMeasure = function (dLeft, dRight) {
 ngeo.extendedProfile.utils.getNiceLOD = function(span) {
   let maxLOD = 0;
   if (span < 200) {
-    maxLOD = 12;
-  } else if (span < 250) {
-    maxLOD = 11;
-  } else if (span < 500) {
     maxLOD = 10;
-  } else if (span < 1000) {
+  } else if (span < 250) {
     maxLOD = 9;
-  } else if (span < 1500) {
+  } else if (span < 500) {
     maxLOD = 8;
-  } else if (span < 2000) {
+  } else if (span < 1000) {
     maxLOD = 7;
+  } else if (span < 1500) {
+    maxLOD = 6;
+  } else if (span < 2000) {
+    maxLOD = 5;
   } else {
     maxLOD = 6;
   }
-  return 7 //!!!for dev...
+  return maxLOD;
 }
 
 ngeo.extendedProfile.utils.downloadDataUrlFromJavascript = function(filename, dataUrl) {
