@@ -325,6 +325,14 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 
       this.routeDistance = resp.data.routes[0].distance;
       this.routeDuration = Math.ceil(resp.data.routes[0].duration / 60);
+
+      // update labels if there is a better name available
+      if (resp.data.waypoints[0].name && resp.data.waypoints[0].name !== '') {
+        this.startFeatureLabel = resp.data.waypoints[0].name;
+      }
+      if (resp.data.waypoints[1].name && resp.data.waypoints[1].name !== '') {
+        this.targetFeatureLabel = resp.data.waypoints[1].name;
+      }
     }).bind(this);
 
     const onError_ = function(resp) {
