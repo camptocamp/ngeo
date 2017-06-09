@@ -64,13 +64,14 @@ gmf.module.component('gmfRouting', gmf.routingComponent);
  * @param {!angular.Scope} $scope Scope.
  * @param {!gmf.RoutingService} gmfRoutingService service for OSRM routing
  * @param {!angular.$q} $q Angular q service
+ * @param {!angular.$filter} $filter Angular filter
  * @constructor
  * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfRoutingController
  */
-gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
+gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
 
   /**
    * @type {angular.Scope}
@@ -89,6 +90,12 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q) {
    * @private
    */
   this.$q_ = $q;
+
+  /**
+   * The format function
+   * @type {ngeox.unitPrefix}
+   */
+  this.format_ = $filter('ngeoUnitPrefix');
 
   /**
    * @type {ol.Map}
@@ -380,7 +387,7 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
       // recenter map on route
       this.map.getView().fit(route.getExtent());
 
-      this.routeDistance = resp.data.routes[0].distance;
+      this.routeDistance = this.format_(resp.data.routes[0].distance, 'm');
       this.routeDuration = Math.ceil(resp.data.routes[0].duration / 60);
 
       // process waypoints to "snap" the features
