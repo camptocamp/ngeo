@@ -80,7 +80,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
 gmf.displayquerygridComponent = {
   controller: 'GmfDisplayquerygridController as ctrl',
   bindings: {
-    'active': '=gmfDisplayquerygridActive',
+    'active': '=?gmfDisplayquerygridActive',
     'featuresStyleFn': '&gmfDisplayquerygridFeaturesstyle',
     'selectedFeatureStyleFn': '&gmfDisplayquerygridSourceselectedfeaturestyle',
     'getMapFn': '&gmfDisplayquerygridMap',
@@ -356,7 +356,6 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
     this.$timeout_(() => {
       const firstSourceId = this.loadedGridSources[0];
       this.selectTab(this.gridSources[firstSourceId]);
-      this.reflowGrid_(firstSourceId);
     }, 0);
   }
 };
@@ -669,6 +668,8 @@ gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
         });
   }
   this.updateFeatures_(gridSource);
+
+  this.reflowGrid_(this.selectedTab);
 };
 
 
