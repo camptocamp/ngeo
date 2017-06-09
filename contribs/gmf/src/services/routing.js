@@ -85,4 +85,44 @@ gmf.RoutingService.prototype.getRoute = function(coordinates, config) {
   return this.$http_.get(url);
 };
 
+/**
+ * Snaps a coordinate to the street network and returns the nearest match
+ * @param {ol.Coordinate} coordinate coordinate to query
+ * @param {?Object} config optional configuration
+ * @return {!angular.$http.HttpPromise} promise of the OSRM API request
+ * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service
+ */
+gmf.RoutingService.prototype.getNearest = function(coordinate, config) {
+  config = config || {};
+
+  // service is always nearest
+  config.service = 'nearest';
+
+  // Mode of transportation
+  // If used in combiantion with a getRoute request, choose the same profile.
+  if (!config.profile) {
+    config.profile = 'car'; // default to car
+  }
+
+  // build request URL
+  let url = this.gmfOsrmBackendUrl_;
+  url += `${config.service}/${this.protocolVersion_}/${config.profile}/`;
+
+  // [a,b] -> 'a,b'
+  const coordinateString = coordinate.join(',');
+  url += coordinateString;
+
+  // look for nereast service options
+  if (config.options) {
+    url += '?';
+    const options = [];
+    for (const option of Object.keys(config.options)) {
+      options.push(`${option}=${config.options[option]}`);
+    }
+    url += options.join('&');
+  }
+
+  return this.$http_.get(url);
+};
+
 gmf.module.service('gmfRoutingService', gmf.RoutingService);
