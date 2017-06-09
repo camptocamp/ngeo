@@ -377,6 +377,9 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
         geometry: route
       }));
 
+      // recenter map on route
+      this.map.getView().fit(route.getExtent());
+
       this.routeDistance = resp.data.routes[0].distance;
       this.routeDuration = Math.ceil(resp.data.routes[0].duration / 60);
 
