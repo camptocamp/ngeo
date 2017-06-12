@@ -129,6 +129,7 @@ ngeo.RuleController = class {
 
     const ot = ngeo.rule.Rule.OperatorType;
     const sot = ngeo.rule.Rule.SpatialOperatorType;
+    const tot = ngeo.rule.Rule.TemporalOperatorType;
 
     /**
      * @type {Object.<string, string>}
@@ -146,7 +147,11 @@ ngeo.RuleController = class {
       [ot.LIKE]: gettextCatalog.getString('Contains'),
       [sot.CONTAINS]: gettextCatalog.getString('Contains'),
       [sot.INTERSECTS]: gettextCatalog.getString('Intersects'),
-      [sot.WITHIN]: gettextCatalog.getString('Is inside of')
+      [sot.WITHIN]: gettextCatalog.getString('Is inside of'),
+      [tot.BEGINS]: gettextCatalog.getString('Begins at'),
+      [tot.DURING]: gettextCatalog.getString('During'),
+      [tot.ENDS]: gettextCatalog.getString('Ends at'),
+      [tot.EQUALS]: gettextCatalog.getString('Is equal to')
     };
 
     /**
