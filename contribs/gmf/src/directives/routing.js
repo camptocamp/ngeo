@@ -163,6 +163,29 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
   });
 
   /**
+   * Interaction for moving start and end.
+   * @type {ol.interaction.Modify}
+   * @private
+   */
+  this.modifyFeatures_ = new ol.interaction.Modify({
+    features: this.vectorFeatures_
+  });
+
+  /**
+   * Remember which feature is being moved.
+   * @type {string}
+   * @private
+   */
+  this.activeModifyFeature_ = null;
+
+  /**
+   * Remember which feature (label) is being moved.
+   * @type {string}
+   * @private
+   */
+  this.activeModifyFeatureLabel_ = null;
+
+  /**
    * @type {ol.source.Vector}
    * @private
    */
@@ -220,6 +243,30 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
 gmf.GmfRoutingController.prototype.$onInit = function() {
   this.map.addLayer(this.vectorLayer_);
   this.map.addLayer(this.routeLayer_);
+
+  this.modifyFeatures_.setActive(true);
+  this.map.addInteraction(this.modifyFeatures_);
+
+  this.modifyFeatures_.on('modifystart', (event) => {
+    const feature = event.features.getArray()[0];
+
+    if (this.startFeature_ === feature) {
+      this.activeModifyFeature_ = 'startFeature_';
+      this.activeModifyFeatureLabel_ = 'startFeatureLabel';
+    } else if (this.targetFeature_ === feature) {
+      this.activeModifyFeature_ = 'targetFeature_';
+      this.activeModifyFeatureLabel_ = 'targetFeatureLabel';
+    }
+  });
+
+  this.modifyFeatures_.on('modifyend', (event) => {
+    const feature = event.features.getArray()[0];
+    this.vectorSource_.removeFeature(this[this.activeModifyFeature_]);
+    this[this.activeModifyFeature_] = feature;
+    this.vectorSource_.addFeature(this[this.activeModifyFeature_]);
+    this.snapFeature_(this.activeModifyFeature_, this.activeModifyFeatureLabel_);
+    this.calculateRoute();
+  });
 };
 
 /**
