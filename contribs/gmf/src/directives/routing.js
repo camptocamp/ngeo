@@ -459,8 +459,7 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 
     this.$q_.when(this.gmfRoutingService_.getRoute(route, config))
       .then(onSuccess_.bind(this), onError_.bind(this));
-  }
-  else if (this.startFeature_ || this.targetFeature_) {
+  } else if (this.startFeature_ || this.targetFeature_) {
     const feature = (this.startFeature_) ? 'startFeature_' : 'targetFeature_';
     const label = (this.startFeatureLabel) ? 'startFeatureLabel' : 'targetFeatureLabel';
     // only snap feature if it is still just a plain coordinate
