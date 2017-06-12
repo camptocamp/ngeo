@@ -2120,6 +2120,14 @@ ngeox.rule.Rule = function() {};
  * @struct
  * @extends ngeox.rule.RuleOptions
  */
+ngeox.rule.DateOptions = function() {};
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleOptions
+ */
 ngeox.rule.GeometryOptions = function() {};
 
 
