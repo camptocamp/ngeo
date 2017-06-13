@@ -82,10 +82,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     .style('z-index', 0)
     .style('position', 'absolute')
     .style('margin-left', margin.left.toString() + 'px')
-    .style('margin-top', margin.top.toString() + 'px')
-  
-  console.log("data domain", rangeX[1] - rangeX[0], rangeY[1] - rangeY[0]);
-  
+    .style('margin-top', margin.top.toString() + 'px')  
   
   let domainProfileWidth = rangeX[1] - rangeX[0];
   let domainProfileHeight = rangeY[1] - rangeY[0];
@@ -131,7 +128,6 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   function zoomed() {
     console.log("zoom");
     let tr = d3.event.transform;
-    // console.log(d3.event);
     svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(sx)));
     svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(sy)));
 
@@ -152,7 +148,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   zoom.scaleExtent([1, 10000])
     .on("zoom", zoomed);
 
-  d3.select('svg#profileSVG').call(zoom.on('end', ngeo.extendedProfile.loader.loadDeeperLOD));
+  d3.select('svg#profileSVG').call(zoom.on('end', ngeo.extendedProfile.loader.updateData));
 
   let context = d3.select('#profileCanvas')
     .node().getContext('2d');
@@ -186,6 +182,8 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   d3.select('g.y.axis').selectAll('g.tick line')
   .style('opacity', '0.5')
   .style('stroke', '#d8d8d8');
+  
+  ngeo.extendedProfile.config.plotParams.previousDomain= sx.domain();
 
 };
 

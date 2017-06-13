@@ -239,9 +239,7 @@ ngeo.extendedProfile.plot = function(options) {
   const extendedProfile = function(selection) {
 
     ngeo.extendedProfile.config.getProfileConfig('http://localhost:5001');
-    var minLOD = 0;
-    var maxLOD = 6;
-    ngeo.extendedProfile.loader.getProfileByLOD(minLOD, maxLOD, $('#coordinates').val(), 0, 1, true);
+    ngeo.extendedProfile.loader.getProfileByLOD(0, ngeo.extendedProfile.config.plotParams.initialLOD, $('#coordinates').val(), 0, 1, true);
   };
 
   return extendedProfile;

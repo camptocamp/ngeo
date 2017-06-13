@@ -91,9 +91,9 @@ ngeo.extendedProfile.utils.getNiceLOD = function(span) {
   } else if (span < 1000) {
     maxLOD = 7;
   } else if (span < 1500) {
-    maxLOD = 6;
+    maxLOD = 7;
   } else if (span < 2000) {
-    maxLOD = 5;
+    maxLOD = 6;
   } else {
     maxLOD = 6;
   }

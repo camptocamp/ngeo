@@ -39,6 +39,8 @@ ngeo.extendedProfile.config.plotParams = {};
 ngeo.extendedProfile.config.plotParams.scaleX = {};
 ngeo.extendedProfile.config.plotParams.currentScaleY = {};
 ngeo.extendedProfile.config.plotParams.currentZoom = 1;
+ngeo.extendedProfile.config.plotParams.previousDomain = [];
+ngeo.extendedProfile.config.plotParams.initialLOD = 7;
 
 ngeo.extendedProfile.config.pointAttributes = {};
 
