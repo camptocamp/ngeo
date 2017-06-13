@@ -20,7 +20,7 @@ ngeo.extendedProfile.config.getProfileConfig = function (pytreeserver_url) {
     ngeo.extendedProfile.config.profileConfig.classification = data;
     let html = '';
     for (let i in data) {
-      html += '<input checked type="checkbox" onchange="setClassActive(this);" value=\''+ i +'\'>classe: '+  data[i].name
+      html += '<input checked type="checkbox" onchange="ngeo.extendedProfile.plot2canvas.setClassActive(this);" value=\''+ i +'\'>classe: '+  data[i].name
     }
     $('#classes').html(html);        
   });
@@ -41,6 +41,7 @@ ngeo.extendedProfile.config.plotParams.currentScaleY = {};
 ngeo.extendedProfile.config.plotParams.currentZoom = 1;
 ngeo.extendedProfile.config.plotParams.previousDomain = [];
 ngeo.extendedProfile.config.plotParams.initialLOD = 7;
+ngeo.extendedProfile.config.plotParams.distanceOffset = 0;
 
 ngeo.extendedProfile.config.pointAttributes = {};
 

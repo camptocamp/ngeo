@@ -11,14 +11,25 @@
     <style>
 
         #map {
-          width: 800px;
+          width: 100%;
           height: 200px;
         }
         .extended-profile {
-          width: 800px;
+          width: 100%;
           height: 250px;
           background-color: gray;
         }
+        #classes {
+          width: 800px;
+          height: 100px;
+          padding-left: 25px;
+        } 
+        #profileInfo {
+          width: 800px;
+          height: 50px;
+          padding-left: 25px;
+        }
+
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
@@ -32,10 +43,8 @@
         <input style="width: 35px;" type="checkbox" id="demdsm">
         </input><label for="width"> Largeur:</label>
         <input style="width: 35px;" type="number" id="width" value=15></input>
-        <label for="minLOD"> minLOD:</label>
-        <input style="width: 35px;" type="number" id="minLOD" value=0></input>
         <label for="returnType"> Return type:</label>
-        <select id="material" onchange="changeStyle(this.value);">
+        <select id="material" onchange="ngeo.extendedProfile.plot2canvas.changeStyle(this.value);">
             <option value="COLOR_PACKED">COLOR_PACKED</option>
             <option value="INTENSITY">INTENSITY</option>
             <option value="CLASSIFICATION" selected>CLASSIFICATION</option>
@@ -54,6 +63,8 @@
       <canvas id="profileCanvas"></canvas>
       <svg id="profileSVG" style="fill: #ffff00;position:absolute;z-index:1"></svg>
     </div>
+    <div id="classes"></div>
+    <div id="profileInfo"></div>
 
     <ul ng-show="ctrl.point != null">
       <li>Longitude: {{ctrl.point.x}}</li>

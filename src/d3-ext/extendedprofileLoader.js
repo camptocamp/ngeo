@@ -153,15 +153,16 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
     let rangeY = [ngeo.extendedProfile.plot2canvas.arrayMin(points.altitude), ngeo.extendedProfile.plot2canvas.arrayMax(points.altitude)];
     if (iter==0 && resetPlot) {
       ngeo.extendedProfile.plot2canvas.setupPlot(rangeX, rangeY);
-      ngeo.extendedProfile.plot2canvas.drawPoints(points, "CLASSIFICATION", ngeo.extendedProfile.config.plotParams.currentZoom);
+      ngeo.extendedProfile.plot2canvas.drawPoints(points, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
 
     } else {
-      ngeo.extendedProfile.plot2canvas.drawPoints(points, "CLASSIFICATION", ngeo.extendedProfile.config.plotParams.currentZoom);
+      ngeo.extendedProfile.plot2canvas.drawPoints(points, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
     }
 
-    // if (lastLOD) {
+    if (lastLOD) {
       // ngeo.extendedProfile.raster.generateDemDsm();
-    // }
+      // ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring()) 
+    }
 
   // } catch (e) {
   // console.log('error during buffer processing: ' + e);
@@ -172,6 +173,7 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
 ngeo.extendedProfile.loader.updateData = function () {
   
   let domain = ngeo.extendedProfile.config.plotParams.scaleX.domain();
+  let clip = ngeo.extendedProfile.utils.clipLineByMeasure(domain[0], domain[1]);
   let span = domain[1] - domain[0];
   let niceLOD = ngeo.extendedProfile.utils.getNiceLOD(span);
   let tr = d3.event.transform;
@@ -183,25 +185,23 @@ ngeo.extendedProfile.loader.updateData = function () {
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
   let zoomDir = previousSpan - span;
+
   if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir >= 0) {
+    
     console.log("zoom, no deeper LOD needed");
     ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
-    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, "CLASSIFICATION", ngeo.extendedProfile.config.plotParams.currentZoom);
+    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
+
     return;
   } else if (Math.abs(dxL) < 0.5 && Math.abs(dxR) < 0.5) {
 
     console.log("Y translation only, no deeper LOD needed")
     ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
-    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, "CLASSIFICATION", ngeo.extendedProfile.config.plotParams.currentZoom);
+    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
+
     return;
+
   } else {
-
-    let clip = ngeo.extendedProfile.utils.clipLineByMeasure(domain[0], domain[1]);
-
-    if (clip.clippedLine.length <= 1){
-      console.log("Zoomed outside data domain!");
-      return;
-    }
 
     let line = clip.clippedLine;
     let cPotreeLineStr = '';
@@ -209,7 +209,6 @@ ngeo.extendedProfile.loader.updateData = function () {
     for (let i in line) {
       cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
     }
-
     cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
     ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, 5, false);
 

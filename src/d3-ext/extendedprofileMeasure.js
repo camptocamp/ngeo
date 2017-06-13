@@ -45,7 +45,7 @@ ngeo.extendedProfile.measure.measureHeight = function () {
   let ys = svgCoordinates[1];
   let tolerance = 2; 
   let sx = ngeo.extendedProfile.config.plotParams.scaleX;
-  let sy = ngeo.extendedProfile.config.plotParams.currentScaleY;
+  let sy = ngeo.extendedProfile.config.plotParams.scaleY;
   let pointSize = 3;
   let p = ngeo.extendedProfile.plot2canvas.getClosestPoint(ngeo.extendedProfile.loader.profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
   if (!ngeo.extendedProfile.measure.profileMeasure.pStart.set) {

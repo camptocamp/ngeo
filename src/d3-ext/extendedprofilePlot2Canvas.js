@@ -126,7 +126,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   ngeo.extendedProfile.config.plotParams.scaleY = sy;
   
   function zoomed() {
-    console.log("zoom");
+
     let tr = d3.event.transform;
     svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(sx)));
     svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(sy)));
@@ -255,14 +255,14 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
     .attr('id', 'highlightCircle')
     .attr('cx', cx)
     .attr('cy', cy)
-    .attr('r', pointSize)
-    .style('fill', 'gray');
+    .attr('r', pointSize + 1)
+    .style('fill', 'orange');
 
     let html = 'distance: ' + Math.round(10 * p.distance) / 10 + ' alti: ' + Math.round( 10 * p.altitude) / 10 + '  -  ';
     html += 'Classification: ' + ngeo.extendedProfile.config.profileConfig.classification[p.classification].name + '  -  ';
     html += 'Intensity: ' + p.intensity;
 
-    $('#profileInfo').css('color', 'gray');
+    $('#profileInfo').css('color', 'orange');
     $('#profileInfo').html(html);
 
   } else {

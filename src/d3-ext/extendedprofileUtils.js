@@ -41,6 +41,18 @@ ngeo.extendedProfile.utils.getLinestring = function () {
   return lShifted;
 }
 
+ngeo.extendedProfile.utils.formatLinestring = function () {
+  
+  let linestringStr = $('#coordinates').val().replace(/{/g, '').replace(/}/g, '').split(',');
+  let linestring = [];
+
+  for (let j=0; j<linestringStr.length;j++) {
+    linestring.push([parseFloat(linestringStr[j]), parseFloat(linestringStr[j+1])]);
+    j+=1;
+  }
+  return linestring
+}
+
 /***
 Interpolate the 2D coordinate from a profile distance (=measure M)
 ***/
