@@ -176,14 +176,14 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
    * @type {string}
    * @private
    */
-  this.activeModifyFeature_ = null;
+  this.activeModifyFeature_ = '';
 
   /**
    * Remember which feature (label) is being moved.
    * @type {string}
    * @private
    */
-  this.activeModifyFeatureLabel_ = null;
+  this.activeModifyFeatureLabel_ = '';
 
   /**
    * @type {ol.source.Vector}
@@ -211,11 +211,11 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
   });
 
   /**
-   * Distance of route in meters
-   * @type {?number}
+   * Formatted distance of route
+   * @type {string}
    * @export
    */
-  this.routeDistance = null;
+  this.routeDistance = '';
 
   /**
    * Duration of route in minutes.
