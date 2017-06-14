@@ -133,17 +133,20 @@ ngeo.extendedProfile.utils.downloadDataUrlFromJavascript = function(filename, da
 Export chart to a png file
 @SITN/OM 2017 Adapted from http://stackoverflow.com/questions/11567668/svg-to-canvas-with-d3-js
 ***/
-ngeo.extendedProfile.utils.exportToImageFile= function (format) {
+ngeo.extendedProfile.utils.exportToImageFile = function (format) {
 
   let svg = d3.select('#profileSVG').node();
-
   let img = new Image();
+  var DOMURL = window.URL || window.webkitURL || window;
   let serializer = new XMLSerializer();
   let svgStr = serializer.serializeToString(svg);
-
+  var svgImage = new Blob([svgStr], {type: 'image/svg+xml'});
+  let canvas = document.createElement('canvas');
+  let ctx = canvas.getContext('2d');
+  var url = DOMURL.createObjectURL(svgImage);
+  
   img.onload = function() {
-
-    let canvas = document.createElement('canvas');
+    canvas.style.display = "none";
     document.body.appendChild(canvas);
     let w = d3.select('#profileSVG').attr('width');
     let h = d3.select('#profileSVG').attr('height');
@@ -154,14 +157,12 @@ ngeo.extendedProfile.utils.exportToImageFile= function (format) {
     ctx.fillRect(0,0,w,h);
     let pointsCanvas = d3.select('#profileCanvas').node();
     canvas.getContext('2d').drawImage(pointsCanvas,margin.left,margin.top,w - (margin.left + margin.right),h - (margin.top + margin.bottom));
-    canvas.getContext('2d').drawImage(img,0,0,w,h);
+    ctx.drawImage(img,0,0,w,h);
     let dataURL = canvas.toDataURL();
-    ngeo.extendedProfile.utils.downloadDataUrlFromJavascript('sitn_profile.png', dataURL);
-
-  };
-
-  img.src = 'data:image/svg+xml;utf8,' + svgStr;
-
+    ngeo.extendedProfile.utils.downloadDataUrlFromJavascript('sitn_profile.png', dataURL)
+    DOMURL.revokeObjectURL(url);
+  }
+  img.src = url;
 }
 
 /***
