@@ -350,8 +350,10 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
 
     // (1) add a blank layer
     if (this.addBlankBackgroundLayer_) {
+      // For i18n string collection
+      gettextCatalog.getString('blank');
       layers.push(new ol.layer.Tile({
-        'label': gettextCatalog.getString('blank'),
+        'label': 'blank',
         'metadata': {'thumbnail': ''}
       }));
     }
