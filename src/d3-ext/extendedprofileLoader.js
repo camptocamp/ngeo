@@ -178,7 +178,7 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
 
     if (resetPlot) {
       // ngeo.extendedProfile.raster.generateDemDsm(); // For now only add GMF
-      // ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring(), distanceOffset);
+      ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring(), 0);
     }
 
   // } catch (e) {
@@ -202,7 +202,7 @@ ngeo.extendedProfile.loader.updateData = function () {
   .node().getContext('2d');
   let zoomDir = previousSpan - span;
 
-  // ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
+  ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
 
   if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir >= 0) {
     

@@ -142,7 +142,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     ngeo.extendedProfile.config.plotParams.scaleX = tr.rescaleX(sx);
     ngeo.extendedProfile.config.plotParams.scaleY = tr.rescaleY(sy);
   }
-  console.log("ICICICI");
+
   let zoom = d3.zoom();
   console.log( rangeY[1]);
   zoom.scaleExtent([1, 10])
