@@ -268,4 +268,17 @@ ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function (profilePoints) {
 
 }
 
-
+ngeo.extendedProfile.utils.UUID = function() {
+    var nbr, randStr = "";
+    do {
+        randStr += (nbr = Math.random()).toString(16).substr(2);
+    } while (randStr.length < 30);
+    return [
+        randStr.substr(0, 8), "-",
+        randStr.substr(8, 4), "-4",
+        randStr.substr(12, 3), "-",
+        ((nbr*4|0)+8).toString(16), // [89ab]
+        randStr.substr(15, 3), "-",
+        randStr.substr(18, 12)
+        ].join("");
+}

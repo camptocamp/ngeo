@@ -9,13 +9,12 @@ LiDAR profile from protreeViewer adapated for new d3 API after d3 4.0 API break
 Draw the points to canvas
 ***/
 ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) {
-  
+  console.log("NB points", points.distance.length);
   // In order to optimize the point size, we scale data, not canvas!
-
   let pointSize = 3;
-  if (scale != null) {
-    pointSize = Math.max(pointSize/scale, 2);;
-  }
+  // if (scale != null) {
+    // pointSize = Math.max(pointSize/scale, 2);;
+  // }
 
   let i = -1;
   let n = points.distance.length;
