@@ -175,8 +175,8 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
     }
 
     if (lastLOD) {
-      // ngeo.extendedProfile.raster.generateDemDsm();
-      // ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring()) 
+      ngeo.extendedProfile.raster.generateDemDsm();
+      ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring()) 
     }
 
   // } catch (e) {
@@ -206,22 +206,17 @@ ngeo.extendedProfile.loader.updateData = function () {
     
     console.log("zoom, no deeper LOD needed");
     console.log(ngeo.extendedProfile.loader.profilePoints.distance.length);
-
-    ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
-
     return;
   } else if (Math.abs(dxL) < 0.5 && Math.abs(dxR) < 0.5) {
     
     console.log("Y translation only, no deeper LOD needed")
     console.log(ngeo.extendedProfile.loader.profilePoints.distance.length);
-
-    ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
-
     return;
 
   } else {
+
     console.log("loading additional LOD");
     let line = clip.clippedLine;
     let cPotreeLineStr = '';
@@ -230,7 +225,6 @@ ngeo.extendedProfile.loader.updateData = function () {
       cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
     }
     cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
-    console.log("reload points");
     ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, 5, false);
 
   }

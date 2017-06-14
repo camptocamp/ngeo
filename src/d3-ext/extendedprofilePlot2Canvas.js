@@ -11,7 +11,7 @@ Draw the points to canvas
 ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) {
   console.log("NB points", points.distance.length);
   // In order to optimize the point size, we scale data, not canvas!
-  let pointSize = 3;
+  let pointSize = 2;
   // if (scale != null) {
     // pointSize = Math.max(pointSize/scale, 2);;
   // }
@@ -19,7 +19,7 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
   let i = -1;
   let n = points.distance.length;
   let cx, cy;
-  let context = d3.select('#profileCanvas').node().getContext('2d');
+  let ctx = d3.select('#profileCanvas').node().getContext('2d');
 
   while (++i < n) {
 
@@ -34,18 +34,20 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
       cx = ngeo.extendedProfile.config.plotParams.scaleX(distance);
       cy = ngeo.extendedProfile.config.plotParams.scaleY(altitude);
 
-      context.beginPath();
-      context.moveTo(cx, cy);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
       if (material == 'COLOR_PACKED') {
-        context.fillStyle = 'RGB(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
+        ctx.fillStyle = 'RGB(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
       } else if (material == 'INTENSITY') {
-        context.fillStyle = 'RGB(' + intensity + ', ' + intensity + ', ' + intensity + ')';
+        ctx.fillStyle = 'RGB(' + intensity + ', ' + intensity + ', ' + intensity + ')';
       } else if (material == 'CLASSIFICATION') {
-        context.fillStyle = 'RGB(' + ngeo.extendedProfile.config.profileConfig.classification[classification].color + ')';
+        ctx.fillStyle = 'RGB(' + ngeo.extendedProfile.config.profileConfig.classification[classification].color + ')';
       } else {
-        context.fillStyle = 'RGB(' + 150 + ', ' + 150 + ', ' + 150 + ')';
+        ctx.fillStyle = 'RGB(' + 150 + ', ' + 150 + ', ' + 150 + ')';
       }
-      context.fillRect(cx, cy, pointSize, pointSize);
+      // ctx.fillRect(cx, cy, pointSize, pointSize);
+      ctx.arc(cx, cy, pointSize, 0, 2 * Math.PI, false);
+      ctx.fill();
     }
   }
 };

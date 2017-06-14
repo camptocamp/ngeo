@@ -48,21 +48,25 @@ ngeo.extendedProfile.measure.measureHeight = function () {
   let sy = ngeo.extendedProfile.config.plotParams.scaleY;
   let pointSize = 3;
   let p = ngeo.extendedProfile.plot2canvas.getClosestPoint(ngeo.extendedProfile.loader.profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
+
   if (!ngeo.extendedProfile.measure.profileMeasure.pStart.set) {
     if (p != undefined) {
+
       ngeo.extendedProfile.measure.profileMeasure.pStart.distance = p.distance;
       ngeo.extendedProfile.measure.profileMeasure.pStart.altitude = p.altitude;
       ngeo.extendedProfile.measure.profileMeasure.pStart.cx = sx(p.distance ) + margin.left;
       ngeo.extendedProfile.measure.profileMeasure.pStart.cy = sy(p.altitude) + margin.top;
+
     } else {
+
       ngeo.extendedProfile.measure.profileMeasure.pStart.distance = sx.invert(xs);
       ngeo.extendedProfile.measure.profileMeasure.pStart.altitude = sy.invert(ys);
       ngeo.extendedProfile.measure.profileMeasure.pStart.cx = xs ;
       ngeo.extendedProfile.measure.profileMeasure.pStart.cy = ys;
+
     }
 
     ngeo.extendedProfile.measure.profileMeasure.pStart.set = true;
-    
     let highlightCircle = d3.select('svg#profileSVG').append('circle')
     .attr('id', 'start_m')
     .attr('cx', ngeo.extendedProfile.measure.profileMeasure.pStart.cx)
@@ -70,13 +74,14 @@ ngeo.extendedProfile.measure.measureHeight = function () {
     .attr('r', pointSize)
     .style('fill', 'red');
 
-
   } else if (!ngeo.extendedProfile.measure.profileMeasure.pEnd.set){
     if (p != undefined) {
+
       ngeo.extendedProfile.measure.profileMeasure.pEnd.distance = p.distance;
       ngeo.extendedProfile.measure.profileMeasure.pEnd.altitude = p.altitude;
-      ngeo.extendedProfile.measure.profileMeasure.pEnd.cxEnd = sx(p.distance ) + margin.left;
-      ngeo.extendedProfile.measure.profileMeasure.pEnd.cyEnd = sy(p.altitude) + margin.top;
+      ngeo.extendedProfile.measure.profileMeasure.pEnd.cx = sx(p.distance ) + margin.left;
+      ngeo.extendedProfile.measure.profileMeasure.pEnd.cy = sy(p.altitude) + margin.top;
+
     } else {
       ngeo.extendedProfile.measure.profileMeasure.pEnd.distance = sx.invert(xs);
       ngeo.extendedProfile.measure.profileMeasure.pEnd.altitude = sy.invert(ys);
@@ -103,7 +108,9 @@ ngeo.extendedProfile.measure.measureHeight = function () {
 
 
   } else {
+
     ngeo.extendedProfile.measure.startMeasure();
+
   }
 
   let dH = ngeo.extendedProfile.measure.profileMeasure.pEnd.altitude-ngeo.extendedProfile.measure.profileMeasure.pStart.altitude;
