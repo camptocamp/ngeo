@@ -187,16 +187,9 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
           // the original one.
           if (gmfLayerWMS.childLayers && gmfLayerWMS.childLayers.length) {
             // skip layers with no queryable childLayer
-            var isQueryable = function(item) {
-              return item.queryable && resolution >= item.minResolutionHint && resolution <= item.maxResolutionHint;
-            };
-            if (!gmfLayerWMS.childLayers.some(isQueryable)) {
-              return [];
-            }
-
             var childLayerNames = [];
             gmfLayerWMS.childLayers.forEach(function(childLayer) {
-              if (childLayer.queryable) {
+              if (childLayer.queryable && resolution >= childLayer.minResolutionHint && resolution <= childLayer.maxResolutionHint) {
                 childLayerNames.push(childLayer.name);
               }
             }, this);
