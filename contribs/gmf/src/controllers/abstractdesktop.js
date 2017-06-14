@@ -71,6 +71,11 @@ goog.require('ngeo.sortableDirective');
 goog.require('ngeo.SortableOptions');
 
 
+gmf.module.value('ngeoQueryOptions', {
+  'limit': 20
+});
+
+
 /**
  * Desktop application abstract controller.
  *
