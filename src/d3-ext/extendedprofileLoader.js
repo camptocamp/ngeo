@@ -167,7 +167,6 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
     let lastSegment = initialProfile[initialProfile.length-1];
     let rangeX = [0, lastSegment.endD];
     let rangeY = [ngeo.extendedProfile.plot2canvas.arrayMin(points.altitude), ngeo.extendedProfile.plot2canvas.arrayMax(points.altitude)];
-    console.log("RANGE Y", rangeY);
     if (iter==0 && resetPlot) {
       ngeo.extendedProfile.plot2canvas.setupPlot(rangeX, rangeY);
       ngeo.extendedProfile.plot2canvas.drawPoints(points, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
@@ -202,15 +201,16 @@ ngeo.extendedProfile.loader.updateData = function () {
   .node().getContext('2d');
   let zoomDir = previousSpan - span;
 
-  ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
 
   if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir >= 0) {
-    
+    ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
+
     console.log("zoom foward, no deeper LOD needed");
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
   } else if (Math.abs(dxL) < 0.5 && Math.abs(dxR) < 0.5) {
-    
+    ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
+
     console.log("Vertical translation only, no deeper LOD needed")
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
@@ -219,12 +219,21 @@ ngeo.extendedProfile.loader.updateData = function () {
 
     console.log("loading additional LOD");
     let line = clip.clippedLine;
+    
+    console.log(clip.clippedLine.length);
+    
+    if(clip.clippedLine.length < 2) {
+      return;
+    }
+    
     let cPotreeLineStr = '';
 
     for (let i in line) {
       cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
     }
     cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
+    ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
+
     ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, 5, false);
 
   }

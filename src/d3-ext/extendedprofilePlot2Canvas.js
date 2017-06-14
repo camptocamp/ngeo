@@ -145,7 +145,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
 
   let zoom = d3.zoom();
   console.log( rangeY[1]);
-  zoom.scaleExtent([1, 10])
+  zoom.scaleExtent([1, 100])
   // .translateExtent([[0, -Infinity], [rangeX[1], 0]])
    .on("zoom", zoomed);
 

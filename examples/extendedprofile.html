@@ -34,7 +34,7 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <label for="coordinates">Demo coordinates:</label>
-    <input type="text" id="coordinates" style="width: 600px;" value="{2553000.0,1199000.0},{2553500.0,1199000.0},{2554000.0,1199000.0}"></input>
+    <input type="text" id="coordinates" style="width: 600px;" value="{2528725.0,1195975.0},{2538725.0,1197975.0},{2538735.0,1197995.0}"></input>
             <br>
         <button onclick="ngeo.extendedProfile.utils.getPointsInProfileAsCSV(ngeo.extendedProfile.loader.profilePoints);">Export as CSV </button>
         <button onclick="ngeo.extendedProfile.utils.exportToImageFile('png');">Export as PNG</button>
@@ -49,8 +49,6 @@
             <option value="INTENSITY">INTENSITY</option>
             <option value="CLASSIFICATION" selected>CLASSIFICATION</option>
         </select>
-        <label for="pointCloud"> pointCloud:</label>
-        <input type="text" id="pointCloud" value="sitn2010"></input>
         <br>
         <label for="attributes"> Attributes:</label>
         <input type="text" id="attributes" value="" style="width: 600px;"></input>

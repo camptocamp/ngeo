@@ -87,6 +87,9 @@ ngeo.extendedProfile.raster.generateDemDsm = function() {
 
 ngeo.extendedProfile.raster.getGmfProfile = function(coordinates, distanceOffset) {  let gmfurl = 'http://localhost:5001/get_gmf_dem_dsm?';
 
+  svg.selectAll('#line_dem').remove();
+  svg.selectAll('#line_dsm').remove();
+
   gmfurl += 'coord=' + coordinates;
   gmfurl += '&type=LineString';
   gmfurl += '&layers=mnt,mns';
@@ -114,19 +117,18 @@ ngeo.extendedProfile.raster.getGmfProfile = function(coordinates, distanceOffset
 
 ngeo.extendedProfile.raster.drawDem = function(data, distanceOffset) {
 
+  svg.selectAll('#line_dem').remove();
+  svg.selectAll('#line_dsm').remove();
+
   if(data == null) {
     return;
   }
-
-  svg.selectAll('#line_dem').remove();
-  svg.selectAll('#line_dsm').remove();
 
   let d = data.profile;
   let sx = ngeo.extendedProfile.config.plotParams.scaleX;
   let sy = ngeo.extendedProfile.config.plotParams.scaleY;
   console.log("GMF profile returned: " + d.length + " points");
   for (let i=0; i<d.length-1;i++) {
-    // console.log(d[i].dist);
     d3.select('svg#profileSVG').append('line')
     .attr('id', 'line_dem')
     .attr('x1', sx(d[i].dist + distanceOffset) + margin.left)
