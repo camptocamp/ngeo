@@ -39,7 +39,7 @@ ngeo.extendedProfile.utils.getLinestring = function () {
 
   }
   return lShifted;
-}
+};
 
 ngeo.extendedProfile.utils.formatLinestring = function () {
   
@@ -51,20 +51,25 @@ ngeo.extendedProfile.utils.formatLinestring = function () {
     j+=1;
   }
   return linestring
-}
+};
 
 /***
 Interpolate the 2D coordinate from a profile distance (=measure M)
 ***/
 ngeo.extendedProfile.utils.interpolatePoint = function (d, segment) {
-
-  let xLocal = Math.round(Math.sqrt(Math.pow(d,2)/(1 + Math.pow(segment.coeffA,2))));
-  let yLocal = Math.round(segment.coeffA * xLocal);
+  let xLocal, yLocal;
+  if (isFinite(segment.coeffA)) {
+    xLocal = Math.round(Math.sqrt(Math.pow(d,2)/(1 + Math.pow(segment.coeffA,2))));
+  } else {
+    xLocal = d;
+  }
+  yLocal = Math.round(segment.coeffA * xLocal);
+  console.log('local', xLocal, yLocal);
   let x = xLocal + segment.origX;
   let y = yLocal + segment.origY;
   return [x,y];
 
-}
+};
 
 /***
 Clip a linestring to a given plot domain
@@ -72,16 +77,27 @@ Clip a linestring to a given plot domain
 ngeo.extendedProfile.utils.clipLineByMeasure = function (dLeft, dRight) {
   let l = ngeo.extendedProfile.utils.getLinestring();
   let clippedLine = [];
+  console.log(l.length);
   // CHECK LOGIC HERE!!!
-  for (let i in l) {
+  for (let i=0; i<l.length; i++) {
+        console.log("Segment: ", i);
+        console.log("Domaines",dLeft, l[i].endD);
+            
+            
     if (dLeft <= l[i].endD) {
       if (dLeft >= l[i].startD) {
+
+        console.log('-1-', ngeo.extendedProfile.utils.interpolatePoint(dLeft, l[i]));
         clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dLeft, l[i]));
       }
       if (dRight <= l[i].endD) {
+
         clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dRight, l[i]));
+        console.log('-2-',ngeo.extendedProfile.utils.interpolatePoint(dRight, l[i]));
       } else {
+
         clippedLine.push([l[i].endX,l[i].endY]);
+        console.log('-3-',[l[i].endX,l[i].endY])
       }
     } 
   }
@@ -90,7 +106,7 @@ ngeo.extendedProfile.utils.clipLineByMeasure = function (dLeft, dRight) {
     clippedLine: clippedLine,
     distanceOffset: dLeft
   }
-}
+};
 
 ngeo.extendedProfile.utils.getNiceLOD = function(span) {
   let maxLOD = 0;
@@ -110,7 +126,7 @@ ngeo.extendedProfile.utils.getNiceLOD = function(span) {
     maxLOD = 6;
   }
   return maxLOD;
-}
+};
 
 ngeo.extendedProfile.utils.downloadDataUrlFromJavascript = function(filename, dataUrl) {
 
@@ -127,7 +143,7 @@ ngeo.extendedProfile.utils.downloadDataUrlFromJavascript = function(filename, da
   // Cleanup the DOM
   document.body.removeChild(link);
   delete link;
-}
+};
 
 /***
 Export chart to a png file
@@ -163,7 +179,7 @@ ngeo.extendedProfile.utils.exportToImageFile = function (format) {
     DOMURL.revokeObjectURL(url);
   }
   img.src = url;
-}
+};
 
 /***
 Code adapted from Markus Schuetz @Potree
@@ -267,7 +283,7 @@ ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function (profilePoints) {
   let encodedUri = encodeURI(file);
   ngeo.extendedProfile.utils.downloadDataUrlFromJavascript('sitn_profile.csv', encodedUri);
 
-}
+};
 
 ngeo.extendedProfile.utils.UUID = function() {
     var nbr, randStr = "";
@@ -282,4 +298,4 @@ ngeo.extendedProfile.utils.UUID = function() {
         randStr.substr(15, 3), "-",
         randStr.substr(18, 12)
         ].join("");
-}
+};

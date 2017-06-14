@@ -85,11 +85,11 @@ ngeo.extendedProfile.raster.generateDemDsm = function() {
   }
 }
 
-ngeo.extendedProfile.raster.getGmfProfile = function(coordinates) {
-
-  let gmfurl = 'http://localhost:5001/get_gmf_dem_dsm?';
+ngeo.extendedProfile.raster.getGmfProfile = function(coordinates, distanceOffset) {  let gmfurl = 'http://localhost:5001/get_gmf_dem_dsm?';
 
   gmfurl += 'coord=' + coordinates;
+  gmfurl += '&type=LineString';
+  gmfurl += '&layers=mnt,mns';
   gmfurl += '&nbPoints=200';
   let xhr = new XMLHttpRequest();
   xhr.open('GET', gmfurl, true);
@@ -98,7 +98,7 @@ ngeo.extendedProfile.raster.getGmfProfile = function(coordinates) {
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200 || xhr.status === 0) {
-        ngeo.extendedProfile.raster.drawDem(JSON.parse(xhr.response));
+        ngeo.extendedProfile.raster.drawDem(JSON.parse(xhr.response), distanceOffset);
       } else {
         console.log('Failed to load data! HTTP status: ' + xhr.status + ', file: ' + gmfurl);
       }
@@ -112,7 +112,7 @@ ngeo.extendedProfile.raster.getGmfProfile = function(coordinates) {
   }
 }
 
-ngeo.extendedProfile.raster.drawDem = function(data) {
+ngeo.extendedProfile.raster.drawDem = function(data, distanceOffset) {
 
   if(data == null) {
     return;
@@ -121,25 +121,26 @@ ngeo.extendedProfile.raster.drawDem = function(data) {
   svg.selectAll('#line_dem').remove();
   svg.selectAll('#line_dsm').remove();
 
-  console.log(margin);
   let d = data.profile;
   let sx = ngeo.extendedProfile.config.plotParams.scaleX;
   let sy = ngeo.extendedProfile.config.plotParams.scaleY;
+  console.log("GMF profile returned: " + d.length + " points");
   for (let i=0; i<d.length-1;i++) {
+    // console.log(d[i].dist);
     d3.select('svg#profileSVG').append('line')
     .attr('id', 'line_dem')
-    .attr('x1', sx(d[i].dist) + margin.left)
+    .attr('x1', sx(d[i].dist + distanceOffset) + margin.left)
     .attr('y1', sy(d[i].values.mnt) + margin.top)
-    .attr('x2', sx(d[i+1].dist) + margin.left)
+    .attr('x2', sx(d[i+1].dist + distanceOffset) + margin.left)
     .attr('y2', sy(d[i+1].values.mnt) + margin.top)
     .attr('stroke-width', 1.5)
     .attr('stroke', '#41caf4');
     
     d3.select('svg#profileSVG').append('line')
     .attr('id', 'line_dsm')
-    .attr('x1', sx(d[i].dist) + margin.left)
+    .attr('x1', sx(d[i].dist + distanceOffset) + margin.left)
     .attr('y1', sy(d[i].values.mns) + margin.top)
-    .attr('x2', sx(d[i+1].dist) + margin.left)
+    .attr('x2', sx(d[i+1].dist + distanceOffset) + margin.left)
     .attr('y2', sy(d[i+1].values.mns) + margin.top)
     .attr('stroke-width', 1.5)
     .attr('stroke', '#00ff00');

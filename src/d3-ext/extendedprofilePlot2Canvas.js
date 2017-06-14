@@ -9,7 +9,6 @@ LiDAR profile from protreeViewer adapated for new d3 API after d3 4.0 API break
 Draw the points to canvas
 ***/
 ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) {
-  console.log("NB points", points.distance.length);
   // In order to optimize the point size, we scale data, not canvas!
   let pointSize = 2;
   // if (scale != null) {
@@ -56,7 +55,7 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
 Setup the d3 canvas & svg plot
 ***/
 ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
-  
+  console.log("PLOT SETUP!!!");
   let canvasEl = d3.select('#profileCanvas').node();
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
@@ -84,7 +83,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     .style('position', 'absolute')
     .style('margin-left', margin.left.toString() + 'px')
     .style('margin-top', margin.top.toString() + 'px')  
-  
+  console.log("RANGE X", rangeX);
   let domainProfileWidth = rangeX[1] - rangeX[0];
   let domainProfileHeight = rangeY[1] - rangeY[0];
 
@@ -95,7 +94,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   let sx, sy;
   
   if(domainRatio < rangeRatio){
-
+  console.log("cas 1");
   let targetWidth = domainProfileWidth * (rangeProfileHeight / domainProfileHeight);
     let domainScale = rangeRatio / domainRatio;
     let domainScaledWidth = domainProfileWidth * domainScale;
@@ -108,7 +107,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
       .domain(rangeY)
       .range([height, 0]);
   } else {
-
+    console.log("cas 2");
     let targetHeight = domainProfileHeight* (rangeProfileWidth / domainProfileWidth);
     let domainScale =  domainRatio / rangeRatio;
     let domainScaledHeight = domainProfileHeight * domainScale;
@@ -122,7 +121,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
         domainHeightCentroid + domainScaledHeight / 2 ])
       .range([height, 0]);
   }
-  
+  console.log("INITIAL DOMAIN", sx.domain());
   ngeo.extendedProfile.config.plotParams.scaleX = sx;
   ngeo.extendedProfile.config.plotParams.scaleY = sy;
   
@@ -143,11 +142,12 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     ngeo.extendedProfile.config.plotParams.scaleX = tr.rescaleX(sx);
     ngeo.extendedProfile.config.plotParams.scaleY = tr.rescaleY(sy);
   }
-  
+  console.log("ICICICI");
   let zoom = d3.zoom();
-  
-  zoom.scaleExtent([1, 10000])
-    .on("zoom", zoomed);
+  console.log( rangeY[1]);
+  zoom.scaleExtent([1, 10])
+  // .translateExtent([[0, -Infinity], [rangeX[1], 0]])
+   .on("zoom", zoomed);
 
   d3.select('svg#profileSVG').call(zoom.on('end', ngeo.extendedProfile.loader.updateData));
 
@@ -291,5 +291,13 @@ ngeo.extendedProfile.plot2canvas.arrayMax = function (array) {
 }
 
 ngeo.extendedProfile.plot2canvas.arrayMin = function (array) {
-  return array.reduce((a, b) => Math.min(a, b));
+  
+  let minVal = Infinity;
+  for (let i=0; i<array.length; i++) {
+    if(array[i] < minVal) {
+      minVal = array[i];
+    }
+  }
+  return minVal;
+
 }

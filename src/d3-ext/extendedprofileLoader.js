@@ -35,13 +35,12 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline
       // the first 4 levels are usually fast to load
       ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 4, i, polyline, distanceOffset, lastLOD, width, resetPlot, uuid);
       i += 3;
-    } else if (i < maxLOD) {
+    } else if (i < maxLOD - 1) {
       ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width, false, uuid);
     } else {
       lastLOD = true;
       ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width, false, uuid);
     }
-    
   }
 
 }
@@ -164,8 +163,11 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
     }
 
     // draw this LOD
-    let rangeX = [ngeo.extendedProfile.plot2canvas.arrayMin(points.distance), ngeo.extendedProfile.plot2canvas.arrayMax(points.distance)];
+    let initialProfile = ngeo.extendedProfile.utils.getLinestring();
+    let lastSegment = initialProfile[initialProfile.length-1];
+    let rangeX = [0, lastSegment.endD];
     let rangeY = [ngeo.extendedProfile.plot2canvas.arrayMin(points.altitude), ngeo.extendedProfile.plot2canvas.arrayMax(points.altitude)];
+    console.log("RANGE Y", rangeY);
     if (iter==0 && resetPlot) {
       ngeo.extendedProfile.plot2canvas.setupPlot(rangeX, rangeY);
       ngeo.extendedProfile.plot2canvas.drawPoints(points, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
@@ -174,9 +176,9 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
       ngeo.extendedProfile.plot2canvas.drawPoints(points, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
     }
 
-    if (lastLOD) {
-      ngeo.extendedProfile.raster.generateDemDsm();
-      ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring()) 
+    if (resetPlot) {
+      // ngeo.extendedProfile.raster.generateDemDsm(); // For now only add GMF
+      // ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring(), distanceOffset);
     }
 
   // } catch (e) {
@@ -191,8 +193,6 @@ ngeo.extendedProfile.loader.updateData = function () {
   let clip = ngeo.extendedProfile.utils.clipLineByMeasure(domain[0], domain[1]);
   let span = domain[1] - domain[0];
   let niceLOD = ngeo.extendedProfile.utils.getNiceLOD(span);
-  console.log("nice LOD", niceLOD, "Initial LOD", ngeo.extendedProfile.config.plotParams.initialLOD);
-  let tr = d3.event.transform;
   let previousSpan = ngeo.extendedProfile.config.plotParams.previousDomain[1] - ngeo.extendedProfile.config.plotParams.previousDomain[0];
   let dxL = ngeo.extendedProfile.config.plotParams.previousDomain[0] - domain[0];
   let dxR = ngeo.extendedProfile.config.plotParams.previousDomain[1] - domain[1];
@@ -202,16 +202,16 @@ ngeo.extendedProfile.loader.updateData = function () {
   .node().getContext('2d');
   let zoomDir = previousSpan - span;
 
+  // ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
+
   if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir >= 0) {
     
-    console.log("zoom, no deeper LOD needed");
-    console.log(ngeo.extendedProfile.loader.profilePoints.distance.length);
+    console.log("zoom foward, no deeper LOD needed");
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
   } else if (Math.abs(dxL) < 0.5 && Math.abs(dxR) < 0.5) {
     
-    console.log("Y translation only, no deeper LOD needed")
-    console.log(ngeo.extendedProfile.loader.profilePoints.distance.length);
+    console.log("Vertical translation only, no deeper LOD needed")
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
 
