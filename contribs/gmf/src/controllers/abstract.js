@@ -48,11 +48,6 @@ gmf.module.value('ngeoExportFeatureFormats', [
 ]);
 
 
-gmf.module.value('ngeoQueryOptions', {
-  'limit': 20
-});
-
-
 /**
  * Application abstract controller.
  *
