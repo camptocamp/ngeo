@@ -10,10 +10,6 @@ ngeo.extendedProfile.loader.profilePoints = {
   classification: []
 }
 
-ngeo.extendedProfile.loader.requests = [];
-ngeo.extendedProfile.loader.lastBatchId = '';
-
-
 // Load points by LOD
 ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline, distanceOffset, width, resetPlot) {
 
@@ -30,9 +26,7 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline
   }
 
   for (var i=0; i<maxLOD; i++) {
-
     if (i==0){
-      // the first 4 levels are usually fast to load
       ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 4, i, polyline, distanceOffset, lastLOD, width, resetPlot, uuid);
       i += 3;
     } else if (i < maxLOD - 1) {
@@ -66,14 +60,13 @@ ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordina
       if (xhr.status === 200) {
         if (this.uuid == ngeo.extendedProfile.loader.lastUuid) {
           ngeo.extendedProfile.loader.processBuffer(xhr.response, iter, distanceOffset, lastLOD, resetPlot);
-        } else {
-          console.log("cancelled query due to multiple queries");
         }
       } else {
         console.log('Failed to load data! HTTP status: ' + xhr.status + ', file: ' + url);
       }
     }
   };
+
   try {
     xhr.send(null);
   } catch(e) {
@@ -82,7 +75,7 @@ ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordina
 };
 
 ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOffset, lastLOD, resetPlot) {
-  // try {
+  try {
     // ***Get header size***
     let typedArrayInt32 = new Int32Array(profile, 0,4);
     let headerSize = typedArrayInt32[0];
@@ -107,8 +100,8 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
       attributes.push(ngeo.extendedProfile.config.pointAttributes[attr[j]]);  
       }      
     }
+ 
     // ***Get points from buffer ***
-
     let scale = jHeader.scale;
     let points = {
       distance: [],
@@ -158,7 +151,7 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
         ngeo.extendedProfile.loader.profilePoints.color_packed.push([r, g, b]);
 
       }
-      aoffset = aoffset + attribute.bytes;
+        aoffset = aoffset + attribute.bytes;
       }
     }
 
@@ -180,9 +173,9 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
       ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring(), 0);
     }
 
-  // } catch (e) {
-  // console.log('error during buffer processing: ' + e);
-  // }
+  } catch (e) {
+    console.log('error during buffer processing: ' + e);
+  }
 
 }
 
@@ -201,39 +194,30 @@ ngeo.extendedProfile.loader.updateData = function () {
   .node().getContext('2d');
   let zoomDir = previousSpan - span;
 
-
   if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir >= 0) {
     ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
-
-    console.log("zoom foward, no deeper LOD needed");
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
-  } else if (Math.abs(dxL) < 0.5 && Math.abs(dxR) < 0.5) {
-    ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
 
-    console.log("Vertical translation only, no deeper LOD needed")
+  } else if (Math.abs(dxL) < 0.5 && Math.abs(dxR) < 0.5) {
+
+    ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
 
   } else {
 
-    console.log("loading additional LOD");
     let line = clip.clippedLine;
-    
-    console.log(clip.clippedLine.length);
-    
     if(clip.clippedLine.length < 2) {
       return;
     }
-    
-    let cPotreeLineStr = '';
 
+    let cPotreeLineStr = '';
     for (let i in line) {
       cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
     }
     cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
     ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
-
     ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, 5, false);
 
   }
