@@ -64,6 +64,7 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
  * @struct
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.DecorateGeolocation} ngeoDecorateGeolocation Decorate
  *     Geolocation service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
@@ -75,7 +76,8 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
  * @ngname NgeoMobileGeolocationController
  */
 ngeo.MobileGeolocationController = function($scope, $element,
-    ngeoDecorateGeolocation, ngeoFeatureOverlayMgr, ngeoNotification) {
+    gettextCatalog, ngeoDecorateGeolocation, ngeoFeatureOverlayMgr,
+    ngeoNotification) {
 
   $element.on('click', this.toggleTracking.bind(this));
 
@@ -120,7 +122,22 @@ ngeo.MobileGeolocationController = function($scope, $element,
   // handle geolocation error.
   this.geolocation_.on('error', function(error) {
     this.untrack_();
-    this.notification_.error(error.message);
+    var msg;
+    switch (error.code) {
+      case 1:
+        msg = gettextCatalog.getString('geolocation_permission_denied_error');
+        break;
+      case 2:
+        msg = gettextCatalog.getString('geolocation_position_unavailable_error');
+        break;
+      case 3:
+        msg = gettextCatalog.getString('geolocation_timeout_error');
+        break;
+      default:
+        msg = gettextCatalog.getString('geolocation_unknow_error');
+        break;
+    }
+    this.notification_.error(msg);
     $scope.$emit(ngeo.MobileGeolocationEventType.ERROR, error);
   }, this);
 
