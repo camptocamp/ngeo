@@ -47,6 +47,7 @@ gmf.timeSliderDirective = function($timeout, $filter) {
           ctrl.onDateSelected({
             time: computeDates_(e, sliderUi)
           });
+          scope.$apply();
         }
 
         function computeDates_(e, sliderUi) {
