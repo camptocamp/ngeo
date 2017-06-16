@@ -64,7 +64,6 @@ ngeo.extendedProfile.utils.interpolatePoint = function (d, segment) {
     xLocal = d;
   }
   yLocal = Math.round(segment.coeffA * xLocal);
-  console.log('local', xLocal, yLocal);
   let x = xLocal + segment.origX;
   let y = yLocal + segment.origY;
   return [x,y];

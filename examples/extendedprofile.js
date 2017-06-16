@@ -140,19 +140,33 @@ app.MainController = function($http, $scope) {
     interactions: ol.interaction.defaults().extend([select, modify]),
     layers: [
       new ol.layer.Image({
+        // source: new ol.source.ImageWMS({
+          // url: 'http://wms.geo.admin.ch/',
+          // crossOrigin: 'anonymous',
+          // attributions: [new ol.Attribution({
+            // html: '&copy; ' +
+                // '<a href="http://www.geo.admin.ch/internet/geoportal/' +
+                // 'en/home.html">' +
+                // 'Pixelmap 1:500000 / geo.admin.ch</a>'
+          // })],
+          // params: {
+            // 'LAYERS': 'ch.swisstopo.pixelkarte-farbe-pk1000.noscale',
+            // 'FORMAT': 'image/jpeg'
+          // },
+          // serverType: /** @type {ol.source.WMSServerType} */ ('mapserver')
+        // })
         source: new ol.source.ImageWMS({
-          url: 'http://wms.geo.admin.ch/',
+          url: 'http://sitn.ne.ch/mapproxy95/service/',
           crossOrigin: 'anonymous',
+          params: {
+            'LAYERS': 'plan_ville_25d',
+            'FORMAT': 'image/png'
+          },
           attributions: [new ol.Attribution({
             html: '&copy; ' +
-                '<a href="http://www.geo.admin.ch/internet/geoportal/' +
-                'en/home.html">' +
-                'Pixelmap 1:500000 / geo.admin.ch</a>'
+                '<a href="http://sitn.ne.ch">' +
+                'SITN</a>'
           })],
-          params: {
-            'LAYERS': 'ch.swisstopo.pixelkarte-farbe-pk1000.noscale',
-            'FORMAT': 'image/jpeg'
-          },
           serverType: /** @type {ol.source.WMSServerType} */ ('mapserver')
         })
       }),
@@ -174,6 +188,9 @@ app.MainController = function($http, $scope) {
     })
   });
 
+  // HUGLY Hack for demo
+  // map = this.map;
+    
   const map = this.map;
 
   const vectorLayer = new ol.layer.Vector({
