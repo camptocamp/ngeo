@@ -18,6 +18,8 @@ goog.require('ol.layer.Image');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.Vector');
+goog.require('ol.interaction.Select');
+goog.require('ol.interaction.Modify');
 
 
 /** @type {!angular.Module} **/
@@ -38,11 +40,104 @@ app.MainController = function($http, $scope) {
    */
   this.scope_ = $scope;
   const source = new ol.source.Vector();
+  
+  let overlayStyle = (function() {
+  let styles = {};
+  styles['Polygon'] = [
+    new ol.style.Style({
+      fill: new ol.style.Fill({
+        color: [255, 255, 255, 0.5]
+      })
+    }),
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: [255, 255, 255, 1],
+        width: 5
+      })
+    }),
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: [0, 153, 255, 1],
+        width: 3
+      })
+    })
+  ];
+  styles['MultiPolygon'] = styles['Polygon'];
+
+  styles['LineString'] = [
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: [255, 255, 255, 1],
+        width: 5
+      })
+    }),
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: [0, 153, 255, 1],
+        width: 3
+      })
+    })
+  ];
+  styles['MultiLineString'] = styles['LineString'];
+
+  styles['Point'] = [
+    new ol.style.Style({
+      image: new ol.style.Circle({
+        radius: 7,
+        fill: new ol.style.Fill({
+          color: [0, 153, 255, 1]
+        }),
+        stroke: new ol.style.Stroke({
+          color: [255, 255, 255, 0.75],
+          width: 1.5
+        })
+      }),
+      zIndex: 100000
+    })
+  ];
+  styles['MultiPoint'] = styles['Point'];
+
+  styles['GeometryCollection'] = styles['Polygon'].concat(styles['Point']);
+
+  return function(feature) {
+    return styles[feature.getGeometry().getType()];
+  };
+})();
+  
+  let select = new ol.interaction.Select({
+    hitTolerance: 10,
+    style: overlayStyle
+  });
+  
+  let modify = new ol.interaction.Modify({
+    features: select.getFeatures(),
+    style: overlayStyle
+  });
+  
+  modify.on('modifyend', function() {
+
+    let flat = source.getFeatures()[0].getGeometry().flatCoordinates;
+    let pytreeLineString = '';
+    for (let i=0; i<flat.length; i++) {
+      let px = flat[i];
+      let py = flat[i+1];
+      pytreeLineString += '{' + Math.round(100*px)/100 + ',' + Math.round(100*py)/100+ '},';
+      i+= 2;
+    };
+    
+    pytreeLineString = pytreeLineString.substr(0,pytreeLineString.length -1);
+    
+    $('#coordinates').val(pytreeLineString);
+    
+    ngeo.extendedProfile.loader.getProfileByLOD(0, ngeo.extendedProfile.config.plotParams.initialLOD, pytreeLineString, 0, $('#width').val(), true);
+  });
+  
   /**
    * @type {ol.Map}
    * @export
    */
   this.map = new ol.Map({
+    interactions: ol.interaction.defaults().extend([select, modify]),
     layers: [
       new ol.layer.Image({
         source: new ol.source.ImageWMS({

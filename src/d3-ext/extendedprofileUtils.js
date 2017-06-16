@@ -77,27 +77,20 @@ Clip a linestring to a given plot domain
 ngeo.extendedProfile.utils.clipLineByMeasure = function (dLeft, dRight) {
   let l = ngeo.extendedProfile.utils.getLinestring();
   let clippedLine = [];
-  console.log(l.length);
   // CHECK LOGIC HERE!!!
   for (let i=0; i<l.length; i++) {
-        console.log("Segment: ", i);
-        console.log("Domaines",dLeft, l[i].endD);
-            
-            
+
     if (dLeft <= l[i].endD) {
       if (dLeft >= l[i].startD) {
 
-        console.log('-1-', ngeo.extendedProfile.utils.interpolatePoint(dLeft, l[i]));
         clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dLeft, l[i]));
       }
       if (dRight <= l[i].endD) {
 
         clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dRight, l[i]));
-        console.log('-2-',ngeo.extendedProfile.utils.interpolatePoint(dRight, l[i]));
       } else {
 
         clippedLine.push([l[i].endX,l[i].endY]);
-        console.log('-3-',[l[i].endX,l[i].endY])
       }
     } 
   }

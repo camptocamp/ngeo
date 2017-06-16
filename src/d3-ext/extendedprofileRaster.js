@@ -85,7 +85,7 @@ ngeo.extendedProfile.raster.generateDemDsm = function() {
   }
 }
 
-ngeo.extendedProfile.raster.getGmfProfile = function(coordinates, distanceOffset) {  let gmfurl = 'http://localhost:5001/get_gmf_dem_dsm?';
+ngeo.extendedProfile.raster.getGmfProfile = function(coordinates, distanceOffset) {  let gmfurl = 'http://nesitn7/pytree/get_gmf_dem_dsm?';
 
   svg.selectAll('#line_dem').remove();
   svg.selectAll('#line_dsm').remove();

@@ -10,9 +10,10 @@ ngeo.extendedProfile.loader.profilePoints = {
   classification: []
 }
 
+ngeo.extendedProfile.loader.requestsQueue = [];
+
 // Load points by LOD
 ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline, distanceOffset, width, resetPlot) {
-
   let uuid = ngeo.extendedProfile.utils.UUID();
   ngeo.extendedProfile.loader.lastUuid = uuid;
   let lastLOD = false;
@@ -46,10 +47,19 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline
  */
 ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot, uuid) {
 
-  let hurl = 'http://localhost:5001/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
+  let hurl = 'http://nesitn7/pytree/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
   hurl += '&width=' + width + '&coordinates=' + coordinates;
   hurl += '&pointCloud=sitn2010';
   hurl += '&attributes=';
+  
+  
+  for (let i=0; i<ngeo.extendedProfile.loader.requestsQueue.length; i++) {
+    if (ngeo.extendedProfile.loader.requestsQueue[i].uuid != ngeo.extendedProfile.loader.lastUuid) {
+      ngeo.extendedProfile.loader.requestsQueue[i].abort();
+      ngeo.extendedProfile.loader.requestsQueue.splice(i, 1);
+    }
+  }
+  
   let xhr = new XMLHttpRequest();
   xhr.uuid = uuid;
   xhr.open('GET', hurl, true);
@@ -61,13 +71,12 @@ ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordina
         if (this.uuid == ngeo.extendedProfile.loader.lastUuid) {
           ngeo.extendedProfile.loader.processBuffer(xhr.response, iter, distanceOffset, lastLOD, resetPlot);
         }
-      } else {
-        console.log('Failed to load data! HTTP status: ' + xhr.status + ', file: ' + url);
       }
     }
   };
 
   try {
+    ngeo.extendedProfile.loader.requestsQueue.push(xhr);
     xhr.send(null);
   } catch(e) {
     console.log('Error: ' + e);
@@ -170,7 +179,9 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
 
     if (resetPlot) {
       // ngeo.extendedProfile.raster.generateDemDsm(); // For now only add GMF
-      ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring(), 0);
+      if ($('#demdsm')[0].checked) {
+        ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring(), 0);
+      }
     }
 
   } catch (e) {
@@ -194,18 +205,23 @@ ngeo.extendedProfile.loader.updateData = function () {
   .node().getContext('2d');
   let zoomDir = previousSpan - span;
 
-  if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir >= 0) {
-    ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
+  if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir > 0) {
+    
+    if ($('#demdsm')[0].checked) {
+      ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
+    }
+
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
 
-  } else if (Math.abs(dxL) < 0.5 && Math.abs(dxR) < 0.5) {
-
-    ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
+  } else if (Math.abs(dxL) == 0 && Math.abs(dxR) == 0) {
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
 
   } else {
+    if ($('#demdsm')[0].checked) {
+      ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
+    }
 
     let line = clip.clippedLine;
     if(clip.clippedLine.length < 2) {
@@ -217,8 +233,7 @@ ngeo.extendedProfile.loader.updateData = function () {
       cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
     }
     cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
-    ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
-    ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, 5, false);
+    ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, $('#width').val(), false);
 
   }
 

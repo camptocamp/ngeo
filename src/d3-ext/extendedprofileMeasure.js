@@ -126,6 +126,7 @@ ngeo.extendedProfile.measure.measureHeight = function () {
     .text( height + 'm')
     .attr('font-family', 'sans-serif')
     .attr('font-size', '14px')
+    .style('font-weight', 'bold')
     .attr('fill', 'red');
   }
 

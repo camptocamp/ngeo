@@ -237,8 +237,8 @@ ngeo.extendedProfile.plot = function(options) {
 
 
   const extendedProfile = function(selection) {
-    ngeo.extendedProfile.config.getProfileConfig('http://localhost:5001');
-    ngeo.extendedProfile.loader.getProfileByLOD(0, ngeo.extendedProfile.config.plotParams.initialLOD, $('#coordinates').val(), 0, 1, true);
+    ngeo.extendedProfile.config.getProfileConfig('http://nesitn7/pytree');
+    ngeo.extendedProfile.loader.getProfileByLOD(0, ngeo.extendedProfile.config.plotParams.initialLOD, $('#coordinates').val(), 0, $('#width').val(), true);
   };
 
   return extendedProfile;
