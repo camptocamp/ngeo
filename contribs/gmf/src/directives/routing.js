@@ -168,11 +168,14 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
       return [new ol.style.Style({
         text: new ol.style.Text({
           fill: new ol.style.Fill({
-            color: (feature === this.startFeature_) ? 'rgba(107, 230, 46, 1)' : 'rgba(255, 62, 19, 1)'
+            color: (feature === this.startFeature_) ? '#6BE62E' : '#FF3E13'
           }),
           font: 'normal 30px FontAwesome',
           offsetY: -15,
-          stroke: new ol.style.Stroke({color: '#ffffff', width: 3}),
+          stroke: new ol.style.Stroke({
+            width: 3,
+            color: (feature === this.startFeature_) ? '#4CB01E' : '#CD3412'
+          }),
           text: '\uf041'
         })
       })];
