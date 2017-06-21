@@ -115,6 +115,12 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
   );
 
   /**
+   * @type {string}
+   * @export
+   */
+  this.errorMessage = '';
+
+  /**
    * @type {ol.Feature}
    * @private
    */
@@ -295,6 +301,7 @@ gmf.GmfRoutingController.prototype.handleActiveChange_ = function(active) {
     this.routeDuration = null;
     this.vectorSource_.clear();
     this.routeSource_.clear();
+    this.errorMessage = '';
   }
 };
 
@@ -408,6 +415,7 @@ gmf.GmfRoutingController.prototype.snapFeature_ = function(feature, label) {
   }).bind(this);
 
   const onError = (function(resp) {
+    this.errorMessage = 'Error: routing server not responding.';
     console.log(resp);
   }).bind(this);
 
@@ -475,9 +483,10 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
       this.replaceFeature_('targetFeature_', 'targetFeatureLabel', targetCoord, targetLabel);
     }).bind(this);
 
-    const onError_ = function(resp) {
+    const onError_ = (function(resp) {
+      this.errorMessage = 'Error: routing server not responding.';
       console.log(resp);
-    };
+    }).bind(this);
 
     const config = {
       options: {
