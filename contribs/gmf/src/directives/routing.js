@@ -104,6 +104,17 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
   this.map;
 
   /**
+   * @type {boolean}
+   * @private
+   */
+  this.active;
+
+  $scope.$watch(
+    () => this.active,
+    this.handleActiveChange_.bind(this)
+  );
+
+  /**
    * @type {ol.Feature}
    * @private
    */
@@ -267,6 +278,24 @@ gmf.GmfRoutingController.prototype.$onInit = function() {
     this.snapFeature_(this.activeModifyFeature_, this.activeModifyFeatureLabel_);
     this.calculateRoute();
   });
+};
+
+/**
+ * Cleanup when component becomes inactive.
+ * @param {boolean} active component status
+ * @private
+ */
+gmf.GmfRoutingController.prototype.handleActiveChange_ = function(active) {
+  if (!active) {
+    this.startFeature_ = null;
+    this.startFeatureLabel = '';
+    this.targetFeature_ = null;
+    this.targetFeatureLabel = '';
+    this.routeDistance = '';
+    this.routeDuration = null;
+    this.vectorSource_.clear();
+    this.routeSource_.clear();
+  }
 };
 
 /**
