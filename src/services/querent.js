@@ -543,10 +543,8 @@ ngeo.Querent = class {
         }
       }
 
-      ol.obj.assign(params, {
-        LAYERS,
-        QUERY_LAYERS: LAYERS
-      });
+      params['LAYERS'] = LAYERS;
+      params['QUERY_LAYERS'] = LAYERS;
 
       // Manage 'FILTER' parameter
       if (filterString && filtrableLayerName) {
@@ -582,8 +580,9 @@ ngeo.Querent = class {
       const wmsGetFeatureInfoUrl = goog.asserts.assertString(
         wmsSource.getGetFeatureInfoUrl(
           coordinate, resolution, projCode, {
-            FEATURE_COUNT,
-            INFO_FORMAT
+            // Without extern, quoting is necessary
+            'FEATURE_COUNT': FEATURE_COUNT,
+            'INFO_FORMAT': INFO_FORMAT
           }
         )
       );
