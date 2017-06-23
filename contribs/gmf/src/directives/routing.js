@@ -122,7 +122,7 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
 
   /**
    * @type {ol.Feature}
-   * @private
+   * @export
    */
   this.startFeature_ = null;
 
@@ -134,7 +134,7 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
 
   /**
    * @type {ol.Feature}
-   * @private
+   * @export
    */
   this.targetFeature_ = null;
 
