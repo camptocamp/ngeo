@@ -580,8 +580,9 @@ ngeo.Querent = class {
       const wmsGetFeatureInfoUrl = goog.asserts.assertString(
         wmsSource.getGetFeatureInfoUrl(
           coordinate, resolution, projCode, {
-            FEATURE_COUNT,
-            INFO_FORMAT
+            // Without extern, quoting is necessary
+            'FEATURE_COUNT': FEATURE_COUNT,
+            'INFO_FORMAT': INFO_FORMAT
           }
         )
       );
