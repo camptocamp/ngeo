@@ -450,7 +450,7 @@ gmf.GmfRoutingController.prototype.replaceFeature_ = function(feature, label, ne
 };
 
 /**
- * @param {object} route Routes of OSRM response
+ * @param {Object} route Routes of OSRM response
  * @returns {Array<ol.Feature>} parsed route features
  * @private
  */
@@ -513,13 +513,13 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
       console.log(resp);
     }).bind(this);
 
-    const config = {
-      options: {
-        steps: true,
-        overview: false,
-        geometries: 'geojson'
-      }
-    };
+    const options = {};
+    options['steps'] = true;
+    options['overview'] = false;
+    options['geometries'] = 'geojson';
+
+    const config = {};
+    config['options'] = options;
 
     this.$q_.when(this.gmfRoutingService_.getRoute(route, config))
       .then(onSuccess_.bind(this), onError_.bind(this));
