@@ -351,8 +351,10 @@ gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
       this.map.removeInteraction(this.draw_);
     }
     this.calculateRoute();
+    this.modifyFeatures_.setActive(true);
   });
 
+  this.modifyFeatures_.setActive(false);
   this.map.addInteraction(this.draw_);
 };
 
