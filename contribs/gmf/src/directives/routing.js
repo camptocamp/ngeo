@@ -449,6 +449,28 @@ gmf.GmfRoutingController.prototype.replaceFeature_ = function(feature, label, ne
   this[label] = (newLabel !== '') ? newLabel : transformedCoords.join('/');
 };
 
+/**
+ * @param {object} route Routes of OSRM response
+ * @returns {Array<ol.Feature>} parsed route features
+ * @private
+ */
+gmf.GmfRoutingController.prototype.parseRoute_ = function(route) {
+  let parsedRoutes = [];
+  const format = new ol.format.GeoJSON();
+  const formatConfig = {
+    dataProjection: 'EPSG:4326',
+    featureProjection: this.map.getView().getProjection()
+  };
+  // if there are is useful "legs" data, parse this
+  if (route.legs && route.legs[0] && route.legs[0].steps && route.legs[0].steps.length > 0) {
+    const steps = route.legs[0].steps;
+    parsedRoutes = steps.map(step => new ol.Feature({geometry: format.readGeometry(step.geometry, formatConfig)}));
+  } else if (route.geometry) {
+  // otherwise parse (overview) geometry
+    parsedRoutes.push(new ol.Feature({geometry: format.readGeometry(route.geometry, formatConfig)}));
+  }
+  return parsedRoutes;
+};
 
 /**
  * @export
@@ -463,17 +485,15 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
     const route =  [coordFrom, coordTo];
 
     const onSuccess_ = (function(resp) {
-      const format = new ol.format.GeoJSON();
-      const route = format.readGeometry(resp.data.routes[0].geometry, {
-        dataProjection: 'EPSG:4326',
-        featureProjection: this.map.getView().getProjection()
-      });
-      this.routeSource_.addFeature(new ol.Feature({
-        geometry: route
-      }));
+      const features = this.parseRoute_(resp.data.routes[0]);
+      if (features.length == 0) {
+        console.log('No route or not supported format.');
+        return;
+      }
+      this.routeSource_.addFeatures(features);
 
       // recenter map on route
-      this.map.getView().fit(route.getExtent());
+      this.map.getView().fit(this.routeSource_.getExtent());
 
       this.routeDistance = this.format_(resp.data.routes[0].distance, 'm');
       this.routeDuration = Math.ceil(resp.data.routes[0].duration / 60);
@@ -495,7 +515,8 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 
     const config = {
       options: {
-        steps: false,
+        steps: true,
+        overview: false,
         geometries: 'geojson'
       }
     };
