@@ -30,7 +30,7 @@
     "angular-touch": "1.6.4",
     "angular-ui-date": "1.1.1",
     "angular-ui-slider": "0.4.0",
-    "async": "2.4.1",
+    "async": "2.5.0",
     "bootstrap": "3.3.7",
     "clean-css-cli": "4.1.5",
     "closure-util": "git://github.com/camptocamp/closure-util#487fac6",
