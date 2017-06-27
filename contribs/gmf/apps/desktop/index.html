@@ -367,7 +367,14 @@
         module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
         module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
         module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/short/create');
-        module.constant('gmfOsrmBackendUrl', 'http://routing.osm.ch/routed-car/');
+        module.constant('gmfOsrmBackendUrl', 'http://routing.osm.ch/');
+        module.constant('gmfRoutingProfiles', [
+          {label : 'Car', profile: 'routed-car'},
+          {label : 'Bike (City)', profile: 'routed-bike'},
+          {label : 'Bike (Touring)', profile: 'routed-bike-touring'},
+          {label : 'Foot', profile: 'routed-foot'},
+          {label : 'Hiking', profile: 'routed-hiking'}
+        ]);
         module.constant('gmfSearchGroups', ['osm','district']);
         // Requires that the gmfSearchGroups is specified
         module.constant('gmfSearchActions', [

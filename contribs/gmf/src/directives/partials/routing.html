@@ -13,6 +13,15 @@
     <span class="fa fa-exchange"></span> {{'Reverse' | translate}}
   </button><br><br>
 
+  <div id="routingProfile" ng-if="routeCtrl.routingProfiles.length > 1">
+    <label for="gmfRoutingProfileSelect">{{'Profile' | translate}}:</label>
+    <select id="gmfRoutingProfileSelect"
+            name="gmfRoutingProfileSelect"
+            ng-model="routeCtrl.selectedRoutingProfile">
+      <option ng-repeat="profile in routeCtrl.routingProfiles" ng-value="profile">{{profile.label}}</option>
+    </select>
+  </div>
+
   <div id="routingError" ng-hide="routeCtrl.errorMessage === ''">
     {{routeCtrl.errorMessage}}
   </div>

@@ -61,6 +61,7 @@ gmf.module.component('gmfRouting', gmf.routingComponent);
 
 /**
  * The controller for the routing directive.
+ * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Scope.
  * @param {!gmf.RoutingService} gmfRoutingService service for OSRM routing
  * @param {!angular.$q} $q Angular q service
@@ -71,7 +72,7 @@ gmf.module.component('gmfRouting', gmf.routingComponent);
  * @ngdoc controller
  * @ngname GmfRoutingController
  */
-gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
+gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, $q, $filter) {
 
   /**
    * @type {angular.Scope}
@@ -84,6 +85,30 @@ gmf.GmfRoutingController = function($scope, gmfRoutingService, $q, $filter) {
    * @private
    */
   this.gmfRoutingService_ = gmfRoutingService;
+
+  /**
+   * Available routing profiles.
+   * Example: [
+   *            {
+   *              label: 'Car', // used as label in the UI
+   *              profile: 'routed-car' // used as part of the query
+   *            }
+   *          ]
+   * @type {Array<Object<string, string>>}
+   * @export
+   */
+  this.routingProfiles = $injector.has('gmfRoutingProfiles') ? $injector.get('gmfRoutingProfiles') : [];
+
+  /**
+   * @type {?Object<string, string>}
+   * @export
+   */
+  this.selectedRoutingProfile = this.routingProfiles.length > 0 ? this.routingProfiles[0] : null;
+
+  $scope.$watch(
+    () => this.selectedRoutingProfile,
+    this.calculateRoute.bind(this)
+  );
 
   /**
    * @type {angular.$q}
@@ -409,6 +434,11 @@ gmf.GmfRoutingController.prototype.reverseRoute = function() {
  */
 gmf.GmfRoutingController.prototype.snapFeature_ = function(feature, label) {
   const coord = this.getLonLatFromPoint_(this[feature]);
+  const config = {};
+
+  if (this.selectedRoutingProfile) {
+    config['instance'] = this.selectedRoutingProfile['profile'];
+  }
 
   const onSuccess = (function(resp) {
     if (resp.data.waypoints.length > 0) {
@@ -424,7 +454,7 @@ gmf.GmfRoutingController.prototype.snapFeature_ = function(feature, label) {
     console.log(resp);
   }).bind(this);
 
-  this.$q_.when(this.gmfRoutingService_.getNearest(coord, {}))
+  this.$q_.when(this.gmfRoutingService_.getNearest(coord, config))
     .then(onSuccess.bind(this), onError.bind(this));
 };
 
@@ -520,6 +550,10 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 
     const config = {};
     config['options'] = options;
+
+    if (this.selectedRoutingProfile) {
+      config['instance'] = this.selectedRoutingProfile['profile'];
+    }
 
     this.$q_.when(this.gmfRoutingService_.getRoute(route, config))
       .then(onSuccess_.bind(this), onError_.bind(this));

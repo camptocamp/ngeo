@@ -56,8 +56,8 @@ gmf.RoutingService.prototype.getRoute = function(coordinates, config) {
 
   // Service
   // see: https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#requests
-  if (!config.service) {
-    config.service = 'route'; // default to route
+  if (!config['service']) {
+    config['service'] = 'route'; // default to route
   }
 
   // Mode of transportation,
@@ -66,13 +66,20 @@ gmf.RoutingService.prototype.getRoute = function(coordinates, config) {
   //
   // As of version 5.8.0, OSRM (server) does not support multiple profiles simultaneously.
   // This means the value actually does not matter.
-  if (!config.profile) {
-    config.profile = 'car'; // default to car
+  if (!config['profile']) {
+    config['profile'] = 'car'; // default to car
   }
 
   // build request URL
   let url = this.gmfOsrmBackendUrl_;
-  url += `${config.service}/${this.protocolVersion_}/${config.profile}/`;
+
+  // Common workaround to provide multiple profiles (since it is not supported yet)
+  // Every profile runs on its own instance.
+  if (config['instance']) {
+    url += `${config['instance']}/`;
+  }
+
+  url += `${config['service']}/${this.protocolVersion_}/${config['profile']}/`;
 
   // [ [a,b] , [c,d] ] -> 'a,b;c,d'
   const coordinateString = coordinates.map(c => c.join(',')).join(';');
@@ -104,17 +111,24 @@ gmf.RoutingService.prototype.getNearest = function(coordinate, config) {
   config = config || {};
 
   // service is always nearest
-  config.service = 'nearest';
+  config['service'] = 'nearest';
 
   // Mode of transportation
   // If used in combination with a getRoute request, choose the same profile.
-  if (!config.profile) {
-    config.profile = 'car'; // default to car
+  if (!config['profile']) {
+    config['profile'] = 'car'; // default to car
   }
 
   // build request URL
   let url = this.gmfOsrmBackendUrl_;
-  url += `${config.service}/${this.protocolVersion_}/${config.profile}/`;
+
+  // Common workaround to provide multiple profiles (since it is not supported yet)
+  // Every profile runs on its own instance.
+  if (config['instance']) {
+    url += `${config['instance']}/`;
+  }
+
+  url += `${config['service']}/${this.protocolVersion_}/${config['profile']}/`;
 
   // [a,b] -> 'a,b'
   const coordinateString = coordinate.join(',');
