@@ -6,14 +6,14 @@ goog.require('gmf');
  * Service to provide acces to a Open Source Routing Machine (OSRM)
  * backend and its features.
  * @param {angular.$http} $http Angular http service.
- * @param {string=} gmfOsrmBackendUrl URL for OSRM backend API
+ * @param {angular.$injector} $injector Main injector.
  * @constructor
  * @struct
  * @ngInject
  * @export
  * @ngname gmfRoutingService
  */
-gmf.RoutingService = function($http, gmfOsrmBackendUrl) {
+gmf.RoutingService = function($http, $injector) {
 
   /**
    * @type {angular.$http}
@@ -23,11 +23,16 @@ gmf.RoutingService = function($http, gmfOsrmBackendUrl) {
 
 
   /**
+   * URL for OSRM backend API.
+   * Defaults to demo backend.
    * @type {string}
    * @private
    */
-  this.gmfOsrmBackendUrl_ = gmfOsrmBackendUrl || 'http://router.project-osrm.org/';
+  this.gmfOsrmBackendUrl_ = 'http://router.project-osrm.org/';
 
+  if ($injector.has('gmfOsrmBackendUrl')) {
+    this.gmfOsrmBackendUrl_ = $injector.get('gmfOsrmBackendUrl');
+  }
 
   /**
    * Version of the protocol implemented by the service.
