@@ -3,7 +3,7 @@ goog.provide('gmf.RoutingService');
 goog.require('gmf');
 
 /**
- * Service to provide acces to a Open Source Routing Machine (OSRM)
+ * Service to provide access to a Open Source Routing Machine (OSRM)
  * backend and its features.
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$injector} $injector Main injector.
