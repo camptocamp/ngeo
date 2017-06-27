@@ -486,7 +486,7 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 
     const onSuccess_ = (function(resp) {
       const features = this.parseRoute_(resp.data.routes[0]);
-      if (features.length == 0) {
+      if (features.length === 0) {
         console.log('No route or not supported format.');
         return;
       }
