@@ -63,6 +63,9 @@ gmf.RoutingService.prototype.getRoute = function(coordinates, config) {
   // Mode of transportation,
   // can be: car, bike, foot
   // see: https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#requests
+  //
+  // As of version 5.8.0, OSRM (server) does not support multiple profiles simultaneously.
+  // This means the value actually does not matter.
   if (!config.profile) {
     config.profile = 'car'; // default to car
   }
