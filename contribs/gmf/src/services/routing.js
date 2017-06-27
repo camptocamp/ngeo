@@ -107,7 +107,7 @@ gmf.RoutingService.prototype.getNearest = function(coordinate, config) {
   config.service = 'nearest';
 
   // Mode of transportation
-  // If used in combiantion with a getRoute request, choose the same profile.
+  // If used in combination with a getRoute request, choose the same profile.
   if (!config.profile) {
     config.profile = 'car'; // default to car
   }
