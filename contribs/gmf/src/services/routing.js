@@ -32,6 +32,11 @@ gmf.RoutingService = function($http, $injector) {
 
   if ($injector.has('gmfOsrmBackendUrl')) {
     this.gmfOsrmBackendUrl_ = $injector.get('gmfOsrmBackendUrl');
+
+    // the url is expected to end with a slash
+    if (this.gmfOsrmBackendUrl_.substr(-1) !== '/') {
+      this.gmfOsrmBackendUrl_ += '/';
+    }
   }
 
   /**
