@@ -40,6 +40,12 @@ gmf.NominatimService = function($http, $injector) {
   }
 
   /**
+   * @type {Object<string, string>}
+   * @export
+   */
+  this.searchDefaultParams = {};
+
+  /**
    * Delay to avoid calling the API too often.
    * Only if there were no calls for that many milliseconds,
    * the last call will be executed.
@@ -96,6 +102,7 @@ gmf.NominatimService.prototype.search = function(query, params) {
   let url = `${this.nominatimUrl_}/search?q=${query}`;
 
   params = params || {};
+  params = Object.assign(this.searchDefaultParams, params);
 
   // require JSON response
   params['format'] = 'json';
