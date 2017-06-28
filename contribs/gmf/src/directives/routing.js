@@ -45,7 +45,7 @@ function gmfRoutingTemplateUrl($element, $attrs, gmfRoutingTemplateUrl) {
  *     active or not.
  * @htmlAttribute {ol.Map} gmf-routing-map The map.
  * @ngdoc component
- * @ngname gmfObjectediting
+ * @ngname gmfRouting
  */
 gmf.routingComponent = {
   controller: 'GmfRoutingController as routeCtrl',
