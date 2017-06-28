@@ -4,6 +4,8 @@ goog.require('gmf');
 goog.require('gmf.DataSource');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
+goog.require('ngeo.BackgroundEventType');
+goog.require('ngeo.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DataSources');
 goog.require('ngeo.LayerHelper');
@@ -31,6 +33,8 @@ gmf.DataSourcesManager = class {
    * @param {angular.$timeout} $timeout Angular timeout service.
    * @param {gmf.Themes} gmfThemes The gmf Themes service.
    * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
+   * @param {!ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
+   *     manager.
    * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
    *     objects.
    * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
@@ -41,7 +45,8 @@ gmf.DataSourcesManager = class {
    * @ngname gmfDataSourcesManager
    */
   constructor($q, $rootScope, $timeout, gmfThemes, gmfTreeManager,
-      ngeoDataSources, ngeoLayerHelper, ngeoRuleHelper, ngeoWMSTime
+      ngeoBackgroundLayerMgr, ngeoDataSources, ngeoLayerHelper, ngeoRuleHelper,
+      ngeoWMSTime
   ) {
 
     // === Injected properties ===
@@ -75,6 +80,12 @@ gmf.DataSourcesManager = class {
      * @private
      */
     this.gmfTreeManager_ = gmfTreeManager;
+
+    /**
+     * @type {!ngeo.BackgroundLayerMgr}
+     * @private
+     */
+    this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
     /**
      * The collection of DataSources from ngeo, which gets updated by this
@@ -133,6 +144,12 @@ gmf.DataSourcesManager = class {
 
     // === Events ===
 
+    ol.events.listen(
+      this.ngeoBackgroundLayerMgr_,
+      ngeo.BackgroundEventType.CHANGE,
+      this.handleNgeoBackgroundLayerChange_,
+      this
+    );
     ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE,
         this.handleThemesChange_, this);
   }
@@ -685,6 +702,51 @@ gmf.DataSourcesManager = class {
     );
   }
 
+  /**
+   * Called when the background layer changes. Add/Remove the according data
+   * sources to/from the ngeo data sources collection. Update the data source
+   * `visible` property as well.
+   *
+   * The `querySourceIds` property in the layer is used to determine the
+   * data sources that are bound to the layer.
+   *
+   * @param {!ngeo.BackgroundEvent} evt Event.
+   * @private
+   */
+  handleNgeoBackgroundLayerChange_(evt) {
+
+    const previousBackgroundLayer = evt.previous;
+    const currentBackgroundLayer = evt.current;
+    const cache = this.dataSourcesCache_;
+
+    // Remove data sources linked to previous background layer
+    if (previousBackgroundLayer) {
+      const ids = previousBackgroundLayer.get('querySourceIds');
+      if (Array.isArray(ids)) {
+        for (const id of ids) {
+          const dataSource = cache[id];
+          if (dataSource) {
+            dataSource.visible = false;
+            this.ngeoDataSources_.remove(dataSource);
+          }
+        }
+      }
+    }
+
+    // Add data sources linked to current background layer
+    if (currentBackgroundLayer) {
+      const ids = currentBackgroundLayer.get('querySourceIds');
+      if (Array.isArray(ids)) {
+        for (const id of ids) {
+          const dataSource = cache[id];
+          if (dataSource) {
+            dataSource.visible = true;
+            this.ngeoDataSources_.push(dataSource);
+          }
+        }
+      }
+    }
+  }
 };
 
 
