@@ -273,7 +273,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @type {string}
    * @export
    */
-  this.placeholder = '';
+  this.placeholder;
 
   /**
    * The maximum zoom we will zoom on result.
@@ -333,7 +333,7 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @type {string}
    * @export
    */
-  this.inputValue = '';
+  this.inputValue;
 
   // Create each datasource
   for (let i = 0; i < this.datasources_.length; i++) {
@@ -428,6 +428,16 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
       datasetsempty: gmf.SearchController.datasetsempty_.bind(this)
     }));
 };
+
+
+/**
+ * Called on initialization of the controller.
+ */
+gmf.SearchController.prototype.$onInit = function() {
+  this.inputValue = this.inputValue || '';
+  this.placeholder = this.placeholder || '';
+};
+
 
 /**
  * Merges the custom listeners received via the directive attributes and the
