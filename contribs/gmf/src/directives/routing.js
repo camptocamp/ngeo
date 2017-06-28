@@ -2,6 +2,7 @@ goog.provide('gmf.routingComponent');
 
 goog.require('gmf');
 goog.require('gmf.RoutingService');
+goog.require('gmf.NominatimService');
 goog.require('ol.format.GeoJSON');
 
 
@@ -64,6 +65,7 @@ gmf.module.component('gmfRouting', gmf.routingComponent);
  * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Scope.
  * @param {!gmf.RoutingService} gmfRoutingService service for OSRM routing
+ * @param {!gmf.NominatimService} gmfNominatimService service for Nominatim
  * @param {!angular.$q} $q Angular q service
  * @param {!angular.$filter} $filter Angular filter
  * @constructor
@@ -72,7 +74,7 @@ gmf.module.component('gmfRouting', gmf.routingComponent);
  * @ngdoc controller
  * @ngname GmfRoutingController
  */
-gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, $q, $filter) {
+gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNominatimService, $q, $filter) {
 
   /**
    * @type {angular.Scope}
@@ -85,6 +87,12 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, $q, $f
    * @private
    */
   this.gmfRoutingService_ = gmfRoutingService;
+
+  /**
+   * @type {gmf.NominatimService}
+   * @export
+   */
+  this.gmfNominatimService = gmfNominatimService;
 
   /**
    * Available routing profiles.

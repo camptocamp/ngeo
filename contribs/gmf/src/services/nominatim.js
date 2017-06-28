@@ -6,6 +6,7 @@ goog.require('gmf');
  * Service to provide access to Nominatim, which allows to search for
  * OSM data by name and address.
  * @param {angular.$http} $http Angular http service.
+ * @param {angular.$injector} $injector Main injector.
  * @constructor
  * @struct
  * @ngInject
@@ -13,7 +14,7 @@ goog.require('gmf');
  * @ngname gmfNominatimService
  * @see https://wiki.openstreetmap.org/wiki/Nominatim
  */
-gmf.NominatimService = function($http) {
+gmf.NominatimService = function($http, $injector) {
 
   /**
    * @type {angular.$http}
@@ -22,10 +23,21 @@ gmf.NominatimService = function($http) {
   this.$http_ = $http;
 
   /**
+   * URL for Nominatim backend
+   * Defaults openstreetmap instance.
    * @type {string}
    * @private
    */
   this.nominatimUrl_ = 'http://nominatim.openstreetmap.org/';
+
+  if ($injector.has('gmfNominatimUrl')) {
+    this.nominatimUrl_ = $injector.get('gmfNominatimUrl');
+
+    // the url is expected to end with a slash
+    if (this.nominatimUrl_.substr(-1) !== '/') {
+      this.nominatimUrl_ += '/';
+    }
+  }
 
 };
 
@@ -40,6 +52,9 @@ gmf.NominatimService = function($http) {
 gmf.NominatimService.prototype.search = function(query, params) {
   let url = `${this.nominatimUrl_}/search?q=${query}`;
 
+  // require JSON response
+  params['format'] = 'json';
+
   if (params) {
     url += '&';
     const options = [];
@@ -51,3 +66,5 @@ gmf.NominatimService.prototype.search = function(query, params) {
 
   return this.$http_.get(url);
 };
+
+gmf.module.service('gmfNominatimService', gmf.NominatimService);
