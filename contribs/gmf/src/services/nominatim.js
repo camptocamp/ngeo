@@ -46,6 +46,12 @@ gmf.NominatimService = function($http, $injector) {
   this.searchDefaultParams = {};
 
   /**
+   * @type {Object<string, string>}
+   * @export
+   */
+  this.reverseDefaultParams = {};
+
+  /**
    * Delay to avoid calling the API too often.
    * Only if there were no calls for that many milliseconds,
    * the last call will be executed.
@@ -103,6 +109,39 @@ gmf.NominatimService.prototype.search = function(query, params) {
 
   params = params || {};
   params = Object.assign(this.searchDefaultParams, params);
+
+  // require JSON response
+  params['format'] = 'json';
+
+  if (params) {
+    url += '&';
+    const options = [];
+    for (const option of Object.keys(params)) {
+      options.push(`${option}=${params[option]}`);
+    }
+    url += options.join('&');
+  }
+
+  return this.$http_.get(url);
+};
+
+/**
+ * Reverse Geocoding
+ * @param {ol.Coordinate} coordinate Search coordinate in LonLat projection
+ * @param {?Object} params Optional parameters
+ * @return {!angular.$http.HttpPromise} promise of the Nominatim API request
+ * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
+ * @export
+ */
+gmf.NominatimService.prototype.reverse = function(coordinate, params) {
+  let url = `${this.nominatimUrl_}/reverse`;
+
+  params = params || {};
+  params = Object.assign(this.reverseDefaultParams, params);
+
+  // coordinate
+  params['lon'] = coordinate[0];
+  params['lat'] = coordinate[1];
 
   // require JSON response
   params['format'] = 'json';
