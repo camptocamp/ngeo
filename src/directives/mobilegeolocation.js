@@ -116,7 +116,10 @@ ngeo.MobileGeolocationController = function($scope, $element,
    * @private
    */
   this.geolocation_ = new ol.Geolocation({
-    projection: map.getView().getProjection()
+    projection: map.getView().getProjection(),
+    trackingOptions: /** @type {GeolocationPositionOptions} */ ({
+      enableHighAccuracy: true
+    })
   });
 
   // handle geolocation error.
