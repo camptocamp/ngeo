@@ -105,7 +105,7 @@ gmf.NominatimService = function($http, $injector) {
  * @export
  */
 gmf.NominatimService.prototype.search = function(query, params) {
-  let url = `${this.nominatimUrl_}/search?q=${query}`;
+  let url = `${this.nominatimUrl_}search?q=${query}`;
 
   params = params || {};
   params = Object.assign(this.searchDefaultParams, params);
@@ -134,7 +134,7 @@ gmf.NominatimService.prototype.search = function(query, params) {
  * @export
  */
 gmf.NominatimService.prototype.reverse = function(coordinate, params) {
-  let url = `${this.nominatimUrl_}/reverse`;
+  let url = `${this.nominatimUrl_}reverse`;
 
   params = params || {};
   params = Object.assign(this.reverseDefaultParams, params);
