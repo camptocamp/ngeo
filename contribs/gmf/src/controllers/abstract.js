@@ -114,6 +114,21 @@ gmf.AbstractController = function(config, $scope, $injector) {
    */
   const permalink = $injector.get('gmfPermalink');
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.hasEditableLayers = false;
+
+  /**
+   * @private
+   */
+  this.updateHasEditableLayers_ = function() {
+    this.gmfThemes_.hasEditableLayers().then((hasEditableLayers) => {
+      this.hasEditableLayers = hasEditableLayers;
+    });
+  };
+
   const userChange = function(evt) {
     const roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
     // Reload theme and background layer when login status changes.
@@ -425,21 +440,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
   }.bind(this);
 
   this.updateCurrentBackgroundLayer_(false);
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.hasEditableLayers = false;
-
-  /**
-   * @private
-   */
-  this.updateHasEditableLayers_ = function() {
-    this.gmfThemes_.hasEditableLayers().then((hasEditableLayers) => {
-      this.hasEditableLayers = hasEditableLayers;
-    });
-  };
 
   /**
    * Ngeo create popup factory
