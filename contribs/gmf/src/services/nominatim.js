@@ -147,7 +147,7 @@ gmf.NominatimService.prototype.reverse = function(coordinate, params) {
   params['format'] = 'json';
 
   if (params) {
-    url += '&';
+    url += '?';
     const options = [];
     for (const option of Object.keys(params)) {
       options.push(`${option}=${params[option]}`);
