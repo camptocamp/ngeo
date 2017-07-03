@@ -30,12 +30,21 @@ function gmfNominatimInputTemplateUrl($element, $attrs, gmfNominatimInputTemplat
 
 
 /**
+ * @htmlAttribute {function} gmf-nominatim-input-on-select
+ *  Event fired when user selects a new suggestion.
+ *  Parameters: (event object, suggestion object)
+ * @htmlAttribute {Object<string, string>} gmf-nominatim-input-search-deafault-params
+ *  Default parameters to customize search.
+ * @htmlAttribute {ol.Feature} gmf-nominatim-input-feature Feature
  * @ngdoc component
  * @ngname gmfNominatimInput
  */
 gmf.nominatimInputComponent = {
   controller: 'GmfNominatimInputController as inputCtrl',
   bindings: {
+    'onSelect': '=?gmfNominatimInputOnSelect',
+    'searchDefaultParams': '=?gmfNominatimInputSearchDefaultParams',
+    'feature': '=gmfNominatimInputFeature'
   },
   templateUrl: gmfNominatimInputTemplateUrl
 };
@@ -69,10 +78,30 @@ gmf.GmfNominatimInputController = function($element, $injector, $scope, gmfNomin
   this.$scope_ = $scope;
 
   /**
+   * @type {Object<string, string>}
+   * @private
+   */
+  this.searchDefaultParams_ = this.$scope_['searchDefaultParams'] || [];
+  this.searchDefaultParams_['countrycodes'] = 'CH';
+
+  /**
    * @type {gmf.NominatimService}
    * @export
    */
   this.gmfNominatimService = gmfNominatimService;
+  this.gmfNominatimService.searchDefaultParams = this.searchDefaultParams_;
+
+  /**
+   * @type {function}
+   * @export
+   */
+  this.onSelect;
+
+  /**
+   * @type {ol.Feature}
+   */
+  this.feature;
+
 };
 
 gmf.GmfNominatimInputController.prototype.$onInit = function() {
