@@ -318,7 +318,6 @@ gmf.GmfRoutingController.prototype.$onInit = function() {
     this[this.activeModifyFeature_] = feature;
     this.vectorSource_.addFeature(this[this.activeModifyFeature_]);
     this.snapFeature_(this.activeModifyFeature_, this.activeModifyFeatureLabel_);
-    this.calculateRoute();
   });
 };
 
@@ -383,7 +382,7 @@ gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
     if (this.draw_) {
       this.map.removeInteraction(this.draw_);
     }
-    this.calculateRoute();
+    this.snapFeature_(feature, label);
     this.modifyFeatures_.setActive(true);
   });
 
@@ -451,6 +450,8 @@ gmf.GmfRoutingController.prototype.snapFeature_ = function(feature, label) {
     const newLabel = resp['data']['display_name'];
 
     this.replaceFeature_(feature, label, coords, newLabel);
+
+    this.calculateRoute();
   }).bind(this);
 
   const onError = (function(resp) {
@@ -532,14 +533,7 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
       this.routeDistance = this.format_(resp.data.routes[0].distance, 'm');
       this.routeDuration = Math.ceil(resp.data.routes[0].duration / 60);
 
-      // process waypoints to "snap" the features
-      const startCoord = resp.data.waypoints[0].location;
-      const startLabel = resp.data.waypoints[0].name;
-      this.replaceFeature_('startFeature_', 'startFeatureLabel', startCoord, startLabel);
-
-      const targetCoord = resp.data.waypoints[1].location;
-      const targetLabel = resp.data.waypoints[1].name;
-      this.replaceFeature_('targetFeature_', 'targetFeatureLabel', targetCoord, targetLabel);
+      // TODO draw line between markes and end of route
     }).bind(this);
 
     const onError_ = (function(resp) {
@@ -561,13 +555,6 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 
     this.$q_.when(this.gmfRoutingService_.getRoute(route, config))
       .then(onSuccess_.bind(this), onError_.bind(this));
-  } else if (this.startFeature_ || this.targetFeature_) {
-    const feature = (this.startFeature_) ? 'startFeature_' : 'targetFeature_';
-    const label = (this.startFeatureLabel) ? 'startFeatureLabel' : 'targetFeatureLabel';
-    // only snap feature if it is still just a plain coordinate
-    if (this.regexIsFormattedCoord.test(this[label])) {
-      this.snapFeature_(feature, label);
-    }
   }
 };
 
