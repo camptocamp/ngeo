@@ -21,8 +21,9 @@ goog.require('ol.interaction.DragBox');
  *      <span
  *        ngeo-bbox-query=""
  *        ngeo-bbox-query-map="::ctrl.map"
- *        ngeo-bbox-query-active="ctrl.queryActive">
- *        ngeo-bbox-query-autoclear="ctrl.queryAutoClear">
+ *        ngeo-bbox-query-active="ctrl.queryActive"
+ *        ngeo-bbox-query-autoclear="ctrl.queryAutoClear"
+ *        ngeo-bbox-query-dimensions="ctrl.dimensions">
  *      </span>
  *
  * See the live example: [../examples/bboxquery.html](../examples/bboxquery.html)
@@ -42,6 +43,7 @@ ngeo.bboxQueryDirective = function(ngeoMapQuerent) {
        * @type {ol.Map}
        */
       const map = scope.$eval(attrs['ngeoBboxQueryMap']);
+      const dimensions = scope.$eval(attrs['ngeoBboxQueryDimensions']);
 
       const interaction = new ol.interaction.DragBox({
         condition: ol.events.condition.platformModifierKeyOnly
@@ -56,7 +58,8 @@ ngeo.bboxQueryDirective = function(ngeoMapQuerent) {
         const extent = interaction.getGeometry().getExtent();
         ngeoMapQuerent.issue({
           extent,
-          map
+          map,
+          dimensions
         });
       };
       interaction.on('boxend', handleBoxEnd);

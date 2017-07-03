@@ -480,6 +480,11 @@ ngeox.DataSource.prototype.combinableForWMS;
 ngeox.DataSource.prototype.combinableForWFS;
 
 /**
+ * @type {?Object.<string, string>}
+ */
+ngeox.DataSource.prototype.dimensions;
+
+/**
  * @type {boolean}
  */
 ngeox.DataSource.prototype.queryable;
@@ -526,6 +531,7 @@ ngeox.DataSource.prototype.combinableWithDataSourceForWMS = function(dataSource)
  * @typedef {{
  *     coordinate: (ol.Coordinate|undefined),
  *     dataSources: (Array.<ngeox.DataSource>|undefined),
+ *     dimensions: (Object.<string, string>|undefined),
  *     extent: (ol.Extent|undefined),
  *     filter: (ol.format.filter.Filter|undefined),
  *     limit: (number|undefined),

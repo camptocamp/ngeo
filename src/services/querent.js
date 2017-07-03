@@ -98,7 +98,7 @@ ngeo.Querent = class {
     //     The 'bbox' ('extent' option) is not required for WFS requests to
     //     be issued.
     const combinedWFSDataSources = this.getCombinableWFSDataSources_(
-      queryableDataSources.wfs);
+      queryableDataSources.wfs, options);
     promises.push(this.issueCombinedWFS_(combinedWFSDataSources, options));
 
     // (4) Combine data sources that support WMS and issue WMS queries.
@@ -107,7 +107,7 @@ ngeo.Querent = class {
     const coordinate = options.coordinate;
     if (coordinate) {
       const combinedWMSDataSources = this.getCombinableWMSDataSources_(
-        queryableDataSources.wms);
+        queryableDataSources.wms, options);
       promises.push(this.issueCombinedWMS_(combinedWMSDataSources, options));
     }
 
@@ -365,6 +365,8 @@ ngeo.Querent = class {
         }
       }
 
+      const params = this.getDimensionsParams_(dataSources, options);
+
       goog.asserts.assert(getFeatureCommonOptions);
       getFeatureCommonOptions.featureTypes = featureTypes;
       goog.asserts.assert(url);
@@ -406,6 +408,7 @@ ngeo.Querent = class {
           url,
           featureCountRequest,
           {
+            params,
             timeout: canceler.promise
           }
         ).then(((response) => {
@@ -443,6 +446,7 @@ ngeo.Querent = class {
             url,
             featureRequest,
             {
+              params,
               timeout: canceler.promise
             }
           ).then((response) => {
@@ -487,13 +491,14 @@ ngeo.Querent = class {
     const coordinate = options.coordinate;
     goog.asserts.assert(coordinate);
 
+    const params = {};
+
     // (2) Launch one request per combinaison of data sources
     for (const dataSources of combinedDataSources) {
 
       let url;
       let LAYERS = [];
       let INFO_FORMAT;
-      const params = {};
       let filterString = null;
       let filtrableLayerName = null;
 
@@ -509,15 +514,6 @@ ngeo.Querent = class {
         // (b) Add queryable layer names in featureTypes array
         LAYERS = LAYERS.concat(
           dataSource.getInRangeOGCLayerNames(resolution, true));
-
-        // (c) Manage active dimensions. Add them directly to the query
-        //     parameters.
-        const dimensions = dataSource.activeDimensions;
-        if (dimensions) {
-          for (const dimensionKey in dimensions) {
-            params[dimensionKey] = dimensions[dimensionKey];
-          }
-        }
 
         // (d) Add filter, if any. If there is a filter on the data source,
         //     then it is expected that one request will be sent for this
@@ -542,6 +538,8 @@ ngeo.Querent = class {
           );
         }
       }
+
+      ol.obj.assign(params, this.getDimensionsParams_(dataSources, options));
 
       params['LAYERS'] = LAYERS;
       params['QUERY_LAYERS'] = LAYERS;
@@ -608,10 +606,11 @@ ngeo.Querent = class {
   /**
    * @param {!Array.<ngeox.DataSource>} dataSources List of queryable data
    *     sources that supports WFS.
+   * @param {ngeox.IssueGetFeaturesOptions} options Options.
    * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
    * @private
    */
-  getCombinableWFSDataSources_(dataSources) {
+  getCombinableWFSDataSources_(dataSources, options) {
     const combinableDataSources = [];
     const notCombinableDataSources = [];
 
@@ -619,7 +618,8 @@ ngeo.Querent = class {
       if (dataSource.combinableForWFS) {
         let combined = false;
         for (const combinableDataSource of combinableDataSources) {
-          if (dataSource.combinableWithDataSourceForWFS(combinableDataSource[0])) {
+          if (dataSource.combinableWithDataSourceForWFS(combinableDataSource[0]) &&
+              !this.dimensionsOverlap_(dataSource, combinableDataSource, options)) {
             combinableDataSource.push(dataSource);
             combined = true;
           }
@@ -638,10 +638,11 @@ ngeo.Querent = class {
   /**
    * @param {!Array.<ngeox.DataSource>} dataSources List of queryable data
    *     sources that supports WMS.
+   * @param {ngeox.IssueGetFeaturesOptions} options Options.
    * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
    * @private
    */
-  getCombinableWMSDataSources_(dataSources) {
+  getCombinableWMSDataSources_(dataSources, options) {
     const combinableDataSources = [];
     const notCombinableDataSources = [];
 
@@ -649,7 +650,8 @@ ngeo.Querent = class {
       if (dataSource.combinableForWMS) {
         let combined = false;
         for (const combinableDataSource of combinableDataSources) {
-          if (dataSource.combinableWithDataSourceForWMS(combinableDataSource[0])) {
+          if (dataSource.combinableWithDataSourceForWMS(combinableDataSource[0]) &&
+              !this.dimensionsOverlap_(dataSource, combinableDataSource, options)) {
             combinableDataSource.push(dataSource);
             combined = true;
           }
@@ -680,6 +682,57 @@ ngeo.Querent = class {
   isDataSourceQueryable_(ds, res) {
     return ds.visible && ds.inRange && ds.queryable &&
       ds.isAnyOGCLayerInRange(res, true);
+  }
+
+  /**
+   * Check if data source dimensions overlap with data sources list.
+   * @param {!ngeox.DataSource} dataSource Data source to check.
+   * @param {!Array.<ngeox.DataSource>} dataSources Data sources list to check with.
+   * @param {ngeox.IssueGetFeaturesOptions} options Options.
+   * @return {boolean} true if dimensions values do overlap.
+   * @private
+   */
+  dimensionsOverlap_(dataSource, dataSources, options) {
+    const dimensions = options.dimensions || {};
+    for (const key in dataSource.dimensions) {
+      // Verify only dimensions values not set globally in options
+      if (dimensions[key] != undefined) {
+        for (const combinedDataSource of dataSources) {
+          if (dataSource.dimensions[key] !== combinedDataSource.dimensions[key]) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Get dimensions query parameters for specified list of data sources.
+   * @param {!Array.<ngeox.DataSource>} dataSources Considered data sources list.
+   * @param {ngeox.IssueGetFeaturesOptions} options Options.
+   * @return {Object.<string, string>} Dimensions related query parameters.
+   * @private
+   */
+  getDimensionsParams_(dataSources, options) {
+    const params = {};
+    const dimensions = options.dimensions || {};
+
+    ol.obj.assign(params, dimensions);
+
+    // Apply default data sources dimensions values
+    for (const dataSource of dataSources) {
+      for (const key in dataSource.dimensions) {
+        if (!(key in params)) {
+          const value = dataSource.dimensions[key];
+          if (value !== undefined) {
+            params[key] = value;
+          }
+        }
+      }
+    }
+
+    return params;
   }
 
   /**
