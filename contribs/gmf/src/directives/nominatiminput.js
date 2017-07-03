@@ -110,6 +110,10 @@ gmf.GmfNominatimInputController.prototype.$onInit = function() {
     display: 'name',
     source: this.gmfNominatimService.typeaheadSourceDebounced
   });
+
+  $('.typeahead', $(this.element_)).bind('typeahead:select', (ev, suggestion) => {
+    console.log(suggestion);
+  });
 };
 
 gmf.module.controller('GmfNominatimInputController', gmf.GmfNominatimInputController);
