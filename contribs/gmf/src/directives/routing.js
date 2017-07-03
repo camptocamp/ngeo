@@ -90,9 +90,9 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
 
   /**
    * @type {gmf.NominatimService}
-   * @export
+   * @private
    */
-  this.gmfNominatimService = gmfNominatimService;
+  this.gmfNominatimService_ = gmfNominatimService;
 
   /**
    * Available routing profiles.
@@ -444,25 +444,21 @@ gmf.GmfRoutingController.prototype.snapFeature_ = function(feature, label) {
   const coord = this.getLonLatFromPoint_(this[feature]);
   const config = {};
 
-  if (this.selectedRoutingProfile) {
-    config['instance'] = this.selectedRoutingProfile['profile'];
-  }
-
   const onSuccess = (function(resp) {
-    if (resp.data.waypoints.length > 0) {
-      const coords = resp.data.waypoints[0].location;
-      const newLabel = resp.data.waypoints[0].name;
+    const lon = parseFloat(resp['data']['lon']);
+    const lat = parseFloat(resp['data']['lat']);
+    const coords = [lon, lat];
+    const newLabel = resp['data']['display_name'];
 
-      this.replaceFeature_(feature, label, coords, newLabel);
-    }
+    this.replaceFeature_(feature, label, coords, newLabel);
   }).bind(this);
 
   const onError = (function(resp) {
-    this.errorMessage = 'Error: routing server not responding.';
+    this.errorMessage = 'Error: nominatim server not responding.';
     console.log(resp);
   }).bind(this);
 
-  this.$q_.when(this.gmfRoutingService_.getNearest(coord, config))
+  this.$q_.when(this.gmfNominatimService_.reverse(coord, config))
     .then(onSuccess.bind(this), onError.bind(this));
 };
 
@@ -601,7 +597,7 @@ gmf.GmfRoutingController.prototype.nominatimSearch = function(query, callback) {
     callback([]);
   }).bind(this);
 
-  this.gmfNominatimService.search(query, {}).then(onSuccess_, onError_);
+  this.gmfNominatimService_.search(query, {}).then(onSuccess_, onError_);
 };
 
 gmf.module.controller('GmfRoutingController', gmf.GmfRoutingController);
