@@ -94,6 +94,7 @@ gmf.NominatimService = function($http, $injector) {
    * @type {Function}
    */
   this.typeaheadSourceDebounced = debounce(this.typeaheadSource_.bind(this), this.typeaheadDebounceDelay_);
+  // TODO: check if replacing debounce with ngeo.Debounce would make sense
 };
 
 /**
