@@ -169,7 +169,7 @@ gmf.NominatimService.prototype.typeaheadSource_ = function(query, syncResults, a
   const onSuccess_ = function(resp) {
     const features = resp.data.map((result) => {
       return {
-        coords: [result.lon, result.lat],
+        coordinate: [result.lon, result.lat],
         name: result.display_name
       };
     });
