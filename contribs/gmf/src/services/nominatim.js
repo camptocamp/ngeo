@@ -108,7 +108,7 @@ gmf.NominatimService.prototype.search = function(query, params) {
   let url = `${this.nominatimUrl_}search?q=${query}`;
 
   params = params || {};
-  params = Object.assign(this.searchDefaultParams, params);
+  params = Object.assign({}, this.searchDefaultParams, params);
 
   // require JSON response
   params['format'] = 'json';
