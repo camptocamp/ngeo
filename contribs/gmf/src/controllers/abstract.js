@@ -534,7 +534,8 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   const searchQuery = this.ngeoLocation.getParam('search');
   if (searchQuery) {
-    this.search_(searchQuery);
+    const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    this.search_(searchQuery, overlay);
   }
 };
 
@@ -623,14 +624,16 @@ gmf.AbstractController.prototype.getLocationIcon = function() {
 /**
  * Performs a full-text search and centers the map on the first search result.
  * @param {string} query Search query.
+ * @param {ngeo.FeatureOverlay} overlay Feature overlay to add the feature if found.
  * @private
  */
-gmf.AbstractController.prototype.search_ = function(query) {
+gmf.AbstractController.prototype.search_ = function(query, overlay) {
   this.fullTextSearch_.search(query, {'limit': 1})
     .then((data) => {
       if (data && data.features[0]) {
         const format = new ol.format.GeoJSON();
         const feature = format.readFeature(data.features[0]);
+        overlay.addFeature(feature);
         this.map.getView().fit(feature.getGeometry().getExtent());
       }
     });
