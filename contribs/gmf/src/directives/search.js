@@ -944,7 +944,7 @@ gmf.SearchController.prototype.fulltextsearch_ = function(query) {
         const feature = format.readFeature(data.features[0]);
         this.featureOverlay_.addFeature(feature);
         this.map_.getView().fit(feature.getGeometry().getExtent());
-        this.inputValue = feature.get('label');
+        this.inputValue = /** @type {string} */ (feature.get('label'));
       }
     });
 };
