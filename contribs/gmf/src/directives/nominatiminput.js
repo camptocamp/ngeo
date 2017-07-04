@@ -94,6 +94,7 @@ gmf.GmfNominatimInputController = function($element, $injector, $scope, gmfNomin
   this.gmfNominatimService.searchDefaultParams = this.searchDefaultParams_;
 
   /**
+   * Signature: (ev, suggestion)
    * @type {function}
    * @export
    */
@@ -125,9 +126,18 @@ gmf.GmfNominatimInputController.prototype.$onInit = function() {
     source: this.gmfNominatimService.typeaheadSourceDebounced
   });
 
-  $('.typeahead', $(this.element_)).bind('typeahead:select', (ev, suggestion) => {
-    console.log(suggestion);
-  });
+  $('.typeahead', $(this.element_)).bind('typeahead:select', this.handleSelect_.bind(this));
+};
+
+/**
+ * @param {Object} event Event object.
+ * @param {Object} suggestion Selected search result.
+ * @private
+ */
+gmf.GmfNominatimInputController.prototype.handleSelect_ = function(event, suggestion) {
+  if (this.onSelect) {
+    this.onSelect(suggestion);
+  }
 };
 
 gmf.module.controller('GmfNominatimInputController', gmf.GmfNominatimInputController);
