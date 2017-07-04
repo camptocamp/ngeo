@@ -39,7 +39,7 @@ gmf.fulltextSearchService = function($injector, $http) {
    * @type {Object.<string, string>}
    * @private
    */
-  this.params_ = ngeo.utils.decodeQueryString(queryString);
+  this.defaultParams_ = ngeo.utils.decodeQueryString(queryString);
 };
 
 /**
@@ -49,8 +49,7 @@ gmf.fulltextSearchService = function($injector, $http) {
  * @returns {Promise} Request promise with data array.
  */
 gmf.fulltextSearchService.prototype.search = function(query, params) {
-  let queryParams = Object.assign({}, this.params_); // clone it
-  queryParams = Object.assign(queryParams, params);
+  const queryParams = Object.assign({}, this.defaultParams_, params);
 
   queryParams['query'] = query;
 
