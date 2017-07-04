@@ -10,6 +10,8 @@ goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.colorpickerDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.popoverDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.fulltextSearchService');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
@@ -169,6 +171,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.$injector} $injector Main injector.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
  * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
@@ -181,7 +184,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  * @ngdoc controller
  * @ngname GmfSearchController
  */
-gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
+gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCatalog,
   ngeoAutoProjection, ngeoSearchCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
   gmfThemes, gmfTreeManager) {
 
@@ -203,6 +206,17 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @private
    */
   this.timeout_ = $timeout;
+
+  /**
+   * @type {ngeo.Location}
+   * @private
+   */
+  this.ngeoLocation_ = $injector.get('ngeoLocation');
+
+  /**
+   * @private
+   */
+  this.fullTextSearch_ = $injector.get('gmfFulltextSearchService');
 
   /**
    * @type {angularGettext.Catalog}
@@ -436,6 +450,11 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
 gmf.SearchController.prototype.$onInit = function() {
   this.inputValue = this.inputValue || '';
   this.placeholder = this.placeholder || '';
+
+  const searchQuery = this.ngeoLocation_.getParam('search');
+  if (searchQuery) {
+    this.fulltextsearch_(searchQuery);
+  }
 };
 
 
@@ -910,6 +929,24 @@ gmf.SearchController.datasetsempty_ = function(event, query, empty) {
     message.hide();
   }
 
+};
+
+/**
+ * Performs a full-text search and centers the map on the first search result.
+ * @param {string} query Search query.
+ * @private
+ */
+gmf.SearchController.prototype.fulltextsearch_ = function(query) {
+  this.fullTextSearch_.search(query, {'limit': 1})
+    .then((data) => {
+      if (data && data.features[0]) {
+        const format = new ol.format.GeoJSON();
+        const feature = format.readFeature(data.features[0]);
+        this.featureOverlay_.addFeature(feature);
+        this.map_.getView().fit(feature.getGeometry().getExtent());
+        this.inputValue = feature.get('label');
+      }
+    });
 };
 
 
