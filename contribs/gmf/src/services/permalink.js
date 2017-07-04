@@ -234,6 +234,12 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
     $injector.get('ngeoWfsPermalink') : null;
 
   /**
+   * @type {gmfx.User}
+   * @export
+   */
+  this.gmfUser_ = $injector.get('gmfUser');
+
+  /**
    * @type {?ol.Map}
    * @private
    */
@@ -803,6 +809,58 @@ gmf.Permalink.prototype.setThemeInUrl_ = function() {
 
 
 /**
+ * Get the default theme from url, local storage, user functionalities or
+ * defaultTheme constant.
+ * @return {?string} default theme name.
+ * @export
+ */
+gmf.Permalink.prototype.defaultThemeName = function() {
+
+  // check if we have a theme in url
+  const pathElements = this.ngeoLocation_.getPath().split('/');
+  if (this.themeInUrl_(pathElements)) {
+    return pathElements[pathElements.length - 1];
+  }
+
+  // check if we have a theme in the local storage
+  const tn = this.ngeoStateManager_.getInitialStringValue('theme');
+  if (tn) {
+    return tn;
+  }
+
+  const defaultTheme = this.defaultThemeNameFromFunctionalities();
+  if (defaultTheme !== null) {
+    return defaultTheme;
+  }
+
+  // fallback to the defaultTheme constant
+  if (this.defaultTheme_) {
+    return this.defaultTheme_;
+  }
+
+  return null;
+};
+
+
+/**
+ * Get the default theme from user functionalities.
+ * @return {?string} default theme name.
+ * @export
+ */
+gmf.Permalink.prototype.defaultThemeNameFromFunctionalities = function() {
+  //check if we have a theme in the user functionalities
+  const functionalities = this.gmfUser_.functionalities;
+  if (functionalities && 'default_theme' in functionalities) {
+    const defaultTheme = functionalities.default_theme;
+    if (defaultTheme.length > 0) {
+      return defaultTheme[0];
+    }
+  }
+  return null;
+};
+
+
+/**
  * @private
  */
 gmf.Permalink.prototype.initLayers_ = function() {
@@ -810,24 +868,8 @@ gmf.Permalink.prototype.initLayers_ = function() {
     return;
   }
   this.gmfThemes_.getThemesObject().then((themes) => {
-    let themeName;
-    const pathElements = this.ngeoLocation_.getPath().split('/');
-    if (this.themeInUrl_(pathElements)) {
-      themeName = pathElements[pathElements.length - 1];
-    }
+    const themeName = this.defaultThemeName();
 
-    if (!themeName) {
-      // check if we have a theme in the local storage
-      const tn = this.ngeoStateManager_.getInitialStringValue('theme');
-      if (tn) {
-        themeName = tn;
-      }
-    }
-
-    if (!themeName && this.defaultTheme_) {
-      // fallback to the default theme
-      themeName = this.defaultTheme_;
-    }
     if (this.gmfThemeManager_ && this.gmfThemeManager_.modeFlush) {
       this.gmfThemeManager_.themeName = `${themeName}`;
     }

@@ -103,16 +103,17 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.gmfThemes_ = $injector.get('gmfThemes');
 
   /**
+   * Permalink service
+   * @type {gmf.Permalink}
+   * @private
+   */
+  this.permalink_ = $injector.get('gmfPermalink');
+
+  /**
    * Authentication service
    * @type {gmf.Authentication}
    */
   const gmfAuthentication = $injector.get('gmfAuthentication');
-
-  /**
-   * Permalink service
-   * @type {gmf.Permalink}
-   */
-  const permalink = $injector.get('gmfPermalink');
 
   const userChange = function(evt) {
     const roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
@@ -149,7 +150,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.dimensions = {};
 
   // watch any change on dimensions object to refresh the url
-  permalink.setDimensions(this.dimensions);
+  this.permalink_.setDimensions(this.dimensions);
 
   // FIXME - manage dimensions ...
   //const queryManager = $injector.get('gmfQueryManager');
@@ -399,7 +400,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
       let background;
       if (!skipPermalink) {
         // get the background from the permalink
-        background = permalink.getBackgroundLayer(layers);
+        background = this.permalink_.getBackgroundLayer(layers);
       }
       if (!background) {
         // get the background from the user settings
@@ -547,16 +548,7 @@ gmf.AbstractController.prototype.initLanguage = function() {
  */
 gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
   this.gmfThemes_.getThemesObject().then((themes) => {
-    let themeName;
-
-    // check if we have a theme in the user functionalities
-    const functionalities = this.gmfUser.functionalities;
-    if (functionalities && 'default_theme' in functionalities) {
-      const defaultTheme = functionalities.default_theme;
-      if (defaultTheme.length > 0) {
-        themeName = defaultTheme[0];
-      }
-    }
+    const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
     if (themeName) {
       const theme = gmf.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
       if (theme) {
