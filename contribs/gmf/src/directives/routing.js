@@ -558,33 +558,4 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
   }
 };
 
-/**
- *
- * @param query
- * @param callback
- */
-gmf.GmfRoutingController.prototype.nominatimSearch = function(query, callback) {
-  const onSuccess_ = (function(resp){
-    console.log(resp);
-    const features = resp.data.map((result) => {
-      const coords = [result.lon, result.lat];
-      const projection = this.map.getView().getProjection();
-      const transformedCoords = ol.proj.fromLonLat(coords, projection);
-      return new ol.Feature({
-        geometry: new ol.geom.Point(transformedCoords),
-        name: result.display_name
-      });
-    });
-    callback(features);
-  }).bind(this);
-
-  const onError_ = (function(resp) {
-    this.errorMessage = 'Error: nominatim server not responding.';
-    console.log(resp);
-    callback([]);
-  }).bind(this);
-
-  this.gmfNominatimService_.search(query, {}).then(onSuccess_, onError_);
-};
-
 gmf.module.controller('GmfRoutingController', gmf.GmfRoutingController);

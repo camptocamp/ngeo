@@ -94,8 +94,7 @@ gmf.GmfNominatimInputController = function($element, $injector, $scope, gmfNomin
   this.gmfNominatimService.searchDefaultParams = this.searchDefaultParams_;
 
   /**
-   * Signature: (ev, suggestion)
-   * @type {function}
+   * @type {(function(Object)|undefined)}
    * @export
    */
   this.onSelect;
@@ -112,6 +111,31 @@ gmf.GmfNominatimInputController = function($element, $injector, $scope, gmfNomin
   this.inputValue = '';
 
   /**
+   * @type {TypeaheadOptions}
+   * @export
+   */
+  this.options = /** @type {TypeaheadOptions} */ ({
+  });
+
+  /**
+   * @type {Array.<TypeaheadDataset>}
+   * @export
+   */
+  this.datasets = [/** @type {TypeaheadDataset} */({
+    name: 'nominatim',
+    display: 'name',
+    source: this.gmfNominatimService.typeaheadSourceDebounced
+  })];
+
+  /**
+   * @type {ngeox.SearchDirectiveListeners}
+   * @export
+   */
+  this.listeners = /** @type {ngeox.SearchDirectiveListeners} */({
+    select: this.select_.bind(this)
+  });
+
+  /**
    * @type {string}
    * @export
    */
@@ -119,25 +143,18 @@ gmf.GmfNominatimInputController = function($element, $injector, $scope, gmfNomin
 
 };
 
-gmf.GmfNominatimInputController.prototype.$onInit = function() {
-  $('.typeahead', $(this.element_)).typeahead(null, {
-    name: 'nominatim',
-    display: 'name',
-    source: this.gmfNominatimService.typeaheadSourceDebounced
-  });
-
-  $('.typeahead', $(this.element_)).bind('typeahead:select', this.handleSelect_.bind(this));
-};
-
 /**
- * @param {Object} event Event object.
- * @param {Object} suggestion Selected search result.
+ * @param {jQuery.Event} event Event.
+ * @param {Object|ol.Feature} suggestion Suggestion.
+ * @param {TypeaheadDataset} dataset Dataset.
+ * @this {gmf.GmfNominatimInputController}
  * @private
  */
-gmf.GmfNominatimInputController.prototype.handleSelect_ = function(event, suggestion) {
+gmf.GmfNominatimInputController.prototype.select_ = function(event, suggestion, dataset) {
   if (this.onSelect) {
     this.onSelect(suggestion);
   }
 };
+
 
 gmf.module.controller('GmfNominatimInputController', gmf.GmfNominatimInputController);

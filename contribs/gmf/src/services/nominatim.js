@@ -91,9 +91,11 @@ gmf.NominatimService = function($http, $injector) {
 
   /**
    * @export
-   * @type {Function}
+   * @type {function(string,function(Array.<BloodhoundDatum>),(function(Array.<ol.Feature>)|undefined))}
    */
-  this.typeaheadSourceDebounced = debounce(this.typeaheadSource_.bind(this), this.typeaheadDebounceDelay_);
+  this.typeaheadSourceDebounced =
+    /** @type{function(string,function(Array.<BloodhoundDatum>),(function(Array.<ol.Feature>)|undefined))} */
+    (debounce(this.typeaheadSource_.bind(this), this.typeaheadDebounceDelay_, false));
   // TODO: check if replacing debounce with ngeo.Debounce would make sense
 };
 
@@ -129,7 +131,7 @@ gmf.NominatimService.prototype.search = function(query, params) {
 /**
  * Reverse Geocoding
  * @param {ol.Coordinate} coordinate Search coordinate in LonLat projection
- * @param {?Object} params Optional parameters
+ * @param {(Object|undefined)} params Optional parameters
  * @return {!angular.$http.HttpPromise} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
  * @export
@@ -137,8 +139,7 @@ gmf.NominatimService.prototype.search = function(query, params) {
 gmf.NominatimService.prototype.reverse = function(coordinate, params) {
   let url = `${this.nominatimUrl_}reverse`;
 
-  params = params || {};
-  params = Object.assign(this.reverseDefaultParams, params);
+  params = Object.assign({}, this.reverseDefaultParams, params);
 
   // coordinate
   params['lon'] = coordinate[0];
@@ -159,11 +160,10 @@ gmf.NominatimService.prototype.reverse = function(coordinate, params) {
   return this.$http_.get(url);
 };
 
-
 /**
  * @param {string} query Search query
- * @param {function} syncResults Callback for synchronous execution, unused
- * @param {function} asyncResults Callback for asynchronous execution
+ * @param {function(Array.<BloodhoundDatum>)} syncResults Callback for synchronous execution, unused
+ * @param {function(Array.<ol.Feature>)} asyncResults Callback for asynchronous execution
  * @private
  */
 gmf.NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
@@ -181,7 +181,7 @@ gmf.NominatimService.prototype.typeaheadSource_ = function(query, syncResults, a
     asyncResults([]);
   };
 
-  this.search(query).then(onSuccess_, onError_);
+  this.search(query, {}).then(onSuccess_, onError_);
 };
 
 

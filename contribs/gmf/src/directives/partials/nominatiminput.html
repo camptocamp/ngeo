@@ -1,3 +1,7 @@
-<div class="gmfnominatiminput">
-  <input class="typeahead" type="text" placeholder="{{'Search...' | translate}}">
+<div class="gmf-nominatim-input">
+  <input type="text" placeholder="{{inputCtrl.placeholder}}"
+         ng-model="inputCtrl.inputValue"
+         ngeo-search="inputCtrl.options"
+         ngeo-search-datasets="inputCtrl.datasets"
+         ngeo-search-listeners="inputCtrl.listeners">
 </div>
