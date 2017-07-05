@@ -453,7 +453,11 @@ gmf.SearchController.prototype.$onInit = function() {
 
   const searchQuery = this.ngeoLocation_.getParam('search');
   if (searchQuery) {
-    this.fulltextsearch_(searchQuery);
+    let resultOffset = 0;
+    if (this.ngeoLocation_.getParam('search-offset')) {
+      resultOffset = parseInt(this.ngeoLocation_.getParam('search-offset'), 10);
+    }
+    this.fulltextsearch_(searchQuery, resultOffset);
   }
 };
 
@@ -934,14 +938,15 @@ gmf.SearchController.datasetsempty_ = function(event, query, empty) {
 /**
  * Performs a full-text search and centers the map on the first search result.
  * @param {string} query Search query.
+ * @param {number} resultOffset Return (n + 1)th result instead.
  * @private
  */
-gmf.SearchController.prototype.fulltextsearch_ = function(query) {
-  this.fullTextSearch_.search(query, {'limit': 1})
+gmf.SearchController.prototype.fulltextsearch_ = function(query, resultOffset) {
+  this.fullTextSearch_.search(query, {'limit': 1 + resultOffset})
     .then((data) => {
-      if (data && data.features[0]) {
+      if (data && data.features[resultOffset]) {
         const format = new ol.format.GeoJSON();
-        const feature = format.readFeature(data.features[0]);
+        const feature = format.readFeature(data.features[resultOffset]);
         this.featureOverlay_.addFeature(feature);
         this.map_.getView().fit(feature.getGeometry().getExtent());
         this.inputValue = /** @type {string} */ (feature.get('label'));
