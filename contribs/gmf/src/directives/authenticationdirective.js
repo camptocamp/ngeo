@@ -36,9 +36,13 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
  *
  * Example:
  *
- *      <gmf-authentication></gmf-authentication>
+ *      <gmf-authentication
+ *        gmf-authentication-allow-password-change="true">
+ *      </gmf-authentication>
  *
  * @param {string} gmfAuthenticationTemplateUrl Url to template.
+ * @htmlAttribute {boolean} gmf-authentication-allow-password-change Whether to
+ *     show the change password button. Default to true.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -46,7 +50,10 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
  */
 gmf.authenticationDirective = function(gmfAuthenticationTemplateUrl) {
   return {
-    scope: true,
+    bindToController: true,
+    scope: {
+      'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange'
+    },
     controller: 'GmfAuthenticationController as authCtrl',
     templateUrl: gmfAuthenticationTemplateUrl
   };
@@ -100,6 +107,16 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
    * @private
    */
   this.notification_ = ngeoNotification;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.allowPasswordChange;
+
+  if (this.allowPasswordChange === undefined) {
+    this.allowPasswordChange = true;
+  }
 
   /**
    * @type {boolean}
