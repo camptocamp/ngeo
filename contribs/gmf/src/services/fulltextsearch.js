@@ -34,7 +34,7 @@ gmf.fulltextSearchService = function($injector, $http) {
    */
   this.baseUrl_ = url[0];
 
-  const queryString = (url.length == 2) ? url[1] : '';
+  const queryString = (url.length == 2) ? `?${url[1]}` : '';
   /**
    * @type {Object.<string, string>}
    * @private
