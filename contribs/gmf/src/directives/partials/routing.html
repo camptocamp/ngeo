@@ -1,19 +1,23 @@
 <div class="gmf-routing">
-  <gmf-nominatim-input
-          gmf-nominatim-input-value="routeCtrl.startFeatureLabel"
-          gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
-          gmf-nominatim-input-on-select="routeCtrl.startFeatureOnSelect">
-  </gmf-nominatim-input>
-  <button type="button" id="gmfRoutingFromButton" class="btn btn-default" ng-click="routeCtrl.setStart()">
+  <div class="nominatim-input">
+    <gmf-nominatim-input
+            gmf-nominatim-input-value="routeCtrl.startFeatureLabel"
+            gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
+            gmf-nominatim-input-on-select="routeCtrl.startFeatureOnSelect">
+    </gmf-nominatim-input>
+  </div>
+  <button type="button" id="gmfRoutingFromButton" class="btn btn-default set-marker" ng-click="routeCtrl.setStart()">
     <span class="fa fa-map-marker"></span>
   </button><br>
 
-  <gmf-nominatim-input
-          gmf-nominatim-input-value="routeCtrl.targetFeatureLabel"
-          gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
-          gmf-nominatim-input-on-select="routeCtrl.targetFeatureOnSelect">
-  </gmf-nominatim-input>
-  <button type="button" id="gmfRoutingToButton" class="btn btn-default" ng-click="routeCtrl.setTarget()">
+  <div class="nominatim-input">
+    <gmf-nominatim-input
+            gmf-nominatim-input-value="routeCtrl.targetFeatureLabel"
+            gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
+            gmf-nominatim-input-on-select="routeCtrl.targetFeatureOnSelect">
+    </gmf-nominatim-input>
+  </div>
+  <button type="button" id="gmfRoutingToButton" class="btn btn-default set-marker" ng-click="routeCtrl.setTarget()">
     <span class="fa fa-map-marker"></span>
   </button><br>
 
