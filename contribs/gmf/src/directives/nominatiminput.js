@@ -43,7 +43,7 @@ gmf.nominatimInputComponent = {
   controller: 'GmfNominatimInputController as inputCtrl',
   bindings: {
     'onSelect': '=?gmfNominatimInputOnSelect',
-    'searchDefaultParams': '=?gmfNominatimInputSearchDefaultParams',
+    'searchDefaultParams': '<?gmfNominatimInputSearchDefaultParams',
     'inputValue': '=?gmfNominatimInputValue',
     'placeholder': '@?gmfNominatimInputPlaceholder'
   },
@@ -82,15 +82,13 @@ gmf.GmfNominatimInputController = function($element, $injector, $scope, gmfNomin
    * @type {Object<string, string>}
    * @private
    */
-  this.searchDefaultParams_ = this.$scope_['searchDefaultParams'] || [];
-  this.searchDefaultParams_['countrycodes'] = 'CH';
+  this.searchDefaultParams;
 
   /**
    * @type {gmf.NominatimService}
    * @export
    */
   this.gmfNominatimService = gmfNominatimService;
-  this.gmfNominatimService.searchDefaultParams = this.searchDefaultParams_;
 
   /**
    * @type {(function(Object)|undefined)}
@@ -135,6 +133,10 @@ gmf.GmfNominatimInputController = function($element, $injector, $scope, gmfNomin
    */
   this.placeholder = '';
 
+};
+
+gmf.GmfNominatimInputController.prototype.$onInit = function() {
+  this.gmfNominatimService['searchDefaultParams'] = this.searchDefaultParams || {};
 };
 
 /**

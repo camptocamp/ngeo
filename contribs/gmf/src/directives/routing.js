@@ -190,6 +190,12 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
   this.targetFeatureOnSelect = this.onSuggestionSelectFactory_('targetFeature_', 'targetFeatureLabel');
 
   /**
+   * @type {Object<string, string>}
+   * @export
+   */
+  this.searchDefaultParams = $injector.has('gmfRoutingSearchDefaultParams') ? $injector.get('gmfRoutingSearchDefaultParams') : {};
+
+  /**
    * @type {ol.Collection}
    * @private
    */

@@ -375,6 +375,9 @@
           {label : 'Foot', profile: 'routed-foot'},
           {label : 'Hiking', profile: 'routed-hiking'}
         ]);
+        module.constant('gmfRoutingSearchDefaultParams', {
+          'countrycodes': 'CH'
+        });
         module.constant('gmfSearchGroups', ['osm','district']);
         // Requires that the gmfSearchGroups is specified
         module.constant('gmfSearchActions', [
