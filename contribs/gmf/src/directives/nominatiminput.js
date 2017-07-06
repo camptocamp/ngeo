@@ -33,7 +33,7 @@ function gmfNominatimInputTemplateUrl($element, $attrs, gmfNominatimInputTemplat
  * @htmlAttribute {function} gmf-nominatim-input-on-select
  *  Event fired when user selects a new suggestion.
  *  Parameters: (event object, suggestion object)
- * @htmlAttribute {Object<string, string>} gmf-nominatim-input-search-deafault-params
+ * @htmlAttribute {Object<string, string>} gmf-nominatim-input-search-default-params
  *  Default parameters to customize search.
  * @htmlAttribute {ol.Feature} gmf-nominatim-input-feature Feature
  * @htmlAttribute {string} gmf-nominatim-input-placeholder Placeholder
