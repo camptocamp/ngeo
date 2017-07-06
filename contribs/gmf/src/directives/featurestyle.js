@@ -196,12 +196,12 @@ gmf.FeaturestyleController.prototype.getSetName = function(value) {
 
 
 /**
- * @param {string|undefined} value A stroke value to set or undefined to get.
- * @return {string} The stroke of the feature.
+ * @param {number|undefined} value A stroke value to set or undefined to get.
+ * @return {number} The stroke of the feature.
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetOpacity = function(value) {
-  return goog.asserts.assertString(this.getSetProperty_(ngeo.FeatureProperties.OPACITY, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.OPACITY, value));
 };
 
 
@@ -217,22 +217,22 @@ gmf.FeaturestyleController.prototype.getSetShowMeasure = function(value) {
 
 
 /**
- * @param {string|undefined} value A size value to set or undefined to get.
- * @return {string} The size of the feature.
+ * @param {number|undefined} value A size value to set or undefined to get.
+ * @return {number} The size of the feature.
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetSize = function(value) {
-  return goog.asserts.assertString(this.getSetProperty_(ngeo.FeatureProperties.SIZE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.SIZE, value));
 };
 
 
 /**
- * @param {string|undefined} value A stroke value to set or undefined to get.
- * @return {string} The stroke of the feature.
+ * @param {number|undefined} value A stroke value to set or undefined to get.
+ * @return {number} The stroke of the feature.
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetStroke = function(value) {
-  return goog.asserts.assertString(this.getSetProperty_(ngeo.FeatureProperties.STROKE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.STROKE, value));
 };
 
 

@@ -942,11 +942,6 @@ ngeo.FeatureHelper.prototype.panMapToFeature = function(feature, map,
     const mapCenter = view.getCenter();
     goog.asserts.assertArray(mapCenter);
 
-    view.animate({
-      center: mapCenter,
-      duration: panDuration
-    });
-
     let featureCenter;
     if (geometry instanceof ol.geom.LineString) {
       featureCenter = geometry.getCoordinateAt(0.5);
@@ -959,6 +954,9 @@ ngeo.FeatureHelper.prototype.panMapToFeature = function(feature, map,
     }
 
     view.animate({
+      center: mapCenter,
+      duration: panDuration
+    }, {
       center: featureCenter,
       duration: panDuration
     });
