@@ -139,7 +139,7 @@ let TypeaheadTemplates;
 
 /**
  * @typedef {{
- *   source: function(string,function(Array.<BloodhoundDatum>),(function(Array.<ol.Feature>)|undefined)),
+ *   source: function(string,function(Array.<BloodhoundDatum>),(function(Array.<BloodhoundDatum>)|undefined)),
  *   async: (boolean|undefined),
  *   name: (string|undefined),
  *   limit: (number|undefined),
