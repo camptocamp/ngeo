@@ -30,12 +30,12 @@ function gmfNominatimInputTemplateUrl($element, $attrs, gmfNominatimInputTemplat
 
 
 /**
- * @htmlAttribute {function} gmf-nominatim-input-on-select
+ * @htmlAttribute {function(gmfx.NominatimSearchResult)} gmf-nominatim-input-on-select
  *  Event fired when user selects a new suggestion.
- *  Parameters: (event object, suggestion object)
  * @htmlAttribute {Object<string, string>} gmf-nominatim-input-search-default-params
  *  Default parameters to customize search.
  * @htmlAttribute {ol.Feature} gmf-nominatim-input-feature Feature
+ * @htmlAttribute {string} gmf-nominatim-input-value Value of input field
  * @htmlAttribute {string} gmf-nominatim-input-placeholder Placeholder
  * @ngdoc component
  * @ngname gmfNominatimInput
@@ -46,6 +46,7 @@ gmf.nominatimInputComponent = {
     'onSelect': '=?gmfNominatimInputOnSelect',
     'searchDefaultParams': '=?gmfNominatimInputSearchDefaultParams',
     'feature': '=?gmfNominatimInputFeature',
+    'inputValue': '=?gmfNominatimInputValue',
     'placeholder': '@?gmfNominatimInputPlaceholder'
   },
   templateUrl: gmfNominatimInputTemplateUrl
@@ -102,13 +103,13 @@ gmf.GmfNominatimInputController = function($element, $injector, $scope, gmfNomin
   /**
    * @type {ol.Feature}
    */
-  this.feature;
+  this.feature; // TODO: is this still needed?
 
   /**
    * @type {string}
    * @export
    */
-  this.inputValue = '';
+  this.inputValue;
 
   /**
    * @type {TypeaheadOptions}
@@ -145,7 +146,7 @@ gmf.GmfNominatimInputController = function($element, $injector, $scope, gmfNomin
 
 /**
  * @param {jQuery.Event} event Event.
- * @param {Object|ol.Feature} suggestion Suggestion.
+ * @param {gmfx.NominatimSearchResult} suggestion Suggestion.
  * @param {TypeaheadDataset} dataset Dataset.
  * @this {gmf.GmfNominatimInputController}
  * @private

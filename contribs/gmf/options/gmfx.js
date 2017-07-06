@@ -699,3 +699,11 @@ gmfx.openPopup_
  * }>}
  */
 gmfx.AuthenticationEvent;
+
+/**
+ * @typedef {{
+ *     name: (string),
+ *     coordinate: (ol.Coordinate)
+ * }}
+ */
+gmfx.NominatimSearchResult;

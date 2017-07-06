@@ -166,6 +166,12 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
   this.startFeatureLabel = '';
 
   /**
+   * @type {function(gmfx.NominatimSearchResult)}
+   * @export
+   */
+  this.startFeatureOnSelect = this.onSuggestionSelectFactory_('startFeature_', 'startFeatureLabel');
+
+  /**
    * @type {ol.Feature}
    * @export
    */
@@ -176,6 +182,12 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
    * @export
    */
   this.targetFeatureLabel = '';
+
+  /**
+   * @type {function(gmfx.NominatimSearchResult)}
+   * @export
+   */
+  this.targetFeatureOnSelect = this.onSuggestionSelectFactory_('targetFeature_', 'targetFeatureLabel');
 
   /**
    * @type {ol.Collection}
@@ -390,6 +402,19 @@ gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
   this.map.addInteraction(this.draw_);
 };
 
+/**
+ * onSelect handler factory
+ * @param {string} feature Property name of feature
+ * @param {string} label Property name of label
+ * @return {function(gmfx.NominatimSearchResult)}  Selected feature handler
+ * @private
+ */
+gmf.GmfRoutingController.prototype.onSuggestionSelectFactory_ = function(feature, label) {
+  return (function(selected) {
+    this.replaceFeature_(feature, label, selected.coordinate, selected.name);
+    this.calculateRoute();
+  }).bind(this);
+};
 
 /**
  * @param {ol.Feature} feature Feature to format
@@ -476,7 +501,9 @@ gmf.GmfRoutingController.prototype.replaceFeature_ = function(feature, label, ne
     geometry: new ol.geom.Point(transformedCoords)
   });
   // replace feature
-  this.vectorSource_.removeFeature(this[feature]);
+  if (this[feature]) {
+    this.vectorSource_.removeFeature(this[feature]);
+  }
   this[feature] = newFeature;
   this.vectorSource_.addFeature(this[feature]);
 

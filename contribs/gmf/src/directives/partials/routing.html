@@ -1,10 +1,20 @@
 <div class="gmf-routing">
-  <input type="text" id="gmfRoutingFrom" ng-model="routeCtrl.startFeatureLabel" readonly />
+  <gmf-nominatim-input
+          gmf-nominatim-input-feature="routeCtrl.startFeature_"
+          gmf-nominatim-input-value="routeCtrl.startFeatureLabel"
+          gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
+          gmf-nominatim-input-on-select="routeCtrl.startFeatureOnSelect">
+  </gmf-nominatim-input>
   <button type="button" id="gmfRoutingFromButton" class="btn btn-default" ng-click="routeCtrl.setStart()">
     <span class="fa fa-map-marker"></span>
   </button><br>
 
-  <input type="text" id="gmfRoutingTo" ng-model="routeCtrl.targetFeatureLabel" readonly />
+  <gmf-nominatim-input
+          gmf-nominatim-input-feature="routeCtrl.targetFeature_"
+          gmf-nominatim-input-value="routeCtrl.targetFeatureLabel"
+          gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
+          gmf-nominatim-input-on-select="routeCtrl.targetFeatureOnSelect">
+  </gmf-nominatim-input>
   <button type="button" id="gmfRoutingToButton" class="btn btn-default" ng-click="routeCtrl.setTarget()">
     <span class="fa fa-map-marker"></span>
   </button><br>
@@ -33,9 +43,4 @@
   <div id="routeDistance" ng-hide="routeCtrl.routeDistance === ''">
     <strong>{{'Distance' | translate}}:</strong> {{routeCtrl.routeDistance}}
   </div>
-
-  <gmf-nominatim-input
-          gmf-nominatim-input-feature="routeCtrl.startFeature_"
-          gmf-nominatim-input-placeholder="{{'Search...' | translate}}">
-  </gmf-nominatim-input>
 </div>

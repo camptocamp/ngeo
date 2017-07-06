@@ -163,18 +163,18 @@ gmf.NominatimService.prototype.reverse = function(coordinate, params) {
 /**
  * @param {string} query Search query
  * @param {function(Array.<BloodhoundDatum>)} syncResults Callback for synchronous execution, unused
- * @param {function(Array.<ol.Feature>)} asyncResults Callback for asynchronous execution
+ * @param {function(Array.<gmfx.NominatimSearchResult>)} asyncResults Callback for asynchronous execution
  * @private
  */
 gmf.NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
   const onSuccess_ = function(resp) {
-    const features = resp.data.map((result) => {
-      return {
+    const results = resp.data.map((result) => {
+      return /** @type{gmfx.NominatimSearchResult} */({
         coordinate: [result.lon, result.lat],
         name: result.display_name
-      };
+      });
     });
-    asyncResults(features);
+    asyncResults(results);
   };
 
   const onError_ = function(resp) {
