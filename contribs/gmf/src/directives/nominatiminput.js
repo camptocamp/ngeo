@@ -34,7 +34,6 @@ function gmfNominatimInputTemplateUrl($element, $attrs, gmfNominatimInputTemplat
  *  Event fired when user selects a new suggestion.
  * @htmlAttribute {Object<string, string>} gmf-nominatim-input-search-default-params
  *  Default parameters to customize search.
- * @htmlAttribute {ol.Feature} gmf-nominatim-input-feature Feature
  * @htmlAttribute {string} gmf-nominatim-input-value Value of input field
  * @htmlAttribute {string} gmf-nominatim-input-placeholder Placeholder
  * @ngdoc component
@@ -45,7 +44,6 @@ gmf.nominatimInputComponent = {
   bindings: {
     'onSelect': '=?gmfNominatimInputOnSelect',
     'searchDefaultParams': '=?gmfNominatimInputSearchDefaultParams',
-    'feature': '=?gmfNominatimInputFeature',
     'inputValue': '=?gmfNominatimInputValue',
     'placeholder': '@?gmfNominatimInputPlaceholder'
   },
@@ -99,11 +97,6 @@ gmf.GmfNominatimInputController = function($element, $injector, $scope, gmfNomin
    * @export
    */
   this.onSelect;
-
-  /**
-   * @type {ol.Feature}
-   */
-  this.feature; // TODO: is this still needed?
 
   /**
    * @type {string}
