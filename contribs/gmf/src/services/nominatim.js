@@ -168,13 +168,18 @@ gmf.NominatimService.prototype.reverse = function(coordinate, params) {
  */
 gmf.NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
   const onSuccess_ = function(resp) {
-    const results = resp.data.map((result) => {
+    /**
+     * Parses result response.
+     * @param {gmfx.NominatimSearchResponseResult} result Result
+     * @return {gmfx.NominatimSearchResult} Parsed result
+     */
+    const parse = function(result) {
       return /** @type{gmfx.NominatimSearchResult} */({
         coordinate: [result.lon, result.lat],
         name: result.display_name
       });
-    });
-    asyncResults(results);
+    };
+    asyncResults(resp.data.map(parse));
   };
 
   const onError_ = function(resp) {
