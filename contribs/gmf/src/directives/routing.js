@@ -160,16 +160,10 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
   this.startFeature_ = null;
 
   /**
-   * @type {string}
-   * @export
-   */
-  this.startFeatureLabel = '';
-
-  /**
    * @type {function(gmfx.NominatimSearchResult)}
    * @export
    */
-  this.startFeatureOnSelect = this.onSuggestionSelectFactory_('startFeature_', 'startFeatureLabel');
+  this.startFeatureOnSelect = this.onSuggestionSelectFactory_('startFeature_');
 
   /**
    * @type {ol.Feature}
@@ -178,16 +172,10 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
   this.targetFeature_ = null;
 
   /**
-   * @type {string}
-   * @export
-   */
-  this.targetFeatureLabel = '';
-
-  /**
    * @type {function(gmfx.NominatimSearchResult)}
    * @export
    */
-  this.targetFeatureOnSelect = this.onSuggestionSelectFactory_('targetFeature_', 'targetFeatureLabel');
+  this.targetFeatureOnSelect = this.onSuggestionSelectFactory_('targetFeature_');
 
   /**
    * @type {Array.<gmfx.RoutingVia>}
@@ -256,13 +244,6 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
   this.activeModifyFeature_ = '';
 
   /**
-   * Remember which feature (label) is being moved.
-   * @type {string}
-   * @private
-   */
-  this.activeModifyFeatureLabel_ = '';
-
-  /**
    * @type {ol.source.Vector}
    * @private
    */
@@ -326,22 +307,30 @@ gmf.GmfRoutingController.prototype.$onInit = function() {
 
   this.modifyFeatures_.on('modifystart', (event) => {
     const feature = event.features.getArray()[0];
+    this.activeModifyFeature_ = null;
 
     if (this.startFeature_ === feature) {
-      this.activeModifyFeature_ = 'startFeature_';
-      this.activeModifyFeatureLabel_ = 'startFeatureLabel';
+      this.activeModifyFeature_ = this.startFeature_;
     } else if (this.targetFeature_ === feature) {
-      this.activeModifyFeature_ = 'targetFeature_';
-      this.activeModifyFeatureLabel_ = 'targetFeatureLabel';
+      this.activeModifyFeature_ = this.targetFeature_;
+    } else {
+      for (let i = 0; i < this.viaArray.length && this.activeModifyFeature_ === null; i++) {
+        if (this.viaArray[i].feature === feature) {
+          this.activeModifyFeature_ = this.viaArray[i].feature;
+        }
+      }
     }
   });
 
   this.modifyFeatures_.on('modifyend', (event) => {
-    const feature = event.features.getArray()[0];
-    this.vectorSource_.removeFeature(this[this.activeModifyFeature_]);
-    this[this.activeModifyFeature_] = feature;
-    this.vectorSource_.addFeature(this[this.activeModifyFeature_]);
-    this.snapFeature_(this.activeModifyFeature_, this.activeModifyFeatureLabel_);
+    if (this.activeModifyFeature_) {
+      const feature = event.features.getArray()[0];
+      this.vectorSource_.removeFeature(this.activeModifyFeature_);
+      this.activeModifyFeature_ = feature;
+      this.vectorSource_.addFeature(this.activeModifyFeature_);
+      //this.snapFeature_(this.activeModifyFeature_);
+      this.calculateRoute(); // TODO change to snap again
+    }
   });
 };
 
@@ -353,9 +342,7 @@ gmf.GmfRoutingController.prototype.$onInit = function() {
 gmf.GmfRoutingController.prototype.handleActiveChange_ = function(active) {
   if (!active) {
     this.startFeature_ = null;
-    this.startFeatureLabel = '';
     this.targetFeature_ = null;
-    this.targetFeatureLabel = '';
     this.routeDistance = '';
     this.routeDuration = null;
     this.vectorSource_.clear();
@@ -368,22 +355,21 @@ gmf.GmfRoutingController.prototype.handleActiveChange_ = function(active) {
  * @export
  */
 gmf.GmfRoutingController.prototype.setStart = function() {
-  this.setFeature_('startFeature_', 'startFeatureLabel');
+  this.setFeature_('startFeature_');
 };
 
 /**
  * @export
  */
 gmf.GmfRoutingController.prototype.setTarget = function() {
-  this.setFeature_('targetFeature_', 'targetFeatureLabel');
+  this.setFeature_('targetFeature_');
 };
 
 /**
  * @param {string} feature Property name of feature
- * @param {string} label Property name of label
  * @private
  */
-gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
+gmf.GmfRoutingController.prototype.setFeature_ = function(feature) {
   if (this.draw_) {
     this.map.removeInteraction(this.draw_);
   }
@@ -396,17 +382,17 @@ gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
   this.draw_.on('drawstart', () => {
     if (this[feature]) {
       this.vectorSource_.removeFeature(this[feature]);
+      this[feature].set('name', '');
     }
-    this[label] = '';
   });
 
   this.draw_.on('drawend', (event) => {
     this[feature] = event.feature;
-    this[label] = this.formatFeature(this[feature]);
+    //this[feature].set('name', this.formatFeature(this[feature]));
     if (this.draw_) {
       this.map.removeInteraction(this.draw_);
     }
-    this.snapFeature_(feature, label);
+    this.snapFeature_(feature);
     this.modifyFeatures_.setActive(true);
   });
 
@@ -417,13 +403,12 @@ gmf.GmfRoutingController.prototype.setFeature_ = function(feature, label) {
 /**
  * onSelect handler factory
  * @param {string} feature Property name of feature
- * @param {string} label Property name of label
  * @return {function(gmfx.NominatimSearchResult)}  Selected feature handler
  * @private
  */
-gmf.GmfRoutingController.prototype.onSuggestionSelectFactory_ = function(feature, label) {
+gmf.GmfRoutingController.prototype.onSuggestionSelectFactory_ = function(feature) {
   return (function(selected) {
-    this.replaceFeature_(feature, label, selected.coordinate, selected.name);
+    this.replaceFeature_(feature, selected.coordinate, selected.name);
     this.calculateRoute();
   }).bind(this);
 };
@@ -456,11 +441,8 @@ gmf.GmfRoutingController.prototype.getLonLatFromPoint_ = function(point) {
 gmf.GmfRoutingController.prototype.reverseRoute = function() {
   // swap start and target
   const tmpFeature = this.startFeature_;
-  const tmpLabel = this.startFeatureLabel;
   this.startFeature_ = this.targetFeature_;
-  this.startFeatureLabel = this.targetFeatureLabel;
   this.targetFeature_ = tmpFeature;
-  this.targetFeatureLabel = tmpLabel;
 
   // refresh source to re-render start and target icons
   this.vectorSource_.refresh();
@@ -473,10 +455,9 @@ gmf.GmfRoutingController.prototype.reverseRoute = function() {
  * function of the routing service. Replaces the feature and
  * its label.
  * @param {string} feature Property name of feature
- * @param {string} label Property name of label
  * @private
  */
-gmf.GmfRoutingController.prototype.snapFeature_ = function(feature, label) {
+gmf.GmfRoutingController.prototype.snapFeature_ = function(feature) {
   const coord = this.getLonLatFromPoint_(this[feature]);
   const config = {};
 
@@ -486,7 +467,7 @@ gmf.GmfRoutingController.prototype.snapFeature_ = function(feature, label) {
     const coords = [lon, lat];
     const newLabel = resp['data']['display_name'];
 
-    this.replaceFeature_(feature, label, coords, newLabel);
+    this.replaceFeature_(feature, coords, newLabel);
 
     this.calculateRoute();
   }).bind(this);
@@ -502,15 +483,18 @@ gmf.GmfRoutingController.prototype.snapFeature_ = function(feature, label) {
 
 /**
  * @param {string} feature Property name of feature
- * @param {string} label Property name of label
  * @param {ol.Coordinate} newCoords Coordinates of new feature (in LonLat projection)
  * @param {string} newLabel New Label
  * @private
  */
-gmf.GmfRoutingController.prototype.replaceFeature_ = function(feature, label, newCoords, newLabel) {
+gmf.GmfRoutingController.prototype.replaceFeature_ = function(feature, newCoords, newLabel) {
   const transformedCoords = ol.proj.fromLonLat(newCoords, this.map.getView().getProjection());
+  if (newLabel === '') {
+    newLabel = transformedCoords.join('/');
+  }
   const newFeature = new ol.Feature({
-    geometry: new ol.geom.Point(transformedCoords)
+    geometry: new ol.geom.Point(transformedCoords),
+    name: newLabel
   });
   // replace feature
   if (this[feature]) {
@@ -518,9 +502,6 @@ gmf.GmfRoutingController.prototype.replaceFeature_ = function(feature, label, ne
   }
   this[feature] = newFeature;
   this.vectorSource_.addFeature(this[feature]);
-
-  //replace label
-  this[label] = (newLabel !== '') ? newLabel : transformedCoords.join('/');
 };
 
 /**
@@ -603,7 +584,6 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 gmf.GmfRoutingController.prototype.addVia = function() {
   this.viaArray.push({
     feature: null,
-    label: '',
     onSelect: null
   });
 };

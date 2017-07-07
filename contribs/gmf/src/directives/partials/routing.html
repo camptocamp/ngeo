@@ -1,7 +1,7 @@
 <div class="gmf-routing">
   <div class="nominatim-input">
     <gmf-nominatim-input
-            gmf-nominatim-input-value="routeCtrl.startFeatureLabel"
+            gmf-nominatim-input-value="routeCtrl.startFeature_.values_['name']"
             gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
             gmf-nominatim-input-on-select="routeCtrl.startFeatureOnSelect"
             gmf-nominatim-input-search-default-params="routeCtrl.searchDefaultParams">
@@ -14,7 +14,7 @@
   <div class="gmf-routing-vias" ng-repeat="(index, via) in routeCtrl.viaArray">
     <div class="nominatim-input">
       <gmf-nominatim-input
-              gmf-nominatim-input-value="via.label"
+              gmf-nominatim-input-value="via.feature.values_['name']"
               gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
               gmf-nominatim-input-on-select="via.onSelect"
               gmf-nominatim-input-search-default-params="routeCtrl.searchDefaultParams">
@@ -30,7 +30,7 @@
 
   <div class="nominatim-input">
     <gmf-nominatim-input
-            gmf-nominatim-input-value="routeCtrl.targetFeatureLabel"
+            gmf-nominatim-input-value="routeCtrl.targetFeature_.values_['name']"
             gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
             gmf-nominatim-input-on-select="routeCtrl.targetFeatureOnSelect"
             gmf-nominatim-input-search-default-params="routeCtrl.searchDefaultParams">
