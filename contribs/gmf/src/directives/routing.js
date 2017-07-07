@@ -190,6 +190,12 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
   this.targetFeatureOnSelect = this.onSuggestionSelectFactory_('targetFeature_', 'targetFeatureLabel');
 
   /**
+   * @type {Array.<gmfx.RoutingVia>}
+   * @export
+   */
+  this.viaArray = [];
+
+  /**
    * @type {Object<string, string>}
    * @export
    */
@@ -590,5 +596,27 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
       .then(onSuccess_.bind(this), onError_.bind(this));
   }
 };
+
+/**
+ * @export
+ */
+gmf.GmfRoutingController.prototype.addVia = function() {
+  this.viaArray.push({
+    feature: null,
+    label: '',
+    onSelect: null
+  });
+};
+
+/**
+ * @param {number} index Array index.
+ * @export
+ */
+gmf.GmfRoutingController.prototype.deleteVia = function(index) {
+  if (this.viaArray.length > index) {
+    this.viaArray.splice(index, 1);
+  }
+};
+
 
 gmf.module.controller('GmfRoutingController', gmf.GmfRoutingController);

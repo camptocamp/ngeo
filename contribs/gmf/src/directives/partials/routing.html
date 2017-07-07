@@ -11,6 +11,23 @@
     <span class="fa fa-map-marker"></span>
   </button><br>
 
+  <div class="gmf-routing-vias" ng-repeat="(index, via) in routeCtrl.viaArray">
+    <div class="nominatim-input">
+      <gmf-nominatim-input
+              gmf-nominatim-input-value="via.label"
+              gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
+              gmf-nominatim-input-on-select="via.onSelect"
+              gmf-nominatim-input-search-default-params="routeCtrl.searchDefaultParams">
+      </gmf-nominatim-input>
+    </div>
+    <button type="button" class="btn btn-default set-marker set-via" ng-click="routeCtrl.setTarget()">
+      <span class="fa fa-map-marker"></span>
+    </button>
+    <button type="button" class="btn btn-default delete-via" ng-click="routeCtrl.deleteVia(index)">
+      <span class="fa fa-trash-o"></span>
+    </button><br>
+  </div>
+
   <div class="nominatim-input">
     <gmf-nominatim-input
             gmf-nominatim-input-value="routeCtrl.targetFeatureLabel"
@@ -25,6 +42,9 @@
 
   <button type="button" id="gmfRoutingReverseButton" class="btn btn-default" ng-click="routeCtrl.reverseRoute()">
     <span class="fa fa-exchange"></span> {{'Reverse' | translate}}
+  </button>
+  <button type="button" id="gmfRoutingAddViaButton" class="btn btn-default" ng-click="routeCtrl.addVia()">
+    <span class="fa fa-plus"></span> {{'Add via' | translate}}
   </button><br><br>
 
   <div id="routingProfile" ng-if="routeCtrl.routingProfiles.length > 1">

@@ -716,3 +716,12 @@ gmfx.NominatimSearchResult;
  * }}
  */
 gmfx.NominatimSearchResponseResult;
+
+/**
+ * @typedef {{
+ *     feature: (?ol.Feature),
+ *     label: (string),
+ *     onSelect: (function(gmfx.NominatimSearchResult))
+ * }}
+ */
+gmfx.RoutingVia;
