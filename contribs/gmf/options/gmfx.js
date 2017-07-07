@@ -724,3 +724,11 @@ gmfx.NominatimSearchResponseResult;
  * }}
  */
 gmfx.RoutingVia;
+
+/**
+ * @typedef {{
+ *     label: (string),
+ *     profile: (string)
+ * }}
+ */
+gmfx.RoutingProfile;

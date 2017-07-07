@@ -102,13 +102,13 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
    *              profile: 'routed-car' // used as part of the query
    *            }
    *          ]
-   * @type {Array<Object<string, string>>}
+   * @type {Array<RoutingProfile>}
    * @export
    */
   this.routingProfiles = $injector.has('gmfRoutingProfiles') ? $injector.get('gmfRoutingProfiles') : [];
 
   /**
-   * @type {?Object<string, string>}
+   * @type {?RoutingProfile>}
    * @export
    */
   this.selectedRoutingProfile = this.routingProfiles.length > 0 ? this.routingProfiles[0] : null;
