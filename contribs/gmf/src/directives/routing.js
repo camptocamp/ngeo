@@ -537,7 +537,8 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 
     const coordFrom = this.getLonLatFromPoint_(this.startFeature_);
     const coordTo = this.getLonLatFromPoint_(this.targetFeature_);
-    const route =  [coordFrom, coordTo];
+    const vias = this.viaArray.map(via => this.getLonLatFromPoint_(via.feature));
+    const route =  [coordFrom].concat(vias, [coordTo]);
 
     const onSuccess_ = (function(resp) {
       const features = this.parseRoute_(resp.data.routes[0]);
