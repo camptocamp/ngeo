@@ -94,7 +94,7 @@ gmf.GmfRoutingFeatureController = function($timeout, $q, gmfNominatimService) {
    * @type {ol.Feature}
    * @export
    */
-  this.feature; // todo update layer if feature is changed from the outside
+  this.feature;
 
   /**
    * @type {string}
@@ -206,7 +206,6 @@ gmf.GmfRoutingFeatureController.prototype.$onDestroy = function() {
 gmf.GmfRoutingFeatureController.prototype.set = function() {
   if (this.draw_) {
     this.map.removeInteraction(this.draw_);
-    // TODO: maybe remove all existing draw interactions?
   }
 
   this.draw_ = new ol.interaction.Draw({
