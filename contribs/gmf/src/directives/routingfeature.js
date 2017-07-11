@@ -55,6 +55,7 @@ gmf.module.component('gmfRoutingFeature', gmf.routingFeatureComponent);
 
 
 /**
+ * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {!angular.$q} $q Angular q service
  * @param {!gmf.NominatimService} gmfNominatimService service for Nominatim
  * @constructor
@@ -63,7 +64,13 @@ gmf.module.component('gmfRoutingFeature', gmf.routingFeatureComponent);
  * @ngdoc controller
  * @ngname GmfRoutingFeatureController
  */
-gmf.GmfRoutingFeatureController = function($q, gmfNominatimService) {
+gmf.GmfRoutingFeatureController = function($timeout, $q, gmfNominatimService) {
+
+  /**
+   * @type {angular.$timeout}
+   * @private
+   */
+  this.timeout_ = $timeout;
 
   /**
    * @type {angular.$q}
@@ -176,6 +183,12 @@ gmf.GmfRoutingFeatureController.prototype.$onInit = function() {
   });
 };
 
+gmf.GmfRoutingFeatureController.prototype.$onDestroy = function() {
+  this.map.removeLayer(this.vectorLayer_);
+  this.modifyFeature_.setActive(false);
+  this.map.removeInteraction(this.modifyFeature_);
+};
+
 /**
  * @export
  */
@@ -228,7 +241,9 @@ gmf.GmfRoutingFeatureController.prototype.setFeature_ = function(coordinate, lab
   this.vectorSource_.addFeature(this.feature);
 
   if (this.onChange) {
-    this.onChange(this.feature);
+    this.timeout_(() => {
+      this.onChange(this.feature);
+    });
   }
 };
 

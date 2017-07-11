@@ -396,6 +396,7 @@ gmf.GmfRoutingController.prototype.addVia = function() {
 gmf.GmfRoutingController.prototype.deleteVia = function(index) {
   if (this.viaArray.length > index) {
     this.viaArray.splice(index, 1);
+    this.calculateRoute();
   }
 };
 
