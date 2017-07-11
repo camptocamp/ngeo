@@ -167,6 +167,11 @@ gmf.GmfRoutingFeatureController = function($timeout, $q, gmfNominatimService) {
    */
   this.draw_ = null;
 
+  /**
+   * @param {gmfx.NominatimSearchResult} selected Selected result.
+   * @export
+   */
+  this.onSelect = this.onSelect_.bind(this);
 };
 
 gmf.GmfRoutingFeatureController.prototype.$onInit = function() {
@@ -249,9 +254,9 @@ gmf.GmfRoutingFeatureController.prototype.setFeature_ = function(coordinate, lab
 
 /**
  * @param {gmfx.NominatimSearchResult} selected Selected result.
- * @export
+ * @private
  */
-gmf.GmfRoutingFeatureController.prototype.onSelect = function(selected) {
+gmf.GmfRoutingFeatureController.prototype.onSelect_ = function(selected) {
   const coordinate = selected.coordinate;
   const label = selected.label;
   this.setFeature_(coordinate, label);
