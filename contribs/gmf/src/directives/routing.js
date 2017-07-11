@@ -243,7 +243,7 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
 
   /**
    * @export
-   * @type {(function)}
+   * @type {function()}
    */
   this.handleChange = this.calculateRoute.bind(this);
 };

@@ -109,6 +109,12 @@ gmf.GmfRoutingFeatureController = function($timeout, $q, gmfNominatimService) {
   this.strokeColor;
 
   /**
+   * @type {function(ol.Feature)}
+   * @export
+   */
+  this.onChange;
+
+  /**
    * @type {Object<string, string>}
    * @export
    */
