@@ -121,10 +121,11 @@ gmf.Authentication = function($http, authenticationBaseUrl, gmfUser) {
   this.$http_ = $http;
 
   /**
+   * The authentication url without trailing slash
    * @type {string}
    * @private
    */
-  this.baseUrl_ = authenticationBaseUrl;
+  this.baseUrl_ = authenticationBaseUrl.replace(/\/$/, '');
 
   /**
    * @type {gmfx.User}
