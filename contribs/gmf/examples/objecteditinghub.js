@@ -170,7 +170,6 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
    */
   this.themeName = 'ObjectEditing';
 
-
   this.gmfThemes_.loadThemes();
 
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {

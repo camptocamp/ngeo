@@ -13,6 +13,18 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
 
 
 /**
+ * @enum {string}
+ * @export
+ */
+gmf.ThemeManagerEventType = {
+  /**
+   * Triggered when the theme name change.
+   */
+  THEME_NAME_SET: 'gmf-thememanager-theme_name_set'
+};
+
+
+/**
  * Manage a tree with children. This service can be used in mode 'flush'
  * (default) or not (mode 'add'). In mode 'flush', each theme, group or group
  * by layer that you add will replace the previous children's array. In mode
@@ -25,6 +37,7 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * This service's theme is a GmfTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
+ * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
  * @param {gmf.TreeManager} gmfTreeManager the tree manager.
@@ -34,7 +47,14 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * @ngdoc service
  * @ngname gmfTreeManager
  */
-gmf.ThemeManager = function(gmfThemes, gmfTreeManagerModeFlush, gmfTreeManager, ngeoStateManager) {
+gmf.ThemeManager = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
+    gmfTreeManager, ngeoStateManager) {
+
+  /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.$rootScope_ = $rootScope;
 
   /**
    * @type {gmf.Themes}
@@ -61,9 +81,9 @@ gmf.ThemeManager = function(gmfThemes, gmfTreeManagerModeFlush, gmfTreeManager, 
 
   /**
    * @type {string}
-   * @export
+   * @private
    */
-  this.themeName = '';
+  this.themeName_ = '';
 };
 
 
@@ -80,10 +100,32 @@ gmf.ThemeManager.prototype.addTheme = function(theme, opt_silent) {
     this.ngeoStateManager_.updateState({
       'theme': theme.name
     });
-    this.themeName = theme.name;
+    this.setThemeName(theme.name);
     this.gmfTreeManager_.setFirstLevelGroups(theme.children);
   } else {
     this.gmfTreeManager_.addFirstLevelGroups(theme.children, false, opt_silent);
+  }
+};
+
+
+/**
+ * @return {string} The theme name. Will be empty on 'not flush' mode.
+ * @export
+ */
+gmf.ThemeManager.prototype.getThemeName = function() {
+  return this.themeName_;
+};
+
+
+/**
+ * @param {string} name The new theme name.
+ * @param {boolean=} opt_stealth Don't emit an event is true
+ * @export
+ */
+gmf.ThemeManager.prototype.setThemeName = function(name, opt_stealth) {
+  this.themeName_ = name;
+  if (!opt_stealth) {
+    this.$rootScope_.$emit(gmf.ThemeManagerEventType.THEME_NAME_SET, null);
   }
 };
 

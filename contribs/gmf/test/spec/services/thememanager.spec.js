@@ -22,7 +22,7 @@ describe('gmf.ThemeManager', () => {
   it('Add a theme', () => {
     const theme0 = themes.themes[0];
     gmfThemeManager_.addTheme(theme0);
-    expect(gmfThemeManager_.themeName).toEqual(theme0.name);
+    expect(gmfThemeManager_.getThemeName()).toEqual(theme0.name);
     //expect(gmfTreeManager_.root.children).toEqual(theme0.children);
   });
 });

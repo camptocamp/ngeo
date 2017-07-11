@@ -15,8 +15,8 @@ goog.require('gmf.ThemesEventType');
  *      <a href class="btn btn-default btn-block btn-primary" data-toggle="dropdown">
  *          <span class="fa fa-grid"></span>
  *          <span translate>Theme:</span>
- *          <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Loading...</b>
- *          <b ng-if="mainCtrl.gmfThemeManager.themeName">{{mainCtrl.gmfThemeManager.themeName|translate}}</b>
+ *          <b ng-if="!mainCtrl.gmfThemeManager.getThemeName()" translate>Loading...</b>
+ *          <b ng-if="mainCtrl.gmfThemeManager.getThemeName()">{{mainCtrl.gmfThemeManager.getThemeName()|translate}}</b>
  *          <span class="caret"></span>
  *      </a>
  *      <gmf-themeselector

@@ -386,7 +386,8 @@ gmf.AbstractController = function(config, $scope, $injector) {
   ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
 
 
-  $scope.$watch(() => this.gmfThemeManager.themeName, (name) => {
+  // TODO aabbcctt
+  $scope.$watch(() => this.gmfThemeManager.getThemeName(), (name) => {
     const map = this.map;
     this.gmfThemes_.getThemeObject(name).then((theme) => {
       if (theme) {
