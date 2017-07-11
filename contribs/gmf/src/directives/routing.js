@@ -315,11 +315,9 @@ gmf.GmfRoutingController.prototype.parseRoute_ = function(route) {
   };
   // if there are is useful "legs" data, parse this
   if (route.legs) {
-    parsedRoutes = route.legs.map((leg) => {
-      return leg.steps.map(step => new ol.Feature({geometry: format.readGeometry(step.geometry, formatConfig)}));
-    });
+    parsedRoutes = route.legs.map(leg => leg.steps.map(step => new ol.Feature({geometry: format.readGeometry(step.geometry, formatConfig)})));
     // flatten
-    parsedRoutes = [].concat.apply([], parsedRoutes);
+    parsedRoutes = [].concat(...parsedRoutes);
   } else if (route.geometry) {
   // otherwise parse (overview) geometry
     parsedRoutes.push(new ol.Feature({geometry: format.readGeometry(route.geometry, formatConfig)}));
