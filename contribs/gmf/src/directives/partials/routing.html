@@ -1,44 +1,39 @@
 <div class="gmf-routing">
-  <div class="nominatim-input">
-    <gmf-nominatim-input
-            gmf-nominatim-input-value="routeCtrl.startFeature_.values_['name']"
-            gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
-            gmf-nominatim-input-on-select="routeCtrl.startFeatureOnSelect"
-            gmf-nominatim-input-search-default-params="routeCtrl.searchDefaultParams">
-    </gmf-nominatim-input>
+  <div id="routing-start">
+    <gmf-routing-feature
+            gmf-routing-feature-map="routeCtrl.map"
+            gmf-routing-feature-feature="routeCtrl.startFeature_"
+            gmf-routing-feature-fill-color="routeCtrl.colors['start.fill']"
+            gmf-routing-feature-stroke-color="routeCtrl.colors['start.stroke']"
+            gmf-routing-feature-on-change="routeCtrl.handleChange"
+            gmf-routing-feature-search-default-params="routeCtrl.searchDefaultParams">
+    </gmf-routing-feature>
   </div>
-  <button type="button" id="gmfRoutingFromButton" class="btn btn-default set-marker" ng-click="routeCtrl.setStart()">
-    <span class="fa fa-map-marker"></span>
-  </button><br>
 
   <div class="gmf-routing-vias" ng-repeat="(index, via) in routeCtrl.viaArray">
-    <div class="nominatim-input">
-      <gmf-nominatim-input
-              gmf-nominatim-input-value="via.feature.values_['name']"
-              gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
-              gmf-nominatim-input-on-select="via.onSelect"
-              gmf-nominatim-input-search-default-params="routeCtrl.searchDefaultParams">
-      </gmf-nominatim-input>
-    </div>
-    <button type="button" class="btn btn-default set-marker set-via" ng-click="routeCtrl.setTarget()">
-      <span class="fa fa-map-marker"></span>
-    </button>
+    <gmf-routing-feature
+            gmf-routing-feature-map="routeCtrl.map"
+            gmf-routing-feature-feature="via.feature"
+            gmf-routing-feature-fill-color="routeCtrl.colors['via.fill']"
+            gmf-routing-feature-stroke-color="routeCtrl.colors['via.stroke']"
+            gmf-routing-feature-on-change="routeCtrl.handleChange"
+            gmf-routing-feature-search-default-params="routeCtrl.searchDefaultParams">
+    </gmf-routing-feature>
     <button type="button" class="btn btn-default delete-via" ng-click="routeCtrl.deleteVia(index)">
       <span class="fa fa-trash-o"></span>
-    </button><br>
+    </button>
   </div>
 
-  <div class="nominatim-input">
-    <gmf-nominatim-input
-            gmf-nominatim-input-value="routeCtrl.targetFeature_.values_['name']"
-            gmf-nominatim-input-placeholder="{{'Search...' | translate}}"
-            gmf-nominatim-input-on-select="routeCtrl.targetFeatureOnSelect"
-            gmf-nominatim-input-search-default-params="routeCtrl.searchDefaultParams">
-    </gmf-nominatim-input>
+  <div id="routing-destination">
+    <gmf-routing-feature
+            gmf-routing-feature-map="routeCtrl.map"
+            gmf-routing-feature-feature="routeCtrl.targetFeature_"
+            gmf-routing-feature-fill-color="routeCtrl.colors['destination.fill']"
+            gmf-routing-feature-stroke-color="routeCtrl.colors['destination.stroke']"
+            gmf-routing-feature-on-change="routeCtrl.handleChange"
+            gmf-routing-feature-search-default-params="routeCtrl.searchDefaultParams">
+    </gmf-routing-feature>
   </div>
-  <button type="button" id="gmfRoutingToButton" class="btn btn-default set-marker" ng-click="routeCtrl.setTarget()">
-    <span class="fa fa-map-marker"></span>
-  </button><br>
 
   <button type="button" id="gmfRoutingReverseButton" class="btn btn-default" ng-click="routeCtrl.reverseRoute()">
     <span class="fa fa-exchange"></span> {{'Reverse' | translate}}

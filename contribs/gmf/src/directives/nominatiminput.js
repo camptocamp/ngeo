@@ -136,7 +136,8 @@ gmf.GmfNominatimInputController = function($element, $injector, $scope, gmfNomin
 };
 
 gmf.GmfNominatimInputController.prototype.$onInit = function() {
-  this.gmfNominatimService['searchDefaultParams'] = this.searchDefaultParams || {};
+  // TODO are injected services shared?
+  this.gmfNominatimService.searchDefaultParams = this.searchDefaultParams || {};
 };
 
 /**

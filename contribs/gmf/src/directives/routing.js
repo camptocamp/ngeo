@@ -102,13 +102,13 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
    *              profile: 'routed-car' // used as part of the query
    *            }
    *          ]
-   * @type {Array<RoutingProfile>}
+   * @type {Array<gmfx.RoutingProfile>}
    * @export
    */
   this.routingProfiles = $injector.has('gmfRoutingProfiles') ? $injector.get('gmfRoutingProfiles') : [];
 
   /**
-   * @type {?RoutingProfile>}
+   * @type {?gmfx.RoutingProfile}
    * @export
    */
   this.selectedRoutingProfile = this.routingProfiles.length > 0 ? this.routingProfiles[0] : null;
@@ -132,7 +132,7 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
 
   /**
    * @type {ol.Map}
-   * @private
+   * @export
    */
   this.map;
 
@@ -160,22 +160,10 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
   this.startFeature_ = null;
 
   /**
-   * @type {function(gmfx.NominatimSearchResult)}
-   * @export
-   */
-  this.startFeatureOnSelect = this.onSuggestionSelectFactory_('startFeature_');
-
-  /**
    * @type {ol.Feature}
    * @export
    */
   this.targetFeature_ = null;
-
-  /**
-   * @type {function(gmfx.NominatimSearchResult)}
-   * @export
-   */
-  this.targetFeatureOnSelect = this.onSuggestionSelectFactory_('targetFeature_');
 
   /**
    * @type {Array.<gmfx.RoutingVia>}
@@ -187,61 +175,20 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
    * @type {Object<string, string>}
    * @export
    */
+  this.colors = {
+    'start.fill': '#6BE62E',
+    'start.stroke': '#4CB01E',
+    'destination.fill': '#FF3E13',
+    'destination.stroke': '#CD3412',
+    'via.fill': '#000000',
+    'via.stroke': '#000000'
+  };
+
+  /**
+   * @type {Object<string, string>}
+   * @export
+   */
   this.searchDefaultParams = $injector.has('gmfRoutingSearchDefaultParams') ? $injector.get('gmfRoutingSearchDefaultParams') : {};
-
-  /**
-   * @type {ol.Collection}
-   * @private
-   */
-  this.vectorFeatures_ = new ol.Collection();
-
-  /**
-   * @type {ol.source.Vector}
-   * @private
-   */
-  this.vectorSource_ = new ol.source.Vector({
-    features: this.vectorFeatures_
-  });
-
-  /**
-   * @type {ol.layer.Vector}
-   * @private
-   */
-  this.vectorLayer_ = new ol.layer.Vector({
-    source: this.vectorSource_,
-    style: (function(feature, resolution) {
-      return [new ol.style.Style({
-        text: new ol.style.Text({
-          fill: new ol.style.Fill({
-            color: (feature === this.startFeature_) ? '#6BE62E' : '#FF3E13'
-          }),
-          font: 'normal 30px FontAwesome',
-          offsetY: -15,
-          stroke: new ol.style.Stroke({
-            width: 3,
-            color: (feature === this.startFeature_) ? '#4CB01E' : '#CD3412'
-          }),
-          text: '\uf041'
-        })
-      })];
-    }).bind(this)
-  });
-
-  /**
-   * Interaction for moving start and end.
-   * @type {ol.interaction.Modify}
-   * @private
-   */
-  this.modifyFeatures_ = new ol.interaction.Modify({
-    features: this.vectorFeatures_
-  });
-
-  /**
-   * Remember which feature is being moved.
-   * @type {string}
-   * @private
-   */
-  this.activeModifyFeature_ = '';
 
   /**
    * @type {ol.source.Vector}
@@ -293,45 +240,19 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
    * @private
    */
   this.draw_ = null;
+
+  /**
+   * @export
+   * @type {(function)}
+   */
+  this.handleChange = this.calculateRoute.bind(this);
 };
 
 /**
  * Init the controller
  */
 gmf.GmfRoutingController.prototype.$onInit = function() {
-  this.map.addLayer(this.vectorLayer_);
   this.map.addLayer(this.routeLayer_);
-
-  this.modifyFeatures_.setActive(true);
-  this.map.addInteraction(this.modifyFeatures_);
-
-  this.modifyFeatures_.on('modifystart', (event) => {
-    const feature = event.features.getArray()[0];
-    this.activeModifyFeature_ = null;
-
-    if (this.startFeature_ === feature) {
-      this.activeModifyFeature_ = this.startFeature_;
-    } else if (this.targetFeature_ === feature) {
-      this.activeModifyFeature_ = this.targetFeature_;
-    } else {
-      for (let i = 0; i < this.viaArray.length && this.activeModifyFeature_ === null; i++) {
-        if (this.viaArray[i].feature === feature) {
-          this.activeModifyFeature_ = this.viaArray[i].feature;
-        }
-      }
-    }
-  });
-
-  this.modifyFeatures_.on('modifyend', (event) => {
-    if (this.activeModifyFeature_) {
-      const feature = event.features.getArray()[0];
-      this.vectorSource_.removeFeature(this.activeModifyFeature_);
-      this.activeModifyFeature_ = feature;
-      this.vectorSource_.addFeature(this.activeModifyFeature_);
-      //this.snapFeature_(this.activeModifyFeature_);
-      this.calculateRoute(); // TODO change to snap again
-    }
-  });
 };
 
 /**
@@ -343,82 +264,12 @@ gmf.GmfRoutingController.prototype.handleActiveChange_ = function(active) {
   if (!active) {
     this.startFeature_ = null;
     this.targetFeature_ = null;
+    this.viaArray = [];
     this.routeDistance = '';
     this.routeDuration = null;
-    this.vectorSource_.clear();
     this.routeSource_.clear();
     this.errorMessage = '';
   }
-};
-
-/**
- * @export
- */
-gmf.GmfRoutingController.prototype.setStart = function() {
-  this.setFeature_('startFeature_');
-};
-
-/**
- * @export
- */
-gmf.GmfRoutingController.prototype.setTarget = function() {
-  this.setFeature_('targetFeature_');
-};
-
-/**
- * @param {string} feature Property name of feature
- * @private
- */
-gmf.GmfRoutingController.prototype.setFeature_ = function(feature) {
-  if (this.draw_) {
-    this.map.removeInteraction(this.draw_);
-  }
-
-  this.draw_ = new ol.interaction.Draw({
-    features: this.vectorFeatures_,
-    type: /** @type {ol.geom.GeometryType} */ ('Point')
-  });
-
-  this.draw_.on('drawstart', () => {
-    if (this[feature]) {
-      this.vectorSource_.removeFeature(this[feature]);
-      this[feature].set('name', '');
-    }
-  });
-
-  this.draw_.on('drawend', (event) => {
-    this[feature] = event.feature;
-    //this[feature].set('name', this.formatFeature(this[feature]));
-    if (this.draw_) {
-      this.map.removeInteraction(this.draw_);
-    }
-    this.snapFeature_(feature);
-    this.modifyFeatures_.setActive(true);
-  });
-
-  this.modifyFeatures_.setActive(false);
-  this.map.addInteraction(this.draw_);
-};
-
-/**
- * onSelect handler factory
- * @param {string} feature Property name of feature
- * @return {function(gmfx.NominatimSearchResult)}  Selected feature handler
- * @private
- */
-gmf.GmfRoutingController.prototype.onSuggestionSelectFactory_ = function(feature) {
-  return (function(selected) {
-    this.replaceFeature_(feature, selected.coordinate, selected.name);
-    this.calculateRoute();
-  }).bind(this);
-};
-
-/**
- * @param {ol.Feature} feature Feature to format
- * @return {string} Formated feature description
- */
-gmf.GmfRoutingController.prototype.formatFeature = function(feature) {
-  return this.getLonLatFromPoint_(feature).join('/');
 };
 
 /**
@@ -445,63 +296,9 @@ gmf.GmfRoutingController.prototype.reverseRoute = function() {
   this.targetFeature_ = tmpFeature;
 
   // refresh source to re-render start and target icons
-  this.vectorSource_.refresh();
+  //this.vectorSource_.refresh();
 
   this.calculateRoute();
-};
-
-/**
- * Snaps a feature to the street network using the getNearest
- * function of the routing service. Replaces the feature and
- * its label.
- * @param {string} feature Property name of feature
- * @private
- */
-gmf.GmfRoutingController.prototype.snapFeature_ = function(feature) {
-  const coord = this.getLonLatFromPoint_(this[feature]);
-  const config = {};
-
-  const onSuccess = (function(resp) {
-    const lon = parseFloat(resp['data']['lon']);
-    const lat = parseFloat(resp['data']['lat']);
-    const coords = [lon, lat];
-    const newLabel = resp['data']['display_name'];
-
-    this.replaceFeature_(feature, coords, newLabel);
-
-    this.calculateRoute();
-  }).bind(this);
-
-  const onError = (function(resp) {
-    this.errorMessage = 'Error: nominatim server not responding.';
-    console.log(resp);
-  }).bind(this);
-
-  this.$q_.when(this.gmfNominatimService_.reverse(coord, config))
-    .then(onSuccess.bind(this), onError.bind(this));
-};
-
-/**
- * @param {string} feature Property name of feature
- * @param {ol.Coordinate} newCoords Coordinates of new feature (in LonLat projection)
- * @param {string} newLabel New Label
- * @private
- */
-gmf.GmfRoutingController.prototype.replaceFeature_ = function(feature, newCoords, newLabel) {
-  const transformedCoords = ol.proj.fromLonLat(newCoords, this.map.getView().getProjection());
-  if (newLabel === '') {
-    newLabel = transformedCoords.join('/');
-  }
-  const newFeature = new ol.Feature({
-    geometry: new ol.geom.Point(transformedCoords),
-    name: newLabel
-  });
-  // replace feature
-  if (this[feature]) {
-    this.vectorSource_.removeFeature(this[feature]);
-  }
-  this[feature] = newFeature;
-  this.vectorSource_.addFeature(this[feature]);
 };
 
 /**
@@ -583,10 +380,10 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
  * @export
  */
 gmf.GmfRoutingController.prototype.addVia = function() {
-  this.viaArray.push({
+  this.viaArray.push(/** @type{gmfx.RoutingVia} */({
     feature: null,
     onSelect: null
-  });
+  }));
 };
 
 /**
