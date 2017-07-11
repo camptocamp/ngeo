@@ -5,6 +5,8 @@ goog.require('ngeo');
 goog.require('ngeo.AutoProjection');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
+/** @suppress {extraRequire} */
+goog.require('gmf.ThemeManager');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.Debounce');
