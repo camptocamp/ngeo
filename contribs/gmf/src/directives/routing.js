@@ -180,7 +180,7 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
     'start.stroke': '#4CB01E',
     'destination.fill': '#FF3E13',
     'destination.stroke': '#CD3412',
-    'via.fill': '#000000',
+    'via.fill': '#767676',
     'via.stroke': '#000000'
   };
 
