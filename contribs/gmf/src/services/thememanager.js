@@ -125,7 +125,7 @@ gmf.ThemeManager.prototype.getThemeName = function() {
 gmf.ThemeManager.prototype.setThemeName = function(name, opt_stealth) {
   this.themeName_ = name;
   if (!opt_stealth) {
-    this.$rootScope_.$emit(gmf.ThemeManagerEventType.THEME_NAME_SET, null);
+    this.$rootScope_.$emit(gmf.ThemeManagerEventType.THEME_NAME_SET, name);
   }
 };
 

@@ -388,9 +388,8 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
     });
   }
 
-  //TODO aabbcctt
   if (this.gmfThemeManager_) {
-    $rootScope.$watch(() => this.gmfThemeManager_.getThemeName(), (name) => {
+    this.rootScope_.$on(gmf.ThemeManagerEventType.THEME_NAME_SET, (event, name) => {
       this.setThemeInUrl_();
     });
   }
