@@ -265,6 +265,8 @@ gmf.GmfRoutingFeatureController.prototype.onSelect_ = function(selected) {
   const coordinate = selected.coordinate;
   const label = selected.label;
   this.setFeature_(coordinate, label);
+  const newCoordinates = /** @type{ol.geom.Point} */(this.feature.getGeometry()).getCoordinates();
+  this.map.getView().setCenter(newCoordinates);
 };
 
 /**
