@@ -11,7 +11,7 @@ goog.require('ngeo.colorpickerDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.popoverDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.fulltextSearchService');
+goog.require('gmf.FulltextSearchService');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
@@ -180,13 +180,14 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  *     overlay manager service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {gmf.FulltextSearchService} gmfFulltextSearchService gmf Full text search service.
  * @ngInject
  * @ngdoc controller
  * @ngname GmfSearchController
  */
 gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCatalog,
   ngeoAutoProjection, ngeoSearchCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
-  gmfThemes, gmfTreeManager) {
+  gmfThemes, gmfTreeManager, gmfFulltextSearchService) {
 
 
   /**
@@ -208,17 +209,6 @@ gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCa
   this.timeout_ = $timeout;
 
   /**
-   * @type {ngeo.Location}
-   * @private
-   */
-  this.ngeoLocation_ = $injector.get('ngeoLocation');
-
-  /**
-   * @private
-   */
-  this.fullTextSearch_ = $injector.get('gmfFulltextSearchService');
-
-  /**
    * @type {angularGettext.Catalog}
    * @private
    */
@@ -237,6 +227,12 @@ gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCa
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
+   * @type {gmf.FulltextSearchService}
+   * @private
+   */
+  this.fullTextSearch_ = gmfFulltextSearchService;
+
+  /**
    * @type {ngeo.search.CreateGeoJSONBloodhound}
    * @private
    */
@@ -247,6 +243,16 @@ gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCa
    * @private
    */
   this.ngeoFeatureOverlayMgr = ngeoFeatureOverlayMgr;
+
+  /**
+   * @type {ngeo.Location|undefined}
+   * @private
+   */
+  this.ngeoLocation_;
+
+  if ($injector.has('ngeoLocation')) {
+    this.ngeoLocation_ = $injector.get('ngeoLocation');
+  }
 
   /**
    * @type {ngeo.AutoProjection}
@@ -451,13 +457,15 @@ gmf.SearchController.prototype.$onInit = function() {
   this.inputValue = this.inputValue || '';
   this.placeholder = this.placeholder || '';
 
-  const searchQuery = this.ngeoLocation_.getParam('search');
-  if (searchQuery) {
-    let resultOffset = 0;
-    if (this.ngeoLocation_.getParam('search-offset')) {
-      resultOffset = parseInt(this.ngeoLocation_.getParam('search-offset'), 10);
+  if (this.ngeoLocation_) {
+    const searchQuery = this.ngeoLocation_.getParam('search');
+    if (searchQuery) {
+      let resultOffset = 0;
+      if (this.ngeoLocation_.getParam('search-offset')) {
+        resultOffset = parseInt(this.ngeoLocation_.getParam('search-offset'), 10);
+      }
+      this.fulltextsearch_(searchQuery, resultOffset);
     }
-    this.fulltextsearch_(searchQuery, resultOffset);
   }
 };
 

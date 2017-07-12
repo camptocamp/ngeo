@@ -22,7 +22,7 @@ goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.searchDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.fulltextSearchService');
+goog.require('gmf.FulltextSearchService');
 /** @suppress {extraRequire} */
 goog.require('gmf.themeselectorDirective');
 /** @suppress {extraRequire} */

@@ -1,4 +1,4 @@
-goog.provide('gmf.fulltextSearchService');
+goog.provide('gmf.FulltextSearchService');
 
 goog.require('gmf');
 goog.require('ngeo.utils');
@@ -13,7 +13,7 @@ goog.require('ngeo.utils');
  * @export
  * @ngname gmfFulltextSearchService
  */
-gmf.fulltextSearchService = function($injector, $http) {
+gmf.FulltextSearchService = function($injector, $http) {
 
   /**
    * @type {angular.$http}
@@ -48,7 +48,7 @@ gmf.fulltextSearchService = function($injector, $http) {
  * @param {Object.<string, string>} params Additional parameters.
  * @returns {Promise} Request promise with data array.
  */
-gmf.fulltextSearchService.prototype.search = function(query, params) {
+gmf.FulltextSearchService.prototype.search = function(query, params) {
   const queryParams = Object.assign({}, this.defaultParams_, params);
 
   queryParams['query'] = query;
@@ -62,4 +62,4 @@ gmf.fulltextSearchService.prototype.search = function(query, params) {
   });
 };
 
-gmf.module.service('gmfFulltextSearchService', gmf.fulltextSearchService);
+gmf.module.service('gmfFulltextSearchService', gmf.FulltextSearchService);
