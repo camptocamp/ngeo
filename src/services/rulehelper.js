@@ -379,7 +379,7 @@ ngeo.RuleHelper = class {
    */
   createFilter(options) {
 
-    const dataSource = options.dataSource;
+    const dataSource = /** @type {ngeo.DataSource} */ (options.dataSource);
     let mainFilter = null;
 
     if (options.filter) {
