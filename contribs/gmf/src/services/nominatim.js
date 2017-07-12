@@ -72,8 +72,8 @@ gmf.NominatimService = function($http, $injector) {
    */
   const debounce = function(func, wait, immediate) {
     let timeout;
-    return function() {
-      const context = this, args = arguments;
+    return function(...args) {
+      const context = this;
       const later = function() {
         timeout = null;
         if (!immediate) {
