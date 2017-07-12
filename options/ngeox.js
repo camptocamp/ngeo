@@ -90,10 +90,10 @@ ngeox.Attribute.prototype.type;
  * service.
  *
  * @typedef {{
- *     dataSource: (ngeo.DataSource),
+ *     dataSource: (ngeox.DataSource),
  *     incTime: (boolean|undefined),
  *     filter: (ol.format.filter.Filter|undefined),
- *     filterRules: (!Array.<ngeo.rule.Rule>|undefined),
+ *     filterRules: (!Array.<ngeox.rule.Rule>|undefined),
  *     srsName: (string|undefined)
  * }}
  */
@@ -103,7 +103,7 @@ ngeox.CreateFilterOptions;
 /**
  * The data source from which to get the filterRules that will be used to
  * create the OL filter object.
- * @type {ngeo.DataSource}
+ * @type {ngeox.DataSource}
  */
 ngeox.CreateFilterOptions.prototype.dataSource;
 
@@ -131,7 +131,7 @@ ngeox.CreateFilterOptions.prototype.filter;
  * An alternative list of filter rules to use instead of those that are defined
  * within the data source. Useful when one wants to get the data of a given
  * filter without applying it to the data source.
- * @type {Array.<!ngeo.rule.Rule>|undefined}
+ * @type {Array.<!ngeox.rule.Rule>|undefined}
  */
 ngeox.CreateFilterOptions.prototype.filterRules;
 
@@ -180,7 +180,7 @@ ngeox.DataSourceLayer.prototype.queryable;
 
 
 /**
- * The options to create a `ngeo.DataSource` with.
+ * The options to create a `ngeox.DataSource` with.
  * @record
  * @struct
  */
@@ -503,6 +503,16 @@ ngeox.DataSource.prototype.wmsUrl;
  * @type {string|undefined}
  */
 ngeox.DataSource.prototype.wfsUrl;
+
+/**
+ * @type {string}
+ */
+ngeox.DataSource.prototype.filterCondition;
+
+/**
+ * @type {?Array.<!ngeox.rule.Rule>}
+ */
+ngeox.DataSource.prototype.filterRules;
 
 /**
  * @param {ngeox.DataSource} dataSource Data source.

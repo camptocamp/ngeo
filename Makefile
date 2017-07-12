@@ -201,6 +201,7 @@ dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
 .PHONY: check
 check: git-attributes eof-newline lint check-examples test dist build-gmf-apps
+	grep -nE "ngeo.rule.Rule|ngeo.DataSource" options/ngeox.js && (echo "Only use ngeox.rule.Rule and ngeox.DataSource in options/ngeox.js" && exit 1)
 
 .PHONY: build-gmf-apps
 build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),.js .css)) \
