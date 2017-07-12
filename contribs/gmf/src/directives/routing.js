@@ -295,8 +295,8 @@ gmf.GmfRoutingController.prototype.reverseRoute = function() {
   this.startFeature_ = this.targetFeature_;
   this.targetFeature_ = tmpFeature;
 
-  // refresh source to re-render start and target icons
-  //this.vectorSource_.refresh();
+  // reverse vias
+  this.viaArray = this.viaArray.reverse();
 
   this.calculateRoute();
 };
