@@ -1,12 +1,14 @@
 goog.provide('gmf.NominatimService');
 
 goog.require('gmf');
+goog.require('ngeo.Debounce');
 
 /**
  * Service to provide access to Nominatim, which allows to search for
  * OSM data by name and address.
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$injector} $injector Main injector.
+ * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @struct
  * @ngInject
@@ -14,13 +16,19 @@ goog.require('gmf');
  * @ngname gmfNominatimService
  * @see https://wiki.openstreetmap.org/wiki/Nominatim
  */
-gmf.NominatimService = function($http, $injector) {
+gmf.NominatimService = function($http, $injector, ngeoDebounce) {
 
   /**
    * @type {angular.$http}
    * @private
    */
   this.$http_ = $http;
+
+  /**
+   * @type {ngeo.Debounce}
+   * @private
+   */
+  this.ngeoDebounce_ = ngeoDebounce;
 
   /**
    * URL for Nominatim backend
@@ -61,42 +69,12 @@ gmf.NominatimService = function($http, $injector) {
   this.typeaheadDebounceDelay_ = 500;
 
   /**
-   * Creates and returns a new debounced version of the passed function
-   * which will postpone its execution until after wait milliseconds
-   * have elapsed since the last time it was invoked
-   * @see: http://underscorejs.org/#debounce
-   * @param {Function} func Function to execute
-   * @param {number} wait Wait that many milliseconds to execute
-   * @param {?boolean} immediate True to execute immediately
-   * @returns {Function} Debounced version of passed function
-   */
-  const debounce = function(func, wait, immediate) {
-    let timeout;
-    return function(...args) {
-      const context = this;
-      const later = function() {
-        timeout = null;
-        if (!immediate) {
-          func.apply(context, args);
-        }
-      };
-      const callNow = immediate && !timeout;
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-      if (callNow) {
-        func.apply(context, args);
-      }
-    };
-  };
-
-  /**
    * @export
    * @type {function(string,function(Array.<BloodhoundDatum>),(function(Array.<ol.Feature>)|undefined))}
    */
   this.typeaheadSourceDebounced =
     /** @type{function(string,function(Array.<BloodhoundDatum>),(function(Array.<ol.Feature>)|undefined))} */
-    (debounce(this.typeaheadSource_.bind(this), this.typeaheadDebounceDelay_, false));
-  // TODO: check if replacing debounce with ngeo.Debounce would make sense
+    (this.ngeoDebounce_(/** @type {function(?)} */ (this.typeaheadSource_.bind(this)), this.typeaheadDebounceDelay_, true));
 };
 
 /**
