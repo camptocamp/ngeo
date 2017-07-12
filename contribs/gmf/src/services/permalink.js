@@ -5,6 +5,8 @@ goog.require('ngeo');
 goog.require('ngeo.AutoProjection');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
+/** @suppress {extraRequire} */
+goog.require('gmf.ThemeManager');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.Debounce');
@@ -389,7 +391,7 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
   }
 
   if (this.gmfThemeManager_) {
-    $rootScope.$watch(() => this.gmfThemeManager_.themeName, (name) => {
+    this.rootScope_.$on(gmf.ThemeManagerEventType.THEME_NAME_SET, (event, name) => {
       this.setThemeInUrl_();
     });
   }
@@ -785,7 +787,8 @@ gmf.Permalink.prototype.themeInUrl_ = function(pathElements) {
  * @private
  */
 gmf.Permalink.prototype.setThemeInUrl_ = function() {
-  if (this.gmfThemeManager_ && this.gmfThemeManager_.themeName) {
+  const themeName = this.gmfThemeManager_ ? this.gmfThemeManager_.getThemeName() : null;
+  if (themeName) {
     const pathElements = this.ngeoLocation_.getPath().split('/');
     goog.asserts.assert(pathElements.length > 1);
     if (pathElements[pathElements.length - 1] === '') {
@@ -793,9 +796,9 @@ gmf.Permalink.prototype.setThemeInUrl_ = function() {
       pathElements.splice(pathElements.length - 1);
     }
     if (this.themeInUrl_(pathElements)) {
-      pathElements[pathElements.length - 1] = this.gmfThemeManager_.themeName;
+      pathElements[pathElements.length - 1] = themeName;
     } else {
-      pathElements.push('theme', this.gmfThemeManager_.themeName);
+      pathElements.push('theme', themeName);
     }
     this.ngeoLocation_.setPath(pathElements.join('/'));
   }
@@ -829,7 +832,8 @@ gmf.Permalink.prototype.initLayers_ = function() {
       themeName = this.defaultTheme_;
     }
     if (this.gmfThemeManager_ && this.gmfThemeManager_.modeFlush) {
-      this.gmfThemeManager_.themeName = `${themeName}`;
+      // Set theme in stealth mode, we just want to set the theme name, not more.
+      this.gmfThemeManager_.setThemeName(`${themeName}`, true);
     }
 
     /**
