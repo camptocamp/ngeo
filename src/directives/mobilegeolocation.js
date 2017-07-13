@@ -115,7 +115,10 @@ ngeo.MobileGeolocationController = function($scope, $element,
    * @private
    */
   this.geolocation_ = new ol.Geolocation({
-    projection: map.getView().getProjection()
+    projection: map.getView().getProjection(),
+    trackingOptions: /** @type {GeolocationPositionOptions} */ ({
+      enableHighAccuracy: true
+    })
   });
 
   // handle geolocation error.
@@ -124,16 +127,16 @@ ngeo.MobileGeolocationController = function($scope, $element,
     let msg;
     switch (error.code) {
       case 1:
-        msg = gettextCatalog.getString('geolocation_permission_denied_error');
+        msg = gettextCatalog.getString('User denied the request for Geolocation.');
         break;
       case 2:
-        msg = gettextCatalog.getString('geolocation_position_unavailable_error');
+        msg = gettextCatalog.getString('Location information is unavailable.');
         break;
       case 3:
-        msg = gettextCatalog.getString('geolocation_timeout_error');
+        msg = gettextCatalog.getString('The request to get user location timed out.');
         break;
       default:
-        msg = gettextCatalog.getString('geolocation_unknow_error');
+        msg = gettextCatalog.getString('Geolocation: An unknown error occurred.');
         break;
     }
     this.notification_.error(msg);
