@@ -1,56 +1,56 @@
-goog.require('gmf.ProfileController');
+goog.require('gmf.profileComponent');
 
 
-describe('gmf.GmfProfileController', function() {
+describe('gmf.GmfProfileController', () => {
 
-  var profileController;
-  var csvDownloadServiceMock;
-  var $scope;
-  var $rootScope;
+  let profileController;
+  let csvDownloadServiceMock;
+  let $scope;
+  let $rootScope;
 
-  beforeEach(function() {
-    module('ngeo', function($provide) {
-      $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.json');
+  beforeEach(() => {
+    module('ngeo', ($provide) => {
+      $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
       csvDownloadServiceMock = {
-        startDownload: function(data, columnDefs, fileName) {}
+        startDownload(data, columnDefs, fileName) {}
       };
     });
 
-    inject(function($injector, _$controller_, _$rootScope_) {
-      var $controller = _$controller_;
+    inject(($injector, _$controller_, _$rootScope_) => {
+      const $controller = _$controller_;
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
-      var data = {
-        getLinesConfigurationFn: function() {
+      const data = {
+        getLinesConfigurationFn() {
           return {
             'aster': {
-              'color':'#0404A0'
+              'color': '#0404A0'
             },
             'srtm': {
-              'color':'#04A004'
+              'color': '#04A004'
             }
           };
         }
       };
       profileController = $controller(
           'GmfProfileController', {
-            $scope: $scope,
+            $scope,
             ngeoCsvDownload: csvDownloadServiceMock,
             $element: $('<div></div>')}, data);
       $rootScope.$digest();
     });
   });
 
-  describe('#downloadCsv', function() {
+  describe('#downloadCsv', () => {
 
-    it('does nothing when empty', function() {
+    it('does nothing when empty', () => {
       profileController.profileData = [];
       spyOn(csvDownloadServiceMock, 'startDownload');
       profileController.downloadCsv();
       expect(csvDownloadServiceMock.startDownload).not.toHaveBeenCalled();
     });
 
-    it('generates rows and header correctly', function() {
+    it('generates rows and header correctly', () => {
       profileController.profileData = [
         {
           x: 631943,
@@ -85,7 +85,7 @@ describe('gmf.GmfProfileController', function() {
 
       expect(csvDownloadServiceMock.startDownload).toHaveBeenCalled();
 
-      var callArgs = csvDownloadServiceMock.startDownload.calls.mostRecent().args;
+      const callArgs = csvDownloadServiceMock.startDownload.calls.mostRecent().args;
       expect(callArgs[0]).toEqual([
         {
           x: 631943,

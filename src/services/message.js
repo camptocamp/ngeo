@@ -34,12 +34,14 @@ ngeo.MessageType = {
  *
  * @constructor
  * @struct
+ * @abstract
  */
 ngeo.Message = function() {};
 
 
 /**
  * Show the message.
+ *
  * @abstract
  * @param {ngeox.Message} message Message.
  * @protected
@@ -50,18 +52,20 @@ ngeo.Message.prototype.showMessage = function(message) {};
 /**
  * Show disclaimer message string or object or list of disclame message
  * strings or objects.
+ *
  * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
  *     object A message or list of messages as text or configuration objects.
  * @export
  */
 ngeo.Message.prototype.show = function(object) {
-  var msgObjects = this.getMessageObjects(object);
+  const msgObjects = this.getMessageObjects(object);
   msgObjects.forEach(this.showMessage, this);
 };
 
 
 /**
  * Display the given error message or list of error messages.
+ *
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
@@ -103,7 +107,7 @@ ngeo.Message.prototype.warn = function(message) {
 /**
  * Returns an array of message object from any given message string, list of
  * message strings, message object or list message objects. The type can be
- * overriden here as well OR defined (if the message(s) is/are string(s),
+ * overridden here as well OR defined (if the message(s) is/are string(s),
  * defaults to 'information').
  * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
  *     object A message or list of messages as text or configuration objects.
@@ -112,9 +116,9 @@ ngeo.Message.prototype.warn = function(message) {
  * @protected
  */
 ngeo.Message.prototype.getMessageObjects = function(object, opt_type) {
-  var msgObjects = [];
-  var msgObject = null;
-  var defaultType = ngeo.MessageType.INFORMATION;
+  const msgObjects = [];
+  let msgObject = null;
+  const defaultType = ngeo.MessageType.INFORMATION;
 
   if (typeof object === 'string') {
     msgObjects.push({
@@ -122,10 +126,10 @@ ngeo.Message.prototype.getMessageObjects = function(object, opt_type) {
       type: opt_type !== undefined ? opt_type : defaultType
     });
   } else if (Array.isArray(object)) {
-    object.forEach(function(msg) {
+    object.forEach((msg) => {
       if (typeof object === 'string') {
         msgObject = {
-          msg: msg,
+          msg,
           type: opt_type !== undefined ? opt_type : defaultType
         };
       } else {

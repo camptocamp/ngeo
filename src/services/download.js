@@ -29,10 +29,10 @@ ngeo.downloadFactory_ = function() {
     // do a manual download with "Save as".
     // See also: https://github.com/eligrey/FileSaver.js/issues/12
     /** @type{string} */
-    var fileType = opt_fileType !== undefined && !ngeo.utils.isSafari() ?
+    const fileType = opt_fileType !== undefined && !ngeo.utils.isSafari() ?
         opt_fileType : 'text/plain;charset=utf-8';
 
-    var blob = new Blob([content], {type: fileType});
+    const blob = new Blob([content], {type: fileType});
     saveAs(blob, fileName);
   }
 

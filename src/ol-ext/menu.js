@@ -3,6 +3,7 @@ goog.provide('ngeo.MenuEvent');
 goog.provide('ngeo.MenuEventType');
 
 goog.require('ol.Overlay');
+goog.require('ol.OverlayPositioning');
 goog.require('ol.events.Event');
 
 
@@ -56,9 +57,9 @@ ol.inherits(ngeo.MenuEvent, ol.events.Event);
  */
 ngeo.Menu = function(menuOptions, opt_overlayOptions) {
 
-  var options = opt_overlayOptions !== undefined ? opt_overlayOptions : {};
+  const options = opt_overlayOptions !== undefined ? opt_overlayOptions : {};
 
-  options.positioning = ol.Overlay.Positioning.TOP_LEFT;
+  options.positioning = ol.OverlayPositioning.TOP_LEFT;
 
   /**
    * @type {Array.<goog.events.Key>}
@@ -78,7 +79,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
    */
   this.olListenerKeys_ = [];
 
-  var contentEl = $('<div/>', {
+  const contentEl = $('<div/>', {
     'class': 'panel panel-default'
   });
 
@@ -91,7 +92,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
 
   // titleEl
   if (menuOptions.title) {
-    var headerEl = $('<div>', {
+    const headerEl = $('<div>', {
       'class': 'panel-heading'
     }).appendTo(contentEl);
 
@@ -101,7 +102,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
   }
 
   // actionsEl
-  var actionsEl = $('<div>', {
+  const actionsEl = $('<div>', {
     'class': 'list-group'
   }).appendTo(contentEl);
 
@@ -139,19 +140,20 @@ ol.inherits(ngeo.Menu, ol.Overlay);
 /**
  * @param {ol.Map|undefined} map Map.
  * @export
+ * @override
  */
 ngeo.Menu.prototype.setMap = function(map) {
 
-  var keys = this.listenerKeys_;
-  var olKeys = this.olListenerKeys_;
+  const keys = this.listenerKeys_;
+  const olKeys = this.olListenerKeys_;
 
-  var currentMap = this.getMap();
+  const currentMap = this.getMap();
   if (currentMap) {
-    keys.forEach(function(key) {
+    keys.forEach((key) => {
       goog.events.unlistenByKey(key);
     }, this);
     keys.length = 0;
-    olKeys.forEach(function(key) {
+    olKeys.forEach((key) => {
       ol.events.unlistenByKey(key);
     }, this);
     olKeys.length = 0;
@@ -161,7 +163,7 @@ ngeo.Menu.prototype.setMap = function(map) {
 
   if (map) {
     this.actions_.forEach(function(action) {
-      var data = action.data();
+      const data = action.data();
       keys.push(
         goog.events.listen(
           action[0],
@@ -177,7 +179,7 @@ ngeo.Menu.prototype.setMap = function(map) {
     olKeys.push(
       ol.events.listen(
         map,
-        ol.MapBrowserEvent.EventType.POINTERMOVE,
+        ol.MapBrowserEventType.POINTERMOVE,
         this.handleMapPointerMove_,
         this
       )
@@ -244,7 +246,7 @@ ngeo.Menu.prototype.handleActionClick_ = function(action, evt) {
  * @private
  */
 ngeo.Menu.prototype.handleClickOut_ = function(evt) {
-  var element = this.getElement();
+  const element = this.getElement();
   if (element && $(evt.target).closest(element).length === 0) {
     this.close();
   }
@@ -261,13 +263,13 @@ ngeo.Menu.prototype.handleClickOut_ = function(evt) {
  * @private
  */
 ngeo.Menu.prototype.handleMapPointerMove_ = function(evt) {
-  var target = evt.originalEvent.target;
+  const target = evt.originalEvent.target;
   goog.asserts.assertInstanceof(target, Element);
 
-  var element = this.getElement();
+  const element = this.getElement();
   goog.asserts.assertInstanceof(element, Element);
 
-  if (goog.dom.contains(element, target)) {
+  if (element.contains(target)) {
     evt.coordinate = [Infinity, Infinity];
     evt.pixel = [Infinity, Infinity];
   }

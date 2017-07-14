@@ -40,10 +40,18 @@ app.measuretoolsDirective = function() {
       'map': '=appMeasuretoolsMap',
       'lang': '=appMeasuretoolsLang'
     },
-    controller: 'AppMeasuretoolsController',
-    controllerAs: 'ctrl',
+    controller: 'AppMeasuretoolsController as ctrl',
     bindToController: true,
-    templateUrl: 'partials/measuretools.html'
+    templateUrl: 'partials/measuretools.html',
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     * @param {app.MeasuretoolsController} controller Controller.
+     */
+    link(scope, element, attrs, controller) {
+      controller.init();
+    }
   };
 };
 
@@ -101,53 +109,51 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
   this.measureAzimutContinueMsg = null;
 
   // Translations for the measure tools' tooltips.
-  var measureStartMsgs = {
+  const measureStartMsgs = {
     'en': $sce.trustAsHtml('Click to start drawing.'),
     'fr': $sce.trustAsHtml('Cliquer pour commencer à dessiner.')
   };
-  var measureLengthContinueMsgs = {
+  const measureLengthContinueMsgs = {
     'en': $sce.trustAsHtml('Click to continue drawing.<br>' +
         'Double-click or click last point to finish.'),
     'fr': $sce.trustAsHtml('Cliquer pour continuer le dessin.<br>' +
         'Double-cliquer ou cliquer sur dernier point pour finir.')
   };
-  var measureAreaContinueMsgs = {
+  const measureAreaContinueMsgs = {
     'en': $sce.trustAsHtml('Click to continue drawing.<br>' +
         'Double-click or click starting point to finish.'),
     'fr': $sce.trustAsHtml('Cliquer pour continuer le dessin.<br>' +
         'Double-cliquer ou cliquer sur point de départ pour finir.')
   };
-  var measureAzimutContinueMsgs = {
+  const measureAzimutContinueMsgs = {
     'en': $sce.trustAsHtml('Click to finish.'),
     'fr': $sce.trustAsHtml('Cliquer pour finir.')
   };
 
   // Create elements for the measure tools' tooltips.
-  var measureStartMsg = angular.element(
+  let measureStartMsg = angular.element(
       '<span ng-bind-html="ctrl.measureStartMsg"></span>');
   measureStartMsg = $compile(measureStartMsg)($scope);
-  var measureLengthContinueMsg = angular.element(
+  let measureLengthContinueMsg = angular.element(
       '<span ng-bind-html="ctrl.measureLengthContinueMsg"></span>');
   measureLengthContinueMsg = $compile(measureLengthContinueMsg)($scope);
-  var measureAreaContinueMsg = angular.element(
+  let measureAreaContinueMsg = angular.element(
       '<span ng-bind-html="ctrl.measureAreaContinueMsg"></span>');
   measureAreaContinueMsg = $compile(measureAreaContinueMsg)($scope);
-  var measureAzimutContinueMsg = angular.element(
+  let measureAzimutContinueMsg = angular.element(
       '<span ng-bind-html="ctrl.measureAzimutContinueMsg"></span>');
   measureAzimutContinueMsg = $compile(measureAzimutContinueMsg)($scope);
 
   // Watch the "lang" property and update the toolip messages
   // based on the selected language.
-  $scope.$watch(function() {
-    return this.lang;
-  }.bind(this), function(newVal) {
+  $scope.$watch(() => this.lang, (newVal) => {
     this.measureStartMsg = measureStartMsgs[newVal];
     this.measureLengthContinueMsg = measureLengthContinueMsgs[newVal];
     this.measureAreaContinueMsg = measureAreaContinueMsgs[newVal];
     this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
-  }.bind(this));
+  });
 
-  var style = new ol.style.Style({
+  const style = new ol.style.Style({
     fill: new ol.style.Fill({
       color: 'rgba(255, 255, 255, 0.2)'
     }),
@@ -167,8 +173,6 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     })
   });
 
-  var map = this.map;
-
   /**
    * @type {ngeo.interaction.MeasureLength}
    * @export
@@ -179,10 +183,8 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     continueMsg: measureLengthContinueMsg[0]
   });
 
-  var measureLength = this.measureLength;
-  measureLength.setActive(false);
-  ngeoDecorateInteraction(measureLength);
-  map.addInteraction(measureLength);
+  this.measureLength.setActive(false);
+  ngeoDecorateInteraction(this.measureLength);
 
   /**
    * @type {ngeo.interaction.MeasureArea}
@@ -194,38 +196,40 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     continueMsg: measureAreaContinueMsg[0]
   });
 
-  var measureArea = this.measureArea;
-  measureArea.setActive(false);
-  ngeoDecorateInteraction(measureArea);
-  map.addInteraction(measureArea);
+  this.measureArea.setActive(false);
+  ngeoDecorateInteraction(this.measureArea);
 
   /**
    * @type {ngeo.interaction.MeasureAzimut}
    * @export
    */
-  this.measureAzimut = new ngeo.interaction.MeasureAzimut($filter('ngeoUnitPrefix'), {
-    sketchStyle: style,
-    startMsg: measureStartMsg[0],
-    continueMsg: measureAzimutContinueMsg[0]
-  });
+  this.measureAzimut = new ngeo.interaction.MeasureAzimut(
+        $filter('ngeoUnitPrefix'), $filter('ngeoNumber'), {
+          sketchStyle: style,
+          startMsg: measureStartMsg[0],
+          continueMsg: measureAzimutContinueMsg[0]
+        });
 
-  var measureAzimut = this.measureAzimut;
-  measureAzimut.setActive(false);
-  ngeoDecorateInteraction(measureAzimut);
-  map.addInteraction(measureAzimut);
+  this.measureAzimut.setActive(false);
+  ngeoDecorateInteraction(this.measureAzimut);
 
 
   // the following code shows how one can add additional information to the
   // tooltip. This can be useful to display the elevation offset from the
   // 2 points of an azimut measurement.
-  measureAzimut.on('measureend', function(evt) {
-    var el = evt.target.getTooltipElement();
+  this.measureAzimut.on('measureend', (evt) => {
+    const el = evt.target.getTooltipElement();
     el.innerHTML += '<br>Additional info';
   });
 };
 
 app.module.controller('AppMeasuretoolsController', app.MeasuretoolsController);
 
+app.MeasuretoolsController.prototype.init = function() {
+  this.map.addInteraction(this.measureLength);
+  this.map.addInteraction(this.measureArea);
+  this.map.addInteraction(this.measureAzimut);
+};
 
 /**
  * @constructor

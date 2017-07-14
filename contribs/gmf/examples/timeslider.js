@@ -2,7 +2,7 @@ goog.provide('gmfapp.timeslider');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.TimeSliderDirective');
-goog.require('gmf.WMSTime');
+goog.require('ngeo.WMSTime');
 
 
 /** @type {!angular.Module} **/
@@ -12,16 +12,16 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 /**
  * @constructor
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!gmf.WMSTime} gmfWMSTime wmstime service.
+ * @param {!ngeo.WMSTime} ngeoWMSTime wmstime service.
  * @ngInject
  */
-gmfapp.MainController = function($scope, gmfWMSTime) {
+gmfapp.MainController = function($scope, ngeoWMSTime) {
 
   /**
-   * @type {gmf.WMSTime}
+   * @type {ngeo.WMSTime}
    * @private
    */
-  this.gmfWMSTime_ = gmfWMSTime;
+  this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
    * @type {ngeox.TimeProperty}
@@ -35,7 +35,7 @@ gmfapp.MainController = function($scope, gmfWMSTime) {
     minDefValue: null,
     resolution: /** @type {ngeox.TimePropertyResolutionEnum}*/ ('day'),
     mode: /** @type {ngeox.TimePropertyModeEnum} */('range'),
-    interval : [0,1,0,0]
+    interval: [0, 1, 0, 0]
   };
 
   /**
@@ -50,7 +50,7 @@ gmfapp.MainController = function($scope, gmfWMSTime) {
     minDefValue: null,
     resolution: /** @type {ngeox.TimePropertyResolutionEnum}*/ ('year'),
     mode: /** @type {ngeox.TimePropertyModeEnum} */ ('value'),
-    interval : [0,0,1,0]
+    interval: [0, 0, 1, 0]
   };
 
   /**
@@ -66,12 +66,12 @@ gmfapp.MainController = function($scope, gmfWMSTime) {
   this.sliderRangeValue;
 
   this.onDateSelected = function(date) {
-    this.sliderValue = this.gmfWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
+    this.sliderValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
     $scope.$digest();
   };
 
   this.onDateRangeSelected = function(date) {
-    this.sliderRangeValue = this.gmfWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
+    this.sliderRangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
     $scope.$digest();
   };
 

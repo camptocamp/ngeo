@@ -9,7 +9,7 @@
 /**
  * @typedef {Object.<string,*>}
  */
-var BloodhoundDatum;
+let BloodhoundDatum;
 
 /**
  * @typedef {{
@@ -21,7 +21,7 @@ var BloodhoundDatum;
  *   transform: (function(?):Array.<BloodhoundDatum>|undefined)
  * }}
  */
-var BloodhoundRemoteOptions;
+let BloodhoundRemoteOptions;
 
 /**
  * @typedef {{
@@ -32,7 +32,7 @@ var BloodhoundRemoteOptions;
  *   thumbprint: (string|undefined)
  * }}
  */
-var BloodhoundPrefetchOptions;
+let BloodhoundPrefetchOptions;
 
 /**
  * @typedef {{
@@ -47,7 +47,7 @@ var BloodhoundPrefetchOptions;
  *   remote: (string|BloodhoundRemoteOptions|undefined)
  * }}
  */
-var BloodhoundOptions;
+let BloodhoundOptions;
 
 /**
  * @constructor
@@ -135,7 +135,7 @@ Bloodhound.tokenizers.obj.nonword = function(key) {};
  *   suggestion: (function(Object):string|undefined)
  * }}
  */
-var TypeaheadTemplates;
+let TypeaheadTemplates;
 
 /**
  * @typedef {{
@@ -144,10 +144,11 @@ var TypeaheadTemplates;
  *   name: (string|undefined),
  *   limit: (number|undefined),
  *   display: (string|function(Object):string|undefined),
+ *   displayKey: (string|undefined),
  *   templates: (TypeaheadTemplates|undefined)
  * }}
  */
-var TypeaheadDataset;
+let TypeaheadDataset;
 
 /**
  * @typedef {{
@@ -164,7 +165,7 @@ var TypeaheadDataset;
  *   highlight: (string|undefined)
  * }}
  */
-var TypeaheadClassNames;
+let TypeaheadClassNames;
 
 /**
  * @typedef {{
@@ -174,7 +175,7 @@ var TypeaheadClassNames;
  *   classNames: (TypeaheadClassNames|undefined)
  * }}
  */
-var TypeaheadOptions;
+let TypeaheadOptions;
 
 /**
  * @param {TypeaheadOptions|string} options

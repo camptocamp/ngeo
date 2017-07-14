@@ -1,4 +1,3 @@
-goog.provide('ngeo.DrawfeatureController');
 goog.provide('ngeo.drawfeatureDirective');
 
 goog.require('ngeo');
@@ -82,6 +81,9 @@ goog.require('ol.Feature');
  *
  * @htmlAttribute {boolean} ngeo-drawfeature-active Whether the directive is
  *     active or not.
+ * @htmlAttribute {!ol.Collection=} ngeo-drawfeature-features The features
+ *     collection in which to push the drawn features. If none is provided,
+ *     then the `ngeoFeatures` collection is used.
  * @htmlAttribute {ol.Map} ngeo-drawfeature-map The map.
  * @return {angular.Directive} The directive specs.
  * @ngInject
@@ -90,13 +92,13 @@ goog.require('ol.Feature');
  */
 ngeo.drawfeatureDirective = function() {
   return {
-    controller: 'ngeoDrawfeatureController',
+    controller: 'ngeoDrawfeatureController as dfCtrl',
     scope: true,
     bindToController: {
       'active': '=ngeoDrawfeatureActive',
+      'features': '=?ngeoDrawfeatureFeatures',
       'map': '=ngeoDrawfeatureMap'
-    },
-    controllerAs: 'dfCtrl'
+    }
   };
 };
 
@@ -113,6 +115,7 @@ ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @constructor
+ * @private
  * @struct
  * @ngInject
  * @ngdoc controller
@@ -120,12 +123,6 @@ ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
  */
 ngeo.DrawfeatureController = function($scope, $compile, $sce,
     gettextCatalog, ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures) {
-
-  /**
-   * @type {ol.Map}
-   * @export
-   */
-  this.map;
 
   /**
    * @type {boolean}
@@ -136,6 +133,20 @@ ngeo.DrawfeatureController = function($scope, $compile, $sce,
   if (this.active === undefined) {
     this.active = false;
   }
+
+  /**
+   * Alternate collection of features in which to push the drawn features.
+   * If not defined, then `ngeoFeatures` is used instead.
+   * @type {!ol.Collection.<!ol.Feature>|undefined}
+   * @export
+   */
+  this.features;
+
+  /**
+   * @type {ol.Map}
+   * @export
+   */
+  this.map;
 
   /**
    * @type {angularGettext.Catalog}
@@ -166,7 +177,7 @@ ngeo.DrawfeatureController = function($scope, $compile, $sce,
    * @type {ol.Collection.<ol.Feature>}
    * @private
    */
-  this.features_ = ngeoFeatures;
+  this.ngeoFeatures_ = ngeoFeatures;
 
   /**
    * @type {Array.<ol.interaction.Interaction>}
@@ -214,16 +225,14 @@ ngeo.DrawfeatureController = function($scope, $compile, $sce,
   // Watch the "active" property, and disable the draw interactions
   // when "active" gets set to false.
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
-    function(newVal) {
+    () => this.active,
+    (newVal) => {
       if (newVal === false) {
-        this.interactions_.forEach(function(interaction) {
+        this.interactions_.forEach((interaction) => {
           interaction.setActive(false);
         }, this);
       }
-    }.bind(this)
+    }
   );
 
 };
@@ -248,13 +257,11 @@ ngeo.DrawfeatureController.prototype.registerInteraction = function(
  * Called when any of the draw or measure interaction active property changes.
  * Set the active property of this directive accordingly, i.e. if at least
  * one of the draw or measure is active then the active property is set to true.
- * @param {ol.ObjectEvent} event Event.
+ * @param {ol.Object.Event} event Event.
  * @export
  */
 ngeo.DrawfeatureController.prototype.handleActiveChange = function(event) {
-  this.active = this.interactions_.some(function(interaction) {
-    return interaction.getActive();
-  }, this);
+  this.active = this.interactions_.some(interaction => interaction.getActive(), this);
 };
 
 
@@ -266,9 +273,12 @@ ngeo.DrawfeatureController.prototype.handleActiveChange = function(event) {
  * @export
  */
 ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
-  var feature = new ol.Feature(event.feature.getGeometry());
 
-  var prop = ngeo.FeatureProperties;
+  const features = this.features || this.ngeoFeatures_;
+
+  const feature = new ol.Feature(event.feature.getGeometry());
+
+  const prop = ngeo.FeatureProperties;
 
   switch (type) {
     case ngeo.GeometryType.CIRCLE:
@@ -290,13 +300,13 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
   /**
    * @type {string}
    */
-  var name = this.gettextCatalog_.getString(type);
-  feature.set(prop.NAME, name + ' ' + (this.features_.getLength() + 1));
+  const name = this.gettextCatalog_.getString(type);
+  feature.set(prop.NAME, `${name} ${features.getLength() + 1}`);
 
   /**
    * @type {string}
    */
-  var color = type !== ngeo.GeometryType.TEXT ? '#DB4436' : '#000000';
+  const color = type !== ngeo.GeometryType.TEXT ? '#DB4436' : '#000000';
   feature.set(prop.COLOR, color);
 
   feature.set(prop.ANGLE, 0);
@@ -309,7 +319,7 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
   this.featureHelper_.setStyle(feature);
 
   // push in collection
-  this.features_.push(feature);
+  features.push(feature);
 };
 
 ngeo.module.controller('ngeoDrawfeatureController', ngeo.DrawfeatureController);

@@ -1,7 +1,6 @@
 goog.provide('gmf.EditFeature');
 
 goog.require('gmf');
-goog.require('goog.uri.utils');
 goog.require('ol.format.GeoJSON');
 
 
@@ -48,11 +47,11 @@ gmf.EditFeature = function($http, gmfLayersUrl) {
  * @export
  */
 gmf.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
-  var ids = layerIds.join(',');
-  var url = goog.uri.utils.appendParam(
-    goog.uri.utils.appendPath(this.baseUrl_, ids),
-    'bbox',
-    extent.join(',')
+  const url = ol.uri.appendParams(
+    `${this.baseUrl_}/${layerIds.join(',')}`,
+    {
+      'bbox': extent.join(',')
+    }
   );
   return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
@@ -67,33 +66,24 @@ gmf.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
  * define the url to the GMF Protocol (layers) a dummy promise returns an
  * empty array of features if the url is not defined.
  *
- * @param {Array.<number>} layerIds List of layer ids to get the features from.
- * @param {Array.<gmfx.ComparisonFilter>} filters List of comparison filters
+ * @param {!Array.<number>} layerIds List of layer ids to get the features from.
+ * @param {!Array.<!gmfx.ComparisonFilter>} filters List of comparison filters
  * @return {angular.$q.Promise} Promise.
  */
 gmf.EditFeature.prototype.getFeaturesWithComparisonFilters = function(
   layerIds, filters
 ) {
+  const properties = [];
+  const params = {};
 
-  var ids = layerIds.join(',');
-
-  var properties = [];
-  var params = {};
-
-  var filter;
-  for (var i = 0, ii = filters.length; i < ii; i++) {
-    filter = filters[i];
-    params[filter.property + '__' + filter.operator] = filter.value;
+  for (const filter of filters) {
+    params[`${filter.property}__${filter.operator}`] = filter.value;
     properties.push(filter.property);
   }
 
   params['queryable'] = properties.join(',');
 
-  var url = ol.uri.appendParams(
-    goog.uri.utils.appendPath(this.baseUrl_, ids),
-    params
-  );
-
+  const url = ol.uri.appendParams(`${this.baseUrl_}/${layerIds.join(',')}`, params);
   return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
 
@@ -115,8 +105,8 @@ gmf.EditFeature.prototype.handleGetFeatures_ = function(resp) {
  * @export
  */
 gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
-  var url = goog.uri.utils.appendPath(this.baseUrl_, layerId.toString());
-  var geoJSON = new ol.format.GeoJSON().writeFeatures(features);
+  const url = `${this.baseUrl_}/${layerId}`;
+  const geoJSON = new ol.format.GeoJSON().writeFeatures(features);
   return this.http_.post(url, geoJSON, {
     headers: {'Content-Type': 'application/json'},
     withCredentials: true
@@ -131,11 +121,8 @@ gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
  * @export
  */
 gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
-  var url = goog.uri.utils.appendPath(
-    this.baseUrl_,
-    layerId.toString() + '/' + feature.getId()
-  );
-  var geoJSON = new ol.format.GeoJSON().writeFeature(feature);
+  const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
+  const geoJSON = new ol.format.GeoJSON().writeFeature(feature);
   return this.http_.put(url, geoJSON, {
     headers: {'Content-Type': 'application/json'},
     withCredentials: true
@@ -150,10 +137,7 @@ gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
  * @export
  */
 gmf.EditFeature.prototype.deleteFeature = function(layerId, feature) {
-  var url = goog.uri.utils.appendPath(
-    this.baseUrl_,
-    layerId.toString() + '/' + feature.getId()
-  );
+  const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
   return this.http_.delete(url, {
     headers: {'Content-Type': 'application/json'},
     withCredentials: true

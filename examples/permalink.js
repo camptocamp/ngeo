@@ -22,31 +22,25 @@ app.module = angular.module('app', ['ngeo']);
 
 
 /**
- * An application-specific map directive that updates the URL in the browser
+ * An application-specific map component that updates the URL in the browser
  * address bar when the map view changes. It also sets the initial view based
  * on the URL query params at init time.
  *
- * This directive gets a reference to the map instance through the "app-map"
+ * This component gets a reference to the map instance through the "app-map"
  * attribute.
  *
- * @return {angular.Directive} The directive specs.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.mapDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appMap'
-    },
-    controller: 'AppMapController',
-    controllerAs: 'ctrl',
-    bindToController: true,
-    template: '<div ngeo-map=ctrl.map></div>'
-  };
+app.mapComponent = {
+  controller: 'AppMapController as ctrl',
+  bindings: {
+    'map': '=appMap'
+  },
+  template: '<div ngeo-map=ctrl.map></div>'
 };
 
 
-app.module.directive('appMap', app.mapDirective);
+app.module.component('appMap', app.mapComponent);
 
 
 /**
@@ -55,91 +49,96 @@ app.module.directive('appMap', app.mapDirective);
  * @constructor
  * @ngInject
  */
-app.MapDirectiveController = function(ngeoLocation, ngeoDebounce) {
+app.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   /**
    * @type {ol.Map}
    * @export
    */
   this.map;
 
-  var map = this.map;
-  var view = map.getView();
+  /**
+   * @type {ngeo.Location}
+   * @private
+   */
+  this.ngeoLocation_ = ngeoLocation;
 
-  var zoom = ngeoLocation.getParam('z');
+  /**
+   * @type {ngeo.Debounce}
+   * @private
+   */
+  this.ngeoDebounce_ = ngeoDebounce;
+};
+
+app.module.controller('AppMapController', app.MapComponentController);
+
+app.MapComponentController.prototype.$onInit = function() {
+  const view = this.map.getView();
+
+  let zoom = this.ngeoLocation_.getParam('z');
   zoom = zoom !== undefined ? +zoom : 4;
 
-  var x = ngeoLocation.getParam('x');
-  var y = ngeoLocation.getParam('y');
-  var center = (x !== undefined) && (y !== undefined) ?
+  const x = this.ngeoLocation_.getParam('x');
+  const y = this.ngeoLocation_.getParam('y');
+  const center = (x !== undefined) && (y !== undefined) ?
       [+x, +y] : [0, 0];
 
   view.setCenter(center);
   view.setZoom(zoom);
 
-  ngeoLocation.updateParams({
+  this.ngeoLocation_.updateParams({
     'z': zoom,
     'x': Math.round(center[0]),
     'y': Math.round(center[1])
   });
 
   view.on('propertychange',
-      ngeoDebounce(
+      this.ngeoDebounce_(
           /**
-           * @param {ol.ObjectEvent} e Object event.
+           * @param {ol.ObjectEventType} e Object event.
            */
-          function(e) {
-            var center = view.getCenter();
-            var params = {
+          (e) => {
+            const center = view.getCenter();
+            const params = {
               'z': view.getZoom(),
               'x': Math.round(center[0]),
               'y': Math.round(center[1])
             };
-            ngeoLocation.updateParams(params);
+            this.ngeoLocation_.updateParams(params);
           }, 300, /* invokeApply */ true));
 };
 
-
-app.module.controller('AppMapController', app.MapDirectiveController);
-
-
 /**
- * A draw directive that adds a simple draw tool.
+ * A draw component that adds a simple draw tool.
  *
- * @return {angular.Directive} The directive specs.
+ * @type {!angular.Component}
  */
-app.drawDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appDrawMap',
-      'layer': '=appDrawLayer'
-    },
-    controller: 'AppDrawController',
-    controllerAs: 'ctrl',
-    bindToController: true,
-    template:
-        '<label>Enable drawing:' +
-        '<input type="checkbox" ng-model="ctrl.interaction.active" />' +
-        '</label><br>' +
-        '<button ng-click="ctrl.clearLayer()">Clear layer</button>'
-
-  };
+app.drawComponent = {
+  controller: 'AppDrawController as ctrl',
+  bindings: {
+    'map': '=appDrawMap',
+    'layer': '=appDrawLayer'
+  },
+  template:
+      '<label>Enable drawing:' +
+      '<input type="checkbox" ng-model="ctrl.interaction.active" />' +
+      '</label><br>' +
+      '<button ng-click="ctrl.clearLayer()">Clear layer</button>'
 };
 
 
-app.module.directive('appDraw', app.drawDirective);
+app.module.component('appDraw', app.drawComponent);
 
 
 /**
- * @param {angular.Scope} $scope Scope.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
+ * @param {!angular.Scope} $scope Scope.
+ * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
- * @param {ngeo.Location} ngeoLocation ngeo Location service.
+ * @param {!ngeo.Location} ngeoLocation ngeo Location service.
  * @constructor
  * @export
  * @ngInject
  */
-app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLocation) {
+app.DrawComponentController = function($scope, ngeoDecorateInteraction, ngeoLocation) {
 
   /**
    * @type {ol.Map}
@@ -153,10 +152,16 @@ app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLoca
   this.layer;
 
   /**
-   * @type {ngeo.Location}
+   * @type {!ngeo.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
+
+  /**
+   * @type {!angular.Scope}
+   * @private
+   */
+  this.scope_ = $scope;
 
   /**
    * @type {number}
@@ -164,53 +169,60 @@ app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLoca
    */
   this.featureSeq_ = 0;
 
-  var vectorSource = this.layer.getSource();
+  /**
+   * @type {!ngeo.DecorateInteraction}
+   * @private
+   */
+  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
   /**
    * @type {ol.interaction.Draw}
    * @export
    */
+  this.interaction;
+};
+
+app.DrawComponentController.prototype.$onInit = function() {
+  const vectorSource = this.layer.getSource();
+
   this.interaction = new ol.interaction.Draw({
     type: /** @type {ol.geom.GeometryType} */ ('LineString'),
     source: vectorSource
   });
 
-  var interaction = this.interaction;
-  interaction.setActive(false);
-  this.map.addInteraction(interaction);
-  ngeoDecorateInteraction(interaction);
+  this.interaction.setActive(false);
+  this.map.addInteraction(this.interaction);
+  this.ngeoDecorateInteraction_(this.interaction);
 
   this.interaction.on('drawend', function(e) {
     e.feature.set('id', ++this.featureSeq_);
   }, this);
 
-
   // Deal with the encoding and decoding of features in the URL.
 
-  var fhFormat = new ngeo.format.FeatureHash();
+  const fhFormat = new ngeo.format.FeatureHash();
 
-  vectorSource.on('addfeature', function(e) {
-    var feature = e.feature;
+  vectorSource.on('addfeature', (e) => {
+    const feature = e.feature;
     feature.setStyle(new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: [255, 0, 0, 1],
         width: 2
       })
     }));
-    var features = vectorSource.getFeatures();
-    var encodedFeatures = fhFormat.writeFeatures(features);
-    $scope.$applyAsync(function() {
-      ngeoLocation.updateParams({'features': encodedFeatures});
+    const features = vectorSource.getFeatures();
+    const encodedFeatures = fhFormat.writeFeatures(features);
+    this.scope_.$applyAsync(() => {
+      this.ngeoLocation_.updateParams({'features': encodedFeatures});
     });
   });
 
-  var encodedFeatures = ngeoLocation.getParam('features');
+  const encodedFeatures = this.ngeoLocation_.getParam('features');
   if (encodedFeatures !== undefined) {
-    var features = fhFormat.readFeatures(encodedFeatures);
+    const features = fhFormat.readFeatures(encodedFeatures);
     this.featureSeq_ = features.length;
     vectorSource.addFeatures(features);
   }
-
 };
 
 
@@ -218,13 +230,13 @@ app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLoca
  * Clear the vector layer.
  * @export
  */
-app.DrawDirectiveController.prototype.clearLayer = function() {
+app.DrawComponentController.prototype.clearLayer = function() {
   this.layer.getSource().clear(true);
   this.featureSeq_ = 0;
   this.ngeoLocation_.deleteParam('features');
 };
 
-app.module.controller('AppDrawController', app.DrawDirectiveController);
+app.module.controller('AppDrawController', app.DrawComponentController);
 
 
 /**
@@ -245,7 +257,7 @@ app.MainController = function() {
   });
 
 
-  var vectorSource = new ol.source.Vector();
+  const vectorSource = new ol.source.Vector();
 
   /**
    * @type {ol.layer.Vector}

@@ -3,6 +3,7 @@ goog.provide('ngeo.drawtextDirective');
 goog.require('ngeo');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEventType');
 
 
 /**
@@ -21,9 +22,9 @@ ngeo.drawtextDirective = function() {
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
      */
-    link: function($scope, element, attrs, drawFeatureCtrl) {
+    link($scope, element, attrs, drawFeatureCtrl) {
 
-      var drawText = new ol.interaction.Draw({
+      const drawText = new ol.interaction.Draw({
         type: ol.geom.GeometryType.POINT
       });
 
@@ -32,7 +33,7 @@ ngeo.drawtextDirective = function() {
 
       ol.events.listen(
           drawText,
-          ol.interaction.Draw.EventType.DRAWEND,
+          ol.interaction.DrawEventType.DRAWEND,
           drawFeatureCtrl.handleDrawEnd.bind(
               drawFeatureCtrl, ngeo.GeometryType.TEXT),
           drawFeatureCtrl
@@ -40,7 +41,7 @@ ngeo.drawtextDirective = function() {
       ol.events.listen(
           drawText,
           ol.Object.getChangeEventType(
-              ol.interaction.Interaction.Property.ACTIVE),
+              ol.interaction.Property.ACTIVE),
           drawFeatureCtrl.handleActiveChange,
           drawFeatureCtrl
       );

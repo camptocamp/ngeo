@@ -2,11 +2,9 @@ goog.provide('app.search');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.CreateGeoJSONBloodhound');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.searchDirective');
+goog.require('ngeo');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -14,10 +12,11 @@ goog.require('ol.layer.Vector');
 goog.require('ol.proj');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
+goog.require('goog.asserts');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [ngeo.module.name]);
 
 
 /**
@@ -30,26 +29,24 @@ app.searchDirective = function() {
     scope: {
       'map': '=appSearchMap'
     },
-    controller: 'AppSearchController',
+    controller: 'AppSearchController as ctrl',
     bindToController: true,
-    controllerAs: 'ctrl',
     template:
         '<input type="text" placeholder="search…" ' +
         'ngeo-search="ctrl.options" ' +
         'ngeo-search-datasets="ctrl.datasets" ' +
         'ngeo-search-listeners="ctrl.listeners">',
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Atttributes.
-         */
-        function(scope, element, attrs) {
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
           // Empty the search field on focus and blur.
-          element.find('input').on('focus blur', function() {
-            $(this).val('');
-          });
-        }
+      element.find('input').on('focus blur', function() {
+        $(this).val('');
+      });
+    }
   };
 };
 
@@ -61,12 +58,11 @@ app.module.directive('appSearch', app.searchDirective);
  * @constructor
  * @param {angular.Scope} $rootScope Angular root scope.
  * @param {angular.$compile} $compile Angular compile service.
- * @param {ngeo.CreateGeoJSONBloodhound} ngeoCreateGeoJSONBloodhound The ngeo
+ * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @ngInject
  */
-app.SearchController = function($rootScope, $compile,
-    ngeoCreateGeoJSONBloodhound) {
+app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
 
   /**
    * @type {ol.Map}
@@ -81,8 +77,8 @@ app.SearchController = function($rootScope, $compile,
   this.vectorLayer_ = this.createVectorLayer_();
 
   /** @type {Bloodhound} */
-  var bloodhoundEngine = this.createAndInitBloodhound_(
-      ngeoCreateGeoJSONBloodhound);
+  const bloodhoundEngine = this.createAndInitBloodhound_(
+      ngeoSearchCreateGeoJSONBloodhound);
 
   /**
    * @type {TypeaheadOptions}
@@ -100,27 +96,27 @@ app.SearchController = function($rootScope, $compile,
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
-    display: function(suggestion) {
-      var feature = /** @type {ol.Feature} */ (suggestion);
+    display(suggestion) {
+      const feature = /** @type {ol.Feature} */ (suggestion);
       return feature.get('label');
     },
     templates: {
-      header: function() {
+      header() {
         return '<div class="ngeo-header">Addresses</div>';
       },
-      suggestion: function(suggestion) {
-        var feature = /** @type {ol.Feature} */ (suggestion);
+      suggestion(suggestion) {
+        const feature = /** @type {ol.Feature} */ (suggestion);
 
         // A scope for the ng-click on the suggestion's « i » button.
-        var scope = $rootScope.$new(true);
+        const scope = $rootScope.$new(true);
         scope['feature'] = feature;
         scope['click'] = function(event) {
           window.alert(feature.get('label'));
           event.stopPropagation();
         };
 
-        var html = '<p>' + feature.get('label') +
-            '<button ng-click="click($event)">i</button></p>';
+        const html = `<p>${feature.get('label')
+            }<button ng-click="click($event)">i</button></p>`;
         return $compile(html)(scope);
       }
     }
@@ -142,7 +138,7 @@ app.SearchController = function($rootScope, $compile,
  * @private
  */
 app.SearchController.prototype.createVectorLayer_ = function() {
-  var vectorLayer = new ol.layer.Vector({
+  const vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector()
   });
   // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
@@ -153,14 +149,14 @@ app.SearchController.prototype.createVectorLayer_ = function() {
 
 
 /**
- * @param {ngeo.CreateGeoJSONBloodhound} ngeoCreateGeoJSONBloodhound The ngeo
+ * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateGeoJSONBloodhound) {
-  var url = 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch?query=%QUERY';
-  var bloodhound = ngeoCreateGeoJSONBloodhound(
+app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
+  const url = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?query=%QUERY';
+  const bloodhound = ngeoSearchCreateGeoJSONBloodhound(
       url, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
   bloodhound.initialize();
   return bloodhound;
@@ -175,16 +171,15 @@ app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateGeo
  * @private
  */
 app.SearchController.select_ = function(event, suggestion, dataset) {
-  var map = /** @type {ol.Map} */ (this.map);
-  var feature = /** @type {ol.Feature} */ (suggestion);
-  var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
+  const feature = /** @type {ol.Feature} */ (suggestion);
+  const featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
-  var mapSize = /** @type {ol.Size} */ (map.getSize());
-  var source = this.vectorLayer_.getSource();
+  const size = this.map.getSize();
+  goog.asserts.assert(size !== undefined);
+  const source = this.vectorLayer_.getSource();
   source.clear(true);
   source.addFeature(feature);
-  map.getView().fit(featureGeometry, mapSize,
-      /** @type {olx.view.FitOptions} */ ({maxZoom: 16}));
+  this.map.getView().fit(featureGeometry, {size, maxZoom: 16});
 };
 
 

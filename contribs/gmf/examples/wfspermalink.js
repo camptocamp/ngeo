@@ -3,7 +3,7 @@ goog.provide('gmfapp.wfspermalink');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerywindowDirective');
+goog.require('gmf.displayquerywindowComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
@@ -22,7 +22,7 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 gmfapp.module.value('ngeoWfsPermalinkOptions',
     /** @type {ngeox.WfsPermalinkOptions} */ ({
-      url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
+      url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
       wfsTypes: [
         {featureType: 'fuel', label: 'display_name'},
         {featureType: 'osm_scale', label: 'display_name'}
@@ -54,8 +54,8 @@ gmfapp.MainController = function() {
     })
   });
 
-  var fill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
-  var stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
+  const fill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
+  const stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
    * FeatureStyle used by the displayquerywindow directive
@@ -63,9 +63,9 @@ gmfapp.MainController = function() {
    * @export
    */
   this.featureStyle = new ol.style.Style({
-    fill: fill,
-    image: new ol.style.Circle({fill: fill, radius: 5, stroke: stroke}),
-    stroke: stroke
+    fill,
+    image: new ol.style.Circle({fill, radius: 5, stroke}),
+    stroke
   });
 };
 

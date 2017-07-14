@@ -55,7 +55,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.polygonGeomType = ngeo.GeometryType.POLYGON;
 
-  var vector = new ol.layer.Vector({
+  const vector = new ol.layer.Vector({
     source: new ol.source.Vector({
       wrapX: false,
       features: this.features
@@ -85,7 +85,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.createPointActive = false;
 
-  var createPointToolActivate = new ngeo.ToolActivate(
+  const createPointToolActivate = new ngeo.ToolActivate(
     this,
     'createPointActive'
   );
@@ -101,7 +101,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.createLineStringActive = false;
 
-  var createLineStringToolActivate = new ngeo.ToolActivate(
+  const createLineStringToolActivate = new ngeo.ToolActivate(
     this,
     'createLineStringActive'
   );
@@ -117,7 +117,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.createPolygonActive = false;
 
-  var createPolygonToolActivate = new ngeo.ToolActivate(
+  const createPolygonToolActivate = new ngeo.ToolActivate(
     this,
     'createPolygonActive'
   );
@@ -133,7 +133,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.dummyActive = true;
 
-  var dummyToolActivate = new ngeo.ToolActivate(
+  const dummyToolActivate = new ngeo.ToolActivate(
     this,
     'dummyActive'
   );

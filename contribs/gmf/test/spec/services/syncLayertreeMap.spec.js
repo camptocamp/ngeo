@@ -2,16 +2,14 @@
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.test.data.themes');
 
-describe('gmf.SyncLayertreeMap', function() {
-  var $httpBackend_;
-  var gmfSyncLayertreeMap_;
-  var element;
-  var map;
-  var roottreeCtrl;
-  var group;
-  var getLayer;
+describe('gmf.SyncLayertreeMap', () => {
+  let $httpBackend_;
+  let gmfSyncLayertreeMap_;
+  let element;
+  let map;
+  let getLayer;
 
-  beforeEach(function() {
+  beforeEach(() => {
     map = new ol.Map({
       view: new ol.View({
         center: [0, 0],
@@ -19,7 +17,7 @@ describe('gmf.SyncLayertreeMap', function() {
       })
     });
 
-    group = new ol.layer.Group();
+    const group = new ol.layer.Group();
     map.getLayers().push(group);
 
     element = angular.element(
@@ -29,11 +27,11 @@ describe('gmf.SyncLayertreeMap', function() {
       '</div>'
     );
 
-    inject(function($rootScope, $compile, $httpBackend, gmfSyncLayertreeMap, gmfThemes, gmfTreeUrl) {
+    inject(($rootScope, $compile, $httpBackend, gmfSyncLayertreeMap, gmfThemes, gmfTreeUrl) => {
       $httpBackend_ = $httpBackend;
       gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
-      var reGmfTreeUrl = new RegExp('^' + gmfTreeUrl);
+      const reGmfTreeUrl = new RegExp(`^${gmfTreeUrl}`);
       // Prepare request simulation
       $httpBackend.when('GET', reGmfTreeUrl).respond(themes);
       $httpBackend.when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr').respond(capabilities.swisstopo);
@@ -45,7 +43,7 @@ describe('gmf.SyncLayertreeMap', function() {
 
       // Prepare layertree
       getLayer = function(treeCtrl) {
-        var layer = gmfSyncLayertreeMap.createLayer(treeCtrl, map, group);
+        const layer = gmfSyncLayertreeMap.createLayer(treeCtrl, map, group);
         return layer;
       };
     });
@@ -53,8 +51,8 @@ describe('gmf.SyncLayertreeMap', function() {
 
   // ================== miscellaneous ================
 
-  it('Get layer', function() {
-    inject(function($rootScope, $compile) {
+  it('Get layer', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
@@ -62,11 +60,11 @@ describe('gmf.SyncLayertreeMap', function() {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-    roottreeCtrl = element.scope().layertreeCtrl;
 
-    var treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
-    var treeLayer = treeGroup.children[0]; // Leaf 'cinema'
-    var layer = gmf.SyncLayertreeMap.getLayer(treeLayer);
+    const roottreeCtrl = element.scope().layertreeCtrl;
+    const treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
+    const treeLayer = treeGroup.children[0]; // Leaf 'cinema'
+    const layer = gmf.SyncLayertreeMap.getLayer(treeLayer);
 
     expect(treeLayer.layer).toBe(null);
     expect(layer.constructor).toBe(ol.layer.Image);
@@ -74,8 +72,8 @@ describe('gmf.SyncLayertreeMap', function() {
 
   // ================== Create ================
 
-  it('Create WMS Layer in mixed group', function() {
-    inject(function($rootScope, $compile) {
+  it('Create WMS Layer in mixed group', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
@@ -83,16 +81,17 @@ describe('gmf.SyncLayertreeMap', function() {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-    roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[0]; // Group 'OSM functions mixed'
-    var treeLeaf = treeGroup.children[0]; // osm scale;
-    var wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
+    const treeGroup = roottreeCtrl.children[0]; // Group 'OSM functions mixed'
+    const treeLeaf = treeGroup.children[0]; // osm scale;
+    const wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
 
     expect(treeLeaf.node.name).toEqual(wmsParamLayers);
   });
 
-  it('Create WMS Layer in a not mixed group', function() {
-    inject(function($rootScope, $compile) {
+  it('Create WMS Layer in a not mixed group', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
@@ -100,17 +99,18 @@ describe('gmf.SyncLayertreeMap', function() {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-    roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
-    var wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
-    var checkedLayers = ['cinema', 'police', 'post_office','entertainment',
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
+    const treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
+    const wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
+    const checkedLayers = ['cinema', 'police', 'post_office', 'entertainment',
       'sustenance', 'hospitals']; // order count !
 
     expect(wmsParamLayers).toEqual(checkedLayers.reverse().join(','));
   });
 
-  it('Create WMTS Layer (in a mixed group)', function() {
-    inject(function($rootScope, $compile) {
+  it('Create WMTS Layer (in a mixed group)', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[2]; // Theme 'Cadastre'
       $rootScope.map = map;
@@ -120,17 +120,18 @@ describe('gmf.SyncLayertreeMap', function() {
     });
 
     $httpBackend_.flush(); // To get capabilities (and source) for the WMTS layer.
-    roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
-    var treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
+    const treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
+    const treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
 
     expect(treeLeaf.node.name).toBe(treeLeaf.layer.getSource().getLayer());
   });
 
   // ================== Sync ================
 
-  it('Sync WMS Layer in mixed group', function() {
-    inject(function($rootScope, $compile) {
+  it('Sync WMS Layer in mixed group', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
@@ -138,10 +139,10 @@ describe('gmf.SyncLayertreeMap', function() {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-    roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[0]; // Group 'OSM functions mixed'
-    var treeLeaf = treeGroup.children[0]; // osm scale;
-    var wmsParamLayers;
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
+    const treeGroup = roottreeCtrl.children[0]; // Group 'OSM functions mixed'
+    const treeLeaf = treeGroup.children[0]; // osm scale;
 
     roottreeCtrl.setState('off');
     gmfSyncLayertreeMap_.sync_(map, treeGroup);
@@ -150,12 +151,12 @@ describe('gmf.SyncLayertreeMap', function() {
     gmfSyncLayertreeMap_.sync_(map, treeGroup);
     treeLeaf.setState('on');
     gmfSyncLayertreeMap_.sync_(map, treeLeaf);
-    wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
+    const wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
     expect(wmsParamLayers).toBe('osm_scale');
   });
 
-  it('Sync WMS Layer in a not mixed group', function() {
-    inject(function($rootScope, $compile) {
+  it('Sync WMS Layer in a not mixed group', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
@@ -163,10 +164,10 @@ describe('gmf.SyncLayertreeMap', function() {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
-    roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
-    var treeLeaf = treeGroup.children[0]; // Leaf 'cinema'
-    var wmsParamLayers;
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
+    const treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
+    const treeLeaf = treeGroup.children[0]; // Leaf 'cinema'
 
     roottreeCtrl.setState('off');
     gmfSyncLayertreeMap_.sync_(map, treeGroup);
@@ -174,7 +175,7 @@ describe('gmf.SyncLayertreeMap', function() {
 
     treeLeaf.setState('on');
     gmfSyncLayertreeMap_.sync_(map, treeLeaf);
-    wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
+    let wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
     expect(wmsParamLayers).toBe('cinema');
 
     // Group is on, original order must be kept.
@@ -185,8 +186,8 @@ describe('gmf.SyncLayertreeMap', function() {
             'osm_time,post_office,police,cinema');
   });
 
-  it('Sync WMTS Layer (in a mixed group)', function() {
-    inject(function($rootScope, $compile) {
+  it('Sync WMTS Layer (in a mixed group)', () => {
+    inject(($rootScope, $compile) => {
       // Init, compile layertree
       $rootScope.tree = themes.themes[2]; // Theme 'Cadastre'
       $rootScope.map = map;
@@ -194,10 +195,12 @@ describe('gmf.SyncLayertreeMap', function() {
       $compile(element)($rootScope);
       $rootScope.$digest();
     });
+
     $httpBackend_.flush(); // To get capabilities (and source) for the WMTS layer.
-    roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
-    var treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
+
+    const roottreeCtrl = element.scope().layertreeCtrl;
+    const treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
+    const treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
 
     treeGroup.setState('off');
     gmfSyncLayertreeMap_.sync_(map, treeGroup);

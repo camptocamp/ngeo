@@ -34,10 +34,10 @@ goog.require('${app}');
 
 (function() {
   /**
-   * @param {angular.$cacheFactory.Cache} $templateCache
+   * @param {angular.cacheFactory.Cache} $templateCache
    * @ngInject
    */
-  var runner = function($templateCache) {
+  let runner = function($templateCache) {
   % for partial in _partials:
     $templateCache.put('${partial}', '${_partials[partial]}');
   %endfor

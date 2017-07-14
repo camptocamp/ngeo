@@ -39,16 +39,16 @@ gmf.ShareService = function($http, gmfShortenerCreateUrl) {
  * the promise attached to the shortener API request
  */
 gmf.ShareService.prototype.getShortUrl = function(url) {
-  var params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
-    url : url
+  const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
+    url
   });
 
   if (!this.gmfShortenerCreateUrl_) {
     return {
-      data : {
-        short_url : url
+      data: {
+        short_url: url
       },
-      status : 200
+      status: 200
     };
   }
 
@@ -65,9 +65,9 @@ gmf.ShareService.prototype.getShortUrl = function(url) {
  * @return {angular.$http.HttpPromise} the promise attached to the shortener API request
  */
 gmf.ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
-  var params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
-    url : shortUrl,
-    email : email
+  const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
+    url: shortUrl,
+    email
   });
 
   if (opt_message) {
@@ -84,7 +84,7 @@ gmf.ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message)
  * @private
  */
 gmf.ShareService.prototype.postShortUrl_ = function(params) {
-  //Override default behavior of $http.post method (sending data in json format)
+  // Override default behavior of $http.post method (sending data in json format)
   return this.$http_.post(this.gmfShortenerCreateUrl_, $.param(params), {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
   });

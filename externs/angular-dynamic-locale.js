@@ -9,11 +9,11 @@
  *   get: function():string,
  * }}
  */
-var tmhDynamicLocale;
+let tmhDynamicLocale;
 
 /**
  * @typedef {{
  *   localeLocationPattern: function(string)
  * }}
  */
-var tmhDynamicLocaleProvider;
+let tmhDynamicLocaleProvider;

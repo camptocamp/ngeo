@@ -32,7 +32,7 @@ app.module = angular.module('app', ['ngeo']);
 app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
 
   /** @type {ol.layer.Tile} */
-  var asitvd = new ol.layer.Tile({
+  const asitvd = new ol.layer.Tile({
     source: new ngeo.source.AsitVD({
       layer: 'asitvd.fond_couleur'
     })
@@ -40,7 +40,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   asitvd.set('name', 'asitvd');
 
   /** @type {ol.layer.Tile} */
-  var boundaries = new ol.layer.Tile({
+  const boundaries = new ol.layer.Tile({
     source: new ol.source.TileWMS({
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill'},
@@ -50,7 +50,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   boundaries.set('name', 'Boundaries');
 
   /** @type {ol.layer.Tile} */
-  var waterBodies = new ol.layer.Tile({
+  const waterBodies = new ol.layer.Tile({
     source: new ol.source.TileWMS({
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.geologie-gravimetrischer_atlas'},
@@ -60,7 +60,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   waterBodies.set('name', 'Water bodies');
 
   /** @type {ol.layer.Tile} */
-  var cities = new ol.layer.Tile({
+  const cities = new ol.layer.Tile({
     source: new ol.source.TileWMS({
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
@@ -88,7 +88,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
     })
   });
 
-  var map = this.map;
+  const map = this.map;
 
   /**
    * @type {ol.layer.Tile}
@@ -110,15 +110,13 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
    */
   this.selectedLayers = [];
 
-  var selectedLayers = this.selectedLayers;
+  const selectedLayers = this.selectedLayers;
 
   ngeoSyncArrays(map.getLayers().getArray(), selectedLayers, true, $scope,
       layerFilter);
 
   // watch any change on layers array to refresh the map
-  $scope.$watchCollection(function() {
-    return selectedLayers;
-  }, function() {
+  $scope.$watchCollection(() => selectedLayers, () => {
     map.render();
   });
 

@@ -3,19 +3,16 @@ goog.provide('ngeo.MeasureEventType');
 goog.provide('ngeo.interaction.Measure');
 
 goog.require('goog.asserts');
-goog.require('goog.dom');
-goog.require('goog.dom.classlist');
 goog.require('ol.dom');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Overlay');
 goog.require('ol.events');
-goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 goog.require('ol.sphere.WGS84');
-goog.require('ol.string');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
@@ -25,6 +22,7 @@ goog.require('ol.style.Style');
  * Interactions for measure tools base class.
  * @typedef {{
  *    decimals: (number|undefined),
+ *    precision: (number|undefined),
  *    displayHelpTooltip: (boolean|undefined),
  *    startMsg: (Element|undefined),
  *    style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
@@ -47,7 +45,6 @@ ngeo.MeasureEventType = {
 
 
 /**
- * @classdesc
  * Events emitted by {@link ngeo.interaction.Interaction} instances are
  * instances of this type.
  *
@@ -78,12 +75,13 @@ ol.inherits(ngeo.MeasureEvent, ol.events.Event);
  *
  * @constructor
  * @struct
+ * @abstract
  * @extends {ol.interaction.Interaction}
  * @param {ngeo.interaction.MeasureBaseOptions=} opt_options Options
  */
 ngeo.interaction.Measure = function(opt_options) {
 
-  var options = opt_options !== undefined ? opt_options : {};
+  const options = opt_options !== undefined ? opt_options : {};
 
   ol.interaction.Interaction.call(this, {
     handleEvent: ngeo.interaction.Measure.handleEvent_
@@ -137,10 +135,18 @@ ngeo.interaction.Measure = function(opt_options) {
   /**
    * Defines the number of decimals to keep in the measurement. If not defined,
    * then the default behaviour occurs depending on the measure type.
-   * @type {?number}
+   * @type {number|undefined}
    * @protected
    */
-  this.decimals = options.decimals !== undefined ? options.decimals : null;
+  this.decimals = options.decimals;
+
+  /**
+   * Defines the number of precision to keep in the measurement. If not defined,
+   * then the default behaviour occurs depending on the measure type.
+   * @type {number|undefined}
+   * @protected
+   */
+  this.precision = options.precision;
 
   /**
    * Whether or not to display any tooltip
@@ -154,8 +160,13 @@ ngeo.interaction.Measure = function(opt_options) {
    * The message to show when user is about to start drawing.
    * @type {Element}
    */
-  this.startMsg = options.startMsg !== undefined ? options.startMsg :
-      goog.dom.createDom('SPAN', {}, 'Click to start drawing.');
+  this.startMsg;
+  if (options.startMsg !== undefined) {
+    this.startMsg = options.startMsg;
+  } else {
+    this.startMsg = document.createElement('span');
+    this.startMsg.textContent =  'Click to start drawing.';
+  }
 
   /**
    * The key for geometry change event.
@@ -164,7 +175,7 @@ ngeo.interaction.Measure = function(opt_options) {
    */
   this.changeEventKey_ = null;
 
-  var style = options.style !== undefined ? options.style : [
+  const style = options.style !== undefined ? options.style : [
     new ol.style.Style({
       fill: new ol.style.Fill({
         color: 'rgba(255, 255, 255, 0.2)'
@@ -191,7 +202,7 @@ ngeo.interaction.Measure = function(opt_options) {
    */
   this.vectorLayer_ = new ol.layer.Vector({
     source: new ol.source.Vector(),
-    style: style
+    style
   });
 
   /**
@@ -209,15 +220,15 @@ ngeo.interaction.Measure = function(opt_options) {
   this.shouldHandleDrawInteractionActiveChange_ = true;
 
   ol.events.listen(this.drawInteraction_,
-      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
       this.handleDrawInteractionActiveChange_, this);
   ol.events.listen(this.drawInteraction_,
-      ol.interaction.Draw.EventType.DRAWSTART, this.onDrawStart_, this);
+      ol.interaction.DrawEventType.DRAWSTART, this.onDrawStart_, this);
   ol.events.listen(this.drawInteraction_,
-      ol.interaction.Draw.EventType.DRAWEND, this.onDrawEnd_, this);
+      ol.interaction.DrawEventType.DRAWEND, this.onDrawEnd_, this);
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.interaction.Interaction.Property.ACTIVE),
+      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
       this.updateState_, this);
 };
 ol.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
@@ -225,79 +236,74 @@ ol.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
 /**
  * Calculate the area of the passed polygon and return a formatted string
  * of the area.
- * @param {ol.geom.Polygon} polygon Polygon.
- * @param {ol.proj.Projection} projection Projection of the polygon coords.
- * @param {?number} decimals Decimals.
- * @param {ngeox.unitPrefix} format The format function.
+ * @param {!ol.geom.Polygon} polygon Polygon.
+ * @param {!ol.proj.Projection} projection Projection of the polygon coords.
+ * @param {number|undefined} precision Precision.
+ * @param {!ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  * @export
  * @this {ngeo.interaction.Measure}
  */
 ngeo.interaction.Measure.getFormattedArea = function(
-    polygon, projection, decimals, format) {
-  var geom = /** @type {ol.geom.Polygon} */ (
+    polygon, projection, precision, format) {
+  const geom = /** @type {ol.geom.Polygon} */ (
       polygon.clone().transform(projection, 'EPSG:4326'));
-  var coordinates = geom.getLinearRing(0).getCoordinates();
-  var area = Math.abs(ol.sphere.WGS84.geodesicArea(coordinates));
-  return format(area, 'm²', 'square');
+  const coordinates = geom.getLinearRing(0).getCoordinates();
+  const area = Math.abs(ol.sphere.WGS84.geodesicArea(coordinates));
+  return format(area, 'm²', 'square', precision);
 };
 
 
 /**
  * Calculate the area of the passed circle and return a formatted string
  * of the area.
- * @param {ol.geom.Circle} circle Circle
- * @param {?number} decimals Decimals.
+ * @param {!ol.geom.Circle} circle Circle
+ * @param {number|undefined} precision Precision.
+ * @param {!ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
- * @param {ngeox.unitPrefix} format The format function.
  * @export
  */
 ngeo.interaction.Measure.getFormattedCircleArea = function(
-    circle, decimals, format) {
-  var area = Math.PI * Math.pow(circle.getRadius(), 2);
-  return format(area, 'm²', 'square');
+    circle, precision, format) {
+  const area = Math.PI * Math.pow(circle.getRadius(), 2);
+  return format(area, 'm²', 'square', precision);
 };
 
 
 /**
  * Calculate the length of the passed line string and return a formatted
  * string of the length.
- * @param {ol.geom.LineString} lineString Line string.
- * @param {ol.proj.Projection} projection Projection of the line string coords.
- * @param {?number} decimals Decimals.
- * @param {ngeox.unitPrefix} format The format function.
+ * @param {!ol.geom.LineString} lineString Line string.
+ * @param {!ol.proj.Projection} projection Projection of the line string coords.
+ * @param {number|undefined} precision Precision.
+ * @param {!ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of length.
  * @export
  */
 ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
-    decimals, format) {
-  var length = 0;
-  var coordinates = lineString.getCoordinates();
-  for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-    var c1 = ol.proj.transform(coordinates[i], projection, 'EPSG:4326');
-    var c2 = ol.proj.transform(coordinates[i + 1], projection, 'EPSG:4326');
+    precision, format) {
+  let length = 0;
+  const coordinates = lineString.getCoordinates();
+  for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+    const c1 = ol.proj.transform(coordinates[i], projection, 'EPSG:4326');
+    const c2 = ol.proj.transform(coordinates[i + 1], projection, 'EPSG:4326');
     length += ol.sphere.WGS84.haversineDistance(c1, c2);
   }
-  return format(length, 'm');
+  return format(length, 'm', 'unit', precision);
 };
 
 
 /**
  * Return a formatted string of the point.
- * @param {ol.geom.Point} point Point.
- * @param {ol.proj.Projection} projection Projection of the line string coords.
- * @param {?number} decimals Decimals.
+ * @param {!ol.geom.Point} point Point.
+ * @param {number|undefined} decimals Decimals.
+ * @param {!ngeox.numberCoordinates} format A function to format coordinate into text
+ * @param {string=} opt_template The template.
  * @return {string} Formatted string of coordinate.
  */
 ngeo.interaction.Measure.getFormattedPoint = function(
-    point, projection, decimals) {
-  var coordinates = point.getCoordinates();
-  var x = coordinates[0];
-  var y = coordinates[1];
-  decimals = decimals !== null ? decimals : 0;
-  x = ol.string.padNumber(x, 0, decimals);
-  y = ol.string.padNumber(y, 0, decimals);
-  return ['X: ', x, ', Y: ', y].join('');
+    point, decimals, format, opt_template) {
+  return format(point.getCoordinates(), decimals, opt_template);
 };
 
 
@@ -309,11 +315,11 @@ ngeo.interaction.Measure.getFormattedPoint = function(
  * @private
  */
 ngeo.interaction.Measure.handleEvent_ = function(evt) {
-  if (evt.type != ol.MapBrowserEvent.EventType.POINTERMOVE || evt.dragging) {
+  if (evt.type != ol.MapBrowserEventType.POINTERMOVE || evt.dragging) {
     return true;
   }
 
-  var helpMsg = this.startMsg;
+  let helpMsg = this.startMsg;
   if (this.sketchFeature !== null) {
     helpMsg = this.continueMsg;
   }
@@ -339,6 +345,7 @@ ngeo.interaction.Measure.prototype.getDrawInteraction = function() {
 
 /**
  * Creates the draw interaction.
+ *
  * @abstract
  * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
  *     style The sketchStyle used for the drawing interaction.
@@ -358,7 +365,7 @@ ngeo.interaction.Measure.prototype.setMap = function(map) {
 
   this.vectorLayer_.setMap(map);
 
-  var prevMap = this.drawInteraction_.getMap();
+  const prevMap = this.drawInteraction_.getMap();
   if (prevMap !== null) {
     prevMap.removeInteraction(this.drawInteraction_);
   }
@@ -379,18 +386,18 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
   this.vectorLayer_.getSource().clear(true);
   this.createMeasureTooltip_();
 
-  var geometry = this.sketchFeature.getGeometry();
+  const geometry = this.sketchFeature.getGeometry();
 
   goog.asserts.assert(geometry !== undefined);
   this.changeEventKey_ = ol.events.listen(geometry,
       ol.events.EventType.CHANGE,
       function() {
-        this.handleMeasure(function(measure, coord) {
+        this.handleMeasure((measure, coord) => {
           if (coord !== null) {
             this.measureTooltipElement_.innerHTML = measure;
             this.measureTooltipOverlay_.setPosition(coord);
           }
-        }.bind(this));
+        });
       }, this);
 };
 
@@ -401,7 +408,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
-  goog.dom.classlist.add(this.measureTooltipElement_, 'ngeo-tooltip-static');
+  this.measureTooltipElement_.classList.add('ngeo-tooltip-static');
   this.measureTooltipOverlay_.setOffset([0, -7]);
   this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
       this.sketchFeature));
@@ -419,8 +426,8 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
 ngeo.interaction.Measure.prototype.createHelpTooltip_ = function() {
   this.removeHelpTooltip_();
   if (this.displayHelpTooltip_) {
-    this.helpTooltipElement_ = goog.dom.createDom('DIV');
-    goog.dom.classlist.add(this.helpTooltipElement_, 'tooltip');
+    this.helpTooltipElement_ = document.createElement('div');
+    this.helpTooltipElement_.classList.add('tooltip');
     this.helpTooltipOverlay_ = new ol.Overlay({
       element: this.helpTooltipElement_,
       offset: [15, 0],
@@ -453,9 +460,9 @@ ngeo.interaction.Measure.prototype.removeHelpTooltip_ = function() {
  */
 ngeo.interaction.Measure.prototype.createMeasureTooltip_ = function() {
   this.removeMeasureTooltip_();
-  this.measureTooltipElement_ = goog.dom.createDom('DIV');
-  goog.dom.classlist.addAll(this.measureTooltipElement_,
-      ['tooltip', 'ngeo-tooltip-measure']);
+  this.measureTooltipElement_ = document.createElement('div');
+  this.measureTooltipElement_.classList.add('tooltip');
+  this.measureTooltipElement_.classList.add('ngeo-tooltip-measure');
   this.measureTooltipOverlay_ = new ol.Overlay({
     element: this.measureTooltipElement_,
     offset: [0, -15],
@@ -484,7 +491,7 @@ ngeo.interaction.Measure.prototype.removeMeasureTooltip_ = function() {
  * @private
  */
 ngeo.interaction.Measure.prototype.updateState_ = function() {
-  var active = this.getActive();
+  const active = this.getActive();
   this.shouldHandleDrawInteractionActiveChange_ = false;
   this.drawInteraction_.setActive(active);
   this.shouldHandleDrawInteractionActiveChange_ = true;
@@ -508,6 +515,7 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
 /**
  * Function implemented in inherited classes to compute measurement, determine
  * where to place the tooltip and determine which help message to display.
+ *
  * @abstract
  * @param {function(string, ?ol.Coordinate)} callback The function
  *     to be called.

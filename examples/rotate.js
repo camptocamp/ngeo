@@ -20,7 +20,7 @@ goog.require('ol.geom.Polygon');
 
 
 /** @type {!angular.Module} **/
-var module = angular.module('app', ['ngeo']);
+const module = angular.module('app', ['ngeo']);
 
 
 /**
@@ -45,9 +45,9 @@ app.MainController = function() {
     })
   });
 
-  var map = this.map;
+  const map = this.map;
 
-  var polygon = new ol.geom.Polygon([[
+  const polygon = new ol.geom.Polygon([[
               [-9e6, 4e6], [-11e6, 4e6], [-11e6, 6e6], [-9e6, 6e6]
   ]]);
 
@@ -61,10 +61,10 @@ app.MainController = function() {
     geometry: polygon
   }));
 
-  var vectorSource = new ol.source.Vector({
+  const vectorSource = new ol.source.Vector({
     features: this.features
   });
-  var vectorLayer = new ol.layer.Vector({
+  const vectorLayer = new ol.layer.Vector({
     source: vectorSource
   });
 
@@ -73,8 +73,8 @@ app.MainController = function() {
   vectorLayer.setMap(map);
 
 
-  var style = (function() {
-    var styles = {};
+  const style = (function() {
+    const styles = {};
     styles['Polygon'] = [
       new ol.style.Style({
         fill: new ol.style.Fill({
@@ -120,18 +120,16 @@ app.MainController = function() {
     /** @type {olx.interaction.ModifyOptions} */({
       features: this.features,
       layers: [vectorLayer],
-      style: style
+      style
     }));
 
-  var interaction = this.interaction;
+  const interaction = this.interaction;
   interaction.setActive(false);
   map.addInteraction(interaction);
 
   map.on('singleclick', function(evt) {
-    var feature = this.map.forEachFeatureAtPixel(evt.pixel,
-      function(feature) {
-        return feature;
-      });
+    const feature = this.map.forEachFeatureAtPixel(evt.pixel,
+      feature => feature);
     if (feature) {
       this.interaction.setActive(true);
     }

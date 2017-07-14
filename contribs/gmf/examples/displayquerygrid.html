@@ -196,8 +196,12 @@
   <body ng-controller="MainController as ctrl">
 
     <gmf-map gmf-map-map="ctrl.map"
-        ngeo-map-query="" ngeo-map-query-map="::ctrl.map"
-        ngeo-map-query-active="ctrl.queryActive">
+        ngeo-map-query=""
+        ngeo-map-query-map="::ctrl.map"
+        ngeo-map-query-active="ctrl.queryActive"
+        ngeo-bbox-query=""
+        ngeo-bbox-query-map="::ctrl.map"
+        ngeo-bbox-query-active="ctrl.queryActive">
     </gmf-map>
 
     <div id="tree-container">
@@ -245,6 +249,7 @@
     <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
     <script src="../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
     <script src="../../../node_modules/proj4/dist/proj4.js"></script>
+    <script src="../../../node_modules/moment/min/moment.min.js"></script>
     <script src="/@?main=displayquerygrid.js"></script>
     <script src="default.js"></script>
     <script src="../../../utils/watchwatchers.js"></script>

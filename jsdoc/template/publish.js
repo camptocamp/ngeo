@@ -373,7 +373,7 @@ function buildNav(members) {
     });
 
     directives.forEach(function(directive) {
-        // remove the injected paramters
+        // remove the injected parameters
         directive.params = [];
     });
 

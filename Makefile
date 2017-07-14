@@ -1,11 +1,13 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 TEST_JS_FILES := $(shell find test -type f -name '*.js')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
+NGEO_MODULES_PARTIALS_FILES := $(shell find src/modules/ -name '*.html')
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
 NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
 GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
 
 OS := $(shell uname)
+CLOSURE_LIBRARY_PATH = $(shell node -e 'process.stdout.write(require("closure-util").getLibraryPath())' 2> /dev/null)
 
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 EXAMPLES_JS_FILES := $(EXAMPLES_HTML_FILES:.html=.js)
@@ -20,7 +22,7 @@ GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type 
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 GMF_APPS += mobile desktop desktop_alt oeedit oeview
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
-GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
+GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less src/modules -type f -name '*.less')
 DEVELOPMENT ?= FALSE
 ifeq ($(DEVELOPMENT), TRUE)
 CLOSURE_VARS += --var development=true
@@ -39,11 +41,13 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/bootstrap/dist/js/bootstrap.js \
 	node_modules/floatthead/dist/jquery.floatThead.js \
 	node_modules/proj4/dist/proj4-src.js \
-	node_modules/d3/d3.js \
+	node_modules/d3/build/d3.js \
 	node_modules/file-saver/FileSaver.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.js \
 	node_modules/jsts/dist/jsts.min.js \
-	third-party/jquery-ui/jquery-ui.js
+	node_modules/moment/min/moment.min.js \
+	third-party/jquery-ui/jquery-ui.js \
+	$(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js
 else
 GMF_APPS_LIBS_JS_FILES += \
 	examples/https.js \
@@ -60,10 +64,11 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/bootstrap/dist/js/bootstrap.min.js \
 	node_modules/floatthead/dist/jquery.floatThead.min.js \
 	node_modules/proj4/dist/proj4.js \
-	node_modules/d3/d3.min.js \
 	node_modules/file-saver/FileSaver.min.js \
+	node_modules/d3/build/d3.min.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.min.js \
 	node_modules/jsts/dist/jsts.min.js \
+	node_modules/moment/min/moment.min.js \
 	third-party/jquery-ui/jquery-ui.min.js
 endif
 
@@ -94,21 +99,28 @@ EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
 	.build/examples-hosted/lib/proj4.js \
 	.build/examples-hosted/lib/jsts.min.js \
+	.build/examples-hosted/lib/moment.min.js \
+	.build/examples-hosted/lib/transpile.js \
 	.build/examples-hosted/https.js \
 	.build/examples-hosted/lib/font-awesome.min.css \
 	$(addprefix .build/examples-hosted/fonts/fontawesome-webfont.,eot ttf woff woff2) \
 	$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur)
 NGEO_EXAMPLES_HOSTED_REQUIREMENTS = $(EXAMPLES_HOSTED_REQUIREMENTS) \
 	$(subst examples,.build/examples-hosted,$(NGEO_EXAMPLES_PARTIALS_FILES)) \
-	.build/examples-hosted/data
+	.build/examples-hosted/data \
+	.build/templatecache.js
 GMF_EXAMPLES_PARTIALS_FILES = $(EXAMPLES_PARTIALS_FILES) \
 	$(subst contibs/gmf/examples,.build/examples-hosted/contribs/gmf,$(GMF_EXAMPLES_PARTIALS_FILES)) \
-	.build/examples-hosted/contribs/gmf/data
+	.build/examples-hosted/contribs/gmf/data \
+	.build/gmftemplatecache.js
 
 # Git
 GITHUB_USERNAME ?= camptocamp
 GIT_BRANCH ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
 GIT_REMOTE_NAME ?= origin
+export GITHUB_USERNAME
+export GIT_BRANCH
+export GIT_REMOTE_NAME
 
 # i18n
 L10N_LANGUAGES = fr de
@@ -119,7 +131,7 @@ L10N_PO_FILES = \
 LANGUAGES = en $(L10N_LANGUAGES)
 ANGULAR_LOCALES_FILES = $(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 
-TX_VERSION ?= 2_1
+TX_VERSION ?= 2_2
 ifeq (,$(wildcard $(HOME)/.transifexrc))
 TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
@@ -131,9 +143,9 @@ GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_DEMO_HTML = $(shell find contribs/gmf/apps -type f -name '*.html')
 GMF_DEMO_JS_FILES = $(shell find contribs/gmf/apps -type f -name '*.js')
 
-EXTERNS_ANGULAR = .build/externs/angular-1.5.js
-EXTERNS_ANGULAR_Q = .build/externs/angular-1.5-q_templated.js
-EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.5-http-promise_templated.js
+EXTERNS_ANGULAR = .build/externs/angular-1.6.js
+EXTERNS_ANGULAR_Q = .build/externs/angular-1.6-q_templated.js
+EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.6-http-promise_templated.js
 EXTERNS_JQUERY = .build/externs/jquery-1.9.js
 EXTERNS_FILES = $(EXTERNS_ANGULAR) $(EXTERNS_ANGULAR_Q) $(EXTERNS_ANGULAR_HTTP_PROMISE) $(EXTERNS_JQUERY)
 
@@ -188,7 +200,7 @@ apidoc: .build/apidoc
 dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
 .PHONY: check
-check: git-attributes lint check-examples test dist build-gmf-apps
+check: git-attributes eof-newline lint check-examples test dist build-gmf-apps
 
 .PHONY: build-gmf-apps
 build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),.js .css)) \
@@ -203,7 +215,11 @@ lint: .build/eslint.timestamp
 
 .PHONY: git-attributes
 git-attributes:
-	git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
+	git --no-pager diff --check `git log --oneline | tail -1 | cut -f 1 -d ' '`
+
+.PHONY: eof-newline
+eof-newline:
+	buildtools/test-eof-newline
 
 .PHONY: test
 test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js
@@ -230,6 +246,18 @@ examples-hosted: \
 		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
+.PHONY: examples-hosted-ngeo
+examples-hosted-ngeo: \
+		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(EXAMPLES_HTML_FILES)) \
+
+.PHONY: examples-hosted-gmf
+examples-hosted-gmf: \
+		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
+
+.PHONY: examples-hosted-apps
+examples-hosted-apps: \
+		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
+
 .build/python-venv/lib/python2.7/site-packages/glob2: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^glob2== $< --colour=never`
 	touch $@
@@ -243,40 +271,14 @@ examples-hosted: \
 	touch $@
 
 .PHONY: gh-pages
-gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
-		.build/python-venv/lib/python2.7/site-packages/requests \
-		.build/python-venv/lib/python2.7/site-packages/urllib3 \
-		examples-hosted \
-		.build/examples-hosted/index.html \
-		.build/examples-hosted/contribs/gmf/index.html \
-		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS))) \
-		.build/apidoc
-	cd $<; git fetch origin
-	cd $<; git merge --ff-only origin/gh-pages
-	cd $<; git clean --force -d
-
-	.build/python-venv/bin/python buildtools/cleanup-ghpages.py $(GITHUB_USERNAME) $<
-	cd $<; git add -A
-	cd $<; git commit -m 'Cleanup GitHub pages' || true
-
-	cd $<; git rm --ignore-unmatch -r --quiet --force $(GIT_BRANCH)
-	mkdir $</$(GIT_BRANCH)
-
-	cp -r .build/apidoc $</$(GIT_BRANCH)/apidoc
-	mkdir $</$(GIT_BRANCH)/examples
-	cp -r .build/examples-hosted/* $</$(GIT_BRANCH)/examples
-	rm $</$(GIT_BRANCH)/examples/lib/*.js.map || true
-	rm $</$(GIT_BRANCH)/contribs/gmf/examples/build/*.js.map || true
-	cd $<; git add -A
-	cd $<; git status
-	cd $<; git commit -m 'Update GitHub pages' || true
-	cd $<; git push $(GIT_REMOTE_NAME) gh-pages
+gh-pages:
+	EXAMPLES_NGEO=TRUE API=TRUE EXAMPLES_GMF=TRUE APPS_GMF=TRUE buildtools/deploy.sh
 
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages:
 	git clone --depth=1 --branch gh-pages $(GIT_REMOTE_URL) $@
 
-.build/eslint.timestamp: .build/node_modules.timestamp \
+.build/eslint.timestamp: .build/node_modules.timestamp .eslintrc.yaml .eslintrc-es6.yaml \
 		$(SRC_JS_FILES) \
 		$(TEST_JS_FILES) \
 		$(GMF_TEST_JS_FILES) \
@@ -284,7 +286,7 @@ gh-pages: .build/ngeo-$(GITHUB_USERNAME)-gh-pages \
 		$(GMF_SRC_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES)
-	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp, $?)
+	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp .eslintrc.yaml .eslintrc-es6.yaml, $?)
 	touch $@
 
 dist/ngeo.js: .build/ngeo.json \
@@ -415,6 +417,14 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.build/examples-hosted/contribs/gmf/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/jquery.min.js: node_modules/jquery/dist/jquery.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -435,7 +445,7 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $@
 	cp -r $</* $@
 
-.build/examples-hosted/lib/d3.min.js: node_modules/d3/d3.min.js
+.build/examples-hosted/lib/d3.min.js: node_modules/d3/build/d3.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
@@ -459,9 +469,19 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/moment.min.js: node_modules/moment/min/moment.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/font-awesome.min.css: node_modules/font-awesome/css/font-awesome.min.css
 	mkdir -p $(dir $@)
 	cp $< $@
+
+$(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js: .build/node_modules.timestamp
+
+.build/examples-hosted/lib/transpile.js: $(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js
+	mkdir -p $(dir $@)
+	cp $(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js $@
 
 .PRECIOUS: .build/examples-hosted/fonts/%
 .build/examples-hosted/fonts/%: node_modules/font-awesome/fonts/%
@@ -533,13 +553,14 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/angular-touch/angular-touch.js|lib/angular-touch.min.js|' \
 		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
 		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
-		-e 's|\.\./node_modules/d3/d3.js|lib/d3.min.js|' \
+		-e 's|\.\./node_modules/d3/build/d3.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/file-saver/FileSaver.min.js|lib/FileSaver.min.js|' \
 		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
-		-e 's|/@?main=$*.js|$*.js|' \
-		-e '/default\.js/d' \
+		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
+		-e 's|/@?main=$*.js|lib/transpile.js|' \
+		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
 		-e '/<head>/a\$(SED_NEW_LINE)    <script src="https.js"></script>$(SED_NEW_LINE)' $< > $@
 
@@ -565,13 +586,14 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
 		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
 		-e 's|\.\./node_modules/angular-ui-slider/src/slider.js|lib/slider.min.js|' \
-		-e 's|\.\./node_modules/d3/d3\.js|lib/d3.min.js|' \
+		-e 's|\.\./node_modules/d3/build/d3\.js|lib/d3.min.js|' \
 		-e 's|\.\./node_modules/file-saver/FileSaver.min.js|lib/FileSaver.min.js|' \
 		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
-		-e 's|/@?main=$*\.js|$*.js|' \
-		-e '/default\.js/d' \
+		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
+		-e 's|/@?main=$*\.js|../../lib/transpile.js|' \
+		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
 		-e '/<head>/a\$(SED_NEW_LINE)    <script src="../../https.js"></script>$(SED_NEW_LINE)' $< > $@
 
@@ -587,7 +609,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		$(addprefix .build/examples-hosted/contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
-		$(addprefix .build/examples-hosted/contribs/gmf/fonts/gmf-icons., eot ttf woff)
+		$(addprefix .build/examples-hosted/contribs/gmf/fonts/gmf-icons., eot ttf woff) \
+		$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur)
 	mkdir -p $(dir $@)
 	sed -e '/stylesheet\/less" href="..\/..\//d' \
 		-e '/\/node_modules\//d' \
@@ -649,16 +672,28 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/index.html: buildtools/examples-index.mako.html $(EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
+.build/examples-hosted/index.html: \
+		buildtools/examples-index.mako.html \
+		$(EXAMPLES_HTML_FILES) \
+		.build/python-venv/bin/mako-render \
+		.build/beautifulsoup4.timestamp \
+		.build/examples-hosted/bootstrap.min.css
 	mkdir -p $(dir $@)
 	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
 
-.build/examples-hosted/contribs/gmf/index.html: buildtools/examples-index.mako.html $(GMF_EXAMPLES_HTML_FILES) .build/python-venv/bin/mako-render .build/beautifulsoup4.timestamp
+.build/examples-hosted/contribs/gmf/index.html: \
+		buildtools/examples-index.mako.html \
+		$(GMF_EXAMPLES_HTML_FILES) \
+		.build/python-venv/bin/mako-render \
+		.build/beautifulsoup4.timestamp \
+		.build/examples-hosted/contribs/gmf/bootstrap.min.css
 	mkdir -p $(dir $@)
 	.build/python-venv/bin/python buildtools/generate-examples-index.py \
 		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \
 		--app 'Desktop application' apps/desktop/index.html 'The desktop example application for GeoMapFish.' \
 		--app 'Alternate desktop application' apps/desktop_alt/index.html 'An alternate desktop example application for GeoMapFish.' \
+		--app 'Object editing viewer' apps/oeview/index.html 'An example application for viewing an object.' \
+		--app 'Object editing editor' apps/oeedit/index.html 'An example application for editing an object.' \
 		$< $(GMF_EXAMPLES_HTML_FILES) > $@
 
 .build/%.check.timestamp: .build/examples-hosted/%.html \
@@ -757,31 +792,33 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 
 contribs/gmf/build/angular-locale_%.js: github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/`grep ^angular.js= $< | cut --delimiter = --fields 2`/src/ngLocale/angular-locale_$*.js
+	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/`grep ^angular.js= $< | cut -d = -f 2`/src/ngLocale/angular-locale_$*.js
 
 $(EXTERNS_ANGULAR): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/angular-1.6.js
 	touch $@
 
 $(EXTERNS_ANGULAR_Q): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5-q_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/angular-1.6-q_templated.js
 	touch $@
 
 $(EXTERNS_ANGULAR_HTTP_PROMISE): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/angular-1.5-http-promise_templated.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/angular-1.6-http-promise_templated.js
 	touch $@
 
 $(EXTERNS_JQUERY): github_versions
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut --delimiter = --fields 2`/contrib/externs/jquery-1.9.js
+	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/jquery-1.9.js
 	touch $@
 
 .build/python-venv:
 	mkdir -p $(dir $@)
 	virtualenv --no-site-packages $@
+	.build/python-venv/bin/pip install `grep ^pip== requirements.txt --colour=never`
+	.build/python-venv/bin/pip install `grep ^setuptoolss== requirements.txt --colour=never`
 
 .build/python-venv/bin/mako-render: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^Mako== $< --colour=never` `grep ^htmlmin== $< --colour=never`
@@ -794,19 +831,22 @@ $(EXTERNS_JQUERY): github_versions
 .build/closure-library: github_versions
 	mkdir -p $(dir $@)
 	git clone http://github.com/google/closure-library/ $@
-	cd $@; git checkout `grep ^closure-library= $< | cut --delimiter = --fields 2`
+	cd $@; git checkout `grep ^closure-library= $< | cut -d = -f 2`
 
-.build/ol-deps.js: .build/python-venv
+.build/ol-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="node_modules/openlayers/src ../../../../../../openlayers/src" \
 		--root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../openlayers/build/ol.ext" \
 		--output_file=$@
 
-.build/ngeo-deps.js: .build/python-venv
+.build/ngeo-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="src ../../../../../../../src" --output_file=$@
 
-.build/gmf-deps.js: .build/python-venv
+.build/gmf-deps.js: .build/python-venv \
+		.build/node_modules.timestamp \
+		$(SRC_JS_FILES) \
+		$(GMF_SRC_JS_FILES)
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="contribs/gmf/src ../../../../../../../contribs/gmf/src" --output_file=$@
 
@@ -817,18 +857,21 @@ $(EXTERNS_JQUERY): github_versions
 .build/templatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/lib/python2.7/site-packages/glob2 \
 		.build/python-venv/bin/mako-render \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES)
+		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
+		$(NGEO_MODULES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src/directives/partials" \
+		--var "partials=ngeo:src/directives/partials ngeomodule:src/modules" \
 		--var "app=ngeo" $< > $@
 
 .PRECIOUS: .build/gmftemplatecache.js
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
 		.build/python-venv/lib/python2.7/site-packages/glob2 \
 		.build/python-venv/bin/mako-render \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(GMF_DIRECTIVES_PARTIALS_FILES)
+		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
+		$(NGEO_MODULES_PARTIALS_FILES) \
+		$(GMF_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src/directives/partials gmf:contribs/gmf/src/directives/partials" \
+		--var "partials=ngeo:src/directives/partials ngeomodule:src/modules gmf:contribs/gmf/src/directives/partials" \
 		--var "app=gmf" $< > $@
 
 .build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp
@@ -886,16 +929,16 @@ $(HOME)/.transifexrc:
 
 .tx/config: .tx/config.mako .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "tx_version=$(TX_VERSION)" $< > $@
+		--var "tx_version=$(TX_VERSION)" --var "languages=$(L10N_LANGUAGES)" $< > $@
 
 contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var "tx_version=$(TX_VERSION)" $< > $@
 
 .build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES)
+		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES) $(NGEO_JS_FILES)
 	mkdir -p $(dir $@)
-	node buildtools/extract-messages $(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
+	node buildtools/extract-messages $(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
 
 .build/locale/gmf.pot: lingua.cfg .build/node_modules.timestamp \
 		$(GMF_DIRECTIVES_PARTIALS_FILES) $(GMF_JS_FILES)
@@ -944,11 +987,11 @@ transifex-init: .build/python-venv/bin/tx \
 	cd -
 
 .build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
-	.build/python-venv/bin/tx pull -l $* --force
+	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
 .build/locale/%/LC_MESSAGES/gmf.po: .tx/config .build/python-venv/bin/tx
-	.build/python-venv/bin/tx pull -l $* --force
+	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po

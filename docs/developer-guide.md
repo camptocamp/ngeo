@@ -47,7 +47,7 @@ individually compile the examples.
 Each example can be individually compiled. For example:
 
 ```shell
-$ make .build/examples/simple.min.js
+$ make .build/examples-hosted/simple.js
 ```
 
 ## Publish examples to GitHub Pages
@@ -104,6 +104,17 @@ $ make gh-pages GITHUB_USERNAME=<your_github_username>
 
 URL will then be `http://<your_github_username>.github.io/ngeo/<branchname>/apidoc`
 
+## Developing on Windows
+
+If using Windows, then please use the Windows Makefile `Makefile_windows`.
+
+Typically, to run the example, one would use the following command:
+
+```shell
+$ make -f Makefile_windows serve
+```
+
+Please be sure to fulfill also the requirements listed on top of the Windows Makefile
 
 ## Developer Guide
 
@@ -268,21 +279,18 @@ Travis will create a new package on npm.
 
 When we create a new stabilisation branch we should also duplicate the localisation.
 
-Get the actual localisation:
+Go on master:
 ```bash
-make transifex-get
+git checkout master
+git pull origin master
 ```
 
 Create the new branch:
-`git checkout -b x.y`
-
-Update the `Makefile`:
-```diff
-- TX_BRANCH ?= master
-+ TX_BRANCH ?= x_y
+```bash
+git checkout -b x_y
 ```
 
-Update the `.travs.yml`:
+Update the `.travis.yml`:
 ```diff
  - provider: script
    script: make transifex-send
@@ -291,14 +299,52 @@ Update the `.travs.yml`:
      repo: camptocamp/ngeo
 -     branch: master
 +     branch: x.y
-     node: "4"
 ```
 
 Commit and push the changes:
 ```bash
-git add Makefile
-git commit -m "Start the branch x.y"
-git push origin x.y
+git add .travis.yml
+git commit -m "Update the branch"
+git push origin x_y
+```
+
+Back on master:
+```bash
+git checkout master
+```
+
+Do the merge to prepare the future merges:
+```bash
+git checkout merge x.y
+```
+
+Restore the `.travis.yml`:
+```diff
+ - provider: script
+   script: make transifex-send
+   skip_cleanup: true
+   on:
+     repo: camptocamp/ngeo
+-     branch: x.y
++     branch: master
+```
+
+Get the actual localisation:
+```bash
+make transifex-get
+```
+
+Update the `Makefile`:
+```diff
+- TX_VERSION ?= x_y
++ TX_VERSION ?= x_y+1
+```
+
+Commit and push the changes:
+```bash
+git add Makefile .travis.yml
+git commit -m "Start the version x.y+1"
+git push origin master
 ```
 
 Create the new localisation resource:

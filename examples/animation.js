@@ -29,7 +29,7 @@ app.mapDirective = function() {
       'map': '=appMap',
       'class': '=appMapClass'
     },
-    controller: function() {},
+    controller() {},
     controllerAs: 'ctrl',
     bindToController: true,
     template: '<div ngeo-map="ctrl.map"></div>'
@@ -75,8 +75,8 @@ app.MainController = function($timeout) {
   // But we need to do it asynchronously in order to have the `resizemap`
   // directive working. If we don't, the `ng-class` directive doesn't fire the
   // animation hooks.
-  var self = this;
-  $timeout(function() {
+  const self = this;
+  $timeout(() => {
     self.open = true;
   }, 0);
 };

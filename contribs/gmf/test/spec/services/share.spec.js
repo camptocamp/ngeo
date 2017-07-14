@@ -1,29 +1,30 @@
 goog.require('gmf.ShareService');
 
-describe('gmf.ShareService', function() {
-  var gmfShareService;
-  var $httpBackend;
-  var shortenerUrl;
-  var successResponse = {
-    short_url : 'http://fake/gmf'
+describe('gmf.ShareService', () => {
+  let $httpBackend;
+  const successResponse = {
+    short_url: 'http://fake/gmf'
   };
 
-  afterEach(function() {
+  afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('Should get a short version of the permalink', function() {
-    inject(function($injector) {
+  it('Should get a short version of the permalink', () => {
+    let shortenerUrl;
+    let gmfShareService;
+
+    inject(($injector) => {
       $httpBackend = $injector.get('$httpBackend');
-      $httpBackend.when('POST', shortenerUrl).respond(successResponse);
       gmfShareService = $injector.get('gmfShareService');
       shortenerUrl = $injector.get('gmfShortenerCreateUrl');
+      $httpBackend.when('POST', shortenerUrl).respond(successResponse);
     });
 
-    var permalink = 'htpp://fake/c2c/permalink';
-    var params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
-      url : permalink
+    const permalink = 'htpp://fake/c2c/permalink';
+    const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
+      url: permalink
     });
 
     $httpBackend.expectPOST(shortenerUrl, $.param(params));
@@ -37,16 +38,19 @@ describe('gmf.ShareService', function() {
 
   });
 
-  it('Should return the permalink if no URL for the shorten service has been provided', function() {
-    module(function($provide) {
+  it('Should return the permalink if no URL for the shorten service has been provided', () => {
+    let shortenerUrl;
+    let gmfShareService;
+
+    module(($provide) => {
       $provide.value('gmfShortenerCreateUrl', '');
     });
 
-    inject(function($injector) {
+    inject(($injector) => {
       $httpBackend = $injector.get('$httpBackend');
-      $httpBackend.when('POST', shortenerUrl).respond(successResponse);
       gmfShareService = $injector.get('gmfShareService');
       shortenerUrl = $injector.get('gmfShortenerCreateUrl');
+      $httpBackend.when('POST', shortenerUrl).respond(successResponse);
     });
 
     gmfShareService.getShortUrl(shortenerUrl);

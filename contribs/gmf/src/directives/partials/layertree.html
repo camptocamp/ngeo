@@ -1,4 +1,14 @@
 <div
+   class="gmf-layertree-root-tools"
+   ng-if="layertreeCtrl.isRoot">
+  <a
+     href
+     ng-if="gmfLayertreeCtrl.nodesCount() > 0"
+     ng-click="gmfLayertreeCtrl.removeAllNodes()">
+    <span class="fa fa-trash"></span> {{'Clear all' | translate}}
+  </a>
+</div>
+<div
   ng-if="::!layertreeCtrl.isRoot"
   id="gmf-layertree-node-{{::layertreeCtrl.uid}}"
   ng-class="[layertreeCtrl.node.children ? 'gmf-layertree-group' : 'gmf-layertree-leaf', 'gmf-layertree-depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]">
@@ -126,6 +136,15 @@
               {{'Show/hide legend'|translate}}
             </a>
           </li>
+          <li ng-if="layertreeCtrl.getDataSource() && layertreeCtrl.getDataSource().filtrable">
+            <i class="fa fa-filter fa-fw"></i>
+            <a
+              title="{{'Filter'|translate}}"
+              ng-click="gmfLayertreeCtrl.toggleFiltrableDataSource(layertreeCtrl.getDataSource())"
+              href="">
+              {{'Filter'|translate}}
+            </a>
+          </li>
         </ul>
       </div>
     </span>
@@ -173,7 +192,7 @@
     {{'Hide legend'|translate}}
   </a>
 
-  <img ng-src="{{gmfLayertreeCtrl.getLegendURL(layertreeCtrl)}}"></img>
+  <img ng-if="gmfLayertreeCtrl.isNodeLegendVisible('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')" ng-src="{{gmfLayertreeCtrl.getLegendURL(layertreeCtrl)}}"></img>
 </div>
 
 <ul

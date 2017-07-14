@@ -1,4 +1,3 @@
-goog.provide('gmf.MobileMeasurePointController');
 goog.provide('gmf.mobileMeasurepointDirective');
 
 goog.require('gmf');
@@ -19,10 +18,10 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} The template url.
      */
-    function(element, attrs) {
-      var templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
+    (element, attrs) => {
+      const templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/mobilemeasurepoint.html';
+          `${gmf.baseTemplateUrl}/mobilemeasurepoint.html`;
     });
 
 
@@ -32,7 +31,7 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
  *
  * Example:
  *
- *      <div gmf-mobile-measurepoint=""
+ *      <div gmf-mobile-measurepoint
  *        gmf-mobile-measurepoint-active="ctrl.measurePointActive"
  *        gmf-mobile-measurepoint-layersconfig="::ctrl.measurePointLayers"
  *        gmf-mobile-measurepoint-map="::ctrl.map">
@@ -40,17 +39,17 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
  *
  * Where ctrl.measurePointLayers is an object like this:
  *
- *      this.measurePointLayers = {
- *        'srtm': {unit: 'm', decimals: 2},
- *        'wind': {unit: 'km/h'},
- *        'humidity': {}
- *      }
+ *      this.measurePointLayers = [
+ *        {name: 'srtm', unit: 'm', decimals: 2},
+ *        {name: 'wind', {unit: 'km/h'},
+ *        {name: 'humidity'}
+ *      ];
  *
  * @htmlAttribute {boolean} gmf-mobile-measurepoint-active Used to active
  * or deactivate the component.
  * @htmlAttribute {number=} gmf-mobile-measurepoint-Coordinatedecimals number
  *     of decimal to display for the coordinate.
- * @htmlAttribute {Object.<string, gmf.MobileMeasurePointController.LayerConfig>}
+ * @htmlAttribute {Array.<gmf.MobileMeasurePointController.LayerConfig>}
  *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
  *     information under the point and its configuaration.
  * @htmlAttribute {ol.Map} gmf-mobile-measurepoint-map The map.
@@ -74,10 +73,18 @@ gmf.mobileMeasurePointDirective =
           'map': '=gmfMobileMeasurepointMap',
           'sketchStyle': '=?gmfMobileMeasurepointSketchstyle'
         },
-        controller: 'GmfMobileMeasurePointController',
-        controllerAs: 'ctrl',
+        controller: 'GmfMobileMeasurePointController as ctrl',
         bindToController: true,
-        templateUrl: gmfMobileMeasurePointTemplateUrl
+        templateUrl: gmfMobileMeasurePointTemplateUrl,
+        /**
+         * @param {!angular.Scope} scope Scope.
+         * @param {!angular.JQLite} element Element.
+         * @param {!angular.Attributes} attrs Attributes.
+         * @param {!gmf.MobileMeasurePointController} controller Controller.
+         */
+        link(scope, element, attrs, controller) {
+          controller.init();
+        }
       };
     };
 
@@ -95,6 +102,7 @@ gmf.module.directive('gmfMobileMeasurepoint',
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileMeasurePointController
@@ -138,14 +146,12 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
    */
   this.active;
 
-  $scope.$watch(function() {
-    return this.active;
-  }.bind(this), function(newVal) {
+  $scope.$watch(() => this.active, (newVal) => {
     this.measure.setActive(newVal);
     this.handleMeasureActiveChange_();
-  }.bind(this));
+  });
 
-  var coordinateDecimalsFn = this['getCoordinateDecimalsFn'];
+  const coordinateDecimalsFn = this['getCoordinateDecimalsFn'];
 
   /**
    * @type {number}
@@ -153,14 +159,11 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
    */
   this.coordinateDecimals = coordinateDecimalsFn ? coordinateDecimalsFn() : 0;
 
-  var layersConfig = this['getLayersConfigFn']();
-  goog.asserts.assertObject(layersConfig);
-
   /**
-   * @type {Object.<string, gmf.MobileMeasurePointController.LayerConfig>!}
+   * @type {!Array.<gmf.MobileMeasurePointController.LayerConfig>}
    * @private
    */
-  this.layersConfig = layersConfig;
+  this.layersConfig;
 
   /**
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
@@ -195,14 +198,14 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
    * @type {ngeo.interaction.MeasurePointMobile}
    * @export
    */
-  this.measure = new ngeo.interaction.MeasurePointMobile({
-    decimals: this.coordinateDecimals,
-    sketchStyle: this.sketchStyle
-  });
+  this.measure = new ngeo.interaction.MeasurePointMobile(
+        /** @type {ngeox.numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')), {
+          decimals: this.coordinateDecimals,
+          sketchStyle: this.sketchStyle
+        });
 
   this.measure.setActive(this.active);
   ngeoDecorateInteraction(this.measure);
-  this.map.addInteraction(this.measure);
 
   /**
    * @type {ngeo.interaction.MobileDraw}
@@ -219,7 +222,18 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;
+};
 
+
+/**
+ * Initialise the controller.
+ */
+gmf.MobileMeasurePointController.prototype.init = function() {
+  const layersConfig = this['getLayersConfigFn']();
+  goog.asserts.assert(Array.isArray(layersConfig));
+  this.layersConfig = layersConfig;
+
+  this.map.addInteraction(this.measure);
 };
 
 
@@ -252,7 +266,7 @@ gmf.MobileMeasurePointController.prototype.translate = function(str) {
 gmf.MobileMeasurePointController.prototype.handleMeasureActiveChange_ =
     function() {
       if (this.measure.getActive()) {
-        var view = this.map.getView();
+        const view = this.map.getView();
         this.mapViewPropertyChangeEventKey_ = ol.events.listen(
             view,
             'propertychange',
@@ -273,38 +287,38 @@ gmf.MobileMeasurePointController.prototype.handleMeasureActiveChange_ =
  * @private
  */
 gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
-  var center = this.map.getView().getCenter();
+  const center = this.map.getView().getCenter();
   goog.asserts.assertArray(center);
-  var params = {
-    'layers': Object.keys(this.layersConfig).join(',')
+  const params = {
+    'layers': this.layersConfig.map(config => config.name).join(',')
   };
-  this.gmfRaster_.getRaster(center, params).then(function(object) {
-    var el = this.measure.getTooltipElement();
-    var ctn = document.createElement('div');
-    var className = 'gmf-mobile-measure-point';
+  this.gmfRaster_.getRaster(center, params).then((object) => {
+    const el = this.measure.getTooltipElement();
+    const ctn = document.createElement('div');
+    const className = 'gmf-mobile-measure-point';
     ctn.className = className;
 
-    goog.object.forEach(object, function(value, key) {
-      var layerConfig = this.layersConfig[key];
-      if (value !== null) {
-        var childEl = document.createElement('div');
-        var className = 'gmf-mobile-measure-point-' + key;
-        childEl.className = className;
-        var unit = layerConfig.unit || '';
-        var decimals = layerConfig.decimals && layerConfig.decimals > 0 || 0;
+    for (const config of this.layersConfig) {
+      const key = config.name;
+      if (key in object) {
+        let value = object[key];
+        const childEl = document.createElement('div');
+        childEl.className = `gmf-mobile-measure-point-${key}`;
+        const unit = config.unit || '';
+        const decimals = config.decimals && config.decimals > 0 || 0;
         value = this.$filter_('number')(value, decimals);
         childEl.innerHTML = [this.translate(key), ': ', value, ' ', unit].join('');
         ctn.appendChild(childEl);
       }
-    }, this);
+    }
 
-    var previousCtn = goog.dom.getElementByClass(className, el);
-    if (previousCtn) {
-      previousCtn.remove();
+    const previousCtn = el.getElementsByClassName(className);
+    if (previousCtn[0]) {
+      previousCtn[0].remove();
     }
     el.appendChild(ctn);
 
-  }.bind(this));
+  });
 };
 
 
@@ -313,6 +327,7 @@ gmf.module.controller('GmfMobileMeasurePointController',
 
 /**
  * @typedef {{
+ *     name: string,
  *     decimals: (number|undefined),
  *     unit: (string|undefined)
  * }}

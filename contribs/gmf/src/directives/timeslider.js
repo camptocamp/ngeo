@@ -1,8 +1,7 @@
 goog.provide('gmf.TimeSliderDirective');
-goog.provide('gmf.TimeSliderController');
 
 goog.require('gmf');
-goog.require('gmf.WMSTime');
+goog.require('ngeo.WMSTime');
 
 
 /**
@@ -29,47 +28,50 @@ goog.require('gmf.WMSTime');
  */
 gmf.timeSliderDirective = function($timeout, $filter) {
   return {
-    scope : {
-      onDateSelected : '&gmfTimeSliderOnDateSelected',
-      time : '=gmfTimeSliderTime'
+    scope: {
+      onDateSelected: '&gmfTimeSliderOnDateSelected',
+      time: '=gmfTimeSliderTime'
     },
-    bindToController : true,
-    controller : 'gmfTimeSliderController',
-    controllerAs : 'sliderCtrl',
+    bindToController: true,
+    controller: 'gmfTimeSliderController as sliderCtrl',
     restrict: 'AE',
-    templateUrl : gmf.baseTemplateUrl + '/timeslider.html',
-    link: function(scope, element, attrs, ctrl) {
+    templateUrl: `${gmf.baseTemplateUrl}/timeslider.html`,
+    link: /** @type {!angular.LinkingFunctions} */ ({
+      pre: function preLink(scope, element, attrs, ctrl) {
+        ctrl.init();
 
-      ctrl.sliderOptions['stop'] = onSliderReleased_;
-      ctrl.sliderOptions['slide'] = computeDates_;
+        ctrl.sliderOptions['stop'] = onSliderReleased_;
+        ctrl.sliderOptions['slide'] = computeDates_;
 
-      function onSliderReleased_(e, sliderUi) {
-        ctrl.onDateSelected({
-          time : computeDates_(e, sliderUi)
-        });
-      }
-
-      function computeDates_(e, sliderUi) {
-        var sDate, eDate, wmstime;
-        if (sliderUi.values) {
-          sDate = new Date(ctrl.getClosestValue_(sliderUi.values[0]));
-          eDate = new Date(ctrl.getClosestValue_(sliderUi.values[1]));
-          ctrl.dates = [sDate, eDate];
-          wmstime = {
-            start : sDate.getTime(),
-            end : eDate.getTime()
-          };
-        } else {
-          sDate = new Date(ctrl.getClosestValue_(sliderUi.value));
-          ctrl.dates = sDate;
-          wmstime = {
-            start : sDate.getTime()
-          };
+        function onSliderReleased_(e, sliderUi) {
+          ctrl.onDateSelected({
+            time: computeDates_(e, sliderUi)
+          });
+          scope.$apply();
         }
-        scope.$apply();
-        return wmstime;
+
+        function computeDates_(e, sliderUi) {
+          let sDate, eDate, wmstime;
+          if (sliderUi.values) {
+            sDate = new Date(ctrl.getClosestValue_(sliderUi.values[0]));
+            eDate = new Date(ctrl.getClosestValue_(sliderUi.values[1]));
+            ctrl.dates = [sDate, eDate];
+            wmstime = {
+              start: sDate.getTime(),
+              end: eDate.getTime()
+            };
+          } else {
+            sDate = new Date(ctrl.getClosestValue_(sliderUi.value));
+            ctrl.dates = sDate;
+            wmstime = {
+              start: sDate.getTime()
+            };
+          }
+          scope.$apply();
+          return wmstime;
+        }
       }
-    }
+    })
   };
 };
 
@@ -77,23 +79,20 @@ gmf.timeSliderDirective = function($timeout, $filter) {
 /**
  * TimeSliderController - directive controller
  * @param {!angular.Scope} $scope Angular scope.
- * @param {gmf.WMSTime} gmfWMSTime WMSTime service.
+ * @param {ngeo.WMSTime} ngeoWMSTime WMSTime service.
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfTimeSliderController
  */
-gmf.TimeSliderController = function($scope, gmfWMSTime) {
+gmf.TimeSliderController = function($scope, ngeoWMSTime) {
 
   /**
-   * @type {gmf.WMSTime}
+   * @type {ngeo.WMSTime}
    * @private
    */
-  this.gmfWMSTime_ = gmfWMSTime;
-
-  //fetch the initial options for the component
-  var initialOptions_ = this.gmfWMSTime_.getOptions(this.time);
+  this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
    * Function called after date(s) changed/selected
@@ -115,28 +114,27 @@ gmf.TimeSliderController = function($scope, gmfWMSTime) {
    * @type {boolean}
    * @export
    */
-  this.isModeRange = this.time.mode === 'range';
-
+  this.isModeRange;
 
   /**
    * Minimal value of the slider (time in ms)
    * @type {number}
    * @export
    */
-  this.minValue = initialOptions_.minDate;
+  this.minValue;
 
   /**
    * Maximal value of the slider (time in ms)
    * @type {number}
    * @export
    */
-  this.maxValue = initialOptions_.maxDate;
+  this.maxValue;
 
   /**
    * Used when WMS time object has a property 'values' instead of an interval
-   * @type (Array<number>|null)
+   * @type (?Array<number>)
    */
-  this.timeValueList = this.getTimeValueList_();
+  this.timeValueList;
 
   /**
    * Default Slider options (used by ui-slider directive)
@@ -147,22 +145,36 @@ gmf.TimeSliderController = function($scope, gmfWMSTime) {
    * }}
    * @export
    */
-  this.sliderOptions = {
-    range : this.isModeRange,
-    min : this.minValue,
-    max : this.maxValue
-  };
+  this.sliderOptions;
 
   /**
    * Model for the ui-slider directive (date in ms format)
    * @type {Array.<number>|number}
    * @export
    */
-  this.dates = this.isModeRange ? [initialOptions_.values[0], initialOptions_.values[1]] :
-  initialOptions_.values;
-
+  this.dates;
 };
 
+
+/**
+ * Initialise the controller.
+ */
+gmf.TimeSliderController.prototype.init = function() {
+  this.timeValueList = this.getTimeValueList_();
+
+  // Fetch the initial options for the component
+  const initialOptions_ = this.ngeoWMSTime_.getOptions(this.time);
+  this.isModeRange = this.time.mode === 'range';
+  this.minValue = initialOptions_.minDate;
+  this.maxValue = initialOptions_.maxDate;
+  this.dates = this.isModeRange ? [initialOptions_.values[0], initialOptions_.values[1]] :
+      initialOptions_.values;
+  this.sliderOptions = {
+    range: this.isModeRange,
+    min: this.minValue,
+    max: this.maxValue
+  };
+};
 
 /**
  * TimeSliderController.prototype.getTimeValueList_ - Get a list of time value instead
@@ -171,19 +183,19 @@ gmf.TimeSliderController = function($scope, gmfWMSTime) {
  * @return {Array<number>}  - List of timestamp representing possible values
  */
 gmf.TimeSliderController.prototype.getTimeValueList_ = function() {
-  var wmsTime = this.time;
-  var timeValueList = null;
-  var minDate = new Date(this.minValue);
-  var maxDate = new Date(this.maxValue);
+  const wmsTime = this.time;
+  let timeValueList = null;
+  const minDate = new Date(this.minValue);
+  const maxDate = new Date(this.maxValue);
 
   if (wmsTime.values) {
     timeValueList = [];
-    wmsTime.values.forEach(function(date) {
+    wmsTime.values.forEach((date) => {
       timeValueList.push(new Date(date).getTime());
     });
   } else {
-    var maxNbValues = 1024;
-    var endDate = new Date(minDate.getTime());
+    const maxNbValues = 1024;
+    const endDate = new Date(minDate.getTime());
     endDate.setFullYear(minDate.getFullYear() + maxNbValues * wmsTime.interval[0]);
     endDate.setMonth(minDate.getMonth() + maxNbValues * wmsTime.interval[1],
       minDate.getDate() + maxNbValues * wmsTime.interval[2]);
@@ -193,8 +205,8 @@ gmf.TimeSliderController.prototype.getTimeValueList_ = function() {
       // Transform interval to a list of values when the number
       // of values is below a threshold (maxNbValues)
       timeValueList = [];
-      for (var i = 0; ; i++) {
-        var nextDate = new Date(minDate.getTime());
+      for (let i = 0; ; i++) {
+        const nextDate = new Date(minDate.getTime());
         nextDate.setFullYear(minDate.getFullYear() + i * wmsTime.interval[0]);
         nextDate.setMonth(minDate.getMonth() + i * wmsTime.interval[1],
           minDate.getDate() + i * wmsTime.interval[2]);
@@ -228,9 +240,9 @@ gmf.TimeSliderController.prototype.getClosestValue_ = function(timestamp) {
 
   if (this.timeValueList) {
     // Time stops are defined as a list of values
-    var index;
-    var leftIndex = 0;
-    var rightIndex = this.timeValueList.length - 1;
+    let index;
+    let leftIndex = 0;
+    let rightIndex = this.timeValueList.length - 1;
 
     while ((rightIndex - leftIndex) > 1) {
       index = Math.floor((leftIndex + rightIndex) / 2);
@@ -241,23 +253,23 @@ gmf.TimeSliderController.prototype.getClosestValue_ = function(timestamp) {
       }
     }
 
-    var leftDistance = Math.abs(this.timeValueList[leftIndex] - timestamp);
-    var rightDistance = Math.abs(this.timeValueList[rightIndex] - timestamp);
+    const leftDistance = Math.abs(this.timeValueList[leftIndex] - timestamp);
+    const rightDistance = Math.abs(this.timeValueList[rightIndex] - timestamp);
 
     return this.timeValueList[leftDistance < rightDistance ? leftIndex : rightIndex];
   } else {
     // Time stops are defined by a start date plus an interval
-    var targetDate = new Date(timestamp);
-    var startDate = new Date(this.minValue);
-    var bestDate = new Date(this.minValue);
-    var maxDate = new Date(this.maxValue);
-    var bestDistance = Math.abs(targetDate - bestDate);
+    const targetDate = new Date(timestamp);
+    const startDate = new Date(this.minValue);
+    let bestDate = new Date(this.minValue);
+    const maxDate = new Date(this.maxValue);
+    let bestDistance = Math.abs(targetDate - bestDate);
 
-    for (var i = 1; ; i++) {
+    for (let i = 1; ; i++) {
       // The start date should always be used as a reference
       // because adding a month twice could differ from adding
       // two months at once
-      var next = new Date(startDate.getTime());
+      const next = new Date(startDate.getTime());
       next.setFullYear(startDate.getFullYear() + i * this.time.interval[0]);
       next.setMonth(startDate.getMonth() + i *  this.time.interval[1],
         startDate.getDate() + i * this.time.interval[2]);
@@ -267,7 +279,7 @@ gmf.TimeSliderController.prototype.getClosestValue_ = function(timestamp) {
         break;
       }
 
-      var distance = Math.abs(targetDate - next);
+      const distance = Math.abs(targetDate - next);
       if (distance <= bestDistance) {
         bestDate = next;
         bestDistance = distance;

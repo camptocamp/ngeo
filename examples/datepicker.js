@@ -33,7 +33,7 @@ app.MainController = function(ngeoTime) {
     maxDefValue: null,
     minDefValue: null,
     mode: /** @type {ngeox.TimePropertyModeEnum} */ ('range'),
-    interval : [0,1,0,0]
+    interval: [0, 1, 0, 0]
   };
 
   /**
@@ -47,7 +47,7 @@ app.MainController = function(ngeoTime) {
     maxDefValue: null,
     minDefValue: null,
     mode: /** @type {ngeox.TimePropertyModeEnum} */ ('value'),
-    interval : [0,1,0,0]
+    interval: [0, 1, 0, 0]
   };
 
   /**

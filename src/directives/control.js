@@ -29,25 +29,24 @@ goog.require('ol.control.Control');
 ngeo.controlDirective = function() {
   return {
     restrict: 'A',
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         */
-        function(scope, element, attrs) {
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
 
-          var control = /** @type {ol.control.Control} */
+      const control = /** @type {ol.control.Control} */
               (scope.$eval(attrs['ngeoControl']));
-          goog.asserts.assertInstanceof(control, ol.control.Control);
+      goog.asserts.assertInstanceof(control, ol.control.Control);
 
-          var map = /** @type {ol.Map} */
+      const map = /** @type {ol.Map} */
               (scope.$eval(attrs['ngeoControlMap']));
-          goog.asserts.assertInstanceof(map, ol.Map);
+      goog.asserts.assertInstanceof(map, ol.Map);
 
-          control.setTarget(element[0]);
-          map.addControl(control);
-        }
+      control.setTarget(element[0]);
+      map.addControl(control);
+    }
   };
 };
 

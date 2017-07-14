@@ -27,12 +27,19 @@ ngeo.BackgroundEventType = {
  * @struct
  * @extends {ol.events.Event}
  * @param {ngeo.BackgroundEventType} type Type.
+ * @param {ol.layer.Base} current Current background layer.
  * @param {ol.layer.Base} previous Previous background layer.
  * @implements {ngeox.BackgroundEvent}
  */
-ngeo.BackgroundEvent = function(type, previous) {
+ngeo.BackgroundEvent = function(type, current, previous) {
 
   ol.events.Event.call(this, type);
+
+  /**
+   * The current (new) layer used as background.
+   * @type {ol.layer.Base}
+   */
+  this.current = current;
 
   /**
    * The layer used as background before a change.
@@ -47,7 +54,7 @@ ol.inherits(ngeo.BackgroundEvent, ol.events.Event);
  * Provides a service for setting/unsetting background layers
  * in maps.
  *
- * The notion of background/base layers doesn't exist in OpenLayers 3. This
+ * The notion of background/base layers doesn't exist in OpenLayers. This
  * service adds that notion.
  *
  * Setting a background layer to map is done with the `set` function:
@@ -72,9 +79,9 @@ ol.inherits(ngeo.BackgroundEvent, ol.events.Event);
  *
  *     ngeoBackgroundLayerMgr.on('change', function(e) {
  *       // do something with the layer
- *       var layer = ngeoBackgroundLayerMgr.get();
+ *       let layer = ngeoBackgroundLayerMgr.get();
  *       // know which layer was used before
- *       var previous = e.previous
+ *       let previous = e.previous
  *     });
  *
  * See our live examples:
@@ -109,7 +116,7 @@ ol.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.get = function(map) {
-  var mapUid = ol.getUid(map).toString();
+  const mapUid = ol.getUid(map).toString();
   return mapUid in this.mapUids_ ? map.getLayers().item(0) : null;
 };
 
@@ -123,8 +130,8 @@ ngeo.BackgroundLayerMgr.prototype.get = function(map) {
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
-  var mapUid = ol.getUid(map).toString();
-  var previous = this.get(map);
+  const mapUid = ol.getUid(map).toString();
+  const previous = this.get(map);
   if (previous !== null) {
     goog.asserts.assert(mapUid in this.mapUids_);
     if (layer !== null) {
@@ -139,7 +146,7 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
   }
 
   this.dispatchEvent(new ngeo.BackgroundEvent(ngeo.BackgroundEventType.CHANGE,
-      previous));
+      layer, previous));
   return previous;
 };
 
@@ -149,28 +156,28 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
-  var baseBgLayer = this.get(map);
+  const baseBgLayer = this.get(map);
   if (baseBgLayer) {
-    var layers = [baseBgLayer];
+    let layers = [baseBgLayer];
     if (baseBgLayer instanceof ol.layer.Group) {
       // Handle the first level of layers of the base background layer.
       layers = baseBgLayer.getLayers().getArray();
     }
 
-    layers.forEach(function(layer) {
+    layers.forEach((layer) => {
       goog.asserts.assertInstanceof(layer, ol.layer.Layer);
       if (layer) {
-        var hasUpdates = false;
-        var updatedDimensions = {};
-        for (var key in layer.get('dimensions')) {
-          var value = dimensions[key];
+        let hasUpdates = false;
+        const updatedDimensions = {};
+        for (const key in layer.get('dimensions')) {
+          const value = dimensions[key];
           if (value !== undefined) {
             updatedDimensions[key] = value;
             hasUpdates = true;
           }
         }
         if (hasUpdates) {
-          var source = layer.getSource();
+          const source = layer.getSource();
           if (source instanceof ol.source.WMTS) {
             source.updateDimensions(updatedDimensions);
             source.refresh();

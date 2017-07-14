@@ -1,11 +1,12 @@
-var fs = require('fs');
-var nomnom = require('nomnom');
-var Compiler = require('angular-gettext-tools').Compiler;
+"use strict";
+let fs = require('fs');
+let nomnom = require('nomnom');
+let Compiler = require('angular-gettext-tools').Compiler;
 
 function main(inputs) {
-  var compiler = new Compiler({format: 'json'});
+  let compiler = new Compiler({format: 'json'});
 
-  var contents = [];
+  let contents = [];
   inputs.forEach(function(input) {
     // ignore un existing files
     fs.exists(input, function(exists) {
@@ -30,8 +31,8 @@ function main(inputs) {
 
 // If running this module directly then call the main function.
 if (require.main === module) {
-  var options = nomnom.parse();
-  var inputs = options._;
+  let options = nomnom.parse();
+  let inputs = options._;
   main(inputs);
 }
 

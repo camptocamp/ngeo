@@ -7,6 +7,10 @@ goog.provide('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ol.format.IGC');
 /** @suppress {extraRequire} */
+goog.require('ol.source.Raster');
+/** @suppress {extraRequire} */
+goog.require('ol.VectorTile');
+/** @suppress {extraRequire} */
 goog.require('ol.Overlay');
 /** @suppress {extraRequire} */
 goog.require('ol.control.ScaleLine');
@@ -19,17 +23,68 @@ goog.require('ol.layer.VectorTile');
 // Required by ol3
 /** @suppress {extraRequire} */
 goog.require('ol.Map');
+/** @suppress {extraRequire} */
+goog.require('ol.source.Vector');
 
+
+goog.require('ngeo.search.searchModule');
+goog.require('ngeo.import.importModule');
 
 /** @type {!angular.Module} */
-ngeo.module = angular.module('ngeo', ['gettext', 'ui.date', 'floatThead']);
+ngeo.module = angular.module('ngeo', [
+  ngeo.search.searchModule.module.name,
+  ngeo.import.importModule.module.name,
+  'gettext', 'ui.date', 'floatThead'
+]);
 
 
 /**
- * The default template based URL, used as it by the template cache.
+ * The default template base URL for directive partials, used as-is by the template cache.
  * @type {string}
  */
 ngeo.baseTemplateUrl = 'ngeo';
+
+/**
+ * The default template base URL for modules, used as-is by the template cache.
+ * @type {string}
+ */
+ngeo.baseModuleTemplateUrl = 'ngeomodule';
+
+
+/**
+ * @enum {string}
+ * @export
+ */
+ngeo.AttributeType = {
+  /**
+   * @type {string}
+   */
+  BOOLEAN: 'boolean',
+  /**
+   * @type {string}
+   */
+  DATE: 'date',
+  /**
+   * @type {string}
+   */
+  DATETIME: 'datetime',
+  /**
+   * @type {string}
+   */
+  GEOMETRY: 'geometry',
+  /**
+   * @type {string}
+   */
+  NUMBER: 'number',
+  /**
+   * @type {string}
+   */
+  SELECT: 'select',
+  /**
+   * @type {string}
+   */
+  TEXT: 'text'
+};
 
 
 /**
@@ -99,6 +154,29 @@ ngeo.FeatureProperties = {
  * @enum {string}
  * @export
  */
+ngeo.FilterCondition = {
+  /**
+   * @type {string}
+   * @export
+   */
+  AND: '&&',
+  /**
+   * @type {string}
+   * @export
+   */
+  NOT: '!',
+  /**
+   * @type {string}
+   * @export
+   */
+  OR: '||'
+};
+
+
+/**
+ * @enum {string}
+ * @export
+ */
 ngeo.GeometryType = {
   /**
    * @type {string}
@@ -145,4 +223,22 @@ ngeo.GeometryType = {
    * @export
    */
   TEXT: 'Text'
+};
+
+
+/**
+ * @enum {string}
+ * @export
+ */
+ngeo.NumberType = {
+  /**
+   * @type {string}
+   * @export
+   */
+  FLOAT: 'float',
+  /**
+   * @type {string}
+   * @export
+   */
+  INTEGER: 'integer'
 };

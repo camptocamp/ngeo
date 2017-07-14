@@ -1,12 +1,13 @@
 goog.provide('gmf.LayertreeController');
-goog.provide('gmf.layertreeDirective');
+goog.provide('gmf.layertreeComponent');
 
 goog.require('ngeo.SyncArrays');
 goog.require('gmf');
+goog.require('gmf.DataSourceBeingFiltered');
 goog.require('gmf.Permalink');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
-goog.require('gmf.WMSTime');
+goog.require('ngeo.WMSTime');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
@@ -17,19 +18,32 @@ goog.require('ngeo.popoverDirective');
 
 gmf.module.value('gmfLayertreeTemplate',
     /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {!angular.JQLite} $element Element.
+     * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template.
      */
-    function(element, attrs) {
-      var subTemplateUrl = gmf.baseTemplateUrl + '/layertree.html';
-      return '<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
+    ($element, $attrs) => {
+      const subTemplateUrl = `${gmf.baseTemplateUrl}/layertree.html`;
+      return `${'<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
           'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
           'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
-          'ngeo-layertree-templateurl="' + subTemplateUrl + '">' +
+          'ngeo-layertree-templateurl="'}${subTemplateUrl}">` +
           '</div>';
-    });
+    }
+);
+
+
+/**
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfLayertreeTemplate Template function.
+ * @return {string} Template.
+ * @ngInject
+ */
+function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
+  return gmfLayertreeTemplate($element, $attrs);
+}
 
 
 // Overrides the path to the layertree template (used by each node, except
@@ -40,15 +54,13 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    function(element, attrs) {
-      return gmf.baseTemplateUrl + '/layertree.html';
-    });
+    (element, attrs) => `${gmf.baseTemplateUrl}/layertree.html`);
 
 
 /**
- * This directive creates a layertree based on the c2cgeoportal JSON themes
- * source and a {@link ngeo.layertreeDirective}. The controller used by this
- * directive defines some functions for each node that are created by a default
+ * This component creates a layertree based on the c2cgeoportal JSON themes
+ * source and a {@link ngeo.layertreeComponent}. The controller used by this
+ * component defines some functions for each node that are created by a default
  * template. This default template can be overrided by setting the value
  * 'gmf.layertreeTemplateUrl' but you will have to adapt the
  * ngeoLayertreeTemplateUrl value too (to define the children's nodes template
@@ -58,7 +70,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *
  *      <gmf-layertree
  *        gmf-layertree-dimensions="ctrl.dimensions"
- *        gmf-layertree-map="ctrl.map"
+ *        gmf-layertree-map="ctrl.map">
  *      </gmf-layertree>
  *
  * You can add an attribute 'gmf-layertree-openlinksinnewwindow="true"' to open
@@ -76,42 +88,38 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {ol.Map} gmf-layertree-map The map.
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
- *     gmfLayertreeTemplate Template for the directive.
- * @return {angular.Directive} The directive specs.
- * @ngInject
- * @ngdoc directive
- * @ngname gmfLayertreeDirective
+ *
+ * @ngdoc component
+ * @ngname gmfLayertreeComponent
  */
-gmf.layertreeDirective = function(gmfLayertreeTemplate) {
-  return {
-    scope: {
-      'map': '=gmfLayertreeMap',
-      'dimensions': '=?gmfLayertreeDimensions',
-      'openLinksInNewWindowFn': '&gmfLayertreeOpenlinksinnewwindow'
-    },
-    bindToController: true,
-    controller: 'GmfLayertreeController',
-    controllerAs: 'gmfLayertreeCtrl',
-    template: gmfLayertreeTemplate
-  };
+gmf.layertreeComponent = {
+  controller: 'GmfLayertreeController as gmfLayertreeCtrl',
+  bindings: {
+    'map': '=gmfLayertreeMap',
+    'dimensions': '=?gmfLayertreeDimensions',
+    'openLinksInNewWindowFn': '&gmfLayertreeOpenlinksinnewwindow'
+  },
+  template: gmfLayertreeTemplate
 };
 
-gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
+gmf.module.component('gmfLayertree', gmf.layertreeComponent);
 
 
 /**
- * @param {angular.$http} $http Angular http service.
- * @param {angular.$sce} $sce Angular sce service.
+ * @param {!angular.$http} $http Angular http service.
+ * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {gmf.Permalink} gmfPermalink The gmf permalink service.
- * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
- * @param {ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
- * @param {gmf.WMSTime} gmfWMSTime wms time service.
- * @param {gmf.Themes} gmfThemes The gmf Themes service.
+ * @param {!ngeo.CreatePopup} ngeoCreatePopup Popup service.
+ * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {gmf.DataSourceBeingFiltered} gmfDataSourceBeingFiltered The
+ *     Gmf value service that determines the data source currently being
+ *     filtered.
+ * @param {!gmf.Permalink} gmfPermalink The gmf permalink service.
+ * @param {!gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {!gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
+ * @param {!ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
+ * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
+ * @param {!gmf.Themes} gmfThemes The gmf Themes service.
  * @constructor
  * @export
  * @struct
@@ -120,89 +128,98 @@ gmf.module.directive('gmfLayertree', gmf.layertreeDirective);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
-    ngeoLayerHelper, gmfPermalink, gmfTreeManager, gmfSyncLayertreeMap,
-    ngeoSyncArrays, gmfWMSTime, gmfThemes) {
+    ngeoLayerHelper, gmfDataSourceBeingFiltered, gmfPermalink, gmfTreeManager,
+    gmfSyncLayertreeMap, ngeoSyncArrays, ngeoWMSTime, gmfThemes) {
 
   /**
-   * @type {ol.Map}
+   * @type {?ol.Map}
    * @export
    */
   this.map;
 
   /**
-   * @type {Object<string, string>|undefined}
+   * @type {?Object<string, string>}
    * @export
    */
   this.dimensions;
 
   /**
-   * @type {angular.Scope}
+   * @type {!angular.Scope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
    * @private
-   * @type {angular.$http}
+   * @type {!angular.$http}
    */
   this.$http_ = $http;
 
   /**
    * @private
-   * @type {angular.$sce}
+   * @type {!angular.$sce}
    */
   this.$sce_ = $sce;
 
   /**
-   * @type {ngeo.LayerHelper}
+   * @type {!ngeo.LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {gmf.Permalink}
+   * @type {gmf.DataSourceBeingFiltered}
+   * @export
+   */
+  this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
+
+  /**
+   * @type {!gmf.Permalink}
    * @private
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {!gmf.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
-  /**
-   * @type {gmfThemes.GmfRootNode}
-   * @export
-   */
-  this.root = gmfTreeManager.root;
+  const root = gmfTreeManager.root;
+  goog.asserts.assert(root);
 
   /**
-   * @type {gmf.SyncLayertreeMap}
+   * @type {!gmfThemes.GmfRootNode}
+   * @export
+   */
+  this.root = root;
+
+  /**
+   * @type {!gmf.SyncLayertreeMap}
    * @private
    */
   this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
   /**
-   * @type {gmf.WMSTime}
+   * @type {!ngeo.WMSTime}
    * @private
    */
-  this.gmfWMSTime_ = gmfWMSTime;
+  this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
    * @private
-   * @type {ngeo.Popup}
+   * @type {!ngeo.Popup}
    */
   this.infoPopup_ = ngeoCreatePopup();
 
   /**
-   * @type {Object.<string, !angular.$q.Promise>}
+   * @type {!Object.<string, !angular.$q.Promise>}
    * @private
    */
   this.promises_ = {};
 
   /**
-   * @type {Object.<number, Array.<string>>}
+   * @type {!Object.<number, !Array.<string>>}
    * @private
    */
   this.groupNodeStates_ = {};
@@ -214,52 +231,63 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   this.openLinksInNewWindowFn;
 
   /**
-   * @type {boolean}
+   * @type {boolean|undefined}
    * @export
    */
-  this.openLinksInNewWindow = this.openLinksInNewWindowFn() === true ? true : false;
+  this.openLinksInNewWindow;
 
   /**
-   * @type {ol.layer.Group}
+   * @type {?ol.layer.Group}
    * @private
    */
-  this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
-        gmf.DATALAYERGROUP_NAME);
+  this.dataLayerGroup_ = null;
 
   /**
-   * @type {Array.<ol.layer.Base>}
+   * @type {!Array.<!ol.layer.Base>}
    * @export
    */
   this.layers = [];
 
   /**
-   * @type {gmf.Themes}
+   * @type {!gmf.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
 
-  ngeoSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, $scope, function() {
-    return true;
-  });
+  /**
+   * @type {!ngeo.SyncArrays}
+   * @private
+   */
+  this.ngeoSyncArrays_ = ngeoSyncArrays;
+};
+
+
+/**
+ * Init the controller,
+ */
+gmf.LayertreeController.prototype.$onInit = function() {
+  this.openLinksInNewWindow = this.openLinksInNewWindowFn() === true ? true : false;
+  this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
+        gmf.DATALAYERGROUP_NAME);
+
+  this.ngeoSyncArrays_(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 
   // watch any change on layers array to refresh the map
-  $scope.$watchCollection(function() {
-    return this.layers;
-  }.bind(this),
-  function() {
+  this.scope_.$watchCollection(() => this.layers,
+  () => {
     this.map.render();
-  }.bind(this));
+  });
 
   // watch any change on dimensions object to refresh the layers
-  $scope.$watchCollection(function() {
+  this.scope_.$watchCollection(() => {
     if (this.gmfTreeManager_.rootCtrl) {
       return this.dimensions;
     }
-  }.bind(this), function(dimensions) {
+  }, (dimensions) => {
     if (dimensions) {
       this.updateDimensions_(this.gmfTreeManager_.rootCtrl);
     }
-  }.bind(this));
+  });
 };
 
 
@@ -268,13 +296,13 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
  * @private
  */
 gmf.LayertreeController.prototype.updateDimensions_ = function(treeCtrl) {
-  treeCtrl.traverseDepthFirst(function(ctrl) {
+  treeCtrl.traverseDepthFirst((ctrl) => {
     if (ctrl.node.dimensions) {
-      var layer = ctrl.layer;
+      const layer = ctrl.layer;
       goog.asserts.assertInstanceof(layer, ol.layer.Layer);
-      this.updateLayerDimensions_(layer, ctrl.node);
+      this.updateLayerDimensions_(layer, /** @type gmfThemes.GmfGroup|gmfThemes.GmfLayer */ (ctrl.node));
     }
-  }.bind(this));
+  });
 };
 
 
@@ -285,25 +313,25 @@ gmf.LayertreeController.prototype.updateDimensions_ = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node) {
   if (this.dimensions && node.dimensions) {
-    var dimensions = {};
-    for (var key in node.dimensions) {
-      var value = this.dimensions[key];
+    const dimensions = {};
+    for (const key in node.dimensions) {
+      const value = this.dimensions[key];
       if (value !== undefined) {
         dimensions[key] = value;
       }
     }
     if (!ol.obj.isEmpty(dimensions)) {
-      var source = layer.getSource();
+      const source = layer.getSource();
       if (source instanceof ol.source.WMTS) {
         source.updateDimensions(dimensions);
       } else if (source instanceof ol.source.TileWMS || source instanceof ol.source.ImageWMS) {
         source.updateParams(dimensions);
       } else {
         // the source is not ready yet
-        layer.once('change:source', function() {
+        layer.once('change:source', () => {
           goog.asserts.assertInstanceof(layer, ol.layer.Layer);
           this.updateLayerDimensions_(layer, node);
-        }.bind(this));
+        });
       }
     }
   }
@@ -321,7 +349,7 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
  * @export
  */
 gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
-  var opt_position;
+  let opt_position;
   if (treeCtrl.parent.isRoot) {
     this.gmfTreeManager_.rootCtrl = treeCtrl.parent;
     // Precise the index to add first level groups.
@@ -329,11 +357,11 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
         this.gmfTreeManager_.numberOfGroupsToAddInThisDigestLoop || 0;
   }
 
-  var layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
+  const layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
           this.dataLayerGroup_, opt_position);
 
   if (layer instanceof ol.layer.Layer) {
-    var node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
+    const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
     this.updateLayerDimensions_(layer, node);
   }
 
@@ -350,11 +378,11 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
  * @export
  */
 gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
-  var dataLayerGroup = this.dataLayerGroup_;
-  scope.$on('$destroy', function() {
+  const dataLayerGroup = this.dataLayerGroup_;
+  scope.$on('$destroy', () => {
     // Remove the layer from the map.
     dataLayerGroup.getLayers().remove(treeCtrl.layer);
-  }.bind(treeCtrl));
+  });
 };
 
 
@@ -366,8 +394,8 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
  * @export
  */
 gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayerWMS) {
-  var style;
-  var resolution = this.map.getView().getResolution();
+  let style;
+  const resolution = this.map.getView().getResolution();
   if (gmfLayerWMS.minResolutionHint !== undefined && resolution < gmfLayerWMS.minResolutionHint ||
       gmfLayerWMS.maxResolutionHint !== undefined && resolution > gmfLayerWMS.maxResolutionHint) {
     style = 'out-of-resolution';
@@ -401,8 +429,14 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
 
 
 /**
- * Update the TIME parameter of the source of the layer attached to the given
- * layertree contoller
+ * Update the `timeRangeValue` property of the data source bound to the
+ * given tree controller using the given time. If the tree controller has
+ * no data source, it means that it has children and they might have
+ * data sources.
+ *
+ * The setting of the TIME parameter on the layer occurs in the
+ * `gmf.DataSourcesManager` service
+ *
  * LayertreeController.prototype.updateWMSTimeLayerState - description
  * @param {ngeo.LayertreeController} layertreeCtrl ngeo layertree controller
  * @param {{start : number, end : number}} time The start
@@ -414,14 +448,13 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
   if (!time) {
     return;
   }
-  var layer = /** @type {ol.layer.Image} */ (
-      gmf.SyncLayertreeMap.getLayer(layertreeCtrl));
-  if (layer) {
-    var node = /** @type {gmfThemes.GmfGroup} */ (layertreeCtrl.node);
-    var wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
-    var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
-    var timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);
-    this.layerHelper_.updateWMSLayerState(layer, source.getParams()['LAYERS'], timeParam);
+  const dataSource = layertreeCtrl.getDataSource();
+  if (dataSource) {
+    dataSource.timeRangeValue = time;
+  } else if (layertreeCtrl.children) {
+    for (let i = 0, ii = layertreeCtrl.children.length; i < ii; i++) {
+      this.updateWMSTimeLayerState(layertreeCtrl.children[i], time);
+    }
   }
 };
 
@@ -435,7 +468,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
  * @export
  */
 gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
-  var iconUrl = treeCtrl.node.metadata.iconUrl;
+  const iconUrl = treeCtrl.node.metadata.iconUrl;
 
   if (iconUrl !== undefined) {
     return iconUrl;
@@ -445,14 +478,14 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
     return undefined;
   }
 
-  var gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   if (gmfLayer.type !== 'WMS') {
     return undefined;
   }
 
-  var gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
 
-  var legendRule = gmfLayerWMS.metadata.legendRule;
+  const legendRule = gmfLayerWMS.metadata.legendRule;
 
   if (legendRule === undefined) {
     return undefined;
@@ -460,8 +493,8 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
 
   //In case of multiple layers for a gmfLayerWMS, always take the first layer
   //name to get the icon
-  var layerName = gmfLayerWMS.layers.split(',')[0];
-  var gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
+  const layerName = gmfLayerWMS.layers.split(',')[0];
+  const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
   return this.layerHelper_.getWMSLegendURL(
     gmfOgcServer.url, layerName, undefined, legendRule
   );
@@ -480,25 +513,25 @@ gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
     return undefined;
   }
 
-  var gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
-  var layersNames;
+  const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  let layersNames;
 
   if (gmfLayer.metadata.legendImage) {
     return gmfLayer.metadata.legendImage;
   }
 
-  var layer = treeCtrl.layer;
+  const layer = treeCtrl.layer;
   if (gmfLayer.type === 'WMTS' && layer) {
     goog.asserts.assertInstanceof(layer, ol.layer.Tile);
     return this.layerHelper_.getWMTSLegendURL(layer);
   } else {
-    var gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
+    const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
     layersNames = gmfLayerWMS.layers.split(',');
     if (layersNames.length > 1) {
       // not supported, the administrator should give a legendImage metadata
       return undefined;
     }
-    var gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
+    const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
     return this.layerHelper_.getWMSLegendURL(gmfOgcServer.url, layersNames[0], this.getScale_());
   }
 };
@@ -510,10 +543,10 @@ gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
  * @private
  */
 gmf.LayertreeController.prototype.getScale_ = function() {
-  var view = this.map.getView();
-  var resolution = view.getResolution();
-  var mpu = view.getProjection().getMetersPerUnit();
-  var dpi = 25.4 / 0.28;
+  const view = this.map.getView();
+  const resolution = view.getResolution();
+  const mpu = view.getProjection().getMetersPerUnit();
+  const dpi = 25.4 / 0.28;
   return resolution * mpu * 39.37 * dpi;
 };
 
@@ -525,19 +558,19 @@ gmf.LayertreeController.prototype.getScale_ = function() {
  * @export
  */
 gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
-  var treeUid = treeCtrl.uid.toString();
-  var node = treeCtrl.node;
-  var metadataURL = node.metadata['metadataUrl'];
+  const treeUid = treeCtrl.uid.toString();
+  const node = treeCtrl.node;
+  const metadataURL = node.metadata['metadataUrl'];
   if (metadataURL !== undefined) {
     if (!(treeUid in this.promises_)) {
       this.promises_[treeUid] = this.$http_.get(metadataURL).then(
-          function(resp) {
-            var html = this.$sce_.trustAsHtml(resp.data);
+          (resp) => {
+            const html = this.$sce_.trustAsHtml(resp.data);
             return html;
-          }.bind(this));
+          });
     }
-    var infoPopup = this.infoPopup_;
-    this.promises_[treeUid].then(function(html) {
+    const infoPopup = this.infoPopup_;
+    this.promises_[treeUid].then((html) => {
       infoPopup.setTitle(node.name);
       infoPopup.setContent(html);
       infoPopup.setOpen(true);
@@ -552,13 +585,13 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
  * @export
  */
 gmf.LayertreeController.prototype.afterReorder = function() {
-  var groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
-  var currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
-  var treeCtrls = [];
+  const groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
+  const currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
+  const treeCtrls = [];
 
   // Get order of first-level groups for treectrl and layers;
-  groupNodes.forEach(function(node) {
-    currentTreeCtrls.some(function(treeCtrl) {
+  groupNodes.forEach((node) => {
+    currentTreeCtrls.some((treeCtrl) => {
       if (treeCtrl.node === node) {
         treeCtrls.push(treeCtrl);
         return;
@@ -590,15 +623,32 @@ gmf.LayertreeController.prototype.removeNode = function(node) {
 
 
 /**
+ * @export
+ */
+gmf.LayertreeController.prototype.removeAllNodes = function() {
+  this.gmfTreeManager_.removeAll();
+};
+
+
+/**
+ * @return {number} first level node count.
+ * @export
+ */
+gmf.LayertreeController.prototype.nodesCount = function() {
+  return this.gmfTreeManager_.root.children.length;
+};
+
+
+/**
  * Set the resolution of the map with the max or min resolution of the node.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
 gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
-  var gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
-  var view = this.map.getView();
-  var resolution = view.getResolution();
+  const gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
+  const view = this.map.getView();
+  const resolution = view.getResolution();
   if (gmfLayer.minResolutionHint !== undefined && resolution < gmfLayer.minResolutionHint) {
     view.setResolution(view.constrainResolution(gmfLayer.minResolutionHint, 0, 1));
   }
@@ -615,8 +665,27 @@ gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
   $(legendNodeId).toggle({
-    toggle : true
+    toggle: true
   });
+};
+
+
+/**
+ * @param {gmf.DataSource} ds Data source to filter.
+ * @export
+ */
+gmf.LayertreeController.prototype.toggleFiltrableDataSource = function(ds) {
+  this.gmfDataSourceBeingFiltered.dataSource = ds;
+};
+
+
+/**
+ * @param {string} legendNodeId The DOM node legend id
+ * @return {boolean} Whenever the legend is currently displayed.
+ * @export
+ */
+gmf.LayertreeController.prototype.isNodeLegendVisible = function(legendNodeId) {
+  return $(legendNodeId).is(':visible');
 };
 
 
@@ -628,8 +697,8 @@ gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
  * @export
  */
 gmf.LayertreeController.getSnappingConfig = function(treeCtrl) {
-  var node = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
-  var config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
+  const node = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
       node.metadata.snappingConfig : null;
   return config;
 };

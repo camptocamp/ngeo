@@ -8,15 +8,16 @@ goog.require('ol.style.Style');
 
 
 /**
- * @param {angular.$compile} $compile Angular compile service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext service.
- * @param {angular.$filter} $filter Angular filter
- * @return {angular.Directive} The directive specs.
+ * @param {!angular.$compile} $compile Angular compile service.
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {!angular.$filter} $filter Angular filter
+ * @param {!angular.$injector} $injector Main injector.
+ * @return {!angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measureareaDirective = function($compile, gettextCatalog, $filter) {
+ngeo.measureareaDirective = function($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -26,16 +27,17 @@ ngeo.measureareaDirective = function($compile, gettextCatalog, $filter) {
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
      */
-    link: function($scope, element, attrs, drawFeatureCtrl) {
+    link($scope, element, attrs, drawFeatureCtrl) {
 
-      var helpMsg = gettextCatalog.getString('Click to start drawing polygon');
-      var contMsg = gettextCatalog.getString('Click to continue drawing<br/>' +
+      const helpMsg = gettextCatalog.getString('Click to start drawing polygon');
+      const contMsg = gettextCatalog.getString('Click to continue drawing<br/>' +
           'Double-click or click starting point to finish');
 
-      var measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), {
+      const measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), {
         style: new ol.style.Style(),
-        startMsg: $compile('<div translate>' + helpMsg + '</div>')($scope)[0],
-        continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]
+        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
+        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
+        precision: $injector.has('ngeoMeasurePrecision') ? $injector.get('ngeoMeasurePrecision') : undefined
       });
 
       drawFeatureCtrl.registerInteraction(measureArea);
@@ -51,7 +53,7 @@ ngeo.measureareaDirective = function($compile, gettextCatalog, $filter) {
       ol.events.listen(
           measureArea,
           ol.Object.getChangeEventType(
-              ol.interaction.Interaction.Property.ACTIVE),
+              ol.interaction.Property.ACTIVE),
           drawFeatureCtrl.handleActiveChange,
           drawFeatureCtrl
       );

@@ -8,7 +8,7 @@
 /**
  * @type {Object}
  */
-var gmfThemes;
+let gmfThemes;
 
 /**
  * @constructor
@@ -17,22 +17,22 @@ var gmfThemes;
 gmfThemes.GmfThemesResponse = function() {};
 
 /**
- * @type Array.<gmfThemes.GmfLayer>
+ * @type !Array.<!gmfThemes.GmfLayer>
  */
 gmfThemes.GmfThemesResponse.prototype.background_layers;
 
 /**
- * @type Array.<string>
+ * @type !Array.<string>
  */
 gmfThemes.GmfThemesResponse.prototype.errors;
 
 /**
- * @type gmfThemes.GmfOgcServers
+ * @type !gmfThemes.GmfOgcServers
  */
 gmfThemes.GmfThemesResponse.prototype.ogcServers;
 
 /**
- * @type Array.<gmfThemes.GmfTheme>
+ * @type !Array.<!gmfThemes.GmfTheme>
  */
 gmfThemes.GmfThemesResponse.prototype.themes;
 
@@ -45,7 +45,7 @@ gmfThemes.GmfRootNode = function() {};
 
 
 /**
- * @type {Array.<gmfThemes.GmfGroup>}
+ * @type {!Array.<!gmfThemes.GmfGroup>}
  */
 gmfThemes.GmfRootNode.prototype.children;
 
@@ -65,7 +65,7 @@ gmfThemes.GmfBaseNode.prototype.id;
 
 /**
  * The related metadata.
- * @type {gmfThemes.GmfMetaData}
+ * @type {!gmfThemes.GmfMetaData}
  */
 gmfThemes.GmfBaseNode.prototype.metadata;
 
@@ -87,14 +87,14 @@ gmfThemes.GmfTheme = function() {};
 
 /**
  * The first level layer groups.
- * @type {Array.<gmfThemes.GmfGroup>}
+ * @type {!Array.<!gmfThemes.GmfGroup>}
  */
 gmfThemes.GmfTheme.prototype.children;
 
 
 /**
  * The Functionalities related to the theme.
- * @type {Object.<string, Array.<string|number>>}
+ * @type {!gmfThemes.GmfFunctionalities}
  */
 gmfThemes.GmfTheme.prototype.functionalities;
 
@@ -113,7 +113,7 @@ gmfThemes.GmfGroup = function() {};
 
 
 /**
- * @type {Array.<gmfThemes.GmfGroup|gmfThemes.GmfLayer>}
+ * @type {!Array.<!gmfThemes.GmfGroup|!gmfThemes.GmfLayer>}
  */
 gmfThemes.GmfGroup.prototype.children;
 
@@ -121,7 +121,7 @@ gmfThemes.GmfGroup.prototype.children;
 /**
  * The dimensions managed by the OpenLayers layer, if the value is null we will take the dimension from the application.
  * This is present only on non mixed first level group.
- * @type {Object.<string, string>}
+ * @type {!Object.<string, string>}
  */
 gmfThemes.GmfGroup.prototype.dimensions;
 
@@ -167,7 +167,7 @@ gmfThemes.GmfLayer = function() {};
 /**
  * The dimensions managed by the layer, if the value is null we will take the dimension from the application.
  * Present only on layer in a mixed group.
- * @type {Object.<string, string>}
+ * @type {!Object.<string, string>}
  */
 gmfThemes.GmfLayer.prototype.dimensions;
 
@@ -200,7 +200,7 @@ gmfThemes.GmfLayerWMS = function() {};
 
 
 /**
- * @type {Array.<gmfThemes.GmfLayerChildLayer>}
+ * @type {!Array.<!gmfThemes.GmfLayerChildLayer>}
  */
 gmfThemes.GmfLayerWMS.prototype.childLayers;
 
@@ -307,7 +307,7 @@ gmfThemes.GmfLayerChildLayer.prototype.queryable;
 
 
 /**
- * @typedef {Object<string, gmfThemes.GmfOgcServer>}
+ * @typedef {!Object<string, !gmfThemes.GmfOgcServer>}
  */
 gmfThemes.GmfOgcServers;
 
@@ -318,6 +318,11 @@ gmfThemes.GmfOgcServers;
  */
 gmfThemes.GmfOgcServer = function() {};
 
+
+/**
+ * @type {boolean}
+ */
+gmfThemes.GmfOgcServer.prototype.credential;
 
 /**
  * 'image/png' or 'image/jpeg'.
@@ -357,6 +362,18 @@ gmfThemes.GmfOgcServer.prototype.urlWfs;
  */
 gmfThemes.GmfOgcServer.prototype.wfsSupport;
 
+/**
+ * @constructor
+ * @struct
+ */
+gmfThemes.GmfFunctionalities = function() {};
+
+
+/**
+ * The default base map.
+ * @type {!Array.<!string>}
+ */
+gmfThemes.GmfFunctionalities.prototype.default_basemap;
 
 /**
  * @constructor
@@ -374,10 +391,25 @@ gmfThemes.GmfMetaData.prototype.copyable;
 
 
 /**
+ * List of attribute names which should have rules already ready when using
+ * the filter tools.
+ * @type {Array.<string>|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.directedFilterAttributes;
+
+
+/**
  * The disclaimer.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.disclaimer;
+
+
+/**
+ * List of attribute names which have enumerated attribute values.
+ * @type {Array.<string>|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.enumeratedAttributes;
 
 
 /**
@@ -465,6 +497,13 @@ gmfThemes.GmfMetaData.prototype.ogcServer;
 
 
 /**
+ * Layer opacity, default is 1.0
+ * @type {number|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.opacity;
+
+
+/**
  * On GeoMapFish layer WMTS the WMS layers used in the print.
  * @type {string|undefined}
  */
@@ -483,6 +522,13 @@ gmfThemes.GmfMetaData.prototype.queryLayers;
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.thumbnail;
+
+
+/**
+ * The name of the time attribute.
+ * @type {string|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.timeAttribute;
 
 
 /**
@@ -530,3 +576,35 @@ gmfThemes.GmfSnappingConfig.prototype.tolerance;
  * @type {boolean|undefined}
  */
 gmfThemes.GmfSnappingConfig.prototype.vertex;
+
+
+/**
+ * @record
+ * @struct
+ */
+gmfThemes.GmfLayerAttributeValuesResponse = function() {};
+
+
+/**
+ * @type {Array.<gmfThemes.GmfLayerAttributeValue>}
+ */
+gmfThemes.GmfLayerAttributeValuesResponse.prototype.items;
+
+
+/**
+ * @record
+ * @struct
+ */
+gmfThemes.GmfLayerAttributeValue = function() {};
+
+
+/**
+ * @type {string}
+ */
+gmfThemes.GmfLayerAttributeValue.prototype.label;
+
+
+/**
+ * @type {string}
+ */
+gmfThemes.GmfLayerAttributeValue.prototype.value;

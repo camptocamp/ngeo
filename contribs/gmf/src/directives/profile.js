@@ -1,5 +1,4 @@
-goog.provide('gmf.ProfileController');
-goog.provide('gmf.profileDirective');
+goog.provide('gmf.profileComponent');
 
 goog.require('gmf');
 goog.require('ngeo.CsvDownload');
@@ -7,9 +6,10 @@ goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
 goog.require('ol.Feature');
+goog.require('ol.Overlay');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
-goog.require('ol.Overlay');
+goog.require('ol.obj');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
@@ -17,25 +17,37 @@ goog.require('ol.style.Style');
 
 ngeo.module.value('gmfProfileTemplateUrl',
     /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {!angular.JQLite} $element Element.
+     * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template.
      */
-    function(element, attrs) {
-      var templateUrl = attrs['gmfProfileTemplateurl'];
+    ($element, $attrs) => {
+      const templateUrl = $attrs['gmfProfileTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/profile.html';
+          `${gmf.baseTemplateUrl}/profile.html`;
     });
 
 
 /**
- * Provide a directive that display a profile panel. This profile use the given
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfProfileTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
+  return gmfProfileTemplateUrl($element, $attrs);
+}
+
+
+/**
+ * Provide a component that display a profile panel. This profile use the given
  * LineString geometry to request the c2cgeoportal profile.json service. The
  * raster used in the request are the keys of the 'linesconfiguration' object.
  * The 'map' attribute is optional and are only used to display on the map the
  * information that concern the hovered point (in the profile and on the map)
  * of the line.
- * This profile relies on the ngeo.profile (d3) and ngeo.ProfileDirective.
+ * This profile relies on the ngeo.profile (d3) and ngeo.ProfileComponent.
  *
  * Example:
  *
@@ -60,37 +72,29 @@ ngeo.module.value('gmfProfileTemplateUrl',
  *     points to request. Default to 100.
  * @htmlAttribute {Object.<string, *>?} gmf-profile-options Optional options
  *     object like {@link ngeox.profile.ProfileOptions} but without any
- *     mandatory value. Will be passed to the ngeo profile directive. Providing
+ *     mandatory value. Will be passed to the ngeo profile component. Providing
  *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback
  *     or i18n will override native gmf profile values.
- * @param {string} gmfProfileTemplateUrl URL to a template.
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
- * @ngdoc directive
+ *
+ * @ngdoc component
  * @ngname gmfProfile
  */
-gmf.profileDirective = function(gmfProfileTemplateUrl) {
-  return {
-    bindToController: true,
-    controller: 'GmfProfileController',
-    controllerAs: 'ctrl',
-    templateUrl: gmfProfileTemplateUrl,
-    replace: true,
-    restrict: 'E',
-    scope: {
-      'active': '=gmfProfileActive',
-      'line': '=gmfProfileLine',
-      'getMapFn': '&?gmfProfileMap',
-      'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
-      'getHoverPointStyleFn': '&?gmfProfileHoverpointstyle',
-      'getNbPointsFn': '&?gmfProfileNumberofpoints',
-      'getOptionsFn': '&?gmfProfileOptions'
-    }
-  };
+gmf.profileComponent = {
+  controller: 'GmfProfileController as ctrl',
+  bindings: {
+    'active': '=gmfProfileActive',
+    'line': '=gmfProfileLine',
+    'getMapFn': '&?gmfProfileMap',
+    'getLinesConfigurationFn': '&gmfProfileLinesconfiguration',
+    'getHoverPointStyleFn': '&?gmfProfileHoverpointstyle',
+    'getNbPointsFn': '&?gmfProfileNumberofpoints',
+    'getOptionsFn': '&?gmfProfileOptions'
+  },
+  templateUrl: gmfProfileTemplateUrl
 };
 
 
-gmf.module.directive('gmfProfile', gmf.profileDirective);
+gmf.module.component('gmfProfile', gmf.profileComponent);
 
 
 /**
@@ -104,7 +108,7 @@ gmf.module.directive('gmfProfile', gmf.profileDirective);
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
  * @param {ngeo.CsvDownload} ngeoCsvDownload CSV Download service.
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfProfileController
@@ -161,57 +165,29 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
-  var map = null;
-  var mapFn = this['getMapFn'];
-  if (mapFn) {
-    map = mapFn();
-    goog.asserts.assertInstanceof(map, ol.Map);
-  }
-
   /**
    * @type {ol.Map}
    * @private
    */
-  this.map_ = map;
-
-  var linesConfiguration = this['getLinesConfigurationFn']();
-  goog.asserts.assertInstanceof(linesConfiguration, Object);
+  this.map_ = null;
 
   /**
-   * @type {Object<string, gmfx.ProfileLineConfiguration>}
+   * @type {?Object<string, !gmfx.ProfileLineConfiguration>}
    * @private
    */
-  this.linesConfiguration_ = linesConfiguration;
+  this.linesConfiguration_ = null;
 
   /**
-   * @type {Array.<string>}
+   * @type {!Array.<string>}
    * @private
    */
   this.layersNames_ = [];
-
-  var name, lineConfig;
-  for (name in this.linesConfiguration_) {
-    // Keep an array of all layer names.
-    this.layersNames_.push(name);
-    // Add generic zExtractor to lineConfiguration object that doesn't have one.
-    lineConfig = this.linesConfiguration_[name];
-    if (!lineConfig.zExtractor) {
-      this.linesConfiguration_[name].zExtractor = this.getZFactory_(name);
-    }
-  }
-
-  var nbPoints = 100;
-  var nbPointsFn = this['getNbPointsFn'];
-  if (nbPointsFn) {
-    nbPoints = nbPointsFn();
-    goog.asserts.assertNumber(nbPoints);
-  }
 
   /**
    * @type {number}
    * @private
    */
-  this.nbPoints_ = nbPoints;
+  this.nbPoints_ = 100;
 
   /**
    * @type {ol.geom.LineString}
@@ -265,20 +241,6 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
   this.snappedPoint_ = new ol.Feature();
   this.pointHoverOverlay_.addFeature(this.snappedPoint_);
 
-  var hoverPointStyle;
-  var hoverPointStyleFn = this['getHoverPointStyleFn'];
-  if (hoverPointStyleFn) {
-    hoverPointStyle = hoverPointStyleFn();
-    goog.asserts.assertInstanceof(hoverPointStyle, ol.style.Style);
-  } else {
-    hoverPointStyle = new ol.style.Style({
-      image: new ol.style.Circle({
-        fill: new ol.style.Fill({color: '#ffffff'}),
-        radius: 3
-      })
-    });
-  }
-
   /**
    * @type {ngeox.profile.I18n}
    * @private
@@ -288,32 +250,18 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
     yAxis: gettextCatalog.getString('Elevation')
   };
 
-  this.pointHoverOverlay_.setStyle(hoverPointStyle);
 
   /**
-   * @type {ngeox.profile.ProfileOptions}
+   * @type {?ngeox.profile.ProfileOptions}
    * @export
    */
-  this.profileOptions = /** @type {ngeox.profile.ProfileOptions} */ ({
-    linesConfiguration: this.linesConfiguration_,
-    distanceExtractor: this.getDist_,
-    hoverCallback: this.hoverCallback_.bind(this),
-    outCallback: this.outCallback_.bind(this),
-    i18n: this.profileLabels_
-  });
-
-  var optionsFn = this['getOptionsFn'];
-  if (optionsFn) {
-    var options = optionsFn();
-    goog.asserts.assertObject(options);
-    goog.object.extend(this.profileOptions, options);
-  }
+  this.profileOptions = null;
 
   /**
    * @type {boolean}
    * @export
    */
-  this.active = this.active === true;
+  this.active = false;
 
   /**
    * @type {ol.EventsKey}
@@ -330,27 +278,77 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
 
   // Watch the active value to activate/deactive events listening.
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
-    function(newValue, oldValue) {
+    () => this.active,
+    (newValue, oldValue) => {
       if (oldValue !== newValue) {
         this.updateEventsListening_();
       }
-    }.bind(this));
+    });
 
   // Watch the line to update the profileData (data for the chart).
   $scope.$watch(
-    function() {
-      return this.line;
-    }.bind(this),
-    function(newLine, oldLine) {
+    () => this.line,
+    (newLine, oldLine) => {
       if (oldLine !== newLine) {
         this.update_();
       }
-    }.bind(this));
+    });
 
   this.updateEventsListening_();
+};
+
+
+/**
+ * Init the controller
+ */
+gmf.ProfileController.prototype.$onInit = function() {
+  this.map_ = this['getMapFn'] ? this['getMapFn']() : null;
+  this.nbPoints_ = this['getNbPointsFn'] ? this['getNbPointsFn']() : 100;
+
+  let hoverPointStyle;
+  const hoverPointStyleFn = this['getHoverPointStyleFn'];
+  if (hoverPointStyleFn) {
+    hoverPointStyle = hoverPointStyleFn();
+    goog.asserts.assertInstanceof(hoverPointStyle, ol.style.Style);
+  } else {
+    hoverPointStyle = new ol.style.Style({
+      image: new ol.style.Circle({
+        fill: new ol.style.Fill({color: '#ffffff'}),
+        radius: 3
+      })
+    });
+  }
+  this.pointHoverOverlay_.setStyle(hoverPointStyle);
+
+  const linesConfiguration = this['getLinesConfigurationFn']();
+  goog.asserts.assertInstanceof(linesConfiguration, Object);
+
+  this.linesConfiguration_ = linesConfiguration;
+
+  for (const name in this.linesConfiguration_) {
+    // Keep an array of all layer names.
+    this.layersNames_.push(name);
+    // Add generic zExtractor to lineConfiguration object that doesn't have one.
+    const lineConfig = this.linesConfiguration_[name];
+    if (!lineConfig.zExtractor) {
+      this.linesConfiguration_[name].zExtractor = this.getZFactory_(name);
+    }
+  }
+
+  this.profileOptions = /** @type {ngeox.profile.ProfileOptions} */ ({
+    linesConfiguration: this.linesConfiguration_,
+    distanceExtractor: this.getDist_,
+    hoverCallback: this.hoverCallback_.bind(this),
+    outCallback: this.outCallback_.bind(this),
+    i18n: this.profileLabels_
+  });
+
+  const optionsFn = this['getOptionsFn'];
+  if (optionsFn) {
+    const options = optionsFn();
+    goog.asserts.assertObject(options);
+    ol.obj.assign(this.profileOptions, options);
+  }
 };
 
 
@@ -389,11 +387,11 @@ gmf.ProfileController.prototype.onPointerMove_ = function(e) {
   if (e.dragging || !this.line) {
     return;
   }
-  var coordinate = this.map_.getEventCoordinate(e.originalEvent);
-  var closestPoint = this.line.getClosestPoint(coordinate);
+  const coordinate = this.map_.getEventCoordinate(e.originalEvent);
+  const closestPoint = this.line.getClosestPoint(coordinate);
   // compute distance to line in pixels
-  var eventToLine = new ol.geom.LineString([closestPoint, coordinate]);
-  var pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
+  const eventToLine = new ol.geom.LineString([closestPoint, coordinate]);
+  const pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
 
   if (pixelDist < 16) {
     this.profileHighlight = this.getDistanceOnALine_(closestPoint, this.line);
@@ -415,15 +413,15 @@ gmf.ProfileController.prototype.onPointerMove_ = function(e) {
  */
 gmf.ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
     line) {
-  var segment;
-  var distOnLine = 0;
-  var fakeExtent = [
+  let segment;
+  let distOnLine = 0;
+  const fakeExtent = [
     pointOnLine[0] - 0.5,
     pointOnLine[1] - 0.5,
     pointOnLine[0] + 0.5,
     pointOnLine[1] + 0.5
   ];
-  this.line.forEachSegment(function(firstPoint, lastPoint) {
+  this.line.forEachSegment((firstPoint, lastPoint) => {
     segment = new ol.geom.LineString([firstPoint, lastPoint]);
     // Is the pointOnLine on this swegement ?
     if (segment.intersectsExtent(fakeExtent)) {
@@ -451,8 +449,8 @@ gmf.ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
 gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
     elevationsRef, yUnits) {
   // Update information point.
-  var ref;
-  var coordinate = [point.x, point.y];
+  let ref;
+  const coordinate = [point.x, point.y];
   for (ref in elevationsRef) {
     this.currentPoint.elevations[ref] = elevationsRef[ref];
   }
@@ -462,7 +460,7 @@ gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
   this.currentPoint.coordinate = coordinate;
 
   // Update hover.
-  var geom = new ol.geom.Point(coordinate);
+  const geom = new ol.geom.Point(coordinate);
   this.createMeasureTooltip_();
   this.measureTooltipElement_.innerHTML = this.getTooltipHTML_();
   this.measureTooltip_.setPosition(coordinate);
@@ -488,29 +486,29 @@ gmf.ProfileController.prototype.outCallback_ = function() {
 
 
 /**
- * @return {string} A texte formated to a tooltip.
+ * @return {string} A texte formatted to a tooltip.
  * @private
  */
 gmf.ProfileController.prototype.getTooltipHTML_ = function() {
-  var separator = ' : ';
-  var elevationName, translatedElevationName;
-  var innerHTML = [];
-  var number = this.$filter_('number');
-  var DistDecimal = this.currentPoint.xUnits === 'm' ? 0 : 2;
+  const separator = ' : ';
+  let elevationName, translatedElevationName;
+  const innerHTML = [];
+  const number = this.$filter_('number');
+  const DistDecimal = this.currentPoint.xUnits === 'm' ? 0 : 2;
   innerHTML.push(
-      this.profileLabels_.xAxis +
+      `${this.profileLabels_.xAxis +
       separator +
-      number(this.currentPoint.distance, DistDecimal) +
-      ' ' +
-      this.currentPoint.xUnits
+      number(this.currentPoint.distance, DistDecimal)
+      } ${
+      this.currentPoint.xUnits}`
   );
   for (elevationName in this.currentPoint.elevations) {
     translatedElevationName = this.gettextCatalog_.getString(elevationName);
     innerHTML.push(
-        translatedElevationName +
+        `${translatedElevationName +
         separator +
-        number(this.currentPoint.elevations[elevationName], 0) +
-        ' ' + this.currentPoint.yUnits
+        number(this.currentPoint.elevations[elevationName], 0)
+        } ${this.currentPoint.yUnits}`
     );
   }
   return innerHTML.join('</br>');
@@ -555,7 +553,7 @@ gmf.ProfileController.prototype.removeMeasureTooltip_ = function() {
  * @export
  */
 gmf.ProfileController.prototype.getColor = function(layerName) {
-  var lineConfiguration = this.linesConfiguration_[layerName];
+  const lineConfiguration = this.linesConfiguration_[layerName];
   if (!lineConfiguration) {
     return undefined;
   }
@@ -585,7 +583,7 @@ gmf.ProfileController.prototype.getZFactory_ = function(layerName) {
    * @return {number} The elevation.
    * @private
    */
-  var getZFn = function(item) {
+  const getZFn = function(item) {
     if ('values' in item && layerName in item['values']) {
       return parseFloat(item['values'][layerName]);
     }
@@ -614,12 +612,12 @@ gmf.ProfileController.prototype.getDist_ = function(item) {
  * @private
  */
 gmf.ProfileController.prototype.getJsonProfile_ = function() {
-  var geom = {
+  const geom = {
     'type': 'LineString',
     'coordinates': this.line.getCoordinates()
   };
 
-  var params = {
+  const params = {
     'layers': this.layersNames_.join(','),
     'geom': JSON.stringify(geom),
     'nbPoints': this.nbPoints_
@@ -628,7 +626,7 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
   /** @type {Function} */ (this.$http_)({
     url: this.gmfProfileJsonUrl_,
     method: 'POST',
-    params: params,
+    params,
     paramSerializer: '$httpParamSerializerJQLike',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -645,7 +643,7 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
  * @private
  */
 gmf.ProfileController.prototype.getProfileDataSuccess_ = function(resp) {
-  var profileData = resp.data['profile'];
+  const profileData = resp.data['profile'];
   if (profileData instanceof Array) {
     this.profileData = profileData;
   }
@@ -672,28 +670,28 @@ gmf.ProfileController.prototype.downloadCsv = function() {
   }
 
   /** @type {Array.<ngeox.GridColumnDef>} */
-  var headers = [];
-  var hasDistance = false;
-  var firstPoint = this.profileData[0];
+  const headers = [];
+  let hasDistance = false;
+  const firstPoint = this.profileData[0];
   if ('dist' in firstPoint) {
     headers.push({name: 'distance'});
     hasDistance = true;
   }
-  var layers = [];
-  for (var layer in firstPoint['values']) {
+  const layers = [];
+  for (const layer in firstPoint['values']) {
     headers.push({'name': layer});
     layers.push(layer);
   }
   headers.push({name: 'x'});
   headers.push({name: 'y'});
 
-  var rows = this.profileData.map(function(point) {
-    var row = {};
+  const rows = this.profileData.map((point) => {
+    const row = {};
     if (hasDistance) {
       row['distance'] = point['dist'];
     }
 
-    layers.forEach(function(layer) {
+    layers.forEach((layer) => {
       row[layer] = point['values'][layer];
     });
 

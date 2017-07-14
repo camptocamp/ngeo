@@ -24,7 +24,7 @@ ngeo.CreatePopup;
  *
  * Example:
  *
- *     var popup = ngeoCreatePopup();
+ *     let popup = ngeoCreatePopup();
  *     popup.setTitle("A title");
  *     popup.setContent("Some content");
  *     popup.setOpen(true);
@@ -49,16 +49,14 @@ ngeo.Popup = function($compile, $rootScope, $sce, $timeout) {
 
   // manage the auto destruction of the popup
   this.scope.$watch(
-    function() {
-      return this.scope['open'];
-    }.bind(this),
-    function(open) {
+    () => this.scope['open'],
+    (open) => {
       if (!open && this.autoDestroy_) {
-        this.timeout_(function() {
+        this.timeout_(() => {
           this.destroy();
-        }.bind(this));
+        });
       }
-    }.bind(this)
+    }
   );
 
   /**
@@ -129,7 +127,7 @@ ngeo.Popup.prototype.destroy = function() {
  * @export
  */
 ngeo.Popup.prototype.setTitle = function(title) {
-  var trustedTitle = this.sce_.trustAsHtml(title);
+  const trustedTitle = this.sce_.trustAsHtml(title);
   this.scope['title'] = trustedTitle;
 };
 
@@ -154,8 +152,8 @@ ngeo.Popup.prototype.setContent = function(content, opt_trusted) {
  * @export
  */
 ngeo.Popup.prototype.setUrl = function(url) {
-  var content = this.sce_.trustAsHtml(
-    '<iframe src="' + url + '" width="100%" height="100%"></iframe>'
+  const content = this.sce_.trustAsHtml(
+    `<iframe src="${url}" width="100%" height="100%"></iframe>`
   );
   this.setContent(content);
 };

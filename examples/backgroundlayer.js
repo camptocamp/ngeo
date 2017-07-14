@@ -28,7 +28,7 @@ app.module = angular.module('app', ['ngeo']);
  * for the ngModel expression doesn't actually make a difference. This
  * is because ngModel doesn't actually watch the ngModel expression.
  *
- * @return {angular.Directive} Directive Defintion Object.
+ * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  */
 app.backgroundlayerDirective = function() {
@@ -38,9 +38,8 @@ app.backgroundlayerDirective = function() {
       'map': '=appBackgroundlayerMap'
     },
     templateUrl: 'partials/backgroundlayer.html',
-    controllerAs: 'ctrl',
     bindToController: true,
-    controller: 'AppBackgroundlayerController'
+    controller: 'AppBackgroundlayerController as ctrl'
   };
 };
 
@@ -77,11 +76,11 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
   this.bgLayer = null;
 
   $http.get('data/backgroundlayers.json').then(
-      function(resp) {
+      (resp) => {
         this.bgLayers = resp.data;
         // use the first layer by default
         this.bgLayer = this.bgLayers[0];
-      }.bind(this));
+      });
 
   /**
    * @type {ngeo.BackgroundLayerMgr}
@@ -98,8 +97,8 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
  * @export
  */
 app.BackgroundlayerController.prototype.change = function() {
-  var layerSpec = this.bgLayer;
-  var layer = this.getLayer_(layerSpec['name']);
+  const layerSpec = this.bgLayer;
+  const layer = this.getLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this.map, layer);
 };
 
@@ -114,10 +113,10 @@ app.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
     return new ol.layer.Tile();
   }
 
-  var source = new ngeo.source.AsitVD({
+  const source = new ngeo.source.AsitVD({
     layer: layerName
   });
-  return new ol.layer.Tile({source: source});
+  return new ol.layer.Tile({source});
 };
 
 
@@ -149,7 +148,7 @@ app.MainController = function($scope) {
    * An overlay layer.
    * @type {ol.layer.Image}
    */
-  var overlay = new ol.layer.Image({
+  const overlay = new ol.layer.Image({
     source: new ol.source.ImageWMS({
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},

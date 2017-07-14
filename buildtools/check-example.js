@@ -1,8 +1,10 @@
+"use strict";
 //
 // A PhantomJS script used to check that the hosted examples load
 // without errors. This script is executed by the Makefile's
 // check-examples target.
-//
+
+
 var args = require('system').args;
 if (args.length != 2) {
   phantom.exit(1);
@@ -15,6 +17,10 @@ page.onError = function(msg, trace) {
   if (trace) {
     msgStack.push('TRACE:');
     trace.forEach(function(t) {
+      if (t.file.startsWith('https://maps.googleapis.com/maps/api/js')) {
+        // Ignore google referer error
+        return;
+      }
       msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function + '")' : ''));
     });
   }

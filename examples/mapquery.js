@@ -2,7 +2,8 @@ goog.provide('app.mapquery');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.Query');
+goog.require('ngeo.DataSource');
+goog.require('ngeo.DataSources');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
@@ -38,8 +39,7 @@ app.queryresultDirective = function() {
   return {
     restrict: 'E',
     scope: {},
-    controller: 'AppQueryresultController',
-    controllerAs: 'qrCtrl',
+    controller: 'AppQueryresultController as qrCtrl',
     bindToController: true,
     templateUrl: 'partials/queryresult.html'
   };
@@ -69,13 +69,14 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.Query} ngeoQuery The ngeo query service
+ * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
+ *     objects.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
+app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
@@ -89,32 +90,38 @@ app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
    */
   this.queryActive = true;
 
-  var busStopSourceId = 'bus_stop';
-  var busStopLayer = new ol.layer.Image({
-    'querySourceIds': [busStopSourceId],
+  ngeoDataSources.push(new ngeo.DataSource({
+    id: 1,
+    name: 'bus_stop',
+    visible: true,
+    wmsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+    ogcLayers: [{
+      name: 'bus_stop',
+      queryable: true
+    }]
+  }));
+  const busStopLayer = new ol.layer.Image({
     'source': new ol.source.ImageWMS({
-      'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+      'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
       params: {'LAYERS': 'bus_stop'}
     })
   });
-  ngeoQuery.addSource({
-    'id': busStopSourceId,
-    'layer': busStopLayer,
-    layers: ['bus_stop']
-  });
 
-  var informationSourceId = 'information';
-  var informationLayer = new ol.layer.Image({
-    'querySourceIds': [informationSourceId],
+  ngeoDataSources.push(new ngeo.DataSource({
+    id: 2,
+    name: 'information',
+    visible: true,
+    wmsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+    ogcLayers: [{
+      name: 'information',
+      queryable: true
+    }]
+  }));
+  const informationLayer = new ol.layer.Image({
     'source': new ol.source.ImageWMS({
-      'url': 'https://geomapfish-demo.camptocamp.net/1.6/wsgi/mapserv_proxy',
+      'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
       params: {'LAYERS': 'information'}
     })
-  });
-  ngeoQuery.addSource({
-    'id': informationSourceId,
-    'layer': informationLayer,
-    layers: ['information']
   });
 
   /**
@@ -137,10 +144,10 @@ app.MainController = function($scope, ngeoQuery, ngeoToolActivateMgr) {
     })
   });
 
-  var queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+  const queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);
 
-  var dummyToolActivate = new ngeo.ToolActivate(this, 'dummyActive');
+  const dummyToolActivate = new ngeo.ToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate);
 
 };

@@ -2,6 +2,7 @@
 lib:            Set to true to create the libraries files (ngeo or gmf)
 src:            An additional source directory, used by apps
 src_set:        The used source set (undefined(ngeo)|contribs_gmf)
+externs:        An additional externs files, used by apps
 examples:       Add the examples files
 entry_point:    The entry point
 ngeo_folder:    The folder where ngeo is intaled, reqired to use it in the project
@@ -24,10 +25,11 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % endfor
 % endif
     "${_ngeo_folder}src/**/*.js",
-    ".build/templatecache.js",
 % if src_set == 'contribs_gmf':
     "${_ngeo_folder}contribs/gmf/src/**/*.js",
     ".build/gmftemplatecache.js",
+% else:
+    ".build/templatecache.js",
 % endif
     "node_modules/openlayers/src/**/*.js",
     "node_modules/openlayers/build/ol.ext/*.js"
@@ -37,6 +39,11 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "entry_point": "${entry_point}",
 % endif
     "externs": [
+% if externs is not UNDEFINED:
+% for e in externs.split(","):
+      "${e}",
+% endfor
+% endif
       "node_modules/openlayers/externs/bingmaps.js",
       "node_modules/openlayers/externs/cartodb.js",
       "node_modules/openlayers/externs/closure-compiler.js",
@@ -47,6 +54,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "node_modules/openlayers/externs/topojson.js",
       "${_ngeo_folder}externs/angular-gettext.js",
       "${_ngeo_folder}externs/d3.js",
+      "${_ngeo_folder}externs/google_maps_api_v3_27.js",
       "${_ngeo_folder}externs/typeahead.js",
       "${_ngeo_folder}externs/twbootstrap.js",
       "${_ngeo_folder}externs/closure-compiler.js",
@@ -54,9 +62,11 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "${_ngeo_folder}externs/angular-dynamic-locale.js",
       "${_ngeo_folder}externs/file-saver.js",
       "${_ngeo_folder}externs/jsts.js",
-      ".build/externs/angular-1.5.js",
-      ".build/externs/angular-1.5-q_templated.js",
-      ".build/externs/angular-1.5-http-promise_templated.js",
+      "${_ngeo_folder}externs/moment.js",
+      "${_ngeo_folder}externs/geo-admin-api.js",
+      ".build/externs/angular-1.6.js",
+      ".build/externs/angular-1.6-q_templated.js",
+      ".build/externs/angular-1.6-http-promise_templated.js",
       ".build/externs/jquery-1.9.js",
 % if src_set == 'contribs_gmf':
       "${_ngeo_folder}contribs/gmf/externs/gmf-themes.js",
@@ -75,7 +85,6 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "node_modules/openlayers/externs/oli.js"
     ],
     "define": [
-      "ol.DEBUG=false",
       "ol.ENABLE_WEBGL=false"
     ],
     "jscomp_error": [
@@ -85,6 +94,8 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % if examples == 'true':
       "missingProvide",
 % endif
+      "analyzerChecks",
+      "strictMissingRequire",
       "lintChecks"
     ],
     "extra_annotation_name": [
@@ -105,7 +116,11 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "output_manifest": "/tmp/manifest.MF",
     "output_wrapper": "window.CLOSURE_NO_DEPS = true; %output%",
 % else:
+% if __import__('os').environ.get('DO_EXAMPLES_DEPLOY') == 'TRUE':
+    "compilation_level": "SIMPLE",
+% else:
     "compilation_level": "ADVANCED",
+% endif
     "output_wrapper": "(function(){%output%}).call(window);",
 % endif
     "warning_level": "VERBOSE",

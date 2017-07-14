@@ -7,7 +7,6 @@ gmf-layertree {
   height: 100%;
   width: 100%;
   ul {
-    padding-top: @micro-app-margin;
     margin-bottom: 0;
     height: 100%;
   }
@@ -15,6 +14,8 @@ gmf-layertree {
     margin-right: @half-app-margin;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -31,11 +32,11 @@ gmf-layertree {
     box-shadow: 0 0 4px 1px @input-border-focus;
 
     > ul {
-      //adding space after the last li elem of the first level nodes
-      padding-bottom: @half-app-margin;
-
       // no padding for the first list in first level nodes
       padding-left: 0;
+      > li:last-child {
+        padding-bottom: @half-app-margin;
+      }
     }
 
     &:hover {

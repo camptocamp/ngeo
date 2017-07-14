@@ -22,6 +22,7 @@
         class="gmf-authentication-error help-block"></span>
     <div class="form-group">
     <input
+        ng-show="authCtrl.allowPasswordChange"
         type="button"
         class="form-control btn btn-default"
         value="{{'Change password' | translate}}"

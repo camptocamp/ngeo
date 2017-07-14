@@ -4,7 +4,7 @@ goog.provide('app.attributes');
 goog.require('ngeo.mapDirective');
 goog.require('ngeo.format.XSDAttribute');
 /** @suppress {extraRequire} */
-goog.require('ngeo.attributesDirective');
+goog.require('ngeo.attributesComponent');
 goog.require('ol.Feature');
 
 
@@ -58,8 +58,8 @@ app.MainController = function($http, $timeout) {
  * @private
  */
 app.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
-  var format = new ngeo.format.XSDAttribute();
-  var attributes = format.read(resp.data);
+  const format = new ngeo.format.XSDAttribute();
+  const attributes = format.read(resp.data);
   this.attributes = attributes;
   return attributes;
 };
@@ -69,9 +69,9 @@ app.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
  * @export
  */
 app.MainController.prototype.updateName = function() {
-  this.timeout_(function() {
+  this.timeout_(() => {
     this.feature.set('name', 'An alternate name');
-  }.bind(this), 0);
+  }, 0);
 };
 
 

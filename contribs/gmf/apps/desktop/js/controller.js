@@ -14,6 +14,8 @@ goog.provide('app_desktop');
 goog.require('app');
 goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
+goog.require('ngeo.googlestreetviewComponent');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -90,7 +92,7 @@ app.DesktopController = function($scope, $injector) {
 
   // Allow angular-gettext-tools to collect the strings to translate
   /** @type {angularGettext.Catalog} */
-  var gettextCatalog = $injector.get('gettextCatalog');
+  const gettextCatalog = $injector.get('gettextCatalog');
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');

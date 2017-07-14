@@ -1,28 +1,28 @@
 goog.require('ngeo.GetBrowserLanguage');
 
-describe('ngeo.GetBrowserLanguage', function() {
-  var win;
-  var ngeoGetBrowserLanguage;
+describe('ngeo.GetBrowserLanguage', () => {
+  let win;
+  let ngeoGetBrowserLanguage;
 
-  beforeEach(function() {
+  beforeEach(() => {
     win = {navigator: {}};
-    module(function($provide) {
+    module(($provide) => {
       $provide.value('$window', win);
     });
-    inject(function($injector) {
+    inject(($injector) => {
       ngeoGetBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
     });
   });
 
-  it('gets language from navigator.languages', function() {
+  it('gets language from navigator.languages', () => {
     win.navigator.languages = ['en-US', 'zh-CN', 'ja-JP', 'fr-FR'];
-    var langCode = ngeoGetBrowserLanguage(['de', 'fr', 'it']);
+    const langCode = ngeoGetBrowserLanguage(['de', 'fr', 'it']);
     expect(langCode).toBe('fr');
   });
 
-  it('gets language from navigator.language', function() {
+  it('gets language from navigator.language', () => {
     win.navigator.language = ['fr-FR'];
-    var langCode = ngeoGetBrowserLanguage(['de', 'fr', 'it']);
+    const langCode = ngeoGetBrowserLanguage(['de', 'fr', 'it']);
     expect(langCode).toBe('fr');
   });
 });

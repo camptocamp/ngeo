@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "gmlResponseBusStop" }] */
 goog.provide('ngeo.test.data.msGMLOutputBusStop');
 
-var gmlResponseBusStop =
+const gmlResponseBusStop =
 '<?xml version="1.0" encoding="UTF-8"?>' +
 '<msGMLOutput ' +
 '	 xmlns:gml="http://www.opengis.net/gml"' +

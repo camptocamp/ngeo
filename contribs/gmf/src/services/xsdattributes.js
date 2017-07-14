@@ -1,7 +1,6 @@
 goog.provide('gmf.XSDAttributes');
 
 goog.require('gmf');
-goog.require('goog.uri.utils');
 goog.require('ngeo.format.XSDAttribute');
 
 
@@ -45,10 +44,7 @@ gmf.XSDAttributes = function($http, gmfLayersUrl) {
  */
 gmf.XSDAttributes.prototype.getAttributes = function(id) {
   if (!this.promises_[id]) {
-    var url = goog.uri.utils.appendPath(
-      this.baseUrl_,
-      id.toString()
-    ) + '/md.xsd';
+    const url = `${this.baseUrl_}/${id}/md.xsd`;
     this.promises_[id] = this.http_.get(url).then(
       this.handleGetAttributes_.bind(this));
   }

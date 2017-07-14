@@ -8,20 +8,45 @@
  * @private
  * @type {Object}
  */
-var ngeox;
+let ngeox;
+
+
+/**
+ * @record
+ * @struct
+ */
+ngeox.AttributeBase = function() {};
+
+
+/**
+ * Set only if the attribute is a geometry type. Determines the type of
+ * geometry.
+ * @type {string|undefined}
+ */
+ngeox.AttributeBase.prototype.geomType;
+
+
+/**
+ * Set only if the attribute is a number type. Determines the type of number.
+ * @type {string|undefined}
+ */
+ngeox.AttributeBase.prototype.numType;
+
+
+/**
+ * The attribute type, which determines how to render it.
+ * @type {string|undefined}
+ */
+ngeox.AttributeBase.prototype.type;
 
 
 /**
  * A feature attribute definition.
- * @typedef {{
- *     choices: (Array.<string>|undefined),
- *     geomType: (string|undefined),
- *     name: (string),
- *     required: (boolean|undefined),
- *     type: (string)
- * }}
+ * @record
+ * @struct
+ * @extends ngeox.AttributeBase
  */
-ngeox.Attribute;
+ngeox.Attribute = function() {};
 
 
 /**
@@ -32,11 +57,10 @@ ngeox.Attribute.prototype.choices;
 
 
 /**
- * Set only if the attribute is a geometry type. Determines the type of
- * geometry.
- * @type {string|undefined}
+ * Specifies the maximum number of character for the attribute value.
+ * @type {number|undefined}
  */
-ngeox.Attribute.prototype.geomType;
+ngeox.Attribute.prototype.maxLength;
 
 
 /**
@@ -59,6 +83,611 @@ ngeox.Attribute.prototype.required;
  * @type {string}
  */
 ngeox.Attribute.prototype.type;
+
+
+/**
+ * The options to use when creating a filter uwing the `ngeo.RuleHelper`
+ * service.
+ *
+ * @typedef {{
+ *     dataSource: (ngeo.DataSource),
+ *     incTime: (boolean|undefined),
+ *     filter: (ol.format.filter.Filter|undefined),
+ *     filterRules: (!Array.<ngeo.rule.Rule>|undefined),
+ *     srsName: (string|undefined)
+ * }}
+ */
+ngeox.CreateFilterOptions;
+
+
+/**
+ * The data source from which to get the filterRules that will be used to
+ * create the OL filter object.
+ * @type {ngeo.DataSource}
+ */
+ngeox.CreateFilterOptions.prototype.dataSource;
+
+
+/**
+ * Whether to include the data source's time values in the filter created. The
+ * property that contains those values is `timeRangeValue`. Defaults to `false`.
+ * When building a filter for WMS, it should not be included as it is given as
+ * the TIME parameter of the query instead. When used for a WFS request, it
+ * should be included in the filter.
+ * @type {boolean|undefined}
+ */
+ngeox.CreateFilterOptions.prototype.incTime;
+
+
+/**
+ * A filter that is directly given the the method instead of creating one.
+ * Useful to automatically combine the time values.
+ * @type {ol.format.filter.Filter|undefined}
+ */
+ngeox.CreateFilterOptions.prototype.filter;
+
+
+/**
+ * An alternative list of filter rules to use instead of those that are defined
+ * within the data source. Useful when one wants to get the data of a given
+ * filter without applying it to the data source.
+ * @type {Array.<!ngeo.rule.Rule>|undefined}
+ */
+ngeox.CreateFilterOptions.prototype.filterRules;
+
+
+/**
+ * The SRS name used with the spatial filters created by the method.
+ * @type {string|undefined}
+ */
+ngeox.CreateFilterOptions.prototype.srsName;
+
+
+/**
+ * The definition of a single layer (WMS) and/or featureType (WFS).
+ * @record
+ * @struct
+ */
+ngeox.DataSourceLayer = function() {};
+
+
+/**
+ * The maximum resolution the layer should be rendered (when visible).
+ * @type {number|undefined}
+ */
+ngeox.DataSourceLayer.prototype.maxResolution;
+
+
+/**
+ * The minimum resolution the layer should be rendered (when visible).
+ * @type {number|undefined}
+ */
+ngeox.DataSourceLayer.prototype.minResolution;
+
+
+/**
+ * The layer name (WMS) and/or feature type name (WFS)
+ * @type {string}
+ */
+ngeox.DataSourceLayer.prototype.name;
+
+
+/**
+ * Whether the the layer is queryable or not. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceLayer.prototype.queryable;
+
+
+/**
+ * The options to create a `ngeo.DataSource` with.
+ * @record
+ * @struct
+ */
+ngeox.DataSourceOptions = function() {};
+
+
+/**
+ * The dimensions that are currently active on the data source.
+ * @type {Object.<string, string>|undefined}
+ */
+ngeox.DataSourceOptions.prototype.activeDimensions;
+
+
+/**
+ * The attributes of the data source.
+ * @type {Array.<ngeox.Attribute>|undefined}
+ */
+ngeox.DataSourceOptions.prototype.attributes;
+
+
+/**
+ * Whether the geometry from this data source can be copied to other data
+ * sources or not. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.copyable;
+
+
+/**
+ * The dimensions this data source supports.
+ * @type {Object.<string, string>|undefined}
+ */
+ngeox.DataSourceOptions.prototype.dimensions;
+
+
+/**
+ * The filter condition to apply to the filter rules (if any). Defaults to
+ * `ngeo.FilterCondition.AND`.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.filterCondition;
+
+
+/**
+ * A list of filter rules to apply to this data source using the filter
+ * condition.
+ * @type {!Array.<!ngeox.rule.Rule>|undefined}
+ */
+ngeox.DataSourceOptions.prototype.filterRules;
+
+
+/**
+ * Whether the data source is filtrable or not.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.filtrable;
+
+
+/**
+ * The name of the geometry attribute.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.geometryName;
+
+
+/**
+ * (Required) The data source id.
+ * @type {number}
+ */
+ngeox.DataSourceOptions.prototype.id;
+
+
+/**
+ * The name of an attribute among the attributes of the data source.
+ * The value of that attribute, in records, can be used to identify
+ * each record individually.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.identifierAttribute;
+
+
+/**
+ * A data source is considered 'in range' when it is synchronized to
+ * a map view and the resolution of that view is within the range of
+ * the `maxResolution` and `minResolution`. These 2 properties are
+ * required for the `inRange` property to be dynamic, otherwise its
+ * value is always `true` by default.
+ *
+ * The synchronization is made in the `ngeo.syncDataSourcesMap` service.
+ *
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.inRange;
+
+
+/**
+ * Maximum resolution where the data source can be displayed or queried.
+ * @type {number|undefined}
+ */
+ngeox.DataSourceOptions.prototype.maxResolution;
+
+
+/**
+ * Minimum resolution where the data source can be displayed or queried.
+ * @type {number|undefined}
+ */
+ngeox.DataSourceOptions.prototype.minResolution;
+
+
+/**
+ * (Required) A human-readable name for the data source.
+ * @type {string}
+ */
+ngeox.DataSourceOptions.prototype.name;
+
+
+/**
+ * The type of images to fetch by queries by the (WMS) or (WMTS) .
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.ogcImageType;
+
+
+/**
+ * A list of layer definitions that are used by (WMS) and (WFS) queries.
+ * These are **not** used by the (WMTS) queries (the wmtsLayers is used
+ * by WMTS queries).
+ * @type {Array.<!ngeox.DataSourceLayer>|undefined}
+ */
+ngeox.DataSourceOptions.prototype.ogcLayers;
+
+
+/**
+ * The type of OGC server.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.ogcServerType;
+
+
+/**
+ * The type data source. Can be: 'WMS' or 'WMTS'.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.ogcType;
+
+
+/**
+ * Whether the geometry from this data source can be used to snap the geometry
+ * of features from other data sources that are being edited. Defaults to
+ * `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.snappable;
+
+
+/**
+ * Determines whether external features can be snapped to the edges of
+ * features from this data source or not. Defaults to `true`. Requires
+ * `snappable` to be set.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.snappingToEdges;
+
+
+/**
+ * Determines whether external features can be snapped to the vertice of
+ * features from this data source or not. Defaults to `true`. Requires
+ * `snappable` to be set.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.snappingToVertice;
+
+
+/**
+ * The tolerance in pixels the snapping should occur. Defaults to `10`.
+ * @type {number|undefined}
+ */
+ngeox.DataSourceOptions.prototype.snappingTolerance;
+
+
+/**
+ * The name of the time attribute.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.timeAttributeName;
+
+
+/**
+ * The time lower value, which can be combined with the time upper value
+ * to determine a range.
+ * @type {number|undefined}
+ */
+ngeox.DataSourceOptions.prototype.timeLowerValue;
+
+
+/**
+ * The time property for the data source. Used to apply time filters.
+ * @type {ngeox.TimeProperty|undefined}
+ */
+ngeox.DataSourceOptions.prototype.timeProperty;
+
+
+/**
+ * The time upper value, which can be combined with the time lower value
+ * to determine a range.
+ * @type {number|undefined}
+ */
+ngeox.DataSourceOptions.prototype.timeUpperValue;
+
+
+/**
+ * Whether the data source is visible or not, i.e. whether its is ON or OFF.
+ * Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.visible;
+
+
+/**
+ * The feature namespace to use with WFS requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wfsFeatureNS;
+
+
+/**
+ * The feature prefix to use with WFS requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wfsFeaturePrefix;
+
+
+/**
+ * The OutputFormat to use with WFS requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wfsOutputFormat;
+
+
+/**
+ * The url to use for (WFS) requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wfsUrl;
+
+
+/**
+ * The InfoFormat to use with WMS requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wmsInfoFormat;
+
+
+/**
+ * Whether the (WMS) images returned by this data source should be single tiles
+ * or not. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wmsIsSingleTile;
+
+
+/**
+ * The url to use for (WMS) requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wmsUrl;
+
+
+/**
+ * The layer name to use for the (WMTS) requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wmtsLayer;
+
+
+/**
+ * The url to use for (WMTS) requests.
+ * @type {string|undefined}
+ */
+ngeox.DataSourceOptions.prototype.wmtsUrl;
+
+
+/**
+ * @interface
+ * @struct
+ */
+ngeox.DataSource = function() {};
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.combinableForWMS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.combinableForWFS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.queryable;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.supportsWFS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.DataSource.prototype.supportsWMS;
+
+/**
+ * @type {string|undefined}
+ */
+ngeox.DataSource.prototype.wmsUrl;
+
+/**
+ * @type {string|undefined}
+ */
+ngeox.DataSource.prototype.wfsUrl;
+
+/**
+ * @param {ngeox.DataSource} dataSource Data source.
+ * @return {boolean} Whether this data source can be combined to the given
+ *     other data source to fetch features in a single WFS request.
+ */
+ngeox.DataSource.prototype.combinableWithDataSourceForWFS = function(dataSource) {}
+
+
+/**
+ * @param {ngeox.DataSource} dataSource Data source.
+ * @return {boolean} Whether this data source can be combined to the given
+ *     other data source to fetch features in a single WMS request.
+ */
+ngeox.DataSource.prototype.combinableWithDataSourceForWMS = function(dataSource) {}
+
+
+/**
+ * The options to use when sending GetFeature/GetFeatureInfo requests using
+ * the querent or map query service.
+ * @typedef {{
+ *     coordinate: (ol.Coordinate|undefined),
+ *     dataSources: (Array.<ngeox.DataSource>|undefined),
+ *     extent: (ol.Extent|undefined),
+ *     filter: (ol.format.filter.Filter|undefined),
+ *     limit: (number|undefined),
+ *     map: (ol.Map),
+ *     queryableDataSources: (ngeox.QueryableDataSources|undefined),
+ *     tolerancePx: (number|undefined),
+ *     wfsCount: (boolean|undefined)
+ * }}
+ */
+ngeox.IssueGetFeaturesOptions;
+
+
+/**
+ * The coordinate to issue the requests with, which can end up with either
+ * WMS or WFS requests.
+ * @type {ol.Coordinate|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.coordinate;
+
+
+/**
+ * List of data sources to query. Only those that meet the requirements will
+ * actually be queried. The querent service requires either the `dataSources`
+ * or `queryableDataSources` property to be set.
+ * @type {Array.<ngeox.DataSource>|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.dataSources;
+
+
+/**
+ * The extent to issue the requests with, which can end up with WFS requests
+ * only.
+ * @type {ol.Extent|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.extent;
+
+
+/**
+ * A filter to additionnally use with the query. Only used by WFS requests.
+ * If a filter is defined, then it is used instead of the data source's
+ * filter rules.
+ * @type {ol.format.filter.Filter|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.filter;
+
+
+/**
+ * The maximum number of features to get per request.
+ * @type {number|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.limit;
+
+
+/**
+ * The ol3 map object. Used to fill some parameters of the queries, such as
+ * 'srs' and filter the queryable layers within the data sources.
+ * @type {ol.Map}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.map;
+
+
+/**
+ * A hash of queryable data sources, which must meet all requirements. The
+ * querent service requires either the `dataSources` or `queryableDataSources`
+ * property to be set.
+ * @type {ngeox.QueryableDataSources|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.queryableDataSources;
+
+
+/**
+ * A tolerance value in pixels used to create an extent from a coordinate
+ * to issue WFS requests.
+ * @type {number|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.tolerancePx;
+
+
+/**
+ * When set, before making WFS GetFeature requests to fetch features,
+ * WFS GetFeature requests with `resultType = 'hits'` are made first. If
+ * the number of records for the request would exceed the limit, then
+ * no features are returned.
+ * @type {boolean|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.wfsCount;
+
+
+/**
+ * A hash that contains 2 lists of queryable data sources: `wfs` and `wms`.
+ * The same data source can only be in one of the two lists. The `wfs` list
+ * has priority, i.e. if the data source supports WFS, it's put in the
+ * `wfs` list.
+ *
+ * @typedef {{
+ *     wfs: (!Array.<!ngeox.DataSource>),
+ *     wms: (!Array.<!ngeox.DataSource>)
+ * }}
+ */
+ngeox.QueryableDataSources;
+
+
+/**
+ * List of queryable data sources that support WFS.
+ * @type {Array.<ngeox.DataSource>}
+ */
+ngeox.QueryableDataSources.prototype.wfs;
+
+
+/**
+ * List of queryable data sources that support WMS.
+ * @type {Array.<ngeox.DataSource>}
+ */
+ngeox.QueryableDataSources.prototype.wms;
+
+
+/**
+ * Hash of features by data source ids.
+ * @typedef {!Object.<number, !Array.<!ol.Feature>>}
+ */
+ngeox.QuerentResult;
+
+
+/**
+ * The definition of a result item returned by the querent service.
+ *
+ * @typedef {{
+ *     features: (Array.<ol.Feature>),
+ *     tooManyFeatures: (boolean|undefined),
+ *     totalFeatureCount: (number|undefined)
+ * }}
+ */
+ngeox.QuerentResultItem;
+
+
+/**
+ * The list of features that were returned by the query.
+ * @type {Array.<ol.Feature>}
+ */
+ngeox.QuerentResultItem.prototype.features;
+
+
+/**
+ * The maximum number of features to get with the query.
+ * @type {number}
+ */
+ngeox.QuerentResultItem.prototype.limit;
+
+
+/**
+ * Set if the query would have returned to many features. When set, no features
+ * are returned.
+ * @type {boolean|undefined}
+ */
+ngeox.QuerentResultItem.prototype.tooManyFeatures;
+
+
+/**
+ * The total number of features that would have been returned by the query.
+ * @type {number|undefined}
+ */
+ngeox.QuerentResultItem.prototype.totalFeatureCount;
 
 
 /**
@@ -257,7 +886,7 @@ ngeox.PopupOptions.prototype.width;
 /**
  * Results of the query source.
  * @typedef {{
- *     sources: (Array.<ngeox.QueryResultSource>),
+ *     sources: (!Array.<ngeox.QueryResultSource>),
  *     total: (number),
  *     pending: (boolean)
  * }}
@@ -267,7 +896,7 @@ ngeox.QueryResult;
 
 /**
  * Results for each query source.
- * @type {Array.<ngeox.QueryResultSource>}
+ * @type {!Array.<ngeox.QueryResultSource>}
  */
 ngeox.QueryResult.prototype.sources;
 
@@ -292,6 +921,7 @@ ngeox.QueryResult.prototype.pending;
  *     features: (Array.<ol.Feature>),
  *     id: (number|string),
  *     label: (string),
+ *     limit: (number),
  *     pending: (boolean),
  *     queried: (boolean),
  *     tooManyResults: (boolean),
@@ -320,6 +950,14 @@ ngeox.QueryResultSource.prototype.id;
  * @type {string}
  */
 ngeox.QueryResultSource.prototype.label;
+
+
+/**
+ * The maximum number of features that can be returned for a query with this
+ * source.
+ * @type {number}
+ */
+ngeox.QueryResultSource.prototype.limit;
 
 
 /**
@@ -807,7 +1445,7 @@ ngeox.interaction;
  * @typedef {{
  *    startMsg: (Element|undefined),
  *    continueMsg: (Element|undefined),
- *    decimals: (number|undefined),
+ *    precision: (number|undefined),
  *    style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
  *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
  * }}
@@ -831,12 +1469,12 @@ ngeox.interaction.MeasureOptions.prototype.startMsg;
 ngeox.interaction.MeasureOptions.prototype.continueMsg;
 
 
-/**
+/** TODO
  * Defines the number of decimals to keep in the measurement. If not defined,
  * then the default behaviour occurs depending on the measure type.
  * @type {number|undefined}
  */
-ngeox.interaction.MeasureOptions.prototype.decimals;
+ngeox.interaction.MeasureOptions.prototype.precision;
 
 
 /**
@@ -1223,7 +1861,8 @@ ngeox.DesktopGeolocationDirectiveOptions.prototype.zoom;
  *   select: (function(jQuery.Event, Object,
  *       TypeaheadDataset)|undefined),
  *   autocomplete: (function(jQuery.Event, Object,
- *       TypeaheadDataset)|undefined)
+ *       TypeaheadDataset)|undefined),
+ *   datasetsempty: (function(jQuery.Event, string, boolean)|undefined)
  * }}
  */
 ngeox.SearchDirectiveListeners;
@@ -1257,6 +1896,13 @@ ngeox.SearchDirectiveListeners.prototype.select;
  * @type {function(jQuery.Event, Object, TypeaheadDataset)|undefined}
  */
 ngeox.SearchDirectiveListeners.prototype.autocomplete;
+
+
+/**
+ * @type {function(jQuery.Event, string, boolean)|undefined}
+ */
+ngeox.SearchDirectiveListeners.prototype.datasetsempty;
+
 
 /**
  * Enum for the time property widget
@@ -1308,6 +1954,15 @@ ngeox.TimeProperty;
 
 
 /**
+ * @typedef {{
+ *     end: (number|undefined),
+ *     start: number
+ * }}
+ */
+ngeox.TimeRange;
+
+
+/**
  * @interface
  */
 ngeox.BackgroundEvent = function() {};
@@ -1339,6 +1994,236 @@ ngeox.number;
  * @typedef {function(number, string=, string=, number=): string}
  */
 ngeox.unitPrefix;
+
+/**
+ * Format a couple of numbers as number coordinates.
+ *
+ * Arguments:
+ * - coordinates Array of two numbers.
+ * - opt_fractionDigits Optional number of digit. Default to 0.
+ * - opt_template Optional template. Default to '{x} {y}'.
+ *     Where "{x}" will be replaced by the easting coordinate and "{y}" by the northing one. Note:
+ *     Use a html entity to use the semicolon symbol into a template.
+ * @typedef {function(ol.Coordinate, (number|string)=, string=, (boolean|string)=): string}
+ */
+ngeox.numberCoordinates;
+
+/**
+ * Format a coordinates as DMS coordinates.
+ * Arguments:
+ * - coordinates Array of two numbers.
+ * - opt_fractionDigits Optional number of digit. Default to 0.
+ * - opt_template Optional template. Default to '{x} {y}'.
+ *     Where "{x}" will be replaced by the easting coordinate, {y} by the northing one. Note: Use a html
+ *     entity to use the semicolon symbol into a template.
+ * @typedef {function(ol.Coordinate, (number|string)=, string=): string}
+ */
+ngeox.dmsCoordinates;
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+ngeox.rule;
+
+
+/**
+ * @record
+ * @struct
+ */
+ngeox.rule.RuleOptions = function() {};
+
+
+/**
+ * Whether the rule is active or not. Used by the `ngeo-rule` component.
+ * Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.active;
+
+
+/**
+ * The expression of the rule. The expression and boundaries are mutually
+ * exclusives.
+ * @type {number|string|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.expression;
+
+
+/**
+ * Whether the rule is a custom one or not. Defaults to `true`.
+ * @type {boolean|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.isCustom;
+
+
+/**
+ * The lower boundary of the rule. The expression and boundaries are
+ * mutually exclusives.
+ * @type {number|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.lowerBoundary;
+
+
+/**
+ * The human-readable name of the rule.
+ * @type {string}
+ */
+ngeox.rule.RuleOptions.prototype.name;
+
+
+/**
+ * The rule operator.
+ * @type {string|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.operator;
+
+
+/**
+ * The rule operators.
+ * @type {Array.<string>|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.operators;
+
+
+/**
+ * The property name (a.k.a. the attribute name).
+ * @type {string}
+ */
+ngeox.rule.RuleOptions.prototype.propertyName;
+
+
+/**
+ * The type of rule.
+ * @type {string|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.type;
+
+
+/**
+ * The upper boundary of the rule. The expression and boundaries are
+ * mutually exclusives.
+ * @type {number|undefined}
+ */
+ngeox.rule.RuleOptions.prototype.upperBoundary;
+
+
+/**
+ * @interface
+ * @struct
+ */
+ngeox.rule.Rule = function() {};
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleOptions
+ */
+ngeox.rule.DateOptions = function() {};
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleOptions
+ */
+ngeox.rule.GeometryOptions = function() {};
+
+
+/**
+ * Properties for the feature.
+ * @type {Object.<string, *>|undefined}
+ */
+ngeox.rule.GeometryOptions.prototype.featureProperties;
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleOptions
+ */
+ngeox.rule.SelectOptions = function() {};
+
+
+/**
+ * List of choices available for selection.
+ * @type {Array.<string>}
+ */
+ngeox.rule.SelectOptions.prototype.choices;
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleOptions
+ */
+ngeox.rule.TextOptions = function() {};
+
+
+/**
+ * @typedef {!ngeox.rule.RuleOptions|!ngeox.rule.GeometryOptions|!ngeox.rule.SelectOptions|!ngeox.rule.TextOptions}
+ */
+ngeox.rule.AnyOptions;
+
+
+
+/**
+ * @record
+ * @struct
+ */
+ngeox.rule.RuleBaseValue = function() {};
+
+
+/**
+ * The operator of the rule value.
+ * @type {string}
+ */
+ngeox.rule.RuleBaseValue.prototype.operator;
+
+
+/**
+ * The property name of the rule value.
+ * @type {string}
+ */
+ngeox.rule.RuleBaseValue.prototype.propertyName;
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleBaseValue
+ */
+ngeox.rule.RuleSimpleValue = function() {};
+
+
+/**
+ * The expression of the rule value.
+ * @type {number|string}
+ */
+ngeox.rule.RuleSimpleValue.prototype.expression;
+
+
+/**
+ * @record
+ * @struct
+ * @extends ngeox.rule.RuleBaseValue
+ */
+ngeox.rule.RuleRangeValue = function() {};
+
+
+/**
+ * The lower boundary of the rule value.
+ * @type {number}
+ */
+ngeox.rule.RuleRangeValue.prototype.lowerBoundary;
+
+
+/**
+ * The upper boundary of the rule value.
+ * @type {number}
+ */
+ngeox.rule.RuleRangeValue.prototype.upperBoundary;
 
 
 /**
@@ -1428,3 +2313,116 @@ ngeox.source.SwisstopoOptions.prototype.format;
  * @type {string}
  */
 ngeox.source.SwisstopoOptions.prototype.timestamp;
+
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+ngeox.search;
+
+
+/**
+ * @typedef {{
+ *    limit: (number|undefined),
+ *    origins: (string|undefined),
+ *    targetProjection: (!ol.proj.Projection|undefined),
+ *    options: (!BloodhoundOptions|undefined),
+ *    remoteOptions: (!BloodhoundRemoteOptions|undefined),
+ *    prepare: (undefined|function(string, jQueryAjaxSettings):jQueryAjaxSettings)
+ * }}
+ */
+ngeox.search.LocationSearchOptions;
+
+
+/**
+ * The maximum number of results to retrieve per request (max. and default limit=50).
+ * @type {number|undefined}
+ */
+ngeox.search.LocationSearchOptions.prototype.limit;
+
+
+/**
+ * A comma separated list of origins.
+ * Possible origins are: zipcode,gg25,district,kantone,gazetteer,address,parcel
+ * Per default all origins are used.
+ * @type {string|undefined}
+ */
+ngeox.search.LocationSearchOptions.prototype.origins;
+
+
+/**
+ * Target projection.
+ * @type {!ol.proj.Projection|undefined}
+ */
+ngeox.search.LocationSearchOptions.prototype.targetProjection;
+
+
+/**
+ * Optional Bloodhound options. If `undefined`, the default Bloodhound config will be used.
+ * @type {!BloodhoundOptions|undefined}
+ */
+ngeox.search.LocationSearchOptions.prototype.options;
+
+
+/**
+ * Optional Bloodhound remote options. Only used if `remote` is not defined in `options`.
+ * @type {!BloodhoundRemoteOptions|undefined}
+ */
+ngeox.search.LocationSearchOptions.prototype.remoteOptions;
+
+
+/**
+ * Optional function to prepare the request.
+ * @type {undefined|function(string, jQueryAjaxSettings):jQueryAjaxSettings}
+ */
+ngeox.search.LocationSearchOptions.prototype.prepare;
+
+/**
+ * @typedef {{
+ *   handleFileContent: function(string, File),
+ *   transformUrl: function(string): Promise,
+ *   isValidUrl: function(string): boolean
+ * }}
+ */
+ngeox.ImportDndOptions;
+
+
+/**
+ * @typedef {{
+ *   handleFileContent: function(string, File)
+ * }}
+ */
+ngeox.ImportLocalOptions;
+
+
+/**
+ * @typedef {{
+ *   handleFileContent: function(string, File),
+ *   transformUrl: function(string): Promise,
+ *   urls: Array<string>,
+ *   isValidUrl: function(string): boolean
+ * }}
+ */
+ngeox.ImportOnlineOptions;
+
+/**
+ * @typedef {{
+ * layerHovered: Function,
+ * addPreviewLayer: Function,
+ * removePreviewLayer: function(ol.Map),
+ * layerSelected: {Name: string, Abstract: String, isInvalid: boolean, Layer: Object},
+ * transformExtent: function(ol.Extent): ol.Extent
+ * }}
+ */
+ngeox.ImportWmsGetCapItemOptions;
+
+/**
+ * @typedef {{
+ * layerHovered: Function,
+ * addPreviewLayer: Function,
+ * removePreviewLayer: function(ol.Map),
+ * layerSelected: {Name: string, Abstract: String, isInvalid: boolean, Layer: Object}
+ * }}
+ */
+ngeox.ImportWmtsGetCapItemOptions;

@@ -9,7 +9,7 @@ goog.require('gmf.contextualdataDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdatacontentDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerygridDirective');
+goog.require('gmf.displayquerygridComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawfeatureDirective');
 /** @suppress {extraRequire} */
@@ -17,11 +17,13 @@ goog.require('gmf.editfeatureselectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.elevationDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.mousepositionDirective');
+goog.require('gmf.filterselectorComponent');
+/** @suppress {extraRequire} */
+goog.require('gmf.mousepositionComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.printDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.profileDirective');
+goog.require('gmf.profileComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawprofilelineDirective');
 /** @suppress {extraRequire} */
@@ -56,6 +58,10 @@ goog.require('ol.control.Zoom');
 goog.require('ol.interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
+goog.require('ol.style.Text');
 
 gmf.module.value('isDesktop', true);
 
@@ -63,6 +69,11 @@ gmf.module.value('isDesktop', true);
 goog.require('ngeo.sortableDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.SortableOptions');
+
+
+gmf.module.value('ngeoQueryOptions', {
+  'limit': 20
+});
 
 
 /**
@@ -82,10 +93,10 @@ goog.require('ngeo.SortableOptions');
  */
 gmf.AbstractDesktopController = function(config, $scope, $injector) {
 
-  var viewConfig = {
-    projection: ol.proj.get('EPSG:' + (config.srid || 21781))
+  const viewConfig = {
+    projection: ol.proj.get(`EPSG:${config.srid || 21781}`)
   };
-  goog.object.extend(viewConfig, config.mapViewConfig || {});
+  ol.obj.assign(viewConfig, config.mapViewConfig || {});
 
   /**
    * @type {ol.Map}
@@ -100,7 +111,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       }),
       new ol.control.Zoom({
         zoomInTipLabel: '',
-        zoomoutTipLabel: ''
+        zoomOutTipLabel: ''
       })
     ],
     interactions: config.mapInteractions || ol.interaction.defaults({
@@ -133,9 +144,35 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @type {boolean}
    * @export
    */
+  this.filterSelectorActive = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
   this.editFeatureActive = false;
 
-  var body = $('body');
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.googleStreetViewActive = false;
+
+  /**
+   * @type {!ol.style.Style}
+   * @export
+   */
+  this.googleStreetViewStyle = new ol.style.Style({
+    text: new ol.style.Text({
+      fill: new ol.style.Fill({color: '#279B61'}),
+      font: 'normal 30px FontAwesome',
+      offsetY: -15,
+      stroke: new ol.style.Stroke({color: '#ffffff', width: 3}),
+      text: '\uf041'
+    })
+  });
+
+  const body = $('body');
 
   // initialize tooltips
   body.tooltip({
@@ -145,7 +182,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   });
 
   // deactivate tooltips on touch device
-  body.on('touchstart.detectTouch', function() {
+  body.on('touchstart.detectTouch', () => {
     body.tooltip('destroy');
     body.off('touchstart.detectTouch');
   });
@@ -154,7 +191,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * Collection of features for the draw interaction
    * @type {ol.Collection.<ol.Feature>}
    */
-  var ngeoFeatures = $injector.get('ngeoFeatures');
+  const ngeoFeatures = $injector.get('ngeoFeatures');
 
   /**
    * @type {ngeo.FeatureOverlay}
@@ -164,7 +201,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       .getFeatureOverlay();
   this.drawFeatureLayer.setFeatures(ngeoFeatures);
 
-  var ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
+  const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
 
   /**
    * @type {ol.layer.Vector}
@@ -175,7 +212,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       wrapX: false,
       features: new ol.Collection()
     }),
-    style: function(feature, resolution) {
+    style(feature, resolution) {
       return ngeoFeatureHelper.createEditingStyles(feature);
     }
     // style: ngeoFeatureHelper.createEditingStyles.bind(ngeoFeatureHelper)
@@ -186,10 +223,16 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * The ngeo ToolActivate manager service.
    * @type {ngeo.ToolActivateMgr}
    */
-  var ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+  const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
-  var editFeatureActivate = new ngeo.ToolActivate(this, 'editFeatureActive');
+  const editFeatureActivate = new ngeo.ToolActivate(this, 'editFeatureActive');
   ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
+
+  const googleStreetViewActivate = new ngeo.ToolActivate(
+    this,
+    'googleStreetViewActive'
+  );
+  ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
 
   /**
    * @type {ngeo.ScaleselectorOptions}
@@ -208,13 +251,11 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   gmf.AbstractController.call(this, config, $scope, $injector);
 
   // close the login panel on successful login
-  $scope.$watch(function() {
-    return this.gmfUser.username;
-  }.bind(this), function(newVal) {
+  $scope.$watch(() => this.gmfUser.username, (newVal) => {
     if (newVal !== null && this.loginActive) {
       this.loginActive = false;
     }
-  }.bind(this));
+  });
 
 };
 ol.inherits(gmf.AbstractDesktopController, gmf.AbstractController);

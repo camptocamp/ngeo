@@ -14,25 +14,42 @@ goog.provide('app_desktop_alt');
 goog.require('app');
 goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
+goog.require('ngeo.googlestreetviewComponent');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 
+goog.require('app.GmfImportHelper');
+
 
 gmf.module.value('ngeoQueryOptions', {
   'limit': 20,
-  'queryCountFirst': true
+  'queryCountFirst': true,
+  'cursorHover': true
 });
+
+
+gmf.module.value('gmfPrintOptions', {
+  'scaleInput': true
+});
+
+gmf.module.value('ngeoMeasurePrecision', 6);
+gmf.module.value('ngeoMeasureDecimals', 2);
+
 
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
+ * @param {ngeo.File} ngeoFile The file service.
+ * @param {gettext} gettext The gettext service
+ * @param {angular.$q} $q Angular $q.
  * @constructor
  * @extends {gmf.AbstractDesktopController}
  * @ngInject
  * @export
  */
-app.AlternativeDesktopController = function($scope, $injector) {
+app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext, $q) {
   gmf.AbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -102,14 +119,29 @@ app.AlternativeDesktopController = function($scope, $injector) {
 
   // Allow angular-gettext-tools to collect the strings to translate
   /** @type {angularGettext.Catalog} */
-  var gettextCatalog = $injector.get('gettextCatalog');
+  const gettextCatalog = $injector.get('gettextCatalog');
   gettextCatalog.getString('OSM time merged');
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
 
+  /**
+   * @export
+   */
+  this.importOptions = new app.GmfImportHelper(this.map, $scope, gettext, ngeoFile, $q).createOptions();
 };
 ol.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
 
+
+/**
+ * @param {jQuery.Event} event keydown event.
+ * @export
+ */
+app.AlternativeDesktopController.prototype.onKeydown = function(event) {
+  if (event.ctrlKey && event.key === 'p') {
+    this.printPanelActive = true;
+    event.preventDefault();
+  }
+};
 
 app.module.controller('AlternativeDesktopController', app.AlternativeDesktopController);

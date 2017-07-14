@@ -61,15 +61,15 @@ gmf.ObjectEditingManager.prototype.getFeature = function() {
   if (!this.getFeatureDefered_) {
     this.getFeatureDefered_ = this.q_.defer();
 
-    var geomType = this.ngeoLocation_.getParam(
+    const geomType = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.GEOM_TYPE);
-    var id = this.ngeoLocation_.getParam(
+    const id = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.ID);
-    var layer = this.ngeoLocation_.getParam(
+    const layer = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.LAYER);
-    var property = this.ngeoLocation_.getParam(
+    const property = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.PROPERTY);
-    var theme = this.ngeoLocation_.getParam(
+    const theme = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.THEME);
 
     if (geomType && id && layer && property && theme) {
@@ -77,7 +77,7 @@ gmf.ObjectEditingManager.prototype.getFeature = function() {
         [layer],
         [{
           operator: 'eq',
-          property: property,
+          property,
           value: id
         }]
       ).then(this.handleGetFeatures_.bind(this, property, id));
@@ -92,22 +92,22 @@ gmf.ObjectEditingManager.prototype.getFeature = function() {
 
 
 /**
- * @return {?string} The geometry type.
+ * @return {string|undefined} The geometry type.
  * @export
  */
 gmf.ObjectEditingManager.prototype.getGeomType = function() {
   return this.ngeoLocation_.getParam(
-    gmf.ObjectEditingManager.Param.GEOM_TYPE) || null;
+    gmf.ObjectEditingManager.Param.GEOM_TYPE);
 };
 
 
 /**
- * @return {?number} The gmf layer node id.
+ * @return {number|undefined} The gmf layer node id.
  * @export
  */
 gmf.ObjectEditingManager.prototype.getLayerNodeId = function() {
   return this.ngeoLocation_.getParamAsInt(
-    gmf.ObjectEditingManager.Param.LAYER) || null;
+    gmf.ObjectEditingManager.Param.LAYER);
 };
 
 
@@ -126,12 +126,12 @@ gmf.ObjectEditingManager.prototype.handleGetFeatures_ = function(
   key, value, features
 ) {
 
-  var feature;
+  let feature;
 
   if (features.length) {
     feature = features[0];
   } else {
-    var featureProperties = {};
+    const featureProperties = {};
     featureProperties[key] = value;
     featureProperties['geometry'] = null;
     feature = new ol.Feature(featureProperties);

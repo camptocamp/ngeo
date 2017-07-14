@@ -14,11 +14,11 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.value('gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background');
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
 gmfapp.module.value('gmfLayersUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
 
 /**
@@ -62,18 +62,34 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
    * @export
    */
   this.urls = [
-    '../apps/oeedit/',
-    'objectediting.html'
+    {
+      'name': 'oeedit app. (hosted)',
+      'url': 'apps/oeedit/'
+    },
+    {
+      'name': 'oeedit app. (dev)',
+      'url': '../apps/oeedit/'
+    },
+    {
+      'name': 'example',
+      'url': 'objectediting.html'
+    }
   ];
 
   /**
-   * @type {string} OE viewer application base url.
+   * @type {string} OE viewer application base url when developping.
    * @private
    */
-  this.viewerUrl_ = '../apps/oeview/';
+  this.viewerUrlDev_ = '../apps/oeview/';
 
   /**
-   * @type {string}
+   * @type {string} OE viewer application base url when hosted.
+   * @private
+   */
+  this.viewerUrlHosted_ = 'apps/oeview/';
+
+  /**
+   * @type {Object.<string, string>}
    * @export
    */
   this.selectedUrl = this.urls[0];
@@ -127,16 +143,14 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
   this.geomTypeCache_ = {};
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @export
    */
-  this.selectedGeomType = null;
+  this.selectedGeomType = undefined;
 
   $scope.$watch(
-    function() {
-      return this.selectedGmfLayerNode;
-    }.bind(this),
-    function(newVal, oldVal) {
+    () => this.selectedGmfLayerNode,
+    (newVal, oldVal) => {
       this.selectedFeature = null;
 
       if (newVal) {
@@ -147,7 +161,7 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
           this.handleGetGeometryType_.bind(this, newVal)
         );
       }
-    }.bind(this)
+    }
   );
 
   /**
@@ -159,20 +173,20 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
 
   this.gmfThemes_.loadThemes();
 
-  this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
+  this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
 
     // (1) Set OGC servers
     this.gmfServers_ = ogcServers;
 
-    this.gmfThemes_.getThemesObject().then(function(themes) {
+    this.gmfThemes_.getThemesObject().then((themes) => {
       if (!themes) {
         return;
       }
 
-      var i, ii;
+      let i, ii;
 
       // (2) Find OE theme
-      var theme;
+      let theme;
       for (i = 0, ii = themes.length; i < ii; i++) {
         if (themes[i].name === this.themeName) {
           theme = themes[i];
@@ -185,17 +199,18 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
       }
 
       // (3) Get first group node
-      var groupNode = theme.children[0];
+      const groupNode = theme.children[0];
 
       // (4) Set OGC server, which must support WFS for this example to work
-      var gmfServer = this.gmfServers_[groupNode.ogcServer];
+      goog.asserts.assert(groupNode.ogcServer);
+      const gmfServer = this.gmfServers_[groupNode.ogcServer];
       if (gmfServer && gmfServer.wfsSupport === true && gmfServer.urlWfs) {
         this.gmfServer_ = gmfServer;
       } else {
         return;
       }
 
-      var gmfLayerNodes = [];
+      const gmfLayerNodes = [];
       for (i = 0, ii = groupNode.children.length; i < ii; i++) {
         if (groupNode.children[i].metadata.identifierAttributeField) {
           gmfLayerNodes.push(groupNode.children[i]);
@@ -208,8 +223,8 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
       // (6) Select 'polygon' for the purpose of simplifying the demo
       this.selectedGmfLayerNode = this.gmfLayerNodes[1];
 
-    }.bind(this));
-  }.bind(this));
+    });
+  });
 
 };
 
@@ -219,21 +234,21 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
  */
 gmfapp.MainController.prototype.runEditor = function() {
 
-  var geomType = this.selectedGeomType;
-  var feature = this.selectedFeature;
-  var layer = this.selectedGmfLayerNode.id;
-  var property = this.selectedGmfLayerNode.metadata.identifierAttributeField;
+  const geomType = this.selectedGeomType;
+  const feature = this.selectedFeature;
+  const layer = this.selectedGmfLayerNode.id;
+  const property = this.selectedGmfLayerNode.metadata.identifierAttributeField;
   goog.asserts.assert(property !== undefined);
-  var id = feature.get(property);
+  const id = feature.get(property);
 
-  var params = {};
+  const params = {};
   params[gmf.ObjectEditingManager.Param.GEOM_TYPE] = geomType;
   params[gmf.ObjectEditingManager.Param.ID] = id;
   params[gmf.ObjectEditingManager.Param.LAYER] = layer;
   params[gmf.ObjectEditingManager.Param.THEME] = this.themeName;
   params[gmf.ObjectEditingManager.Param.PROPERTY] = property;
 
-  var url = gmfapp.MainController.appendParams(this.selectedUrl, params);
+  const url = gmfapp.MainController.appendParams(this.selectedUrl['url'], params);
   window.open(url);
 };
 
@@ -241,27 +256,44 @@ gmfapp.MainController.prototype.runEditor = function() {
 /**
  * @export
  */
-gmfapp.MainController.prototype.runViewer = function() {
+gmfapp.MainController.prototype.runViewerDev = function() {
+  this.runViewer_(this.viewerUrlDev_);
+};
 
-  var node = this.selectedGmfLayerNode;
-  var nodeId = node.id;
-  var nodeName = node.name;
-  var nodeIdAttrFieldName = node.metadata.identifierAttributeField;
+
+/**
+ * @export
+ */
+gmfapp.MainController.prototype.runViewerHosted = function() {
+  this.runViewer_(this.viewerUrlHosted_);
+};
+
+
+/**
+ * @param {string} baseUrl Base url of the viewer.
+ * @private
+ */
+gmfapp.MainController.prototype.runViewer_ = function(baseUrl) {
+
+  const node = this.selectedGmfLayerNode;
+  const nodeId = node.id;
+  const nodeName = node.name;
+  const nodeIdAttrFieldName = node.metadata.identifierAttributeField;
   goog.asserts.assert(nodeIdAttrFieldName !== undefined);
-  var ids = [];
+  const ids = [];
 
-  var features = this.featuresCache_[nodeId];
-  for (var i = 0, ii = features.length; i < ii; i++) {
+  const features = this.featuresCache_[nodeId];
+  for (let i = 0, ii = features.length; i < ii; i++) {
     ids.push(
       features[i].get(nodeIdAttrFieldName)
     );
   }
 
-  var params = {};
+  const params = {};
   params['wfs_layer'] = nodeName;
-  params['wfs_' + nodeIdAttrFieldName] = ids.join(',');
+  params[`wfs_${nodeIdAttrFieldName}`] = ids.join(',');
 
-  var url = gmfapp.MainController.appendParams(this.viewerUrl_, params);
+  const url = gmfapp.MainController.appendParams(baseUrl, params);
   window.open(url);
 };
 
@@ -275,7 +307,7 @@ gmfapp.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
 
   this.getFeaturesDeferred_ = this.q_.defer();
 
-  var features = this.getFeaturesFromCache_(gmfLayerNode);
+  const features = this.getFeaturesFromCache_(gmfLayerNode);
 
   if (features) {
     this.getFeaturesDeferred_.resolve();
@@ -293,9 +325,9 @@ gmfapp.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
  */
 gmfapp.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
 
-  var id = gmfLayerNode.id;
+  const id = gmfLayerNode.id;
 
-  var url = gmfapp.MainController.appendParams(
+  const url = gmfapp.MainController.appendParams(
     this.gmfServer_.urlWfs,
     {
       'SERVICE': 'WFS',
@@ -305,11 +337,11 @@ gmfapp.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
     }
   );
 
-  this.http_.get(url).then(function(response) {
-    var features = new ol.format.WFS().readFeatures(response.data);
+  this.http_.get(url).then((response) => {
+    const features = new ol.format.WFS().readFeatures(response.data);
     this.featuresCache_[id] = features;
     this.getFeaturesDeferred_.resolve();
-  }.bind(this));
+  });
 };
 
 
@@ -318,7 +350,7 @@ gmfapp.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
  * @private
  */
 gmfapp.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
-  var features = /** @type Array.<ol.Feature> */ (
+  const features = /** @type Array.<ol.Feature> */ (
     this.getFeaturesFromCache_(gmfLayerNode));
   this.features = features;
   this.selectedFeature = this.features[0];
@@ -331,8 +363,8 @@ gmfapp.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
  * @private
  */
 gmfapp.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
-  var id = gmfLayerNode.id;
-  var features = this.featuresCache_[id] || null;
+  const id = gmfLayerNode.id;
+  const features = this.featuresCache_[id] || null;
   return features;
 };
 
@@ -346,7 +378,7 @@ gmfapp.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
 
   this.getGeometryTypeDeferred_ = this.q_.defer();
 
-  var geomType = this.getGeometryTypeFromCache_(gmfLayerNode);
+  const geomType = this.getGeometryTypeFromCache_(gmfLayerNode);
 
   if (geomType) {
     this.getGeometryTypeDeferred_.resolve();
@@ -369,7 +401,7 @@ gmfapp.MainController.prototype.issueGetAttributesRequest_ = function(
   this.gmfXSDAttributes_.getAttributes(gmfLayerNode.id).then(
     function(gmfLayerNode, attributes) {
       // Get geom type from attributes and set
-      var geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(attributes);
+      const geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(attributes);
       if (geomAttr && geomAttr.geomType) {
         this.geomTypeCache_[gmfLayerNode.id] = geomAttr.geomType;
         this.getGeometryTypeDeferred_.resolve();
@@ -385,22 +417,21 @@ gmfapp.MainController.prototype.issueGetAttributesRequest_ = function(
  * @private
  */
 gmfapp.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
-  var geomType = /** @type {string} */ (
-    this.getGeometryTypeFromCache_(gmfLayerNode));
+  const geomType = this.getGeometryTypeFromCache_(gmfLayerNode);
   this.selectedGeomType = geomType;
 };
 
 
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
- * @return {?string} The type of geometry.
+ * @return {string|undefined} The type of geometry.
  * @private
  */
 gmfapp.MainController.prototype.getGeometryTypeFromCache_ = function(
   gmfLayerNode
 ) {
-  var id = gmfLayerNode.id;
-  var geomType = this.geomTypeCache_[id] || null;
+  const id = gmfLayerNode.id;
+  const geomType = this.geomTypeCache_[id];
   return geomType;
 };
 
@@ -414,18 +445,18 @@ gmfapp.MainController.prototype.getGeometryTypeFromCache_ = function(
  * @return {string} The new URI.
  */
 gmfapp.MainController.appendParams = function(uri, params) {
-  var keyParams = [];
+  const keyParams = [];
   // Skip any null or undefined parameter values
-  Object.keys(params).forEach(function(k) {
+  Object.keys(params).forEach((k) => {
     if (params[k] !== null && params[k] !== undefined) {
-      keyParams.push(k + '=' + encodeURIComponent(params[k]));
+      keyParams.push(`${k}=${encodeURIComponent(params[k])}`);
     }
   });
-  var qs = keyParams.join('&');
+  const qs = keyParams.join('&');
   // remove any trailing ? or &
   uri = uri.replace(/[?&]$/, '');
   // append ? or & depending on whether uri has existing parameters
-  uri = uri.indexOf('?') === -1 ? uri + '?' : uri + '&';
+  uri = uri.indexOf('?') === -1 ? `${uri}?` : `${uri}&`;
   return uri + qs;
 };
 

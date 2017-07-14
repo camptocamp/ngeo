@@ -1,4 +1,4 @@
-<div class="gmf-displayquerygrid panel">
+<div class="gmf-displayquerygrid panel" ng-show="ctrl.active">
   <div
     class="close"
     ng-click="ctrl.clear()">
@@ -47,7 +47,7 @@
 
       <div ng-if="gridSource.source.tooManyResults === true">
         <div class="gmf-displayquerygrid-message alert alert-warning">
-          <p><span translate>The results can not be displayed because the maximum number has been reached</span> ({{ctrl.maxResults}}).</p>
+          <p><span translate>The results can not be displayed because the maximum number has been reached</span> ({{gridSource.source.limit}}).</p>
           <p translate>Please refine your query.</p>
         </div>
       </div>

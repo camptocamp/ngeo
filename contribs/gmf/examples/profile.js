@@ -2,9 +2,13 @@ goog.provide('gmfapp.profile');
 
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
+goog.require('gmf.Permalink');
+/** @suppress {extraRequire} */
+goog.require('gmf.Snapping');
+/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.profileDirective');
+goog.require('gmf.profileComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Collection');
@@ -23,7 +27,7 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 gmfapp.module.value(
     'gmfProfileJsonUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.json');
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
 
 /**
  * @param {angular.Scope} $scope Angular scope.
@@ -45,10 +49,10 @@ gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
    */
   this.profileLinesconfiguration = {
     'aster': {
-      'color':'#0404A0'
+      'color': '#0404A0'
     },
     'srtm': {
-      'color':'#04A004'
+      'color': '#04A004'
     }
   };
 
@@ -74,7 +78,7 @@ gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
     })
   });
 
-  var lineStyle = new ol.style.Style({
+  const lineStyle = new ol.style.Style({
     stroke: new ol.style.Stroke({
       color: '#ffcc33',
       width: 2
@@ -84,9 +88,9 @@ gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
   /**
    * @type {ol.Collection.<ol.Feature>}
    */
-  var features = new ol.Collection();
+  const features = new ol.Collection();
 
-  var overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
   overlay.setStyle(lineStyle);
 
@@ -102,7 +106,7 @@ gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
   this.drawLine = new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'LineString',
-        features: features
+        features
       }));
 
   this.drawLine.setActive(false);

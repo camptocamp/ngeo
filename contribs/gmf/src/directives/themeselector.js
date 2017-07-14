@@ -1,4 +1,3 @@
-goog.provide('gmf.ThemeselectorController');
 goog.provide('gmf.themeselectorDirective');
 
 goog.require('gmf');
@@ -27,7 +26,7 @@ goog.require('gmf.ThemesEventType');
  *      </gmf-themeselector>
  *      <script>
  *        (function() {
- *          var module = angular.module('app');
+ *          let module = angular.module('app');
  *          module.value('gmfTreeManagerModeFlush', true);
  *        })();
  *      </script>
@@ -49,7 +48,7 @@ goog.require('gmf.ThemesEventType');
  *      </gmf-themeselector>
  *      <script>
  *        (function() {
- *          var module = angular.module('app');
+ *          let module = angular.module('app');
  *          module.value('gmfTreeManagerModeFlush', false);
  *        })();
  *      </script>
@@ -63,13 +62,12 @@ goog.require('gmf.ThemesEventType');
 gmf.themeselectorDirective = function() {
   return {
     restrict: 'E',
-    controller: 'gmfThemeselectorController',
+    controller: 'gmfThemeselectorController as tsCtrl',
     scope: {
       'filter': '=gmfThemeselectorFilter'
     },
     bindToController: true,
-    controllerAs: 'tsCtrl',
-    templateUrl: gmf.baseTemplateUrl + '/themeselector.html'
+    templateUrl: `${gmf.baseTemplateUrl}/themeselector.html`
   };
 };
 
@@ -81,7 +79,7 @@ gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
  * @param {gmf.ThemeManager} gmfThemeManager Tree manager service.
  * @param {gmf.Themes} gmfThemes Themes service.
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfThemeselectorController
@@ -131,10 +129,10 @@ gmf.ThemeselectorController = function($scope, gmfThemeManager, gmfThemes) {
  * @private
  */
 gmf.ThemeselectorController.prototype.setThemes_ = function() {
-  this.gmfThemes_.getThemesObject().then(function(themes) {
+  this.gmfThemes_.getThemesObject().then((themes) => {
     // Keep only the themes dedicated to the theme switcher
     this.themes = this.filter ? themes.filter(this.filter) : themes;
-  }.bind(this));
+  });
 };
 
 

@@ -1,7 +1,6 @@
 goog.provide('ngeo.resizemapDirective');
 
 goog.require('goog.asserts');
-goog.require('goog.async.AnimationDelay');
 goog.require('ngeo');
 goog.require('ol.Map');
 
@@ -28,52 +27,51 @@ goog.require('ol.Map');
  * @ngname ngeoResizemap
  */
 ngeo.resizemapDirective = function($window) {
-  var /** @type {number} */ duration = 1000;
+  const /** @type {number} */ duration = 1000;
 
   return {
     restrict: 'A',
-    link:
-        /**
-         * @param {!angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         */
-        function(scope, element, attrs) {
-          var attr = 'ngeoResizemap';
-          var prop = attrs[attr];
-          var map = scope.$eval(prop);
-          goog.asserts.assertInstanceof(map, ol.Map);
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
+      const attr = 'ngeoResizemap';
+      const prop = attrs[attr];
+      const map = scope.$eval(prop);
+      goog.asserts.assertInstanceof(map, ol.Map);
 
-          var stateExpr = attrs['ngeoResizemapState'];
-          goog.asserts.assert(stateExpr !== undefined);
+      const stateExpr = attrs['ngeoResizemapState'];
+      goog.asserts.assert(stateExpr !== undefined);
 
-          var start;
+      let start;
+      let animationDelayKey;
 
-          var animationDelay = new goog.async.AnimationDelay(
-              function() {
-                map.updateSize();
-                map.renderSync();
+      const animationDelay = () => {
+        map.updateSize();
+        map.renderSync();
 
-                if (Date.now() - start < duration) {
-                  animationDelay.start();
-                }
-              }, $window);
-
-          // Make sure the map is resized when the animation ends.
-          // It may help in case the animation didn't start correctly.
-          element.bind('transitionend',function() {
-            map.updateSize();
-            map.renderSync();
-          });
-
-          scope.$watch(stateExpr, function(newVal, oldVal) {
-            if (newVal != oldVal) {
-              start = Date.now();
-              animationDelay.stop();
-              animationDelay.start();
-            }
-          });
+        if (Date.now() - start < duration) {
+          animationDelayKey = $window.requestAnimationFrame(animationDelay);
         }
+      };
+
+      // Make sure the map is resized when the animation ends.
+      // It may help in case the animation didn't start correctly.
+      element.on('transitionend', () => {
+        map.updateSize();
+        map.renderSync();
+      });
+
+      scope.$watch(stateExpr, (newVal, oldVal) => {
+        if (newVal != oldVal) {
+          start = Date.now();
+          $window.cancelAnimationFrame(animationDelayKey);
+          animationDelayKey = $window.requestAnimationFrame(animationDelay);
+        }
+      });
+    }
   };
 };
 

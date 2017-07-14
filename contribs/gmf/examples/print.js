@@ -2,7 +2,7 @@ goog.provide('gmfapp.print');
 
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
+goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.printDirective');
 /** @suppress {extraRequire} */
@@ -21,17 +21,17 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 gmfapp.module.value(
     'gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
 
 gmfapp.module.value('gmfPrintUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
 
 
 gmfapp.module.value(
     'authenticationBaseUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi'
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi'
 );
 
 
@@ -65,8 +65,17 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
   });
 
   /**
+   * @type {Object.<string, string|number|boolean>}
+   * @export
+   */
+  this.defaulPrintFieldstValues = {
+    'comments': 'Default comments example',
+    'legend': true
+  };
+
+  /**
    * @type {Array.<Object>|undefined}
-   * export
+   * @export
    */
   this.themes = undefined;
 
@@ -76,12 +85,12 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
    */
   this.treeSource = undefined;
 
-  gmfThemes.getThemesObject().then(function(themes) {
+  gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       this.themes = themes;
       this.treeSource = themes[3];
     }
-  }.bind(this));
+  });
 
   ngeoFeatureOverlayMgr.init(this.map);
 };

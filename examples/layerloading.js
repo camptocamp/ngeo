@@ -25,14 +25,14 @@ app.module = angular.module('app', ['ngeo']);
  */
 app.MainController = function($scope, ngeoDecorateLayerLoading) {
 
-  var source = new ngeo.source.AsitVD({
+  const source = new ngeo.source.AsitVD({
     layer: 'asitvd.fond_couleur'
   });
   /**
    * @type {ol.layer.Tile}
    * @export
    */
-  this.asitvd = new ol.layer.Tile({source: source});
+  this.asitvd = new ol.layer.Tile({source});
 
   ngeoDecorateLayerLoading(this.asitvd, $scope);
 

@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<html lang="{{desktopCtrl.lang}}" ng-app="app" ng-controller="DesktopController as mainCtrl">
+<html lang="{{mainCtrl.lang}}" ng-app="app" ng-controller="DesktopController as mainCtrl">
   <head>
-    <title>{{'Desktop Application'|translate}}</title>
+    <title ng-bind-template="{{'Desktop Application'|translate}}">GeoMapFish</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <link rel="shortcut icon" href="image/favicon.ico"/>
     <link rel="stylesheet" href="../../build/desktop.css">
+    <script>
+      if (!window.requestAnimationFrame) {
+        alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
+            + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. Vous allez être redirigé.\n\n'
+            + 'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. Sie werden weitergeleitet.');
+        window.location = 'http://geomapfish.org/'
+      }
+    </script>
   </head>
   <body ng-class="{'gmf-profile-chart-active': !!profileChartActive}">
     <header>
-      <div>
+      <div class="logo">
         <img src="image/logo.png" />
         <span>by Camptocamp</span>
       </div>
@@ -40,13 +48,12 @@
           </gmf-layertree>
         </div>
       </div>
-      <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map"
-        ngeo-resizemap-state="mainCtrl.toolsActive">
+      <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map" ngeo-resizemap-state="mainCtrl.toolsActive">
         <div class="gmf-app-bar">
           <div ngeo-btn-group class="btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
-              <span class="fa fa-user"></span>
+              <span class="fa fa-user" ng-class="mainCtrl.gmfUser.username ? 'fa-user-times' : 'fa-user'"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.printPanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Print'|translate}}">
@@ -55,6 +62,10 @@
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawFeatureActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw & Measure'|translate}}">
               <span class="fa fa-paint-brush"></span>
+            </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
+              <span class="fa fa-filter"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.editFeatureActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Editing'|translate}}"
@@ -65,6 +76,10 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
               <span class="fa fa-area-chart"></span>
             </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.googleStreetViewActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Street View'|translate}}">
+              <span class="fa fa-street-view"></span>
+            </button>
           </div>
           <br/>
           <br/>
@@ -74,7 +89,9 @@
             </button>
           </span>
         </div>
-        <div class="gmf-app-tools-content container-fluid" ng-class="{'gmf-app-active': mainCtrl.toolsActive}">
+        <div
+            class="gmf-app-tools-content container-fluid"
+            ng-class="{'gmf-app-active': mainCtrl.toolsActive,'gmf-app-googlestreetview-active': mainCtrl.googleStreetViewActive }">
           <div ng-show="mainCtrl.loginActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
@@ -107,6 +124,19 @@
                   gmf-drawfeature-layer="::mainCtrl.drawFeatureLayer"
                   gmf-drawfeature-map="::mainCtrl.map">
               </gmf-drawfeature>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.filterSelectorActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Filter'|translate}}
+                <a class="btn close" ng-click="mainCtrl.filterSelectorActive = false">&times;</a>
+              </div>
+              <gmf-filterselector
+                  active="mainCtrl.filterSelectorActive"
+                  map="mainCtrl.map"
+                  tool-group="mainCtrl.mapToolsGroup">
+              </gmf-filterselector>
             </div>
           </div>
           <div ng-show="mainCtrl.editFeatureActive" class="row">
@@ -151,6 +181,19 @@
                   </em>
                 </p>
               </div>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.googleStreetViewActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Street View'|translate}}
+                <a class="btn close" ng-click="mainCtrl.googleStreetViewActive = false">&times;</a>
+              </div>
+              <ngeo-googlestreetview
+                  active="mainCtrl.googleStreetViewActive"
+                  feature-style="mainCtrl.googleStreetViewStyle"
+                  map="mainCtrl.map">
+              </ngeo-googlestreetview>
             </div>
           </div>
         </div>
@@ -237,6 +280,7 @@
         ngeo-resizemap-state="profileChartActive">
       </gmf-profile>
     </footer>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCYnqxEQA5sz13sWSgMr97ejzvUeGP8gz4"></script>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../../third-party/jquery-ui/jquery-ui.min.js"></script>
     <script src="../../../../node_modules/angular/angular.js"></script>
@@ -252,8 +296,9 @@
     <script src="../../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
     <script src="../../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
     <script src="../../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../../../../node_modules/d3/d3.min.js"></script>
     <script src="../../../../node_modules/file-saver/FileSaver.min.js"></script>
+    <script src="../../../../node_modules/d3/build/d3.min.js"></script>
+    <script src="../../../../node_modules/moment/min/moment.min.js"></script>
     <script src="/@?main=desktop/js/controller.js"></script>
     <script src="default.js"></script>
     <script src="../../../../utils/watchwatchers.js"></script>
@@ -280,14 +325,14 @@
         module.constant('defaultLang', 'en');
         module.constant('langUrls', langUrls);
         module.constant('cacheVersion', cacheVersion);
-        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi');
-        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
-        module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/raster');
-        module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/profile.json');
-        module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/printproxy');
-        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?version=2&background=background&interface=desktop');
-        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/layers/');
-        module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/short/create');
+        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+        module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+        module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
+        module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
+        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
+        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+        module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/short/create');
         module.constant('gmfSearchGroups', ['osm','district']);
         // Requires that the gmfSearchGroups is specified
         module.constant('gmfSearchActions', [
@@ -298,7 +343,7 @@
         module.constant('gmfContextualdatacontentTemplateUrl', window.location.pathname + 'contextualdata.html');
         module.value('ngeoWfsPermalinkOptions',
             /** @type {ngeox.WfsPermalinkOptions} */ ({
-              url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
+              url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
               wfsTypes: [
                 {featureType: 'fuel', label: 'display_name'},
                 {featureType: 'osm_scale', label: 'display_name'}

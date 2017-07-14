@@ -20,7 +20,7 @@ goog.require('ol.interaction.Draw');
  */
 ngeo.interaction.MeasureArea = function(format, opt_options) {
 
-  var options = opt_options !== undefined ? opt_options : {};
+  const options = opt_options !== undefined ? opt_options : {};
 
   ngeo.interaction.Measure.call(this, options);
 
@@ -29,11 +29,16 @@ ngeo.interaction.MeasureArea = function(format, opt_options) {
    * Message to show after the first point is clicked.
    * @type {Element}
    */
-  this.continueMsg = options.continueMsg !== undefined ? options.continueMsg :
-      goog.dom.createDom('SPAN', {},
-          'Click to continue drawing the polygon.',
-          goog.dom.createDom('BR'),
-          'Double-click or click starting point to finish.');
+  this.continueMsg;
+  if (options.continueMsg !== undefined) {
+    this.continueMsg = options.continueMsg;
+  } else {
+    this.continueMsg = document.createElement('span');
+    this.continueMsg.textContent = 'Click to continue drawing the polygon.';
+    const br = document.createElement('br');
+    br.textContent = 'Double-click or click starting point to finish.';
+    this.continueMsg.appendChild(br);
+  }
 
   /**
    * The format function
@@ -54,8 +59,8 @@ ngeo.interaction.MeasureArea.prototype.createDrawInteraction = function(style,
   return new ol.interaction.Draw(
       /** @type {olx.interaction.DrawOptions} */ ({
         type: 'Polygon',
-        source: source,
-        style: style
+        source,
+        style
       }));
 
 };
@@ -65,14 +70,13 @@ ngeo.interaction.MeasureArea.prototype.createDrawInteraction = function(style,
  * @inheritDoc
  */
 ngeo.interaction.MeasureArea.prototype.handleMeasure = function(callback) {
-  var geom = /** @type {ol.geom.Polygon} */
-      (this.sketchFeature.getGeometry());
-  var proj = this.getMap().getView().getProjection();
-  var dec = this.decimals;
-  var output = ngeo.interaction.Measure.getFormattedArea(geom, proj, dec, this.format);
-  var verticesCount = geom.getCoordinates()[0].length;
-  var coord = null;
-  if (verticesCount > 2) {
+  const geom = goog.asserts.assertInstanceof(this.sketchFeature.getGeometry(), ol.geom.Polygon);
+  const proj = this.getMap().getView().getProjection();
+  goog.asserts.assert(proj);
+  const output = ngeo.interaction.Measure.getFormattedArea(geom, proj, this.precision, this.format);
+  const verticesCount = geom.getCoordinates()[0].length;
+  let coord = null;
+  if (verticesCount > 3) {
     coord = geom.getInteriorPoint().getCoordinates();
   }
   callback(output, coord);

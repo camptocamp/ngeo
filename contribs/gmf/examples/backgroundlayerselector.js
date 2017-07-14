@@ -2,7 +2,7 @@ goog.provide('gmfapp.backgroundlayerselector');
 
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
-goog.require('gmf.backgroundlayerselectorDirective');
+goog.require('gmf.backgroundlayerselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
@@ -17,7 +17,7 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 gmfapp.module.value(
     'gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
 

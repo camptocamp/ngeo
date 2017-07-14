@@ -1,5 +1,7 @@
 goog.provide('ngeo.format.XSDAttribute');
 
+goog.require('ngeo');
+goog.require('ngeo.Attribute');
 goog.require('ol.format.XML');
 
 
@@ -21,6 +23,7 @@ ol.inherits(ngeo.format.XSDAttribute, ol.format.XML);
 /**
  * @param {Document|Node|string} source Source.
  * @return {Array.<ngeox.Attribute>} The parsed result.
+ * @override
  */
 ngeo.format.XSDAttribute.prototype.read = function(source) {
   return /** @type {Array.<ngeox.Attribute>} */ (
@@ -32,11 +35,12 @@ ngeo.format.XSDAttribute.prototype.read = function(source) {
 /**
  * @param {Document} doc Document.
  * @return {Array.<ngeox.Attribute>} List of attributes.
+ * @override
  */
 ngeo.format.XSDAttribute.prototype.readFromDocument = function(doc) {
   goog.asserts.assert(doc.nodeType == Node.DOCUMENT_NODE,
       'doc.nodeType should be DOCUMENT');
-  for (var n = doc.firstChild; n; n = n.nextSibling) {
+  for (let n = doc.firstChild; n; n = n.nextSibling) {
     if (n.nodeType == Node.ELEMENT_NODE) {
       return this.readFromNode(n);
     }
@@ -48,6 +52,7 @@ ngeo.format.XSDAttribute.prototype.readFromDocument = function(doc) {
 /**
  * @param {Node} node Node.
  * @return {Array.<ngeox.Attribute>} List of attributes.
+ * @override
  */
 ngeo.format.XSDAttribute.prototype.readFromNode = function(node) {
   goog.asserts.assert(node.nodeType == Node.ELEMENT_NODE,
@@ -55,14 +60,14 @@ ngeo.format.XSDAttribute.prototype.readFromNode = function(node) {
   goog.asserts.assert(node.localName == 'schema',
       'localName should be schema');
 
-  var elements = node.getElementsByTagName('element');
+  let elements = node.getElementsByTagName('element');
   if (!elements.length) {
     elements = node.getElementsByTagName('xsd:element');
   }
-  var attributes = [];
+  const attributes = [];
 
-  var attribute;
-  for (var i = 0, ii = elements.length; i < ii; i++) {
+  let attribute;
+  for (let i = 0, ii = elements.length; i < ii; i++) {
     attribute = this.readFromElementNode_(elements[i]);
     if (attribute) {
       attributes.push(attribute);
@@ -80,65 +85,98 @@ ngeo.format.XSDAttribute.prototype.readFromNode = function(node) {
  */
 ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
-  var name = node.getAttribute('name');
-  goog.asserts.assert(name, 'name should be defined in element node.');
+  const name = node.getAttribute('name');
+  goog.asserts.assertString(name, 'name should be defined in element node.');
 
-  var nillable = node.getAttribute('nillable');
-  var required = !(nillable === true || nillable === 'true');
+  const nillable = node.getAttribute('nillable');
+  const required = !(nillable === true || nillable === 'true');
 
-  var attribute = {
-    name: name,
-    required: required
+  const attribute = {
+    name,
+    required
   };
 
-  var type = node.getAttribute('type');
+  const type = node.getAttribute('type');
   if (type) {
-    var geomRegex =
-      /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
-    if (geomRegex.exec(type)) {
-      attribute.type = ngeo.format.XSDAttributeType.GEOMETRY;
-      if (/^gml:Point/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.POINT;
-      } else if (/^gml:LineString/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.LINE_STRING;
-      } else if (/^gml:Polygon/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.POLYGON;
-      } else if (/^gml:MultiPoint/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.MULTI_POINT;
-      } else if (/^gml:MultiLineString/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.MULTI_LINE_STRING;
-      } else if (/^gml:MultiPolygon/.exec(type)) {
-        attribute.geomType = ol.geom.GeometryType.MULTI_POLYGON;
-      }
-    } else if (type === 'xsd:string') {
-      attribute.type = ngeo.format.XSDAttributeType.TEXT;
-    } else if (type === 'xsd:date') {
-      attribute.type = ngeo.format.XSDAttributeType.DATE;
-    } else if (type === 'xsd:dateTime') {
-      attribute.type = ngeo.format.XSDAttributeType.DATETIME;
-    } else {
-      return null;
+    if (!ngeo.Attribute.setGeometryType(attribute, type)) {
+      this.setAttributeByXsdType_(attribute, type);
     }
   } else {
-    var enumerations = node.getElementsByTagName('enumeration');
+
+    // Attribute has no type defined on 'element' node.  Try:
+
+    // (1) Enumerations
+    let enumerations = node.getElementsByTagName('enumeration');
     if (!enumerations.length) {
       enumerations = node.getElementsByTagName('xsd:enumeration');
     }
     if (enumerations.length) {
-      attribute.type = ngeo.format.XSDAttributeType.SELECT;
-      var choices = [];
-      for (var i = 0, ii = enumerations.length; i < ii; i++) {
+      attribute.type = ngeo.AttributeType.SELECT;
+      const choices = [];
+      for (let i = 0, ii = enumerations.length; i < ii; i++) {
         choices.push(enumerations[i].getAttribute('value'));
       }
       attribute.choices = choices;
     } else {
-      return null;
+      // (2) Other types with restrictions
+      let restrictions = node.getElementsByTagName('restriction');
+      if (!restrictions.length) {
+        restrictions = node.getElementsByTagName('xsd:restriction');
+      }
+      if (restrictions.length && restrictions[0]) {
+        const restrictionNode = restrictions[0];
+        this.setAttributeByXsdType_(
+          attribute,
+          restrictionNode.getAttribute('base')
+        );
+        // MaxLength
+        let maxLengths = node.getElementsByTagName('maxLength');
+        if (!maxLengths.length) {
+          maxLengths = node.getElementsByTagName('xsd:maxLength');
+        }
+        if (maxLengths.length && maxLengths[0]) {
+          attribute.maxLength = Number(maxLengths[0].getAttribute('value'));
+        }
+      }
     }
+  }
+
+  if (!attribute.type) {
+    return null;
   }
 
   goog.asserts.assert(attribute.type);
 
   return attribute;
+};
+
+
+/**
+ * Set the `type` and `numType` properties of an attribute depending on the
+ * given xsdType.
+ *
+ * @param {ngeox.AttributeBase} attribute Attribute.
+ * @param {string} type The xsd type.
+ * @private
+ */
+ngeo.format.XSDAttribute.prototype.setAttributeByXsdType_ = function(
+  attribute, type
+) {
+  if (type === 'xsd:boolean') {
+    attribute.type = ngeo.AttributeType.BOOLEAN;
+  } else if (type === 'xsd:date') {
+    attribute.type = ngeo.AttributeType.DATE;
+  } else if (type === 'xsd:dateTime') {
+    attribute.type = ngeo.AttributeType.DATETIME;
+  } else if (type === 'xsd:decimal') {
+    attribute.type = ngeo.AttributeType.NUMBER;
+    attribute.numType = ngeo.NumberType.FLOAT;
+  } else if (type === 'xsd:integer') {
+    attribute.type = ngeo.AttributeType.NUMBER;
+    attribute.numType = ngeo.NumberType.INTEGER;
+  } else if (type === 'xsd:string') {
+    attribute.type = ngeo.AttributeType.TEXT;
+  }
 };
 
 
@@ -149,39 +187,12 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
  * @export
  */
 ngeo.format.XSDAttribute.getGeometryAttribute = function(attributes) {
-  var geomAttribute = null;
-  for (var i = 0, ii = attributes.length; i < ii; i++) {
-    if (attributes[i].type === ngeo.format.XSDAttributeType.GEOMETRY) {
+  let geomAttribute = null;
+  for (let i = 0, ii = attributes.length; i < ii; i++) {
+    if (attributes[i].type === ngeo.AttributeType.GEOMETRY) {
       geomAttribute = attributes[i];
       break;
     }
   }
   return geomAttribute;
-};
-
-
-/**
- * @enum {string}
- */
-ngeo.format.XSDAttributeType = {
-  /**
-   * @type {string}
-   */
-  DATE: 'date',
-  /**
-   * @type {string}
-   */
-  DATETIME: 'datetime',
-  /**
-   * @type {string}
-   */
-  GEOMETRY: 'geometry',
-  /**
-   * @type {string}
-   */
-  SELECT: 'select' ,
-  /**
-   * @type {string}
-   */
-  TEXT: 'text'
 };

@@ -1,4 +1,3 @@
-goog.provide('gmf.FeaturestyleController');
 goog.provide('gmf.featurestyleDirective');
 
 goog.require('gmf');
@@ -24,13 +23,12 @@ goog.require('ngeo.colorpickerDirective');
  */
 gmf.featurestyleDirective = function() {
   return {
-    controller: 'GmfFeaturestyleController',
+    controller: 'GmfFeaturestyleController as fsCtrl',
     scope: {
       'feature': '=gmfFeaturestyleFeature'
     },
     bindToController: true,
-    controllerAs: 'fsCtrl',
-    templateUrl: gmf.baseTemplateUrl + '/featurestyle.html'
+    templateUrl: `${gmf.baseTemplateUrl}/featurestyle.html`
   };
 };
 
@@ -41,6 +39,7 @@ gmf.module.directive('gmfFeaturestyle', gmf.featurestyleDirective);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfFeaturestyleController
@@ -66,21 +65,19 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
   this.featureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @export
    */
-  this.color = null;
+  this.color = undefined;
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @export
    */
-  this.measure = null;
+  this.measure = undefined;
 
   $scope.$watch(
-    function() {
-      return this.color;
-    }.bind(this),
+    () => this.color,
     this.handleColorSet_.bind(this)
   );
 
@@ -91,15 +88,13 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
   this.featureListenerKeys_ = [];
 
   /**
-   * @type {?string}
+   * @type {string|undefined}
    * @export
    */
   this.type;
 
   $scope.$watch(
-    function() {
-      return this.feature;
-    }.bind(this),
+    () => this.feature,
     this.handleFeatureSet_.bind(this)
   );
 
@@ -115,15 +110,15 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
 gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
     newFeature, previousFeature) {
 
-  var keys = this.featureListenerKeys_;
+  const keys = this.featureListenerKeys_;
 
   if (previousFeature) {
-    keys.forEach(function(key) {
+    keys.forEach((key) => {
       ol.events.unlistenByKey(key);
     }, this);
-    this.type = null;
-    this.color = null;
-    this.measure = null;
+    this.type = undefined;
+    this.color = undefined;
+    this.measure = undefined;
   }
 
   if (newFeature) {
@@ -146,7 +141,7 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
       );
     }, this);
 
-    var geometry = newFeature.getGeometry();
+    const geometry = newFeature.getGeometry();
     goog.asserts.assert(geometry, 'Geometry should be thruthy');
 
     keys.push(
@@ -166,13 +161,13 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
 
 
 /**
- * @param {?string} newColor Color.
+ * @param {string|undefined} newColor Color.
  * @private
  */
 gmf.FeaturestyleController.prototype.handleColorSet_ = function(
     newColor) {
   if (this.feature && newColor) {
-    var currentColor = this.feature.get(ngeo.FeatureProperties.COLOR);
+    const currentColor = this.feature.get(ngeo.FeatureProperties.COLOR);
     if (currentColor !== newColor) {
       this.feature.set(ngeo.FeatureProperties.COLOR, newColor);
     }
@@ -186,8 +181,7 @@ gmf.FeaturestyleController.prototype.handleColorSet_ = function(
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetAngle = function(value) {
-  return /** @type {number} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.ANGLE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.ANGLE, value));
 };
 
 
@@ -197,19 +191,17 @@ gmf.FeaturestyleController.prototype.getSetAngle = function(value) {
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetName = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.NAME, value));
+  return goog.asserts.assertString(this.getSetProperty_(ngeo.FeatureProperties.NAME, value));
 };
 
 
 /**
- * @param {string|undefined} value A stroke value to set or undefined to get.
- * @return {string} The stroke of the feature.
+ * @param {number|undefined} value A stroke value to set or undefined to get.
+ * @return {number} The stroke of the feature.
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetOpacity = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.OPACITY, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.OPACITY, value));
 };
 
 
@@ -220,30 +212,27 @@ gmf.FeaturestyleController.prototype.getSetOpacity = function(value) {
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetShowMeasure = function(value) {
-  return /** @type {boolean} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.SHOW_MEASURE, value));
+  return goog.asserts.assertBoolean(this.getSetProperty_(ngeo.FeatureProperties.SHOW_MEASURE, value));
 };
 
 
 /**
- * @param {string|undefined} value A size value to set or undefined to get.
- * @return {string} The size of the feature.
+ * @param {number|undefined} value A size value to set or undefined to get.
+ * @return {number} The size of the feature.
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetSize = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.SIZE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.SIZE, value));
 };
 
 
 /**
- * @param {string|undefined} value A stroke value to set or undefined to get.
- * @return {string} The stroke of the feature.
+ * @param {number|undefined} value A stroke value to set or undefined to get.
+ * @return {number} The stroke of the feature.
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetStroke = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.STROKE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.STROKE, value));
 };
 
 
@@ -266,7 +255,7 @@ gmf.FeaturestyleController.prototype.getSetProperty_ = function(key, value) {
  * @private
  */
 gmf.FeaturestyleController.prototype.handleFeatureChange_ = function() {
-  var feature = this.feature;
+  const feature = this.feature;
 
   if (!feature) {
     return;
@@ -280,10 +269,10 @@ gmf.FeaturestyleController.prototype.handleFeatureChange_ = function() {
  * @private
  */
 gmf.FeaturestyleController.prototype.handleGeometryChange_ = function() {
-  var feature = this.feature;
-  this.measure = this.featureHelper_.getMeasure(feature);
+  goog.asserts.assert(this.feature);
+  this.measure = this.featureHelper_.getMeasure(this.feature);
 
-  var showMeasure = this.featureHelper_.getShowMeasureProperty(feature);
+  const showMeasure = this.featureHelper_.getShowMeasureProperty(this.feature);
   if (showMeasure) {
     this.handleFeatureChange_();
   }

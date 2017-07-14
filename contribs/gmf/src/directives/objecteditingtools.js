@@ -1,4 +1,3 @@
-goog.provide('gmf.ObjecteditingtoolsController');
 goog.provide('gmf.objecteditingtoolsDirective');
 
 /** @suppress {extraRequire} */
@@ -31,6 +30,8 @@ gmf.module.value('gmfObjectEditingToolsOptions', {});
  *
  *     <gmf-objecteditingtools
  *         gmf-objecteditingtools-active="ctrl.objectEditingActive"
+ *         gmf-objecteditingtools-copyfromactive="ctrl.objectEditingCopyFromActive"
+ *         gmf-objecteditingtools-deletefromactive="ctrl.objectEditingDeleteFromActive"
  *         gmf-objecteditingtools-feature="ctrl.objectEditingFeature"
  *         gmf-objecteditingtools-geomtype="ctrl.objectEditingGeomType"
  *         gmf-objecteditingtools-map="::ctrl.map"
@@ -42,6 +43,10 @@ gmf.module.value('gmfObjectEditingToolsOptions', {});
  *
  * @htmlAttribute {boolean} gmf-objecteditingtools-active Whether the
  *     directive is active or not.
+ * @htmlAttribute {boolean} gmf-objecteditingtools-copyfromactive Whether the
+ *     'Copy from' tool is active or not.
+ * @htmlAttribute {boolean} gmf-objecteditingtools-deletefromactive Whether the
+ *     'Delete from' tool is active or not.
  * @htmlAttribute {ol.Feature} gmf-objecteditingtools-feature The feature to
  *     edit.
  * @htmlAttribute {string} gmf-objecteditingtools-geomtype The geometry type.
@@ -61,9 +66,11 @@ gmf.module.value('gmfObjectEditingToolsOptions', {});
  */
 gmf.objecteditingtoolsDirective = function() {
   return {
-    controller: 'GmfObjecteditingtoolsController',
+    controller: 'GmfObjecteditingtoolsController as oetCtrl',
     scope: {
       'active': '=gmfObjecteditingtoolsActive',
+      'copyFromActive': '=gmfObjecteditingtoolsCopyfromactive',
+      'deleteFromActive': '=gmfObjecteditingtoolsDeletefromactive',
       'feature': '<gmfObjecteditingtoolsFeature',
       'geomType': '<gmfObjecteditingtoolsGeomtype',
       'map': '<gmfObjecteditingtoolsMap',
@@ -73,8 +80,7 @@ gmf.objecteditingtoolsDirective = function() {
       'sketchFeatures': '<gmfObjecteditingtoolsSketchfeatures'
     },
     bindToController: true,
-    controllerAs: 'oetCtrl',
-    templateUrl: gmf.baseTemplateUrl + '/objecteditingtools.html'
+    templateUrl: `${gmf.baseTemplateUrl}/objecteditingtools.html`
   };
 };
 
@@ -89,6 +95,7 @@ gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditingtoolsController
@@ -103,6 +110,18 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
    * @export
    */
   this.active;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.copyFromActive;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.deleteFromActive;
 
   /**
    * @type {ol.Feature}
@@ -211,7 +230,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
    */
   this.triangleAngle = Math.PI / 180 * 90; // 90 degrees
 
-  var oeToolsOptions = /** @type {gmfx.ObjectEditingToolsOptions} */ (
+  const oeToolsOptions = /** @type {gmfx.ObjectEditingToolsOptions} */ (
       $injector.get('gmfObjectEditingToolsOptions'));
 
   /**
@@ -224,20 +243,8 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
   this.registerTool_('drawTriangleActive',
     gmf.ObjecteditingtoolsController.ProcessType.ADD);
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.copyFromActive = false;
-
   this.registerTool_('copyFromActive',
     gmf.ObjecteditingtoolsController.ProcessType.ADD, true);
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.deleteFromActive = false;
 
   this.registerTool_('deleteFromActive',
     gmf.ObjecteditingtoolsController.ProcessType.DELETE, true);
@@ -269,17 +276,15 @@ gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
   toolActiveName, process, opt_requiresLayer
 ) {
 
-  var requiresLayer = opt_requiresLayer === true;
+  const requiresLayer = opt_requiresLayer === true;
 
   this.scope_.$watch(
-    function() {
-      return this[toolActiveName];
-    }.bind(this),
+    () => this[toolActiveName],
     this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
 
-  var group = gmf.ObjecteditingtoolsController.NAMESPACE_ + '-' + ol.getUid(this);
-  var toolActivate = new ngeo.ToolActivate(this, toolActiveName);
+  const group = `${gmf.ObjecteditingtoolsController.NAMESPACE_}-${ol.getUid(this)}`;
+  const toolActivate = new ngeo.ToolActivate(this, toolActiveName);
   this.ngeoToolActivateMgr_.registerTool(group, toolActivate, false);
 
   this.toolActiveNames_.push(toolActiveName);
@@ -306,8 +311,8 @@ gmf.ObjecteditingtoolsController.prototype.handleToolActiveChange_ = function(
   }
 
   // Update active property
-  var active = false;
-  for (var i = 0, ii = this.toolActiveNames_.length; i < ii; i++) {
+  let active = false;
+  for (let i = 0, ii = this.toolActiveNames_.length; i < ii; i++) {
     active = active || this[this.toolActiveNames_[i]];
     if (active) {
       break;

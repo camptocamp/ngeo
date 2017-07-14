@@ -22,9 +22,8 @@ app.colorpickerDirective = function() {
     restrict: 'E',
     scope: true,
     template: '<div ngeo-colorpicker="ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
-    controllerAs: 'ctrl',
     bindToController: true,
-    controller: 'AppColorpickerController'
+    controller: 'AppColorpickerController as ctrl'
   };
 };
 
@@ -46,7 +45,7 @@ app.ColorPickerController = function() {
    * @export
    */
   this.colors = [
-    ['red', 'yellow','green', 'lightgreen', 'lightblue', 'orange', 'purple'],
+    ['red', 'yellow', 'green', 'lightgreen', 'lightblue', 'orange', 'purple'],
     ['#ffffff', '#f7f7f7', '#c3c3c3', '#000000']];
 
 };

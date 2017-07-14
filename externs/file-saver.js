@@ -11,4 +11,4 @@
  * @param {string=} opt_filename
  * @param {boolean=} opt_disableAutoBOM
  */
-var saveAs = function(blobOrFile, opt_filename, opt_disableAutoBOM) {};
+let saveAs = function(blobOrFile, opt_filename, opt_disableAutoBOM) {};

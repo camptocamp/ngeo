@@ -1,7 +1,7 @@
 goog.provide('ngeo.bboxQueryDirective');
 
 goog.require('ngeo');
-goog.require('ngeo.Query');
+goog.require('ngeo.MapQuerent');
 goog.require('ol.interaction.DragBox');
 
 
@@ -27,23 +27,23 @@ goog.require('ol.interaction.DragBox');
  *
  * See the live example: [../examples/bboxquery.html](../examples/bboxquery.html)
  *
- * @param {ngeo.Query} ngeoQuery The ngeo Query service.
+ * @param {ngeo.MapQuerent} ngeoMapQuerent The ngeo map querent service.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBboxQuery
  */
-ngeo.bboxQueryDirective = function(ngeoQuery) {
+ngeo.bboxQueryDirective = function(ngeoMapQuerent) {
   return {
     restrict: 'A',
     scope: false,
-    link: function(scope, elem, attrs) {
+    link(scope, elem, attrs) {
       /**
        * @type {ol.Map}
        */
-      var map = scope.$eval(attrs['ngeoBboxQueryMap']);
+      const map = scope.$eval(attrs['ngeoBboxQueryMap']);
 
-      var interaction = new ol.interaction.DragBox({
+      const interaction = new ol.interaction.DragBox({
         condition: ol.events.condition.platformModifierKeyOnly
       });
 
@@ -52,15 +52,18 @@ ngeo.bboxQueryDirective = function(ngeoQuery) {
        * a request to the query service using the extent that was drawn.
        * @param {ol.interaction.DragBox.Event} evt Event.
        */
-      var handleBoxEnd = function(evt) {
-        var extent = interaction.getGeometry().getExtent();
-        ngeoQuery.issue(map, extent);
+      const handleBoxEnd = function(evt) {
+        const extent = interaction.getGeometry().getExtent();
+        ngeoMapQuerent.issue({
+          extent,
+          map
+        });
       };
       interaction.on('boxend', handleBoxEnd);
 
       // watch 'active' property -> activate/deactivate accordingly
       scope.$watch(attrs['ngeoBboxQueryActive'],
-          function(newVal, oldVal) {
+          (newVal, oldVal) => {
             if (newVal) {
               // activate
               map.addInteraction(interaction);
@@ -68,7 +71,7 @@ ngeo.bboxQueryDirective = function(ngeoQuery) {
               // deactivate
               map.removeInteraction(interaction);
               if (scope.$eval(attrs['ngeoBboxQueryAutoclear']) !== false) {
-                ngeoQuery.clear();
+                ngeoMapQuerent.clear();
               }
             }
           }

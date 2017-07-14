@@ -3,7 +3,7 @@ goog.provide('gmf.AbstractMobileController');
 goog.require('gmf');
 goog.require('gmf.AbstractController');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerywindowDirective');
+goog.require('gmf.displayquerywindowComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileMeasurelengthDirective');
 /** @suppress {extraRequire} */
@@ -83,7 +83,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     }.bind(this)
   });
 
-  var positionFeatureStyle = config.positionFeatureStyle || new ol.style.Style({
+  const positionFeatureStyle = config.positionFeatureStyle || new ol.style.Style({
     image: new ol.style.Circle({
       radius: 6,
       fill: new ol.style.Fill({color: 'rgba(230, 100, 100, 1)'}),
@@ -91,7 +91,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     })
   });
 
-  var accuracyFeatureStyle = config.accuracyFeatureStyle || new ol.style.Style({
+  const accuracyFeatureStyle = config.accuracyFeatureStyle || new ol.style.Style({
     fill: new ol.style.Fill({color: 'rgba(100, 100, 230, 0.3)'}),
     stroke: new ol.style.Stroke({color: 'rgba(40, 40, 230, 1)', width: 2})
   });
@@ -101,15 +101,15 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
    * @export
    */
   this.mobileGeolocationOptions = {
-    positionFeatureStyle: positionFeatureStyle,
-    accuracyFeatureStyle: accuracyFeatureStyle,
+    positionFeatureStyle,
+    accuracyFeatureStyle,
     zoom: config.geolocationZoom
   };
 
-  var viewConfig = {
-    projection: ol.proj.get('EPSG:' + (config.srid || 21781))
+  const viewConfig = {
+    projection: ol.proj.get(`EPSG:${config.srid || 21781}`)
   };
-  goog.object.extend(viewConfig, config.mapViewConfig || {});
+  ol.obj.assign(viewConfig, config.mapViewConfig || {});
 
   /**
    * @type {ol.Map}
@@ -122,7 +122,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
       new ol.control.ScaleLine(),
       new ol.control.Zoom({
         zoomInTipLabel: '',
-        zoomoutTipLabel: ''
+        zoomOutTipLabel: ''
       })
     ],
     interactions:
@@ -133,15 +133,15 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   gmf.AbstractController.call(this, config, $scope, $injector);
 
 
-  var dragEl = document.querySelector('main');
-  var handleEl = document.querySelector('main .overlay');
+  const dragEl = document.querySelector('main');
+  const handleEl = document.querySelector('main .overlay');
   /**
    * @type {goog.fx.Dragger}
    * @private
    */
   this.dragger_ = new goog.fx.Dragger(dragEl, handleEl);
 
-  goog.events.listen(this.dragger_, 'start', function(e) {
+  goog.events.listen(this.dragger_, 'start', (e) => {
     // Prevent transition to happen while dragging
     angular.element(dragEl).addClass('dragging');
   });
@@ -155,18 +155,18 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   this.navWidth_ = angular.element(document.querySelector(
     '.gmf-mobile-nav-left')).width();
 
-  goog.events.listen(this.dragger_, 'end', (function(e) {
+  goog.events.listen(this.dragger_, 'end', (e) => {
     angular.element(dragEl).removeClass('dragging');
     // Reset positioning when finished so that transition can happen correctly
     angular.element(e.target.target).css('transform', '');
     // Hide nav only if dragged sufficiently
-    var deltaX = this.dragger_.limitX(this.dragger_.deltaX);
+    const deltaX = this.dragger_.limitX(this.dragger_.deltaX);
     if (Math.abs(deltaX) > this.navWidth_ / 2) {
-      $scope.$apply(function() {
+      $scope.$apply(() => {
         this.hideNav();
-      }.bind(this));
+      });
     }
-  }).bind(this));
+  });
 };
 ol.inherits(gmf.AbstractMobileController, gmf.AbstractController);
 
@@ -178,11 +178,11 @@ gmf.AbstractMobileController.prototype.toggleLeftNavVisibility = function() {
   this.leftNavVisible = !this.leftNavVisible;
 
   if (this.leftNavVisible) {
-    var navWidth = this.navWidth_;
+    const navWidth = this.navWidth_;
     // default dragger behavior is to change left/top, override it to change
     // translateX
     this.dragger_.defaultAction = function(x, y) {
-      this.target.style.transform = 'translateX(' + (navWidth + x) + 'px)';
+      this.target.style.transform = `translateX(${navWidth + x}px)`;
     };
     // Set the limits for dragger so that it's constrained horizontaly to the
     // left.
@@ -198,11 +198,11 @@ gmf.AbstractMobileController.prototype.toggleRightNavVisibility = function() {
   this.rightNavVisible = !this.rightNavVisible;
 
   if (this.rightNavVisible) {
-    var navWidth = this.navWidth_;
+    const navWidth = this.navWidth_;
     // default dragger behavior is to change left/top, override it to change
     // translateX
     this.dragger_.defaultAction = function(x, y) {
-      this.target.style.transform = 'translateX(' + (-navWidth + x) + 'px)';
+      this.target.style.transform = `translateX(${-navWidth + x}px)`;
     };
     // Set the limits for dragger so that it's constrained horizontaly to the
     // right.

@@ -76,19 +76,19 @@ angular.JQLite.prototype.tab = function(action) {};
 
 /**
  * @typedef {{
-   * animation: (boolean|undefined),
-   * container: (string|boolean|undefined),
-   * delay: (number|Object.<string,*>|undefined),
-   * html: (boolean|undefined),
-   * placement: (string|function(Element, Element)|undefined),
-   * selector: (string|undefined),
-   * template: (string|undefined),
-   * title: (string|function()|undefined),
-   * trigger: (string|undefined),
-   * viewport: (string|Object.<string,*>|function(Element)|undefined)
+ *   animation: (boolean|undefined),
+ *   container: (string|boolean|undefined),
+ *   delay: (number|Object.<string,*>|undefined),
+ *   html: (boolean|undefined),
+ *   placement: (string|function(Element, Element)|undefined),
+ *   selector: (string|undefined),
+ *   template: (string|undefined),
+ *   title: (string|function()|undefined),
+ *   trigger: (string|undefined),
+ *   viewport: (string|Object.<string,*>|function(Element)|undefined)
  * }}
  */
-var TooltipOptions;
+let TooltipOptions;
 
 
 /**
@@ -103,3 +103,26 @@ jQuery.prototype.tooltip = function(opt_options) {};
  * @return {angular.JQLite}
  */
 angular.JQLite.prototype.tooltip = function(opt_options) {};
+
+
+/**
+ * @typedef {{
+ *   parent: (string|boolean|undefined),
+ *   toggle: (boolean|undefined)
+ * }}
+ */
+let CollapseOptions;
+
+
+/**
+ * @param {string|CollapseOptions} action_or_options
+ * @return {jQuery}
+ */
+jQuery.prototype.collapse = function(action_or_options) {};
+
+
+/**
+ * @param {string|CollapseOptions} action_or_options
+ * @return {angular.JQLite}
+ */
+angular.JQLite.prototype.collapse = function(action_or_options) {};

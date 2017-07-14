@@ -1,3 +1,4 @@
+"use strict";
 /**
  * This plugin extracts info from boolean defines.  This only
  * handles boolean defines with the default value in the description.  Default
@@ -6,7 +7,7 @@
  */
 
 
-var DEFAULT_VALUE = /default\s+is\s+`?(true|false)`?/i;
+let DEFAULT_VALUE = /default\s+is\s+`?(true|false)`?/i;
 
 
 /**
@@ -19,9 +20,9 @@ exports.defineTags = function(dictionary) {
     canHaveType: true,
     mustHaveValue: true,
     onTagged: function(doclet, tag) {
-      var types = tag.value.type.names;
+      let types = tag.value.type.names;
       if (types.length === 1 && types[0] === 'boolean') {
-        var match = tag.value.description.match(DEFAULT_VALUE);
+        let match = tag.value.description.match(DEFAULT_VALUE);
         if (match) {
           doclet.define = {
             default: match[1] === 'true'

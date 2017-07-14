@@ -23,7 +23,7 @@ app.module = angular.module('app', ['ngeo']);
  * The directive is based on Bootstrap's dropdown jQuery plugin and on
  * the ngeoBackgroundLayerMgr service.
  *
- * @return {angular.Directive} Directive Defintion Object.
+ * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  */
 app.backgroundlayerDirective = function() {
@@ -33,9 +33,8 @@ app.backgroundlayerDirective = function() {
       'map': '=appBackgroundlayerMap'
     },
     templateUrl: 'partials/backgroundlayerdropdown.html',
-    controllerAs: 'ctrl',
     bindToController: true,
-    controller: 'AppBackgroundlayerController'
+    controller: 'AppBackgroundlayerController as ctrl'
   };
 };
 
@@ -53,11 +52,11 @@ app.module.directive('appBackgroundlayer', app.backgroundlayerDirective);
  */
 app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
   $http.get('data/backgroundlayers.json').then(
-      function(resp) {
-        var bgLayers = resp.data;
+      (resp) => {
+        const bgLayers = resp.data;
         this['bgLayers'] = bgLayers;
         this.setLayer(bgLayers[0]);
-      }.bind(this));
+      });
 
   /**
    * @type {ngeo.BackgroundLayerMgr}
@@ -75,7 +74,7 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
  */
 app.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
   this['currentBgLayer'] = layerSpec;
-  var layer = this.createLayer_(layerSpec['name']);
+  const layer = this.createLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this['map'], layer);
 };
 
@@ -90,10 +89,10 @@ app.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
     return new ol.layer.Tile();
   }
 
-  var source = new ngeo.source.AsitVD({
+  const source = new ngeo.source.AsitVD({
     layer: layerName
   });
-  return new ol.layer.Tile({source: source});
+  return new ol.layer.Tile({source});
 };
 
 
@@ -111,7 +110,7 @@ app.MainController = function($scope) {
   /**
    * @type {ol.Map}
    */
-  var map = new ol.Map({
+  const map = new ol.Map({
     view: new ol.View({
       projection: 'EPSG:21781',
       resolutions: [1000, 500, 200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
@@ -125,7 +124,7 @@ app.MainController = function($scope) {
    * An overlay layer.
    * @type {ol.layer.Image}
    */
-  var overlay = new ol.layer.Image({
+  const overlay = new ol.layer.Image({
     source: new ol.source.ImageWMS({
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},

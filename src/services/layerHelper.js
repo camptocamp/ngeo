@@ -7,10 +7,11 @@ goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
+goog.require('ol.obj');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('ol.source.WMTS');
-goog.require('goog.uri.utils');
+goog.require('ol.uri');
 
 
 /**
@@ -61,14 +62,15 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
  *     "geoserver", "qgisserver", …).
  * @param {string=} opt_time time parameter for layer queryable by time/periode
  * @param {Object.<string, string>=} opt_params WMS parameters.
+ * @param {string=} opt_crossOrigin crossOrigin.
  * @return {ol.layer.Image} WMS Layer.
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
-    sourceLayersName, opt_serverType, opt_time, opt_params) {
+    sourceLayersName, opt_serverType, opt_time, opt_params, opt_crossOrigin) {
 
-  var params = {'LAYERS': sourceLayersName};
-  var olServerType;
+  const params = {'LAYERS': sourceLayersName};
+  let olServerType;
   if (opt_time) {
     params['TIME'] = opt_time;
   }
@@ -77,16 +79,17 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
     // OpenLayers expects 'qgis' insteads of 'qgisserver'
     olServerType = opt_serverType.replace('qgisserver', 'qgis');
   }
-  var source = new ol.source.ImageWMS({
+  const source = new ol.source.ImageWMS({
     url: sourceURL,
-    params: params,
-    serverType: olServerType
+    params,
+    serverType: olServerType,
+    crossOrigin: opt_crossOrigin
   });
   if (opt_params) {
     source.updateParams(opt_params);
   }
 
-  return new ol.layer.Image({source: source});
+  return new ol.layer.Image({source});
 };
 
 
@@ -105,38 +108,37 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
  * @export
  */
 ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_dimensions) {
-  var parser = new ol.format.WMTSCapabilities();
-  var layer = new ol.layer.Tile({
+  const parser = new ol.format.WMTSCapabilities();
+  const layer = new ol.layer.Tile({
     preload: Infinity
   });
-  var $q = this.$q_;
+  const $q = this.$q_;
 
-  return this.$http_.get(capabilitiesURL).then(function(response) {
-    var result;
+  return this.$http_.get(capabilitiesURL, {cache: true}).then((response) => {
+    let result;
     if (response.data) {
       result = parser.read(response.data);
     }
     if (result) {
-      var options = ol.source.WMTS.optionsFromCapabilities(result, {
+      const options = ol.source.WMTS.optionsFromCapabilities(result, {
+        crossOrigin: 'anonymous',
         layer: layerName
       });
-      var source = new ol.source.WMTS(options);
-      if (opt_dimensions) {
+      goog.asserts.assert(options);
+      const source = new ol.source.WMTS(/** @type {olx.source.WMTSOptions} */ (options));
+      if (opt_dimensions && !ol.obj.isEmpty(opt_dimensions)) {
         source.updateDimensions(opt_dimensions);
       }
       layer.setSource(source);
 
       // Add styles from capabilities as param of the layer
-      var layers = result['Contents']['Layer'];
-      var l = ol.array.find(layers, function(elt, index, array) {
-        return elt['Identifier'] == layerName;
-      });
+      const layers = result['Contents']['Layer'];
+      const l = ol.array.find(layers, (elt, index, array) => elt['Identifier'] == layerName);
       layer.set('capabilitiesStyles', l['Style']);
 
       return $q.resolve(layer);
     }
-    return $q.reject('Failed to get WMTS capabilities from ' +
-        capabilitiesURL);
+    return $q.reject(`Failed to get WMTS capabilities from ${capabilitiesURL}`);
   });
 };
 
@@ -150,7 +152,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
-  var group = new ol.layer.Group();
+  const group = new ol.layer.Group();
   if (opt_layers) {
     group.setLayers(opt_layers);
   }
@@ -169,9 +171,9 @@ ngeo.LayerHelper.prototype.createBasicGroup = function(opt_layers) {
  * @export
  */
 ngeo.LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
-  var groups = map.getLayerGroup().getLayers();
-  var group;
-  groups.getArray().some(function(existingGroup) {
+  const groups = map.getLayerGroup().getLayers();
+  let group;
+  groups.getArray().some((existingGroup) => {
     if (existingGroup.get(ngeo.LayerHelper.GROUP_KEY) === groupName) {
       group = /** @type {ol.layer.Group} */ (existingGroup);
       return true;
@@ -210,7 +212,7 @@ ngeo.LayerHelper.prototype.getFlatLayers = function(layer) {
  */
 ngeo.LayerHelper.prototype.getFlatLayers_ = function(layer, array) {
   if (layer instanceof ol.layer.Group) {
-    var sublayers = layer.getLayers();
+    const sublayers = layer.getLayers();
     sublayers.forEach(function(l) {
       this.getFlatLayers_(l, array);
     }, this);
@@ -233,10 +235,10 @@ ngeo.LayerHelper.prototype.getFlatLayers_ = function(layer, array) {
  * @export
  */
 ngeo.LayerHelper.prototype.getLayerByName = function(layerName, layers) {
-  var found = null;
+  let found = null;
   layers.some(function(layer) {
     if (layer instanceof ol.layer.Group) {
-      var sublayers = layer.getLayers().getArray();
+      const sublayers = layer.getLayers().getArray();
       found = this.getLayerByName(layerName, sublayers);
     } else if (layer.get('layerNodeName') === layerName) {
       found = layer;
@@ -257,10 +259,10 @@ ngeo.LayerHelper.prototype.getLayerByName = function(layerName, layers) {
  */
 ngeo.LayerHelper.prototype.getWMTSLegendURL = function(layer) {
   // FIXME case of multiple styles ?  case of multiple legendUrl ?
-  var url;
-  var styles = layer.get('capabilitiesStyles');
+  let url;
+  const styles = layer.get('capabilitiesStyles');
   if (styles !== undefined) {
-    var legendURL = styles[0]['legendURL'];
+    const legendURL = styles[0]['legendURL'];
     if (legendURL !== undefined) {
       url = legendURL[0]['href'];
     }
@@ -271,7 +273,7 @@ ngeo.LayerHelper.prototype.getWMTSLegendURL = function(layer) {
 
 /**
  * Get the WMS legend URL for the given node.
- * @param {string} url The base url of the wms service.
+ * @param {string|undefined} url The base url of the wms service.
  * @param {string} layerName The name of a wms layer.
  * @param {number=} opt_scale A scale.
  * @param {string=} opt_legendRule rule parameters to add to the returned URL.
@@ -283,19 +285,21 @@ ngeo.LayerHelper.prototype.getWMSLegendURL = function(url,
   if (!url) {
     return undefined;
   }
-  url = goog.uri.utils.setParam(url, 'FORMAT', 'image/png');
-  url = goog.uri.utils.setParam(url, 'TRANSPARENT', true);
-  url = goog.uri.utils.setParam(url, 'SERVICE', 'WMS');
-  url = goog.uri.utils.setParam(url, 'VERSION', '1.1.1');
-  url = goog.uri.utils.setParam(url, 'REQUEST', 'GetLegendGraphic');
-  url = goog.uri.utils.setParam(url, 'LAYER', layerName);
+  const queryString = {
+    'FORMAT': 'image/png',
+    'TRANSPARENT': true,
+    'SERVICE': 'WMS',
+    'VERSION': '1.1.1',
+    'REQUEST': 'GetLegendGraphic',
+    'LAYER': layerName
+  };
   if (opt_scale !== undefined) {
-    url = goog.uri.utils.setParam(url, 'SCALE', opt_scale);
+    queryString['SCALE'] = opt_scale;
   }
   if (opt_legendRule !== undefined) {
-    url = goog.uri.utils.setParam(url, 'RULE', opt_legendRule);
+    queryString['RULE'] = opt_legendRule;
   }
-  return url;
+  return ol.uri.appendParams(url, queryString);
 };
 
 
@@ -310,7 +314,7 @@ ngeo.LayerHelper.prototype.isLayerVisible = function(layer, map) {
     return false;
   }
 
-  var currentResolution = map.getView().getResolution();
+  const currentResolution = map.getView().getResolution();
   return currentResolution > layer.getMinResolution() &&
       currentResolution < layer.getMaxResolution();
 };
@@ -321,13 +325,13 @@ ngeo.LayerHelper.prototype.isLayerVisible = function(layer, map) {
  * @param {ol.layer.Image|ol.layer.Tile} layer Layer to refresh.
  */
 ngeo.LayerHelper.prototype.refreshWMSLayer = function(layer) {
-  var source_ = layer.getSource();
+  const source_ = layer.getSource();
   goog.asserts.assert(
     source_ instanceof ol.source.ImageWMS ||
     source_ instanceof ol.source.TileWMS
   );
-  var source = /** @type{ol.source.ImageWMS|ol.source.TileWMS} */ (source_);
-  var params = source.getParams();
+  const source = /** @type{ol.source.ImageWMS|ol.source.TileWMS} */ (source_);
+  const params = source.getParams();
   params[ngeo.LayerHelper.REFRESH_PARAM] = Math.random();
   source.updateParams(params);
 };
@@ -343,14 +347,13 @@ ngeo.LayerHelper.prototype.refreshWMSLayer = function(layer) {
  * in a ISO-8601 string datetime or time interval format
  * @export
  */
-ngeo.LayerHelper.prototype.updateWMSLayerState = function(layer,
-    names, opt_time) {
+ngeo.LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time) {
   // Don't send layer without parameters, hide layer instead;
   if (names.length <= 0) {
     layer.setVisible(false);
   } else {
     layer.setVisible(true);
-    var source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
+    const source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
     if (opt_time) {
       source.updateParams({'LAYERS': names, 'TIME': opt_time});
     } else {

@@ -1,4 +1,3 @@
-goog.provide('gmf.ObjecteditinggetwmsfeatureController');
 goog.provide('gmf.objecteditinggetwmsfeatureDirective');
 
 goog.require('gmf');
@@ -32,15 +31,14 @@ goog.require('gmf.ObjectEditingQuery');
  */
 gmf.objecteditinggetwmsfeatureDirective = function() {
   return {
-    controller: 'GmfObjecteditinggetwmsfeatureController',
+    controller: 'GmfObjecteditinggetwmsfeatureController as gwfCtrl',
     scope: {
       'active': '=gmfObjecteditinggetwmsfeatureActive',
       'features': '<gmfObjecteditinggetwmsfeatureFeatures',
       'layerInfo': '=gmfObjecteditinggetwmsfeatureLayerinfo',
       'map': '<gmfObjecteditinggetwmsfeatureMap'
     },
-    bindToController: true,
-    controllerAs: 'gwfCtrl'
+    bindToController: true
   };
 };
 
@@ -54,6 +52,7 @@ gmf.module.directive(
  * @param {gmf.ObjectEditingQuery} gmfObjectEditingQuery GMF ObjectEditing
  *     query service.
  * @constructor
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditinggetwmsfeatureController
@@ -70,9 +69,7 @@ gmf.ObjecteditinggetwmsfeatureController = function($scope,
   this.active;
 
   $scope.$watch(
-    function() {
-      return this.active;
-    }.bind(this),
+    () => this.active,
     this.handleActiveChange_.bind(this)
   );
 
@@ -117,14 +114,14 @@ gmf.ObjecteditinggetwmsfeatureController.prototype.handleActiveChange_ = functio
   if (active) {
     ol.events.listen(
       this.map,
-      ol.MapBrowserEvent.EventType.CLICK,
+      ol.MapBrowserEventType.CLICK,
       this.handleMapClick_,
       this
     );
   } else {
     ol.events.unlisten(
       this.map,
-      ol.MapBrowserEvent.EventType.CLICK,
+      ol.MapBrowserEventType.CLICK,
       this.handleMapClick_,
       this
     );
@@ -145,11 +142,11 @@ gmf.ObjecteditinggetwmsfeatureController.prototype.handleMapClick_ = function(
     this.layerInfo,
     evt.coordinate,
     this.map
-  ).then(function(feature) {
+  ).then((feature) => {
     if (feature) {
       this.features.push(feature);
     }
-  }.bind(this));
+  });
 
 };
 

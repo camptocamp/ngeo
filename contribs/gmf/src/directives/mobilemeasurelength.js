@@ -1,4 +1,3 @@
-goog.provide('gmf.MobileMeasureLengthController');
 goog.provide('gmf.mobileMeasurelengthDirective');
 
 goog.require('gmf');
@@ -19,10 +18,10 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} The template url.
      */
-    function(element, attrs) {
-      var templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
+    (element, attrs) => {
+      const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          gmf.baseTemplateUrl + '/mobilemeasurelength.html';
+          `${gmf.baseTemplateUrl}/mobilemeasurelength.html`;
     });
 
 
@@ -31,15 +30,14 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
  *
  * Example:
  *
- *      <div gmf-mobile-measurelength=""
+ *      <div gmf-mobile-measurelength
  *        gmf-mobile-measurelength-active="ctrl.measureLengthActive"
  *        gmf-mobile-measurelength-map="::ctrl.map">
  *      </div>
  *
  * @htmlAttribute {boolean} gmf-mobile-measurelength-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurelength-decimals number of decimal
- *     to display.
+ * @htmlAttribute {number=} gmf-mobile-measurelength-precision the number of significant digits to display.
  * @htmlAttribute {ol.Map} gmf-mobile-measurelength-map The map.
  * @htmlAttribute {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction=}
  *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
@@ -56,14 +54,22 @@ gmf.mobileMeasureLengthDirective =
         restrict: 'A',
         scope: {
           'active': '=gmfMobileMeasurelengthActive',
-          'decimals': '<?gmfMobileMeasurelengthDecimals',
+          'precision': '<?gmfMobileMeasurelengthPrecision',
           'map': '=gmfMobileMeasurelengthMap',
           'sketchStyle': '=?gmfMobileMeasureLengthSketchstyle'
         },
-        controller: 'GmfMobileMeasureLengthController',
-        controllerAs: 'ctrl',
+        controller: 'GmfMobileMeasureLengthController as ctrl',
         bindToController: true,
-        templateUrl: gmfMobileMeasureLengthTemplateUrl
+        templateUrl: gmfMobileMeasureLengthTemplateUrl,
+        /**
+         * @param {angular.Scope} scope Scope.
+         * @param {angular.JQLite} element Element.
+         * @param {angular.Attributes} attrs Attributes.
+         * @param {gmf.MobileMeasureLengthController} controller Controller.
+         */
+        link(scope, element, attrs, controller) {
+          controller.init();
+        }
       };
     };
 
@@ -78,6 +84,8 @@ gmf.module.directive('gmfMobileMeasurelength',
  *     interaction service.
  * @param {angular.$filter} $filter Angular filter
  * @constructor
+ * @private
+ * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileMeasureLengthController
@@ -96,17 +104,15 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
    */
   this.active;
 
-  $scope.$watch(function() {
-    return this.active;
-  }.bind(this), function(newVal) {
+  $scope.$watch(() => this.active, (newVal) => {
     this.measure.setActive(newVal);
-  }.bind(this));
+  });
 
   /**
    * @type {number|undefined}
    * @export
    */
-  this.decimals;
+  this.precision;
 
   /**
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
@@ -142,13 +148,12 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
    * @export
    */
   this.measure = new ngeo.interaction.MeasureLengthMobile($filter('ngeoUnitPrefix'), {
-    decimals: this.decimals,
+    precision: this.precision,
     sketchStyle: this.sketchStyle
   });
 
   this.measure.setActive(this.active);
   ngeoDecorateInteraction(this.measure);
-  this.map.addInteraction(this.measure);
 
   /**
    * @type {ngeo.interaction.MobileDraw}
@@ -157,11 +162,11 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
   this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
       this.measure.getDrawInteraction());
 
-  var drawInteraction = this.drawInteraction;
+  const drawInteraction = this.drawInteraction;
   ngeoDecorateInteraction(drawInteraction);
 
   Object.defineProperty(this, 'hasPoints', {
-    get: function() {
+    get() {
       return this.drawInteraction.getFeature() !== null;
     }
   });
@@ -222,6 +227,12 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
   );
 };
 
+/**
+ * Initialise the controller.
+ */
+gmf.MobileMeasureLengthController.prototype.init = function() {
+  this.map.addInteraction(this.measure);
+};
 
 /**
  * Add current sketch point to line measure

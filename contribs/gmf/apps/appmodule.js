@@ -9,17 +9,20 @@
 goog.provide('app');
 
 goog.require('gmf');
-goog.require('goog.Uri');
+
+goog.require('ngeo.import.importModule');
 
 
 /**
  * @type {!angular.Module}
  */
-app.module = angular.module('app', [gmf.module.name]);
+app.module = angular.module('app', [
+  ngeo.import.importModule.module.name,
+  gmf.module.name
+]);
 
 app.module.config(['$compileProvider', function($compileProvider) {
-  var uri = goog.Uri.parse(location);
-  if (!uri.getQueryData().containsKey('debug')) {
+  if (!('debug' in ngeo.utils.decodeQueryString(window.location.search))) {
     // Disable the debug info
     $compileProvider.debugInfoEnabled(false);
   }

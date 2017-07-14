@@ -33,9 +33,8 @@ app.scaleselectorDirective = function() {
     template: '<div ngeo-scaleselector="ctrl.scales" ' +
         'ngeo-scaleselector-map="ctrl.map" ' +
         'ngeo-scaleselector-options="ctrl.options"></div>',
-    controllerAs: 'ctrl',
     bindToController: true,
-    controller: 'AppScaleselectorController'
+    controller: 'AppScaleselectorController as ctrl'
   };
 };
 

@@ -29,10 +29,8 @@ ngeo.decorateInteraction = function(interaction) {
   goog.asserts.assertInstanceof(interaction, ol.interaction.Interaction);
 
   Object.defineProperty(interaction, 'active', {
-    get: function() {
-      return interaction.getActive();
-    },
-    set: function(val) {
+    get: () => interaction.getActive(),
+    set: (val) => {
       interaction.setActive(val);
     }
   });

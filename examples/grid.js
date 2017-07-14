@@ -2,7 +2,7 @@ goog.provide('app.grid');
 
 goog.require('ngeo.GridConfig');
 /** @suppress {extraRequire} */
-goog.require('ngeo.gridDirective');
+goog.require('ngeo.gridComponent');
 
 
 /** @type {!angular.Module} **/
@@ -15,7 +15,7 @@ app.module = angular.module('app', ['ngeo']);
  */
 app.MainController = function() {
 
-  var data = [
+  const data = [
     {
       'name': 'row_1',
       'display_name': 'Row 1',
@@ -54,7 +54,7 @@ app.MainController = function() {
     }
   ];
 
-  var columnDefs = [
+  const columnDefs = [
     {name: 'name'},
     {name: 'display_name'},
     {name: 'timestamp'},

@@ -2,6 +2,7 @@ goog.provide('ngeo.mapDirective');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
+goog.require('ngeo.SyncDataSourcesMap');
 goog.require('ol.Map');
 
 
@@ -18,29 +19,32 @@ goog.require('ol.Map');
  * [../examples/simple.html](../examples/simple.html)
  *
  * @htmlAttribute {ol.Map} ngeo-map The map.
+ * @param {ngeo.SyncDataSourcesMap} ngeoSyncDataSourcesMap Ngeo sync
+ *     data sources map service.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoMap
  */
-ngeo.mapDirective = function() {
+ngeo.mapDirective = function(ngeoSyncDataSourcesMap) {
   return {
     restrict: 'A',
-    link:
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         */
-        function(scope, element, attrs) {
-          var attr = 'ngeoMap';
-          var prop = attrs[attr];
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     */
+    link(scope, element, attrs) {
+      const attr = 'ngeoMap';
+      const prop = attrs[attr];
 
-          var map = /** @type {ol.Map} */ (scope.$eval(prop));
-          goog.asserts.assertInstanceof(map, ol.Map);
+      const map = scope.$eval(prop);
+      goog.asserts.assertInstanceof(map, ol.Map);
 
-          map.setTarget(element[0]);
-        }
+      map.setTarget(element[0]);
+
+      ngeoSyncDataSourcesMap.map = map;
+    }
   };
 };
 

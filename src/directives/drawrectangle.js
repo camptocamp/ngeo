@@ -3,6 +3,7 @@ goog.provide('ngeo.drawrectangleDirective');
 goog.require('ngeo');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.DrawEventType');
 goog.require('ol.geom.Polygon');
 
 
@@ -22,16 +23,16 @@ ngeo.drawrectangleDirective = function() {
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
      */
-    link: function($scope, element, attrs, drawFeatureCtrl) {
+    link($scope, element, attrs, drawFeatureCtrl) {
 
-      var drawRectangle = new ol.interaction.Draw({
+      const drawRectangle = new ol.interaction.Draw({
         type: ol.geom.GeometryType.LINE_STRING,
-        geometryFunction: function(coordinates, geometry) {
+        geometryFunction(coordinates, geometry) {
           if (!geometry) {
             geometry = new ol.geom.Polygon(null);
           }
-          var start = coordinates[0];
-          var end = coordinates[1];
+          const start = coordinates[0];
+          const end = coordinates[1];
           geometry.setCoordinates([
             [start, [start[0], end[1]], end, [end[0], start[1]], start]
           ]);
@@ -45,7 +46,7 @@ ngeo.drawrectangleDirective = function() {
 
       ol.events.listen(
           drawRectangle,
-          ol.interaction.Draw.EventType.DRAWEND,
+          ol.interaction.DrawEventType.DRAWEND,
           drawFeatureCtrl.handleDrawEnd.bind(
               drawFeatureCtrl, ngeo.GeometryType.RECTANGLE),
           drawFeatureCtrl
@@ -53,7 +54,7 @@ ngeo.drawrectangleDirective = function() {
       ol.events.listen(
           drawRectangle,
           ol.Object.getChangeEventType(
-              ol.interaction.Interaction.Property.ACTIVE),
+              ol.interaction.Property.ACTIVE),
           drawFeatureCtrl.handleActiveChange,
           drawFeatureCtrl
       );

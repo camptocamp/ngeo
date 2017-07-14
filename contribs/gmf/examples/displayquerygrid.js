@@ -1,19 +1,21 @@
 goog.provide('gmfapp.displayquerygrid');
 
-goog.require('gmf.QueryManager');
+goog.require('gmf.DataSourcesManager');
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerygridDirective');
+goog.require('gmf.displayquerygridComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeDirective');
+goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
+goog.require('ngeo.bboxQueryDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.gridDirective');
+goog.require('ngeo.gridComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
@@ -31,13 +33,14 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.constant('ngeoQueryOptions', {
-  'limit': 20
+  'limit': 20,
+  'queryCountFirst': true
 });
 
 
 gmfapp.module.constant(
     'gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.1/wsgi/themes?' +
+    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
 
@@ -52,8 +55,7 @@ gmfapp.queryresultDirective = function() {
   return {
     restrict: 'E',
     scope: {},
-    controller: 'gmfappQueryresultController',
-    controllerAs: 'qrCtrl',
+    controller: 'gmfappQueryresultController as qrCtrl',
     bindToController: true,
     templateUrl: 'partials/queryresult.html'
   };
@@ -85,18 +87,19 @@ gmfapp.module.controller('gmfappQueryresultController', gmfapp.QueryresultContro
 /**
  * @constructor
  * @param {gmf.Themes} gmfThemes The gmf themes service.
- * @param {gmf.QueryManager} gmfQueryManager The gmf query manager service.
+ * @param {gmf.DataSourcesManager} gmfDataSourcesManager The gmf data sources
+ *     manager service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */
-gmfapp.MainController = function(gmfThemes, gmfQueryManager,
+gmfapp.MainController = function(gmfThemes, gmfDataSourcesManager,
     ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
 
-  var fill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
-  var stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
+  const fill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
+  const stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
    * FeatureStyle used by the displayquerygrid directive
@@ -104,9 +107,9 @@ gmfapp.MainController = function(gmfThemes, gmfQueryManager,
    * @export
    */
   this.featureStyle = new ol.style.Style({
-    fill: fill,
-    image: new ol.style.Circle({fill: fill, radius: 5, stroke: stroke}),
-    stroke: stroke
+    fill,
+    image: new ol.style.Circle({fill, radius: 5, stroke}),
+    stroke
   });
 
   /**
@@ -151,12 +154,12 @@ gmfapp.MainController = function(gmfThemes, gmfQueryManager,
    */
   this.queryGridActive = true;
 
-  gmfThemes.getThemesObject().then(function(themes) {
+  gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       this.themes = themes;
       this.treeSource = themes[3];
     }
-  }.bind(this));
+  });
 
   ngeoFeatureOverlayMgr.init(this.map);
 };

@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html lang="{{mobileCtrl.lang}}" ng-app="app" ng-controller="MobileController as mainCtrl">
+<html lang="{{mainCtrl.lang}}" ng-app="app" ng-controller="MobileController as mainCtrl">
   <head>
-    <title>{{'Mobile Application'|translate}}</title>
+    <title ng-bind-template="{{'Mobile Application'|translate}}">GeoMapFish</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="shortcut icon" href="image/favicon.ico"/>
     <link rel="stylesheet" href="../../build/mobile.css">
+    <script>
+      if (!window.requestAnimationFrame) {
+        alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
+            + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. Vous allez être redirigé.\n\n'
+            + 'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. Sie werden weitergeleitet.');
+        window.location = 'http://geomapfish.org/'
+      }
+    </script>
   </head>
   <body ng-class="{'gmf-mobile-nav-is-visible': mainCtrl.navIsVisible(),
                    'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavIsVisible(),
@@ -24,7 +33,7 @@
         class="gmf-mobile-measure"
         gmf-mobile-measurelength
         gmf-mobile-measurelength-active="mainCtrl.measureLengthActive"
-        gmf-mobile-measurelength-decimals="2"
+        gmf-mobile-measurelength-precision="2"
         gmf-mobile-measurelength-map="::mainCtrl.map">
       </div>
       <div
@@ -159,7 +168,8 @@
     <script src="../../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
     <script src="../../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
     <script src="../../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../../../../node_modules/d3/d3.min.js"></script>
+    <script src="../../../../node_modules/d3/build/d3.min.js"></script>
+    <script src="../../../../node_modules/moment/min/moment.min.js"></script>
     <script src="/@?main=mobile/js/controller.js"></script>
     <script src="default.js"></script>
     <script src="../../../../utils/watchwatchers.js"></script>
@@ -196,7 +206,7 @@
         module.constant('gmfSearchActions', []);
         module.value('ngeoWfsPermalinkOptions',
             /** @type {ngeox.WfsPermalinkOptions} */ ({
-              url: 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/mapserv_proxy',
+              url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
               wfsTypes: [
                 {featureType: 'fuel', label: 'display_name'},
                 {featureType: 'osm_scale', label: 'display_name'}

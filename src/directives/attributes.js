@@ -1,11 +1,11 @@
-goog.provide('ngeo.AttributesController');
-goog.provide('ngeo.attributesDirective');
+goog.provide('ngeo.attributesComponent');
 
+goog.require('ol.ObjectEventType');
 goog.require('ngeo');
 goog.require('ngeo.EventHelper');
 
 /**
- * Directive used to render the attributes of a feature into a form.
+ * Component used to render the attributes of a feature into a form.
  * Example:
  *
  *     <ngeo-attributes
@@ -19,32 +19,31 @@ goog.require('ngeo.EventHelper');
  * @htmlAttribute {boolean} ngeo-attributes-disabled Whether the fieldset should
  *     be disabled or not.
  * @htmlAttribute {ol.Feature} ngeo-attributes-feature The feature.
- * @return {angular.Directive} The directive specs.
- * @ngInject
- * @ngdoc directive
+ *
+ * @ngdoc component
  * @ngname ngeoAttributes
  */
-ngeo.attributesDirective = function() {
-  return {
-    controller: 'ngeoAttributesController',
-    scope: true,
-    bindToController: {
-      'attributes': '=ngeoAttributesAttributes',
-      'disabled': '<ngeoAttributesDisabled',
-      'feature': '=ngeoAttributesFeature'
-    },
-    controllerAs: 'attrCtrl',
-    templateUrl: ngeo.baseTemplateUrl + '/attributes.html'
-  };
+ngeo.attributesComponent = {
+  controller: 'ngeoAttributesController as attrCtrl',
+  bindings: {
+    'attributes': '=ngeoAttributesAttributes',
+    'disabled': '<ngeoAttributesDisabled',
+    'feature': '=ngeoAttributesFeature'
+  },
+  require: {
+    'form': '^'
+  },
+  templateUrl: () => `${ngeo.baseTemplateUrl}/attributes.html`
 };
 
-ngeo.module.directive('ngeoAttributes', ngeo.attributesDirective);
+ngeo.module.component('ngeoAttributes', ngeo.attributesComponent);
 
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
+ * @private
  * @struct
  * @ngInject
  * @ngdoc controller
@@ -64,7 +63,7 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
    * @type {boolean}
    * @export
    */
-  this.disabled = this.disabled === true;
+  this.disabled = false;
 
   /**
    * The feature containing the values.
@@ -76,10 +75,10 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
   /**
    * The properties bound to the form, initialized with the inner properties
    * of the feature.
-   * @type {Object.<string, *>}
+   * @type {?Object.<string, *>}
    * @export
    */
-  this.properties = this.feature.getProperties();
+  this.properties;
 
   /**
    * @type {!angular.Scope}
@@ -103,19 +102,6 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
     'changeYear': true
   };
 
-  // Listen to the feature inner properties change and apply them to the form
-  var uid = ol.getUid(this);
-  this.ngeoEventHelper_.addListenerKey(
-    uid,
-    ol.events.listen(
-      this.feature,
-      ol.ObjectEventType.PROPERTYCHANGE,
-      this.handleFeaturePropertyChange_,
-      this
-    ),
-    true
-  );
-
   /**
    * While changes happen from the form (from the template), they are applied
    * to the feature inner properties. The 'propertychange' event registered
@@ -127,9 +113,27 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
    * @private
    */
   this.updating_ = false;
+};
 
-  $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
+/**
+ * Initialise the component.
+ */
+ngeo.AttributesController.prototype.$onInit = function() {
+  this.properties = this.feature.getProperties();
+
+  // Listen to the feature inner properties change and apply them to the form
+  const uid = ol.getUid(this);
+  this.ngeoEventHelper_.addListenerKey(
+    uid,
+    ol.events.listen(
+      this.feature,
+      ol.ObjectEventType.PROPERTYCHANGE,
+      this.handleFeaturePropertyChange_,
+      this
+    ),
+    true
+  );
 };
 
 
@@ -140,7 +144,7 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
  */
 ngeo.AttributesController.prototype.handleInputChange = function(name) {
   this.updating_ = true;
-  var value = this.properties[name];
+  const value = this.properties[name];
   this.feature.set(name, value);
   this.updating_ = false;
 };
@@ -148,21 +152,18 @@ ngeo.AttributesController.prototype.handleInputChange = function(name) {
 
 /**
  * Cleanup event listeners.
- * @private
  */
-ngeo.AttributesController.prototype.handleDestroy_ = function() {
-  var uid = ol.getUid(this);
+ngeo.AttributesController.prototype.$onDestroy = function() {
+  const uid = ol.getUid(this);
   this.ngeoEventHelper_.clearListenerKey(uid);
 };
 
 
 /**
- * @param {ol.ObjectEvent} evt Event.
+ * @param {ol.Object.Event} evt Event.
  * @private
  */
-ngeo.AttributesController.prototype.handleFeaturePropertyChange_ = function(
-  evt
-) {
+ngeo.AttributesController.prototype.handleFeaturePropertyChange_ = function(evt) {
   if (this.updating_) {
     return;
   }

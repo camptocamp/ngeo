@@ -40,8 +40,7 @@ goog.require('ol.events.EventType');
 gmf.elevationDirective = function() {
   return {
     restrict: 'A',
-    controller: 'GmfElevationController',
-    controllerAs: 'ctrl',
+    controller: 'GmfElevationController as ctrl',
     bindToController: true,
     scope: {
       'active': '<gmfElevationActive',
@@ -50,20 +49,16 @@ gmf.elevationDirective = function() {
       'layer': '<gmfElevationLayer',
       'map': '=gmfElevationMap'
     },
-    link: function(scope, element, attr) {
-      var ctrl = scope['ctrl'];
+    link(scope, element, attr) {
+      const ctrl = scope['ctrl'];
 
       // Watch active or not.
-      scope.$watch(function() {
-        return ctrl.active;
-      }, function(active) {
+      scope.$watch(() => ctrl.active, function(active) {
         this.toggleActive_(active);
       }.bind(ctrl));
 
       // Watch current layer.
-      scope.$watch(function() {
-        return ctrl.layer;
-      }, function(layer) {
+      scope.$watch(() => ctrl.layer, function(layer) {
         this.layer = layer;
         this.elevation = null;
       }.bind(ctrl));
@@ -155,11 +150,11 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
     // Moving the mouse clears previously displayed elevation
     this.listenerKeys_.push(ol.events.listen(this.map, 'pointermove',
         function(e) {
-          this.scope_.$apply(function() {
+          this.scope_.$apply(() => {
             this.inViewport_ = true;
             this.elevation = undefined;
             this.loading = false;
-          }.bind(this));
+          });
         }, this));
 
     // Launch the elevation service request when the user stops moving the
@@ -171,15 +166,15 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
     this.listenerKeys_.push(ol.events.listen(this.map.getViewport(),
         ol.events.EventType.MOUSEOUT,
         function(e) {
-          this.scope_.$apply(function() {
+          this.scope_.$apply(() => {
             this.elevation = undefined;
             this.inViewport_ = false;
             this.loading = false;
-          }.bind(this));
+          });
         }, this));
   } else {
     this.elevation = undefined;
-    for (var i = 0, ii = this.listenerKeys_.length; i < ii; ++i) {
+    for (let i = 0, ii = this.listenerKeys_.length; i < ii; ++i) {
       ol.events.unlistenByKey(this.listenerKeys_[i]);
     }
   }
@@ -195,7 +190,7 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
 gmf.ElevationController.prototype.pointerStop_ = function(e) {
   if (this.inViewport_) {
     this.loading = true;
-    var params = {
+    const params = {
       'layers': this.layer
     };
     this.gmfRaster_.getRaster(e.coordinate, params).then(
@@ -231,7 +226,7 @@ gmf.module.controller('GmfElevationController', gmf.ElevationController);
 
 
 /**
- * Provides a directive which encapsulates the elevation directive (see above)
+ * Provides a component which encapsulates the elevation component (see above)
  * in a button with dropdown menu to be included in a application directly.
  *
  * Example:
@@ -245,27 +240,21 @@ gmf.module.controller('GmfElevationController', gmf.ElevationController);
  * @htmlAttribute {Array.<string>} gmf-elevationwidget-layers The list of
  *     layers.
  * @htmlAttribute {boolean} gmf-elevationwidget-active Whether to activate the
- *     elevation directive.
- * @return {angular.Directive} The directive specs.
- * @ngdoc directive
+ *     elevation component.
+ *
+ * @ngdoc component
  * @ngname gmfElevationwidget
  */
-gmf.elevationwidgetDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '<gmfElevationwidgetMap',
-      'layers': '<gmfElevationwidgetLayers',
-      'active': '<gmfElevationwidgetActive'
-    },
-    controller: 'gmfElevationwidgetController',
-    controllerAs: 'ctrl',
-    bindToController: true,
-    templateUrl: gmf.baseTemplateUrl + '/elevationwidget.html'
-  };
+gmf.elevationwidgetComponent = {
+  controller: 'gmfElevationwidgetController as ctrl',
+  bindings: {
+    'map': '<gmfElevationwidgetMap',
+    'layers': '<gmfElevationwidgetLayers',
+    'active': '<gmfElevationwidgetActive'
+  },
+  templateUrl: () => `${gmf.baseTemplateUrl}/elevationwidget.html`
 };
-
-gmf.module.directive('gmfElevationwidget', gmf.elevationwidgetDirective);
+gmf.module.component('gmfElevationwidget', gmf.elevationwidgetComponent);
 
 
 /**
@@ -275,13 +264,13 @@ gmf.module.directive('gmfElevationwidget', gmf.elevationwidgetDirective);
  */
 gmf.ElevationwidgetController = function() {
   /**
-   * @type {ol.Map}
+   * @type {!ol.Map}
    * @export
    */
   this.map;
 
   /**
-   * @type {Array.<string>}
+   * @type {!Array.<string>}
    * @export
    */
   this.layers;
@@ -296,8 +285,12 @@ gmf.ElevationwidgetController = function() {
    * @type {string}
    * @export
    */
-  this.selectedElevationLayer = this.layers[0];
+  this.selectedElevationLayer;
 };
-
 gmf.module.controller('gmfElevationwidgetController',
     gmf.ElevationwidgetController);
+
+
+gmf.ElevationwidgetController.prototype.$onInit = function() {
+  this.selectedElevationLayer = this.layers[0];
+};

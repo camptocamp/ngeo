@@ -109,7 +109,7 @@ ngeo.exampleDirective = function(…) {
       map: '=ngeoExampleMap'
     }
     controller: function() {
-      var m = this['map'];
+      let m = this['map'];
       // Then, for Closure-Compiler, assert and type this value.
       // …
     },
@@ -224,11 +224,11 @@ ngeo.module.directive('ngeoControl', ngeo.controlDirective);
 
 ## Custom `ol.Object` properties
 
-OpenLayers 3 allows passing custom properties to classes inheriting from
+OpenLayers allows passing custom properties to classes inheriting from
 `ol.Object`. For example:
 
 ```js
-var layer = new ol.layer.Tile({
+let layer = new ol.layer.Tile({
   maxResolution: 5000,
   title: 'A title',
   source: new ol.source.OSM()
@@ -241,7 +241,7 @@ ol3 built-in layer property.)
 You can then use the `get` methods to get that property's value:
 
 ```js
-var layerTitle = layer.get('title');
+let layerTitle = layer.get('title');
 ```
 
 **But** this won't work in the case of the ngeo, or any code compiled in with
@@ -252,7 +252,7 @@ One option to work-around the issue involves using the `set` method after
 the construction of the layer:
 
 ```js
-var layer = new ol.layer.Tile({
+let layer = new ol.layer.Tile({
   maxResolution: 5000,
   source: new ol.source.OSM()
 });
@@ -282,23 +282,23 @@ If the service is an object a `@constructor` must be defined. For example:
 
 ```js
 /**
- * The ngeo Location type.
+ * The ngeo Permalink type.
  * @constructor
- * @param {Location} location Location.
- * @param {History} history History.
+ * @param {!ngeo.Location} ngeoLocation Location.
+ * @param {!History} history History.
  */
-ngeo.Location = function(location, history) {
+ngeo.Permalink = function(ngeoLocation, history) {
   /**
-   * @type {History}
+   * @type {!History}
    * @private
    */
   this.history_ = history;
 
   /**
-   * @type {!goog.Uri}
+   * @type {!ngeo.Location}
    * @private
    */
-  this.uri_ = goog.Uri.parse(location);
+  this.uri_ = ngeoLocation;
 };
 ```
 
@@ -320,7 +320,7 @@ the DOM tree, at the `<html>` element for example.
 
 And instead of `ng-controller` instances use application-specific directives,
 and store the directive-specific data in the directive itself. For that, use
-a directive controller, with `controllerAs` and `bindToController`.
+a directive controller, with `controller` and `bindToController`.
 
 [The `permalink`
 example](https://github.com/camptocamp/ngeo/tree/master/examples/permalink.js)
@@ -552,7 +552,7 @@ include the `ngeo-layertree` directive.
  * @return {angular.Directive} The directive Definition Object.
  * @ngInject
  */
-gmf.layertreeDirective = function() {
+gmf.layertreeComponent = function() {
   return {
     ...
     template:
@@ -604,7 +604,7 @@ ngeo.module.value('ngeo<Name>TemplateUrl',
      * @param {angular.Attributes} attrs Attributes.
      */
     function(element, attrs) {
-      var templateUrl = attrs['ngeo<Name>Templateurl'];
+      let templateUrl = attrs['ngeo<Name>Templateurl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseTemplateUrl + '/<name>.html';
     });
@@ -769,7 +769,7 @@ ngeo.foobarDirective = function() {
  * @export
  */
 ngeo.NgeoFoobarController = function($scope) {
-  var foo = $scope['fooFn']();
+  let foo = $scope['fooFn']();
 };
 ```
 
@@ -802,33 +802,6 @@ statements are removed before publication of the examples on github.io.
 Even though the examples are not compiled on github.io the `check` target does
 compile them, as a verification step. This means that the examples must use
 compiler annotations and respect the constraints imposed by the compiler.
-
-## Usage of the closure-library
-
-For applications compiled together with ngeo, OpenLayers, and Closure Compiler
-the `goog` functions and objects should sometimes be preferred.
-
-For example, `goog.isDef` should be preferred over `angular.isDefined`. When
-using `goog.isDef` Closure Compiler will remove the call to `goog.isDef` and
-use code that is much smaller. In contrast, `angular.isDefined` is defined in
-the Angular externs file so it won't be changed by the compiler.
-
-But there are some exceptions, see [ol3 guidelines](https://github.com/openlayers/ol3/blob/master/CONTRIBUTING.md#follow-openlayers-3s-coding-style)
-about the usage of `goog` in openlayers3 project. We want to follow those
-guidelines in `ngeo` as well.
-
-### Use native javascript object methods instead
-
-```js
- Array.prototype.lastIndexOf
- Array.prototype.every
- Array.prototype.some
- Array.prototype.forEach
- Array.prototype.map
- Array.prototype.filter
-
- Object.prototype.keys
-```
 
 ### Declaring an event
 
