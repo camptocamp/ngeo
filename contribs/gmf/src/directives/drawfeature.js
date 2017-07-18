@@ -619,7 +619,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
       return ret;
     },
     {
-      hitTolerance: 5
+      hitTolerance: 7
     }
   );
 
