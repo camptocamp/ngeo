@@ -925,6 +925,9 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
         ret = feature;
       }
       return ret;
+    },
+    {
+      hitTolerance: 5
     }
   );
 
