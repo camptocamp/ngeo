@@ -174,7 +174,8 @@
       ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend"
       title="{{'Show/hide legend'|translate}}"
       data-toggle="collapse"
-      href="#gmf-layertree-node-{{::layertreeCtrl.uid}}-legend">
+      ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')"
+      href>
     </a>
   </span>
 </div>
