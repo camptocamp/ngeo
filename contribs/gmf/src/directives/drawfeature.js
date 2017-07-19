@@ -564,6 +564,9 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
         ret = feature;
       }
       return ret;
+    },
+    {
+      hitTolerance: 5
     }
   );
 
