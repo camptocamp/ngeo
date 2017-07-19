@@ -304,23 +304,26 @@ ngeo.interaction.ModifyRectangle.prototype.handleDrag_ = function(evt) {
     const siblingYPixel = this.getMap().getPixelFromCoordinate(siblingYCoordinate);
 
     // 4 - The point opposite of the handle we dragged
-    const origin = [
-      siblingXCoordinate[0], siblingYCoordinate[1]
-    ];
-    const originPixel = [
-      siblingXPixel[0], siblingYPixel[1]
-    ];
+    let opposite = siblingY.get('siblingY');
+    goog.asserts.assertInstanceof(opposite, ol.Feature);
+    if (ol.getUid(feature) == ol.getUid(opposite)) {
+      opposite = siblingY.get('siblingX');
+    }
+
+    goog.asserts.assertInstanceof(opposite, ol.Feature);
+    const oppositePoint = opposite.getGeometry();
+    goog.asserts.assertInstanceof(oppositePoint, ol.geom.Point);
+    const origin = oppositePoint.getCoordinates();
+    const originPixel = this.getMap().getPixelFromCoordinate(origin);
 
     // Calculate new positions of siblings
-    const b2Pixel = [
-      originPixel[0], destinationPixel[1]
-    ];
+    const b2Pixel = this.calculateNewPixel_(
+      originPixel, destinationPixel, siblingXPixel);
     const b2Coordinate = this.getMap().getCoordinateFromPixel(b2Pixel);
     siblingXPoint.setCoordinates(b2Coordinate);
 
-    const c2Pixel = [
-      destinationPixel[0], originPixel[1]
-    ];
+    const c2Pixel = this.calculateNewPixel_(
+      originPixel, destinationPixel, siblingYPixel);
     const c2Coordinate = this.getMap().getCoordinateFromPixel(c2Pixel);
 
     siblingYPoint.setCoordinates(c2Coordinate);
@@ -335,6 +338,36 @@ ngeo.interaction.ModifyRectangle.prototype.handleDrag_ = function(evt) {
     this.coordinate_[0] = evt.coordinate[0];
     this.coordinate_[1] = evt.coordinate[1];
   }
+};
+
+
+/**
+ * Calculate the new position of a point as projected on a vector from origin to
+ * destination.
+ * @param {ol.Pixel} origin Pixel of origin (opposite of the drag handle)
+ * @param {ol.Pixel} destination Pixel of destination (the handle we dragged)
+ * @param {ol.Pixel} point The point to transform.
+ * @return {ol.Pixel} The new pixel of the point
+ * @private
+ */
+ngeo.interaction.ModifyRectangle.prototype.calculateNewPixel_ = function(
+  origin, destination, point) {
+
+  const aVector = [destination[0] - origin[0], destination[1] - origin[1]];
+  const bVector = [
+    point[0] - origin[0],
+    point[1] - origin[1]
+  ];
+
+  const abScalarProduct = aVector[0] * bVector[0] + aVector[1] * bVector[1];
+  const bDivisor = Math.pow(bVector[0], 2) + Math.pow(bVector[1], 2);
+
+  const b2Vector = [
+    (bVector[0] * abScalarProduct) / bDivisor,
+    (bVector[1] * abScalarProduct) / bDivisor
+  ];
+
+  return [b2Vector[0] + origin[0], b2Vector[1] + origin[1]];
 };
 
 
