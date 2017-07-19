@@ -874,6 +874,9 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
         ret = feature;
       }
       return ret;
+    },
+    {
+      hitTolerance: 5
     }
   );
 
@@ -925,6 +928,9 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
         ret = feature;
       }
       return ret;
+    },
+    {
+      hitTolerance: 7
     }
   );
 
