@@ -70,8 +70,9 @@ ngeo.mapDirective = function($window, ngeoSyncDataSourcesMap) {
       if (manageResize) {
         const resizeTransitionAttr = 'ngeoMapResizeTransition';
         const resizeTransitionProp = attrs[resizeTransitionAttr];
-        /** @type {number|undefined} */
-        const resizeTransition = scope.$eval(resizeTransitionProp);
+
+        const resizeTransition = /** @type {number|undefined} */ (
+          scope.$eval(resizeTransitionProp));
 
         ol.events.listen(
           $window,
