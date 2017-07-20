@@ -75,7 +75,7 @@ ngeo.mapDirective = function(ngeoSyncDataSourcesMap) {
           window,
           'resize',
           () => {
-            if (resizeTransition) {
+            if (resizeTransition && Number.isInteger(resizeTransition)) {
               // Resize with transition
               const start = Date.now();
               let loop = true;
