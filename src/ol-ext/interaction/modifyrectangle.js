@@ -72,16 +72,16 @@ ngeo.interaction.ModifyRectangle = function(options) {
   this.feature_ = null;
 
   /**
-   * @type {ol.Pixel}
-   * @private
-   */
-  this.coordinate_ = null;
-
-  /**
    * @type {Object.<number, ngeo.interaction.ModifyRectangle.CacheItem>}
    * @private
    */
   this.cache_ = {};
+
+  /**
+   * @type {?ngeo.interaction.ModifyRectangle.ModifyParams}
+   * @private
+   */
+  this.params_ = null;
 
   ol.events.listen(this.features_, ol.CollectionEventType.ADD,
     this.handleFeatureAdd_, this);
@@ -191,7 +191,77 @@ ngeo.interaction.ModifyRectangle.prototype.willModifyFeatures_ = function(evt) {
     this.modified_ = true;
     this.dispatchEvent(new ol.interaction.Modify.Event(
       ol.interaction.ModifyEventType.MODIFYSTART, this.features_, evt));
+    this.params_ = this.initializeParams_();
   }
+};
+
+
+/**
+ * @return {ngeo.interaction.ModifyRectangle.ModifyParams} The initialised params
+ * @private
+ */
+ngeo.interaction.ModifyRectangle.prototype.initializeParams_ = function() {
+  const feature = this.feature_;
+
+  // 1. Find the origin (opposite) point for the modify operation
+  // siblingY relative to the origin is siblingX relative to the opposite
+  const siblingY = feature.get('siblingX');
+  goog.asserts.assertInstanceof(siblingY, ol.Feature);
+
+  const origin = siblingY.get('siblingY');
+  goog.asserts.assertInstanceof(origin, ol.Feature);
+  const originPoint = origin.getGeometry();
+  goog.asserts.assertInstanceof(originPoint, ol.geom.Point);
+  const originCoordinate = originPoint.getCoordinates();
+  const originPixel = this.getMap().getPixelFromCoordinate(originCoordinate);
+
+  // 2. Find the origin's X sibling and the normal vector from the origin to it
+  const siblingX = origin.get('siblingX');
+  goog.asserts.assertInstanceof(siblingX, ol.Feature);
+  const siblingXPoint = siblingX.getGeometry();
+  goog.asserts.assertInstanceof(siblingXPoint, ol.geom.Point);
+  const siblingXCoordinate = siblingXPoint.getCoordinates();
+  const siblingXPixel = this.getMap().getPixelFromCoordinate(siblingXCoordinate);
+  let vectorX = [
+    siblingXPixel[0] - originPixel[0],
+    siblingXPixel[1] - originPixel[1]
+  ];
+  const vectorXMagnitude = Math.sqrt(vectorX[0] * vectorX[0] + vectorX[1] * vectorX[1]);
+  vectorX[0] /= vectorXMagnitude;
+  vectorX[1] /= vectorXMagnitude;
+
+  // 3. Find the origin's Y sibling and the normal vector from the origin to it
+  const siblingYPoint = siblingY.getGeometry();
+  goog.asserts.assertInstanceof(siblingYPoint, ol.geom.Point);
+  const siblingYCoordinate = siblingYPoint.getCoordinates();
+  const siblingYPixel = this.getMap().getPixelFromCoordinate(siblingYCoordinate);
+  let vectorY = [
+    siblingYPixel[0] - originPixel[0],
+    siblingYPixel[1] - originPixel[1]
+  ];
+  const vectorYMagnitude = Math.sqrt(vectorY[0] * vectorY[0] + vectorY[1] * vectorY[1]);
+  vectorY[0] /= vectorYMagnitude;
+  vectorY[1] /= vectorYMagnitude;
+
+  // 4. Validate the vectors.
+  if (isNaN(vectorX[0]) && isNaN(vectorY[0])) {
+    // Both vector are invalid. Rotation information has already been lost
+    vectorX = [0, 1];
+    vectorY = [1, 0];
+  } else if (isNaN(vectorX[0])) {
+    vectorX = [vectorY[1], -vectorY[0]];
+  } else if (isNaN(vectorY[0])) {
+    vectorY = [vectorX[1], -vectorX[0]];
+  }
+
+  return {
+    originCoordinate,
+    originPixel,
+    siblingXPoint,
+    siblingYPoint,
+    vectorX,
+    vectorY
+  };
 };
 
 
@@ -257,7 +327,6 @@ ngeo.interaction.ModifyRectangle.prototype.handleDown_ = function(evt) {
   );
 
   if (feature) {
-    this.coordinate_ = evt.coordinate;
     this.feature_ = feature;
 
     return true;
@@ -282,50 +351,24 @@ ngeo.interaction.ModifyRectangle.prototype.handleDrag_ = function(evt) {
   if (geometry instanceof ol.geom.Point) {
     geometry.setCoordinates(evt.coordinate);
 
-    // Get all four corners' coordinates
-
-    // 1 - The pixel of the handle we dragged
     const destinationPixel = evt.pixel;
 
-    // 2 - One of our siblings
-    const siblingX = feature.get('siblingX');
-    goog.asserts.assertInstanceof(siblingX, ol.Feature);
-    const siblingXPoint = siblingX.getGeometry();
-    goog.asserts.assertInstanceof(siblingXPoint, ol.geom.Point);
-    const siblingXCoordinate = siblingXPoint.getCoordinates();
-    const siblingXPixel = this.getMap().getPixelFromCoordinate(siblingXCoordinate);
-
-    // 3 - The second sibling
-    const siblingY = feature.get('siblingY');
-    goog.asserts.assertInstanceof(siblingY, ol.Feature);
-    const siblingYPoint = siblingY.getGeometry();
-    goog.asserts.assertInstanceof(siblingYPoint, ol.geom.Point);
-    const siblingYCoordinate = siblingYPoint.getCoordinates();
-    const siblingYPixel = this.getMap().getPixelFromCoordinate(siblingYCoordinate);
-
-    // 4 - The point opposite of the handle we dragged
-    let opposite = siblingY.get('siblingY');
-    goog.asserts.assertInstanceof(opposite, ol.Feature);
-    if (ol.getUid(feature) == ol.getUid(opposite)) {
-      opposite = siblingY.get('siblingX');
-    }
-
-    goog.asserts.assertInstanceof(opposite, ol.Feature);
-    const oppositePoint = opposite.getGeometry();
-    goog.asserts.assertInstanceof(oppositePoint, ol.geom.Point);
-    const origin = oppositePoint.getCoordinates();
-    const originPixel = this.getMap().getPixelFromCoordinate(origin);
+    const originPixel = this.params_.originPixel;
+    const siblingXPoint = this.params_.siblingXPoint;
+    const siblingYPoint = this.params_.siblingYPoint;
+    const vectorX = this.params_.vectorX;
+    const vectorY = this.params_.vectorY;
+    const originCoordinate = this.params_.originCoordinate;
 
     // Calculate new positions of siblings
     const b2Pixel = this.calculateNewPixel_(
-      originPixel, destinationPixel, siblingXPixel);
+      originPixel, destinationPixel, vectorX);
     const b2Coordinate = this.getMap().getCoordinateFromPixel(b2Pixel);
     siblingXPoint.setCoordinates(b2Coordinate);
 
     const c2Pixel = this.calculateNewPixel_(
-      originPixel, destinationPixel, siblingYPixel);
+      originPixel, destinationPixel, vectorY);
     const c2Coordinate = this.getMap().getCoordinateFromPixel(c2Pixel);
-
     siblingYPoint.setCoordinates(c2Coordinate);
 
 
@@ -333,10 +376,7 @@ ngeo.interaction.ModifyRectangle.prototype.handleDrag_ = function(evt) {
     const boxFeature = feature.get('boxFeature');
     const geom = boxFeature.getGeometry();
     goog.asserts.assertInstanceof(geom, ol.geom.Polygon);
-    geom.setCoordinates([[evt.coordinate, b2Coordinate, origin, c2Coordinate, evt.coordinate]]);
-
-    this.coordinate_[0] = evt.coordinate[0];
-    this.coordinate_[1] = evt.coordinate[1];
+    geom.setCoordinates([[evt.coordinate, b2Coordinate, originCoordinate, c2Coordinate, evt.coordinate]]);
   }
 };
 
@@ -346,28 +386,23 @@ ngeo.interaction.ModifyRectangle.prototype.handleDrag_ = function(evt) {
  * destination.
  * @param {ol.Pixel} origin Pixel of origin (opposite of the drag handle)
  * @param {ol.Pixel} destination Pixel of destination (the handle we dragged)
- * @param {ol.Pixel} point The point to transform.
+ * @param {ol.Pixel} vector The normalized vector to the point
  * @return {ol.Pixel} The new pixel of the point
  * @private
  */
 ngeo.interaction.ModifyRectangle.prototype.calculateNewPixel_ = function(
-  origin, destination, point) {
+  origin, destination, vector) {
 
   const aVector = [destination[0] - origin[0], destination[1] - origin[1]];
-  const bVector = [
-    point[0] - origin[0],
-    point[1] - origin[1]
+
+  const abScalarProduct = aVector[0] * vector[0] + aVector[1] * vector[1];
+
+  const deltaVector = [
+    (vector[0] * abScalarProduct),
+    (vector[1] * abScalarProduct)
   ];
 
-  const abScalarProduct = aVector[0] * bVector[0] + aVector[1] * bVector[1];
-  const bDivisor = Math.pow(bVector[0], 2) + Math.pow(bVector[1], 2);
-
-  const b2Vector = [
-    (bVector[0] * abScalarProduct) / bDivisor,
-    (bVector[1] * abScalarProduct) / bDivisor
-  ];
-
-  return [b2Vector[0] + origin[0], b2Vector[1] + origin[1]];
+  return [deltaVector[0] + origin[0], deltaVector[1] + origin[1]];
 };
 
 
@@ -381,6 +416,7 @@ ngeo.interaction.ModifyRectangle.prototype.handleUp_ = function(evt) {
   if (this.modified_) {
     this.dispatchEvent(new ol.interaction.Modify.Event(
       ol.interaction.ModifyEventType.MODIFYEND, this.features_, evt));
+    this.params_ = null;
     this.modified_ = false;
   }
   return false;
@@ -393,3 +429,16 @@ ngeo.interaction.ModifyRectangle.prototype.handleUp_ = function(evt) {
  * }}
  */
 ngeo.interaction.ModifyRectangle.CacheItem;
+
+
+/**
+ * @typedef {{
+ *     originCoordinate: ol.Coordinate,
+ *     originPixel: ol.Pixel,
+ *     siblingXPoint: ol.geom.Point,
+ *     siblingYPoint: ol.geom.Point,
+ *     vectorX: Array.<number>,
+ *     vectorY: Array.<number>
+ * }}
+ */
+ngeo.interaction.ModifyRectangle.ModifyParams;
