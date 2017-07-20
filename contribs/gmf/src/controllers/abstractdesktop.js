@@ -75,6 +75,9 @@ gmf.module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
+gmf.module.value('ngeoMeasurePrecision', 3);
+gmf.module.value('ngeoMeasureDecimals', 0);
+
 
 /**
  * Desktop application abstract controller.
