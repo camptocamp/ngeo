@@ -167,6 +167,8 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
       });
     }
   });
+
+  this.manageResize = true;
 };
 ol.inherits(gmf.AbstractMobileController, gmf.AbstractController);
 

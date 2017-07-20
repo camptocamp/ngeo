@@ -23,6 +23,12 @@ goog.require('ol.Map');
  *      <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
  *
  * @htmlAttribute {ol.Map} gmf-map-map The map.
+ * @htmlAttribute {boolean|undefined} gmf-map-manage-resize Whether to update
+ *     the size of the map on browser window resize.
+ * @htmlAttribute {boolean|undefined} gmf-map-resize-transition The duration
+ *     (milliseconds) of the animation that may occur on the div containing
+ *     the map. Used to smoothly resize the map while the animation is in
+ *     progress.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -31,10 +37,13 @@ goog.require('ol.Map');
 gmf.mapDirective = function() {
   return {
     scope: {
-      'getMapFn': '&gmfMapMap'
+      'map': '<gmfMapMap',
+      'manageResize': '<gmfMapManageResize',
+      'resizeTransition': '<gmfMapResizeTransition'
     },
     controller: 'GmfMapController as ctrl',
-    template: '<div ngeo-map="ctrl.map"></div>'
+    bindToController: true,
+    templateUrl: `${gmf.baseTemplateUrl}/map.html`
   };
 };
 
@@ -42,34 +51,67 @@ gmf.module.directive('gmfMap', gmf.mapDirective);
 
 
 /**
- * @param {angular.Scope} $scope The directive's scope.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- * @param {gmf.Permalink} gmfPermalink The gmf permalink service.
- * @param {gmf.Snapping} gmfSnapping The gmf snapping service.
+ * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!gmf.Permalink} gmfPermalink The gmf permalink service.
+ * @param {!gmf.Snapping} gmfSnapping The gmf snapping service.
  * @constructor
  * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMapController
  */
-gmf.MapController = function($scope, ngeoFeatureOverlayMgr, gmfPermalink,
-  gmfSnapping) {
+gmf.MapController = function(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
 
-  const map = $scope['getMapFn']();
-  goog.asserts.assertInstanceof(map, ol.Map);
+  // Scope properties
 
   /**
    * @type {!ol.Map}
    * @export
    */
-  this.map = map;
+  this.map;
 
-  ngeoFeatureOverlayMgr.init(this.map);
+  /**
+   * @type {boolean|undefined}
+   * @export
+   */
+  this.manageResize;
 
-  gmfPermalink.setMap(this.map);
+  /**
+   * @type {boolean|undefined}
+   * @export
+   */
+  this.resizeTransition;
 
-  gmfSnapping.setMap(this.map);
 
+  // Injected properties
+
+  /**
+   * @type {!ngeo.FeatureOverlayMgr}
+   * @private
+   */
+  this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
+
+  /**
+   * @type {!gmf.Permalink}
+   * @private
+   */
+  this.gmfPermalink_ = gmfPermalink;
+
+  /**
+   * @type {!gmf.Snapping}
+   * @private
+   */
+  this.gmfSnapping_ = gmfSnapping;
 };
 
 gmf.module.controller('GmfMapController', gmf.MapController);
+
+
+/**
+ * Called on initialization of the controller.
+ */
+gmf.MapController.prototype.$onInit = function() {
+  this.ngeoFeatureOverlayMgr_.init(this.map);
+  this.gmfPermalink_.setMap(this.map);
+  this.gmfSnapping_.setMap(this.map);
+};

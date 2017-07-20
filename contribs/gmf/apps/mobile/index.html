@@ -21,7 +21,10 @@
                    'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavIsVisible(),
                    'gmf-mobile-nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
     <main ng-class="{'gmf-search-is-active': mainCtrl.searchOverlayVisible}">
-      <gmf-map gmf-map-map="mainCtrl.map"
+      <gmf-map
+        gmf-map-map="mainCtrl.map"
+        gmf-map-manage-resize="mainCtrl.manageResize"
+        gmf-map-resize-transition="mainCtrl.resizeTransition"
         ngeo-map-query=""
         ngeo-map-query-map="::mainCtrl.map"
         ngeo-map-query-active="mainCtrl.queryActive"></gmf-map>

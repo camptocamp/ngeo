@@ -495,6 +495,22 @@ gmf.AbstractController = function(config, $scope, $injector) {
     popup.setAutoDestroy(true);
     popup.setOpen(true);
   };
+
+  /**
+   * Whether to update the size of the map on browser window resize.
+   * @type {boolean}
+   * @export
+   */
+  this.manageResize = false;
+
+  /**
+   * The duration (milliseconds) of the animation that may occur on the div
+   * containing the map. Used to smoothly resize the map while the animation
+   * is in progress.
+   * @type {number|undefined}
+   * @export
+   */
+  this.resizeTransition;
 };
 
 
