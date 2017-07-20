@@ -36,7 +36,7 @@ app.module = angular.module('app', ['ngeo']);
  * @ngInject
  */
 app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
-    ngeoDecorateInteraction) {
+  ngeoDecorateInteraction) {
 
   /**
    * @type {ol.Map}
@@ -105,10 +105,10 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
    * @export
    */
   this.drawPoint = new ol.interaction.Draw(
-      /** @type {olx.interaction.DrawOptions} */ ({
-        type: 'Point',
-        features
-      }));
+    /** @type {olx.interaction.DrawOptions} */ ({
+      type: 'Point',
+      features
+    }));
   this.drawPoint.setActive(false);
   ngeoDecorateInteraction(this.drawPoint);
   map.addInteraction(this.drawPoint);
@@ -122,10 +122,10 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
    * @export
    */
   this.drawLine = new ol.interaction.Draw(
-      /** @type {olx.interaction.DrawOptions} */ ({
-        type: 'LineString',
-        features
-      }));
+    /** @type {olx.interaction.DrawOptions} */ ({
+      type: 'LineString',
+      features
+    }));
   this.drawLine.setActive(false);
   ngeoDecorateInteraction(this.drawLine);
   map.addInteraction(this.drawLine);
@@ -139,10 +139,10 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
    * @export
    */
   this.drawPolygon = new ol.interaction.Draw(
-      /** @type {olx.interaction.DrawOptions} */ ({
-        type: 'Polygon',
-        features
-      }));
+    /** @type {olx.interaction.DrawOptions} */ ({
+      type: 'Polygon',
+      features
+    }));
   this.drawPolygon.setActive(false);
   ngeoDecorateInteraction(this.drawPolygon);
   map.addInteraction(this.drawPolygon);

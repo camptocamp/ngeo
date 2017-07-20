@@ -38,11 +38,11 @@ ngeo.MapQuerent = class {
    * @ngInject
    */
   constructor($injector, ngeoDataSources, ngeoDataSourcesHelper, ngeoQuerent,
-      ngeoQueryResult) {
+    ngeoQueryResult) {
 
     const options = /** @type {ngeox.QueryOptions} */ (
       $injector.has('ngeoQueryOptions') ?
-      $injector.get('ngeoQueryOptions') : {});
+        $injector.get('ngeoQueryOptions') : {});
 
     /**
      * @type {ngeo.DataSources}

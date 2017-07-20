@@ -158,7 +158,7 @@ gmf.Authentication.prototype.load_ = function() {
  * @export
  */
 gmf.Authentication.prototype.changePassword = function(oldPwd, newPwd,
-    confPwd) {
+  confPwd) {
 
   const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.CHANGE_PASSWORD}`;
 
@@ -187,7 +187,7 @@ gmf.Authentication.prototype.login = function(login, pwd) {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     withCredentials: true
   }).then(
-      this.handleLogin_.bind(this, false));
+    this.handleLogin_.bind(this, false));
 };
 
 
@@ -198,7 +198,7 @@ gmf.Authentication.prototype.login = function(login, pwd) {
 gmf.Authentication.prototype.logout = function() {
   const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.LOGOUT}`;
   return this.$http_.get(url, {withCredentials: true}).then(
-      this.resetUser_.bind(this));
+    this.resetUser_.bind(this));
 };
 
 
@@ -216,7 +216,7 @@ gmf.Authentication.prototype.resetPassword = function(login) {
    */
   const successFn = function(resp) {
     const respData = /** @type {gmf.AuthenticationDefaultResponse} */ (
-        resp.data);
+      resp.data);
     return respData;
   }.bind(this);
 

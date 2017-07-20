@@ -37,7 +37,7 @@ gmfapp.module.value('ngeoExportFeatureFormats', [
  * @ngInject
  */
 gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
-    ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
+  ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {!angular.Scope}
@@ -68,27 +68,27 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
     view
   });
 
- /**
+  /**
    * @type {boolean}
    * @export
    */
   this.drawFeatureActive = true;
 
   const drawFeatureToolActivate = new ngeo.ToolActivate(
-      this, 'drawFeatureActive');
+    this, 'drawFeatureActive');
   ngeoToolActivateMgr.registerTool(
-      'mapTools', drawFeatureToolActivate, true);
+    'mapTools', drawFeatureToolActivate, true);
 
- /**
+  /**
    * @type {boolean}
    * @export
    */
   this.pointerMoveActive = false;
 
   const pointerMoveToolActivate = new ngeo.ToolActivate(
-      this, 'pointerMoveActive');
+    this, 'pointerMoveActive');
   ngeoToolActivateMgr.registerTool(
-      'mapTools', pointerMoveToolActivate, false);
+    'mapTools', pointerMoveToolActivate, false);
 
   $scope.$watch(
     () => this.pointerMoveActive,

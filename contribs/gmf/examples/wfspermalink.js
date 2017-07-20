@@ -21,15 +21,15 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.value('ngeoWfsPermalinkOptions',
-    /** @type {ngeox.WfsPermalinkOptions} */ ({
-      url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
-      wfsTypes: [
-        {featureType: 'fuel', label: 'display_name'},
-        {featureType: 'osm_scale', label: 'display_name'}
-      ],
-      defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
-      defaultFeaturePrefix: 'feature'
-    }));
+  /** @type {ngeox.WfsPermalinkOptions} */ ({
+    url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+    wfsTypes: [
+      {featureType: 'fuel', label: 'display_name'},
+      {featureType: 'osm_scale', label: 'display_name'}
+    ],
+    defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
+    defaultFeaturePrefix: 'feature'
+  }));
 
 /**
  * @constructor

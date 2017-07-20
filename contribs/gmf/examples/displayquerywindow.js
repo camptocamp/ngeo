@@ -34,8 +34,8 @@ gmfapp.module.value('ngeoQueryOptions', {
 
 
 gmfapp.module.value(
-    'gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
+  'gmfTreeUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
 
@@ -88,7 +88,7 @@ gmfapp.module.controller('AppQueryresultController', gmfapp.QueryresultControlle
  * @ngInject
  */
 gmfapp.MainController = function(gmfThemes, gmfDataSourcesManager,
-    ngeoFeatureOverlayMgr) {
+  ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
 

@@ -73,7 +73,7 @@ ngeo.AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
  * @export
  */
 ngeo.AutoProjection.prototype.tryProjections = function(coordinates,
-    extent, viewProjection, opt_projections) {
+  extent, viewProjection, opt_projections) {
   let position;
   if (opt_projections === undefined) {
     opt_projections = [viewProjection];
@@ -108,12 +108,12 @@ ngeo.AutoProjection.prototype.tryProjections = function(coordinates,
  * @export
  */
 ngeo.AutoProjection.prototype.tryProjectionsWithInversion = function(
-    coordinates, extent, viewProjection, opt_projections) {
+  coordinates, extent, viewProjection, opt_projections) {
   let position = this.tryProjections(coordinates, extent, viewProjection,
-        opt_projections);
+    opt_projections);
   if (position === null) {
     position = this.tryProjections(coordinates.reverse(), extent,
-        viewProjection, opt_projections);
+      viewProjection, opt_projections);
   }
   return position;
 };

@@ -47,7 +47,7 @@ app.MainController = function() {
   const map = this.map;
 
   const rectangle = new ol.geom.Polygon([[
-              [-9e6, 4e6], [-11e6, 4e6], [-11e6, 6e6], [-9e6, 6e6]
+    [-9e6, 4e6], [-11e6, 4e6], [-11e6, 6e6], [-9e6, 6e6]
   ]]);
 
   /**

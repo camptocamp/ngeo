@@ -148,13 +148,13 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
         if (val && val['Service'] && val['Capability']) {
           if (val['Service']['MaxWidth']) {
             scope['limitations'] = `${gettextCatalog.getString('Maximum WMS size allowed')
-                } ${val['Service']['MaxWidth']
-                } * ${val['Service']['MaxHeight']}`;
+            } ${val['Service']['MaxWidth']
+            } * ${val['Service']['MaxHeight']}`;
           }
 
           if (val['Capability']['Layer']) {
             const root = getChildLayers(val, val['Capability']['Layer'],
-                scope['map'].getView().getProjection());
+              scope['map'].getView().getProjection());
             if (root) {
               scope['layers'] = root['Layer'] || [root];
             }
@@ -195,16 +195,16 @@ exports.module = angular.module('ngeo.wmsGetCapDirective', [
 ]);
 
 exports.module.value('ngeoWmsGetCapTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoWmsGetCapTemplateUrl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseModuleTemplateUrl}/import/partials/wms-get-cap.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoWmsGetCapTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/import/partials/wms-get-cap.html`;
+  });
 
 /**
  * This directive displays the list of layers available in the

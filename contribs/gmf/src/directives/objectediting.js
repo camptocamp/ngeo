@@ -26,16 +26,16 @@ goog.require('ol.style.Style');
 
 
 gmf.module.value('gmfObjecteditingTemplateUrl',
-    /**
+  /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template URL.
      */
-    ($element, $attrs) => {
-      const templateUrl = $attrs['gmfObjecteditingTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/objectediting.html`;
-    }
+  ($element, $attrs) => {
+    const templateUrl = $attrs['gmfObjecteditingTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/objectediting.html`;
+  }
 );
 
 
@@ -115,9 +115,9 @@ goog.require('ngeo.LayerHelper');
  * @ngname GmfObjecteditingController
  */
 gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
-    gmfEditFeature, gmfObjectEditingQuery, gmfTreeManager,
-    ngeoDecorateInteraction, ngeoFeatureHelper, ngeoLayerHelper,
-    ngeoToolActivateMgr) {
+  gmfEditFeature, gmfObjectEditingQuery, gmfTreeManager,
+  ngeoDecorateInteraction, ngeoFeatureHelper, ngeoLayerHelper,
+  ngeoToolActivateMgr) {
 
   // == Scope properties ==
 
@@ -465,7 +465,7 @@ gmf.ObjecteditingController.prototype.$onInit = function() {
 gmf.ObjecteditingController.prototype.delete = function() {
   const gettextCatalog = this.gettextCatalog_;
   const msg = gettextCatalog.getString(
-      'Do you really want to delete the feature?');
+    'Do you really want to delete the feature?');
   // Confirm deletion first
   if (confirm(msg)) {
     this.dirty = false;

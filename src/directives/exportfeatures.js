@@ -54,7 +54,7 @@ ngeo.module.directive('ngeoExportfeatures', ngeo.exportfeaturesDirective);
  * @ngname ngeoExportfeaturesController
  */
 ngeo.ExportfeaturesController = function($element, $injector, $scope,
-    ngeoFeatureHelper) {
+  ngeoFeatureHelper) {
 
   /**
    * @type {ol.Collection.<ol.Feature>}
@@ -120,11 +120,11 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
           'href': '#',
           'text': format
         })
-        .on(
-          ['click', id].join('.'),
-          this.handleMenuItemClick_.bind(this, format)
-        )
-      );
+          .on(
+            ['click', id].join('.'),
+            this.handleMenuItemClick_.bind(this, format)
+          )
+        );
       this.items_.push($item);
     }, this);
   }
@@ -213,4 +213,4 @@ ngeo.ExportfeaturesController.prototype.handleDestroy_ = function() {
 
 
 ngeo.module.controller(
-    'ngeoExportfeaturesController', ngeo.ExportfeaturesController);
+  'ngeoExportfeaturesController', ngeo.ExportfeaturesController);

@@ -51,7 +51,7 @@ app.ColorPickerController = function() {
 };
 
 app.module.controller('AppColorpickerController',
-    app.ColorPickerController);
+  app.ColorPickerController);
 
 
 /**

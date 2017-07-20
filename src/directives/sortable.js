@@ -154,10 +154,10 @@ ngeo.sortableDirective = function($timeout) {
                   hoverNextItemIdx == idx + 1 ||
                   (hoverNextItemIdx == -1 &&
                    idx == element.children().length - 1)) {
-                // element dropped out of the list container
-                // or
-                // element dropped at the same location
-                // -> restore initial nodes list
+            // element dropped out of the list container
+            // or
+            // element dropped at the same location
+            // -> restore initial nodes list
             element.append(savedNodes);
           } else if (hoverNextItemIdx != -1) {
             // there's a next item, so insert

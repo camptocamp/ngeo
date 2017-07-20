@@ -163,7 +163,7 @@ ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
  * @export
  */
 ngeo.Print.prototype.createSpec = function(
-    map, scale, dpi, layout, format, customAttributes) {
+  map, scale, dpi, layout, format, customAttributes) {
 
   const specMap = /** @type {MapFishPrintMap} */ ({
     dpi,
@@ -267,7 +267,7 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   const url = source.getUrl();
   if (url !== undefined) {
     this.encodeWmsLayer_(
-        arr, layer.getOpacity(), url, source.getParams());
+      arr, layer.getOpacity(), url, source.getParams());
   }
 };
 
@@ -397,7 +397,7 @@ ngeo.Print.prototype.encodeTileWmsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(source, ol.source.TileWMS);
 
   this.encodeWmsLayer_(
-      arr, layer.getOpacity(), source.getUrls()[0], source.getParams());
+    arr, layer.getOpacity(), source.getUrls()[0], source.getParams());
 };
 
 
@@ -438,7 +438,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
      * @type {Array<ol.style.Style>}
      */
     const styles = (styleData !== null && !Array.isArray(styleData)) ?
-        [styleData] : styleData;
+      [styleData] : styleData;
     goog.asserts.assert(Array.isArray(styles));
 
     if (styles !== null && styles.length > 0) {
@@ -475,7 +475,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
 
         const featureStyleProp = ngeo.Print.FEAT_STYLE_PROP_PREFIX_ + j;
         this.encodeVectorStyle_(
-            mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
+          mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
         geojsonFeature.properties[featureStyleProp] = styleId;
       }
     }
@@ -532,7 +532,7 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
   if (styleType == ngeo.PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
       this.encodeVectorStylePolygon_(
-          styleObject.symbolizers, fillStyle, strokeStyle);
+        styleObject.symbolizers, fillStyle, strokeStyle);
     }
   } else if (styleType == ngeo.PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
@@ -832,7 +832,7 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
     }
   });
   ol.obj.assign(httpConfig,
-      opt_httpConfig !== undefined ? opt_httpConfig : {});
+    opt_httpConfig !== undefined ? opt_httpConfig : {});
   return this.$http_.post(url, printSpec, httpConfig);
 };
 
@@ -888,12 +888,12 @@ ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
  */
 ngeo.createPrintServiceFactory = function($http, ngeoLayerHelper) {
   return (
-      /**
+  /**
        * @param {string} url URL to MapFish print service.
        */
-      function(url) {
-        return new ngeo.Print(url, $http, ngeoLayerHelper);
-      });
+    function(url) {
+      return new ngeo.Print(url, $http, ngeoLayerHelper);
+    });
 };
 
 

@@ -106,7 +106,7 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
 
         if (val && val['Contents'] && val['Contents']['Layer']) {
           scope['layers'] = getLayersList(val, scope['url'],
-              scope['map'].getView().getProjection());
+            scope['map'].getView().getProjection());
         }
       });
 
@@ -143,16 +143,16 @@ exports.module = angular.module('ngeo.wmtsGetCapDirective', [
 ]);
 
 exports.module.value('ngeoWmtsGetCapTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoWmtsGetCapTemplateUrl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseModuleTemplateUrl}/import/partials/wmts-get-cap.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoWmtsGetCapTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/import/partials/wmts-get-cap.html`;
+  });
 
 /**
  * This directive displays the list of layers available in the

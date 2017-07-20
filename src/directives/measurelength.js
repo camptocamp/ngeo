@@ -44,18 +44,18 @@ ngeo.measurelengthDirective = function($compile, gettextCatalog, $filter, $injec
       drawFeatureCtrl.measureLength = measureLength;
 
       ol.events.listen(
-          measureLength,
-          ngeo.MeasureEventType.MEASUREEND,
-          drawFeatureCtrl.handleDrawEnd.bind(
-              drawFeatureCtrl, ngeo.GeometryType.LINE_STRING),
-          drawFeatureCtrl
+        measureLength,
+        ngeo.MeasureEventType.MEASUREEND,
+        drawFeatureCtrl.handleDrawEnd.bind(
+          drawFeatureCtrl, ngeo.GeometryType.LINE_STRING),
+        drawFeatureCtrl
       );
       ol.events.listen(
-          measureLength,
-          ol.Object.getChangeEventType(
-              ol.interaction.Property.ACTIVE),
-          drawFeatureCtrl.handleActiveChange,
-          drawFeatureCtrl
+        measureLength,
+        ol.Object.getChangeEventType(
+          ol.interaction.Property.ACTIVE),
+        drawFeatureCtrl.handleActiveChange,
+        drawFeatureCtrl
       );
     }
   };

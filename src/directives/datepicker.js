@@ -5,16 +5,16 @@ goog.require('ngeo');
 goog.require('ngeo.Time');
 
 ngeo.module.value('ngeoDatePickerTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoDatePickerTemplateUrl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseTemplateUrl}/datepicker.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoDatePickerTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseTemplateUrl}/datepicker.html`;
+  });
 
 
 /**

@@ -88,7 +88,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
    * @private
    */
   this.autoClose_ = menuOptions.autoClose !== undefined ?
-      menuOptions.autoClose : true;
+    menuOptions.autoClose : true;
 
   // titleEl
   if (menuOptions.title) {
@@ -230,7 +230,7 @@ ngeo.Menu.prototype.close = function() {
 ngeo.Menu.prototype.handleActionClick_ = function(action, evt) {
 
   this.dispatchEvent(
-      new ngeo.MenuEvent(ngeo.MenuEventType.ACTION_CLICK, action));
+    new ngeo.MenuEvent(ngeo.MenuEventType.ACTION_CLICK, action));
 
   if (this.autoClose_) {
     this.close();

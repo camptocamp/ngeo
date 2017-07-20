@@ -32,7 +32,7 @@ goog.require('ngeo.LayertreeController');
  * @ngname gmfTreeManager
  */
 gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
-    ngeoNotification, gmfThemes, ngeoStateManager) {
+  ngeoNotification, gmfThemes, ngeoStateManager) {
 
   /**
    * @type {angular.$timeout}
@@ -169,7 +169,7 @@ gmf.TreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
  * @export
  */
 gmf.TreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
-    opt_add, opt_silent) {
+  opt_add, opt_silent) {
   const groupNotAdded = [];
 
   firstLevelGroups.slice().reverse().forEach((group) => {
@@ -400,8 +400,8 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
     names.push(group.name);
   });
   const msg = (names.length < 2) ?
-      gettextCatalog.getString('group is already loaded.') :
-      gettextCatalog.getString('groups are already loaded.');
+    gettextCatalog.getString('group is already loaded.') :
+    gettextCatalog.getString('groups are already loaded.');
   this.ngeoNotification_.notify({
     msg: `${names.join(', ')} ${msg}`,
     type: ngeo.MessageType.INFORMATION

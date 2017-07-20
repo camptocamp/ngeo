@@ -32,18 +32,18 @@ ngeo.drawpointDirective = function() {
       drawFeatureCtrl.drawPoint = drawPoint;
 
       ol.events.listen(
-          drawPoint,
-          ol.interaction.DrawEventType.DRAWEND,
-          drawFeatureCtrl.handleDrawEnd.bind(
-              drawFeatureCtrl, ngeo.GeometryType.POINT),
-          drawFeatureCtrl
+        drawPoint,
+        ol.interaction.DrawEventType.DRAWEND,
+        drawFeatureCtrl.handleDrawEnd.bind(
+          drawFeatureCtrl, ngeo.GeometryType.POINT),
+        drawFeatureCtrl
       );
       ol.events.listen(
-          drawPoint,
-          ol.Object.getChangeEventType(
-              ol.interaction.Property.ACTIVE),
-          drawFeatureCtrl.handleActiveChange,
-          drawFeatureCtrl
+        drawPoint,
+        ol.Object.getChangeEventType(
+          ol.interaction.Property.ACTIVE),
+        drawFeatureCtrl.handleActiveChange,
+        drawFeatureCtrl
       );
     }
   };

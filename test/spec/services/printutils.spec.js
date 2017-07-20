@@ -33,7 +33,7 @@ describe('ngeo.PrintUtils', () => {
       const printMapSize = [640, 320];  // dots
       const printScale = 10;  // scale denominator
       const optimalResolution = ngeoPrintUtils.getOptimalResolution(
-          mapSize, printMapSize, printScale);
+        mapSize, printMapSize, printScale);
       expect(optimalResolution).toBe(1);
     });
   });

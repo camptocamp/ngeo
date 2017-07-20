@@ -44,17 +44,17 @@ ngeo.filereaderDirective = function($window) {
         return;
       }
       element.on('change', (changeEvent) => {
-            /** @type {!FileReader} */
+        /** @type {!FileReader} */
         const fileReader = new $window.FileReader();
         fileReader.onload = (
-                /**
+          /**
                  * @param {!ProgressEvent} evt Event.
                  */
-                function(evt) {
-                  scope.$apply(() => {
-                    scope['fileContent'] = evt.target.result;
-                  });
-                });
+          function(evt) {
+            scope.$apply(() => {
+              scope['fileContent'] = evt.target.result;
+            });
+          });
         fileReader.readAsText(changeEvent.target.files[0]);
       });
     }

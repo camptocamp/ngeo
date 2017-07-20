@@ -125,7 +125,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
 
   const circleProperties = {
     geometry: ol.geom.Polygon.fromCircle(
-        new ol.geom.Circle([-7691093, 6166327], 35000), 64)
+      new ol.geom.Circle([-7691093, 6166327], 35000), 64)
   };
   circleProperties[ngeo.FeatureProperties.COLOR] = '#000000';
   circleProperties[ngeo.FeatureProperties.IS_CIRCLE] = true;

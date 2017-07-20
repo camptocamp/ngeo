@@ -36,7 +36,7 @@ exports.Controller = function($scope) {
 
     options.layerSelected = (options.layerSelected &&
         options['layerSelected']['Title'] == getCapLayer['Title']) ?
-        null : getCapLayer;
+      null : getCapLayer;
   };
 };
 
@@ -90,16 +90,16 @@ exports.directive = function($compile, ngeoWmtsGetCapItemTemplateUrl) {
 exports.module = angular.module('ngeo.wmtsGetCapItemDirective', []);
 
 exports.module.value('ngeoWmtsGetCapItemTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoWmsGetCapItemTemplateUrl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseModuleTemplateUrl}/import/partials/wmts-get-cap-item.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoWmsGetCapItemTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/import/partials/wmts-get-cap-item.html`;
+  });
 
 exports.module.controller('NgeoWmtsGetCapItemDirectiveController', exports.Controller);
 exports.module.directive('ngeoWmtsGetCapItem', exports.directive);

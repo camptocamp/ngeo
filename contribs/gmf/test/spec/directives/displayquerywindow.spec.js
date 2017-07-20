@@ -21,7 +21,7 @@ describe('gmf.displayquerywindowComponent', () => {
       }
     };
     displayQueriesController = $controller(
-        'GmfDisplayquerywindowController', {$scope}, data);
+      'GmfDisplayquerywindowController', {$scope}, data);
   }));
 
   describe('#show', () => {

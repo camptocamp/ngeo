@@ -146,9 +146,9 @@ ngeo.interaction.Translate.prototype.setState_ = function() {
   if (map && active && features) {
     features.forEach(this.addFeature_, this);
     keys.push(ol.events.listen(features, ol.CollectionEventType.ADD,
-        this.handleFeaturesAdd_, this));
+      this.handleFeaturesAdd_, this));
     keys.push(ol.events.listen(features, ol.CollectionEventType.REMOVE,
-        this.handleFeaturesRemove_, this));
+      this.handleFeaturesRemove_, this));
   } else {
 
     if (map) {
@@ -171,7 +171,7 @@ ngeo.interaction.Translate.prototype.setState_ = function() {
 ngeo.interaction.Translate.prototype.handleFeaturesAdd_ = function(evt) {
   const feature = evt.element;
   goog.asserts.assertInstanceof(feature, ol.Feature,
-      'feature should be an ol.Feature');
+    'feature should be an ol.Feature');
   this.addFeature_(feature);
 };
 
@@ -196,10 +196,10 @@ ngeo.interaction.Translate.prototype.addFeature_ = function(feature) {
   goog.asserts.assertInstanceof(geometry, ol.geom.Geometry);
 
   this.featureListenerKeys_[uid] = ol.events.listen(
-      geometry,
-      ol.events.EventType.CHANGE,
-      this.handleGeometryChange_.bind(this, feature),
-      this
+    geometry,
+    ol.events.EventType.CHANGE,
+    this.handleGeometryChange_.bind(this, feature),
+    this
   );
 
   const point = this.getGeometryCenterPoint_(geometry);
@@ -231,7 +231,7 @@ ngeo.interaction.Translate.prototype.removeFeature_ = function(feature) {
  * @private
  */
 ngeo.interaction.Translate.prototype.handleGeometryChange_ = function(feature,
-    evt) {
+  evt) {
   const geometry = evt.target;
   goog.asserts.assertInstanceof(geometry, ol.geom.Geometry);
 
@@ -247,7 +247,7 @@ ngeo.interaction.Translate.prototype.handleGeometryChange_ = function(feature,
  * @private
  */
 ngeo.interaction.Translate.prototype.getGeometryCenterPoint_ = function(
-    geometry) {
+  geometry) {
 
   let center;
   let point;

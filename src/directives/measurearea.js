@@ -44,18 +44,18 @@ ngeo.measureareaDirective = function($compile, gettextCatalog, $filter, $injecto
       drawFeatureCtrl.measureArea = measureArea;
 
       ol.events.listen(
-          measureArea,
-          ngeo.MeasureEventType.MEASUREEND,
-          drawFeatureCtrl.handleDrawEnd.bind(
-              drawFeatureCtrl, ngeo.GeometryType.POLYGON),
-          drawFeatureCtrl
+        measureArea,
+        ngeo.MeasureEventType.MEASUREEND,
+        drawFeatureCtrl.handleDrawEnd.bind(
+          drawFeatureCtrl, ngeo.GeometryType.POLYGON),
+        drawFeatureCtrl
       );
       ol.events.listen(
-          measureArea,
-          ol.Object.getChangeEventType(
-              ol.interaction.Property.ACTIVE),
-          drawFeatureCtrl.handleActiveChange,
-          drawFeatureCtrl
+        measureArea,
+        ol.Object.getChangeEventType(
+          ol.interaction.Property.ACTIVE),
+        drawFeatureCtrl.handleActiveChange,
+        drawFeatureCtrl
       );
     }
   };

@@ -32,18 +32,18 @@ ngeo.drawtextDirective = function() {
       drawFeatureCtrl.drawText = drawText;
 
       ol.events.listen(
-          drawText,
-          ol.interaction.DrawEventType.DRAWEND,
-          drawFeatureCtrl.handleDrawEnd.bind(
-              drawFeatureCtrl, ngeo.GeometryType.TEXT),
-          drawFeatureCtrl
+        drawText,
+        ol.interaction.DrawEventType.DRAWEND,
+        drawFeatureCtrl.handleDrawEnd.bind(
+          drawFeatureCtrl, ngeo.GeometryType.TEXT),
+        drawFeatureCtrl
       );
       ol.events.listen(
-          drawText,
-          ol.Object.getChangeEventType(
-              ol.interaction.Property.ACTIVE),
-          drawFeatureCtrl.handleActiveChange,
-          drawFeatureCtrl
+        drawText,
+        ol.Object.getChangeEventType(
+          ol.interaction.Property.ACTIVE),
+        drawFeatureCtrl.handleActiveChange,
+        drawFeatureCtrl
       );
     }
   };

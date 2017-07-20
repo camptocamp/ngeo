@@ -135,7 +135,7 @@ gmf.ContextualdataController.prototype.init = function() {
   goog.asserts.assertElement(mapDiv);
 
   goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
-        this.handleMapContextMenu_, false, this);
+    this.handleMapContextMenu_, false, this);
 };
 
 /**
@@ -177,8 +177,8 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
     console.error('Error on getting the raster.');
   };
   this.gmfRaster_.getRaster(coordinate).then(
-      getRasterSuccess,
-      getRasterError
+    getRasterSuccess,
+    getRasterError
   );
 };
 
@@ -255,7 +255,7 @@ gmf.module.controller('GmfContextualdataController', gmf.ContextualdataControlle
  * @ngname gmfContextualdatacontent
  */
 gmf.contextualdatacontentDirective = function(
-    gmfContextualdatacontentTemplateUrl) {
+  gmfContextualdatacontentTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,

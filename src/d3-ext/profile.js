@@ -67,21 +67,21 @@ ngeo.profile = function(options) {
    * The values for margins around the chart defined in pixels.
    */
   const margin = light ? {top: 0, right: 0, bottom: 0, left: 0} :
-      {top: 10, right: 20, bottom: 30, left: 40};
+    {top: 10, right: 20, bottom: 30, left: 40};
 
   /**
    * Hover callback function.
    * @type {function(Object, number, string, Object.<string, number>, string)}
    */
   const hoverCallback = options.hoverCallback !== undefined ?
-      options.hoverCallback : ol.nullFunction;
+    options.hoverCallback : ol.nullFunction;
 
   /**
    * Out callback function.
    * @type {function()}
    */
   const outCallback = options.outCallback !== undefined ?
-      options.outCallback : ol.nullFunction;
+    options.outCallback : ol.nullFunction;
 
   /**
    * Distance data extractor used to get the dist values.
@@ -117,7 +117,7 @@ ngeo.profile = function(options) {
    * @type {number}
    */
   const poiLabelAngle = options.poiLabelAngle !== undefined ?
-      options.poiLabelAngle : -60;
+    options.poiLabelAngle : -60;
 
   /**
    * @type {Object.<string, string>}
@@ -249,12 +249,12 @@ ngeo.profile = function(options) {
       let area;
       if (numberOfLines === 1) {
         area = d3.area()
-            .x(d => x(distanceExtractor(d)))
-            .y0(height)
-            .y1((d) => {
-              const firstLineName =  Object.keys(linesConfiguration)[0];
-              return y(linesConfiguration[firstLineName].zExtractor(d));
-            });
+          .x(d => x(distanceExtractor(d)))
+          .y0(height)
+          .y1((d) => {
+            const firstLineName =  Object.keys(linesConfiguration)[0];
+            return y(linesConfiguration[firstLineName].zExtractor(d));
+          });
       }
 
       // Select the svg element, if it exists.
@@ -277,11 +277,11 @@ ngeo.profile = function(options) {
 
       if (numberOfLines === 1) {
         gEnter.append('path').attr('class', 'area')
-            .style('fill', 'rgba(222, 222, 222, 0.5)');
+          .style('fill', 'rgba(222, 222, 222, 0.5)');
       }
 
       gEnter.insert('g', ':first-child')
-          .attr('class', 'grid-y');
+        .attr('class', 'grid-y');
 
       if (!light) {
         gEnter.append('g')
@@ -318,20 +318,20 @@ ngeo.profile = function(options) {
       xHover.append('text');
 
       gEnter.append('rect')
-          .attr('class', 'overlay')
-          .attr('width', width)
-          .attr('height', height)
-          .style('fill', 'none')
-          .style('pointer-events', 'all');
+        .attr('class', 'overlay')
+        .attr('width', width)
+        .attr('height', height)
+        .style('fill', 'none')
+        .style('pointer-events', 'all');
 
       // Update the outer dimensions.
       svg.attr('width', width + margin.left + margin.right)
-          .attr('height', height + margin.top + margin.bottom);
+        .attr('height', height + margin.top + margin.bottom);
 
       // Update the inner dimensions.
       g = svg.select('g')
-          .attr('transform', `translate(${margin.left},${
-              margin.top})`);
+        .attr('transform', `translate(${margin.left},${
+          margin.top})`);
 
       xDomain = d3.extent(data, d => distanceExtractor(d));
       x.domain(xDomain);
@@ -366,8 +366,8 @@ ngeo.profile = function(options) {
       // Update the area path.
       if (numberOfLines === 1) {
         g.select('.area')
-            .transition()
-            .attr('d', area);
+          .transition()
+          .attr('d', area);
       }
 
       // Set style and update the lines paths and y hover guides for each lines.
@@ -375,8 +375,8 @@ ngeo.profile = function(options) {
       for (name in linesConfiguration) {
         // Set style of each line and add a class with its respective name.
         gEnter.append('path').attr('class', `line ${name}`)
-            .style('stroke', linesConfiguration[name].color || '#F00')
-            .style('fill', 'none');
+          .style('stroke', linesConfiguration[name].color || '#F00')
+          .style('fill', 'none');
 
         // Set y hover guides
         yHover = gEnter.append('g').attr('class', `y grid-hover ${name}`);
@@ -385,13 +385,13 @@ ngeo.profile = function(options) {
 
         // Configure the d3 line.
         line = d3.line()
-            .x(d => x(distanceExtractor(d)))
-            .y(d => y(linesConfiguration[name].zExtractor(d)));
+          .x(d => x(distanceExtractor(d)))
+          .y(d => y(linesConfiguration[name].zExtractor(d)));
 
         // Update path for the line.
         g.select(`.line.${name}`)
-            .transition()
-            .attr('d', line);
+          .transition()
+          .attr('d', line);
       }
 
       if (xDomain[1] > 2000) {
@@ -430,27 +430,27 @@ ngeo.profile = function(options) {
       }
 
       g.select('.grid-y')
-          .transition()
-          .call(yAxis.tickSize(-width, 0).tickFormat(''))
-          .selectAll('.tick line')
-          .style('stroke', '#ccc')
-          .style('opacity', 0.7);
+        .transition()
+        .call(yAxis.tickSize(-width, 0).tickFormat(''))
+        .selectAll('.tick line')
+        .style('stroke', '#ccc')
+        .style('opacity', 0.7);
 
       g.selectAll('.axis').selectAll('path, line')
-          .style('fill', 'none')
-          .style('stroke', '#000')
-          .style('shape-rendering', 'crispEdges');
+        .style('fill', 'none')
+        .style('stroke', '#000')
+        .style('shape-rendering', 'crispEdges');
 
       g.select('.grid-y').select('path')
-          .style('stroke', 'none');
+        .style('stroke', 'none');
 
       g.selectAll('.grid-hover line')
-          .style('stroke', '#222')
-          .style('opacity', 0.8);
+        .style('stroke', '#222')
+        .style('opacity', 0.8);
 
       g.select('.overlay')
-          .on('mouseout', mouseout)
-          .on('mousemove', mousemove);
+        .on('mouseout', mouseout)
+        .on('mousemove', mousemove);
 
       function mousemove() {
         const mouseX = d3.mouse(this)[0];
@@ -471,7 +471,7 @@ ngeo.profile = function(options) {
    */
   profile.clearHighlight = function() {
     g.selectAll('.grid-hover')
-        .style('display', 'none');
+      .style('display', 'none');
     outCallback.call(null);
   };
 
@@ -499,43 +499,43 @@ ngeo.profile = function(options) {
       elevations.push(elevation);
       elevationsRef[lineName] = elevation;
       g.select(`.y.grid-hover.${lineName}`)
-          .style('display', 'inline')
-          .select('line')
-          .attr('x1', x(0))
-          .attr('y1', y(elevation))
-          .attr('x2', width)
-          .attr('y2', y(elevation));
+        .style('display', 'inline')
+        .select('line')
+        .attr('x1', x(0))
+        .attr('y1', y(elevation))
+        .attr('x2', width)
+        .attr('y2', y(elevation));
     }
 
     g.select('.x.grid-hover')
-        .style('display', 'inline')
-        .select('line')
-        .attr('x1', x(dist))
-        .attr('y1', height)
-        .attr('x2', x(dist))
-        .attr('y2', y(Math.max.apply(null, elevations)));
+      .style('display', 'inline')
+      .select('line')
+      .attr('x1', x(dist))
+      .attr('y1', height)
+      .attr('x2', x(dist))
+      .attr('y2', y(Math.max.apply(null, elevations)));
 
     const right = dist > xDomain[1] / 2;
     let xtranslate = x(dist);
     xtranslate += right ? -10 : 10;
 
     g.select('.x.grid-hover text')
-        .text(formatter.xhover(dist / xFactor, xUnits))
-        .style('text-anchor', right ? 'end' : 'start')
-        .attr('transform', `translate(${xtranslate},${
-            height - 10})`);
+      .text(formatter.xhover(dist / xFactor, xUnits))
+      .style('text-anchor', right ? 'end' : 'start')
+      .attr('transform', `translate(${xtranslate},${
+        height - 10})`);
 
     const yUnits = 'm';
     // Display altitude on guides only if there is one line.
     if (numberOfLines === 1) {
       g.select('.y.grid-hover text')
-          .text(formatter.yhover(elevations[0], 'm'))
-          .style('text-anchor', right ? 'end' : 'start')
-          .attr('transform', `translate(${xtranslate},${
-              y(elevations[0]) - 10})`);
+        .text(formatter.yhover(elevations[0], 'm'))
+        .style('text-anchor', right ? 'end' : 'start')
+        .attr('transform', `translate(${xtranslate},${
+          y(elevations[0]) - 10})`);
     }
     hoverCallback.call(null, point, dist / xFactor, xUnits, elevationsRef,
-        yUnits);
+      yUnits);
   };
 
 
@@ -598,11 +598,11 @@ ngeo.profile = function(options) {
       .text(d => pe.sort(d) + (light ? '' : (` - ${pe.title(d)}`)));
 
     poiEnterG.selectAll('line')
-       .style('stroke', 'grey')
-       .attr('x1', d => x(pe.dist(d)))
-       .attr('y1', d => y(y.domain()[0]))
-       .attr('x2', d => x(pe.dist(d)))
-       .attr('y2', d => y(pe.z(d)));
+      .style('stroke', 'grey')
+      .attr('x1', d => x(pe.dist(d)))
+      .attr('y1', d => y(y.domain()[0]))
+      .attr('x2', d => x(pe.dist(d)))
+      .attr('y2', d => y(pe.z(d)));
 
     // remove unused pois
     poiEnterG.exit().remove();

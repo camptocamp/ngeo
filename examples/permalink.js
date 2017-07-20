@@ -80,7 +80,7 @@ app.MapComponentController.prototype.$onInit = function() {
   const x = this.ngeoLocation_.getParam('x');
   const y = this.ngeoLocation_.getParam('y');
   const center = (x !== undefined) && (y !== undefined) ?
-      [+x, +y] : [0, 0];
+    [+x, +y] : [0, 0];
 
   view.setCenter(center);
   view.setZoom(zoom);
@@ -92,19 +92,19 @@ app.MapComponentController.prototype.$onInit = function() {
   });
 
   view.on('propertychange',
-      this.ngeoDebounce_(
-          /**
+    this.ngeoDebounce_(
+      /**
            * @param {ol.ObjectEventType} e Object event.
            */
-          (e) => {
-            const center = view.getCenter();
-            const params = {
-              'z': view.getZoom(),
-              'x': Math.round(center[0]),
-              'y': Math.round(center[1])
-            };
-            this.ngeoLocation_.updateParams(params);
-          }, 300, /* invokeApply */ true));
+      (e) => {
+        const center = view.getCenter();
+        const params = {
+          'z': view.getZoom(),
+          'x': Math.round(center[0]),
+          'y': Math.round(center[1])
+        };
+        this.ngeoLocation_.updateParams(params);
+      }, 300, /* invokeApply */ true));
 };
 
 /**

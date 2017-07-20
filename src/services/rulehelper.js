@@ -234,14 +234,14 @@ ngeo.RuleHelper = class {
     }
     const isCustom = rule.isCustom;
     const lowerBoundary = rule.lowerBoundary !== null ? rule.lowerBoundary :
-          undefined;
+      undefined;
     const name = rule.name;
     const operator = rule.operator !== null ? rule.operator : undefined;
     const operators = rule.operators ? rule.operators.slice(0) : undefined;
     const propertyName = rule.propertyName;
     const type = rule.type !== null ? rule.type : undefined;
     const upperBoundary = rule.upperBoundary !== null ? rule.upperBoundary :
-          undefined;
+      undefined;
 
     const options = {
       expression,

@@ -108,7 +108,7 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
  * @private
  */
 gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
-    newFeature, previousFeature) {
+  newFeature, previousFeature) {
 
   const keys = this.featureListenerKeys_;
 
@@ -132,12 +132,12 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
       ngeo.FeatureProperties.STROKE
     ].forEach(function(propName) {
       keys.push(
-          ol.events.listen(
-              newFeature,
-              ol.Object.getChangeEventType(propName),
-              this.handleFeatureChange_,
-              this
-          )
+        ol.events.listen(
+          newFeature,
+          ol.Object.getChangeEventType(propName),
+          this.handleFeatureChange_,
+          this
+        )
       );
     }, this);
 
@@ -145,12 +145,12 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
     goog.asserts.assert(geometry, 'Geometry should be thruthy');
 
     keys.push(
-        ol.events.listen(
-            geometry,
-            'change',
-            this.handleGeometryChange_,
-            this
-        )
+      ol.events.listen(
+        geometry,
+        'change',
+        this.handleGeometryChange_,
+        this
+      )
     );
 
     this.type = this.featureHelper_.getType(newFeature);
@@ -165,7 +165,7 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
  * @private
  */
 gmf.FeaturestyleController.prototype.handleColorSet_ = function(
-    newColor) {
+  newColor) {
   if (this.feature && newColor) {
     const currentColor = this.feature.get(ngeo.FeatureProperties.COLOR);
     if (currentColor !== newColor) {

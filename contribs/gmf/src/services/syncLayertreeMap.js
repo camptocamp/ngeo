@@ -21,7 +21,7 @@ goog.require('ol.layer.Tile');
  * @ngname gmfSyncLayertreeMap
  */
 gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
-   gmfThemes) {
+  gmfThemes) {
 
   /**
    * @type {ngeo.LayerHelper}
@@ -158,7 +158,7 @@ gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
  * @private
  */
 gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
-    dataLayerGroup, opt_position) {
+  dataLayerGroup, opt_position) {
   const groupNode = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.node);
   let layer = null;
   const isFirstLevelGroup = treeCtrl.parent.isRoot;
@@ -174,7 +174,7 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
     if (inAMixedGroup) {
       layer = this.createLayerFromGroup_(treeCtrl, true);
       const layerGroup = /** @type {ol.layer.Group} */ (
-              gmf.SyncLayertreeMap.getLayer(treeCtrl.parent));
+        gmf.SyncLayertreeMap.getLayer(treeCtrl.parent));
       layerGroup.getLayers().insertAt(0, layer);
     }
   }
@@ -191,7 +191,7 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
  * @private
  */
 gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
-    mixed) {
+  mixed) {
   let layer;
   const groupNode = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.node);
   if (mixed) { // Will be one ol.layer per each node.
@@ -307,10 +307,10 @@ gmf.SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
   goog.asserts.assert(gmfLayerWMTS.url);
   goog.asserts.assert(gmfLayerWMTS.layer);
   this.layerHelper_.createWMTSLayerFromCapabilitites(gmfLayerWMTS.url,
-        gmfLayerWMTS.layer, gmfLayerWMTS.dimensions).then((layer) => {
-          newLayer.setSource(layer.getSource());
-          newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
-        });
+    gmfLayerWMTS.layer, gmfLayerWMTS.dimensions).then((layer) => {
+    newLayer.setSource(layer.getSource());
+    newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
+  });
   return newLayer;
 };
 
@@ -393,7 +393,7 @@ gmf.SyncLayertreeMap.prototype.isOneParentNotMixed_ = function(treeCtrl) {
  * @private
  */
 gmf.SyncLayertreeMap.prototype.getFirstLevelGroupCtrl_ = function(
-    treeCtrl) {
+  treeCtrl) {
   let tree = treeCtrl;
   while (!tree.parent.isRoot) {
     tree = tree.parent;

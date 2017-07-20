@@ -101,7 +101,7 @@ gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
  * @ngname GmfObjecteditingtoolsController
  */
 gmf.ObjecteditingtoolsController = function($injector, $scope,
-    ngeoDecorateInteraction, ngeoToolActivateMgr) {
+  ngeoDecorateInteraction, ngeoToolActivateMgr) {
 
   // == Scope properties ==
 
@@ -231,7 +231,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
   this.triangleAngle = Math.PI / 180 * 90; // 90 degrees
 
   const oeToolsOptions = /** @type {gmfx.ObjectEditingToolsOptions} */ (
-      $injector.get('gmfObjectEditingToolsOptions'));
+    $injector.get('gmfObjectEditingToolsOptions'));
 
   /**
    * @type {number}

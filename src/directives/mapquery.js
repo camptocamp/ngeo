@@ -106,13 +106,13 @@ ngeo.mapQueryDirective = function(ngeoMapQuerent, $injector) {
 
       // watch 'active' property -> activate/deactivate accordingly
       scope.$watch(attrs['ngeoMapQueryActive'],
-          (newVal, oldVal) => {
-            if (newVal) {
-              activate_();
-            } else {
-              deactivate_();
-            }
+        (newVal, oldVal) => {
+          if (newVal) {
+            activate_();
+          } else {
+            deactivate_();
           }
+        }
       );
     }
   };

@@ -51,17 +51,17 @@ describe('ngeo.gridComponent', () => {
       }
     ];
     const columnDefs = [
-        {name: 'name'},
-        {name: 'display_name'},
-        {name: 'timestamp'},
-        {name: 'type'}
+      {name: 'name'},
+      {name: 'display_name'},
+      {name: 'timestamp'},
+      {name: 'type'}
     ];
 
     const data = {
       configuration: new ngeo.GridConfig(gridConfigData, columnDefs)
     };
     gridController = $controller(
-        'ngeoGridController', {$scope}, data);
+      'ngeoGridController', {$scope}, data);
   }));
 
   describe('#sort', () => {

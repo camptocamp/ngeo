@@ -45,8 +45,8 @@ gmf.DataSourcesManager = class {
    * @ngname gmfDataSourcesManager
    */
   constructor($q, $rootScope, $timeout, gmfThemes, gmfTreeManager,
-      ngeoBackgroundLayerMgr, ngeoDataSources, ngeoLayerHelper, ngeoRuleHelper,
-      ngeoWMSTime
+    ngeoBackgroundLayerMgr, ngeoDataSources, ngeoLayerHelper, ngeoRuleHelper,
+    ngeoWMSTime
   ) {
 
     // === Injected properties ===
@@ -151,7 +151,7 @@ gmf.DataSourcesManager = class {
       this
     );
     ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE,
-        this.handleThemesChange_, this);
+      this.handleThemesChange_, this);
   }
 
   /**
@@ -207,8 +207,8 @@ gmf.DataSourcesManager = class {
             const newTreeCtrls = [];
             const visitor = (treeCtrls, treeCtrl) => {
               const node =
-                    /** @type {!gmfThemes.GmfGroup|!gmfThemes.GmfLayer} */ (
-                    treeCtrl.node);
+                  /** @type {!gmfThemes.GmfGroup|!gmfThemes.GmfLayer} */ (
+                  treeCtrl.node);
               const children = node.children;
               if (!children) {
                 treeCtrls.push(treeCtrl);
@@ -365,7 +365,7 @@ gmf.DataSourcesManager = class {
     const ogcServerType = ogcServer ? ogcServer.type : undefined;
     const wmsIsSingleTile = ogcServer ? ogcServer.isSingleTile : undefined;
     const wfsUrl = ogcServer && ogcServer.wfsSupport ?
-          ogcServer.urlWfs : undefined;
+      ogcServer.urlWfs : undefined;
     const wmsUrl = ogcServer ? ogcServer.url : undefined;
 
     let wfsOutputFormat = ngeo.DataSource.WFSOutputFormat.GML3;
@@ -377,11 +377,11 @@ gmf.DataSourcesManager = class {
     // (6) Snapping
     const snappable = !!meta.snappingConfig;
     const snappingTolerance = meta.snappingConfig ?
-          meta.snappingConfig.tolerance : undefined;
+      meta.snappingConfig.tolerance : undefined;
     const snappingToEdges = meta.snappingConfig ?
-          meta.snappingConfig.edge : undefined;
+      meta.snappingConfig.edge : undefined;
     const snappingToVertice = meta.snappingConfig ?
-          meta.snappingConfig.vertex : undefined;
+      meta.snappingConfig.vertex : undefined;
 
     // (7) Dimensions
     const dimensions = node.dimensions || firstLevelGroup.dimensions;

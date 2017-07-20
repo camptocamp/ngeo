@@ -72,7 +72,7 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @ngname GmfDrawfeatureController
  */
 gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog, ngeoDecorateInteraction,
-    ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
+  ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
    * @type {!ol.Map}
@@ -96,7 +96,7 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog, ngeoDecor
    */
   this.drawActive = false;
 
- /**
+  /**
    * @type {!ngeo.ToolActivate}
    * @export
    */
@@ -378,17 +378,17 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
     // when activated
 
     keys.push(ol.events.listen(this.features, ol.CollectionEventType.ADD,
-        this.handleFeaturesAdd_, this));
+      this.handleFeaturesAdd_, this));
     keys.push(ol.events.listen(this.features, ol.CollectionEventType.REMOVE,
-        this.handleFeaturesRemove_, this));
+      this.handleFeaturesRemove_, this));
 
     keys.push(ol.events.listen(this.translate_,
-        ol.interaction.TranslateEventType.TRANSLATEEND,
-        this.handleTranslateEnd_, this));
+      ol.interaction.TranslateEventType.TRANSLATEEND,
+      this.handleTranslateEnd_, this));
 
     keys.push(ol.events.listen(this.rotate_,
-        ngeo.RotateEventType.ROTATEEND,
-        this.handleRotateEnd_, this));
+      ngeo.RotateEventType.ROTATEEND,
+      this.handleRotateEnd_, this));
 
     toolMgr.registerTool(drawUid, this.drawToolActivate, false);
     toolMgr.registerTool(drawUid, this.mapSelectToolActivate, true);
@@ -458,7 +458,7 @@ gmf.DrawfeatureController.prototype.getFeaturesArray = function() {
 gmf.DrawfeatureController.prototype.clearFeatures = function() {
   const gettextCatalog = this.gettextCatalog_;
   const msg = gettextCatalog.getString(
-      'Do you really want to delete all the features?');
+    'Do you really want to delete all the features?');
   if (confirm(msg)) {
     this.features.clear();
   }
@@ -472,7 +472,7 @@ gmf.DrawfeatureController.prototype.clearFeatures = function() {
 gmf.DrawfeatureController.prototype.removeFeature = function(feature) {
   const gettextCatalog = this.gettextCatalog_;
   const msg = gettextCatalog.getString(
-      'Do you really want to delete the selected feature?');
+    'Do you really want to delete the selected feature?');
   if (confirm(msg)) {
     this.features.remove(feature);
   }
@@ -508,42 +508,42 @@ gmf.DrawfeatureController.prototype.handleFeaturesRemove_ = function(evt) {
  * @private
  */
 gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
-    active) {
+  active) {
 
   const mapDiv = this.map.getViewport();
   goog.asserts.assertElement(mapDiv);
 
   if (active) {
     ol.events.listen(this.map, ol.MapBrowserEventType.CLICK,
-        this.handleMapClick_, this);
+      this.handleMapClick_, this);
 
     goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
-        this.handleMapContextMenu_, false, this);
+      this.handleMapContextMenu_, false, this);
 
     goog.events.listen(mapDiv, goog.events.EventType.TOUCHSTART,
-        this.handleMapTouchStart_, false, this);
+      this.handleMapTouchStart_, false, this);
 
     goog.events.listen(mapDiv, goog.events.EventType.TOUCHMOVE,
-        this.handleMapTouchEnd_, false, this);
+      this.handleMapTouchEnd_, false, this);
 
     goog.events.listen(mapDiv, goog.events.EventType.TOUCHEND,
-        this.handleMapTouchEnd_, false, this);
+      this.handleMapTouchEnd_, false, this);
 
   } else {
     ol.events.unlisten(this.map, ol.MapBrowserEventType.CLICK,
-        this.handleMapClick_, this);
+      this.handleMapClick_, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.CONTEXTMENU,
-        this.handleMapContextMenu_, false, this);
+      this.handleMapContextMenu_, false, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.TOUCHSTART,
-        this.handleMapTouchStart_, false, this);
+      this.handleMapTouchStart_, false, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.TOUCHMOVE,
-        this.handleMapTouchEnd_, false, this);
+      this.handleMapTouchEnd_, false, this);
 
     goog.events.unlisten(mapDiv, goog.events.EventType.TOUCHEND,
-        this.handleMapTouchEnd_, false, this);
+      this.handleMapTouchEnd_, false, this);
   }
 };
 
@@ -659,7 +659,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
     });
 
     ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
-        this.handleMenuActionClick_, this);
+      this.handleMenuActionClick_, this);
     this.map.addOverlay(this.menu_);
 
     this.menu_.open(coordinate);
@@ -691,7 +691,7 @@ gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
   switch (action) {
     case gmf.DrawfeatureController.MenuActionType.DELETE:
       goog.asserts.assert(
-          this.selectedFeature, 'Selected feature should be truthy');
+        this.selectedFeature, 'Selected feature should be truthy');
       this.removeFeature(this.selectedFeature);
       this.scope_.$apply();
       break;

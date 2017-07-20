@@ -40,7 +40,7 @@ ngeo.RuleController = class {
    * @ngname NgeoRuleController
    */
   constructor(gettextCatalog, $scope, $timeout, ngeoDecorateInteraction,
-      ngeoFeatureHelper, ngeoRuleHelper, ngeoToolActivateMgr
+    ngeoFeatureHelper, ngeoRuleHelper, ngeoToolActivateMgr
   ) {
 
     // Binding properties

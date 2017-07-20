@@ -58,7 +58,7 @@ gmf.module.directive(
  * @ngname GmfObjecteditinggetwmsfeatureController
  */
 gmf.ObjecteditinggetwmsfeatureController = function($scope,
-    gmfObjectEditingQuery) {
+  gmfObjectEditingQuery) {
 
   // Scope properties
 

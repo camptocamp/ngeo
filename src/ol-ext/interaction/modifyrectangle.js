@@ -84,9 +84,9 @@ ngeo.interaction.ModifyRectangle = function(options) {
   this.cache_ = {};
 
   ol.events.listen(this.features_, ol.CollectionEventType.ADD,
-      this.handleFeatureAdd_, this);
+    this.handleFeatureAdd_, this);
   ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
-      this.handleFeatureRemove_, this);
+    this.handleFeatureRemove_, this);
 
   this.features_.forEach(this.addFeature_, this);
 
@@ -190,7 +190,7 @@ ngeo.interaction.ModifyRectangle.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
     this.dispatchEvent(new ol.interaction.Modify.Event(
-        ol.interaction.ModifyEventType.MODIFYSTART, this.features_, evt));
+      ol.interaction.ModifyEventType.MODIFYSTART, this.features_, evt));
   }
 };
 
@@ -228,7 +228,7 @@ ngeo.interaction.ModifyRectangle.prototype.setMap = function(map) {
 ngeo.interaction.ModifyRectangle.prototype.handleFeatureAdd_ = function(evt) {
   const feature = evt.element;
   goog.asserts.assertInstanceof(feature, ol.Feature,
-      'feature should be an ol.Feature');
+    'feature should be an ol.Feature');
   this.addFeature_(feature);
 };
 
@@ -347,7 +347,7 @@ ngeo.interaction.ModifyRectangle.prototype.handleDrag_ = function(evt) {
 ngeo.interaction.ModifyRectangle.prototype.handleUp_ = function(evt) {
   if (this.modified_) {
     this.dispatchEvent(new ol.interaction.Modify.Event(
-        ol.interaction.ModifyEventType.MODIFYEND, this.features_, evt));
+      ol.interaction.ModifyEventType.MODIFYEND, this.features_, evt));
     this.modified_ = false;
   }
   return false;

@@ -100,20 +100,20 @@ ngeo.profileDirective = function(ngeoDebounce) {
       });
 
       scope.$watch(attrs['ngeoProfileHighlight'],
-              (newVal, oldVal) => {
-                if (newVal === undefined) {
-                  return;
-                }
-                if (newVal > 0) {
-                  profile.highlight(newVal);
-                } else {
-                  profile.clearHighlight();
-                }
-              });
+        (newVal, oldVal) => {
+          if (newVal === undefined) {
+            return;
+          }
+          if (newVal > 0) {
+            profile.highlight(newVal);
+          } else {
+            profile.clearHighlight();
+          }
+        });
 
       goog.events.listen(window, goog.events.EventType.RESIZE,
-              ngeoDebounce(refreshData, 50, true),
-              false, this);
+        ngeoDebounce(refreshData, 50, true),
+        false, this);
 
       function refreshData() {
         if (profile !== undefined) {

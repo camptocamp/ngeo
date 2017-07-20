@@ -146,7 +146,7 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
   }
 
   this.dispatchEvent(new ngeo.BackgroundEvent(ngeo.BackgroundEventType.CHANGE,
-      layer, previous));
+    layer, previous));
   return previous;
 };
 

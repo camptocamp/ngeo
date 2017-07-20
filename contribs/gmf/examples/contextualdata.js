@@ -17,12 +17,12 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.value(
-    'gmfRasterUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+  'gmfRasterUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
 
 gmfapp.module.value(
-    'gmfContextualdatacontentTemplateUrl',
-    'partials/contextualdata.html');
+  'gmfContextualdatacontentTemplateUrl',
+  'partials/contextualdata.html');
 
 
 /**

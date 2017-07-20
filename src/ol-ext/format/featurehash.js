@@ -93,21 +93,21 @@ ngeo.format.FeatureHash = function(opt_options) {
    * @private
    */
   this.accuracy_ = options.accuracy !== undefined ?
-      options.accuracy : ngeo.format.FeatureHash.ACCURACY_;
+    options.accuracy : ngeo.format.FeatureHash.ACCURACY_;
 
   /**
    * @type {boolean}
    * @private
    */
   this.encodeStyles_ = options.encodeStyles !== undefined ?
-      options.encodeStyles : true;
+    options.encodeStyles : true;
 
   /**
    * @type {function(ol.Feature):Object.<string, (string|number)>}
    * @private
    */
   this.propertiesFunction_ = options.properties !== undefined ?
-      options.properties : ngeo.format.FeatureHash.defaultPropertiesFunction_;
+    options.properties : ngeo.format.FeatureHash.defaultPropertiesFunction_;
 
   /**
    * @type {boolean}
@@ -234,7 +234,7 @@ ngeo.format.FeatureHash.encodeNumber_ = function(num) {
   let encodedNumber = '';
   while (num >= 0x20) {
     encodedNumber += ngeo.format.FeatureHash.CHAR64_.charAt(
-        0x20 | (num & 0x1f));
+      0x20 | (num & 0x1f));
     num >>= 5;
   }
   encodedNumber += ngeo.format.FeatureHash.CHAR64_.charAt(num);
@@ -263,7 +263,7 @@ ngeo.format.FeatureHash.encodeStyles_ = function(styles, geometryType, encodedSt
     if (styleType == ngeo.format.FeatureHashStyleType.POLYGON) {
       if (fillStyle !== null) {
         ngeo.format.FeatureHash.encodeStylePolygon_(
-            fillStyle, strokeStyle, encodedStyles);
+          fillStyle, strokeStyle, encodedStyles);
       }
     } else if (styleType == ngeo.format.FeatureHashStyleType.LINE_STRING) {
       if (strokeStyle !== null) {
@@ -347,7 +347,7 @@ ngeo.format.FeatureHash.encodeStylePolygon_ = function(fillStyle, strokeStyle, e
  */
 ngeo.format.FeatureHash.encodeStyleFill_ = function(fillStyle, encodedStyles, opt_propertyName) {
   const propertyName = opt_propertyName !== undefined ?
-      opt_propertyName : 'fillColor';
+    opt_propertyName : 'fillColor';
   const fillColor = fillStyle.getColor();
   if (fillColor !== null) {
     goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
@@ -358,7 +358,7 @@ ngeo.format.FeatureHash.encodeStyleFill_ = function(fillStyle, encodedStyles, op
       encodedStyles.push('\'');
     }
     encodedStyles.push(
-        encodeURIComponent(`${propertyName}*${fillColorHex}`));
+      encodeURIComponent(`${propertyName}*${fillColorHex}`));
   }
 };
 
@@ -413,7 +413,7 @@ ngeo.format.FeatureHash.encodeStyleText_ = function(textStyle, encodedStyles) {
   const fillStyle = textStyle.getFill();
   if (fillStyle !== null) {
     ngeo.format.FeatureHash.encodeStyleFill_(
-        fillStyle, encodedStyles, 'fontColor');
+      fillStyle, encodedStyles, 'fontColor');
   }
 };
 
@@ -458,7 +458,7 @@ ngeo.format.FeatureHash.readMultiLineStringGeometry_ = function(text) {
   }
   const multiLineString = new ol.geom.MultiLineString(null);
   multiLineString.setFlatCoordinates(
-      ol.geom.GeometryLayout.XY, flatCoordinates, ends);
+    ol.geom.GeometryLayout.XY, flatCoordinates, ends);
   return multiLineString;
 };
 
@@ -568,7 +568,7 @@ ngeo.format.FeatureHash.readMultiPolygonGeometry_ = function(text) {
   }
   const multipolygon = new ol.geom.MultiPolygon(null);
   multipolygon.setFlatCoordinates(
-      ol.geom.GeometryLayout.XY, flatCoordinates, endss);
+    ol.geom.GeometryLayout.XY, flatCoordinates, endss);
   return multipolygon;
 };
 
@@ -882,7 +882,7 @@ ngeo.format.FeatureHash.writePolygonGeometry_ = function(geometry) {
   const offset = 0;
   const textArray = ['a('];
   ngeo.format.FeatureHash.encodeRings_.call(this,
-      flatCoordinates, stride, offset, ends, textArray);
+    flatCoordinates, stride, offset, ends, textArray);
   textArray.push(')');
   return textArray.join('');
 };
@@ -908,7 +908,7 @@ ngeo.format.FeatureHash.writeMultiPolygonGeometry_ = function(geometry) {
     const ends = endss[i];
     textArray.push('(');
     offset = ngeo.format.FeatureHash.encodeRings_.call(this,
-        flatCoordinates, stride, offset, ends, textArray);
+      flatCoordinates, stride, offset, ends, textArray);
     textArray.push(')');
   }
   return textArray.join('');
@@ -959,7 +959,7 @@ ngeo.format.FeatureHash.prototype.decodeCoordinates_ = function(text, opt_flatCo
   const len = text.length;
   let index = 0;
   const flatCoordinates = opt_flatCoordinates !== undefined ?
-      opt_flatCoordinates : [];
+    opt_flatCoordinates : [];
   let i = flatCoordinates.length;
   while (index < len) {
     let b;
@@ -1031,16 +1031,16 @@ ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_optio
   goog.asserts.assert(text[text.length - 1] === ')');
   let splitIndex = text.indexOf('~');
   const geometryText = splitIndex >= 0 ?
-      `${text.substring(0, splitIndex)})` : text;
+    `${text.substring(0, splitIndex)})` : text;
   const geometry = this.readGeometryFromText(geometryText, opt_options);
   const feature = new ol.Feature(geometry);
   if (splitIndex >= 0) {
     const attributesAndStylesText = text.substring(
-        splitIndex + 1, text.length - 1);
+      splitIndex + 1, text.length - 1);
     splitIndex = attributesAndStylesText.indexOf('~');
     const attributesText = splitIndex >= 0 ?
-        attributesAndStylesText.substring(0, splitIndex) :
-        attributesAndStylesText;
+      attributesAndStylesText.substring(0, splitIndex) :
+      attributesAndStylesText;
     if (attributesText != '') {
       const parts = attributesText.split('\'');
       for (let i = 0; i < parts.length; ++i) {
@@ -1085,7 +1085,7 @@ ngeo.format.FeatureHash.prototype.readFeaturesFromText = function(text, opt_opti
     const index = text.indexOf(')');
     goog.asserts.assert(index >= 0);
     const feature = this.readFeatureFromText(
-        text.substring(0, index + 1), opt_options);
+      text.substring(0, index + 1), opt_options);
     features.push(feature);
     text = text.substring(index + 1);
   }
@@ -1147,7 +1147,7 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
         encodedProperties.push('\'');
       }
       const encoded = encodeURIComponent(
-          `${key.replace(/[()'*]/g, '_')}*${
+        `${key.replace(/[()'*]/g, '_')}*${
           value.toString().replace(/[()'*]/g, '_')}`);
       encodedProperties.push(encoded);
     }
@@ -1168,7 +1168,7 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
         const encodedStyles = [];
         styles = Array.isArray(styles) ? styles : [styles];
         ngeo.format.FeatureHash.encodeStyles_(
-            styles, geometry.getType(), encodedStyles);
+          styles, geometry.getType(), encodedStyles);
         if (encodedStyles.length > 0) {
           encodedParts.push('~');
           Array.prototype.push.apply(encodedParts, encodedStyles);
@@ -1214,7 +1214,7 @@ ngeo.format.FeatureHash.prototype.writeFeaturesText = function(features, opt_opt
  */
 ngeo.format.FeatureHash.prototype.writeGeometryText = function(geometry, opt_options) {
   const geometryWriter = ngeo.format.FeatureHash.GEOMETRY_WRITERS_[
-      geometry.getType()];
+    geometry.getType()];
   goog.asserts.assert(geometryWriter !== undefined);
   const transformedGeometry = /** @type {ol.geom.Geometry} */
       (ol.format.Feature.transformWithOptions(geometry, true, opt_options));

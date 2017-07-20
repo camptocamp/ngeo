@@ -20,9 +20,9 @@ goog.exportSymbol(
   ol.geom.GeometryCollection);
 
 goog.exportProperty(
-    ol.geom.GeometryCollection.prototype,
-    'getGeometries',
-    ol.geom.GeometryCollection.prototype.getGeometries);
+  ol.geom.GeometryCollection.prototype,
+  'getGeometries',
+  ol.geom.GeometryCollection.prototype.getGeometries);
 
 goog.exportSymbol(
   'ol.geom.LineString',
@@ -103,6 +103,6 @@ goog.exportProperty(
   ol.geom.Polygon.prototype.getLinearRings);
 
 goog.exportProperty(
-    ol.geom.Polygon.prototype,
-    'getCoordinates',
-    ol.geom.Polygon.prototype.getCoordinates);
+  ol.geom.Polygon.prototype,
+  'getCoordinates',
+  ol.geom.Polygon.prototype.getCoordinates);

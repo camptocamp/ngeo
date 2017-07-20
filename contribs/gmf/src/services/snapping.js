@@ -33,7 +33,7 @@ goog.require('ol.interaction.Snap');
  * @ngname gmfSnapping
  */
 gmf.Snapping = function($http, $q, $rootScope, $timeout, gmfThemes,
-    gmfTreeManager) {
+  gmfTreeManager) {
 
   // === Injected services ===
 

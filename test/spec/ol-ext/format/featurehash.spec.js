@@ -86,10 +86,10 @@ describe('ngeo.format.FeatureHash', () => {
         let ring;
         ring = polygon.getLinearRing(0);
         expect(ring.getCoordinates()).toEqual(
-            [[0, 0], [4, 4], [4, -4], [0, 0]]);
+          [[0, 0], [4, 4], [4, -4], [0, 0]]);
         ring = polygon.getLinearRing(1);
         expect(ring.getCoordinates()).toEqual(
-            [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]);
+          [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]);
       });
 
     });
@@ -98,7 +98,7 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('correctly decodes a multi polygon', () => {
         const multiPolygon = fhFormat.readGeometry(
-            'A(..DD.K\'!F_..!-.)(!_!!.D)');
+          'A(..DD.K\'!F_..!-.)(!_!!.D)');
         expect(multiPolygon instanceof ol.geom.MultiPolygon).toBeTruthy();
         const polygons = multiPolygon.getPolygons();
         expect(polygons.length).toBe(2);
@@ -108,16 +108,16 @@ describe('ngeo.format.FeatureHash', () => {
         expect(linearRingCount).toBe(2);
         ring = polygon.getLinearRing(0);
         expect(ring.getCoordinates()).toEqual(
-            [[0, 0], [4, 4], [4, -4], [0, 0]]);
+          [[0, 0], [4, 4], [4, -4], [0, 0]]);
         ring = polygon.getLinearRing(1);
         expect(ring.getCoordinates()).toEqual(
-            [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]);
+          [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]);
         polygon = polygons[1];
         linearRingCount = polygon.getLinearRingCount();
         expect(linearRingCount).toBe(1);
         ring = polygon.getLinearRing(0);
         expect(ring.getCoordinates()).toEqual(
-            [[0, 0], [-2, -2], [-2, 2], [0, 0]]);
+          [[0, 0], [-2, -2], [-2, 2], [0, 0]]);
       });
 
     });
@@ -126,7 +126,7 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('correctly decodes a feature', () => {
         const feature = fhFormat.readFeature(
-            'p(__~foo*foo\'bar*bar~fillColor*%23ff0101\'' +
+          'p(__~foo*foo\'bar*bar~fillColor*%23ff0101\'' +
             'strokeColor*%2301ff01\'strokeWidth*3\'' +
             'fontSize*12px\'fontColor*%230101ff)');
         expect(feature instanceof ol.Feature).toBeTruthy();
@@ -163,7 +163,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('feature decoding with pointRadius', () => {
       it('correctly decodes a feature with pointRadius', () => {
         const feature = fhFormat.readFeature(
-            'p(__~foo*foo\'bar*bar~fillColor*%23ff0101\'' +
+          'p(__~foo*foo\'bar*bar~fillColor*%23ff0101\'' +
             'strokeColor*%2301ff01\'strokeWidth*3\'' +
             'pointRadius*4)');
         expect(feature instanceof ol.Feature).toBeTruthy();
@@ -199,7 +199,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('feature decoding with style, witout attributes', () => {
       it('correctly decodes a feature with style, witout attributes', () => {
         const feature = fhFormat.readFeature(
-            'p(__~~fillColor*%23ff0101\'' +
+          'p(__~~fillColor*%23ff0101\'' +
             'strokeColor*%2301ff01\'strokeWidth*3\'' +
             'pointRadius*4)');
         expect(feature instanceof ol.Feature).toBeTruthy();
@@ -305,7 +305,7 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('correctly encodes a multi line', () => {
         const multiLineString = new ol.geom.MultiLineString([
-            [[0, 0], [1, 1]], [[0, 0], [1, 1]]
+          [[0, 0], [1, 1]], [[0, 0], [1, 1]]
         ]);
         const result = fhFormat.writeGeometry(multiLineString);
         expect(result).toBe('L(..__\'--__)');
@@ -317,8 +317,8 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('correctly encodes a polygon', () => {
         const polygon = new ol.geom.Polygon([
-            [[0, 0], [4, 4], [4, -4], [0, 0]],
-            [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]
+          [[0, 0], [4, 4], [4, -4], [0, 0]],
+          [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]
         ]);
         const result = fhFormat.writeGeometry(polygon);
         expect(result).toBe('a(..DD.K\'!F_..!-.)');
@@ -331,7 +331,7 @@ describe('ngeo.format.FeatureHash', () => {
       it('correctly encodes a multi polygon', () => {
         const multiPolygon = new ol.geom.MultiPolygon([
           [[[0, 0], [4, 4], [4, -4], [0, 0]],
-          [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]],
+            [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]],
           [[[0, 0], [-2, -2], [-2, 2], [0, 0]]]
         ]);
         const result = fhFormat.writeGeometry(multiPolygon);
@@ -395,8 +395,8 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('correctly encodes a polygon feature', () => {
         const polygon = new ol.geom.Polygon([
-            [[0, 0], [4, 4], [4, -4], [0, 0]],
-            [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]
+          [[0, 0], [4, 4], [4, -4], [0, 0]],
+          [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]
         ]);
         const feature = new ol.Feature({
           geometry: polygon,
@@ -468,9 +468,9 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('encodes as expected', () => {
         const polygon = new ol.geom.Polygon([[
-            [538820, 153580], [538720, 151980], [540400, 151300],
-            [541040, 151920], [541080, 153060], [540340, 154120],
-            [538820, 153580]]]);
+          [538820, 153580], [538720, 151980], [540400, 151300],
+          [541040, 151920], [541080, 153060], [540340, 154120],
+          [538820, 153580]]]);
         const polygonFeature = new ol.Feature({
           geometry: polygon
         });
@@ -481,7 +481,7 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('decodes as expected', () => {
         const features = fhFormat.readFeatures(
-            'Fa(huv9Fhmrx_gy-z801u1-z9I1hHh4H1Uh9RgfJhqP)');
+          'Fa(huv9Fhmrx_gy-z801u1-z9I1hHh4H1Uh9RgfJhqP)');
         expect(features.length).toBe(1);
         const feature = features[0];
         expect(feature instanceof ol.Feature).toBeTruthy();

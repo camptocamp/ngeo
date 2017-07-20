@@ -198,7 +198,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @export
    */
   this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr')
-      .getFeatureOverlay();
+    .getFeatureOverlay();
   this.drawFeatureLayer.setFeatures(ngeoFeatures);
 
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
@@ -262,5 +262,5 @@ ol.inherits(gmf.AbstractDesktopController, gmf.AbstractController);
 
 
 gmf.module.controller(
-    'AbstractDesktopController',
-    gmf.AbstractDesktopController);
+  'AbstractDesktopController',
+  gmf.AbstractDesktopController);

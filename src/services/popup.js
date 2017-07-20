@@ -260,13 +260,13 @@ ngeo.Popup.prototype.open = function(options) {
  * @ngInject
  */
 ngeo.createPopupServiceFactory = function($compile, $rootScope, $sce,
-    $timeout) {
+  $timeout) {
   return (
-      /**
+  /**
        * @return {!ngeo.Popup} The popup instance.
        */
-      function() {
-        return new ngeo.Popup($compile, $rootScope, $sce, $timeout);
-      });
+    function() {
+      return new ngeo.Popup($compile, $rootScope, $sce, $timeout);
+    });
 };
 ngeo.module.factory('ngeoCreatePopup', ngeo.createPopupServiceFactory);

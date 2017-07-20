@@ -81,7 +81,7 @@ app.ScaleselectorController = function($sce) {
 };
 
 app.module.controller('AppScaleselectorController',
-    app.ScaleselectorController);
+  app.ScaleselectorController);
 
 
 /**

@@ -48,7 +48,7 @@ gmf.ThemeManagerEventType = {
  * @ngname gmfTreeManager
  */
 gmf.ThemeManager = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
-    gmfTreeManager, ngeoStateManager) {
+  gmfTreeManager, ngeoStateManager) {
 
   /**
    * @type {angular.Scope}
