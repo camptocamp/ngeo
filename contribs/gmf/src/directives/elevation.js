@@ -149,29 +149,29 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
   if (active) {
     // Moving the mouse clears previously displayed elevation
     this.listenerKeys_.push(ol.events.listen(this.map, 'pointermove',
-        function(e) {
-          this.scope_.$apply(() => {
-            this.inViewport_ = true;
-            this.elevation = undefined;
-            this.loading = false;
-          });
-        }, this));
+      function(e) {
+        this.scope_.$apply(() => {
+          this.inViewport_ = true;
+          this.elevation = undefined;
+          this.loading = false;
+        });
+      }, this));
 
     // Launch the elevation service request when the user stops moving the
     // mouse for less short delay
     this.listenerKeys_.push(ol.events.listen(this.map, 'pointermove',
-        this.ngeoDebounce_(this.pointerStop_.bind(this), 500, true)
-      ));
+      this.ngeoDebounce_(this.pointerStop_.bind(this), 500, true)
+    ));
 
     this.listenerKeys_.push(ol.events.listen(this.map.getViewport(),
-        ol.events.EventType.MOUSEOUT,
-        function(e) {
-          this.scope_.$apply(() => {
-            this.elevation = undefined;
-            this.inViewport_ = false;
-            this.loading = false;
-          });
-        }, this));
+      ol.events.EventType.MOUSEOUT,
+      function(e) {
+        this.scope_.$apply(() => {
+          this.elevation = undefined;
+          this.inViewport_ = false;
+          this.loading = false;
+        });
+      }, this));
   } else {
     this.elevation = undefined;
     for (let i = 0, ii = this.listenerKeys_.length; i < ii; ++i) {
@@ -194,8 +194,8 @@ gmf.ElevationController.prototype.pointerStop_ = function(e) {
       'layers': this.layer
     };
     this.gmfRaster_.getRaster(e.coordinate, params).then(
-        this.getRasterSuccess_.bind(this),
-        this.getRasterError_.bind(this)
+      this.getRasterSuccess_.bind(this),
+      this.getRasterError_.bind(this)
     );
   }
 };
@@ -288,7 +288,7 @@ gmf.ElevationwidgetController = function() {
   this.selectedElevationLayer;
 };
 gmf.module.controller('gmfElevationwidgetController',
-    gmf.ElevationwidgetController);
+  gmf.ElevationwidgetController);
 
 
 gmf.ElevationwidgetController.prototype.$onInit = function() {

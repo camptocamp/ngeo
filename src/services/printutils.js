@@ -60,61 +60,61 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScal
   const self = this;
 
   return (
-      /**
+  /**
        * @param {ol.render.Event} evt Postcompose event.
        */
-      function(evt) {
-        const context = evt.context;
-        const frameState = evt.frameState;
+    function(evt) {
+      const context = evt.context;
+      const frameState = evt.frameState;
 
-        const resolution = frameState.viewState.resolution;
+      const resolution = frameState.viewState.resolution;
 
-        const viewportWidth = frameState.size[0] * frameState.pixelRatio;
-        const viewportHeight = frameState.size[1] * frameState.pixelRatio;
+      const viewportWidth = frameState.size[0] * frameState.pixelRatio;
+      const viewportHeight = frameState.size[1] * frameState.pixelRatio;
 
-        const center = [viewportWidth / 2, viewportHeight / 2];
+      const center = [viewportWidth / 2, viewportHeight / 2];
 
-        const size = getSize();
-        const height = size[1] * ol.has.DEVICE_PIXEL_RATIO;
-        const width = size[0] * ol.has.DEVICE_PIXEL_RATIO;
-        const scale = getScale(frameState);
+      const size = getSize();
+      const height = size[1] * ol.has.DEVICE_PIXEL_RATIO;
+      const width = size[0] * ol.has.DEVICE_PIXEL_RATIO;
+      const scale = getScale(frameState);
 
-        const ppi = ngeo.PrintUtils.DOTS_PER_INCH_;
-        const ipm = ngeo.PrintUtils.INCHES_PER_METER_;
+      const ppi = ngeo.PrintUtils.DOTS_PER_INCH_;
+      const ipm = ngeo.PrintUtils.INCHES_PER_METER_;
 
-        const extentHalfWidth =
+      const extentHalfWidth =
             (((width / ppi) / ipm) * scale / resolution) / 2;
-        self.extentHalfHorizontalDistance_ =
+      self.extentHalfHorizontalDistance_ =
             (((size[0] / ppi) / ipm) * scale) / 2;
 
-        const extentHalfHeight =
+      const extentHalfHeight =
             (((height / ppi) / ipm) * scale / resolution) / 2;
-        self.extentHalfVerticalDistance_ =
+      self.extentHalfVerticalDistance_ =
             (((size[1] / ppi) / ipm) * scale) / 2;
 
-        // Draw a mask on the whole map.
-        context.beginPath();
-        context.moveTo(0, 0);
-        context.lineTo(viewportWidth, 0);
-        context.lineTo(viewportWidth, viewportHeight);
-        context.lineTo(0, viewportHeight);
-        context.lineTo(0, 0);
-        context.closePath();
+      // Draw a mask on the whole map.
+      context.beginPath();
+      context.moveTo(0, 0);
+      context.lineTo(viewportWidth, 0);
+      context.lineTo(viewportWidth, viewportHeight);
+      context.lineTo(0, viewportHeight);
+      context.lineTo(0, 0);
+      context.closePath();
 
-        // Draw the print zone
-        if (!opt_rotation) {
-          self.drawPrintZone_(context, center, extentHalfWidth,
-              extentHalfHeight);
-        } else {
-          const rotation = ol.math.toRadians(opt_rotation());
-          self.drawPrintZoneWithRotation_(context, center, extentHalfWidth,
-              extentHalfHeight, rotation);
-        }
+      // Draw the print zone
+      if (!opt_rotation) {
+        self.drawPrintZone_(context, center, extentHalfWidth,
+          extentHalfHeight);
+      } else {
+        const rotation = ol.math.toRadians(opt_rotation());
+        self.drawPrintZoneWithRotation_(context, center, extentHalfWidth,
+          extentHalfHeight, rotation);
+      }
 
-        // Fill the mask
-        context.fillStyle = 'rgba(0, 5, 25, 0.5)';
-        context.fill();
-      });
+      // Fill the mask
+      context.fillStyle = 'rgba(0, 5, 25, 0.5)';
+      context.fill();
+    });
 };
 
 
@@ -126,7 +126,7 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScal
  * @private
  */
 ngeo.PrintUtils.prototype.drawPrintZone_ = function(context, center,
-    extentHalfWidth, extentHalfHeight) {
+  extentHalfWidth, extentHalfHeight) {
   const minx = center[0] - extentHalfWidth;
   const miny = center[1] - extentHalfHeight;
   const maxx = center[0] + extentHalfWidth;
@@ -150,7 +150,7 @@ ngeo.PrintUtils.prototype.drawPrintZone_ = function(context, center,
  * @private
  */
 ngeo.PrintUtils.prototype.drawPrintZoneWithRotation_ = function(context, center,
-    extentHalfWidth, extentHalfHeight, rotation) {
+  extentHalfWidth, extentHalfHeight, rotation) {
   // diagonal = distance p1 to center.
   const diagonal = Math.sqrt(Math.pow(extentHalfWidth, 2) +
       Math.pow(extentHalfHeight, 2));
@@ -192,7 +192,7 @@ ngeo.PrintUtils.prototype.drawPrintZoneWithRotation_ = function(context, center,
  * @export
  */
 ngeo.PrintUtils.prototype.getOptimalScale = function(
-    mapSize, mapResolution, printMapSize, printMapScales) {
+  mapSize, mapResolution, printMapSize, printMapScales) {
 
   const mapWidth = mapSize[0] * mapResolution;
   const mapHeight = mapSize[1] * mapResolution;
@@ -224,7 +224,7 @@ ngeo.PrintUtils.prototype.getOptimalScale = function(
  * @export
  */
 ngeo.PrintUtils.prototype.getOptimalResolution = function(
-    mapSize, printMapSize, printMapScale) {
+  mapSize, printMapSize, printMapScale) {
 
   const dotsPerMeter =
       ngeo.PrintUtils.DOTS_PER_INCH_ * ngeo.PrintUtils.INCHES_PER_METER_;

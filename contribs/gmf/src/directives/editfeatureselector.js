@@ -63,7 +63,7 @@ gmf.module.directive('gmfEditfeatureselector', gmf.editfeatureselectorDirective)
  * @ngname GmfEditfeatureselectorController
  */
 gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
-    gmfTreeManager) {
+  gmfTreeManager) {
 
   // === Directive options ===
 

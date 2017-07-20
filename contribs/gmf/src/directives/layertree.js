@@ -17,20 +17,20 @@ goog.require('ol.layer.Tile');
 goog.require('ngeo.popoverDirective');
 
 gmf.module.value('gmfLayertreeTemplate',
-    /**
+  /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template.
      */
-    ($element, $attrs) => {
-      const subTemplateUrl = `${gmf.baseTemplateUrl}/layertree.html`;
-      return `${'<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
+  ($element, $attrs) => {
+    const subTemplateUrl = `${gmf.baseTemplateUrl}/layertree.html`;
+    return `${'<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
           'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
           'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
           'ngeo-layertree-templateurl="'}${subTemplateUrl}">` +
           '</div>';
-    }
+  }
 );
 
 
@@ -49,12 +49,12 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
 // Overrides the path to the layertree template (used by each node, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
 ngeo.module.value('ngeoLayertreeTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => `${gmf.baseTemplateUrl}/layertree.html`);
+  (element, attrs) => `${gmf.baseTemplateUrl}/layertree.html`);
 
 
 /**
@@ -128,8 +128,8 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @ngname gmfLayertreeController
  */
 gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
-    ngeoLayerHelper, gmfDataSourceBeingFiltered, gmfPermalink, gmfTreeManager,
-    gmfSyncLayertreeMap, ngeoSyncArrays, ngeoWMSTime, gmfThemes) {
+  ngeoLayerHelper, gmfDataSourceBeingFiltered, gmfPermalink, gmfTreeManager,
+  gmfSyncLayertreeMap, ngeoSyncArrays, ngeoWMSTime, gmfThemes) {
 
   /**
    * @type {?ol.Map}
@@ -268,15 +268,15 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
 gmf.LayertreeController.prototype.$onInit = function() {
   this.openLinksInNewWindow = this.openLinksInNewWindowFn() === true ? true : false;
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
-        gmf.DATALAYERGROUP_NAME);
+    gmf.DATALAYERGROUP_NAME);
 
   this.ngeoSyncArrays_(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 
   // watch any change on layers array to refresh the map
   this.scope_.$watchCollection(() => this.layers,
-  () => {
-    this.map.render();
-  });
+    () => {
+      this.map.render();
+    });
 
   // watch any change on dimensions object to refresh the layers
   this.scope_.$watchCollection(() => {
@@ -358,7 +358,7 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
   }
 
   const layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
-          this.dataLayerGroup_, opt_position);
+    this.dataLayerGroup_, opt_position);
 
   if (layer instanceof ol.layer.Layer) {
     const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
@@ -444,7 +444,7 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
  * @export
  */
 gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
-        layertreeCtrl, time) {
+  layertreeCtrl, time) {
   if (!time) {
     return;
   }
@@ -564,10 +564,10 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
   if (metadataURL !== undefined) {
     if (!(treeUid in this.promises_)) {
       this.promises_[treeUid] = this.$http_.get(metadataURL).then(
-          (resp) => {
-            const html = this.$sce_.trustAsHtml(resp.data);
-            return html;
-          });
+        (resp) => {
+          const html = this.$sce_.trustAsHtml(resp.data);
+          return html;
+        });
     }
     const infoPopup = this.infoPopup_;
     this.promises_[treeUid].then((html) => {
@@ -699,7 +699,7 @@ gmf.LayertreeController.prototype.isNodeLegendVisible = function(legendNodeId) {
 gmf.LayertreeController.getSnappingConfig = function(treeCtrl) {
   const node = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
-      node.metadata.snappingConfig : null;
+    node.metadata.snappingConfig : null;
   return config;
 };
 

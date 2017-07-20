@@ -56,7 +56,7 @@ ngeo.desktopGeolocationDirective = function() {
 
 
 ngeo.module.directive('ngeoDesktopGeolocation',
-    ngeo.desktopGeolocationDirective);
+  ngeo.desktopGeolocationDirective);
 
 
 /**
@@ -75,7 +75,7 @@ ngeo.module.directive('ngeoDesktopGeolocation',
  * @ngname NgeoDesktopGeolocationController
  */
 ngeo.DesktopGeolocationController = function($scope, $element,
-    ngeoDecorateGeolocation, ngeoFeatureOverlayMgr, ngeoNotification) {
+  ngeoDecorateGeolocation, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggle.bind(this));
 
@@ -157,21 +157,21 @@ ngeo.DesktopGeolocationController = function($scope, $element,
   this.active_ = false;
 
   ol.events.listen(
-      this.geolocation_,
-      ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
-      function() {
-        this.accuracyFeature_.setGeometry(
-            this.geolocation_.getAccuracyGeometry());
-      },
-      this);
+    this.geolocation_,
+    ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
+    function() {
+      this.accuracyFeature_.setGeometry(
+        this.geolocation_.getAccuracyGeometry());
+    },
+    this);
 
   ol.events.listen(
-      this.geolocation_,
-      ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
-      function(e) {
-        this.setPosition_(e);
-      },
-      this);
+    this.geolocation_,
+    ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
+    function(e) {
+      this.setPosition_(e);
+    },
+    this);
 
   ngeoDecorateGeolocation(this.geolocation_);
 };
@@ -230,4 +230,4 @@ ngeo.DesktopGeolocationController.prototype.setPosition_ = function(event) {
 
 
 ngeo.module.controller('NgeoDesktopGeolocationController',
-    ngeo.DesktopGeolocationController);
+  ngeo.DesktopGeolocationController);

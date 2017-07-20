@@ -77,7 +77,7 @@ ngeo.interaction.ModifyCircle = function(options) {
    * @private
    */
   this.pixelTolerance_ = options.pixelTolerance !== undefined ?
-      options.pixelTolerance : 10;
+    options.pixelTolerance : 10;
 
   /**
    * @type {boolean}
@@ -110,7 +110,7 @@ ngeo.interaction.ModifyCircle = function(options) {
       wrapX: !!options.wrapX
     }),
     style: options.style ? options.style :
-        ngeo.interaction.ModifyCircle.getDefaultStyleFunction(),
+      ngeo.interaction.ModifyCircle.getDefaultStyleFunction(),
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });
@@ -123,9 +123,9 @@ ngeo.interaction.ModifyCircle = function(options) {
 
   this.features_.forEach(this.addFeature_, this);
   ol.events.listen(this.features_, ol.CollectionEventType.ADD,
-      this.handleFeatureAdd_, this);
+    this.handleFeatureAdd_, this);
   ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
-      this.handleFeatureRemove_, this);
+    this.handleFeatureRemove_, this);
 
 };
 ol.inherits(ngeo.interaction.ModifyCircle, ol.interaction.Pointer);
@@ -157,7 +157,7 @@ ngeo.interaction.ModifyCircle.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
     this.dispatchEvent(new ol.interaction.Modify.Event(
-        ol.interaction.ModifyEventType.MODIFYSTART, this.features_, evt));
+      ol.interaction.ModifyEventType.MODIFYSTART, this.features_, evt));
   }
 };
 
@@ -185,14 +185,14 @@ ngeo.interaction.ModifyCircle.prototype.removeFeatureSegmentData_ = function(fea
   const rBush = this.rBush_;
   const /** @type {Array.<ol.ModifySegmentDataType>} */ nodesToRemove = [];
   rBush.forEach(
-      /**
+    /**
        * @param {ol.ModifySegmentDataType} node RTree node.
        */
-      (node) => {
-        if (feature === node.feature) {
-          nodesToRemove.push(node);
-        }
-      });
+    (node) => {
+      if (feature === node.feature) {
+        nodesToRemove.push(node);
+      }
+    });
   for (let i = nodesToRemove.length - 1; i >= 0; --i) {
     rBush.remove(nodesToRemove[i]);
   }
@@ -215,7 +215,7 @@ ngeo.interaction.ModifyCircle.prototype.setMap = function(map) {
 ngeo.interaction.ModifyCircle.prototype.handleFeatureAdd_ = function(evt) {
   const feature = evt.element;
   goog.asserts.assertInstanceof(feature, ol.Feature,
-      'feature should be an ol.Feature');
+    'feature should be an ol.Feature');
   this.addFeature_(feature);
 };
 
@@ -368,11 +368,11 @@ ngeo.interaction.ModifyCircle.handleDragEvent_ = function(evt) {
 ngeo.interaction.ModifyCircle.handleUpEvent_ = function(evt) {
   this.rBush_.clear();
   this.writeCircleGeometry_(this.dragSegments_[0][0].feature,
-      this.dragSegments_[0][0].geometry);
+    this.dragSegments_[0][0].geometry);
 
   if (this.modified_) {
     this.dispatchEvent(new ol.interaction.Modify.Event(
-        ol.interaction.ModifyEventType.MODIFYEND, this.features_, evt));
+      ol.interaction.ModifyEventType.MODIFYEND, this.features_, evt));
     this.modified_ = false;
   }
   return false;
@@ -427,9 +427,9 @@ ngeo.interaction.ModifyCircle.prototype.handlePointerAtPixel_ = function(pixel, 
   };
 
   const lowerLeft = map.getCoordinateFromPixel(
-      [pixel[0] - this.pixelTolerance_, pixel[1] + this.pixelTolerance_]);
+    [pixel[0] - this.pixelTolerance_, pixel[1] + this.pixelTolerance_]);
   const upperRight = map.getCoordinateFromPixel(
-      [pixel[0] + this.pixelTolerance_, pixel[1] - this.pixelTolerance_]);
+    [pixel[0] + this.pixelTolerance_, pixel[1] - this.pixelTolerance_]);
   const box = ol.extent.boundingExtent([lowerLeft, upperRight]);
 
   const rBush = this.rBush_;
@@ -439,7 +439,7 @@ ngeo.interaction.ModifyCircle.prototype.handlePointerAtPixel_ = function(pixel, 
     const node = nodes[0];
     const closestSegment = node.segment;
     let vertex = (ol.coordinate.closestOnSegment(pixelCoordinate,
-        closestSegment));
+      closestSegment));
     const vertexPixel = map.getPixelFromCoordinate(vertex);
     if (Math.sqrt(ol.coordinate.squaredDistance(pixel, vertexPixel)) <=
         this.pixelTolerance_) {
@@ -451,7 +451,7 @@ ngeo.interaction.ModifyCircle.prototype.handlePointerAtPixel_ = function(pixel, 
       this.snappedToVertex_ = dist <= this.pixelTolerance_;
       if (this.snappedToVertex_) {
         vertex = squaredDist1 > squaredDist2 ?
-            closestSegment[1] : closestSegment[0];
+          closestSegment[1] : closestSegment[0];
         this.createOrUpdateVertexFeature_(vertex);
         const vertexSegments = {};
         vertexSegments[ol.getUid(closestSegment)] = true;

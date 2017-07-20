@@ -33,20 +33,20 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.value('gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
 gmfapp.module.value(
-    'authenticationBaseUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+  'authenticationBaseUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
 
 
 gmfapp.module.value('gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
 gmfapp.module.value('gmfLayersUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
 
 gmfapp.MainController = class {
@@ -64,7 +64,7 @@ gmfapp.MainController = class {
    * @ngInject
    */
   constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager,
-      ngeoDataSources, ngeoToolActivateMgr
+    ngeoDataSources, ngeoToolActivateMgr
   ) {
 
     /**

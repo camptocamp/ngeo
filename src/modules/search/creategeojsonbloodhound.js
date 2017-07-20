@@ -59,7 +59,7 @@ ngeo.search.CreateGeoJSONBloodhound;
  * @return {Bloodhound} The Bloodhound object.
  */
 ngeo.search.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
-    opt_dataProjection, opt_options, opt_remoteOptions) {
+  opt_dataProjection, opt_options, opt_remoteOptions) {
   const geojsonFormat = new ol.format.GeoJSON();
   const bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {

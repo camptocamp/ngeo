@@ -8,16 +8,16 @@ goog.require('ngeo.modalDirective');
 
 
 gmf.module.value('gmfAuthenticationTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['gmfAuthenticationTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/authentication.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['gmfAuthenticationTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/authentication.html`;
+  });
 
 
 /**
@@ -76,7 +76,7 @@ gmf.module.directive('gmfAuthentication', gmf.authenticationDirective);
  * @ngname GmfAuthenticationController
  */
 gmf.AuthenticationController = function(gettextCatalog, $scope,
-    gmfAuthentication, gmfUser, ngeoNotification) {
+  gmfAuthentication, gmfUser, ngeoNotification) {
 
   /**
    * @type {gmfx.User}
@@ -223,11 +223,11 @@ gmf.AuthenticationController.prototype.changePassword = function() {
       //     the old password given is incorrect.
       const error = gettextCatalog.getString('Incorrect old password.');
       this.gmfAuthentication_.changePassword(oldPwd, newPwd, confPwd).then(
-          () => {
-            this.changePasswordModalShown = true;
-            this.changePasswordReset();
-          },
-          this.setError_.bind(this, error));
+        () => {
+          this.changePasswordModalShown = true;
+          this.changePasswordReset();
+        },
+        this.setError_.bind(this, error));
     }
   }
 };
@@ -252,8 +252,8 @@ gmf.AuthenticationController.prototype.login = function() {
   } else {
     const error = gettextCatalog.getString('Incorrect username or password.');
     this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
-        this.resetError_.bind(this),
-        this.setError_.bind(this, error));
+      this.resetError_.bind(this),
+      this.setError_.bind(this, error));
   }
 };
 
@@ -266,8 +266,8 @@ gmf.AuthenticationController.prototype.logout = function() {
   const gettextCatalog = this.gettextCatalog;
   const error = gettextCatalog.getString('Could not log out.');
   this.gmfAuthentication_.logout().then(
-      this.resetError_.bind(this),
-      this.setError_.bind(this, error));
+    this.resetError_.bind(this),
+    this.setError_.bind(this, error));
 };
 
 
@@ -294,9 +294,9 @@ gmf.AuthenticationController.prototype.resetPassword = function() {
   }.bind(this);
 
   this.gmfAuthentication_.resetPassword(this.loginVal).then(
-      resetPasswordSuccessFn,
-      this.setError_.bind(this, error)
-    );
+    resetPasswordSuccessFn,
+    this.setError_.bind(this, error)
+  );
 };
 
 
@@ -353,4 +353,4 @@ gmf.AuthenticationController.prototype.resetError_ = function() {
 
 
 gmf.module.controller('GmfAuthenticationController',
-    gmf.AuthenticationController);
+  gmf.AuthenticationController);

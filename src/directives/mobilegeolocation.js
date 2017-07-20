@@ -75,8 +75,8 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
  * @ngname NgeoMobileGeolocationController
  */
 ngeo.MobileGeolocationController = function($scope, $element,
-    gettextCatalog, ngeoDecorateGeolocation, ngeoFeatureOverlayMgr,
-    ngeoNotification) {
+  gettextCatalog, ngeoDecorateGeolocation, ngeoFeatureOverlayMgr,
+  ngeoNotification) {
 
   $element.on('click', this.toggleTracking.bind(this));
 
@@ -185,42 +185,42 @@ ngeo.MobileGeolocationController = function($scope, $element,
   this.viewChangedByMe_ = false;
 
   ol.events.listen(
-      this.geolocation_,
-      ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
-      function() {
-        this.accuracyFeature_.setGeometry(
-            this.geolocation_.getAccuracyGeometry());
-        this.setPosition_();
-      },
-      this);
+    this.geolocation_,
+    ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
+    function() {
+      this.accuracyFeature_.setGeometry(
+        this.geolocation_.getAccuracyGeometry());
+      this.setPosition_();
+    },
+    this);
 
   ol.events.listen(
-      this.geolocation_,
-      ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
-      function() {
-        this.setPosition_();
-      },
-      this);
+    this.geolocation_,
+    ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
+    function() {
+      this.setPosition_();
+    },
+    this);
 
   const view = map.getView();
 
   ol.events.listen(
-      view,
-      ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
-      this.handleViewChange_,
-      this);
+    view,
+    ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
+    this.handleViewChange_,
+    this);
 
   ol.events.listen(
-      view,
-      ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
-      this.handleViewChange_,
-      this);
+    view,
+    ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
+    this.handleViewChange_,
+    this);
 
   ol.events.listen(
-      view,
-      ol.Object.getChangeEventType(ol.ViewProperty.ROTATION),
-      this.handleViewChange_,
-      this);
+    view,
+    ol.Object.getChangeEventType(ol.ViewProperty.ROTATION),
+    this.handleViewChange_,
+    this);
 
   ngeoDecorateGeolocation(this.geolocation_);
 };

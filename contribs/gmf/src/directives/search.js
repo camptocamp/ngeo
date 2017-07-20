@@ -24,16 +24,16 @@ goog.require('ol.uri');
 
 
 gmf.module.value('gmfSearchTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['gmfSearchTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/search.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['gmfSearchTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/search.html`;
+  });
 
 
 /**
@@ -145,7 +145,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
     link(scope, element, attrs) {
       if (!scope['clearbutton']) {
         const ctrl = scope['ctrl'];
-            // Empty the search field on focus and blur.
+        // Empty the search field on focus and blur.
         element.find('input').on('focus blur', () => {
           ctrl.clear();
         });
@@ -182,8 +182,8 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  * @ngname GmfSearchController
  */
 gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
-    ngeoAutoProjection, ngeoSearchCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
-    gmfThemes, gmfTreeManager) {
+  ngeoAutoProjection, ngeoSearchCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
+  gmfThemes, gmfTreeManager) {
 
 
   /**
@@ -455,17 +455,17 @@ gmf.SearchController.prototype.mergeListeners_ = function(additionalListeners, l
   return {
     open: additionalListeners.open,
     close: additionalListeners.close === undefined ?
-        listeners.close : function() {
-          listeners.close();
-          additionalListeners.close();
-        },
+      listeners.close : function() {
+        listeners.close();
+        additionalListeners.close();
+      },
     cursorchange: additionalListeners.cursorchange,
     datasetsempty: additionalListeners.datasetsempty,
     select: additionalListeners.select === undefined ?
-        listeners.select : function(evt, obj, dataset) {
-          listeners.select(evt, obj, dataset);
-          additionalListeners.select(evt, obj, dataset);
-        },
+      listeners.select : function(evt, obj, dataset) {
+        listeners.select(evt, obj, dataset);
+        additionalListeners.select(evt, obj, dataset);
+      },
     autocomplete: additionalListeners.autocomplete
   };
 };
@@ -506,7 +506,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
         scope['feature'] = feature;
 
         let html = `<p class="gmf-search-label" translate>${
-                   feature.get(config.labelKey)}</p>`;
+          feature.get(config.labelKey)}</p>`;
         html += `<p class="gmf-search-group" translate>${feature.get('layer_name') ||
                 config.datasetTitle}</p>`;
         html = `<div class="gmf-search-datum">${html}</div>`;
@@ -529,20 +529,20 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
  */
 gmf.SearchController.prototype.filterAction_ = function(action) {
   return (
-      /**
+  /**
        * @param {GeoJSONFeature} feature
        * @return {boolean}
        */
-      function(feature) {
-        const properties = feature['properties'];
-        if (properties['actions']) {
-          // result is an action (add_theme, add_group, ...)
-          // add it to the corresponding group
-          return !properties['layer_name'] && properties['actions'].some(act => act.action === action);
-        } else {
-          return false;
-        }
+    function(feature) {
+      const properties = feature['properties'];
+      if (properties['actions']) {
+        // result is an action (add_theme, add_group, ...)
+        // add it to the corresponding group
+        return !properties['layer_name'] && properties['actions'].some(act => act.action === action);
+      } else {
+        return false;
       }
+    }
   );
 };
 
@@ -556,21 +556,21 @@ gmf.SearchController.prototype.filterAction_ = function(action) {
  */
 gmf.SearchController.prototype.filterLayername_ = function(opt_layerName) {
   return (
-      /**
+  /**
        * @param {GeoJSONFeature} feature
        * @return {boolean}
        */
-      function(feature) {
-        const featureLayerName = feature['properties']['layer_name'];
-        // Keep only layers with layer_name (don't keep action layers).
-        if (featureLayerName === undefined) {
-          return false;
-        }
-        if (opt_layerName === undefined) {
-          return true;
-        }
-        return featureLayerName === opt_layerName;
+    function(feature) {
+      const featureLayerName = feature['properties']['layer_name'];
+      // Keep only layers with layer_name (don't keep action layers).
+      if (featureLayerName === undefined) {
+        return false;
       }
+      if (opt_layerName === undefined) {
+        return true;
+      }
+      return featureLayerName === opt_layerName;
+    }
   );
 };
 
@@ -583,12 +583,12 @@ gmf.SearchController.prototype.filterLayername_ = function(opt_layerName) {
  * @private
  */
 gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
-    opt_filter) {
+  opt_filter) {
   const mapProjectionCode = this.map_.getView().getProjection().getCode();
   const remoteOptions = this.getBloodhoudRemoteOptions_();
   const bloodhound = this.ngeoSearchCreateGeoJSONBloodhound_(config.url, opt_filter,
-      ol.proj.get(mapProjectionCode), ol.proj.get(config.projection),
-      config.bloodhoundOptions, remoteOptions);
+    ol.proj.get(mapProjectionCode), ol.proj.get(config.projection),
+    config.bloodhoundOptions, remoteOptions);
   bloodhound.initialize();
   return bloodhound;
 };
@@ -635,7 +635,7 @@ gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
       return;
     }
     const position = this.ngeoAutoProjection_.tryProjectionsWithInversion(coordinates,
-        extent, viewProjection, this.coordinatesProjections_);
+      extent, viewProjection, this.coordinatesProjections_);
     if (position === null) {
       return;
     }
@@ -830,7 +830,7 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
         this.gmfTreeManager_.addGroupByName(actionData, true);
       } else if (actionName == 'add_layer') {
         const groupActions = /** @type {Array.<string>} */ (
-            this.datasources_[0].groupActions);
+          this.datasources_[0].groupActions);
         let datasourcesActionsHaveAddLayer;
         groupActions.forEach((groupAction) => {
           if (groupAction['action'] === 'add_layer') {
@@ -852,7 +852,7 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
     this.featureOverlay_.addFeature(feature);
     this.displayColorPicker = true;
     const fitArray = featureGeometry.getType() === 'GeometryCollection' ?
-        featureGeometry.getExtent() : featureGeometry;
+      featureGeometry.getExtent() : featureGeometry;
     view.fit(fitArray, {
       size,
       maxZoom: this.maxZoom});

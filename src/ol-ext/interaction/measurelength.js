@@ -54,14 +54,14 @@ ol.inherits(ngeo.interaction.MeasureLength, ngeo.interaction.Measure);
  * @inheritDoc
  */
 ngeo.interaction.MeasureLength.prototype.createDrawInteraction = function(style,
-    source) {
+  source) {
 
   return new ol.interaction.Draw(
-      /** @type {olx.interaction.DrawOptions} */ ({
-        type: 'LineString',
-        source,
-        style
-      }));
+    /** @type {olx.interaction.DrawOptions} */ ({
+      type: 'LineString',
+      source,
+      style
+    }));
 
 };
 

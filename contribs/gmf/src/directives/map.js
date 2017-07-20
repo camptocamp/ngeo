@@ -53,7 +53,7 @@ gmf.module.directive('gmfMap', gmf.mapDirective);
  * @ngname GmfMapController
  */
 gmf.MapController = function($scope, ngeoFeatureOverlayMgr, gmfPermalink,
-    gmfSnapping) {
+  gmfSnapping) {
 
   const map = $scope['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);

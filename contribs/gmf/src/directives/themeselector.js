@@ -117,7 +117,7 @@ gmf.ThemeselectorController = function($scope, gmfThemeManager, gmfThemes) {
   this.listenerKeys_ = [];
 
   this.listenerKeys_.push(ol.events.listen(this.gmfThemes_,
-      gmf.ThemesEventType.CHANGE, this.setThemes_, this));
+    gmf.ThemesEventType.CHANGE, this.setThemes_, this));
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 

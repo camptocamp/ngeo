@@ -67,8 +67,8 @@ ngeo.interaction.MobileDraw = function(options) {
    * @private
    */
   this.minPoints_ = options.minPoints ?
-      options.minPoints :
-      (this.type_ === ol.geom.GeometryType.POLYGON ? 3 : 2);
+    options.minPoints :
+    (this.type_ === ol.geom.GeometryType.POLYGON ? 3 : 2);
 
   /**
    * Sketch feature.
@@ -102,14 +102,14 @@ ngeo.interaction.MobileDraw = function(options) {
       wrapX: options.wrapX ? options.wrapX : false
     }),
     style: options.style ? options.style :
-        ol.interaction.Draw.getDefaultStyleFunction(),
+      ol.interaction.Draw.getDefaultStyleFunction(),
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
-      this.updateState_, this);
+    ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
+    this.updateState_, this);
 
   this.set(ngeo.interaction.MobileDrawProperty.DIRTY, false);
   this.set(ngeo.interaction.MobileDrawProperty.DRAWING, false);
@@ -135,8 +135,8 @@ ngeo.interaction.MobileDraw.prototype.setMap = function(map) {
 
   if (map) {
     this.changeEventKey_ = ol.events.listen(map.getView(),
-        ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
-        this.handleViewCenterChange_, this);
+      ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
+      this.handleViewCenterChange_, this);
   }
 
   this.updateState_();
@@ -156,7 +156,7 @@ ngeo.interaction.MobileDraw.prototype.setMap = function(map) {
  */
 ngeo.interaction.MobileDraw.prototype.getDirty = function() {
   return /** @type {boolean} */ (
-      this.get(ngeo.interaction.MobileDrawProperty.DIRTY));
+    this.get(ngeo.interaction.MobileDrawProperty.DIRTY));
 };
 
 
@@ -168,7 +168,7 @@ ngeo.interaction.MobileDraw.prototype.getDirty = function() {
  */
 ngeo.interaction.MobileDraw.prototype.getDrawing = function() {
   return /** @type {boolean} */ (
-      this.get(ngeo.interaction.MobileDrawProperty.DRAWING));
+    this.get(ngeo.interaction.MobileDrawProperty.DRAWING));
 };
 
 
@@ -182,7 +182,7 @@ ngeo.interaction.MobileDraw.prototype.getDrawing = function() {
  */
 ngeo.interaction.MobileDraw.prototype.getValid = function() {
   return /** @type {boolean} */ (
-      this.get(ngeo.interaction.MobileDrawProperty.VALID));
+    this.get(ngeo.interaction.MobileDrawProperty.VALID));
 };
 
 
@@ -224,7 +224,7 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
     if (!this.sketchFeature_) {
       this.sketchFeature_ = new ol.Feature(new ol.geom.Point(coordinate));
       this.dispatchEvent(new ol.interaction.Draw.Event(
-          ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
+        ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
 
     }
     sketchFeatureGeom = this.sketchFeature_.getGeometry();
@@ -240,7 +240,7 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
       coordinates = [coordinate.slice(), coordinate.slice()];
       this.sketchFeature_ = new ol.Feature(new ol.geom.LineString(coordinates));
       this.dispatchEvent(new ol.interaction.Draw.Event(
-          ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
+        ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
     } else {
       sketchFeatureGeom = this.sketchFeature_.getGeometry();
       goog.asserts.assertInstanceof(sketchFeatureGeom, ol.geom.SimpleGeometry);
@@ -308,7 +308,7 @@ ngeo.interaction.MobileDraw.prototype.finishDrawing = function() {
   this.set(ngeo.interaction.MobileDrawProperty.DRAWING, false);
 
   this.dispatchEvent(new ol.interaction.Draw.Event(
-      ol.interaction.DrawEventType.DRAWEND, this.sketchFeature_));
+    ol.interaction.DrawEventType.DRAWEND, this.sketchFeature_));
 };
 
 

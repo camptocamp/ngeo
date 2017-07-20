@@ -122,7 +122,7 @@ ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
  * @ngname ngeoDrawfeatureController
  */
 ngeo.DrawfeatureController = function($scope, $compile, $sce,
-    gettextCatalog, ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures) {
+  gettextCatalog, ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures) {
 
   /**
    * @type {boolean}
@@ -245,7 +245,7 @@ ngeo.DrawfeatureController = function($scope, $compile, $sce,
  * @export
  */
 ngeo.DrawfeatureController.prototype.registerInteraction = function(
-    interaction) {
+  interaction) {
   this.interactions_.push(interaction);
   interaction.setActive(false);
   this.ngeoDecorateInteraction_(interaction);

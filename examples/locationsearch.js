@@ -56,7 +56,7 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
   const limit = 10;
   /** @type {Bloodhound} */
   const bloodhoundEngine = this.createAndInitBloodhound_(
-      ngeoCreateLocationSearchBloodhound, limit);
+    ngeoCreateLocationSearchBloodhound, limit);
 
   /**
    * @type {TypeaheadOptions}

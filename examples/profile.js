@@ -109,7 +109,7 @@ app.MainController = function($http, $scope) {
     let i;
     const len = data.length;
     const lineString = new ol.geom.LineString([],
-        /** @type {ol.geom.GeometryLayout} */ ('XYM'));
+      /** @type {ol.geom.GeometryLayout} */ ('XYM'));
     for (i = 0; i < len; i++) {
       const p = data[i];
       lineString.appendCoordinate([p.x, p.y, p.dist]);
@@ -142,17 +142,17 @@ app.MainController = function($http, $scope) {
    */
   const typedFunctionsFactory = function(type, key, opt_childKey) {
     return (
-        /**
+    /**
          * @param {Object} item
          * @return {T}
          * @template T
          */
-        function(item) {
-          if (opt_childKey !== undefined) {
-            item = item[opt_childKey];
-          }
-          return item[key];
-        });
+      function(item) {
+        if (opt_childKey !== undefined) {
+          item = item[opt_childKey];
+        }
+        return item[key];
+      });
   };
 
   const types = {

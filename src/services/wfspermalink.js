@@ -38,9 +38,9 @@ ngeo.WfsPermalinkData;
  * permalink functionality.
  */
 ngeo.module.value('ngeoWfsPermalinkOptions',
-    /** @type {ngeox.WfsPermalinkOptions} */ ({
-      url: '', wfsTypes: [], defaultFeatureNS: '', defaultFeaturePrefix: ''
-    }));
+  /** @type {ngeox.WfsPermalinkOptions} */ ({
+    url: '', wfsTypes: [], defaultFeatureNS: '', defaultFeaturePrefix: ''
+  }));
 
 
 /**
@@ -164,7 +164,7 @@ ngeo.WfsPermalink.prototype.clear = function() {
  */
 ngeo.WfsPermalink.prototype.issue = function(queryData, map) {
   goog.asserts.assert(this.url_,
-      'url is not set. to use the wfs permalink service, ' +
+    'url is not set. to use the wfs permalink service, ' +
       'set the value `ngeoWfsPermalinkOptions`');
   this.clearResult_();
 
@@ -195,9 +195,9 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
   const featureRequestXml = wfsFormat.writeGetFeature({
     srsName: map.getView().getProjection().getCode(),
     featureNS: (wfsType.featureNS !== undefined) ?
-        wfsType.featureNS : this.defaultFeatureNS_,
+      wfsType.featureNS : this.defaultFeatureNS_,
     featurePrefix: (wfsType.featurePrefix !== undefined) ?
-        wfsType.featurePrefix : this.defaultFeaturePrefix_,
+      wfsType.featurePrefix : this.defaultFeaturePrefix_,
     featureTypes: [wfsType.featureType],
     outputFormat: 'GML3',
     filter,

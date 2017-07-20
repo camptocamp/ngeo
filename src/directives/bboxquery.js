@@ -63,18 +63,18 @@ ngeo.bboxQueryDirective = function(ngeoMapQuerent) {
 
       // watch 'active' property -> activate/deactivate accordingly
       scope.$watch(attrs['ngeoBboxQueryActive'],
-          (newVal, oldVal) => {
-            if (newVal) {
-              // activate
-              map.addInteraction(interaction);
-            } else {
-              // deactivate
-              map.removeInteraction(interaction);
-              if (scope.$eval(attrs['ngeoBboxQueryAutoclear']) !== false) {
-                ngeoMapQuerent.clear();
-              }
+        (newVal, oldVal) => {
+          if (newVal) {
+            // activate
+            map.addInteraction(interaction);
+          } else {
+            // deactivate
+            map.removeInteraction(interaction);
+            if (scope.$eval(attrs['ngeoBboxQueryAutoclear']) !== false) {
+              ngeoMapQuerent.clear();
             }
           }
+        }
       );
     }
   };

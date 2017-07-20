@@ -9,8 +9,8 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.value(
-    'authenticationBaseUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+  'authenticationBaseUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
 
 
 /**

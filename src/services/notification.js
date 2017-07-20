@@ -120,7 +120,7 @@ ngeo.Notification.prototype.showMessage = function(message) {
   el.html(message.msg).addClass('in');
 
   const delay = message.delay !== undefined ? message.delay :
-      ngeo.Notification.DEFAULT_DELAY_;
+    ngeo.Notification.DEFAULT_DELAY_;
 
   const item = /** @type {ngeo.Notification.CacheItem} */ ({
     el

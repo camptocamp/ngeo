@@ -113,7 +113,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   const selectedLayers = this.selectedLayers;
 
   ngeoSyncArrays(map.getLayers().getArray(), selectedLayers, true, $scope,
-      layerFilter);
+    layerFilter);
 
   // watch any change on layers array to refresh the map
   $scope.$watchCollection(() => selectedLayers, () => {

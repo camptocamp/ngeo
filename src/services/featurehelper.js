@@ -773,7 +773,7 @@ ngeo.FeatureHelper.prototype.exportKML = function(features) {
  * @private
  */
 ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
-    opt_mimeType) {
+  opt_mimeType) {
   const mimeType = opt_mimeType !== undefined ? opt_mimeType : 'text/plain';
 
   // clone the features to apply the original style to the clone
@@ -793,7 +793,7 @@ ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
 
   const data = format.writeFeatures(clones, writeOptions);
   this.download_(
-      data, fileName, `${mimeType};charset=utf-8`);
+    data, fileName, `${mimeType};charset=utf-8`);
 };
 
 
@@ -929,7 +929,7 @@ ngeo.FeatureHelper.prototype.getType = function(feature) {
  * @export
  */
 ngeo.FeatureHelper.prototype.panMapToFeature = function(feature, map,
-    opt_panDuration) {
+  opt_panDuration) {
 
   const panDuration = opt_panDuration !== undefined ? opt_panDuration : 250;
   const size = map.getSize();

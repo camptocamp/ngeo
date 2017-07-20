@@ -26,7 +26,7 @@ ngeo.FilterController = class {
    * @ngname NgeoFilterController
    */
   constructor(gettextCatalog, $scope, $timeout, ngeoMapQuerent,
-      ngeoRuleHelper) {
+    ngeoRuleHelper) {
 
     // === Binding properties ===
 

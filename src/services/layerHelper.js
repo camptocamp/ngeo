@@ -67,7 +67,7 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
-    sourceLayersName, opt_serverType, opt_time, opt_params, opt_crossOrigin) {
+  sourceLayersName, opt_serverType, opt_time, opt_params, opt_crossOrigin) {
 
   const params = {'LAYERS': sourceLayersName};
   let olServerType;
@@ -281,7 +281,7 @@ ngeo.LayerHelper.prototype.getWMTSLegendURL = function(layer) {
  * @export
  */
 ngeo.LayerHelper.prototype.getWMSLegendURL = function(url,
-    layerName, opt_scale, opt_legendRule) {
+  layerName, opt_scale, opt_legendRule) {
   if (!url) {
     return undefined;
   }

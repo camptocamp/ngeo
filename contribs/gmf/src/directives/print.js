@@ -55,16 +55,16 @@ gmf.module.value('gmfPrintState', {
 });
 
 gmf.module.value('gmfPrintTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['gmfPrintTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/print.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['gmfPrintTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/print.html`;
+  });
 
 
 /**
@@ -174,9 +174,9 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @ngname GmfPrintController
  */
 gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
-    gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils,
-    ngeoCreatePrint, gmfPrintUrl, gmfAuthentication, ngeoQueryResult,
-    ngeoFeatureHelper, $filter, gmfPrintState, gmfThemes) {
+  gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils,
+  ngeoCreatePrint, gmfPrintUrl, gmfAuthentication, ngeoQueryResult,
+  ngeoFeatureHelper, $filter, gmfPrintState, gmfThemes) {
 
   /**
    * @type {gmf.PrintStateEnum}
@@ -212,7 +212,7 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
    * @private
    */
   this.fieldValues_ = this['fieldValues'] ?
-      this['fieldValues']() : {};
+    this['fieldValues']() : {};
 
   /**
    * @type {angular.Scope}
@@ -405,7 +405,7 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
    * @type {function(ol.render.Event)}
    */
   this.postcomposeListener_ = ngeoPrintUtils.createPrintMaskPostcompose(
-      getSizeFn, getScaleFn, getRotationFn);
+    getSizeFn, getScaleFn, getRotationFn);
 
   /**
    * @type {angular.$http.HttpPromise}
@@ -461,9 +461,9 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
       // Get capabilities - On success
       this.parseCapabilities_(resp);
       this.postComposeListenerKey_ = this.map.on('postcompose',
-          this.postcomposeListener_);
+        this.postcomposeListener_);
       this.pointerDragListenerKey_ = this.map.on('pointerdrag',
-          this.onPointerDrag_.bind(this));
+        this.onPointerDrag_.bind(this));
       this.map.render();
     }, (resp) => {
       // Get capabilities - On error
@@ -541,7 +541,7 @@ gmf.PrintController.prototype.updateFields_ = function() {
   const legend = this.isAttributeInCurrentLayout_('legend');
   if (this.layoutInfo.legend === undefined) {
     this.layoutInfo.legend = !!(legend !== undefined ?
-        legend : this.fieldValues_['legend']);
+      legend : this.fieldValues_['legend']);
   }
 
   this.layoutInfo.scales = clientInfo['scales'] || [];
@@ -553,7 +553,7 @@ gmf.PrintController.prototype.updateFields_ = function() {
 
   this.layoutInfo.dpi =
       (this.layoutInfo.dpi && this.layoutInfo.dpis.indexOf(this.layoutInfo.dpi) > 0) ?
-      this.layoutInfo.dpi : this.layoutInfo.dpis[0];
+        this.layoutInfo.dpi : this.layoutInfo.dpis[0];
 
   this.layoutInfo.formats = {};
   this.formats_.forEach((format) => {
@@ -586,7 +586,7 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
       name = `${attribute.name}`;
       const defaultValue = attribute.default;
       value = (defaultValue !== undefined && defaultValue !== '') ?
-          defaultValue : this.fieldValues_[name];
+        defaultValue : this.fieldValues_[name];
 
       // Try to use existing form field type
       rawType = `${attribute.type}`;
@@ -789,12 +789,12 @@ gmf.PrintController.prototype.print = function(format) {
   }));
 
   const spec = this.ngeoPrint_.createSpec(map, scale, this.layoutInfo.dpi,
-      this.layoutInfo.layout, format, customAttributes);
+    this.layoutInfo.layout, format, customAttributes);
 
   // Add feature overlay layer to print spec.
   const layers = [];
   this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_,
-      viewResolution);
+    viewResolution);
   if (layers.length > 0) {
     spec.attributes.map.layers.unshift(layers[0]);
   }
@@ -802,8 +802,8 @@ gmf.PrintController.prototype.print = function(format) {
   this.ngeoPrint_.createReport(spec, /** @type {angular.$http.Config} */ ({
     timeout: this.requestCanceler_.promise
   })).then(
-      this.handleCreateReportSuccess_.bind(this),
-      this.handleCreateReportError_.bind(this)
+    this.handleCreateReportSuccess_.bind(this),
+    this.handleCreateReportError_.bind(this)
   );
 
   // remove temporary map
@@ -898,7 +898,7 @@ gmf.PrintController.prototype.getOptimalScale_ = function(mapSize, viewResolutio
   const scales = this.layoutInfo.scales.slice();
   if (mapSize !== undefined && viewResolution !== undefined) {
     return this.ngeoPrintUtils_.getOptimalScale(mapSize, viewResolution,
-        this.paperSize_, scales.reverse());
+      this.paperSize_, scales.reverse());
   }
   return this.layoutInfo.scales[0];
 };
@@ -926,8 +926,8 @@ gmf.PrintController.prototype.getStatus_ = function(ref) {
   this.ngeoPrint_.getStatus(ref, /** @type {angular.$http.Config} */ ({
     timeout: this.requestCanceler_.promise
   })).then(
-      this.handleGetStatusSuccess_.bind(this, ref),
-      this.handleCreateReportError_.bind(this)
+    this.handleGetStatusSuccess_.bind(this, ref),
+    this.handleCreateReportError_.bind(this)
   );
 };
 
@@ -978,7 +978,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
 
   // Get layers from layertree only.
   const dataLayerGroup = this.ngeoLayerHelper_.getGroupFromMap(this.map,
-      gmf.DATALAYERGROUP_NAME);
+    gmf.DATALAYERGROUP_NAME);
   const layers = this.ngeoLayerHelper_.getFlatLayers(dataLayerGroup);
 
   // For each visible layer in reverse order, get the legend url.
@@ -1003,7 +1003,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
         layerNames = source.getParams()['LAYERS'].split(',');
         layerNames.forEach((name) => {
           icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
-              scale);
+            scale);
           // Don't add classes without legend url or from layers without any
           // active name.
           if (icons && name.length !== 0) {

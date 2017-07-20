@@ -9,16 +9,16 @@ goog.require('ol.events');
 
 
 ngeo.module.value('ngeoScaleselectorTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoScaleselectorTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseTemplateUrl}/scaleselector.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoScaleselectorTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseTemplateUrl}/scaleselector.html`;
+  });
 
 
 /**
@@ -104,7 +104,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
    * @export
    */
   this.scales = /** @type {!Array.<number>} */
-      ($scope.$eval(scalesExpr));
+    ($scope.$eval(scalesExpr));
   goog.asserts.assert(this.scales !== undefined);
 
   /**
@@ -163,7 +163,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   }
 
   ol.events.listen(this.map_, ol.Object.getChangeEventType('view'),
-      this.handleViewChange_, this);
+    this.handleViewChange_, this);
 
   this.registerResolutionChangeListener_();
 
@@ -254,10 +254,10 @@ ngeo.ScaleselectorController.prototype.registerResolutionChangeListener_ = funct
   }
   const view = this.map_.getView();
   this.resolutionChangeKey_ = ol.events.listen(view,
-      ol.Object.getChangeEventType('resolution'), this.handleResolutionChange_,
-      this);
+    ol.Object.getChangeEventType('resolution'), this.handleResolutionChange_,
+    this);
 };
 
 
 ngeo.module.controller('NgeoScaleselectorController',
-    ngeo.ScaleselectorController);
+  ngeo.ScaleselectorController);

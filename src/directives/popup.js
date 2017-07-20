@@ -4,16 +4,16 @@ goog.require('ngeo');
 
 
 ngeo.module.value('ngeoPopupTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoPopupTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseTemplateUrl}/popup.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoPopupTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseTemplateUrl}/popup.html`;
+  });
 
 
 /**

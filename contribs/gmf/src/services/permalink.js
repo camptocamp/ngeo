@@ -49,7 +49,7 @@ gmf.PermalinkParamPrefix = {
 
 
 gmf.module.value('gmfPermalinkOptions',
-    /** @type {gmfx.PermalinkOptions} */ ({}));
+  /** @type {gmfx.PermalinkOptions} */ ({}));
 
 
 /** Configure the ngeo state manager */
@@ -93,7 +93,7 @@ gmf.module.value('gmfPermalinkOptions',
  * @ngname gmfPermalink
  */
 gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
-    ngeoStateManager, ngeoLocation) {
+  ngeoStateManager, ngeoLocation) {
 
   /**
    * @type {angular.Scope}
@@ -323,10 +323,10 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
 
   if (this.ngeoBackgroundLayerMgr_) {
     ol.events.listen(
-        this.ngeoBackgroundLayerMgr_,
-        ngeo.BackgroundEventType.CHANGE,
-        this.handleBackgroundLayerManagerChange_,
-        this);
+      this.ngeoBackgroundLayerMgr_,
+      ngeo.BackgroundEventType.CHANGE,
+      this.handleBackgroundLayerManagerChange_,
+      this);
   }
 
   // visibility
@@ -357,7 +357,7 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
     const newState = {};
     const opacity = treeCtrl.layer.getOpacity();
     const stateName = (treeCtrl.parent.node.mixed ?
-        gmf.PermalinkParamPrefix.TREE_OPACITY : gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY
+      gmf.PermalinkParamPrefix.TREE_OPACITY : gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY
     ) + treeCtrl.node.name;
     newState[stateName] = opacity;
     this.ngeoStateManager_.updateState(newState);
@@ -472,8 +472,8 @@ gmf.Permalink.prototype.getMapCenter = function() {
     if (this.sourceProjections_ !== null && this.ngeoAutoProjection_) {
       const targetProjection = this.map_.getView().getProjection();
       const reprojectedCenter = this.ngeoAutoProjection_.tryProjectionsWithInversion(
-          center, targetProjection.getExtent(), targetProjection,
-          this.sourceProjections_);
+        center, targetProjection.getExtent(), targetProjection,
+        this.sourceProjections_);
       if (reprojectedCenter) {
         return reprojectedCenter;
       }
@@ -631,18 +631,18 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
   // (2) Listen to any property changes within the view and apply them to
   //     the permalink service
   this.mapViewPropertyChangeEventKey_ = ol.events.listen(
-      view,
-      'propertychange',
-      this.ngeoDebounce_(() => {
-        const center = view.getCenter();
-        const zoom = view.getZoom();
-        const object = {};
-        object[gmf.PermalinkParam.MAP_X] = Math.round(center[0]);
-        object[gmf.PermalinkParam.MAP_Y] = Math.round(center[1]);
-        object[gmf.PermalinkParam.MAP_Z] = zoom;
-        this.ngeoStateManager_.updateState(object);
-      }, 300, /* invokeApply */ true),
-      this);
+    view,
+    'propertychange',
+    this.ngeoDebounce_(() => {
+      const center = view.getCenter();
+      const zoom = view.getZoom();
+      const object = {};
+      object[gmf.PermalinkParam.MAP_X] = Math.round(center[0]);
+      object[gmf.PermalinkParam.MAP_Y] = Math.round(center[1]);
+      object[gmf.PermalinkParam.MAP_Z] = zoom;
+      this.ngeoStateManager_.updateState(object);
+    }, 300, /* invokeApply */ true),
+    this);
 
   // (3) Add map crosshair, if set
   if (this.getMapCrosshair() && this.featureOverlay_) {
@@ -655,7 +655,7 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
     goog.asserts.assertArray(crosshairCoordinate);
 
     const crosshairFeature = new ol.Feature(
-        new ol.geom.Point(crosshairCoordinate));
+      new ol.geom.Point(crosshairCoordinate));
     crosshairFeature.setStyle(this.crosshairStyle_);
     this.featureOverlay_.addFeature(crosshairFeature);
   }
@@ -697,7 +697,7 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
  */
 gmf.Permalink.prototype.unregisterMap_ = function() {
   goog.asserts.assert(
-      this.mapViewPropertyChangeEventKey_, 'Key should be thruthy');
+    this.mapViewPropertyChangeEventKey_, 'Key should be thruthy');
   ol.events.unlistenByKey(this.mapViewPropertyChangeEventKey_);
   this.mapViewPropertyChangeEventKey_ = null;
 };
@@ -875,8 +875,8 @@ gmf.Permalink.prototype.initLayers_ = function() {
 
         const opacity = this.ngeoStateManager_.getInitialNumberValue((
           treeCtrl.parent.node.mixed ?
-          gmf.PermalinkParamPrefix.TREE_OPACITY :
-          gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY
+            gmf.PermalinkParamPrefix.TREE_OPACITY :
+            gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY
         ) + treeCtrl.node.name);
         if (opacity !== undefined && treeCtrl.layer) {
           treeCtrl.layer.setOpacity(opacity);

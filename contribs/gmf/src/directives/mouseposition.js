@@ -103,4 +103,4 @@ gmf.MousepositionController.prototype.setProjection = function(projection) {
 };
 
 gmf.module.controller('gmfMousepositionController',
-    gmf.MousepositionController);
+  gmf.MousepositionController);

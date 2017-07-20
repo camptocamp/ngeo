@@ -25,31 +25,31 @@ ngeo.Debounce;
  */
 ngeo.debounceServiceFactory = function($timeout) {
   return (
-      /**
+  /**
        * @param {function(?)} func The function to debounce.
        * @param {number} wait The wait time in ms.
        * @param {boolean} invokeApply Whether the call to `func` is wrapped
        *    into an `$apply` call.
        * @return {function()} The wrapper function.
        */
-      function(func, wait, invokeApply) {
-        /**
+    function(func, wait, invokeApply) {
+      /**
          * @type {?angular.$q.Promise}
          */
-        let timeout = null;
-        return (
-            function(...args) {
-              const context = this;
-              const later = function() {
-                timeout = null;
-                func.apply(context, args);
-              };
-              if (timeout !== null) {
-                $timeout.cancel(timeout);
-              }
-              timeout = $timeout(later, wait, invokeApply);
-            });
-      });
+      let timeout = null;
+      return (
+        function(...args) {
+          const context = this;
+          const later = function() {
+            timeout = null;
+            func.apply(context, args);
+          };
+          if (timeout !== null) {
+            $timeout.cancel(timeout);
+          }
+          timeout = $timeout(later, wait, invokeApply);
+        });
+    });
 };
 
 

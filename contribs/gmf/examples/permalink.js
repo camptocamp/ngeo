@@ -18,20 +18,20 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.value('gmfPermalinkOptions',
-    /** @type {gmfx.PermalinkOptions} */ ({
-      crosshairStyle: new ol.style.Style({
-        image: new ol.style.RegularShape({
-          stroke: new ol.style.Stroke({
-            color: 'rgba(0, 0, 255, 1)',
-            width: 2
-          }),
-          points: 4,
-          radius: 8,
-          radius2: 0,
-          angle: 0
-        })
+  /** @type {gmfx.PermalinkOptions} */ ({
+    crosshairStyle: new ol.style.Style({
+      image: new ol.style.RegularShape({
+        stroke: new ol.style.Stroke({
+          color: 'rgba(0, 0, 255, 1)',
+          width: 2
+        }),
+        points: 4,
+        radius: 8,
+        radius2: 0,
+        angle: 0
       })
-    }));
+    })
+  }));
 
 /**
  * @constructor

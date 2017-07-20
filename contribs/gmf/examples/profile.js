@@ -26,8 +26,8 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.value(
-    'gmfProfileJsonUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
+  'gmfProfileJsonUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
 
 /**
  * @param {angular.Scope} $scope Angular scope.
@@ -104,10 +104,10 @@ gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
    * @export
    */
   this.drawLine = new ol.interaction.Draw(
-      /** @type {olx.interaction.DrawOptions} */ ({
-        type: 'LineString',
-        features
-      }));
+    /** @type {olx.interaction.DrawOptions} */ ({
+      type: 'LineString',
+      features
+    }));
 
   this.drawLine.setActive(false);
   this.map.addInteraction(this.drawLine);

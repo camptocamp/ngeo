@@ -43,8 +43,8 @@ gmf.FilterselectorController = class {
    * @ngname GmfFilterselectorController
    */
   constructor($scope, $timeout, gettextCatalog, gmfDataSourceBeingFiltered,
-      gmfDataSourcesHelper, gmfSavedFilters, gmfUser, ngeoNotification,
-      ngeoFeatureOverlayMgr, ngeoRuleHelper
+    gmfDataSourcesHelper, gmfSavedFilters, gmfUser, ngeoNotification,
+    ngeoFeatureOverlayMgr, ngeoRuleHelper
   ) {
 
     // Binding properties
@@ -587,9 +587,9 @@ gmf.FilterselectorController = class {
     if (!alreadyExist || confirm(msg)) {
       // (1) Serialize the existing custom and directed rules
       const customRules = this.customRules ?
-            this.ngeoRuleHelper_.serializeRules(this.customRules) : [];
+        this.ngeoRuleHelper_.serializeRules(this.customRules) : [];
       const directedRules = this.directedRules ?
-            this.ngeoRuleHelper_.serializeRules(this.directedRules) : [];
+        this.ngeoRuleHelper_.serializeRules(this.directedRules) : [];
 
       // (2) Ask the service to save it
       const item = /** @type {!gmf.SavedFilters.FilterItem} */ ({

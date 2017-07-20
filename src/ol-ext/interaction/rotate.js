@@ -104,7 +104,7 @@ ngeo.interaction.Rotate = function(options) {
    * @private
    */
   this.pixelTolerance_ = options.pixelTolerance !== undefined ?
-      options.pixelTolerance : 10;
+    options.pixelTolerance : 10;
 
   /**
    * @type {ol.Collection.<ol.Feature>}
@@ -189,9 +189,9 @@ ngeo.interaction.Rotate.prototype.setActive = function(active) {
     );
     this.features_.forEach(this.addFeature_, this);
     this.listenerKeys_.push(ol.events.listen(this.features_,
-        ol.CollectionEventType.ADD, this.handleFeatureAdd_, this));
+      ol.CollectionEventType.ADD, this.handleFeatureAdd_, this));
     this.listenerKeys_.push(ol.events.listen(this.features_,
-        ol.CollectionEventType.REMOVE, this.handleFeatureRemove_, this));
+      ol.CollectionEventType.REMOVE, this.handleFeatureRemove_, this));
 
   } else {
     this.listenerKeys_.forEach((key) => {
@@ -230,7 +230,7 @@ ngeo.interaction.Rotate.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
     this.dispatchEvent(new ol.interaction.Modify.Event(
-        ol.interaction.ModifyEventType.MODIFYSTART, this.features_, evt));
+      ol.interaction.ModifyEventType.MODIFYSTART, this.features_, evt));
   }
 };
 
@@ -270,7 +270,7 @@ ngeo.interaction.Rotate.prototype.setMap = function(map) {
 ngeo.interaction.Rotate.prototype.handleFeatureAdd_ = function(evt) {
   const feature = evt.element;
   goog.asserts.assertInstanceof(feature, ol.Feature,
-      'feature should be an ol.Feature');
+    'feature should be an ol.Feature');
   this.addFeature_(feature);
 };
 
@@ -294,7 +294,7 @@ ngeo.interaction.Rotate.prototype.handleDown_ = function(evt) {
   const map = evt.map;
 
   let feature = map.forEachFeatureAtPixel(evt.pixel,
-      (feature, layer) => feature, undefined);
+    (feature, layer) => feature, undefined);
 
   if (feature) {
     let found = false;
@@ -329,7 +329,7 @@ ngeo.interaction.Rotate.prototype.handleDown_ = function(evt) {
  * @private
  */
 ngeo.interaction.Rotate.prototype.getCenterCoordinate_ = function(
-    geometry) {
+  geometry) {
 
   let center;
 

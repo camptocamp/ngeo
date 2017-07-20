@@ -135,7 +135,7 @@ describe('ngeo.Query', () => {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('GET', requestUrlBusStop).respond(gmlResponseBusStop);
         $httpBackend.when('GET', requestUrlBusStopAndInformation).respond(
-            gmlResponseBusStopAndInformation);
+          gmlResponseBusStopAndInformation);
       });
 
       busStopLayer = new ol.layer.Image({

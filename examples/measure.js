@@ -69,7 +69,7 @@ app.module.directive('appMeasuretools', app.measuretoolsDirective);
  * @ngInject
  */
 app.MeasuretoolsController = function($scope, $compile, $sce,
-    $filter, ngeoDecorateInteraction) {
+  $filter, ngeoDecorateInteraction) {
 
   /**
    * @type {ol.Map}
@@ -132,16 +132,16 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
 
   // Create elements for the measure tools' tooltips.
   let measureStartMsg = angular.element(
-      '<span ng-bind-html="ctrl.measureStartMsg"></span>');
+    '<span ng-bind-html="ctrl.measureStartMsg"></span>');
   measureStartMsg = $compile(measureStartMsg)($scope);
   let measureLengthContinueMsg = angular.element(
-      '<span ng-bind-html="ctrl.measureLengthContinueMsg"></span>');
+    '<span ng-bind-html="ctrl.measureLengthContinueMsg"></span>');
   measureLengthContinueMsg = $compile(measureLengthContinueMsg)($scope);
   let measureAreaContinueMsg = angular.element(
-      '<span ng-bind-html="ctrl.measureAreaContinueMsg"></span>');
+    '<span ng-bind-html="ctrl.measureAreaContinueMsg"></span>');
   measureAreaContinueMsg = $compile(measureAreaContinueMsg)($scope);
   let measureAzimutContinueMsg = angular.element(
-      '<span ng-bind-html="ctrl.measureAzimutContinueMsg"></span>');
+    '<span ng-bind-html="ctrl.measureAzimutContinueMsg"></span>');
   measureAzimutContinueMsg = $compile(measureAzimutContinueMsg)($scope);
 
   // Watch the "lang" property and update the toolip messages
@@ -204,11 +204,11 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
    * @export
    */
   this.measureAzimut = new ngeo.interaction.MeasureAzimut(
-        $filter('ngeoUnitPrefix'), $filter('ngeoNumber'), {
-          sketchStyle: style,
-          startMsg: measureStartMsg[0],
-          continueMsg: measureAzimutContinueMsg[0]
-        });
+    $filter('ngeoUnitPrefix'), $filter('ngeoNumber'), {
+      sketchStyle: style,
+      startMsg: measureStartMsg[0],
+      continueMsg: measureAzimutContinueMsg[0]
+    });
 
   this.measureAzimut.setActive(false);
   ngeoDecorateInteraction(this.measureAzimut);

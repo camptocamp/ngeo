@@ -13,16 +13,16 @@ goog.require('ol.style.Style');
 
 
 ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
-    /**
+  /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template.
      */
-    ($element, $attrs) => {
-      const templateUrl = $attrs['gmfDisplayquerywindowTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/displayquerywindow.html`;
-    });
+  ($element, $attrs) => {
+    const templateUrl = $attrs['gmfDisplayquerywindowTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/displayquerywindow.html`;
+  });
 
 
 /**
@@ -97,7 +97,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @ngname GmfDisplayquerywindowController
  */
 gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
-    ngeoFeatureHelper, ngeoFeatureOverlayMgr) {
+  ngeoFeatureHelper, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {boolean}
@@ -210,15 +210,15 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
   this.open = false;
 
   $scope.$watchCollection(
-      () => ngeoQueryResult,
-      (newQueryResult, oldQueryResult) => {
-        this.updateQueryResult_(newQueryResult);
-        if (newQueryResult.total > 0) {
-          this.show();
-        } else if (oldQueryResult !== newQueryResult) {
-          this.close();
-        }
-      });
+    () => ngeoQueryResult,
+    (newQueryResult, oldQueryResult) => {
+      this.updateQueryResult_(newQueryResult);
+      if (newQueryResult.total > 0) {
+        this.show();
+      } else if (oldQueryResult !== newQueryResult) {
+        this.close();
+      }
+    });
 };
 
 /**
@@ -291,7 +291,7 @@ gmf.DisplayquerywindowController.prototype.updateFeatures_ = function() {
  * @private
  */
 gmf.DisplayquerywindowController.prototype.setCurrentResult_ = function(
-    position, setHighlight) {
+  position, setHighlight) {
   let hasChanged = false;
   if (position !== this.currentResult) {
     let i, source, features;

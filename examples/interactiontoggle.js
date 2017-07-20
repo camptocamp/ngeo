@@ -55,10 +55,10 @@ app.MainController = function(ngeoDecorateInteraction) {
    * @export
    */
   this.interaction = new ol.interaction.Draw(
-      /** @type {olx.interaction.DrawOptions} */ ({
-        type: 'Point',
-        source: vectorLayer.getSource()
-      }));
+    /** @type {olx.interaction.DrawOptions} */ ({
+      type: 'Point',
+      source: vectorLayer.getSource()
+    }));
 
   const interaction = this.interaction;
   interaction.setActive(false);

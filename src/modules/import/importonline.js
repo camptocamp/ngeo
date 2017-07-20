@@ -166,15 +166,15 @@ exports.module = angular.module('ngeo.importOnlineDirective', [
 ]);
 
 exports.module.value('ngeoImportOnlineTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoImportOnlineTemplateUrl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseModuleTemplateUrl}/import/partials/import-online.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoImportOnlineTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/import/partials/import-online.html`;
+  });
 
 exports.module.directive('ngeoImportOnline', exports);

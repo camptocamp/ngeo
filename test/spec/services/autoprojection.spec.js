@@ -42,17 +42,17 @@ describe('ngeo.AutoProjection', () => {
     const projections = [ol.proj.get('EPSG:21781'), ol.proj.get('EPSG:4326')];
 
     let point = ngeoAutoProjection.tryProjections(coordinatesA, extent,
-        viewProjection);
+      viewProjection);
     expect(point).toEqual(coordinatesA);
 
     point = ngeoAutoProjection.tryProjections(coordinatesB, extent,
-        viewProjection);
+      viewProjection);
     expect(point).toBeNull();
 
     const coordinatesBTransformed = ol.proj.transform(coordinatesB,
-        ol.proj.get('EPSG:4326'), viewProjection);
+      ol.proj.get('EPSG:4326'), viewProjection);
     point = ngeoAutoProjection.tryProjections(coordinatesB, extent,
-        viewProjection, projections);
+      viewProjection, projections);
     expect(point).toEqual(coordinatesBTransformed);
   });
 
@@ -62,10 +62,10 @@ describe('ngeo.AutoProjection', () => {
     const extent = viewProjection.getExtent();
     const projections = [ol.proj.get('EPSG:4326')];
     const coordinatesTransformed = ol.proj.transform(coordinates.reverse(),
-        projections[0], viewProjection);
+      projections[0], viewProjection);
 
     const point = ngeoAutoProjection.tryProjectionsWithInversion(coordinates,
-        extent, viewProjection, projections);
+      extent, viewProjection, projections);
     expect(point).toEqual(coordinatesTransformed);
   });
 });

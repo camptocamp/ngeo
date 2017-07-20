@@ -6,16 +6,16 @@ goog.require('ngeo.DecorateLayer');
 goog.require('ngeo.DecorateLayerLoading');
 
 ngeo.module.value('ngeoLayertreeTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoLayertreeTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseTemplateUrl}/layertree.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoLayertreeTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseTemplateUrl}/layertree.html`;
+  });
 
 
 /**

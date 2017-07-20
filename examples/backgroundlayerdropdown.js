@@ -52,11 +52,11 @@ app.module.directive('appBackgroundlayer', app.backgroundlayerDirective);
  */
 app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
   $http.get('data/backgroundlayers.json').then(
-      (resp) => {
-        const bgLayers = resp.data;
-        this['bgLayers'] = bgLayers;
-        this.setLayer(bgLayers[0]);
-      });
+    (resp) => {
+      const bgLayers = resp.data;
+      this['bgLayers'] = bgLayers;
+      this.setLayer(bgLayers[0]);
+    });
 
   /**
    * @type {ngeo.BackgroundLayerMgr}
@@ -97,7 +97,7 @@ app.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
 
 
 app.module.controller('AppBackgroundlayerController',
-    app.BackgroundlayerController);
+  app.BackgroundlayerController);
 
 
 /**

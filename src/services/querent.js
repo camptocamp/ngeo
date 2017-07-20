@@ -390,14 +390,14 @@ ngeo.Querent = class {
       let countPromise;
       if (wfsCount) {
         const getCountOptions =
-              /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
-                ol.obj.assign(
-                  {
-                    resultType: 'hits'
-                  },
-                  getFeatureCommonOptions
-                )
-              );
+            /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
+            ol.obj.assign(
+              {
+                resultType: 'hits'
+              },
+              getFeatureCommonOptions
+            )
+          );
         const featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
         const featureCountRequest = xmlSerializer.serializeToString(
           featureCountXml);
@@ -426,13 +426,13 @@ ngeo.Querent = class {
 
           const getFeatureOptions =
               /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
-                ol.obj.assign(
-                  {
-                    maxFeatures
-                  },
-                  getFeatureCommonOptions
-                )
-              );
+              ol.obj.assign(
+                {
+                  maxFeatures
+                },
+                getFeatureCommonOptions
+              )
+            );
           const featureRequestXml = wfsFormat.writeGetFeature(
             getFeatureOptions);
           const featureRequest = xmlSerializer.serializeToString(

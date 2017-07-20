@@ -261,9 +261,9 @@ ngeo.DMSCoordinates = function() {
     const m = Math.floor((dms / 60) % 60);
     const s = (dms % 60);
     return `${d}\u00b0 ${
-        ol.string.padNumber(m, 2)}\u2032 ${
-        ol.string.padNumber(s, 2, fractionDigits)}\u2033 ${
-        hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0)}`;
+      ol.string.padNumber(m, 2)}\u2032 ${
+      ol.string.padNumber(s, 2, fractionDigits)}\u2033 ${
+      hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0)}`;
   };
 
   /**
