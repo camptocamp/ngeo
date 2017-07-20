@@ -29,6 +29,7 @@ goog.require('ol.Map');
  * [../examples/simple.html](../examples/simple.html)
  *
  * @htmlAttribute {ol.Map} ngeo-map The map.
+ * @param {angular.$window} $window The Angular $window service.
  * @param {ngeo.SyncDataSourcesMap} ngeoSyncDataSourcesMap Ngeo sync
  *     data sources map service.
  * @return {angular.Directive} Directive Definition Object.
@@ -36,7 +37,7 @@ goog.require('ol.Map');
  * @ngdoc directive
  * @ngname ngeoMap
  */
-ngeo.mapDirective = function(ngeoSyncDataSourcesMap) {
+ngeo.mapDirective = function($window, ngeoSyncDataSourcesMap) {
   return {
     restrict: 'A',
     /**
@@ -69,13 +70,14 @@ ngeo.mapDirective = function(ngeoSyncDataSourcesMap) {
       if (manageResize) {
         const resizeTransitionAttr = 'ngeoMapResizeTransition';
         const resizeTransitionProp = attrs[resizeTransitionAttr];
+        /** @type {number|undefined} */
         const resizeTransition = scope.$eval(resizeTransitionProp);
 
         ol.events.listen(
-          window,
+          $window,
           'resize',
           () => {
-            if (resizeTransition && Number.isInteger(resizeTransition)) {
+            if (resizeTransition) {
               // Resize with transition
               const start = Date.now();
               let loop = true;
@@ -83,7 +85,7 @@ ngeo.mapDirective = function(ngeoSyncDataSourcesMap) {
                 map.updateSize();
                 map.renderSync();
                 if (loop) {
-                  window.requestAnimationFrame(adjustSize);
+                  $window.requestAnimationFrame(adjustSize);
                 }
                 if (Date.now() - start > resizeTransition) {
                   loop = false;
@@ -94,8 +96,7 @@ ngeo.mapDirective = function(ngeoSyncDataSourcesMap) {
               // A single plain resize
               map.updateSize();
             }
-          },
-          this
+          }
         );
       }
     }
