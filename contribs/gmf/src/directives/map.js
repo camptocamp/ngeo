@@ -3,7 +3,6 @@ goog.provide('gmf.mapDirective');
 goog.require('gmf');
 goog.require('gmf.Permalink');
 goog.require('gmf.Snapping');
-goog.require('goog.asserts');
 goog.require('ngeo.FeatureOverlayMgr');
 
 /**
