@@ -656,6 +656,28 @@ gmfx.openTextPopup;
 
 
 /**
+ * @type {Object}
+ */
+let cgxp;
+
+
+/**
+ * @type {Object}
+ */
+cgxp.tools;
+
+
+/**
+ * Static function to create a popup with an iframe.
+ * @param {string} url an url.
+ * @param {string} title (text).
+ * @param {string=} opt_width CSS width.
+ * @param {string=} opt_height CSS height.
+ */
+cgxp.tools.openInfoWindow;
+
+
+/**
  * @param {ngeo.Popup!} popup a ngeoPopup.
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.

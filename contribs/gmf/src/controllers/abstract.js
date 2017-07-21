@@ -511,6 +511,20 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @export
    */
   this.resizeTransition;
+
+  const cgxp = window.cgxp || {};
+  window.cgxp = cgxp;
+  cgxp.tools = window.cgxp.tools || {};
+  /**
+   * Static function to create a popup with an iframe.
+   * @param {string} url an url.
+   * @param {string} title (text).
+   * @param {string=} opt_width CSS width.
+   * @param {string=} opt_height CSS height.
+   */
+  cgxp.tools.openInfoWindow = function(url, title, opt_width, opt_height) {
+    gmfx.openIframePopup(url, title, opt_width, opt_height);
+  };
 };
 
 
