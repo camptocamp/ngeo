@@ -189,7 +189,7 @@ ngeox.DataSourceOptions = function() {};
 
 /**
  * The dimensions that are currently active on the data source.
- * @type {Object.<string, string>|undefined}
+ * @type {ngeox.Dimensions|undefined}
  */
 ngeox.DataSourceOptions.prototype.activeDimensions;
 
@@ -207,13 +207,6 @@ ngeox.DataSourceOptions.prototype.attributes;
  * @type {boolean|undefined}
  */
 ngeox.DataSourceOptions.prototype.copyable;
-
-
-/**
- * The dimensions this data source supports.
- * @type {Object.<string, string>|undefined}
- */
-ngeox.DataSourceOptions.prototype.dimensions;
 
 
 /**
@@ -247,6 +240,13 @@ ngeox.DataSourceOptions.prototype.geometryName;
 
 
 /**
+ * A reference to the global dimensions.
+ * @type {ngeox.Dimensions|undefined}
+ */
+ngeox.DataSourceOptions.prototype.globalDimensions;
+
+
+/**
  * (Required) The data source id.
  * @type {number}
  */
@@ -274,6 +274,13 @@ ngeox.DataSourceOptions.prototype.identifierAttribute;
  * @type {boolean|undefined}
  */
 ngeox.DataSourceOptions.prototype.inRange;
+
+
+/**
+ * A the dimensions supported by this data source.
+ * @type {ngeox.Dimensions|undefined}
+ */
+ngeox.DataSourceOptions.prototype.innerDimensions;
 
 
 /**
@@ -519,7 +526,7 @@ ngeox.DataSource.prototype.filterRules;
  * @return {boolean} Whether this data source can be combined to the given
  *     other data source to fetch features in a single WFS request.
  */
-ngeox.DataSource.prototype.combinableWithDataSourceForWFS = function(dataSource) {}
+ngeox.DataSource.prototype.combinableWithDataSourceForWFS = function(dataSource) {};
 
 
 /**
@@ -527,7 +534,31 @@ ngeox.DataSource.prototype.combinableWithDataSourceForWFS = function(dataSource)
  * @return {boolean} Whether this data source can be combined to the given
  *     other data source to fetch features in a single WMS request.
  */
-ngeox.DataSource.prototype.combinableWithDataSourceForWMS = function(dataSource) {}
+ngeox.DataSource.prototype.combinableWithDataSourceForWMS = function(dataSource) {};
+
+
+/**
+ * @param {ngeox.DataSource} dataSource Remote data source to compare with
+ *     this one.
+ * @return {boolean}  Whether the two data sources have the same active
+ *     dimensions. If both have no dimensions, they are considered to be
+ *     sharing the same dimensions.
+ */
+ngeox.DataSource.prototype.haveTheSameActiveDimensions = function(dataSource) {};
+
+
+/**
+ * Dimensions definition.
+ * @typedef {Object.<string, ?string>}
+ */
+ngeox.Dimensions;
+
+
+/**
+ * Active dimensions definition, where the value can't be null.
+ * @typedef {Object.<string, string>}
+ */
+ngeox.DimensionsActive;
 
 
 /**

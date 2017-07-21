@@ -166,12 +166,11 @@ gmf.AbstractController = function(config, $scope, $injector) {
   // watch any change on dimensions object to refresh the url
   permalink.setDimensions(this.dimensions);
 
-  // FIXME - manage dimensions ...
-  //const queryManager = $injector.get('gmfQueryManager');
-  //queryManager.setDimensions(this.dimensions);
-
   // Injecting the gmfDataSourcesManager service creates the data sources
-  $injector.get('gmfDataSourcesManager');
+  const gmfDataSourcesManager = $injector.get('gmfDataSourcesManager');
+
+  // Give the dimensions to the gmfDataSourcesManager
+  gmfDataSourcesManager.setDimensions(this.dimensions);
 
   if ($injector.has('gmfDefaultDimensions')) {
     // Set defaults

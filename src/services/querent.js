@@ -308,6 +308,7 @@ ngeo.Querent = class {
       let featureNS;
       let featureTypes = [];
       let url;
+      const params = {};
 
       // (3) Build query options
       for (const dataSource of dataSources) {
@@ -329,6 +330,9 @@ ngeo.Querent = class {
           };
 
           url = dataSource.wfsUrl;
+
+          // All data sources combined share the same active dimensions
+          ol.obj.assign(params, dataSource.activeDimensions);
         }
 
         // (b) Add queryable layer names in featureTypes array
@@ -406,6 +410,7 @@ ngeo.Querent = class {
           url,
           featureCountRequest,
           {
+            params,
             timeout: canceler.promise
           }
         ).then(((response) => {
@@ -443,6 +448,7 @@ ngeo.Querent = class {
             url,
             featureRequest,
             {
+              params,
               timeout: canceler.promise
             }
           ).then((response) => {
@@ -493,6 +499,7 @@ ngeo.Querent = class {
       let url;
       let LAYERS = [];
       let INFO_FORMAT;
+      let activeDimensionsSet = false;
       const params = {};
       let filterString = null;
       let filtrableLayerName = null;
@@ -510,13 +517,14 @@ ngeo.Querent = class {
         LAYERS = LAYERS.concat(
           dataSource.getInRangeOGCLayerNames(resolution, true));
 
-        // (c) Manage active dimensions. Add them directly to the query
-        //     parameters.
-        const dimensions = dataSource.activeDimensions;
-        if (dimensions) {
-          for (const dimensionKey in dimensions) {
-            params[dimensionKey] = dimensions[dimensionKey];
-          }
+        // (c) Manage active dimensions, which are added directly to the
+        //     query parameters. Note that this occurs only ONCE, i.e.
+        //     for the first data source, because all data sources here have
+        //     been combined together, therefore they share the same active
+        //     dimensions.
+        if (!activeDimensionsSet) {
+          ol.obj.assign(params, dataSource.activeDimensions);
+          activeDimensionsSet = true;
         }
 
         // (d) Add filter, if any. If there is a filter on the data source,

@@ -126,6 +126,13 @@ gmf.DataSourcesManager = class {
     this.dataSourcesCache_ = {};
 
     /**
+     * A reference to the global dimensions object.
+     * @type {ngeox.Dimensions|undefined}
+     * @private
+     */
+    this.globalDimensions_;
+
+    /**
      * The cache of layertree leaf controller, i.e. those that are added to
      * the tree manager. When treeCtrl is added in this cache, it's given
      * a reference to its according data source.
@@ -152,6 +159,14 @@ gmf.DataSourcesManager = class {
     );
     ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE,
       this.handleThemesChange_, this);
+  }
+
+  /**
+   * @param {!ngeox.Dimensions} dimensions A reference to the global dimensions
+   *     object to keep a reference of in this service.
+   */
+  setDimensions(dimensions) {
+    this.globalDimensions_ = dimensions;
   }
 
   /**
@@ -384,8 +399,8 @@ gmf.DataSourcesManager = class {
       meta.snappingConfig.vertex : undefined;
 
     // (7) Dimensions
-    const dimensions = node.dimensions || firstLevelGroup.dimensions;
-    const activeDimensions = dimensions;
+    const globalDimensions = this.globalDimensions_;
+    const innerDimensions = node.dimensions || firstLevelGroup.dimensions;
 
     // (8) Time values (lower or lower/upper)
     let timeLowerValue;
@@ -409,12 +424,12 @@ gmf.DataSourcesManager = class {
 
     // Create the data source and add it to the cache
     cache[id] = new gmf.DataSource({
-      activeDimensions,
       copyable,
-      dimensions,
+      globalDimensions,
       gmfLayer,
       id,
       identifierAttribute,
+      innerDimensions,
       maxResolution,
       minResolution,
       name,

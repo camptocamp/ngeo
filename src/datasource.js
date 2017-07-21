@@ -34,13 +34,6 @@ ngeo.DataSource = class {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
-     * The dimensions that are currently active on the data source.
-     * @type {?Object.<string, string>}
-     * @private
-     */
-    this.activeDimensions_ = options.activeDimensions || null;
-
-    /**
      * The filter condition to apply to the filter rules (if any).
      * @type {string}
      * @private
@@ -80,6 +73,13 @@ ngeo.DataSource = class {
     this.inRange_ = options.inRange !== false;
 
     /**
+     * The inner dimenions of the data source.
+     * @type {?mgx.Dimensions}
+     * @private
+     */
+    this.innerDimensions_ = options.innerDimensions || null;
+
+    /**
      * Whether the data source is visible or not, i.e. whether its is ON or OFF.
      * Defaults to `false`.
      * @type {boolean}
@@ -106,11 +106,11 @@ ngeo.DataSource = class {
     this.copyable_ = options.copyable === true;
 
     /**
-     * The dimensions this data source supports.
-     * @type {?Object.<string, string>}
+     * A reference to the global dimensions object.
+     * @type {?mgx.Dimensions}
      * @private
      */
-    this.dimensions_ = options.dimensions || null;
+    this.globalDimensions_ = options.globalDimensions || null;
 
     /**
      * The name of the geometry attribute.
@@ -373,22 +373,6 @@ ngeo.DataSource = class {
   // ========================================
 
   /**
-   * @return {?Object.<string, string>} Active dimensions
-   * @export
-   */
-  get activeDimensions() {
-    return this.activeDimensions_;
-  }
-
-  /**
-   * @param {?Object.<string, string>} activeDimensions Active dimensions
-   * @export
-   */
-  set activeDimensions(activeDimensions) {
-    this.activeDimensions_ = activeDimensions;
-  }
-
-  /**
    * @return {string} Filter condition
    * @export
    */
@@ -434,6 +418,22 @@ ngeo.DataSource = class {
    */
   set inRange(inRange) {
     this.inRange_ = inRange;
+  }
+
+  /**
+   * @return {?ngeox.Dimensions} Inner dimensions
+   * @export
+   */
+  get innerDimensions() {
+    return this.innerDimensions_;
+  }
+
+  /**
+   * @param {?ngeox.Dimensions} innerDimensions Inner dimensions
+   * @export
+   */
+  set innerDimensions(innerDimensions) {
+    this.innerDimensions_ = innerDimensions;
   }
 
   /**
@@ -542,14 +542,6 @@ ngeo.DataSource = class {
    */
   get copyable() {
     return this.copyable_;
-  }
-
-  /**
-   * @return {?Object.<string, string>} Dimensions
-   * @export
-   */
-  get dimensions() {
-    return this.dimensions_;
   }
 
   /**
@@ -775,6 +767,28 @@ ngeo.DataSource = class {
   // ===================================
 
   /**
+   * @return {!ngeox.DimensionsActive} Active dimensions
+   * @export
+   */
+  get activeDimensions() {
+    const active = {};
+    const global = this.globalDimensions_ || {};
+    const inner = this.innerDimensions || {};
+
+    for (const key in inner) {
+      if (inner[key] === null) {
+        if (global[key] !== undefined && global[key] !== null) {
+          active[key] = global[key];
+        }
+      } else {
+        active[key] = inner[key];
+      }
+    }
+
+    return active;
+  }
+
+  /**
    * A data source can't be combined to other data source to issue a single
    * WFS request if:
    *
@@ -918,7 +932,8 @@ ngeo.DataSource = class {
     return this.combinableForWFS && dataSource.combinableForWFS &&
       this.supportsWFS && dataSource.supportsWFS &&
       this.queryable && dataSource.queryable &&
-      this.wfsUrl === dataSource.wfsUrl;
+      this.wfsUrl === dataSource.wfsUrl &&
+      this.haveTheSameActiveDimensions(dataSource);
   }
 
   /**
@@ -932,7 +947,8 @@ ngeo.DataSource = class {
     return this.combinableForWMS && dataSource.combinableForWMS &&
       this.supportsWMS && dataSource.supportsWMS &&
       this.queryable && dataSource.queryable &&
-      this.wmsUrl === dataSource.wmsUrl;
+      this.wmsUrl === dataSource.wmsUrl &&
+      this.haveTheSameActiveDimensions(dataSource);
   }
 
   /**
@@ -1033,6 +1049,37 @@ ngeo.DataSource = class {
     this.geometryName_ = geometryName;
   }
 
+  /**
+   * @param {!ngeo.DataSource} dataSource Remote data source to compare with
+   *     this one.
+   * @return {boolean} Whether the two data sources have the same active
+   *     dimensions. If both have no dimensions, they are considered to be
+   *     sharing the same dimensions.
+   */
+  haveTheSameActiveDimensions(dataSource) {
+    let share = true;
+
+    const myActive = this.activeDimensions;
+    const itsActive = dataSource.activeDimensions;
+
+    for (const key in myActive) {
+      if (myActive[key] !== itsActive[key]) {
+        share = false;
+        break;
+      }
+    }
+
+    if (share) {
+      for (const key in itsActive) {
+        if (itsActive[key] !== myActive[key]) {
+          share = false;
+          break;
+        }
+      }
+    }
+
+    return share;
+  }
 };
 
 
