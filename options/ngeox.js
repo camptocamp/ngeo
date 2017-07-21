@@ -477,6 +477,11 @@ ngeox.DataSourceOptions.prototype.wmtsUrl;
 ngeox.DataSource = function() {};
 
 /**
+ * @type {!ngeox.DimensionsActive}
+ */
+ngeox.DataSource.prototype.activeDimensions;
+
+/**
  * @type {boolean}
  */
 ngeox.DataSource.prototype.combinableForWMS;
