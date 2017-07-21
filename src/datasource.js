@@ -74,7 +74,7 @@ ngeo.DataSource = class {
 
     /**
      * The inner dimenions of the data source.
-     * @type {?mgx.Dimensions}
+     * @type {?ngeox.Dimensions}
      * @private
      */
     this.innerDimensions_ = options.innerDimensions || null;
@@ -107,7 +107,7 @@ ngeo.DataSource = class {
 
     /**
      * A reference to the global dimensions object.
-     * @type {?mgx.Dimensions}
+     * @type {?ngeox.Dimensions}
      * @private
      */
     this.globalDimensions_ = options.globalDimensions || null;
