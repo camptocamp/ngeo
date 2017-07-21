@@ -260,7 +260,11 @@
             </gmf-disclaimer>
           </div>
         </div>
-        <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"
+        <gmf-map
+          class="gmf-map"
+          gmf-map-map="mainCtrl.map"
+          gmf-map-manage-resize="mainCtrl.manageResize"
+          gmf-map-resize-transition="mainCtrl.resizeTransition"
           ngeo-map-query=""
           ngeo-map-query-map="::mainCtrl.map"
           ngeo-map-query-active="mainCtrl.queryActive"
