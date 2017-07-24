@@ -52,7 +52,7 @@ mkdir -p .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}
 cd .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}
 if [ "${EXAMPLES_NGEO}" == TRUE ]
 then
-    git rm --ignore-unmatch -r --quiet --force examples/*.js examples/*.html || true
+    git rm --ignore-unmatch --quiet --force examples/*.js examples/*.html || true
     git rm --ignore-unmatch -r --quiet --force examples/data || true
     git rm --ignore-unmatch -r --quiet --force examples/fonts || true
     git rm --ignore-unmatch -r --quiet --force examples/lib || true
@@ -60,7 +60,7 @@ then
 fi
 if [ "${EXAMPLES_GMF}" == TRUE ]
 then
-    git rm --ignore-unmatch -r --quiet --force examples/contribs/gmf/*.js examples/contribs/gmf/*.html || true
+    git rm --ignore-unmatch --quiet --force examples/contribs/gmf/*.js examples/contribs/gmf/*.html || true
 fi
 if [ "${APPS_GMF}" == TRUE ]
 then

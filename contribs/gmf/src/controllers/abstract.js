@@ -458,10 +458,10 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string=} opt_width CSS width.
    * @param {string=} opt_height CSS height.
    */
-  gmfx.OpenIframePopup = function(url, title, opt_width, opt_height) {
+  gmfx.openIframePopup = function(url, title, opt_width, opt_height) {
     const popup = ngeoCreatePopup();
     popup.setUrl(`${url}`);
-    gmfx.OpenPopup_(popup, title, opt_width, opt_height);
+    gmfx.openPopup_(popup, title, opt_width, opt_height);
   };
 
   /**
@@ -471,10 +471,10 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string=} opt_width CSS width.
    * @param {string=} opt_height CSS height.
    */
-  gmfx.OpenTextPopup = function(content, title, opt_width, opt_height) {
+  gmfx.openTextPopup = function(content, title, opt_width, opt_height) {
     const popup = ngeoCreatePopup();
     popup.setContent(`${content}`, true);
-    gmfx.OpenPopup_(popup, title, opt_width, opt_height);
+    gmfx.openPopup_(popup, title, opt_width, opt_height);
   };
 
   /**
@@ -483,7 +483,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string=} opt_width CSS width.
    * @param {string=} opt_height CSS height.
    */
-  gmfx.OpenPopup_ = function(popup, title, opt_width, opt_height) {
+  gmfx.openPopup_ = function(popup, title, opt_width, opt_height) {
     if (opt_width) {
       popup.setWidth(`${opt_width}`);
     }
@@ -510,6 +510,20 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @export
    */
   this.resizeTransition;
+
+  const cgxp = window.cgxp || {};
+  window.cgxp = cgxp;
+  cgxp.tools = window.cgxp.tools || {};
+  /**
+   * Static function to create a popup with an iframe.
+   * @param {string} url an url.
+   * @param {string} title (text).
+   * @param {string=} opt_width CSS width.
+   * @param {string=} opt_height CSS height.
+   */
+  cgxp.tools.openInfoWindow = function(url, title, opt_width, opt_height) {
+    gmfx.openIframePopup(url, title, opt_width, opt_height);
+  };
 };
 
 

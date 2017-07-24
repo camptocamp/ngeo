@@ -642,7 +642,7 @@ gmfx.ThemesOptions.prototype.addBlankBackgroundLayer;
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
  */
-gmfx.OpenIframePopup;
+gmfx.openIframePopup;
 
 
 /**
@@ -652,7 +652,29 @@ gmfx.OpenIframePopup;
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
  */
-gmfx.OpenTextPopup;
+gmfx.openTextPopup;
+
+
+/**
+ * @type {Object}
+ */
+let cgxp;
+
+
+/**
+ * @type {Object}
+ */
+cgxp.tools;
+
+
+/**
+ * Static function to create a popup with an iframe.
+ * @param {string} url an url.
+ * @param {string} title (text).
+ * @param {string=} opt_width CSS width.
+ * @param {string=} opt_height CSS height.
+ */
+cgxp.tools.openInfoWindow;
 
 
 /**
@@ -661,7 +683,7 @@ gmfx.OpenTextPopup;
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
  */
-gmfx.OpenPopup_
+gmfx.openPopup_
 
 /**
  * @typedef {{
