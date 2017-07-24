@@ -21,7 +21,8 @@ goog.require('ngeo.MapQuerent');
  *        ngeo-map-query=""
  *        ngeo-map-query-map="::ctrl.map"
  *        ngeo-map-query-active="ctrl.queryActive"
- *        ngeo-map-query-autoclear="ctrl.queryAutoClear">
+ *        ngeo-map-query-autoclear="ctrl.queryAutoClear"
+ *        ngeo-map-query-dimensions="ctrl.dimensions">
  *      </span>
  *
  * See our live example: [../examples/mapquery.html](../examples/mapquery.html)
@@ -39,6 +40,8 @@ ngeo.mapQueryDirective = function(ngeoMapQuerent, $injector) {
     scope: false,
     link(scope, elem, attrs) {
       const map = scope.$eval(attrs['ngeoMapQueryMap']);
+      const dimensions = scope.$eval(attrs['ngeoMapQueryDimensions']);
+
       let clickEventKey_ = null;
       let pointerMoveEventKey_ = null;
 
@@ -51,7 +54,8 @@ ngeo.mapQueryDirective = function(ngeoMapQuerent, $injector) {
         const coordinate = evt.coordinate;
         ngeoMapQuerent.issue({
           coordinate,
-          map
+          map,
+          dimensions
         });
       };
 
