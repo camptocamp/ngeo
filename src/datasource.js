@@ -34,6 +34,13 @@ ngeo.DataSource = class {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
+     * The dimenions configuration for the data source.
+     * @type {?ngeox.Dimensions}
+     * @private
+     */
+    this.dimensionsConfig_ = options.dimensionsConfig || null;
+
+    /**
      * The filter condition to apply to the filter rules (if any).
      * @type {string}
      * @private
@@ -73,13 +80,6 @@ ngeo.DataSource = class {
     this.inRange_ = options.inRange !== false;
 
     /**
-     * The inner dimenions of the data source.
-     * @type {?ngeox.Dimensions}
-     * @private
-     */
-    this.innerDimensions_ = options.innerDimensions || null;
-
-    /**
      * Whether the data source is visible or not, i.e. whether its is ON or OFF.
      * Defaults to `false`.
      * @type {boolean}
@@ -106,11 +106,11 @@ ngeo.DataSource = class {
     this.copyable_ = options.copyable === true;
 
     /**
-     * A reference to the global dimensions object.
+     * A reference to the dimensions object.
      * @type {?ngeox.Dimensions}
      * @private
      */
-    this.globalDimensions_ = options.globalDimensions || null;
+    this.dimensions_ = options.dimensions || null;
 
     /**
      * The name of the geometry attribute.
@@ -373,6 +373,22 @@ ngeo.DataSource = class {
   // ========================================
 
   /**
+   * @return {?ngeox.Dimensions} Dimensions configuration for this data source
+   * @export
+   */
+  get dimensionsConfig() {
+    return this.dimensionsConfig_;
+  }
+
+  /**
+   * @param {?ngeox.Dimensions} dimensionsConfig Dimensions configuration
+   * @export
+   */
+  set dimensionsConfig(dimensionsConfig) {
+    this.dimensionsConfig_ = dimensionsConfig;
+  }
+
+  /**
    * @return {string} Filter condition
    * @export
    */
@@ -418,22 +434,6 @@ ngeo.DataSource = class {
    */
   set inRange(inRange) {
     this.inRange_ = inRange;
-  }
-
-  /**
-   * @return {?ngeox.Dimensions} Inner dimensions
-   * @export
-   */
-  get innerDimensions() {
-    return this.innerDimensions_;
-  }
-
-  /**
-   * @param {?ngeox.Dimensions} innerDimensions Inner dimensions
-   * @export
-   */
-  set innerDimensions(innerDimensions) {
-    this.innerDimensions_ = innerDimensions;
   }
 
   /**
@@ -772,16 +772,16 @@ ngeo.DataSource = class {
    */
   get activeDimensions() {
     const active = {};
-    const global = this.globalDimensions_ || {};
-    const inner = this.innerDimensions || {};
+    const dimensions = this.dimensions_ || {};
+    const config = this.dimensionsConfig || {};
 
-    for (const key in inner) {
-      if (inner[key] === null) {
-        if (global[key] !== undefined && global[key] !== null) {
-          active[key] = global[key];
+    for (const key in config) {
+      if (config[key] === null) {
+        if (dimensions[key] !== undefined && dimensions[key] !== null) {
+          active[key] = dimensions[key];
         }
       } else {
-        active[key] = inner[key];
+        active[key] = config[key];
       }
     }
 
@@ -1055,6 +1055,8 @@ ngeo.DataSource = class {
    * @return {boolean} Whether the two data sources have the same active
    *     dimensions. If both have no dimensions, they are considered to be
    *     sharing the same dimensions.
+   * @export
+   * @override
    */
   haveTheSameActiveDimensions(dataSource) {
     let share = true;

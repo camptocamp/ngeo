@@ -210,6 +210,22 @@ ngeox.DataSourceOptions.prototype.copyable;
 
 
 /**
+ * A reference to the dimensions.
+ * @type {ngeox.Dimensions|undefined}
+ */
+ngeox.DataSourceOptions.prototype.dimensions;
+
+
+/**
+ * The dimensions configuration, which determines those supported by this data
+ * source and whether they should use a static value or the one defined in the
+ * dimensions.
+ * @type {ngeox.Dimensions|undefined}
+ */
+ngeox.DataSourceOptions.prototype.dimensionsConfig;
+
+
+/**
  * The filter condition to apply to the filter rules (if any). Defaults to
  * `ngeo.FilterCondition.AND`.
  * @type {string|undefined}
@@ -240,13 +256,6 @@ ngeox.DataSourceOptions.prototype.geometryName;
 
 
 /**
- * A reference to the global dimensions.
- * @type {ngeox.Dimensions|undefined}
- */
-ngeox.DataSourceOptions.prototype.globalDimensions;
-
-
-/**
  * (Required) The data source id.
  * @type {number}
  */
@@ -274,13 +283,6 @@ ngeox.DataSourceOptions.prototype.identifierAttribute;
  * @type {boolean|undefined}
  */
 ngeox.DataSourceOptions.prototype.inRange;
-
-
-/**
- * A the dimensions supported by this data source.
- * @type {ngeox.Dimensions|undefined}
- */
-ngeox.DataSourceOptions.prototype.innerDimensions;
 
 
 /**
