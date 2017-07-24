@@ -144,7 +144,7 @@ ngeo.Print.FEAT_STYLE_PROP_PREFIX_ = '_ngeo_style_';
  */
 ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
-      /** @type {angular.$http.Config} */ ({});
+    /** @type {angular.$http.Config} */ ({});
   const url = `${this.url_}/cancel/${ref}`;
   // "delete" is a reserved word, so use ['delete']
   return this.$http_['delete'](url, httpConfig);
@@ -846,7 +846,7 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
  */
 ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
-      /** @type {angular.$http.Config} */ ({});
+    /** @type {angular.$http.Config} */ ({});
   const url = `${this.url_}/status/${ref}.json`;
   return this.$http_.get(url, httpConfig);
 };
