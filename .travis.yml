@@ -103,6 +103,7 @@ script:
 - make git-attributes
 - if [ "${DO_LINT}" = TRUE ]; then make eof-newline; fi
 - if [ "${DO_LINT}" = TRUE ]; then make lint; fi
+- if [ "${DO_LINT}" = TRUE ]; then make check-ngeox; fi
 - if [ "${DO_TEST}" = TRUE ]; then make test; fi
 
 - if [ "${DO_EXAMPLES_TEST}-${IS_PR}" = TRUE-TRUE ]; then buildtools/test_examples.py ${EXAMPLES_SPLIT}; fi

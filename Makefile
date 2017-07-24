@@ -200,8 +200,11 @@ apidoc: .build/apidoc
 dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
 .PHONY: check
-check: git-attributes eof-newline lint check-examples test dist build-gmf-apps
-	grep -nE "ngeo.rule.Rule|ngeo.DataSource" options/ngeox.js && (echo "Only use ngeox.rule.Rule and ngeox.DataSource in options/ngeox.js" && exit 1)
+check: git-attributes eof-newline lint check-examples test dist build-gmf-apps check-ngeox
+
+.PHONY: check-ngeox
+check-ngeox: options/ngeox.js
+	if grep -nE "ngeo.rule.Rule|ngeo.DataSource" options/ngeox.js; then echo "Only use ngeox.rule.Rule and ngeox.DataSource in options/ngeox.js"; false ; else true; fi
 
 .PHONY: build-gmf-apps
 build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),.js .css)) \
