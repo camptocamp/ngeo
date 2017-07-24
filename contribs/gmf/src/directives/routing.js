@@ -293,7 +293,7 @@ gmf.GmfRoutingController.prototype.reverseRoute = function() {
   // swap start and target
   const tmpFeature = this.startFeature_;
   this.startFeature_ = this.targetFeature_;
-  this.targetFeature_ = tmpFeature;
+  this.targetFeature_ = tmpFeature; // FIXME: does not update the feature layers, markers stay the same color
 
   // reverse vias
   this.viaArray = this.viaArray.reverse();
