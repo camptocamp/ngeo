@@ -34,11 +34,11 @@ ngeo.DataSource = class {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
-     * The dimensions that are currently active on the data source.
-     * @type {?Object.<string, string>}
+     * The dimenions configuration for the data source.
+     * @type {?ngeox.Dimensions}
      * @private
      */
-    this.activeDimensions_ = options.activeDimensions || null;
+    this.dimensionsConfig_ = options.dimensionsConfig || null;
 
     /**
      * The filter condition to apply to the filter rules (if any).
@@ -106,8 +106,8 @@ ngeo.DataSource = class {
     this.copyable_ = options.copyable === true;
 
     /**
-     * The dimensions this data source supports.
-     * @type {?Object.<string, string>}
+     * A reference to the dimensions object.
+     * @type {?ngeox.Dimensions}
      * @private
      */
     this.dimensions_ = options.dimensions || null;
@@ -373,19 +373,19 @@ ngeo.DataSource = class {
   // ========================================
 
   /**
-   * @return {?Object.<string, string>} Active dimensions
+   * @return {?ngeox.Dimensions} Dimensions configuration for this data source
    * @export
    */
-  get activeDimensions() {
-    return this.activeDimensions_;
+  get dimensionsConfig() {
+    return this.dimensionsConfig_;
   }
 
   /**
-   * @param {?Object.<string, string>} activeDimensions Active dimensions
+   * @param {?ngeox.Dimensions} dimensionsConfig Dimensions configuration
    * @export
    */
-  set activeDimensions(activeDimensions) {
-    this.activeDimensions_ = activeDimensions;
+  set dimensionsConfig(dimensionsConfig) {
+    this.dimensionsConfig_ = dimensionsConfig;
   }
 
   /**
@@ -542,14 +542,6 @@ ngeo.DataSource = class {
    */
   get copyable() {
     return this.copyable_;
-  }
-
-  /**
-   * @return {?Object.<string, string>} Dimensions
-   * @export
-   */
-  get dimensions() {
-    return this.dimensions_;
   }
 
   /**
@@ -775,6 +767,28 @@ ngeo.DataSource = class {
   // ===================================
 
   /**
+   * @return {!ngeox.DimensionsActive} Active dimensions
+   * @export
+   */
+  get activeDimensions() {
+    const active = {};
+    const dimensions = this.dimensions_ || {};
+    const config = this.dimensionsConfig || {};
+
+    for (const key in config) {
+      if (config[key] === null) {
+        if (dimensions[key] !== undefined && dimensions[key] !== null) {
+          active[key] = dimensions[key];
+        }
+      } else {
+        active[key] = config[key];
+      }
+    }
+
+    return active;
+  }
+
+  /**
    * A data source can't be combined to other data source to issue a single
    * WFS request if:
    *
@@ -918,7 +932,8 @@ ngeo.DataSource = class {
     return this.combinableForWFS && dataSource.combinableForWFS &&
       this.supportsWFS && dataSource.supportsWFS &&
       this.queryable && dataSource.queryable &&
-      this.wfsUrl === dataSource.wfsUrl;
+      this.wfsUrl === dataSource.wfsUrl &&
+      this.haveTheSameActiveDimensions(dataSource);
   }
 
   /**
@@ -932,7 +947,8 @@ ngeo.DataSource = class {
     return this.combinableForWMS && dataSource.combinableForWMS &&
       this.supportsWMS && dataSource.supportsWMS &&
       this.queryable && dataSource.queryable &&
-      this.wmsUrl === dataSource.wmsUrl;
+      this.wmsUrl === dataSource.wmsUrl &&
+      this.haveTheSameActiveDimensions(dataSource);
   }
 
   /**
@@ -1033,6 +1049,39 @@ ngeo.DataSource = class {
     this.geometryName_ = geometryName;
   }
 
+  /**
+   * @param {!ngeox.DataSource} dataSource Remote data source to compare with
+   *     this one.
+   * @return {boolean} Whether the two data sources have the same active
+   *     dimensions. If both have no dimensions, they are considered to be
+   *     sharing the same dimensions.
+   * @export
+   * @override
+   */
+  haveTheSameActiveDimensions(dataSource) {
+    let share = true;
+
+    const myActive = this.activeDimensions;
+    const itsActive = dataSource.activeDimensions;
+
+    for (const key in myActive) {
+      if (myActive[key] !== itsActive[key]) {
+        share = false;
+        break;
+      }
+    }
+
+    if (share) {
+      for (const key in itsActive) {
+        if (itsActive[key] !== myActive[key]) {
+          share = false;
+          break;
+        }
+      }
+    }
+
+    return share;
+  }
 };
 
 
