@@ -545,7 +545,7 @@ ngeox.DataSource.prototype.combinableWithDataSourceForWMS = function(dataSource)
 
 
 /**
- * @param {ngeox.DataSource} dataSource Remote data source to compare with
+ * @param {!ngeox.DataSource} dataSource Remote data source to compare with
  *     this one.
  * @return {boolean}  Whether the two data sources have the same active
  *     dimensions. If both have no dimensions, they are considered to be
