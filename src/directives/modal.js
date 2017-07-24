@@ -52,7 +52,7 @@ ngeo.modalDirective = function($parse) {
     transclude: true,
     /**
      * @param {!angular.Scope=} scope Scope.
-     * @param {!angular.JQLite=} element Element.
+     * @param {!jQuery=} element Element.
      * @param {!angular.Attributes=} attrs Atttributes.
      * @param {!angular.NgModelController=} ngModelController The ngModel controller.
      * @param {!function(!angular.Scope=, !function(Element)=)=} transcludeFn is a transclude linking
@@ -66,6 +66,8 @@ ngeo.modalDirective = function($parse) {
       // move the modal to document body to ensure that it is on top of
       // other elements even if in a positioned element initially.
       angular.element(document.body).append(modal);
+
+      modal.find('.modal-content').draggable({'containment': 'document'});
 
       ngModelController.$render = function() {
         modal.modal(ngModelController.$viewValue ? 'show' : 'hide');
