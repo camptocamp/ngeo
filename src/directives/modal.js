@@ -67,7 +67,8 @@ ngeo.modalDirective = function($parse) {
       // other elements even if in a positioned element initially.
       angular.element(document.body).append(modal);
 
-      modal.find('.modal-content').draggable({'containment': 'document'});
+      modal.find('.modal-dialog').draggable();
+      modal.find('.modal-content').resizable();
 
       ngModelController.$render = function() {
         modal.modal(ngModelController.$viewValue ? 'show' : 'hide');
