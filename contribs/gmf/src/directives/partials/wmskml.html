@@ -1,0 +1,26 @@
+<div class="import">
+  <div>Local</div>
+  <div class="import-local"
+       ngeo-import-local
+       ngeo-import-local-options="::wkCtrl.importOptions">
+  </div>
+  <div>Online</div>
+  <div
+       ngeo-import-online
+       ngeo-import-online-options="::wkCtrl.importOptions">
+  </div>
+
+  <!-- Display WMS GetCapabilities results -->
+  <div ng-if="wkCtrl.wmsGetCap"
+       ngeo-wms-get-cap="wkCtrl.wmsGetCap"
+       ngeo-wms-get-cap-map="::wkCtrl.map"
+       ngeo-wms-get-cap-options="::wkCtrl.importOptions">
+  </div>
+
+  <!-- Display WMTS GetCapabilities results -->
+  <div ng-if="wkCtrl.wmtsGetCap"
+       ngeo-wmts-get-cap="wkCtrl.wmtsGetCap"
+       ngeo-wmts-get-cap-map="::wkCtrl.map"
+       ngeo-wmts-get-cap-options="::wkCtrl.importOptions">
+  </div>
+</div>

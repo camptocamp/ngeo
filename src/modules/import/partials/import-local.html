@@ -2,7 +2,7 @@
   <input type="file" name="file"/>
   <!-- Button use to open the file chooser of the input file -->
   <input class="form-control" type="text" readonly
-         value="{{(file.name) ? file.name + ', ' + file.size/1000 + ' ko' : ''}}"
+         value="{{(file.name) ? file.name + ', ' + file.size/1000 + ' ' + ('kB' | translate) : ''}}"
          placeholder="{{'No file' | translate}}"/>
   <span class="input-group-btn">
     <button type="button" class="btn btn-default ngeo-import-browse" translate>Browse</button>

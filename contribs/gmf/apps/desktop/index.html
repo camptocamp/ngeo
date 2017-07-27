@@ -80,6 +80,10 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Street View'|translate}}">
               <span class="fa fa-street-view"></span>
             </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.wmsKmlActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'WMS/KML'|translate}}">
+              <span class="fa fa-upload"></span>
+            </button>
           </div>
           <br/>
           <br/>
@@ -194,6 +198,21 @@
                   feature-style="mainCtrl.googleStreetViewStyle"
                   map="mainCtrl.map">
               </ngeo-googlestreetview>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.wmsKmlActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'WMS/KML'|translate}}
+                <a class="btn close" ng-click="mainCtrl.wmsKmlActive = false">&times;</a>
+              </div>
+              <gmf-wmskml
+                gmf-wmskml-active="mainCtrl.wmsKmlActive"
+                gmf-wmskml-map="::mainCtrl.map"
+                gmf-wmskml-import-options="::mainCtrl.importOptions"
+                gmf-wmskml-wms-get-cap="wmsGetCap"
+                gmf-wmskml-wmts-get-cap="wmtsGetCap">
+              </gmf-wmskml>
             </div>
           </div>
         </div>

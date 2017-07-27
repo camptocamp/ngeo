@@ -33,6 +33,8 @@ goog.require('gmf.TimeSliderDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.shareDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.wmskmlDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btngroupDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.resizemapDirective');
@@ -160,6 +162,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @export
    */
   this.googleStreetViewActive = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.wmsKmlActive = false;
 
   /**
    * @type {!ol.style.Style}

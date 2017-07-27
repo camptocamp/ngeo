@@ -173,9 +173,8 @@ app.GmfImportHelper.prototype.handleFileContent = function(data, file) {
     });
 
     this.addFeatures(map, features);
-    defer.reject({
-      'message': this.gettext_('Parsing failed'),
-      'reason': this.gettext_('Not implemented yet')
+    defer.resolve({
+      'message': this.gettext_('Parsing succeeded')
     });
   } else if (ngeoFile.isGpx(data)) {
     features = this.gpxFormat_.readFeatures(data, {
