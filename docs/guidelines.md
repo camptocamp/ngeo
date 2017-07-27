@@ -61,7 +61,7 @@ some rules that helps the code to be easly usable and customisable.
 ## Google style guide
 
 We more or less follow the [AngularJS Style Guide for Closure Users at
-Google](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html).
+Google](https://google.github.io/styleguide/angularjs-google-style.html).
 
 ## Property renaming
 
@@ -154,7 +154,7 @@ as represented in the DOM must follow this rule:
 `base-(platform-)directive(-attribute)`
 
 Where:
-- `Base` can be `ngeo` or a contribs prefix.
+- `base` can be `ngeo` or a contribs prefix.
 - `platform` is optional and can be for instance `mobile` or `desktop`.
 - `directive` is the name of the directive.
 - `attribute` is the name of your attribute.

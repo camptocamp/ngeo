@@ -2,6 +2,11 @@
 
 This document provides information for developers working on ngeo.
 
+## Requirements
+
+The Closure Compiler requires Java 7 or higher. You can use [OpenJDK](http://openjdk.java.net/install/).
+Check it with `java -version`.
+
 ## Build standalone version
 
 To build the "standalone" version of ngeo use the `dist` target:
