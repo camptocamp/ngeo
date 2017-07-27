@@ -594,4 +594,17 @@ gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
   });
 };
 
+/**
+ * @protected
+ * @return {Element} Span element with font-awesome inside of it
+ */
+gmf.AbstractController.prototype.getLocationIcon = function() {
+  const arrow = document.createElement('span');
+  arrow.className = 'fa fa-location-arrow';
+  arrow.style.transform = 'rotate(-0.82rad)';
+  const arrowWrapper = document.createElement('span');
+  arrowWrapper.appendChild(arrow);
+  return arrowWrapper;
+};
+
 gmf.module.controller('AbstractController', gmf.AbstractController);
