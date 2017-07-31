@@ -217,22 +217,6 @@ gmf.module.factory('$verticalSwipe', [function() {
  * @element ANY
  * @param {expression} gmfSwipeDown {@link guide/expression Expression} to evaluate
  * upon down swipe. (Event object is available as `$event`)
- *
- * @example
-    <example module="gmfSwipeDownExample" deps="angular-touch.js" name="gmf-swipe-down">
-      <file name="index.html">
-        <div ng-show="!showActions" gmf-swipe-down="showActions = true">
-          Some list content, like an email in the inbox
-        </div>
-        <div ng-show="showActions" gmf-swipe-up="showActions = false">
-          <button ng-click="reply()">Reply</button>
-          <button ng-click="delete()">Delete</button>
-        </div>
-      </file>
-      <file name="script.js">
-        angular.module('gmfSwipeDownExample', ['ngTouch']);
-      </file>
-    </example>
  */
 
 /**
@@ -250,22 +234,6 @@ gmf.module.factory('$verticalSwipe', [function() {
  * @element ANY
  * @param {expression} gmfSwipeUp {@link guide/expression Expression} to evaluate
  * upon up swipe. (Event object is available as `$event`)
- *
- * @example
-    <example module="gmfSwipeUpExample" deps="angular-touch.js" name="gmf-swipe-up">
-      <file name="index.html">
-        <div ng-show="!showActions" gmf-swipe-down="showActions = true">
-          Some list content, like an email in the inbox
-        </div>
-        <div ng-show="showActions" gmf-swipe-up="showActions = false">
-          <button ng-click="reply()">Reply</button>
-          <button ng-click="delete()">Delete</button>
-        </div>
-      </file>
-      <file name="script.js">
-        angular.module('gmfSwipeUpExample', ['ngTouch']);
-      </file>
-    </example>
  */
 
 function makeSwipeDirective(directiveName, direction, eventName) {
