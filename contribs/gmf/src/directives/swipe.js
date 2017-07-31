@@ -82,7 +82,7 @@ gmf.module.factory('$verticalSwipe', [function() {
      * @name $verticalSwipe#bind
      * @param {Node} element - Current directive element
      * @param {Object} eventHandlers - Event handlers object with `start`, `cancel` and `end` callbacks
-     * @param {string[]} pointerTypes - Types of pointer
+     * @param {Array<string>} pointerTypes - Types of pointer
      *
      * @description
      * The main method of `$verticalSwipe`. It takes an element to be watched for swipe motions, and an
