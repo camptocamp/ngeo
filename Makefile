@@ -663,8 +663,14 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/examples-hosted/contribs/gmf/apps/mobile/contextualdata.html:
 	# no contextualdata partial for the mobile
 
+.build/examples-hosted/contribs/gmf/apps/mobile_alt/image/logo.png:
+	# no logo for the mobile_alt
+
 .build/examples-hosted/contribs/gmf/apps/mobile/image/logo.png:
 	# no logo for the mobile
+
+.build/examples-hosted/contribs/gmf/apps/mobile_alt/image/background-layer-button.png:
+	# no background layer button for the mobile_alt
 
 .build/examples-hosted/contribs/gmf/apps/mobile/image/background-layer-button.png:
 	# no background layer button for the mobile
