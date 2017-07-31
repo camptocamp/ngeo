@@ -20,7 +20,7 @@ GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
-GMF_APPS += mobile desktop desktop_alt oeedit oeview
+GMF_APPS += mobile desktop desktop_alt mobile_alt oeedit oeview
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less src/modules -type f -name '*.less')
 DEVELOPMENT ?= FALSE
@@ -657,6 +657,9 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/examples-hosted/contribs/gmf/apps/desktop_alt/contextualdata.html:
 	# no contextualdata partial for the desktop_alt
 
+.build/examples-hosted/contribs/gmf/apps/mobile_alt/contextualdata.html:
+	# no contextualdata partial for the mobile_alt
+
 .build/examples-hosted/contribs/gmf/apps/mobile/contextualdata.html:
 	# no contextualdata partial for the mobile
 
@@ -696,6 +699,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \
 		--app 'Desktop application' apps/desktop/index.html 'The desktop example application for GeoMapFish.' \
 		--app 'Alternate desktop application' apps/desktop_alt/index.html 'An alternate desktop example application for GeoMapFish.' \
+		--app 'Alternate mobile application' apps/mobile_alt/index.html 'An alternate mobile example application for GeoMapFish.' \
 		--app 'Object editing viewer' apps/oeview/index.html 'An example application for viewing an object.' \
 		--app 'Object editing editor' apps/oeedit/index.html 'An example application for editing an object.' \
 		$< $(GMF_EXAMPLES_HTML_FILES) > $@
