@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{mainCtrl.lang}}" ng-app="app" ng-controller="MobileController as mainCtrl">
+<html lang="{{mainCtrl.lang}}" ng-app="app" ng-controller="AlternativeMobileController as mainCtrl">
   <head>
     <title ng-bind-template="{{'Mobile Application'|translate}}">GeoMapFish</title>
     <meta charset="utf-8">
@@ -173,7 +173,7 @@
     <script src="../../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../../../../node_modules/d3/build/d3.min.js"></script>
     <script src="../../../../node_modules/moment/min/moment.min.js"></script>
-    <script src="/@?main=mobile/js/controller.js"></script>
+    <script src="/@?main=mobile_alt/js/controller.js"></script>
     <script src="default.js"></script>
     <script src="../../../../utils/watchwatchers.js"></script>
     <script>
@@ -207,7 +207,6 @@
         module.constant('gmfSearchGroups', []);
         // Requires that the gmfSearchGroups is specified
         module.constant('gmfSearchActions', []);
-        module.constant('gmfTreeManagerModeFlush', false);
         module.value('ngeoWfsPermalinkOptions',
             /** @type {ngeox.WfsPermalinkOptions} */ ({
               url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',

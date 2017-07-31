@@ -7,8 +7,8 @@
  * This file includes `goog.require`'s for all the components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
-goog.provide('app.MobileController');
-goog.provide('app_mobile');
+goog.provide('app.AlternativeMobileController');
+goog.provide('app_mobile_alt');
 
 goog.require('app');
 goog.require('gmf.AbstractMobileController');
@@ -26,7 +26,7 @@ goog.require('ngeo.proj.EPSG21781');
  * @ngInject
  * @export
  */
-app.MobileController = function($scope, $injector) {
+app.AlternativeMobileController = function($scope, $injector) {
   gmf.AbstractMobileController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -52,7 +52,7 @@ app.MobileController = function($scope, $injector) {
   this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
 };
-ol.inherits(app.MobileController, gmf.AbstractMobileController);
+ol.inherits(app.AlternativeMobileController, gmf.AbstractMobileController);
 
 
-app.module.controller('MobileController', app.MobileController);
+app.module.controller('AlternativeMobileController', app.AlternativeMobileController);
