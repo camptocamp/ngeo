@@ -80,7 +80,7 @@ gmf.module.factory('$verticalSwipe', [function() {
     /**
      * @ngdoc method
      * @name $verticalSwipe#bind
-     * @param {Node} element - Current directive element
+     * @param {!angular.JQLite} element Element.
      * @param {Object} eventHandlers - Event handlers object with `start`, `cancel` and `end` callbacks
      * @param {Array<string>} pointerTypes - Types of pointer
      *
