@@ -207,10 +207,8 @@ function makeSwipeDirective(directiveName, direction, eventName) {
     const MAX_HORIZONTAL_RATIO = 0.3;
     // At least a 30px lateral motion is necessary for a swipe.
     const MIN_VERTICAL_DISTANCE = 30;
-    console.log('init directive');
 
     return function(scope, element, attr) {
-      console.log('aassign to element');
       const swipeHandler = $parse(attr[directiveName]);
 
       let startCoords, valid;
