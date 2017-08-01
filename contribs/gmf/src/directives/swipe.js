@@ -199,43 +199,6 @@ gmf.module.factory('$verticalSwipe', [function() {
   };
 }]);
 
-/**
- * @ngdoc directive
- * @name gmfSwipeDown
- *
- * @description
- * Specify custom behavior when an element is swiped to the down on a touchscreen device.
- * A downward swipe is a quick, up-to-down slide of the finger.
- * Though gmfSwipeDown is designed for touch-based devices, it will work with a mouse click and drag
- * too.
- *
- * To disable the mouse click and drag functionality, add `gmf-swipe-disable-mouse` to
- * the `gmf-swipe-down` or `gmf-swipe-up` DOM Element.
- *
- * Requires the {@link ngTouch `ngTouch`} module to be installed.
- *
- * @element ANY
- * @param {expression} gmfSwipeDown {@link guide/expression Expression} to evaluate
- * upon down swipe. (Event object is available as `$event`)
- */
-
-/**
- * @ngdoc directive
- * @name gmfSwipeUp
- *
- * @description
- * Specify custom behavior when an element is swiped to the up on a touchscreen device.
- * A upward swipe is a quick, down-to-up slide of the finger.
- * Though gmfSwipeUp is designed for touch-based devices, it will work with a mouse click and drag
- * too.
- *
- * Requires the {@link ngTouch `ngTouch`} module to be installed.
- *
- * @element ANY
- * @param {expression} gmfSwipeUp {@link guide/expression Expression} to evaluate
- * upon up swipe. (Event object is available as `$event`)
- */
-
 function makeSwipeDirective(directiveName, direction, eventName) {
   gmf.module.directive(directiveName, ['$parse', '$verticalSwipe', function($parse, $verticalSwipe) {
     // The maximum horizontal delta for a swipe should be less than 75px.
