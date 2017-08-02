@@ -68,7 +68,6 @@ ngeo.modalDirective = function($parse) {
       angular.element(document.body).append(modal);
 
       modal.find('.modal-dialog').draggable();
-      modal.find('.modal-content').resizable();
 
       ngModelController.$render = function() {
         modal.modal(ngModelController.$viewValue ? 'show' : 'hide');
@@ -86,19 +85,23 @@ ngeo.modalDirective = function($parse) {
         modal.on('hide.bs.modal', onHide);
         modal.on('show.bs.modal', onShow);
       } else {
-        modal.find('.modal-content').append(transcludeFn());
+        modal.find('.modal-content').resizable().append(transcludeFn());
       }
 
       function onShow(e) {
         childScope = scope.$new();
         transcludeFn(childScope, (clone) => {
-          modal.find('.modal-content').append(clone);
+          modal.find('.modal-content').resizable().append(clone);
         });
       }
 
       function onHide(e) {
         childScope.$destroy();
-        modal.find('.modal-content').empty();
+        const content = modal.find('.modal-content');
+        if (content.hasClass('ui-resizable')) {
+          content.resizable('destroy');
+        }
+        content.empty();
       }
     }
   };
