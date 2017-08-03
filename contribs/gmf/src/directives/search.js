@@ -10,6 +10,8 @@ goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.colorpickerDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.popoverDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.FulltextSearchService');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
@@ -169,6 +171,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.$injector} $injector Main injector.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
  * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
@@ -177,13 +180,14 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  *     overlay manager service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {gmf.FulltextSearchService} gmfFulltextSearchService gmf Full text search service.
  * @ngInject
  * @ngdoc controller
  * @ngname GmfSearchController
  */
-gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
+gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCatalog,
   ngeoAutoProjection, ngeoSearchCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
-  gmfThemes, gmfTreeManager) {
+  gmfThemes, gmfTreeManager, gmfFulltextSearchService) {
 
 
   /**
@@ -223,6 +227,12 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
+   * @type {gmf.FulltextSearchService}
+   * @private
+   */
+  this.fullTextSearch_ = gmfFulltextSearchService;
+
+  /**
    * @type {ngeo.search.CreateGeoJSONBloodhound}
    * @private
    */
@@ -233,6 +243,16 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
    * @private
    */
   this.ngeoFeatureOverlayMgr = ngeoFeatureOverlayMgr;
+
+  /**
+   * @type {ngeo.Location|undefined}
+   * @private
+   */
+  this.ngeoLocation_;
+
+  if ($injector.has('ngeoLocation')) {
+    this.ngeoLocation_ = $injector.get('ngeoLocation');
+  }
 
   /**
    * @type {ngeo.AutoProjection}
@@ -436,6 +456,17 @@ gmf.SearchController = function($scope, $compile, $timeout, gettextCatalog,
 gmf.SearchController.prototype.$onInit = function() {
   this.inputValue = this.inputValue || '';
   this.placeholder = this.placeholder || '';
+
+  if (this.ngeoLocation_) {
+    const searchQuery = this.ngeoLocation_.getParam('search');
+    if (searchQuery) {
+      let resultIndex = 1;
+      if (this.ngeoLocation_.getParam('search-select-index')) {
+        resultIndex = parseInt(this.ngeoLocation_.getParam('search-select-index'), 10);
+      }
+      this.fulltextsearch_(searchQuery, resultIndex);
+    }
+  }
 };
 
 
@@ -910,6 +941,28 @@ gmf.SearchController.datasetsempty_ = function(event, query, empty) {
     message.hide();
   }
 
+};
+
+/**
+ * Performs a full-text search and centers the map on the first search result.
+ * @param {string} query Search query.
+ * @param {number} resultIndex Return nth result instead.
+ * @private
+ */
+gmf.SearchController.prototype.fulltextsearch_ = function(query, resultIndex) {
+  if (resultIndex < 1) { // can't be lower than one
+    resultIndex = 1;
+  }
+  this.fullTextSearch_.search(query, {'limit': resultIndex})
+    .then((data) => {
+      if (data && data.features[resultIndex - 1]) {
+        const format = new ol.format.GeoJSON();
+        const feature = format.readFeature(data.features[resultIndex - 1]);
+        this.featureOverlay_.addFeature(feature);
+        this.map_.getView().fit(feature.getGeometry().getExtent());
+        this.inputValue = /** @type {string} */ (feature.get('label'));
+      }
+    });
 };
 
 
