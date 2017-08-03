@@ -6,7 +6,7 @@ beforeEach(() => {
   module('gmf', ($provide) => {
     $provide.value('gmfTreeUrl', 'http://fake/gmf/themes');
     $provide.value('gmfShortenerCreateUrl', 'http://fake/gmf/short/create');
-    $provide.value('gmfOsrmBackendUrl', 'http://fake/gmf/routing/');
+    $provide.value('gmfRoutingOptions', {backendUrl: 'http://fake/gmf/routing/'});
     $provide.value('authenticationBaseUrl', 'https://fake/gmf/authentication');
     $provide.value('gmfRasterUrl', 'https://fake/gmf/raster');
     $provide.value('gmfContextualdatacontentTemplateUrl', 'contextualdata.html');

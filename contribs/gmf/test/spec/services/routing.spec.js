@@ -18,7 +18,7 @@ describe('gmf.RoutingService', () => {
     inject(($injector) => {
       $httpBackend = $injector.get('$httpBackend');
       gmfRoutingService = $injector.get('gmfRoutingService');
-      gmfOsrmBackendUrl = $injector.get('gmfOsrmBackendUrl');
+      gmfOsrmBackendUrl = $injector.get('gmfRoutingOptions').backendUrl;
     });
 
     const coordinates = /** @type {Array.<ol.Coordinate>} */ [[6.455, 46.648], [6.532, 6.532]];
@@ -47,7 +47,7 @@ describe('gmf.RoutingService', () => {
     inject(($injector) => {
       $httpBackend = $injector.get('$httpBackend');
       gmfRoutingService = $injector.get('gmfRoutingService');
-      gmfOsrmBackendUrl = $injector.get('gmfOsrmBackendUrl');
+      gmfOsrmBackendUrl = $injector.get('gmfRoutingOptions').backendUrl;
     });
 
     const coordinate = /** @type {ol.Coordinate} */ [6.455, 46.648];

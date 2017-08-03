@@ -95,6 +95,12 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
   this.gmfNominatimService_ = gmfNominatimService;
 
   /**
+   * @type {gmfx.RoutingOptions}
+   * @private
+   */
+  this.routingOptions_ = $injector.has('gmfRoutingOptions') ? $injector.get('gmfRoutingOptions') : {};
+
+  /**
    * Available routing profiles.
    * Example: [
    *            {
@@ -105,7 +111,7 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
    * @type {Array<gmfx.RoutingProfile>}
    * @export
    */
-  this.routingProfiles = $injector.has('gmfRoutingProfiles') ? $injector.get('gmfRoutingProfiles') : [];
+  this.routingProfiles = this.routingOptions_.profiles || [];
 
   /**
    * @type {?gmfx.RoutingProfile}
@@ -188,7 +194,7 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
    * @type {Object<string, string>}
    * @export
    */
-  this.searchDefaultParams = $injector.has('gmfRoutingSearchDefaultParams') ? $injector.get('gmfRoutingSearchDefaultParams') : {};
+  this.searchDefaultParams = this.routingOptions_.searchDefaultParams || {};
 
   /**
    * @type {ol.source.Vector}

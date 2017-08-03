@@ -21,6 +21,11 @@ gmf.RoutingService = function($http, $injector) {
    */
   this.$http_ = $http;
 
+  /**
+   * @type {gmfx.RoutingOptions}
+   * @private
+   */
+  this.routingOptions_ = $injector.has('gmfRoutingOptions') ? $injector.get('gmfRoutingOptions') : {};
 
   /**
    * URL for OSRM backend API.
@@ -28,15 +33,11 @@ gmf.RoutingService = function($http, $injector) {
    * @type {string}
    * @private
    */
-  this.gmfOsrmBackendUrl_ = 'http://router.project-osrm.org/';
+  this.gmfOsrmBackendUrl_ = this.routingOptions_.backendUrl || 'http://router.project-osrm.org/';
 
-  if ($injector.has('gmfOsrmBackendUrl')) {
-    this.gmfOsrmBackendUrl_ = $injector.get('gmfOsrmBackendUrl');
-
-    // the url is expected to end with a slash
-    if (this.gmfOsrmBackendUrl_.substr(-1) !== '/') {
-      this.gmfOsrmBackendUrl_ += '/';
-    }
+  // the url is expected to end with a slash
+  if (this.gmfOsrmBackendUrl_.substr(-1) !== '/') {
+    this.gmfOsrmBackendUrl_ += '/';
   }
 
   /**
