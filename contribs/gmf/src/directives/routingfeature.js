@@ -178,6 +178,12 @@ gmf.GmfRoutingFeatureController = function($timeout, $q, gmfNominatimService) {
    * @export
    */
   this.onSelect = this.onSelect_.bind(this);
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.errorMessage = '';
 };
 
 gmf.GmfRoutingFeatureController.prototype.$onInit = function() {
