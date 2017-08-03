@@ -830,14 +830,14 @@ gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
     ol.events.listen(this.map, ol.MapBrowserEventType.CLICK,
       this.handleMapClick_, this);
 
-    goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
+    goog.events.listen(mapDiv, 'contextmenu',
       this.handleMapContextMenu_, false, this);
 
   } else {
     ol.events.unlisten(this.map, ol.MapBrowserEventType.CLICK,
       this.handleMapClick_, this);
 
-    goog.events.unlisten(mapDiv, goog.events.EventType.CONTEXTMENU,
+    goog.events.unlisten(mapDiv, 'contextmenu',
       this.handleMapContextMenu_, false, this);
   }
 };

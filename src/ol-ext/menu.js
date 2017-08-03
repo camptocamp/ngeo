@@ -167,7 +167,7 @@ ngeo.Menu.prototype.setMap = function(map) {
       keys.push(
         goog.events.listen(
           action[0],
-          goog.events.EventType.CLICK,
+          'click',
           this.handleActionClick_.bind(this, data.name),
           false,
           this
@@ -200,7 +200,7 @@ ngeo.Menu.prototype.open = function(coordinate) {
   if (this.autoClose_) {
     this.clickOutListenerKey_ =  goog.events.listen(
       document.documentElement,
-      goog.events.EventType.MOUSEDOWN,
+      'mousedown',
       this.handleClickOut_,
       false,
       this

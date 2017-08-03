@@ -4,8 +4,6 @@ goog.provide('ngeo.interaction.Rotate');
 
 goog.require('goog.asserts');
 goog.require('goog.events');
-goog.require('goog.events.EventType');
-goog.require('goog.events.KeyCodes');
 goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
@@ -184,7 +182,7 @@ ngeo.interaction.Rotate.prototype.setActive = function(active) {
   if (active) {
     this.keyPressListenerKey_ = goog.events.listen(
       document,
-      goog.events.EventType.KEYUP,
+      'keyup',
       this.handleKeyUp_,
       false,
       this
@@ -402,7 +400,8 @@ ngeo.interaction.Rotate.prototype.handleUp_ = function(evt) {
  * @private
  */
 ngeo.interaction.Rotate.prototype.handleKeyUp_ = function(evt) {
-  if (evt.keyCode === goog.events.KeyCodes.ESC) {
+  // 27 == ESC key
+  if (evt.keyCode === 27) {
     this.setActive(false);
   }
 };
