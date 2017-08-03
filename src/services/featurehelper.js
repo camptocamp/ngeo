@@ -772,19 +772,18 @@ ngeo.FeatureHelper.prototype.exportKML = function(features) {
  * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
  * @private
  */
-ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName,
-  opt_mimeType) {
+ngeo.FeatureHelper.prototype.export_ = function(features, format, fileName, opt_mimeType) {
   const mimeType = opt_mimeType !== undefined ? opt_mimeType : 'text/plain';
 
   // clone the features to apply the original style to the clone
   // (the original may have select style active)
   const clones = [];
   let clone;
-  features.forEach(function(feature) {
+  features.forEach((feature) => {
     clone = new ol.Feature(feature.getProperties());
     this.setStyle(clone, false);
     clones.push(clone);
-  }, this);
+  });
 
   const writeOptions = this.projection_ ? {
     dataProjection: 'EPSG:4326',

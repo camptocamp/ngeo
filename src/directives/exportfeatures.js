@@ -113,7 +113,7 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
     this.menu_ = $menu;
     let $item;
 
-    formats.forEach(function(format) {
+    formats.forEach((format) => {
       $item = $('<li />')
         .appendTo($menu)
         .append($('<a />', {
@@ -126,7 +126,7 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
           )
         );
       this.items_.push($item);
-    }, this);
+    });
   }
 
   /**
@@ -162,7 +162,7 @@ ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
     const feature = features[0];
     const geom = feature.getGeometry();
     let $item;
-    this.formats_.forEach(function(format, i) {
+    this.formats_.forEach((format, i) => {
       $item = this.items_[i];
       if (format === ngeo.FeatureHelper.FormatType.GPX) {
         if (geom instanceof ol.geom.Point ||
@@ -172,7 +172,7 @@ ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
           $item.addClass('disabled');
         }
       }
-    }, this);
+    });
   }
 };
 
