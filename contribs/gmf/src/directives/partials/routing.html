@@ -35,15 +35,15 @@
     </gmf-routing-feature>
   </div>
 
-  <button type="button" id="gmfRoutingReverseButton" class="btn btn-default" ng-click="routeCtrl.reverseRoute()">
-    <span class="fa fa-exchange"></span> {{'Reverse' | translate}}
+  <button type="button" id="gmfRoutingReverseButton" class="btn btn-default" ng-click="routeCtrl.reverseRoute()" translate>
+    <span class="fa fa-exchange"></span> Reverse
   </button>
-  <button type="button" id="gmfRoutingAddViaButton" class="btn btn-default" ng-click="routeCtrl.addVia()">
-    <span class="fa fa-plus"></span> {{'Add via' | translate}}
+  <button type="button" id="gmfRoutingAddViaButton" class="btn btn-default" ng-click="routeCtrl.addVia()" translate>
+    <span class="fa fa-plus"></span> Add via
   </button><br><br>
 
   <div id="routingProfile" ng-if="routeCtrl.routingProfiles.length > 1">
-    <label for="gmfRoutingProfileSelect">{{'Profile' | translate}}:</label>
+    <label for="gmfRoutingProfileSelect" translate>Profile</label>
     <select id="gmfRoutingProfileSelect"
             name="gmfRoutingProfileSelect"
             ng-model="routeCtrl.selectedRoutingProfile">
@@ -56,10 +56,10 @@
   </div>
 
   <div id="routeDuration" ng-hide="routeCtrl.routeDuration === null">
-    <strong>{{'Duration' | translate}}:</strong> {{routeCtrl.routeDuration}} {{'minutes' | translate}}
+    <strong translate>Duration:</strong> {{routeCtrl.routeDuration}} {{'minutes' | translate}}
   </div>
 
   <div id="routeDistance" ng-hide="routeCtrl.routeDistance === ''">
-    <strong>{{'Distance' | translate}}:</strong> {{routeCtrl.routeDistance}}
+    <strong translate>Distance:</strong> {{routeCtrl.routeDistance}}
   </div>
 </div>
