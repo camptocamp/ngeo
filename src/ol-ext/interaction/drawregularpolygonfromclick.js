@@ -106,12 +106,7 @@ ngeo.interaction.DrawRegularPolygonFromClick.prototype.enable_ = function() {
   const map = this.getMap();
   goog.asserts.assert(map, 'Map should be set.');
   this.listenerKeys_.push(
-    ol.events.listen(
-      map,
-      ol.MapBrowserEventType.CLICK,
-      this.handleMapClick_,
-      this
-    )
+    ol.events.listen(map, 'click', this.handleMapClick_, this)
   );
 };
 

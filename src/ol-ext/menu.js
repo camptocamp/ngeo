@@ -179,7 +179,7 @@ ngeo.Menu.prototype.setMap = function(map) {
     olKeys.push(
       ol.events.listen(
         map,
-        ol.MapBrowserEventType.POINTERMOVE,
+        'pointermove',
         this.handleMapPointerMove_,
         this
       )
