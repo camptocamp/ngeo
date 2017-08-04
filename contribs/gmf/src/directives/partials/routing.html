@@ -1,5 +1,5 @@
 <div class="gmf-routing">
-  <div id="routing-start" class="form-group">
+  <div class="gmf-routing-start form-group">
     <gmf-routing-feature
             gmf-routing-feature-map="routeCtrl.map"
             gmf-routing-feature-feature="routeCtrl.startFeature_"
@@ -10,7 +10,7 @@
     </gmf-routing-feature>
   </div>
 
-    <div id="routing-vias" class="form-group" ng-repeat="(index, via) in routeCtrl.viaArray">
+    <div class="gmf-routing-vias form-group" ng-repeat="(index, via) in routeCtrl.viaArray">
       <div class="form-inline">
         <div class="form-group">
           <gmf-routing-feature
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-  <div id="routing-destination" class="form-group">
+  <div class="gmf-routing-destination form-group">
     <gmf-routing-feature
             gmf-routing-feature-map="routeCtrl.map"
             gmf-routing-feature-feature="routeCtrl.targetFeature_"
@@ -67,8 +67,7 @@
     </div>
   </div>
 
-  <div id="routingError"
-       class="form-group clearfix"
+  <div class="gmf-routing-error form-group clearfix"
        ng-hide="routeCtrl.errorMessage === ''">
     {{routeCtrl.errorMessage}}
   </div>
