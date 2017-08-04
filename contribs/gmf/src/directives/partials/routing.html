@@ -40,27 +40,22 @@
   </div>
 
   <div class="form-group pull-right">
-    <button type="button" id="gmfRoutingReverseButton" class="btn btn-primary" ng-click="routeCtrl.reverseRoute()" translate>
+    <button type="button" class="btn btn-primary" ng-click="routeCtrl.reverseRoute()" translate>
       <span class="fa fa-exchange"></span> Reverse
     </button>
-    <button type="button" id="gmfRoutingAddViaButton" class="btn btn-primary" ng-click="routeCtrl.addVia()" translate>
+    <button type="button" class="btn btn-primary" ng-click="routeCtrl.addVia()" translate>
       <span class="fa fa-plus"></span> Add via
     </button>
   </div>
 
   <div class="clearfix"></div>
 
-  <div id="routingProfile" class="form-horizontal"
+  <div class="form-horizontal"
        ng-if="routeCtrl.routingProfiles.length > 1">
     <div class="form-group">
-      <label for="gmfRoutingProfileSelect"
-             class="control-label col-md-4"
-             translate>Profile</label>
+      <label class="control-label col-md-4" translate>Profile</label>
       <div class="col-md-8">
-        <select id="gmfRoutingProfileSelect"
-                class="form-control"
-                name="gmfRoutingProfileSelect"
-                ng-model="routeCtrl.selectedRoutingProfile">
+        <select class="form-control" ng-model="routeCtrl.selectedRoutingProfile">
           <option ng-repeat="profile in routeCtrl.routingProfiles" ng-value="profile">{{profile.label}}</option>
         </select>
       </div>
@@ -81,9 +76,7 @@
         <strong translate>Route statistics</strong>
       </div>
     </div>
-    <div id="routeDuration"
-         class="row"
-         ng-hide="routeCtrl.routeDuration === null">
+    <div class="row" ng-hide="routeCtrl.routeDuration === null">
       <div class="col-md-4 text-right" translate>
         Duration
       </div>
@@ -92,9 +85,7 @@
       </div>
     </div>
 
-    <div id="routeDistance"
-         class="row"
-         ng-hide="routeCtrl.routeDistance === ''">
+    <div class="row" ng-hide="routeCtrl.routeDistance === ''">
       <div class="col-md-4 text-right" translate>
         Distance
       </div>
