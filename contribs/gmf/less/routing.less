@@ -2,29 +2,23 @@
   color: darkred;
 }
 
-#routing-start .gmf-routing-feature button span {
+#routing-start .fa-map-marker {
   color: #6BE62E;
   text-shadow: -1px 0 #4CB01E, 0 1px #4CB01E, 1px 0 #4CB01E, 0 -1px #4CB01E;
 }
 
-#routing-destination .gmf-routing-feature button span {
+#routing-destination .fa-map-marker {
   color: #FF3E13;
   text-shadow: -1px 0 #CD3412, 0 1px #CD3412, 1px 0 #CD3412, 0 -1px #CD3412;
 }
 
-#routing-vias .gmf-routing-feature button span {
+#routing-vias .fa-map-marker {
   color: #767676;
   text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
 }
 
-.gmf-routing .nominatim-input {
-  float: left;
-}
-
-.gmf-routing .set-marker, .gmf-routing .delete-via {
-  font-size: larger;
-  float: left;
-  margin-left: 5px;
+.gmf-nominatim-input {
+  height: 30px;
 }
 
 /**
@@ -42,4 +36,12 @@
 
 .tt-suggestion p {
   margin: 0;
+}
+
+.gmf-nominatim-input .twitter-typeahead {
+  width: 100%;
+}
+
+#routing-vias .form-inline .input-group .form-control {
+  width: 185px;
 }
