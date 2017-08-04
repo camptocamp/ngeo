@@ -287,7 +287,7 @@ git pull origin master
 
 Create the new branch:
 ```bash
-git checkout -b x_y
+git checkout -b x.y
 ```
 
 Update the `.travis.yml`:
@@ -305,7 +305,7 @@ Commit and push the changes:
 ```bash
 git add .travis.yml
 git commit -m "Update the branch"
-git push origin x_y
+git push origin x.y
 ```
 
 Back on master:
@@ -315,7 +315,7 @@ git checkout master
 
 Do the merge to prepare the future merges:
 ```bash
-git checkout merge x.y
+git merge x.y
 ```
 
 Restore the `.travis.yml`:

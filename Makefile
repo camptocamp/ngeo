@@ -992,11 +992,11 @@ transifex-init: .build/python-venv/bin/tx \
 		.build/locale/ngeo.pot \
 		.build/locale/gmf.pot \
 		.build/locale/apps.pot
-	.build/python-venv/bin/tx push --source --force
+	.build/python-venv/bin/tx push --source --force --no-interactive
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 
 	cd contribs/gmf/apps/
-	.build/python-venv/bin/tx push --source --force
+	.build/python-venv/bin/tx push --source --force --no-interactive
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 	cd -
 
