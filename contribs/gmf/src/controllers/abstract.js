@@ -451,6 +451,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
   // closure remove them. "export" tag doens't work on static function below,
   // we "export" them as externs in the gmfx options file.
   const gmfx = window.gmfx || {};
+  /**
+   * @export
+   */
   window.gmfx = gmfx;
 
   /**
@@ -459,6 +462,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string} title (text).
    * @param {string=} opt_width CSS width.
    * @param {string=} opt_height CSS height.
+   * @export
    */
   gmfx.openIframePopup = function(url, title, opt_width, opt_height) {
     const popup = ngeoCreatePopup();
@@ -472,6 +476,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string} title (text).
    * @param {string=} opt_width CSS width.
    * @param {string=} opt_height CSS height.
+   * @export
    */
   gmfx.openTextPopup = function(content, title, opt_width, opt_height) {
     const popup = ngeoCreatePopup();
@@ -514,7 +519,13 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.resizeTransition;
 
   const cgxp = window.cgxp || {};
+  /**
+   * @export
+   */
   window.cgxp = cgxp;
+  /**
+   * @export
+   */
   cgxp.tools = window.cgxp.tools || {};
   /**
    * Static function to create a popup with an iframe.
@@ -522,6 +533,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string} title (text).
    * @param {string=} opt_width CSS width.
    * @param {string=} opt_height CSS height.
+   * @export
    */
   cgxp.tools.openInfoWindow = function(url, title, opt_width, opt_height) {
     gmfx.openIframePopup(url, title, opt_width, opt_height);
