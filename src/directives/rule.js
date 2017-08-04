@@ -690,10 +690,10 @@ ngeo.RuleController = class {
    * @private
    */
   initializeInteractions_() {
-    this.interactions_.forEach(function(interaction) {
+    this.interactions_.forEach((interaction) => {
       interaction.setActive(false);
       this.ngeoDecorateInteraction_(interaction);
-    }, this);
+    });
   }
 
   /**
@@ -701,9 +701,9 @@ ngeo.RuleController = class {
    * @private
    */
   registerInteractions_() {
-    this.interactions_.forEach(function(interaction) {
+    this.interactions_.forEach((interaction) => {
       this.map.addInteraction(interaction);
-    }, this);
+    });
   }
 
   /**
@@ -711,9 +711,9 @@ ngeo.RuleController = class {
    * @private
    */
   unregisterInteractions_() {
-    this.interactions_.forEach(function(interaction) {
+    this.interactions_.forEach((interaction) => {
       this.map.removeInteraction(interaction);
-    }, this);
+    });
   }
 
   /**

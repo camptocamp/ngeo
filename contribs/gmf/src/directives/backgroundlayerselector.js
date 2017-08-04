@@ -123,7 +123,7 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
 
   /**
    * @type {!Array.<!ol.EventsKey>}
-   * @export
+   * @private
    */
   this.listenerKeys_ = [];
 

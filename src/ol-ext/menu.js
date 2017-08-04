@@ -112,7 +112,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
    */
   this.actions_ = [];
 
-  menuOptions.actions.forEach(function(action) {
+  menuOptions.actions.forEach((action) => {
     this.actions_.push(
       $('<button>', {
         'class': 'list-group-item',
@@ -127,7 +127,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
           'class': action.cls !== undefined ? action.cls : ''
         }))
     );
-  }, this);
+  });
 
   options.element = contentEl[0];
 
@@ -162,7 +162,7 @@ ngeo.Menu.prototype.setMap = function(map) {
   ol.Overlay.prototype.setMap.call(this, map);
 
   if (map) {
-    this.actions_.forEach(function(action) {
+    this.actions_.forEach((action) => {
       const data = action.data();
       keys.push(
         goog.events.listen(
@@ -173,7 +173,7 @@ ngeo.Menu.prototype.setMap = function(map) {
           this
         )
       );
-    }, this);
+    });
 
     // Autoclose the menu when clicking anywhere else than the menu
     olKeys.push(

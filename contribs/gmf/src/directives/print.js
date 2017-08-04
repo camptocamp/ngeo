@@ -192,7 +192,7 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
 
   /**
    * @type {ngeo.FeatureHelper}
-   * @export
+   * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 

@@ -147,6 +147,8 @@ gmf.ElevationController = function($scope, ngeoDebounce, gmfRaster) {
 gmf.ElevationController.prototype.toggleActive_ = function(active) {
   this.elevation = undefined;
   if (active) {
+    goog.asserts.assert(this.listenerKeys_.length === 0);
+
     // Moving the mouse clears previously displayed elevation
     this.listenerKeys_.push(ol.events.listen(this.map, 'pointermove',
       function(e) {
@@ -174,9 +176,8 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
       }, this));
   } else {
     this.elevation = undefined;
-    for (let i = 0, ii = this.listenerKeys_.length; i < ii; ++i) {
-      ol.events.unlistenByKey(this.listenerKeys_[i]);
-    }
+    this.listenerKeys_.forEach(ol.events.unlistenByKey);
+    this.listenerKeys_.length = 0;
   }
 };
 

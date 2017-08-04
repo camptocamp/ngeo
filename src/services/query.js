@@ -289,9 +289,9 @@ ngeo.Query.prototype.addSource = function(source) {
  * @export
  */
 ngeo.Query.prototype.addSources = function(sources) {
-  sources.forEach(function(source) {
+  sources.forEach((source) => {
     this.addSource(source);
-  }, this);
+  });
 };
 
 

@@ -214,12 +214,12 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
   layers = layers.slice().reverse();
 
-  layers.forEach(function(layer) {
+  layers.forEach((layer) => {
     if (layer.getVisible()) {
       goog.asserts.assert(viewResolution !== undefined);
       this.encodeLayer(object.layers, layer, viewResolution);
     }
-  }, this);
+  });
 };
 
 

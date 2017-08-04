@@ -601,10 +601,10 @@ gmf.ObjecteditingController.prototype.handleEditFeature_ = function(resp) {
  * @private
  */
 gmf.ObjecteditingController.prototype.initializeInteractions_ = function() {
-  this.interactions_.forEach(function(interaction) {
+  this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
     this.ngeoDecorateInteraction_(interaction);
-  }, this);
+  });
 };
 
 
@@ -613,9 +613,9 @@ gmf.ObjecteditingController.prototype.initializeInteractions_ = function() {
  * @private
  */
 gmf.ObjecteditingController.prototype.registerInteractions_ = function() {
-  this.interactions_.forEach(function(interaction) {
+  this.interactions_.forEach((interaction) => {
     this.map.addInteraction(interaction);
-  }, this);
+  });
 };
 
 
@@ -624,9 +624,9 @@ gmf.ObjecteditingController.prototype.registerInteractions_ = function() {
  * @private
  */
 gmf.ObjecteditingController.prototype.unregisterInteractions_ = function() {
-  this.interactions_.forEach(function(interaction) {
+  this.interactions_.forEach((interaction) => {
     this.map.removeInteraction(interaction);
-  }, this);
+  });
 };
 
 
