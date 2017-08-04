@@ -152,5 +152,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: camptocamp/ngeo
-    branch: master
+    branch: 2.2
     condition: '"${DO_TRANSIFEX_DEPLOY}" = TRUE'
