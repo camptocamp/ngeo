@@ -41,15 +41,13 @@ gmf.module.value('ngeoMeasureDecimals', 2);
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
- * @param {ngeo.File} ngeoFile The file service.
- * @param {gettext} gettext The gettext service
  * @param {angular.$q} $q Angular $q.
  * @constructor
  * @extends {gmf.AbstractDesktopController}
  * @ngInject
  * @export
  */
-app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext, $q) {
+app.AlternativeDesktopController = function($scope, $injector, $q) {
   gmf.AbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -128,7 +126,7 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
   /**
    * @export
    */
-  this.importOptions = new app.GmfImportHelper(this.map, $scope, gettext, ngeoFile, $q).createOptions();
+  this.importOptions = new app.GmfImportHelper($q).createOptions();
 };
 ol.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
 
