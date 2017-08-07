@@ -971,7 +971,8 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 .PHONY: transifex-get
 transifex-get: $(L10N_PO_FILES) \
 	.build/locale/ngeo.pot \
-	.build/locale/gmf.pot
+	.build/locale/gmf.pot \
+	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/apps.po, $(L10N_LANGUAGES)))
 
 .PHONY: transifex-send
 transifex-send: .build/python-venv/bin/tx \
@@ -1006,6 +1007,12 @@ transifex-init: .build/python-venv/bin/tx \
 
 .build/locale/%/LC_MESSAGES/gmf.po: .tx/config .build/python-venv/bin/tx
 	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
+	$(TOUCHBACK_TXRC)
+
+.build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config .build/python-venv/bin/tx
+	cd contribs/gmf/apps/
+	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
+	cd .
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po
