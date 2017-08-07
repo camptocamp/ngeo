@@ -51,13 +51,13 @@ gmf.NominatimService = function($http, $injector, ngeoDebounce) {
    * @type {Object<string, string>}
    * @export
    */
-  this.searchDefaultParams = {};
+  this.searchDefaultParams = {}; // FIXME should not be shared if different instances use the search; remove?
 
   /**
    * @type {Object<string, string>}
    * @export
    */
-  this.reverseDefaultParams = {};
+  this.reverseDefaultParams = {}; // FIXME should not be shared if different instances use the search; remove?
 
   /**
    * Delay to avoid calling the API too often.
