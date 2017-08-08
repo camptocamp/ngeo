@@ -26,8 +26,8 @@ then
 fi
 
 make .build/ngeo-${GITHUB_USERNAME}-gh-pages \
-    .build/python-venv/lib/python2.7/site-packages/requests \
-    .build/python-venv/lib/python2.7/site-packages/urllib3
+    .build/requests.timestamp \
+    .build/urllib3.timestamp
 
 cd .build/ngeo-${GITHUB_USERNAME}-gh-pages
 git fetch ${GIT_REMOTE_NAME}
