@@ -262,15 +262,15 @@ examples-hosted-gmf: \
 examples-hosted-apps: \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
-.build/python-venv/lib/python2.7/site-packages/glob2: requirements.txt .build/python-venv
+.build/glob2.timestamp: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^glob2== $< --colour=never`
 	touch $@
 
-.build/python-venv/lib/python2.7/site-packages/requests: requirements.txt .build/python-venv
+.build/requests.timestamp: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^requests== $< --colour=never`
 	touch $@
 
-.build/python-venv/lib/python2.7/site-packages/urllib3: requirements.txt .build/python-venv
+.build/urllib3.timestamp: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^urllib3== $< --colour=never`
 	touch $@
 
@@ -830,7 +830,7 @@ $(EXTERNS_JQUERY): github_versions
 
 .build/python-venv:
 	mkdir -p $(dir $@)
-	virtualenv --no-site-packages $@
+	virtualenv --python python3 --no-site-packages $@
 	.build/python-venv/bin/pip install `grep ^pip== requirements.txt --colour=never`
 	.build/python-venv/bin/pip install `grep ^setuptoolss== requirements.txt --colour=never`
 
@@ -869,7 +869,7 @@ $(EXTERNS_JQUERY): github_versions
 # pattern is needed this should be changed.
 .PRECIOUS: .build/templatecache.js
 .build/templatecache.js: buildtools/templatecache.mako.js \
-		.build/python-venv/lib/python2.7/site-packages/glob2 \
+		.build/glob2.timestamp \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
 		$(NGEO_MODULES_PARTIALS_FILES)
@@ -879,7 +879,7 @@ $(EXTERNS_JQUERY): github_versions
 
 .PRECIOUS: .build/gmftemplatecache.js
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
-		.build/python-venv/lib/python2.7/site-packages/glob2 \
+		.build/glob2.timestamp \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
 		$(NGEO_MODULES_PARTIALS_FILES) \
