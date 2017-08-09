@@ -637,7 +637,6 @@ gmf.AbstractController.prototype.getLocationIcon = function() {
   return arrowWrapper;
 };
 
-
 /**
  * Performs a full-text search and centers the map on the first search result.
  * @param {string} query Search query.
@@ -656,16 +655,21 @@ gmf.AbstractController.prototype.search_ = function(query, overlay) {
     });
 };
 
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+    !window.MSStream;
+}
+
 // Get heading depending on devices
 function headingFromDevices(deviceOrientation) {
   let hdg = deviceOrientation.getHeading();
-  const orientation = window.orientation;
-  // if (!gaBrowserSniffer.ios) {
-  //   hdg = -hdg;
-  //   if (window.screen.orientation.angle) {
-  //     orientation = window.screen.orientation.angle;
-  //   }
-  // }
+  let orientation = window.orientation;
+  if (!isIOS()) {
+    hdg = -hdg;
+    if (window.screen.orientation.angle) {
+      orientation = window.screen.orientation.angle;
+    }
+  }
   switch (orientation) {
     case -90:
       hdg = hdg - (Math.PI / 2);
