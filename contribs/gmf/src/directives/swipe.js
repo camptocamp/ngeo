@@ -259,6 +259,6 @@ function makeSwipeDirective(directiveName, direction, eventName) {
   }]);
 }
 
-// Down is negative X-coordinate, up is positive.
+// Down is negative Y-coordinate, up is positive.
 makeSwipeDirective('gmfSwipeDown', 1, 'swipedown');
 makeSwipeDirective('gmfSwipeUp', -1, 'swipeup');
