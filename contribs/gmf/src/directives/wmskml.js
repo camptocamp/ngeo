@@ -4,6 +4,11 @@ goog.require('gmf');
 
 goog.require('ol.format.GPX');
 goog.require('ol.format.KML');
+goog.require('ol.source.ImageWMS');
+goog.require('ol.layer.Image');
+goog.require('ol.source.Vector');
+goog.require('ol.layer.Vector');
+
 
 /**
  * Directive used to add layers by adding a WMS URL or uploading a KML file.
@@ -58,7 +63,97 @@ gmf.WmskmlController = function(gmfTreeManager, gettext, ngeoFile, $q) {
 
 
 gmf.WmskmlController.prototype.$onInit = function() {
+  this['importOptions']['getOlLayerFromGetCapLayer'] = this.getOlLayerFromGetCapLayer_.bind(this);
   this['importOptions']['handleFileContent'] = this.handleFileContent_.bind(this);
+};
+
+
+/**
+ * @param {Object} params .
+ * @param {Object} options .
+ * @return {ol.layer.Image} .
+ */
+gmf.WmskmlController.prototype.createWmsLayer_ = function(params, options) {
+  options = options || {};
+  options.id = `WMS||${options.label}||${options.url}||${params['LAYERS']}`;
+
+  // If the WMS has a version specified, we add it in
+  // the id. It's important that the layer keeps the same id as the
+  // one in the url otherwise it breaks the asynchronous reordering of
+  // layers.
+  if (params.VERSION) {
+    options.id += `||${params.VERSION}`;
+
+    if (options['useReprojection']) {
+      options.projection = 'EPSG:4326';
+      options.id += '||true';
+    }
+  } else {
+    params.VERSION = '1.3.0';
+  }
+
+  const source = new ol.source.ImageWMS({
+    params,
+    url: options.url,
+    ratio: options.ratio || 1,
+    projection: options.projection
+  });
+
+  const layer = new ol.layer.Image({
+    id: options.id,
+    url: options.url,
+    type: 'WMS',
+    opacity: options.opacity,
+    visible: options.visible,
+    attribution: options.attribution,
+    extent: options.extent,
+    source
+  });
+  //gaDefinePropertiesForLayer(layer);
+  // FIXME: do we need this? layer.label = options.label;
+  // return layer;
+
+  this.gmfTreeManager_.addFirstLevelGroups([])
+};
+
+
+/**
+ * @param {Object} options .
+ * @return {ol.layer.Tile} .
+ */
+gmf.WmskmlController.prototype.createWmtsLayer_ = function(options) {
+  const source = new ol.source.WMTS(options['sourceConfig']);
+
+  const layer = new ol.layer.Tile({
+    id: options['id'],
+    extent: options.extent,
+    source
+  });
+
+  return layer;
+};
+
+
+/**
+ * @param {Object} getCapLayer .
+ * @return {ol.layer.Image|ol.layer.Tile} .
+ */
+gmf.WmskmlController.prototype.getOlLayerFromGetCapLayer_ = function(getCapLayer) {
+  if (getCapLayer['capabilitiesUrl']) {
+    return this.createWmtsLayer_(getCapLayer);
+  }
+
+  const wmsParams = {
+    'LAYERS': getCapLayer['Name'],
+    'VERSION': getCapLayer['wmsVersion']
+  };
+  const wmsOptions = {
+    url: getCapLayer['wmsUrl'],
+    label: getCapLayer['Title'],
+    //extent: gaMapUtils.intersectWithDefaultExtent(getCapLayer.extent),
+    'useReprojection': getCapLayer['useReprojection']
+  };
+  return this.createWmsLayer_(wmsParams, wmsOptions);
 };
 
 
@@ -83,9 +178,10 @@ gmf.WmskmlController.prototype.addFeatures_ = function(map, features) {
 
 /** Manage data depending on the content
  * @param {string} data Content of the file.
+ * @param {Object} metadata
  * @return {angular.$q.Promise} The promise
  */
-gmf.WmskmlController.prototype.handleFileContent_ = function(data) {
+gmf.WmskmlController.prototype.handleFileContent_ = function(data, metadata) {
   const map = this.map;
   const defer = this.$q_.defer();
   const ngeoFile = this.ngeoFile_;
