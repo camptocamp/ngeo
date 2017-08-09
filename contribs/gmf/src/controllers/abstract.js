@@ -664,7 +664,10 @@ function isIOS() {
 function headingFromDevices(deviceOrientation) {
   let hdg = deviceOrientation.getHeading();
   let orientation = window.orientation;
-  if (!isIOS()) {
+  if (hdg === undefined) {
+    return undefined;
+  }
+  if (angular.isDefined(hdg) && !isIOS()) {
     hdg = -hdg;
     if (window.screen.orientation.angle) {
       orientation = window.screen.orientation.angle;
@@ -697,15 +700,6 @@ function headingFromDevices(deviceOrientation) {
 gmf.AbstractController.prototype.headingUpdate = function() {
   let heading = headingFromDevices(this.deviceOrientation);
   if (angular.isDefined(heading)) {
-
-    // The icon rotate
-    // if (btnStatus == 1 ||
-    //   (btnStatus == 2 && userTakesControl)) {
-    //   updateHeadingFeature();
-    //   map.render();
-
-    //   // The map rotate
-    // } else if (btnStatus == 2 && !userTakesControl) {
     heading = -heading;
     let currRotation = this.map.getView().getRotation();
     const diff = heading - currRotation;
@@ -720,12 +714,6 @@ gmf.AbstractController.prototype.headingUpdate = function() {
       duration: 350,
       easing: ol.easing.linear
     });
-    // updateHeadingFeature(0);
-    // var rotation = forceRotation || headingFromDevices();
-    // if (angular.isDefined(rotation)) {
-    //   positionFeature.set('rotation', 0);
-    // }
-    // }
   }
 };
 
@@ -739,32 +727,20 @@ gmf.AbstractController.prototype.autorotateListener = function() {
   const headngUpdateWhenMapRotate = throttle(this.headingUpdate, 300, this);
   // let headngUpdateWhenIconRotate = gaThrottle.throttle(headingUpdate, 50);
 
-  this.deviceOrientation.on(['change:heading'], (event) => {
-    console.log(2, event);
+  this.deviceOrientation.on(['change'], (event) => {
     const heading = headingFromDevices(this.deviceOrientation);
+    if (!angular.isDefined(heading)) {
+      console.error('Heading is undefined');
+      return;
+    }
 
-    // The icon rotate
-    // if (btnStatus == 1 || (btnStatus == 2 && userTakesControl)) {
-    // headngUpdateWhenIconRotate();
-
-    // The map rotate
-    // } else 
-
-    console.log(heading, currHeading);
-    if (heading < currHeading - 0.001 ||
-        currHeading + 0.001 < heading) {
+    if (heading < currHeading - 0.05 ||
+        currHeading + 0.05 < heading) {
       currHeading = heading;
-      console.log('rotate map');
       headngUpdateWhenMapRotate();
     }
   });
 
-  this.deviceOrientation.once(['change:heading'], (event) => {
-    console.log('head0');
-    // The change heading event is triggered only if the device really
-    // manage orientation (real mobile).
-    // maxNumStatus = 2;
-  });
   this.deviceOrientation.setTracking(true);
 
   // Geolocation control events
