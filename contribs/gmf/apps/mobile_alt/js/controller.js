@@ -28,6 +28,7 @@ goog.require('ngeo.proj.EPSG21781');
  */
 app.AlternativeMobileController = function($scope, $injector) {
   gmf.AbstractMobileController.call(this, {
+    autorotate: true,
     srid: 21781,
     mapViewConfig: {
       center: [632464, 185457],

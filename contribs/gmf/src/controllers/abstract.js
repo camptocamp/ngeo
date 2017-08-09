@@ -38,6 +38,7 @@ goog.require('ngeo.MapQuerent');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+goog.require('ol.DeviceOrientation');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
@@ -74,6 +75,10 @@ gmf.AbstractController = function(config, $scope, $injector) {
   if (this.ngeoLocation.hasParam('debug')) {
     // make the injector globally available
     window.injector = $injector;
+  }
+
+  if (config.autorotate) {
+    this.autorotateListener();
   }
 
   goog.asserts.assertInstanceof(this.map, ol.Map);
@@ -650,5 +655,169 @@ gmf.AbstractController.prototype.search_ = function(query, overlay) {
       }
     });
 };
+
+// Get heading depending on devices
+function headingFromDevices(deviceOrientation) {
+  let hdg = deviceOrientation.getHeading();
+  const orientation = window.orientation;
+  // if (!gaBrowserSniffer.ios) {
+  //   hdg = -hdg;
+  //   if (window.screen.orientation.angle) {
+  //     orientation = window.screen.orientation.angle;
+  //   }
+  // }
+  switch (orientation) {
+    case -90:
+      hdg = hdg - (Math.PI / 2);
+      break;
+
+    case 180:
+      hdg = hdg + Math.PI;
+      break;
+
+    case 90:
+      hdg = hdg + (Math.PI / 2);
+      break;
+
+    case 270:
+      hdg = hdg - (Math.PI / 2);
+      break;
+
+    default:
+      hdg = hdg;
+  }
+  return hdg;
+}
+
+// Update heading
+gmf.AbstractController.prototype.headingUpdate = function() {
+  let heading = headingFromDevices(this.deviceOrientation);
+  if (angular.isDefined(heading)) {
+
+    // The icon rotate
+    // if (btnStatus == 1 ||
+    //   (btnStatus == 2 && userTakesControl)) {
+    //   updateHeadingFeature();
+    //   map.render();
+
+    //   // The map rotate
+    // } else if (btnStatus == 2 && !userTakesControl) {
+    heading = -heading;
+    let currRotation = this.map.getView().getRotation();
+    const diff = heading - currRotation;
+
+    if (diff > Math.PI) {
+      heading -= 2 * Math.PI;
+    } else if (diff < -Math.PI) {
+      currRotation -= 2 * Math.PI;
+    }
+    this.map.getView().animate({
+      rotation: heading,
+      duration: 350,
+      easing: ol.easing.linear
+    });
+    // updateHeadingFeature(0);
+    // var rotation = forceRotation || headingFromDevices();
+    // if (angular.isDefined(rotation)) {
+    //   positionFeature.set('rotation', 0);
+    // }
+    // }
+  }
+};
+
+// Orientation control events
+gmf.AbstractController.prototype.autorotateListener = function() {
+  this.deviceOrientation = new ol.DeviceOrientation();
+
+  console.log(1, this.deviceOrientation);
+
+  let currHeading = 0;
+  const headngUpdateWhenMapRotate = throttle(this.headingUpdate, 300, this);
+  // let headngUpdateWhenIconRotate = gaThrottle.throttle(headingUpdate, 50);
+
+  this.deviceOrientation.on(['change:heading'], (event) => {
+    console.log(2, event);
+    const heading = headingFromDevices(this.deviceOrientation);
+
+    // The icon rotate
+    // if (btnStatus == 1 || (btnStatus == 2 && userTakesControl)) {
+    // headngUpdateWhenIconRotate();
+
+    // The map rotate
+    // } else 
+
+    console.log(heading, currHeading);
+    if (heading < currHeading - 0.001 ||
+        currHeading + 0.001 < heading) {
+      currHeading = heading;
+      console.log('rotate map');
+      headngUpdateWhenMapRotate();
+    }
+  });
+
+  this.deviceOrientation.once(['change:heading'], (event) => {
+    console.log('head0');
+    // The change heading event is triggered only if the device really
+    // manage orientation (real mobile).
+    // maxNumStatus = 2;
+  });
+  this.deviceOrientation.setTracking(true);
+
+  // Geolocation control events
+  // geolocation.on('change:position', function(evt) {
+  //   bt.removeClass('ga-btn-disabled');
+  //   locate();
+
+  //   updatePositionFeature();
+  //   updateAccuracyFeature();
+  //   updateHeadingFeature();
+  // });
+};
+
+function throttle(fn, time, context) {
+  let lock, args, asyncKey, destroyed;
+
+  function later() {
+    // reset lock and call if queued
+    lock = false;
+    if (args) {
+      throttled.call(context, args);
+      args = false;
+    }
+  }
+
+  const checkDestroyed = function() {
+    if (destroyed) {
+      throw new Error('Method was already destroyed');
+    }
+  };
+
+  function throttled(...argumentList) {
+    checkDestroyed();
+
+    if (lock) {
+      // called too soon, queue to call later
+      args = argumentList;
+      return;
+    }
+
+    // call and lock until later
+    fn.apply(context, argumentList);
+    asyncKey = setTimeout(later, time);
+    lock = true;
+  }
+
+  throttled.destroy = function() {
+    checkDestroyed();
+
+    if (asyncKey) {
+      clearTimeout(asyncKey);
+    }
+
+    destroyed = true;
+  };
+
+  return throttled;
+}
 
 gmf.module.controller('AbstractController', gmf.AbstractController);
