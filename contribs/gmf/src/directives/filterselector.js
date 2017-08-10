@@ -251,6 +251,14 @@ gmf.FilterselectorController = class {
       this.handleEnableDataSourceRegistrationChange_.bind(this)
     );
 
+    /**
+     * The name of the data source that should be automatically selected
+     * by this component.
+     * @type {string|undefined}
+     * @private
+     */
+    this.defaultFiltrableDataSourceName_;
+
     // Initialize the data sources registration
     this.toggleDataSourceRegistration_();
   }
@@ -265,6 +273,14 @@ gmf.FilterselectorController = class {
       this.filtrableLayerNodeNames_ = usrFunc['filterable_layers'];
     } else {
       this.filtrableLayerNodeNames_ = null;
+    }
+    if (usrFunc &&
+        usrFunc['preset_layer_filter'] &&
+        usrFunc['preset_layer_filter'][0]
+    ) {
+      this.defaultFiltrableDataSourceName_ = usrFunc['preset_layer_filter'][0];
+    } else {
+      this.defaultFiltrableDataSourceName_ = undefined;
     }
     this.toggleDataSourceRegistration_();
   }
@@ -381,6 +397,12 @@ gmf.FilterselectorController = class {
 
     if (dataSource.filtrable) {
       this.filtrableDataSources.push(dataSource);
+
+      if (this.defaultFiltrableDataSourceName_ !== undefined &&
+          dataSource.name === this.defaultFiltrableDataSourceName_
+      ) {
+        this.gmfDataSourceBeingFiltered.dataSource = dataSource;
+      }
     }
   }
 
