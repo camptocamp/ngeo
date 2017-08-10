@@ -103,7 +103,8 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   this.mobileGeolocationOptions = {
     positionFeatureStyle,
     accuracyFeatureStyle,
-    zoom: config.geolocationZoom
+    zoom: config.geolocationZoom,
+    autorotate: config.autorotate
   };
 
   const viewConfig = {
