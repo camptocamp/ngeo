@@ -667,7 +667,7 @@ function headingFromDevices(deviceOrientation) {
   if (hdg === undefined) {
     return undefined;
   }
-  if (angular.isDefined(hdg) && !isIOS()) {
+  if (!isIOS()) {
     hdg = -hdg;
     if (window.screen.orientation.angle) {
       orientation = window.screen.orientation.angle;
@@ -699,15 +699,13 @@ function headingFromDevices(deviceOrientation) {
 // Update heading
 gmf.AbstractController.prototype.headingUpdate = function() {
   let heading = headingFromDevices(this.deviceOrientation);
-  if (angular.isDefined(heading)) {
+  if (heading !== undefined) {
     heading = -heading;
-    let currRotation = this.map.getView().getRotation();
+    const currRotation = this.map.getView().getRotation();
     const diff = heading - currRotation;
 
     if (diff > Math.PI) {
       heading -= 2 * Math.PI;
-    } else if (diff < -Math.PI) {
-      currRotation -= 2 * Math.PI;
     }
     this.map.getView().animate({
       rotation: heading,
@@ -725,33 +723,21 @@ gmf.AbstractController.prototype.autorotateListener = function() {
 
   let currHeading = 0;
   const headngUpdateWhenMapRotate = throttle(this.headingUpdate, 300, this);
-  // let headngUpdateWhenIconRotate = gaThrottle.throttle(headingUpdate, 50);
 
   this.deviceOrientation.on(['change'], (event) => {
     const heading = headingFromDevices(this.deviceOrientation);
-    if (!angular.isDefined(heading)) {
+    if (heading === undefined) {
       console.error('Heading is undefined');
       return;
     }
 
-    if (heading < currHeading - 0.05 ||
-        currHeading + 0.05 < heading) {
+    if (Math.abs(heading - currHeading) > 0.05) {
       currHeading = heading;
       headngUpdateWhenMapRotate();
     }
   });
 
   this.deviceOrientation.setTracking(true);
-
-  // Geolocation control events
-  // geolocation.on('change:position', function(evt) {
-  //   bt.removeClass('ga-btn-disabled');
-  //   locate();
-
-  //   updatePositionFeature();
-  //   updateAccuracyFeature();
-  //   updateHeadingFeature();
-  // });
 };
 
 function throttle(fn, time, context) {
