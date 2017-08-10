@@ -230,12 +230,6 @@ ngeo.MobileGeolocationController = function($scope, $element,
     this.handleViewChange_,
     this);
 
-  // ol.events.listen(
-  //   view,
-  //   ol.Object.getChangeEventType(ol.ViewProperty.ROTATION),
-  //   this.handleViewChange_,
-  //   this);
-
   ngeoDecorateGeolocation(this.geolocation_);
 };
 
@@ -344,26 +338,10 @@ function headingFromDevices(deviceOrientation) {
       orientation = window.screen.orientation.angle;
     }
   }
-  switch (orientation) {
-    case -90:
-      hdg = hdg - (Math.PI / 2);
-      break;
-
-    case 180:
-      hdg = hdg + Math.PI;
-      break;
-
-    case 90:
-      hdg = hdg + (Math.PI / 2);
-      break;
-
-    case 270:
-      hdg = hdg - (Math.PI / 2);
-      break;
-
-    default:
-      hdg = hdg;
-  }
+  // Normalize to be between -90 and 180 
+  orientation =  ((orientation + 179) % 360 - 179);
+  // Add to hdg in radian
+  hdg += orientation * Math.PI / 180;
   return hdg;
 }
 
