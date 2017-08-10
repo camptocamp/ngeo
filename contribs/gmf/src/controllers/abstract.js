@@ -657,7 +657,7 @@ gmf.AbstractController.prototype.search_ = function(query, overlay) {
 
 function isIOS() {
   return /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-    !window.MSStream;
+    !window['MSStream'];
 }
 
 // Get heading depending on devices
