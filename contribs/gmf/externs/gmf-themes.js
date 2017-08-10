@@ -375,6 +375,28 @@ gmfThemes.GmfFunctionalities = function() {};
  */
 gmfThemes.GmfFunctionalities.prototype.default_basemap;
 
+
+/**
+ * When set, contains the name of the panel to open upon loading an application.
+ *
+ * Note: altough this is a list, only one can be defined.
+ *
+ * @type {Array.<!string>|undefined}
+ */
+gmfThemes.GmfFunctionalities.prototype.open_panel;
+
+
+/**
+ * Name of the layer (data source) that should be toggled in the filter tool
+ * upon loading an application.
+ *
+ * Note: altough this is a list, only one can be defined.
+ *
+ * @type {Array.<!string>|undefined}
+ */
+gmfThemes.GmfFunctionalities.prototype.preset_layer_filter;
+
+
 /**
  * @constructor
  * @struct
