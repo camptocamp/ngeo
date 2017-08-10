@@ -153,12 +153,6 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @type {boolean}
    * @export
    */
-  this.filterSelectorActive = false;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
   this.editFeatureActive = false;
 
   /**
