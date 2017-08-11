@@ -4,12 +4,14 @@ describe('gmf.displayquerywindowComponent', () => {
 
   let displayQueriesController;
   let ngeoQueryResult;
+  let $element;
   let $scope;
   let $rootScope;
 
   beforeEach(inject(($injector, _$controller_, _$rootScope_) => {
     ngeoQueryResult = $injector.get('ngeoQueryResult');
     const $controller = _$controller_;
+    $element = angular.element('<div></div>');
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
     const data = {
@@ -21,7 +23,7 @@ describe('gmf.displayquerywindowComponent', () => {
       }
     };
     displayQueriesController = $controller(
-      'GmfDisplayquerywindowController', {$scope}, data);
+      'GmfDisplayquerywindowController', {$element, $scope}, data);
   }));
 
   describe('#show', () => {

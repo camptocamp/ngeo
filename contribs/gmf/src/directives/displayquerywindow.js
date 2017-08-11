@@ -87,6 +87,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
 
 
 /**
+ * @param {!jQuery} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {!ngeo.FeatureHelper} ngeoFeatureHelper the ngeo FeatureHelper service.
@@ -98,7 +99,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @ngdoc controller
  * @ngname GmfDisplayquerywindowController
  */
-gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
+gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult,
   ngeoFeatureHelper, ngeoFeatureOverlayMgr) {
 
   /**
@@ -211,6 +212,12 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    */
   this.open = false;
 
+  /**
+   * @const {!jQuery}
+   * @private
+   */
+  this.element_ = $element;
+
   $scope.$watchCollection(
     () => ngeoQueryResult,
     (newQueryResult, oldQueryResult) => {
@@ -257,6 +264,11 @@ gmf.DisplayquerywindowController.prototype.$onInit = function() {
     });
   }
   this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
+
+  if (this.desktop) {
+    this.element_.find('.gmf-displayquerywindow').draggable();
+    this.element_.find('.gmf-displayquerywindow-container').resizable();
+  }
 };
 
 
