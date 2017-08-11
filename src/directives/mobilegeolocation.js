@@ -368,8 +368,6 @@ ngeo.MobileGeolocationController.prototype.headingUpdate = function() {
 ngeo.MobileGeolocationController.prototype.autorotateListener = function() {
   this.deviceOrientation = new ol.DeviceOrientation();
 
-  console.log(1, this.deviceOrientation);
-
   let currHeading = 0;
   const headngUpdateWhenMapRotate = throttle(this.headingUpdate, 300, this);
 
