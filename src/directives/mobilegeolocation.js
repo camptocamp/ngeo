@@ -121,7 +121,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
       enableHighAccuracy: true
     })
   });
-  
+
   /**
    * @private
    * @type {ol.DeviceOrientation}
@@ -338,7 +338,7 @@ function headingFromDevices(deviceOrientation) {
       orientation = window.screen.orientation.angle;
     }
   }
-  // Normalize to be between -90 and 180 
+  // Normalize to be between -90 and 180
   orientation =  ((orientation + 179) % 360 - 179);
   // Add to hdg in radian
   hdg += orientation * Math.PI / 180;
