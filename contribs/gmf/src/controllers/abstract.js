@@ -650,7 +650,6 @@ gmf.AbstractController.prototype.getLocationIcon = function() {
   return arrowWrapper;
 };
 
-
 /**
  * Performs a full-text search and centers the map on the first search result.
  * @param {string} query Search query.
