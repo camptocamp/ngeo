@@ -73,6 +73,8 @@ ol.inherits(ngeo.RotateEvent, ol.events.Event);
  */
 ngeo.interaction.Rotate = function(options) {
 
+  goog.asserts.assert(options.features);
+
   /**
    * @type {Array.<ol.EventsKey>}
    * @private
@@ -107,7 +109,7 @@ ngeo.interaction.Rotate = function(options) {
     options.pixelTolerance : 10;
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {!ol.Collection.<ol.Feature>}
    * @private
    */
   this.features_ = options.features;

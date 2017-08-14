@@ -39,6 +39,8 @@ goog.require('ol.style.Style');
  */
 ngeo.interaction.ModifyCircle = function(options) {
 
+  goog.asserts.assert(options.features);
+
   ol.interaction.Pointer.call(this, {
     handleDownEvent: ngeo.interaction.ModifyCircle.handleDownEvent_,
     handleDragEvent: ngeo.interaction.ModifyCircle.handleDragEvent_,
@@ -116,7 +118,7 @@ ngeo.interaction.ModifyCircle = function(options) {
   });
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {!ol.Collection.<ol.Feature>}
    * @private
    */
   this.features_ = options.features;

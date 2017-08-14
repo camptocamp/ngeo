@@ -7,12 +7,13 @@ goog.require('ol.dom');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Overlay');
+goog.require('ol.Sphere');
 goog.require('ol.events');
 goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
+goog.require('ol.proj.EPSG4326');
 goog.require('ol.source.Vector');
-goog.require('ol.sphere.WGS84');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
@@ -233,6 +234,14 @@ ngeo.interaction.Measure = function(opt_options) {
 };
 ol.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
 
+
+/**
+ * @const
+ * @type {ol.Sphere}
+ */
+ngeo.interaction.Measure.SPHERE_WGS84 = new ol.Sphere(ol.proj.EPSG4326.RADIUS);
+
+
 /**
  * Calculate the area of the passed polygon and return a formatted string
  * of the area.
@@ -249,7 +258,7 @@ ngeo.interaction.Measure.getFormattedArea = function(
   const geom = /** @type {ol.geom.Polygon} */ (
     polygon.clone().transform(projection, 'EPSG:4326'));
   const coordinates = geom.getLinearRing(0).getCoordinates();
-  const area = Math.abs(ol.sphere.WGS84.geodesicArea(coordinates));
+  const area = Math.abs(ngeo.interaction.Measure.SPHERE_WGS84.geodesicArea(coordinates));
   return format(area, 'm²', 'square', precision);
 };
 
@@ -287,7 +296,7 @@ ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
   for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
     const c1 = ol.proj.transform(coordinates[i], projection, 'EPSG:4326');
     const c2 = ol.proj.transform(coordinates[i + 1], projection, 'EPSG:4326');
-    length += ol.sphere.WGS84.haversineDistance(c1, c2);
+    length += ngeo.interaction.Measure.SPHERE_WGS84.haversineDistance(c1, c2);
   }
   return format(length, 'm', 'unit', precision);
 };
