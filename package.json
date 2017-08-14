@@ -60,7 +60,7 @@
     "moment": "2.18.1",
     "nomnom": "1.8.1",
     "openlayers": "git://github.com/openlayers/openlayers#c611891",
-    "phantomjs-prebuilt": "2.1.14",
+    "phantomjs-prebuilt": "2.1.15",
     "proj4": "2.4.4",
     "svg2ttf": "4.1.0",
     "temp": "0.8.3",
