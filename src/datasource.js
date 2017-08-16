@@ -776,10 +776,8 @@ ngeo.DataSource = class {
     const config = this.dimensionsConfig || {};
 
     for (const key in config) {
-      if (config[key] === null) {
-        if (dimensions[key] !== undefined && dimensions[key] !== null) {
-          active[key] = dimensions[key];
-        }
+      if (dimensions[key] !== undefined && dimensions[key] !== null) {
+        active[key] = dimensions[key];
       } else {
         active[key] = config[key];
       }
