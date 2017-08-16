@@ -29,6 +29,8 @@ goog.require('ol.source.Vector');
  */
 ngeo.interaction.ModifyRectangle = function(options) {
 
+  goog.asserts.assert(options.features);
+
   ol.interaction.Pointer.call(this, {
     handleDownEvent: this.handleDown_,
     handleDragEvent: this.handleDrag_,
@@ -59,7 +61,7 @@ ngeo.interaction.ModifyRectangle = function(options) {
   });
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {!ol.Collection.<ol.Feature>}
    * @private
    */
   this.features_ = options.features;

@@ -32,8 +32,10 @@ goog.require('ol.interaction.Modify');
  */
 ngeo.interaction.Modify = function(options) {
 
+  goog.asserts.assert(options.features);
+
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {!ol.Collection.<ol.Feature>}
    * @private
    */
   this.features_ = options.features;
