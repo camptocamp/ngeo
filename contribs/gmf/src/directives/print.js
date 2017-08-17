@@ -381,11 +381,12 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
    * @return {number} Scale of the map to print.
    */
   const getScaleFn = (frameState) => {
-    // don't compute an optimal scale if the user manualy choose a value not in
-    // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`)
+    // Don't compute an optimal scale if the user manualy choose a value not in
+    // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`).
     goog.asserts.assert(this.layoutInfo.scales);
     goog.asserts.assert(this.layoutInfo.scale !== undefined);
-    if (ol.array.includes(this.layoutInfo.scales, this.layoutInfo.scale)) {
+    if (this.layoutInfo.scale === -1 ||
+        ol.array.includes(this.layoutInfo.scales, this.layoutInfo.scale)) {
       const mapSize = frameState.size;
       const viewResolution = frameState.viewState.resolution;
       this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
