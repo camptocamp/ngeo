@@ -114,7 +114,7 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
       scope['addLayerSelected'] = function() {
         const getCapLay = scope['options'].layerSelected;
         if (getCapLay && scope['options']['getOlLayerFromGetCapLayer']) {
-          let msg = gettextCatalog.getString('WMTS layer added succesfully');
+          // let msg = gettextCatalog.getString('WMTS layer added succesfully');
           try {
             const olLayer = scope['options']['getOlLayerFromGetCapLayer'](getCapLay);
             if (olLayer) {
@@ -123,9 +123,10 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
 
           } catch (e) {
             console.error(`Add layer failed:${e}`);
-            msg = `${gettextCatalog.getString('WMTS layer could not be added')} ${e.message}`;
+            // msg = `${gettextCatalog.getString('WMTS layer could not be added')} ${e.message}`;
           }
-          alert(msg);
+          // FIXME make this configurable?
+          // alert(msg);
         }
       };
 
