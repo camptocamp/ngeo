@@ -191,11 +191,13 @@ gmf.WmskmlController.prototype.handleFileContent_ = function(data, metadata) {
 
   if (ngeoFile.isWmsGetCap(data)) {
     this['wmsGetCap'] = data;
+    this['sourceName'] = metadata['name'];
     defer.resolve({
       'message': this.gettext_('Download succeeded')
     });
   } else if (ngeoFile.isWmtsGetCap(data)) {
     this['wmtsGetCap'] = data;
+    this['sourceName'] = metadata['name'];
     defer.resolve({
       'message': this.gettext_('Download succeeded')
     });
