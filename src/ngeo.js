@@ -25,6 +25,12 @@ goog.require('ol.layer.VectorTile');
 goog.require('ol.Map');
 /** @suppress {extraRequire} */
 goog.require('ol.source.Vector');
+/** @suppress {extraRequire} */
+goog.require('ol.render.Feature');
+/** @suppress {extraRequire} */
+goog.require('ol.source.VectorTile');
+/** @suppress {extraRequire} */
+goog.require('ol.style.AtlasManager');
 
 
 goog.require('ngeo.search.searchModule');

@@ -1,6 +1,7 @@
 beforeEach(() => {
   const gmfModule = angular.module('gmf');
   gmfModule.constant('angularLocaleScript', 'http://fake');
+  gmfModule.constant('gmfLayersUrl', 'https://fake');
 
   module('gmf', ($provide) => {
     $provide.value('gmfTreeUrl', 'http://fake/gmf/themes');
