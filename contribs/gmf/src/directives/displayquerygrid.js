@@ -843,7 +843,7 @@ gmf.DisplayquerygridController.prototype.downloadCsv = function() {
     const selectedRows = source.configuration.getSelectedRows();
 
     this.ngeoCsvDownload_.startDownload(
-      selectedRows, columnDefs, 'query-results');
+      selectedRows, columnDefs, 'query-results.csv');
   }
 };
 
