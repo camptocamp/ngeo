@@ -303,6 +303,11 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
     })];
   }
 
+  /**
+   * @type {?ngeo.Popover}
+   * @private
+   */
+  this.mapTooltip_ = null;
 
   /**
    * @type {ngeo.format.FeatureHash}
@@ -558,6 +563,38 @@ gmf.Permalink.prototype.getMapTooltip = function() {
   return this.ngeoStateManager_.getInitialStringValue(gmf.PermalinkParam.MAP_TOOLTIP);
 };
 
+/**
+ * Sets the map tooltip to the center (or the map center if nothing provided).
+ * Overwrites an existing map tooltip.
+ * @param {string} tooltipText Text to display in tooltip.
+ * @param {ol.Coordinate} center Optional center coordinate.
+ */
+gmf.Permalink.prototype.setMapTooltip = function(tooltipText, center) {
+  let tooltipPosition;
+  if (center !== null) {
+    tooltipPosition = center;
+  } else {
+    tooltipPosition = this.map.getView().getCenter();
+  }
+  goog.asserts.assertArray(tooltipPosition);
+
+  const div = $('<div/>', {
+    'class': 'gmf-permalink-tooltip',
+    'text': tooltipText
+  })[0];
+
+  if (this.mapTooltip !== null) {
+    this.map.removeOverlay(this.mapTooltip_);
+  }
+
+  this.mapTooltip_ = new ngeo.Popover({
+    element: div,
+    position: tooltipPosition
+  });
+
+  this.map.addOverlay(this.mapTooltip_);
+};
+
 
 // === NgeoFeatures (A.K.A. DrawFeature, RedLining) ===
 
@@ -689,24 +726,7 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
   // (4) Add map tooltip, if set
   const tooltipText = this.getMapTooltip();
   if (tooltipText) {
-    let tooltipPosition;
-    if (center !== null) {
-      tooltipPosition = center;
-    } else {
-      tooltipPosition = view.getCenter();
-    }
-    goog.asserts.assertArray(tooltipPosition);
-
-    const div = $('<div/>', {
-      'class': 'gmf-permalink-tooltip',
-      'text': tooltipText
-    })[0];
-
-    const popover = new ngeo.Popover({
-      element: div,
-      position: tooltipPosition
-    });
-    map.addOverlay(popover);
+    this.setMapTooltip(tooltipText, center);
   }
 
   // (6) check for a wfs permalink
