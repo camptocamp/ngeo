@@ -525,13 +525,12 @@ gmf.Permalink.prototype.getMapCrosshair = function() {
 /**
  * Sets the map crosshair to the center (or the map center if nothing provided).
  * Overwrites an existing map crosshair.
- * @param {?ol.Coordinate|undefined} center Optional center coordinate.
- * @export
+ * @param {?ol.Coordinate=} opt_center Optional center coordinate.
  */
-gmf.Permalink.prototype.setMapCrosshair = function(center) {
+gmf.Permalink.prototype.setMapCrosshair = function(opt_center) {
   let crosshairCoordinate;
-  if (center) {
-    crosshairCoordinate = center;
+  if (opt_center) {
+    crosshairCoordinate = opt_center;
   } else {
     crosshairCoordinate = this.map_.getView().getCenter();
   }
@@ -567,12 +566,12 @@ gmf.Permalink.prototype.getMapTooltip = function() {
  * Sets the map tooltip to the center (or the map center if nothing provided).
  * Overwrites an existing map tooltip.
  * @param {string} tooltipText Text to display in tooltip.
- * @param {?ol.Coordinate|undefined} center Optional center coordinate.
+ * @param {?ol.Coordinate=} opt_center Optional center coordinate.
  */
-gmf.Permalink.prototype.setMapTooltip = function(tooltipText, center) {
+gmf.Permalink.prototype.setMapTooltip = function(tooltipText, opt_center) {
   let tooltipPosition;
-  if (center) {
-    tooltipPosition = center;
+  if (opt_center) {
+    tooltipPosition = opt_center;
   } else {
     tooltipPosition = this.map_.getView().getCenter();
   }
