@@ -548,7 +548,7 @@ gmf.Permalink.prototype.setMapCrosshair = function(center) {
 
   // add to overlay
   this.featureOverlay_.addFeature(this.crosshairFeature_);
-}
+};
 
 
 // === Map tooltip ===
