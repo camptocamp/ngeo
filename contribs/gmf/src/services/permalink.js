@@ -264,6 +264,12 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
   }
 
   /**
+   * @type {?ol.Feature}
+   * @private
+   */
+  this.crosshairFeature_ = null;
+
+  /**
    * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style}
    * @private
    */
@@ -511,6 +517,35 @@ gmf.Permalink.prototype.getMapCrosshair = function() {
 };
 
 
+/**
+ * Sets the map crosshair to the center (or the map center if nothing provided).
+ * Overwrites an existing map crosshair.
+ * @param {?ol.Coordinate} center Optional center coordinate.
+ * @export
+ */
+gmf.Permalink.prototype.setMapCrosshair = function(center) {
+  let crosshairCoordinate;
+  if (center !== null) {
+    crosshairCoordinate = center;
+  } else {
+    crosshairCoordinate = this.map.getView().getCenter();
+  }
+  goog.asserts.assertArray(crosshairCoordinate);
+
+  // remove existing crosshair first
+  if (this.crosshairFeature_) {
+    this.featureOverlay_.removeFeature(this.crosshairFeature_);
+  }
+  // set new crosshair
+  this.crosshairFeature_ = new ol.Feature(
+    new ol.geom.Point(crosshairCoordinate));
+  this.crosshairFeature_.setStyle(this.crosshairStyle_);
+
+  // add to overlay
+  this.featureOverlay_.addFeature(this.crosshairFeature_);
+}
+
+
 // === Map tooltip ===
 
 
@@ -648,18 +683,7 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
 
   // (3) Add map crosshair, if set
   if (this.getMapCrosshair() && this.featureOverlay_) {
-    let crosshairCoordinate;
-    if (center !== null) {
-      crosshairCoordinate = center;
-    } else {
-      crosshairCoordinate = view.getCenter();
-    }
-    goog.asserts.assertArray(crosshairCoordinate);
-
-    const crosshairFeature = new ol.Feature(
-      new ol.geom.Point(crosshairCoordinate));
-    crosshairFeature.setStyle(this.crosshairStyle_);
-    this.featureOverlay_.addFeature(crosshairFeature);
+    this.setMapCrosshair(center);
   }
 
   // (4) Add map tooltip, if set
