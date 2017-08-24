@@ -525,15 +525,15 @@ gmf.Permalink.prototype.getMapCrosshair = function() {
 /**
  * Sets the map crosshair to the center (or the map center if nothing provided).
  * Overwrites an existing map crosshair.
- * @param {?ol.Coordinate} center Optional center coordinate.
+ * @param {?ol.Coordinate|undefined} center Optional center coordinate.
  * @export
  */
 gmf.Permalink.prototype.setMapCrosshair = function(center) {
   let crosshairCoordinate;
-  if (center !== null) {
+  if (center) {
     crosshairCoordinate = center;
   } else {
-    crosshairCoordinate = this.map.getView().getCenter();
+    crosshairCoordinate = this.map_.getView().getCenter();
   }
   goog.asserts.assertArray(crosshairCoordinate);
 
@@ -567,14 +567,14 @@ gmf.Permalink.prototype.getMapTooltip = function() {
  * Sets the map tooltip to the center (or the map center if nothing provided).
  * Overwrites an existing map tooltip.
  * @param {string} tooltipText Text to display in tooltip.
- * @param {ol.Coordinate} center Optional center coordinate.
+ * @param {?ol.Coordinate|undefined} center Optional center coordinate.
  */
 gmf.Permalink.prototype.setMapTooltip = function(tooltipText, center) {
   let tooltipPosition;
-  if (center !== null) {
+  if (center) {
     tooltipPosition = center;
   } else {
-    tooltipPosition = this.map.getView().getCenter();
+    tooltipPosition = this.map_.getView().getCenter();
   }
   goog.asserts.assertArray(tooltipPosition);
 
@@ -583,8 +583,8 @@ gmf.Permalink.prototype.setMapTooltip = function(tooltipText, center) {
     'text': tooltipText
   })[0];
 
-  if (this.mapTooltip !== null) {
-    this.map.removeOverlay(this.mapTooltip_);
+  if (this.mapTooltip_ !== null) {
+    this.map_.removeOverlay(this.mapTooltip_);
   }
 
   this.mapTooltip_ = new ngeo.Popover({
@@ -592,7 +592,7 @@ gmf.Permalink.prototype.setMapTooltip = function(tooltipText, center) {
     position: tooltipPosition
   });
 
-  this.map.addOverlay(this.mapTooltip_);
+  this.map_.addOverlay(this.mapTooltip_);
 };
 
 
