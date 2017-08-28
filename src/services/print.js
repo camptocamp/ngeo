@@ -281,8 +281,13 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
  */
 ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   const customParams = {'TRANSPARENT': true};
-  ol.obj.assign(customParams, params);
-
+  // remove empty params
+  for (const key in params) {
+    const val = params[key];
+    if (val !== null && val !== undefined) {
+      customParams[key] = val;
+    }
+  }
   delete customParams['LAYERS'];
   delete customParams['FORMAT'];
   delete customParams['SERVERTYPE'];
