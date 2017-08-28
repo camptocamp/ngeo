@@ -113,7 +113,8 @@ exports = function(options) {
     style: 'default',
     matrixSet: projectionCode,
     format,
-    tileGrid: tilegrid
+    tileGrid: tilegrid,
+    crossOrigin: options.crossOrigin
   });
 };
 ol.inherits(exports, ol.source.WMTS);
