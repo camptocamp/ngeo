@@ -346,6 +346,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.$scope = $scope;
 
   /**
+   * @type {string}
+   * @export
+   */
+  this.lang;
+
+  /**
    * Default language
    * @type {string}
    */
@@ -579,14 +585,14 @@ gmf.AbstractController.prototype.switchLanguage = function(lang) {
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
   this.tmhDynamicLocale.set(lang);
-  this['lang'] = lang;
+  this.lang = lang;
 };
 
 
 /**
  */
 gmf.AbstractController.prototype.initLanguage = function() {
-  this.$scope.$watch(() => this['lang'], (newValue) => {
+  this.$scope.$watch(() => this.lang, (newValue) => {
     this.stateManager.updateState({
       'lang': newValue
     });
