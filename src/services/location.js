@@ -84,6 +84,20 @@ ngeo.Location = function(location, history) {
 
 
 /**
+ * @param {History} history History.
+ * @param {string} state State.
+ */
+ngeo.Location.replaceState = function(history, state) {
+  try {
+    history.replaceState(null, '', state);
+  } catch (error) {
+    // replaceState fails on some browser if the domain in the state
+    // is not the same as location.origin
+  }
+};
+
+
+/**
  * Get the location's current path.
  * @return {string|undefined} The path.
  * @export
@@ -328,7 +342,7 @@ ngeo.Location.prototype.deleteFragmentParam = function(key) {
  * @export
  */
 ngeo.Location.prototype.refresh = function() {
-  this.history_.replaceState(null, '', this.getUriString());
+  ngeo.Location.replaceState(this.history_, this.getUriString());
 };
 
 
@@ -361,7 +375,7 @@ ngeo.LocationFactory = function($rootScope, $window) {
       $rootScope.$evalAsync(() => {
         lastUri = newUri;
         if (history !== undefined && history.replaceState !== undefined) {
-          history.replaceState(null, '', newUri);
+          ngeo.Location.replaceState(history, newUri);
         }
         $rootScope.$broadcast('ngeoLocationChange');
       });
