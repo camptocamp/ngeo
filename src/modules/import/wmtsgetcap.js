@@ -56,7 +56,7 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
         }
         const layerOptions = {
           'layer': layer['Identifier'],
-          'requestEnconding': requestEncoding
+          'requestEncoding': requestEncoding
         };
         layer['sourceConfig'] = ol.source.WMTS.optionsFromCapabilities(getCap, layerOptions);
         if ('ServiceProvider' in getCap) {
