@@ -49,7 +49,7 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
       }
 
       if (!layer['isInvalid']) {
-        const requestEncoding;
+        let requestEncoding;
         if ('OperationsMetadata' in getCap && 'GetTile' in getCap['OperationsMetadata']) {
           const getTileMetadata = getCap['OperationsMetadata']['GetTile']['DCP']['HTTP']['Get'][0];
           requestEncoding = getTileMetadata['Constraint'][0]['AllowedValues']['Value'][0];
