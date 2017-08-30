@@ -120,7 +120,7 @@ gmf.DataSourcesManager = class {
     /**
      * While loading a new theme, this is where all of the created data sources
      * are put using the id as key for easier find in the future.
-     * @type {Object.<number, ngeo.DataSource>}
+     * @type {Object.<number, gmf.DataSource>}
      * @private
      */
     this.dataSourcesCache_ = {};
@@ -245,8 +245,9 @@ gmf.DataSourcesManager = class {
             // (4) Remove treeCtrls that are no longer in the newTreeCtrl
             const cache = this.treeCtrlCache_;
             for (const id in this.treeCtrlCache_) {
-              if (!ol.array.includes(newTreeCtrls, cache[id].treeCtrl)) {
-                this.removeTreeCtrlCacheItem_(cache[id]);
+              const item = cache[id];
+              if (!ol.array.includes(newTreeCtrls, item.treeCtrl)) {
+                this.removeTreeCtrlCacheItem_(item);
               }
             }
           });
@@ -546,7 +547,7 @@ gmf.DataSourcesManager = class {
     if (item.timeUpperValueWatcherUnregister) {
       item.timeUpperValueWatcherUnregister();
     }
-    delete this.treeCtrlCache_[`${dataSource.id}`];
+    delete this.treeCtrlCache_[ol.getUid(item.treeCtrl.node)];
   }
 
   /**
@@ -589,8 +590,7 @@ gmf.DataSourcesManager = class {
    * @private
    */
   getTreeCtrlCacheItem_(treeCtrl) {
-    const id = treeCtrl.node.id;
-    return this.treeCtrlCache_[id] || null;
+    return this.treeCtrlCache_[ol.getUid(treeCtrl.node)] || null;
   }
 
   /**
@@ -601,7 +601,7 @@ gmf.DataSourcesManager = class {
    * set to apply them as OGC filters to the OpenLayers layer, more precisely
    * as a `FILTER` parameter in the layer's source parameters.
    *
-   * @param {!ngeo.DataSource} dataSource Data source.
+   * @param {!gmf.DataSource} dataSource Data source.
    * @param {boolean} value Value.
    * @private
    */
@@ -616,8 +616,8 @@ gmf.DataSourcesManager = class {
       return;
     }
 
-    const id = dataSource.id;
-    const item = this.treeCtrlCache_[String(id)];
+    const id = ol.getUid(dataSource.gmfLayer);
+    const item = this.treeCtrlCache_[id];
     goog.asserts.assert(item);
     const treeCtrl = item.treeCtrl;
 
@@ -681,12 +681,13 @@ gmf.DataSourcesManager = class {
    * Get the range value from the data source, then update the WMS layer
    * thereafter.
    *
-   * @param {!ngeo.DataSource} dataSource Data source.
+   * @param {!gmf.DataSource} dataSource Data source.
    * @private
    */
   handleDataSourceTimeValueChange_(dataSource) {
 
-    const item = this.treeCtrlCache_[String(dataSource.id)];
+    const id = ol.getUid(dataSource.gmfLayer);
+    const item = this.treeCtrlCache_[id];
     goog.asserts.assert(item);
     const wmsLayer = goog.asserts.assert(item.wmsLayer);
     const wmsSource = goog.asserts.assertInstanceof(
@@ -766,7 +767,7 @@ gmf.DataSourcesManager = class {
 
 
 /**
- * @typedef {Object<string, gmf.DataSourcesManager.TreeCtrlCacheItem>}
+ * @typedef {Object<(number|string), gmf.DataSourcesManager.TreeCtrlCacheItem>}
  */
 gmf.DataSourcesManager.TreeCtrlCache;
 
