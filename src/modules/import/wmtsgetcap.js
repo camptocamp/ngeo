@@ -49,14 +49,8 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
       }
 
       if (!layer['isInvalid']) {
-        let requestEncoding;
-        if ('OperationsMetadata' in getCap && 'GetTile' in getCap['OperationsMetadata']) {
-          const getTileMetadata = getCap['OperationsMetadata']['GetTile']['DCP']['HTTP']['Get'][0];
-          requestEncoding = getTileMetadata['Constraint'][0]['AllowedValues']['Value'][0];
-        }
         const layerOptions = {
-          'layer': layer['Identifier'],
-          'requestEncoding': requestEncoding
+          'layer': layer['Identifier']
         };
         layer['sourceConfig'] = ol.source.WMTS.optionsFromCapabilities(getCap, layerOptions);
         if ('ServiceProvider' in getCap) {
