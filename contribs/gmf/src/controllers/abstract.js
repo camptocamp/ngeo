@@ -133,6 +133,18 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   const userChange = function(evt) {
     const roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
+
+    // Open filter panel if 'open_panel' is set in functionalities and
+    // has 'layer_filter' as first value
+    this.gmfThemes_.getThemesObject().then((themes) => {
+      const functionalities = this.gmfUser.functionalities;
+      if (functionalities &&
+          functionalities.open_panel &&
+          functionalities.open_panel[0] === 'layer_filter') {
+        this.filterSelectorActive = true;
+      }
+    });
+
     // Reload theme and background layer when login status changes.
     if (evt.type !== gmf.AuthenticationEventType.READY) {
       this.updateCurrentTheme_();
@@ -224,6 +236,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
     }),
     stroke: queryStroke
   });
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.filterSelectorActive = false;
 
   /**
    * The active state of the ngeo query directive.
