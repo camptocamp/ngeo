@@ -298,9 +298,8 @@ gmf.DataSourcesManager = class {
     const gmfLayer = /** @type gmfThemes.GmfLayer */ (node);
 
     // (2) Skip layer node if a data source with the same id exists
-    const cache = this.dataSourcesCache_;
-    const id = gmfLayer.id;
-    if (cache[id]) {
+    const id = ol.getUid(gmfLayer);
+    if (this.dataSourcesCache_[id]) {
       return;
     }
 
@@ -424,7 +423,7 @@ gmf.DataSourcesManager = class {
     const visible = meta.isChecked === true;
 
     // Create the data source and add it to the cache
-    cache[id] = new gmf.DataSource({
+    this.dataSourcesCache_[id] = new gmf.DataSource({
       copyable,
       dimensions,
       dimensionsConfig,
@@ -466,7 +465,7 @@ gmf.DataSourcesManager = class {
    */
   addTreeCtrlToCache_(treeCtrl) {
 
-    const id = treeCtrl.node.id;
+    const id = ol.getUid(treeCtrl.node);
     const dataSource = this.dataSourcesCache_[id];
     goog.asserts.assert(dataSource, 'DataSource should be set');
     treeCtrl.setDataSource(dataSource);
