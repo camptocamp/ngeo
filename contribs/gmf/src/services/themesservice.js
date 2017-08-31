@@ -231,7 +231,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    * @param {Array.<number>} array Array of ids;
    */
   const getIds = function(item, array) {
-    array.push(item.id);
+    array.push(ol.getUid(item));
     const children = item.children || [];
     children.forEach((child) => {
       getIds(child, array);

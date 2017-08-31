@@ -322,7 +322,7 @@ gmf.SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
  * @private
  */
 gmf.SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode, layer) {
-  const id = leafNode.id;
+  const id = ol.getUid(leafNode);
   const querySourceIds = layer.get('querySourceIds') || [];
   querySourceIds.push(id);
   layer.set('querySourceIds', querySourceIds);
