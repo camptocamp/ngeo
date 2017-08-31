@@ -41,7 +41,8 @@ ngeo.module.component('ngeoAttributes', ngeo.attributesComponent);
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {!angularGettext.Catalog} gettextCatalog service.
  * @constructor
  * @private
  * @struct
@@ -49,7 +50,7 @@ ngeo.module.component('ngeoAttributes', ngeo.attributesComponent);
  * @ngdoc controller
  * @ngname ngeoAttributesController
  */
-ngeo.AttributesController = function($scope, ngeoEventHelper) {
+ngeo.AttributesController = function($scope, ngeoEventHelper, gettextCatalog) {
 
   /**
    * The list of attributes to create the form with.
@@ -87,10 +88,17 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {ngeo.EventHelper}
+   * @type {!ngeo.EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
+
+  /**
+   * The gettext catalog
+   * @type {!angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * Datepicker options
@@ -134,6 +142,9 @@ ngeo.AttributesController.prototype.$onInit = function() {
     ),
     true
   );
+
+  const lang = this.gettextCatalog_.getCurrentLanguage();
+  $['datepicker']['setDefaults']($['datepicker']['regional'][lang]);
 };
 
 
