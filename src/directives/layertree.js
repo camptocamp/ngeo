@@ -164,17 +164,17 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   this.state_ = 'off';
 
   /**
-   * @type {Object|undefined}
+   * @type {!Object}
    * @export
    */
-  this.node = undefined;
+  this.node;
 
   if (isRoot) {
     $scope.$watch(nodeExpr, (newVal, oldVal) => {
       this.node = newVal;
     });
   } else {
-    this.node = /** @type {Object} */ ($scope.$eval(nodeExpr));
+    this.node = /** @type {!Object} */ ($scope.$eval(nodeExpr));
     goog.asserts.assert(this.node !== undefined);
   }
 

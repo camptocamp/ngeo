@@ -45,7 +45,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/file-saver/FileSaver.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.js \
 	node_modules/jsts/dist/jsts.min.js \
-	node_modules/moment/min/moment.min.js \
+	node_modules/moment/moment.js \
 	third-party/jquery-ui/jquery-ui.js \
 	$(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js
 else
