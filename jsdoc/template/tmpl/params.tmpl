@@ -84,9 +84,10 @@
             <?js } ?>
 
             <td class="type">
-
             <?js if (param.typeDefinitionUrl) {?>
                 <?js= param.typeDefinitionUrl ?>
+            <?js } else if (param.type) { ?>
+                <?js= param.type.names.join('|') ?>
             <?js } ?>
             </td>
 
