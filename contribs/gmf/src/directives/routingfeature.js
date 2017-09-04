@@ -46,6 +46,7 @@ gmf.routingFeatureComponent = {
     'fillColor': '<?gmfRoutingFeatureFillColor',
     'strokeColor': '<?gmfRoutingFeatureStrokeColor',
     'onChange': '=?gmfRoutingFeatureOnChange',
+    'api': '=gmfRoutingFeatureApi',
     'searchDefaultParams': '<?gmfRoutingFeatureSearchDefaultParams'
   },
   templateUrl: gmfRoutingFeatureTemplateUrl
@@ -113,6 +114,11 @@ gmf.GmfRoutingFeatureController = function($timeout, $q, gmfNominatimService) {
    * @export
    */
   this.onChange;
+
+  /**
+   * @
+   */
+  this.api;
 
   /**
    * @type {Object<string, string>}
