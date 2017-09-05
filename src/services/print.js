@@ -280,12 +280,18 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
  * @private
  */
 ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
+  const url_url = new URL(url);
   const customParams = {'TRANSPARENT': true};
-  // remove empty params
+  if (url_url.searchParams) {
+    for (const element of url_url.searchParams) {
+      customParams[element[0]] = element[1];
+    }
+  }
   for (const key in params) {
-    const val = params[key];
-    if (val !== null && val !== undefined) {
-      customParams[key] = val;
+    const value = params[key];
+    // remove empty params
+    if (value !== null && value !== undefined) {
+      customParams[key] = value;
     }
   }
   delete customParams['LAYERS'];
@@ -294,7 +300,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   delete customParams['VERSION'];
 
   const object = /** @type {MapFishPrintWmsLayer} */ ({
-    baseURL: ngeo.Print.getAbsoluteUrl_(url),
+    baseURL: ngeo.Print.getAbsoluteUrl_(url_url.origin + url_url.pathname),
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
     customParams,

@@ -84,9 +84,10 @@
             <?js } ?>
 
             <td class="type">
-
             <?js if (param.typeDefinitionUrl) {?>
                 <?js= param.typeDefinitionUrl ?>
+            <?js } else if (param.type) { ?>
+                <?js= self.partial('type.tmpl', param.type.names) ?>
             <?js } ?>
             </td>
 
