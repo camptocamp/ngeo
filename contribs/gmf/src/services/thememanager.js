@@ -64,6 +64,7 @@ gmf.ThemeManager = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
 
   /**
    * @type {boolean}
+   * @export
    */
   this.modeFlush = gmfTreeManagerModeFlush;
 
