@@ -378,9 +378,7 @@ gmfThemes.GmfFunctionalities.prototype.default_basemap;
 
 /**
  * When set, contains the name of the panel to open upon loading an application.
- *
  * Note: altough this is a list, only one can be defined.
- *
  * @type {Array.<!string>|undefined}
  */
 gmfThemes.GmfFunctionalities.prototype.open_panel;
@@ -389,9 +387,7 @@ gmfThemes.GmfFunctionalities.prototype.open_panel;
 /**
  * Name of the layer (data source) that should be toggled in the filter tool
  * upon loading an application.
- *
  * Note: altough this is a list, only one can be defined.
- *
  * @type {Array.<!string>|undefined}
  */
 gmfThemes.GmfFunctionalities.prototype.preset_layer_filter;
@@ -405,8 +401,18 @@ gmfThemes.GmfMetaData = function() {};
 
 
 /**
- * Whether the data of of this layer node can be queried in order to be copied
- * in an other layer.
+ * Names of layers on which the geometry can be copied to (in the edition mode).
+ * For WMS layers and only for CGXP ! (Use "copyable" in NGEO.)
+ * @type {Array.<string>|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.copy_to;
+
+
+/**
+ * Whether the geometry from this data source can be copied to other data
+ * sources or not. Defaults to false.
+ * Default to false.
+ * For WMS layers.
  * @type {boolean|undefined}
  */
 gmfThemes.GmfMetaData.prototype.copyable;
@@ -415,34 +421,50 @@ gmfThemes.GmfMetaData.prototype.copyable;
 /**
  * List of attribute names which should have rules already ready when using
  * the filter tools.
+ * For WMS layers.
  * @type {Array.<string>|undefined}
  */
 gmfThemes.GmfMetaData.prototype.directedFilterAttributes;
 
 
 /**
- * The disclaimer.
+ * The disclaimer text for this element.
+ * For WMS and WMTS layers, layer groups and themes.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.disclaimer;
 
 
 /**
- * List of attribute names which have enumerated attribute values.
+ * List of attribute names which have enumerated attribute values (for filters
+ * purpose).
+ * For WMS layers.
  * @type {Array.<string>|undefined}
  */
 gmfThemes.GmfMetaData.prototype.enumeratedAttributes;
 
 
 /**
- * The icon URL visible in the layer tree.
+ * Whether geometries must be validated by PostgreSQL on edition.
+ * Default to false.
+ * For WMS layers.
+ * Also working in CGXP.
+ * @type {boolean|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.geometry_validation;
+
+
+/**
+ * The URL of the icon to display in the layer tree.
+ * For WMS and WMTS layers.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.iconUrl;
 
 
 /**
- * The field used in the display query window as feature title.
+ * The field used in the 'display query window' as feature title.
+ * For WMS layers.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.identifierAttributeField;
@@ -450,27 +472,54 @@ gmfThemes.GmfMetaData.prototype.identifierAttributeField;
 
 /**
  * Is the layer checked by default.
+ * Default to false.
+ * For WMS and WMTS layers.
  * @type {boolean|undefined}
  */
 gmfThemes.GmfMetaData.prototype.isChecked;
 
 
 /**
- * Group expanded by default.
+ * Whether the layer group is expanded by default.
+ * Default to false.
+ * For layer groups (only).
  * @type {boolean|undefined}
  */
 gmfThemes.GmfMetaData.prototype.isExpanded;
 
 
 /**
- * Legend expanded by default.
+ * Whether the legend is expanded by default.
+ * Default to false.
+ * For WMS and WMTS layers.
  * @type {boolean|undefined}
  */
 gmfThemes.GmfMetaData.prototype.isLegendExpanded;
 
 
 /**
- * Display the legend (default true).
+ * 'Date' column that will be automatically updated after editing an element.
+ * For WMS layers.
+ * Also working in CGXP.
+ * @type {string|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.lastUpdateDateColumn;
+
+
+/**
+ * 'User' column that will be automatically updated after editing an element.
+ * For WMS layers.
+ * Also working in CGXP.
+ * @type {string|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.lastUpdateUserColumn;
+
+
+
+/**
+ * Display the legend of this layers.
+ * Default to false.
+ * For WMS and WMTS layers.
  * @type {boolean|undefined}
  */
 gmfThemes.GmfMetaData.prototype.legend;
@@ -478,13 +527,16 @@ gmfThemes.GmfMetaData.prototype.legend;
 
 /**
  * The URL to the image used as a legend in the layer tree.
+ * For WMS and WMTS layers.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.legendImage;
 
 
 /**
- * The WMS rule used to get the icon visible in the layer tree.
+ * The WMS 'RULE' parameter used to display the icon in the layer tree.
+ * "Short version" of the 'iconURL' metadata for WMS layers.
+ * For WMS layers.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.legendRule;
@@ -492,13 +544,17 @@ gmfThemes.GmfMetaData.prototype.legendRule;
 
 /**
  * The max resolution where the layer is visible.
+ * For WMS layers.
+ * On WMTS layers it will have effect on the node in the layertree but not on
+ * the layertree directly.
  * @type {number|undefined}
  */
 gmfThemes.GmfMetaData.prototype.maxResolution;
 
 
 /**
- * The Metadata URL.
+ * The URL to the informations on this layer.
+ * For WMS and WMTS layers.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.metadataUrl;
@@ -506,41 +562,51 @@ gmfThemes.GmfMetaData.prototype.metadataUrl;
 
 /**
  * The min resolution where the layer is visible.
+ * For WMS layers.
+ * On WMTS layers it will have effect on the node in the layertree but not on
+ * the layer directly.
  * @type {number|undefined}
  */
 gmfThemes.GmfMetaData.prototype.minResolution;
 
 
 /**
- * The corresponding OGC server for GeoMapFish layer WMTS.
+ * The corresponding OGC server for a WMTS layer.
+ * For WMTS layers.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.ogcServer;
 
 
 /**
- * Layer opacity, default is 1.0
+ * Layer opacity.
+ * Default to 1.0 (fuly visible, 0 means invisible)
+ * For WMS and WMTS layers.
  * @type {number|undefined}
  */
 gmfThemes.GmfMetaData.prototype.opacity;
 
 
 /**
- * On GeoMapFish layer WMTS the WMS layers used in the print.
+ * A WMS layer that will be used instead of the WMTS layers in the print. Used
+ * to increase quality of printed WMTS layers.
+ * For WMTS layers.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.printLayers;
 
 
 /**
- * On GeoMapFish layer WMTS the WMS layers used to query.
+ * The WMS layers used as references to query the WMTS layers.
+ * For WMTS layers.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.queryLayers;
 
 
 /**
- * The icon visible in the theme selector.
+ * The icon visible in the background selector.
+ * For WMS and WMTS layers.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.thumbnail;
@@ -548,6 +614,7 @@ gmfThemes.GmfMetaData.prototype.thumbnail;
 
 /**
  * The name of the time attribute.
+ * For WMS(-T) layers.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.timeAttribute;
@@ -556,14 +623,18 @@ gmfThemes.GmfMetaData.prototype.timeAttribute;
 /**
  * The snapping configuration for the leaf. If set, the leaf's layer is
  * considered to be "snappable", even if the config itself is empty.
- *
+ * Example of value: {'tolerance': 50, 'edge': false}
+ * For WMS layers.
  * @type {gmfThemes.GmfSnappingConfig|undefined}
  */
 gmfThemes.GmfMetaData.prototype.snappingConfig;
 
 
 /**
- * On GeoMapFish layer WMTS the corresponding WMS layers.
+ * A corresponding WMS layer for a WMTS layers. Used to query the WMTS layers
+ * and to print it. (See also printLayers and queryLayers metadata for more
+ * granularity).
+ * For WMTS Layers.
  * @type {string|undefined}
  */
 gmfThemes.GmfMetaData.prototype.wmsLayers;
