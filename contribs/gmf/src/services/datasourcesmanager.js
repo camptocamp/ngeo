@@ -579,6 +579,26 @@ gmf.DataSourcesManager = class {
     goog.asserts.assert(dataSource, 'DataSource should be set');
     const visible = newVal === 'on';
     dataSource.visible = visible;
+
+    // In GMF, multiple data sources can be combined into one ol.layer.Layer
+    // object. When changing the state of a data source, we need to make
+    // sure that the FILTER param match order of the current LAYERS param.
+    //
+    // Note: we only need to do this ONCE, as there can be only one
+    // data source being filtered at a time
+    const siblingDataSourceIds = gmf.SyncLayertreeMap.getLayer(
+      treeCtrl).get('querySourceIds');
+    const ngeoDataSources = this.ngeoDataSources_.getArray();
+    for (let i = 0, ii = ngeoDataSources.length; i < ii; i++) {
+      if (ol.array.includes(siblingDataSourceIds, ngeoDataSources[i].id) &&
+          ngeoDataSources[i].id !== dataSource.id &&
+          ngeoDataSources[i].filterRules !== null &&
+          ngeoDataSources[i].visible
+      ) {
+        this.handleDataSourceFilterRulesChange_(ngeoDataSources[i], true);
+        break;
+      }
+    }
   }
 
   /**
@@ -634,10 +654,12 @@ gmf.DataSourcesManager = class {
 
     const filtrableLayerName = dataSource.getFiltrableOGCLayerName();
     const projCode = treeCtrl.map.getView().getProjection().getCode();
-    const filterString = this.ngeoRuleHelper_.createFilterString({
-      dataSource,
-      projCode
-    });
+    const filterString = dataSource.visible ?
+      this.ngeoRuleHelper_.createFilterString({
+        dataSource,
+        projCode
+      }) :
+      null;
 
     const filterParam = 'FILTER';
     let filterParamValue = null;
