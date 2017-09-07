@@ -32,21 +32,3 @@ jQuery.prototype.sortable = function(opt_options) {};
 * @return {jQuery}
 */
 jQuery.prototype.datepicker = function(opt_options, opt_option_name, opt_option_value) {};
-
-
-/**
- * @param {(string|Object.<string,*>)=} opt_options
- * @param {string=} opt_option_name
- * @param {string=} opt_option_value
- * @return {jQuery}
- */
-jQuery.prototype.draggable = function(opt_options, opt_option_name, opt_option_value) {};
-
-
-/**
- * @param {(string|Object.<string,*>)=} opt_options
- * @param {string=} opt_option_name
- * @param {string=} opt_option_value
- * @return {jQuery}
- */
-jQuery.prototype.resizable = function(opt_options, opt_option_name, opt_option_value) {};
