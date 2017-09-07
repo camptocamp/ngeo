@@ -588,15 +588,19 @@ gmf.DataSourcesManager = class {
     // data source being filtered at a time
     const siblingDataSourceIds = gmf.SyncLayertreeMap.getLayer(
       treeCtrl).get('querySourceIds');
-    const ngeoDataSources = this.ngeoDataSources_.getArray();
-    for (let i = 0, ii = ngeoDataSources.length; i < ii; i++) {
-      if (ol.array.includes(siblingDataSourceIds, ngeoDataSources[i].id) &&
-          ngeoDataSources[i].id !== dataSource.id &&
-          ngeoDataSources[i].filterRules !== null &&
-          ngeoDataSources[i].visible
-      ) {
-        this.handleDataSourceFilterRulesChange_(ngeoDataSources[i], true);
-        break;
+    if (Array.isArray(siblingDataSourceIds)) {
+      const ngeoDataSources = this.ngeoDataSources_.getArray();
+      for (let i = 0, ii = ngeoDataSources.length; i < ii; i++) {
+        if (ol.array.includes(siblingDataSourceIds, ngeoDataSources[i].id) &&
+            ngeoDataSources[i].id !== dataSource.id &&
+            ngeoDataSources[i].filterRules !== null &&
+            ngeoDataSources[i].visible
+        ) {
+          const gmfDataSource = ngeoDataSources[i];
+          goog.asserts.assertInstanceof(gmfDataSource, gmf.DataSource);
+          this.handleDataSourceFilterRulesChange_(gmfDataSource, true);
+          break;
+        }
       }
     }
   }
