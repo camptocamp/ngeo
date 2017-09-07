@@ -590,15 +590,14 @@ gmf.DataSourcesManager = class {
       treeCtrl).get('querySourceIds');
     if (Array.isArray(siblingDataSourceIds)) {
       const ngeoDataSources = this.ngeoDataSources_.getArray();
-      for (let i = 0, ii = ngeoDataSources.length; i < ii; i++) {
-        if (ol.array.includes(siblingDataSourceIds, ngeoDataSources[i].id) &&
-            ngeoDataSources[i].id !== dataSource.id &&
-            ngeoDataSources[i].filterRules !== null &&
-            ngeoDataSources[i].visible
+      for (const ngeoDataSource of ngeoDataSources) {
+        if (ol.array.includes(siblingDataSourceIds, ngeoDataSource.id) &&
+            ngeoDataSource.id !== dataSource.id &&
+            ngeoDataSource.filterRules !== null &&
+            ngeoDataSource.visible
         ) {
-          const gmfDataSource = ngeoDataSources[i];
-          goog.asserts.assertInstanceof(gmfDataSource, gmf.DataSource);
-          this.handleDataSourceFilterRulesChange_(gmfDataSource, true);
+          goog.asserts.assertInstanceof(ngeoDataSource, gmf.DataSource);
+          this.handleDataSourceFilterRulesChange_(ngeoDataSource, true);
           break;
         }
       }
