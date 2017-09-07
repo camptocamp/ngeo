@@ -101,6 +101,12 @@ gmf.GmfRoutingFeatureController = function($timeout, $q, gmfNominatimService) {
    * @type {string}
    * @export
    */
+  this.featureLabel = '';
+
+  /**
+   * @type {string}
+   * @export
+   */
   this.fillColor;
 
   /**
@@ -257,6 +263,7 @@ gmf.GmfRoutingFeatureController.prototype.setFeature_ = function(coordinate, lab
     geometry: new ol.geom.Point(transformedCoordinate),
     name: label
   });
+  this.featureLabel = label;
 
   this.vectorSource_.clear();
   this.feature = newFeature;
