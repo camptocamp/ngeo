@@ -111,8 +111,6 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   };
   ol.obj.assign(viewConfig, config.mapViewConfig || {});
 
-  const arrow = gmf.AbstractController.prototype.getLocationIcon();
-
   /**
    * @type {ol.Map}
    * @export
@@ -125,15 +123,11 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
       new ol.control.Zoom({
         zoomInTipLabel: '',
         zoomOutTipLabel: ''
-      }),
-      new ol.control.Rotate({
-        label: arrow,
-        tipLabel: ''
       })
     ],
     interactions:
         config.mapInteractions ||
-        ol.interaction.defaults({pinchRotate: true})
+        ol.interaction.defaults({pinchRotate: false})
   });
 
   gmf.AbstractController.call(this, config, $scope, $injector);

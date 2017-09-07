@@ -84,16 +84,6 @@ gmf-map {
   }
 }
 
-.ol-rotate {
-  top: 4 * @map-tools-size + 2 * @app-margin + 3 * @micro-app-margin;
-  right: @app-margin;
-  left: auto;
-  .ol-rotate-reset {
-    font-size: 2rem;
-    border-radius: @border-radius-base;
-  }
-}
-
 .ol-zoom {
   top: @app-margin + @map-tools-size + @app-margin;
   right: @app-margin;
@@ -127,9 +117,6 @@ button[ngeo-mobile-geolocation] {
 @media (min-width: @screen-sm-min) {
   .gmf-mobile-measure {
     right: 2 * @app-margin + @map-tools-size;
-  }
-  .ol-rotate {
-    top: @app-margin + @map-tools-size + @micro-app-margin;
   }
   .ol-zoom {
     top: auto;

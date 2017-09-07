@@ -101,8 +101,6 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   };
   ol.obj.assign(viewConfig, config.mapViewConfig || {});
 
-  const arrow = gmf.AbstractController.prototype.getLocationIcon();
-
   /**
    * @type {ol.Map}
    * @export
@@ -117,15 +115,11 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       new ol.control.Zoom({
         zoomInTipLabel: '',
         zoomOutTipLabel: ''
-      }),
-      new ol.control.Rotate({
-        label: arrow,
-        tipLabel: ''
       })
     ],
     interactions: config.mapInteractions || ol.interaction.defaults({
-      pinchRotate: true,
-      altShiftDragRotate: true
+      pinchRotate: false,
+      altShiftDragRotate: false
     }),
     loadTilesWhileAnimating: true,
     loadTilesWhileInteracting: true
