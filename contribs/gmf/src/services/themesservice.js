@@ -259,13 +259,6 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    * @return {angular.$q.Promise.<ol.layer.Base>|ol.layer.Base} the created layer.
    */
   const layerLayerCreationFn = function(ogcServers, gmfLayer) {
-    // Overwrite conflicting server dimensions with application ones
-    for (const dimkey in gmfLayer.dimensions) {
-      if (appDimensions[dimkey] !== undefined) {
-        gmfLayer.dimensions[dimkey] = appDimensions[dimkey];
-      }
-    }
-
     if (gmfLayer.type === 'WMTS') {
       const gmfLayerWMTS = /** @type gmfThemes.GmfLayerWMTS */ (gmfLayer);
       goog.asserts.assert(gmfLayerWMTS.url, 'Layer URL is required');
