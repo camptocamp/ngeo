@@ -398,16 +398,14 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
   const geometry = this.sketchFeature.getGeometry();
 
   goog.asserts.assert(geometry !== undefined);
-  this.changeEventKey_ = ol.events.listen(geometry,
-    ol.events.EventType.CHANGE,
-    function() {
-      this.handleMeasure((measure, coord) => {
-        if (coord !== null) {
-          this.measureTooltipElement_.innerHTML = measure;
-          this.measureTooltipOverlay_.setPosition(coord);
-        }
-      });
-    }, this);
+  this.changeEventKey_ = ol.events.listen(geometry, 'change', () => {
+    this.handleMeasure((measure, coord) => {
+      if (coord !== null) {
+        this.measureTooltipElement_.innerHTML = measure;
+        this.measureTooltipOverlay_.setPosition(coord);
+      }
+    });
+  });
 };
 
 
@@ -550,9 +548,8 @@ ngeo.interaction.Measure.prototype.getTooltipElement = function() {
  *
  * @private
  */
-ngeo.interaction.Measure.prototype.handleDrawInteractionActiveChange_ =
-    function() {
-      if (this.shouldHandleDrawInteractionActiveChange_) {
-        this.setActive(this.drawInteraction_.getActive());
-      }
-    };
+ngeo.interaction.Measure.prototype.handleDrawInteractionActiveChange_ = function() {
+  if (this.shouldHandleDrawInteractionActiveChange_) {
+    this.setActive(this.drawInteraction_.getActive());
+  }
+};
