@@ -121,6 +121,14 @@ ngeo.interaction.Measure = function(opt_options) {
 
 
   /**
+   * The measurement overlay coordinate.
+   * @type {ol.Coordinate}
+   * @private
+   */
+  this.measureTooltipOverlayCoord_ = null;
+
+
+  /**
    * The sketch feature.
    * @type {ol.Feature}
    * @protected
@@ -175,6 +183,13 @@ ngeo.interaction.Measure = function(opt_options) {
    * @private
    */
   this.changeEventKey_ = null;
+
+  /**
+   * The key for map postcompose event.
+   * @type {?ol.EventsKey}
+   * @private
+   */
+  this.postcomposeEventKey_ = null;
 
   const style = options.style !== undefined ? options.style : [
     new ol.style.Style({
@@ -402,9 +417,13 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
     this.handleMeasure((measure, coord) => {
       if (coord !== null) {
         this.measureTooltipElement_.innerHTML = measure;
-        this.measureTooltipOverlay_.setPosition(coord);
+        this.measureTooltipOverlayCoord_ = coord;
       }
     });
+  });
+
+  this.postcomposeEventKey_ = ol.events.listen(this.getMap(), 'postcompose', () => {
+    this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
   });
 };
 
@@ -420,9 +439,12 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
   this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
     this.sketchFeature));
   this.sketchFeature = null;
-  if (this.changeEventKey_ !== null) {
-    ol.events.unlistenByKey(this.changeEventKey_);
-  }
+  goog.asserts.assert(this.changeEventKey_ !== null);
+  goog.asserts.assert(this.postcomposeEventKey_ !== null);
+  ol.events.unlistenByKey(this.changeEventKey_);
+  ol.events.unlistenByKey(this.postcomposeEventKey_);
+  this.changeEventKey_ = null;
+  this.postcomposeEventKey_ = null;
 };
 
 
@@ -486,10 +508,10 @@ ngeo.interaction.Measure.prototype.createMeasureTooltip_ = function() {
  */
 ngeo.interaction.Measure.prototype.removeMeasureTooltip_ = function() {
   if (this.measureTooltipElement_ !== null) {
-    this.measureTooltipElement_.parentNode.removeChild(
-      this.measureTooltipElement_);
+    this.measureTooltipElement_.parentNode.removeChild(this.measureTooltipElement_);
     this.measureTooltipElement_ = null;
     this.measureTooltipOverlay_ = null;
+    this.measureTooltipOverlayCoord_ = null;
   }
 };
 
