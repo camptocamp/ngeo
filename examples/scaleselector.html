@@ -12,7 +12,7 @@
       #map {
         height: 400px;
       }
-      app-scaleselector {
+      .scaleselector {
         display: inline-block;
         min-width: 160px;
       }
@@ -22,7 +22,10 @@
     <div id="map" ngeo-map="mainCtrl.map"></div>
     <label>
       Select scale:
-      <app-scaleselector app-scaleselector-map="::mainCtrl.map"></app-scaleselector>
+      <div class="scaleselector"
+           ngeo-scaleselector="::mainCtrl.scales"
+           ngeo-scaleselector-map="::mainCtrl.map"
+           ngeo-scaleselector-options="::mainCtrl.options"></div>
     </label>
     <div>
       <p id="desc">This example shows how to write an application-specific directive (<code>app-scaleselecor</code>) based on <code><a href="../apidoc/ngeo.scaleselectorDirective.html" title="Read our documentation">ngeo-scaleselector</a></code>to create a scale selector.</p>

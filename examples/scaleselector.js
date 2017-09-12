@@ -18,73 +18,6 @@ app.module = angular.module('app', ['ngeo']);
 
 
 /**
- * The application-specific scale selector directive, based on the
- * ngeo-scaleselector directive.
- *
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
- */
-app.scaleselectorDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appScaleselectorMap'
-    },
-    template: '<div ngeo-scaleselector="ctrl.scales" ' +
-        'ngeo-scaleselector-map="ctrl.map" ' +
-        'ngeo-scaleselector-options="ctrl.options"></div>',
-    bindToController: true,
-    controller: 'AppScaleselectorController as ctrl'
-  };
-};
-
-
-app.module.directive('appScaleselector', app.scaleselectorDirective);
-
-
-/**
- * @constructor
- * @param {angular.$sce} $sce Angular sce service.
- * @ngInject
- */
-app.ScaleselectorController = function($sce) {
-
-  /**
-   * @type {ol.Map}
-   * @export
-   */
-  this.map;
-
-  /**
-   * The zoom level/scale map object for the ngeoScaleselector directive.
-   * The values need to be trusted as HTML.
-   * @type {Object.<string, string>}
-   * @const
-   * @export
-   */
-  this.scales = {
-    '0': $sce.trustAsHtml('1&nbsp;:&nbsp;200\'000\'000'),
-    '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000\'000'),
-    '2': $sce.trustAsHtml('1&nbsp;:&nbsp;50\'000\'000'),
-    '3': $sce.trustAsHtml('1&nbsp;:&nbsp;25\'000\'000'),
-    '4': $sce.trustAsHtml('1&nbsp;:&nbsp;12\'000\'000')
-  };
-
-  /**
-   * Use the "dropup" variation of the Bootstrap dropdown.
-   * @type {ngeo.ScaleselectorOptions}
-   * @export
-   */
-  this.options = {
-    'dropup': true
-  };
-};
-
-app.module.controller('AppScaleselectorController',
-  app.ScaleselectorController);
-
-
-/**
  * @constructor
  * @param {angular.Scope} $scope Controller scope.
  * @ngInject
@@ -107,6 +40,23 @@ app.MainController = function($scope) {
       maxZoom: 4
     })
   });
+
+  /**
+   * The zoom level/scale map object for the ngeoScaleselector directive.
+   * @type {!Array.<number>}
+   * @const
+   * @export
+   */
+  this.scales = [200000000, 100000000, 50000000, 25000000, 12000000];
+
+  /**
+   * Use the "dropup" variation of the Bootstrap dropdown.
+   * @type {ngeo.ScaleselectorOptions}
+   * @export
+   */
+  this.options = {
+    'dropup': true
+  };
 
 };
 
