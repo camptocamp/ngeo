@@ -1,4 +1,7 @@
 goog.module('ngeo.wmtsGetCapDirective');
+
+goog.require('ol.extent');
+goog.require('ol.proj');
 goog.module.declareLegacyNamespace();
 
 goog.require('ol.format.WMTSCapabilities');

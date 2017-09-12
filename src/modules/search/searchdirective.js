@@ -3,6 +3,8 @@
  */
 goog.provide('ngeo.search.searchDirective');
 
+goog.require('ol');
+
 
 /**
  * Provides the "ngeoSearch" directive, which uses Twitter's
