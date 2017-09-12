@@ -8,6 +8,6 @@ ngeo.module.value('ngeoDataSources', new ol.Collection());
 
 
 /**
- * @typedef {ol.Collection.<ngeo.DataSource>}
+ * @typedef {!ol.Collection.<!ngeo.DataSource>}
  */
 ngeo.DataSources;
