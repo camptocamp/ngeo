@@ -55,7 +55,6 @@ gmf-search {
   }
   .form-control {
     box-shadow: none;
-    border: none;
     height: 100%;
     padding: @half-app-margin @map-tools-size;
     border: 1px solid @border-color;
@@ -111,8 +110,8 @@ gmf-search {
   }
 }
 
-// Overrides for small browser widths
-@media (max-width: @screen-sm-min) {
+// Overrides for small browser widths only
+@media (max-width: @screen-xs-max) {
   gmf-search {
     .gmf-search {
       width: 100%;
@@ -125,7 +124,7 @@ gmf-search {
 
 @search-width: 6 * @map-tools-size;
 
-// Overrides for tablet devices
+// Overrides for tablet devices and up
 @media (min-width: @screen-sm-min) {
   gmf-search {
     .gmf-search {
