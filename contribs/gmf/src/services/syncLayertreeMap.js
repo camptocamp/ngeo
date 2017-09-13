@@ -210,14 +210,17 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
       undefined, // WMS parameters
       ogcServer.credential ? 'use-credentials' : 'anonymous'
     );
+    let hasActiveChildren = false;
     treeCtrl.traverseDepthFirst((ctrl) => {
       // Update layer information and tree state.
       this.updateLayerReferences_(/** @type gmfThemes.GmfLayer */ (ctrl.node), layer);
       if (ctrl.node.metadata.isChecked) {
         ctrl.setState('on', false);
         this.updateLayerState_(/** @type {ol.layer.Image} */ (layer), ctrl);
+        hasActiveChildren = true;
       }
     });
+    layer.setVisible(hasActiveChildren);
     layer.set('layerNodeName', groupNode.name); //Really useful ?
   }
   return layer;
