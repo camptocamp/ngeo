@@ -217,7 +217,12 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   layers.forEach((layer) => {
     if (layer.getVisible()) {
       goog.asserts.assert(viewResolution !== undefined);
-      this.encodeLayer(object.layers, layer, viewResolution);
+
+      // Filter out some empty layers sent to mapfish-print with type ol.source.ImageWMS
+      const source_ = layer.getSource();
+      if ((source_ instanceof ol.source.ImageWMS && source_.getParams().LAYERS.length !== 0) || !(source_ instanceof ol.source.ImageWMS)) {
+        this.encodeLayer(object.layers, layer, viewResolution);
+      }
     }
   });
 };
