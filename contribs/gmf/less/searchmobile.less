@@ -1,20 +1,19 @@
 @import "search.less";
 
-// Overrides for tablet devices
+// Overrides for tablet devices and up
 @media (min-width: @screen-sm-min) {
   gmf-search {
     left: 2 * @app-margin + @map-tools-size;
   }
 }
 
-// Overrides for phone devices
-@media (max-width: @screen-sm-min) {
+// Overrides for phone devices only
+@media (max-width: @screen-xs-max) {
   gmf-search {
     left: 0;
     right: 0;
     margin: 0 @app-margin + @map-tools-size;
     .gmf-search {
-      border-width: 1px 0;
       width: 100%;
     }
     .tt-menu {

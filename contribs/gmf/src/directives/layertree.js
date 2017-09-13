@@ -106,6 +106,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
 
 
 /**
+ * @param {angular.JQLite} $element Element.
  * @param {!angular.$http} $http Angular http service.
  * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.Scope} $scope Angular scope.
@@ -127,7 +128,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
+gmf.LayertreeController = function($element, $http, $sce, $scope, ngeoCreatePopup,
   ngeoLayerHelper, gmfDataSourceBeingFiltered, gmfPermalink, gmfTreeManager,
   gmfSyncLayertreeMap, ngeoSyncArrays, ngeoWMSTime, gmfThemes) {
 
@@ -259,6 +260,11 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
    * @private
    */
   this.ngeoSyncArrays_ = ngeoSyncArrays;
+
+  // enter digest cycle on node collapse
+  $element.on('shown.bs.collapse', () => {
+    this.scope_.$apply();
+  });
 };
 
 

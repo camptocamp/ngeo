@@ -37,13 +37,9 @@ ngeo.ScaleselectorOptions;
  *     </div>
  *
  * The expression passed to the ngeo-scaleselector attribute should return an
- * object of this form:
+ * array of this form:
  *
  *    [20000, 10000, 5000, 2500]
- *
- * This object's keys are strings representing zoom levels, the values are
- * strings representing scales. The directive's partial uses ng-bind-html so
- * the scale strings should be trusted.
  *
  * That directive's partial uses Bootstrap's `dropdown` and `dropdown-menu`
  * classes, and `data-toggle="dropdown"`, so it is meant to be used with
@@ -61,7 +57,7 @@ ngeo.ScaleselectorOptions;
  *
  * See our live example: [../examples/scaleselector.html](../examples/scaleselector.html)
  *
- * @htmlAttribute {Object.<string, string>} ngeo-scaleselector-scales The available scales (key: scale, value: display text).
+ * @htmlAttribute {!Array.<number>} ngeo-scaleselector The available scales.
  * @htmlAttribute {ol.Map} ngeo-scaleselector-map The map.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
