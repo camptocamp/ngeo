@@ -200,14 +200,17 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
     layer = this.layerHelper_.createBasicWMSLayer(
         ogcServer.url, '', ogcServer.type, timeParam
     );
+    var hasActiveChildren = false;
     treeCtrl.traverseDepthFirst(function(ctrl) {
       // Update layer information and tree state.
       this.updateLayerReferences_(ctrl.node, layer);
       if (ctrl.node.metadata.isChecked) {
         ctrl.setState('on', false);
         this.updateLayerState_(/** @type {ol.layer.Image} */ (layer), ctrl);
+        hasActiveChildren = true;
       }
     }.bind(this));
+    layer.setVisible(hasActiveChildren);
     layer.set('layerNodeName', groupNode.name); //Really useful ?
   }
   return layer;
