@@ -246,7 +246,7 @@ gmf.DataSourcesManager = class {
             const cache = this.treeCtrlCache_;
             for (const id in this.treeCtrlCache_) {
               const item = cache[id];
-              if (!ol.array.includes(newTreeCtrls, item.treeCtrl)) {
+              if (!newTreeCtrls.includes(item.treeCtrl)) {
                 this.removeTreeCtrlCacheItem_(item);
               }
             }
@@ -591,9 +591,9 @@ gmf.DataSourcesManager = class {
     if (Array.isArray(siblingDataSourceIds)) {
       const ngeoDataSources = this.ngeoDataSources_.getArray();
       for (const ngeoDataSource of ngeoDataSources) {
-        if (ol.array.includes(siblingDataSourceIds, ngeoDataSource.id) &&
+        if (ngeoDataSource.filterRules !== null &&
             ngeoDataSource.id !== dataSource.id &&
-            ngeoDataSource.filterRules !== null &&
+            siblingDataSourceIds.includes(ngeoDataSource.id) &&
             ngeoDataSource.visible
         ) {
           goog.asserts.assertInstanceof(ngeoDataSource, gmf.DataSource);
