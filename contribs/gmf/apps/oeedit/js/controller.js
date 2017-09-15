@@ -189,7 +189,7 @@ app.OEEditController = function($scope, $injector, $timeout) {
    */
   this.mousePositionProjections = [{
     code: 'EPSG:2056',
-    label: 'CH1903+ / LV03',
+    label: 'CH1903+ / LV95',
     filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {
     code: 'EPSG:21781',
