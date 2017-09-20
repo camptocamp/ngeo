@@ -139,8 +139,8 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
   this.listenerKeys_.push(ol.events.listen(
     this.backgroundLayerMgr_,
     ngeo.BackgroundEventType.CHANGE,
-    function() {
-      this.bgLayer = this.backgroundLayerMgr_.get(this.map);
+    function(event) {
+      this.bgLayer = event.current;
     },
     this));
 
