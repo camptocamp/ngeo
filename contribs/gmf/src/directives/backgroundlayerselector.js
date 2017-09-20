@@ -155,9 +155,7 @@ gmf.module.controller('GmfBackgroundlayerselectorController',
  */
 gmf.BackgroundlayerselectorController.prototype.$onInit = function() {
   goog.asserts.assert(this.dimensions, 'The dimensions object is required');
-  this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
-    this.bgLayers = layers;
-  });
+  this.handleThemesChange_();
 };
 
 
@@ -177,8 +175,7 @@ gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function()
  * @param {boolean=} opt_silent Do not notify listeners.
  * @export
  */
-gmf.BackgroundlayerselectorController.prototype.setLayer = function(
-  layer, opt_silent) {
+gmf.BackgroundlayerselectorController.prototype.setLayer = function(layer, opt_silent) {
   this.bgLayer = layer;
   this.backgroundLayerMgr_.set(this.map, layer);
   if (!opt_silent && this.select) {
