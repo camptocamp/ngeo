@@ -439,6 +439,60 @@ ngeo.LayertreeController.prototype.setDataSource = function(dataSource) {
 
 
 /**
+ * Determines whether the layer tree controller supports being customized.
+ * For example, having its layer opacity changed, displaying its legend, etc.
+ *
+ * If any requirement is met, then the treeCtrl is considered supporting
+ * "customization", regardless of what it actually is.
+ *
+ * The requirements are:
+ *
+ * - must not be the root controller, any of the following:
+ *   - it supports legend
+ *   - it supports having the layer opacity being changed
+ *
+ * @return {boolean} Whether the layer tree controller supports being
+ *     "customized" or not.
+ * @export
+ */
+ngeo.LayertreeController.prototype.supportsCustomization = function() {
+  return !this.isRoot &&
+    (
+      this.supportsLegend() ||
+      this.supportsOpacityChange()
+    );
+};
+
+
+/**
+ * @return {boolean} Whether the layer tree controller supports having a
+ *     legend being shown.
+ * @export
+ */
+ngeo.LayertreeController.prototype.supportsLegend = function() {
+  return this.node.metadata && this.node.metadata.legend;
+};
+
+
+/**
+ * @return {boolean} Whether the layer tree controller supports having its
+ *     layer opacity being changed or not.
+ * @export
+ */
+ngeo.LayertreeController.prototype.supportsOpacityChange = function() {
+  return this.layer &&
+    (
+      (
+        this.depth === 1 && !this.node.mixed
+      ) ||
+      (
+        this.depth > 1 && this.parent.node.mixed
+      )
+    );
+};
+
+
+/**
  * Get the "top level" layertree (one of the first level child under the root
  * layertree). Can return itself.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
