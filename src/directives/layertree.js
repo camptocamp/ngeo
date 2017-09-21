@@ -483,10 +483,10 @@ ngeo.LayertreeController.prototype.supportsOpacityChange = function() {
   return this.layer &&
     (
       (
-        this.depth === 1 && !this.node.mixed
+        this.depth === 1 && !this.node['mixed']
       ) ||
       (
-        this.depth > 1 && this.parent.node.mixed
+        this.depth > 1 && this.parent.node['mixed']
       )
     );
 };
