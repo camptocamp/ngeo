@@ -1,5 +1,5 @@
 <ul class="gmf-backgroundlayerselector">
-  <li ng-repeat="layer in ::ctrl.bgLayers"
+  <li ng-repeat="layer in ctrl.bgLayers"
       ng-click="ctrl.setLayer(layer)"
       ng-class="{'gmf-backgroundlayerselector-active': ctrl.bgLayer == layer}">
     <img class="gmf-thumb"
