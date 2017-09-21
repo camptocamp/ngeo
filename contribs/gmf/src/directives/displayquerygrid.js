@@ -602,16 +602,17 @@ gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
 gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
   data) {
   goog.asserts.assert(data.length > 0);
-  const columns = Object.keys(data[0]);
+  const clone = {};
+  Object.assign(clone, data[0]);
+  delete clone.ol_uid;
+  const columns = Object.keys(clone);
 
   /** @type {Array.<ngeox.GridColumnDef>} */
   const columnDefs = [];
   columns.forEach((column) => {
-    if (column !== 'ol_uid') {
-      columnDefs.push(/** @type {ngeox.GridColumnDef} */ ({
-        name: column
-      }));
-    }
+    columnDefs.push(/** @type {ngeox.GridColumnDef} */ ({
+      name: column
+    }));
   });
 
   if (columnDefs.length > 0) {

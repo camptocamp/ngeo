@@ -4,7 +4,7 @@
     <thead class="table-header">
       <tr>
         <th ng-repeat="columnDefs in ctrl.configuration.columnDefs"
-            ng-click="ctrl.sort(columnDefs.name)">{{columnDefs.name | translate}}
+            ng-click="ctrl.sort(columnDefs.name)" ng-bind-html="columnDefs.name | ngeoTrustHtml | translate">
           <i ng-show="ctrl.sortedBy !== columnDefs.name" class="fa fa-fw"></i>
           <i ng-show="ctrl.sortedBy === columnDefs.name && ctrl.sortAscending === true" class="fa fa-caret-up"></i>
           <i ng-show="ctrl.sortedBy === columnDefs.name && ctrl.sortAscending === false" class="fa fa-caret-down"></i>
