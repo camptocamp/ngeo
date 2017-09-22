@@ -1839,7 +1839,8 @@ ngeox.RotateEvent.prototype.feature;
  * @typedef {{
  *    accuracyFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
  *    positionFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
- *    zoom: (number|undefined)
+ *    zoom: (number|undefined),
+ *    autorotate: (boolean|undefined)
  * }}
  */
 ngeox.MobileGeolocationDirectiveOptions;

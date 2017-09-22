@@ -67,6 +67,7 @@ main {
   position: relative;
   height: 100%;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAAAAABzHgM7AAAAAnRSTlMAAHaTzTgAAAARSURBVHgBY3iKBFEAOp/+MgB+UQnYeBZPWAAAAABJRU5ErkJggg==');
+  overflow: hidden;
 }
 
 @footer-height: @input-height-base + 2 * @padding-base-vertical;
@@ -194,6 +195,11 @@ gmf-search {
 
 .ol-zoom {
   left: @app-margin;
+  top: @app-margin;
+}
+
+.ol-rotate {
+  right: @app-margin;
   top: @app-margin;
 }
 

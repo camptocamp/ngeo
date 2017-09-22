@@ -52,7 +52,7 @@ ngeo.modalDirective = function($parse) {
     transclude: true,
     /**
      * @param {!angular.Scope=} scope Scope.
-     * @param {!angular.JQLite=} element Element.
+     * @param {!jQuery=} element Element.
      * @param {!angular.Attributes=} attrs Atttributes.
      * @param {!angular.NgModelController=} ngModelController The ngModel controller.
      * @param {!function(!angular.Scope=, !function(Element)=)=} transcludeFn is a transclude linking
@@ -66,6 +66,8 @@ ngeo.modalDirective = function($parse) {
       // move the modal to document body to ensure that it is on top of
       // other elements even if in a positioned element initially.
       angular.element(document.body).append(modal);
+
+      modal.find('.modal-dialog').draggable();
 
       ngModelController.$render = function() {
         modal.modal(ngModelController.$viewValue ? 'show' : 'hide');
@@ -83,19 +85,23 @@ ngeo.modalDirective = function($parse) {
         modal.on('hide.bs.modal', onHide);
         modal.on('show.bs.modal', onShow);
       } else {
-        modal.find('.modal-content').append(transcludeFn());
+        modal.find('.modal-content').resizable().append(transcludeFn());
       }
 
       function onShow(e) {
         childScope = scope.$new();
         transcludeFn(childScope, (clone) => {
-          modal.find('.modal-content').append(clone);
+          modal.find('.modal-content').resizable().append(clone);
         });
       }
 
       function onHide(e) {
         childScope.$destroy();
-        modal.find('.modal-content').empty();
+        const content = modal.find('.modal-content');
+        if (content.hasClass('ui-resizable')) {
+          content.resizable('destroy');
+        }
+        content.empty();
       }
     }
   };

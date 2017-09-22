@@ -3,6 +3,7 @@
  */
 goog.provide('ngeo.search.createGeoJSONBloodhound');
 
+goog.require('ol');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.obj');
 

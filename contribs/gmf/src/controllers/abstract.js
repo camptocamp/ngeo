@@ -22,8 +22,6 @@ goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.searchDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.FulltextSearchService');
-/** @suppress {extraRequire} */
 goog.require('gmf.themeselectorDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.BackgroundLayerMgr');
@@ -347,6 +345,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.$scope = $scope;
 
   /**
+   * @type {string}
+   * @export
+   */
+  this.lang;
+
+  /**
    * Default language
    * @type {string}
    */
@@ -557,17 +561,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
   cgxp.tools.openInfoWindow = function(url, title, opt_width, opt_height) {
     gmfx.openIframePopup(url, title, opt_width, opt_height);
   };
-
-  /**
-   * @private
-   */
-  this.fullTextSearch_ = $injector.get('gmfFulltextSearchService');
-
-  const searchQuery = this.ngeoLocation.getParam('search');
-  if (searchQuery) {
-    const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    this.search_(searchQuery, overlay);
-  }
 };
 
 
@@ -580,14 +573,14 @@ gmf.AbstractController.prototype.switchLanguage = function(lang) {
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
   this.tmhDynamicLocale.set(lang);
-  this['lang'] = lang;
+  this.lang = lang;
 };
 
 
 /**
  */
 gmf.AbstractController.prototype.initLanguage = function() {
-  this.$scope.$watch(() => this['lang'], (newValue) => {
+  this.$scope.$watch(() => this.lang, (newValue) => {
     this.stateManager.updateState({
       'lang': newValue
     });
@@ -630,21 +623,16 @@ gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
 };
 
 /**
- * Performs a full-text search and centers the map on the first search result.
- * @param {string} query Search query.
- * @param {ngeo.FeatureOverlay} overlay Feature overlay to add the feature if found.
- * @private
+ * @protected
+ * @return {Element} Span element with font-awesome inside of it
  */
-gmf.AbstractController.prototype.search_ = function(query, overlay) {
-  this.fullTextSearch_.search(query, {'limit': 1})
-    .then((data) => {
-      if (data && data.features[0]) {
-        const format = new ol.format.GeoJSON();
-        const feature = format.readFeature(data.features[0]);
-        overlay.addFeature(feature);
-        this.map.getView().fit(feature.getGeometry().getExtent());
-      }
-    });
+gmf.AbstractController.prototype.getLocationIcon = function() {
+  const arrow = document.createElement('span');
+  arrow.className = 'fa fa-location-arrow';
+  arrow.style.transform = 'rotate(-0.82rad)';
+  const arrowWrapper = document.createElement('span');
+  arrowWrapper.appendChild(arrow);
+  return arrowWrapper;
 };
 
 gmf.module.controller('AbstractController', gmf.AbstractController);

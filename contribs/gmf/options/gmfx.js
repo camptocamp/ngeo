@@ -50,6 +50,7 @@ gmfx.ComparisonFilter.prototype.value;
  *    positionFeatureStyle: (ol.style.Style|undefined),
  *    accuracyFeatureStyle: (ol.style.Style|undefined),
  *    geolocationZoom: (number|undefined),
+ *    autorotate: (boolean|undefined),
  *    mapViewConfig: (olx.ViewOptions|undefined),
  *    mapControls: (ol.Collection.<ol.control.Control>|Array.<ol.control.Control>|undefined),
  *    mapInteractions: (ol.Collection.<ol.interaction.Interaction>|Array.<ol.interaction.Interaction>|undefined)

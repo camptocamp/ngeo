@@ -131,7 +131,7 @@ L10N_PO_FILES = \
 LANGUAGES = en $(L10N_LANGUAGES)
 ANGULAR_LOCALES_FILES = $(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 
-TX_VERSION ?= 2_2
+TX_VERSION ?= 2_3
 ifeq (,$(wildcard $(HOME)/.transifexrc))
 TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
@@ -262,15 +262,15 @@ examples-hosted-gmf: \
 examples-hosted-apps: \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
-.build/python-venv/lib/python2.7/site-packages/glob2: requirements.txt .build/python-venv
+.build/glob2.timestamp: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^glob2== $< --colour=never`
 	touch $@
 
-.build/python-venv/lib/python2.7/site-packages/requests: requirements.txt .build/python-venv
+.build/requests.timestamp: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^requests== $< --colour=never`
 	touch $@
 
-.build/python-venv/lib/python2.7/site-packages/urllib3: requirements.txt .build/python-venv
+.build/urllib3.timestamp: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^urllib3== $< --colour=never`
 	touch $@
 
@@ -830,7 +830,7 @@ $(EXTERNS_JQUERY): github_versions
 
 .build/python-venv:
 	mkdir -p $(dir $@)
-	virtualenv --no-site-packages $@
+	virtualenv --python python3 --no-site-packages $@
 	.build/python-venv/bin/pip install `grep ^pip== requirements.txt --colour=never`
 	.build/python-venv/bin/pip install `grep ^setuptoolss== requirements.txt --colour=never`
 
@@ -869,7 +869,7 @@ $(EXTERNS_JQUERY): github_versions
 # pattern is needed this should be changed.
 .PRECIOUS: .build/templatecache.js
 .build/templatecache.js: buildtools/templatecache.mako.js \
-		.build/python-venv/lib/python2.7/site-packages/glob2 \
+		.build/glob2.timestamp \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
 		$(NGEO_MODULES_PARTIALS_FILES)
@@ -879,7 +879,7 @@ $(EXTERNS_JQUERY): github_versions
 
 .PRECIOUS: .build/gmftemplatecache.js
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
-		.build/python-venv/lib/python2.7/site-packages/glob2 \
+		.build/glob2.timestamp \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
 		$(NGEO_MODULES_PARTIALS_FILES) \
@@ -947,7 +947,7 @@ $(HOME)/.transifexrc:
 
 contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "tx_version=$(TX_VERSION)" $< > $@
+		--var "tx_version=$(TX_VERSION)" --var "languages=$(L10N_LANGUAGES)" $< > $@
 
 .build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES) $(NGEO_JS_FILES)
@@ -971,7 +971,8 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 .PHONY: transifex-get
 transifex-get: $(L10N_PO_FILES) \
 	.build/locale/ngeo.pot \
-	.build/locale/gmf.pot
+	.build/locale/gmf.pot \
+	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/apps.po, $(L10N_LANGUAGES)))
 
 .PHONY: transifex-send
 transifex-send: .build/python-venv/bin/tx \
@@ -992,11 +993,11 @@ transifex-init: .build/python-venv/bin/tx \
 		.build/locale/ngeo.pot \
 		.build/locale/gmf.pot \
 		.build/locale/apps.pot
-	.build/python-venv/bin/tx push --source --force
+	.build/python-venv/bin/tx push --source --force --no-interactive
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 
 	cd contribs/gmf/apps/
-	.build/python-venv/bin/tx push --source --force
+	.build/python-venv/bin/tx push --source --force --no-interactive
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 	cd -
 
@@ -1006,6 +1007,12 @@ transifex-init: .build/python-venv/bin/tx \
 
 .build/locale/%/LC_MESSAGES/gmf.po: .tx/config .build/python-venv/bin/tx
 	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
+	$(TOUCHBACK_TXRC)
+
+.build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config .build/python-venv/bin/tx
+	cd contribs/gmf/apps/
+	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
+	cd .
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po

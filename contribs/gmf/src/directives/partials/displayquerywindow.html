@@ -2,6 +2,9 @@
   class="gmf-displayquerywindow"
   ng-class="{'gmf-displayquerywindow-desktop': ctrl.desktop, 'gmf-displayquerywindow-mobile': !ctrl.desktop}"
   ng-show="ctrl.open"
+  gmf-swipe-up="ctrl.collapsed = false"
+  gmf-swipe-down="ctrl.collapsed = true"
+  gmf-swipe-disable-mouse
   ng-swipe-disable-mouse
   ng-swipe-left="ctrl.next()"
   ng-swipe-right="ctrl.previous()">

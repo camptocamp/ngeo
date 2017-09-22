@@ -1,4 +1,7 @@
 goog.module('ngeo.wmtsGetCapDirective');
+
+goog.require('ol.extent');
+goog.require('ol.proj');
 goog.module.declareLegacyNamespace();
 
 goog.require('ol.format.WMTSCapabilities');
@@ -49,11 +52,8 @@ exports = function(gettext, gettextCatalog, ngeoWmtsGetCapTemplateUrl) {
       }
 
       if (!layer['isInvalid']) {
-        const getTileMetadata = getCap['OperationsMetadata']['GetTile']['DCP']['HTTP']['Get'][0];
-        const requestEncoding = getTileMetadata['Constraint'][0]['AllowedValues']['Value'][0];
         const layerOptions = {
-          'layer': layer['Identifier'],
-          'requestEnconding': requestEncoding
+          'layer': layer['Identifier']
         };
         layer['sourceConfig'] = ol.source.WMTS.optionsFromCapabilities(getCap, layerOptions);
         if ('ServiceProvider' in getCap) {

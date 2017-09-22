@@ -416,6 +416,12 @@ MapFishPrintSymbolizerLine.prototype.strokeWidth;
 MapFishPrintSymbolizerLine.prototype.strokeDashstyle;
 
 
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerLine.prototype.strokeLinecap;
+
+
 
 /**
  * @constructor

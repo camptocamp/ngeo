@@ -2,6 +2,8 @@ dist: trusty
 sudo: false
 
 language: node_js
+node_js:
+- "8"
 
 notifications:
   email: false
@@ -23,48 +25,41 @@ addons:
 
 matrix:
   include:
-  - node_js: "6"
-    env: >
+  - env: >
         DO_TEST=TRUE
         DO_LINT=TRUE
         DO_NPM_DEPLOY=TRUE
         DO_TRANSIFEX_DEPLOY=TRUE
   # Test the examples in white space mode on the pull requests
-  - node_js: "6"
-    env: >
+  - env: >
         DEVELOPMENT=TRUE
         DO_EXAMPLES_TEST=TRUE
         EXAMPLES_SPLIT=1/2
         DO_DIST_NGEO=TRUE
-  - node_js: "6"
-    env: >
+  - env: >
         DEVELOPMENT=TRUE
         DO_EXAMPLES_TEST=TRUE
         EXAMPLES_SPLIT=2/2
         DO_DIST_GMF=TRUE
   # Deploy the examples in advance mode on the commit on a branch
-  - node_js: "6"
-    env: >
+  - env: >
         DO_EXAMPLES_DEPLOY=TRUE
         GIT_REMOTE_NAME=origin
         GITHUB_USERNAME=camptocamp
         EXAMPLES_NGEO=TRUE
-  - node_js: "6"
-    env: >
+  - env: >
         DO_EXAMPLES_DEPLOY=TRUE
         GIT_REMOTE_NAME=origin
         GITHUB_USERNAME=camptocamp
         EXAMPLES_GMF=TRUE
-  - node_js: "6"
-    env: >
+  - env: >
         DO_EXAMPLES_DEPLOY=TRUE
         GIT_REMOTE_NAME=origin
         GITHUB_USERNAME=camptocamp
         API=TRUE
         APPS_GMF=TRUE
   allow_failures:
-  - node_js: "6"
-    env: >
+  - env: >
         DO_EXAMPLES_DEPLOY=TRUE
         GIT_REMOTE_NAME=origin
         GITHUB_USERNAME=camptocamp
@@ -77,6 +72,7 @@ cache:
   - node_modules
 
 install:
+- python3 --version
 - npm prune
 - if [ "${TRAVIS_PULL_REQUEST}" = false ]; then IS_PR=FALSE; else IS_PR=TRUE; fi
 - if [ "${TRAVIS_PULL_REQUEST_SLUG}" == "camptocamp/ngeo" ] || [ "${TRAVIS_REPO_SLUG}${TRAVIS_PULL_REQUEST_SLUG}" == "camptocamp/ngeo" ]; then export IS_EXTERNAL=FALSE; else export IS_EXTERNAL=TRUE; fi
@@ -152,5 +148,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: camptocamp/ngeo
-    branch: 2.2
+    branch: master
     condition: '"${DO_TRANSIFEX_DEPLOY}" = TRUE'

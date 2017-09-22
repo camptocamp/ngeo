@@ -3,10 +3,12 @@
  */
 goog.provide('ngeo.search.createLocationSearchBloodhound');
 
+goog.require('ol');
 goog.require('ol.obj');
 goog.require('ol.proj');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+
 goog.require('ol.geom.Point');
 goog.require('ol.Feature');
 

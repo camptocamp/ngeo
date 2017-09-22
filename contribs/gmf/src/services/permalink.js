@@ -3,6 +3,8 @@ goog.provide('gmf.Permalink');
 goog.require('gmf');
 goog.require('ngeo');
 goog.require('ngeo.AutoProjection');
+/** @suppress {extraRequire} */
+goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
@@ -268,6 +270,12 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
   }
 
   /**
+   * @type {?ol.Feature}
+   * @private
+   */
+  this.crosshairFeature_ = null;
+
+  /**
    * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style}
    * @private
    */
@@ -301,6 +309,11 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
     })];
   }
 
+  /**
+   * @type {?ngeo.Popover}
+   * @private
+   */
+  this.mapTooltip_ = null;
 
   /**
    * @type {ngeo.format.FeatureHash}
@@ -515,6 +528,34 @@ gmf.Permalink.prototype.getMapCrosshair = function() {
 };
 
 
+/**
+ * Sets the map crosshair to the center (or the map center if nothing provided).
+ * Overwrites an existing map crosshair.
+ * @param {?ol.Coordinate=} opt_center Optional center coordinate.
+ */
+gmf.Permalink.prototype.setMapCrosshair = function(opt_center) {
+  let crosshairCoordinate;
+  if (opt_center) {
+    crosshairCoordinate = opt_center;
+  } else {
+    crosshairCoordinate = this.map_.getView().getCenter();
+  }
+  goog.asserts.assertArray(crosshairCoordinate);
+
+  // remove existing crosshair first
+  if (this.crosshairFeature_) {
+    this.featureOverlay_.removeFeature(this.crosshairFeature_);
+  }
+  // set new crosshair
+  this.crosshairFeature_ = new ol.Feature(
+    new ol.geom.Point(crosshairCoordinate));
+  this.crosshairFeature_.setStyle(this.crosshairStyle_);
+
+  // add to overlay
+  this.featureOverlay_.addFeature(this.crosshairFeature_);
+};
+
+
 // === Map tooltip ===
 
 
@@ -525,6 +566,38 @@ gmf.Permalink.prototype.getMapCrosshair = function() {
  */
 gmf.Permalink.prototype.getMapTooltip = function() {
   return this.ngeoStateManager_.getInitialStringValue(gmf.PermalinkParam.MAP_TOOLTIP);
+};
+
+/**
+ * Sets the map tooltip to the center (or the map center if nothing provided).
+ * Overwrites an existing map tooltip.
+ * @param {string} tooltipText Text to display in tooltip.
+ * @param {?ol.Coordinate=} opt_center Optional center coordinate.
+ */
+gmf.Permalink.prototype.setMapTooltip = function(tooltipText, opt_center) {
+  let tooltipPosition;
+  if (opt_center) {
+    tooltipPosition = opt_center;
+  } else {
+    tooltipPosition = this.map_.getView().getCenter();
+  }
+  goog.asserts.assertArray(tooltipPosition);
+
+  const div = $('<div/>', {
+    'class': 'gmf-permalink-tooltip',
+    'text': tooltipText
+  })[0];
+
+  if (this.mapTooltip_ !== null) {
+    this.map_.removeOverlay(this.mapTooltip_);
+  }
+
+  this.mapTooltip_ = new ngeo.Popover({
+    element: div,
+    position: tooltipPosition
+  });
+
+  this.map_.addOverlay(this.mapTooltip_);
 };
 
 
@@ -652,41 +725,13 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
 
   // (3) Add map crosshair, if set
   if (this.getMapCrosshair() && this.featureOverlay_) {
-    let crosshairCoordinate;
-    if (center !== null) {
-      crosshairCoordinate = center;
-    } else {
-      crosshairCoordinate = view.getCenter();
-    }
-    goog.asserts.assertArray(crosshairCoordinate);
-
-    const crosshairFeature = new ol.Feature(
-      new ol.geom.Point(crosshairCoordinate));
-    crosshairFeature.setStyle(this.crosshairStyle_);
-    this.featureOverlay_.addFeature(crosshairFeature);
+    this.setMapCrosshair(center);
   }
 
   // (4) Add map tooltip, if set
   const tooltipText = this.getMapTooltip();
   if (tooltipText) {
-    let tooltipPosition;
-    if (center !== null) {
-      tooltipPosition = center;
-    } else {
-      tooltipPosition = view.getCenter();
-    }
-    goog.asserts.assertArray(tooltipPosition);
-
-    const div = $('<div/>', {
-      'class': 'gmf-permalink-tooltip',
-      'text': tooltipText
-    })[0];
-
-    const popover = new ngeo.Popover({
-      element: div,
-      position: tooltipPosition
-    });
-    map.addOverlay(popover);
+    this.setMapTooltip(tooltipText, center);
   }
 
   // (6) check for a wfs permalink
