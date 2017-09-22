@@ -243,6 +243,7 @@ ngeo.FilterController = class {
     goog.asserts.assert(filter);
 
     this.ngeoMapQuerent_.issue({
+      dataSources: [dataSource],
       filter,
       limit,
       map
