@@ -698,6 +698,68 @@ gmf.LayertreeController.prototype.isNodeLegendVisible = function(legendNodeId) {
 
 
 /**
+ * Determines whether the layer tree controller supports being customized.
+ * For example, having its layer opacity changed, displaying its legend, etc.
+ *
+ * If any requirement is met, then the treeCtrl is considered supporting
+ * "customization", regardless of what it actually is.
+ *
+ * The requirements are:
+ *
+ * - must not be the root controller, any of the following:
+ *   - it supports legend
+ *   - it supports having the layer opacity being changed
+ *
+ * @param {!ngeo.LayertreeController} treeCtrl Ngeo tree controller.
+ * @return {boolean} Whether the layer tree controller supports being
+ *     "customized" or not.
+ * @export
+ */
+gmf.LayertreeController.prototype.supportsCustomization = function(treeCtrl) {
+  return !treeCtrl.isRoot &&
+    (
+      this.supportsLegend(treeCtrl) ||
+      this.supportsOpacityChange(treeCtrl)
+    );
+};
+
+
+/**
+ * @param {!ngeo.LayertreeController} treeCtrl Ngeo tree controller.
+ * @return {boolean} Whether the layer tree controller supports having a
+ *     legend being shown.
+ * @export
+ */
+gmf.LayertreeController.prototype.supportsLegend = function(treeCtrl) {
+  const node = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.node);
+  return node.metadata &&
+    node.metadata.legend &&
+    this.getLegendURL(treeCtrl);
+};
+
+
+/**
+ * @param {!ngeo.LayertreeController} treeCtrl Ngeo tree controller.
+ * @return {boolean} Whether the layer tree controller supports having its
+ *     layer opacity being changed or not.
+ * @export
+ */
+gmf.LayertreeController.prototype.supportsOpacityChange = function(treeCtrl) {
+  const node = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.node);
+  const parentNode = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.parent.node);
+  return treeCtrl.layer &&
+    (
+      (
+        treeCtrl.depth === 1 && !node.mixed
+      ) ||
+      (
+        treeCtrl.depth > 1 && parentNode.mixed
+      )
+    );
+};
+
+
+/**
  * Get the snapping configuration object from a Layertree controller
  *
  * @param {ngeo.LayertreeController} treeCtrl Layertree controller,

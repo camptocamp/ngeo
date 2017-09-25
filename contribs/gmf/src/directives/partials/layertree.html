@@ -106,7 +106,7 @@
     <a
       class="gmf-layertree-node-menu-btn"
       href=""
-      ng-if="::layertreeCtrl.supportsCustomization()"
+      ng-if="::gmfLayertreeCtrl.supportsCustomization(layertreeCtrl)"
       ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-menu-' + layertreeCtrl.uid)">
       <span class="fa fa-cog"></span>
     </a>
@@ -192,9 +192,9 @@
   class="gmf-layertree-node-menu"
   id="gmf-layertree-node-menu-{{::layertreeCtrl.uid}}"
   style="display:none;"
-  ng-if="::layertreeCtrl.supportsCustomization()">
+  ng-if="::gmfLayertreeCtrl.supportsCustomization(layertreeCtrl)">
 
-  <div ng-if="::layertreeCtrl.supportsOpacityChange()">
+  <div ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
     <i class="fa fa-tint fa-fw"></i>
     <span for="layer-opactity">{{'Opacity'|translate}}</span>
     <input
@@ -209,7 +209,7 @@
 
   <a
     class="gmf-layertree-node-menu-togglelegend"
-    ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.supportsLegend()"
+    ng-if="::gmfLayertreeCtrl.supportsLegend(layertreeCtrl)"
     title="{{'Hide legend'|translate}}"
     data-toggle="collapse"
     ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')"
