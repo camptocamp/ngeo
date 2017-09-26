@@ -103,6 +103,14 @@
       <span class="fa fa-trash"></span>
     </a>
 
+    <a
+      class="gmf-layertree-node-menu-btn"
+      href=""
+      ng-if="::gmfLayertreeCtrl.supportsCustomization(layertreeCtrl)"
+      ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-menu-' + layertreeCtrl.uid)">
+      <span class="fa fa-cog"></span>
+    </a>
+
     <span
       ngeo-popover
       ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed && !layertreeCtrl.node.children) || (gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend)" ngeo-popover-dismiss=".content">
@@ -178,6 +186,40 @@
       href>
     </a>
   </span>
+</div>
+
+<div
+  class="gmf-layertree-node-menu"
+  id="gmf-layertree-node-menu-{{::layertreeCtrl.uid}}"
+  style="display:none;"
+  ng-if="::gmfLayertreeCtrl.supportsCustomization(layertreeCtrl)">
+
+  <div ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
+    <i class="fa fa-tint fa-fw"></i>
+    <span for="layer-opactity">{{'Opacity'|translate}}</span>
+    <input
+        class="input-action"
+        name="layer-opactity"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        ng-model="layertreeCtrl.layer.opacity" />
+  </div>
+
+  <a
+    class="gmf-layertree-node-menu-togglelegend"
+    ng-if="::gmfLayertreeCtrl.supportsLegend(layertreeCtrl)"
+    title="{{'Hide legend'|translate}}"
+    data-toggle="collapse"
+    ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')"
+    href="">
+    <span
+        class="fa fa-th-list">
+    </span>
+    {{'Show/hide legend'|translate}}
+  </a>
+
 </div>
 
 <div
