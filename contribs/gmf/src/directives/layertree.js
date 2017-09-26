@@ -732,9 +732,9 @@ gmf.LayertreeController.prototype.supportsCustomization = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.supportsLegend = function(treeCtrl) {
   const node = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.node);
-  return node.metadata &&
-    node.metadata.legend &&
-    this.getLegendURL(treeCtrl);
+  return !!node.metadata &&
+    !!node.metadata.legend &&
+    !!this.getLegendURL(treeCtrl);
 };
 
 
@@ -747,7 +747,7 @@ gmf.LayertreeController.prototype.supportsLegend = function(treeCtrl) {
 gmf.LayertreeController.prototype.supportsOpacityChange = function(treeCtrl) {
   const node = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.node);
   const parentNode = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.parent.node);
-  return treeCtrl.layer &&
+  return !!treeCtrl.layer &&
     (
       (
         treeCtrl.depth === 1 && !node.mixed
