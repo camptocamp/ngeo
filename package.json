@@ -36,7 +36,7 @@
     "closure-util": "camptocamp/closure-util#487fac6",
     "console-control-strings": "1.1.0",
     "corejs-typeahead": "1.2.1",
-    "coveralls": "2.13.1",
+    "coveralls": "2.13.2",
     "d3": "4.10.1",
     "eslint": "4.7.2",
     "eslint-config-openlayers": "7.0.0",
