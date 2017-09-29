@@ -379,6 +379,9 @@ ngeo.durationFilter = function(gettextCatalog) {
    * @return {string} The formatted string.
    */
   const result = function(duration) {
+    // round to next integer
+    duration = Math.round(duration);
+
     // just seconds
     let output;
     if (duration < 60) {
