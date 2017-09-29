@@ -125,9 +125,9 @@ ngeo.module.filter('ngeoNumber', ngeo.Number);
  * Examples:
  *
  *      {{25000 | ngeoUnitPrefix}} => 25 k
- *      {{25000 | ngeoUnitPrefix:m}} => 25 km
- *      {{25000000 | ngeoUnitPrefix:m²:square}} => 25 km²
- *      {{2048 | ngeoUnitPrefix:o:binary}} => 2 Kio
+ *      {{25000 | ngeoUnitPrefix:'m'}} => 25 km
+ *      {{25000000 | ngeoUnitPrefix:'m²':'square'}} => 25 km²
+ *      {{2048 | ngeoUnitPrefix:'o':'binary'}} => 2 Kio
  *
  *
  * @param {angular.$filter} $filter Angular filter
