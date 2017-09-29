@@ -277,7 +277,7 @@ gmf.GmfRoutingFeatureController.prototype.setFeature_ = function(coordinate, lab
 
 gmf.GmfRoutingFeatureController.prototype.onFeatureChange_ = function() {
   // update label
-  this.featureLabel = this.feature.get('name');
+  this.featureLabel = /** @type{string} */(this.feature.get('name') || '');
 
   //update vector source
   this.vectorSource_.clear();

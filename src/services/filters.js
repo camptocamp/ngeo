@@ -352,7 +352,7 @@ ngeo.durationFilter = function(gettextCatalog) {
 
   /**
    * @param {number} amount Amount of time.
-   * @param {Symbol} unit Unit of time.
+   * @param {symbol} unit Unit of time.
    * @return {string} formatted and translated string
    */
   const pluralize = function(amount, unit) {
@@ -376,7 +376,7 @@ ngeo.durationFilter = function(gettextCatalog) {
     return `${amount} ${gettextCatalog_.getString(formattedUnit)}`;
   };
 
-  /*
+  /**
    * @param {number} duration The duration in seconds.
    * @return {string} The formatted string.
    */
