@@ -340,8 +340,6 @@ ngeo.module.filter('ngeoTrustHtml', ngeo.trustHtmlFilter);
  * @ngname ngeoDuration
  */
 ngeo.durationFilter = function(gettextCatalog) {
-  const gettextCatalog_ = gettextCatalog;
-
   // time unit enum
   const TimeUnits = Object.freeze({
     SECONDS: Symbol('seconds'),
@@ -359,21 +357,21 @@ ngeo.durationFilter = function(gettextCatalog) {
     let formattedUnit = '';
     switch (unit) {
       case TimeUnits.SECONDS:
-        formattedUnit = amount > 1 ? 'seconds' : 'second';
+        formattedUnit = amount > 1 ? gettextCatalog.getString('seconds') : gettextCatalog.getString('second');
         break;
       case TimeUnits.MINUTES:
-        formattedUnit = amount > 1 ? 'minutes' : 'minute';
+        formattedUnit = amount > 1 ? gettextCatalog.getString('minutes') : gettextCatalog.getString('minute');
         break;
       case TimeUnits.HOURS:
-        formattedUnit = amount > 1 ? 'hours' : 'hour';
+        formattedUnit = amount > 1 ? gettextCatalog.getString('hours') :gettextCatalog.getString( 'hour');
         break;
       case TimeUnits.DAYS:
-        formattedUnit = amount > 1 ? 'days' : 'day';
+        formattedUnit = amount > 1 ? gettextCatalog.getString('days') : gettextCatalog.getString('day');
         break;
       default:
         break;
     }
-    return `${amount} ${gettextCatalog_.getString(formattedUnit)}`;
+    return `${amount} ${formattedUnit}`;
   };
 
   /**
