@@ -1,6 +1,6 @@
 beautifulsoup4==4.6.0
 glob2==0.6
-htmlmin==0.1.10
+htmlmin==0.1.11
 Mako==1.0.7
 pip==9.0.1
 requests==2.18.4
