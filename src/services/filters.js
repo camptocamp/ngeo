@@ -363,7 +363,7 @@ ngeo.durationFilter = function(gettextCatalog) {
         formattedUnit = amount > 1 ? gettextCatalog.getString('minutes') : gettextCatalog.getString('minute');
         break;
       case TimeUnits.HOURS:
-        formattedUnit = amount > 1 ? gettextCatalog.getString('hours') :gettextCatalog.getString( 'hour');
+        formattedUnit = amount > 1 ? gettextCatalog.getString('hours') : gettextCatalog.getString('hour');
         break;
       case TimeUnits.DAYS:
         formattedUnit = amount > 1 ? gettextCatalog.getString('days') : gettextCatalog.getString('day');
