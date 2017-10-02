@@ -120,7 +120,7 @@ ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController
  */
-ngeo.DrawfeatureController = function($scope, $sce, gettextCatalog
+ngeo.DrawfeatureController = function($scope, $sce, gettextCatalog,
   ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures) {
 
   /**
