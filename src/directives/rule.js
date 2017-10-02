@@ -795,6 +795,7 @@ ngeo.RuleController = class {
     if (feature) {
 
       const type = this.ngeoFeatureHelper_.getType(feature);
+      const  gettextCatalog = this.gettextCatalog_;
 
       if (type == ngeo.GeometryType.CIRCLE ||
           type == ngeo.GeometryType.LINE_STRING ||
@@ -802,7 +803,7 @@ ngeo.RuleController = class {
           type == ngeo.GeometryType.RECTANGLE) {
         actions.push({
           cls: 'fa fa-arrows',
-          label: this.gettextCatalog_.getString('Move'),
+          label: gettextCatalog.getString('Move'),
           name: ngeo.RuleController.MenuActionType.MOVE
         });
       }
@@ -811,7 +812,7 @@ ngeo.RuleController = class {
           type == ngeo.GeometryType.RECTANGLE) {
         actions.push({
           cls: 'fa fa-rotate-right',
-          label: this.gettextCatalog_.getString('Rotate'),
+          label: gettextCatalog.getString('Rotate'),
           name: ngeo.RuleController.MenuActionType.ROTATE
         });
       }
