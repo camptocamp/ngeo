@@ -107,7 +107,6 @@ ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
 
 /**
  * @param {!angular.Scope} $scope Scope.
- * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$sce} $sce Angular sce service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
@@ -121,8 +120,8 @@ ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController
  */
-ngeo.DrawfeatureController = function($scope, $compile, $sce,
-  gettextCatalog, ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures) {
+ngeo.DrawfeatureController = function($scope, $sce, gettextCatalog,
+  ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures) {
 
   /**
    * @type {boolean}
