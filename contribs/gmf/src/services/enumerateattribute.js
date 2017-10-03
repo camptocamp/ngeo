@@ -40,7 +40,7 @@ gmf.EnumerateAttribute = class {
   }
 
   /**
-   * @param {gmf.DataSource} dataSource Data source.
+   * @param {gmf.datasource.OGC} dataSource Data source.
    * @param {string} attribute Attribute name.
    * @return {angular.$q.Promise} Promise.
    */

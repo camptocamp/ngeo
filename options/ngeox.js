@@ -90,7 +90,7 @@ ngeox.Attribute.prototype.type;
  * service.
  *
  * @typedef {{
- *     dataSource: (ngeox.DataSource),
+ *     dataSource: (ngeox.datasource.DataSource),
  *     incTime: (boolean|undefined),
  *     filter: (ol.format.filter.Filter|undefined),
  *     filterRules: (!Array.<ngeox.rule.Rule>|undefined),
@@ -103,7 +103,7 @@ ngeox.CreateFilterOptions;
 /**
  * The data source from which to get the filterRules that will be used to
  * create the OL filter object.
- * @type {ngeox.DataSource}
+ * @type {ngeox.datasource.DataSource}
  */
 ngeox.CreateFilterOptions.prototype.dataSource;
 
@@ -144,417 +144,6 @@ ngeox.CreateFilterOptions.prototype.srsName;
 
 
 /**
- * The definition of a single layer (WMS) and/or featureType (WFS).
- * @record
- * @struct
- */
-ngeox.DataSourceLayer = function() {};
-
-
-/**
- * The maximum resolution the layer should be rendered (when visible).
- * @type {number|undefined}
- */
-ngeox.DataSourceLayer.prototype.maxResolution;
-
-
-/**
- * The minimum resolution the layer should be rendered (when visible).
- * @type {number|undefined}
- */
-ngeox.DataSourceLayer.prototype.minResolution;
-
-
-/**
- * The layer name (WMS) and/or feature type name (WFS)
- * @type {string}
- */
-ngeox.DataSourceLayer.prototype.name;
-
-
-/**
- * Whether the the layer is queryable or not. Defaults to `false`.
- * @type {boolean|undefined}
- */
-ngeox.DataSourceLayer.prototype.queryable;
-
-
-/**
- * The options to create a `ngeox.DataSource` with.
- * @record
- * @struct
- */
-ngeox.DataSourceOptions = function() {};
-
-
-/**
- * The dimensions that are currently active on the data source.
- * @type {ngeox.Dimensions|undefined}
- */
-ngeox.DataSourceOptions.prototype.activeDimensions;
-
-
-/**
- * The attributes of the data source.
- * @type {Array.<ngeox.Attribute>|undefined}
- */
-ngeox.DataSourceOptions.prototype.attributes;
-
-
-/**
- * Whether the geometry from this data source can be copied to other data
- * sources or not. Defaults to `false`.
- * @type {boolean|undefined}
- */
-ngeox.DataSourceOptions.prototype.copyable;
-
-
-/**
- * A reference to the dimensions.
- * @type {ngeox.Dimensions|undefined}
- */
-ngeox.DataSourceOptions.prototype.dimensions;
-
-
-/**
- * The dimensions configuration, which determines those supported by this data
- * source and whether they should use a static value or the one defined in the
- * dimensions.
- * @type {ngeox.Dimensions|undefined}
- */
-ngeox.DataSourceOptions.prototype.dimensionsConfig;
-
-
-/**
- * The filter condition to apply to the filter rules (if any). Defaults to
- * `ngeo.FilterCondition.AND`.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.filterCondition;
-
-
-/**
- * A list of filter rules to apply to this data source using the filter
- * condition.
- * @type {!Array.<!ngeox.rule.Rule>|undefined}
- */
-ngeox.DataSourceOptions.prototype.filterRules;
-
-
-/**
- * Whether the data source is filtrable or not.
- * @type {boolean|undefined}
- */
-ngeox.DataSourceOptions.prototype.filtrable;
-
-
-/**
- * The name of the geometry attribute.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.geometryName;
-
-
-/**
- * (Required) The data source id.
- * @type {number}
- */
-ngeox.DataSourceOptions.prototype.id;
-
-
-/**
- * The name of an attribute among the attributes of the data source.
- * The value of that attribute, in records, can be used to identify
- * each record individually.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.identifierAttribute;
-
-
-/**
- * A data source is considered 'in range' when it is synchronized to
- * a map view and the resolution of that view is within the range of
- * the `maxResolution` and `minResolution`. These 2 properties are
- * required for the `inRange` property to be dynamic, otherwise its
- * value is always `true` by default.
- *
- * The synchronization is made in the `ngeo.syncDataSourcesMap` service.
- *
- * @type {boolean|undefined}
- */
-ngeox.DataSourceOptions.prototype.inRange;
-
-
-/**
- * Maximum resolution where the data source can be displayed or queried.
- * @type {number|undefined}
- */
-ngeox.DataSourceOptions.prototype.maxResolution;
-
-
-/**
- * Minimum resolution where the data source can be displayed or queried.
- * @type {number|undefined}
- */
-ngeox.DataSourceOptions.prototype.minResolution;
-
-
-/**
- * (Required) A human-readable name for the data source.
- * @type {string}
- */
-ngeox.DataSourceOptions.prototype.name;
-
-
-/**
- * The type of images to fetch by queries by the (WMS) or (WMTS) .
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.ogcImageType;
-
-
-/**
- * A list of layer definitions that are used by (WMS) and (WFS) queries.
- * These are **not** used by the (WMTS) queries (the wmtsLayers is used
- * by WMTS queries).
- * @type {Array.<!ngeox.DataSourceLayer>|undefined}
- */
-ngeox.DataSourceOptions.prototype.ogcLayers;
-
-
-/**
- * The type of OGC server.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.ogcServerType;
-
-
-/**
- * The type data source. Can be: 'WMS' or 'WMTS'.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.ogcType;
-
-
-/**
- * Whether the geometry from this data source can be used to snap the geometry
- * of features from other data sources that are being edited. Defaults to
- * `false`.
- * @type {boolean|undefined}
- */
-ngeox.DataSourceOptions.prototype.snappable;
-
-
-/**
- * Determines whether external features can be snapped to the edges of
- * features from this data source or not. Defaults to `true`. Requires
- * `snappable` to be set.
- * @type {boolean|undefined}
- */
-ngeox.DataSourceOptions.prototype.snappingToEdges;
-
-
-/**
- * Determines whether external features can be snapped to the vertice of
- * features from this data source or not. Defaults to `true`. Requires
- * `snappable` to be set.
- * @type {boolean|undefined}
- */
-ngeox.DataSourceOptions.prototype.snappingToVertice;
-
-
-/**
- * The tolerance in pixels the snapping should occur. Defaults to `10`.
- * @type {number|undefined}
- */
-ngeox.DataSourceOptions.prototype.snappingTolerance;
-
-
-/**
- * The name of the time attribute.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.timeAttributeName;
-
-
-/**
- * The time lower value, which can be combined with the time upper value
- * to determine a range.
- * @type {number|undefined}
- */
-ngeox.DataSourceOptions.prototype.timeLowerValue;
-
-
-/**
- * The time property for the data source. Used to apply time filters.
- * @type {ngeox.TimeProperty|undefined}
- */
-ngeox.DataSourceOptions.prototype.timeProperty;
-
-
-/**
- * The time upper value, which can be combined with the time lower value
- * to determine a range.
- * @type {number|undefined}
- */
-ngeox.DataSourceOptions.prototype.timeUpperValue;
-
-
-/**
- * Whether the data source is visible or not, i.e. whether its is ON or OFF.
- * Defaults to `false`.
- * @type {boolean|undefined}
- */
-ngeox.DataSourceOptions.prototype.visible;
-
-
-/**
- * The feature namespace to use with WFS requests.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.wfsFeatureNS;
-
-
-/**
- * The feature prefix to use with WFS requests.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.wfsFeaturePrefix;
-
-
-/**
- * The OutputFormat to use with WFS requests.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.wfsOutputFormat;
-
-
-/**
- * The url to use for (WFS) requests.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.wfsUrl;
-
-
-/**
- * The InfoFormat to use with WMS requests.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.wmsInfoFormat;
-
-
-/**
- * Whether the (WMS) images returned by this data source should be single tiles
- * or not. Defaults to `false`.
- * @type {boolean|undefined}
- */
-ngeox.DataSourceOptions.prototype.wmsIsSingleTile;
-
-
-/**
- * The url to use for (WMS) requests.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.wmsUrl;
-
-
-/**
- * The layer name to use for the (WMTS) requests.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.wmtsLayer;
-
-
-/**
- * The url to use for (WMTS) requests.
- * @type {string|undefined}
- */
-ngeox.DataSourceOptions.prototype.wmtsUrl;
-
-
-/**
- * @interface
- * @struct
- */
-ngeox.DataSource = function() {};
-
-/**
- * @type {!ngeox.DimensionsActive}
- */
-ngeox.DataSource.prototype.activeDimensions;
-
-/**
- * @type {boolean}
- */
-ngeox.DataSource.prototype.combinableForWMS;
-
-/**
- * @type {boolean}
- */
-ngeox.DataSource.prototype.combinableForWFS;
-
-/**
- * @type {boolean}
- */
-ngeox.DataSource.prototype.queryable;
-
-/**
- * @type {boolean}
- */
-ngeox.DataSource.prototype.supportsWFS;
-
-/**
- * @type {boolean}
- */
-ngeox.DataSource.prototype.supportsWMS;
-
-/**
- * @type {string|undefined}
- */
-ngeox.DataSource.prototype.wmsUrl;
-
-/**
- * @type {string|undefined}
- */
-ngeox.DataSource.prototype.wfsUrl;
-
-/**
- * @type {string}
- */
-ngeox.DataSource.prototype.filterCondition;
-
-/**
- * @type {?Array.<!ngeox.rule.Rule>}
- */
-ngeox.DataSource.prototype.filterRules;
-
-/**
- * @param {ngeox.DataSource} dataSource Data source.
- * @return {boolean} Whether this data source can be combined to the given
- *     other data source to fetch features in a single WFS request.
- */
-ngeox.DataSource.prototype.combinableWithDataSourceForWFS = function(dataSource) {};
-
-
-/**
- * @param {ngeox.DataSource} dataSource Data source.
- * @return {boolean} Whether this data source can be combined to the given
- *     other data source to fetch features in a single WMS request.
- */
-ngeox.DataSource.prototype.combinableWithDataSourceForWMS = function(dataSource) {};
-
-
-/**
- * @param {!ngeox.DataSource} dataSource Remote data source to compare with
- *     this one.
- * @return {boolean}  Whether the two data sources have the same active
- *     dimensions. If both have no dimensions, they are considered to be
- *     sharing the same dimensions.
- */
-ngeox.DataSource.prototype.haveTheSameActiveDimensions = function(dataSource) {};
-
-
-/**
  * Dimensions definition.
  * @typedef {Object.<string, ?string>}
  */
@@ -573,7 +162,7 @@ ngeox.DimensionsActive;
  * the querent or map query service.
  * @typedef {{
  *     coordinate: (ol.Coordinate|undefined),
- *     dataSources: (Array.<ngeox.DataSource>|undefined),
+ *     dataSources: (Array.<ngeox.datasource.DataSource>|undefined),
  *     extent: (ol.Extent|undefined),
  *     filter: (ol.format.filter.Filter|undefined),
  *     limit: (number|undefined),
@@ -598,7 +187,7 @@ ngeox.IssueGetFeaturesOptions.prototype.coordinate;
  * List of data sources to query. Only those that meet the requirements will
  * actually be queried. The querent service requires either the `dataSources`
  * or `queryableDataSources` property to be set.
- * @type {Array.<ngeox.DataSource>|undefined}
+ * @type {Array.<ngeox.datasource.DataSource>|undefined}
  */
 ngeox.IssueGetFeaturesOptions.prototype.dataSources;
 
@@ -669,8 +258,8 @@ ngeox.IssueGetFeaturesOptions.prototype.wfsCount;
  * `wfs` list.
  *
  * @typedef {{
- *     wfs: (!Array.<!ngeox.DataSource>),
- *     wms: (!Array.<!ngeox.DataSource>)
+ *     wfs: (!Array.<!ngeox.datasource.DataSource>),
+ *     wms: (!Array.<!ngeox.datasource.DataSource>)
  * }}
  */
 ngeox.QueryableDataSources;
@@ -678,14 +267,14 @@ ngeox.QueryableDataSources;
 
 /**
  * List of queryable data sources that support WFS.
- * @type {Array.<ngeox.DataSource>}
+ * @type {Array.<ngeox.datasource.DataSource>}
  */
 ngeox.QueryableDataSources.prototype.wfs;
 
 
 /**
  * List of queryable data sources that support WMS.
- * @type {Array.<ngeox.DataSource>}
+ * @type {Array.<ngeox.datasource.DataSource>}
  */
 ngeox.QueryableDataSources.prototype.wms;
 
@@ -1344,6 +933,448 @@ ngeox.WfsType.prototype.defaultFeaturePrefix;
  * @type {number|undefined}
  */
 ngeox.WfsPermalinkOptions.prototype.maxFeatures;
+
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+ngeox.datasource;
+
+
+/**
+ * The options required to create a `ngeox.datasource.DataSource`.
+ * @record
+ * @struct
+ */
+ngeox.datasource.DataSourceOptions = function() {};
+
+
+/**
+ * The attributes of the data source.
+ * @type {Array.<ngeox.Attribute>|undefined}
+ */
+ngeox.datasource.DataSourceOptions.prototype.attributes;
+
+
+/**
+ * (Required) The data source id.
+ * @type {number}
+ */
+ngeox.datasource.DataSourceOptions.prototype.id;
+
+
+/**
+ * The name of an attribute among the attributes of the data source.
+ * The value of that attribute, in records, can be used to identify
+ * each record individually.
+ * @type {string|undefined}
+ */
+ngeox.datasource.DataSourceOptions.prototype.identifierAttribute;
+
+
+/**
+ * A data source is considered 'in range' when it is synchronized to
+ * a map view and the resolution of that view is within the range of
+ * the `maxResolution` and `minResolution`. These 2 properties are
+ * required for the `inRange` property to be dynamic, otherwise its
+ * value is always `true` by default.
+ *
+ * The synchronization is made in the `ngeo.datasource.syncDataSourcesMap`
+ * service.
+ *
+ * @type {boolean|undefined}
+ */
+ngeox.datasource.DataSourceOptions.prototype.inRange;
+
+
+/**
+ * Maximum resolution where the data source can be displayed or queried.
+ * @type {number|undefined}
+ */
+ngeox.datasource.DataSourceOptions.prototype.maxResolution;
+
+
+/**
+ * Minimum resolution where the data source can be displayed or queried.
+ * @type {number|undefined}
+ */
+ngeox.datasource.DataSourceOptions.prototype.minResolution;
+
+
+/**
+ * (Required) A human-readable name for the data source.
+ * @type {string}
+ */
+ngeox.datasource.DataSourceOptions.prototype.name;
+
+
+/**
+ * Whether the data source is visible or not, i.e. whether its is ON or OFF.
+ * Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.datasource.DataSourceOptions.prototype.visible;
+
+
+/**
+ * The options required to create a `ngeox.datasource.OGC`.
+ * @record
+ * @struct
+ * @extends ngeox.datasource.DataSourceOptions
+ */
+ngeox.datasource.OGCOptions = function() {};
+
+
+/**
+ * The dimensions that are currently active on the data source.
+ * @type {ngeox.Dimensions|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.activeDimensions;
+
+
+/**
+ * Whether the geometry from this data source can be copied to other data
+ * sources or not. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.copyable;
+
+
+/**
+ * A reference to the dimensions.
+ * @type {ngeox.Dimensions|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.dimensions;
+
+
+/**
+ * The dimensions configuration, which determines those supported by this data
+ * source and whether they should use a static value or the one defined in the
+ * dimensions.
+ * @type {ngeox.Dimensions|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.dimensionsConfig;
+
+
+/**
+ * The filter condition to apply to the filter rules (if any). Defaults to
+ * `ngeo.FilterCondition.AND`.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.filterCondition;
+
+
+/**
+ * A list of filter rules to apply to this data source using the filter
+ * condition.
+ * @type {!Array.<!ngeox.rule.Rule>|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.filterRules;
+
+
+/**
+ * Whether the data source is filtrable or not.
+ * @type {boolean|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.filtrable;
+
+
+/**
+ * The name of the geometry attribute.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.geometryName;
+
+
+/**
+ * The type of images to fetch by queries by the (WMS) or (WMTS) .
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.ogcImageType;
+
+
+/**
+ * A list of layer definitions that are used by (WMS) and (WFS) queries.
+ * These are **not** used by the (WMTS) queries (the wmtsLayers is used
+ * by WMTS queries).
+ * @type {Array.<!ngeox.datasource.OGCLayer>|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.ogcLayers;
+
+
+/**
+ * The type of OGC server.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.ogcServerType;
+
+
+/**
+ * The type data source. Can be: 'WMS' or 'WMTS'.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.ogcType;
+
+
+/**
+ * Whether the geometry from this data source can be used to snap the geometry
+ * of features from other data sources that are being edited. Defaults to
+ * `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.snappable;
+
+
+/**
+ * Determines whether external features can be snapped to the edges of
+ * features from this data source or not. Defaults to `true`. Requires
+ * `snappable` to be set.
+ * @type {boolean|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.snappingToEdges;
+
+
+/**
+ * Determines whether external features can be snapped to the vertice of
+ * features from this data source or not. Defaults to `true`. Requires
+ * `snappable` to be set.
+ * @type {boolean|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.snappingToVertice;
+
+
+/**
+ * The tolerance in pixels the snapping should occur. Defaults to `10`.
+ * @type {number|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.snappingTolerance;
+
+
+/**
+ * The name of the time attribute.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.timeAttributeName;
+
+
+/**
+ * The time lower value, which can be combined with the time upper value
+ * to determine a range.
+ * @type {number|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.timeLowerValue;
+
+
+/**
+ * The time property for the data source. Used to apply time filters.
+ * @type {ngeox.TimeProperty|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.timeProperty;
+
+
+/**
+ * The time upper value, which can be combined with the time lower value
+ * to determine a range.
+ * @type {number|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.timeUpperValue;
+
+
+/**
+ * The feature namespace to use with WFS requests.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.wfsFeatureNS;
+
+
+/**
+ * The feature prefix to use with WFS requests.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.wfsFeaturePrefix;
+
+
+/**
+ * The OutputFormat to use with WFS requests.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.wfsOutputFormat;
+
+
+/**
+ * The url to use for (WFS) requests.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.wfsUrl;
+
+
+/**
+ * The InfoFormat to use with WMS requests.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.wmsInfoFormat;
+
+
+/**
+ * Whether the (WMS) images returned by this data source should be single tiles
+ * or not. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.wmsIsSingleTile;
+
+
+/**
+ * The url to use for (WMS) requests.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.wmsUrl;
+
+
+/**
+ * The layer name to use for the (WMTS) requests.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.wmtsLayer;
+
+
+/**
+ * The url to use for (WMTS) requests.
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGCOptions.prototype.wmtsUrl;
+
+
+/**
+ * @interface
+ * @struct
+ */
+ngeox.datasource.DataSource = function() {};
+
+/**
+ * @type {boolean}
+ */
+ngeox.datasource.DataSource.prototype.queryable;
+
+/**
+ * @interface
+ * @struct
+ * @extends ngeox.datasource.DataSource
+ */
+ngeox.datasource.OGC = function() {};
+
+/**
+ * @type {!ngeox.DimensionsActive}
+ */
+ngeox.datasource.OGC.prototype.activeDimensions;
+
+/**
+ * @type {boolean}
+ */
+ngeox.datasource.OGC.prototype.combinableForWMS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.datasource.OGC.prototype.combinableForWFS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.datasource.OGC.prototype.supportsWFS;
+
+/**
+ * @type {boolean}
+ */
+ngeox.datasource.OGC.prototype.supportsWMS;
+
+/**
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGC.prototype.wmsUrl;
+
+/**
+ * @type {string|undefined}
+ */
+ngeox.datasource.OGC.prototype.wfsUrl;
+
+/**
+ * @type {string}
+ */
+ngeox.datasource.OGC.prototype.filterCondition;
+
+/**
+ * @type {?Array.<!ngeox.rule.Rule>}
+ */
+ngeox.datasource.OGC.prototype.filterRules;
+
+/**
+ * @param {ngeox.datasource.OGC} dataSource Data source.
+ * @return {boolean} Whether this data source can be combined to the given
+ *     other data source to fetch features in a single WFS request.
+ */
+ngeox.datasource.OGC.prototype.combinableWithDataSourceForWFS = function(dataSource) {};
+
+
+/**
+ * @param {ngeox.datasource.OGC} dataSource Data source.
+ * @return {boolean} Whether this data source can be combined to the given
+ *     other data source to fetch features in a single WMS request.
+ */
+ngeox.datasource.OGC.prototype.combinableWithDataSourceForWMS = function(dataSource) {};
+
+
+/**
+ * @param {!ngeox.datasource.OGC} dataSource Remote data source to compare with
+ *     this one.
+ * @return {boolean}  Whether the two data sources have the same active
+ *     dimensions. If both have no dimensions, they are considered to be
+ *     sharing the same dimensions.
+ */
+ngeox.datasource.OGC.prototype.haveTheSameActiveDimensions = function(dataSource) {};
+
+
+/**
+ * The definition of a single layer (WMS) and/or featureType (WFS).
+ * @record
+ * @struct
+ */
+ngeox.datasource.OGCLayer = function() {};
+
+
+/**
+ * The maximum resolution the layer should be rendered (when visible).
+ * @type {number|undefined}
+ */
+ngeox.datasource.OGCLayer.prototype.maxResolution;
+
+
+/**
+ * The minimum resolution the layer should be rendered (when visible).
+ * @type {number|undefined}
+ */
+ngeox.datasource.OGCLayer.prototype.minResolution;
+
+
+/**
+ * The layer name (WMS) and/or feature type name (WFS)
+ * @type {string}
+ */
+ngeox.datasource.OGCLayer.prototype.name;
+
+
+/**
+ * Whether the the layer is queryable or not. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.datasource.OGCLayer.prototype.queryable;
+
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+ngeox.interaction;
 
 
 /**

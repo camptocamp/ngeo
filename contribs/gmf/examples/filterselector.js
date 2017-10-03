@@ -7,7 +7,7 @@ goog.require('gmf.authenticationDirective');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.DataSourcesManager');
+goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.filterselectorComponent');
 /** @suppress {extraRequire} */
@@ -53,12 +53,12 @@ gmfapp.MainController = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
-   * @param {gmf.DataSourcesManager} gmfDataSourcesManager The gmf data sources
-   *     manager service.
+   * @param {gmf.datasource.DataSourcesManager} gmfDataSourcesManager The gmf
+   *     data sources manager service.
    * @param {gmf.Themes} gmfThemes The gmf themes service.
    * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
-   * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
-   *     objects.
+   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+   *     data sources objects.
    * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
    *     service.
    * @ngInject

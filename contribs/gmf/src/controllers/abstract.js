@@ -6,7 +6,7 @@ goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.backgroundlayerselectorComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.DataSourcesManager');
+goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */

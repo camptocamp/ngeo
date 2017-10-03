@@ -2,7 +2,7 @@ goog.provide('ngeo.mapDirective');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
-goog.require('ngeo.SyncDataSourcesMap');
+goog.require('ngeo.datasource.SyncDataSourcesMap');
 goog.require('ol.events');
 goog.require('ol.Map');
 
@@ -31,7 +31,7 @@ goog.require('ol.Map');
  *
  * @htmlAttribute {ol.Map} ngeo-map The map.
  * @param {angular.$window} $window The Angular $window service.
- * @param {ngeo.SyncDataSourcesMap} ngeoSyncDataSourcesMap Ngeo sync
+ * @param {ngeo.datasource.SyncDataSourcesMap} ngeoSyncDataSourcesMap Ngeo sync
  *     data sources map service.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject

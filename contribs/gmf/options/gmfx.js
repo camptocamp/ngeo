@@ -60,24 +60,6 @@ gmfx.Config;
 
 
 /**
- * The options to create a `gmf.DataSource` with.
- * @record
- * @struct
- * @extends ngeox.DataSourceOptions
- */
-gmfx.DataSourceOptions;
-
-
-/**
- * A reference to the GMF layer node that was used to create the data source.
- * It may contains additionnal information, such as metadata, about the data
- * source.
- * @type {gmfThemes.GmfLayer}
- */
-gmfx.DataSourceOptions.prototype.gmfLayer;
-
-
-/**
  * Configuration for a grid tab.
  * @typedef {{
  *     configuration: ngeo.GridConfig,
@@ -564,21 +546,6 @@ gmfx.User.prototype.role_name;
  */
 gmfx.User.prototype.username;
 
-/**
- * @typedef {{
- *  columns : Array.<string>,
- *  data : Array.<Array.<string|number|boolean>>
- * }}
- */
-gmfx.DataSourceTableObject;
-
-/**
- * @typedef {{
- *  title : string,
- *  table : gmfx.DataSourceTableObject
- * }}
- */
-gmfx.DataSourcePrintReportObject;
 
 /**
  * @typedef {{
@@ -654,6 +621,49 @@ gmfx.openIframePopup;
  * @param {string=} opt_height CSS height.
  */
 gmfx.openTextPopup;
+
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+gmfx.datasource;
+
+
+/**
+ * The options required to create a `gmf.datasource.OGC`.
+ * @record
+ * @struct
+ * @extends ngeox.datasource.OGCOptions
+ */
+gmfx.datasource.OGCOptions;
+
+
+/**
+ * A reference to the GMF layer node that was used to create the data source.
+ * It may contains additionnal information, such as metadata, about the data
+ * source.
+ * @type {gmfThemes.GmfLayer}
+ */
+gmfx.datasource.OGCOptions.prototype.gmfLayer;
+
+
+/**
+ * @typedef {{
+ *  columns : Array.<string>,
+ *  data : Array.<Array.<string|number|boolean>>
+ * }}
+ */
+gmfx.datasource.DataSourceTableObject;
+
+
+/**
+ * @typedef {{
+ *  title : string,
+ *  table : gmfx.datasource.DataSourceTableObject
+ * }}
+ */
+gmfx.datasource.DataSourcePrintReportObject;
 
 
 /**

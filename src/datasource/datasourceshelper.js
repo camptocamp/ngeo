@@ -1,22 +1,23 @@
-goog.provide('ngeo.DataSourcesHelper');
+goog.provide('ngeo.datasource.DataSourcesHelper');
 
 goog.require('ngeo');
-goog.require('ngeo.DataSource');
-goog.require('ngeo.DataSources');
+goog.require('ngeo.datasource.DataSource');
+goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.Querent');
 goog.require('ngeo.format.WFSAttribute');
 goog.require('ol.events');
 goog.require('ol.CollectionEventType');
 
 
-ngeo.DataSourcesHelper = class {
+ngeo.datasource.DataSourcesHelper = class {
 
   /**
    * A service that provides utility methods to manipulate or get data sources.
    *
    * @struct
    * @param {angular.$q} $q The Angular $q service.
-   * @param {ngeo.DataSources} ngeoDataSources Ngeo data source collection.
+   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data source
+   *     collection.
    * @param {ngeo.Querent} ngeoQuerent Ngeo querent service.
    * @ngdoc service
    * @ngname ngeoDataSourcesHelper
@@ -33,7 +34,7 @@ ngeo.DataSourcesHelper = class {
     this.q_ = $q;
 
     /**
-     * @type {ngeo.DataSources}
+     * @type {ngeo.datasource.DataSources}
      * @private
      */
     this.collection_ = ngeoDataSources;
@@ -48,7 +49,7 @@ ngeo.DataSourcesHelper = class {
     // === Other properties ===
 
     /**
-     * @type {Object.<number, ngeo.DataSource>}
+     * @type {Object.<number, ngeo.datasource.DataSource>}
      * @private
      */
     this.cache_ = {};
@@ -70,7 +71,7 @@ ngeo.DataSourcesHelper = class {
   }
 
   /**
-   * @return {ngeo.DataSources} Data sources collection.
+   * @return {ngeo.datasource.DataSources} Data sources collection.
    * @export
    */
   get collection() {
@@ -80,7 +81,7 @@ ngeo.DataSourcesHelper = class {
   /**
    * Return a data source using its id.
    * @param {number} id Data source id.
-   * @return {?ngeo.DataSource} Data source.
+   * @return {?ngeo.datasource.DataSource} Data source.
    * @export
    */
   getDataSource(id) {
@@ -95,7 +96,7 @@ ngeo.DataSourcesHelper = class {
    * Please, note that in order to be dynamically set, the data source must
    * only have 1 ogcLayer set and be queryable.
    *
-   * @param {ngeo.DataSource} dataSource Filtrable data source.
+   * @param {ngeo.datasource.OGC} dataSource Filtrable data source.
    * @return {angular.$q.Promise} Promise.
    * @export
    */
@@ -140,7 +141,7 @@ ngeo.DataSourcesHelper = class {
    */
   handleDataSourcesAdd_(evt) {
     const dataSource = goog.asserts.assertInstanceof(
-      evt.element, ngeo.DataSource);
+      evt.element, ngeo.datasource.DataSource);
     this.cache_[dataSource.id] = dataSource;
   }
 
@@ -152,11 +153,11 @@ ngeo.DataSourcesHelper = class {
    */
   handleDataSourcesRemove_(evt) {
     const dataSource = goog.asserts.assertInstanceof(
-      evt.element, ngeo.DataSource);
+      evt.element, ngeo.datasource.DataSource);
     delete this.cache_[dataSource.id];
   }
 
 };
 
 
-ngeo.module.service('ngeoDataSourcesHelper', ngeo.DataSourcesHelper);
+ngeo.module.service('ngeoDataSourcesHelper', ngeo.datasource.DataSourcesHelper);

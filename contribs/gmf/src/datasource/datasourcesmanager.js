@@ -1,13 +1,13 @@
-goog.provide('gmf.DataSourcesManager');
+goog.provide('gmf.datasource.DataSourcesManager');
 
 goog.require('gmf');
-goog.require('gmf.DataSource');
+goog.require('gmf.datasource.OGC');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
-goog.require('ngeo.DataSources');
+goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.WMSTime');
@@ -16,13 +16,13 @@ goog.require('ol.layer.Image');
 goog.require('ol.source.ImageWMS');
 
 
-gmf.DataSourcesManager = class {
+gmf.datasource.DataSourcesManager = class {
 
   /**
    * The GeoMapFish DataSources Manager is responsible of listenening to the
-   * c2cgeoportal's themes to create instances of `ngeo.DataSource` objects with
-   * the layer definitions found and push them in the `ngeo.DataSources`
-   * collection.
+   * c2cgeoportal's themes to create instances of `ngeo.datasource.DataSource`
+   * objects with the layer definitions found and push them in the
+   * `ngeo.datasource.DataSources` collection.
    *
    * When changing theme, these data sources are cleared then re-created.
    *
@@ -34,8 +34,8 @@ gmf.DataSourcesManager = class {
    * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
    * @param {!ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
    *     manager.
-   * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
-   *     objects.
+   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+   *     data sources objects.
    * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
@@ -90,7 +90,7 @@ gmf.DataSourcesManager = class {
      * The collection of DataSources from ngeo, which gets updated by this
      * service. When the theme changes, first we remove all data sources, then
      * the 'active' data source are added here.
-     * @type {ngeo.DataSources}
+     * @type {ngeo.datasource.DataSources}
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
@@ -119,7 +119,7 @@ gmf.DataSourcesManager = class {
     /**
      * While loading a new theme, this is where all of the created data sources
      * are put using the id as key for easier find in the future.
-     * @type {Object.<number, gmf.DataSource>}
+     * @type {Object.<number, gmf.datasource.OGC>}
      * @private
      */
     this.dataSourcesCache_ = {};
@@ -135,7 +135,7 @@ gmf.DataSourcesManager = class {
      * The cache of layertree leaf controller, i.e. those that are added to
      * the tree manager. When treeCtrl is added in this cache, it's given
      * a reference to its according data source.
-     * @type {gmf.DataSourcesManager.TreeCtrlCache}
+     * @type {gmf.datasource.DataSourcesManager.TreeCtrlCache}
      * @private
      */
     this.treeCtrlCache_ = {};
@@ -382,10 +382,10 @@ gmf.DataSourcesManager = class {
       ogcServer.urlWfs : undefined;
     const wmsUrl = ogcServer ? ogcServer.url : undefined;
 
-    let wfsOutputFormat = ngeo.DataSource.WFSOutputFormat.GML3;
+    let wfsOutputFormat = ngeo.datasource.OGC.WFSOutputFormat.GML3;
     // qgis server only supports GML2 output
-    if (ogcServerType === ngeo.DataSource.OGCServerType.QGISSERVER) {
-      wfsOutputFormat = ngeo.DataSource.WFSOutputFormat.GML2;
+    if (ogcServerType === ngeo.datasource.OGC.ServerType.QGISSERVER) {
+      wfsOutputFormat = ngeo.datasource.OGC.WFSOutputFormat.GML2;
     }
 
     // (6) Snapping
@@ -422,7 +422,7 @@ gmf.DataSourcesManager = class {
     const visible = meta.isChecked === true;
 
     // Create the data source and add it to the cache
-    this.dataSourcesCache_[id] = new gmf.DataSource({
+    this.dataSourcesCache_[id] = new gmf.datasource.OGC({
       copyable,
       dimensions,
       dimensionsConfig,
@@ -488,7 +488,7 @@ gmf.DataSourcesManager = class {
     let timeUpperValueWatcherUnregister;
     let wmsLayer;
     if (dataSource.timeProperty &&
-        dataSource.ogcType === ngeo.DataSource.OGCType.WMS
+        dataSource.ogcType === ngeo.datasource.OGC.Type.WMS
     ) {
       timeLowerValueWatcherUnregister = this.rootScope_.$watch(
         () => dataSource.timeLowerValue,
@@ -524,7 +524,7 @@ gmf.DataSourcesManager = class {
    * Remove a treeCtrl cache item. Unregister event listeners and remove the
    * data source from the ngeo collection.
    *
-   * @param {gmf.DataSourcesManager.TreeCtrlCacheItem} item Layertree
+   * @param {gmf.datasource.DataSourcesManager.TreeCtrlCacheItem} item Layertree
    *     controller cache item
    * @private
    */
@@ -595,7 +595,8 @@ gmf.DataSourcesManager = class {
             siblingDataSourceIds.includes(ngeoDataSource.id) &&
             ngeoDataSource.visible
         ) {
-          goog.asserts.assertInstanceof(ngeoDataSource, gmf.DataSource);
+          goog.asserts.assertInstanceof(
+            ngeoDataSource, gmf.datasource.OGC);
           this.handleDataSourceFilterRulesChange_(ngeoDataSource, true);
           break;
         }
@@ -607,7 +608,7 @@ gmf.DataSourcesManager = class {
    * Returns a layertree controller cache item, if it exists.
    *
    * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
-   * @return {gmf.DataSourcesManager.TreeCtrlCacheItem} Cache item
+   * @return {gmf.datasource.DataSourcesManager.TreeCtrlCacheItem} Cache item
    * @private
    */
   getTreeCtrlCacheItem_(treeCtrl) {
@@ -622,7 +623,7 @@ gmf.DataSourcesManager = class {
    * set to apply them as OGC filters to the OpenLayers layer, more precisely
    * as a `FILTER` parameter in the layer's source parameters.
    *
-   * @param {!gmf.DataSource} dataSource Data source.
+   * @param {!gmf.datasource.OGC} dataSource Data source.
    * @param {boolean} value Value.
    * @private
    */
@@ -632,7 +633,7 @@ gmf.DataSourcesManager = class {
     // the WMS ogcType, i.e. those that do not have an OpenLayers layer
     // to update
     if (dataSource.filtrable !== true ||
-        dataSource.ogcType !== ngeo.DataSource.OGCType.WMS
+        dataSource.ogcType !== ngeo.datasource.OGC.Type.WMS
     ) {
       return;
     }
@@ -704,7 +705,7 @@ gmf.DataSourcesManager = class {
    * Get the range value from the data source, then update the WMS layer
    * thereafter.
    *
-   * @param {!gmf.DataSource} dataSource Data source.
+   * @param {!gmf.datasource.OGC} dataSource Data source.
    * @private
    */
   handleDataSourceTimeValueChange_(dataSource) {
@@ -790,9 +791,9 @@ gmf.DataSourcesManager = class {
 
 
 /**
- * @typedef {Object<(number|string), gmf.DataSourcesManager.TreeCtrlCacheItem>}
+ * @typedef {Object<(number|string), gmf.datasource.DataSourcesManager.TreeCtrlCacheItem>}
  */
-gmf.DataSourcesManager.TreeCtrlCache;
+gmf.datasource.DataSourcesManager.TreeCtrlCache;
 
 
 /**
@@ -805,7 +806,7 @@ gmf.DataSourcesManager.TreeCtrlCache;
  *     wmsLayer: (ol.layer.Image|undefined)
  * }}
  */
-gmf.DataSourcesManager.TreeCtrlCacheItem;
+gmf.datasource.DataSourcesManager.TreeCtrlCacheItem;
 
 
-gmf.module.service('gmfDataSourcesManager', gmf.DataSourcesManager);
+gmf.module.service('gmfDataSourcesManager', gmf.datasource.DataSourcesManager);

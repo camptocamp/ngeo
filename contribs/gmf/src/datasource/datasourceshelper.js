@@ -1,21 +1,22 @@
-goog.provide('gmf.DataSourcesHelper');
+goog.provide('gmf.datasource.DataSourcesHelper');
 
 goog.require('gmf');
 goog.require('gmf.EnumerateAttribute');
-goog.require('ngeo.DataSourcesHelper');
+goog.require('ngeo.datasource.DataSourcesHelper');
 
 
-gmf.DataSourcesHelper = class {
+gmf.datasource.DataSourcesHelper = class {
 
   /**
-   * A service that provides utility methods to manipulate or get data sources.
+   * A service that provides utility methods to manipulate or get GMF data
+   * sources.
    *
    * @struct
    * @param {angular.$q} $q The Angular $q service.
    * @param {gmf.EnumerateAttribute} gmfEnumerateAttribute The Gmf enumerate
    *     attribute service.
-   * @param {ngeo.DataSourcesHelper} ngeoDataSourcesHelper Ngeo data source
-   *     helper service.
+   * @param {ngeo.datasource.DataSourcesHelper} ngeoDataSourcesHelper Ngeo data
+   *     source helper service.
    * @ngdoc service
    * @ngname gmfDataSourcesHelper
    * @ngInject
@@ -37,7 +38,7 @@ gmf.DataSourcesHelper = class {
     this.gmfEnumerateAttribute_ = gmfEnumerateAttribute;
 
     /**
-     * @type {ngeo.DataSourcesHelper}
+     * @type {ngeo.datasource.DataSourcesHelper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
@@ -46,24 +47,24 @@ gmf.DataSourcesHelper = class {
     // === Other properties ===
 
     /**
-     * @type {gmf.DataSources}
+     * @type {gmf.datasource.DataSources}
      * @protected
      */
     this.collection_;
 
     /**
-     * @type {Object.<number, gmf.DataSource>}
+     * @type {Object.<number, gmf.datasource.DataSource>}
      * @protected
      */
     this.cache_;
   }
 
   /**
-   * @return {gmf.DataSources} Data sources collection.
+   * @return {gmf.datasource.DataSources} Data sources collection.
    * @export
    */
   get collection() {
-    return /** @type {gmf.DataSources} */ (
+    return /** @type {gmf.datasource.DataSources} */ (
       this.ngeoDataSourcesHelper_.collection
     );
   }
@@ -71,17 +72,17 @@ gmf.DataSourcesHelper = class {
   /**
    * Return a data source using its id.
    * @param {number} id Data source id.
-   * @return {?gmf.DataSource} Data source.
+   * @return {?gmf.datasource.DataSource} Data source.
    * @export
    */
   getDataSource(id) {
-    return /** @type {?gmf.DataSource} */ (
+    return /** @type {?gmf.datasource.DataSource} */ (
       this.ngeoDataSourcesHelper_.getDataSource(id)
     );
   }
 
   /**
-   * @param {gmf.DataSource} dataSource Filtrable data source.
+   * @param {gmf.datasource.OGC} dataSource Filtrable data source.
    * @return {angular.$q.Promise} Promise.
    * @export
    */
@@ -130,10 +131,10 @@ gmf.DataSourcesHelper = class {
 };
 
 
-gmf.module.service('gmfDataSourcesHelper', gmf.DataSourcesHelper);
+gmf.module.service('gmfDataSourcesHelper', gmf.datasource.DataSourcesHelper);
 
 
 /**
- * @typedef {ol.Collection.<gmf.DataSource>}
+ * @typedef {ol.Collection.<gmf.datasource.DataSource>}
  */
-gmf.DataSources;
+gmf.datasource.DataSources;

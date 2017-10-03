@@ -123,7 +123,7 @@ ngeo.Querent = class {
    *
    * The map view resolution determines if the inner ogc layers are in range.
    *
-   * @param {!Array.<!ngeo.DataSource>} dataSources Data sources
+   * @param {!Array.<!ngeo.datasource.DataSource>} dataSources Data sources
    * @param {ol.Map} map Map.
    * @return {!ngeox.QueryableDataSources} Queryable data sources.
    * @export
@@ -143,11 +143,13 @@ ngeo.Querent = class {
         continue;
       }
 
-      // (2) Split data sources
-      if (dataSource.supportsWFS) {
-        queryableDataSources.wfs.push(dataSource);
-      } else {
-        queryableDataSources.wms.push(dataSource);
+      if (dataSource instanceof ngeo.datasource.OGC) {
+        // (2) Split data sources
+        if (dataSource.supportsWFS) {
+          queryableDataSources.wfs.push(dataSource);
+        } else {
+          queryableDataSources.wms.push(dataSource);
+        }
       }
     }
 
@@ -155,7 +157,7 @@ ngeo.Querent = class {
   }
 
   /**
-   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {ngeo.datasource.OGC} dataSource Data source.
    * @return {angular.$q.Promise} Promise.
    * @export
    */
@@ -220,8 +222,8 @@ ngeo.Querent = class {
    * Handles the result of a single WMS GetFeatureInfo or WFS GetFeature
    * request. Read features from the response and return them.
    *
-   * @param {!Array.<!ngeo.DataSource>} dataSources List of queryable data
-   *     sources that were used to do the query.
+   * @param {!Array.<!ngeo.datasource.DataSource>} dataSources List of
+   *     queryable data sources that were used to do the query.
    * @param {number} limit The maximum number of features to get with the query.
    * @param {boolean} wfs Whether the query was WFS or WMS.
    * @param {angular.$http.Response|number} response Response.
@@ -241,10 +243,12 @@ ngeo.Querent = class {
         tooManyFeatures = true;
         totalFeatureCount = response;
       } else {
-        if (wfs) {
-          features = dataSource.wfsFormat.readFeatures(response.data);
-        } else {
-          features = dataSource.wmsFormat.readFeatures(response.data);
+        if (dataSource instanceof ngeo.datasource.OGC) {
+          if (wfs) {
+            features = dataSource.wfsFormat.readFeatures(response.data);
+          } else {
+            features = dataSource.wmsFormat.readFeatures(response.data);
+          }
         }
       }
       const dataSourceId = dataSource.id;
@@ -614,8 +618,8 @@ ngeo.Querent = class {
   }
 
   /**
-   * @param {!Array.<ngeox.DataSource>} dataSources List of queryable data
-   *     sources that supports WFS.
+   * @param {!Array.<ngeox.datasource.DataSource>} dataSources List of
+   *     queryable data sources that supports WFS.
    * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
    * @private
    */
@@ -644,8 +648,8 @@ ngeo.Querent = class {
   }
 
   /**
-   * @param {!Array.<ngeox.DataSource>} dataSources List of queryable data
-   *     sources that supports WMS.
+   * @param {!Array.<ngeox.datasource.DataSource>} dataSources List of
+   *     queryable data sources that supports WMS.
    * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
    * @private
    */
@@ -680,14 +684,17 @@ ngeo.Querent = class {
    * - queryable (using the native getter)
    * - have at least one OGC layer in range of current map view resolution.
    *
-   * @param {ngeo.DataSource} ds Data source
+   * @param {ngeo.datasource.DataSource} ds Data source
    * @param {number} res Resolution.
    * @return {boolean} Whether the data source is queryable
    * @private
    */
   isDataSourceQueryable_(ds, res) {
-    return ds.visible && ds.inRange && ds.queryable &&
-      ds.isAnyOGCLayerInRange(res, true);
+    let queryable = ds.visible && ds.inRange && ds.queryable;
+    if (queryable && ds instanceof ngeo.datasource.OGC) {
+      queryable = ds.isAnyOGCLayerInRange(res, true);
+    }
+    return queryable;
   }
 
   /**
@@ -730,7 +737,7 @@ ngeo.Querent = class {
 
 
 /**
- * @typedef {!Array.<!Array.<!ngeo.DataSource>>}
+ * @typedef {!Array.<!Array.<!ngeo.datasource.OGC>>}
  */
 ngeo.Querent.CombinedDataSources;
 

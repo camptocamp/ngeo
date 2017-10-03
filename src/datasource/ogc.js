@@ -1,35 +1,33 @@
-goog.provide('ngeo.DataSource');
+goog.provide('ngeo.datasource.OGC');
 
-goog.require('ngeo');
 goog.require('goog.asserts');
+goog.require('ngeo.datasource.DataSource');
 goog.require('ol.format.GML2');
 goog.require('ol.format.GML3');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
 
 
-/**
- * @implements {ngeox.DataSource}
- */
-ngeo.DataSource = class {
+ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
 
   /**
-   * A `ngeo.DataSource` represents a single source of data, which can combine
-   * different type of servers to display or fetch the data. It can serve
-   * as a point of entry to get all the information about a single data
-   * source.
+   * A data source contain information of a single source of data that can
+   * show or fetch the data using an OGC server. Serveral OGC service types are
+   * supported by this data source: WMS, WMTS and even WFS.
    *
-   * You can use the information in a data source to do all sorts of things:
-   *  - create `ol.layer.Layer` objects using the WMS, WMTS or even WFS
-   *    information
-   *  - issue WMS/WFS queries
-   *  - know whether the data is visible or not
-   *  - apply filter rules on it
+   * You can use the information stored within an OGC data source to do allo
+   * sorts of things:
+   * - issue WMS/WFS queries
+   * - apply filter rules on it
+   * - create `ol.layer.Layer` objects using the WMS, WMTS or event WFS
+   *   information
    *
    * @struct
-   * @param {ngeox.DataSourceOptions} options Options.
+   * @param {ngeox.datasource.OGCOptions} options Options.
    */
   constructor(options) {
+
+    super(options);
 
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
@@ -65,37 +63,8 @@ ngeo.DataSource = class {
      */
     this.filtrable_ = options.filtrable || null;
 
-    /**
-     * A data source is considered 'in range' when it is synchronized to
-     * a map view and the resolution of that view is within the range of
-     * the `maxResolution` and `minResolution`. These 2 properties are
-     * required for the `inRange` property to be dynamic, otherwise its
-     * value is always `true` by default.
-     *
-     * The synchronization is made in the `ngeo.syncDataSourcesMap` service.
-     *
-     * @type {boolean}
-     * @private
-     */
-    this.inRange_ = options.inRange !== false;
-
-    /**
-     * Whether the data source is visible or not, i.e. whether its is ON or OFF.
-     * Defaults to `false`.
-     * @type {boolean}
-     * @private
-     */
-    this.visible_ = options.visible === true;
-
 
     // === STATIC properties (i.e. that never change) ===
-
-    /**
-     * The attributes of the data source.
-     * @type {?Array.<ngeox.Attribute>}
-     * @private
-     */
-    this.attributes_ = options.attributes || null;
 
     /**
      * Whether the geometry from this data source can be copied to other data
@@ -118,44 +87,7 @@ ngeo.DataSource = class {
      * @private
      */
     this.geometryName_ = options.geometryName ||
-      ngeo.DataSource.DEFAULT_GEOMETRY_NAME_;
-
-    /**
-     * (Required) The data source id.
-     * @type {number}
-     * @private
-     */
-    this.id_ = options.id;
-
-    /**
-     * The name of an attribute among the attributes of the data source.
-     * The value of that attribute, in records, can be used to identify
-     * each record individually.
-     * @type {string|undefined}
-     * @private
-     */
-    this.identifierAttribute_ = options.identifierAttribute;
-
-    /**
-     * Maximum resolution where the data source can be displayed or queried.
-     * @type {number|undefined}
-     * @private
-     */
-    this.maxResolution_ = options.maxResolution;
-
-    /**
-     * Minimum resolution where the data source can be displayed or queried.
-     * @type {number|undefined}
-     * @private
-     */
-    this.minResolution_ = options.minResolution;
-
-    /**
-     * (Required) A human-readable name for the data source.
-     * @type {string}
-     * @private
-     */
-    this.name_ = options.name;
+      ngeo.datasource.OGC.DEFAULT_GEOMETRY_NAME_;
 
     /**
      * The type of images to fetch by queries by the (WMS) or (WMTS) .
@@ -168,7 +100,7 @@ ngeo.DataSource = class {
      * A list of layer definitions that are used by (WMS) and (WFS) queries.
      * These are **not** used by the (WMTS) queries (the wmtsLayers is used
      * by WMTS queries).
-     * @type {?Array.<!ngeox.DataSourceLayer>}
+     * @type {?Array.<!ngeox.datasource.OGCLayer>}
      * @private
      */
     this.ogcLayers_ = options.ogcLayers || null;
@@ -179,14 +111,14 @@ ngeo.DataSource = class {
      * @private
      */
     this.ogcServerType_ = options.ogcServerType ||
-      ngeo.DataSource.OGCServerType.MAPSERVER;
+      ngeo.datasource.OGC.ServerType.MAPSERVER;
 
     /**
      * The type data source. Can be: 'WMS' or 'WMTS'.
      * @type {string}
      * @private
      */
-    this.ogcType_ = options.ogcType || ngeo.DataSource.OGCType.WMS;
+    this.ogcType_ = options.ogcType || ngeo.datasource.OGC.Type.WMS;
 
     /**
      * Whether the geometry from this data source can be used to snap the
@@ -254,7 +186,8 @@ ngeo.DataSource = class {
      * @type {string}
      * @private
      */
-    this.wfsFeatureNS_ = options.wfsFeatureNS || ngeo.DataSource.WFSFeatureNS[this.ogcServerType_];
+    this.wfsFeatureNS_ = options.wfsFeatureNS ||
+      ngeo.datasource.OGC.WFSFeatureNS[this.ogcServerType_];
 
     /**
      * The feature prefix to use with WFS requests.
@@ -262,7 +195,7 @@ ngeo.DataSource = class {
      * @private
      */
     this.wfsFeaturePrefix_ = options.wfsFeaturePrefix ||
-      ngeo.DataSource.WFSFeaturePrefix.FEATURE;
+      ngeo.datasource.OGC.WFSFeaturePrefix.FEATURE;
 
     /**
      * The OutputFormat to use with WFS requests.
@@ -270,7 +203,7 @@ ngeo.DataSource = class {
      * @private
      */
     this.wfsOutputFormat_ = options.wfsOutputFormat ||
-      ngeo.DataSource.WFSOutputFormat.GML3;
+      ngeo.datasource.OGC.WFSOutputFormat.GML3;
 
     /**
      * The url to use for (WFS) requests.
@@ -285,7 +218,7 @@ ngeo.DataSource = class {
      * @private
      */
     this.wmsInfoFormat_ = options.wmsInfoFormat ||
-      ngeo.DataSource.WMSInfoFormat.GML;
+      ngeo.datasource.OGC.WMSInfoFormat.GML;
 
     /**
      * Whether the (WMS) images returned by this data source
@@ -316,6 +249,7 @@ ngeo.DataSource = class {
      */
     this.wmtsUrl_ = options.wmtsUrl;
 
+
     // === Calculated properties ===
 
     // Get queryable ogc layer names
@@ -331,9 +265,9 @@ ngeo.DataSource = class {
     let wfsFormat = null;
     if (this.supportsWFS && layers.length) {
       let format = undefined;
-      if (this.wfsOutputFormat_ === ngeo.DataSource.WFSOutputFormat.GML3) {
+      if (this.wfsOutputFormat_ === ngeo.datasource.OGC.WFSOutputFormat.GML3) {
         format = new ol.format.GML3();
-      } else if (this.wfsOutputFormat_ === ngeo.DataSource.WFSOutputFormat.GML2) {
+      } else if (this.wfsOutputFormat_ === ngeo.datasource.OGC.WFSOutputFormat.GML2) {
         format = new ol.format.GML2();
       }
       goog.asserts.assert(format);
@@ -352,7 +286,7 @@ ngeo.DataSource = class {
 
     let wmsFormat = null;
     if (this.supportsWMS && layers.length) {
-      if (this.wmsInfoFormat === ngeo.DataSource.WMSInfoFormat.GML) {
+      if (this.wmsInfoFormat === ngeo.datasource.OGC.WMSInfoFormat.GML) {
         wmsFormat = new ol.format.WMSGetFeatureInfo({
           layers
         });
@@ -365,7 +299,6 @@ ngeo.DataSource = class {
      * @private
      */
     this.wmsFormat_ = wmsFormat;
-
   }
 
   // ========================================
@@ -418,22 +351,6 @@ ngeo.DataSource = class {
    */
   set filterRules(filterRules) {
     this.filterRules_ = filterRules;
-  }
-
-  /**
-   * @return {boolean} In range
-   * @export
-   */
-  get inRange() {
-    return this.inRange_;
-  }
-
-  /**
-   * @param {boolean} inRange In range
-   * @export
-   */
-  set inRange(inRange) {
-    this.inRange_ = inRange;
   }
 
   /**
@@ -499,22 +416,6 @@ ngeo.DataSource = class {
     this.timeUpperValue_ = time;
   }
 
-  /**
-   * @return {boolean} Visible
-   * @export
-   */
-  get visible() {
-    return this.visible_;
-  }
-
-  /**
-   * @param {boolean} visible Visible
-   * @export
-   */
-  set visible(visible) {
-    this.visible_ = visible;
-  }
-
   // =======================================
   // === Static property getters/setters ===
   // =======================================
@@ -524,7 +425,7 @@ ngeo.DataSource = class {
    * @export
    */
   get attributes() {
-    return this.attributes_;
+    return parent.attributes;
   }
 
   /**
@@ -532,7 +433,7 @@ ngeo.DataSource = class {
    * @export
    */
   set attributes(attributes) {
-    this.attributes_ = attributes;
+    parent.attributes = attributes;
     this.updateGeometryNameFromAttributes_();
   }
 
@@ -569,46 +470,6 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @return {number} Id
-   * @export
-   */
-  get id() {
-    return this.id_;
-  }
-
-  /**
-   * @return {string|undefined} Identifier attribute
-   * @export
-   */
-  get identifierAttribute() {
-    return this.identifierAttribute_;
-  }
-
-  /**
-   * @return {number|undefined} Maximum resolution
-   * @export
-   */
-  get maxResolution() {
-    return this.maxResolution_;
-  }
-
-  /**
-   * @return {number|undefined} Minimum resolution
-   * @export
-   */
-  get minResolution() {
-    return this.minResolution_;
-  }
-
-  /**
-   * @return {string} Name
-   * @export
-   */
-  get name() {
-    return this.name_;
-  }
-
-  /**
    * @return {string} OGC image type
    * @export
    */
@@ -617,7 +478,7 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @return {?Array.<!ngeox.DataSourceLayer>} OGC layers
+   * @return {?Array.<!ngeox.datasource.OGCLayer>} OGC layers
    * @export
    */
   get ogcLayers() {
@@ -823,9 +684,9 @@ ngeo.DataSource = class {
   }
 
   /**
-   * Whether the data source is queryable or not. To be queryable, it requires
-   * the support of WFS or WMS and at least one ogc layer to be querable.
-   * @return {boolean} Whether the data source is queryable or not.
+   * Whether the data source is queryable or not. For an OGC data source to be
+   * queryable, it requires the support of WFS or WMS and at least one ogc
+   * layer to be querable.
    * @export
    */
   get queryable() {
@@ -840,15 +701,6 @@ ngeo.DataSource = class {
       }
     }
     return queryable;
-  }
-
-  /**
-   * @return {boolean} Whether the data source supports a dynamic `inRange`
-   *     property or not, i.e. whether it can be calculated.
-   * @export
-   */
-  get supportsDynamicInRange() {
-    return this.maxResolution !== null || this.minResolution !== null;
   }
 
   /**
@@ -922,7 +774,7 @@ ngeo.DataSource = class {
   // ============================
 
   /**
-   * @param {ngeox.DataSource} dataSource Data source.
+   * @param {ngeox.datasource.OGC} dataSource Data source.
    * @return {boolean} Whether this data source can be combined to the given
    *     other data source to fetch features in a single WFS request.
    * @export
@@ -937,7 +789,7 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @param {ngeox.DataSource} dataSource Data source.
+   * @param {ngeox.datasource.OGC} dataSource Data source.
    * @return {boolean} Whether this data source can be combined to the given
    *     other data source to fetch features in a single WMS request.
    * @export
@@ -1035,7 +887,7 @@ ngeo.DataSource = class {
    * @private
    */
   updateGeometryNameFromAttributes_() {
-    let geometryName = ngeo.DataSource.DEFAULT_GEOMETRY_NAME_;
+    let geometryName = ngeo.datasource.DataSource.DEFAULT_GEOMETRY_NAME_;
 
     if (this.attributes) {
       for (const attribute of this.attributes) {
@@ -1050,8 +902,8 @@ ngeo.DataSource = class {
   }
 
   /**
-   * @param {!ngeox.DataSource} dataSource Remote data source to compare with
-   *     this one.
+   * @param {!ngeox.datasource.OGC} dataSource Remote data source to
+   *     compare with this one.
    * @return {boolean} Whether the two data sources have the same active
    *     dimensions. If both have no dimensions, they are considered to be
    *     sharing the same dimensions.
@@ -1090,14 +942,14 @@ ngeo.DataSource = class {
  * @type {string}
  * @private
  */
-ngeo.DataSource.DEFAULT_GEOMETRY_NAME_ = 'the_geom';
+ngeo.datasource.OGC.DEFAULT_GEOMETRY_NAME_ = 'the_geom';
 
 
 /**
  * Available OGC server types.
  * @enum {string}
  */
-ngeo.DataSource.OGCServerType = {
+ngeo.datasource.OGC.ServerType = {
   GEOSERVER: 'geoserver',
   MAPSERVER: 'mapserver',
   QGISSERVER: 'qgisserver'
@@ -1108,7 +960,7 @@ ngeo.DataSource.OGCServerType = {
  * Available OGC types.
  * @enum {string}
  */
-ngeo.DataSource.OGCType = {
+ngeo.datasource.OGC.Type = {
   WMS: 'WMS',
   WMTS: 'WMTS'
 };
@@ -1118,7 +970,7 @@ ngeo.DataSource.OGCType = {
  * Available Feature namespace for WFS requests.
  * @const {Object.<string, string>}
  */
-ngeo.DataSource.WFSFeatureNS = {
+ngeo.datasource.OGC.WFSFeatureNS = {
   'geoserver': 'http://www.opengis.net/gml/3.2',
   'mapserver': 'http://mapserver.gis.umn.edu/mapserver',
   'qgisserver': 'http://www.qgis.org/gml'
@@ -1129,7 +981,7 @@ ngeo.DataSource.WFSFeatureNS = {
  * Available Feature namespace for WFS requests.
  * @enum {string}
  */
-ngeo.DataSource.WFSFeaturePrefix = {
+ngeo.datasource.OGC.WFSFeaturePrefix = {
   FEATURE: 'feature'
 };
 
@@ -1138,7 +990,7 @@ ngeo.DataSource.WFSFeaturePrefix = {
  * Available OutputFormat for WFS requests.
  * @enum {string}
  */
-ngeo.DataSource.WFSOutputFormat = {
+ngeo.datasource.OGC.WFSOutputFormat = {
   GML2: 'GML2',
   GML3: 'GML3'
 };
@@ -1148,6 +1000,6 @@ ngeo.DataSource.WFSOutputFormat = {
  * Available InfoFormat for WMS requests.
  * @enum {string}
  */
-ngeo.DataSource.WMSInfoFormat = {
+ngeo.datasource.OGC.WMSInfoFormat = {
   GML: 'application/vnd.ogc.gml'
 };
