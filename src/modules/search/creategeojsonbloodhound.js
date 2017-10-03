@@ -6,45 +6,6 @@ goog.provide('ngeo.search.createGeoJSONBloodhound');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.obj');
 
-/**
- * Provides a function that creates a Bloodhound engine
- * expecting GeoJSON responses from the search web service, which creates
- * `ol.Feature` objects as suggestions.
- *
- * Example:
- *
- *     let bloodhound = createGeoJSONBloodhound(
- *       'http://example.com/fulltextsearch?query=%QUERY',
- *       aFilterFunction,
- *       ol.proj.get('EPSG:3857'));
- *     bloodhound.initialize();
- *
- *     let bloodhound = createGeoJSONBloodhound(
- *       '',
- *       undefined,
- *       ol.proj.get('EPSG:3857'),
- *       ol.proj.get('EPSG:21781'),
- *       {
- *         remote: {
- *           url: mySearchEngineUrl,
- *           replace: function(url, query) {
- *             return url +
- *                 '?qtext=' + encodeURIComponent(query) +
- *                 '&lang=' + gettextCatalog.currentLanguage;
- *           }
- *         }
- *       }
- *     );
- *     bloodhound.initialize();
- *
- * @typedef {function(string, (function(GeoJSONFeature): boolean)=,
- * ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=,
- * BloodhoundRemoteOptions=):Bloodhound}
- * @ngdoc service
- * @ngname search.createGeoJSONBloodhound
- */
-ngeo.search.CreateGeoJSONBloodhound;
-
 
 /**
  * @param {string} url an URL to a search service.
@@ -116,3 +77,43 @@ ngeo.search.createGeoJSONBloodhound.module = angular.module('ngeoSearchCreategeo
 ngeo.search.createGeoJSONBloodhound.module.value(
   'ngeoSearchCreateGeoJSONBloodhound',
   ngeo.search.createGeoJSONBloodhound);
+
+
+/**
+ * Provides a function that creates a Bloodhound engine
+ * expecting GeoJSON responses from the search web service, which creates
+ * `ol.Feature` objects as suggestions.
+ *
+ * Example:
+ *
+ *     let bloodhound = createGeoJSONBloodhound(
+ *       'http://example.com/fulltextsearch?query=%QUERY',
+ *       aFilterFunction,
+ *       ol.proj.get('EPSG:3857'));
+ *     bloodhound.initialize();
+ *
+ *     let bloodhound = createGeoJSONBloodhound(
+ *       '',
+ *       undefined,
+ *       ol.proj.get('EPSG:3857'),
+ *       ol.proj.get('EPSG:21781'),
+ *       {
+ *         remote: {
+ *           url: mySearchEngineUrl,
+ *           replace: function(url, query) {
+ *             return url +
+ *                 '?qtext=' + encodeURIComponent(query) +
+ *                 '&lang=' + gettextCatalog.currentLanguage;
+ *           }
+ *         }
+ *       }
+ *     );
+ *     bloodhound.initialize();
+ *
+ * @typedef {function(string, (function(GeoJSONFeature): boolean)=,
+ * ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=,
+ * BloodhoundRemoteOptions=):Bloodhound}
+ * @ngdoc service
+ * @ngname search.createGeoJSONBloodhound
+ */
+ngeo.search.createGeoJSONBloodhound.Function;
