@@ -225,9 +225,11 @@ ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
   //
   // For that reason we use $applyAsync instead of $apply here.
 
-  this.$scope_.$applyAsync(() => {
-    this.currentScale = currentScale;
-  });
+  if (currentScale !== undefined) {
+    this.$scope_.$applyAsync(() => {
+      this.currentScale = currentScale;
+    });
+  }
 };
 
 
