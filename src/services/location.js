@@ -212,6 +212,25 @@ ngeo.Location.prototype.getParamAsInt = function(key) {
 
 
 /**
+ * Get a param in the location's URI as a floating point number.
+ * If the entry does not exist, or if the value can not be parsed,
+ * `undefined` is returned.
+ * @param {string} key Param key.
+ * @return {number|undefined} Param value.
+ * @export
+ */
+ngeo.Location.prototype.getParamAsFloat = function(key) {
+  const value = this.getParam(key);
+  if (value === undefined) {
+    return undefined;
+  }
+  goog.asserts.assertString(value);
+  const valueAsFloat = parseFloat(value);
+  return isNaN(valueAsFloat) ? undefined : valueAsFloat;
+};
+
+
+/**
  * Get a param from the fragment of the location's URI as integer. If the entry
  * does not exist, or if the value can not be parsed as integer, `undefined` is returned.
  * @param {string} key Param key.
