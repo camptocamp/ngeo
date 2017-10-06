@@ -1,6 +1,7 @@
 goog.provide('ngeo.LayerHelper');
 
 goog.require('ngeo');
+goog.require('goog.asserts');
 goog.require('ol.Collection');
 goog.require('ol.array');
 goog.require('ol.format.WMTSCapabilities');

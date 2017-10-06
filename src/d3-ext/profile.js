@@ -1,5 +1,8 @@
 goog.provide('ngeo.profile');
 
+goog.require('goog.asserts');
+goog.require('ol.obj');
+
 
 /**
  * Provides a D3js component to be used to draw an elevation
