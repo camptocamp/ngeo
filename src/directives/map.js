@@ -3,6 +3,7 @@ goog.provide('ngeo.mapDirective');
 goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.SyncDataSourcesMap');
+goog.require('ol.events');
 goog.require('ol.Map');
 
 
