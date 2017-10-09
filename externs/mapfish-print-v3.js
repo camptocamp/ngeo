@@ -44,6 +44,11 @@ let MapFishPrintAttributes = function() {};
 MapFishPrintAttributes.prototype.map;
 
 
+/**
+ * @type {Array}
+ */
+MapFishPrintAttributes.prototype.datasource;
+
 
 /**
  * @constructor
