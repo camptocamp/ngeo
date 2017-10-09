@@ -1,6 +1,6 @@
-goog.provide('gmf.NominatimService');
+goog.provide('ngeo.NominatimService');
 
-goog.require('gmf');
+goog.require('ngeo');
 goog.require('ngeo.Debounce');
 
 /**
@@ -13,10 +13,10 @@ goog.require('ngeo.Debounce');
  * @struct
  * @ngInject
  * @export
- * @ngname gmfNominatimService
+ * @ngname ngeoNominatimService
  * @see https://wiki.openstreetmap.org/wiki/Nominatim
  */
-gmf.NominatimService = function($http, $injector, ngeoDebounce) {
+ngeo.NominatimService = function($http, $injector, ngeoDebounce) {
 
   /**
    * @type {angular.$http}
@@ -38,8 +38,8 @@ gmf.NominatimService = function($http, $injector, ngeoDebounce) {
    */
   this.nominatimUrl_ = 'http://nominatim.openstreetmap.org/';
 
-  if ($injector.has('gmfNominatimUrl')) {
-    this.nominatimUrl_ = $injector.get('gmfNominatimUrl');
+  if ($injector.has('ngeoNominatimUrl')) {
+    this.nominatimUrl_ = $injector.get('ngeoNominatimUrl');
 
     // the url is expected to end with a slash
     if (this.nominatimUrl_.substr(-1) !== '/') {
@@ -85,7 +85,7 @@ gmf.NominatimService = function($http, $injector, ngeoDebounce) {
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Search
  * @export
  */
-gmf.NominatimService.prototype.search = function(query, params) {
+ngeo.NominatimService.prototype.search = function(query, params) {
   let url = `${this.nominatimUrl_}search?q=${query}`;
 
   params = params || {};
@@ -114,7 +114,7 @@ gmf.NominatimService.prototype.search = function(query, params) {
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
  * @export
  */
-gmf.NominatimService.prototype.reverse = function(coordinate, params) {
+ngeo.NominatimService.prototype.reverse = function(coordinate, params) {
   let url = `${this.nominatimUrl_}reverse`;
 
   params = Object.assign({}, this.reverseDefaultParams, params);
@@ -141,18 +141,18 @@ gmf.NominatimService.prototype.reverse = function(coordinate, params) {
 /**
  * @param {string} query Search query
  * @param {function(Array.<BloodhoundDatum>)} syncResults Callback for synchronous execution, unused
- * @param {function(Array.<gmfx.NominatimSearchResult>)} asyncResults Callback for asynchronous execution
+ * @param {function(Array.<ngeox.NominatimSearchResult>)} asyncResults Callback for asynchronous execution
  * @private
  */
-gmf.NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
+ngeo.NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
   const onSuccess_ = function(resp) {
     /**
      * Parses result response.
-     * @param {gmfx.NominatimSearchResponseResult} result Result
-     * @return {gmfx.NominatimSearchResult} Parsed result
+     * @param {ngeox.NominatimSearchResponseResult} result Result
+     * @return {ngeox.NominatimSearchResult} Parsed result
      */
     const parse = function(result) {
-      return /** @type{gmfx.NominatimSearchResult} */({
+      return /** @type{ngeox.NominatimSearchResult} */({
         coordinate: [result.lon, result.lat],
         name: result.display_name
       });
@@ -168,4 +168,4 @@ gmf.NominatimService.prototype.typeaheadSource_ = function(query, syncResults, a
 };
 
 
-gmf.module.service('gmfNominatimService', gmf.NominatimService);
+ngeo.module.service('ngeoNominatimService', ngeo.NominatimService);

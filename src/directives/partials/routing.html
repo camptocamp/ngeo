@@ -1,26 +1,26 @@
-<div class="gmf-routing">
-  <div class="gmf-routing-start form-group">
-    <gmf-routing-feature
-            gmf-routing-feature-map="routeCtrl.map"
-            gmf-routing-feature-feature="routeCtrl.startFeature_"
-            gmf-routing-feature-fill-color="routeCtrl.colors['start.fill']"
-            gmf-routing-feature-stroke-color="routeCtrl.colors['start.stroke']"
-            gmf-routing-feature-on-change="routeCtrl.handleChange"
-            gmf-routing-feature-search-default-params="routeCtrl.searchDefaultParams">
-    </gmf-routing-feature>
+<div class="ngeo-routing">
+  <div class="ngeo-routing-start form-group">
+    <ngeo-routing-feature
+            ngeo-routing-feature-map="routeCtrl.map"
+            ngeo-routing-feature-feature="routeCtrl.startFeature_"
+            ngeo-routing-feature-fill-color="routeCtrl.colors['start.fill']"
+            ngeo-routing-feature-stroke-color="routeCtrl.colors['start.stroke']"
+            ngeo-routing-feature-on-change="routeCtrl.handleChange"
+            ngeo-routing-feature-search-default-params="routeCtrl.searchDefaultParams">
+    </ngeo-routing-feature>
   </div>
 
-    <div class="gmf-routing-vias form-group" ng-repeat="(index, via) in routeCtrl.viaArray">
+    <div class="ngeo-routing-vias form-group" ng-repeat="(index, via) in routeCtrl.viaArray">
       <div class="form-inline">
         <div class="form-group">
-          <gmf-routing-feature
-                  gmf-routing-feature-map="routeCtrl.map"
-                  gmf-routing-feature-feature="via.feature"
-                  gmf-routing-feature-fill-color="routeCtrl.colors['via.fill']"
-                  gmf-routing-feature-stroke-color="routeCtrl.colors['via.stroke']"
-                  gmf-routing-feature-on-change="routeCtrl.handleChange"
-                  gmf-routing-feature-search-default-params="routeCtrl.searchDefaultParams">
-          </gmf-routing-feature>
+          <ngeo-routing-feature
+                  ngeo-routing-feature-map="routeCtrl.map"
+                  ngeo-routing-feature-feature="via.feature"
+                  ngeo-routing-feature-fill-color="routeCtrl.colors['via.fill']"
+                  ngeo-routing-feature-stroke-color="routeCtrl.colors['via.stroke']"
+                  ngeo-routing-feature-on-change="routeCtrl.handleChange"
+                  ngeo-routing-feature-search-default-params="routeCtrl.searchDefaultParams">
+          </ngeo-routing-feature>
         </div>
         <button type="button" class="btn btn-primary delete-via" ng-click="routeCtrl.deleteVia(index)">
           <span class="fa fa-trash-o"></span>
@@ -28,15 +28,15 @@
       </div>
     </div>
 
-  <div class="gmf-routing-destination form-group">
-    <gmf-routing-feature
-            gmf-routing-feature-map="routeCtrl.map"
-            gmf-routing-feature-feature="routeCtrl.targetFeature_"
-            gmf-routing-feature-fill-color="routeCtrl.colors['destination.fill']"
-            gmf-routing-feature-stroke-color="routeCtrl.colors['destination.stroke']"
-            gmf-routing-feature-on-change="routeCtrl.handleChange"
-            gmf-routing-feature-search-default-params="routeCtrl.searchDefaultParams">
-    </gmf-routing-feature>
+  <div class="ngeo-routing-destination form-group">
+    <ngeo-routing-feature
+            ngeo-routing-feature-map="routeCtrl.map"
+            ngeo-routing-feature-feature="routeCtrl.targetFeature_"
+            ngeo-routing-feature-fill-color="routeCtrl.colors['destination.fill']"
+            ngeo-routing-feature-stroke-color="routeCtrl.colors['destination.stroke']"
+            ngeo-routing-feature-on-change="routeCtrl.handleChange"
+            ngeo-routing-feature-search-default-params="routeCtrl.searchDefaultParams">
+    </ngeo-routing-feature>
   </div>
 
   <div class="form-group pull-right">
@@ -62,7 +62,7 @@
     </div>
   </div>
 
-  <div class="gmf-routing-error form-group clearfix"
+  <div class="ngeo-routing-error form-group clearfix"
        ng-hide="routeCtrl.errorMessage === ''">
     {{routeCtrl.errorMessage}}
   </div>

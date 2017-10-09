@@ -1,21 +1,21 @@
-goog.provide('gmf.routingComponent');
+goog.provide('ngeo.routingComponent');
 
-goog.require('gmf');
-goog.require('gmf.RoutingService');
-goog.require('gmf.NominatimService');
+goog.require('ngeo');
+goog.require('ngeo.RoutingService');
+goog.require('ngeo.NominatimService');
 goog.require('ol.format.GeoJSON');
 
 
-gmf.module.value('gmfRoutingTemplateUrl',
+ngeo.module.value('ngeoRoutingTemplateUrl',
   /**
    * @param {!angular.JQLite} $element Element.
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($element, $attrs) => {
-    const templateUrl = $attrs['gmfRoutingTemplateUrl'];
+    const templateUrl = $attrs['ngeoRoutingTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseTemplateUrl}/routing.html`;
+      `${ngeo.baseTemplateUrl}/routing.html`;
   }
 );
 
@@ -23,12 +23,12 @@ gmf.module.value('gmfRoutingTemplateUrl',
 /**
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfRoutingTemplateUrl Template function.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} ngeoRoutingTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
-function gmfRoutingTemplateUrl($element, $attrs, gmfRoutingTemplateUrl) {
-  return gmfRoutingTemplateUrl($element, $attrs);
+function ngeoRoutingTemplateUrl($element, $attrs, ngeoRoutingTemplateUrl) {
+  return ngeoRoutingTemplateUrl($element, $attrs);
 }
 
 
@@ -37,43 +37,43 @@ function gmfRoutingTemplateUrl($element, $attrs, gmfRoutingTemplateUrl) {
  *
  * Example:
  *
- *  <gmf-routing
- *    gmf-routing-active="ctrl.routingActive"
- *    gmf-routing-map="::ctrl.map">
- *  </gmf-routing>
+ *  <ngeo-routing
+ *    ngeo-routing-active="ctrl.routingActive"
+ *    ngeo-routing-map="::ctrl.map">
+ *  </ngeo-routing>
  *
- * @htmlAttribute {boolean} gmf-routing-active Whether the component is
+ * @htmlAttribute {boolean} ngeo-routing-active Whether the component is
  *     active or not.
- * @htmlAttribute {ol.Map} gmf-routing-map The map.
+ * @htmlAttribute {ol.Map} ngeo-routing-map The map.
  * @ngdoc component
- * @ngname gmfRouting
+ * @ngname ngeoRouting
  */
-gmf.routingComponent = {
-  controller: 'GmfRoutingController as routeCtrl',
+ngeo.routingComponent = {
+  controller: 'NgeoRoutingController as routeCtrl',
   bindings: {
-    'active': '=gmfRoutingActive',
-    'map': '<gmfRoutingMap'
+    'active': '=ngeoRoutingActive',
+    'map': '<ngeoRoutingMap'
   },
-  templateUrl: gmfRoutingTemplateUrl
+  templateUrl: ngeoRoutingTemplateUrl
 };
 
-gmf.module.component('gmfRouting', gmf.routingComponent);
+ngeo.module.component('ngeoRouting', ngeo.routingComponent);
 
 
 /**
  * The controller for the routing directive.
  * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Scope.
- * @param {!gmf.RoutingService} gmfRoutingService service for OSRM routing
- * @param {!gmf.NominatimService} gmfNominatimService service for Nominatim
+ * @param {!ngeo.RoutingService} ngeoRoutingService service for OSRM routing
+ * @param {!ngeo.NominatimService} ngeoNominatimService service for Nominatim
  * @param {!angular.$q} $q Angular q service
  * @constructor
  * @private
  * @ngInject
  * @ngdoc controller
- * @ngname GmfRoutingController
+ * @ngname NgeoRoutingController
  */
-gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNominatimService, $q) {
+ngeo.NgeoRoutingController = function($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q) {
 
   /**
    * @type {angular.Scope}
@@ -82,22 +82,22 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
   this.$scope_ = $scope;
 
   /**
-   * @type {gmf.RoutingService}
+   * @type {ngeo.RoutingService}
    * @private
    */
-  this.gmfRoutingService_ = gmfRoutingService;
+  this.ngeoRoutingService_ = ngeoRoutingService;
 
   /**
-   * @type {gmf.NominatimService}
+   * @type {ngeo.NominatimService}
    * @private
    */
-  this.gmfNominatimService_ = gmfNominatimService;
+  this.ngeoNominatimService_ = ngeoNominatimService;
 
   /**
-   * @type {gmfx.RoutingOptions}
+   * @type {ngeox.RoutingOptions}
    * @private
    */
-  this.routingOptions_ = $injector.has('gmfRoutingOptions') ? $injector.get('gmfRoutingOptions') : {};
+  this.routingOptions_ = $injector.has('ngeoRoutingOptions') ? $injector.get('ngeoRoutingOptions') : {};
 
   /**
    * Available routing profiles.
@@ -107,13 +107,13 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
    *              profile: 'routed-car' // used as part of the query
    *            }
    *          ]
-   * @type {Array<gmfx.RoutingProfile>}
+   * @type {Array<ngeox.RoutingProfile>}
    * @export
    */
   this.routingProfiles = this.routingOptions_.profiles || [];
 
   /**
-   * @type {?gmfx.RoutingProfile}
+   * @type {?ngeox.RoutingProfile}
    * @export
    */
   this.selectedRoutingProfile = this.routingProfiles.length > 0 ? this.routingProfiles[0] : null;
@@ -165,7 +165,7 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
   this.targetFeature_ = null;
 
   /**
-   * @type {Array.<gmfx.RoutingVia>}
+   * @type {Array.<ngeox.RoutingVia>}
    * @export
    */
   this.viaArray = [];
@@ -250,7 +250,7 @@ gmf.GmfRoutingController = function($injector, $scope, gmfRoutingService, gmfNom
 /**
  * Init the controller
  */
-gmf.GmfRoutingController.prototype.$onInit = function() {
+ngeo.NgeoRoutingController.prototype.$onInit = function() {
   this.map.addLayer(this.routeLayer_);
 };
 
@@ -259,7 +259,7 @@ gmf.GmfRoutingController.prototype.$onInit = function() {
  * @param {boolean} active component status
  * @private
  */
-gmf.GmfRoutingController.prototype.handleActiveChange_ = function(active) {
+ngeo.NgeoRoutingController.prototype.handleActiveChange_ = function(active) {
   if (!active) {
     this.startFeature_ = null;
     this.targetFeature_ = null;
@@ -277,7 +277,7 @@ gmf.GmfRoutingController.prototype.handleActiveChange_ = function(active) {
  * @return {ol.Coordinate} LonLat coordinate
  * @private
  */
-gmf.GmfRoutingController.prototype.getLonLatFromPoint_ = function(point) {
+ngeo.NgeoRoutingController.prototype.getLonLatFromPoint_ = function(point) {
   const geometry = /** @type {ol.geom.Point} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
@@ -288,7 +288,7 @@ gmf.GmfRoutingController.prototype.getLonLatFromPoint_ = function(point) {
  * Flip start and target and re-calculate route.
  * @export
  */
-gmf.GmfRoutingController.prototype.reverseRoute = function() {
+ngeo.NgeoRoutingController.prototype.reverseRoute = function() {
   // swap start and target
   const tmpFeature = this.startFeature_;
   this.startFeature_ = this.targetFeature_;
@@ -305,7 +305,7 @@ gmf.GmfRoutingController.prototype.reverseRoute = function() {
  * @returns {Array<ol.Feature>} parsed route features
  * @private
  */
-gmf.GmfRoutingController.prototype.parseRoute_ = function(route) {
+ngeo.NgeoRoutingController.prototype.parseRoute_ = function(route) {
   let parsedRoutes = [];
   const format = new ol.format.GeoJSON();
   const formatConfig = {
@@ -327,7 +327,7 @@ gmf.GmfRoutingController.prototype.parseRoute_ = function(route) {
 /**
  * @export
  */
-gmf.GmfRoutingController.prototype.calculateRoute = function() {
+ngeo.NgeoRoutingController.prototype.calculateRoute = function() {
   if (this.startFeature_ && this.targetFeature_) {
     // remove rendered routes
     this.routeSource_.clear();
@@ -371,7 +371,7 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
       config['instance'] = this.selectedRoutingProfile['profile'];
     }
 
-    this.$q_.when(this.gmfRoutingService_.getRoute(route, config))
+    this.$q_.when(this.ngeoRoutingService_.getRoute(route, config))
       .then(onSuccess_.bind(this), onError_.bind(this));
   }
 };
@@ -379,8 +379,8 @@ gmf.GmfRoutingController.prototype.calculateRoute = function() {
 /**
  * @export
  */
-gmf.GmfRoutingController.prototype.addVia = function() {
-  this.viaArray.push(/** @type{gmfx.RoutingVia} */({
+ngeo.NgeoRoutingController.prototype.addVia = function() {
+  this.viaArray.push(/** @type{ngeox.RoutingVia} */({
     feature: null,
     onSelect: null
   }));
@@ -390,7 +390,7 @@ gmf.GmfRoutingController.prototype.addVia = function() {
  * @param {number} index Array index.
  * @export
  */
-gmf.GmfRoutingController.prototype.deleteVia = function(index) {
+ngeo.NgeoRoutingController.prototype.deleteVia = function(index) {
   if (this.viaArray.length > index) {
     this.viaArray.splice(index, 1);
     this.calculateRoute();
@@ -398,4 +398,4 @@ gmf.GmfRoutingController.prototype.deleteVia = function(index) {
 };
 
 
-gmf.module.controller('GmfRoutingController', gmf.GmfRoutingController);
+ngeo.module.controller('NgeoRoutingController', ngeo.NgeoRoutingController);

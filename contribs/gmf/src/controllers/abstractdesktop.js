@@ -15,11 +15,11 @@ goog.require('gmf.editfeatureselectorDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.elevationDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.routingComponent');
+goog.require('ngeo.routingComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.routingFeatureComponent');
+goog.require('ngeo.routingFeatureComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.nominatimInputComponent');
+goog.require('ngeo.nominatimInputComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.filterselectorComponent');
 /** @suppress {extraRequire} */

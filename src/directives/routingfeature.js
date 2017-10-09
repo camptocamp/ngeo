@@ -1,71 +1,71 @@
-goog.provide('gmf.routingFeatureComponent');
+goog.provide('ngeo.routingFeatureComponent');
 
-goog.require('gmf');
+goog.require('ngeo');
 goog.require('ol.proj');
 
-gmf.module.value('gmfRoutingFeatureTemplateUrl',
+ngeo.module.value('ngeoRoutingFeatureTemplateUrl',
   /**
    * @param {!angular.JQLite} $element Element.
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($element, $attrs) => {
-    const templateUrl = $attrs['gmfRoutingFeatureTemplateUrl'];
+    const templateUrl = $attrs['ngeoRoutingFeatureTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseTemplateUrl}/routingfeature.html`;
+      `${ngeo.baseTemplateUrl}/routingfeature.html`;
   }
 );
 
 /**
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfRoutingFeatureTemplateUrl Template function.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} ngeoRoutingFeatureTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
-function gmfRoutingFeatureTemplateUrl($element, $attrs, gmfRoutingFeatureTemplateUrl) {
-  return gmfRoutingFeatureTemplateUrl($element, $attrs);
+function ngeoRoutingFeatureTemplateUrl($element, $attrs, ngeoRoutingFeatureTemplateUrl) {
+  return ngeoRoutingFeatureTemplateUrl($element, $attrs);
 }
 
 /**
- * @htmlAttribute {ol.Map} gmf-routing-feature-map The map.
- * @htmlAttribute {ol.Feature} gmf-routing-feature-feature The feature.
- * @htmlAttribute {string} gmf-routing-feature-fill-color The marker fill color.
- * @htmlAttribute {string} gmf-routing-feature-stroke-color The marker stroke color.
- * @htmlAttribute {function(ol.Feature)} gmf-routing-feature-on-change Event fired when feature changes.
- * @htmlAttribute {Object<string, string>} gmf-routing-feature-search-default-params
+ * @htmlAttribute {ol.Map} ngeo-routing-feature-map The map.
+ * @htmlAttribute {ol.Feature} ngeo-routing-feature-feature The feature.
+ * @htmlAttribute {string} ngeo-routing-feature-fill-color The marker fill color.
+ * @htmlAttribute {string} ngeo-routing-feature-stroke-color The marker stroke color.
+ * @htmlAttribute {function(ol.Feature)} ngeo-routing-feature-on-change Event fired when feature changes.
+ * @htmlAttribute {Object<string, string>} ngeo-routing-feature-search-default-params
  *  Default parameters to customize search.
  * @ngdoc component
- * @ngname gmfRoutingFeature
+ * @ngname ngeoRoutingFeature
  */
-gmf.routingFeatureComponent = {
-  controller: 'GmfRoutingFeatureController as featureCtrl',
+ngeo.routingFeatureComponent = {
+  controller: 'NgeoRoutingFeatureController as featureCtrl',
   bindings: {
-    'map': '<gmfRoutingFeatureMap',
-    'feature': '=gmfRoutingFeatureFeature',
-    'fillColor': '<?gmfRoutingFeatureFillColor',
-    'strokeColor': '<?gmfRoutingFeatureStrokeColor',
-    'onChange': '=?gmfRoutingFeatureOnChange',
-    'searchDefaultParams': '<?gmfRoutingFeatureSearchDefaultParams'
+    'map': '<ngeoRoutingFeatureMap',
+    'feature': '=ngeoRoutingFeatureFeature',
+    'fillColor': '<?ngeoRoutingFeatureFillColor',
+    'strokeColor': '<?ngeoRoutingFeatureStrokeColor',
+    'onChange': '=?ngeoRoutingFeatureOnChange',
+    'searchDefaultParams': '<?ngeoRoutingFeatureSearchDefaultParams'
   },
-  templateUrl: gmfRoutingFeatureTemplateUrl
+  templateUrl: ngeoRoutingFeatureTemplateUrl
 };
 
-gmf.module.component('gmfRoutingFeature', gmf.routingFeatureComponent);
+ngeo.module.component('ngeoRoutingFeature', ngeo.routingFeatureComponent);
 
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {!angular.$q} $q Angular q service
- * @param {!gmf.NominatimService} gmfNominatimService service for Nominatim
+ * @param {!ngeo.NominatimService} ngeoNominatimService service for Nominatim
  * @constructor
  * @private
  * @ngInject
  * @ngdoc controller
- * @ngname GmfRoutingFeatureController
+ * @ngname NgeoRoutingFeatureController
  */
-gmf.GmfRoutingFeatureController = function($scope, $timeout, $q, gmfNominatimService) {
+ngeo.NgeoRoutingFeatureController = function($scope, $timeout, $q, ngeoNominatimService) {
 
   /**
    * @type {!angular.Scope}
@@ -86,10 +86,10 @@ gmf.GmfRoutingFeatureController = function($scope, $timeout, $q, gmfNominatimSer
   this.$q_ = $q;
 
   /**
-   * @type {gmf.NominatimService}
+   * @type {ngeo.NominatimService}
    * @private
    */
-  this.gmfNominatimService_ = gmfNominatimService;
+  this.ngeoNominatimService_ = ngeoNominatimService;
 
   /**
    * @type {ol.Map}
@@ -187,7 +187,7 @@ gmf.GmfRoutingFeatureController = function($scope, $timeout, $q, gmfNominatimSer
   this.draw_ = null;
 
   /**
-   * @param {gmfx.NominatimSearchResult} selected Selected result.
+   * @param {ngeox.NominatimSearchResult} selected Selected result.
    * @export
    */
   this.onSelect = this.onSelect_.bind(this);
@@ -199,7 +199,7 @@ gmf.GmfRoutingFeatureController = function($scope, $timeout, $q, gmfNominatimSer
   this.errorMessage = '';
 };
 
-gmf.GmfRoutingFeatureController.prototype.$onInit = function() {
+ngeo.NgeoRoutingFeatureController.prototype.$onInit = function() {
   this.map.addLayer(this.vectorLayer_);
 
   // setup modify interaction
@@ -222,7 +222,7 @@ gmf.GmfRoutingFeatureController.prototype.$onInit = function() {
   );
 };
 
-gmf.GmfRoutingFeatureController.prototype.$onDestroy = function() {
+ngeo.NgeoRoutingFeatureController.prototype.$onDestroy = function() {
   this.map.removeLayer(this.vectorLayer_);
   this.modifyFeature_.setActive(false);
   this.map.removeInteraction(this.modifyFeature_);
@@ -231,7 +231,7 @@ gmf.GmfRoutingFeatureController.prototype.$onDestroy = function() {
 /**
  * @export
  */
-gmf.GmfRoutingFeatureController.prototype.set = function() {
+ngeo.NgeoRoutingFeatureController.prototype.set = function() {
   if (this.draw_) {
     this.map.removeInteraction(this.draw_);
   }
@@ -264,7 +264,7 @@ gmf.GmfRoutingFeatureController.prototype.set = function() {
  * @param {string} label Feature name/label.
  * @private
  */
-gmf.GmfRoutingFeatureController.prototype.setFeature_ = function(coordinate, label) {
+ngeo.NgeoRoutingFeatureController.prototype.setFeature_ = function(coordinate, label) {
   const transformedCoordinate = ol.proj.fromLonLat(coordinate, this.map.getView().getProjection());
   if (label === '') {
     label = transformedCoordinate.join('/');
@@ -275,7 +275,7 @@ gmf.GmfRoutingFeatureController.prototype.setFeature_ = function(coordinate, lab
   });
 };
 
-gmf.GmfRoutingFeatureController.prototype.onFeatureChange_ = function() {
+ngeo.NgeoRoutingFeatureController.prototype.onFeatureChange_ = function() {
   // update label
   this.featureLabel = /** @type{string} */(this.feature.get('name') || '');
 
@@ -292,10 +292,10 @@ gmf.GmfRoutingFeatureController.prototype.onFeatureChange_ = function() {
 };
 
 /**
- * @param {gmfx.NominatimSearchResult} selected Selected result.
+ * @param {ngeox.NominatimSearchResult} selected Selected result.
  * @private
  */
-gmf.GmfRoutingFeatureController.prototype.onSelect_ = function(selected) {
+ngeo.NgeoRoutingFeatureController.prototype.onSelect_ = function(selected) {
   const coordinate = selected.coordinate;
   const label = selected.label;
   this.setFeature_(coordinate, label);
@@ -309,7 +309,7 @@ gmf.GmfRoutingFeatureController.prototype.onSelect_ = function(selected) {
  * @param {ol.Feature} feature Feature to snap
  * @private
  */
-gmf.GmfRoutingFeatureController.prototype.snapFeature_ = function(feature) {
+ngeo.NgeoRoutingFeatureController.prototype.snapFeature_ = function(feature) {
   const coord = this.getLonLatFromPoint_(feature);
   const config = {};
 
@@ -326,7 +326,7 @@ gmf.GmfRoutingFeatureController.prototype.snapFeature_ = function(feature) {
     console.log(resp);
   }).bind(this);
 
-  this.$q_.when(this.gmfNominatimService_.reverse(coord, config))
+  this.$q_.when(this.ngeoNominatimService_.reverse(coord, config))
     .then(onSuccess.bind(this), onError.bind(this));
 };
 
@@ -336,11 +336,11 @@ gmf.GmfRoutingFeatureController.prototype.snapFeature_ = function(feature) {
  * @return {ol.Coordinate} LonLat coordinate
  * @private
  */
-gmf.GmfRoutingFeatureController.prototype.getLonLatFromPoint_ = function(point) {
+ngeo.NgeoRoutingFeatureController.prototype.getLonLatFromPoint_ = function(point) {
   const geometry = /** @type {ol.geom.Point} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
   return ol.proj.toLonLat(coords, projection);
 };
 
-gmf.module.controller('GmfRoutingFeatureController', gmf.GmfRoutingFeatureController);
+ngeo.module.controller('NgeoRoutingFeatureController', ngeo.NgeoRoutingFeatureController);

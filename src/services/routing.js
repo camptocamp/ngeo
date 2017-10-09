@@ -1,6 +1,6 @@
-goog.provide('gmf.RoutingService');
+goog.provide('ngeo.RoutingService');
 
-goog.require('gmf');
+goog.require('ngeo');
 
 /**
  * Service to provide access to a Open Source Routing Machine (OSRM)
@@ -11,9 +11,9 @@ goog.require('gmf');
  * @struct
  * @ngInject
  * @export
- * @ngname gmfRoutingService
+ * @ngname ngeoRoutingService
  */
-gmf.RoutingService = function($http, $injector) {
+ngeo.RoutingService = function($http, $injector) {
 
   /**
    * @type {angular.$http}
@@ -22,10 +22,10 @@ gmf.RoutingService = function($http, $injector) {
   this.$http_ = $http;
 
   /**
-   * @type {gmfx.RoutingOptions}
+   * @type {ngeox.RoutingOptions}
    * @private
    */
-  this.routingOptions_ = $injector.has('gmfRoutingOptions') ? $injector.get('gmfRoutingOptions') : {};
+  this.routingOptions_ = $injector.has('ngeoRoutingOptions') ? $injector.get('ngeoRoutingOptions') : {};
 
   /**
    * URL for OSRM backend API.
@@ -33,11 +33,11 @@ gmf.RoutingService = function($http, $injector) {
    * @type {string}
    * @private
    */
-  this.gmfOsrmBackendUrl_ = this.routingOptions_.backendUrl || 'http://router.project-osrm.org/';
+  this.ngeoOsrmBackendUrl_ = this.routingOptions_.backendUrl || 'http://router.project-osrm.org/';
 
   // the url is expected to end with a slash
-  if (this.gmfOsrmBackendUrl_.substr(-1) !== '/') {
-    this.gmfOsrmBackendUrl_ += '/';
+  if (this.ngeoOsrmBackendUrl_.substr(-1) !== '/') {
+    this.ngeoOsrmBackendUrl_ += '/';
   }
 
   /**
@@ -56,7 +56,7 @@ gmf.RoutingService = function($http, $injector) {
  * @param {?Object} config optional configuration
  * @return {!angular.$http.HttpPromise} promise of the OSRM API request
  */
-gmf.RoutingService.prototype.getRoute = function(coordinates, config) {
+ngeo.RoutingService.prototype.getRoute = function(coordinates, config) {
 
   config = config || {};
 
@@ -77,7 +77,7 @@ gmf.RoutingService.prototype.getRoute = function(coordinates, config) {
   }
 
   // build request URL
-  let url = this.gmfOsrmBackendUrl_;
+  let url = this.ngeoOsrmBackendUrl_;
 
   // Common workaround to provide multiple profiles (since it is not supported yet)
   // Every profile runs on its own instance.
@@ -113,7 +113,7 @@ gmf.RoutingService.prototype.getRoute = function(coordinates, config) {
  * @return {!angular.$http.HttpPromise} promise of the OSRM API request
  * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service
  */
-gmf.RoutingService.prototype.getNearest = function(coordinate, config) {
+ngeo.RoutingService.prototype.getNearest = function(coordinate, config) {
   config = config || {};
 
   // service is always nearest
@@ -126,7 +126,7 @@ gmf.RoutingService.prototype.getNearest = function(coordinate, config) {
   }
 
   // build request URL
-  let url = this.gmfOsrmBackendUrl_;
+  let url = this.ngeoOsrmBackendUrl_;
 
   // Common workaround to provide multiple profiles (since it is not supported yet)
   // Every profile runs on its own instance.
@@ -153,4 +153,4 @@ gmf.RoutingService.prototype.getNearest = function(coordinate, config) {
   return this.$http_.get(url);
 };
 
-gmf.module.service('gmfRoutingService', gmf.RoutingService);
+ngeo.module.service('ngeoRoutingService', ngeo.RoutingService);

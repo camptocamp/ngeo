@@ -2610,3 +2610,45 @@ ngeox.MeasureEvent;
  * }>}
  */
 ngeox.RotateEvent;
+
+/**
+ * @typedef {{
+ *     name: (string),
+ *     coordinate: (ol.Coordinate)
+ * }}
+ */
+ngeox.NominatimSearchResult;
+
+/**
+ * @typedef {{
+ *     display_name: (string),
+ *     lon: (number),
+ *     lat: (number)
+ * }}
+ */
+ngeox.NominatimSearchResponseResult;
+
+/**
+ * @typedef {{
+ *     feature: (?ol.Feature),
+ *     onSelect: (function(ngeox.NominatimSearchResult))
+ * }}
+ */
+ngeox.RoutingVia;
+
+/**
+ * @typedef {{
+ *     label: (string),
+ *     profile: (string)
+ * }}
+ */
+ngeox.RoutingProfile;
+
+/**
+ * @typedef {{
+ *     backendUrl: (string|undefined),
+ *     profiles: (Array.<ngeox.RoutingProfile>|undefined),
+ *     searchDefaultParams: (Object.<string, string>|undefined)
+ * }}
+ */
+ngeox.RoutingOptions;
