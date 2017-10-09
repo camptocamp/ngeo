@@ -510,38 +510,62 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
 
 
 /**
- * Get the legend URL for the given treeCtrl.
+ * Get the legends object (<LayerName: url> for each layer) for the given treeCtrl.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
- * @return {string|undefined} The legend URL or undefined.
+ * @return {Object.<string, string>} A <layerName: url> object that provides a
+ *     layer for each layer.
  * @export
  */
-gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
+gmf.LayertreeController.prototype.getLegendsObject = function(treeCtrl) {
+  const legendsObject = {};
   if (/** @type gmfThemes.GmfGroup */ (treeCtrl.node).children !== undefined) {
-    return undefined;
+    return null;
   }
 
   const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
-  let layersNames;
-
+  const gmfLayerDefaultName = gmfLayer.name;
   if (gmfLayer.metadata.legendImage) {
-    return gmfLayer.metadata.legendImage;
+    legendsObject[gmfLayerDefaultName] = gmfLayer.metadata.legendImage;
+    return legendsObject;
   }
 
   const layer = treeCtrl.layer;
-  if (gmfLayer.type === 'WMTS' && layer) {
+  if (gmfLayer.type === 'WMTS') {
     goog.asserts.assertInstanceof(layer, ol.layer.Tile);
-    return this.layerHelper_.getWMTSLegendURL(layer);
+    const wmtsLegendURL = this.layerHelper_.getWMTSLegendURL(layer);
+    legendsObject[gmfLayerDefaultName] = wmtsLegendURL;
+    return wmtsLegendURL ? legendsObject : null;
   } else {
     const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
-    layersNames = gmfLayerWMS.layers.split(',');
-    if (layersNames.length > 1) {
-      // not supported, the administrator should give a legendImage metadata
-      return undefined;
-    }
+    let layersNames = gmfLayerWMS.layers;
     const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
-    return this.layerHelper_.getWMSLegendURL(gmfOgcServer.url, layersNames[0], this.getScale_());
+    const scale = this.getScale_();
+    // QGIS can handle multiple layers natively. Use Mutliple urls for other map
+    // servers
+    if (gmfOgcServer.type === ngeo.DataSource.OGCServerType.QGISSERVER) {
+      layersNames = [layersNames];
+    } else {
+      layersNames = layersNames.split(',');
+    }
+    layersNames.forEach((layerName) => {
+      legendsObject[layerName] = this.layerHelper_.getWMSLegendURL(gmfOgcServer.url, layerName, scale);
+    });
+    return legendsObject;
   }
+};
+
+
+/**
+ * Get the number of legends object for this layertree controller.
+ * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ *     the current node.
+ * @return {number} The number of Legends object.
+ * @export
+ */
+gmf.LayertreeController.prototype.getNumberOfLegendsObject = function(treeCtrl) {
+  const legendsObject = this.getLegendsObject(treeCtrl);
+  return legendsObject ? Object.keys(legendsObject).length : 0;
 };
 
 
