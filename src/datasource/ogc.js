@@ -425,7 +425,7 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
    * @export
    */
   get attributes() {
-    return parent.attributes;
+    return super.attributes;
   }
 
   /**
@@ -433,7 +433,7 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
    * @export
    */
   set attributes(attributes) {
-    parent.attributes = attributes;
+    super.attributes = attributes;
     this.updateGeometryNameFromAttributes_();
   }
 
