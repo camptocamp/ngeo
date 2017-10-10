@@ -679,7 +679,7 @@ gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
 
 
 /**
- * @param {gmf.datasource.DataSource} ds Data source to filter.
+ * @param {gmf.datasource.OGC} ds Data source to filter.
  * @export
  */
 gmf.LayertreeController.prototype.toggleFiltrableDataSource = function(ds) {
