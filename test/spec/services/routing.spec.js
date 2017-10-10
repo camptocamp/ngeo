@@ -1,6 +1,6 @@
-goog.require('gmf.RoutingService');
+goog.require('ngeo.RoutingService');
 
-describe('gmf.RoutingService', () => {
+describe('ngeo.RoutingService', () => {
   let $httpBackend;
 
   afterEach(() => {
@@ -9,16 +9,16 @@ describe('gmf.RoutingService', () => {
   });
 
   it('Should get a route', () => {
-    let gmfOsrmBackendUrl;
-    let gmfRoutingService;
+    let ngeoOsrmBackendUrl;
+    let ngeoRoutingService;
     const successResponse = {
       route: true
     };
 
     inject(($injector) => {
       $httpBackend = $injector.get('$httpBackend');
-      gmfRoutingService = $injector.get('gmfRoutingService');
-      gmfOsrmBackendUrl = $injector.get('gmfRoutingOptions').backendUrl;
+      ngeoRoutingService = $injector.get('ngeoRoutingService');
+      ngeoOsrmBackendUrl = $injector.get('ngeoRoutingOptions').backendUrl;
     });
 
     const coordinates = /** @type {Array.<ol.Coordinate>} */ [[6.455, 46.648], [6.532, 6.532]];
@@ -29,25 +29,25 @@ describe('gmf.RoutingService', () => {
         option: 'value'
       }
     };
-    const requestUrl = `${gmfOsrmBackendUrl}route/v1/${config.profile}/${coordString}?option=${config.options.option}`;
+    const requestUrl = `${ngeoOsrmBackendUrl}route/v1/${config.profile}/${coordString}?option=${config.options.option}`;
 
     $httpBackend.when('GET', requestUrl).respond(successResponse);
     $httpBackend.expectGET(requestUrl);
-    gmfRoutingService.getRoute(coordinates, config);
+    ngeoRoutingService.getRoute(coordinates, config);
     $httpBackend.flush();
   });
 
   it('Should get a nearest object', () => {
-    let gmfOsrmBackendUrl;
-    let gmfRoutingService;
+    let ngeoOsrmBackendUrl;
+    let ngeoRoutingService;
     const successResponse = {
       nearest: 'Streetname'
     };
 
     inject(($injector) => {
       $httpBackend = $injector.get('$httpBackend');
-      gmfRoutingService = $injector.get('gmfRoutingService');
-      gmfOsrmBackendUrl = $injector.get('gmfRoutingOptions').backendUrl;
+      ngeoRoutingService = $injector.get('ngeoRoutingService');
+      ngeoOsrmBackendUrl = $injector.get('ngeoRoutingOptions').backendUrl;
     });
 
     const coordinate = /** @type {ol.Coordinate} */ [6.455, 46.648];
@@ -57,11 +57,11 @@ describe('gmf.RoutingService', () => {
         option: 'value'
       }
     };
-    const requestUrl = `${gmfOsrmBackendUrl}nearest/v1/car/${coordString}?option=${config.options.option}`;
+    const requestUrl = `${ngeoOsrmBackendUrl}nearest/v1/car/${coordString}?option=${config.options.option}`;
 
     $httpBackend.when('GET', requestUrl).respond(successResponse);
     $httpBackend.expectGET(requestUrl);
-    gmfRoutingService.getNearest(coordinate, config);
+    ngeoRoutingService.getNearest(coordinate, config);
     $httpBackend.flush();
   });
 });
