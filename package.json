@@ -57,7 +57,7 @@
     "less": "2.7.2",
     "less-plugin-autoprefix": "1.5.1",
     "less-plugin-clean-css": "1.5.1",
-    "moment": "2.18.1",
+    "moment": "2.19.0",
     "nomnom": "1.8.1",
     "openlayers": "4.3.4",
     "phantomjs-prebuilt": "2.1.15",
