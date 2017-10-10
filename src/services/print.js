@@ -747,11 +747,25 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
   const label = textStyle.getText();
   if (label !== undefined) {
     symbolizer.label = label;
+    let xAlign = 'c';
+    let yAlign = 'm';
 
-    const labelAlign = textStyle.getTextAlign();
-    if (labelAlign !== undefined) {
-      symbolizer.labelAlign = labelAlign;
+    const olTextAlign = textStyle.getTextAlign();
+    // 'left', 'right', 'center', 'end' or 'start'.
+    if (olTextAlign === 'left' || olTextAlign === 'start') {
+      xAlign = 'l';
+    } else if (olTextAlign === 'right' || olTextAlign === 'end') {
+      xAlign = 'r';
     }
+
+    const olTextBaseline = textStyle.getTextBaseline();
+    // 'bottom', 'top', 'middle', 'alphabetic', 'hanging' or 'ideographic'
+    if (olTextBaseline === 'bottom') {
+      yAlign = 'l';
+    } else if (olTextBaseline === 'top') {
+      yAlign = 't';
+    }
+    symbolizer.labelAlign = `${xAlign}${yAlign}`;
 
     const labelRotation = textStyle.getRotation();
     if (labelRotation !== undefined) {
