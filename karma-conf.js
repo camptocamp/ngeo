@@ -7,7 +7,7 @@ var isDebug = process.argv.some(function(argument) {
 });
 
 module.exports = function(config) {
-  var closureLibPath = 'node_modules/closure-util/.deps/library/**/';
+  var closureLibPath = 'node_modules/@camptocamp/closure-util/.deps/library/**/';
   var olSrcPath = 'node_modules/openlayers/src/';
   var olExtPath = 'node_modules/openlayers/build/ol.ext/';
 
