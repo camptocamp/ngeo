@@ -458,6 +458,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
   }
   const dataSource = layertreeCtrl.getDataSource();
   if (dataSource) {
+    goog.asserts.assertInstanceof(dataSource, ngeo.datasource.OGC);
     dataSource.timeRangeValue = time;
   } else if (layertreeCtrl.children) {
     for (let i = 0, ii = layertreeCtrl.children.length; i < ii; i++) {

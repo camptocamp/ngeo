@@ -222,7 +222,7 @@ ngeo.Querent = class {
    * Handles the result of a single WMS GetFeatureInfo or WFS GetFeature
    * request. Read features from the response and return them.
    *
-   * @param {!Array.<!ngeo.datasource.DataSource>} dataSources List of
+   * @param {!Array.<!ngeo.datasource.OGC>} dataSources List of
    *     queryable data sources that were used to do the query.
    * @param {number} limit The maximum number of features to get with the query.
    * @param {boolean} wfs Whether the query was WFS or WMS.
@@ -618,7 +618,7 @@ ngeo.Querent = class {
   }
 
   /**
-   * @param {!Array.<ngeox.datasource.DataSource>} dataSources List of
+   * @param {!Array.<ngeox.datasource.OGC>} dataSources List of
    *     queryable data sources that supports WFS.
    * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
    * @private
@@ -692,6 +692,7 @@ ngeo.Querent = class {
   isDataSourceQueryable_(ds, res) {
     let queryable = ds.visible && ds.inRange && ds.queryable;
     if (queryable && ds instanceof ngeo.datasource.OGC) {
+      goog.asserts.assertInstanceof(ds, ngeo.datasource.OGC);
       queryable = ds.isAnyOGCLayerInRange(res, true);
     }
     return queryable;
