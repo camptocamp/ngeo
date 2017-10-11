@@ -45,7 +45,7 @@ MapFishPrintAttributes.prototype.map;
 
 
 /**
- * @type {Array}
+ * @type {Array.<Object>}
  */
 MapFishPrintAttributes.prototype.datasource;
 
