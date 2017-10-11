@@ -74,8 +74,10 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *  * metadataUrl: Display a popup with the content of the given URL if
  *    possible also open a new window.
  *
- * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {ol.Map} gmf-layertree-map The map.
+ * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
+ * @htmlAttribute {boolean|undefined} gmf-layertree-openlinksinnewwindow if true, open
+ *     metadataURLs in a new window. Otherwise open them in a popup.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfLayertreeTemplate Template for the directive.
  * @return {angular.Directive} The directive specs.
@@ -88,7 +90,7 @@ gmf.layertreeDirective = function(gmfLayertreeTemplate) {
     scope: {
       'map': '=gmfLayertreeMap',
       'dimensions': '=?gmfLayertreeDimensions',
-      'openLinksInNewWindowFn': '&gmfLayertreeOpenlinksinnewwindow'
+      'openLinksInNewWindowFn': '&?gmfLayertreeOpenlinksinnewwindow'
     },
     bindToController: true,
     controller: 'GmfLayertreeController',
