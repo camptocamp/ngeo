@@ -648,7 +648,7 @@ ngeo.Querent = class {
   }
 
   /**
-   * @param {!Array.<ngeox.datasource.DataSource>} dataSources List of
+   * @param {!Array.<ngeox.datasource.OGC>} dataSources List of
    *     queryable data sources that supports WMS.
    * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
    * @private
@@ -692,8 +692,8 @@ ngeo.Querent = class {
   isDataSourceQueryable_(ds, res) {
     let queryable = ds.visible && ds.inRange && ds.queryable;
     if (queryable && ds instanceof ngeo.datasource.OGC) {
-      goog.asserts.assertInstanceof(ds, ngeo.datasource.OGC);
-      queryable = ds.isAnyOGCLayerInRange(res, true);
+      const ogcDS = /** @type {!ngeo.datasource.OGC} */ (ds);
+      queryable = ogcDS.isAnyOGCLayerInRange(res, true);
     }
     return queryable;
   }

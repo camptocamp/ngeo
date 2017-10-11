@@ -258,8 +258,8 @@ ngeox.IssueGetFeaturesOptions.prototype.wfsCount;
  * `wfs` list.
  *
  * @typedef {{
- *     wfs: (!Array.<!ngeox.datasource.DataSource>),
- *     wms: (!Array.<!ngeox.datasource.DataSource>)
+ *     wfs: (!Array.<!ngeox.datasource.OGC>),
+ *     wms: (!Array.<!ngeox.datasource.OGC>)
  * }}
  */
 ngeox.QueryableDataSources;
@@ -267,14 +267,14 @@ ngeox.QueryableDataSources;
 
 /**
  * List of queryable data sources that support WFS.
- * @type {Array.<ngeox.datasource.DataSource>}
+ * @type {Array.<ngeox.datasource.OGC>}
  */
 ngeox.QueryableDataSources.prototype.wfs;
 
 
 /**
  * List of queryable data sources that support WMS.
- * @type {Array.<ngeox.datasource.DataSource>}
+ * @type {Array.<ngeox.datasource.OGC>}
  */
 ngeox.QueryableDataSources.prototype.wms;
 
