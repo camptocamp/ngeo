@@ -56,10 +56,14 @@ ngeo.datasource.DataSource = class {
 
     /**
      * The attributes of the data source.
+     *
+     * Note: `attributes` is not using the conventionnal getter/setter due
+     * to:  See: https://github.com/google/closure-compiler/issues/1089
+     *
      * @type {?Array.<ngeox.Attribute>}
-     * @private
+     * @export
      */
-    this.attributes_ = options.attributes || null;
+    this.attributes = options.attributes || null;
 
     /**
      * (Required) The data source id.
@@ -143,16 +147,16 @@ ngeo.datasource.DataSource = class {
    * @return {?Array.<ngeox.Attribute>} Attributes
    * @export
    */
-  get attributes() {
-    return this.attributes_;
+  getAttributes() {
+    return this.attributes;
   }
 
   /**
    * @param {?Array.<ngeox.Attribute>} attributes Attributes
    * @export
    */
-  set attributes(attributes) {
-    this.attributes_ = attributes;
+  setAttributes(attributes) {
+    this.attributes = attributes;
   }
 
   /**

@@ -9,6 +9,9 @@ goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
 
 
+/**
+ * @implements {ngeox.datasource.OGC}
+ */
 ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
 
   /**
@@ -422,19 +425,17 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
   // =======================================
 
   /**
-   * @return {?Array.<ngeox.Attribute>} Attributes
-   * @export
+   * @inheritDoc
    */
-  get attributes() {
+  getAttributes() {
     return super.attributes;
   }
 
   /**
-   * @param {?Array.<ngeox.Attribute>} attributes Attributes
-   * @export
+   * @inheritDoc
    */
-  set attributes(attributes) {
-    super.attributes = attributes;
+  setAttributes(attributes) {
+    super.setAttributes(attributes);
     this.updateGeometryNameFromAttributes_();
   }
 
@@ -888,7 +889,7 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
    * @private
    */
   updateGeometryNameFromAttributes_() {
-    let geometryName = ngeo.datasource.DataSource.DEFAULT_GEOMETRY_NAME_;
+    let geometryName = ngeo.datasource.OGC.DEFAULT_GEOMETRY_NAME_;
 
     if (this.attributes) {
       for (const attribute of this.attributes) {

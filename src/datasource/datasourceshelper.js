@@ -124,7 +124,7 @@ ngeo.datasource.DataSourcesHelper = class {
         const attributes = new ngeo.format.WFSAttribute().read(complexContent);
 
         // Set the attributes in the data source
-        dataSource.attributes = attributes;
+        dataSource.setAttributes(attributes);
 
         wfsDescribeFeatureTypeDefer.resolve(attributes);
       });

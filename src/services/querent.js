@@ -249,6 +249,8 @@ ngeo.Querent = class {
           } else {
             features = dataSource.wmsFormat.readFeatures(response.data);
           }
+        } else {
+          features = [];
         }
       }
       const dataSourceId = dataSource.id;
