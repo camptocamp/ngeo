@@ -326,6 +326,8 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
         if (value !== undefined) {
           dimensions[key] = value;
         }
+      } else {
+        dimensions[key] = node.dimensions[key];
       }
     }
     if (!ol.obj.isEmpty(dimensions)) {
