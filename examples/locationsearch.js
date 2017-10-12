@@ -42,7 +42,7 @@ app.module.directive('appLocationSearch', app.locationSearchDirective);
 
 /**
  * @constructor
- * @param {ngeo.search.CreateLocationSearchBloodhound} ngeoCreateLocationSearchBloodhound Bloodhound service.
+ * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
  * @ngInject
  */
 app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
@@ -102,7 +102,7 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
 
 
 /**
- * @param {ngeo.search.CreateLocationSearchBloodhound} ngeoCreateLocationSearchBloodhound Bloodhound service.
+ * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
  * @param {number} limit Limit.
  * @return {Bloodhound} The bloodhound engine.
  * @private
