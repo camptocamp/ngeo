@@ -2,27 +2,21 @@
 
 make .build/node_modules.timestamp
 
-if [ "${EXAMPLES_NGEO}" == TRUE ]
+if [ "${JOB}" == publish-examples-ngeo ]
 then
     make examples-hosted-ngeo .build/examples-hosted/index.html
 fi
-if [ "${EXAMPLES_GMF}" == TRUE ]
+if [ "${JOB}" == publish-examples-gmf ]
 then
     make examples-hosted-gmf .build/examples-hosted/contribs/gmf/index.html
 fi
-if [ "${APPS_GMF}" == TRUE ]
+if [ "${JOB}" == publish-apps-gmf ]
 then
     make examples-hosted-apps
 fi
-if [ "${API}" == TRUE ]
+if [ "${JOB}" == publish-api-docs ]
 then
     make .build/apidoc
-fi
-
-echo ${IS_EXTERNAL}
-if [ "${IS_EXTERNAL}" = TRUE ]
-then
-    exit 0
 fi
 
 make .build/ngeo-${GITHUB_USERNAME}-gh-pages \
@@ -50,7 +44,7 @@ cd -
 
 mkdir -p .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}
 cd .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}
-if [ "${EXAMPLES_NGEO}" == TRUE ]
+if [ "${JOB}" == publish-examples-ngeo ]
 then
     git rm --ignore-unmatch --quiet --force examples/*.js examples/*.html || true
     git rm --ignore-unmatch -r --quiet --force examples/data || true
@@ -58,34 +52,34 @@ then
     git rm --ignore-unmatch -r --quiet --force examples/lib || true
     git rm --ignore-unmatch -r --quiet --force examples/partials || true
 fi
-if [ "${EXAMPLES_GMF}" == TRUE ]
+if [ "${JOB}" == publish-examples-gmf ]
 then
     git rm --ignore-unmatch --quiet --force examples/contribs/gmf/*.js examples/contribs/gmf/*.html || true
 fi
-if [ "${APPS_GMF}" == TRUE ]
+if [ "${JOB}" == publish-apps-gmf ]
 then
     git rm --ignore-unmatch -r --quiet --force examples/contribs/gmf/apps || true
     git rm --ignore-unmatch -r --quiet --force examples/contribs/gmf/build || true
     git rm --ignore-unmatch -r --quiet --force examples/contribs/gmf/fonts || true
     git rm --ignore-unmatch -r --quiet --force examples/contribs/gmf/cursors || true
 fi
-if [ "${API}" == TRUE ]
+if [ "${JOB}" == publish-api-docs ]
 then
     git rm --ignore-unmatch -r --quiet --force apidoc || true
 fi
 cd -
 
-if [ "${EXAMPLES_NGEO}" == TRUE ]
+if [ "${JOB}" == publish-examples-ngeo ]
 then
     mkdir -p .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/
     cp -r .build/examples-hosted/* .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/
 fi
-if [ "${EXAMPLES_GMF}" == TRUE ]
+if [ "${JOB}" == publish-examples-gmf ]
 then
     mkdir -p .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
     cp -r .build/examples-hosted/contribs/gmf/* .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
 fi
-if [ "${APPS_GMF}" == TRUE ]
+if [ "${JOB}" == publish-apps-gmf ]
 then
     mkdir -p .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
     cp -r .build/examples-hosted/contribs/gmf/apps .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
@@ -93,7 +87,7 @@ then
     cp -r .build/examples-hosted/contribs/gmf/fonts .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
     cp -r .build/examples-hosted/contribs/gmf/cursors .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
 fi
-if [ "${API}" == TRUE ]
+if [ "${JOB}" == publish-api-docs ]
 then
     cp -r .build/apidoc .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/
 fi
