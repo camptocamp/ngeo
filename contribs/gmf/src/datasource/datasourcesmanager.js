@@ -590,13 +590,12 @@ gmf.datasource.DataSourcesManager = class {
     if (Array.isArray(siblingDataSourceIds)) {
       const ngeoDataSources = this.ngeoDataSources_.getArray();
       for (const ngeoDataSource of ngeoDataSources) {
-        if (ngeoDataSource.filterRules !== null &&
+        if (ngeoDataSource instanceof gmf.datasource.OGC &&
+            ngeoDataSource.filterRules !== null &&
             ngeoDataSource.id !== dataSource.id &&
             siblingDataSourceIds.includes(ngeoDataSource.id) &&
             ngeoDataSource.visible
         ) {
-          goog.asserts.assertInstanceof(
-            ngeoDataSource, gmf.datasource.OGC);
           this.handleDataSourceFilterRulesChange_(ngeoDataSource, true);
           break;
         }
