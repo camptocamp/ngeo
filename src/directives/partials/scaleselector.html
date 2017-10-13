@@ -5,7 +5,7 @@
   <ul class="dropdown-menu btn-block" role="menu">
     <li ng-repeat="zoomLevel in ::scaleselectorCtrl.zoomLevels">
       <a href ng-click="scaleselectorCtrl.changeZoom(zoomLevel)"
-         ng-bind-html="::scaleselectorCtrl.getScale(zoomLevel) | ngeoScalify | ngeoTrustHtml">
+         ng-bind-html="scaleselectorCtrl.getScale(zoomLevel) | ngeoScalify | ngeoTrustHtml">
       </a>
     </li>
   </ul>
