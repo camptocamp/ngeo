@@ -717,7 +717,7 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle
 ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle) {
   const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
-    goog.asserts.assert(Array.isArray(strokeColor));
+    goog.asserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
     const strokeColorRgba = ol.color.asArray(strokeColor);
     goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
     symbolizer.strokeColor = ngeo.utils.rgbArrayToHex(strokeColorRgba);
@@ -788,7 +788,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     const strokeStyle = textStyle.getStroke();
     if (strokeStyle !== null) {
       const strokeColor = strokeStyle.getColor();
-      goog.asserts.assert(Array.isArray(strokeColor));
+      goog.asserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
       const strokeColorRgba = ol.color.asArray(strokeColor);
       goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
       symbolizer.haloColor = ngeo.utils.rgbArrayToHex(strokeColorRgba);
@@ -802,7 +802,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     const fillStyle = textStyle.getFill();
     if (fillStyle !== null) {
       const fillColor = fillStyle.getColor();
-      goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
+      goog.asserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
       const fillColorRgba = ol.color.asArray(fillColor);
       goog.asserts.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
       symbolizer.fontColor = ngeo.utils.rgbArrayToHex(fillColorRgba);
