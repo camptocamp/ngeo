@@ -14,7 +14,7 @@ gmf.module = angular.module('gmf', [
 
 gmf.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   /**
-   * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider
+   * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider angular-dynamic-locale provider.
    * @param {string} angularLocaleScript the script.
    */
   function(tmhDynamicLocaleProvider, angularLocaleScript) {
@@ -27,7 +27,7 @@ gmf.module.config(['$animateProvider',
   /**
    * For performance reason, only perform animation on elements that have the
    * `gmf-animatable` css class.
-   * @param {angular.$animateProvider} $animateProvider
+   * @param {angular.$animateProvider} $animateProvider animate provider.
    */
   function($animateProvider) {
     $animateProvider.classNameFilter(/gmf-animatable/);
