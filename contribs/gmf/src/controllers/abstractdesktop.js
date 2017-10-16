@@ -175,6 +175,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
     })
   });
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.importDataSourceActive = false;
+
   const body = $('body');
 
   // initialize tooltips

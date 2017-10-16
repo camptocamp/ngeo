@@ -1,0 +1,97 @@
+<div class="form-group">
+  <select
+    class="form-control"
+    ng-model="$ctrl.mode"
+    ng-options="mode | translate for mode in $ctrl.modes">
+  </select>
+</div>
+
+<div ng-switch="$ctrl.mode">
+
+  <form
+    name="idsl_form"
+    novalidate
+    ng-switch-when="Local">
+    <div class="form-group">
+      <div class="input-group input-group-sm">
+        <input
+          name="file"
+          type="file"
+        />
+        <input
+          class="form-control"
+          placeholder="{{'No file' | translate}}"
+          readonly
+          type="text"
+          value="{{(file.name) ? file.name + ', ' + file.size/1000 + ' ko' : ''}}"
+        />
+        <span class="input-group-btn">
+          <button
+            class="btn btn-default"
+            type="button"
+            ng-click="$ctrl.browse()"
+            translate>Browse</button>
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <button
+        class="btn btn-sm btn-default form-control"
+        title="{{'Load a file from local' | translate}}"
+        type="submit"
+        ng-click="idsl_form.$valid && $ctrl.load()"
+        ng-disabled="idsl_form.$invalid || $ctrl.pending"
+      >
+        <span>{{'Load local file' | translate}}</span>
+      </button>
+    </div>
+  </form>
+
+  <form
+    name="idsc_form"
+    novalidate
+    ng-switch-default>
+    <div class="form-group">
+      <input
+        class="form-control"
+        name="url"
+        placeholder="{{'Choose or enter online resource URL' | translate}}"
+        required
+        type="url"
+        ng-disabled="$ctrl.pending"
+        ng-model="$ctrl.url"
+      />
+    </div>
+    <div class="form-group">
+      <button
+        class="btn btn-sm btn-default form-control"
+        title="{{'Connect to online resource' | translate}}"
+        type="submit"
+        ng-click="idsc_form.$valid && $ctrl.connect()"
+        ng-disabled="idsc_form.$invalid || $ctrl.pending"
+      >
+        <span
+          ng-if="$ctrl.pending"
+        >{{'Connecting, please wait...' | translate}}</span>
+        <span
+          ng-if="!$ctrl.pending && $ctrl.hasError"
+        >{{'Failed to connect' | translate}}</span>
+        <span
+          ng-if="!$ctrl.pending && !$ctrl.hasError"
+        >{{'Connect' | translate}}</span>
+      </button>
+    </div>
+  </form>
+
+</div>
+
+<div
+  class="gmf-importdatasource-layers"
+  ng-if="$ctrl.wmsCapabilities">
+  <hr />
+  <h4>{{ 'Layers' | translate }}</h4>
+  <gmf-wmscapabilitylayertreenode
+    capabilities="::$ctrl.wmsCapabilities"
+    layer="::$ctrl.wmsCapabilities.Capability.Layer">
+  </gmf-wmscapabilitylayertreenode>
+</div>

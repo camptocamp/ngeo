@@ -5,6 +5,7 @@ goog.require('ngeo.RuleHelper');
 goog.require('ngeo.WMSTime');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WFSDescribeFeatureType');
+goog.require('ol.format.WMSCapabilities');
 goog.require('ol.obj');
 goog.require('ol.source.ImageWMS');
 
@@ -16,6 +17,12 @@ ngeo.Querent = class {
    * ngeo data sources. It does not store the result. Instead, it returns it
    * using promises. Any component that inject this service can use it to
    * make it issue its own queries and do whatever it wants with the result.
+   *
+   * It supports sending OGC requests and parse the response, such as:
+   * - WFS DescribeFeatureType
+   * - WFS GetFeature
+   * - WMS GetCapabilites
+   * - WMS GetFeatureInfo
    *
    * @struct
    * @param {angular.$http} $http Angular $http service.
@@ -63,6 +70,14 @@ ngeo.Querent = class {
      * @private
      */
     this.requestCancelers_ = [];
+
+    /**
+     * Cache of promises for WMS GetCapabilities requests. They key is the
+     * online resource base url that is used to do the query.
+     * @type {!Object.<!angular.$q.Promise>}
+     * @private
+     */
+    this.wmsGetCapabilitiesPromises_ = {};
   }
 
 
@@ -185,6 +200,43 @@ ngeo.Querent = class {
       const format = new ol.format.WFSDescribeFeatureType();
       return format.read(response.data);
     });
+  }
+
+  /**
+   * @param {string} baseUrl Base url of the WMS server.
+   * @param {boolean} opt_cache Whether to use the cached capability, if
+   *     available. Enabling this will also store the capability when required
+   *     for the first time. Defaults to: `true`.
+   * @return {!angular.$q.Promise} Promise.
+   * @export
+   */
+  wmsGetCapabilities(baseUrl, opt_cache) {
+
+    const cache = opt_cache !== false;
+
+    const params = {
+      'REQUEST': 'GetCapabilities',
+      'SERVICE': 'WMS',
+      'VERSION': '1.3.0'
+    };
+
+    const url = ol.uri.appendParams(baseUrl, params);
+    let promise;
+
+    if (!cache || !this.wmsGetCapabilitiesPromises_[baseUrl]) {
+      promise = this.http_.get(url).then((response) => {
+        const format = new ol.format.WMSCapabilities();
+        return format.read(response.data);
+      });
+    } else if (cache && this.wmsGetCapabilitiesPromises_[baseUrl]) {
+      promise = this.wmsGetCapabilitiesPromises_[baseUrl];
+    }
+
+    if (cache && !this.wmsGetCapabilitiesPromises_[baseUrl]) {
+      this.wmsGetCapabilitiesPromises_[baseUrl] = promise;
+    }
+
+    return promise;
   }
 
 

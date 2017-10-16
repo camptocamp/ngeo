@@ -14,6 +14,8 @@ goog.provide('app_desktop_alt');
 goog.require('app');
 goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
+goog.require('gmf.importdatasourceComponent');
+/** @suppress {extraRequire} */
 goog.require('ngeo.googlestreetviewComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
@@ -29,6 +31,11 @@ gmf.module.value('ngeoQueryOptions', {
   'cursorHover': true
 });
 
+gmf.module.value('gmfExternalOGCServers', [{
+  'name': 'Swiss Topo',
+  'type': 'WMS',
+  'url': 'http://wms.geo.admin.ch/?lang=fr'
+}]);
 
 gmf.module.value('gmfPrintOptions', {
   'scaleInput': true
