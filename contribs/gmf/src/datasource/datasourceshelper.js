@@ -53,7 +53,7 @@ gmf.datasource.DataSourcesHelper = class {
     this.collection_;
 
     /**
-     * @type {Object.<number, gmf.datasource.DataSource>}
+     * @type {Object.<number, gmf.datasource.OGC>}
      * @protected
      */
     this.cache_;
@@ -72,11 +72,11 @@ gmf.datasource.DataSourcesHelper = class {
   /**
    * Return a data source using its id.
    * @param {number} id Data source id.
-   * @return {?gmf.datasource.DataSource} Data source.
+   * @return {?gmf.datasource.OGC} Data source.
    * @export
    */
   getDataSource(id) {
-    return /** @type {?gmf.datasource.DataSource} */ (
+    return /** @type {?gmf.datasource.OGC} */ (
       this.ngeoDataSourcesHelper_.getDataSource(id)
     );
   }
@@ -135,6 +135,6 @@ gmf.module.service('gmfDataSourcesHelper', gmf.datasource.DataSourcesHelper);
 
 
 /**
- * @typedef {ol.Collection.<gmf.datasource.DataSource>}
+ * @typedef {ol.Collection.<gmf.datasource.OGC>}
  */
 gmf.datasource.DataSources;
