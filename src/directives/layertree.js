@@ -261,7 +261,7 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   }
 
   /**
-   * @type {?ngeo.DataSource}
+   * @type {?ngeo.datasource.DataSource}
    * @private
    */
   this.dataSource_ = null;
@@ -420,8 +420,8 @@ ngeo.LayertreeController.prototype.getSetActive = function(val) {
 
 
 /**
- * @return {?ngeo.DataSource} dataSource The data source bound to this layer
- *     tree controller.
+ * @return {?ngeo.datasource.DataSource} dataSource The data source bound to
+ *     this layer tree controller.
  * @export
  */
 ngeo.LayertreeController.prototype.getDataSource = function() {
@@ -430,7 +430,7 @@ ngeo.LayertreeController.prototype.getDataSource = function() {
 
 
 /**
- * @param {?ngeo.DataSource} dataSource Data source or null.
+ * @param {?ngeo.datasource.DataSource} dataSource Data source or null.
  * @export
  */
 ngeo.LayertreeController.prototype.setDataSource = function(dataSource) {
