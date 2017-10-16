@@ -850,8 +850,8 @@ gmf.PrintController.prototype.resetPrintStates_ = function(opt_printState) {
 /**
  * Get datasource object for print report
  * @private
- * @return {Array.<gmfx.DataSourcePrintReportObject>} the datasource objet for
- * the print report
+ * @return {Array.<gmfx.datasource.DataSourcePrintReportObject>} the data
+ *     source objet for the print report
  */
 gmf.PrintController.prototype.getDataSource_ = function() {
   let datasourceObj, data, columns;
@@ -871,13 +871,14 @@ gmf.PrintController.prototype.getDataSource_ = function() {
       data.push(Object.keys(properties).map(key => properties[key]));
     }, this);
     if (columns.length) {
-      datasourceObj = /** @type {gmfx.DataSourcePrintReportObject} */({
-        title: this.translate_(source.label),
-        table: {
-          columns,
-          data
-        }
-      });
+      datasourceObj =
+        /** @type {gmfx.datasource.DataSourcePrintReportObject} */({
+          title: this.translate_(source.label),
+          table: {
+            columns,
+            data
+          }
+        });
       datasourceArr.push(datasourceObj);
     }
   }, this);

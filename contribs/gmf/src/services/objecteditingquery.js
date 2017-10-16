@@ -2,7 +2,7 @@ goog.provide('gmf.ObjectEditingQuery');
 
 goog.require('gmf');
 goog.require('gmf.Themes');
-goog.require('ngeo.DataSource');
+goog.require('ngeo.datasource.OGC');
 goog.require('ol.format.WMSGetFeatureInfo');
 goog.require('ol.source.ImageWMS');
 
@@ -169,7 +169,7 @@ gmf.ObjectEditingQuery.prototype.getFeatureInfo = function(
   const view = map.getView();
   const projCode = view.getProjection().getCode();
   const resolution = /** @type {number} */(view.getResolution());
-  const infoFormat = ngeo.DataSource.WMSInfoFormat.GML;
+  const infoFormat = ngeo.datasource.OGC.WMSInfoFormat.GML;
   const layerNode = layerInfo.layerNode;
   const layersParam = layerNode.layers.split(',');
   const ogcServer = layerInfo.ogcServer;
