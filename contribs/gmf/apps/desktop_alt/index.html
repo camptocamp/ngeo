@@ -110,6 +110,10 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Street View'|translate}}">
               <span class="fa fa-street-view"></span>
             </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.importDataSourceActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Import Layer'|translate}}">
+              <span class="fa fa-upload"></span>
+            </button>
           </div>
           <br/>
           <br/>
@@ -226,6 +230,17 @@
                   feature-style="mainCtrl.googleStreetViewStyle"
                   map="mainCtrl.map">
               </ngeo-googlestreetview>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.importDataSourceActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Import Layer'|translate}}
+                <a class="btn close" ng-click="mainCtrl.importDataSource = false">&times;</a>
+              </div>
+              <gmf-importdatasource
+                  map="mainCtrl.map">
+              </gmf-importdatasource>
             </div>
           </div>
         </div>

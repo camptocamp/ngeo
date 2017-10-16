@@ -1,0 +1,94 @@
+<ul>
+  <li ng-repeat="layer in ::$ctrl.layer.Layer">
+
+    <div class="gmf-wmscapabilitylayertreenode-header">
+
+    <span
+      ng-if="::(layer.Name !== undefined || layer.Abstract !== undefined)"
+      ngeo-popover
+      ngeo-popover-dismiss=".content">
+
+      <span
+        ngeo-popover-anchor
+        class="fa fa-cog gmf-wmscapabilitylayertreenode-actions">
+      </span>
+
+      <div
+        class="gmf-wmscapabilitylayertreenode-popover-content"
+        ngeo-popover-content>
+        <ul>
+          <li
+              ng-if="::(layer.Name !== undefined)">
+            <i class="fa fa-plus fa-fw"></i>
+            <a
+              href=""
+              ng-click="$ctrl.createAndAddDataSource(layer); popoverCtrl.dismissPopover()"
+            >
+              <span translate>Add layer</span>
+            </a>
+          </li>
+          <li
+              ng-if="::(layer.Abstract !== undefined)">
+            <i class="fa fa-th-list fa-fw"></i>
+            <a
+              aria-expanded="false"
+              data-toggle="collapse"
+              href="#gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
+              ng-click="popoverCtrl.dismissPopover()"
+            >
+              <span translate>Open/Close description</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </span>
+
+    <a
+      aria-expanded="false"
+      class="fa gmf-wmscapabilitylayertreenode-expand-node fa-fw"
+      data-toggle="collapse"
+      href="#gmf-wmscapabilitylayertreenode-children-{{::$ctrl.getUid(layer)}}"
+      ng-if="::(layer.Layer !== undefined && layer.Layer.length)"
+    ></a>
+
+    <span
+      ng-if="::(layer.Layer !== undefined && layer.Layer.length)"
+      class="fa fa-fw gmf-wmscapabilitylayertreenode-group">
+    </span>
+
+    <a
+      class="fa fa-circle-thin gmf-wmscapabilitylayertreenode-no-icon fa-fw "
+      ng-if="::(layer.Layer === undefined || layer.Layer.length === 0)"
+    ></a>
+
+    <span>{{ ::layer.Title }}</span>
+
+    <div
+      class="collapse gmf-wmscapabilitylayertreenode-description"
+      id="gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
+      ng-if="::(layer.Abstract !== undefined)"
+    >
+      <a
+        aria-expanded="false"
+        class="gmf-wmscapabilitylayertreenode-description-toggle"
+        data-toggle="collapse"
+        href="#gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
+        >
+        <span translate>Hide description</span>
+      </a>
+      <span
+        class="gmf-wmscapabilitylayertreenode-description-content"
+      >{{ ::layer.Abstract }}</span>
+    </div>
+
+    </div>
+
+    <gmf-wmscapabilitylayertreenode
+        class="collapse"
+        id="gmf-wmscapabilitylayertreenode-children-{{::$ctrl.getUid(layer)}}"
+        capabilities="::$ctrl.capabilities"
+        layer="::layer"
+        ng-if="::(layer.Layer !== undefined)">
+    </gmf-wmscapabilitylayertreenode>
+  </li>
+</ul>
