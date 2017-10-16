@@ -3,9 +3,9 @@ goog.provide('gmf.filterselectorComponent');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.Authentication');
-goog.require('gmf.DataSourceBeingFiltered');
+goog.require('gmf.datasource.DataSourceBeingFiltered');
 /** @suppress {extraRequire} */
-goog.require('gmf.DataSourcesHelper');
+goog.require('gmf.datasource.DataSourcesHelper');
 goog.require('gmf.SavedFilters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filterComponent');
@@ -25,11 +25,11 @@ gmf.FilterselectorController = class {
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
-   * @param {gmf.DataSourceBeingFiltered} gmfDataSourceBeingFiltered The
-   *     Gmf value service that determines the data source currently being
+   * @param {gmf.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
+   *     The Gmf value service that determines the data source currently being
    *     filtered.
-   * @param {gmf.DataSourcesHelper} gmfDataSourcesHelper Gmf data sources
-   *     helper service.
+   * @param {gmf.datasource.DataSourcesHelper} gmfDataSourcesHelper Gmf data
+   *     sources helper service.
    * @param {gmf.SavedFilters} gmfSavedFilters Gmf saved filters service.
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
@@ -91,7 +91,7 @@ gmf.FilterselectorController = class {
      * The data source that can either be selected from the list or have
      * its value set from an external source (for example: the layertree)
      * and that requires to be ready before it can be filtered.
-     * @type {gmf.DataSourceBeingFiltered}
+     * @type {gmf.datasource.DataSourceBeingFiltered}
      * @export
      */
     this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
@@ -102,7 +102,7 @@ gmf.FilterselectorController = class {
     );
 
     /**
-     * @type {gmf.DataSourcesHelper}
+     * @type {gmf.datasource.DataSourcesHelper}
      * @private
      */
     this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
@@ -177,7 +177,7 @@ gmf.FilterselectorController = class {
     this.directedRules = null;
 
     /**
-     * @type {Array.<gmf.DataSource>}
+     * @type {Array.<gmf.datasource.OGC>}
      * @export
      */
     this.filtrableDataSources = [];
@@ -189,7 +189,7 @@ gmf.FilterselectorController = class {
     this.filtrableLayerNodeNames_ = null;
 
     /**
-     * @type {gmf.DataSources}
+     * @type {gmf.datasource.DataSources}
      * @private
      */
     this.gmfDataSources_ = gmfDataSourcesHelper.collection;
@@ -203,7 +203,7 @@ gmf.FilterselectorController = class {
     /**
      * The data source ready to be filtered, after it has been selected and
      * prepared.
-     * @type {?gmf.DataSource}
+     * @type {?gmf.datasource.OGC}
      * @export
      */
     this.readyDataSource = null;
@@ -362,8 +362,9 @@ gmf.FilterselectorController = class {
    */
   handleDataSourcesAdd_(evt) {
     const dataSource = evt.element;
-    goog.asserts.assertInstanceof(dataSource, gmf.DataSource);
-    this.registerDataSource_(dataSource);
+    if (dataSource instanceof gmf.datasource.OGC) {
+      this.registerDataSource_(dataSource);
+    }
   }
 
 
@@ -377,8 +378,9 @@ gmf.FilterselectorController = class {
    */
   handleDataSourcesRemove_(evt) {
     const dataSource = evt.element;
-    goog.asserts.assertInstanceof(dataSource, gmf.DataSource);
-    this.unregisterDataSource_(dataSource);
+    if (dataSource instanceof gmf.datasource.OGC) {
+      this.unregisterDataSource_(dataSource);
+    }
   }
 
 
@@ -387,7 +389,7 @@ gmf.FilterselectorController = class {
    * data source is about to be registered, then the `filtrable` property
    * is set. Otherwise, it's used.
    *
-   * @param {gmf.DataSource} dataSource Data source
+   * @param {gmf.datasource.OGC} dataSource Data source
    * @private
    */
   registerDataSource_(dataSource) {
@@ -410,7 +412,7 @@ gmf.FilterselectorController = class {
   /**
    * Unregister a data source if it's filtrable. Also, if it's the one
    * that was currently selected, unselect it.
-   * @param {gmf.DataSource} dataSource Data source
+   * @param {gmf.datasource.OGC} dataSource Data source
    * @private
    */
   unregisterDataSource_(dataSource) {
@@ -438,7 +440,7 @@ gmf.FilterselectorController = class {
    * If 1) is true but not any of the others, then the server has not been
    * configured properly. In this case, a warning notification can be shown.
    *
-   * @param {gmf.DataSource} dataSource Ngeo data source object
+   * @param {gmf.datasource.OGC} dataSource GMF data source object
    * @param {boolean=} opt_notify Whether to show a warning notification or not
    *     in case of a data source that has its name is in the list of
    *     filtrable layer node names but it doesn't match the other requirements.
@@ -506,7 +508,8 @@ gmf.FilterselectorController = class {
   }
 
   /**
-   * @param {?gmf.DataSource} dataSource Newly selected data source object.
+   * @param {?gmf.datasource.OGC} dataSource Newly selected data source
+   *     object.
    * @private
    */
   handleSelectedDataSourceChange_(dataSource) {
@@ -566,7 +569,7 @@ gmf.FilterselectorController = class {
   }
 
   /**
-   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {ngeo.datasource.DataSource} dataSource Data source.
    * @return {?gmf.FilterselectorController.RuleCacheItem} Rule cache item.
    * @private
    */
@@ -575,7 +578,7 @@ gmf.FilterselectorController = class {
   }
 
   /**
-   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {ngeo.datasource.DataSource} dataSource Data source.
    * @param {gmf.FilterselectorController.RuleCacheItem} item Rule cache item.
    * @private
    */

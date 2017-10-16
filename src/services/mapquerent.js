@@ -2,7 +2,7 @@ goog.provide('ngeo.MapQuerent');
 
 goog.require('ngeo');
 goog.require('ngeo.Querent');
-goog.require('ngeo.DataSourcesHelper');
+goog.require('ngeo.datasource.DataSourcesHelper');
 
 
 /**
@@ -27,10 +27,10 @@ ngeo.MapQuerent = class {
    *
    * @struct
    * @param {angular.$injector} $injector Main injector.
-   * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data source
-   *     objects.
-   * @param {ngeo.DataSourcesHelper} ngeoDataSourcesHelper Ngeo data sources
-   *     helper service.
+   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+   *     data source objects.
+   * @param {ngeo.datasource.DataSourcesHelper} ngeoDataSourcesHelper Ngeo data
+   *     sources helper service.
    * @param {ngeo.Querent} ngeoQuerent The ngeo querent service.
    * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
    * @ngdoc service
@@ -45,13 +45,13 @@ ngeo.MapQuerent = class {
         $injector.get('ngeoQueryOptions') : {});
 
     /**
-     * @type {ngeo.DataSources}
+     * @type {ngeo.datasource.DataSources}
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
 
     /**
-     * @type {ngeo.DataSourcesHelper}
+     * @type {ngeo.datasource.DataSourcesHelper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;

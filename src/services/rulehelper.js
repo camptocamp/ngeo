@@ -379,7 +379,7 @@ ngeo.RuleHelper = class {
    */
   createFilter(options) {
 
-    const dataSource = /** @type {ngeo.DataSource} */ (options.dataSource);
+    const dataSource = /** @type {ngeo.datasource.OGC} */ (options.dataSource);
     let mainFilter = null;
 
     if (options.filter) {
@@ -456,7 +456,7 @@ ngeo.RuleHelper = class {
 
   /**
    * @param {ngeo.rule.Rule} rule Rule.
-   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {ngeo.datasource.OGC} dataSource Data source.
    * @param {string=} opt_srsName SRS name. No srsName attribute will be
    *     set on geometries when this is not provided.
    * @return {?ol.format.filter.Filter} filter Filter;
@@ -642,8 +642,8 @@ ngeo.RuleHelper = class {
   /**
    * Create and return an OpenLayers filter object using the available
    * time properties within the data source.
-   * @param {ngeo.DataSource} dataSource Data source from which to create the
-   *     filter.
+   * @param {ngeo.datasource.OGC} dataSource Data source from which to
+   *     create the filter.
    * @return {?ol.format.filter.Filter} Filter
    * @private
    */

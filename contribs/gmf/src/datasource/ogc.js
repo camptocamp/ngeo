@@ -1,16 +1,16 @@
-goog.provide('gmf.DataSource');
+goog.provide('gmf.datasource.OGC');
 
-goog.require('ngeo.DataSource');
+goog.require('ngeo.datasource.OGC');
 
 
-gmf.DataSource = class extends ngeo.DataSource {
+gmf.datasource.OGC = class extends ngeo.datasource.OGC {
 
   /**
-   * A `gmf.DataSource` extends a `ngeo.DataSource` and adds some properties
-   * that are proper to GMF only.
+   * A `gmf.datasource.OGC` extends a `ngeo.datasource.OGC` and
+   * adds some properties that are proper to GMF only.
    *
    * @struct
-   * @param {gmfx.DataSourceOptions} options Options.
+   * @param {gmfx.datasource.OGCOptions} options Options.
    */
   constructor(options) {
 

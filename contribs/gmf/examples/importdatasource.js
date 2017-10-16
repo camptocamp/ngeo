@@ -1,6 +1,6 @@
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 
-goog.provide('gmfapp.filterselector');
+goog.provide('gmfapp.importdatasource');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
@@ -9,7 +9,7 @@ goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.filterselectorComponent');
+goog.require('gmf.importdatasourceComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
@@ -35,18 +35,18 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 gmfapp.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
-
-gmfapp.module.value(
-  'authenticationBaseUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
-
-
 gmfapp.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
 gmfapp.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+
+gmfapp.module.value('gmfExternalOGCServers', [{
+  'name': 'Swiss Topo',
+  'type': 'WMS',
+  'url': 'http://wms.geo.admin.ch/?lang=fr'
+}]);
 
 
 gmfapp.MainController = class {
@@ -112,43 +112,10 @@ gmfapp.MainController = class {
     });
 
     /**
-     * @type {string}
-     * @export
-     */
-    this.toolGroup = 'mapTools';
-
-    /**
-     * @type {boolean}
-     * @export
-     */
-    this.filterSelectorActive = true;
-
-    const filterSelectorToolActivate = new ngeo.ToolActivate(
-      this, 'filterSelectorActive');
-    ngeoToolActivateMgr.registerTool(
-      'dummyTools', filterSelectorToolActivate, true);
-
-    /**
-     * @type {boolean}
-     * @export
-     */
-    this.dummyActive = false;
-
-    const dummyToolActivate = new ngeo.ToolActivate(
-      this, 'dummyActive');
-    ngeoToolActivateMgr.registerTool(
-      'dummyTools', dummyToolActivate, false);
-
-    /**
      * @type {boolean}
      * @export
      */
     this.queryActive = true;
-
-    const queryToolActivate = new ngeo.ToolActivate(
-      this, 'queryActive');
-    ngeoToolActivateMgr.registerTool(
-      this.toolGroup, queryToolActivate, true);
 
     // initialize tooltips
     $('[data-toggle="tooltip"]').tooltip({

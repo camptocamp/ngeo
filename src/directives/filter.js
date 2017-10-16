@@ -43,7 +43,7 @@ ngeo.FilterController = class {
     this.customRules;
 
     /**
-     * @type {!ngeo.DataSource}
+     * @type {!ngeo.datasource.OGC}
      * @export
      */
     this.datasource;

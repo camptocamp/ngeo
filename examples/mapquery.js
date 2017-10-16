@@ -2,8 +2,8 @@ goog.provide('app.mapquery');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.DataSource');
-goog.require('ngeo.DataSources');
+goog.require('ngeo.datasource.DataSources');
+goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
@@ -69,8 +69,8 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
- *     objects.
+ * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+ *     data sources objects.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
  * @constructor
@@ -90,7 +90,7 @@ app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
    */
   this.queryActive = true;
 
-  ngeoDataSources.push(new ngeo.DataSource({
+  ngeoDataSources.push(new ngeo.datasource.OGC({
     id: 1,
     name: 'bus_stop',
     visible: true,
@@ -107,7 +107,7 @@ app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
     })
   });
 
-  ngeoDataSources.push(new ngeo.DataSource({
+  ngeoDataSources.push(new ngeo.datasource.OGC({
     id: 2,
     name: 'information',
     visible: true,
