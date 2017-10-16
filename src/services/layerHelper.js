@@ -95,6 +95,43 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
 
 
 /**
+ * Create and return a basic WMS layer using an OGC data source.
+ *
+ * @param {ngeo.datasource.OGC} dataSource OGC data source.
+ * @param {string=} opt_crossOrigin crossOrigin.
+ * @return {ol.layer.Image} WMS Layer.
+ * @export
+ */
+ngeo.LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
+  dataSource, opt_crossOrigin
+) {
+  const url = dataSource.wmsUrl;
+  goog.asserts.assert(url);
+
+  const layerNames = dataSource.getOGCLayerNames().join(',');
+  const serverType = dataSource.ogcServerType;
+
+  // (1) Layer creation
+  const layer = this.createBasicWMSLayer(
+    url,
+    layerNames,
+    serverType,
+    undefined,
+    undefined,
+    opt_crossOrigin
+  );
+
+  // (2) Manage visibility
+  layer.setVisible(dataSource.visible);
+
+  // (3) Reference to the data source
+  layer.set('querySourceIds', [dataSource.id]);
+
+  return layer;
+};
+
+
+/**
  * Create and return a promise that provides a WMTS layer with source on
  * success, no layer else.
  * The WMTS layer source will be configured by the capabilities that are

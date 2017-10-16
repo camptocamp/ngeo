@@ -117,6 +117,7 @@ gmf.ImportdatasourceController = class {
    * Called on initialization of the component.
    */
   $onInit() {
+    this.gmfExternalDataSourcesManager_.map = this.map;
   }
 
   /**
