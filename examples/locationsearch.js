@@ -109,9 +109,8 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
  * @private
  */
 app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
-  const proj3857 = ol.proj.get('EPSG:3857');
   const bloodhound = ngeoCreateLocationSearchBloodhound({
-    targetProjection: proj3857,
+    targetProjection: ol.proj.get('EPSG:3857'),
     limit,
     origins: 'gazetteer',
     prepare(query, settings) {
