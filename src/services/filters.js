@@ -28,7 +28,7 @@ ngeo.Scalify = function($filter) {
     const text = numberFilter(scale, 0);
     return text ? `1\u00a0:\u00a0${text}` : '';
   };
-  filterFn.$stateful = true;
+  filterFn['$stateful'] = true;
   return filterFn;
 };
 
