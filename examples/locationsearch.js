@@ -102,16 +102,15 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
 
 
 /**
- * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
+ * @param {ngeo.search.createLocationSearchBloodhound.Function} ngeoCreateLocationSearchBloodhound
+ *     Bloodhound service.
  * @param {number} limit Limit.
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
 app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
-  const proj = ol.proj.get('EPSG:3857');
-  goog.asserts.assert(proj !== null);
   const bloodhound = ngeoCreateLocationSearchBloodhound({
-    targetProjection: proj,
+    targetProjection: ol.proj.get('EPSG:3857'),
     limit,
     origins: 'gazetteer',
     prepare(query, settings) {
