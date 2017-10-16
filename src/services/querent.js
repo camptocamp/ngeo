@@ -6,6 +6,7 @@ goog.require('ngeo.WMSTime');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WFSDescribeFeatureType');
 goog.require('ol.format.WMSCapabilities');
+goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.obj');
 goog.require('ol.source.ImageWMS');
 
@@ -23,6 +24,7 @@ ngeo.Querent = class {
    * - WFS GetFeature
    * - WMS GetCapabilites
    * - WMS GetFeatureInfo
+   * - WMTS GetCapabilities
    *
    * @struct
    * @param {angular.$http} $http Angular $http service.
@@ -78,6 +80,14 @@ ngeo.Querent = class {
      * @private
      */
     this.wmsGetCapabilitiesPromises_ = {};
+
+    /**
+     * Cache of promises for WMST GetCapabilities requests. They key is the
+     * url that is used to do the query.
+     * @type {!Object.<!angular.$q.Promise>}
+     * @private
+     */
+    this.wmtsGetCapabilitiesPromises_ = {};
   }
 
 
@@ -234,6 +244,36 @@ ngeo.Querent = class {
 
     if (cache && !this.wmsGetCapabilitiesPromises_[baseUrl]) {
       this.wmsGetCapabilitiesPromises_[baseUrl] = promise;
+    }
+
+    return promise;
+  }
+
+  /**
+   * @param {string} url Url of the WMTS server. Note that it must contain
+   *     all required arguments.
+   * @param {boolean} opt_cache Whether to use the cached capability, if
+   *     available. Enabling this will also store the capability when required
+   *     for the first time. Defaults to: `true`.
+   * @return {!angular.$q.Promise} Promise.
+   * @export
+   */
+  wmtsGetCapabilities(url, opt_cache) {
+
+    const cache = opt_cache !== false;
+    let promise;
+
+    if (!cache || !this.wmtsGetCapabilitiesPromises_[url]) {
+      promise = this.http_.get(url).then((response) => {
+        const format = new ol.format.WMTSCapabilities();
+        return format.read(response.data);
+      });
+    } else if (cache && this.wmtsGetCapabilitiesPromises_[url]) {
+      promise = this.wmtsGetCapabilitiesPromises_[url];
+    }
+
+    if (cache && !this.wmtsGetCapabilitiesPromises_[url]) {
+      this.wmtsGetCapabilitiesPromises_[url] = promise;
     }
 
     return promise;

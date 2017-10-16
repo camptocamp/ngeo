@@ -6,7 +6,8 @@ gmf-importdatasource {
   }
 }
 
-gmf-wmscapabilitylayertreenode {
+gmf-wmscapabilitylayertreenode,
+gmf-wmtscapabilitylayertree {
   display: block;
 
   a {
@@ -36,7 +37,8 @@ gmf-wmscapabilitylayertreenode {
 .gmf-importdatasource-layers {
   height: ~"calc(100% - 19rem)";
 
-  > gmf-wmscapabilitylayertreenode {
+  > gmf-wmscapabilitylayertreenode,
+  > gmf-wmtscapabilitylayertree {
     background-color: white;
     border: 0.1rem solid #ccc;
     height: ~"calc(100% - 6rem)";
@@ -113,6 +115,6 @@ a.gmf-wmscapabilitylayertreenode-expand-node.fa {
 }
 
 
-gmf-wmsgrouptree {
+gmf-datasourcegrouptree {
   display: block;
 }

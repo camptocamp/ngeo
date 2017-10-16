@@ -1,5 +1,5 @@
 <div
-  class="gmf-layertree-group gmf-layertree-depth-1 {{$ctrl.wmsGroup.visibilityState}}"
+  class="gmf-layertree-group gmf-layertree-depth-1 {{$ctrl.group.visibilityState}}"
 >
   <a
     data-toggle="collapse"
@@ -20,7 +20,7 @@
     href
     ng-click="$ctrl.toggle()"
   >
-    <span>{{$ctrl.wmsGroup.title | translate}}</span>
+    <span>{{$ctrl.group.title | translate}}</span>
   </a>
 
   <span class="gmf-layertree-right-buttons">
@@ -39,7 +39,7 @@
   <li
     class="gmf-layertree-node gmf-layertree-depth-2"
     ng-class="[dataSource.visible ? 'on' : 'off']"
-    ng-repeat="dataSource in $ctrl.wmsGroup.dataSources"
+    ng-repeat="dataSource in $ctrl.group.dataSources"
   >
     <div class="gmf-layertree-leaf">
       <a
