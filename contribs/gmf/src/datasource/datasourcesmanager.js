@@ -193,74 +193,108 @@ gmf.datasource.DataSourcesManager = class {
         }
       });
 
-      const promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then((backgroundLayers) => {
-        // Create a DataSource for each background layer
-        for (const backgroundLayer of backgroundLayers) {
-          this.createDataSource_(null, backgroundLayer, ogcServers);
+      const promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(
+        (backgroundLayers) => {
+          // Create a DataSource for each background layer
+          for (const backgroundLayer of backgroundLayers) {
+            this.createDataSource_(null, backgroundLayer, ogcServers);
+          }
         }
-      });
+      );
 
       // Then add the data sources that are active in the ngeo collection
       this.q_.all([promiseThemes, promiseBgLayers]).then(() => {
-        this.treeCtrlsUnregister_ = this.rootScope_.$watchCollection(() => {
-          if (this.gmfTreeManager_.rootCtrl) {
-            return this.gmfTreeManager_.rootCtrl.children;
-          }
-        }, (value) => {
-          // Timeout required, because the collection event is fired before
-          // the leaf nodes are created and they are the ones we're looking
-          // for here.
-          this.timeout_(() => {
-
-            // (1) No need to do anything if the value is not set
-            if (!value) {
-              return;
+        this.treeCtrlsUnregister_ = this.rootScope_.$watchCollection(
+          () => {
+            if (this.gmfTreeManager_.rootCtrl) {
+              return this.gmfTreeManager_.rootCtrl.children;
             }
-
-            // (2) Collect 'leaf' treeCtrls
-            const newTreeCtrls = [];
-            const visitor = (treeCtrls, treeCtrl) => {
-              const node =
-                  /** @type {!gmfThemes.GmfGroup|!gmfThemes.GmfLayer} */ (
-                  treeCtrl.node);
-              const children = node.children;
-              if (!children) {
-                treeCtrls.push(treeCtrl);
-              }
-            };
-            for (let i = 0, ii = value.length; i < ii; i++) {
-              value[i].traverseDepthFirst(visitor.bind(this, newTreeCtrls));
-            }
-
-            // (3) Add new 'treeCtrls'
-            for (let i = 0, ii = newTreeCtrls.length; i < ii; i++) {
-              const newTreeCtrl = newTreeCtrls[i];
-              const cacheItem = this.getTreeCtrlCacheItem_(newTreeCtrl);
-              if (!cacheItem) {
-                this.addTreeCtrlToCache_(newTreeCtrl);
-              }
-            }
-
-            // (4) Remove treeCtrls that are no longer in the newTreeCtrl
-            const cache = this.treeCtrlCache_;
-            for (const id in this.treeCtrlCache_) {
-              const item = cache[id];
-              if (!newTreeCtrls.includes(item.treeCtrl)) {
-                this.removeTreeCtrlCacheItem_(item);
-              }
-            }
-          });
-        });
+          },
+          this.handleTreeManagerRootChildrenChange_.bind(this)
+        );
       });
     });
   }
 
   /**
-   * Remove all data sources from the ngeo collection and from the cache.
+   * Called when the list of tree controllers within the tree manager
+   * root controller changes. In other words, this method is called
+   * after nodes are being added added or removed from the tree,
+   * i.e. from the child nodes collection.
+   *
+   * A timeout is required  because the collection event is fired before
+   * the leaf nodes are created and they are the ones we're looking for here.
+   *
+   * This method handles the registration/unregistration of tree nodes that
+   * are added or removed, pushing it to the cache or removing it from the
+   * cache.
+   *
+   * @param {Array.<ngeo.LayertreeController>|undefined} value List of tree
+   *     controllers.
+   * @private
+   */
+  handleTreeManagerRootChildrenChange_(value) {
+
+    this.timeout_(() => {
+
+      // (1) No need to do anything if the value is not set
+      if (!value) {
+        return;
+      }
+
+      // (2) Collect 'leaf' treeCtrls
+      const newTreeCtrls = [];
+      const visitor = (treeCtrls, treeCtrl) => {
+        const node = /** @type {!gmfThemes.GmfGroup|!gmfThemes.GmfLayer} */ (
+          treeCtrl.node);
+        const children = node.children;
+        if (!children) {
+          treeCtrls.push(treeCtrl);
+        }
+      };
+      for (let i = 0, ii = value.length; i < ii; i++) {
+        value[i].traverseDepthFirst(visitor.bind(this, newTreeCtrls));
+      }
+
+      // (3) Add new 'treeCtrls'
+      for (let i = 0, ii = newTreeCtrls.length; i < ii; i++) {
+        const newTreeCtrl = newTreeCtrls[i];
+        const cacheItem = this.getTreeCtrlCacheItem_(newTreeCtrl);
+        if (!cacheItem) {
+          this.addTreeCtrlToCache_(newTreeCtrl);
+        }
+      }
+
+      // (4) Remove treeCtrls that are no longer in the newTreeCtrl
+      const cache = this.treeCtrlCache_;
+      for (const id in this.treeCtrlCache_) {
+        const item = cache[id];
+        if (!newTreeCtrls.includes(item.treeCtrl)) {
+          this.removeTreeCtrlCacheItem_(item);
+        }
+      }
+    });
+  }
+
+  /**
+   * Remove the data sources from the ngeo collection that are in the cache,
+   * i.e. those created by this service, then clear the cache.
    * @private
    */
   clearDataSources_() {
-    this.ngeoDataSources_.clear();
+
+    // (1) Remove data sources from ngeo collection
+    const ngeoDataSources = this.ngeoDataSources_.getArray();
+    for (let i = ngeoDataSources.length - 1, ii = 0; i >= ii; i--) {
+      if (this.dataSourcesCache_[ngeoDataSources[i].id]) {
+        // Use the `remove` method of the `ol.Collection` object for it
+        // to update its length accordingly and trigger the REMOVE event as
+        // well.
+        this.ngeoDataSources_.remove(ngeoDataSources[i]);
+      }
+    }
+
+    // (2) Clear the cache
     ol.obj.clear(this.dataSourcesCache_);
   }
 

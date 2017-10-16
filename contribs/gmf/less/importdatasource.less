@@ -1,0 +1,113 @@
+@import "../../../node_modules/font-awesome/less/variables.less";
+
+gmf-importdatasource {
+  input[type=file] {
+    display: none;
+  }
+}
+
+gmf-wmscapabilitylayertreenode {
+  display: block;
+
+  a {
+    color: black;
+    text-decoration: none;
+
+    &:focus,
+    &:hover {
+      text-decoration: none;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    > ul > li > gmf-wmscapabilitylayertreenode {
+      margin: 0 0 0 2.5rem;
+    }
+  }
+}
+
+.gmf-importdatasource-layers {
+  height: ~"calc(100% - 19rem)";
+
+  > gmf-wmscapabilitylayertreenode {
+    background-color: white;
+    border: 0.1rem solid #ccc;
+    height: ~"calc(100% - 6rem)";
+    padding: 1rem 1rem 1rem 3rem;
+    overflow-y: auto;
+  }
+}
+
+a.gmf-wmscapabilitylayertreenode-expand-node.fa {
+  display: inline-block;
+
+  &::before {
+    content: "\f054";
+  }
+  &[aria-expanded="true"]::before {
+    content: "\f078";
+  }
+}
+
+.gmf-wmscapabilitylayertreenode-group:before {
+  content: "\e600";
+  font-family: gmf-icons;
+}
+
+.gmf-wmscapabilitylayertreenode-popover-content {
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  a {
+    cursor: pointer;
+  }
+}
+
+.gmf-wmscapabilitylayertreenode-actions {
+  cursor: pointer;
+  opacity: 0;
+  margin: 0 0 0 -2rem;
+}
+
+.gmf-wmscapabilitylayertreenode-header:hover > span > .gmf-wmscapabilitylayertreenode-actions {
+  opacity: 1;
+}
+
+.gmf-wmscapabilitylayertreenode-no-icon {
+  font-size: 0.8rem;
+  vertical-align: middle;
+}
+
+.gmf-wmscapabilitylayertreenode-description {
+  background-color: #fafafa;
+  border: 0.1rem solid #ddd;
+  padding: 1rem;
+
+  a {
+    color: #929292;
+    cursor: pointer;
+    font-size: 9pt;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.gmf-wmscapabilitylayertreenode-description-toggle {
+  display: block;
+  text-align: right;
+}
