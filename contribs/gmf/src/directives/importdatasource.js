@@ -142,7 +142,7 @@ gmf.ImportdatasourceController = class {
    * @export
    */
   connect() {
-    const serviceType = this.getServiceType_();
+    const serviceType = ngeo.datasource.OGC.guessServiceTypeByUrl(this.url);
 
     this.startWorking_();
     if (serviceType === ngeo.datasource.OGC.Type.WMS) {
@@ -215,31 +215,6 @@ gmf.ImportdatasourceController = class {
         this.hasErrorPromise_ = null;
       }, 3000);
     }
-  }
-
-  /**
-   * Determines the type of OGC service depending on the current value of the
-   * url property. Possible values returned are:
-   *
-   * - wmts
-   * - wms (default value)
-   *
-   * @return {string} Type of OGC service.
-   * @private
-   */
-  getServiceType_() {
-
-    let type;
-    const url = this.url;
-
-    if (/(wmts)/i.test(url)) {
-      type = ngeo.datasource.OGC.Type.WMTS;
-    } else {
-      // All other urls are tested as WMS services.
-      type = ngeo.datasource.OGC.Type.WMS;
-    }
-
-    return type;
   }
 };
 

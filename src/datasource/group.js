@@ -1,6 +1,7 @@
 goog.provide('ngeo.datasource.Group');
 
 goog.require('ngeo');
+goog.require('ol.Collection');
 
 
 /**
@@ -22,10 +23,10 @@ ngeo.datasource.Group = class {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
-     * @type {!Array.<!ngeo.datasource.DataSource>}
+     * @type {!ol.Collection.<!ngeo.datasource.DataSource>}
      * @protected
      */
-    this.dataSources_ = options.dataSources;
+    this.dataSourcesCollection_ = new ol.Collection(options.dataSources);
 
 
     // === STATIC properties (i.e. that never change) ===
@@ -37,7 +38,7 @@ ngeo.datasource.Group = class {
     this.title_ = options.title;
 
 
-    // === PRIVATE properties ===@private
+    // === PRIVATE properties ===
 
     /**
      * @type {string}
@@ -50,7 +51,7 @@ ngeo.datasource.Group = class {
    * @export
    */
   destroy() {
-    this.dataSources_.length = 0;
+    this.dataSourcesCollection_.clear();
   }
 
   // ========================================
@@ -58,11 +59,20 @@ ngeo.datasource.Group = class {
   // ========================================
 
   /**
-   * @return {!Array.<!ngeo.datasource.OGC>} Data sources
+   * @return {!Array.<!ngeo.datasource.DataSource>} Data sources
    * @export
    */
   get dataSources() {
-    return this.dataSources_;
+    return this.dataSourcesCollection_.getArray();
+  }
+
+
+  /**
+   * @return {!ol.Collection.<!ngeo.datasource.DataSource>} Data sources
+   * @export
+   */
+  get dataSourcesCollection() {
+    return this.dataSourcesCollection_;
   }
 
 
@@ -136,7 +146,7 @@ ngeo.datasource.Group = class {
    * @export
    */
   addDataSource(dataSource) {
-    this.dataSources_.push(dataSource);
+    this.dataSourcesCollection_.push(dataSource);
   }
 
   /**
@@ -144,7 +154,7 @@ ngeo.datasource.Group = class {
    * @export
    */
   removeDataSource(dataSource) {
-    ol.array.remove(this.dataSources_, dataSource);
+    this.dataSourcesCollection_.remove(dataSource);
   }
 
   /**

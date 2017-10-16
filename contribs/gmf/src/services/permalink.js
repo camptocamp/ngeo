@@ -9,6 +9,7 @@ goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.ThemeManager');
+goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.Debounce');
@@ -18,7 +19,11 @@ goog.require('ngeo.Features');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.Popover');
+goog.require('ngeo.Querent');
 goog.require('ngeo.StateManager');
+goog.require('ngeo.datasource.Group');
+goog.require('ngeo.datasource.OGC');
+goog.require('ngeo.datasource.WMSGroup');
 goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.WfsPermalink');
 goog.require('goog.asserts');
@@ -47,6 +52,16 @@ gmf.PermalinkParamPrefix = {
   TREE_GROUP_OPACITY: 'tree_group_opacity_',
   TREE_OPACITY: 'tree_opacity_',
   WFS: 'wfs_'
+};
+
+
+/**
+ * External data source separators
+ * @enum {string}
+ */
+gmf.PermalinkExtDSSeparator = {
+  LIST: ',',
+  NAMES: ';'
 };
 
 
@@ -84,6 +99,7 @@ gmf.module.value('gmfPermalinkOptions',
  *
  * @constructor
  * @struct
+ * @param {!angular.$q} $q The Angular $q service.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$injector} $injector Main injector.
@@ -94,8 +110,14 @@ gmf.module.value('gmfPermalinkOptions',
  * @ngdoc service
  * @ngname gmfPermalink
  */
-gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
+gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce,
   ngeoStateManager, ngeoLocation) {
+
+  /**
+   * @type {!angular.$q}
+   * @private
+   */
+  this.q_ = $q;
 
   /**
    * @type {angular.Scope}
@@ -173,6 +195,13 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
     $injector.get('ngeoFeatureHelper') : null;
 
   /**
+   * @type {?ngeo.Querent}
+   * @private
+   */
+  this.ngeoQuerent_ = $injector.has('ngeoQuerent') ?
+    $injector.get('ngeoQuerent') : null;
+
+  /**
    * The options to configure the gmf permalink service with.
    * @type {!gmfx.PermalinkOptions}
    */
@@ -187,6 +216,14 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
    * @private
    */
   this.crosshairEnabledByDefault_ = !!gmfPermalinkOptions.crosshairEnabledByDefault;
+
+  /**
+   * @type {?gmf.datasource.ExternalDataSourcesManager}
+   * @private
+   */
+  this.gmfExternalDataSourcesManager_ =
+    $injector.has('gmfExternalDataSourcesManager') ?
+      $injector.get('gmfExternalDataSourcesManager') : null;
 
   /**
    * @type {?gmf.Themes}
@@ -412,6 +449,55 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
   if (this.gmfThemeManager_) {
     this.rootScope_.$on(gmf.ThemeManagerEventType.THEME_NAME_SET, (event, name) => {
       this.setThemeInUrl_();
+    });
+  }
+
+  // External DataSources
+
+  /**
+   * @type {?angular.$q.Promise}
+   * @private
+   */
+  this.setExternalDataSourcesStatePromise_ = null;
+
+  if (this.ngeoQuerent_ && this.gmfExternalDataSourcesManager_) {
+    // First, load the external data sources that are defined in the url
+    this.initExternalDataSources_().then(() => {
+      // Then, listen to the changes made to the external data sources to
+      // update the url accordingly.
+      ol.events.listen(
+        this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
+        ol.CollectionEventType.ADD,
+        this.handleExternalDSGroupCollectionAdd_,
+        this
+      );
+      ol.events.listen(
+        this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
+        ol.CollectionEventType.REMOVE,
+        this.handleExternalDSGroupCollectionRemove_,
+        this
+      );
+      ol.events.listen(
+        this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
+        ol.CollectionEventType.ADD,
+        this.handleExternalDSGroupCollectionAdd_,
+        this
+      );
+      ol.events.listen(
+        this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
+        ol.CollectionEventType.REMOVE,
+        this.handleExternalDSGroupCollectionRemove_,
+        this
+      );
+
+      // We also need to 'register' the existing groups as well, i.e. those
+      // that were created by the Permalink
+      for (const wmsGroup of this.gmfExternalDataSourcesManager_.wmsGroups) {
+        this.registerExternalDSGroup_(wmsGroup);
+      }
+      for (const wmtsGroup of this.gmfExternalDataSourcesManager_.wmtsGroups) {
+        this.registerExternalDSGroup_(wmtsGroup);
+      }
     });
   }
 
@@ -1163,6 +1249,280 @@ gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
   });
 
   return (filters.length > 0) ? {filters} : null;
+};
+
+
+// === External Data Sources management ===
+
+
+/**
+ * @return {!angular.$q.Promise} Promise
+ * @private
+ */
+
+gmf.Permalink.prototype.initExternalDataSources_ = function() {
+
+  const ngeoQuerent = goog.asserts.assert(this.ngeoQuerent_);
+  const gmfExtDSManager = goog.asserts.assert(
+    this.gmfExternalDataSourcesManager_);
+
+  const promises = [];
+
+  const layerNamesString = this.ngeoStateManager_.getInitialValue(
+    gmf.PermalinkParam.EXTERNAL_DATASOURCES_NAMES);
+  const urlsString = this.ngeoStateManager_.getInitialValue(
+    gmf.PermalinkParam.EXTERNAL_DATASOURCES_URLS);
+
+  if (layerNamesString && urlsString) {
+
+    const layerNames = layerNamesString.split(gmf.PermalinkExtDSSeparator.LIST);
+    const urls = urlsString.split(gmf.PermalinkExtDSSeparator.LIST);
+
+    for (let i = 0, ii = urls.length; i < ii; i++) {
+      // Stop iterating if we do not have the same number of urls and layer
+      // names
+      const groupLayerNamesString = layerNames[i];
+
+      if (!groupLayerNamesString) {
+        break;
+      }
+
+      const groupLayerNames = groupLayerNamesString.split(
+        gmf.PermalinkExtDSSeparator.NAMES);
+      const url = urls[i];
+
+      const serviceType = ngeo.datasource.OGC.guessServiceTypeByUrl(url);
+
+      const getCapabilitiesDefer = this.q_.defer();
+      promises.push(getCapabilitiesDefer.promise);
+
+      if (serviceType === ngeo.datasource.OGC.Type.WMS) {
+        ngeoQuerent.wmsGetCapabilities(url).then(
+          (capabilities) => {
+            getCapabilitiesDefer.resolve({
+              capabilities,
+              groupLayerNames,
+              serviceType,
+              url
+            });
+          },
+          () => {
+            // Query to the WMS service didn't work
+            getCapabilitiesDefer.reject({
+              groupLayerNames,
+              serviceType,
+              url
+            });
+          }
+        );
+      } else if (serviceType === ngeo.datasource.OGC.Type.WMTS) {
+        ngeoQuerent.wmtsGetCapabilities(url).then(
+          (capabilities) => {
+            getCapabilitiesDefer.resolve({
+              capabilities,
+              groupLayerNames,
+              serviceType,
+              url
+            });
+          },
+          () => {
+            // Query to the WMTS service didn't work
+            getCapabilitiesDefer.reject({
+              groupLayerNames,
+              serviceType,
+              url
+            });
+          }
+        );
+      } else {
+        // Wrong service type
+        getCapabilitiesDefer.reject({
+          groupLayerNames,
+          serviceType,
+          url
+        });
+      }
+    }
+  }
+
+  return this.q_.all(promises).then(
+    (responses) => {
+      for (const response of responses) {
+
+        // WMS - For each layer name, find its layer capability object, then
+        //       create the data source
+        if (response.serviceType === ngeo.datasource.OGC.Type.WMS) {
+          for (const layerName of response.groupLayerNames) {
+            const layerCap = ngeoQuerent.wmsFindLayerCapability(
+              response.capabilities['Capability']['Layer']['Layer'],
+              layerName
+            );
+            if (layerCap) {
+              gmfExtDSManager.createAndAddDataSourceFromWMSCapability(
+                layerCap,
+                response.capabilities,
+                response.url
+              );
+            } else {
+              // TODO - handle 'not found' layer in capabilities
+            }
+          }
+
+        } else if (response.serviceType === ngeo.datasource.OGC.Type.WMTS) {
+
+          // WMTS - For each layer name, find its layer capability object, then
+          //        create the data source
+          for (const layerName of response.groupLayerNames) {
+            const layerCap = ngeoQuerent.wmtsFindLayerCapability(
+              response.capabilities['Contents']['Layer'],
+              layerName
+            );
+            if (layerCap) {
+              gmfExtDSManager.createAndAddDataSourceFromWMTSCapability(
+                layerCap,
+                response.capabilities,
+                response.url
+              );
+            } else {
+              // TODO - handle 'not found' layer in capabilities
+            }
+          }
+        }
+      }
+    },
+    (rejections) => {
+      // TODO - handle rejections
+    }
+  );
+};
+
+
+/**
+ * @param {!ol.Collection.Event} evt Collection event.
+ * @private
+ */
+gmf.Permalink.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
+  const group = evt.element;
+  goog.asserts.assertInstanceof(group, ngeo.datasource.Group);
+  this.registerExternalDSGroup_(group);
+  this.setExternalDataSourcesState_();
+};
+
+
+/**
+ * @param {!ngeo.datasource.Group} group Data source group.
+ * @private
+ */
+gmf.Permalink.prototype.registerExternalDSGroup_ = function(group) {
+  ol.events.listen(
+    group.dataSourcesCollection,
+    ol.CollectionEventType.ADD,
+    this.setExternalDataSourcesState_,
+    this
+  );
+  ol.events.listen(
+    group.dataSourcesCollection,
+    ol.CollectionEventType.REMOVE,
+    this.setExternalDataSourcesState_,
+    this
+  );
+};
+
+
+/**
+ * @param {!ol.Collection.Event} evt Collection event.
+ * @private
+ */
+gmf.Permalink.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
+  const group = evt.element;
+  goog.asserts.assertInstanceof(group, ngeo.datasource.Group);
+  this.unregisterExternalDSGroup_(group);
+  this.setExternalDataSourcesState_();
+};
+
+
+/**
+ * @param {!ngeo.datasource.Group} group Data source group.
+ * @private
+ */
+gmf.Permalink.prototype.unregisterExternalDSGroup_ = function(group) {
+  ol.events.unlisten(
+    group.dataSourcesCollection,
+    ol.CollectionEventType.ADD,
+    this.setExternalDataSourcesState_,
+    this
+  );
+  ol.events.unlisten(
+    group.dataSourcesCollection,
+    ol.CollectionEventType.REMOVE,
+    this.setExternalDataSourcesState_,
+    this
+  );
+};
+
+
+/**
+ * Set the External Data Sources parameters in the url.
+ * @private
+ */
+gmf.Permalink.prototype.setExternalDataSourcesState_ = function() {
+
+  if (this.setExternalDataSourcesStatePromise_) {
+    this.$timeout_.cancel(this.setExternalDataSourcesStatePromise_);
+  }
+
+  this.setExternalDataSourcesStatePromise_ = this.$timeout_(() => {
+    const names = [];
+    const urls = [];
+
+    // (1) Collect WMS Groups and their layer names
+    for (const wmsGroup of this.gmfExternalDataSourcesManager_.wmsGroups) {
+
+      // (1a) url
+      urls.push(wmsGroup.url);
+
+      // (1b) layer names
+      const wmsGroupLayerNames = [];
+      for (const wmsDataSource of wmsGroup.dataSources) {
+        goog.asserts.assert(wmsDataSource, ngeo.datasource.OGC);
+
+        // External WMS data sources always have only one OGC layer name,
+        // as they are created using a single Capability Layer object that
+        // has only 1 layer name
+        const layerName = wmsDataSource.getOGCLayerNames()[0];
+        wmsGroupLayerNames.push(layerName);
+      }
+      names.push(wmsGroupLayerNames.join(gmf.PermalinkExtDSSeparator.NAMES));
+    }
+
+    // (2) Collect WMTS Groups and their layer names
+    for (const wmtsGroup of this.gmfExternalDataSourcesManager_.wmtsGroups) {
+
+      // (2a) url
+      urls.push(wmtsGroup.url);
+
+      // (2b) layer names
+      const wmtsGroupLayerNames = [];
+      for (const wmtsDataSource of wmtsGroup.dataSources) {
+        goog.asserts.assert(wmtsDataSource.wmtsLayer);
+        wmtsGroupLayerNames.push(wmtsDataSource.wmtsLayer);
+      }
+      names.push(wmtsGroupLayerNames.join(gmf.PermalinkExtDSSeparator.NAMES));
+    }
+
+    // (3) Update state
+    this.ngeoStateManager_.updateState({
+      [gmf.PermalinkParam.EXTERNAL_DATASOURCES_NAMES]: names.join(
+        gmf.PermalinkExtDSSeparator.LIST
+      ),
+      [gmf.PermalinkParam.EXTERNAL_DATASOURCES_URLS]: urls.join(
+        gmf.PermalinkExtDSSeparator.LIST
+      )
+    });
+
+    // (4) Reset promise
+    this.setExternalDataSourcesStatePromise_ = null;
+  });
 };
 
 

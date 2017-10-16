@@ -65,6 +65,8 @@ gmf.COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
  */
 gmf.PermalinkParam = {
   BG_LAYER: 'baselayer_ref',
+  EXTERNAL_DATASOURCES_NAMES: 'eds_n',
+  EXTERNAL_DATASOURCES_URLS: 'eds_u',
   FEATURES: 'rl_features',
   MAP_CROSSHAIR: 'map_crosshair',
   MAP_TOOLTIP: 'map_tooltip',

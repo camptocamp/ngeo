@@ -241,6 +241,16 @@ gmf.datasource.ExternalDataSourcesManager = class {
   // === Other methods ===
 
   /**
+   * @param {!ngeo.datasource.DataSource} dataSource Data source
+   * @return {boolean} Whether the given data source is external or not. To
+   *     be considered external, it needs to be in the external data source
+   *     hash (cache).
+   */
+  isExternalDataSource(dataSource) {
+    return !!this.extDataSources_[dataSource.id];
+  }
+
+  /**
    * @return {ol.layer.Group} Layer group where to push layers created by
    *     this service.
    */
