@@ -258,3 +258,20 @@
     ngeo-layertree-listenersexpr="layertreeCtrl.listenersExpr">
   </li>
 </ul>
+
+<ul
+   class="gmf-layertree-root-external-datasources"
+   ng-if="layertreeCtrl.isRoot && (gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups.length || gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmtsGroups.length)">
+  <gmf-datasourcegrouptree
+    class="gmf-layertree-node gmf-layertree-depth-1"
+    ng-repeat="wmtsGroup in gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmtsGroups"
+    group="wmtsGroup"
+  >
+  </gmf-datasourcegrouptree>
+  <gmf-datasourcegrouptree
+    class="gmf-layertree-node gmf-layertree-depth-1"
+    ng-repeat="wmsGroup in gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups"
+    group="wmsGroup"
+  >
+  </gmf-datasourcegrouptree>
+</ul>

@@ -3,7 +3,9 @@ goog.provide('gmf.layertreeComponent');
 
 goog.require('ngeo.SyncArrays');
 goog.require('gmf');
-goog.require('gmf.DataSourceBeingFiltered');
+goog.require('gmf.datasourcegrouptreeComponent');
+goog.require('gmf.datasource.DataSourceBeingFiltered');
+goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('gmf.Permalink');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
@@ -11,6 +13,7 @@ goog.require('ngeo.WMSTime');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
+goog.require('ngeo.datasource.OGC');
 goog.require('ol.layer.Tile');
 
 /** @suppress {extraRequire} */
@@ -112,9 +115,12 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {gmf.DataSourceBeingFiltered} gmfDataSourceBeingFiltered The
- *     Gmf value service that determines the data source currently being
+ * @param {gmf.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
+ *     The Gmf value service that determines the data source currently being
  *     filtered.
+ * @param {!gmf.datasource.ExternalDataSourcesManager}
+ *     gmfExternalDataSourcesManager The Gmf external data sources manager
+ *     service. Used here to fetch the external WMS groups.
  * @param {!gmf.Permalink} gmfPermalink The gmf permalink service.
  * @param {!gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {!gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
@@ -128,8 +134,9 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-gmf.LayertreeController = function($element, $http, $sce, $scope, ngeoCreatePopup,
-  ngeoLayerHelper, gmfDataSourceBeingFiltered, gmfPermalink, gmfTreeManager,
+gmf.LayertreeController = function($element, $http, $sce, $scope,
+  ngeoCreatePopup, ngeoLayerHelper, gmfDataSourceBeingFiltered,
+  gmfExternalDataSourcesManager, gmfPermalink, gmfTreeManager,
   gmfSyncLayertreeMap, ngeoSyncArrays, ngeoWMSTime, gmfThemes) {
 
   /**
@@ -169,10 +176,16 @@ gmf.LayertreeController = function($element, $http, $sce, $scope, ngeoCreatePopu
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {gmf.DataSourceBeingFiltered}
+   * @type {gmf.datasource.DataSourceBeingFiltered}
    * @export
    */
   this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
+
+  /**
+   * @type {!gmf.datasource.ExternalDataSourcesManager}
+   * @export
+   */
+  this.gmfExternalDataSourcesManager = gmfExternalDataSourcesManager;
 
   /**
    * @type {!gmf.Permalink}
@@ -443,7 +456,7 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
  * data sources.
  *
  * The setting of the TIME parameter on the layer occurs in the
- * `gmf.DataSourcesManager` service
+ * `gmf.datasource.DataSourcesManager` service
  *
  * LayertreeController.prototype.updateWMSTimeLayerState - description
  * @param {ngeo.LayertreeController} layertreeCtrl ngeo layertree controller
@@ -458,6 +471,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
   }
   const dataSource = layertreeCtrl.getDataSource();
   if (dataSource) {
+    goog.asserts.assertInstanceof(dataSource, ngeo.datasource.OGC);
     dataSource.timeRangeValue = time;
   } else if (layertreeCtrl.children) {
     for (let i = 0, ii = layertreeCtrl.children.length; i < ii; i++) {
@@ -679,7 +693,7 @@ gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
 
 
 /**
- * @param {gmf.DataSource} ds Data source to filter.
+ * @param {gmf.datasource.OGC} ds Data source to filter.
  * @export
  */
 gmf.LayertreeController.prototype.toggleFiltrableDataSource = function(ds) {
