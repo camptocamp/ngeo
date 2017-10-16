@@ -4,9 +4,11 @@ goog.provide('gmf.layertreeComponent');
 goog.require('ngeo.SyncArrays');
 goog.require('gmf');
 goog.require('gmf.datasource.DataSourceBeingFiltered');
+goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('gmf.Permalink');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
+goog.require('gmf.wmsgrouptreeComponent');
 goog.require('ngeo.WMSTime');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
@@ -116,6 +118,9 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {gmf.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
  *     filtered.
+ * @param {!gmf.datasource.ExternalDataSourcesManager}
+ *     gmfExternalDataSourcesManager The Gmf external data sources manager
+ *     service. Used here to fetch the external WMS groups.
  * @param {!gmf.Permalink} gmfPermalink The gmf permalink service.
  * @param {!gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {!gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
@@ -129,8 +134,9 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-gmf.LayertreeController = function($element, $http, $sce, $scope, ngeoCreatePopup,
-  ngeoLayerHelper, gmfDataSourceBeingFiltered, gmfPermalink, gmfTreeManager,
+gmf.LayertreeController = function($element, $http, $sce, $scope,
+  ngeoCreatePopup, ngeoLayerHelper, gmfDataSourceBeingFiltered,
+  gmfExternalDataSourcesManager, gmfPermalink, gmfTreeManager,
   gmfSyncLayertreeMap, ngeoSyncArrays, ngeoWMSTime, gmfThemes) {
 
   /**
@@ -174,6 +180,12 @@ gmf.LayertreeController = function($element, $http, $sce, $scope, ngeoCreatePopu
    * @export
    */
   this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
+
+  /**
+   * @type {!gmf.datasource.ExternalDataSourcesManager}
+   * @export
+   */
+  this.gmfExternalDataSourcesManager = gmfExternalDataSourcesManager;
 
   /**
    * @type {!gmf.Permalink}

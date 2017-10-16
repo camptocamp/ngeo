@@ -262,3 +262,14 @@
     ngeo-layertree-listenersexpr="layertreeCtrl.listenersExpr">
   </li>
 </ul>
+
+<ul
+   class="gmf-layertree-root-external-datasources"
+   ng-if="layertreeCtrl.isRoot && gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups.length">
+  <gmf-wmsgrouptree
+    class="gmf-layertree-node gmf-layertree-depth-1"
+    ng-repeat="wmsGroup in gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups"
+    wms-group="wmsGroup"
+  >
+  </gmf-wmsgrouptree>
+</ul>
