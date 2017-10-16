@@ -6,6 +6,7 @@ goog.provide('gmf.datasource.ExternalDataSourcesManager');
 goog.require('gmf');
 goog.require('gmf.datasource.OGC');
 goog.require('ngeo.datasource.DataSources');
+goog.require('ngeo.datasource.Group');
 goog.require('ngeo.datasource.WMSGroup');
 
 
@@ -96,6 +97,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
     }
 
     /**
+     * FIXME adube - remove this
      * The functions to call to unregister the `watch` event on data sources
      * that are registered. Key is the id of the data source.
      * @type {!Object.<number, Function>}
@@ -110,6 +112,21 @@ gmf.datasource.ExternalDataSourcesManager = class {
      */
     this.wmsGroupsCollection_ = new ol.Collection();
 
+    /**
+     * Collection of groups for WMTS data sources.
+     * @type {!ol.Collection.<!ngeo.datasource.Group>}
+     * @private
+     */
+    this.wmtsGroupsCollection_ = new ol.Collection();
+
+    /**
+     * Cache that stores the information of a WMTS data source. The key is the
+     * data source id.
+     * @type {!Object.<number, gmf.datasource.ExternalDataSourcesManager.WMTSCacheItem>}
+     * @private
+     */
+    this.wmtsCache_ = {};
+
     ol.events.listen(
       this.ngeoDataSources_,
       ol.CollectionEventType.REMOVE,
@@ -117,6 +134,8 @@ gmf.datasource.ExternalDataSourcesManager = class {
       this
     );
   }
+
+  // === WMS Groups ===
 
   /**
    * @param {ngeo.datasource.WMSGroup} wmsGroup WMS group.
@@ -132,19 +151,6 @@ gmf.datasource.ExternalDataSourcesManager = class {
    */
   removeWMSGroup_(wmsGroup) {
     this.wmsGroupsCollection.remove(wmsGroup);
-  }
-
-  /**
-   * @return {ol.layer.Group} Layer group where to push layers created by
-   *     this service.
-   */
-  get layerGroup() {
-    const map = this.map_;
-    goog.asserts.assert(map);
-    return this.ngeoLayerHelper_.getGroupFromMap(
-      map,
-      gmf.EXTERNALLAYERGROUP_NAME
-    );
   }
 
   /**
@@ -170,7 +176,6 @@ gmf.datasource.ExternalDataSourcesManager = class {
     return this.wmsGroupsCollection_.getArray();
   }
 
-
   /**
    * @return {!ol.Collection.<!ngeo.datasource.WMSGroup>} Collection of WMS
    *     groups.
@@ -180,6 +185,73 @@ gmf.datasource.ExternalDataSourcesManager = class {
     return this.wmsGroupsCollection_;
   }
 
+
+  // === WMTS Groups ===
+
+  /**
+   * @param {ngeo.datasource.Group} wmtsGroup Group for WMTS data sources.
+   * @private
+   */
+  addWMTSGroup_(wmtsGroup) {
+    this.wmtsGroupsCollection.push(wmtsGroup);
+  }
+
+  /**
+   * @param {ngeo.datasource.Group} wmtsGroup Group for WMTS data sources.
+   * @private
+   */
+  removeWMTSGroup_(wmtsGroup) {
+    this.wmtsGroupsCollection.remove(wmtsGroup);
+  }
+
+  /**
+   * @param {string} url Online resource url
+   * @return {?ngeo.datasource.Group} WMTS group.
+   */
+  getWMTSGroup(url) {
+    let found = null;
+    for (const wmtsGroup of this.wmtsGroups) {
+      if (wmtsGroup.url === url) {
+        found = wmtsGroup;
+        break;
+      }
+    }
+    return found;
+  }
+
+  /**
+   * @return {!Array.<!ngeo.datasource.Group>} List of groups for WMTS data
+   *     sources.
+   * @export
+   */
+  get wmtsGroups() {
+    return this.wmtsGroupsCollection_.getArray();
+  }
+
+  /**
+   * @return {!ol.Collection.<!ngeo.datasource.WMTSGroup>} Collection of groups
+   *     for WMTS data sources.
+   * @export
+   */
+  get wmtsGroupsCollection() {
+    return this.wmtsGroupsCollection_;
+  }
+
+
+  // === Other methods ===
+
+  /**
+   * @return {ol.layer.Group} Layer group where to push layers created by
+   *     this service.
+   */
+  get layerGroup() {
+    const map = this.map_;
+    goog.asserts.assert(map);
+    return this.ngeoLayerHelper_.getGroupFromMap(
+      map,
+      gmf.EXTERNALLAYERGROUP_NAME
+    );
+  }
 
   /**
    * @param {?ol.Map} map Map
@@ -207,13 +279,13 @@ gmf.datasource.ExternalDataSourcesManager = class {
   /**
    * @param {!Object} layer WMS Capability Layer object.
    * @param {!Object} capabilities  WMS Capabilities definition
+   * @param {string} url The WMS service url.
    * @export
    */
-  createAndAddDataSourceFromWMSCapability(layer, capabilities) {
+  createAndAddDataSourceFromWMSCapability(layer, capabilities, url) {
 
     const id = gmf.datasource.ExternalDataSourcesManager.getId(layer);
     const service = capabilities['Service'];
-    const url = service['OnlineResource'];
 
     let dataSource;
 
@@ -283,6 +355,90 @@ gmf.datasource.ExternalDataSourcesManager = class {
   }
 
   /**
+   * @param {!Object} layer WTMS Capability Layer object.
+   * @param {!Object} capabilities  WMTS Capabilities definition
+   * @param {string} wmtsUrl The WMTS capabilities url
+   * @export
+   */
+  createAndAddDataSourceFromWMTSCapability(layer, capabilities, wmtsUrl) {
+    const id = gmf.datasource.ExternalDataSourcesManager.getId(layer);
+
+    // (1) No need to do anything if there's already a WMTS data source (and its
+    // layer in the map)
+    if (this.wmtsCache_[id]) {
+      return;
+    }
+
+    let dataSource;
+
+    // (2) Get data source from cache if it exists, otherwise create it
+    if (this.extDataSources_[id]) {
+      dataSource = this.extDataSources_[id];
+    } else {
+
+      // TODO - MaxScaleDenominator
+      // TODO - MinScaleDenominator
+      dataSource = new gmf.datasource.OGC({
+        id,
+        name: layer['Title'],
+        ogcType: ngeo.datasource.OGC.Type.WMTS,
+        visible: true,
+        wmtsLayer: layer['Identifier'],
+        wmtsUrl
+      });
+
+      // Keep a reference to the external data source in the cache
+      this.extDataSources_[id] = dataSource;
+    }
+
+    // (3) Get/Create group, then add data source to group
+    let wmtsGroup = this.getWMTSGroup(wmtsUrl);
+    if (!wmtsGroup) {
+      wmtsGroup = new ngeo.datasource.Group({
+        dataSources: [],
+        injector: this.injector_,
+        title: capabilities['ServiceIdentification']['Title'],
+        url: wmtsUrl
+      });
+      this.addWMTSGroup_(wmtsGroup);
+    }
+    wmtsGroup.addDataSource(dataSource);
+
+    // (4) Create and add the OL layer
+    const layerObj = this.ngeoLayerHelper_.createWMTSLayerFromCapabilititesObj(
+      capabilities,
+      layer
+    );
+    this.addLayer_(layerObj);
+
+    // (5) Add data source to ngeo collection
+    this.ngeoDataSources_.push(dataSource);
+
+    // (6) Create and set WMTS cache item
+    this.wmtsCache_[id] = {
+      layerObj,
+      // This watcher synchronizes the data source visible property to
+      // the OL layer object visible property
+      unregister: this.rootScope_.$watch(
+        () => dataSource.visible,
+        this.handleWMTSDataSourceVisibleChange_.bind(this, layerObj)
+      )
+    };
+  }
+
+  /**
+   * @param {!ol.layer.Tile} layer WMTS layer 
+   * @param {boolean|undefined} value Current visible property of the DS
+   * @param {boolean|undefined} oldValue Old visible property of the DS
+   * @private
+   */
+  handleWMTSDataSourceVisibleChange_(layer, value, oldValue) {
+    if (value !== undefined && value !== oldValue) {
+      layer.setVisible(value);
+    }
+  }
+
+  /**
    * Called when a data source is removed from the collection of ngeo data
    * sources. If it's an external data source, remove it from its WMS Group
    *
@@ -310,20 +466,47 @@ gmf.datasource.ExternalDataSourcesManager = class {
    * @private
    */
   removeDataSource_(dataSource) {
-    const url = dataSource.wmsUrl;
-    goog.asserts.assert(url);
+    if (dataSource.ogcType === ngeo.datasource.OGC.Type.WMS) {
+      // WMS data source
+      const url = dataSource.wmsUrl;
+      goog.asserts.assert(url);
 
-    const wmsGroup = this.getWMSGroup(url);
-    if (wmsGroup && wmsGroup.dataSources.includes(dataSource)) {
-      // Remove from group
-      wmsGroup.removeDataSource(dataSource);
+      const wmsGroup = this.getWMSGroup(url);
+      if (wmsGroup && wmsGroup.dataSources.includes(dataSource)) {
+        // Remove from group
+        wmsGroup.removeDataSource(dataSource);
 
-      // In case we removed the last data source from the group, then remove and
-      // destroy the group, and remove the layer from the map as well.
-      if (!wmsGroup.dataSources.length) {
-        this.removeLayer_(wmsGroup.layer);
-        wmsGroup.destroy();
-        this.removeWMSGroup_(wmsGroup);
+        // In case we removed the last data source from the group, then remove
+        // and destroy the group, and remove the layer from the map as well.
+        if (!wmsGroup.dataSources.length) {
+          this.removeLayer_(wmsGroup.layer);
+          wmsGroup.destroy();
+          this.removeWMSGroup_(wmsGroup);
+        }
+      }
+    } else if (dataSource.ogcType === ngeo.datasource.OGC.Type.WMTS) {
+      // WMTS data source
+      const url = dataSource.wmtsUrl;
+      goog.asserts.assert(url);
+
+      const wmtsGroup = this.getWMTSGroup(url);
+      if (wmtsGroup && wmtsGroup.dataSources.includes(dataSource)) {
+        // Remove from group
+        wmtsGroup.removeDataSource(dataSource);
+
+        // Remove the cache item, in addition to removing the layer from the
+        // map and unregister the watcher
+        const id = dataSource.id;
+        this.removeLayer_(this.wmtsCache_[id].layerObj);
+        this.wmtsCache_[id].unregister();
+        delete this.wmtsCache_[id];
+
+        // In case we removed the last data source from the group, then remove
+        // and destroy the groug.
+        if (!wmtsGroup.dataSources.length) {
+          wmtsGroup.destroy();
+          this.removeWMTSGroup_(wmtsGroup);
+        }
       }
     }
   }
@@ -331,14 +514,14 @@ gmf.datasource.ExternalDataSourcesManager = class {
 
 
 /**
- * Get the data source id from a WMS Capability Layer object.
+ * Get the data source id from a WMS or WMTS Capability Layer object.
  *
  * Please, note that this is used to generate a unique id for the created
- * external data sources and since a WMS Capability Layer object doesn't
- * natively contains an id by itself, then it is programatically generated
+ * external data sources and since a WMS/WMTS Capability Layer objects don't
+ * natively contains an id by themselves, then it is programatically generated
  * using the `ol.getUid` method, plus a million.
  *
- * @param {!Object} layer WMS Capability Layer object.
+ * @param {!Object} layer WMS/WMTS Capability Layer object.
  * @return {number} Data source id.
  * @export
  */
@@ -349,3 +532,12 @@ gmf.datasource.ExternalDataSourcesManager.getId = function(layer) {
 
 gmf.module.service(
   'gmfExternalDataSourcesManager', gmf.datasource.ExternalDataSourcesManager);
+
+
+/**
+ * @typedef {{
+ *     layerObj: (!ol.layer.Tile),
+ *     unregister: Function
+ * }}
+ */
+gmf.datasource.ExternalDataSourcesManager.WMTSCacheItem;

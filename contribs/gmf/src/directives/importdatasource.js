@@ -3,7 +3,9 @@ goog.provide('gmf.importdatasourceComponent');
 goog.require('gmf');
 goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('gmf.wmscapabilitylayertreenodeComponent');
+goog.require('gmf.wmtscapabilitylayertreeComponent');
 goog.require('ngeo.Querent');
+goog.require('ngeo.datasource.OGC');
 
 
 /**
@@ -110,7 +112,14 @@ gmf.ImportdatasourceController = class {
      * @type {?Object}
      * @export
      */
-    this.wmsCapabilities = false;
+    this.wmsCapabilities = null;
+
+    /**
+     * Current WTMS Capabilities that were connected.
+     * @type {?Object}
+     * @export
+     */
+    this.wmtsCapabilities = null;
   }
 
   /**
@@ -133,17 +142,37 @@ gmf.ImportdatasourceController = class {
    * @export
    */
   connect() {
+    const serviceType = this.getServiceType_();
+
     this.startWorking_();
-    this.ngeoQuerent_.wmsGetCapabilities(this.url).then(
-      (wmsCapabilities) => {
-        this.wmsCapabilities = wmsCapabilities;
-        this.stopWorking_();
-      },
-      () => {
-        // Something went wrong...
+    if (serviceType === ngeo.datasource.OGC.Type.WMS) {
+      this.ngeoQuerent_.wmsGetCapabilities(this.url).then(
+        (wmsCapabilities) => {
+          this.wmsCapabilities = wmsCapabilities;
+          this.stopWorking_();
+        },
+        () => {
+          // Something went wrong...
+          this.stopWorking_(true);
+        }
+      );
+    } else if (serviceType === ngeo.datasource.OGC.Type.WMTS) {
+      this.ngeoQuerent_.wmtsGetCapabilities(this.url).then(
+        (wmtsCapabilities) => {
+          this.wmtsCapabilities = wmtsCapabilities;
+          this.stopWorking_();
+        },
+        () => {
+          // Something went wrong...
+          this.stopWorking_(true);
+        }
+      );
+    } else {
+      // Could not determine the type of url
+      this.timeout_(() => {
         this.stopWorking_(true);
-      }
-    );
+      });
+    }
   }
 
   /**
@@ -166,6 +195,7 @@ gmf.ImportdatasourceController = class {
 
     // Clear any previous objects
     this.wmsCapabilities = null;
+    this.wmtsCapabilities = null;
   }
 
   /**
@@ -185,6 +215,31 @@ gmf.ImportdatasourceController = class {
         this.hasErrorPromise_ = null;
       }, 3000);
     }
+  }
+
+  /**
+   * Determines the type of OGC service depending on the current value of the
+   * url property. Possible values returned are:
+   *
+   * - wmts
+   * - wms (default value)
+   *
+   * @return {string} Type of OGC service.
+   * @private
+   */
+  getServiceType_() {
+
+    let type;
+    const url = this.url;
+
+    if (/(wmts)/i.test(url)) {
+      type = ngeo.datasource.OGC.Type.WMTS;
+    } else {
+      // All other urls are tested as WMS services.
+      type = ngeo.datasource.OGC.Type.WMS;
+    }
+
+    return type;
   }
 };
 

@@ -1,4 +1,4 @@
-goog.provide('gmf.wmsgrouptreeComponent');
+goog.provide('gmf.datasourcegrouptreeComponent');
 
 goog.require('gmf');
 goog.require('ngeo.datasource.DataSources');
@@ -7,7 +7,7 @@ goog.require('ngeo.datasource.DataSources');
 /**
  * @private
  */
-gmf.WmsgrouptreeController = class {
+gmf.DatasourcegrouptreeController = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
@@ -17,17 +17,17 @@ gmf.WmsgrouptreeController = class {
    * @struct
    * @ngInject
    * @ngdoc controller
-   * @ngname GmfWmsgrouptreeController
+   * @ngname GmfDatasourcegrouptreeController
    */
   constructor($scope, ngeoDataSources) {
 
     // Binding properties
 
     /**
-     * @type {!ngeo.datasource.WMSGroup}
+     * @type {!ngeo.datasource.Group}
      * @export
      */
-    this.wmsGroup;
+    this.group;
 
 
     // Injected properties
@@ -50,20 +50,20 @@ gmf.WmsgrouptreeController = class {
    * @export
    */
   getGroupUid() {
-    return `wmsgrouptree-${ol.getUid(this.wmsGroup)}`;
+    return `datasourcegrouptree-${ol.getUid(this.group)}`;
   }
 
   /**
-   * Toggle visibility of the whole WMS Group
+   * Toggle visibility of the group itself, i.e. its visibility state.
    * @export
    */
   toggle() {
-    this.wmsGroup.toggleVisibilityState();
+    this.group.toggleVisibilityState();
   }
 
   /**
    * Toggle visible property of a data source.
-   * @param {ngeo.datasource.OGC} dataSource Data source to toggle the
+   * @param {ngeo.datasource.DataSource} dataSource Data source to toggle the
    * visibility
    * @export
    */
@@ -73,19 +73,19 @@ gmf.WmsgrouptreeController = class {
 
   /**
    * Remove all data sources from the `ngeo.DataSources` collection, which
-   * will automatically remove them from the WMS Group. The group itself
+   * will automatically remove them from the Group. The group itself
    * is going to be removed as well, destroying this component in the process.
    * @export
    */
   remove() {
-    for (let i = this.wmsGroup.dataSources.length - 1, ii = 0; i >= ii; i--) {
-      this.ngeoDataSources_.remove(this.wmsGroup.dataSources[i]);
+    for (let i = this.group.dataSources.length - 1, ii = 0; i >= ii; i--) {
+      this.ngeoDataSources_.remove(this.group.dataSources[i]);
     }
   }
 
   /**
-   * @param {ngeo.datasource.OGC} dataSource Data source to remove from the
-   *     `ngeo.DataSources` collection.
+   * @param {ngeo.datasource.DataSource} dataSource Data source to remove from
+   *     the `ngeo.DataSources` collection.
    * @export
    */
   removeDataSource(dataSource) {
@@ -94,10 +94,10 @@ gmf.WmsgrouptreeController = class {
 };
 
 
-gmf.module.component('gmfWmsgrouptree', {
+gmf.module.component('gmfDatasourcegrouptree', {
   bindings: {
-    'wmsGroup': '<'
+    'group': '<'
   },
-  controller: gmf.WmsgrouptreeController,
-  templateUrl: () => `${gmf.baseTemplateUrl}/wmsgrouptree.html`
+  controller: gmf.DatasourcegrouptreeController,
+  templateUrl: () => `${gmf.baseTemplateUrl}/datasourcegrouptree.html`
 });

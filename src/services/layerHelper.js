@@ -182,6 +182,41 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
 
 
 /**
+ * Create and return a WMTS layer using a formatted capabilities response
+ * and a capability layer.
+ *
+ * @param {!Object} capabilities The complete capabilities object of the service
+ * @param {!Object} layerCap The layer capability object
+ * @param {Object.<string, string>=} opt_dimensions WMTS dimensions.
+ * @return {!ol.layer.Tile} WMTS layer
+ * @export
+ */
+ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
+  capabilities, layerCap, opt_dimensions
+) {
+
+  const options = ol.source.WMTS.optionsFromCapabilities(capabilities, {
+    crossOrigin: 'anonymous',
+    layer: layerCap['Identifier']
+  });
+
+  goog.asserts.assert(options);
+  const source = new ol.source.WMTS(
+    /** @type {olx.source.WMTSOptions} */ (options));
+
+  if (opt_dimensions && !ol.obj.isEmpty(opt_dimensions)) {
+    source.updateDimensions(opt_dimensions);
+  }
+
+  return new ol.layer.Tile({
+    'capabilitiesStyles': layerCap['Style'],
+    preload: Infinity,
+    source
+  });
+};
+
+
+/**
  * Create and return an ol.layer.Group. You can pass a collection of layers to
  * directly add them in the returned group.
  * @param {ol.Collection.<ol.layer.Base>=} opt_layers The layer to add to the

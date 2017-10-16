@@ -265,11 +265,17 @@
 
 <ul
    class="gmf-layertree-root-external-datasources"
-   ng-if="layertreeCtrl.isRoot && gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups.length">
-  <gmf-wmsgrouptree
+   ng-if="layertreeCtrl.isRoot && (gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups.length || gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmtsGroups.length)">
+  <gmf-datasourcegrouptree
+    class="gmf-layertree-node gmf-layertree-depth-1"
+    ng-repeat="wmtsGroup in gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmtsGroups"
+    group="wmtsGroup"
+  >
+  </gmf-datasourcegrouptree>
+  <gmf-datasourcegrouptree
     class="gmf-layertree-node gmf-layertree-depth-1"
     ng-repeat="wmsGroup in gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups"
-    wms-group="wmsGroup"
+    group="wmsGroup"
   >
-  </gmf-wmsgrouptree>
+  </gmf-datasourcegrouptree>
 </ul>
