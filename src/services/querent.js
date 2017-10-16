@@ -213,6 +213,32 @@ ngeo.Querent = class {
   }
 
   /**
+   * @param {!Array.<!Object>} layerCapabilities List of WMS layer capabilities
+   * @param {string} layerName Name of the WMS layer
+   * @return {?Object} Found WMS layer capability
+   * @export
+   */
+  wmsFindLayerCapability(layerCapabilities, layerName) {
+
+    let found = null;
+
+    for (const layerCapability of layerCapabilities) {
+      if (layerCapability['Name'] === layerName) {
+        found = layerCapability;
+        break;
+      } else if (layerCapability['Layer']) {
+        found = this.wmsFindLayerCapability(
+          layerCapability['Layer'], layerName);
+        if (found) {
+          break;
+        }
+      }
+    }
+
+    return found;
+  }
+
+  /**
    * @param {string} baseUrl Base url of the WMS server.
    * @param {boolean} opt_cache Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required
@@ -247,6 +273,23 @@ ngeo.Querent = class {
     }
 
     return promise;
+  }
+
+  /**
+   * @param {!Array.<!Object>} layerCapabilities List of WMTS layer capabilities
+   * @param {string} layerName Name of the WMTS layer, a.k.a. the identifier.
+   * @return {?Object} Found WTMS layer capability
+   * @export
+   */
+  wmtsFindLayerCapability(layerCapabilities, layerName) {
+    let found = null;
+    for (const layerCapability of layerCapabilities) {
+      if (layerCapability['Identifier'] === layerName) {
+        found = layerCapability;
+        break;
+      }
+    }
+    return found;
   }
 
   /**

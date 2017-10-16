@@ -29,10 +29,10 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
-     * @type {!Array.<!ngeo.datasource.OGC>}
+     * @type {!ol.Collection.<!ngeo.datasource.OGC>}
      * @private
      */
-    this.dataSources_;
+    this.dataSourcesCollection_;
 
 
     // === PRIVATE properties ===
@@ -98,7 +98,15 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
    * @export
    */
   get dataSources() {
-    return this.dataSources_;
+    return this.dataSourcesCollection_.getArray();
+  }
+
+  /**
+   * @return {!ol.Collection.<!ngeo.datasource.OGC>} Data sources
+   * @export
+   */
+  get dataSourcesCollection() {
+    return this.dataSourcesCollection_;
   }
 
 
