@@ -98,7 +98,7 @@ ngeo.Popover.prototype.setMap = function(map) {
     }, 0);
 
     this.clickKey_ = goog.events.listen(this.closeEl_[0],
-      goog.events.EventType.CLICK, this.handleCloseElClick_, false, this);
+      'click', this.handleCloseElClick_, false, this);
   }
 };
 

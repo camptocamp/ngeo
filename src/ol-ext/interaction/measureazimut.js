@@ -5,7 +5,6 @@ goog.require('goog.asserts');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
-goog.require('ol.MapBrowserEventType');
 goog.require('ol.events');
 goog.require('ol.functions');
 goog.require('ol.geom.Circle');
@@ -279,9 +278,9 @@ ngeo.interaction.DrawAzimut.handleUpEvent_ = function(event) {
  */
 ngeo.interaction.DrawAzimut.handleEvent_ = function(mapBrowserEvent) {
   let pass = true;
-  if (mapBrowserEvent.type === ol.MapBrowserEventType.POINTERMOVE) {
+  if (mapBrowserEvent.type === 'pointermove') {
     pass = this.handlePointerMove_(mapBrowserEvent);
-  } else if (mapBrowserEvent.type === ol.MapBrowserEventType.DBLCLICK) {
+  } else if (mapBrowserEvent.type === 'dblclick') {
     pass = false;
   }
   return ol.interaction.Pointer.handleEvent.call(this, mapBrowserEvent) && pass;

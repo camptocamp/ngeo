@@ -111,7 +111,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
           }
         });
 
-      goog.events.listen(window, goog.events.EventType.RESIZE,
+      goog.events.listen(window, 'resize',
         ngeoDebounce(refreshData, 50, true),
         false, this);
 

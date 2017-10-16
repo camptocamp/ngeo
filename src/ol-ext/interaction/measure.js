@@ -339,7 +339,7 @@ ngeo.interaction.Measure.getFormattedPoint = function(
  * @private
  */
 ngeo.interaction.Measure.handleEvent_ = function(evt) {
-  if (evt.type != ol.MapBrowserEventType.POINTERMOVE || evt.dragging) {
+  if (evt.type != 'pointermove' || evt.dragging) {
     return true;
   }
 

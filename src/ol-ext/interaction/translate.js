@@ -1,6 +1,5 @@
 goog.provide('ngeo.interaction.Translate');
 
-goog.require('goog.events.KeyCodes');
 goog.require('ol.Feature');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
@@ -99,7 +98,7 @@ ngeo.interaction.Translate.prototype.setActive = function(active) {
   if (active) {
     this.keyPressListenerKey_ = goog.events.listen(
       document,
-      goog.events.EventType.KEYUP,
+      'keyup',
       this.handleKeyUp_,
       false,
       this
@@ -277,7 +276,8 @@ ngeo.interaction.Translate.prototype.getGeometryCenterPoint_ = function(
  * @private
  */
 ngeo.interaction.Translate.prototype.handleKeyUp_ = function(evt) {
-  if (evt.keyCode === goog.events.KeyCodes.ESC) {
+  // 27 == ESC key
+  if (evt.keyCode === 27) {
     this.setActive(false);
   }
 };
