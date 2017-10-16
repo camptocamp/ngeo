@@ -466,6 +466,10 @@ gmf.DataSourcesManager = class {
 
     const id = ol.getUid(treeCtrl.node);
     const dataSource = this.dataSourcesCache_[id];
+    // FIXME: find another way to handle source that was not added through theme
+    if (!dataSource) {
+      return;
+    }
     goog.asserts.assert(dataSource, 'DataSource should be set');
     treeCtrl.setDataSource(dataSource);
 

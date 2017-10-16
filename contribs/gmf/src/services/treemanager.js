@@ -430,6 +430,16 @@ gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
 
 
 /**
+ * Add an OGC server.
+ * @param {string} ogcServerName Name of the OGC server to add.
+ * @param {!gmfThemes.GmfOgcServer} ogcServer OGC server to add.
+ */
+gmf.TreeManager.prototype.addOgcServer = function(ogcServerName, ogcServer) {
+  this.ogcServers_[ogcServerName] = ogcServer;
+};
+
+
+/**
  * Get the OGC server.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.

@@ -89,7 +89,7 @@ exports = function($q, $timeout, ngeoFile, gettext, ngeoImportOnlineTemplateUrl)
         // When a WMS is selected in the list, start downloading the
         // GetCapabilities
         scope['fileUrl'] = nameUrl['url'];
-        scope['handleFileUrl']();
+        scope['handleFileUrl'](nameUrl['name']);
         scope.$digest();
       });
 
@@ -126,7 +126,7 @@ exports = function($q, $timeout, ngeoFile, gettext, ngeoImportOnlineTemplateUrl)
       };
 
       // Handle URL of WMS
-      scope['handleFileUrl'] = function() {
+      scope['handleFileUrl'] = function(sourceName) {
         const transformUrl = options.transformUrl || $q.when;
 
         transformUrl(scope['fileUrl']).then((url) => {
@@ -140,6 +140,7 @@ exports = function($q, $timeout, ngeoFile, gettext, ngeoImportOnlineTemplateUrl)
             scope['canceler'] = null;
 
             return scope['handleFileContent'](fileContent, {
+              name: sourceName,
               url: scope['fileUrl']
             });
 

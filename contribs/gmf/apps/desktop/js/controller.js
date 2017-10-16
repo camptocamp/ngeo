@@ -20,16 +20,19 @@ goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 
+goog.require('app.GmfImportHelper');
+
 
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
+ * @param {angular.$q} $q Angular $q.
  * @constructor
  * @extends {gmf.AbstractDesktopController}
  * @ngInject
  * @export
  */
-app.DesktopController = function($scope, $injector) {
+app.DesktopController = function($scope, $injector, $q) {
   gmf.AbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -96,6 +99,11 @@ app.DesktopController = function($scope, $injector) {
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
+
+  /**
+   * @export
+   */
+  this.importOptions = new app.GmfImportHelper($q).createOptions();
 };
 ol.inherits(app.DesktopController, gmf.AbstractDesktopController);
 
