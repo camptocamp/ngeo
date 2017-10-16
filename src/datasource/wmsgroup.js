@@ -2,21 +2,18 @@ goog.provide('ngeo.datasource.WMSGroup');
 
 goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
+goog.require('ngeo.datasource.Group');
 
 
 /**
  * @implements {ngeox.datasource.WMSGroup}
  */
-ngeo.datasource.WMSGroup = class {
+ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
 
   /**
    * A WMSGroup data source combines multiple `ngeo.datasource.OGC` objects.
    * It's main utility is to create a single `ol.layer.Image` object in which
    * the data source visible properties determine the WMS LAYERS parameter.
-   *
-   * Also, this WMSGroup object has a calculated `visibilityState` property
-   * that can be used to determine if all its data source are all visible, all
-   * hidden or some are hidden and other visible.
    *
    * Note: the layer is not added to the map here.
    *
@@ -24,6 +21,8 @@ ngeo.datasource.WMSGroup = class {
    * @param {ngeox.datasource.WMSGroupOptions} options Options.
    */
   constructor(options) {
+
+    super(options);
 
     const injector = options.injector;
 
@@ -33,16 +32,7 @@ ngeo.datasource.WMSGroup = class {
      * @type {!Array.<!ngeo.datasource.OGC>}
      * @private
      */
-    this.dataSources_ = options.dataSources;
-
-
-    // === STATIC properties (i.e. that never change) ===
-
-    /**
-     * @type {string}
-     * @private
-     */
-    this.title_ = options.title;
+    this.dataSources_;
 
 
     // === PRIVATE properties ===
@@ -64,12 +54,6 @@ ngeo.datasource.WMSGroup = class {
      * @private
      */
     this.rootScope_ = injector.get('$rootScope');
-
-    /**
-     * @type {string}
-     * @private
-     */
-    this.url_ = options.url;
 
     /**
      * The functions to call to unregister the `watch` event on data sources
@@ -102,7 +86,7 @@ ngeo.datasource.WMSGroup = class {
     for (const dataSource of this.dataSources) {
       this.unregisterDataSource_(dataSource);
     }
-    this.dataSources_.length = 0;
+    super.destroy();
   }
 
   // ========================================
@@ -130,73 +114,17 @@ ngeo.datasource.WMSGroup = class {
     return this.layer_;
   }
 
-  /**
-   * @return {string} Title 
-   * @export
-   */
-  get title() {
-    return this.title_;
-  }
-
-  /**
-   * @return {string} Url
-   * @export
-   */
-  get url() {
-    return this.url_;
-  }
-
-
-  // ===================================
-  // === Calculated property getters ===
-  // ===================================
-
-  /**
-   * @return {string} Visibility state
-   * @export
-   */
-  get visibilityState() {
-    let state;
-
-    for (const dataSource of this.dataSources) {
-      if (state === undefined) {
-        state = this.getDataSourceState(dataSource);
-      } else {
-        const otherState = this.getDataSourceState(dataSource);
-        if (otherState !== state) {
-          state = ngeo.datasource.WMSGroup.VisibilityState.INDETERMINATE;
-        }
-      }
-      if (state === ngeo.datasource.WMSGroup.VisibilityState.INDETERMINATE) {
-        break;
-      }
-    }
-
-    return state;
-  }
-
 
   // =======================
   // === Utility Methods ===
   // =======================
 
   /**
-   * @param {!ngeo.datasource.OGC} dataSource OGC data source.
-   * @return {number} Visible state of a data source
-   * @export
-   */
-  getDataSourceState(dataSource) {
-    return dataSource.visible ?
-      ngeo.datasource.WMSGroup.VisibilityState.ON :
-      ngeo.datasource.WMSGroup.VisibilityState.OFF;
-  }
-
-  /**
    * @param {!ngeo.datasource.OGC} dataSource OGC data source to add.
    * @export
    */
   addDataSource(dataSource) {
-    this.dataSources_.push(dataSource);
+    super.addDataSource(dataSource);
     this.registerDataSource_(dataSource);
   }
 
@@ -257,7 +185,7 @@ ngeo.datasource.WMSGroup = class {
    * @export
    */
   removeDataSource(dataSource) {
-    ol.array.remove(this.dataSources_, dataSource);
+    super.removeDataSource(dataSource);
     this.unregisterDataSource_(dataSource);
   }
 
@@ -288,34 +216,4 @@ ngeo.datasource.WMSGroup = class {
       this.updateLayer_(this);
     }
   }
-
-  /**
-   * Update visible property of all data sources depending on the current
-   * visibility state:
-   *
-   * - state ON --> visible false
-   * - state OFF --> visible true
-   * - state IND. --> visible true
-   *
-   * @export
-   */
-  toggleVisibilityState() {
-    const visibleToSet =
-        this.visibilityState !== ngeo.datasource.WMSGroup.VisibilityState.ON;
-    for (const dataSource of this.dataSources) {
-      if (dataSource.visible !== visibleToSet) {
-        dataSource.visible = visibleToSet;
-      }
-    }
-  }
-};
-
-
-/**
- * @enum {number}
- */
-ngeo.datasource.WMSGroup.VisibilityState = {
-  INDETERMINATE: 'indeterminate',
-  OFF: 'off',
-  ON: 'on'
 };

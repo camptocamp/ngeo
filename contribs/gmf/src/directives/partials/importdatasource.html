@@ -87,11 +87,19 @@
 
 <div
   class="gmf-importdatasource-layers"
-  ng-if="$ctrl.wmsCapabilities">
+  ng-if="$ctrl.wmsCapabilities !== null || $ctrl.wmtsCapabilities !== null">
   <hr />
   <h4>{{ 'Layers' | translate }}</h4>
   <gmf-wmscapabilitylayertreenode
     capabilities="::$ctrl.wmsCapabilities"
-    layer="::$ctrl.wmsCapabilities.Capability.Layer">
+    layer="::$ctrl.wmsCapabilities.Capability.Layer"
+    url="::$ctrl.url"
+    ng-if="$ctrl.wmsCapabilities !== null">
   </gmf-wmscapabilitylayertreenode>
+  <gmf-wmtscapabilitylayertree
+    capabilities="::$ctrl.wmtsCapabilities"
+    layers="::$ctrl.wmtsCapabilities.Contents.Layer"
+    url="::$ctrl.url"
+    ng-if="$ctrl.wmtsCapabilities !== null">
+  </gmf-wmtscapabilitylayertree>
 </div>
