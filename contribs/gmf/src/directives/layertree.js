@@ -3,6 +3,7 @@ goog.provide('gmf.layertreeComponent');
 
 goog.require('ngeo.SyncArrays');
 goog.require('gmf');
+/** @suppress {extraRequire} */
 goog.require('gmf.datasourcegrouptreeComponent');
 goog.require('gmf.datasource.DataSourceBeingFiltered');
 goog.require('gmf.datasource.ExternalDataSourcesManager');

@@ -1,8 +1,11 @@
 goog.provide('gmf.importdatasourceComponent');
 
 goog.require('gmf');
+/** @suppress {extraRequire} */
 goog.require('gmf.datasource.ExternalDataSourcesManager');
+/** @suppress {extraRequire} */
 goog.require('gmf.wmscapabilitylayertreenodeComponent');
+/** @suppress {extraRequire} */
 goog.require('gmf.wmtscapabilitylayertreeComponent');
 goog.require('ngeo.Querent');
 goog.require('ngeo.datasource.OGC');
@@ -16,8 +19,9 @@ gmf.ImportdatasourceController = class {
   /**
    * @param {!angular.JQLite} $element Element.
    * @param {!angular.$timeout} $timeout Angular timeout service.
-   * @param {!gmf.ExternalDataSourcesManager} gmfExternalDataSourcesManager
-   *     GMF service responsible of managing external data sources.
+   * @param {!gmf.datasource.ExternalDataSourcesManager}
+   *     gmfExternalDataSourcesManager GMF service responsible of managing
+   *     external data sources.
    * @param {!ngeo.Querent} ngeoQuerent Ngeo querent service.
    * @private
    * @struct
@@ -51,7 +55,7 @@ gmf.ImportdatasourceController = class {
     this.timeout_ = $timeout;
 
     /**
-     * @type {!gmf.ExternalDataSourcesManager}
+     * @type {!gmf.datasource.ExternalDataSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
@@ -142,11 +146,12 @@ gmf.ImportdatasourceController = class {
    * @export
    */
   connect() {
-    const serviceType = ngeo.datasource.OGC.guessServiceTypeByUrl(this.url);
+    const url = goog.asserts.assertString(this.url);
+    const serviceType = ngeo.datasource.OGC.guessServiceTypeByUrl(url);
 
     this.startWorking_();
     if (serviceType === ngeo.datasource.OGC.Type.WMS) {
-      this.ngeoQuerent_.wmsGetCapabilities(this.url).then(
+      this.ngeoQuerent_.wmsGetCapabilities(url).then(
         (wmsCapabilities) => {
           this.wmsCapabilities = wmsCapabilities;
           this.stopWorking_();
@@ -157,7 +162,7 @@ gmf.ImportdatasourceController = class {
         }
       );
     } else if (serviceType === ngeo.datasource.OGC.Type.WMTS) {
-      this.ngeoQuerent_.wmtsGetCapabilities(this.url).then(
+      this.ngeoQuerent_.wmtsGetCapabilities(url).then(
         (wmtsCapabilities) => {
           this.wmtsCapabilities = wmtsCapabilities;
           this.stopWorking_();
@@ -199,13 +204,13 @@ gmf.ImportdatasourceController = class {
   }
 
   /**
-   * @param {boolean} hasError Whether we stopped working because of after
+   * @param {boolean=} opt_hasError Whether we stopped working because of after
    *     an error.
    * @private
    */
-  stopWorking_(hasError) {
+  stopWorking_(opt_hasError = false) {
     this.pending = false;
-    if (hasError) {
+    if (opt_hasError) {
       this.hasError = true;
       if (this.hasErrorPromise_) {
         this.timeout_.cancel(this.hasErrorPromise_);

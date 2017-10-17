@@ -240,7 +240,7 @@ ngeo.Querent = class {
 
   /**
    * @param {string} baseUrl Base url of the WMS server.
-   * @param {boolean} opt_cache Whether to use the cached capability, if
+   * @param {boolean=} opt_cache Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
    * @return {!angular.$q.Promise} Promise.
@@ -267,6 +267,8 @@ ngeo.Querent = class {
     } else if (cache && this.wmsGetCapabilitiesPromises_[baseUrl]) {
       promise = this.wmsGetCapabilitiesPromises_[baseUrl];
     }
+
+    goog.asserts.assert(promise);
 
     if (cache && !this.wmsGetCapabilitiesPromises_[baseUrl]) {
       this.wmsGetCapabilitiesPromises_[baseUrl] = promise;
@@ -295,7 +297,7 @@ ngeo.Querent = class {
   /**
    * @param {string} url Url of the WMTS server. Note that it must contain
    *     all required arguments.
-   * @param {boolean} opt_cache Whether to use the cached capability, if
+   * @param {boolean=} opt_cache Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
    * @return {!angular.$q.Promise} Promise.
@@ -314,6 +316,8 @@ ngeo.Querent = class {
     } else if (cache && this.wmtsGetCapabilitiesPromises_[url]) {
       promise = this.wmtsGetCapabilitiesPromises_[url];
     }
+
+    goog.asserts.assert(promise);
 
     if (cache && !this.wmtsGetCapabilitiesPromises_[url]) {
       this.wmtsGetCapabilitiesPromises_[url] = promise;
