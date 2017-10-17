@@ -4,9 +4,9 @@
 goog.provide('gmf.datasource.ExternalDataSourcesManager');
 
 goog.require('gmf');
-goog.require('gmf.datasource.OGC');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.Group');
+goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.datasource.WMSGroup');
 
 
@@ -68,7 +68,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
      * If a data source with an id already exists in this cache, it is used
      * instead of being re-created.
      *
-     * @type {Object.<number, gmf.datasource.OGC>}
+     * @type {Object.<number, !ngeo.datasource.OGC>}
      * @private
      */
     this.extDataSources_ = {};
@@ -85,8 +85,10 @@ gmf.datasource.ExternalDataSourcesManager = class {
      */
     this.wmsServers_ = {};
 
-    const servers = /** @type {Array.<!gmfx.ExternalOGCServer>|undefined} */ (
-      $injector.get('gmfExternalOGCServers'));
+    const servers = $injector.has('gmfExternalOGCServers') ?
+      /** @type {Array.<!gmfx.ExternalOGCServer>|undefined} */ (
+        $injector.get('gmfExternalOGCServers')
+      ) : undefined;
 
     if (servers) {
       for (const server of servers) {
@@ -95,15 +97,6 @@ gmf.datasource.ExternalDataSourcesManager = class {
         }
       }
     }
-
-    /**
-     * FIXME adube - remove this
-     * The functions to call to unregister the `watch` event on data sources
-     * that are registered. Key is the id of the data source.
-     * @type {!Object.<number, Function>}
-     * @private
-     */
-    this.wmsDataSourceUnregister_ = {};
 
     /**
      * Collection of WMS groups.
@@ -138,7 +131,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
   // === WMS Groups ===
 
   /**
-   * @param {ngeo.datasource.WMSGroup} wmsGroup WMS group.
+   * @param {!ngeo.datasource.WMSGroup} wmsGroup WMS group.
    * @private
    */
   addWMSGroup_(wmsGroup) {
@@ -146,7 +139,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
   }
 
   /**
-   * @param {ngeo.datasource.WMSGroup} wmsGroup WMS group.
+   * @param {!ngeo.datasource.WMSGroup} wmsGroup WMS group.
    * @private
    */
   removeWMSGroup_(wmsGroup) {
@@ -189,7 +182,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
   // === WMTS Groups ===
 
   /**
-   * @param {ngeo.datasource.Group} wmtsGroup Group for WMTS data sources.
+   * @param {!ngeo.datasource.Group} wmtsGroup Group for WMTS data sources.
    * @private
    */
   addWMTSGroup_(wmtsGroup) {
@@ -197,7 +190,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
   }
 
   /**
-   * @param {ngeo.datasource.Group} wmtsGroup Group for WMTS data sources.
+   * @param {!ngeo.datasource.Group} wmtsGroup Group for WMTS data sources.
    * @private
    */
   removeWMTSGroup_(wmtsGroup) {
@@ -229,7 +222,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
   }
 
   /**
-   * @return {!ol.Collection.<!ngeo.datasource.WMTSGroup>} Collection of groups
+   * @return {!ol.Collection.<!ngeo.datasource.Group>} Collection of groups
    *     for WMTS data sources.
    * @export
    */
@@ -271,7 +264,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
   }
 
   /**
-   * @param {ol.layer.Image} layer Layer.
+   * @param {ol.layer.Image|ol.layer.Tile} layer Layer.
    * @private
    */
   addLayer_(layer) {
@@ -279,7 +272,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
   }
 
   /**
-   * @param {ol.layer.Image} layer Layer.
+   * @param {ol.layer.Image|ol.layer.Tile} layer Layer.
    * @private
    */
   removeLayer_(layer) {
@@ -323,7 +316,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
 
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator
-      dataSource = new gmf.datasource.OGC({
+      dataSource = new ngeo.datasource.OGC({
         id,
         name: layer['Title'],
         ogcImageType,
@@ -386,14 +379,17 @@ gmf.datasource.ExternalDataSourcesManager = class {
       dataSource = this.extDataSources_[id];
     } else {
 
+      const name = goog.asserts.assertString(layer['Title']);
+      const wmtsLayer = goog.asserts.assertString(layer['Identifier']);
+
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator
-      dataSource = new gmf.datasource.OGC({
+      dataSource = new ngeo.datasource.OGC({
         id,
-        name: layer['Title'],
+        name,
         ogcType: ngeo.datasource.OGC.Type.WMTS,
         visible: true,
-        wmtsLayer: layer['Identifier'],
+        wmtsLayer,
         wmtsUrl
       });
 
@@ -437,7 +433,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
   }
 
   /**
-   * @param {!ol.layer.Tile} layer WMTS layer 
+   * @param {!ol.layer.Tile} layer WMTS layer
    * @param {boolean|undefined} value Current visible property of the DS
    * @param {boolean|undefined} oldValue Old visible property of the DS
    * @private
@@ -457,7 +453,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
    */
   handleDataSourcesRemove_(evt) {
     const dataSource = evt.element;
-    if (dataSource instanceof gmf.datasource.OGC &&
+    if (dataSource instanceof ngeo.datasource.OGC &&
        this.extDataSources_[dataSource.id] === dataSource
     ) {
       this.removeDataSource_(dataSource);
@@ -472,7 +468,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
    * Note: it is expected that the data source has already been removed
    * from the ngeo collection.
    *
-   * @param {!gmf.datasource.OGC} dataSource External OGC data source.
+   * @param {!ngeo.datasource.OGC} dataSource External OGC data source.
    * @private
    */
   removeDataSource_(dataSource) {

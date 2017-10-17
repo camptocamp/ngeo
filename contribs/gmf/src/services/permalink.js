@@ -23,6 +23,7 @@ goog.require('ngeo.Querent');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.datasource.Group');
 goog.require('ngeo.datasource.OGC');
+/** @suppress {extraRequire} */
 goog.require('ngeo.datasource.WMSGroup');
 goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.WfsPermalink');
@@ -1484,7 +1485,7 @@ gmf.Permalink.prototype.setExternalDataSourcesState_ = function() {
       // (1b) layer names
       const wmsGroupLayerNames = [];
       for (const wmsDataSource of wmsGroup.dataSources) {
-        goog.asserts.assert(wmsDataSource, ngeo.datasource.OGC);
+        goog.asserts.assertInstanceof(wmsDataSource, ngeo.datasource.OGC);
 
         // External WMS data sources always have only one OGC layer name,
         // as they are created using a single Capability Layer object that

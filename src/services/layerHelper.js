@@ -436,4 +436,16 @@ ngeo.LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time
 };
 
 
+/**
+ * @param {ol.layer.Image} layer The WMS layer.
+ * @return {Array.<number>|undefined} List of query source ids, a.k.a.
+ *     the data source ids this layer is composed of.
+ * @export
+ */
+ngeo.LayerHelper.prototype.getQuerySourceIds = function(layer) {
+  return /** @type {Array.<number>|undefined} */ (
+    layer.get('querySourceIds'));
+};
+
+
 ngeo.module.service('ngeoLayerHelper', ngeo.LayerHelper);

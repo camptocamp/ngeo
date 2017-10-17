@@ -1256,7 +1256,7 @@ ngeox.datasource.GroupOptions = function() {};
 /**
  * List of data source combined in the group. At least one must be defined
  * upon the cration of the group.
- * @type {!Array.<!ngeo.datasource.DataSources>}
+ * @type {!Array.<!ngeo.datasource.DataSource>}
  */
 ngeox.datasource.GroupOptions.prototype.dataSources;
 

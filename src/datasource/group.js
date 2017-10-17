@@ -4,9 +4,6 @@ goog.require('ngeo');
 goog.require('ol.Collection');
 
 
-/**
- * @implements {ngeox.datasource.Group}
- */
 ngeo.datasource.Group = class {
 
   /**
@@ -81,7 +78,7 @@ ngeo.datasource.Group = class {
   // =======================================
 
   /**
-   * @return {string} Title 
+   * @return {string} Title
    * @export
    */
   get title() {
@@ -122,6 +119,8 @@ ngeo.datasource.Group = class {
       }
     }
 
+    goog.asserts.assertString(state);
+
     return state;
   }
 
@@ -132,7 +131,7 @@ ngeo.datasource.Group = class {
 
   /**
    * @param {!ngeo.datasource.DataSource} dataSource Data source.
-   * @return {number} Visible state of a data source
+   * @return {string} Visible state of a data source
    * @export
    */
   getDataSourceState(dataSource) {
@@ -180,7 +179,7 @@ ngeo.datasource.Group = class {
 
 
 /**
- * @enum {number}
+ * @enum {string}
  */
 ngeo.datasource.Group.VisibilityState = {
   INDETERMINATE: 'indeterminate',

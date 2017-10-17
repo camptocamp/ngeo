@@ -1,7 +1,9 @@
 goog.provide('gmf.wmscapabilitylayertreenodeComponent');
 
 goog.require('gmf');
+/** @suppress {extraRequire} */
 goog.require('gmf.datasource.ExternalDataSourcesManager');
+/** @suppress {extraRequire} */
 goog.require('ngeo.CreatePopup');
 
 
@@ -11,8 +13,9 @@ goog.require('ngeo.CreatePopup');
 gmf.WmscapabilitylayertreenodeController = class {
 
   /**
-   * @param {!gmf.ExternalDataSourcesManager} gmfExternalDataSourcesManager
-   *     GMF service responsible of managing external data sources.
+   * @param {!gmf.datasource.ExternalDataSourcesManager}
+   *     gmfExternalDataSourcesManager GMF service responsible of managing
+   *     external data sources.
    * @private
    * @struct
    * @ngInject
@@ -49,7 +52,7 @@ gmf.WmscapabilitylayertreenodeController = class {
     // Injected properties
 
     /**
-     * @type {!gmf.ExternalDataSourcesManager}
+     * @type {!gmf.datasource.ExternalDataSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;

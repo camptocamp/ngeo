@@ -84,7 +84,7 @@ gmf.DatasourcegrouptreeController = class {
   }
 
   /**
-   * @param {ngeo.datasource.DataSource} dataSource Data source to remove from
+   * @param {!ngeo.datasource.DataSource} dataSource Data source to remove from
    *     the `ngeo.DataSources` collection.
    * @export
    */

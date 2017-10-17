@@ -3,11 +3,9 @@ goog.provide('ngeo.datasource.WMSGroup');
 goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.datasource.Group');
+goog.require('ngeo.datasource.OGC');
 
 
-/**
- * @implements {ngeox.datasource.WMSGroup}
- */
 ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
 
   /**
@@ -26,19 +24,11 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
 
     const injector = options.injector;
 
-    // === DYNAMIC properties (i.e. that can change / be watched ===
-
-    /**
-     * @type {!ol.Collection.<!ngeo.datasource.OGC>}
-     * @private
-     */
-    this.dataSourcesCollection_;
-
 
     // === PRIVATE properties ===
 
     /**
-     * @type {!ol.layer.Image}
+     * @type {ol.layer.Image}
      * @private
      */
     this.layer_;
@@ -75,38 +65,20 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
       this.dataSources.length, 'At least one data source is required.');
 
     for (const dataSource of this.dataSources) {
+      goog.asserts.assertInstanceof(dataSource, ngeo.datasource.OGC);
       this.registerDataSource_(dataSource);
     }
   }
 
   /**
-   * @export
+   * @inheritDoc
    */
   destroy() {
     for (const dataSource of this.dataSources) {
+      goog.asserts.assertInstanceof(dataSource, ngeo.datasource.OGC);
       this.unregisterDataSource_(dataSource);
     }
     super.destroy();
-  }
-
-  // ========================================
-  // === Dynamic property getters/setters ===
-  // ========================================
-
-  /**
-   * @return {!Array.<!ngeo.datasource.OGC>} Data sources
-   * @export
-   */
-  get dataSources() {
-    return this.dataSourcesCollection_.getArray();
-  }
-
-  /**
-   * @return {!ol.Collection.<!ngeo.datasource.OGC>} Data sources
-   * @export
-   */
-  get dataSourcesCollection() {
-    return this.dataSourcesCollection_;
   }
 
 
@@ -115,7 +87,7 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
   // =======================================
 
   /**
-   * @return {!ol.layer.Image} layer 
+   * @return {ol.layer.Image} layer
    * @export
    */
   get layer() {
@@ -128,11 +100,11 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
   // =======================
 
   /**
-   * @param {!ngeo.datasource.OGC} dataSource OGC data source to add.
-   * @export
+   * @inheritDoc
    */
   addDataSource(dataSource) {
     super.addDataSource(dataSource);
+    goog.asserts.assertInstanceof(dataSource, ngeo.datasource.OGC);
     this.registerDataSource_(dataSource);
   }
 
@@ -179,21 +151,22 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
 
     // (1) Collect layer names from data sources in the group
     for (const dataSource of this.dataSources) {
+      goog.asserts.assertInstanceof(dataSource, ngeo.datasource.OGC);
       if (dataSource.visible) {
         layerNames = layerNames.concat(dataSource.getOGCLayerNames());
       }
     }
 
     // (2) Update layer object
-    this.ngeoLayerHelper_.updateWMSLayerState(layer, layerNames);
+    this.ngeoLayerHelper_.updateWMSLayerState(layer, layerNames.join(','));
   }
 
   /**
-   * @param {!ngeo.datasource.OGC} dataSource OGC data source to remove.
-   * @export
+   * @inheritDoc
    */
   removeDataSource(dataSource) {
     super.removeDataSource(dataSource);
+    goog.asserts.assertInstanceof(dataSource, ngeo.datasource.OGC);
     this.unregisterDataSource_(dataSource);
   }
 
@@ -206,9 +179,6 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
     const id = dataSource.id;
     const layer = this.layer;
 
-    // Remove id reference from layer
-    ol.array.remove(layer.get('querySourceIds'), id);
-
     // Unregister watcher
     const unregister = this.wmsDataSourceUnregister_[id];
     unregister();
@@ -218,10 +188,13 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
     ol.array.remove(this.dataSources, dataSource);
 
     // Remove query source id
-    ol.array.remove(layer.get('querySourceIds'), id);
+    const ids = this.ngeoLayerHelper_.getQuerySourceIds(layer);
+    if (ids) {
+      ol.array.remove(ids, id);
+    }
 
     if (this.dataSources.length) {
-      this.updateLayer_(this);
+      this.updateLayer_();
     }
   }
 };
