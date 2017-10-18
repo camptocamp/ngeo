@@ -53,6 +53,10 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  * Features displayed on the map use a default style but you can override these
  * styles by passing ol.style.Style objects as attributes of this component.
  *
+ * Note: the following ng-class need to be present in the interface <body> element to display the footer
+ * when the grid is active (initially there should be the code for the profile tool):
+ *      <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!queryGridActive}">
+ *
  * Example:
  *
  *      <gmf-displayquerygrid

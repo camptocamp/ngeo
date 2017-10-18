@@ -24,10 +24,12 @@ goog.require('ol.string');
  */
 ngeo.Scalify = function($filter) {
   const numberFilter = $filter('number');
-  return function(scale) {
+  const filterFn = function(scale) {
     const text = numberFilter(scale, 0);
     return text ? `1\u00a0:\u00a0${text}` : '';
   };
+  filterFn['$stateful'] = true;
+  return filterFn;
 };
 
 ngeo.module.filter('ngeoScalify', ngeo.Scalify);

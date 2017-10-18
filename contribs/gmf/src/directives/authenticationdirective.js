@@ -114,10 +114,6 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
    */
   this.allowPasswordChange;
 
-  if (this.allowPasswordChange === undefined) {
-    this.allowPasswordChange = true;
-  }
-
   /**
    * @type {boolean}
    * @export
@@ -176,6 +172,16 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
    */
   this.newPwdConfVal = '';
 
+};
+
+
+/**
+ * Initialise the controller.
+ */
+gmf.AuthenticationController.prototype.$onInit = function() {
+  if (this.allowPasswordChange === undefined) {
+    this.allowPasswordChange = true;
+  }
 };
 
 

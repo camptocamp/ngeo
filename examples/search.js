@@ -58,7 +58,7 @@ app.module.directive('appSearch', app.searchDirective);
  * @constructor
  * @param {angular.Scope} $rootScope Angular root scope.
  * @param {angular.$compile} $compile Angular compile service.
- * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
+ * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @ngInject
  */
@@ -149,7 +149,7 @@ app.SearchController.prototype.createVectorLayer_ = function() {
 
 
 /**
- * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
+ * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @return {Bloodhound} The bloodhound engine.
  * @private

@@ -174,7 +174,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  * @param {angular.$injector} $injector Main injector.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
- * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
+ * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
@@ -233,7 +233,7 @@ gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCa
   this.fullTextSearch_ = gmfFulltextSearchService;
 
   /**
-   * @type {ngeo.search.CreateGeoJSONBloodhound}
+   * @type {ngeo.search.createGeoJSONBloodhound.Function}
    * @private
    */
   this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;
