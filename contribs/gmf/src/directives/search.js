@@ -464,7 +464,11 @@ gmf.SearchController.prototype.$onInit = function() {
       if (this.ngeoLocation_.getParam('search-select-index')) {
         resultIndex = parseInt(this.ngeoLocation_.getParam('search-select-index'), 10);
       }
-      this.fulltextsearch_(searchQuery, resultIndex);
+      let mapZoom = null;
+      if (this.ngeoLocation_.getParam('map_zoom')) {
+        mapZoom = parseInt(this.ngeoLocation_.getParam('map_zoom'), 10);
+      }
+      this.fulltextsearch_(searchQuery, resultIndex, mapZoom);
     }
   }
 };
@@ -947,9 +951,10 @@ gmf.SearchController.datasetsempty_ = function(event, query, empty) {
  * Performs a full-text search and centers the map on the first search result.
  * @param {string} query Search query.
  * @param {number} resultIndex Return nth result instead.
+ * @param {?number} opt_zoom Optional zoom level.
  * @private
  */
-gmf.SearchController.prototype.fulltextsearch_ = function(query, resultIndex) {
+gmf.SearchController.prototype.fulltextsearch_ = function(query, resultIndex, opt_zoom) {
   if (resultIndex < 1) { // can't be lower than one
     resultIndex = 1;
   }
@@ -959,7 +964,11 @@ gmf.SearchController.prototype.fulltextsearch_ = function(query, resultIndex) {
         const format = new ol.format.GeoJSON();
         const feature = format.readFeature(data.features[resultIndex - 1]);
         this.featureOverlay_.addFeature(feature);
-        this.map_.getView().fit(feature.getGeometry().getExtent());
+        const fitOptions = /** @type {olx.view.FitOptions} */ ({});
+        if (opt_zoom) {
+          fitOptions.maxZoom = opt_zoom;
+        }
+        this.map_.getView().fit(feature.getGeometry().getExtent(), fitOptions);
         this.inputValue = /** @type {string} */ (feature.get('label'));
       }
     });
