@@ -940,6 +940,25 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
 
 
 /**
+ * Guess the type of OGC service from a given url. Default returned value is
+ * WMS.
+ * @param {string} url Url
+ * @return {string} Guessed OGC service type.
+ */
+ngeo.datasource.OGC.guessServiceTypeByUrl = function(url) {
+  let type;
+
+  if (/(wmts)/i.test(url)) {
+    type = ngeo.datasource.OGC.Type.WMTS;
+  } else {
+    type = ngeo.datasource.OGC.Type.WMS;
+  }
+
+  return type;
+};
+
+
+/**
  * Default name of the geometry attribute.
  * @type {string}
  * @private

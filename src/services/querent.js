@@ -5,6 +5,8 @@ goog.require('ngeo.RuleHelper');
 goog.require('ngeo.WMSTime');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WFSDescribeFeatureType');
+goog.require('ol.format.WMSCapabilities');
+goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.obj');
 goog.require('ol.source.ImageWMS');
 
@@ -16,6 +18,13 @@ ngeo.Querent = class {
    * ngeo data sources. It does not store the result. Instead, it returns it
    * using promises. Any component that inject this service can use it to
    * make it issue its own queries and do whatever it wants with the result.
+   *
+   * It supports sending OGC requests and parse the response, such as:
+   * - WFS DescribeFeatureType
+   * - WFS GetFeature
+   * - WMS GetCapabilites
+   * - WMS GetFeatureInfo
+   * - WMTS GetCapabilities
    *
    * @struct
    * @param {angular.$http} $http Angular $http service.
@@ -63,6 +72,22 @@ ngeo.Querent = class {
      * @private
      */
     this.requestCancelers_ = [];
+
+    /**
+     * Cache of promises for WMS GetCapabilities requests. They key is the
+     * online resource base url that is used to do the query.
+     * @type {!Object.<!angular.$q.Promise>}
+     * @private
+     */
+    this.wmsGetCapabilitiesPromises_ = {};
+
+    /**
+     * Cache of promises for WMST GetCapabilities requests. They key is the
+     * url that is used to do the query.
+     * @type {!Object.<!angular.$q.Promise>}
+     * @private
+     */
+    this.wmtsGetCapabilitiesPromises_ = {};
   }
 
 
@@ -185,6 +210,120 @@ ngeo.Querent = class {
       const format = new ol.format.WFSDescribeFeatureType();
       return format.read(response.data);
     });
+  }
+
+  /**
+   * @param {!Array.<!Object>} layerCapabilities List of WMS layer capabilities
+   * @param {string} layerName Name of the WMS layer
+   * @return {?Object} Found WMS layer capability
+   * @export
+   */
+  wmsFindLayerCapability(layerCapabilities, layerName) {
+
+    let found = null;
+
+    for (const layerCapability of layerCapabilities) {
+      if (layerCapability['Name'] === layerName) {
+        found = layerCapability;
+        break;
+      } else if (layerCapability['Layer']) {
+        found = this.wmsFindLayerCapability(
+          layerCapability['Layer'], layerName);
+        if (found) {
+          break;
+        }
+      }
+    }
+
+    return found;
+  }
+
+  /**
+   * @param {string} baseUrl Base url of the WMS server.
+   * @param {boolean=} opt_cache Whether to use the cached capability, if
+   *     available. Enabling this will also store the capability when required
+   *     for the first time. Defaults to: `true`.
+   * @return {!angular.$q.Promise} Promise.
+   * @export
+   */
+  wmsGetCapabilities(baseUrl, opt_cache) {
+
+    const cache = opt_cache !== false;
+
+    const params = {
+      'REQUEST': 'GetCapabilities',
+      'SERVICE': 'WMS',
+      'VERSION': '1.3.0'
+    };
+
+    const url = ol.uri.appendParams(baseUrl, params);
+    let promise;
+
+    if (!cache || !this.wmsGetCapabilitiesPromises_[baseUrl]) {
+      promise = this.http_.get(url).then((response) => {
+        const format = new ol.format.WMSCapabilities();
+        return format.read(response.data);
+      });
+    } else if (cache && this.wmsGetCapabilitiesPromises_[baseUrl]) {
+      promise = this.wmsGetCapabilitiesPromises_[baseUrl];
+    }
+
+    goog.asserts.assert(promise);
+
+    if (cache && !this.wmsGetCapabilitiesPromises_[baseUrl]) {
+      this.wmsGetCapabilitiesPromises_[baseUrl] = promise;
+    }
+
+    return promise;
+  }
+
+  /**
+   * @param {!Array.<!Object>} layerCapabilities List of WMTS layer capabilities
+   * @param {string} layerName Name of the WMTS layer, a.k.a. the identifier.
+   * @return {?Object} Found WTMS layer capability
+   * @export
+   */
+  wmtsFindLayerCapability(layerCapabilities, layerName) {
+    let found = null;
+    for (const layerCapability of layerCapabilities) {
+      if (layerCapability['Identifier'] === layerName) {
+        found = layerCapability;
+        break;
+      }
+    }
+    return found;
+  }
+
+  /**
+   * @param {string} url Url of the WMTS server. Note that it must contain
+   *     all required arguments.
+   * @param {boolean=} opt_cache Whether to use the cached capability, if
+   *     available. Enabling this will also store the capability when required
+   *     for the first time. Defaults to: `true`.
+   * @return {!angular.$q.Promise} Promise.
+   * @export
+   */
+  wmtsGetCapabilities(url, opt_cache) {
+
+    const cache = opt_cache !== false;
+    let promise;
+
+    if (!cache || !this.wmtsGetCapabilitiesPromises_[url]) {
+      promise = this.http_.get(url).then((response) => {
+        const format = new ol.format.WMTSCapabilities();
+        return format.read(response.data);
+      });
+    } else if (cache && this.wmtsGetCapabilitiesPromises_[url]) {
+      promise = this.wmtsGetCapabilitiesPromises_[url];
+    }
+
+    goog.asserts.assert(promise);
+
+    if (cache && !this.wmtsGetCapabilitiesPromises_[url]) {
+      this.wmtsGetCapabilitiesPromises_[url] = promise;
+    }
+
+    return promise;
   }
 
 

@@ -369,9 +369,9 @@ gmf.FilterselectorController = class {
 
 
   /**
-   * Called when a data source is added to the collection of ngeo data sources.
-   * If the data source is 'valid', add it to the list of filtrable data
-   * sources.
+   * Called when a data source is removed from the collection of ngeo data
+   * sources. If the data source is 'valid', remove it from the list of
+   * filtrable data sources.
    *
    * @param {ol.Collection.Event} evt Collection event.
    * @private

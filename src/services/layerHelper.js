@@ -95,6 +95,43 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
 
 
 /**
+ * Create and return a basic WMS layer using an OGC data source.
+ *
+ * @param {ngeo.datasource.OGC} dataSource OGC data source.
+ * @param {string=} opt_crossOrigin crossOrigin.
+ * @return {ol.layer.Image} WMS Layer.
+ * @export
+ */
+ngeo.LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
+  dataSource, opt_crossOrigin
+) {
+  const url = dataSource.wmsUrl;
+  goog.asserts.assert(url);
+
+  const layerNames = dataSource.getOGCLayerNames().join(',');
+  const serverType = dataSource.ogcServerType;
+
+  // (1) Layer creation
+  const layer = this.createBasicWMSLayer(
+    url,
+    layerNames,
+    serverType,
+    undefined,
+    undefined,
+    opt_crossOrigin
+  );
+
+  // (2) Manage visibility
+  layer.setVisible(dataSource.visible);
+
+  // (3) Reference to the data source
+  layer.set('querySourceIds', [dataSource.id]);
+
+  return layer;
+};
+
+
+/**
  * Create and return a promise that provides a WMTS layer with source on
  * success, no layer else.
  * The WMTS layer source will be configured by the capabilities that are
@@ -140,6 +177,41 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
       return $q.resolve(layer);
     }
     return $q.reject(`Failed to get WMTS capabilities from ${capabilitiesURL}`);
+  });
+};
+
+
+/**
+ * Create and return a WMTS layer using a formatted capabilities response
+ * and a capability layer.
+ *
+ * @param {!Object} capabilities The complete capabilities object of the service
+ * @param {!Object} layerCap The layer capability object
+ * @param {Object.<string, string>=} opt_dimensions WMTS dimensions.
+ * @return {!ol.layer.Tile} WMTS layer
+ * @export
+ */
+ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
+  capabilities, layerCap, opt_dimensions
+) {
+
+  const options = ol.source.WMTS.optionsFromCapabilities(capabilities, {
+    crossOrigin: 'anonymous',
+    layer: layerCap['Identifier']
+  });
+
+  goog.asserts.assert(options);
+  const source = new ol.source.WMTS(
+    /** @type {olx.source.WMTSOptions} */ (options));
+
+  if (opt_dimensions && !ol.obj.isEmpty(opt_dimensions)) {
+    source.updateDimensions(opt_dimensions);
+  }
+
+  return new ol.layer.Tile({
+    'capabilitiesStyles': layerCap['Style'],
+    preload: Infinity,
+    source
   });
 };
 
@@ -361,6 +433,18 @@ ngeo.LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time
       source.updateParams({'LAYERS': names});
     }
   }
+};
+
+
+/**
+ * @param {ol.layer.Image} layer The WMS layer.
+ * @return {Array.<number>|undefined} List of query source ids, a.k.a.
+ *     the data source ids this layer is composed of.
+ * @export
+ */
+ngeo.LayerHelper.prototype.getQuerySourceIds = function(layer) {
+  return /** @type {Array.<number>|undefined} */ (
+    layer.get('querySourceIds'));
 };
 
 
