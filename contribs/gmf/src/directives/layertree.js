@@ -61,7 +61,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *        gmf-layertree-map="ctrl.map"
  *      </gmf-layertree>
  *
- * You can add an attribute 'gmf-layertree-openlinksinnewwindow="true"' to open
+ * You can add an attribute 'gmf-layertree-openlinksinnewwindow="::true"' to open
  * metadata URLs in a new window. By default, and in the default template,
  * links will be opened in a popup.
  *
@@ -90,7 +90,7 @@ gmf.layertreeDirective = function(gmfLayertreeTemplate) {
     scope: {
       'map': '=gmfLayertreeMap',
       'dimensions': '=?gmfLayertreeDimensions',
-      'openLinksInNewWindowFn': '&?gmfLayertreeOpenlinksinnewwindow'
+      'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow'
     },
     bindToController: true,
     controller: 'GmfLayertreeController',
@@ -210,16 +210,10 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
   this.groupNodeStates_ = {};
 
   /**
-   * @type {function()|undefined}
-   * @export
-   */
-  this.openLinksInNewWindowFn;
-
-  /**
    * @type {boolean}
    * @export
    */
-  this.openLinksInNewWindow = this.openLinksInNewWindowFn() === true ? true : false;
+  this.openLinksInNewWindow = this.openLinksInNewWindow === true;
 
   /**
    * @type {ol.layer.Group}
