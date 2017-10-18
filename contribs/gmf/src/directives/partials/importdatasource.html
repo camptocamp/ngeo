@@ -6,24 +6,26 @@
   </select>
 </div>
 
-<div ng-switch="$ctrl.mode">
+<div>
 
   <form
     name="idsl_form"
     novalidate
-    ng-switch-when="Local">
+    ng-show="$ctrl.mode === 'Local'">
     <div class="form-group">
       <div class="input-group input-group-sm">
         <input
           name="file"
           type="file"
+          required
         />
         <input
           class="form-control"
           placeholder="{{'No file' | translate}}"
           readonly
           type="text"
-          value="{{(file.name) ? file.name + ', ' + file.size/1000 + ' ko' : ''}}"
+          value="{{($ctrl.file !== undefined) ? $ctrl.file.name + ', ' + $ctrl.file.size/1000 + ' ko' : ''}}"
+          ng-click="$ctrl.browse()"
         />
         <span class="input-group-btn">
           <button
@@ -40,7 +42,7 @@
         title="{{'Load a file from local' | translate}}"
         type="submit"
         ng-click="idsl_form.$valid && $ctrl.load()"
-        ng-disabled="idsl_form.$invalid || $ctrl.pending"
+        ng-disabled="$ctrl.file === undefined"
       >
         <span>{{'Load local file' | translate}}</span>
       </button>
@@ -50,7 +52,7 @@
   <form
     name="idsc_form"
     novalidate
-    ng-switch-default>
+    ng-show="$ctrl.mode === 'Online'">
     <div class="form-group">
       <input
         class="form-control"

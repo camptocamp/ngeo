@@ -1018,6 +1018,22 @@ ngeox.datasource.DataSourceOptions.prototype.visible;
 
 
 /**
+ * The options required to create a `ngeox.datasource.File`.
+ * @record
+ * @struct
+ * @extends ngeox.datasource.DataSourceOptions
+ */
+ngeox.datasource.FileOptions = function() {};
+
+
+/**
+ * Collection of `ol.Feature` objects.
+ * @type {ol.Collection.<!ol.Feature>|undefined}
+ */
+ngeox.datasource.FileOptions.prototype.features;
+
+
+/**
  * The options required to create a `ngeox.datasource.OGC`.
  * @record
  * @struct
@@ -1270,17 +1286,42 @@ ngeox.datasource.GroupOptions.prototype.title;
 
 
 /**
- * The WMS service url. Used as a unique identifier for the group object itself.
+ * The options required to create a `ngeox.datasource.FileGroup`.
+ * @record
+ * @struct
+ * @extends ngeox.datasource.GroupOptions
+ */
+ngeox.datasource.FileGroupOptions = function() {};
+
+
+/**
+ * Angular main injector.
+ * @type {!angular.$injector}
+ */
+ngeox.datasource.FileGroupOptions.prototype.injector;
+
+
+/**
+ * The options required to create a `ngeox.datasource.OGCGroup`.
+ * @record
+ * @struct
+ * @extends ngeox.datasource.GroupOptions
+ */
+ngeox.datasource.OGCGroupOptions = function() {};
+
+
+/**
+ * The OGC service url. Used as a unique identifier for the group object itself.
  * @type {string}
  */
-ngeox.datasource.GroupOptions.prototype.url;
+ngeox.datasource.OGCGroupOptions.prototype.url;
 
 
 /**
  * The options required to create a `ngeox.datasource.WMSGroup`.
  * @record
  * @struct
- * @extends ngeox.datasource.GroupOptions
+ * @extends ngeox.datasource.OGCGroupOptions
  */
 ngeox.datasource.WMSGroupOptions = function() {};
 
