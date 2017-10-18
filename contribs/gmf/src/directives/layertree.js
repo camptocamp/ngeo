@@ -547,7 +547,7 @@ gmf.LayertreeController.prototype.getLegendsObject = function(treeCtrl) {
     const scale = this.getScale_();
     // QGIS can handle multiple layers natively. Use Mutliple urls for other map
     // servers
-    if (gmfOgcServer.type === ngeo.DataSource.OGCServerType.QGISSERVER) {
+    if (gmfOgcServer.type === ngeo.datasource.OGC.ServerType.QGISSERVER) {
       layersNames = [layersNames];
     } else {
       layersNames = layersNames.split(',');
@@ -762,7 +762,7 @@ gmf.LayertreeController.prototype.supportsLegend = function(treeCtrl) {
   const node = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.node);
   return !!node.metadata &&
     !!node.metadata.legend &&
-    !!this.getLegendURL(treeCtrl);
+    !!this.getLegendsObject(treeCtrl);
 };
 
 
