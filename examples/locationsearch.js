@@ -42,7 +42,7 @@ app.module.directive('appLocationSearch', app.locationSearchDirective);
 
 /**
  * @constructor
- * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
+ * @param {ngeo.search.createLocationSearchBloodhound.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
  * @ngInject
  */
 app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
@@ -109,8 +109,10 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
  * @private
  */
 app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
+  const epsg3857 = ol.proj.get('EPSG:3857');
+  goog.asserts.assert(epsg3857 !== null);
   const bloodhound = ngeoCreateLocationSearchBloodhound({
-    targetProjection: ol.proj.get('EPSG:3857'),
+    targetProjection: epsg3857,
     limit,
     origins: 'gazetteer',
     prepare(query, settings) {
