@@ -33,8 +33,10 @@ goog.require('ngeo');
  *
  * @param {angular.$parse} $parse Angular parse service.
  * @return {angular.Directive} The directive specs.
- * @htmlAttribute {boolean} ngeo-modal-destroy-content-on-hide Destroy the content
- * when the modal is hidden
+ * @htmlAttribute {boolean} ngeo-modal-destroy-content-on-hide Destroy the
+ *     content when the modal is hidden
+ * @htmlAttribute {boolean} ngeo-modal-resizable Whether the modal can be
+ *     resized or not. Defaults to `false`.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoModal
@@ -61,6 +63,7 @@ ngeo.modalDirective = function($parse) {
     link(scope, element, attrs, ngModelController, transcludeFn) {
       const modal = element.children();
       const destroyContent = attrs['ngeoModalDestroyContentOnHide'] === 'true';
+      const resizable = attrs['ngeoModalResizable'] === 'true';
       let childScope = scope.$new();
 
       // move the modal to document body to ensure that it is on top of
@@ -85,20 +88,28 @@ ngeo.modalDirective = function($parse) {
         modal.on('hide.bs.modal', onHide);
         modal.on('show.bs.modal', onShow);
       } else {
-        modal.find('.modal-content').resizable().append(transcludeFn());
+        if (resizable) {
+          modal.find('.modal-content').resizable().append(transcludeFn());
+        } else {
+          modal.find('.modal-content').append(transcludeFn());
+        }
       }
 
       function onShow(e) {
         childScope = scope.$new();
         transcludeFn(childScope, (clone) => {
-          modal.find('.modal-content').resizable().append(clone);
+          if (resizable) {
+            modal.find('.modal-content').resizable().append(clone);
+          } else {
+            modal.find('.modal-content').append(clone);
+          }
         });
       }
 
       function onHide(e) {
         childScope.$destroy();
         const content = modal.find('.modal-content');
-        if (content.hasClass('ui-resizable')) {
+        if (resizable && content.hasClass('ui-resizable')) {
           content.resizable('destroy');
         }
         content.empty();
