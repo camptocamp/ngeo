@@ -267,7 +267,10 @@ gmf.DisplayquerywindowController.prototype.$onInit = function() {
 
   if (this.desktop) {
     this.element_.find('.gmf-displayquerywindow').draggable();
-    this.element_.find('.gmf-displayquerywindow-container').resizable();
+    this.element_.find('.gmf-displayquerywindow-container').resizable({
+      'minHeight': 240,
+      'minWidth': 240
+    });
   }
 };
 
