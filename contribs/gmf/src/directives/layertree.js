@@ -762,7 +762,7 @@ gmf.LayertreeController.prototype.supportsLegend = function(treeCtrl) {
   const node = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.node);
   return !!node.metadata &&
     !!node.metadata.legend &&
-    !!this.getLegendURL(treeCtrl);
+    !!this.getLegendsObject(treeCtrl);
 };
 
 
