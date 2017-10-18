@@ -965,7 +965,7 @@ gmf.SearchController.prototype.fulltextsearch_ = function(query, resultIndex, op
         const feature = format.readFeature(data.features[resultIndex - 1]);
         this.featureOverlay_.addFeature(feature);
         const fitOptions = /** @type {olx.view.FitOptions} */ ({});
-        if (opt_zoom) {
+        if (opt_zoom !== null) {
           fitOptions.maxZoom = opt_zoom;
         }
         this.map_.getView().fit(feature.getGeometry().getExtent(), fitOptions);
