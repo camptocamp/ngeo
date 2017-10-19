@@ -43,12 +43,13 @@ before_install:
 
 install:
 - export GIT_BRANCH=${TRAVIS_BRANCH}
+- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ]; then IS_HOME=TRUE; else IS_HOME=FALSE; fi
 
-- if [ ${TRAVIS_REPO_SLUG} = camptocamp/ngeo ]; then openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in secrets.tar.enc -out secrets.tar -d; fi
-- if [ ${TRAVIS_REPO_SLUG} = camptocamp/ngeo ]; then tar xvf secrets.tar; fi
-- if [ ${TRAVIS_REPO_SLUG} = camptocamp/ngeo ]; then cp .transifexrc $HOME/.transifexrc; fi
-- if [ ${TRAVIS_REPO_SLUG} = camptocamp/ngeo ]; then cp ngeo_deploy_key $HOME/.ssh/id_rsa; fi
-- if [ ${TRAVIS_REPO_SLUG} = camptocamp/ngeo ]; then chmod 600 $HOME/.ssh/id_rsa; fi
+- if [ ${IS_HOME} = TRUE ]; then openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in secrets.tar.enc -out secrets.tar -d; fi
+- if [ ${IS_HOME} = TRUE ]; then tar xvf secrets.tar; fi
+- if [ ${IS_HOME} = TRUE ]; then cp .transifexrc $HOME/.transifexrc; fi
+- if [ ${IS_HOME} = TRUE ]; then cp ngeo_deploy_key $HOME/.ssh/id_rsa; fi
+- if [ ${IS_HOME} = TRUE ]; then chmod 600 $HOME/.ssh/id_rsa; fi
 - git fetch origin ${TRAVIS_BRANCH}:${TRAVIS_BRANCH}
 
 stages:
