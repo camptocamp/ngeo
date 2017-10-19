@@ -464,7 +464,7 @@ gmf.SearchController.prototype.$onInit = function() {
       if (this.ngeoLocation_.getParam('search-select-index')) {
         resultIndex = parseInt(this.ngeoLocation_.getParam('search-select-index'), 10);
       }
-      let mapZoom = null;
+      let mapZoom;
       if (this.ngeoLocation_.getParam('map_zoom')) {
         mapZoom = parseInt(this.ngeoLocation_.getParam('map_zoom'), 10);
       }
@@ -951,7 +951,7 @@ gmf.SearchController.datasetsempty_ = function(event, query, empty) {
  * Performs a full-text search and centers the map on the first search result.
  * @param {string} query Search query.
  * @param {number} resultIndex Return nth result instead.
- * @param {?number} opt_zoom Optional zoom level.
+ * @param {number=} opt_zoom Optional zoom level.
  * @private
  */
 gmf.SearchController.prototype.fulltextsearch_ = function(query, resultIndex, opt_zoom) {
@@ -965,7 +965,7 @@ gmf.SearchController.prototype.fulltextsearch_ = function(query, resultIndex, op
         const feature = format.readFeature(data.features[resultIndex - 1]);
         this.featureOverlay_.addFeature(feature);
         const fitOptions = /** @type {olx.view.FitOptions} */ ({});
-        if (opt_zoom) {
+        if (opt_zoom !== undefined) {
           fitOptions.maxZoom = opt_zoom;
         }
         this.map_.getView().fit(feature.getGeometry().getExtent(), fitOptions);
