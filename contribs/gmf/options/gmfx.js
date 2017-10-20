@@ -60,6 +60,17 @@ gmfx.Config;
 
 
 /**
+ * The definition of an external OGC server
+ * @typedef {{
+ *    name: (string),
+ *    type: (string),
+ *    url: (string)
+ * }}
+ */
+gmfx.ExternalOGCServer;
+
+
+/**
  * Configuration for a grid tab.
  * @typedef {{
  *     configuration: ngeo.GridConfig,

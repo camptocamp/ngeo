@@ -1246,6 +1246,53 @@ ngeox.datasource.OGCOptions.prototype.wmtsUrl;
 
 
 /**
+ * The options required to create a `ngeox.datasource.Group`.
+ * @record
+ * @struct
+ */
+ngeox.datasource.GroupOptions = function() {};
+
+
+/**
+ * List of data source combined in the group. At least one must be defined
+ * upon the cration of the group.
+ * @type {!Array.<!ngeo.datasource.DataSource>}
+ */
+ngeox.datasource.GroupOptions.prototype.dataSources;
+
+
+/**
+ * A human-readable title for the group. Usually, the WMS Server title is
+ * used for this property.
+ * @type {string}
+ */
+ngeox.datasource.GroupOptions.prototype.title;
+
+
+/**
+ * The WMS service url. Used as a unique identifier for the group object itself.
+ * @type {string}
+ */
+ngeox.datasource.GroupOptions.prototype.url;
+
+
+/**
+ * The options required to create a `ngeox.datasource.WMSGroup`.
+ * @record
+ * @struct
+ * @extends ngeox.datasource.GroupOptions
+ */
+ngeox.datasource.WMSGroupOptions = function() {};
+
+
+/**
+ * Angular main injector.
+ * @type {!angular.$injector}
+ */
+ngeox.datasource.WMSGroupOptions.prototype.injector;
+
+
+/**
  * @interface
  * @struct
  */
