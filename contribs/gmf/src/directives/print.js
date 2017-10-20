@@ -87,7 +87,7 @@ gmf.module.value('gmfPrintTemplateUrl',
  *        gmf-print-map="mainCtrl.map"
  *        gmf-print-active="printActive"
  *        gmf-print-rotatemask="true"
- *        gmf-print-hiddenfields="['name']"
+ *        gmf-print-hiddenattributes="['name']"
  *        gmf-print-attributes-out="attributes">
  *        <div ng-repeat="attribute in attributes">
  *          <div ng-if="attribute.name == 'name'">
