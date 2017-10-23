@@ -43,6 +43,7 @@ module.exports = function(config) {
       'node_modules/floatthead/dist/jquery.floatThead.js',
       'node_modules/proj4/dist/proj4-src.js',
       'node_modules/d3/build/d3.js',
+      'node_modules/gyronorm/dist/gyronorm.complete.js',
       'node_modules/file-saver/FileSaver.js',
       'node_modules/corejs-typeahead/dist/typeahead.bundle.js',
       'third-party/jquery-ui/jquery-ui.js',

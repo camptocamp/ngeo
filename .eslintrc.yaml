@@ -11,6 +11,7 @@ globals:
     goog: false
     google: false
     d3: false
+    GyroNorm: false
     Bloodhound: false
     ol: false
     proj4: false
