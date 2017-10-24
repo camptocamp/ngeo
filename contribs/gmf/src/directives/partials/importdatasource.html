@@ -24,7 +24,7 @@
           placeholder="{{'No file' | translate}}"
           readonly
           type="text"
-          value="{{($ctrl.file !== undefined) ? $ctrl.file.name + ', ' + $ctrl.file.size/1000 + ' ko' : ''}}"
+          value="{{$ctrl.fileNameAndSize}}"
           ng-click="$ctrl.browse()"
         />
         <span class="input-group-btn">

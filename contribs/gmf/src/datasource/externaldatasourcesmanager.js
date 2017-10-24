@@ -509,7 +509,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
         this.ngeoDataSources_.push(dataSource);
       },
       (rejections) => {
-        // TODO, handle rejection...
+        goog.asserts.fail(`Failed to load file: ${file.name}`);
       }
     );
   }
