@@ -21,7 +21,7 @@
     <div class="gmf-share-email" ng-if="::shareCtrl.enableEmail">
       <div class="form-group">
         <label for="gmfShareInputEmail" translate>Send this link to</label>
-        <input type="email" class="form-control"  name="inputEmail" id="gmfShareInputEmail" placeholder="Email" ng-model="shareCtrl.email" required>
+        <input type="email" class="form-control"  name="inputEmail" id="gmfShareInputEmail" placeholder="E-mail" ng-model="shareCtrl.email" required>
         <span ng-show="gmfShareForm.$submitted || gmfShareForm.inputEmail.$touched">
           <span class="text-danger" ng-show="gmfShareForm.inputEmail.$error.email || gmfShareForm.inputEmail.$error.required">
             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -29,7 +29,7 @@
         </span>
       </div>
       <div class="form-group">
-        <textarea class="form-control" placeholder="{{'Message (optional)' | translate }}" ng-model="shareCtrl.message"></textarea>
+        <textarea class="form-control" ng-attr-placeholder="{{'Message (optional)' | translate }}" ng-model="shareCtrl.message"></textarea>
       </div>
       <span class="text-success" ng-if="shareCtrl.successfullySent">
         <i class="fa fa-check" aria-hidden="true"></i>

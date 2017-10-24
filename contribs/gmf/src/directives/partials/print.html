@@ -10,21 +10,21 @@
         ng-model="customField.value"
         class="form-control"
         type="number"
-        placeholder="{{customField.name | translate}}">
+        ng-attr-placeholder="{{customField.name | translate}}">
 
       <input
         ng-if="customField.type === 'text'"
         ng-model="customField.value"
         class="form-control"
         type="text"
-        placeholder="{{customField.name | translate}}">
+        ng-attr-placeholder="{{customField.name | translate}}">
 
       <textarea
         ng-if="customField.type === 'textarea'"
         ng-model="customField.value"
         class="form-control"
         row="3"
-        placeholder="{{customField.name | translate}}"></textarea>
+        ng-attr-placeholder="{{customField.name | translate}}"></textarea>
 
       <div
         ng-if="customField.type === 'checkbox'"
