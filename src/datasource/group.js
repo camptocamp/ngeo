@@ -33,15 +33,6 @@ ngeo.datasource.Group = class {
      * @private
      */
     this.title_ = options.title;
-
-
-    // === PRIVATE properties ===
-
-    /**
-     * @type {string}
-     * @private
-     */
-    this.url_ = options.url;
   }
 
   /**
@@ -83,14 +74,6 @@ ngeo.datasource.Group = class {
    */
   get title() {
     return this.title_;
-  }
-
-  /**
-   * @return {string} Url
-   * @export
-   */
-  get url() {
-    return this.url_;
   }
 
 

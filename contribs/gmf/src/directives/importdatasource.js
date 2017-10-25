@@ -18,6 +18,8 @@ gmf.ImportdatasourceController = class {
 
   /**
    * @param {!angular.JQLite} $element Element.
+   * @param {!angular.$filter} $filter Angular filter.
+   * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {!gmf.datasource.ExternalDataSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
@@ -29,7 +31,8 @@ gmf.ImportdatasourceController = class {
    * @ngdoc controller
    * @ngname GmfImportdatasourceController
    */
-  constructor($element, $timeout, gmfExternalDataSourcesManager, ngeoQuerent) {
+  constructor($element, $filter, $scope, $timeout,
+    gmfExternalDataSourcesManager, ngeoQuerent) {
 
     // Binding properties
 
@@ -47,6 +50,12 @@ gmf.ImportdatasourceController = class {
      * @private
      */
     this.element_ = $element;
+
+    /**
+     * @type {!angular.Scope}
+     * @private
+     */
+    this.scope_ = $scope;
 
     /**
      * @type {!angular.$timeout}
@@ -70,6 +79,12 @@ gmf.ImportdatasourceController = class {
     // Model properties
 
     /**
+     * @type {File|undefined}
+     * @export
+     */
+    this.file;
+
+    /**
      * @type {string|undefined}
      * @export
      */
@@ -77,6 +92,12 @@ gmf.ImportdatasourceController = class {
 
 
     // Inner properties
+
+    /**
+     * @type {!angular.JQLite}
+     * @private
+     */
+    this.fileInput_ = $element.find('input[type=file]');
 
     /**
      * @type {boolean}
@@ -112,6 +133,13 @@ gmf.ImportdatasourceController = class {
     this.pending = false;
 
     /**
+     * @type {!ngeox.unitPrefix}
+     * @private
+     */
+    this.unitPrefixFormat_ = /** @type {ngeox.unitPrefix} */ (
+      $filter('ngeoUnitPrefix'));
+
+    /**
      * Current WMS Capabilities that were connected.
      * @type {?Object}
      * @export
@@ -124,6 +152,14 @@ gmf.ImportdatasourceController = class {
      * @export
      */
     this.wmtsCapabilities = null;
+
+
+    // Register input[type=file] onchange event, use HTML5 File api
+    this.fileInput_.on('change', () => {
+      this.file = this.fileInput_[0].files && this.fileInput_[0].files[0] ?
+        this.fileInput_[0].files[0] : undefined;
+      this.scope_.$apply();
+    });
   }
 
   /**
@@ -181,11 +217,28 @@ gmf.ImportdatasourceController = class {
   }
 
   /**
-   * Load local file
+   * Create data source from file.
    * @export
    */
   load() {
-    // Todo
+    const file = goog.asserts.assert(this.file);
+    this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromFile(file);
+  }
+
+  /**
+   * @return {string} The name of the file and human-readable size.
+   * @export
+   */
+  get fileNameAndSize() {
+    let nameAndSize = '';
+
+    const file = this.file;
+    if (file !== undefined) {
+      const fileSize = this.unitPrefixFormat_(file.size, 'o');
+      nameAndSize = `${file.name}, ${fileSize}`;
+    }
+
+    return nameAndSize;
   }
 
 

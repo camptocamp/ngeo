@@ -2,16 +2,17 @@ goog.provide('ngeo.datasource.WMSGroup');
 
 goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
-goog.require('ngeo.datasource.Group');
+goog.require('ngeo.datasource.OGCGroup');
 goog.require('ngeo.datasource.OGC');
 
 
-ngeo.datasource.WMSGroup = class extends ngeo.datasource.Group {
+ngeo.datasource.WMSGroup = class extends ngeo.datasource.OGCGroup {
 
   /**
-   * A WMSGroup data source combines multiple `ngeo.datasource.OGC` objects.
-   * It's main utility is to create a single `ol.layer.Image` object in which
-   * the data source visible properties determine the WMS LAYERS parameter.
+   * A WMSGroup data source combines multiple `ngeo.datasource.OGC` objects
+   * that have the 'WMS' type. Its main goal is to create a single
+   * `ol.layer.Image` object in which the data source visible properties
+   * determine the WMS LAYERS parameter.
    *
    * Note: the layer is not added to the map here.
    *
