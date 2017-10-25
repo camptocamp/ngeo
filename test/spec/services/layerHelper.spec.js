@@ -23,9 +23,14 @@ describe('ngeo.LayerHelper', function() {
   });
 
   it('Create a basic WMS layer', function() {
-    layer = ngeoLayerHelper.createBasicWMSLayer('', '');
+    layer = ngeoLayerHelper.createBasicWMSLayer('http://example.com/', 'a,b,c', 'image/jpeg');
     expect(layer.constructor).toBe(ol.layer.Image);
-    expect(layer.getSource().constructor).toBe(ol.source.ImageWMS);
+    var source = layer.getSource();
+    expect(source.constructor).toBe(ol.source.ImageWMS);
+    expect(source.getUrl()).toBe('http://example.com/');
+    var params = source.getParams();
+    expect(params.LAYERS).toBe('a,b,c');
+    expect(params.FORMAT).toBe('image/jpeg');
   });
 
   it('Create a WMTS layer from capabilitites', function() {
