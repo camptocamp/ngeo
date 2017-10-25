@@ -32,6 +32,7 @@
   .gmf-displayquerywindow-container {
     background-color: @nav-bg;
     border: solid 1px @border-color;
+    height: 24rem;
     position: relative;
   }
   .gmf-displayquerywindow-animation-container {
@@ -60,7 +61,7 @@
     }
   }
   .gmf-displayquerywindow-animation-container-detailed {
-    height: @displayquerywindow-detailed-header-height + @displayquerywindow-detailed-details-height + @app-margin * 3;
+    height: ~"calc(100% - 3rem)";
     .gmf-displayquerywindow-details {
       display: block;
     }
