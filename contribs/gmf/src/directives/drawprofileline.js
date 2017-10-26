@@ -75,7 +75,7 @@ gmf.module.directive('gmfDrawprofileline', gmf.drawprofilelineDirective);
  * @ngname gmfDrawprofilelineController
  */
 gmf.DrawprofilelineController = function($scope, $element, $timeout,
-    ngeoFeatureOverlayMgr, ngeoDecorateInteraction) {
+  ngeoFeatureOverlayMgr, ngeoDecorateInteraction) {
 
   /**
    * @type {?ol.geom.LineString}
@@ -125,10 +125,10 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
    * @export
    */
   this.interaction = new ol.interaction.Draw(
-      /** @type {olx.interaction.DrawOptions} */ ({
-        type: 'LineString',
-        features: this.features_
-      }));
+    /** @type {olx.interaction.DrawOptions} */ ({
+      type: 'LineString',
+      features: this.features_
+    }));
 
   ngeoDecorateInteraction(this.interaction);
 
@@ -195,4 +195,4 @@ gmf.DrawprofilelineController.prototype.clear_ = function() {
 
 
 gmf.module.controller('GmfDrawprofilelineController',
-    gmf.DrawprofilelineController);
+  gmf.DrawprofilelineController);

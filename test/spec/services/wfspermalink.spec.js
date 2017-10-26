@@ -121,24 +121,24 @@ describe('ngeo.WfsPermalink', () => {
       };
       const f = ol.format.filter;
       const expectedFilters = f.or(
-          f.or(
-            f.and(
-                f.equalTo('osm_id', '12345'),
-                f.or(
-                  f.equalTo('type', 'diesel'),
-                  f.equalTo('type', 'gas')
-                )
-            ),
+        f.or(
+          f.and(
+            f.equalTo('osm_id', '12345'),
             f.or(
-              f.equalTo('payment', 'card'),
-              f.equalTo('payment', 'cash')
+              f.equalTo('type', 'diesel'),
+              f.equalTo('type', 'gas')
             )
           ),
-          f.equalTo('open_7_24', '1')
+          f.or(
+            f.equalTo('payment', 'card'),
+            f.equalTo('payment', 'cash')
+          )
+        ),
+        f.equalTo('open_7_24', '1')
       );
       expectFiltersToEqual(
-          ngeoWfsPermalink.createFilters_(queryData['filterGroups']),
-          expectedFilters
+        ngeoWfsPermalink.createFilters_(queryData['filterGroups']),
+        expectedFilters
       );
     });
 

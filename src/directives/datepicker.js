@@ -5,16 +5,16 @@ goog.require('ngeo');
 goog.require('ngeo.Time');
 
 ngeo.module.value('ngeoDatePickerTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoDatePickerTemplateUrl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseTemplateUrl}/datepicker.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoDatePickerTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseTemplateUrl}/datepicker.html`;
+  });
 
 
 /**
@@ -83,8 +83,9 @@ ngeo.module.directive('ngeoDatePicker', ngeo.DatePicker);
 /**
  * DatePickerController - directive conttroller
  * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$injector} $injector injector.
- * @param {ngeo.Time} ngeoTime time service.
+ * @param {!angular.$injector} $injector injector.
+ * @param {!ngeo.Time} ngeoTime time service.
+ * @param {!angularGettext.Catalog} gettextCatalog service.
  * @constructor
  * @private
  * @struct
@@ -92,26 +93,26 @@ ngeo.module.directive('ngeoDatePicker', ngeo.DatePicker);
  * @ngdoc controller
  * @ngname ngeoDatePickerController
  */
-ngeo.DatePickerController = function($scope, $injector, ngeoTime) {
+ngeo.DatePickerController = function($scope, $injector, ngeoTime, gettextCatalog) {
 
   /**
-   * @type {ngeo.Time}
+   * @type {!ngeo.Time}
    * @private
    */
   this.ngeoTime_ = ngeoTime;
 
   /**
-   * @type {ngeox.TimeProperty}
+   * @type {!ngeox.TimeProperty}
    * @export
    */
   this.time;
 
   /**
    * The gettext catalog
-   * @type {angularGettext.Catalog}
+   * @type {!angularGettext.Catalog}
    * @private
    */
-  this.gettextCatalog_ = $injector.get('gettextCatalog');
+  this.gettextCatalog_ = gettextCatalog;
 
 
   /**

@@ -231,7 +231,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    * @param {Array.<number>} array Array of ids;
    */
   const getIds = function(item, array) {
-    array.push(item.id);
+    array.push(ol.getUid(item));
     const children = item.children || [];
     children.forEach((child) => {
       getIds(child, array);
@@ -259,20 +259,13 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    * @return {angular.$q.Promise.<ol.layer.Base>|ol.layer.Base} the created layer.
    */
   const layerLayerCreationFn = function(ogcServers, gmfLayer) {
-    // Overwrite conflicting server dimensions with application ones
-    for (const dimkey in gmfLayer.dimensions) {
-      if (appDimensions[dimkey] !== undefined) {
-        gmfLayer.dimensions[dimkey] = appDimensions[dimkey];
-      }
-    }
-
     if (gmfLayer.type === 'WMTS') {
       const gmfLayerWMTS = /** @type gmfThemes.GmfLayerWMTS */ (gmfLayer);
       goog.asserts.assert(gmfLayerWMTS.url, 'Layer URL is required');
       return layerHelper.createWMTSLayerFromCapabilitites(
-          gmfLayerWMTS.url,
-          gmfLayerWMTS.layer || '',
-          gmfLayer.dimensions
+        gmfLayerWMTS.url,
+        gmfLayerWMTS.layer || '',
+        gmfLayer.dimensions
       ).then(callback.bind(null, gmfLayer)).then(null, (response) => {
         let message = `Unable to build layer "${gmfLayerWMTS.layer}" from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
         message += `OpenLayers error is "${response['message']}`;
@@ -287,12 +280,12 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
       goog.asserts.assert(server, 'The OGC server was not found');
       goog.asserts.assert(server.url, 'The server URL is required');
       return callback(gmfLayer, layerHelper.createBasicWMSLayer(
-          server.url,
-          gmfLayerWMS.layers || '',
-          server.type,
-          undefined, // time
-          gmfLayer.dimensions,
-          server.credential ? 'use-credentials' : 'anonymous'
+        server.url,
+        gmfLayerWMS.layers || '',
+        server.type,
+        undefined, // time
+        gmfLayer.dimensions,
+        server.credential ? 'use-credentials' : 'anonymous'
       ));
     }
     goog.asserts.fail(`Unsupported type: ${gmfLayer.type}`);
@@ -344,8 +337,10 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
 
     // (1) add a blank layer
     if (this.addBlankBackgroundLayer_) {
+      // For i18n string collection
+      gettextCatalog.getString('blank');
       layers.push(new ol.layer.Tile({
-        'label': gettextCatalog.getString('blank'),
+        'label': 'blank',
         'metadata': {'thumbnail': ''}
       }));
     }
@@ -371,13 +366,13 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
  */
 gmf.Themes.prototype.getThemeObject = function(themeName) {
   return this.promise_.then(
-      /**
+    /**
        * @param {gmfThemes.GmfThemesResponse} data The "themes" web service
        *     response.
        * @return {gmfThemes.GmfTheme?} The theme object for themeName, or null
        *     if not found.
        */
-      data => gmf.Themes.findThemeByName(data.themes, themeName));
+    data => gmf.Themes.findThemeByName(data.themes, themeName));
 };
 
 
@@ -388,12 +383,12 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
  */
 gmf.Themes.prototype.getThemesObject = function() {
   return this.promise_.then(
-      /**
+    /**
        * @param {!gmfThemes.GmfThemesResponse} data The "themes" web service
        *     response.
        * @return {!Array.<!gmfThemes.GmfTheme>} The themes object.
        */
-      data => data.themes);
+    data => data.themes);
 };
 
 
@@ -404,12 +399,12 @@ gmf.Themes.prototype.getThemesObject = function() {
 gmf.Themes.prototype.getBackgroundLayersObject = function() {
   goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
-      /**
+    /**
        * @param {!gmfThemes.GmfThemesResponse} data The "themes" web service
        *     response.
        * @return {!Array.<!gmfThemes.GmfLayer>} The background layers object.
        */
-      data => data.background_layers
+    data => data.background_layers
   );
 };
 
@@ -422,12 +417,12 @@ gmf.Themes.prototype.getBackgroundLayersObject = function() {
 gmf.Themes.prototype.getOgcServersObject = function() {
   goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
-      /**
+    /**
        * @param {gmfThemes.GmfThemesResponse} data The "themes" web service
        *     response.
        * @return {gmfThemes.GmfOgcServers} The `ogcServers` object.
        */
-      data => data.ogcServers);
+    data => data.ogcServers);
 };
 
 

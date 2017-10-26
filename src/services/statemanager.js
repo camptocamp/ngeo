@@ -39,7 +39,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
   /**
    * @type {boolean}
    */
-  this.useLocalStorage = true;
+  this.useLocalStorage = false;
 
   try {
     if ('localStorage' in window) {
@@ -64,7 +64,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
       for (const key in window.localStorage) {
         goog.asserts.assert(key);
 
-        this.usedKeyRegexp.some(function(keyRegexp) {
+        this.usedKeyRegexp.some((keyRegexp) => {
           if (key.match(keyRegexp)) {
             const value = window.localStorage[key];
             if (value !== undefined || value !== null) {
@@ -74,12 +74,12 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
             }
             return true;
           }
-        }, this);
+        });
       }
     }
   } else {
-    paramKeys.forEach(function(key) {
-      this.usedKeyRegexp.some(function(keyRegexp) {
+    paramKeys.forEach((key) => {
+      this.usedKeyRegexp.some((keyRegexp) => {
         if (key.match(keyRegexp)) {
           const value = this.ngeoLocation.getParam(key);
           if (value !== undefined) {
@@ -87,8 +87,8 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
             return true;
           }
         }
-      }, this);
-    }, this);
+      });
+    });
   }
 };
 

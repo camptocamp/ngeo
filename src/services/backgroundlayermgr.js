@@ -27,12 +27,19 @@ ngeo.BackgroundEventType = {
  * @struct
  * @extends {ol.events.Event}
  * @param {ngeo.BackgroundEventType} type Type.
+ * @param {ol.layer.Base} current Current background layer.
  * @param {ol.layer.Base} previous Previous background layer.
  * @implements {ngeox.BackgroundEvent}
  */
-ngeo.BackgroundEvent = function(type, previous) {
+ngeo.BackgroundEvent = function(type, current, previous) {
 
   ol.events.Event.call(this, type);
+
+  /**
+   * The current (new) layer used as background.
+   * @type {ol.layer.Base}
+   */
+  this.current = current;
 
   /**
    * The layer used as background before a change.
@@ -139,7 +146,7 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
   }
 
   this.dispatchEvent(new ngeo.BackgroundEvent(ngeo.BackgroundEventType.CHANGE,
-      previous));
+    layer, previous));
   return previous;
 };
 

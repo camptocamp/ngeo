@@ -55,30 +55,45 @@ gmf.module.value('gmfPrintState', {
 });
 
 gmf.module.value('gmfPrintTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['gmfPrintTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/print.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['gmfPrintTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/print.html`;
+  });
 
 
 /**
  * Provide a directive that display a print panel. This panel is populated with
  * a form corresponding to the capabilities delivered by a GMF print v3 server.
  * If you want to use another template for your print panel, you can see the
- * available fields in the 'gmfx.PrintFields' classes.
+ * available layout information in the 'gmfx.PrintLayoutInfo' classes.
  *
- * Example:
+ * Simple example:
  *
  *      <gmf-print
  *        gmf-print-map="mainCtrl.map"
  *        gmf-print-active="printActive"
  *        gmf-print-rotatemask="true">
+ *      </gmf-print>
+ *
+ * Example with user defined attribute:
+ *
+ *      <gmf-print
+ *        gmf-print-map="mainCtrl.map"
+ *        gmf-print-active="printActive"
+ *        gmf-print-rotatemask="true"
+ *        gmf-print-hiddenattributes="['name']"
+ *        gmf-print-attributes-out="attributes">
+ *        <div ng-repeat="attribute in attributes">
+ *          <div ng-if="attribute.name == 'name'">
+ *            <input ng-model="attribute.value" placeholder="name" />
+ *          </div>
+ *        </div>
  *      </gmf-print>
  *
  * Note: The 'print' and 'cancel' functions can also be called via globals
@@ -95,6 +110,7 @@ gmf.module.value('gmfPrintTemplateUrl',
  *     property's name of the field.
  *     Example: {'comments': 'demo', 'legend': false}. Doesn't work for the dpi
  *     and the scale. Server's values are used in priorty.
+ * @htmlAttribute {Array.<string>} gmf-print-hiddenattributes The list of attributes that should be hidden.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfPrintTemplateUrl Template url for the directive.
  * @return {angular.Directive} Directive Definition Object.
@@ -109,11 +125,14 @@ gmf.printDirective = function(gmfPrintTemplateUrl) {
     templateUrl: gmfPrintTemplateUrl,
     replace: true,
     restrict: 'E',
+    transclude: true,
     scope: {
       'map': '=gmfPrintMap',
       'active': '=gmfPrintActive',
       'rotateMask': '&?gmfPrintRotatemask',
-      'fieldValues': '&?gmfPrintFieldvalues'
+      'fieldValues': '&?gmfPrintFieldvalues',
+      'hiddenAttributeNames': '=gmfPrintHiddenattributes',
+      'attributesOut': '=gmfPrintAttributesOut'
     },
     link(scope, element, attr) {
       const ctrl = scope['ctrl'];
@@ -155,9 +174,9 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @ngname GmfPrintController
  */
 gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
-    gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils,
-    ngeoCreatePrint, gmfPrintUrl, gmfAuthentication, ngeoQueryResult,
-    ngeoFeatureHelper, $filter, gmfPrintState, gmfThemes) {
+  gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils,
+  ngeoCreatePrint, gmfPrintUrl, gmfAuthentication, ngeoQueryResult,
+  ngeoFeatureHelper, $filter, gmfPrintState, gmfThemes) {
 
   /**
    * @type {gmf.PrintStateEnum}
@@ -173,7 +192,7 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
 
   /**
    * @type {ngeo.FeatureHelper}
-   * @export
+   * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
@@ -193,7 +212,7 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
    * @private
    */
   this.fieldValues_ = this['fieldValues'] ?
-      this['fieldValues']() : {};
+    this['fieldValues']() : {};
 
   /**
    * @type {angular.Scope}
@@ -335,16 +354,22 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   this.paperSize_ = [];
 
   /**
-   * @type {gmfx.PrintFields}
+   * @type {gmfx.PrintLayoutInfo}
    * @export
    */
-  this.fields = {};
+  this.layoutInfo = {};
 
   /**
    * @type {number}
    * @export
    */
   this.rotation = 0;
+
+  /**
+   * @type {Array.<string>}
+   * @export
+   */
+  this.hiddenAttributeNames;
 
   /**
    * @return {ol.Size} Size in dots of the map to print.
@@ -356,16 +381,17 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
    * @return {number} Scale of the map to print.
    */
   const getScaleFn = (frameState) => {
-    // don't compute an optimal scale if the user manualy choose a value not in
-    // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`)
-    goog.asserts.assert(this.fields.scales);
-    goog.asserts.assert(this.fields.scale !== undefined);
-    if (ol.array.includes(this.fields.scales, this.fields.scale)) {
+    // Don't compute an optimal scale if the user manualy choose a value not in
+    // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`).
+    goog.asserts.assert(this.layoutInfo.scales);
+    goog.asserts.assert(this.layoutInfo.scale !== undefined);
+    if (this.layoutInfo.scale === -1 ||
+        ol.array.includes(this.layoutInfo.scales, this.layoutInfo.scale)) {
       const mapSize = frameState.size;
       const viewResolution = frameState.viewState.resolution;
-      this.fields.scale = this.getOptimalScale_(mapSize, viewResolution);
+      this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
     }
-    return this.fields.scale;
+    return this.layoutInfo.scale;
   };
 
   let getRotationFn;
@@ -380,7 +406,7 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
    * @type {function(ol.render.Event)}
    */
   this.postcomposeListener_ = ngeoPrintUtils.createPrintMaskPostcompose(
-      getSizeFn, getScaleFn, getRotationFn);
+    getSizeFn, getScaleFn, getRotationFn);
 
   /**
    * @type {angular.$http.HttpPromise}
@@ -436,9 +462,9 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
       // Get capabilities - On success
       this.parseCapabilities_(resp);
       this.postComposeListenerKey_ = this.map.on('postcompose',
-          this.postcomposeListener_);
+        this.postcomposeListener_);
       this.pointerDragListenerKey_ = this.map.on('pointerdrag',
-          this.onPointerDrag_.bind(this));
+        this.onPointerDrag_.bind(this));
       this.map.render();
     }, (resp) => {
       // Get capabilities - On error
@@ -475,7 +501,7 @@ gmf.PrintController.prototype.getCapabilities_ = function(opt_roleId) {
 
 /**
  * Create the list of layouts, get the formats, get the first layout in
- * gmf print v3 capabilities and then update the print panel fields.
+ * gmf print v3 capabilities and then update the print panel layout information.
  * @param {!angular.$http.Response} resp Response.
  * @private
  */
@@ -485,9 +511,9 @@ gmf.PrintController.prototype.parseCapabilities_ = function(resp) {
   this.layouts_ = data['layouts'];
   this.layout_ = data['layouts'][0];
 
-  this.fields.layouts = [];
+  this.layoutInfo.layouts = [];
   this.layouts_.forEach((layout) => {
-    this.fields.layouts.push(layout.name);
+    this.layoutInfo.layouts.push(layout.name);
   });
 
   this.updateFields_();
@@ -495,7 +521,7 @@ gmf.PrintController.prototype.parseCapabilities_ = function(resp) {
 
 
 /**
- * Update fields with the user values if there are always available in the
+ * Update layout information with the user values if there are always available in the
  * current layout otherwise use the defaults values of the layout.
  * If a field doesn't exist in the current layout, set it to undefined so the
  * view can hide it. Update also the paper size.
@@ -503,7 +529,7 @@ gmf.PrintController.prototype.parseCapabilities_ = function(resp) {
  * @private
  */
 gmf.PrintController.prototype.updateFields_ = function() {
-  this.fields.layout = this.layout_.name;
+  this.layoutInfo.layout = this.layout_.name;
 
   const mapInfo = this.isAttributeInCurrentLayout_('map');
   goog.asserts.assertObject(mapInfo);
@@ -514,26 +540,28 @@ gmf.PrintController.prototype.updateFields_ = function() {
   this.updateCustomFields_();
 
   const legend = this.isAttributeInCurrentLayout_('legend');
-  if (this.fields.legend === undefined) {
-    this.fields.legend = !!(legend !== undefined ?
-        legend : this.fieldValues_['legend']);
+  if (this.layoutInfo.legend === undefined) {
+    this.layoutInfo.legend = !!(legend !== undefined ?
+      legend : this.fieldValues_['legend']);
   }
 
-  this.fields.scales = clientInfo['scales'] || [];
-  this.fields.dpis = clientInfo['dpiSuggestions'] || [];
+  this.layoutInfo.scales = clientInfo['scales'] || [];
+  this.layoutInfo.dpis = clientInfo['dpiSuggestions'] || [];
 
   const mapSize = this.map.getSize();
   const viewResolution = this.map.getView().getResolution();
-  this.fields.scale = this.getOptimalScale_(mapSize, viewResolution);
+  this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
 
-  this.fields.dpi =
-      (this.fields.dpi && this.fields.dpis.indexOf(this.fields.dpi) > 0) ?
-      this.fields.dpi : this.fields.dpis[0];
+  this.layoutInfo.dpi =
+      (this.layoutInfo.dpi && this.layoutInfo.dpis.indexOf(this.layoutInfo.dpi) > 0) ?
+        this.layoutInfo.dpi : this.layoutInfo.dpis[0];
 
-  this.fields.formats = {};
+  this.layoutInfo.formats = {};
   this.formats_.forEach((format) => {
-    this.fields.formats[format] = true;
+    this.layoutInfo.formats[format] = true;
   });
+
+  this.attributesOut = this.layoutInfo['simpleAttributes'];
 
   // Force the update of the mask
   this.map.render();
@@ -541,25 +569,25 @@ gmf.PrintController.prototype.updateFields_ = function() {
 
 
 /**
- * Update customs fields with gmfx.Customfield to be able to generate a form
+ * Update simple attributes information with gmfx.Customfield to be able to generate a form
  * from a custom GMF print v3 configuration.
  * @private
  */
 gmf.PrintController.prototype.updateCustomFields_ = function() {
   let name, rawType, value, type;
-  if (!this.fields.customs) {
-    this.fields.customs = [];
+  if (!this.layoutInfo.simpleAttributes) {
+    this.layoutInfo.simpleAttributes = [];
   }
-  const customs = this.fields.customs;
-  const previousCustoms = customs.splice(0, customs.length);
+  const simpleAttributes = this.layoutInfo.simpleAttributes;
+  const previousAttributes = simpleAttributes.splice(0, simpleAttributes.length);
 
-  // The attributes without 'clientParams' are the custom fields (user-defined).
+  // The attributes without 'clientParams' are the custom layout information (defined by end user).
   this.layout_.attributes.forEach((attribute) => {
     if (!attribute['clientParams']) {
       name = `${attribute.name}`;
       const defaultValue = attribute.default;
       value = (defaultValue !== undefined && defaultValue !== '') ?
-          defaultValue : this.fieldValues_[name];
+        defaultValue : this.fieldValues_[name];
 
       // Try to use existing form field type
       rawType = `${attribute.type}`;
@@ -580,13 +608,13 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
       }
 
       // If it exists use the value of previous same field.
-      previousCustoms.forEach((c) => {
+      previousAttributes.forEach((c) => {
         if (c.name === name && c.type === type) {
           return value = c.value;
         }
       });
 
-      this.fields.customs.push(/** gmfx.CustomField */ ({
+      this.layoutInfo.simpleAttributes.push(/** gmfx.PrintSimpleAttributes */ ({
         name,
         type,
         value
@@ -689,7 +717,7 @@ gmf.PrintController.prototype.onPointerDrag_ = function(e) {
 
 
 /**
- * Create a print report based on the values of the 'fields' values.
+ * Create a print report based on the values of the 'layoutInfo' values.
  * @param {string} format An output format corresponding to one format in the
  *     capabilities document ('pdf', 'png', etc).
  * @export
@@ -712,24 +740,24 @@ gmf.PrintController.prototype.print = function(format) {
     'datasource': datasource,
     'lang': this.gettextCatalog_.currentLanguage,
     'rotation': rotation,
-    'scale': this.fields.scale
+    'scale': this.layoutInfo.scale
   };
 
-  if (this.fields.customs) {
-    this.fields.customs.forEach((field) => {
+  if (this.layoutInfo.simpleAttributes) {
+    this.layoutInfo.simpleAttributes.forEach((field) => {
       customAttributes[field.name] = field.value;
     });
   }
 
-  if (this.fields.legend) {
+  if (this.layoutInfo.legend) {
     const legend = this.getLegend_(scale);
     if (legend !== null) {
       customAttributes['legend'] = this.getLegend_(scale);
     }
   }
 
-  goog.asserts.assertNumber(this.fields.dpi);
-  goog.asserts.assertString(this.fields.layout);
+  goog.asserts.assertNumber(this.layoutInfo.dpi);
+  goog.asserts.assertString(this.layoutInfo.layout);
 
   // convert the WMTS layers to WMS
   const map = new ol.Map({});
@@ -761,13 +789,13 @@ gmf.PrintController.prototype.print = function(format) {
     layers: new_ol_layers
   }));
 
-  const spec = this.ngeoPrint_.createSpec(map, scale, this.fields.dpi,
-      this.fields.layout, format, customAttributes);
+  const spec = this.ngeoPrint_.createSpec(map, scale, this.layoutInfo.dpi,
+    this.layoutInfo.layout, format, customAttributes);
 
   // Add feature overlay layer to print spec.
   const layers = [];
   this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_,
-      viewResolution);
+    viewResolution);
   if (layers.length > 0) {
     spec.attributes.map.layers.unshift(layers[0]);
   }
@@ -775,8 +803,8 @@ gmf.PrintController.prototype.print = function(format) {
   this.ngeoPrint_.createReport(spec, /** @type {angular.$http.Config} */ ({
     timeout: this.requestCanceler_.promise
   })).then(
-      this.handleCreateReportSuccess_.bind(this),
-      this.handleCreateReportError_.bind(this)
+    this.handleCreateReportSuccess_.bind(this),
+    this.handleCreateReportError_.bind(this)
   );
 
   // remove temporary map
@@ -822,8 +850,8 @@ gmf.PrintController.prototype.resetPrintStates_ = function(opt_printState) {
 /**
  * Get datasource object for print report
  * @private
- * @return {Array.<gmfx.DataSourcePrintReportObject>} the datasource objet for
- * the print report
+ * @return {Array.<gmfx.datasource.DataSourcePrintReportObject>} the data
+ *     source objet for the print report
  */
 gmf.PrintController.prototype.getDataSource_ = function() {
   let datasourceObj, data, columns;
@@ -833,6 +861,7 @@ gmf.PrintController.prototype.getDataSource_ = function() {
     data = [];
     columns = [];
     source.features.forEach(function(feature, i) {
+      goog.asserts.assert(feature);
       const properties = this.ngeoFeatureHelper_.getFilteredFeatureValues(feature);
       if (i === 0) {
         columns = Object.keys(properties).map(function tanslateColumns(prop) {
@@ -842,13 +871,14 @@ gmf.PrintController.prototype.getDataSource_ = function() {
       data.push(Object.keys(properties).map(key => properties[key]));
     }, this);
     if (columns.length) {
-      datasourceObj = /** @type {gmfx.DataSourcePrintReportObject} */({
-        title: this.translate_(source.label),
-        table: {
-          columns,
-          data
-        }
-      });
+      datasourceObj =
+        /** @type {gmfx.datasource.DataSourcePrintReportObject} */({
+          title: this.translate_(source.label),
+          table: {
+            columns,
+            data
+          }
+        });
       datasourceArr.push(datasourceObj);
     }
   }, this);
@@ -867,12 +897,12 @@ gmf.PrintController.prototype.getDataSource_ = function() {
  * @private
  */
 gmf.PrintController.prototype.getOptimalScale_ = function(mapSize, viewResolution) {
-  const scales = this.fields.scales.slice();
+  const scales = this.layoutInfo.scales.slice();
   if (mapSize !== undefined && viewResolution !== undefined) {
     return this.ngeoPrintUtils_.getOptimalScale(mapSize, viewResolution,
-        this.paperSize_, scales.reverse());
+      this.paperSize_, scales.reverse());
   }
-  return this.fields.scales[0];
+  return this.layoutInfo.scales[0];
 };
 
 
@@ -898,8 +928,8 @@ gmf.PrintController.prototype.getStatus_ = function(ref) {
   this.ngeoPrint_.getStatus(ref, /** @type {angular.$http.Config} */ ({
     timeout: this.requestCanceler_.promise
   })).then(
-      this.handleGetStatusSuccess_.bind(this, ref),
-      this.handleCreateReportError_.bind(this)
+    this.handleGetStatusSuccess_.bind(this, ref),
+    this.handleCreateReportError_.bind(this)
   );
 };
 
@@ -950,7 +980,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
 
   // Get layers from layertree only.
   const dataLayerGroup = this.ngeoLayerHelper_.getGroupFromMap(this.map,
-      gmf.DATALAYERGROUP_NAME);
+    gmf.DATALAYERGROUP_NAME);
   const layers = this.ngeoLayerHelper_.getFlatLayers(dataLayerGroup);
 
   // For each visible layer in reverse order, get the legend url.
@@ -975,7 +1005,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
         layerNames = source.getParams()['LAYERS'].split(',');
         layerNames.forEach((name) => {
           icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
-              scale);
+            scale);
           // Don't add classes without legend url or from layers without any
           // active name.
           if (icons && name.length !== 0) {
@@ -1000,7 +1030,7 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
 
 
 /**
- * Set the current layout and update all fields with this new layout parameters.
+ * Set the current layout and update all layout information with this new layout parameters.
  * @param {string!} layoutName A layout name as existing in the list of
  *     existing layouts.
  * @export
@@ -1027,12 +1057,12 @@ gmf.PrintController.prototype.setLayout = function(layoutName) {
 gmf.PrintController.prototype.getSetScale = function(opt_scale) {
   if (opt_scale !== undefined) {
     const mapSize = this.map.getSize();
-    this.fields.scale = opt_scale;
+    this.layoutInfo.scale = opt_scale;
     const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_, opt_scale);
     const contrainRes = this.map.getView().constrainResolution(res, 0, 1);
     this.map.getView().setResolution(contrainRes);
   }
-  return this.fields.scale;
+  return this.layoutInfo.scale;
 };
 
 
@@ -1042,7 +1072,7 @@ gmf.PrintController.prototype.getSetScale = function(opt_scale) {
  * @export
  */
 gmf.PrintController.prototype.setDpi = function(dpi) {
-  this.fields.dpi = dpi;
+  this.layoutInfo.dpi = dpi;
 };
 
 

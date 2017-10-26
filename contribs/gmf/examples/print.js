@@ -20,18 +20,18 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.value(
-    'gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
+  'gmfTreeUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
 
 gmfapp.module.value('gmfPrintUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
 
 
 gmfapp.module.value(
-    'authenticationBaseUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi'
+  'authenticationBaseUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi'
 );
 
 
@@ -66,7 +66,7 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {Object.<string, string|number|boolean>}
-   * export
+   * @export
    */
   this.defaulPrintFieldstValues = {
     'comments': 'Default comments example',
@@ -75,7 +75,7 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {Array.<Object>|undefined}
-   * export
+   * @export
    */
   this.themes = undefined;
 

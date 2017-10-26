@@ -40,7 +40,7 @@ ngeo.RuleController = class {
    * @ngname NgeoRuleController
    */
   constructor(gettextCatalog, $scope, $timeout, ngeoDecorateInteraction,
-      ngeoFeatureHelper, ngeoRuleHelper, ngeoToolActivateMgr
+    ngeoFeatureHelper, ngeoRuleHelper, ngeoToolActivateMgr
   ) {
 
     // Binding properties
@@ -129,6 +129,7 @@ ngeo.RuleController = class {
 
     const ot = ngeo.rule.Rule.OperatorType;
     const sot = ngeo.rule.Rule.SpatialOperatorType;
+    const tot = ngeo.rule.Rule.TemporalOperatorType;
 
     /**
      * @type {Object.<string, string>}
@@ -146,7 +147,11 @@ ngeo.RuleController = class {
       [ot.LIKE]: gettextCatalog.getString('Contains'),
       [sot.CONTAINS]: gettextCatalog.getString('Contains'),
       [sot.INTERSECTS]: gettextCatalog.getString('Intersects'),
-      [sot.WITHIN]: gettextCatalog.getString('Is inside of')
+      [sot.WITHIN]: gettextCatalog.getString('Is inside of'),
+      [tot.BEGINS]: gettextCatalog.getString('Begins at'),
+      [tot.DURING]: gettextCatalog.getString('During'),
+      [tot.ENDS]: gettextCatalog.getString('Ends at'),
+      [tot.EQUALS]: gettextCatalog.getString('Is equal to')
     };
 
     /**
@@ -685,10 +690,10 @@ ngeo.RuleController = class {
    * @private
    */
   initializeInteractions_() {
-    this.interactions_.forEach(function(interaction) {
+    this.interactions_.forEach((interaction) => {
       interaction.setActive(false);
       this.ngeoDecorateInteraction_(interaction);
-    }, this);
+    });
   }
 
   /**
@@ -696,9 +701,9 @@ ngeo.RuleController = class {
    * @private
    */
   registerInteractions_() {
-    this.interactions_.forEach(function(interaction) {
+    this.interactions_.forEach((interaction) => {
       this.map.addInteraction(interaction);
-    }, this);
+    });
   }
 
   /**
@@ -706,9 +711,9 @@ ngeo.RuleController = class {
    * @private
    */
   unregisterInteractions_() {
-    this.interactions_.forEach(function(interaction) {
+    this.interactions_.forEach((interaction) => {
       this.map.removeInteraction(interaction);
-    }, this);
+    });
   }
 
   /**
@@ -790,6 +795,7 @@ ngeo.RuleController = class {
     if (feature) {
 
       const type = this.ngeoFeatureHelper_.getType(feature);
+      const  gettextCatalog = this.gettextCatalog_;
 
       if (type == ngeo.GeometryType.CIRCLE ||
           type == ngeo.GeometryType.LINE_STRING ||
@@ -797,7 +803,7 @@ ngeo.RuleController = class {
           type == ngeo.GeometryType.RECTANGLE) {
         actions.push({
           cls: 'fa fa-arrows',
-          label: this.gettextCatalog_.getString('Move'),
+          label: gettextCatalog.getString('Move'),
           name: ngeo.RuleController.MenuActionType.MOVE
         });
       }
@@ -806,7 +812,7 @@ ngeo.RuleController = class {
           type == ngeo.GeometryType.RECTANGLE) {
         actions.push({
           cls: 'fa fa-rotate-right',
-          label: this.gettextCatalog_.getString('Rotate'),
+          label: gettextCatalog.getString('Rotate'),
           name: ngeo.RuleController.MenuActionType.ROTATE
         });
       }

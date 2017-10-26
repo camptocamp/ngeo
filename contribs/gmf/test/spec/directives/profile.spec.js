@@ -33,10 +33,10 @@ describe('gmf.GmfProfileController', () => {
         }
       };
       profileController = $controller(
-          'GmfProfileController', {
-            $scope,
-            ngeoCsvDownload: csvDownloadServiceMock,
-            $element: $('<div></div>')}, data);
+        'GmfProfileController', {
+          $scope,
+          ngeoCsvDownload: csvDownloadServiceMock,
+          $element: $('<div></div>')}, data);
       $rootScope.$digest();
     });
   });

@@ -38,7 +38,7 @@ exports.Controller = function($scope) {
 
     options.layerSelected = (options.layerSelected &&
         options.layerSelected.Name == getCapLayer['Name']) ?
-        null : getCapLayer;
+      null : getCapLayer;
   };
 };
 
@@ -98,7 +98,7 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
 
         if (extent) {
           const res = view.constrainResolution(
-              view.getResolutionForExtent(extent, mapSize), 0, -1);
+            view.getResolutionForExtent(extent, mapSize), 0, -1);
           view.setCenter(layerExtentCenter);
           view.setResolution(res);
         }
@@ -151,16 +151,16 @@ exports.directive = function($compile, ngeoWmsGetCapItemTemplateUrl) {
 exports.module = angular.module('ngeo.wmsGetCapItemDirective', []);
 
 exports.module.value('ngeoWmsGetCapItemTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoWmsGetCapItemTemplateUrl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseModuleTemplateUrl}/import/partials/wms-get-cap-item.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoWmsGetCapItemTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/import/partials/wms-get-cap-item.html`;
+  });
 
 exports.module.controller('NgeoWmsGetCapItemDirectiveController', exports.Controller);
 exports.module.directive('ngeoWmsGetCapItem', exports.directive);

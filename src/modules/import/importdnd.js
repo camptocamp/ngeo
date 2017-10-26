@@ -117,15 +117,15 @@ exports.module = angular.module('ngeo.importDndDirective', [
 ]);
 
 exports.module.value('ngeoImportDndTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoImportDndTemplateUrl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseModuleTemplateUrl}/import/partials/import-dnd.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoImportDndTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/import/partials/import-dnd.html`;
+  });
 
 exports.module.directive('ngeoImportDnd', exports);

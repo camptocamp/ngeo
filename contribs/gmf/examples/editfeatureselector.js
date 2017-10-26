@@ -29,20 +29,20 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.value('gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
 gmfapp.module.value(
-    'authenticationBaseUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+  'authenticationBaseUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
 
 
 gmfapp.module.value('gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
 gmfapp.module.value('gmfLayersUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
 
 /**
@@ -57,7 +57,7 @@ gmfapp.module.value('gmfLayersUrl',
  * @constructor
  */
 gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
-    ngeoFeatureHelper, ngeoToolActivateMgr) {
+  ngeoFeatureHelper, ngeoToolActivateMgr) {
 
   /**
    * @type {!angular.Scope}
@@ -133,27 +133,27 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
     }
   });
 
- /**
+  /**
    * @type {boolean}
    * @export
    */
   this.editFeatureSelectorActive = true;
 
   const editFeatureSelectorToolActivate = new ngeo.ToolActivate(
-      this, 'editFeatureSelectorActive');
+    this, 'editFeatureSelectorActive');
   ngeoToolActivateMgr.registerTool(
-      'mapTools', editFeatureSelectorToolActivate, true);
+    'mapTools', editFeatureSelectorToolActivate, true);
 
- /**
+  /**
    * @type {boolean}
    * @export
    */
   this.dummyActive = false;
 
   const dummyToolActivate = new ngeo.ToolActivate(
-      this, 'dummyActive');
+    this, 'dummyActive');
   ngeoToolActivateMgr.registerTool(
-      'mapTools', dummyToolActivate, false);
+    'mapTools', dummyToolActivate, false);
 
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({

@@ -142,23 +142,23 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
    * @type {function(ol.render.Event)}
    */
   const postcomposeListener = ngeoPrintUtils.createPrintMaskPostcompose(
-      /**
+    /**
        * @return {ol.Size} Size in dots of the map to print.
        */
-      () => app.PRINT_PAPER_SIZE_,
-      /**
+    () => app.PRINT_PAPER_SIZE_,
+    /**
        * @param {olx.FrameState} frameState Frame state.
        * @return {number} Scale of the map to print.
        */
-      (frameState) => {
-        const mapSize = frameState.size;
-        const mapResolution = frameState.viewState.resolution;
-        // we test mapSize and mapResolution just to please the compiler
-        return mapSize !== undefined && mapResolution !== undefined ?
-            ngeoPrintUtils.getOptimalScale(mapSize, mapResolution,
-                app.PRINT_PAPER_SIZE_, app.PRINT_SCALES_) :
-            app.PRINT_SCALES_[0];
-      });
+    (frameState) => {
+      const mapSize = frameState.size;
+      const mapResolution = frameState.viewState.resolution;
+      // we test mapSize and mapResolution just to please the compiler
+      return mapSize !== undefined && mapResolution !== undefined ?
+        ngeoPrintUtils.getOptimalScale(mapSize, mapResolution,
+          app.PRINT_PAPER_SIZE_, app.PRINT_SCALES_) :
+        app.PRINT_SCALES_[0];
+    });
 
   /**
    * Draw the print window in a map postcompose listener.
@@ -178,9 +178,9 @@ app.MainController.prototype.print = function() {
 
   // we test mapSize and viewResolution just to please the compiler
   const scale = mapSize !== undefined && viewResolution !== undefined ?
-      this.printUtils_.getOptimalScale(mapSize, viewResolution,
-          app.PRINT_PAPER_SIZE_, app.PRINT_SCALES_) :
-      app.PRINT_SCALES_[0];
+    this.printUtils_.getOptimalScale(mapSize, viewResolution,
+      app.PRINT_PAPER_SIZE_, app.PRINT_SCALES_) :
+    app.PRINT_SCALES_[0];
 
   const dpi = app.PRINT_DPI_;
   const format = app.PRINT_FORMAT_;
@@ -196,8 +196,8 @@ app.MainController.prototype.print = function() {
   });
 
   this.print_.createReport(spec).then(
-      this.handleCreateReportSuccess_.bind(this),
-      this.handleCreateReportError_.bind(this)
+    this.handleCreateReportSuccess_.bind(this),
+    this.handleCreateReportError_.bind(this)
   );
 };
 
@@ -218,8 +218,8 @@ app.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
  */
 app.MainController.prototype.getStatus_ = function(ref) {
   this.print_.getStatus(ref).then(
-      this.handleGetStatusSuccess_.bind(this, ref),
-      this.handleGetStatusError_.bind(this)
+    this.handleGetStatusSuccess_.bind(this, ref),
+    this.handleGetStatusError_.bind(this)
   );
 };
 

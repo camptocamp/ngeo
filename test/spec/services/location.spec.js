@@ -63,6 +63,25 @@ describe('ngeo.Location', () => {
     });
   });
 
+  describe('#getParamAsFloat', () => {
+    it('returns the param value as float', () => {
+      ngeoLocation.updateParams({'key2': '2.45678'});
+      const value = ngeoLocation.getParamAsFloat('key2');
+      expect(value).toBe(2.45678);
+    });
+
+    it('returns undefined if no float', () => {
+      const value = ngeoLocation.getParamAsFloat('key1');
+      expect(value).toBe(undefined);
+    });
+
+    it('returns undefined if no float', () => {
+      ngeoLocation.updateParams({'key2': 'NaN'});
+      const value = ngeoLocation.getParamAsFloat('key2');
+      expect(value).toBe(undefined);
+    });
+  });
+
   describe('#getParamKeys', () => {
     it('returns the param keys', () => {
       const keys = ngeoLocation.getParamKeys();

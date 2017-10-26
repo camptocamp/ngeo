@@ -9,16 +9,16 @@ goog.require('ol.events');
 
 
 ngeo.module.value('ngeoScaleselectorTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoScaleselectorTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseTemplateUrl}/scaleselector.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoScaleselectorTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseTemplateUrl}/scaleselector.html`;
+  });
 
 
 /**
@@ -37,13 +37,9 @@ ngeo.ScaleselectorOptions;
  *     </div>
  *
  * The expression passed to the ngeo-scaleselector attribute should return an
- * object of this form:
+ * array of this form:
  *
  *    [20000, 10000, 5000, 2500]
- *
- * This object's keys are strings representing zoom levels, the values are
- * strings representing scales. The directive's partial uses ng-bind-html so
- * the scale strings should be trusted.
  *
  * That directive's partial uses Bootstrap's `dropdown` and `dropdown-menu`
  * classes, and `data-toggle="dropdown"`, so it is meant to be used with
@@ -61,7 +57,7 @@ ngeo.ScaleselectorOptions;
  *
  * See our live example: [../examples/scaleselector.html](../examples/scaleselector.html)
  *
- * @htmlAttribute {Object.<string, string>} ngeo-scaleselector-scales The available scales (key: scale, value: display text).
+ * @htmlAttribute {!Array.<number>} ngeo-scaleselector The available scales.
  * @htmlAttribute {ol.Map} ngeo-scaleselector-map The map.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
@@ -104,7 +100,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
    * @export
    */
   this.scales = /** @type {!Array.<number>} */
-      ($scope.$eval(scalesExpr));
+    ($scope.$eval(scalesExpr));
   goog.asserts.assert(this.scales !== undefined);
 
   /**
@@ -163,7 +159,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   }
 
   ol.events.listen(this.map_, ol.Object.getChangeEventType('view'),
-      this.handleViewChange_, this);
+    this.handleViewChange_, this);
 
   this.registerResolutionChangeListener_();
 
@@ -229,9 +225,11 @@ ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
   //
   // For that reason we use $applyAsync instead of $apply here.
 
-  this.$scope_.$applyAsync(() => {
-    this.currentScale = currentScale;
-  });
+  if (currentScale !== undefined) {
+    this.$scope_.$applyAsync(() => {
+      this.currentScale = currentScale;
+    });
+  }
 };
 
 
@@ -254,10 +252,10 @@ ngeo.ScaleselectorController.prototype.registerResolutionChangeListener_ = funct
   }
   const view = this.map_.getView();
   this.resolutionChangeKey_ = ol.events.listen(view,
-      ol.Object.getChangeEventType('resolution'), this.handleResolutionChange_,
-      this);
+    ol.Object.getChangeEventType('resolution'), this.handleResolutionChange_,
+    this);
 };
 
 
 ngeo.module.controller('NgeoScaleselectorController',
-    ngeo.ScaleselectorController);
+  ngeo.ScaleselectorController);

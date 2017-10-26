@@ -161,7 +161,7 @@ gmf.MobileNavController.prototype.init = function(element) {
  * @private
  */
 gmf.MobileNavController.prototype.updateNavigationHeader_ = function(
-    active, back) {
+  active, back) {
   const cls = gmf.MobileNavController.ClassName_;
   this.header_.toggleClass(cls.BACK, back);
 
@@ -170,7 +170,7 @@ gmf.MobileNavController.prototype.updateNavigationHeader_ = function(
 
   // deactivate the currently active nav
   this.header_.find(`nav.${cls.ACTIVE}`).removeClass(cls.ACTIVE)
-      .addClass(cls.SLIDE_OUT);
+    .addClass(cls.SLIDE_OUT);
 
   // show the back button when relevant
   this.backButton_.toggleClass(cls.ACTIVE, this.slid_.length > 0);

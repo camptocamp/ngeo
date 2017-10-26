@@ -50,6 +50,7 @@ gmfx.ComparisonFilter.prototype.value;
  *    positionFeatureStyle: (ol.style.Style|undefined),
  *    accuracyFeatureStyle: (ol.style.Style|undefined),
  *    geolocationZoom: (number|undefined),
+ *    autorotate: (boolean|undefined),
  *    mapViewConfig: (olx.ViewOptions|undefined),
  *    mapControls: (ol.Collection.<ol.control.Control>|Array.<ol.control.Control>|undefined),
  *    mapInteractions: (ol.Collection.<ol.interaction.Interaction>|Array.<ol.interaction.Interaction>|undefined)
@@ -59,21 +60,14 @@ gmfx.Config;
 
 
 /**
- * The options to create a `gmf.DataSource` with.
- * @record
- * @struct
- * @extends ngeox.DataSourceOptions
+ * The definition of an external OGC server
+ * @typedef {{
+ *    name: (string),
+ *    type: (string),
+ *    url: (string)
+ * }}
  */
-gmfx.DataSourceOptions;
-
-
-/**
- * A reference to the GMF layer node that was used to create the data source.
- * It may contains additionnal information, such as metadata, about the data
- * source.
- * @type {gmfThemes.GmfLayer}
- */
-gmfx.DataSourceOptions.prototype.gmfLayer;
+gmfx.ExternalOGCServer;
 
 
 /**
@@ -210,7 +204,7 @@ gmfx.PermalinkOptions.prototype.useLocalStorage;
  * Fields that can come from a print v3 server and can be used in the partial
  * of the gmf print panel.
  * @typedef {{
- *   customs: (Array.<gmfx.CustomField>|undefined),
+ *   simpleAttributes: (Array.<gmfx.PrintSimpleAttributes>|undefined),
  *   dpi: (number|undefined),
  *   dpis: (Array.<number>|undefined),
  *   formats: (Object.<string, boolean>|undefined),
@@ -221,69 +215,102 @@ gmfx.PermalinkOptions.prototype.useLocalStorage;
  *   scales: (Array.<number>|undefined)
  * }}
  */
-gmfx.PrintFields;
+gmfx.PrintLayoutInfo;
 
 /**
- * Custom print fields.
- * @type {Array.<gmfx.CustomField>|undefined}
+ * Custom print layoutInfo.
+ * @type {Array.<gmfx.PrintSimpleAttributes>|undefined}
  */
-gmfx.PrintFields.prototype.customs;
+gmfx.PrintLayoutInfo.prototype.simpleAttributes;
 
 
 /**
  * The selected 'dpi'.
  * @type {number|undefined}
  */
-gmfx.PrintFields.prototype.dpi;
+gmfx.PrintLayoutInfo.prototype.dpi;
 
 
 /**
  * The list of 'dpis'.
  * @type {Array.<number>|undefined}
  */
-gmfx.PrintFields.prototype.dpis;
+gmfx.PrintLayoutInfo.prototype.dpis;
 
 
 /**
  * The list of active 'formats' (png, pdf, ...).
  * @type {Object.<string, boolean>|undefined}
  */
-gmfx.PrintFields.prototype.formats;
+gmfx.PrintLayoutInfo.prototype.formats;
 
 
 /**
  * The selected 'layout'.
  * @type {string|undefined}
  */
-gmfx.PrintFields.prototype.layout;
+gmfx.PrintLayoutInfo.prototype.layout;
 
 
 /**
  * The list of 'layouts'.
  * @type {Array.<string>|undefined}
  */
-gmfx.PrintFields.prototype.layouts;
+gmfx.PrintLayoutInfo.prototype.layouts;
 
 
 /**
  * The legend checkbox.
  * @type {boolean|undefined}
  */
-gmfx.PrintFields.prototype.legend;
+gmfx.PrintLayoutInfo.prototype.legend;
 
 
 /**
  * The selected 'scale'.
  * @type {number|undefined}
  */
-gmfx.PrintFields.prototype.scale;
+gmfx.PrintLayoutInfo.prototype.scale;
 
 
 /**
  * The list of 'scales'
  * @type {Array.<number>|undefined}
  */
-gmfx.PrintFields.prototype.scales;
+gmfx.PrintLayoutInfo.prototype.scales;
+
+
+/**
+ * Object that can be used to generate a form field.
+ * @typedef {{
+ *   default: (string|boolean|number|undefined),
+ *   name: string,
+ *   type: string
+ * }}
+ */
+gmfx.PrintSimpleAttributes;
+
+
+/**
+ * Default value of the form field.
+ * @type {(string|boolean|number|undefined)}
+ */
+gmfx.PrintSimpleAttributes.prototype.default;
+
+
+/**
+ * Name of the form field.
+ * @type {string}
+ */
+gmfx.PrintSimpleAttributes.prototype.name;
+
+
+/**
+ * Type of the field.
+ * Can be 'String', 'Boolean' or 'Number'.
+ * @type {string}
+ */
+gmfx.PrintSimpleAttributes.prototype.type;
 
 
 /**
@@ -357,39 +384,6 @@ gmfx.ProfileHoverPointInformations.prototype.xUnits;
  * @type {string|undefined}
  */
 gmfx.ProfileHoverPointInformations.prototype.yUnits;
-
-
-/**
- * Object that can be used to generate a form field.
- * @typedef {{
- *   default: (string|boolean|number|undefined),
- *   name: string,
- *   type: string
- * }}
- */
-gmfx.CustomField;
-
-
-/**
- * Default value of the form field.
- * @type {(string|boolean|number|undefined)}
- */
-gmfx.CustomField.prototype.default;
-
-
-/**
- * Name of the form field.
- * @type {string}
- */
-gmfx.CustomField.prototype.name;
-
-
-/**
- * Type of the field.
- * Can be 'String', 'Boolean' or 'Number'.
- * @type {string}
- */
-gmfx.CustomField.prototype.type;
 
 
 /**
@@ -563,21 +557,6 @@ gmfx.User.prototype.role_name;
  */
 gmfx.User.prototype.username;
 
-/**
- * @typedef {{
- *  columns : Array.<string>,
- *  data : Array.<Array.<string|number|boolean>>
- * }}
- */
-gmfx.DataSourceTableObject;
-
-/**
- * @typedef {{
- *  title : string,
- *  table : gmfx.DataSourceTableObject
- * }}
- */
-gmfx.DataSourcePrintReportObject;
 
 /**
  * @typedef {{
@@ -642,7 +621,7 @@ gmfx.ThemesOptions.prototype.addBlankBackgroundLayer;
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
  */
-gmfx.OpenIframePopup;
+gmfx.openIframePopup;
 
 
 /**
@@ -652,7 +631,72 @@ gmfx.OpenIframePopup;
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
  */
-gmfx.OpenTextPopup;
+gmfx.openTextPopup;
+
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+gmfx.datasource;
+
+
+/**
+ * The options required to create a `gmf.datasource.OGC`.
+ * @record
+ * @struct
+ * @extends ngeox.datasource.OGCOptions
+ */
+gmfx.datasource.OGCOptions;
+
+
+/**
+ * A reference to the GMF layer node that was used to create the data source.
+ * It may contains additionnal information, such as metadata, about the data
+ * source.
+ * @type {gmfThemes.GmfLayer}
+ */
+gmfx.datasource.OGCOptions.prototype.gmfLayer;
+
+
+/**
+ * @typedef {{
+ *  columns : Array.<string>,
+ *  data : Array.<Array.<string|number|boolean>>
+ * }}
+ */
+gmfx.datasource.DataSourceTableObject;
+
+
+/**
+ * @typedef {{
+ *  title : string,
+ *  table : gmfx.datasource.DataSourceTableObject
+ * }}
+ */
+gmfx.datasource.DataSourcePrintReportObject;
+
+
+/**
+ * @type {Object}
+ */
+let cgxp;
+
+
+/**
+ * @type {Object}
+ */
+cgxp.tools;
+
+
+/**
+ * Static function to create a popup with an iframe.
+ * @param {string} url an url.
+ * @param {string} title (text).
+ * @param {string=} opt_width CSS width.
+ * @param {string=} opt_height CSS height.
+ */
+cgxp.tools.openInfoWindow;
 
 
 /**
@@ -661,7 +705,7 @@ gmfx.OpenTextPopup;
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
  */
-gmfx.OpenPopup_
+gmfx.openPopup_
 
 /**
  * @typedef {{

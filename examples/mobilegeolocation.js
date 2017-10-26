@@ -48,7 +48,8 @@ app.MainController = function($scope, ngeoFeatureOverlayMgr) {
   this.mobileGeolocationOptions = {
     positionFeatureStyle,
     accuracyFeatureStyle,
-    zoom: 17
+    zoom: 17,
+    autorotate: true
   };
 
   /**

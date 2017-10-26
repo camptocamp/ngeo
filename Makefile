@@ -7,7 +7,6 @@ NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
 GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
 
 OS := $(shell uname)
-CLOSURE_LIBRARY_PATH = $(shell node -e 'process.stdout.write(require("closure-util").getLibraryPath())' 2> /dev/null)
 
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 EXAMPLES_JS_FILES := $(EXAMPLES_HTML_FILES:.html=.js)
@@ -20,7 +19,7 @@ GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
-GMF_APPS += mobile desktop desktop_alt oeedit oeview
+GMF_APPS += mobile desktop desktop_alt mobile_alt oeedit oeview
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less src/modules -type f -name '*.less')
 DEVELOPMENT ?= FALSE
@@ -45,9 +44,9 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/file-saver/FileSaver.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.js \
 	node_modules/jsts/dist/jsts.min.js \
-	node_modules/moment/min/moment.min.js \
+	node_modules/moment/moment.js \
 	third-party/jquery-ui/jquery-ui.js \
-	$(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js
+	node_modules/google-closure-library/closure/goog/transpile.js
 else
 GMF_APPS_LIBS_JS_FILES += \
 	examples/https.js \
@@ -131,7 +130,7 @@ L10N_PO_FILES = \
 LANGUAGES = en $(L10N_LANGUAGES)
 ANGULAR_LOCALES_FILES = $(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 
-TX_VERSION ?= 2_2
+TX_VERSION ?= 2_3
 ifeq (,$(wildcard $(HOME)/.transifexrc))
 TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell date --iso-8601=seconds)" $(HOME)/.transifexrc
 else
@@ -200,7 +199,11 @@ apidoc: .build/apidoc
 dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
 .PHONY: check
-check: git-attributes eof-newline lint check-examples test dist build-gmf-apps
+check: git-attributes eof-newline lint check-examples test dist build-gmf-apps check-ngeox
+
+.PHONY: check-ngeox
+check-ngeox: options/ngeox.js
+	if grep -nE "ngeo.rule.Rule|ngeo.DataSource" options/ngeox.js; then echo "Only use ngeox.rule.Rule and ngeox.DataSource in options/ngeox.js"; false ; else true; fi
 
 .PHONY: build-gmf-apps
 build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),.js .css)) \
@@ -258,15 +261,15 @@ examples-hosted-gmf: \
 examples-hosted-apps: \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
-.build/python-venv/lib/python2.7/site-packages/glob2: requirements.txt .build/python-venv
+.build/glob2.timestamp: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^glob2== $< --colour=never`
 	touch $@
 
-.build/python-venv/lib/python2.7/site-packages/requests: requirements.txt .build/python-venv
+.build/requests.timestamp: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^requests== $< --colour=never`
 	touch $@
 
-.build/python-venv/lib/python2.7/site-packages/urllib3: requirements.txt .build/python-venv
+.build/urllib3.timestamp: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^urllib3== $< --colour=never`
 	touch $@
 
@@ -477,11 +480,9 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-$(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js: .build/node_modules.timestamp
-
-.build/examples-hosted/lib/transpile.js: $(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js
+.build/examples-hosted/lib/transpile.js: node_modules/google-closure-library/closure/goog/transpile.js
 	mkdir -p $(dir $@)
-	cp $(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js $@
+	cp $< $@
 
 .PRECIOUS: .build/examples-hosted/fonts/%
 .build/examples-hosted/fonts/%: node_modules/font-awesome/fonts/%
@@ -653,11 +654,20 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/examples-hosted/contribs/gmf/apps/desktop_alt/contextualdata.html:
 	# no contextualdata partial for the desktop_alt
 
+.build/examples-hosted/contribs/gmf/apps/mobile_alt/contextualdata.html:
+	# no contextualdata partial for the mobile_alt
+
 .build/examples-hosted/contribs/gmf/apps/mobile/contextualdata.html:
 	# no contextualdata partial for the mobile
 
+.build/examples-hosted/contribs/gmf/apps/mobile_alt/image/logo.png:
+	# no logo for the mobile_alt
+
 .build/examples-hosted/contribs/gmf/apps/mobile/image/logo.png:
 	# no logo for the mobile
+
+.build/examples-hosted/contribs/gmf/apps/mobile_alt/image/background-layer-button.png:
+	# no background layer button for the mobile_alt
 
 .build/examples-hosted/contribs/gmf/apps/mobile/image/background-layer-button.png:
 	# no background layer button for the mobile
@@ -691,6 +701,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/generate-examples-index.py \
 		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \
 		--app 'Desktop application' apps/desktop/index.html 'The desktop example application for GeoMapFish.' \
+		--app 'Alternate mobile application' apps/mobile_alt/index.html 'An alternate mobile example application for GeoMapFish.' \
 		--app 'Alternate desktop application' apps/desktop_alt/index.html 'An alternate desktop example application for GeoMapFish.' \
 		--app 'Object editing viewer' apps/oeview/index.html 'An example application for viewing an object.' \
 		--app 'Object editing editor' apps/oeedit/index.html 'An example application for editing an object.' \
@@ -816,7 +827,7 @@ $(EXTERNS_JQUERY): github_versions
 
 .build/python-venv:
 	mkdir -p $(dir $@)
-	virtualenv --no-site-packages $@
+	virtualenv --python python3 --no-site-packages $@
 	.build/python-venv/bin/pip install `grep ^pip== requirements.txt --colour=never`
 	.build/python-venv/bin/pip install `grep ^setuptoolss== requirements.txt --colour=never`
 
@@ -835,27 +846,27 @@ $(EXTERNS_JQUERY): github_versions
 
 .build/ol-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-		--root_with_prefix="node_modules/openlayers/src ../../../../../../openlayers/src" \
-		--root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../openlayers/build/ol.ext" \
+		--root_with_prefix="node_modules/openlayers/src ../../../openlayers/src" \
+		--root_with_prefix="node_modules/openlayers/build/ol.ext ../../../openlayers/build/ol.ext" \
 		--output_file=$@
 
 .build/ngeo-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-		--root_with_prefix="src ../../../../../../../src" --output_file=$@
+		--root_with_prefix="src ../../../../src" --output_file=$@
 
 .build/gmf-deps.js: .build/python-venv \
 		.build/node_modules.timestamp \
 		$(SRC_JS_FILES) \
 		$(GMF_SRC_JS_FILES)
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-		--root_with_prefix="contribs/gmf/src ../../../../../../../contribs/gmf/src" --output_file=$@
+		--root_with_prefix="contribs/gmf/src ../../../../contribs/gmf/src" --output_file=$@
 
 # The keys in the template cache begin with "../src/directives/partials". This
 # is done so ngeo.js works for the examples on github.io. If another key
 # pattern is needed this should be changed.
 .PRECIOUS: .build/templatecache.js
 .build/templatecache.js: buildtools/templatecache.mako.js \
-		.build/python-venv/lib/python2.7/site-packages/glob2 \
+		.build/glob2.timestamp \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
 		$(NGEO_MODULES_PARTIALS_FILES)
@@ -865,7 +876,7 @@ $(EXTERNS_JQUERY): github_versions
 
 .PRECIOUS: .build/gmftemplatecache.js
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
-		.build/python-venv/lib/python2.7/site-packages/glob2 \
+		.build/glob2.timestamp \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
 		$(NGEO_MODULES_PARTIALS_FILES) \
@@ -933,7 +944,7 @@ $(HOME)/.transifexrc:
 
 contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-venv/bin/mako-render
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "tx_version=$(TX_VERSION)" $< > $@
+		--var "tx_version=$(TX_VERSION)" --var "languages=$(L10N_LANGUAGES)" $< > $@
 
 .build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES) $(NGEO_JS_FILES)
@@ -957,7 +968,8 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 .PHONY: transifex-get
 transifex-get: $(L10N_PO_FILES) \
 	.build/locale/ngeo.pot \
-	.build/locale/gmf.pot
+	.build/locale/gmf.pot \
+	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/apps.po, $(L10N_LANGUAGES)))
 
 .PHONY: transifex-send
 transifex-send: .build/python-venv/bin/tx \
@@ -978,11 +990,11 @@ transifex-init: .build/python-venv/bin/tx \
 		.build/locale/ngeo.pot \
 		.build/locale/gmf.pot \
 		.build/locale/apps.pot
-	.build/python-venv/bin/tx push --source --force
+	.build/python-venv/bin/tx push --source --force --no-interactive
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 
 	cd contribs/gmf/apps/
-	.build/python-venv/bin/tx push --source --force
+	.build/python-venv/bin/tx push --source --force --no-interactive
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 	cd -
 
@@ -992,6 +1004,12 @@ transifex-init: .build/python-venv/bin/tx \
 
 .build/locale/%/LC_MESSAGES/gmf.po: .tx/config .build/python-venv/bin/tx
 	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
+	$(TOUCHBACK_TXRC)
+
+.build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config .build/python-venv/bin/tx
+	cd contribs/gmf/apps/
+	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
+	cd .
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po

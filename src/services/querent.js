@@ -5,6 +5,8 @@ goog.require('ngeo.RuleHelper');
 goog.require('ngeo.WMSTime');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WFSDescribeFeatureType');
+goog.require('ol.format.WMSCapabilities');
+goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.obj');
 goog.require('ol.source.ImageWMS');
 
@@ -16,6 +18,13 @@ ngeo.Querent = class {
    * ngeo data sources. It does not store the result. Instead, it returns it
    * using promises. Any component that inject this service can use it to
    * make it issue its own queries and do whatever it wants with the result.
+   *
+   * It supports sending OGC requests and parse the response, such as:
+   * - WFS DescribeFeatureType
+   * - WFS GetFeature
+   * - WMS GetCapabilites
+   * - WMS GetFeatureInfo
+   * - WMTS GetCapabilities
    *
    * @struct
    * @param {angular.$http} $http Angular $http service.
@@ -63,6 +72,22 @@ ngeo.Querent = class {
      * @private
      */
     this.requestCancelers_ = [];
+
+    /**
+     * Cache of promises for WMS GetCapabilities requests. They key is the
+     * online resource base url that is used to do the query.
+     * @type {!Object.<!angular.$q.Promise>}
+     * @private
+     */
+    this.wmsGetCapabilitiesPromises_ = {};
+
+    /**
+     * Cache of promises for WMST GetCapabilities requests. They key is the
+     * url that is used to do the query.
+     * @type {!Object.<!angular.$q.Promise>}
+     * @private
+     */
+    this.wmtsGetCapabilitiesPromises_ = {};
   }
 
 
@@ -123,7 +148,7 @@ ngeo.Querent = class {
    *
    * The map view resolution determines if the inner ogc layers are in range.
    *
-   * @param {!Array.<!ngeo.DataSource>} dataSources Data sources
+   * @param {!Array.<!ngeo.datasource.DataSource>} dataSources Data sources
    * @param {ol.Map} map Map.
    * @return {!ngeox.QueryableDataSources} Queryable data sources.
    * @export
@@ -143,11 +168,13 @@ ngeo.Querent = class {
         continue;
       }
 
-      // (2) Split data sources
-      if (dataSource.supportsWFS) {
-        queryableDataSources.wfs.push(dataSource);
-      } else {
-        queryableDataSources.wms.push(dataSource);
+      if (dataSource instanceof ngeo.datasource.OGC) {
+        // (2) Split data sources
+        if (dataSource.supportsWFS) {
+          queryableDataSources.wfs.push(dataSource);
+        } else {
+          queryableDataSources.wms.push(dataSource);
+        }
       }
     }
 
@@ -155,7 +182,7 @@ ngeo.Querent = class {
   }
 
   /**
-   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {ngeo.datasource.OGC} dataSource Data source.
    * @return {angular.$q.Promise} Promise.
    * @export
    */
@@ -183,6 +210,120 @@ ngeo.Querent = class {
       const format = new ol.format.WFSDescribeFeatureType();
       return format.read(response.data);
     });
+  }
+
+  /**
+   * @param {!Array.<!Object>} layerCapabilities List of WMS layer capabilities
+   * @param {string} layerName Name of the WMS layer
+   * @return {?Object} Found WMS layer capability
+   * @export
+   */
+  wmsFindLayerCapability(layerCapabilities, layerName) {
+
+    let found = null;
+
+    for (const layerCapability of layerCapabilities) {
+      if (layerCapability['Name'] === layerName) {
+        found = layerCapability;
+        break;
+      } else if (layerCapability['Layer']) {
+        found = this.wmsFindLayerCapability(
+          layerCapability['Layer'], layerName);
+        if (found) {
+          break;
+        }
+      }
+    }
+
+    return found;
+  }
+
+  /**
+   * @param {string} baseUrl Base url of the WMS server.
+   * @param {boolean=} opt_cache Whether to use the cached capability, if
+   *     available. Enabling this will also store the capability when required
+   *     for the first time. Defaults to: `true`.
+   * @return {!angular.$q.Promise} Promise.
+   * @export
+   */
+  wmsGetCapabilities(baseUrl, opt_cache) {
+
+    const cache = opt_cache !== false;
+
+    const params = {
+      'REQUEST': 'GetCapabilities',
+      'SERVICE': 'WMS',
+      'VERSION': '1.3.0'
+    };
+
+    const url = ol.uri.appendParams(baseUrl, params);
+    let promise;
+
+    if (!cache || !this.wmsGetCapabilitiesPromises_[baseUrl]) {
+      promise = this.http_.get(url).then((response) => {
+        const format = new ol.format.WMSCapabilities();
+        return format.read(response.data);
+      });
+    } else if (cache && this.wmsGetCapabilitiesPromises_[baseUrl]) {
+      promise = this.wmsGetCapabilitiesPromises_[baseUrl];
+    }
+
+    goog.asserts.assert(promise);
+
+    if (cache && !this.wmsGetCapabilitiesPromises_[baseUrl]) {
+      this.wmsGetCapabilitiesPromises_[baseUrl] = promise;
+    }
+
+    return promise;
+  }
+
+  /**
+   * @param {!Array.<!Object>} layerCapabilities List of WMTS layer capabilities
+   * @param {string} layerName Name of the WMTS layer, a.k.a. the identifier.
+   * @return {?Object} Found WTMS layer capability
+   * @export
+   */
+  wmtsFindLayerCapability(layerCapabilities, layerName) {
+    let found = null;
+    for (const layerCapability of layerCapabilities) {
+      if (layerCapability['Identifier'] === layerName) {
+        found = layerCapability;
+        break;
+      }
+    }
+    return found;
+  }
+
+  /**
+   * @param {string} url Url of the WMTS server. Note that it must contain
+   *     all required arguments.
+   * @param {boolean=} opt_cache Whether to use the cached capability, if
+   *     available. Enabling this will also store the capability when required
+   *     for the first time. Defaults to: `true`.
+   * @return {!angular.$q.Promise} Promise.
+   * @export
+   */
+  wmtsGetCapabilities(url, opt_cache) {
+
+    const cache = opt_cache !== false;
+    let promise;
+
+    if (!cache || !this.wmtsGetCapabilitiesPromises_[url]) {
+      promise = this.http_.get(url).then((response) => {
+        const format = new ol.format.WMTSCapabilities();
+        return format.read(response.data);
+      });
+    } else if (cache && this.wmtsGetCapabilitiesPromises_[url]) {
+      promise = this.wmtsGetCapabilitiesPromises_[url];
+    }
+
+    goog.asserts.assert(promise);
+
+    if (cache && !this.wmtsGetCapabilitiesPromises_[url]) {
+      this.wmtsGetCapabilitiesPromises_[url] = promise;
+    }
+
+    return promise;
   }
 
 
@@ -220,8 +361,8 @@ ngeo.Querent = class {
    * Handles the result of a single WMS GetFeatureInfo or WFS GetFeature
    * request. Read features from the response and return them.
    *
-   * @param {!Array.<!ngeo.DataSource>} dataSources List of queryable data
-   *     sources that were used to do the query.
+   * @param {!Array.<!ngeo.datasource.OGC>} dataSources List of
+   *     queryable data sources that were used to do the query.
    * @param {number} limit The maximum number of features to get with the query.
    * @param {boolean} wfs Whether the query was WFS or WMS.
    * @param {angular.$http.Response|number} response Response.
@@ -241,10 +382,14 @@ ngeo.Querent = class {
         tooManyFeatures = true;
         totalFeatureCount = response;
       } else {
-        if (wfs) {
-          features = dataSource.wfsFormat.readFeatures(response.data);
+        if (dataSource instanceof ngeo.datasource.OGC) {
+          if (wfs) {
+            features = dataSource.wfsFormat.readFeatures(response.data);
+          } else {
+            features = dataSource.wmsFormat.readFeatures(response.data);
+          }
         } else {
-          features = dataSource.wmsFormat.readFeatures(response.data);
+          features = [];
         }
       }
       const dataSourceId = dataSource.id;
@@ -308,6 +453,7 @@ ngeo.Querent = class {
       let featureNS;
       let featureTypes = [];
       let url;
+      const params = {};
 
       // (3) Build query options
       for (const dataSource of dataSources) {
@@ -329,6 +475,9 @@ ngeo.Querent = class {
           };
 
           url = dataSource.wfsUrl;
+
+          // All data sources combined share the same active dimensions
+          ol.obj.assign(params, dataSource.activeDimensions);
         }
 
         // (b) Add queryable layer names in featureTypes array
@@ -390,14 +539,14 @@ ngeo.Querent = class {
       let countPromise;
       if (wfsCount) {
         const getCountOptions =
-              /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
-                ol.obj.assign(
-                  {
-                    resultType: 'hits'
-                  },
-                  getFeatureCommonOptions
-                )
-              );
+            /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
+            ol.obj.assign(
+              {
+                resultType: 'hits'
+              },
+              getFeatureCommonOptions
+            )
+          );
         const featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
         const featureCountRequest = xmlSerializer.serializeToString(
           featureCountXml);
@@ -406,6 +555,7 @@ ngeo.Querent = class {
           url,
           featureCountRequest,
           {
+            params,
             timeout: canceler.promise
           }
         ).then(((response) => {
@@ -426,13 +576,13 @@ ngeo.Querent = class {
 
           const getFeatureOptions =
               /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
-                ol.obj.assign(
-                  {
-                    maxFeatures
-                  },
-                  getFeatureCommonOptions
-                )
-              );
+              ol.obj.assign(
+                {
+                  maxFeatures
+                },
+                getFeatureCommonOptions
+              )
+            );
           const featureRequestXml = wfsFormat.writeGetFeature(
             getFeatureOptions);
           const featureRequest = xmlSerializer.serializeToString(
@@ -443,6 +593,7 @@ ngeo.Querent = class {
             url,
             featureRequest,
             {
+              params,
               timeout: canceler.promise
             }
           ).then((response) => {
@@ -493,6 +644,7 @@ ngeo.Querent = class {
       let url;
       let LAYERS = [];
       let INFO_FORMAT;
+      let activeDimensionsSet = false;
       const params = {};
       let filterString = null;
       let filtrableLayerName = null;
@@ -510,13 +662,14 @@ ngeo.Querent = class {
         LAYERS = LAYERS.concat(
           dataSource.getInRangeOGCLayerNames(resolution, true));
 
-        // (c) Manage active dimensions. Add them directly to the query
-        //     parameters.
-        const dimensions = dataSource.activeDimensions;
-        if (dimensions) {
-          for (const dimensionKey in dimensions) {
-            params[dimensionKey] = dimensions[dimensionKey];
-          }
+        // (c) Manage active dimensions, which are added directly to the
+        //     query parameters. Note that this occurs only ONCE, i.e.
+        //     for the first data source, because all data sources here have
+        //     been combined together, therefore they share the same active
+        //     dimensions.
+        if (!activeDimensionsSet) {
+          ol.obj.assign(params, dataSource.activeDimensions);
+          activeDimensionsSet = true;
         }
 
         // (d) Add filter, if any. If there is a filter on the data source,
@@ -543,10 +696,8 @@ ngeo.Querent = class {
         }
       }
 
-      ol.obj.assign(params, {
-        LAYERS,
-        QUERY_LAYERS: LAYERS
-      });
+      params['LAYERS'] = LAYERS;
+      params['QUERY_LAYERS'] = LAYERS;
 
       // Manage 'FILTER' parameter
       if (filterString && filtrableLayerName) {
@@ -582,8 +733,9 @@ ngeo.Querent = class {
       const wmsGetFeatureInfoUrl = goog.asserts.assertString(
         wmsSource.getGetFeatureInfoUrl(
           coordinate, resolution, projCode, {
-            FEATURE_COUNT,
-            INFO_FORMAT
+            // Without extern, quoting is necessary
+            'FEATURE_COUNT': FEATURE_COUNT,
+            'INFO_FORMAT': INFO_FORMAT
           }
         )
       );
@@ -607,8 +759,8 @@ ngeo.Querent = class {
   }
 
   /**
-   * @param {!Array.<ngeox.DataSource>} dataSources List of queryable data
-   *     sources that supports WFS.
+   * @param {!Array.<ngeox.datasource.OGC>} dataSources List of
+   *     queryable data sources that supports WFS.
    * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
    * @private
    */
@@ -637,8 +789,8 @@ ngeo.Querent = class {
   }
 
   /**
-   * @param {!Array.<ngeox.DataSource>} dataSources List of queryable data
-   *     sources that supports WMS.
+   * @param {!Array.<ngeox.datasource.OGC>} dataSources List of
+   *     queryable data sources that supports WMS.
    * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
    * @private
    */
@@ -673,14 +825,18 @@ ngeo.Querent = class {
    * - queryable (using the native getter)
    * - have at least one OGC layer in range of current map view resolution.
    *
-   * @param {ngeo.DataSource} ds Data source
+   * @param {ngeo.datasource.DataSource} ds Data source
    * @param {number} res Resolution.
    * @return {boolean} Whether the data source is queryable
    * @private
    */
   isDataSourceQueryable_(ds, res) {
-    return ds.visible && ds.inRange && ds.queryable &&
-      ds.isAnyOGCLayerInRange(res, true);
+    let queryable = ds.visible && ds.inRange && ds.queryable;
+    if (queryable && ds instanceof ngeo.datasource.OGC) {
+      const ogcDS = /** @type {!ngeo.datasource.OGC} */ (ds);
+      queryable = ogcDS.isAnyOGCLayerInRange(res, true);
+    }
+    return queryable;
   }
 
   /**
@@ -723,7 +879,7 @@ ngeo.Querent = class {
 
 
 /**
- * @typedef {!Array.<!Array.<!ngeo.DataSource>>}
+ * @typedef {!Array.<!Array.<!ngeo.datasource.OGC>>}
  */
 ngeo.Querent.CombinedDataSources;
 

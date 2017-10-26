@@ -1,6 +1,6 @@
 goog.provide('gmfapp.displayquerywindow');
 
-goog.require('gmf.DataSourcesManager');
+goog.require('gmf.datasource.DataSourcesManager');
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.displayquerywindowComponent');
@@ -34,8 +34,8 @@ gmfapp.module.value('ngeoQueryOptions', {
 
 
 gmfapp.module.value(
-    'gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
+  'gmfTreeUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
 
@@ -81,14 +81,14 @@ gmfapp.module.controller('AppQueryresultController', gmfapp.QueryresultControlle
 /**
  * @constructor
  * @param {gmf.Themes} gmfThemes The gmf themes service.
- * @param {gmf.DataSourcesManager} gmfDataSourcesManager The gmf data sources
- *     manager service.
+ * @param {gmf.datasource.DataSourcesManager} gmfDataSourcesManager The gmf
+ *     data sources manager service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */
 gmfapp.MainController = function(gmfThemes, gmfDataSourcesManager,
-    ngeoFeatureOverlayMgr) {
+  ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
 

@@ -14,11 +14,11 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
 
 
 gmfapp.module.value('gmfTreeUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
 gmfapp.module.value('gmfLayersUrl',
-    'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
 
 /**
@@ -169,7 +169,6 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
    * @export
    */
   this.themeName = 'ObjectEditing';
-
 
   this.gmfThemes_.loadThemes();
 

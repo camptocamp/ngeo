@@ -110,24 +110,24 @@ ngeo.ToolActivateMgr = function($rootScope) {
  * @export
  */
 ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
-    opt_defaultActivate) {
+  opt_defaultActivate) {
   let entries = this.groups_[groupName];
   if (!entries) {
     entries = this.groups_[groupName] = [];
   }
 
   const unlisten = this.scope_.$watch(
-      tool.getActive,
-      (newVal, oldVal) => {
-        if (newVal === oldVal) {
-          return;
-        }
-        if (newVal) {
-          this.deactivateTools_(groupName, tool);
-        } else {
-          this.activateDefault_(groupName);
-        }
-      });
+    tool.getActive,
+    (newVal, oldVal) => {
+      if (newVal === oldVal) {
+        return;
+      }
+      if (newVal) {
+        this.deactivateTools_(groupName, tool);
+      } else {
+        this.activateDefault_(groupName);
+      }
+    });
 
   entries.push({
     tool,
@@ -144,7 +144,7 @@ ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
       }
     });
     goog.asserts.assert(
-        defaultTools <= 1, `more than one default tool in group ${groupName}`);
+      defaultTools <= 1, `more than one default tool in group ${groupName}`);
   }
 };
 

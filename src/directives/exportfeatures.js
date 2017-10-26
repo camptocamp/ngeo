@@ -54,7 +54,7 @@ ngeo.module.directive('ngeoExportfeatures', ngeo.exportfeaturesDirective);
  * @ngname ngeoExportfeaturesController
  */
 ngeo.ExportfeaturesController = function($element, $injector, $scope,
-    ngeoFeatureHelper) {
+  ngeoFeatureHelper) {
 
   /**
    * @type {ol.Collection.<ol.Feature>}
@@ -113,20 +113,20 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
     this.menu_ = $menu;
     let $item;
 
-    formats.forEach(function(format) {
+    formats.forEach((format) => {
       $item = $('<li />')
         .appendTo($menu)
         .append($('<a />', {
           'href': '#',
           'text': format
         })
-        .on(
-          ['click', id].join('.'),
-          this.handleMenuItemClick_.bind(this, format)
-        )
-      );
+          .on(
+            ['click', id].join('.'),
+            this.handleMenuItemClick_.bind(this, format)
+          )
+        );
       this.items_.push($item);
-    }, this);
+    });
   }
 
   /**
@@ -162,7 +162,7 @@ ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
     const feature = features[0];
     const geom = feature.getGeometry();
     let $item;
-    this.formats_.forEach(function(format, i) {
+    this.formats_.forEach((format, i) => {
       $item = this.items_[i];
       if (format === ngeo.FeatureHelper.FormatType.GPX) {
         if (geom instanceof ol.geom.Point ||
@@ -172,7 +172,7 @@ ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
           $item.addClass('disabled');
         }
       }
-    }, this);
+    });
   }
 };
 
@@ -213,4 +213,4 @@ ngeo.ExportfeaturesController.prototype.handleDestroy_ = function() {
 
 
 ngeo.module.controller(
-    'ngeoExportfeaturesController', ngeo.ExportfeaturesController);
+  'ngeoExportfeaturesController', ngeo.ExportfeaturesController);

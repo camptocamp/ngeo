@@ -54,14 +54,14 @@ ol.inherits(ngeo.interaction.MeasureArea, ngeo.interaction.Measure);
  * @inheritDoc
  */
 ngeo.interaction.MeasureArea.prototype.createDrawInteraction = function(style,
-    source) {
+  source) {
 
   return new ol.interaction.Draw(
-      /** @type {olx.interaction.DrawOptions} */ ({
-        type: 'Polygon',
-        source,
-        style
-      }));
+    /** @type {olx.interaction.DrawOptions} */ ({
+      type: 'Polygon',
+      source,
+      style
+    }));
 
 };
 
@@ -70,14 +70,13 @@ ngeo.interaction.MeasureArea.prototype.createDrawInteraction = function(style,
  * @inheritDoc
  */
 ngeo.interaction.MeasureArea.prototype.handleMeasure = function(callback) {
-  const geom = /** @type {ol.geom.Polygon} */
-      (this.sketchFeature.getGeometry());
+  const geom = goog.asserts.assertInstanceof(this.sketchFeature.getGeometry(), ol.geom.Polygon);
   const proj = this.getMap().getView().getProjection();
-  const dec = this.decimals;
-  const output = ngeo.interaction.Measure.getFormattedArea(geom, proj, dec, this.format);
+  goog.asserts.assert(proj);
+  const output = ngeo.interaction.Measure.getFormattedArea(geom, proj, this.precision, this.format);
   const verticesCount = geom.getCoordinates()[0].length;
   let coord = null;
-  if (verticesCount > 2) {
+  if (verticesCount > 3) {
     coord = geom.getInteriorPoint().getCoordinates();
   }
   callback(output, coord);

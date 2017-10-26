@@ -4,16 +4,16 @@ goog.require('ngeo');
 
 
 ngeo.module.value('ngeoColorpickerTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoColorpickerTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseTemplateUrl}/colorpicker.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoColorpickerTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseTemplateUrl}/colorpicker.html`;
+  });
 
 /**
  * Provides the "ngeoColorpicker" directive, a widget for
@@ -95,4 +95,4 @@ ngeo.ColorpickerController.prototype.setColor = function(color) {
 
 
 ngeo.module.controller('NgeoColorpickerController',
-    ngeo.ColorpickerController);
+  ngeo.ColorpickerController);

@@ -1,6 +1,7 @@
 /**
  * Styles for the map and OL3 controls.
  */
+.ol-rotate,
 .ol-zoom {
   background-color: transparent;
   padding: 0;
@@ -32,6 +33,7 @@
  * Only affects webkit desktop browsers
  */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
+  .ol-rotate,
   .ol-zoom {
     button {
       &:active {
@@ -99,7 +101,7 @@ button[ngeo-mobile-geolocation] {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    flex: 1;
+    flex: 1 1 auto;
   }
 
   .gmf-thumb {

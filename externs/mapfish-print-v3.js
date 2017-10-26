@@ -44,6 +44,11 @@ let MapFishPrintAttributes = function() {};
 MapFishPrintAttributes.prototype.map;
 
 
+/**
+ * @type {Array.<Object>}
+ */
+MapFishPrintAttributes.prototype.datasource;
+
 
 /**
  * @constructor
@@ -414,6 +419,12 @@ MapFishPrintSymbolizerLine.prototype.strokeWidth;
  * @type {string}
  */
 MapFishPrintSymbolizerLine.prototype.strokeDashstyle;
+
+
+/**
+ * @type {string}
+ */
+MapFishPrintSymbolizerLine.prototype.strokeLinecap;
 
 
 

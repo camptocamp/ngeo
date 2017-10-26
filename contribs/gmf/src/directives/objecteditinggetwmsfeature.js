@@ -58,7 +58,7 @@ gmf.module.directive(
  * @ngname GmfObjecteditinggetwmsfeatureController
  */
 gmf.ObjecteditinggetwmsfeatureController = function($scope,
-    gmfObjectEditingQuery) {
+  gmfObjectEditingQuery) {
 
   // Scope properties
 
@@ -107,21 +107,19 @@ gmf.ObjecteditinggetwmsfeatureController = function($scope,
  * @param {boolean} active Active.
  * @private
  */
-gmf.ObjecteditinggetwmsfeatureController.prototype.handleActiveChange_ = function(
-  active
-) {
+gmf.ObjecteditinggetwmsfeatureController.prototype.handleActiveChange_ = function(active) {
 
   if (active) {
     ol.events.listen(
       this.map,
-      ol.MapBrowserEventType.CLICK,
+      'click',
       this.handleMapClick_,
       this
     );
   } else {
     ol.events.unlisten(
       this.map,
-      ol.MapBrowserEventType.CLICK,
+      'click',
       this.handleMapClick_,
       this
     );

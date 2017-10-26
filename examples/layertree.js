@@ -127,10 +127,10 @@ app.LayertreeController.prototype.onButtonClick = function(node, layer) {
   const layerType = node['layerType'];
   if (!(layerType in this.promises_)) {
     this.promises_[layerType] = this.http_.get('data/metadata.html').then(
-        (resp) => {
-          const html = this.sce_.trustAsHtml(resp.data);
-          return html;
-        }
+      (resp) => {
+        const html = this.sce_.trustAsHtml(resp.data);
+        return html;
+      }
     );
   }
   const infoPopup = this.infoPopup_;
@@ -160,49 +160,49 @@ app.getLayer = (function() {
    */
   const layerCache = {};
   return (
-      /**
+  /**
        * @param {Object} node Tree node.
        * @return {ol.layer.Layer} Layer.
        */
-      function(node) {
-        if (!('layerType' in node)) {
-          return null;
-        }
-        const type = node['layerType'];
-        if (type in layerCache) {
-          return layerCache[type];
-        }
-        let source;
-        if (type == 'stamenWatercolor') {
-          source = new ol.source.Stamen({
-            layer: 'watercolor'
-          });
-        } else if (type == 'stamenTerrain-labels') {
-          source = new ol.source.Stamen({
-            layer: 'terrain-labels'
-          });
-        } else if (type == 'osmHumanitarian') {
-          source = new ol.source.OSM({
-            url: 'https://tile-{a-c}.openstreetmap.fr/hot/{z}/{x}/{y}.png'
-          });
-        } else if (type == 'osmCycle') {
-          source = new ol.source.OSM({
-            url: 'https://{a-c}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png'
-          });
-        } else if (type == 'osmTransport') {
-          source = new ol.source.OSM({
-            url: 'https://{a-c}.tile.thunderforest.com/transport/{z}/{x}/{y}.png'
-          });
-        } else {
-          source = new ol.source.OSM();
-        }
-        const layer = new ol.layer.Tile({
-          source
+    function(node) {
+      if (!('layerType' in node)) {
+        return null;
+      }
+      const type = node['layerType'];
+      if (type in layerCache) {
+        return layerCache[type];
+      }
+      let source;
+      if (type == 'stamenWatercolor') {
+        source = new ol.source.Stamen({
+          layer: 'watercolor'
         });
-        layer.set('type', type);
-        layerCache[type] = layer;
-        return layer;
+      } else if (type == 'stamenTerrain-labels') {
+        source = new ol.source.Stamen({
+          layer: 'terrain-labels'
+        });
+      } else if (type == 'osmHumanitarian') {
+        source = new ol.source.OSM({
+          url: 'https://tile-{a-c}.openstreetmap.fr/hot/{z}/{x}/{y}.png'
+        });
+      } else if (type == 'osmCycle') {
+        source = new ol.source.OSM({
+          url: 'https://{a-c}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png'
+        });
+      } else if (type == 'osmTransport') {
+        source = new ol.source.OSM({
+          url: 'https://{a-c}.tile.thunderforest.com/transport/{z}/{x}/{y}.png'
+        });
+      } else {
+        source = new ol.source.OSM();
+      }
+      const layer = new ol.layer.Tile({
+        source
       });
+      layer.set('type', type);
+      layerCache[type] = layer;
+      return layer;
+    });
 })();
 
 

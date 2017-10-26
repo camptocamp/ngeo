@@ -3,33 +3,14 @@
  */
 goog.provide('ngeo.search.createLocationSearchBloodhound');
 
+goog.require('ol');
 goog.require('ol.obj');
 goog.require('ol.proj');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+
 goog.require('ol.geom.Point');
 goog.require('ol.Feature');
-
-/**
- * Provides a function that creates a Bloodhound engine
- * for the GeoAdmin Location Search API, which creates `ol.Feature` objects
- * as suggestions.
- *
- * See: http://api3.geo.admin.ch/services/sdiservices.html#search
- *
- * Example:
- *
- *     let bloodhound = ngeoCreateLocationSearchBloodhound({
- *       targetProjection: ol.proj.get('EPSG:3857'),
- *       limit: 10
- *     });
- *     bloodhound.initialize();
- *
- * @typedef {function(ngeox.search.LocationSearchOptions=):Bloodhound}
- * @ngdoc service
- * @ngname search.createLocationSearchBloodhound
- */
-ngeo.search.CreateLocationSearchBloodhound;
 
 
 /**
@@ -88,7 +69,7 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
         }
 
         return (options.prepare !== undefined) ?
-            options.prepare(query, settings) : settings;
+          options.prepare(query, settings) : settings;
       },
       transform(/** @type{geoAdminx.SearchLocationResponse} */ parsedResponse) {
         const features = parsedResponse.results.map((/** @type{geoAdminx.SearchLocationResult} */ result) => {
@@ -152,3 +133,25 @@ ngeo.search.createLocationSearchBloodhound.module = angular.module('ngeoCreateLo
 ngeo.search.createLocationSearchBloodhound.module.value(
   'ngeoCreateLocationSearchBloodhound',
   ngeo.search.createLocationSearchBloodhound);
+
+
+/**
+ * Provides a function that creates a Bloodhound engine
+ * for the GeoAdmin Location Search API, which creates `ol.Feature` objects
+ * as suggestions.
+ *
+ * See: http://api3.geo.admin.ch/services/sdiservices.html#search
+ *
+ * Example:
+ *
+ *     let bloodhound = ngeoCreateLocationSearchBloodhound({
+ *       targetProjection: ol.proj.get('EPSG:3857'),
+ *       limit: 10
+ *     });
+ *     bloodhound.initialize();
+ *
+ * @typedef {function(ngeox.search.LocationSearchOptions=):Bloodhound}
+ * @ngdoc service
+ * @ngname search.createLocationSearchBloodhound
+ */
+ngeo.search.createLocationSearchBloodhound.Function;

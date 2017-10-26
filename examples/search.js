@@ -42,7 +42,7 @@ app.searchDirective = function() {
      * @param {angular.Attributes} attrs Atttributes.
      */
     link(scope, element, attrs) {
-          // Empty the search field on focus and blur.
+      // Empty the search field on focus and blur.
       element.find('input').on('focus blur', function() {
         $(this).val('');
       });
@@ -58,7 +58,7 @@ app.module.directive('appSearch', app.searchDirective);
  * @constructor
  * @param {angular.Scope} $rootScope Angular root scope.
  * @param {angular.$compile} $compile Angular compile service.
- * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
+ * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @ngInject
  */
@@ -78,7 +78,7 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
 
   /** @type {Bloodhound} */
   const bloodhoundEngine = this.createAndInitBloodhound_(
-      ngeoSearchCreateGeoJSONBloodhound);
+    ngeoSearchCreateGeoJSONBloodhound);
 
   /**
    * @type {TypeaheadOptions}
@@ -116,7 +116,7 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
         };
 
         const html = `<p>${feature.get('label')
-            }<button ng-click="click($event)">i</button></p>`;
+        }<button ng-click="click($event)">i</button></p>`;
         return $compile(html)(scope);
       }
     }
@@ -149,7 +149,7 @@ app.SearchController.prototype.createVectorLayer_ = function() {
 
 
 /**
- * @param {ngeo.search.CreateGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
+ * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @return {Bloodhound} The bloodhound engine.
  * @private
@@ -157,7 +157,7 @@ app.SearchController.prototype.createVectorLayer_ = function() {
 app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
   const url = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?query=%QUERY';
   const bloodhound = ngeoSearchCreateGeoJSONBloodhound(
-      url, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
+    url, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
   bloodhound.initialize();
   return bloodhound;
 };

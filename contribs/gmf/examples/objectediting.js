@@ -37,7 +37,7 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
  * @ngInject
  */
 gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
-    gmfTreeManager, ngeoToolActivateMgr) {
+  gmfTreeManager, ngeoToolActivateMgr) {
 
   /**
    * @type {gmf.TreeManager}

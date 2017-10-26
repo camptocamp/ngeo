@@ -1,27 +1,28 @@
-goog.provide('gmf.DataSourcesManager');
+goog.provide('gmf.datasource.DataSourcesManager');
 
 goog.require('gmf');
-goog.require('gmf.DataSource');
+goog.require('gmf.datasource.OGC');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
+goog.require('ngeo.BackgroundEventType');
+goog.require('ngeo.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
-goog.require('ngeo.DataSources');
+goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.WMSTime');
-goog.require('ol.array');
 goog.require('ol.obj');
 goog.require('ol.layer.Image');
 goog.require('ol.source.ImageWMS');
 
 
-gmf.DataSourcesManager = class {
+gmf.datasource.DataSourcesManager = class {
 
   /**
    * The GeoMapFish DataSources Manager is responsible of listenening to the
-   * c2cgeoportal's themes to create instances of `ngeo.DataSource` objects with
-   * the layer definitions found and push them in the `ngeo.DataSources`
-   * collection.
+   * c2cgeoportal's themes to create instances of `ngeo.datasource.DataSource`
+   * objects with the layer definitions found and push them in the
+   * `ngeo.datasource.DataSources` collection.
    *
    * When changing theme, these data sources are cleared then re-created.
    *
@@ -31,8 +32,10 @@ gmf.DataSourcesManager = class {
    * @param {angular.$timeout} $timeout Angular timeout service.
    * @param {gmf.Themes} gmfThemes The gmf Themes service.
    * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
-   * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
-   *     objects.
+   * @param {!ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
+   *     manager.
+   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+   *     data sources objects.
    * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
@@ -41,7 +44,8 @@ gmf.DataSourcesManager = class {
    * @ngname gmfDataSourcesManager
    */
   constructor($q, $rootScope, $timeout, gmfThemes, gmfTreeManager,
-      ngeoDataSources, ngeoLayerHelper, ngeoRuleHelper, ngeoWMSTime
+    ngeoBackgroundLayerMgr, ngeoDataSources, ngeoLayerHelper, ngeoRuleHelper,
+    ngeoWMSTime
   ) {
 
     // === Injected properties ===
@@ -77,10 +81,16 @@ gmf.DataSourcesManager = class {
     this.gmfTreeManager_ = gmfTreeManager;
 
     /**
+     * @type {!ngeo.BackgroundLayerMgr}
+     * @private
+     */
+    this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
+
+    /**
      * The collection of DataSources from ngeo, which gets updated by this
      * service. When the theme changes, first we remove all data sources, then
      * the 'active' data source are added here.
-     * @type {ngeo.DataSources}
+     * @type {ngeo.datasource.DataSources}
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
@@ -109,16 +119,23 @@ gmf.DataSourcesManager = class {
     /**
      * While loading a new theme, this is where all of the created data sources
      * are put using the id as key for easier find in the future.
-     * @type {Object.<number, ngeo.DataSource>}
+     * @type {Object.<number, gmf.datasource.OGC>}
      * @private
      */
     this.dataSourcesCache_ = {};
 
     /**
+     * A reference to the dimensions object.
+     * @type {ngeox.Dimensions|undefined}
+     * @private
+     */
+    this.dimensions_;
+
+    /**
      * The cache of layertree leaf controller, i.e. those that are added to
      * the tree manager. When treeCtrl is added in this cache, it's given
      * a reference to its according data source.
-     * @type {gmf.DataSourcesManager.TreeCtrlCache}
+     * @type {gmf.datasource.DataSourcesManager.TreeCtrlCache}
      * @private
      */
     this.treeCtrlCache_ = {};
@@ -133,8 +150,22 @@ gmf.DataSourcesManager = class {
 
     // === Events ===
 
+    ol.events.listen(
+      this.ngeoBackgroundLayerMgr_,
+      ngeo.BackgroundEventType.CHANGE,
+      this.handleNgeoBackgroundLayerChange_,
+      this
+    );
     ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE,
-        this.handleThemesChange_, this);
+      this.handleThemesChange_, this);
+  }
+
+  /**
+   * @param {!ngeox.Dimensions} dimensions A reference to the dimensions
+   *     object to keep a reference of in this service.
+   */
+  setDimensions(dimensions) {
+    this.dimensions_ = dimensions;
   }
 
   /**
@@ -162,73 +193,108 @@ gmf.DataSourcesManager = class {
         }
       });
 
-      const promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then((backgroundLayers) => {
-        // Create a DataSource for each background layer
-        for (const backgroundLayer of backgroundLayers) {
-          this.createDataSource_(null, backgroundLayer, ogcServers);
+      const promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(
+        (backgroundLayers) => {
+          // Create a DataSource for each background layer
+          for (const backgroundLayer of backgroundLayers) {
+            this.createDataSource_(null, backgroundLayer, ogcServers);
+          }
         }
-      });
+      );
 
       // Then add the data sources that are active in the ngeo collection
       this.q_.all([promiseThemes, promiseBgLayers]).then(() => {
-        this.treeCtrlsUnregister_ = this.rootScope_.$watchCollection(() => {
-          if (this.gmfTreeManager_.rootCtrl) {
-            return this.gmfTreeManager_.rootCtrl.children;
-          }
-        }, (value) => {
-          // Timeout required, because the collection event is fired before
-          // the leaf nodes are created and they are the ones we're looking
-          // for here.
-          this.timeout_(() => {
-
-            // (1) No need to do anything if the value is not set
-            if (!value) {
-              return;
+        this.treeCtrlsUnregister_ = this.rootScope_.$watchCollection(
+          () => {
+            if (this.gmfTreeManager_.rootCtrl) {
+              return this.gmfTreeManager_.rootCtrl.children;
             }
-
-            // (2) Collect 'leaf' treeCtrls
-            const newTreeCtrls = [];
-            const visitor = (treeCtrls, treeCtrl) => {
-              const node =
-                    /** @type {!gmfThemes.GmfGroup|!gmfThemes.GmfLayer} */ (
-                    treeCtrl.node);
-              const children = node.children;
-              if (!children) {
-                treeCtrls.push(treeCtrl);
-              }
-            };
-            for (let i = 0, ii = value.length; i < ii; i++) {
-              value[i].traverseDepthFirst(visitor.bind(this, newTreeCtrls));
-            }
-
-            // (3) Add new 'treeCtrls'
-            for (let i = 0, ii = newTreeCtrls.length; i < ii; i++) {
-              const newTreeCtrl = newTreeCtrls[i];
-              const cacheItem = this.getTreeCtrlCacheItem_(newTreeCtrl);
-              if (!cacheItem) {
-                this.addTreeCtrlToCache_(newTreeCtrl);
-              }
-            }
-
-            // (4) Remove treeCtrls that are no longer in the newTreeCtrl
-            const cache = this.treeCtrlCache_;
-            for (const id in this.treeCtrlCache_) {
-              if (!ol.array.includes(newTreeCtrls, cache[id].treeCtrl)) {
-                this.removeTreeCtrlCacheItem_(cache[id]);
-              }
-            }
-          });
-        });
+          },
+          this.handleTreeManagerRootChildrenChange_.bind(this)
+        );
       });
     });
   }
 
   /**
-   * Remove all data sources from the ngeo collection and from the cache.
+   * Called when the list of tree controllers within the tree manager
+   * root controller changes. In other words, this method is called
+   * after nodes are being added added or removed from the tree,
+   * i.e. from the child nodes collection.
+   *
+   * A timeout is required  because the collection event is fired before
+   * the leaf nodes are created and they are the ones we're looking for here.
+   *
+   * This method handles the registration/unregistration of tree nodes that
+   * are added or removed, pushing it to the cache or removing it from the
+   * cache.
+   *
+   * @param {Array.<ngeo.LayertreeController>|undefined} value List of tree
+   *     controllers.
+   * @private
+   */
+  handleTreeManagerRootChildrenChange_(value) {
+
+    this.timeout_(() => {
+
+      // (1) No need to do anything if the value is not set
+      if (!value) {
+        return;
+      }
+
+      // (2) Collect 'leaf' treeCtrls
+      const newTreeCtrls = [];
+      const visitor = (treeCtrls, treeCtrl) => {
+        const node = /** @type {!gmfThemes.GmfGroup|!gmfThemes.GmfLayer} */ (
+          treeCtrl.node);
+        const children = node.children;
+        if (!children) {
+          treeCtrls.push(treeCtrl);
+        }
+      };
+      for (let i = 0, ii = value.length; i < ii; i++) {
+        value[i].traverseDepthFirst(visitor.bind(this, newTreeCtrls));
+      }
+
+      // (3) Add new 'treeCtrls'
+      for (let i = 0, ii = newTreeCtrls.length; i < ii; i++) {
+        const newTreeCtrl = newTreeCtrls[i];
+        const cacheItem = this.getTreeCtrlCacheItem_(newTreeCtrl);
+        if (!cacheItem) {
+          this.addTreeCtrlToCache_(newTreeCtrl);
+        }
+      }
+
+      // (4) Remove treeCtrls that are no longer in the newTreeCtrl
+      const cache = this.treeCtrlCache_;
+      for (const id in this.treeCtrlCache_) {
+        const item = cache[id];
+        if (!newTreeCtrls.includes(item.treeCtrl)) {
+          this.removeTreeCtrlCacheItem_(item);
+        }
+      }
+    });
+  }
+
+  /**
+   * Remove the data sources from the ngeo collection that are in the cache,
+   * i.e. those created by this service, then clear the cache.
    * @private
    */
   clearDataSources_() {
-    this.ngeoDataSources_.clear();
+
+    // (1) Remove data sources from ngeo collection
+    const ngeoDataSources = this.ngeoDataSources_.getArray();
+    for (let i = ngeoDataSources.length - 1, ii = 0; i >= ii; i--) {
+      if (this.dataSourcesCache_[ngeoDataSources[i].id]) {
+        // Use the `remove` method of the `ol.Collection` object for it
+        // to update its length accordingly and trigger the REMOVE event as
+        // well.
+        this.ngeoDataSources_.remove(ngeoDataSources[i]);
+      }
+    }
+
+    // (2) Clear the cache
     ol.obj.clear(this.dataSourcesCache_);
   }
 
@@ -265,9 +331,8 @@ gmf.DataSourcesManager = class {
     const gmfLayer = /** @type gmfThemes.GmfLayer */ (node);
 
     // (2) Skip layer node if a data source with the same id exists
-    const cache = this.dataSourcesCache_;
-    const id = gmfLayer.id;
-    if (cache[id]) {
+    const id = ol.getUid(gmfLayer);
+    if (this.dataSourcesCache_[id]) {
       return;
     }
 
@@ -348,21 +413,27 @@ gmf.DataSourcesManager = class {
     const ogcServerType = ogcServer ? ogcServer.type : undefined;
     const wmsIsSingleTile = ogcServer ? ogcServer.isSingleTile : undefined;
     const wfsUrl = ogcServer && ogcServer.wfsSupport ?
-          ogcServer.urlWfs : undefined;
+      ogcServer.urlWfs : undefined;
     const wmsUrl = ogcServer ? ogcServer.url : undefined;
+
+    let wfsOutputFormat = ngeo.datasource.OGC.WFSOutputFormat.GML3;
+    // qgis server only supports GML2 output
+    if (ogcServerType === ngeo.datasource.OGC.ServerType.QGISSERVER) {
+      wfsOutputFormat = ngeo.datasource.OGC.WFSOutputFormat.GML2;
+    }
 
     // (6) Snapping
     const snappable = !!meta.snappingConfig;
     const snappingTolerance = meta.snappingConfig ?
-          meta.snappingConfig.tolerance : undefined;
+      meta.snappingConfig.tolerance : undefined;
     const snappingToEdges = meta.snappingConfig ?
-          meta.snappingConfig.edge : undefined;
+      meta.snappingConfig.edge : undefined;
     const snappingToVertice = meta.snappingConfig ?
-          meta.snappingConfig.vertex : undefined;
+      meta.snappingConfig.vertex : undefined;
 
     // (7) Dimensions
-    const dimensions = node.dimensions || firstLevelGroup.dimensions;
-    const activeDimensions = dimensions;
+    const dimensions = this.dimensions_;
+    const dimensionsConfig = node.dimensions || firstLevelGroup.dimensions;
 
     // (8) Time values (lower or lower/upper)
     let timeLowerValue;
@@ -385,10 +456,10 @@ gmf.DataSourcesManager = class {
     const visible = meta.isChecked === true;
 
     // Create the data source and add it to the cache
-    cache[id] = new gmf.DataSource({
-      activeDimensions,
+    this.dataSourcesCache_[id] = new gmf.datasource.OGC({
       copyable,
       dimensions,
+      dimensionsConfig,
       gmfLayer,
       id,
       identifierAttribute,
@@ -408,6 +479,7 @@ gmf.DataSourcesManager = class {
       timeProperty,
       timeUpperValue,
       visible,
+      wfsOutputFormat,
       wfsUrl,
       wmsIsSingleTile,
       wmsUrl,
@@ -426,7 +498,7 @@ gmf.DataSourcesManager = class {
    */
   addTreeCtrlToCache_(treeCtrl) {
 
-    const id = treeCtrl.node.id;
+    const id = ol.getUid(treeCtrl.node);
     const dataSource = this.dataSourcesCache_[id];
     goog.asserts.assert(dataSource, 'DataSource should be set');
     treeCtrl.setDataSource(dataSource);
@@ -450,7 +522,7 @@ gmf.DataSourcesManager = class {
     let timeUpperValueWatcherUnregister;
     let wmsLayer;
     if (dataSource.timeProperty &&
-        dataSource.ogcType === ngeo.DataSource.OGCType.WMS
+        dataSource.ogcType === ngeo.datasource.OGC.Type.WMS
     ) {
       timeLowerValueWatcherUnregister = this.rootScope_.$watch(
         () => dataSource.timeLowerValue,
@@ -486,7 +558,7 @@ gmf.DataSourcesManager = class {
    * Remove a treeCtrl cache item. Unregister event listeners and remove the
    * data source from the ngeo collection.
    *
-   * @param {gmf.DataSourcesManager.TreeCtrlCacheItem} item Layertree
+   * @param {gmf.datasource.DataSourcesManager.TreeCtrlCacheItem} item Layertree
    *     controller cache item
    * @private
    */
@@ -507,7 +579,7 @@ gmf.DataSourcesManager = class {
     if (item.timeUpperValueWatcherUnregister) {
       item.timeUpperValueWatcherUnregister();
     }
-    delete this.treeCtrlCache_[`${dataSource.id}`];
+    delete this.treeCtrlCache_[ol.getUid(item.treeCtrl.node)];
   }
 
   /**
@@ -540,18 +612,40 @@ gmf.DataSourcesManager = class {
     goog.asserts.assert(dataSource, 'DataSource should be set');
     const visible = newVal === 'on';
     dataSource.visible = visible;
+
+    // In GMF, multiple data sources can be combined into one ol.layer.Layer
+    // object. When changing the state of a data source, we need to make
+    // sure that the FILTER param match order of the current LAYERS param.
+    //
+    // Note: we only need to do this ONCE, as there can be only one
+    // data source being filtered at a time
+    const siblingDataSourceIds = gmf.SyncLayertreeMap.getLayer(
+      treeCtrl).get('querySourceIds');
+    if (Array.isArray(siblingDataSourceIds)) {
+      const ngeoDataSources = this.ngeoDataSources_.getArray();
+      for (const ngeoDataSource of ngeoDataSources) {
+        if (ngeoDataSource instanceof gmf.datasource.OGC &&
+            ngeoDataSource.filterRules !== null &&
+            ngeoDataSource.id !== dataSource.id &&
+            siblingDataSourceIds.includes(ngeoDataSource.id) &&
+            ngeoDataSource.visible
+        ) {
+          this.handleDataSourceFilterRulesChange_(ngeoDataSource, true);
+          break;
+        }
+      }
+    }
   }
 
   /**
    * Returns a layertree controller cache item, if it exists.
    *
    * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
-   * @return {gmf.DataSourcesManager.TreeCtrlCacheItem} Cache item
+   * @return {gmf.datasource.DataSourcesManager.TreeCtrlCacheItem} Cache item
    * @private
    */
   getTreeCtrlCacheItem_(treeCtrl) {
-    const id = treeCtrl.node.id;
-    return this.treeCtrlCache_[id] || null;
+    return this.treeCtrlCache_[ol.getUid(treeCtrl.node)] || null;
   }
 
   /**
@@ -562,7 +656,7 @@ gmf.DataSourcesManager = class {
    * set to apply them as OGC filters to the OpenLayers layer, more precisely
    * as a `FILTER` parameter in the layer's source parameters.
    *
-   * @param {!ngeo.DataSource} dataSource Data source.
+   * @param {!gmf.datasource.OGC} dataSource Data source.
    * @param {boolean} value Value.
    * @private
    */
@@ -572,13 +666,13 @@ gmf.DataSourcesManager = class {
     // the WMS ogcType, i.e. those that do not have an OpenLayers layer
     // to update
     if (dataSource.filtrable !== true ||
-        dataSource.ogcType !== ngeo.DataSource.OGCType.WMS
+        dataSource.ogcType !== ngeo.datasource.OGC.Type.WMS
     ) {
       return;
     }
 
-    const id = dataSource.id;
-    const item = this.treeCtrlCache_[String(id)];
+    const id = ol.getUid(dataSource.gmfLayer);
+    const item = this.treeCtrlCache_[id];
     goog.asserts.assert(item);
     const treeCtrl = item.treeCtrl;
 
@@ -596,10 +690,12 @@ gmf.DataSourcesManager = class {
 
     const filtrableLayerName = dataSource.getFiltrableOGCLayerName();
     const projCode = treeCtrl.map.getView().getProjection().getCode();
-    const filterString = this.ngeoRuleHelper_.createFilterString({
-      dataSource,
-      projCode
-    });
+    const filterString = dataSource.visible ?
+      this.ngeoRuleHelper_.createFilterString({
+        dataSource,
+        projCode
+      }) :
+      null;
 
     const filterParam = 'FILTER';
     let filterParamValue = null;
@@ -642,12 +738,13 @@ gmf.DataSourcesManager = class {
    * Get the range value from the data source, then update the WMS layer
    * thereafter.
    *
-   * @param {!ngeo.DataSource} dataSource Data source.
+   * @param {!gmf.datasource.OGC} dataSource Data source.
    * @private
    */
   handleDataSourceTimeValueChange_(dataSource) {
 
-    const item = this.treeCtrlCache_[String(dataSource.id)];
+    const id = ol.getUid(dataSource.gmfLayer);
+    const item = this.treeCtrlCache_[id];
     goog.asserts.assert(item);
     const wmsLayer = goog.asserts.assert(item.wmsLayer);
     const wmsSource = goog.asserts.assertInstanceof(
@@ -678,13 +775,58 @@ gmf.DataSourcesManager = class {
     );
   }
 
+  /**
+   * Called when the background layer changes. Add/Remove the according data
+   * sources to/from the ngeo data sources collection. Update the data source
+   * `visible` property as well.
+   *
+   * The `querySourceIds` property in the layer is used to determine the
+   * data sources that are bound to the layer.
+   *
+   * @param {!ngeo.BackgroundEvent} evt Event.
+   * @private
+   */
+  handleNgeoBackgroundLayerChange_(evt) {
+
+    const previousBackgroundLayer = evt.previous;
+    const currentBackgroundLayer = evt.current;
+    const cache = this.dataSourcesCache_;
+
+    // Remove data sources linked to previous background layer
+    if (previousBackgroundLayer) {
+      const ids = previousBackgroundLayer.get('querySourceIds');
+      if (Array.isArray(ids)) {
+        for (const id of ids) {
+          const dataSource = cache[id];
+          if (dataSource) {
+            dataSource.visible = false;
+            this.ngeoDataSources_.remove(dataSource);
+          }
+        }
+      }
+    }
+
+    // Add data sources linked to current background layer
+    if (currentBackgroundLayer) {
+      const ids = currentBackgroundLayer.get('querySourceIds');
+      if (Array.isArray(ids)) {
+        for (const id of ids) {
+          const dataSource = cache[id];
+          if (dataSource) {
+            dataSource.visible = true;
+            this.ngeoDataSources_.push(dataSource);
+          }
+        }
+      }
+    }
+  }
 };
 
 
 /**
- * @typedef {Object<string, gmf.DataSourcesManager.TreeCtrlCacheItem>}
+ * @typedef {Object<(number|string), gmf.datasource.DataSourcesManager.TreeCtrlCacheItem>}
  */
-gmf.DataSourcesManager.TreeCtrlCache;
+gmf.datasource.DataSourcesManager.TreeCtrlCache;
 
 
 /**
@@ -697,7 +839,7 @@ gmf.DataSourcesManager.TreeCtrlCache;
  *     wmsLayer: (ol.layer.Image|undefined)
  * }}
  */
-gmf.DataSourcesManager.TreeCtrlCacheItem;
+gmf.datasource.DataSourcesManager.TreeCtrlCacheItem;
 
 
-gmf.module.service('gmfDataSourcesManager', gmf.DataSourcesManager);
+gmf.module.service('gmfDataSourcesManager', gmf.datasource.DataSourcesManager);

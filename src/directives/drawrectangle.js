@@ -45,18 +45,18 @@ ngeo.drawrectangleDirective = function() {
       drawFeatureCtrl.drawRectangle = drawRectangle;
 
       ol.events.listen(
-          drawRectangle,
-          ol.interaction.DrawEventType.DRAWEND,
-          drawFeatureCtrl.handleDrawEnd.bind(
-              drawFeatureCtrl, ngeo.GeometryType.RECTANGLE),
-          drawFeatureCtrl
+        drawRectangle,
+        ol.interaction.DrawEventType.DRAWEND,
+        drawFeatureCtrl.handleDrawEnd.bind(
+          drawFeatureCtrl, ngeo.GeometryType.RECTANGLE),
+        drawFeatureCtrl
       );
       ol.events.listen(
-          drawRectangle,
-          ol.Object.getChangeEventType(
-              ol.interaction.Property.ACTIVE),
-          drawFeatureCtrl.handleActiveChange,
-          drawFeatureCtrl
+        drawRectangle,
+        ol.Object.getChangeEventType(
+          ol.interaction.Property.ACTIVE),
+        drawFeatureCtrl.handleActiveChange,
+        drawFeatureCtrl
       );
     }
   };

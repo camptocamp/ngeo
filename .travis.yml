@@ -2,6 +2,8 @@ dist: trusty
 sudo: false
 
 language: node_js
+node_js:
+- "8"
 
 notifications:
   email: false
@@ -21,128 +23,156 @@ addons:
     - python-virtualenv
     - google-chrome-stable
 
-matrix:
-  include:
-  - node_js: "6"
-    env: >
-        DO_TEST=TRUE
-        DO_LINT=TRUE
-        DO_NPM_DEPLOY=TRUE
-        DO_TRANSIFEX_DEPLOY=TRUE
-  # Test the examples in white space mode on the pull requests
-  - node_js: "6"
-    env: >
-        DEVELOPMENT=TRUE
-        DO_EXAMPLES_TEST=TRUE
-        EXAMPLES_SPLIT=1/2
-        DO_DIST_NGEO=TRUE
-  - node_js: "6"
-    env: >
-        DEVELOPMENT=TRUE
-        DO_EXAMPLES_TEST=TRUE
-        EXAMPLES_SPLIT=2/2
-        DO_DIST_GMF=TRUE
-  # Deploy the examples in advance mode on the commit on a branch
-  - node_js: "6"
-    env: >
-        DO_EXAMPLES_DEPLOY=TRUE
-        GIT_REMOTE_NAME=origin
-        GITHUB_USERNAME=camptocamp
-        EXAMPLES_NGEO=TRUE
-  - node_js: "6"
-    env: >
-        DO_EXAMPLES_DEPLOY=TRUE
-        GIT_REMOTE_NAME=origin
-        GITHUB_USERNAME=camptocamp
-        EXAMPLES_GMF=TRUE
-  - node_js: "6"
-    env: >
-        DO_EXAMPLES_DEPLOY=TRUE
-        GIT_REMOTE_NAME=origin
-        GITHUB_USERNAME=camptocamp
-        API=TRUE
-        APPS_GMF=TRUE
-
 cache:
   apt: true
   pip: true
   directories:
   - node_modules
 
-install:
-- npm prune
-- if [ "${TRAVIS_PULL_REQUEST}" = false ]; then IS_PR=FALSE; else IS_PR=TRUE; fi
-- if [ "${TRAVIS_PULL_REQUEST_SLUG}" == "camptocamp/ngeo" ] || [ "${TRAVIS_REPO_SLUG}${TRAVIS_PULL_REQUEST_SLUG}" == "camptocamp/ngeo" ]; then export IS_EXTERNAL=FALSE; else export IS_EXTERNAL=TRUE; fi
-- echo $TRAVIS_REPO_SLUG
-- echo $TRAVIS_PULL_REQUEST_SLUG
-- echo $IS_EXTERNAL
+env:
+  global:
+  - GIT_REMOTE_NAME=origin
+  - GITHUB_USERNAME=camptocamp
 
-- if [ ${TRAVIS_REPO_SLUG}-${IS_PR} = camptocamp/ngeo-FALSE ]; then openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in secrets.tar.enc -out secrets.tar -d; fi
-- if [ ${TRAVIS_REPO_SLUG}-${IS_PR} = camptocamp/ngeo-FALSE ]; then tar xvf secrets.tar; fi
-- if [ ${TRAVIS_REPO_SLUG}-${IS_PR} = camptocamp/ngeo-FALSE ]; then cp .transifexrc $HOME/.transifexrc; fi
-- if [ ${TRAVIS_REPO_SLUG}-${IS_PR} = camptocamp/ngeo-FALSE ]; then cp ngeo_deploy_key $HOME/.ssh/id_rsa; fi
-- if [ ${TRAVIS_REPO_SLUG}-${IS_PR} = camptocamp/ngeo-FALSE ]; then chmod 600 $HOME/.ssh/id_rsa; fi
+before_install:
+- python3 --version
+- /opt/google/chrome/chrome --version
+- npm prune
 - git config --global user.name "Travis"
 - git config --global user.email "travis@travis-ci.org"
-- /opt/google/chrome/chrome --version
-- export CHROME_BIN=/opt/google/chrome/chrome
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- if [ "${IS_PR}" != "FALSE" ]; then git fetch origin ${TRAVIS_BRANCH}:${TRAVIS_BRANCH}; fi
 
-script:
-- if [ "`git grep @fileoverview src contribs`" != "" ]; then echo "Using @fileoverview breaks the documentation main page"; FALSE; fi
-- if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; FALSE; fi
-- make git-attributes
-- if [ "${DO_LINT}" = TRUE ]; then make eof-newline; fi
-- if [ "${DO_LINT}" = TRUE ]; then make lint; fi
-- if [ "${DO_TEST}" = TRUE ]; then make test; fi
-
-- if [ "${DO_EXAMPLES_TEST}-${IS_PR}" = TRUE-TRUE ]; then buildtools/test_examples.py ${EXAMPLES_SPLIT}; fi
-- if [ "${DO_DIST_NGEO}-${IS_PR}" = TRUE-TRUE ]; then make dist/ngeo.js; fi
-- if [ "${DO_DIST_NGEO}-${IS_PR}" = TRUE-TRUE ]; then make dist/ngeo-debug.js; fi
-- if [ "${DO_DIST_GMF}-${IS_PR}" = TRUE-TRUE ]; then make dist/gmf.js; fi
-
-- echo $TRAVIS_REPO_SLUG
-- echo $TRAVIS_PULL_REQUEST_SLUG
-- echo $IS_EXTERNAL
-- echo "${DO_EXAMPLES_TEST}-${IS_EXTERNAL}"
-- echo "${DO_DIST_NGEO}-${IS_EXTERNAL}"
-- echo "${DO_DIST_NGEO}-${IS_EXTERNAL}"
-- echo "${DO_DIST_GMF}-${IS_EXTERNAL}"
-- if [ "${DO_EXAMPLES_DEPLOY}-${IS_PR}-${IS_EXTERNAL}" = TRUE-TRUE-TRUE ]; then echo 111; fi
-- if [ "${DO_EXAMPLES_DEPLOY}-${IS_PR}-${IS_EXTERNAL}" = TRUE-TRUE-TRUE ]; then buildtools/deploy.sh; fi
-
-- buildtools/travis-check
-
-after_success:
-- if [ "${DO_TEST}" = TRUE ]; then cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js; fi
+install:
 - export GIT_BRANCH=${TRAVIS_BRANCH}
-- echo "_auth = ${NPM_AUTH}" > ~/.npmrc
-- echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
-- make .build/python-venv
-- .build/python-venv/bin/pip install jsongrep
-- export PACKAGE_VERSION=`.build/python-venv/bin/jsongrep -e version package.json`
+- if [ ${TRAVIS_REPO_SLUG}-${TRAVIS_PULL_REQUEST} = camptocamp/ngeo-false ]; then IS_HOME=TRUE; else IS_HOME=FALSE; fi
 
-deploy:
-- provider: script
-  script: buildtools/deploy.sh
-  skip_cleanup: true
-  on:
-    repo: camptocamp/ngeo
-    all_branches: true
-    condition: '"${DO_EXAMPLES_DEPLOY}-${IS_PR}" = TRUE-FALSE'
-- provider: script
-  script: npm publish
-  skip_cleanup: true
-  on:
-    repo: camptocamp/ngeo
-    tags: true
-    condition: '"${PACKAGE_VERSION}-${DO_NPM_DEPLOY}" = "${TRAVIS_TAG}-TRUE"'
-- provider: script
-  script: make transifex-send
-  skip_cleanup: true
-  on:
-    repo: camptocamp/ngeo
-    branch: master
-    condition: '"${DO_TRANSIFEX_DEPLOY}" = TRUE'
+- if [ ${IS_HOME} = TRUE ]; then openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in secrets.tar.enc -out secrets.tar -d; fi
+- if [ ${IS_HOME} = TRUE ]; then tar xvf secrets.tar; fi
+- if [ ${IS_HOME} = TRUE ]; then cp .transifexrc $HOME/.transifexrc; fi
+- if [ ${IS_HOME} = TRUE ]; then cp ngeo_deploy_key $HOME/.ssh/id_rsa; fi
+- if [ ${IS_HOME} = TRUE ]; then chmod 600 $HOME/.ssh/id_rsa; fi
+- git fetch origin ${TRAVIS_BRANCH}:${TRAVIS_BRANCH}
+
+stages:
+- Lint
+- Tests
+- Build
+- Build and publish
+- Publish on transifex
+
+jobs:
+  include:
+  - stage: Lint
+    install: []
+    script:
+    - make eof-newline
+    - make lint
+    - make check-ngeox
+    - make git-attributes
+    - if [ "`git grep @fileoverview src contribs`" != "" ]; then echo "Using @fileoverview breaks the documentation main page"; false; fi
+    - if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; false; fi
+
+  - stage: Tests
+    install: []
+    script:
+    - export CHROME_BIN=/opt/google/chrome/chrome
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
+    - make test
+    after_success:
+    - cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
+
+  - stage: Build
+    env:
+    - JOB=test-examples-1
+    - DEVELOPMENT=TRUE
+    script:
+    - buildtools/test_examples.py 1/2
+    if: type = pull_request
+  - stage: Build
+    env:
+    - JOB=test-examples-2
+    - DEVELOPMENT=TRUE
+    script:
+    - buildtools/test_examples.py 2/2
+    if: type = pull_request
+  - stage: Build
+    env:
+    - JOB=build-examples-ngeo
+    - DEVELOPMENT=TRUE
+    script:
+    - make examples-hosted-ngeo
+    if: type = pull_request
+  - stage: Build
+    env:
+    - JOB=build-examples-gmf
+    - DEVELOPMENT=TRUE
+    script:
+    - make examples-hosted-gmf
+    if: type = pull_request
+  - stage: Build
+    env:
+    - JOB=build-examples-gmf-apps
+    - DEVELOPMENT=TRUE
+    script:
+    - make .build/node_modules.timestamp
+    - make examples-hosted-apps
+    if: type = pull_request
+  - stage: Build
+    env:
+    - JOB=build-api-docs
+    script:
+    - make .build/apidoc
+    if: type = pull_request
+  - stage: Build
+    env:
+    - JOB=build-dist
+    - DEVELOPMENT=TRUE
+    script:
+    - make dist/ngeo.js
+    - make dist/ngeo-debug.js
+    - make dist/gmf.js
+    if: type = pull_request
+  - stage: Build and publish
+    env:
+    - JOB=publish-npm
+    script:
+    - make dist/ngeo.js
+    - make dist/ngeo-debug.js
+    - make dist/gmf.js
+    - .build/python-venv/bin/pip install jsongrep
+    - export PACKAGE_VERSION=`.build/python-venv/bin/jsongrep -e version package.json`
+    - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
+    - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
+    after_success:
+    - if [ "${PACKAGE_VERSION}" = "${TRAVIS_TAG}" ]; then npm publish; fi
+    if: tag IS present AND repo = camptocamp/ngeo
+  - stage: Build and publish
+    env:
+    - JOB=publish-examples-ngeo
+    script:
+    - buildtools/deploy.sh
+    if: type = push AND repo = camptocamp/ngeo AND branch IS present
+  - stage: Build and publish
+    env:
+    - JOB=publish-examples-gmf
+    script:
+    - buildtools/deploy.sh
+    if: type = push AND repo = camptocamp/ngeo AND branch IS present
+  - stage: Build and publish
+    env:
+    - JOB=publish-apps-gmf
+    script:
+    - buildtools/deploy.sh
+    if: type = push AND repo = camptocamp/ngeo AND branch IS present
+  - stage: Build and publish
+    env:
+    - JOB=publish-api-docs
+    script:
+    - buildtools/deploy.sh
+    if: type = push AND repo = camptocamp/ngeo AND branch IS present
+
+  - stage: Publish on transifex
+    install: []
+    if: type = push AND branch = master AND repo = camptocamp/ngeo
+    after_success:
+    - make transifex-send

@@ -134,15 +134,15 @@ exports.module = angular.module('ngeo.importLocalDirective', [
 ]);
 
 exports.module.value('ngeoImportLocalTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoImportLocalTemplateUrl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseModuleTemplateUrl}/import/partials/import-local.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoImportLocalTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/import/partials/import-local.html`;
+  });
 
 exports.module.directive('ngeoImportLocal', exports);

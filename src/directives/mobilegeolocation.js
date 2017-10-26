@@ -11,6 +11,7 @@ goog.require('ol.GeolocationProperty');
 goog.require('ol.Map');
 goog.require('ol.ViewProperty');
 goog.require('ol.geom.Point');
+goog.require('ol.DeviceOrientation');
 
 
 /**
@@ -64,6 +65,7 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
  * @struct
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.DecorateGeolocation} ngeoDecorateGeolocation Decorate
  *     Geolocation service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
@@ -74,7 +76,8 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
  * @ngname NgeoMobileGeolocationController
  */
 ngeo.MobileGeolocationController = function($scope, $element,
-    ngeoDecorateGeolocation, ngeoFeatureOverlayMgr, ngeoNotification) {
+  gettextCatalog, ngeoDecorateGeolocation, ngeoFeatureOverlayMgr,
+  ngeoNotification) {
 
   $element.on('click', this.toggleTracking.bind(this));
 
@@ -113,13 +116,44 @@ ngeo.MobileGeolocationController = function($scope, $element,
    * @private
    */
   this.geolocation_ = new ol.Geolocation({
-    projection: map.getView().getProjection()
+    projection: map.getView().getProjection(),
+    trackingOptions: /** @type {GeolocationPositionOptions} */ ({
+      enableHighAccuracy: true
+    })
   });
+
+  /**
+   * @private
+   * @type {ol.DeviceOrientation}
+   */
+  this.deviceOrientation;
+
+  if (options.autorotate) {
+    this.autorotateListener();
+  }
 
   // handle geolocation error.
   this.geolocation_.on('error', function(error) {
     this.untrack_();
-    this.notification_.error(error.message);
+    if (this.deviceOrientation) {
+      this.deviceOrientation.setTracking(false);
+    }
+    let msg;
+    switch (error.code) {
+      case 1:
+        msg = gettextCatalog.getString('User denied the request for Geolocation.');
+        break;
+      case 2:
+        msg = gettextCatalog.getString('Location information is unavailable.');
+        break;
+      case 3:
+        msg = gettextCatalog.getString('The request to get user location timed out.');
+        break;
+      default:
+        msg = gettextCatalog.getString('Geolocation: An unknown error occurred.');
+        break;
+    }
+    this.notification_.error(msg);
     $scope.$emit(ngeo.MobileGeolocationEventType.ERROR, error);
   }, this);
 
@@ -165,42 +199,36 @@ ngeo.MobileGeolocationController = function($scope, $element,
   this.viewChangedByMe_ = false;
 
   ol.events.listen(
-      this.geolocation_,
-      ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
-      function() {
-        this.accuracyFeature_.setGeometry(
-            this.geolocation_.getAccuracyGeometry());
-        this.setPosition_();
-      },
-      this);
+    this.geolocation_,
+    ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
+    function() {
+      this.accuracyFeature_.setGeometry(
+        this.geolocation_.getAccuracyGeometry());
+      this.setPosition_();
+    },
+    this);
 
   ol.events.listen(
-      this.geolocation_,
-      ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
-      function() {
-        this.setPosition_();
-      },
-      this);
+    this.geolocation_,
+    ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
+    function() {
+      this.setPosition_();
+    },
+    this);
 
   const view = map.getView();
 
   ol.events.listen(
-      view,
-      ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
-      this.handleViewChange_,
-      this);
+    view,
+    ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
+    this.handleViewChange_,
+    this);
 
   ol.events.listen(
-      view,
-      ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
-      this.handleViewChange_,
-      this);
-
-  ol.events.listen(
-      view,
-      ol.Object.getChangeEventType(ol.ViewProperty.ROTATION),
-      this.handleViewChange_,
-      this);
+    view,
+    ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
+    this.handleViewChange_,
+    this);
 
   ngeoDecorateGeolocation(this.geolocation_);
 };
@@ -291,6 +319,119 @@ ngeo.MobileGeolocationController.prototype.handleViewChange_ = function(event) {
     this.follow_ = false;
   }
 };
+
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+    !window['MSStream'];
+}
+
+// Get heading depending on devices
+function headingFromDevices(deviceOrientation) {
+  let hdg = deviceOrientation.getHeading();
+  let orientation = window.orientation;
+  if (hdg === undefined) {
+    return undefined;
+  }
+  if (!isIOS()) {
+    hdg = -hdg;
+    if (window.screen.orientation.angle) {
+      orientation = window.screen.orientation.angle;
+    }
+  }
+  // Normalize to be between -90 and 180
+  orientation =  ((orientation + 179) % 360 - 179);
+  // Add to hdg in radian
+  hdg += orientation * Math.PI / 180;
+  return hdg;
+}
+
+// Update heading
+ngeo.MobileGeolocationController.prototype.headingUpdate = function() {
+  let heading = headingFromDevices(this.deviceOrientation);
+  if (heading !== undefined) {
+    heading = -heading;
+    const currRotation = this.map_.getView().getRotation();
+    const diff = heading - currRotation;
+
+    if (diff > Math.PI) {
+      heading -= 2 * Math.PI;
+    }
+    this.map_.getView().animate({
+      rotation: heading,
+      duration: 350,
+      easing: ol.easing.linear
+    });
+  }
+};
+
+// Orientation control events
+ngeo.MobileGeolocationController.prototype.autorotateListener = function() {
+  this.deviceOrientation = new ol.DeviceOrientation();
+
+  let currHeading = 0;
+  const headngUpdateWhenMapRotate = throttle(this.headingUpdate, 300, this);
+
+  this.deviceOrientation.on(['change'], (event) => {
+    const heading = headingFromDevices(this.deviceOrientation);
+    if (heading === undefined) {
+      console.error('Heading is undefined');
+      return;
+    }
+
+    if (Math.abs(heading - currHeading) > 0.05) {
+      currHeading = heading;
+      headngUpdateWhenMapRotate();
+    }
+  });
+
+  this.deviceOrientation.setTracking(true);
+};
+
+function throttle(fn, time, context) {
+  let lock, args, asyncKey, destroyed;
+
+  function later() {
+    // reset lock and call if queued
+    lock = false;
+    if (args) {
+      throttled.call(context, args);
+      args = false;
+    }
+  }
+
+  const checkDestroyed = function() {
+    if (destroyed) {
+      throw new Error('Method was already destroyed');
+    }
+  };
+
+  function throttled(...argumentList) {
+    checkDestroyed();
+
+    if (lock) {
+      // called too soon, queue to call later
+      args = argumentList;
+      return;
+    }
+
+    // call and lock until later
+    fn.apply(context, argumentList);
+    asyncKey = setTimeout(later, time);
+    lock = true;
+  }
+
+  throttled.destroy = function() {
+    checkDestroyed();
+
+    if (asyncKey) {
+      clearTimeout(asyncKey);
+    }
+
+    destroyed = true;
+  };
+
+  return throttled;
+}
 
 
 ngeo.module.controller('NgeoMobileGeolocationController', ngeo.MobileGeolocationController);

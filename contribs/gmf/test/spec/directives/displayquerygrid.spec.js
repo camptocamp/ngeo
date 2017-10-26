@@ -52,7 +52,7 @@ describe('gmf.displayquerygridComponent', () => {
         }
       };
       queryGridController = $controller(
-          'GmfDisplayquerygridController', {$scope, $element: $('<div></div>')}, data);
+        'GmfDisplayquerygridController', {$scope, $element: $('<div></div>')}, data);
       $rootScope.$digest();
     });
   });

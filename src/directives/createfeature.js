@@ -83,7 +83,7 @@ ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
  * @ngname ngeoCreatefeatureController
  */
 ngeo.CreatefeatureController = function(gettextCatalog, $compile, $filter, $scope,
-    $timeout, ngeoEventHelper) {
+  $timeout, ngeoEventHelper) {
 
   /**
    * @type {boolean}

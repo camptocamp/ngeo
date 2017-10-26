@@ -38,24 +38,26 @@ angularGettext.Catalog.prototype.debug;
  * @param {number} n
  * @param {string} string
  * @param {string} stringPlural
- * @param {Object.<string, string>=} opt_context
+ * @param {string=} opt_context
  * @return {string}
  */
 angularGettext.Catalog.prototype.getPlural = function(n, string, stringPlural, opt_context) {};
 
 
 /**
- * @param {string} string
+ * @param {string} language
+ * @param {string} key
  * @param {number} n
- * @return {string}
+ * @param {string=} opt_context translation key context
+ * @return {string|null}
  */
-angularGettext.Catalog.prototype.getStringForm = function(string, n) {};
+angularGettext.Catalog.prototype.getStringForm = function(language, key, n, opt_context) {};
 
 
 /**
  * @param {string} string
  * @param {Object.<string, string>=} opt_scope
- * @param {Object.<string, string>=} opt_context
+ * @param {string=} opt_context
  * @return {string}
  */
 angularGettext.Catalog.prototype.getString = function(string, opt_scope, opt_context) {};

@@ -36,7 +36,7 @@ exports.Controller = function($scope) {
 
     options.layerSelected = (options.layerSelected &&
         options['layerSelected']['Title'] == getCapLayer['Title']) ?
-        null : getCapLayer;
+      null : getCapLayer;
   };
 };
 
@@ -48,6 +48,19 @@ exports.Controller = function($scope) {
  * @return {angular.Directive} .
  */
 exports.directive = function($compile, ngeoWmtsGetCapItemTemplateUrl) {
+
+  // Zoom to layer extent
+  const zoomToLayerExtent = function(scope, layer, map) {
+    let extent = layer.extent;
+    if (scope['options'].transformExtent) {
+      extent = scope['options'].transformExtent(layer.extent);
+    }
+    const view = map.getView();
+    const mapSize = map.getSize();
+    if (extent) {
+      view.fit(extent, mapSize);
+    }
+  };
 
   return {
     restrict: 'A',
@@ -63,6 +76,12 @@ exports.directive = function($compile, ngeoWmtsGetCapItemTemplateUrl) {
         compiledContent(scope, (clone, scope) => {
           elt.append(clone);
         });
+
+        const headerGroup = elt.find('> .ngeo-header-group');
+        headerGroup.find('.fa-zoom-in').on('click', (evt) => {
+          evt.stopPropagation();
+          zoomToLayerExtent(scope, scope.layer, scope['map']);
+        });
       };
     }
   };
@@ -71,16 +90,16 @@ exports.directive = function($compile, ngeoWmtsGetCapItemTemplateUrl) {
 exports.module = angular.module('ngeo.wmtsGetCapItemDirective', []);
 
 exports.module.value('ngeoWmtsGetCapItemTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoWmsGetCapItemTemplateUrl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseModuleTemplateUrl}/import/partials/wmts-get-cap-item.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoWmsGetCapItemTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/import/partials/wmts-get-cap-item.html`;
+  });
 
 exports.module.controller('NgeoWmtsGetCapItemDirectiveController', exports.Controller);
 exports.module.directive('ngeoWmtsGetCapItem', exports.directive);

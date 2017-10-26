@@ -17,12 +17,12 @@
       filenames += glob2.glob("{}/*.html".format(source_folder))
       filenames += glob2.glob("{}/**/*.html".format(source_folder))
       for filename in filenames:
-          f = file(filename)
-          content = unicode(f.read().decode('utf8'))
-          content = re.sub(r"'", "\\'", content)
-          content = htmlmin.minify(content, remove_comments=True)
-          name = os.path.join(dest_folder, filename[len(source_folder) + 1:])
-          _partials[name.replace("\\", "/")] = content
+          with open(filename, 'rb') as f:
+              content = f.read().decode('utf-8')
+              content = re.sub(r"'", "\\'", content)
+              content = htmlmin.minify(content, remove_comments=True)
+              name = os.path.join(dest_folder, filename[len(source_folder) + 1:])
+              _partials[name.replace("\\", "/")] = content
 %>\
 /**
  * ngeo template cache.

@@ -16,16 +16,16 @@ goog.require('ol.style.Style');
 
 
 ngeo.module.value('gmfProfileTemplateUrl',
-    /**
+  /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template.
      */
-    ($element, $attrs) => {
-      const templateUrl = $attrs['gmfProfileTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/profile.html`;
-    });
+  ($element, $attrs) => {
+    const templateUrl = $attrs['gmfProfileTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/profile.html`;
+  });
 
 
 /**
@@ -114,8 +114,8 @@ gmf.module.component('gmfProfile', gmf.profileComponent);
  * @ngname GmfProfileController
  */
 gmf.ProfileController = function($scope, $http, $element, $filter,
-    gettextCatalog, ngeoFeatureOverlayMgr, gmfProfileJsonUrl,
-    ngeoCsvDownload) {
+  gettextCatalog, ngeoFeatureOverlayMgr, gmfProfileJsonUrl,
+  ngeoCsvDownload) {
 
   /**
    * @type {angular.Scope}
@@ -372,7 +372,7 @@ gmf.ProfileController.prototype.update_ = function() {
 gmf.ProfileController.prototype.updateEventsListening_ = function() {
   if (this.active && this.map_ !== null) {
     this.pointerMoveKey_ = ol.events.listen(this.map_, 'pointermove',
-        this.onPointerMove_.bind(this));
+      this.onPointerMove_.bind(this));
   } else {
     ol.Observable.unByKey(this.pointerMoveKey_);
   }
@@ -412,7 +412,7 @@ gmf.ProfileController.prototype.onPointerMove_ = function(e) {
  * @private
  */
 gmf.ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
-    line) {
+  line) {
   let segment;
   let distOnLine = 0;
   const fakeExtent = [
@@ -447,7 +447,7 @@ gmf.ProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
  * @private
  */
 gmf.ProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
-    elevationsRef, yUnits) {
+  elevationsRef, yUnits) {
   // Update information point.
   let ref;
   const coordinate = [point.x, point.y];
@@ -496,19 +496,19 @@ gmf.ProfileController.prototype.getTooltipHTML_ = function() {
   const number = this.$filter_('number');
   const DistDecimal = this.currentPoint.xUnits === 'm' ? 0 : 2;
   innerHTML.push(
-      `${this.profileLabels_.xAxis +
+    `${this.profileLabels_.xAxis +
       separator +
       number(this.currentPoint.distance, DistDecimal)
-      } ${
+    } ${
       this.currentPoint.xUnits}`
   );
   for (elevationName in this.currentPoint.elevations) {
     translatedElevationName = this.gettextCatalog_.getString(elevationName);
     innerHTML.push(
-        `${translatedElevationName +
+      `${translatedElevationName +
         separator +
         number(this.currentPoint.elevations[elevationName], 0)
-        } ${this.currentPoint.yUnits}`
+      } ${this.currentPoint.yUnits}`
     );
   }
   return innerHTML.join('</br>');
@@ -539,7 +539,7 @@ gmf.ProfileController.prototype.createMeasureTooltip_ = function() {
 gmf.ProfileController.prototype.removeMeasureTooltip_ = function() {
   if (this.measureTooltipElement_ !== null) {
     this.measureTooltipElement_.parentNode.removeChild(
-        this.measureTooltipElement_);
+      this.measureTooltipElement_);
     this.measureTooltipElement_ = null;
     this.map_.removeOverlay(this.measureTooltip_);
   }

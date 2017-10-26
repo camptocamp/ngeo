@@ -6,16 +6,16 @@ goog.require('ngeo.DecorateLayer');
 goog.require('ngeo.DecorateLayerLoading');
 
 ngeo.module.value('ngeoLayertreeTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['ngeoLayertreeTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseTemplateUrl}/layertree.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['ngeoLayertreeTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseTemplateUrl}/layertree.html`;
+  });
 
 
 /**
@@ -164,17 +164,17 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   this.state_ = 'off';
 
   /**
-   * @type {Object|undefined}
+   * @type {!Object}
    * @export
    */
-  this.node = undefined;
+  this.node;
 
   if (isRoot) {
     $scope.$watch(nodeExpr, (newVal, oldVal) => {
       this.node = newVal;
     });
   } else {
-    this.node = /** @type {Object} */ ($scope.$eval(nodeExpr));
+    this.node = /** @type {!Object} */ ($scope.$eval(nodeExpr));
     goog.asserts.assert(this.node !== undefined);
   }
 
@@ -261,7 +261,7 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   }
 
   /**
-   * @type {?ngeo.DataSource}
+   * @type {?ngeo.datasource.DataSource}
    * @private
    */
   this.dataSource_ = null;
@@ -420,8 +420,8 @@ ngeo.LayertreeController.prototype.getSetActive = function(val) {
 
 
 /**
- * @return {?ngeo.DataSource} dataSource The data source bound to this layer
- *     tree controller.
+ * @return {?ngeo.datasource.DataSource} dataSource The data source bound to
+ *     this layer tree controller.
  * @export
  */
 ngeo.LayertreeController.prototype.getDataSource = function() {
@@ -430,7 +430,7 @@ ngeo.LayertreeController.prototype.getDataSource = function() {
 
 
 /**
- * @param {?ngeo.DataSource} dataSource Data source or null.
+ * @param {?ngeo.datasource.DataSource} dataSource Data source or null.
  * @export
  */
 ngeo.LayertreeController.prototype.setDataSource = function(dataSource) {

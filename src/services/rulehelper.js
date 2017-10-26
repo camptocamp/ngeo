@@ -3,6 +3,7 @@ goog.provide('ngeo.RuleHelper');
 goog.require('ngeo');
 goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.WMSTime');
+goog.require('ngeo.rule.Date');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Select');
@@ -85,24 +86,21 @@ ngeo.RuleHelper = class {
       case ngeo.AttributeType.DATE:
       case ngeo.AttributeType.DATETIME:
         if (isCustom) {
-          rule = new ngeo.rule.Rule({
+          rule = new ngeo.rule.Date({
             name,
-            operator: ngeo.rule.Rule.OperatorType.EQUAL_TO,
+            operator: ngeo.rule.Rule.TemporalOperatorType.EQUALS,
             operators: [
-              ngeo.rule.Rule.OperatorType.EQUAL_TO,
-              ngeo.rule.Rule.OperatorType.GREATER_THAN,
-              ngeo.rule.Rule.OperatorType.GREATER_THAN_OR_EQUAL_TO,
-              ngeo.rule.Rule.OperatorType.LESSER_THAN,
-              ngeo.rule.Rule.OperatorType.LESSER_THAN_OR_EQUAL_TO,
-              ngeo.rule.Rule.OperatorType.NOT_EQUAL_TO
+              ngeo.rule.Rule.TemporalOperatorType.EQUALS,
+              ngeo.rule.Rule.TemporalOperatorType.BEGINS,
+              ngeo.rule.Rule.TemporalOperatorType.ENDS
             ],
             propertyName: attribute.name,
             type: attribute.type
           });
         } else {
-          rule = new ngeo.rule.Rule({
+          rule = new ngeo.rule.Date({
             name,
-            operator: ngeo.rule.Rule.OperatorType.BETWEEN,
+            operator: ngeo.rule.Rule.TemporalOperatorType.DURING,
             propertyName: attribute.name,
             type: attribute.type
           });
@@ -201,7 +199,7 @@ ngeo.RuleHelper = class {
     switch (options.type) {
       case ngeo.AttributeType.DATE:
       case ngeo.AttributeType.DATETIME:
-        rule = new ngeo.rule.Rule(options);
+        rule = new ngeo.rule.Date(options);
         break;
       case ngeo.AttributeType.GEOMETRY:
         rule = new ngeo.rule.Geometry(options);
@@ -236,14 +234,14 @@ ngeo.RuleHelper = class {
     }
     const isCustom = rule.isCustom;
     const lowerBoundary = rule.lowerBoundary !== null ? rule.lowerBoundary :
-          undefined;
+      undefined;
     const name = rule.name;
     const operator = rule.operator !== null ? rule.operator : undefined;
     const operators = rule.operators ? rule.operators.slice(0) : undefined;
     const propertyName = rule.propertyName;
     const type = rule.type !== null ? rule.type : undefined;
     const upperBoundary = rule.upperBoundary !== null ? rule.upperBoundary :
-          undefined;
+      undefined;
 
     const options = {
       expression,
@@ -257,7 +255,9 @@ ngeo.RuleHelper = class {
       upperBoundary
     };
 
-    if (rule instanceof ngeo.rule.Geometry) {
+    if (rule instanceof ngeo.rule.Date) {
+      clone = new ngeo.rule.Date(options);
+    } else if (rule instanceof ngeo.rule.Geometry) {
       clone = new ngeo.rule.Geometry(options);
       clone.feature.setProperties(
         this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature)
@@ -379,7 +379,7 @@ ngeo.RuleHelper = class {
    */
   createFilter(options) {
 
-    const dataSource = options.dataSource;
+    const dataSource = /** @type {ngeo.datasource.OGC} */ (options.dataSource);
     let mainFilter = null;
 
     if (options.filter) {
@@ -456,7 +456,7 @@ ngeo.RuleHelper = class {
 
   /**
    * @param {ngeo.rule.Rule} rule Rule.
-   * @param {ngeo.DataSource} dataSource Data source.
+   * @param {ngeo.datasource.OGC} dataSource Data source.
    * @param {string=} opt_srsName SRS name. No srsName attribute will be
    *     set on geometries when this is not provided.
    * @return {?ol.format.filter.Filter} filter Filter;
@@ -479,6 +479,7 @@ ngeo.RuleHelper = class {
 
     const rot =  ngeo.rule.Rule.OperatorType;
     const rsot = ngeo.rule.Rule.SpatialOperatorType;
+    const rtot = ngeo.rule.Rule.TemporalOperatorType;
 
     const spatialTypes = [
       rsot.CONTAINS,
@@ -493,7 +494,59 @@ ngeo.RuleHelper = class {
       rot.LESSER_THAN_OR_EQUAL_TO
     ];
 
-    if (rule instanceof ngeo.rule.Select) {
+    if (rule instanceof ngeo.rule.Date) {
+      let beginValue;
+      let endValue;
+
+      if (operator === rtot.DURING) {
+        beginValue = moment(lowerBoundary).format('YYYY-MM-DD');
+        endValue = moment(upperBoundary).format('YYYY-MM-DD');
+      } else if (operator === rtot.EQUALS) {
+        beginValue = moment(
+          expression
+        ).format(
+          'YYYY-MM-DD HH:mm:ss'
+        );
+        endValue = moment(
+          expression
+        ).add(
+          1, 'days'
+        ).subtract(
+          1, 'seconds'
+        ).format(
+          'YYYY-MM-DD HH:mm:ss'
+        );
+      } else if (operator === rtot.BEGINS) {
+        beginValue = moment(
+          expression
+        ).format(
+          'YYYY-MM-DD'
+        );
+        // NOTE: end value is CURRENT + 30 years
+        endValue = moment(
+          expression
+        ).add(
+          30, 'years'
+        ).format(
+          'YYYY-MM-DD'
+        );
+      } else if (operator === rtot.ENDS) {
+        // NOTE: begin value is hardcoded to 1970-01-01
+        beginValue = '1970-01-01';
+        endValue = moment(
+          expression
+        ).format(
+          'YYYY-MM-DD'
+        );
+      }
+      if (beginValue && endValue) {
+        filter = ol.format.filter.during(
+          propertyName,
+          beginValue,
+          endValue
+        );
+      }
+    } else if (rule instanceof ngeo.rule.Select) {
       const selectedChoices = rule.selectedChoices;
       if (selectedChoices.length === 1) {
         filter = ol.format.filter.equalTo(
@@ -589,8 +642,8 @@ ngeo.RuleHelper = class {
   /**
    * Create and return an OpenLayers filter object using the available
    * time properties within the data source.
-   * @param {ngeo.DataSource} dataSource Data source from which to create the
-   *     filter.
+   * @param {ngeo.datasource.OGC} dataSource Data source from which to
+   *     create the filter.
    * @return {?ol.format.filter.Filter} Filter
    * @private
    */

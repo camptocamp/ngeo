@@ -65,7 +65,7 @@ describe('ngeo.CreatePrint', () => {
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
         const spec = print.createSpec(map, scale, dpi, layout, format,
-            customAttributes);
+          customAttributes);
         expect(spec.attributes.map.rotation).toEqual(180);
       });
     });
@@ -93,7 +93,7 @@ describe('ngeo.CreatePrint', () => {
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
         const spec = print.createSpec(map, scale, dpi, layout, format,
-            customAttributes);
+          customAttributes);
 
         expect(spec).toEqual({
           attributes: {
@@ -151,7 +151,7 @@ describe('ngeo.CreatePrint', () => {
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
         const spec = print.createSpec(map, scale, dpi, layout, format,
-            customAttributes);
+          customAttributes);
         expect(spec).toEqual({
           attributes: {
             map: {
@@ -222,7 +222,7 @@ describe('ngeo.CreatePrint', () => {
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
         const spec = print.createSpec(map, scale, dpi, layout, format,
-            customAttributes);
+          customAttributes);
 
         expect(spec).toEqual({
           attributes: {
@@ -244,21 +244,21 @@ describe('ngeo.CreatePrint', () => {
                   scaleDenominator: 7142857.142857144,
                   tileSize: [512, 512],
                   topLeftCorner: ol.extent.getTopLeft(
-                      ol.proj.get('EPSG:3857').getExtent()),
+                    ol.proj.get('EPSG:3857').getExtent()),
                   matrixSize: [39, 39]
                 }, {
                   identifier: '01',
                   scaleDenominator: 3571428.571428572,
                   tileSize: [512, 512],
                   topLeftCorner: ol.extent.getTopLeft(
-                      ol.proj.get('EPSG:3857').getExtent()),
+                    ol.proj.get('EPSG:3857').getExtent()),
                   matrixSize: [78, 78]
                 }, {
                   identifier: '02',
                   scaleDenominator: 1785714.285714286,
                   tileSize: [512, 512],
                   topLeftCorner: ol.extent.getTopLeft(
-                      ol.proj.get('EPSG:3857').getExtent()),
+                    ol.proj.get('EPSG:3857').getExtent()),
                   matrixSize: [156, 156]
                 }],
                 matrixSet: 'matrixset',
@@ -361,7 +361,7 @@ describe('ngeo.CreatePrint', () => {
           })
         });
 
-        // Here to check that no offset are present if textAlign is not there.
+        // Here to check that textAlign default value is set.
         style4 = new ol.style.Style({
           text: new ol.style.Text({
             font: 'normal 16px "sans serif"',
@@ -408,7 +408,7 @@ describe('ngeo.CreatePrint', () => {
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
         const spec = print.createSpec(map, scale, dpi, layout, format,
-            customAttributes);
+          customAttributes);
 
         const styleId0 = ol.getUid(style0).toString();
         const styleId1 = ol.getUid(style1).toString();
@@ -454,7 +454,7 @@ describe('ngeo.CreatePrint', () => {
             fontSize: '16px',
             fontFamily: '"sans serif"',
             label: 'Ngeo',
-            labelAlign: 'left',
+            labelAlign: 'lm',
             labelXOffset: 42,
             labelYOffset: 42
           }]
@@ -466,7 +466,10 @@ describe('ngeo.CreatePrint', () => {
             fontWeight: 'normal',
             fontSize: '16px',
             fontFamily: '"sans serif"',
-            label: 'Ngeo'
+            label: 'Ngeo',
+            labelAlign: 'cm',
+            labelXOffset: 42,
+            labelYOffset: 42
           }]
         };
 
@@ -586,7 +589,7 @@ describe('ngeo.CreatePrint', () => {
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
         const spec = print.createSpec(map, scale, dpi, layout, format,
-            customAttributes);
+          customAttributes);
 
         const layers = spec.attributes.map.layers;
         expect(layers.length).toBe(2);
@@ -630,11 +633,11 @@ describe('ngeo.CreatePrint', () => {
       inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('POST', 'http://example.com/print/report.pdf')
-            .respond({
-              ref: 'deadbeef',
-              statusURL: '/print/status/deadbeef.json',
-              downloadURL: '/print/report/deadbeef.json'
-            });
+          .respond({
+            ref: 'deadbeef',
+            statusURL: '/print/status/deadbeef.json',
+            downloadURL: '/print/report/deadbeef.json'
+          });
       });
     });
 
@@ -660,7 +663,7 @@ describe('ngeo.CreatePrint', () => {
       });
     });
 
-/*    describe('cancel report request', () => {
+    /*    describe('cancel report request', () => {
       it('cancels the request', inject(($q) => {
         $httpBackend.expectPOST('http://example.com/print/report.pdf');
 
@@ -688,10 +691,10 @@ describe('ngeo.CreatePrint', () => {
       inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('GET',
-            'http://example.com/print/status/deadbeef.json').respond({
-              done: false,
-              downloadURL: '/print/report/deadbeef.json'
-            });
+          'http://example.com/print/status/deadbeef.json').respond({
+          done: false,
+          downloadURL: '/print/report/deadbeef.json'
+        });
       });
     });
 
@@ -746,7 +749,7 @@ describe('ngeo.CreatePrint', () => {
       };
 
       $httpBackend.when('GET', 'http://example.com/print/capabilities.json')
-          .respond(capabilities);
+        .respond(capabilities);
     }));
 
     beforeEach(() => {
@@ -771,7 +774,7 @@ describe('ngeo.CreatePrint', () => {
       print = ngeoCreatePrint('http://example.com/print');
       $httpBackend = _$httpBackend_;
       $httpBackend.when('DELETE', 'http://example.com/print/cancel/deadbeef')
-          .respond(200);
+        .respond(200);
     }));
 
     afterEach(() => {

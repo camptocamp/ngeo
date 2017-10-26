@@ -13,16 +13,16 @@ goog.require('ol.style.Style');
 
 
 gmf.module.value('gmfMobileMeasurePointTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} The template url.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/mobilemeasurepoint.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/mobilemeasurepoint.html`;
+  });
 
 
 /**
@@ -90,7 +90,7 @@ gmf.mobileMeasurePointDirective =
 
 
 gmf.module.directive('gmfMobileMeasurepoint',
-                     gmf.mobileMeasurePointDirective);
+  gmf.mobileMeasurePointDirective);
 
 
 /**
@@ -108,7 +108,7 @@ gmf.module.directive('gmfMobileMeasurepoint',
  * @ngname GmfMobileMeasurePointController
  */
 gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
-    gmfRaster, ngeoDebounce, ngeoDecorateInteraction) {
+  gmfRaster, ngeoDebounce, ngeoDecorateInteraction) {
 
   /**
    * @type {gmf.Raster}
@@ -198,10 +198,11 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
    * @type {ngeo.interaction.MeasurePointMobile}
    * @export
    */
-  this.measure = new ngeo.interaction.MeasurePointMobile({
-    decimals: this.coordinateDecimals,
-    sketchStyle: this.sketchStyle
-  });
+  this.measure = new ngeo.interaction.MeasurePointMobile(
+    /** @type {ngeox.numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')), {
+      decimals: this.coordinateDecimals,
+      sketchStyle: this.sketchStyle
+    });
 
   this.measure.setActive(this.active);
   ngeoDecorateInteraction(this.measure);
@@ -211,7 +212,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
    * @export
    */
   this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
-      this.measure.getDrawInteraction());
+    this.measure.getDrawInteraction());
 
   ngeoDecorateInteraction(this.drawInteraction);
 
@@ -267,11 +268,11 @@ gmf.MobileMeasurePointController.prototype.handleMeasureActiveChange_ =
       if (this.measure.getActive()) {
         const view = this.map.getView();
         this.mapViewPropertyChangeEventKey_ = ol.events.listen(
-            view,
-            'propertychange',
-            this.ngeoDebounce_(
-                this.getMeasure_.bind(this), 300, /* invokeApply */ true),
-            this);
+          view,
+          'propertychange',
+          this.ngeoDebounce_(
+            this.getMeasure_.bind(this), 300, /* invokeApply */ true),
+          this);
         this.getMeasure_();
       } else if (this.mapViewPropertyChangeEventKey_) {
         ol.events.unlistenByKey(this.mapViewPropertyChangeEventKey_);
@@ -322,7 +323,7 @@ gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
 
 
 gmf.module.controller('GmfMobileMeasurePointController',
-                      gmf.MobileMeasurePointController);
+  gmf.MobileMeasurePointController);
 
 /**
  * @typedef {{

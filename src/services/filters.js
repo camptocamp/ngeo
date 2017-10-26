@@ -24,10 +24,12 @@ goog.require('ol.string');
  */
 ngeo.Scalify = function($filter) {
   const numberFilter = $filter('number');
-  return function(scale) {
+  const filterFn = function(scale) {
     const text = numberFilter(scale, 0);
     return text ? `1\u00a0:\u00a0${text}` : '';
   };
+  filterFn['$stateful'] = true;
+  return filterFn;
 };
 
 ngeo.module.filter('ngeoScalify', ngeo.Scalify);
@@ -125,9 +127,9 @@ ngeo.module.filter('ngeoNumber', ngeo.Number);
  * Examples:
  *
  *      {{25000 | ngeoUnitPrefix}} => 25 k
- *      {{25000 | ngeoUnitPrefix:m}} => 25 km
- *      {{25000000 | ngeoUnitPrefix:m²:square}} => 25 km²
- *      {{2048 | ngeoUnitPrefix:o:binary}} => 2 Kio
+ *      {{25000 | ngeoUnitPrefix:'m'}} => 25 km
+ *      {{25000000 | ngeoUnitPrefix:'m²':'square'}} => 25 km²
+ *      {{2048 | ngeoUnitPrefix:'o':'binary'}} => 2 Kio
  *
  *
  * @param {angular.$filter} $filter Angular filter
@@ -204,9 +206,7 @@ ngeo.module.filter('ngeoUnitPrefix', ngeo.UnitPrefix);
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *
  * @param {angular.$filter} $filter Angular filter
- * @return {function(ol.Coordinate, (number|string)=, string=,
- *     (boolean|string)=): string} A function to format numbers into
- *     coordinates string.
+ * @return {ngeox.numberCoordinates} A function to format numbers into coordinates string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoNumberCoordinates
@@ -238,7 +238,7 @@ ngeo.module.filter('ngeoNumberCoordinates', ngeo.NumberCoordinates);
 
 
 /**
- * Format a couple of numbers as DMS coordinates.
+ * Format coordinates as DMS coordinates.
  *
  * Example without parameters:
  *
@@ -250,8 +250,7 @@ ngeo.module.filter('ngeoNumberCoordinates', ngeo.NumberCoordinates);
  *      <p>{{[7.1234, 46.9876] | ngeoDMSCoordinates:2:'[{y}; {x]'}}</p>
  *      <!-- will Become [46° 59' 15.36'' N; 7° 07' 24.24'' E] -->
  *
- * @return {function(ol.Coordinate, (number|string)=, string=): string} A
- *     function to format numbers into a DMS coordinates string.
+ * @return {ngeox.dmsCoordinates} A function to format numbers into a DMS coordinates string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoDMSCoordinates
@@ -264,9 +263,9 @@ ngeo.DMSCoordinates = function() {
     const m = Math.floor((dms / 60) % 60);
     const s = (dms % 60);
     return `${d}\u00b0 ${
-        ol.string.padNumber(m, 2)}\u2032 ${
-        ol.string.padNumber(s, 2, fractionDigits)}\u2033 ${
-        hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0)}`;
+      ol.string.padNumber(m, 2)}\u2032 ${
+      ol.string.padNumber(s, 2, fractionDigits)}\u2033 ${
+      hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0)}`;
   };
 
   /**

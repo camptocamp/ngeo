@@ -47,6 +47,7 @@ gmf.timeSliderDirective = function($timeout, $filter) {
           ctrl.onDateSelected({
             time: computeDates_(e, sliderUi)
           });
+          scope.$apply();
         }
 
         function computeDates_(e, sliderUi) {
@@ -167,7 +168,7 @@ gmf.TimeSliderController.prototype.init = function() {
   this.minValue = initialOptions_.minDate;
   this.maxValue = initialOptions_.maxDate;
   this.dates = this.isModeRange ? [initialOptions_.values[0], initialOptions_.values[1]] :
-      initialOptions_.values;
+    initialOptions_.values;
   this.sliderOptions = {
     range: this.isModeRange,
     min: this.minValue,

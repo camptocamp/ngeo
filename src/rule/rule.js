@@ -279,7 +279,8 @@ ngeo.rule.Rule = class {
     const upperBoundary = this.upperBoundary;
 
     if (operator) {
-      if (operator === ngeo.rule.Rule.OperatorType.BETWEEN) {
+      if (operator === ngeo.rule.Rule.OperatorType.BETWEEN ||
+          operator === ngeo.rule.Rule.TemporalOperatorType.DURING) {
         if (lowerBoundary !== null && upperBoundary !== null) {
           value = {
             operator,
@@ -354,4 +355,15 @@ ngeo.rule.Rule.SpatialOperatorType = {
   CONTAINS: 'contains',
   INTERSECTS: 'intersects',
   WITHIN: 'within'
+};
+
+
+/**
+ * @enum {string}
+ */
+ngeo.rule.Rule.TemporalOperatorType = {
+  BEGINS: '>=',
+  DURING: '..',
+  ENDS: '<=',
+  EQUALS: '='
 };

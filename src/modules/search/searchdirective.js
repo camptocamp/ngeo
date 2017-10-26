@@ -3,6 +3,8 @@
  */
 goog.provide('ngeo.search.searchDirective');
 
+goog.require('ol');
+
 
 /**
  * Provides the "ngeoSearch" directive, which uses Twitter's
@@ -57,7 +59,7 @@ ngeo.search.searchDirective = function() {
            * @type {ngeox.SearchDirectiveListeners}
            */
       const typeaheadListeners = ngeo.search.searchDirective.adaptListeners_(
-              typeaheadListeners_);
+        typeaheadListeners_);
 
       element.on('typeahead:open', () => {
         scope.$apply(() => {
@@ -72,53 +74,53 @@ ngeo.search.searchDirective = function() {
       });
 
       element.on('typeahead:cursorchange',
-              /**
+        /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
-              (event, suggestion, dataset) => {
-                scope.$apply(() => {
-                  typeaheadListeners.cursorchange(event, suggestion, dataset);
-                });
-              });
+        (event, suggestion, dataset) => {
+          scope.$apply(() => {
+            typeaheadListeners.cursorchange(event, suggestion, dataset);
+          });
+        });
 
       element.on('typeahead:select',
-              /**
+        /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
-              (event, suggestion, dataset) => {
-                scope.$apply(() => {
-                  typeaheadListeners.select(event, suggestion, dataset);
-                });
-              });
+        (event, suggestion, dataset) => {
+          scope.$apply(() => {
+            typeaheadListeners.select(event, suggestion, dataset);
+          });
+        });
 
       element.on('typeahead:autocomplete',
-              /**
+        /**
                * @param {jQuery.Event} event Event.
                * @param {Object} suggestion Suggestion.
                * @param {TypeaheadDataset} dataset Dataset.
                */
-              (event, suggestion, dataset) => {
-                scope.$apply(() => {
-                  typeaheadListeners.autocomplete(event, suggestion, dataset);
-                });
-              });
+        (event, suggestion, dataset) => {
+          scope.$apply(() => {
+            typeaheadListeners.autocomplete(event, suggestion, dataset);
+          });
+        });
 
       element.on('typeahead:asyncreceive',
-              /**
+        /**
                * @param {jQuery.Event} event Event.
                * @param {TypeaheadDataset} dataset Dataset.
                * @param {string} query Query.
                */
-              (event, dataset, query) => {
-                scope.$apply(() => {
-                  const empty = element.data('tt-typeahead')['menu']['_allDatasetsEmpty']();
-                  typeaheadListeners.datasetsempty(event, query, empty);
-                });
-              });
+        (event, dataset, query) => {
+          scope.$apply(() => {
+            const empty = element.data('tt-typeahead')['menu']['_allDatasetsEmpty']();
+            typeaheadListeners.datasetsempty(event, query, empty);
+          });
+        });
 
     }
   };
@@ -147,17 +149,17 @@ ngeo.search.searchDirective.adaptListeners_ = function(object) {
   } else {
     typeaheadListeners = {
       open: object.open !== undefined ?
-          object.open : ol.nullFunction,
+        object.open : ol.nullFunction,
       close: object.close !== undefined ?
-          object.close : ol.nullFunction,
+        object.close : ol.nullFunction,
       cursorchange: object.cursorchange !== undefined ?
-          object.cursorchange : ol.nullFunction,
+        object.cursorchange : ol.nullFunction,
       datasetsempty: object.datasetsempty !== undefined ?
-          object.datasetsempty : ol.nullFunction,
+        object.datasetsempty : ol.nullFunction,
       select: object.select !== undefined ?
-          object.select : ol.nullFunction,
+        object.select : ol.nullFunction,
       autocomplete: object.autocomplete !== undefined ?
-          object.autocomplete : ol.nullFunction
+        object.autocomplete : ol.nullFunction
     };
   }
   return typeaheadListeners;

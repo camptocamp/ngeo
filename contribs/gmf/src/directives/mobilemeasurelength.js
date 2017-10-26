@@ -13,16 +13,16 @@ goog.require('ol.style.Style');
 
 
 gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} The template url.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/mobilemeasurelength.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/mobilemeasurelength.html`;
+  });
 
 
 /**
@@ -37,8 +37,7 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
  *
  * @htmlAttribute {boolean} gmf-mobile-measurelength-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurelength-decimals number of decimal
- *     to display.
+ * @htmlAttribute {number=} gmf-mobile-measurelength-precision the number of significant digits to display.
  * @htmlAttribute {ol.Map} gmf-mobile-measurelength-map The map.
  * @htmlAttribute {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction=}
  *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
@@ -55,7 +54,7 @@ gmf.mobileMeasureLengthDirective =
         restrict: 'A',
         scope: {
           'active': '=gmfMobileMeasurelengthActive',
-          'decimals': '<?gmfMobileMeasurelengthDecimals',
+          'precision': '<?gmfMobileMeasurelengthPrecision',
           'map': '=gmfMobileMeasurelengthMap',
           'sketchStyle': '=?gmfMobileMeasureLengthSketchstyle'
         },
@@ -76,7 +75,7 @@ gmf.mobileMeasureLengthDirective =
 
 
 gmf.module.directive('gmfMobileMeasurelength',
-                     gmf.mobileMeasureLengthDirective);
+  gmf.mobileMeasureLengthDirective);
 
 
 /**
@@ -113,7 +112,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
    * @type {number|undefined}
    * @export
    */
-  this.decimals;
+  this.precision;
 
   /**
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
@@ -149,7 +148,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
    * @export
    */
   this.measure = new ngeo.interaction.MeasureLengthMobile($filter('ngeoUnitPrefix'), {
-    decimals: this.decimals,
+    precision: this.precision,
     sketchStyle: this.sketchStyle
   });
 
@@ -161,7 +160,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
    * @export
    */
   this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
-      this.measure.getDrawInteraction());
+    this.measure.getDrawInteraction());
 
   const drawInteraction = this.drawInteraction;
   ngeoDecorateInteraction(drawInteraction);
@@ -179,20 +178,20 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
   this.dirty = false;
 
   ol.events.listen(
-      drawInteraction,
-      ol.Object.getChangeEventType(
-          ngeo.interaction.MobileDrawProperty.DIRTY),
-      function() {
-        this.dirty = drawInteraction.getDirty();
+    drawInteraction,
+    ol.Object.getChangeEventType(
+      ngeo.interaction.MobileDrawProperty.DIRTY),
+    function() {
+      this.dirty = drawInteraction.getDirty();
 
-        // this is where the angular scope is forced to be applied. We
-        // only need to do this when dirty, as going to "no being dirty"
-        // is made by a click on a button where Angular is within scope
-        if (this.dirty) {
-          $scope.$apply();
-        }
-      },
-      this
+      // this is where the angular scope is forced to be applied. We
+      // only need to do this when dirty, as going to "no being dirty"
+      // is made by a click on a button where Angular is within scope
+      if (this.dirty) {
+        $scope.$apply();
+      }
+    },
+    this
   );
 
   /**
@@ -202,13 +201,13 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
   this.drawing = false;
 
   ol.events.listen(
-      drawInteraction,
-      ol.Object.getChangeEventType(
-          ngeo.interaction.MobileDrawProperty.DRAWING),
-      function() {
-        this.drawing = drawInteraction.getDrawing();
-      },
-      this
+    drawInteraction,
+    ol.Object.getChangeEventType(
+      ngeo.interaction.MobileDrawProperty.DRAWING),
+    function() {
+      this.drawing = drawInteraction.getDrawing();
+    },
+    this
   );
 
   /**
@@ -218,13 +217,13 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
   this.valid = false;
 
   ol.events.listen(
-      drawInteraction,
-      ol.Object.getChangeEventType(
-          ngeo.interaction.MobileDrawProperty.VALID),
-      function() {
-        this.valid = drawInteraction.getValid();
-      },
-      this
+    drawInteraction,
+    ol.Object.getChangeEventType(
+      ngeo.interaction.MobileDrawProperty.VALID),
+    function() {
+      this.valid = drawInteraction.getValid();
+    },
+    this
   );
 };
 
@@ -272,4 +271,4 @@ gmf.MobileMeasureLengthController.prototype.deactivate = function() {
 
 
 gmf.module.controller('GmfMobileMeasureLengthController',
-                      gmf.MobileMeasureLengthController);
+  gmf.MobileMeasureLengthController);

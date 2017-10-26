@@ -32,7 +32,7 @@ describe('ngeo.LayerHelper', () => {
     $httpBackend.expectGET(wmtsSrc);
     const spy = jasmine.createSpy();
     const promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
-            wmtsName);
+      wmtsName);
     promise.then(spy);
     $httpBackend.flush();
 
@@ -74,7 +74,7 @@ describe('ngeo.LayerHelper', () => {
     const layerName = 'wmsLayer';
     const legendRule = 'legendRule';
     const wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, undefined,
-        legendRule);
+      legendRule);
     const expectedResult = `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=` +
       `WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=${layerName
       }&RULE=${legendRule}`;
@@ -85,7 +85,7 @@ describe('ngeo.LayerHelper', () => {
     $httpBackend.expectGET(wmtsSrc);
     const spy = jasmine.createSpy();
     const promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
-            wmtsName);
+      wmtsName);
     promise.then(spy);
     $httpBackend.flush();
 

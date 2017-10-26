@@ -88,7 +88,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
    * @private
    */
   this.autoClose_ = menuOptions.autoClose !== undefined ?
-      menuOptions.autoClose : true;
+    menuOptions.autoClose : true;
 
   // titleEl
   if (menuOptions.title) {
@@ -112,7 +112,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
    */
   this.actions_ = [];
 
-  menuOptions.actions.forEach(function(action) {
+  menuOptions.actions.forEach((action) => {
     this.actions_.push(
       $('<button>', {
         'class': 'list-group-item',
@@ -127,7 +127,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
           'class': action.cls !== undefined ? action.cls : ''
         }))
     );
-  }, this);
+  });
 
   options.element = contentEl[0];
 
@@ -162,24 +162,24 @@ ngeo.Menu.prototype.setMap = function(map) {
   ol.Overlay.prototype.setMap.call(this, map);
 
   if (map) {
-    this.actions_.forEach(function(action) {
+    this.actions_.forEach((action) => {
       const data = action.data();
       keys.push(
         goog.events.listen(
           action[0],
-          goog.events.EventType.CLICK,
+          'click',
           this.handleActionClick_.bind(this, data.name),
           false,
           this
         )
       );
-    }, this);
+    });
 
     // Autoclose the menu when clicking anywhere else than the menu
     olKeys.push(
       ol.events.listen(
         map,
-        ol.MapBrowserEventType.POINTERMOVE,
+        'pointermove',
         this.handleMapPointerMove_,
         this
       )
@@ -200,7 +200,7 @@ ngeo.Menu.prototype.open = function(coordinate) {
   if (this.autoClose_) {
     this.clickOutListenerKey_ =  goog.events.listen(
       document.documentElement,
-      goog.events.EventType.MOUSEDOWN,
+      'mousedown',
       this.handleClickOut_,
       false,
       this
@@ -230,7 +230,7 @@ ngeo.Menu.prototype.close = function() {
 ngeo.Menu.prototype.handleActionClick_ = function(action, evt) {
 
   this.dispatchEvent(
-      new ngeo.MenuEvent(ngeo.MenuEventType.ACTION_CLICK, action));
+    new ngeo.MenuEvent(ngeo.MenuEventType.ACTION_CLICK, action));
 
   if (this.autoClose_) {
     this.close();

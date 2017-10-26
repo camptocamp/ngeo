@@ -134,8 +134,8 @@ gmf.ContextualdataController.prototype.init = function() {
   const mapDiv = this.map.getTargetElement();
   goog.asserts.assertElement(mapDiv);
 
-  goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
-        this.handleMapContextMenu_, false, this);
+  goog.events.listen(mapDiv, 'contextmenu',
+    this.handleMapContextMenu_, false, this);
 };
 
 /**
@@ -177,8 +177,8 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
     console.error('Error on getting the raster.');
   };
   this.gmfRaster_.getRaster(coordinate).then(
-      getRasterSuccess,
-      getRasterError
+    getRasterSuccess,
+    getRasterError
   );
 };
 
@@ -189,7 +189,9 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
 gmf.ContextualdataController.prototype.preparePopover_ = function() {
 
   const container = document.createElement('DIV');
-  container.classList.add('popover', 'bottom', 'gmf-contextualdata');
+  container.classList.add('popover');
+  container.classList.add('bottom');
+  container.classList.add('gmf-contextualdata');
   angular.element(container).css('position', 'relative');
   const arrow = document.createElement('DIV');
   arrow.classList.add('arrow');
@@ -253,7 +255,7 @@ gmf.module.controller('GmfContextualdataController', gmf.ContextualdataControlle
  * @ngname gmfContextualdatacontent
  */
 gmf.contextualdatacontentDirective = function(
-    gmfContextualdatacontentTemplateUrl) {
+  gmfContextualdatacontentTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,

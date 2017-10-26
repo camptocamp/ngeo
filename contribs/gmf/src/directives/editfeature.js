@@ -117,9 +117,9 @@ gmf.module.directive(
  * @ngname GmfEditfeatureController
  */
 gmf.EditfeatureController = function($element, $q, $scope, $timeout,
-    gettextCatalog, gmfEditFeature, gmfSnapping, gmfXSDAttributes,
-    ngeoDecorateInteraction, ngeoEventHelper, ngeoFeatureHelper,
-    ngeoLayerHelper, ngeoToolActivateMgr) {
+  gettextCatalog, gmfEditFeature, gmfSnapping, gmfXSDAttributes,
+  ngeoDecorateInteraction, ngeoEventHelper, ngeoFeatureHelper,
+  ngeoLayerHelper, ngeoToolActivateMgr) {
 
 
   // === Binding properties ===
@@ -627,7 +627,7 @@ gmf.EditfeatureController.prototype.confirmCancel = function() {
  * @private
  */
 gmf.EditfeatureController.prototype.checkForModifications_ = function(
-    scopeApply) {
+  scopeApply) {
   this.confirmDeferred_ = this.q_.defer();
   if (this.feature && this.dirty) {
     this.unsavedModificationsModalShown = true;
@@ -656,7 +656,7 @@ gmf.EditfeatureController.prototype.continueWithoutSaving = function() {
  */
 gmf.EditfeatureController.prototype.delete = function() {
   const msg = this.gettextCatalog_.getString(
-      'Do you really want to delete the selected feature?');
+    'Do you really want to delete the selected feature?');
   // Confirm deletion first
   if (confirm(msg)) {
     this.pending = true;
@@ -769,15 +769,15 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
     //this.registerInteractions_();
 
     keys.push(ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
-        this.handleMenuActionClick_, this));
+      this.handleMenuActionClick_, this));
 
     keys.push(ol.events.listen(this.translate_,
-        ol.interaction.TranslateEventType.TRANSLATEEND,
-        this.handleTranslateEnd_, this));
+      ol.interaction.TranslateEventType.TRANSLATEEND,
+      this.handleTranslateEnd_, this));
 
     keys.push(ol.events.listen(this.rotate_,
-        ngeo.RotateEventType.ROTATEEND,
-        this.handleRotateEnd_, this));
+      ngeo.RotateEventType.ROTATEEND,
+      this.handleRotateEnd_, this));
 
     toolMgr.registerTool(createUid, this.createToolActivate, false);
     toolMgr.registerTool(createUid, this.mapSelectToolActivate, true);
@@ -821,24 +821,24 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
  * @private
  */
 gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
-    active) {
+  active) {
 
   const mapDiv = this.map.getViewport();
   goog.asserts.assertElement(mapDiv);
 
   if (active) {
-    ol.events.listen(this.map, ol.MapBrowserEventType.CLICK,
-        this.handleMapClick_, this);
+    ol.events.listen(this.map, 'click',
+      this.handleMapClick_, this);
 
-    goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
-        this.handleMapContextMenu_, false, this);
+    goog.events.listen(mapDiv, 'contextmenu',
+      this.handleMapContextMenu_, false, this);
 
   } else {
-    ol.events.unlisten(this.map, ol.MapBrowserEventType.CLICK,
-        this.handleMapClick_, this);
+    ol.events.unlisten(this.map, 'click',
+      this.handleMapClick_, this);
 
-    goog.events.unlisten(mapDiv, goog.events.EventType.CONTEXTMENU,
-        this.handleMapContextMenu_, false, this);
+    goog.events.unlisten(mapDiv, 'contextmenu',
+      this.handleMapContextMenu_, false, this);
   }
 };
 
@@ -874,6 +874,9 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
         ret = feature;
       }
       return ret;
+    },
+    {
+      hitTolerance: 5
     }
   );
 
@@ -925,6 +928,9 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
         ret = feature;
       }
       return ret;
+    },
+    {
+      hitTolerance: 7
     }
   );
 

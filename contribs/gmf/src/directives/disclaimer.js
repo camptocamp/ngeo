@@ -87,7 +87,7 @@ gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
  * @ngname GmfDisclaimerController
  */
 gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
-    ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
+  ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
 
   /**
    * @type {?ol.Map}
@@ -176,7 +176,7 @@ gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
  */
 gmf.DisclaimerController.prototype.$onInit = function() {
   this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map,
-      gmf.DATALAYERGROUP_NAME);
+    gmf.DATALAYERGROUP_NAME);
 
   this.registerLayer_(this.dataLayerGroup_);
 

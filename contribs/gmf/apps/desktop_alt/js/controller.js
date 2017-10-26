@@ -14,6 +14,8 @@ goog.provide('app_desktop_alt');
 goog.require('app');
 goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
+goog.require('gmf.importdatasourceComponent');
+/** @suppress {extraRequire} */
 goog.require('ngeo.googlestreetviewComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
@@ -29,10 +31,18 @@ gmf.module.value('ngeoQueryOptions', {
   'cursorHover': true
 });
 
+gmf.module.value('gmfExternalOGCServers', [{
+  'name': 'Swiss Topo',
+  'type': 'WMS',
+  'url': 'http://wms.geo.admin.ch/?lang=fr'
+}]);
 
 gmf.module.value('gmfPrintOptions', {
   'scaleInput': true
 });
+
+gmf.module.value('ngeoMeasurePrecision', 6);
+gmf.module.value('ngeoMeasureDecimals', 2);
 
 
 /**
@@ -94,7 +104,7 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
    */
   this.mousePositionProjections = [{
     code: 'EPSG:2056',
-    label: 'CH1903+ / LV03',
+    label: 'CH1903+ / LV95',
     filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {
     code: 'EPSG:21781',

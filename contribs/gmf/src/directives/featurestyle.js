@@ -108,7 +108,7 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
  * @private
  */
 gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
-    newFeature, previousFeature) {
+  newFeature, previousFeature) {
 
   const keys = this.featureListenerKeys_;
 
@@ -132,12 +132,12 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
       ngeo.FeatureProperties.STROKE
     ].forEach(function(propName) {
       keys.push(
-          ol.events.listen(
-              newFeature,
-              ol.Object.getChangeEventType(propName),
-              this.handleFeatureChange_,
-              this
-          )
+        ol.events.listen(
+          newFeature,
+          ol.Object.getChangeEventType(propName),
+          this.handleFeatureChange_,
+          this
+        )
       );
     }, this);
 
@@ -145,12 +145,12 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
     goog.asserts.assert(geometry, 'Geometry should be thruthy');
 
     keys.push(
-        ol.events.listen(
-            geometry,
-            'change',
-            this.handleGeometryChange_,
-            this
-        )
+      ol.events.listen(
+        geometry,
+        'change',
+        this.handleGeometryChange_,
+        this
+      )
     );
 
     this.type = this.featureHelper_.getType(newFeature);
@@ -165,7 +165,7 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
  * @private
  */
 gmf.FeaturestyleController.prototype.handleColorSet_ = function(
-    newColor) {
+  newColor) {
   if (this.feature && newColor) {
     const currentColor = this.feature.get(ngeo.FeatureProperties.COLOR);
     if (currentColor !== newColor) {
@@ -181,8 +181,7 @@ gmf.FeaturestyleController.prototype.handleColorSet_ = function(
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetAngle = function(value) {
-  return /** @type {number} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.ANGLE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.ANGLE, value));
 };
 
 
@@ -192,19 +191,17 @@ gmf.FeaturestyleController.prototype.getSetAngle = function(value) {
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetName = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.NAME, value));
+  return goog.asserts.assertString(this.getSetProperty_(ngeo.FeatureProperties.NAME, value));
 };
 
 
 /**
- * @param {string|undefined} value A stroke value to set or undefined to get.
- * @return {string} The stroke of the feature.
+ * @param {number|undefined} value A stroke value to set or undefined to get.
+ * @return {number} The stroke of the feature.
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetOpacity = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.OPACITY, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.OPACITY, value));
 };
 
 
@@ -215,30 +212,27 @@ gmf.FeaturestyleController.prototype.getSetOpacity = function(value) {
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetShowMeasure = function(value) {
-  return /** @type {boolean} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.SHOW_MEASURE, value));
+  return goog.asserts.assertBoolean(this.getSetProperty_(ngeo.FeatureProperties.SHOW_MEASURE, value));
 };
 
 
 /**
- * @param {string|undefined} value A size value to set or undefined to get.
- * @return {string} The size of the feature.
+ * @param {number|undefined} value A size value to set or undefined to get.
+ * @return {number} The size of the feature.
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetSize = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.SIZE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.SIZE, value));
 };
 
 
 /**
- * @param {string|undefined} value A stroke value to set or undefined to get.
- * @return {string} The stroke of the feature.
+ * @param {number|undefined} value A stroke value to set or undefined to get.
+ * @return {number} The stroke of the feature.
  * @export
  */
 gmf.FeaturestyleController.prototype.getSetStroke = function(value) {
-  return /** @type {string} */ (
-      this.getSetProperty_(ngeo.FeatureProperties.STROKE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.STROKE, value));
 };
 
 
@@ -275,10 +269,10 @@ gmf.FeaturestyleController.prototype.handleFeatureChange_ = function() {
  * @private
  */
 gmf.FeaturestyleController.prototype.handleGeometryChange_ = function() {
-  const feature = this.feature;
-  this.measure = this.featureHelper_.getMeasure(feature);
+  goog.asserts.assert(this.feature);
+  this.measure = this.featureHelper_.getMeasure(this.feature);
 
-  const showMeasure = this.featureHelper_.getShowMeasureProperty(feature);
+  const showMeasure = this.featureHelper_.getShowMeasureProperty(this.feature);
   if (showMeasure) {
     this.handleFeatureChange_();
   }

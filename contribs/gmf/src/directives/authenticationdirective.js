@@ -8,16 +8,16 @@ goog.require('ngeo.modalDirective');
 
 
 gmf.module.value('gmfAuthenticationTemplateUrl',
-    /**
+  /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    (element, attrs) => {
-      const templateUrl = attrs['gmfAuthenticationTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/authentication.html`;
-    });
+  (element, attrs) => {
+    const templateUrl = attrs['gmfAuthenticationTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/authentication.html`;
+  });
 
 
 /**
@@ -36,9 +36,13 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
  *
  * Example:
  *
- *      <gmf-authentication></gmf-authentication>
+ *      <gmf-authentication
+ *        gmf-authentication-allow-password-change="true">
+ *      </gmf-authentication>
  *
  * @param {string} gmfAuthenticationTemplateUrl Url to template.
+ * @htmlAttribute {boolean} gmf-authentication-allow-password-change Whether to
+ *     show the change password button. Default to true.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -46,7 +50,10 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
  */
 gmf.authenticationDirective = function(gmfAuthenticationTemplateUrl) {
   return {
-    scope: true,
+    bindToController: true,
+    scope: {
+      'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange'
+    },
     controller: 'GmfAuthenticationController as authCtrl',
     templateUrl: gmfAuthenticationTemplateUrl
   };
@@ -69,7 +76,7 @@ gmf.module.directive('gmfAuthentication', gmf.authenticationDirective);
  * @ngname GmfAuthenticationController
  */
 gmf.AuthenticationController = function(gettextCatalog, $scope,
-    gmfAuthentication, gmfUser, ngeoNotification) {
+  gmfAuthentication, gmfUser, ngeoNotification) {
 
   /**
    * @type {gmfx.User}
@@ -100,6 +107,12 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
    * @private
    */
   this.notification_ = ngeoNotification;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.allowPasswordChange;
 
   /**
    * @type {boolean}
@@ -162,6 +175,16 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
 };
 
 
+/**
+ * Initialise the controller.
+ */
+gmf.AuthenticationController.prototype.$onInit = function() {
+  if (this.allowPasswordChange === undefined) {
+    this.allowPasswordChange = true;
+  }
+};
+
+
 // METHODS THAT CALL THE AUTHENTICATION SERVICE METHODS
 
 
@@ -206,11 +229,11 @@ gmf.AuthenticationController.prototype.changePassword = function() {
       //     the old password given is incorrect.
       const error = gettextCatalog.getString('Incorrect old password.');
       this.gmfAuthentication_.changePassword(oldPwd, newPwd, confPwd).then(
-          () => {
-            this.changePasswordModalShown = true;
-            this.changePasswordReset();
-          },
-          this.setError_.bind(this, error));
+        () => {
+          this.changePasswordModalShown = true;
+          this.changePasswordReset();
+        },
+        this.setError_.bind(this, error));
     }
   }
 };
@@ -235,8 +258,8 @@ gmf.AuthenticationController.prototype.login = function() {
   } else {
     const error = gettextCatalog.getString('Incorrect username or password.');
     this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
-        this.resetError_.bind(this),
-        this.setError_.bind(this, error));
+      this.resetError_.bind(this),
+      this.setError_.bind(this, error));
   }
 };
 
@@ -249,8 +272,8 @@ gmf.AuthenticationController.prototype.logout = function() {
   const gettextCatalog = this.gettextCatalog;
   const error = gettextCatalog.getString('Could not log out.');
   this.gmfAuthentication_.logout().then(
-      this.resetError_.bind(this),
-      this.setError_.bind(this, error));
+    this.resetError_.bind(this),
+    this.setError_.bind(this, error));
 };
 
 
@@ -277,9 +300,9 @@ gmf.AuthenticationController.prototype.resetPassword = function() {
   }.bind(this);
 
   this.gmfAuthentication_.resetPassword(this.loginVal).then(
-      resetPasswordSuccessFn,
-      this.setError_.bind(this, error)
-    );
+    resetPasswordSuccessFn,
+    this.setError_.bind(this, error)
+  );
 };
 
 
@@ -336,4 +359,4 @@ gmf.AuthenticationController.prototype.resetError_ = function() {
 
 
 gmf.module.controller('GmfAuthenticationController',
-    gmf.AuthenticationController);
+  gmf.AuthenticationController);

@@ -71,6 +71,14 @@ goog.require('ngeo.sortableDirective');
 goog.require('ngeo.SortableOptions');
 
 
+gmf.module.value('ngeoQueryOptions', {
+  'limit': 20
+});
+
+gmf.module.value('ngeoMeasurePrecision', 3);
+gmf.module.value('ngeoMeasureDecimals', 0);
+
+
 /**
  * Desktop application abstract controller.
  *
@@ -93,6 +101,8 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   };
   ol.obj.assign(viewConfig, config.mapViewConfig || {});
 
+  const arrow = gmf.AbstractController.prototype.getLocationIcon();
+
   /**
    * @type {ol.Map}
    * @export
@@ -107,11 +117,15 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       new ol.control.Zoom({
         zoomInTipLabel: '',
         zoomOutTipLabel: ''
+      }),
+      new ol.control.Rotate({
+        label: arrow,
+        tipLabel: ''
       })
     ],
     interactions: config.mapInteractions || ol.interaction.defaults({
-      pinchRotate: false,
-      altShiftDragRotate: false
+      pinchRotate: true,
+      altShiftDragRotate: true
     }),
     loadTilesWhileAnimating: true,
     loadTilesWhileInteracting: true
@@ -139,12 +153,6 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @type {boolean}
    * @export
    */
-  this.filterSelectorActive = false;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
   this.editFeatureActive = false;
 
   /**
@@ -166,6 +174,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       text: '\uf041'
     })
   });
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.importDataSourceActive = false;
 
   const body = $('body');
 
@@ -193,7 +207,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @export
    */
   this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr')
-      .getFeatureOverlay();
+    .getFeatureOverlay();
   this.drawFeatureLayer.setFeatures(ngeoFeatures);
 
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
@@ -257,5 +271,5 @@ ol.inherits(gmf.AbstractDesktopController, gmf.AbstractController);
 
 
 gmf.module.controller(
-    'AbstractDesktopController',
-    gmf.AbstractDesktopController);
+  'AbstractDesktopController',
+  gmf.AbstractDesktopController);

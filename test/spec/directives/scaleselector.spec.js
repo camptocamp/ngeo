@@ -17,7 +17,7 @@ describe('ngeo.scaleselectorDirective', () => {
     });
 
     element = angular.element(
-        '<div ngeo-scaleselector="scales"' +
+      '<div ngeo-scaleselector="scales"' +
             'ngeo-scaleselector-map="map">' +
         '</div>');
 

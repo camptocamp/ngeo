@@ -22,6 +22,7 @@
         class="gmf-authentication-error help-block"></span>
     <div class="form-group">
     <input
+        ng-show="authCtrl.allowPasswordChange"
         type="button"
         class="form-control btn btn-default"
         value="{{'Change password' | translate}}"
@@ -76,30 +77,29 @@
         ng-click="authCtrl.changePasswordReset()" />
     </div>
   </form>
-
-  <ngeo-modal ng-model="authCtrl.changePasswordModalShown">
-    <div class="modal-header">
-      <button type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="{{'Close' | translate}}">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <h4 class="modal-title">
-        {{'Password Changed' | translate}}
-      </h4>
-    </div>
-    <div class="modal-body">
-      {{'Your password has succesfully been changed.' | translate}}
-    </div>
-    <div class="modal-footer">
-      <button type="button"
-              class="btn btn-default"
-              data-dismiss="modal">{{'OK' | translate}}</button>
-    </div>
-  </ngeo-modal>
-
 </div>
+
+<ngeo-modal ng-model="authCtrl.changePasswordModalShown">
+  <div class="modal-header">
+    <button type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="{{'Close' | translate}}">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">
+      {{'Password Changed' | translate}}
+    </h4>
+  </div>
+  <div class="modal-body">
+    {{'Your password has succesfully been changed.' | translate}}
+  </div>
+  <div class="modal-footer">
+    <button type="button"
+            class="btn btn-default"
+            data-dismiss="modal">{{'OK' | translate}}</button>
+  </div>
+</ngeo-modal>
 
 <div ng-if="!authCtrl.gmfUser.username">
   <form
@@ -138,28 +138,26 @@
          href="">{{'Password forgotten?' | translate}}</a>
     </div>
   </form>
-
-  <ngeo-modal ng-model="authCtrl.resetPasswordModalShown">
-    <div class="modal-header">
-      <button type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="{{'Close' | translate}}">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <h4 class="modal-title">
-        {{'Password forgotten?' | translate}}
-      </h4>
-    </div>
-    <div class="modal-body">
-      {{ ::authCtrl.translate(
-      'A new password has just been sent to you by e-mail.') }}
-    </div>
-    <div class="modal-footer">
-      <button type="button"
-              class="btn btn-default"
-              data-dismiss="modal">{{'OK' | translate}}</button>
-    </div>
-  </ngeo-modal>
-
 </div>
+
+<ngeo-modal ng-model="authCtrl.resetPasswordModalShown">
+  <div class="modal-header">
+    <button type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="{{'Close' | translate}}">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">
+      {{'Password forgotten?' | translate}}
+    </h4>
+  </div>
+  <div class="modal-body" translate>
+    A new password has just been sent to you by e-mail.
+  </div>
+  <div class="modal-footer">
+    <button type="button"
+            class="btn btn-default"
+            data-dismiss="modal">{{'OK' | translate}}</button>
+  </div>
+</ngeo-modal>

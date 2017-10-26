@@ -5,6 +5,8 @@ goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
 goog.require('ngeo.MapQuerent');
+/** @suppress {extraRequire} */
+goog.require('gmf.swipe');
 goog.require('ol.Collection');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
@@ -13,16 +15,16 @@ goog.require('ol.style.Style');
 
 
 ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
-    /**
+  /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template.
      */
-    ($element, $attrs) => {
-      const templateUrl = $attrs['gmfDisplayquerywindowTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/displayquerywindow.html`;
-    });
+  ($element, $attrs) => {
+    const templateUrl = $attrs['gmfDisplayquerywindowTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/displayquerywindow.html`;
+  });
 
 
 /**
@@ -85,6 +87,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
 
 
 /**
+ * @param {!jQuery} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {!ngeo.FeatureHelper} ngeoFeatureHelper the ngeo FeatureHelper service.
@@ -96,8 +99,8 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @ngdoc controller
  * @ngname GmfDisplayquerywindowController
  */
-gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
-    ngeoFeatureHelper, ngeoFeatureOverlayMgr) {
+gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult,
+  ngeoFeatureHelper, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {boolean}
@@ -209,16 +212,22 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
    */
   this.open = false;
 
+  /**
+   * @const {!jQuery}
+   * @private
+   */
+  this.element_ = $element;
+
   $scope.$watchCollection(
-      () => ngeoQueryResult,
-      (newQueryResult, oldQueryResult) => {
-        this.updateQueryResult_(newQueryResult);
-        if (newQueryResult.total > 0) {
-          this.show();
-        } else if (oldQueryResult !== newQueryResult) {
-          this.close();
-        }
-      });
+    () => ngeoQueryResult,
+    (newQueryResult, oldQueryResult) => {
+      this.updateQueryResult_(newQueryResult);
+      if (newQueryResult.total > 0) {
+        this.show();
+      } else if (oldQueryResult !== newQueryResult) {
+        this.close();
+      }
+    });
 };
 
 /**
@@ -255,6 +264,14 @@ gmf.DisplayquerywindowController.prototype.$onInit = function() {
     });
   }
   this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
+
+  if (this.desktop) {
+    this.element_.find('.gmf-displayquerywindow').draggable();
+    this.element_.find('.gmf-displayquerywindow-container').resizable({
+      'minHeight': 240,
+      'minWidth': 240
+    });
+  }
 };
 
 
@@ -291,7 +308,7 @@ gmf.DisplayquerywindowController.prototype.updateFeatures_ = function() {
  * @private
  */
 gmf.DisplayquerywindowController.prototype.setCurrentResult_ = function(
-    position, setHighlight) {
+  position, setHighlight) {
   let hasChanged = false;
   if (position !== this.currentResult) {
     let i, source, features;
@@ -368,6 +385,7 @@ gmf.DisplayquerywindowController.prototype.updateQueryResult_ = function(queryRe
   for (let i = 0; i < queryResult.sources.length; i++) {
     const source = queryResult.sources[i];
     source.features = source.features.filter(function(feature) {
+      goog.asserts.assert(feature);
       return !ol.obj.isEmpty(this.ngeoFeatureHelper_.getFilteredFeatureValues(feature));
     }, this);
     this.ngeoQueryResult.sources.push(source);

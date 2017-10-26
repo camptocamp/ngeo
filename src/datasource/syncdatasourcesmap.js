@@ -1,9 +1,9 @@
-goog.provide('ngeo.SyncDataSourcesMap');
+goog.provide('ngeo.datasource.SyncDataSourcesMap');
 
 goog.require('ngeo');
-goog.require('ngeo.DataSource');
+goog.require('ngeo.datasource.DataSource');
 /** @suppress {extraRequire} */
-goog.require('ngeo.DataSources');
+goog.require('ngeo.datasource.DataSources');
 goog.require('ol.events');
 goog.require('ol.CollectionEventType');
 goog.require('ol.Object');
@@ -13,7 +13,7 @@ goog.require('ol.ViewProperty');
 goog.require('goog.asserts');
 
 
-ngeo.SyncDataSourcesMap = class {
+ngeo.datasource.SyncDataSourcesMap = class {
 
   /**
    * This service is responsible of the synchronization between the ngeo
@@ -26,8 +26,8 @@ ngeo.SyncDataSourcesMap = class {
    * - inRange: The map view 'change:resolution' event is listened and the
    *   property is updated depending on the current resolution.
    *
-   * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
-   *     objects.
+   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+   *     data sources objects.
    *
    * @struct
    * @ngdoc service
@@ -37,7 +37,7 @@ ngeo.SyncDataSourcesMap = class {
   constructor(ngeoDataSources) {
 
     /**
-     * @type {ngeo.DataSources}
+     * @type {ngeo.datasource.DataSources}
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
@@ -139,7 +139,7 @@ ngeo.SyncDataSourcesMap = class {
 
   /**
    * Synchronize a data source `inRange` property with a given resolution.
-   * @param {ngeo.DataSource} dataSource Data source
+   * @param {ngeo.datasource.DataSource} dataSource Data source
    * @param {number} resolution Resolution
    * @private
    */
@@ -172,7 +172,7 @@ ngeo.SyncDataSourcesMap = class {
    */
   handleDataSourcesAdd_(event) {
     const dataSource = goog.asserts.assertInstanceof(
-      event.element, ngeo.DataSource);
+      event.element, ngeo.datasource.DataSource);
     if (this.map_) {
       const resolution = this.map_.getView().getResolution();
       goog.asserts.assertNumber(resolution);
@@ -183,4 +183,5 @@ ngeo.SyncDataSourcesMap = class {
 };
 
 
-ngeo.module.service('ngeoSyncDataSourcesMap', ngeo.SyncDataSourcesMap);
+ngeo.module.service(
+  'ngeoSyncDataSourcesMap', ngeo.datasource.SyncDataSourcesMap);

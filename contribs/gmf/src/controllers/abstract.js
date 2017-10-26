@@ -6,7 +6,7 @@ goog.require('gmf.authenticationDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.backgroundlayerselectorComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.DataSourcesManager');
+goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
@@ -48,15 +48,6 @@ gmf.module.value('ngeoExportFeatureFormats', [
 ]);
 
 
-// Filter to apply by default on all coordinates (such points in draw).
-gmf.module.value('ngeoPointfilter', 'ngeoNumberCoordinates:0:{x} E, {y} N');
-
-
-gmf.module.value('ngeoQueryOptions', {
-  'limit': 20
-});
-
-
 /**
  * Application abstract controller.
  *
@@ -90,7 +81,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @type {ngeo.FeatureHelper}
    */
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
-  ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
+  ngeoFeatureHelper.setProjection(goog.asserts.assert(this.map.getView().getProjection()));
 
   /**
    * @type {gmf.ThemeManager}
@@ -112,19 +103,47 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.gmfThemes_ = $injector.get('gmfThemes');
 
   /**
+   * Permalink service
+   * @type {gmf.Permalink}
+   * @private
+   */
+  this.permalink_ = $injector.get('gmfPermalink');
+
+  /**
    * Authentication service
    * @type {gmf.Authentication}
    */
   const gmfAuthentication = $injector.get('gmfAuthentication');
 
   /**
-   * Permalink service
-   * @type {gmf.Permalink}
+   * @type {boolean}
+   * @export
    */
-  const permalink = $injector.get('gmfPermalink');
+  this.hasEditableLayers = false;
+
+  /**
+   * @private
+   */
+  this.updateHasEditableLayers_ = function() {
+    this.gmfThemes_.hasEditableLayers().then((hasEditableLayers) => {
+      this.hasEditableLayers = hasEditableLayers;
+    });
+  };
 
   const userChange = function(evt) {
     const roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
+
+    // Open filter panel if 'open_panel' is set in functionalities and
+    // has 'layer_filter' as first value
+    this.gmfThemes_.getThemesObject().then((themes) => {
+      const functionalities = this.gmfUser.functionalities;
+      if (functionalities &&
+          functionalities.open_panel &&
+          functionalities.open_panel[0] === 'layer_filter') {
+        this.filterSelectorActive = true;
+      }
+    });
+
     // Reload theme and background layer when login status changes.
     if (evt.type !== gmf.AuthenticationEventType.READY) {
       this.updateCurrentTheme_();
@@ -158,14 +177,13 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.dimensions = {};
 
   // watch any change on dimensions object to refresh the url
-  permalink.setDimensions(this.dimensions);
-
-  // FIXME - manage dimensions ...
-  //const queryManager = $injector.get('gmfQueryManager');
-  //queryManager.setDimensions(this.dimensions);
+  this.permalink_.setDimensions(this.dimensions);
 
   // Injecting the gmfDataSourcesManager service creates the data sources
-  $injector.get('gmfDataSourcesManager');
+  const gmfDataSourcesManager = $injector.get('gmfDataSourcesManager');
+
+  // Give the dimensions to the gmfDataSourcesManager
+  gmfDataSourcesManager.setDimensions(this.dimensions);
 
   if ($injector.has('gmfDefaultDimensions')) {
     // Set defaults
@@ -217,6 +235,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
     }),
     stroke: queryStroke
   });
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.filterSelectorActive = false;
 
   /**
    * The active state of the ngeo query directive.
@@ -321,6 +345,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.$scope = $scope;
 
   /**
+   * @type {string}
+   * @export
+   */
+  this.lang;
+
+  /**
    * Default language
    * @type {string}
    */
@@ -379,8 +409,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
   const printPanelActivate = new ngeo.ToolActivate(this, 'printPanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
 
-
-  $scope.$watch(() => this.gmfThemeManager.themeName, (name) => {
+  $scope.$root.$on(gmf.ThemeManagerEventType.THEME_NAME_SET, (event, name) => {
     const map = this.map;
     this.gmfThemes_.getThemeObject(name).then((theme) => {
       if (theme) {
@@ -408,7 +437,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
       let background;
       if (!skipPermalink) {
         // get the background from the permalink
-        background = permalink.getBackgroundLayer(layers);
+        background = this.permalink_.getBackgroundLayer(layers);
       }
       if (!background) {
         // get the background from the user settings
@@ -436,21 +465,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.updateCurrentBackgroundLayer_(false);
 
   /**
-   * @type {boolean}
-   * @export
-   */
-  this.hasEditableLayers = false;
-
-  /**
-   * @private
-   */
-  this.updateHasEditableLayers_ = function() {
-    this.gmfThemes_.hasEditableLayers().then((hasEditableLayers) => {
-      this.hasEditableLayers = hasEditableLayers;
-    });
-  };
-
-  /**
    * Ngeo create popup factory
    * @type {ngeo.CreatePopup}
    */
@@ -460,6 +474,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
   // closure remove them. "export" tag doens't work on static function below,
   // we "export" them as externs in the gmfx options file.
   const gmfx = window.gmfx || {};
+  /**
+   * @export
+   */
   window.gmfx = gmfx;
 
   /**
@@ -468,11 +485,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string} title (text).
    * @param {string=} opt_width CSS width.
    * @param {string=} opt_height CSS height.
+   * @export
    */
-  gmfx.OpenIframePopup = function(url, title, opt_width, opt_height) {
+  gmfx.openIframePopup = function(url, title, opt_width, opt_height) {
     const popup = ngeoCreatePopup();
     popup.setUrl(`${url}`);
-    gmfx.OpenPopup_(popup, title, opt_width, opt_height);
+    gmfx.openPopup_(popup, title, opt_width, opt_height);
   };
 
   /**
@@ -481,11 +499,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string} title (text).
    * @param {string=} opt_width CSS width.
    * @param {string=} opt_height CSS height.
+   * @export
    */
-  gmfx.OpenTextPopup = function(content, title, opt_width, opt_height) {
+  gmfx.openTextPopup = function(content, title, opt_width, opt_height) {
     const popup = ngeoCreatePopup();
     popup.setContent(`${content}`, true);
-    gmfx.OpenPopup_(popup, title, opt_width, opt_height);
+    gmfx.openPopup_(popup, title, opt_width, opt_height);
   };
 
   /**
@@ -494,7 +513,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string=} opt_width CSS width.
    * @param {string=} opt_height CSS height.
    */
-  gmfx.OpenPopup_ = function(popup, title, opt_width, opt_height) {
+  gmfx.openPopup_ = function(popup, title, opt_width, opt_height) {
     if (opt_width) {
       popup.setWidth(`${opt_width}`);
     }
@@ -504,6 +523,43 @@ gmf.AbstractController = function(config, $scope, $injector) {
     popup.setTitle(`${title}`);
     popup.setAutoDestroy(true);
     popup.setOpen(true);
+  };
+
+  /**
+   * Whether to update the size of the map on browser window resize.
+   * @type {boolean}
+   * @export
+   */
+  this.manageResize = false;
+
+  /**
+   * The duration (milliseconds) of the animation that may occur on the div
+   * containing the map. Used to smoothly resize the map while the animation
+   * is in progress.
+   * @type {number|undefined}
+   * @export
+   */
+  this.resizeTransition;
+
+  const cgxp = window.cgxp || {};
+  /**
+   * @export
+   */
+  window.cgxp = cgxp;
+  /**
+   * @export
+   */
+  cgxp.tools = window.cgxp.tools || {};
+  /**
+   * Static function to create a popup with an iframe.
+   * @param {string} url an url.
+   * @param {string} title (text).
+   * @param {string=} opt_width CSS width.
+   * @param {string=} opt_height CSS height.
+   * @export
+   */
+  cgxp.tools.openInfoWindow = function(url, title, opt_width, opt_height) {
+    gmfx.openIframePopup(url, title, opt_width, opt_height);
   };
 };
 
@@ -517,14 +573,14 @@ gmf.AbstractController.prototype.switchLanguage = function(lang) {
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
   this.tmhDynamicLocale.set(lang);
-  this['lang'] = lang;
+  this.lang = lang;
 };
 
 
 /**
  */
 gmf.AbstractController.prototype.initLanguage = function() {
-  this.$scope.$watch(() => this['lang'], (newValue) => {
+  this.$scope.$watch(() => this.lang, (newValue) => {
     this.stateManager.updateState({
       'lang': newValue
     });
@@ -556,16 +612,7 @@ gmf.AbstractController.prototype.initLanguage = function() {
  */
 gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
   this.gmfThemes_.getThemesObject().then((themes) => {
-    let themeName;
-
-    // check if we have a theme in the user functionalities
-    const functionalities = this.gmfUser.functionalities;
-    if (functionalities && 'default_theme' in functionalities) {
-      const defaultTheme = functionalities.default_theme;
-      if (defaultTheme.length > 0) {
-        themeName = defaultTheme[0];
-      }
-    }
+    const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
     if (themeName) {
       const theme = gmf.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
       if (theme) {
@@ -573,6 +620,19 @@ gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
       }
     }
   });
+};
+
+/**
+ * @protected
+ * @return {Element} Span element with font-awesome inside of it
+ */
+gmf.AbstractController.prototype.getLocationIcon = function() {
+  const arrow = document.createElement('span');
+  arrow.className = 'fa fa-location-arrow';
+  arrow.style.transform = 'rotate(-0.82rad)';
+  const arrowWrapper = document.createElement('span');
+  arrowWrapper.appendChild(arrow);
+  return arrowWrapper;
 };
 
 gmf.module.controller('AbstractController', gmf.AbstractController);

@@ -39,7 +39,7 @@ ngeo.format.XSDAttribute.prototype.read = function(source) {
  */
 ngeo.format.XSDAttribute.prototype.readFromDocument = function(doc) {
   goog.asserts.assert(doc.nodeType == Node.DOCUMENT_NODE,
-      'doc.nodeType should be DOCUMENT');
+    'doc.nodeType should be DOCUMENT');
   for (let n = doc.firstChild; n; n = n.nextSibling) {
     if (n.nodeType == Node.ELEMENT_NODE) {
       return this.readFromNode(n);
@@ -56,9 +56,9 @@ ngeo.format.XSDAttribute.prototype.readFromDocument = function(doc) {
  */
 ngeo.format.XSDAttribute.prototype.readFromNode = function(node) {
   goog.asserts.assert(node.nodeType == Node.ELEMENT_NODE,
-      'node.nodeType should be ELEMENT');
+    'node.nodeType should be ELEMENT');
   goog.asserts.assert(node.localName == 'schema',
-      'localName should be schema');
+    'localName should be schema');
 
   let elements = node.getElementsByTagName('element');
   if (!elements.length) {

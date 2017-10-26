@@ -14,7 +14,7 @@ gmf.module = angular.module('gmf', [
 
 gmf.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   /**
-   * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider
+   * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider angular-dynamic-locale provider.
    * @param {string} angularLocaleScript the script.
    */
   function(tmhDynamicLocaleProvider, angularLocaleScript) {
@@ -27,7 +27,7 @@ gmf.module.config(['$animateProvider',
   /**
    * For performance reason, only perform animation on elements that have the
    * `gmf-animatable` css class.
-   * @param {angular.$animateProvider} $animateProvider
+   * @param {angular.$animateProvider} $animateProvider animate provider.
    */
   function($animateProvider) {
     $animateProvider.classNameFilter(/gmf-animatable/);
@@ -51,6 +51,12 @@ gmf.DATALAYERGROUP_NAME = 'data';
  * @const
  * @export
  */
+gmf.EXTERNALLAYERGROUP_NAME = 'external';
+
+/**
+ * @const
+ * @export
+ */
 gmf.COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
 
 
@@ -59,6 +65,8 @@ gmf.COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
  */
 gmf.PermalinkParam = {
   BG_LAYER: 'baselayer_ref',
+  EXTERNAL_DATASOURCES_NAMES: 'eds_n',
+  EXTERNAL_DATASOURCES_URLS: 'eds_u',
   FEATURES: 'rl_features',
   MAP_CROSSHAIR: 'map_crosshair',
   MAP_TOOLTIP: 'map_tooltip',

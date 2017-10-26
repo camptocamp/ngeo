@@ -144,7 +144,7 @@ ngeo.Print.FEAT_STYLE_PROP_PREFIX_ = '_ngeo_style_';
  */
 ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
-      /** @type {angular.$http.Config} */ ({});
+    /** @type {angular.$http.Config} */ ({});
   const url = `${this.url_}/cancel/${ref}`;
   // "delete" is a reserved word, so use ['delete']
   return this.$http_['delete'](url, httpConfig);
@@ -163,7 +163,7 @@ ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
  * @export
  */
 ngeo.Print.prototype.createSpec = function(
-    map, scale, dpi, layout, format, customAttributes) {
+  map, scale, dpi, layout, format, customAttributes) {
 
   const specMap = /** @type {MapFishPrintMap} */ ({
     dpi,
@@ -214,12 +214,12 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
   layers = layers.slice().reverse();
 
-  layers.forEach(function(layer) {
+  layers.forEach((layer) => {
     if (layer.getVisible()) {
       goog.asserts.assert(viewResolution !== undefined);
       this.encodeLayer(object.layers, layer, viewResolution);
     }
-  }, this);
+  });
 };
 
 
@@ -267,7 +267,7 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   const url = source.getUrl();
   if (url !== undefined) {
     this.encodeWmsLayer_(
-        arr, layer.getOpacity(), url, source.getParams());
+      arr, layer.getOpacity(), url, source.getParams());
   }
 };
 
@@ -280,16 +280,27 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
  * @private
  */
 ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
+  const url_url = new URL(url);
   const customParams = {'TRANSPARENT': true};
-  ol.obj.assign(customParams, params);
-
+  if (url_url.searchParams) {
+    for (const element of url_url.searchParams) {
+      customParams[element[0]] = element[1];
+    }
+  }
+  for (const key in params) {
+    const value = params[key];
+    // remove empty params
+    if (value !== null && value !== undefined) {
+      customParams[key] = value;
+    }
+  }
   delete customParams['LAYERS'];
   delete customParams['FORMAT'];
   delete customParams['SERVERTYPE'];
   delete customParams['VERSION'];
 
   const object = /** @type {MapFishPrintWmsLayer} */ ({
-    baseURL: ngeo.Print.getAbsoluteUrl_(url),
+    baseURL: ngeo.Print.getAbsoluteUrl_(url_url.origin + url_url.pathname),
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
     customParams,
@@ -397,7 +408,7 @@ ngeo.Print.prototype.encodeTileWmsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(source, ol.source.TileWMS);
 
   this.encodeWmsLayer_(
-      arr, layer.getOpacity(), source.getUrls()[0], source.getParams());
+    arr, layer.getOpacity(), source.getUrls()[0], source.getParams());
 };
 
 
@@ -438,7 +449,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
      * @type {Array<ol.style.Style>}
      */
     const styles = (styleData !== null && !Array.isArray(styleData)) ?
-        [styleData] : styleData;
+      [styleData] : styleData;
     goog.asserts.assert(Array.isArray(styles));
 
     if (styles !== null && styles.length > 0) {
@@ -475,7 +486,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
 
         const featureStyleProp = ngeo.Print.FEAT_STYLE_PROP_PREFIX_ + j;
         this.encodeVectorStyle_(
-            mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
+          mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
         geojsonFeature.properties[featureStyleProp] = styleId;
       }
     }
@@ -532,7 +543,7 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
   if (styleType == ngeo.PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
       this.encodeVectorStylePolygon_(
-          styleObject.symbolizers, fillStyle, strokeStyle);
+        styleObject.symbolizers, fillStyle, strokeStyle);
     }
   } else if (styleType == ngeo.PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
@@ -706,7 +717,7 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle
 ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle) {
   const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
-    goog.asserts.assert(Array.isArray(strokeColor));
+    goog.asserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
     const strokeColorRgba = ol.color.asArray(strokeColor);
     goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
     symbolizer.strokeColor = ngeo.utils.rgbArrayToHex(strokeColorRgba);
@@ -736,11 +747,25 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
   const label = textStyle.getText();
   if (label !== undefined) {
     symbolizer.label = label;
+    let xAlign = 'c';
+    let yAlign = 'm';
 
-    const labelAlign = textStyle.getTextAlign();
-    if (labelAlign !== undefined) {
-      symbolizer.labelAlign = labelAlign;
+    const olTextAlign = textStyle.getTextAlign();
+    // 'left', 'right', 'center', 'end' or 'start'.
+    if (olTextAlign === 'left' || olTextAlign === 'start') {
+      xAlign = 'l';
+    } else if (olTextAlign === 'right' || olTextAlign === 'end') {
+      xAlign = 'r';
     }
+
+    const olTextBaseline = textStyle.getTextBaseline();
+    // 'bottom', 'top', 'middle', 'alphabetic', 'hanging' or 'ideographic'
+    if (olTextBaseline === 'bottom') {
+      yAlign = 'l';
+    } else if (olTextBaseline === 'top') {
+      yAlign = 't';
+    }
+    symbolizer.labelAlign = `${xAlign}${yAlign}`;
 
     const labelRotation = textStyle.getRotation();
     if (labelRotation !== undefined) {
@@ -763,7 +788,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     const strokeStyle = textStyle.getStroke();
     if (strokeStyle !== null) {
       const strokeColor = strokeStyle.getColor();
-      goog.asserts.assert(Array.isArray(strokeColor));
+      goog.asserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
       const strokeColorRgba = ol.color.asArray(strokeColor);
       goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
       symbolizer.haloColor = ngeo.utils.rgbArrayToHex(strokeColorRgba);
@@ -777,7 +802,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
     const fillStyle = textStyle.getFill();
     if (fillStyle !== null) {
       const fillColor = fillStyle.getColor();
-      goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
+      goog.asserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
       const fillColorRgba = ol.color.asArray(fillColor);
       goog.asserts.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
       symbolizer.fontColor = ngeo.utils.rgbArrayToHex(fillColorRgba);
@@ -832,7 +857,7 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
     }
   });
   ol.obj.assign(httpConfig,
-      opt_httpConfig !== undefined ? opt_httpConfig : {});
+    opt_httpConfig !== undefined ? opt_httpConfig : {});
   return this.$http_.post(url, printSpec, httpConfig);
 };
 
@@ -846,7 +871,7 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
  */
 ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
-      /** @type {angular.$http.Config} */ ({});
+    /** @type {angular.$http.Config} */ ({});
   const url = `${this.url_}/status/${ref}.json`;
   return this.$http_.get(url, httpConfig);
 };
@@ -888,12 +913,12 @@ ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
  */
 ngeo.createPrintServiceFactory = function($http, ngeoLayerHelper) {
   return (
-      /**
+  /**
        * @param {string} url URL to MapFish print service.
        */
-      function(url) {
-        return new ngeo.Print(url, $http, ngeoLayerHelper);
-      });
+    function(url) {
+      return new ngeo.Print(url, $http, ngeoLayerHelper);
+    });
 };
 
 

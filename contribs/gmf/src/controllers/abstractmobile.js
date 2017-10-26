@@ -103,13 +103,16 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   this.mobileGeolocationOptions = {
     positionFeatureStyle,
     accuracyFeatureStyle,
-    zoom: config.geolocationZoom
+    zoom: config.geolocationZoom,
+    autorotate: config.autorotate
   };
 
   const viewConfig = {
     projection: ol.proj.get(`EPSG:${config.srid || 21781}`)
   };
   ol.obj.assign(viewConfig, config.mapViewConfig || {});
+
+  const arrow = gmf.AbstractController.prototype.getLocationIcon();
 
   /**
    * @type {ol.Map}
@@ -123,11 +126,15 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
       new ol.control.Zoom({
         zoomInTipLabel: '',
         zoomOutTipLabel: ''
+      }),
+      new ol.control.Rotate({
+        label: arrow,
+        tipLabel: ''
       })
     ],
     interactions:
         config.mapInteractions ||
-        ol.interaction.defaults({pinchRotate: false})
+        ol.interaction.defaults({pinchRotate: true})
   });
 
   gmf.AbstractController.call(this, config, $scope, $injector);
@@ -167,6 +174,9 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
       });
     }
   });
+
+  this.manageResize = true;
+  this.resizeTransition = 500;
 };
 ol.inherits(gmf.AbstractMobileController, gmf.AbstractController);
 

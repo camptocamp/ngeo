@@ -103,9 +103,17 @@
       <span class="fa fa-trash"></span>
     </a>
 
+    <a
+      class="gmf-layertree-node-menu-btn"
+      href=""
+      ng-if="::gmfLayertreeCtrl.supportsCustomization(layertreeCtrl)"
+      ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-menu-' + layertreeCtrl.uid)">
+      <span class="fa fa-cog"></span>
+    </a>
+
     <span
       ngeo-popover
-      ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed && !layertreeCtrl.node.children) || (gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend)" ngeo-popover-dismiss=".content">
+      ng-if="::(layertreeCtrl.depth === 1 && !layertreeCtrl.node.mixed) || (layertreeCtrl.depth > 1 && layertreeCtrl.parent.node.mixed && !layertreeCtrl.node.children) || (gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend)" ngeo-popover-dismiss=".content">
 
       <span
         ngeo-popover-anchor
@@ -126,7 +134,7 @@
               step="0.01"
               ng-model="layertreeCtrl.layer.opacity" />
           </li>
-          <li ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend">
+          <li ng-if="::gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend">
             <i class="fa fa-th-list fa-fw"></i>
             <a
               title="{{'Show/hide legend'|translate}}"
@@ -171,16 +179,51 @@
 
     <a
       class="fa fa-align-left gmf-layertree-legend-button"
-      ng-if="::gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend"
+      ng-if="::gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend"
       title="{{'Show/hide legend'|translate}}"
       data-toggle="collapse"
-      href="#gmf-layertree-node-{{::layertreeCtrl.uid}}-legend">
+      ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')"
+      href>
     </a>
   </span>
 </div>
 
 <div
-  ng-if="::!layertreeCtrl.isRoot && gmfLayertreeCtrl.getLegendURL(layertreeCtrl) && layertreeCtrl.node.metadata.legend" id="gmf-layertree-node-{{::layertreeCtrl.uid}}-legend"
+  class="gmf-layertree-node-menu"
+  id="gmf-layertree-node-menu-{{::layertreeCtrl.uid}}"
+  style="display:none;"
+  ng-if="::gmfLayertreeCtrl.supportsCustomization(layertreeCtrl)">
+
+  <div ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
+    <i class="fa fa-tint fa-fw"></i>
+    <span for="layer-opactity">{{'Opacity'|translate}}</span>
+    <input
+        class="input-action"
+        name="layer-opactity"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        ng-model="layertreeCtrl.layer.opacity" />
+  </div>
+
+  <a
+    class="gmf-layertree-node-menu-togglelegend"
+    ng-if="::gmfLayertreeCtrl.supportsLegend(layertreeCtrl)"
+    title="{{'Hide legend'|translate}}"
+    data-toggle="collapse"
+    ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')"
+    href="">
+    <span
+        class="fa fa-th-list">
+    </span>
+    {{'Show/hide legend'|translate}}
+  </a>
+
+</div>
+
+<div
+  ng-if="::!layertreeCtrl.isRoot && gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend" id="gmf-layertree-node-{{::layertreeCtrl.uid}}-legend"
   class="collapse gmf-layertree-legend"
   ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded ? 'in' : '']">
 
@@ -191,8 +234,12 @@
     href="">
     {{'Hide legend'|translate}}
   </a>
-
-  <img ng-if="gmfLayertreeCtrl.isNodeLegendVisible('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')" ng-src="{{gmfLayertreeCtrl.getLegendURL(layertreeCtrl)}}"></img>
+  <div ng-if="gmfLayertreeCtrl.isNodeLegendVisible('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')">
+    <div ng-repeat="(title, url) in ::gmfLayertreeCtrl.getLegendsObject(layertreeCtrl)">
+      <p ng-if="::gmfLayertreeCtrl.getNumberOfLegendsObject(layertreeCtrl) > 1">{{title|translate}}</p>
+      <img ng-src="{{url}}"></img>
+    </div>
+  </div>
 </div>
 
 <ul
@@ -214,4 +261,27 @@
     ngeo-layertree-nodelayerexpr="layertreeCtrl.nodelayerExpr"
     ngeo-layertree-listenersexpr="layertreeCtrl.listenersExpr">
   </li>
+</ul>
+
+<ul
+   class="gmf-layertree-root-external-datasources"
+   ng-if="layertreeCtrl.isRoot && (gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups.length || gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmtsGroups.length || gmfLayertreeCtrl.gmfExternalDataSourcesManager.fileGroup.dataSources.length)">
+  <gmf-datasourcegrouptree
+    class="gmf-layertree-node gmf-layertree-depth-1"
+    ng-repeat="wmtsGroup in gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmtsGroups"
+    group="wmtsGroup"
+  >
+  </gmf-datasourcegrouptree>
+  <gmf-datasourcegrouptree
+    class="gmf-layertree-node gmf-layertree-depth-1"
+    ng-repeat="wmsGroup in gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups"
+    group="wmsGroup"
+  >
+  </gmf-datasourcegrouptree>
+  <gmf-datasourcegrouptree
+    class="gmf-layertree-node gmf-layertree-depth-1"
+    ng-if="gmfLayertreeCtrl.gmfExternalDataSourcesManager.fileGroup.dataSources.length"
+    group="gmfLayertreeCtrl.gmfExternalDataSourcesManager.fileGroup"
+  >
+  </gmf-datasourcegrouptree>
 </ul>

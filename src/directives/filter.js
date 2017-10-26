@@ -26,7 +26,7 @@ ngeo.FilterController = class {
    * @ngname NgeoFilterController
    */
   constructor(gettextCatalog, $scope, $timeout, ngeoMapQuerent,
-      ngeoRuleHelper) {
+    ngeoRuleHelper) {
 
     // === Binding properties ===
 
@@ -43,7 +43,7 @@ ngeo.FilterController = class {
     this.customRules;
 
     /**
-     * @type {!ngeo.DataSource}
+     * @type {!ngeo.datasource.OGC}
      * @export
      */
     this.datasource;
@@ -243,6 +243,7 @@ ngeo.FilterController = class {
     goog.asserts.assert(filter);
 
     this.ngeoMapQuerent_.issue({
+      dataSources: [dataSource],
       filter,
       limit,
       map

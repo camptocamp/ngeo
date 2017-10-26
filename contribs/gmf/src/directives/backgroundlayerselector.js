@@ -8,16 +8,16 @@ goog.require('ngeo.BackgroundLayerMgr');
 
 
 gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
-    /**
+  /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template URL.
      */
-    ($element, $attrs) => {
-      const templateUrl = $attrs['gmfBackgroundlayerselectorTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/backgroundlayerselector.html`;
-    }
+  ($element, $attrs) => {
+    const templateUrl = $attrs['gmfBackgroundlayerselectorTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/backgroundlayerselector.html`;
+  }
 );
 
 
@@ -123,7 +123,7 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
 
   /**
    * @type {!Array.<!ol.EventsKey>}
-   * @export
+   * @private
    */
   this.listenerKeys_ = [];
 
@@ -137,17 +137,17 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
   this.listenerKeys_.push(ol.events.listen(
-      this.backgroundLayerMgr_,
-      ngeo.BackgroundEventType.CHANGE,
-      function() {
-        this.bgLayer = this.backgroundLayerMgr_.get(this.map);
-      },
-      this));
+    this.backgroundLayerMgr_,
+    ngeo.BackgroundEventType.CHANGE,
+    function(event) {
+      this.bgLayer = event.current;
+    },
+    this));
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 };
 gmf.module.controller('GmfBackgroundlayerselectorController',
-    gmf.BackgroundlayerselectorController);
+  gmf.BackgroundlayerselectorController);
 
 
 /**
@@ -155,9 +155,7 @@ gmf.module.controller('GmfBackgroundlayerselectorController',
  */
 gmf.BackgroundlayerselectorController.prototype.$onInit = function() {
   goog.asserts.assert(this.dimensions, 'The dimensions object is required');
-  this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
-    this.bgLayers = layers;
-  });
+  this.handleThemesChange_();
 };
 
 
@@ -177,8 +175,7 @@ gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function()
  * @param {boolean=} opt_silent Do not notify listeners.
  * @export
  */
-gmf.BackgroundlayerselectorController.prototype.setLayer = function(
-    layer, opt_silent) {
+gmf.BackgroundlayerselectorController.prototype.setLayer = function(layer, opt_silent) {
   this.bgLayer = layer;
   this.backgroundLayerMgr_.set(this.map, layer);
   if (!opt_silent && this.select) {

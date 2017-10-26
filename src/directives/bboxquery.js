@@ -21,6 +21,7 @@ goog.require('ol.interaction.DragBox');
  *      <span
  *        ngeo-bbox-query=""
  *        ngeo-bbox-query-map="::ctrl.map"
+ *        ngeo-bbox-query-limit="50"
  *        ngeo-bbox-query-active="ctrl.queryActive">
  *        ngeo-bbox-query-autoclear="ctrl.queryAutoClear">
  *      </span>
@@ -55,6 +56,7 @@ ngeo.bboxQueryDirective = function(ngeoMapQuerent) {
       const handleBoxEnd = function(evt) {
         const extent = interaction.getGeometry().getExtent();
         ngeoMapQuerent.issue({
+          limit: scope.$eval(attrs['ngeoBboxQueryLimit']),
           extent,
           map
         });
@@ -63,18 +65,18 @@ ngeo.bboxQueryDirective = function(ngeoMapQuerent) {
 
       // watch 'active' property -> activate/deactivate accordingly
       scope.$watch(attrs['ngeoBboxQueryActive'],
-          (newVal, oldVal) => {
-            if (newVal) {
-              // activate
-              map.addInteraction(interaction);
-            } else {
-              // deactivate
-              map.removeInteraction(interaction);
-              if (scope.$eval(attrs['ngeoBboxQueryAutoclear']) !== false) {
-                ngeoMapQuerent.clear();
-              }
+        (newVal, oldVal) => {
+          if (newVal) {
+            // activate
+            map.addInteraction(interaction);
+          } else {
+            // deactivate
+            map.removeInteraction(interaction);
+            if (scope.$eval(attrs['ngeoBboxQueryAutoclear']) !== false) {
+              ngeoMapQuerent.clear();
             }
           }
+        }
       );
     }
   };

@@ -32,8 +32,10 @@ goog.require('ol.interaction.Modify');
  */
 ngeo.interaction.Modify = function(options) {
 
+  goog.asserts.assert(options.features);
+
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {!ol.Collection.<ol.Feature>}
    * @private
    */
   this.features_ = options.features;
@@ -157,9 +159,9 @@ ngeo.interaction.Modify.prototype.setState_ = function() {
   if (active && map) {
     this.features_.forEach(this.addFeature_, this);
     keys.push(ol.events.listen(this.features_, ol.CollectionEventType.ADD,
-        this.handleFeaturesAdd_, this));
+      this.handleFeaturesAdd_, this));
     keys.push(ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
-        this.handleFeaturesRemove_, this));
+      this.handleFeaturesRemove_, this));
   } else {
     keys.forEach((key) => {
       ol.events.unlistenByKey(key);
@@ -176,7 +178,7 @@ ngeo.interaction.Modify.prototype.setState_ = function() {
 ngeo.interaction.Modify.prototype.handleFeaturesAdd_ = function(evt) {
   const feature = evt.element;
   goog.asserts.assertInstanceof(feature, ol.Feature,
-      'feature should be an ol.Feature');
+    'feature should be an ol.Feature');
   this.addFeature_(feature);
 };
 

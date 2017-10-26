@@ -84,6 +84,20 @@ ngeo.Location = function(location, history) {
 
 
 /**
+ * @param {History} history History.
+ * @param {string} state State.
+ */
+ngeo.Location.replaceState = function(history, state) {
+  try {
+    history.replaceState(null, '', state);
+  } catch (error) {
+    // replaceState fails on some browser if the domain in the state
+    // is not the same as location.origin
+  }
+};
+
+
+/**
  * Get the location's current path.
  * @return {string|undefined} The path.
  * @export
@@ -194,6 +208,25 @@ ngeo.Location.prototype.getParamAsInt = function(key) {
   goog.asserts.assertString(value);
   const valueAsInt = parseInt(value, 10);
   return (isNaN(valueAsInt)) ? undefined : valueAsInt;
+};
+
+
+/**
+ * Get a param in the location's URI as a floating point number.
+ * If the entry does not exist, or if the value can not be parsed,
+ * `undefined` is returned.
+ * @param {string} key Param key.
+ * @return {number|undefined} Param value.
+ * @export
+ */
+ngeo.Location.prototype.getParamAsFloat = function(key) {
+  const value = this.getParam(key);
+  if (value === undefined) {
+    return undefined;
+  }
+  goog.asserts.assertString(value);
+  const valueAsFloat = parseFloat(value);
+  return isNaN(valueAsFloat) ? undefined : valueAsFloat;
 };
 
 
@@ -328,7 +361,7 @@ ngeo.Location.prototype.deleteFragmentParam = function(key) {
  * @export
  */
 ngeo.Location.prototype.refresh = function() {
-  this.history_.replaceState(null, '', this.getUriString());
+  ngeo.Location.replaceState(this.history_, this.getUriString());
 };
 
 
@@ -361,7 +394,7 @@ ngeo.LocationFactory = function($rootScope, $window) {
       $rootScope.$evalAsync(() => {
         lastUri = newUri;
         if (history !== undefined && history.replaceState !== undefined) {
-          history.replaceState(null, '', newUri);
+          ngeo.Location.replaceState(history, newUri);
         }
         $rootScope.$broadcast('ngeoLocationChange');
       });

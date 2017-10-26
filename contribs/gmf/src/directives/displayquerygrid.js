@@ -17,16 +17,16 @@ goog.require('ol.style.Style');
 
 
 ngeo.module.value('gmfDisplayquerygridTemplateUrl',
-    /**
+  /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template URL.
      */
-    ($element, $attrs) => {
-      const templateUrl = $attrs['gmfDisplayquerygridTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${gmf.baseTemplateUrl}/displayquerygrid.html`;
-    }
+  ($element, $attrs) => {
+    const templateUrl = $attrs['gmfDisplayquerygridTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseTemplateUrl}/displayquerygrid.html`;
+  }
 );
 
 
@@ -52,6 +52,10 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  *
  * Features displayed on the map use a default style but you can override these
  * styles by passing ol.style.Style objects as attributes of this component.
+ *
+ * Note: the following ng-class need to be present in the interface <body> element to display the footer
+ * when the grid is active (initially there should be the code for the profile tool):
+ *      <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!queryGridActive}">
  *
  * Example:
  *
@@ -80,7 +84,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
 gmf.displayquerygridComponent = {
   controller: 'GmfDisplayquerygridController as ctrl',
   bindings: {
-    'active': '=gmfDisplayquerygridActive',
+    'active': '=?gmfDisplayquerygridActive',
     'featuresStyleFn': '&gmfDisplayquerygridFeaturesstyle',
     'selectedFeatureStyleFn': '&gmfDisplayquerygridSourceselectedfeaturestyle',
     'getMapFn': '&gmfDisplayquerygridMap',
@@ -114,10 +118,10 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @ngname GmfDisplayquerygridController
  */
 gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
-    ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
+  ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
 
   const queryOptions = /** @type {ngeox.QueryOptions} */ (
-      $injector.has('ngeoQueryOptions') ?
+    $injector.has('ngeoQueryOptions') ?
       $injector.get('ngeoQueryOptions') : {});
 
   /**
@@ -243,12 +247,12 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
 
   // Watch the ngeo query result service.
   this.$scope_.$watchCollection(
-      () => ngeoQueryResult,
-      (newQueryResult, oldQueryResult) => {
-        if (newQueryResult !== oldQueryResult) {
-          this.updateData_();
-        }
-      });
+    () => ngeoQueryResult,
+    (newQueryResult, oldQueryResult) => {
+      if (newQueryResult !== oldQueryResult) {
+        this.updateData_();
+      }
+    });
 
   /**
    * An unregister function returned from `$scope.$watchCollection` for
@@ -356,7 +360,6 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
     this.$timeout_(() => {
       const firstSourceId = this.loadedGridSources[0];
       this.selectTab(this.gridSources[firstSourceId]);
-      this.reflowGrid_(firstSourceId);
     }, 0);
   }
 };
@@ -466,12 +469,12 @@ gmf.DisplayquerygridController.prototype.getMergedSource_ = function(source, mer
   mergeSource.tooManyResults = mergeSource.tooManyResults || source.tooManyResults;
   if (mergeSource.tooManyResults) {
     mergeSource.totalFeatureCount = (mergeSource.totalFeatureCount !== undefined) ?
-        mergeSource.totalFeatureCount + mergeSource.features.length : mergeSource.features.length;
+      mergeSource.totalFeatureCount + mergeSource.features.length : mergeSource.features.length;
     mergeSource.features = [];
   }
   if (source.totalFeatureCount !== undefined) {
     mergeSource.totalFeatureCount = (mergeSource.totalFeatureCount !== undefined) ?
-        mergeSource.totalFeatureCount + source.totalFeatureCount : source.totalFeatureCount;
+      mergeSource.totalFeatureCount + source.totalFeatureCount : source.totalFeatureCount;
   }
 
   return mergeSource;
@@ -520,7 +523,7 @@ gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
  * @private
  */
 gmf.DisplayquerygridController.prototype.cleanProperties_ = function(
-    allProperties, featureGeometriesNames) {
+  allProperties, featureGeometriesNames) {
   allProperties.forEach((properties) => {
     featureGeometriesNames.forEach((featureGeometryName) => {
       delete properties[featureGeometryName];
@@ -540,7 +543,7 @@ gmf.DisplayquerygridController.prototype.cleanProperties_ = function(
  * @private
  */
 gmf.DisplayquerygridController.prototype.removeEmptyColumnsFn_ = function(
-    allProperties) {
+  allProperties) {
   // Keep all keys that correspond to at least one value in a properties object.
   const keysToKeep = [];
   let i, key;
@@ -601,18 +604,19 @@ gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
  * @private
  */
 gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
-    data) {
+  data) {
   goog.asserts.assert(data.length > 0);
-  const columns = Object.keys(data[0]);
+  const clone = {};
+  Object.assign(clone, data[0]);
+  delete clone.ol_uid;
+  const columns = Object.keys(clone);
 
   /** @type {Array.<ngeox.GridColumnDef>} */
   const columnDefs = [];
   columns.forEach((column) => {
-    if (column !== 'ol_uid') {
-      columnDefs.push(/** @type {ngeox.GridColumnDef} */ ({
-        name: column
-      }));
-    }
+    columnDefs.push(/** @type {ngeox.GridColumnDef} */ ({
+      name: column
+    }));
   });
 
   if (columnDefs.length > 0) {
@@ -661,14 +665,16 @@ gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
 
   if (gridSource.configuration !== null) {
     this.unregisterSelectWatcher_ = this.$scope_.$watchCollection(
-        () => gridSource.configuration.selectedRows,
-        (newSelected, oldSelectedRows) => {
-          if (Object.keys(newSelected) !== Object.keys(oldSelectedRows)) {
-            this.onSelectionChanged_();
-          }
-        });
+      () => gridSource.configuration.selectedRows,
+      (newSelected, oldSelectedRows) => {
+        if (Object.keys(newSelected) !== Object.keys(oldSelectedRows)) {
+          this.onSelectionChanged_();
+        }
+      });
   }
   this.updateFeatures_(gridSource);
+
+  this.reflowGrid_(this.selectedTab);
 };
 
 
@@ -842,10 +848,10 @@ gmf.DisplayquerygridController.prototype.downloadCsv = function() {
     const selectedRows = source.configuration.getSelectedRows();
 
     this.ngeoCsvDownload_.startDownload(
-        selectedRows, columnDefs, 'query-results');
+      selectedRows, columnDefs, 'query-results.csv');
   }
 };
 
 
 gmf.module.controller('GmfDisplayquerygridController',
-    gmf.DisplayquerygridController);
+  gmf.DisplayquerygridController);

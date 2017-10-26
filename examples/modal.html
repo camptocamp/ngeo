@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app='app'>
+<html ng-app='app' ng-cloak>
   <head>
     <title>Modal example</title>
     <meta charset="utf-8">
@@ -8,6 +8,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="../third-party/jquery-ui/jquery-ui.min.css">
     <style>
       #map {
         width: 600px;
@@ -32,6 +33,7 @@
       </div>
     </ngeo-modal>
     <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../third-party/jquery-ui/jquery-ui.min.js"></script>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
     <script src="../node_modules/angular-ui-date/dist/date.js"></script>

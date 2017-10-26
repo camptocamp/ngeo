@@ -169,7 +169,7 @@ ngeo.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
   this.groups_[groupIndex].styleFunction = style === null ?
-      ol.style.Style.defaultFunction : ol.style.Style.createFunction(style);
+    ol.style.Style.defaultFunction : ol.style.Style.createFunction(style);
 };
 
 
@@ -257,18 +257,18 @@ ngeo.FeatureOverlay.prototype.setFeatures = function(features) {
   if (this.features_ !== null) {
     this.features_.clear();
     ol.events.unlisten(this.features_, ol.CollectionEventType.ADD,
-        this.handleFeatureAdd_, this);
+      this.handleFeatureAdd_, this);
     ol.events.unlisten(this.features_, ol.CollectionEventType.REMOVE,
-        this.handleFeatureRemove_, this);
+      this.handleFeatureRemove_, this);
   }
   if (features !== null) {
     features.forEach(function(feature) {
       this.addFeature(feature);
     }, this);
     ol.events.listen(features, ol.CollectionEventType.ADD,
-        this.handleFeatureAdd_, this);
+      this.handleFeatureAdd_, this);
     ol.events.listen(features, ol.CollectionEventType.REMOVE,
-        this.handleFeatureRemove_, this);
+      this.handleFeatureRemove_, this);
   }
   this.features_ = features;
 };

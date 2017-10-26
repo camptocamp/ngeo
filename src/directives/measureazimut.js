@@ -10,15 +10,16 @@ goog.require('ol.style.Style');
 
 
 /**
- * @param {angular.$compile} $compile Angular compile service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {angular.$filter} $filter Angular filter
- * @return {angular.Directive} The directive specs.
+ * @param {!angular.$compile} $compile Angular compile service.
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.$filter} $filter Angular filter
+ * @param {!angular.$injector} $injector Main injector.
+ * @return {!angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measureazimutDirective = function($compile, gettextCatalog, $filter) {
+ngeo.measureazimutDirective = function($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -33,48 +34,51 @@ ngeo.measureazimutDirective = function($compile, gettextCatalog, $filter) {
       const helpMsg = gettextCatalog.getString('Click to start drawing circle');
       const contMsg = gettextCatalog.getString('Click to finish');
 
-      const measureAzimut = new ngeo.interaction.MeasureAzimut($filter('ngeoUnitPrefix'), {
-        style: new ol.style.Style(),
-        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
-        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0]
-      });
+      const measureAzimut = new ngeo.interaction.MeasureAzimut(
+        $filter('ngeoUnitPrefix'), $filter('number'), {
+          style: new ol.style.Style(),
+          startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
+          continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
+          precision: $injector.has('ngeoMeasurePrecision') ? $injector.get('ngeoMeasurePrecision') : undefined,
+          decimals: $injector.has('ngeoMeasureDecimals') ? $injector.get('ngeoMeasureDecimals') : undefined
+        });
 
       drawFeatureCtrl.registerInteraction(measureAzimut);
       drawFeatureCtrl.measureAzimut = measureAzimut;
 
       ol.events.listen(
-          measureAzimut,
-          ngeo.MeasureEventType.MEASUREEND,
-          /**
+        measureAzimut,
+        ngeo.MeasureEventType.MEASUREEND,
+        /**
            * @param {ngeo.MeasureEvent} event Event.
            */
-          (event) => {
-            // In the case of azimut measure interaction, the feature's
-            // geometry is actually a collection (line + circle)
-            // For our purpose here, we only need the circle, which gets
-            // transformed into a polygon with 64 sides.
-            const geometry = /** @type {ol.geom.GeometryCollection} */
+        (event) => {
+          // In the case of azimut measure interaction, the feature's
+          // geometry is actually a collection (line + circle)
+          // For our purpose here, we only need the circle, which gets
+          // transformed into a polygon with 64 sides.
+          const geometry = /** @type {ol.geom.GeometryCollection} */
                 (event.feature.getGeometry());
-            const circle = /** @type {ol.geom.Circle} */ (
-                geometry.getGeometries()[1]);
-            const polygon = ol.geom.Polygon.fromCircle(circle, 64);
-            event.feature = new ol.Feature(polygon);
-            const azimut = ngeo.interaction.MeasureAzimut.getAzimut(
-              /** @type {ol.geom.LineString} */ (geometry.getGeometries()[0])
-            );
-            event.feature.set('azimut', azimut);
+          const circle = /** @type {ol.geom.Circle} */ (
+            geometry.getGeometries()[1]);
+          const polygon = ol.geom.Polygon.fromCircle(circle, 64);
+          event.feature = new ol.Feature(polygon);
+          const azimut = ngeo.interaction.MeasureAzimut.getAzimut(
+            /** @type {ol.geom.LineString} */ (geometry.getGeometries()[0])
+          );
+          event.feature.set('azimut', azimut);
 
-            drawFeatureCtrl.handleDrawEnd(ngeo.GeometryType.CIRCLE, event);
-          },
-          drawFeatureCtrl
+          drawFeatureCtrl.handleDrawEnd(ngeo.GeometryType.CIRCLE, event);
+        },
+        drawFeatureCtrl
       );
 
       ol.events.listen(
-          measureAzimut,
-          ol.Object.getChangeEventType(
-              ol.interaction.Property.ACTIVE),
-          drawFeatureCtrl.handleActiveChange,
-          drawFeatureCtrl
+        measureAzimut,
+        ol.Object.getChangeEventType(
+          ol.interaction.Property.ACTIVE),
+        drawFeatureCtrl.handleActiveChange,
+        drawFeatureCtrl
       );
     }
   };

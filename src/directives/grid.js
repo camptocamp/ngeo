@@ -8,16 +8,16 @@ goog.require('goog.asserts');
 goog.require('ngeo.filters');
 
 ngeo.module.value('ngeoGridTemplateUrl',
-    /**
+  /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template URL.
      */
-    ($element, $attrs) => {
-      const templateUrl = $attrs['ngeoGridTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-          `${ngeo.baseTemplateUrl}/grid.html`;
-    }
+  ($element, $attrs) => {
+    const templateUrl = $attrs['ngeoGridTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseTemplateUrl}/grid.html`;
+  }
 );
 
 
@@ -298,7 +298,7 @@ ngeo.GridController.prototype.clickRow = function(attributes, event) {
  * @private
  */
 ngeo.GridController.prototype.clickRow_ = function(
-    attributes, shiftKey, platformModifierKey) {
+  attributes, shiftKey, platformModifierKey) {
 
   if (shiftKey && !platformModifierKey) {
     this.selectRange_(attributes);
@@ -395,7 +395,7 @@ ngeo.GridController.prototype.preventTextSelection = function(event) {
  */
 ngeo.GridController.prototype.isPlatformModifierKeyOnly_ = function(event) {
   return (
-      !event.altKey &&
+    !event.altKey &&
       (ol.has.MAC ? event.metaKey : event.ctrlKey) &&
       !event.shiftKey);
 };
@@ -409,7 +409,7 @@ ngeo.GridController.prototype.isPlatformModifierKeyOnly_ = function(event) {
  */
 ngeo.GridController.prototype.isShiftKeyOnly_ = function(event) {
   return (
-      !event.altKey &&
+    !event.altKey &&
       !(event.metaKey || event.ctrlKey) &&
       event.shiftKey);
 };

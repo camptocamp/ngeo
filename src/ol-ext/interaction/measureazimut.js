@@ -5,7 +5,6 @@ goog.require('goog.asserts');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
-goog.require('ol.MapBrowserEventType');
 goog.require('ol.events');
 goog.require('ol.functions');
 goog.require('ol.geom.Circle');
@@ -30,11 +29,12 @@ goog.require('ol.source.Vector');
  * @struct
  * @fires ol.interaction.Draw.Event
  * @extends {ngeo.interaction.Measure}
- * @param {ngeox.unitPrefix} format The format function
- * @param {ngeox.interaction.MeasureOptions=} opt_options Options
+ * @param {!ngeox.unitPrefix} unitPrefixFormat The format function
+ * @param {!ngeox.number} numberFormat The format function
+ * @param {!ngeox.interaction.MeasureOptions=} opt_options Options
  * @export
  */
-ngeo.interaction.MeasureAzimut = function(format, opt_options) {
+ngeo.interaction.MeasureAzimut = function(unitPrefixFormat, numberFormat, opt_options) {
 
   const options = opt_options || {};
 
@@ -55,9 +55,15 @@ ngeo.interaction.MeasureAzimut = function(format, opt_options) {
 
   /**
    * The format function
+   * @type {ngeox.number}
+   */
+  this.numberFormat = goog.asserts.assert(numberFormat);
+
+  /**
+   * The format function
    * @type {ngeox.unitPrefix}
    */
-  this.format = format;
+  this.unitPrefixFormat = goog.asserts.assert(unitPrefixFormat);
 
 };
 ol.inherits(ngeo.interaction.MeasureAzimut, ngeo.interaction.Measure);
@@ -67,7 +73,7 @@ ol.inherits(ngeo.interaction.MeasureAzimut, ngeo.interaction.Measure);
  * @inheritDoc
  */
 ngeo.interaction.MeasureAzimut.prototype.createDrawInteraction = function(style,
-    source) {
+  source) {
 
   return new ngeo.interaction.DrawAzimut({
     source,
@@ -82,29 +88,32 @@ ngeo.interaction.MeasureAzimut.prototype.createDrawInteraction = function(style,
  * @inheritDoc
  */
 ngeo.interaction.MeasureAzimut.prototype.handleMeasure = function(callback) {
-  const geom = /** @type {ol.geom.GeometryCollection} */
-      (this.sketchFeature.getGeometry());
-  const line = /** @type {ol.geom.LineString} */ (geom.getGeometries()[0]);
-  const output = ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius(line, this.getMap().getView().getProjection(), this.decimals, this.format);
+  const geom = goog.asserts.assertInstanceof(this.sketchFeature.getGeometry(), ol.geom.GeometryCollection);
+  const line = goog.asserts.assertInstanceof(geom.getGeometries()[0], ol.geom.LineString);
+  const output = ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius(
+    line, goog.asserts.assertInstanceof(this.getMap().getView().getProjection(), ol.proj.Projection),
+    this.decimals, this.precision, this.unitPrefixFormat, this.numberFormat);
   callback(output, line.getLastCoordinate());
 };
 
 
 /**
  * Format measure output of azimut and radius.
- * @param {ol.geom.LineString} line LineString.
- * @param {ol.proj.Projection} projection Projection of the polygon coords.
+ * @param {!ol.geom.LineString} line LineString.
+ * @param {!ol.proj.Projection} projection Projection of the polygon coords.
  * @param {number|undefined} decimals Decimals.
- * @param {ngeox.unitPrefix} format The format function.
+ * @param {number|undefined} precision Precision.
+ * @param {!ngeox.unitPrefix} formatLength The format function.
+ * @param {!ngeox.number} formatAzimut The format function.
  * @return {string} Formatted measure.
  */
 ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius = function(
-    line, projection, decimals, format) {
+  line, projection, decimals, precision, formatLength, formatAzimut) {
 
-  let output = ngeo.interaction.MeasureAzimut.getFormattedAzimut(line);
+  let output = ngeo.interaction.MeasureAzimut.getFormattedAzimut(line, decimals, formatAzimut);
 
   output += `, ${ngeo.interaction.Measure.getFormattedLength(
-      line, projection, decimals, format)}`;
+    line, projection, precision, formatLength)}`;
 
   return output;
 };
@@ -112,12 +121,14 @@ ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius = function(
 
 /**
  * Format measure output of azimut.
- * @param {ol.geom.LineString} line LineString.
+ * @param {!ol.geom.LineString} line LineString.
+ * @param {number|undefined} decimals Decimals.
+ * @param {!ngeox.number} format The format function.
  * @return {string} Formatted measure.
  */
-ngeo.interaction.MeasureAzimut.getFormattedAzimut = function(line) {
+ngeo.interaction.MeasureAzimut.getFormattedAzimut = function(line, decimals, format) {
   const azimut = ngeo.interaction.MeasureAzimut.getAzimut(line);
-  return `${azimut}°`;
+  return `${format(azimut, decimals)}°`;
 };
 
 
@@ -132,7 +143,7 @@ ngeo.interaction.MeasureAzimut.getAzimut = function(line) {
   const dy = coords[1][1] - coords[0][1];
   const rad = Math.acos(dy / Math.sqrt(dx * dx + dy * dy));
   const factor = dx > 0 ? 1 : -1;
-  return Math.round(factor * rad * 180 / Math.PI) % 360;
+  return (factor * rad * 180 / Math.PI) % 360;
 };
 
 
@@ -210,13 +221,13 @@ ngeo.interaction.DrawAzimut = function(options) {
       wrapX: false
     }),
     style: options.style !== undefined ?
-        options.style : ol.interaction.Draw.getDefaultStyleFunction()
+      options.style : ol.interaction.Draw.getDefaultStyleFunction()
   });
 
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
-      this.updateState_, this);
+    ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
+    this.updateState_, this);
 };
 ol.inherits(ngeo.interaction.DrawAzimut, ol.interaction.Pointer);
 
@@ -267,9 +278,9 @@ ngeo.interaction.DrawAzimut.handleUpEvent_ = function(event) {
  */
 ngeo.interaction.DrawAzimut.handleEvent_ = function(mapBrowserEvent) {
   let pass = true;
-  if (mapBrowserEvent.type === ol.MapBrowserEventType.POINTERMOVE) {
+  if (mapBrowserEvent.type === 'pointermove') {
     pass = this.handlePointerMove_(mapBrowserEvent);
-  } else if (mapBrowserEvent.type === ol.MapBrowserEventType.DBLCLICK) {
+  } else if (mapBrowserEvent.type === 'dblclick') {
     pass = false;
   }
   return ol.interaction.Pointer.handleEvent.call(this, mapBrowserEvent) && pass;
@@ -343,7 +354,7 @@ ngeo.interaction.DrawAzimut.prototype.startDrawing_ = function(event) {
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();
   this.dispatchEvent(new ol.interaction.Draw.Event(
-      ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
+    ol.interaction.DrawEventType.DRAWSTART, this.sketchFeature_));
 };
 
 
@@ -354,8 +365,8 @@ ngeo.interaction.DrawAzimut.prototype.startDrawing_ = function(event) {
  */
 ngeo.interaction.DrawAzimut.prototype.modifyDrawing_ = function(event) {
   const coordinate = event.coordinate;
-  const geometry = /** @type {ol.geom.GeometryCollection} */
-      (this.sketchFeature_.getGeometry());
+  const geometry = goog.asserts.assertInstanceof(
+    this.sketchFeature_.getGeometry(), ol.geom.GeometryCollection);
   const geometries = geometry.getGeometriesArray();
   const line = geometries[0];
   goog.asserts.assertInstanceof(line, ol.geom.LineString);
@@ -368,7 +379,7 @@ ngeo.interaction.DrawAzimut.prototype.modifyDrawing_ = function(event) {
   last[1] = coordinate[1];
   goog.asserts.assertInstanceof(line, ol.geom.LineString);
   line.setCoordinates(coordinates);
-  const circle = /** @type {ol.geom.Circle} */ (geometries[1]);
+  const circle = goog.asserts.assertInstanceof(geometries[1], ol.geom.Circle);
   circle.setRadius(line.getLength());
   this.updateSketchFeatures_();
 };
@@ -423,7 +434,7 @@ ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
   }
 
   this.dispatchEvent(new ol.interaction.Draw.Event(
-      ol.interaction.DrawEventType.DRAWEND, sketchFeature));
+    ol.interaction.DrawEventType.DRAWEND, sketchFeature));
 };
 
 
