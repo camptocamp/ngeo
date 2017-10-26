@@ -197,8 +197,9 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
     goog.asserts.assert(ogcServer);
     goog.asserts.assert(ogcServer.url);
     goog.asserts.assert(ogcServer.type);
+    goog.asserts.assert(ogcServer.imageType);
     layer = this.layerHelper_.createBasicWMSLayer(
-        ogcServer.url, '', ogcServer.type, timeParam
+        ogcServer.url, '', ogcServer.imageType, ogcServer.type, timeParam
     );
     var hasActiveChildren = false;
     treeCtrl.traverseDepthFirst(function(ctrl) {
@@ -238,8 +239,9 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map
     goog.asserts.assert(ogcServer.url);
     goog.asserts.assert(ogcServer.type);
     goog.asserts.assert(gmfLayerWMS.layers);
+    goog.asserts.assert(ogcServer.imageType);
     layer = this.layerHelper_.createBasicWMSLayer(ogcServer.url,
-            gmfLayerWMS.layers, ogcServer.type, timeParam);
+            gmfLayerWMS.layers, ogcServer.imageType, ogcServer.type, timeParam);
   }
   // Update layer information and tree state.
   layer.set('layerNodeName', gmfLayer.name); // Really useful ?
