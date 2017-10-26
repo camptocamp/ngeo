@@ -135,14 +135,16 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     ngeo.extendedProfile.config.plotParams.currentZoom = tr.k;
     ngeo.extendedProfile.config.plotParams.scaleX = tr.rescaleX(sx);
     ngeo.extendedProfile.config.plotParams.scaleY = tr.rescaleY(sy);
+    // ngeo.extendedProfile.loader.updateData();
   }
 
-  let zoom = d3.zoom();
-  zoom.scaleExtent([1, 100])
-  zoom.on("zoom", zoomed);
+  let zoom = d3.zoom()
+    .scaleExtent([1, 100])
+    .on("zoom", zoomed);
   // zoom.translateExtent([[0, null], [rangeX[1], null]]);
 
   d3.select('svg#profileSVG').call(zoom.on('end', ngeo.extendedProfile.loader.updateData));
+  // d3.select('svg#profileSVG').call(zoom);
 
   let context = d3.select('#profileCanvas')
     .node().getContext('2d');
@@ -257,10 +259,13 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
     html += 'Intensity: ' + p.intensity;
 
     $('#profileInfo').css('color', 'orange');
+    $('#profileInfo').css('font-size', '14px');
+    $('#profileInfo').css('font-weight', 'bold');
     $('#profileInfo').html(html);
 
   } else {
     svg.select('#highlightCircle').remove();
+    $('#profileInfo').html('');
   }
 };
 
