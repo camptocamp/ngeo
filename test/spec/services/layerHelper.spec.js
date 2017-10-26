@@ -25,10 +25,10 @@ describe('ngeo.LayerHelper', () => {
   it('Create a basic WMS layer', () => {
     layer = ngeoLayerHelper.createBasicWMSLayer('http://example.com/', 'a,b,c', 'image/jpeg');
     expect(layer.constructor).toBe(ol.layer.Image);
-    var source = layer.getSource();
+    const source = layer.getSource();
     expect(source.constructor).toBe(ol.source.ImageWMS);
     expect(source.getUrl()).toBe('http://example.com/');
-    var params = source.getParams();
+    const params = source.getParams();
     expect(params.LAYERS).toBe('a,b,c');
     expect(params.FORMAT).toBe('image/jpeg');
   });
