@@ -90,8 +90,6 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {boolean|undefined} gmf-layertree-openlinksinnewwindow if true, open
  *     metadataURLs in a new window. Otherwise open them in a popup.
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
- *     gmfLayertreeTemplate Template for the directive.
  *
  * @ngdoc component
  * @ngname gmfLayertreeComponent
