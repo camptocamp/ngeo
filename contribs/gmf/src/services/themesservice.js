@@ -278,9 +278,11 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
       const server = ogcServers[gmfLayerWMS.ogcServer];
       goog.asserts.assert(server, 'The OGC server was not found');
       goog.asserts.assert(server.url, 'The server URL is required');
+      goog.asserts.assert(server.imageType, 'The server image type is required');
       return callback(gmfLayer, layerHelper.createBasicWMSLayer(
         server.url,
         gmfLayerWMS.layers || '',
+        server.imageType,
         server.type,
         undefined, // time
         gmfLayer.dimensions,
