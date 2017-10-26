@@ -47,9 +47,10 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline
  */
 ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot, uuid) {
 
-  let hurl = 'http://localhost:5001/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
+  // let hurl = 'http://localhost:5001/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
+  let hurl = 'http://sitn.ne.ch/pytree/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
   hurl += '&width=' + width + '&coordinates=' + coordinates;
-  hurl += '&pointCloud=sitn2010';
+  hurl += '&pointCloud=sitn2016';
   hurl += '&attributes=';
 
 
