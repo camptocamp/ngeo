@@ -114,11 +114,13 @@ ngeo.LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
 
   const layerNames = dataSource.getOGCLayerNames().join(',');
   const serverType = dataSource.ogcServerType;
+  const imageType = dataSource.ogcImageType;
 
   // (1) Layer creation
   const layer = this.createBasicWMSLayer(
     url,
     layerNames,
+    imageType,
     serverType,
     undefined,
     undefined,
