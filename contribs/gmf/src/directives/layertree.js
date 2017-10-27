@@ -77,7 +77,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *        gmf-layertree-map="ctrl.map">
  *      </gmf-layertree>
  *
- * You can add an attribute 'gmf-layertree-openlinksinnewwindow="true"' to open
+ * You can add an attribute 'gmf-layertree-openlinksinnewwindow="::true"' to open
  * metadata URLs in a new window. By default, and in the default template,
  * links will be opened in a popup.
  *
@@ -90,8 +90,10 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  *  * metadataUrl: Display a popup with the content of the given URL if
  *    possible also open a new window.
  *
- * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {ol.Map} gmf-layertree-map The map.
+ * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
+ * @htmlAttribute {boolean|undefined} gmf-layertree-openlinksinnewwindow if true, open
+ *     metadataURLs in a new window. Otherwise open them in a popup.
  *
  * @ngdoc component
  * @ngname gmfLayertreeComponent
@@ -101,7 +103,7 @@ gmf.layertreeComponent = {
   bindings: {
     'map': '=gmfLayertreeMap',
     'dimensions': '=?gmfLayertreeDimensions',
-    'openLinksInNewWindowFn': '&gmfLayertreeOpenlinksinnewwindow'
+    'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow'
   },
   template: gmfLayertreeTemplate
 };
@@ -240,12 +242,6 @@ gmf.LayertreeController = function($element, $http, $sce, $scope,
   this.groupNodeStates_ = {};
 
   /**
-   * @type {function()|undefined}
-   * @export
-   */
-  this.openLinksInNewWindowFn;
-
-  /**
    * @type {boolean|undefined}
    * @export
    */
@@ -286,7 +282,7 @@ gmf.LayertreeController = function($element, $http, $sce, $scope,
  * Init the controller,
  */
 gmf.LayertreeController.prototype.$onInit = function() {
-  this.openLinksInNewWindow = this.openLinksInNewWindowFn() === true ? true : false;
+  this.openLinksInNewWindow = this.openLinksInNewWindow === true;
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
     gmf.DATALAYERGROUP_NAME);
 

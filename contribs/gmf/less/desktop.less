@@ -380,10 +380,9 @@ gmf-backgroundlayerselector {
   clear: both;
 }
 
-.gmf-drawfeature-featurelistctn {
-  border-top: 1px solid #333;
-  margin-top: @app-margin;
-  padding: 10px 0 0 0;
+hr.gmf-drawfeature-separator {
+  border-color: @color;
+  margin: 10px 0;
 }
 
 .gmf-drawfeature-featurelist {
@@ -587,6 +586,7 @@ gmf-objecteditingtools {
  */
 .gmf-filterselector-separator {
   margin: 1.5rem 0 0.5rem 0;
+  border-color: @color;
 }
 
 .gmf-filterselector-savefilter-desc {
@@ -682,6 +682,10 @@ hr.ngeo-filter-separator-criteria {
   margin: 0.5rem 0;
 }
 
+hr.ngeo-filter-separator-criteria,
+hr.ngeo-filter-separator-rules {
+  border-color: @color;
+}
 
 /**
  * Ngeo Rule component

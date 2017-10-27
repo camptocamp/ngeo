@@ -175,9 +175,8 @@ gmf.Themes.findGroupByName = function(themes, name) {
  * @param {string} objectName The object name.
  * @return {T} The object or null.
  * @template T
- * @private
  */
-gmf.Themes.findObjectByName_ = function(objects, objectName) {
+gmf.Themes.findObjectByName = function(objects, objectName) {
   return ol.array.find(objects, object => object['name'] === objectName);
 };
 
@@ -189,7 +188,7 @@ gmf.Themes.findObjectByName_ = function(objects, objectName) {
  * @return {gmfThemes.GmfTheme} The theme object or null.
  */
 gmf.Themes.findThemeByName = function(themes, themeName) {
-  return gmf.Themes.findObjectByName_(themes, themeName);
+  return gmf.Themes.findObjectByName(themes, themeName);
 };
 
 
@@ -279,9 +278,11 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
       const server = ogcServers[gmfLayerWMS.ogcServer];
       goog.asserts.assert(server, 'The OGC server was not found');
       goog.asserts.assert(server.url, 'The server URL is required');
+      goog.asserts.assert(server.imageType, 'The server image type is required');
       return callback(gmfLayer, layerHelper.createBasicWMSLayer(
         server.url,
         gmfLayerWMS.layers || '',
+        server.imageType,
         server.type,
         undefined, // time
         gmfLayer.dimensions,

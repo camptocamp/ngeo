@@ -59,6 +59,7 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
  *
  * @param {string} sourceURL The source URL.
  * @param {string} sourceLayersName A comma separated names string.
+ * @param {string} sourceFormat Image format, for example 'image/png'.
  * @param {string=} opt_serverType Type of the server ("mapserver",
  *     "geoserver", "qgisserver", …).
  * @param {string=} opt_time time parameter for layer queryable by time/periode
@@ -68,9 +69,12 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
-  sourceLayersName, opt_serverType, opt_time, opt_params, opt_crossOrigin) {
+  sourceLayersName, sourceFormat, opt_serverType, opt_time, opt_params, opt_crossOrigin) {
 
-  const params = {'LAYERS': sourceLayersName};
+  const params = {
+    'FORMAT': sourceFormat,
+    'LAYERS': sourceLayersName
+  };
   let olServerType;
   if (opt_time) {
     params['TIME'] = opt_time;
@@ -110,11 +114,13 @@ ngeo.LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
 
   const layerNames = dataSource.getOGCLayerNames().join(',');
   const serverType = dataSource.ogcServerType;
+  const imageType = dataSource.ogcImageType;
 
   // (1) Layer creation
   const layer = this.createBasicWMSLayer(
     url,
     layerNames,
+    imageType,
     serverType,
     undefined,
     undefined,
