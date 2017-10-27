@@ -337,7 +337,7 @@ ngeo.GooglestreetviewController = class {
 
   /**
    * @param {!ol.Coordinate} lonLat LonLat coordinate.
-   * @return {!ol.Coordinate} Map view projection coordinate.
+   * @return {ol.Coordinate} Map view projection coordinate.
    */
   fromLonLat_(lonLat) {
     return ol.proj.fromLonLat(
@@ -348,7 +348,7 @@ ngeo.GooglestreetviewController = class {
 
   /**
    * @param {!ol.Coordinate} coordinate Map view projection coordinate.
-   * @return {!ol.Coordinate} LonLat coordinate.
+   * @return {ol.Coordinate} LonLat coordinate.
    */
   toLonLat_(coordinate) {
     return ol.proj.toLonLat(
