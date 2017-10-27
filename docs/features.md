@@ -5,8 +5,8 @@ This document lists ngeo's features and if they are visible/configurable in the 
 Feature | Sub-feature | Desktop | Mobile
 ------- | ----------- | ------- | ------
 Navigation | Zoom&pan | X | X
-. | Map rotation | (2.3) | (2.3) 
-. | Geolocation | X | X 
+. | Map rotation | (2.3) | (2.3)
+. | Geolocation | X | X
 . | Navigation bar | X | -
 Full-text search | Data | X | X
 . | Layers/groups/themes | X | -
@@ -17,25 +17,25 @@ Data | Background selector | X | X
 Layers | (Un)select layer/group | X | X
 . | Clear all groups | X | X
 . | Remove group | X | X
-. | Reorder groups | X | - 
+. | Reorder groups | X | -
 . | Legend | X | X
 . | Go to scale | X | X
 . | Info on layer | X | X
 . | Opacity | X | (2.3)
-. | Time layers | X | X 
+. | Time layers | X | X
 Query | Point query | X | X
 . | Rectangular query | X | X
 . | Results window | X | X
 . | Results window filter | X | -
-. | Results grid | X | X 
+. | Results grid | X | X
 . | Results grid zoom to | X | -
 . | Results grid export | X | -
 . | Infos on point (includes raster) | X | -
-Access rights | Login | X | X 
-. | Lost password | X | X 
+Access rights | Login | X | X
+. | Lost password | X | X
 . | Rights on layers/themes/... | X | X
 Print | PDF | X | -
-. | PNG | X | - 
+. | PNG | X | -
 Drawing/measure | Drawing | X | -
 . | Measure point | X | X
 . | Measure line | X | X
@@ -44,7 +44,7 @@ Drawing/measure | Drawing | X | -
 . | Measure rectangle | X | -
 Filters | Spatial filter | X | -
 . | Attributes filter | X | -
-. | WMS filter | X | - 
+. | WMS filter | X | -
 . | WFS filter | X | -
 . | Directed filters | X | -
 . | Advanced filters | X | -
@@ -54,15 +54,15 @@ Editing | Edit point | X | -
 . | Edit polygon | X | -
 . | Snapping | X | -
 Profile | Draw profile | X | -
-. | CSV export | X | - 
+. | CSV export | X | -
 StreetView | StreetView panel | X | -
 External layers | Online WMS | (2.3) | -
 . | Online WMTS | (2.3) | -
 . | Local KML | (2.3) | -
 . | Local GPX | (2.3) | -
 . | Query point on WMS | (2.3) | -
-Permalink | Share window | X | - 
+Permalink | Share window | X | -
 . | Location | X | X
 . | Layers/groups/themes | X | X
 . | Drawing | X | (2.4?)
-. | Short URL | X | X 
+. | Short URL | X | X
