@@ -786,6 +786,7 @@ gmf.PrintController.prototype.print = function(format) {
           layer = this.ngeoLayerHelper_.createBasicWMSLayer(
             server.url,
             layer_names,
+            server.imageType,
             server.type
           );
         } else {
