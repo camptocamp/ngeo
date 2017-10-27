@@ -9,6 +9,8 @@
   .popover-content {
     ul {
       margin-bottom: 0;
+      /* fix issue with IE11 not sizing correcly the popover box */
+      min-width: 180px;
     }
 
     li {
@@ -38,6 +40,8 @@
         margin-left: @half-app-margin;
         display: inline-block;
         max-width: @popover-action-max-width - @half-app-margin;
+        /* fix issue with IE11 not sizing correcly the popover box */
+        padding: 0;
       }
     }
   }

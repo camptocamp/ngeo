@@ -71,10 +71,9 @@
   </a>
 </ngeo-drawfeature>
 
-<div
-    ng-switch="efCtrl.selectedFeature"
-    class="gmf-drawfeature-featurelistctn">
+<div ng-switch="efCtrl.selectedFeature">
 
+  <hr class="gmf-drawfeature-separator" ng-show="efCtrl.getFeaturesArray().length > 0">
   <div ng-switch-when="null">
     <div ng-show="efCtrl.getFeaturesArray().length > 0">
       <div class="ngeo-drawfeature-actionbuttons">

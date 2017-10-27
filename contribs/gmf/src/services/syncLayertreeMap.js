@@ -202,9 +202,11 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
     goog.asserts.assert(ogcServer);
     goog.asserts.assert(ogcServer.url);
     goog.asserts.assert(ogcServer.type);
+    goog.asserts.assert(ogcServer.imageType);
     layer = this.layerHelper_.createBasicWMSLayer(
       ogcServer.url,
       '',
+      ogcServer.imageType,
       ogcServer.type,
       timeParam,
       undefined, // WMS parameters
@@ -248,9 +250,11 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map
     goog.asserts.assert(ogcServer.url);
     goog.asserts.assert(ogcServer.type);
     goog.asserts.assert(gmfLayerWMS.layers);
+    goog.asserts.assert(ogcServer.imageType);
     layer = this.layerHelper_.createBasicWMSLayer(
       ogcServer.url,
       gmfLayerWMS.layers,
+      ogcServer.imageType,
       ogcServer.type,
       timeParam,
       undefined, // WMS parameters
