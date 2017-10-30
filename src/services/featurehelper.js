@@ -644,7 +644,7 @@ ngeo.FeatureHelper.prototype.getColorProperty = function(feature) {
 
 /**
  * @param {!ol.Feature} feature Feature.
- * @return {!ol.Color} Color.
+ * @return {ol.Color} Color.
  * @export
  */
 ngeo.FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
