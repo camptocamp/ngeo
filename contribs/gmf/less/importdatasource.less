@@ -43,9 +43,16 @@ gmf-wmtscapabilitylayertree {
     background-color: white;
     border: 0.1rem solid #ccc;
     height: ~"calc(100% - 2rem)";
-    padding: 0.5rem 0.5rem 0.5rem 3rem;
+    padding: 0.5rem 0.5rem 0.5rem 2rem;
     overflow-y: auto;
   }
+}
+
+.gmf-wmscapabilitylayertreenode-expand-node,
+.gmf-wmscapabilitylayertreenode-group,
+.gmf-wmscapabilitylayertreenode-no-icon {
+  margin: auto 0;
+  width: 1.7rem;
 }
 
 a.gmf-wmscapabilitylayertreenode-expand-node.fa {
@@ -62,6 +69,10 @@ a.gmf-wmscapabilitylayertreenode-expand-node.fa {
 .gmf-wmscapabilitylayertreenode-group:before {
   content: "\e600";
   font-family: gmf-icons;
+}
+
+.gmf-wmscapabilitylayertreenode-popover-container {
+  margin: auto 0;
 }
 
 .gmf-wmscapabilitylayertreenode-popover-content {
@@ -82,16 +93,25 @@ a.gmf-wmscapabilitylayertreenode-expand-node.fa {
 .gmf-wmscapabilitylayertreenode-actions {
   cursor: pointer;
   opacity: 0;
-  margin: 0 0 0 -2.4rem;
+  margin: 0 0 0 -1.4rem;
 }
 
-.gmf-wmscapabilitylayertreenode-header:hover > span > .gmf-wmscapabilitylayertreenode-actions {
-  opacity: 1;
+.gmf-wmscapabilitylayertreenode-header {
+  display: flex;
+
+  &:hover > span > .gmf-wmscapabilitylayertreenode-actions {
+    opacity: 1;
+  }
 }
 
 .gmf-wmscapabilitylayertreenode-no-icon {
   font-size: 0.8rem;
   vertical-align: middle;
+}
+
+.gmf-wmscapabilitylayertreenode-title {
+  flex: 2;
+  padding: 0 0.5rem;
 }
 
 .gmf-wmscapabilitylayertreenode-description {
