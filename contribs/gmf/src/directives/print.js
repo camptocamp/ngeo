@@ -131,8 +131,8 @@ gmf.printDirective = function(gmfPrintTemplateUrl) {
       'active': '=gmfPrintActive',
       'rotateMask': '&?gmfPrintRotatemask',
       'fieldValues': '&?gmfPrintFieldvalues',
-      'hiddenAttributeNames': '=gmfPrintHiddenattributes',
-      'attributesOut': '=gmfPrintAttributesOut'
+      'hiddenAttributeNames': '=?gmfPrintHiddenattributes',
+      'attributesOut': '=?gmfPrintAttributesOut'
     },
     link(scope, element, attr) {
       const ctrl = scope['ctrl'];
