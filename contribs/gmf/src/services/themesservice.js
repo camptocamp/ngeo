@@ -173,10 +173,12 @@ gmf.Themes.findGroupByName = function(themes, name) {
     return null;
   };
 
-  for (const theme of themes) {
-    const found = searchChildrenRecursive(theme, name);
-    if (found !== null) {
-      return found;
+  if (themes && themes.length > 0) {
+    for (const theme of themes) {
+      const found = searchChildrenRecursive(theme, name);
+      if (found !== null) {
+        return found;
+      }
     }
   }
   return null;
