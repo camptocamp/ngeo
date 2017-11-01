@@ -360,10 +360,10 @@ gmf.DisplayquerywindowController.prototype.updateQueryResult_ = function(queryRe
   this.ngeoQueryResult.sources.length = 0;
   for (let i = 0; i < queryResult.sources.length; i++) {
     const source = queryResult.sources[i];
-    source.features = source.features.filter(function(feature) {
+    source.features = source.features.filter((feature) => {
       goog.asserts.assert(feature);
       return !ol.obj.isEmpty(ngeo.FeatureHelper.getFilteredFeatureValues(feature));
-    }, this);
+    });
     this.ngeoQueryResult.sources.push(source);
     this.ngeoQueryResult.total += source.features.length;
   }
