@@ -241,11 +241,7 @@ ngeo.Querent = class {
         tooManyFeatures = true;
         totalFeatureCount = response;
       } else {
-        if (wfs) {
-          features = this.readAndTypeFeatures_(dataSource.wfsFormat, response.data);
-        } else {
-          features = this.readAndTypeFeatures_(dataSource.wmsFormat, response.data);
-        }
+        features = this.readAndTypeFeatures_(dataSource, response.data, wfs);
       }
       const dataSourceId = dataSource.id;
       this.setUniqueIds_(features, dataSource.id);
@@ -264,20 +260,25 @@ ngeo.Querent = class {
    * Read and assign the type of the feature to each feature in the data.
    * The type will be stocked in the properties of the features as
    * "ngeo_feature_type_".
-   * @param {ol.format.WFS | ol.format.WMSGetFeatureInfo} formatObject object to
-   *     read features from a xml source.
+   * @param {ngeo.DataSource} dataSource used to read the features.
    * @param {Document | Node | Object | string} data the response data.
+   * @param {boolean} wfs Whether the query was WFS or WMS.
    * @return {Array.<ol.Feature>} returned features with a type in each features.
    * @private
    */
-  readAndTypeFeatures_(formatObject, data) {
+  readAndTypeFeatures_(dataSource, data, wfs) {
     const features = [];
+    let readFeatures;
     // Copy the types to be able to set it AND iterate on it.
-    const featureType = formatObject.featureType_.slice();
-    featureType.forEach((type) => {
+    const featureTypes = this.getSetOlFormatTypes_(dataSource, wfs).slice();
+    featureTypes.forEach((type) => {
       // Assign temporarily a single feature type to read features separately.
-      formatObject.featureType_ = [type];
-      const readFeatures = formatObject.readFeatures(data);
+      this.getSetOlFormatTypes_(dataSource, wfs, [type]);
+      if (wfs) {
+        readFeatures = dataSource.wfsFormat.readFeatures(data);
+      } else {
+        readFeatures = dataSource.wmsFormat.readFeatures(data);
+      }
       if (readFeatures.length > 0) {
         readFeatures.forEach((feature) => {
           feature.set('ngeo_feature_type_', type);
@@ -287,8 +288,37 @@ ngeo.Querent = class {
     });
     // Re-set the value to the datasource.xxxFormat to be able to re-use
     // it later (in another query);
-    formatObject.featureType_ = featureType;
+    this.getSetOlFormatTypes_(dataSource, wfs, featureTypes);
     return features;
+  }
+
+  /**
+   * Return the types defined in the format of the datasource. Can set the
+   * types if one is given.
+   * @param {ngeo.DataSource} dataSource that contains the format object.
+   * @param {boolean} wfs Whether the query was WFS or WMS.
+   * @param {Array.<string>=} opt_types An array of type if you want to set the
+   *     type of the format object.
+   * @return {Array.<string>} The types defined in the format.
+   * @private
+   */
+  getSetOlFormatTypes_(dataSource, wfs, opt_types) {
+    let types;
+    if (wfs) {
+      if (opt_types) {
+        dataSource.wfsFormat['featureType_'] = opt_types;
+      }
+      types = dataSource.wfsFormat['featureType_'];
+    } else {
+      if (opt_types) {
+        dataSource.wmsFormat['layers_'] = opt_types;
+      }
+      types = dataSource.wmsFormat['layers_'];
+    }
+    if (!types) {
+      return null;
+    }
+    return (Array.isArray(types)) ? types : [types];
   }
 
   /**
