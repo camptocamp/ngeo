@@ -87,7 +87,6 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
- * @param {!ngeo.FeatureHelper} ngeoFeatureHelper the ngeo FeatureHelper service.
  * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
@@ -97,7 +96,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @ngname GmfDisplayquerywindowController
  */
 gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
-  ngeoFeatureHelper, ngeoFeatureOverlayMgr) {
+  ngeoFeatureOverlayMgr) {
 
   /**
    * @type {boolean}
@@ -135,12 +134,6 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
     total: 0,
     pending: false
   };
-
-  /**
-   * @type {ngeo.FeatureHelper}
-   * @export
-   */
-  this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
    * @type {?ngeox.QueryResultSource}
@@ -369,7 +362,7 @@ gmf.DisplayquerywindowController.prototype.updateQueryResult_ = function(queryRe
     const source = queryResult.sources[i];
     source.features = source.features.filter(function(feature) {
       goog.asserts.assert(feature);
-      return !ol.obj.isEmpty(this.ngeoFeatureHelper_.getFilteredFeatureValues(feature));
+      return !ol.obj.isEmpty(ngeo.FeatureHelper.getFilteredFeatureValues(feature));
     }, this);
     this.ngeoQueryResult.sources.push(source);
     this.ngeoQueryResult.total += source.features.length;
@@ -419,7 +412,7 @@ gmf.DisplayquerywindowController.prototype.getFeatureValues = function() {
   if (!this.feature) {
     return null;
   }
-  return this.ngeoFeatureHelper_.getFilteredFeatureValues(this.feature);
+  return ngeo.FeatureHelper.getFilteredFeatureValues(this.feature);
 };
 
 
