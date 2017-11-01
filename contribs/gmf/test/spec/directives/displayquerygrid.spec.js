@@ -89,12 +89,12 @@ describe('gmf.displayquerygridComponent', () => {
       $rootScope.$digest();
       $timeout.flush();
       expect(queryGridController.active).toBe(true);
-      expect(queryGridController.selectedTab).toBe(123);
+      expect(queryGridController.selectedTab).toBe('Test');
 
-      const featuresForSource = queryGridController.featuresForSources_['123'];
+      const featuresForSource = queryGridController.featuresForSources_['Test'];
       expect(Object.keys(featuresForSource).length).toBe(2);
 
-      const gridSource = queryGridController.gridSources['123'];
+      const gridSource = queryGridController.gridSources['Test'];
       expect(gridSource).toBeDefined();
 
       const gridConfig = gridSource.configuration;
@@ -146,7 +146,7 @@ describe('gmf.displayquerygridComponent', () => {
       $timeout.flush();
       expect(queryGridController.active).toBe(true);
 
-      const gridSource = queryGridController.gridSources['123'];
+      const gridSource = queryGridController.gridSources['Test'];
       expect(gridSource).toBeDefined();
 
       const gridConfig = gridSource.configuration;
@@ -193,7 +193,7 @@ describe('gmf.displayquerygridComponent', () => {
       $timeout.flush();
       expect(queryGridController.active).toBe(false);
 
-      const gridSource = queryGridController.gridSources['123'];
+      const gridSource = queryGridController.gridSources['Test'];
       expect(gridSource).toBeUndefined();
     });
 
@@ -237,7 +237,7 @@ describe('gmf.displayquerygridComponent', () => {
       expect(queryGridController.active).toBe(true);
 
       // grid source 1
-      const gridSource1 = queryGridController.gridSources['123'];
+      const gridSource1 = queryGridController.gridSources['Test 1'];
       expect(gridSource1).toBeDefined();
 
       const gridConfig1 = gridSource1.configuration;
@@ -260,11 +260,11 @@ describe('gmf.displayquerygridComponent', () => {
       expect(gridConfig1.columnDefs).toEqual(expectedColumnDefs1);
 
       // grid source 2
-      const gridSource2 = queryGridController.gridSources['234'];
+      const gridSource2 = queryGridController.gridSources['Test 2'];
       expect(gridSource2).not.toBeDefined();
 
       // grid source 3
-      const gridSource3 = queryGridController.gridSources['345'];
+      const gridSource3 = queryGridController.gridSources['Test 3'];
       expect(gridSource3).toBeDefined();
 
       const gridConfig3 = gridSource3.configuration;
@@ -314,11 +314,11 @@ describe('gmf.displayquerygridComponent', () => {
       expect(queryGridController.active).toBe(true);
 
       // grid source 1
-      const gridSource1 = queryGridController.gridSources['123'];
+      const gridSource1 = queryGridController.gridSources['Test 1'];
       expect(gridSource1).toBeDefined();
 
       // grid source 2
-      const gridSource2 = queryGridController.gridSources['345'];
+      const gridSource2 = queryGridController.gridSources['Test 3'];
       expect(gridSource2).toBeDefined();
       expect(gridSource2.configuration).toBe(null);
     });
@@ -347,12 +347,12 @@ describe('gmf.displayquerygridComponent', () => {
       expect(queryGridController.active).toBe(true);
 
       // grid source 1
-      const gridSource1 = queryGridController.gridSources['123'];
+      const gridSource1 = queryGridController.gridSources['Test 1'];
       expect(gridSource1).toBeDefined();
       expect(gridSource1.configuration).toBe(null);
 
       // grid source 2
-      const gridSource2 = queryGridController.gridSources['345'];
+      const gridSource2 = queryGridController.gridSources['Test 3'];
       expect(gridSource2).toBeDefined();
       expect(gridSource2.configuration).toBe(null);
     });
@@ -399,7 +399,7 @@ describe('gmf.displayquerygridComponent', () => {
       }];
 
       queryGridController.mergeTabs_ = {
-        'merged_source': ['123', '234']
+        'merged_source': ['Test 1', 'Test 2']
       };
 
       $rootScope.$digest();
@@ -434,7 +434,7 @@ describe('gmf.displayquerygridComponent', () => {
       expect(gridConfig1.columnDefs).toEqual(expectedColumnDefs1);
 
       // grid source 3
-      const gridSource3 = queryGridController.gridSources['345'];
+      const gridSource3 = queryGridController.gridSources['Test 3'];
       expect(gridSource3).toBeDefined();
 
       const gridConfig3 = gridSource3.configuration;
@@ -492,7 +492,7 @@ describe('gmf.displayquerygridComponent', () => {
       }];
 
       queryGridController.mergeTabs_ = {
-        'merged_source': ['123', '234']
+        'merged_source': ['Test 1', 'Test 2']
       };
 
       $rootScope.$digest();
@@ -508,7 +508,7 @@ describe('gmf.displayquerygridComponent', () => {
       expect(gridSource1.source.features).toEqual([]);
 
       // grid source 3
-      const gridSource3 = queryGridController.gridSources['345'];
+      const gridSource3 = queryGridController.gridSources['Test 3'];
       expect(gridSource3).toBeDefined();
     });
 
@@ -548,38 +548,38 @@ describe('gmf.displayquerygridComponent', () => {
     it('allows to switch between tabs', () => {
       $timeout.flush();
       // check that the first source is selected by default
-      expect(queryGridController.selectedTab).toBe(123);
+      expect(queryGridController.selectedTab).toBe('Test 1');
       expect(queryGridController.features_.item(0).get('name')).toBe('A');
       expect(queryGridController.highlightFeatures_.getLength()).toBe(0);
 
       // select the 2nd source
-      queryGridController.selectTab(queryGridController.gridSources['345']);
-      expect(queryGridController.selectedTab).toBe(345);
+      queryGridController.selectTab(queryGridController.gridSources['Test 3']);
+      expect(queryGridController.selectedTab).toBe('Test 3');
       expect(queryGridController.features_.item(0).get('label')).toBe('C');
       expect(queryGridController.highlightFeatures_.getLength()).toBe(0);
     });
 
     it('remembers selected rows when switching tabs', () => {
-      const gridSource1 = queryGridController.gridSources['123'];
+      const gridSource1 = queryGridController.gridSources['Test 1'];
       const row1 = gridSource1.configuration.data[0];
       gridSource1.configuration.selectRow(row1);
       $rootScope.$digest();
       $timeout.flush();
 
       // check that the first source is selected by default
-      expect(queryGridController.selectedTab).toBe(123);
+      expect(queryGridController.selectedTab).toBe('Test 1');
       expect(queryGridController.features_.getLength()).toBe(0);
       expect(queryGridController.highlightFeatures_.item(0).get('name')).toBe('A');
 
       // select the 2nd source
-      queryGridController.selectTab(queryGridController.gridSources['345']);
-      expect(queryGridController.selectedTab).toBe(345);
+      queryGridController.selectTab(queryGridController.gridSources['Test 3']);
+      expect(queryGridController.selectedTab).toBe('Test 3');
       expect(queryGridController.features_.item(0).get('label')).toBe('C');
       expect(queryGridController.highlightFeatures_.getLength()).toBe(0);
 
       // and then select again source 1
-      queryGridController.selectTab(queryGridController.gridSources['123']);
-      expect(queryGridController.selectedTab).toBe(123);
+      queryGridController.selectTab(queryGridController.gridSources['Test 1']);
+      expect(queryGridController.selectedTab).toBe('Test 1');
       expect(queryGridController.features_.getLength()).toBe(0);
       expect(queryGridController.highlightFeatures_.item(0).get('name')).toBe('A');
     });
