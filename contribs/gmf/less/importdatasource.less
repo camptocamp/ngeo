@@ -18,19 +18,20 @@ gmf-wmtscapabilitylayertree {
     &:hover {
       text-decoration: none;
     }
+  }
 
-    ul {
-      margin: 0;
-      padding: 0;
-    }
+  ul {
+    margin: 0;
+    padding: 0;
+  }
 
-    li {
-      list-style: none;
-    }
+  li {
+    list-style: none;
+    padding: 0.2rem;
+  }
 
-    > ul > li > gmf-wmscapabilitylayertreenode {
-      margin: 0 0 0 2.5rem;
-    }
+  > ul > li > gmf-wmscapabilitylayertreenode {
+    margin: 0.5rem 0 0.5rem 1rem;
   }
 }
 
@@ -41,10 +42,17 @@ gmf-wmtscapabilitylayertree {
   > gmf-wmtscapabilitylayertree {
     background-color: white;
     border: 0.1rem solid #ccc;
-    height: ~"calc(100% - 6rem)";
-    padding: 1rem 1rem 1rem 3rem;
+    height: ~"calc(100% - 2rem)";
+    padding: 0.5rem 0.5rem 0.5rem 2rem;
     overflow-y: auto;
   }
+}
+
+.gmf-wmscapabilitylayertreenode-expand-node,
+.gmf-wmscapabilitylayertreenode-group,
+.gmf-wmscapabilitylayertreenode-no-icon {
+  margin: auto 0;
+  width: 1.7rem;
 }
 
 a.gmf-wmscapabilitylayertreenode-expand-node.fa {
@@ -61,6 +69,10 @@ a.gmf-wmscapabilitylayertreenode-expand-node.fa {
 .gmf-wmscapabilitylayertreenode-group:before {
   content: "\e600";
   font-family: gmf-icons;
+}
+
+.gmf-wmscapabilitylayertreenode-popover-container {
+  margin: auto 0;
 }
 
 .gmf-wmscapabilitylayertreenode-popover-content {
@@ -81,16 +93,25 @@ a.gmf-wmscapabilitylayertreenode-expand-node.fa {
 .gmf-wmscapabilitylayertreenode-actions {
   cursor: pointer;
   opacity: 0;
-  margin: 0 0 0 -2rem;
+  margin: 0 0 0 -1.4rem;
 }
 
-.gmf-wmscapabilitylayertreenode-header:hover > span > .gmf-wmscapabilitylayertreenode-actions {
-  opacity: 1;
+.gmf-wmscapabilitylayertreenode-header {
+  display: flex;
+
+  &:hover > span > .gmf-wmscapabilitylayertreenode-actions {
+    opacity: 1;
+  }
 }
 
 .gmf-wmscapabilitylayertreenode-no-icon {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   vertical-align: middle;
+}
+
+.gmf-wmscapabilitylayertreenode-title {
+  flex: 2;
+  padding: 0 0.5rem;
 }
 
 .gmf-wmscapabilitylayertreenode-description {
