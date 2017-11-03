@@ -487,7 +487,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string=} opt_height CSS height.
    * @export
    */
-  gmfx.openIframePopup = function(url, title, opt_width, opt_height) {
+  gmfx.openIframePopup = gmfx.OpenIframePopup = function(
+    url, title, opt_width, opt_height
+  ) {
     const popup = ngeoCreatePopup();
     popup.setUrl(`${url}`);
     gmfx.openPopup_(popup, title, opt_width, opt_height);
@@ -501,7 +503,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string=} opt_height CSS height.
    * @export
    */
-  gmfx.openTextPopup = function(content, title, opt_width, opt_height) {
+  gmfx.openTextPopup = gmfx.OpenTextPopup = function(
+    content, title, opt_width, opt_height
+  ) {
     const popup = ngeoCreatePopup();
     popup.setContent(`${content}`, true);
     gmfx.openPopup_(popup, title, opt_width, opt_height);
