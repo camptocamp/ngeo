@@ -1,0 +1,17 @@
+@import "../../../node_modules/font-awesome/less/variables.less";
+
+main > gmf-displaywindow {
+  left: 0;
+  position: relative;
+  top: 0;
+
+  .gmf-displayquerywindow {
+    height: calc(~"100% -" 2 * @app-margin);
+    left: 0;
+    margin: @app-margin;
+    position: relative;
+    top: 0;
+    width: calc(~"100% -" 2 * @app-margin);
+    z-index: @above-search-index;
+  }
+}
