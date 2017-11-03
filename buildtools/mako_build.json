@@ -51,6 +51,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "node_modules/openlayers/externs/topojson.js",
       "${_ngeo_folder}externs/angular-gettext.js",
       "${_ngeo_folder}externs/d3.js",
+      "${_ngeo_folder}externs/gyronorm.js",
       "${_ngeo_folder}externs/google_maps_api_v3_27.js",
       "${_ngeo_folder}externs/typeahead.js",
       "${_ngeo_folder}externs/twbootstrap.js",

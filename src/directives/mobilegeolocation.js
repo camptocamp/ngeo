@@ -366,6 +366,21 @@ ngeo.MobileGeolocationController.prototype.headingUpdate = function() {
 
 // Orientation control events
 ngeo.MobileGeolocationController.prototype.autorotateListener = function() {
+  // Test gyronorm
+  const gyronorm = new GyroNorm();
+
+  gyronorm .init({
+    frequency: 100,
+    orientationBase: GyroNorm.GAME,
+    decimalCount: 3
+  }).then(() => {
+    gyronorm .start((data) => {
+      headingFromDevices(data);
+    });
+  });
+  // END test gyronorm
+
+
   this.deviceOrientation = new ol.DeviceOrientation();
 
   let currHeading = 0;

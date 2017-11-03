@@ -41,6 +41,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/floatthead/dist/jquery.floatThead.js \
 	node_modules/proj4/dist/proj4-src.js \
 	node_modules/d3/build/d3.js \
+	node_modules/gyronorm/dist/gyronorm.complete.js \
 	node_modules/file-saver/FileSaver.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.js \
 	node_modules/jsts/dist/jsts.min.js \
@@ -63,6 +64,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/bootstrap/dist/js/bootstrap.min.js \
 	node_modules/floatthead/dist/jquery.floatThead.min.js \
 	node_modules/proj4/dist/proj4.js \
+	node_modules/gyronorm/dist/gyronorm.complete.min.js \
 	node_modules/file-saver/FileSaver.min.js \
 	node_modules/d3/build/d3.min.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.min.js \
@@ -93,6 +95,7 @@ EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/contribs/gmf/build/images/ \
 	.build/examples-hosted/lib/images/ \
 	.build/examples-hosted/lib/d3.min.js \
+	.build/examples-hosted/lib/gyronorm.complete.min.js \
 	.build/examples-hosted/lib/FileSaver.min.js \
 	.build/examples-hosted/lib/watchwatchers.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
@@ -452,6 +455,10 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/gyronorm.complete.min.js: node_modules/gyronorm/dist/gyronorm.complete.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/FileSaver.min.js: node_modules/file-saver/FileSaver.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -555,6 +562,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
 		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
 		-e 's|\.\./node_modules/d3/build/d3.js|lib/d3.min.js|' \
+		-e 's|\.\./node_modules/gyronorm/dist/gyronorm.complete.js|lib/gyronorm.complete.min.js|' \
 		-e 's|\.\./node_modules/file-saver/FileSaver.min.js|lib/FileSaver.min.js|' \
 		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
@@ -588,6 +596,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
 		-e 's|\.\./node_modules/angular-ui-slider/src/slider.js|lib/slider.min.js|' \
 		-e 's|\.\./node_modules/d3/build/d3\.js|lib/d3.min.js|' \
+		-e 's|\.\./node_modules/gyronorm/dist/gyronorm.complete.js|lib/gyronorm.complete.min.js \
 		-e 's|\.\./node_modules/file-saver/FileSaver.min.js|lib/FileSaver.min.js|' \
 		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle\.js|lib/typeahead.bundle.min.js|' \
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
