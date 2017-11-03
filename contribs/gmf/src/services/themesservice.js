@@ -156,12 +156,28 @@ gmf.Themes.findGroupByLayerNodeName = function(themes, name) {
  * @return {gmfThemes.GmfGroup} The group.
  */
 gmf.Themes.findGroupByName = function(themes, name) {
-  for (let i = 0, ii = themes.length; i < ii; i++) {
-    const theme = themes[i];
-    for (let j = 0, jj = theme.children.length; j < jj; j++) {
-      const group = theme.children[j];
-      if (group.name == name) {
-        return group;
+
+  const searchChildrenRecursive = (group, name) => {
+    let found;
+    if (group.children && group.children.length > 0) {
+      for (const child of group.children) {
+        if (child.name == name) {
+          return child;
+        }
+        found = searchChildrenRecursive(child, name);
+        if (found !== null) {
+          return found;
+        }
+      }
+    }
+    return null;
+  };
+
+  if (themes && themes.length > 0) {
+    for (const theme of themes) {
+      const found = searchChildrenRecursive(theme, name);
+      if (found !== null) {
+        return found;
       }
     }
   }
