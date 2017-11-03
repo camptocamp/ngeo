@@ -22,8 +22,6 @@ goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 
-goog.require('app.GmfImportHelper');
-
 
 gmf.module.value('ngeoQueryOptions', {
   'limit': 20,
@@ -131,11 +129,6 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
-
-  /**
-   * @export
-   */
-  this.importOptions = new app.GmfImportHelper(this.map, $scope, gettext, ngeoFile, $q).createOptions();
 };
 ol.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
 
