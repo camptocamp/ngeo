@@ -157,7 +157,9 @@ gmf.Themes.findGroupByName = function(themes, name) {
     const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
       const group = theme.children[j];
-      if (group.name == name) {
+      const internalNodes = [];
+      gmf.Themes.getFlatInternalNodes(group, internalNodes);
+      if (gmf.Themes.findObjectByName(internalNodes, name)) {
         return group;
       }
     }
@@ -190,11 +192,28 @@ gmf.Themes.findThemeByName = function(themes, themeName) {
 
 
 /**
- * Fill the given "nodes" array with all node in the given node including the
- * given node itself.
+ * Fill the given "nodes" array with all internal nodes (non-leaf nones) in
+ * the given node.
+ *
  * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layertree node.
  * @param {Array.<gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An array.
- * @export
+ */
+gmf.Themes.getFlatInternalNodes = function(node, nodes) {
+  const children = node.children;
+  if (children !== undefined) {
+    nodes.push(node);
+    for (let i = 0; i < children.length; i++) {
+      gmf.Themes.getFlatInternalNodes(children[i], nodes);
+    }
+  }
+};
+
+
+/**
+ * Fill the given "nodes" array with all leaf nodes in the given node.
+ *
+ * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layertree node.
+ * @param {Array.<gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An array.
  */
 gmf.Themes.getFlatNodes = function(node, nodes) {
   let i;
