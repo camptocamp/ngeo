@@ -138,11 +138,8 @@ gmf.Themes.findGroupByLayerNodeName = function(themes, name) {
       const group = theme.children[j];
       const childNodes = [];
       gmf.Themes.getFlatNodes(group, childNodes);
-      for (let k = 0, kk = childNodes.length; k < kk; k++) {
-        const layer = childNodes[k];
-        if (layer.name == name) {
-          return group;
-        }
+      if (gmf.Themes.findObjectByName(childNodes, name)) {
+        return group;
       }
     }
   }
