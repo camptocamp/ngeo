@@ -1,0 +1,39 @@
+<div
+  class="gmf-displayquerywindow"
+  ng-show="$ctrl.open"
+  ng-style="$ctrl.style"
+>
+
+  <div class="gmf-displayquerywindow-container">
+
+    <button
+      type="button"
+      class="btn fa-close close"
+      ng-click="$ctrl.close()">
+    </button>
+
+    <div class="gmf-displayquerywindow-animation-container">
+      <div class="gmf-displayquerywindow-slide-animation ">
+        <div
+          class="gmf-displayquerywindow-header"
+          ng-if="$ctrl.title !== null">
+          <p class="gmf-displayquerywindow-title">{{ $ctrl.title }}</p>
+        </div>
+        <div
+          class="gmf-displayquerywindow-details"
+          ng-if="$ctrl.content !== null"
+          ng-bind-html="$ctrl.content"></div>
+        <div
+          class="gmf-displayquerywindow-details"
+          ng-if="$ctrl.url !== null">
+          <iframe
+            frameborder="0"
+            type="text/html"
+            ng-src="{{ $ctrl.urlTrusted }}"></iframe>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

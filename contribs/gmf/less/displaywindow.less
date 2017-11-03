@@ -1,0 +1,33 @@
+@import "../../../node_modules/font-awesome/less/variables.less";
+
+gmf-displaywindow {
+  .gmf-displayquerywindow {
+    height: 24rem;
+    left: 1rem;
+    margin: 0;
+    max-height: initial;
+    max-width: initial;
+    position: absolute;
+    right: auto;
+    top: 8rem;
+    z-index: @above-menus-index;
+
+    .gmf-displayquerywindow-animation-container {
+      height: 100%;
+    }
+
+    .gmf-displayquerywindow-details {
+      display: block;
+      height: 100%;
+
+      iframe {
+        height: ~"calc(100% - 1rem)";
+        width: 100%;
+      }
+    }
+
+    .gmf-displayquerywindow-container {
+      height: 100%;
+    }
+  }
+}

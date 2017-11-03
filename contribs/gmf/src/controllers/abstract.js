@@ -8,6 +8,8 @@ goog.require('gmf.backgroundlayerselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
+goog.require('gmf.displaywindowComponent');
+/** @suppress {extraRequire} */
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.Themes');
@@ -464,12 +466,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   this.updateCurrentBackgroundLayer_(false);
 
-  /**
-   * Ngeo create popup factory
-   * @type {ngeo.CreatePopup}
-   */
-  const ngeoCreatePopup = $injector.get('ngeoCreatePopup');
-
   // Static "not used" functions should be in the window because otherwise
   // closure remove them. "export" tag doens't work on static function below,
   // we "export" them as externs in the gmfx options file.
@@ -487,42 +483,46 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @param {string=} opt_height CSS height.
    * @export
    */
-  gmfx.openIframePopup = function(url, title, opt_width, opt_height) {
-    const popup = ngeoCreatePopup();
-    popup.setUrl(`${url}`);
-    gmfx.openPopup_(popup, title, opt_width, opt_height);
+  gmfx.openIframePopup = (
+    url, title, opt_width, opt_height
+  ) => {
+    this.displaywindowUrl = url;
+    gmfx.openPopup_(title, opt_width, opt_height);
   };
 
   /**
    * Static function to create a popup with html content.
    * @param {string} content (text or html).
    * @param {string} title (text).
-   * @param {string=} opt_width CSS width.
-   * @param {string=} opt_height CSS height.
+   * @param {number=} opt_width CSS width in pixel.
+   * @param {number=} opt_height CSS height in pixel.
    * @export
    */
-  gmfx.openTextPopup = function(content, title, opt_width, opt_height) {
-    const popup = ngeoCreatePopup();
-    popup.setContent(`${content}`, true);
-    gmfx.openPopup_(popup, title, opt_width, opt_height);
+  gmfx.openTextPopup = (
+    content, title, opt_width, opt_height
+  ) => {
+    this.displaywindowContent = content;
+    gmfx.openPopup_(title, opt_width, opt_height);
   };
 
   /**
-   * @param {ngeo.Popup!} popup a ngeoPopup.
    * @param {string} title (text).
-   * @param {string=} opt_width CSS width.
-   * @param {string=} opt_height CSS height.
+   * @param {number=} opt_width CSS width in pixel.
+   * @param {number=} opt_height CSS height in pixel.
    */
-  gmfx.openPopup_ = function(popup, title, opt_width, opt_height) {
+  gmfx.openPopup_ = (title, opt_width, opt_height) => {
+
+    this.displaywindowTitle = title;
+    this.displaywindowOpen = true;
+
     if (opt_width) {
-      popup.setWidth(`${opt_width}`);
+      this.displaywindowWidth = `${opt_width}px`;
     }
     if (opt_height) {
-      popup.setHeight(`${opt_height}`);
+      this.displaywindowHeight = `${opt_height}px`;
     }
-    popup.setTitle(`${title}`);
-    popup.setAutoDestroy(true);
-    popup.setOpen(true);
+
+    this.$scope.$apply();
   };
 
   /**
@@ -554,13 +554,49 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * Static function to create a popup with an iframe.
    * @param {string} url an url.
    * @param {string} title (text).
-   * @param {string=} opt_width CSS width.
-   * @param {string=} opt_height CSS height.
+   * @param {number=} opt_width CSS width in pixel.
+   * @param {number=} opt_height CSS height in pixel.
    * @export
    */
   cgxp.tools.openInfoWindow = function(url, title, opt_width, opt_height) {
     gmfx.openIframePopup(url, title, opt_width, opt_height);
   };
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.displaywindowContent = null;
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.displaywindowHeight = null;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.displaywindowOpen = false;
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.displaywindowTitle = null;
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.displaywindowUrl = null;
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.displaywindowWidth = null;
 };
 
 

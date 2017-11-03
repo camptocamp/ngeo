@@ -72,6 +72,15 @@
         ngeo-mobile-geolocation-options="::mainCtrl.mobileGeolocationOptions">
         <span class="fa fa-dot-circle-o"></span>
       </button>
+      <gmf-displaywindow
+        content="mainCtrl.displaywindowContent"
+        desktop="false"
+        height="mainCtrl.displaywindowHeight"
+        open="mainCtrl.displaywindowOpen"
+        title="mainCtrl.displaywindowTitle"
+        url="mainCtrl.displaywindowUrl"
+        width="mainCtrl.displaywindowWidth"
+      ></gmf-displaywindow>
       <div class="gmf-app-map-messages">
         <gmf-disclaimer gmf-disclaimer-map="::mainCtrl.map"></gmf-disclaimer>
         <div class="alert alert-info alert-dismissible fade in hidden-xs" role="alert">
