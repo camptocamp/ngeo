@@ -479,8 +479,8 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * Static function to create a popup with an iframe.
    * @param {string} url an url.
    * @param {string} title (text).
-   * @param {string=} opt_width CSS width.
-   * @param {string=} opt_height CSS height.
+   * @param {number=} opt_width CSS width.
+   * @param {number=} opt_height CSS height.
    * @export
    */
   gmfx.openIframePopup = (
