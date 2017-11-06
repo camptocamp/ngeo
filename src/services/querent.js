@@ -306,17 +306,17 @@ ngeo.Querent = class {
     let types;
     if (wfs) {
       if (opt_types) {
-        dataSource.wfsFormat['featureType_'] = opt_types;
+        dataSource.wfsFormat.setFeatureType(opt_types);
       }
-      types = dataSource.wfsFormat['featureType_'];
+      types = dataSource.wfsFormat.getFeatureType();
     } else {
       if (opt_types) {
-        dataSource.wmsFormat['layers_'] = opt_types;
+        dataSource.wmsFormat.setLayers(opt_types);
       }
-      types = dataSource.wmsFormat['layers_'];
+      types = dataSource.wmsFormat.getLayers();
     }
     if (!types) {
-      return null;
+      return [];
     }
     return (Array.isArray(types)) ? types : [types];
   }
