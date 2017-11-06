@@ -114,7 +114,7 @@ ngeo.interaction.Translate.prototype.setActive = function(active) {
  * Remove the interaction from its current map and attach it to the new map.
  * Subclasses may set up event handlers to get notified about changes to
  * the map here.
- * @param {ol.Map} map Map.
+ * @param {ol.PluggableMap} map Map.
  * @override
  */
 ngeo.interaction.Translate.prototype.setMap = function(map) {
