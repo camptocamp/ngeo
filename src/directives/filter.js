@@ -393,15 +393,15 @@ ngeo.FilterController.Condition;
 
 ngeo.module.component('ngeoFilter', {
   bindings: {
-    aRuleIsActive: '=',
-    customRules: '<',
+    'aRuleIsActive': '=',
+    'customRules': '<',
     // It's 'datasource' instead of 'dataSource', because that would require
     // the attribute to be 'data-source', and Angular strips the 'data-'.
-    datasource: '<',
-    directedRules: '<',
-    featureOverlay: '<',
-    map: '<',
-    toolGroup: '<'
+    'datasource': '<',
+    'directedRules': '<',
+    'featureOverlay': '<',
+    'map': '<',
+    'toolGroup': '<'
   },
   controller: ngeo.FilterController,
   controllerAs: 'filterCtrl',
