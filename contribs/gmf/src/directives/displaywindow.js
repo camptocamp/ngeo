@@ -169,11 +169,13 @@ gmf.DisplaywindowController = class {
   }
 
   /**
-   * @return {string} Trusted url.
+   * @return {string|undefined} Trusted url.
    * @export
    */
   get urlTrusted() {
-    return this.sce_.trustAsResourceUrl(this.url);
+    if (this.url !== null) {
+      return /** @type {string} */ (this.sce_.trustAsResourceUrl(this.url));
+    }
   }
 
   /**
