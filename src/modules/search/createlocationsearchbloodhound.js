@@ -71,8 +71,8 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
         return (options.prepare !== undefined) ?
           options.prepare(query, settings) : settings;
       },
-      transform(/** @type{geoAdminx.SearchLocationResponse} */ parsedResponse) {
-        const features = parsedResponse.results.map((/** @type{geoAdminx.SearchLocationResult} */ result) => {
+      transform(/** @type {geoAdminx.SearchLocationResponse} */ parsedResponse) {
+        const features = parsedResponse.results.map((/** @type {geoAdminx.SearchLocationResult} */ result) => {
           const attrs = result.attrs;
 
           // note that x and y are switched!
