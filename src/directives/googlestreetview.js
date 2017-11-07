@@ -361,10 +361,10 @@ ngeo.GooglestreetviewController = class {
 
 ngeo.module.component('ngeoGooglestreetview', {
   bindings: {
-    active: '<',
-    featureStyle: '<?',
-    map: '<',
-    radius: '<?'
+    'active': '<',
+    'featureStyle': '<?',
+    'map': '<',
+    'radius': '<?'
   },
   controller: ngeo.GooglestreetviewController,
   controllerAs: 'gsvCtrl',
