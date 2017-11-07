@@ -3,8 +3,6 @@ goog.provide('gmf.Permalink');
 goog.require('gmf');
 goog.require('ngeo');
 goog.require('ngeo.AutoProjection');
-/** @suppress {extraRequire} */
-goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
