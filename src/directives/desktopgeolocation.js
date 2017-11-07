@@ -1,7 +1,6 @@
 goog.provide('ngeo.desktopGeolocationDirective');
 
 goog.require('ngeo');
-goog.require('ngeo.DecorateGeolocation');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.Notification');
@@ -64,8 +63,6 @@ ngeo.module.directive('ngeoDesktopGeolocation',
  * @struct
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
- * @param {ngeo.DecorateGeolocation} ngeoDecorateGeolocation Decorate
- *     Geolocation service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
@@ -74,7 +71,7 @@ ngeo.module.directive('ngeoDesktopGeolocation',
  * @ngname NgeoDesktopGeolocationController
  */
 ngeo.DesktopGeolocationController = function($scope, $element,
-  ngeoDecorateGeolocation, ngeoFeatureOverlayMgr, ngeoNotification) {
+  ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggle.bind(this));
 
@@ -172,7 +169,6 @@ ngeo.DesktopGeolocationController = function($scope, $element,
     },
     this);
 
-  ngeoDecorateGeolocation(this.geolocation_);
 };
 
 
