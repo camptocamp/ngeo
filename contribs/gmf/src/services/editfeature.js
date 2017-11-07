@@ -12,11 +12,11 @@ goog.require('ol.format.GeoJSON');
  *
  * @constructor
  * @struct
+ * @param {angular.$injector} $injector Main injector.
  * @param {angular.$http} $http Angular http service.
- * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject
  */
-gmf.EditFeature = function($http, gmfLayersUrl) {
+gmf.EditFeature = function($injector, $http) {
 
   /**
    * @type {angular.$http}
@@ -32,7 +32,8 @@ gmf.EditFeature = function($http, gmfLayersUrl) {
    * @type {string}
    * @private
    */
-  this.baseUrl_ = gmfLayersUrl;
+  this.baseUrl_ = $injector.has('gmfLayersUrl') ?
+    $injector.get('gmfLayersUrl') : '';
 
 };
 
