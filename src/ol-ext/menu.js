@@ -138,7 +138,7 @@ ol.inherits(ngeo.Menu, ol.Overlay);
 
 
 /**
- * @param {ol.Map|undefined} map Map.
+ * @param {ol.PluggableMap|undefined} map Map.
  * @export
  * @override
  */

@@ -10,7 +10,6 @@ goog.require('ngeo.rule.Select');
 goog.require('ngeo.rule.Text');
 goog.require('ol.format.WFS');
 goog.require('ol.format.filter');
-goog.require('ol.format.filter.Spatial');
 
 
 ngeo.RuleHelper = class {
@@ -570,8 +569,7 @@ ngeo.RuleHelper = class {
       goog.asserts.assertInstanceof(rule, ngeo.rule.Geometry);
       const geometry = goog.asserts.assert(rule.geometry);
       if (operator === rsot.CONTAINS) {
-        filter = new ol.format.filter.Spatial(
-          'Contains',
+        filter = ol.format.filter.contains(
           geometryName,
           geometry,
           opt_srsName

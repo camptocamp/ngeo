@@ -28,7 +28,7 @@
       <h3>{{ ::feature.get('display_name') }}</h3>
       <div ng-repeat="(key, value) in ::feature.getProperties()"
            ng-init="value = value !== undefined ? value : ''">
-        <span ng-if="::(key !== 'THE_GEOM' && key !== 'POINT')">
+        <span ng-if="::(key !== feature.getGeometryName() && key !== 'ngeo_feature_type_')">
           <span ng-bind="::key"></span>:
           <span ng-bind="::value"></span>
         </span>

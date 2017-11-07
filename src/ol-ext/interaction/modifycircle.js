@@ -418,7 +418,7 @@ ngeo.interaction.ModifyCircle.prototype.handlePointerMove_ = function(evt) {
 
 /**
  * @param {ol.Pixel} pixel Pixel
- * @param {ol.Map} map Map.
+ * @param {ol.PluggableMap} map Map.
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.handlePointerAtPixel_ = function(pixel, map) {

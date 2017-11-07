@@ -163,7 +163,6 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @param {string} gmfPrintUrl A MapFishPrint url.
  * @param {gmf.Authentication} gmfAuthentication The authentication service.
  * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper the ngeo FeatureHelper service.
  * @param {angular.$filter} $filter Angular $filter service.
  * @param {gmf.PrintStateEnum} gmfPrintState GMF print state.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
@@ -176,7 +175,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
 gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils,
   ngeoCreatePrint, gmfPrintUrl, gmfAuthentication, ngeoQueryResult,
-  ngeoFeatureHelper, $filter, gmfPrintState, gmfThemes) {
+  $filter, gmfPrintState, gmfThemes) {
 
   /**
    * @type {gmf.PrintStateEnum}
@@ -189,12 +188,6 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
    * @private
    */
   this.translate_ = $filter('translate');
-
-  /**
-   * @type {ngeo.FeatureHelper}
-   * @private
-   */
-  this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
    * @type {boolean}
@@ -873,7 +866,7 @@ gmf.PrintController.prototype.getDataSource_ = function() {
     columns = [];
     source.features.forEach(function(feature, i) {
       goog.asserts.assert(feature);
-      const properties = this.ngeoFeatureHelper_.getFilteredFeatureValues(feature);
+      const properties = ngeo.FeatureHelper.getFilteredFeatureValues(feature);
       if (i === 0) {
         columns = Object.keys(properties).map(function tanslateColumns(prop) {
           return this.translate_(prop);

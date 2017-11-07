@@ -987,7 +987,7 @@ ngeox.QueryResultSource.prototype.features;
 
 
 /**
- * Identifier.
+ * Identifier (can be not unique).
  * @type {number|string}
  */
 ngeox.QueryResultSource.prototype.id;

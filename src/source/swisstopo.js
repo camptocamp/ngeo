@@ -3,18 +3,10 @@ goog.module.declareLegacyNamespace();
 
 goog.require('goog.asserts');
 
-goog.require('ol.Attribution');
 goog.require('ol');
 goog.require('ol.source.WMTS');
 goog.require('ol.tilegrid.WMTS');
 
-
-/**
- * @const {ol.Attribution}
- */
-const ATTRIBUTION = new ol.Attribution({
-  html: '&copy; <a href="http://www.swisstopo.admin.ch">swisstopo</a>'
-});
 
 /**
  * Available resolutions as defined in
@@ -102,7 +94,7 @@ exports = function(options) {
   goog.asserts.assert(extension);
 
   ol.source.WMTS.call(this, {
-    attributions: [ATTRIBUTION],
+    attributions: '&copy; <a href="http://www.swisstopo.admin.ch">swisstopo</a>',
     url: swisstopoCreateUrl(projection, extension),
     dimensions: {
       'Time': options.timestamp

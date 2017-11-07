@@ -114,7 +114,7 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
    * @export
    */
   this.gridMergeTabs = {
-    'OSM time merged': ['110', '126', '147']
+    'OSM time merged': ['osm_time', 'osm_time2']
   };
 
   // Allow angular-gettext-tools to collect the strings to translate

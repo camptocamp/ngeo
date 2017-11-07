@@ -6,7 +6,6 @@ goog.require('ngeo.mapDirective');
 goog.require('ngeo.profileDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Attribution');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -49,12 +48,9 @@ app.MainController = function($http, $scope) {
         source: new ol.source.ImageWMS({
           url: 'http://wms.geo.admin.ch/',
           crossOrigin: 'anonymous',
-          attributions: [new ol.Attribution({
-            html: '&copy; ' +
-                '<a href="http://www.geo.admin.ch/internet/geoportal/' +
-                'en/home.html">' +
-                'Pixelmap 1:500000 / geo.admin.ch</a>'
-          })],
+          attributions: '&copy; ' +
+            '<a href="http://www.geo.admin.ch/internet/geoportal/' +
+            'en/home.html">Pixelmap 1:500000 / geo.admin.ch</a>',
           params: {
             'LAYERS': 'ch.swisstopo.pixelkarte-farbe-pk1000.noscale',
             'FORMAT': 'image/jpeg'
