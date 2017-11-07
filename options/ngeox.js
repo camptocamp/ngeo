@@ -1460,13 +1460,6 @@ ngeox.datasource.OGCLayer.prototype.queryable;
 
 /**
  * Namespace.
- * @type {Object}
- */
-ngeox.interaction;
-
-
-/**
- * Namespace.
  * @const
  */
 ngeox.interaction = {};
