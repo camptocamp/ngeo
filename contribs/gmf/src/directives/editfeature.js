@@ -413,10 +413,22 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.geomType;
 
   /**
-   * @type{boolean}
+   * @type {boolean}
    * @export
    */
   this.showServerError = false;
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.serverErrorMessage = null;
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.serverErrorType = null;
 };
 
 
@@ -583,9 +595,11 @@ gmf.EditfeatureController.prototype.save = function() {
       this.pending = false;
       this.handleEditFeature_(response);
     },
-    () => {
+    (response) => {
       this.showServerError = true;
       this.pending = false;
+      this.serverErrorType =  `error type : ${response.data['error_type']}`;
+      this.serverErrorMessage = `error message : ${response.data['message']}`;
     }
   );
 };
@@ -674,9 +688,11 @@ gmf.EditfeatureController.prototype.delete = function() {
         // (2) Reset selected feature
         this.cancel();
       },
-      () => {
+      (response) => {
         this.showServerError = true;
         this.pending = false;
+        this.serverErrorType =  `error type : ${response.data['error_type']}`;
+        this.serverErrorMessage = `error message : ${response.data['message']}`;
       }
     );
 
