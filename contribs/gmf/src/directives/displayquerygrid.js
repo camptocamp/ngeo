@@ -307,7 +307,7 @@ gmf.DisplayquerygridController.prototype.$onInit = function() {
  * @return {Array.<gmfx.GridSource>} Grid sources.
  */
 gmf.DisplayquerygridController.prototype.getGridSources = function() {
-  return this.loadedGridSources.map(sourceId => this.gridSources[sourceId]);
+  return this.loadedGridSources.map(sourceLabel => this.gridSources[sourceLabel]);
 };
 
 
@@ -381,7 +381,7 @@ gmf.DisplayquerygridController.prototype.hasOneWithTooManyResults_ = function() 
  * @return {boolean} Is selected?
  */
 gmf.DisplayquerygridController.prototype.isSelected = function(gridSource) {
-  return this.selectedTab === gridSource.source.id;
+  return this.selectedTab === gridSource.source.label;
 };
 
 
@@ -428,8 +428,8 @@ gmf.DisplayquerygridController.prototype.getMergedSource_ = function(source, mer
   let mergeSourceId = null;
 
   for (const currentMergeSourceId in this.mergeTabs_) {
-    const sourceIds = this.mergeTabs_[currentMergeSourceId];
-    const containsSource = sourceIds.some(sourceId => sourceId == source.id);
+    const sourceLabels = this.mergeTabs_[currentMergeSourceId];
+    const containsSource = sourceLabels.some(sourceLabel => sourceLabel == source.label);
     if (containsSource) {
       mergeSourceId = currentMergeSourceId;
       break;
@@ -510,7 +510,7 @@ gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
   if (allProperties.length > 0) {
     const gridCreated = this.makeGrid_(allProperties, source);
     if (gridCreated) {
-      this.featuresForSources_[`${source.id}`] = featuresForSource;
+      this.featuresForSources_[`${source.label}`] = featuresForSource;
     }
   }
 };
@@ -529,6 +529,7 @@ gmf.DisplayquerygridController.prototype.cleanProperties_ = function(
       delete properties[featureGeometryName];
     });
     delete properties['boundedBy'];
+    delete properties['ngeo_feature_type_'];
   });
 
   if (this.removeEmptyColumns_ === true) {
@@ -579,7 +580,7 @@ gmf.DisplayquerygridController.prototype.removeEmptyColumnsFn_ = function(
  * @private
  */
 gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
-  const sourceId = `${source.id}`;
+  const sourceLabel = `${source.label}`;
   let gridConfig = null;
   if (data !== null) {
     gridConfig = this.getGridConfiguration_(data);
@@ -587,10 +588,10 @@ gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
       return false;
     }
   }
-  if (this.loadedGridSources.indexOf(sourceId) == -1) {
-    this.loadedGridSources.push(sourceId);
+  if (this.loadedGridSources.indexOf(sourceLabel) == -1) {
+    this.loadedGridSources.push(sourceLabel);
   }
-  this.gridSources[sourceId] = {
+  this.gridSources[sourceLabel] = {
     configuration: gridConfig,
     source
   };
@@ -656,7 +657,7 @@ gmf.DisplayquerygridController.prototype.clear = function() {
  */
 gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
   const source = gridSource.source;
-  this.selectedTab = source.id;
+  this.selectedTab = source.label;
 
   if (this.unregisterSelectWatcher_) {
     this.unregisterSelectWatcher_();
@@ -680,15 +681,15 @@ gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
 
 /**
  * @private
- * @param {string|number} sourceId Id of the source that should be refreshed.
+ * @param {string|number} sourceLabel Id of the source that should be refreshed.
  */
-gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceId) {
+gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceLabel) {
   // this is a "work-around" to make sure that the grid is rendered correctly.
   // when a pane is activated by setting `this.selectedTab`, the class `active`
   // is not yet set on the pane. that's why the class is set manually, and
   // after the pane is shown (in the next digest loop), the grid table can
   // be refreshed.
-  const activePane = this.$element_.find(`div.tab-pane#${sourceId}`);
+  const activePane = this.$element_.find(`div.tab-pane#${sourceLabel}`);
   activePane.removeClass('active').addClass('active');
   this.$timeout_(() => {
     activePane.find('div.ngeo-grid-table-container table')['trigger']('reflow');
@@ -722,8 +723,8 @@ gmf.DisplayquerygridController.prototype.updateFeatures_ = function(gridSource) 
     return;
   }
 
-  const sourceId = `${gridSource.source.id}`;
-  const featuresForSource = this.featuresForSources_[sourceId];
+  const sourceLabel = `${gridSource.source.label}`;
+  const featuresForSource = this.featuresForSources_[sourceLabel];
   const selectedRows = gridSource.configuration.selectedRows;
 
   for (const rowId in featuresForSource) {
