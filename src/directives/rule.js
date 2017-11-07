@@ -920,10 +920,10 @@ ngeo.RuleController.MenuActionType = {
  */
 ngeo.module.component('ngeoRule', {
   bindings: {
-    featureOverlay: '<',
-    map: '<',
-    rule: '<',
-    toolGroup: '<'
+    'featureOverlay': '<',
+    'map': '<',
+    'rule': '<',
+    'toolGroup': '<'
   },
   controller: ngeo.RuleController,
   controllerAs: 'ruleCtrl',
