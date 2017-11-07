@@ -2,6 +2,19 @@ goog.provide('ngeo.routingFeatureComponent');
 
 goog.require('ngeo');
 goog.require('ol.proj');
+goog.require('ol.Map');
+goog.require('ol.Feature');
+goog.require('ol.Collection');
+goog.require('ol.source.Vector');
+goog.require('ol.layer.Vector');
+goog.require('ol.style.Style');
+goog.require('ol.style.Text');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Stroke');
+goog.require('ol.geom.Point');
+goog.require('ol.geom.GeometryType');
+goog.require('ol.interaction.Modify');
+goog.require('ol.interaction.Draw');
 
 ngeo.module.value('ngeoRoutingFeatureTemplateUrl',
   /**
