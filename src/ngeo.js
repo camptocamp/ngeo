@@ -1,3 +1,13 @@
+/*
+ * FIXME: a file needing splitting into:
+ * - a "virtual" angular module root used to automatically register finely included ngeo dependencies;
+ * - a JS namespace for constants and types;
+ * - a list of requires (for olx, ol3) to please GCC (using hide_warnings_for GCC parameter might help here);
+ * - a GCC entry point with requires on all parts of ngeo to produce the dist/ngeo.js file (badly broken).
+ *
+ * Also consider renaming the file, see https://github.com/google/closure-compiler/issues/2665.
+ */
+
 /**
  * @module ngeo
  */
@@ -27,14 +37,11 @@ goog.require('ol.Map');
 goog.require('ol.source.Vector');
 
 
-goog.require('ngeo.search.searchModule');
-goog.require('ngeo.import.importModule');
-
 /** @type {!angular.Module} */
 ngeo.module = angular.module('ngeo', [
-  ngeo.search.searchModule.module.name,
-  ngeo.import.importModule.module.name,
   'gettext', 'ui.date', 'floatThead'
+  // src/modules/* were added for producing the dist/ngeo.js file, which is badly broken.
+  // removing them as they conflict with the "virtual" angular module root "vocation" of this file.
 ]);
 
 

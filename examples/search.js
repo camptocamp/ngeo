@@ -14,9 +14,14 @@ goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 goog.require('goog.asserts');
 
+goog.require('ngeo.search.searchModule');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [ngeo.module.name]);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.search.searchModule.module.name
+]);
 
 
 /**
