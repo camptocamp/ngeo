@@ -85,10 +85,6 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Street View'|translate}}">
               <span class="fa fa-street-view"></span>
             </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.routingfeatureActive"
-                    data-toggle="tooltip" data-placement="left" data-original-title="{{'Routing'|translate}}">
-              <span class="fa fa-map-signs"></span>
-            </button>
           </div>
           <br/>
           <br/>
@@ -203,18 +199,6 @@
                   feature-style="mainCtrl.googleStreetViewStyle"
                   map="mainCtrl.map">
               </ngeo-googlestreetview>
-            </div>
-          </div>
-          <div ng-show="mainCtrl.routingfeatureActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Routing'|translate}}
-                <a class="btn close" ng-click="mainCtrl.routingfeatureActive = false">&times;</a>
-              </div>
-              <ngeo-routing
-                  ngeo-routing-active="mainCtrl.routingfeatureActive"
-                  ngeo-routing-map="mainCtrl.map">
-              </ngeo-routing>
             </div>
           </div>
         </div>
@@ -367,19 +351,6 @@
         module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
         module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
         module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/short/create');
-        module.constant('ngeoRoutingOptions', {
-          'backendUrl': 'http://routing.osm.ch/',
-          'profiles': [
-            {label : 'Car', profile: 'routed-car'},
-            {label : 'Bike (City)', profile: 'routed-bike'},
-            {label : 'Bike (Touring)', profile: 'routed-bike-touring'},
-            {label : 'Foot', profile: 'routed-foot'},
-            {label : 'Hiking', profile: 'routed-hiking'}
-          ],
-          'searchDefaultParams' : {
-            'countrycodes': 'CH'
-          }
-        });
         module.constant('gmfSearchGroups', ['osm','district']);
         // Requires that the gmfSearchGroups is specified
         module.constant('gmfSearchActions', [
