@@ -16,7 +16,6 @@ goog.require('ol.DeviceOrientation');
 
 /**
  * @enum {string}
- * @export
  */
 ngeo.MobileGeolocationEventType = {
   /**

@@ -14,7 +14,6 @@ goog.require('ol.geom.Point');
 
 /**
  * @enum {string}
- * @export
  */
 ngeo.DesktopGeolocationEventType = {
   /**
