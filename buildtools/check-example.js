@@ -36,8 +36,12 @@ page.onAlert = function(msg) {
   exitCode = 2;
 };
 page.onResourceError = function(resourceError) {
-  console.log('Resource error: ' + resourceError.errorCode + ', ' + resourceError.url);
-  exitCode = 2;
+  if (resourceError.url.includes('tile.openstreetmap.org')) {
+    console.warn('Ignoring ressource error from openstreetmap');
+  } else {
+    console.log('Resource error: ' + resourceError.errorCode + ', ' + resourceError.url);
+    exitCode = 2;
+  }
 };
 page.onUrlChanged = function(url) {
   console.log('URL changed: ' + url);
