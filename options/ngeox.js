@@ -6,9 +6,9 @@
 
 /**
  * @private
- * @type {Object}
+ * @const
  */
-let ngeox;
+let ngeox = {};
 
 
 /**
@@ -576,7 +576,7 @@ ngeox.QueryResultSource.prototype.features;
 
 
 /**
- * Identifier.
+ * Identifier (can be not unique).
  * @type {number|string}
  */
 ngeox.QueryResultSource.prototype.id;
@@ -1466,6 +1466,13 @@ ngeox.interaction;
 
 
 /**
+ * Namespace.
+ * @const
+ */
+ngeox.interaction = {};
+
+
+/**
  * DrawRegularPolygonFromClick Interaction.
  * @typedef {{
  *     angle: (number|undefined),
@@ -1548,9 +1555,9 @@ ngeox.interaction.MobileDrawOptions.prototype.wrapX;
 
 /**
  * Namespace.
- * @type {Object}
+ * @const
  */
-ngeox.format;
+ngeox.format = {};
 
 
 /**
@@ -1600,12 +1607,6 @@ ngeox.format.FeatureHashOptions.prototype.properties;
  */
 ngeox.format.FeatureHashOptions.prototype.setStyle;
 
-
-/**
- * Namespace.
- * @type {Object}
- */
-ngeox.interaction;
 
 /**
  * Interactions for measure tools.
@@ -1685,9 +1686,9 @@ ngeox.interaction.TranslateOptions.prototype.style;
 
 /**
  * Namespace.
- * @type {Object}
+ * @const
  */
-ngeox.profile;
+ngeox.profile = {};
 
 
 /**
@@ -2190,9 +2191,9 @@ ngeox.dmsCoordinates;
 
 /**
  * Namespace.
- * @type {Object}
+ * @const
  */
-ngeox.rule;
+ngeox.rule = {};
 
 
 /**
@@ -2396,9 +2397,9 @@ ngeox.rule.RuleRangeValue.prototype.upperBoundary;
 
 /**
  * Namespace.
- * @type {Object}
+ * @const
  */
-ngeox.style;
+ngeox.style = {};
 
 
 /**
@@ -2428,6 +2429,12 @@ ngeox.GridColumnDef;
  * @type {String}
  */
 ngeox.GridColumnDef.prototype.name;
+
+
+/**
+ * @const
+ */
+ngeox.source = {}
 
 
 /**
@@ -2485,9 +2492,9 @@ ngeox.source.SwisstopoOptions.prototype.timestamp;
 
 /**
  * Namespace.
- * @type {Object}
+ * @const
  */
-ngeox.search;
+ngeox.search = {};
 
 
 /**

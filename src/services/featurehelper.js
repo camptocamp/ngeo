@@ -603,14 +603,16 @@ ngeo.FeatureHelper.prototype.getHaloStyle_ = function(feature) {
 /**
  * Delete the unwanted ol3 properties from the current feature then return the
  * properties.
+ * Delete also the 'ngeo_feature_type_' from the ngeo query system.
  * @param {!ol.Feature} feature Feature.
  * @return {!Object.<string, *>} Filtered properties of the current feature.
  * @export
  */
-ngeo.FeatureHelper.prototype.getFilteredFeatureValues = function(feature) {
+ngeo.FeatureHelper.getFilteredFeatureValues = function(feature) {
   const properties = feature.getProperties();
   delete properties['boundedBy'];
   delete properties[feature.getGeometryName()];
+  delete properties['ngeo_feature_type_'];
   return properties;
 };
 

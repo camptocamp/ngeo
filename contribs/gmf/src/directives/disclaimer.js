@@ -77,6 +77,7 @@ gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!angular.$sce} $sce Angular sce service.
+ * @param {!angular.$timeout} $timeout Angular timeout service.
  * @param {!ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {!ngeo.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
@@ -86,8 +87,8 @@ gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
  * @ngdoc controller
  * @ngname GmfDisclaimerController
  */
-gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
-  ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
+gmf.DisclaimerController = function($element, $scope, $sce, $timeout,
+  ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
 
   /**
    * @type {?ol.Map}
@@ -128,10 +129,16 @@ gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
   this.msgs_ = [];
 
   /**
-   * @private
    * @type {!angular.$sce}
+   * @private
    */
   this.sce_ = $sce;
+
+  /**
+   * @type {!angular.$timeout}
+   * @private
+   */
+  this.timeout_ = $timeout;
 
   /**
    * @type {!angular.JQLite}
@@ -140,8 +147,8 @@ gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
   this.element_ = $element;
 
   /**
-   * @private
    * @type {!ngeo.CreatePopup}
+   * @private
    */
   this.createPopup_ = ngeoCreatePopup;
 
@@ -177,9 +184,7 @@ gmf.DisclaimerController = function($element, $scope, $sce, ngeoCreatePopup,
 gmf.DisclaimerController.prototype.$onInit = function() {
   this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map,
     gmf.DATALAYERGROUP_NAME);
-
   this.registerLayer_(this.dataLayerGroup_);
-
 };
 
 /**
@@ -187,9 +192,11 @@ gmf.DisclaimerController.prototype.$onInit = function() {
  * @private
  */
 gmf.DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
-  const layer = evt.element;
-  goog.asserts.assertInstanceof(layer, ol.layer.Base);
-  this.registerLayer_(layer);
+  this.timeout_(() => {
+    const layer = evt.element;
+    goog.asserts.assertInstanceof(layer, ol.layer.Base);
+    this.registerLayer_(layer);
+  });
 };
 
 

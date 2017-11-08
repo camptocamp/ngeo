@@ -276,10 +276,11 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce,
     $injector.get('ngeoWfsPermalink') : null;
 
   /**
-   * @type {gmfx.User}
+   * @type {?gmfx.User}
    * @export
    */
-  this.gmfUser_ = $injector.get('gmfUser');
+  this.gmfUser_ = $injector.has('gmfUser') ?
+    $injector.get('gmfUser') : null;
 
   /**
    * @type {?ol.Map}
@@ -984,6 +985,9 @@ gmf.Permalink.prototype.defaultThemeName = function() {
  */
 gmf.Permalink.prototype.defaultThemeNameFromFunctionalities = function() {
   //check if we have a theme in the user functionalities
+  if (!this.gmfUser_) {
+    return null;
+  }
   const functionalities = this.gmfUser_.functionalities;
   if (functionalities && 'default_theme' in functionalities) {
     const defaultTheme = functionalities.default_theme;
