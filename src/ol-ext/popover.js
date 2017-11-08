@@ -58,8 +58,6 @@ ol.inherits(ngeo.Popover, ol.Overlay);
 
 
 /**
- * @param {ol.PluggableMap|undefined} map Map.
- * @export
  * @override
  */
 ngeo.Popover.prototype.setMap = function(map) {
