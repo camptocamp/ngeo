@@ -409,7 +409,7 @@ ngeo.LayerHelper.prototype.refreshWMSLayer = function(layer) {
     source_ instanceof ol.source.ImageWMS ||
     source_ instanceof ol.source.TileWMS
   );
-  const source = /** @type{ol.source.ImageWMS|ol.source.TileWMS} */ (source_);
+  const source = /** @type {ol.source.ImageWMS|ol.source.TileWMS} */ (source_);
   const params = source.getParams();
   params[ngeo.LayerHelper.REFRESH_PARAM] = Math.random();
   source.updateParams(params);

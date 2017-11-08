@@ -539,7 +539,7 @@ ngeo.Querent = class {
       let countPromise;
       if (wfsCount) {
         const getCountOptions =
-            /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
+            /** @type {olx.format.WFSWriteGetFeatureOptions} */ (
             ol.obj.assign(
               {
                 resultType: 'hits'
@@ -575,7 +575,7 @@ ngeo.Querent = class {
         if (numberOfFeatures === undefined || numberOfFeatures < maxFeatures) {
 
           const getFeatureOptions =
-              /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
+              /** @type {olx.format.WFSWriteGetFeatureOptions} */ (
               ol.obj.assign(
                 {
                   maxFeatures

@@ -1,7 +1,6 @@
 goog.provide('ngeo.mobileGeolocationDirective');
 
 goog.require('ngeo');
-goog.require('ngeo.DecorateGeolocation');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.Notification');
@@ -16,7 +15,6 @@ goog.require('ol.DeviceOrientation');
 
 /**
  * @enum {string}
- * @export
  */
 ngeo.MobileGeolocationEventType = {
   /**
@@ -66,8 +64,6 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
- * @param {ngeo.DecorateGeolocation} ngeoDecorateGeolocation Decorate
- *     Geolocation service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
@@ -76,8 +72,7 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
  * @ngname NgeoMobileGeolocationController
  */
 ngeo.MobileGeolocationController = function($scope, $element,
-  gettextCatalog, ngeoDecorateGeolocation, ngeoFeatureOverlayMgr,
-  ngeoNotification) {
+  gettextCatalog, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggleTracking.bind(this));
 
@@ -230,7 +225,6 @@ ngeo.MobileGeolocationController = function($scope, $element,
     this.handleViewChange_,
     this);
 
-  ngeoDecorateGeolocation(this.geolocation_);
 };
 
 
