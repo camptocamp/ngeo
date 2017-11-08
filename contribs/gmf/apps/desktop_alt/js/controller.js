@@ -30,9 +30,17 @@ gmf.module.value('ngeoQueryOptions', {
 });
 
 gmf.module.value('gmfExternalOGCServers', [{
-  'name': 'Swiss Topo',
+  'name': 'Swiss Topo WMS',
   'type': 'WMS',
   'url': 'http://wms.geo.admin.ch/?lang=fr'
+}, {
+  'name': 'ASIT VD',
+  'type': 'WMTS',
+  'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml'
+}, {
+  'name': 'Swiss Topo WMTS',
+  'type': 'WMTS',
+  'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
 }]);
 
 gmf.module.value('gmfPrintOptions', {
