@@ -409,7 +409,7 @@ ngeo.Querent = class {
    * Read and assign the type of the feature to each feature in the data.
    * The type will be stocked in the properties of the features as
    * "ngeo_feature_type_".
-   * @param {ngeo.DataSource} dataSource used to read the features.
+   * @param {ngeo.datasource.OGC} dataSource used to read the features.
    * @param {Document | Node | Object | string} data the response data.
    * @param {boolean} wfs Whether the query was WFS or WMS.
    * @return {Array.<ol.Feature>} returned features with a type in each features.
@@ -444,7 +444,7 @@ ngeo.Querent = class {
   /**
    * Return the types defined in the format of the datasource. Can set the
    * types if one is given.
-   * @param {ngeo.DataSource} dataSource that contains the format object.
+   * @param {ngeo.datasource.OGC} dataSource that contains the format object.
    * @param {boolean} wfs Whether the query was WFS or WMS.
    * @param {Array.<string>=} opt_types An array of type if you want to set the
    *     type of the format object.
