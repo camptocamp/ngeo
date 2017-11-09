@@ -76,7 +76,9 @@
         <gmf-disclaimer gmf-disclaimer-map="::mainCtrl.map"></gmf-disclaimer>
         <div class="alert alert-info alert-dismissible fade in hidden-xs" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="{{'Close' | translate }}"><span aria-hidden="true" class="fa fa-times"></span></button>
-          <span>{{"You're using the mobile application. Check out the" | translate }} <a href="http://camptocamp.github.io/ngeo/master/examples/contribs/gmf/apps/desktop/?no_redirect">{{'standard application' | translate}}</a>.</span>
+          <span translate
+            translate-params-url="'http://camptocamp.github.io/ngeo/master/examples/contribs/gmf/apps/desktop/?no_redirect'">
+            You're using the mobile application. Check out the <a href="{{url}}">standard application</a>.</span>
         </div>
       </div>
     </main>
