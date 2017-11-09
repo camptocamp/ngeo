@@ -358,7 +358,10 @@ ngeo.MobileGeolocationController.prototype.headingUpdate = function() {
   }
 };
 
-// Orientation control events
+/**
+ * Orientation control events
+ * @suppress {deprecated}
+ */
 ngeo.MobileGeolocationController.prototype.autorotateListener = function() {
   this.deviceOrientation = new ol.DeviceOrientation();
 
