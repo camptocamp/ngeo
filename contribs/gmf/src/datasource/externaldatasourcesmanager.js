@@ -107,25 +107,6 @@ gmf.datasource.ExternalDataSourcesManager = class {
     this.map_ = null;
 
     /**
-     * @type {!Object.<string, !gmfx.ExternalOGCServer>}
-     * @private
-     */
-    this.wmsServers_ = {};
-
-    const servers = $injector.has('gmfExternalOGCServers') ?
-      /** @type {Array.<!gmfx.ExternalOGCServer>|undefined} */ (
-        $injector.get('gmfExternalOGCServers')
-      ) : undefined;
-
-    if (servers) {
-      for (const server of servers) {
-        if (server.type === 'WMS') {
-          this.wmsServers_[server.name] = server;
-        }
-      }
-    }
-
-    /**
      * Group that contains file data sources.
      * @type {!ngeo.datasource.FileGroup}
      * @private

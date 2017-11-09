@@ -19,6 +19,7 @@ gmf.ImportdatasourceController = class {
   /**
    * @param {!angular.JQLite} $element Element.
    * @param {!angular.$filter} $filter Angular filter.
+   * @param {!angular.$injector} $injector Main injector.
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {!gmf.datasource.ExternalDataSourcesManager}
@@ -31,7 +32,7 @@ gmf.ImportdatasourceController = class {
    * @ngdoc controller
    * @ngname GmfImportdatasourceController
    */
-  constructor($element, $filter, $scope, $timeout,
+  constructor($element, $filter, $injector, $scope, $timeout,
     gmfExternalDataSourcesManager, ngeoQuerent) {
 
     // Binding properties
@@ -153,6 +154,56 @@ gmf.ImportdatasourceController = class {
      */
     this.wmtsCapabilities = null;
 
+    /**
+     * @type {Bloodhound|undefined}
+     * @private
+     */
+    this.serversEngine_;
+
+    const servers = $injector.has('gmfExternalOGCServers') ?
+      /** @type {Array.<!gmfx.ExternalOGCServer>|undefined} */ (
+        $injector.get('gmfExternalOGCServers')
+      ) : undefined;
+
+    if (servers) {
+      const serverUrls = servers.map(server => server['url']);
+      this.serversEngine_ = new Bloodhound({
+        /**
+         * Allows search queries to match from string from anywhere within
+         * the url, and not only from the beginning of the string (which is
+         * the default, non-configurable behaviour of bloodhound).
+         *
+         * Borrowed from:
+         * https://stackoverflow.com/questions/22059933/twitter-typeahead-js-how-to-return-all-matched-elements-within-a-string
+         *
+         * @param {BloodhoundDatum} datum Datum.
+         * @return {Array.<string>} List of datum tokenizers.
+         */
+        datumTokenizer: (datum) => {
+          goog.asserts.assertString(datum);
+          const originalDatumTokenizers = Bloodhound.tokenizers.whitespace(
+            datum);
+          goog.asserts.assert(originalDatumTokenizers);
+          const datumTokenizers = [];
+          for (const originalDatumTokenizer of originalDatumTokenizers) {
+            let i = 0;
+            while ((i + 1) < originalDatumTokenizer.length) {
+              datumTokenizers.push(
+                originalDatumTokenizer.substr(
+                  i,
+                  originalDatumTokenizer.length
+                )
+              );
+              i++;
+            }
+          }
+          return datumTokenizers;
+        },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        identify: false,
+        local: serverUrls
+      });
+    }
 
     // Register input[type=file] onchange event, use HTML5 File api
     this.fileInput_.on('change', () => {
@@ -167,6 +218,24 @@ gmf.ImportdatasourceController = class {
    */
   $onInit() {
     this.gmfExternalDataSourcesManager_.map = this.map;
+
+
+    if (this.serversEngine_) {
+      // Timeout to let Angular render the placeholder of the input properly,
+      // otherwise typeahead would copy the string with {{}} in it...
+      this.timeout_(() => {
+        goog.asserts.assert(this.serversEngine_);
+        const $urlInput = this.element_.find('input[name=url]');
+        $urlInput.typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 1
+        }, {
+          name: 'url',
+          source: this.serversEngine_.ttAdapter()
+        });
+      });
+    }
   }
 
   /**
