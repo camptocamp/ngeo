@@ -4,14 +4,14 @@ const Service = class {
   constructor() {
     /**
      * @private
-     * @type {olcs.Manager|undefined}
+     * @type {olcs.contrib.Manager|undefined}
      */
     this.manager_;
   }
 
   /**
    * @export
-   * @param {olcs.Manager} manager Manager.
+   * @param {olcs.contrib.Manager} manager Manager.
    */
   initialize(manager) {
     this.manager_ = manager;
@@ -19,7 +19,7 @@ const Service = class {
 
   /**
    * @export
-   * @return {olcs.Manager|undefined} the manager.
+   * @return {olcs.contrib.Manager|undefined} the manager.
    */
   getManager() {
     return this.manager_;

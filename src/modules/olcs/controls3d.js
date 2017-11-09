@@ -28,9 +28,7 @@ const Controller = class {
      * @type {olcs.contrib.Manager}
      * @private
      */
-    this.manager_ = ngeoOlcsService.getManager();
-    goog.asserts.assert(this.manager_);
-
+    this.manager_ = goog.asserts.assert(ngeoOlcsService.getManager());
 
     /**
      * @type {number}
@@ -97,7 +95,7 @@ const Controller = class {
     const newViewMatrix = this.manager_.getCesiumViewMatrix();
     if (!Cesium.Matrix4.equalsEpsilon(this.previousViewMatrix_, newViewMatrix, 1e-5)) {
       const newTilt = this.manager_.getTiltOnGlobe(); // this is expensive!!
-      if (Number.isFinite(newTilt)) {
+      if (Number.isFinite(newTilt || 0)) { // Workaround https://github.com/google/closure-compiler/pull/2712
         this.rotateElement_(this.angle3dEl_, newTilt);
         this.previousViewMatrix_ = Cesium.Matrix4.clone(newViewMatrix);
 
@@ -237,7 +235,7 @@ function ngeoOlcsControls3dTemplateUrl($element, $attrs, ngeoOlcsControls3dTempl
  * See our live example: [../examples/simple3d.html](../examples/simple3d.html)
  *
  * @htmlAttribute {olcs.contrib.Manager} ngeo-olcs-manager The OL-Cesium manager.
- * @type {angular.Component}
+ * @type {!angular.Component}
  * @ngdoc component
  * @ngname ngeoOlcsControls3d
  */
