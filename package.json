@@ -60,6 +60,8 @@
     "moment": "2.18.1",
     "nomnom": "1.8.1",
     "openlayers": "openlayers/openlayers#4a6317d",
+    "ol-cesium": "openlayers/ol-cesium#632423bd",
+    "@camptocamp/cesium": "1.39",
     "phantomjs-prebuilt": "2.1.14",
     "proj4": "2.4.3",
     "svg2ttf": "4.1.0",
