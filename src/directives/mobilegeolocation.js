@@ -124,7 +124,8 @@ ngeo.MobileGeolocationController = function($scope, $element,
   this.deviceOrientation;
 
   if (options.autorotate) {
-    this.autorotateListener();
+    //this.autorotateListener();
+    this.autorotateFn();
   }
 
   // handle geolocation error.
@@ -355,6 +356,54 @@ ngeo.MobileGeolocationController.prototype.headingUpdate = function() {
       duration: 350,
       easing: ol.easing.linear
     });
+  }
+};
+
+ngeo.MobileGeolocationController.prototype.autorotateFn = function() {
+  if (window.DeviceOrientationEvent) {
+
+    let currAlpha = 0;
+    window.addEventListener('deviceorientation', (evt) => {
+      //console.log(evt);
+      const alpha = evt.alpha;
+
+      if (alpha === undefined || alpha === null) {
+        return;
+      }
+
+      if (Math.abs(alpha - currAlpha) > 0.1) {
+        currAlpha = alpha;
+
+        let radAlpha = alpha * Math.PI / 180;
+
+        //alpha = -alpha;
+        const currRotation = this.map_.getView().getRotation();
+        const diff = radAlpha - currRotation;
+        console.log(`radAlpha: ${radAlpha}`);
+        //console.log(`currRotation: ${currRotation}`);
+        //console.log(`diff: ${diff}`);
+
+        console.log(`deg: ${alpha}`);
+        radAlpha *= 2;
+        if (radAlpha >= ol.math.toRadians(360)) {
+          radAlpha -= ol.math.toRadians(360);
+        }
+
+        this.map_.getView().animate({
+          rotation: radAlpha,
+          duration: 350,
+          easing: ol.easing.linear
+        });
+      }
+
+    }, true);
+
+  } else if (window.MozOrientationEvent) {
+    window.addEventListener('MozOrientation', (evt) => {
+      console.log(evt.x * 50);
+    }, true);
+  } else {
+    console.info('Orientation is not supported on this device');
   }
 };
 
