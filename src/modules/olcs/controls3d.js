@@ -196,28 +196,21 @@ const Controller = class {
 };
 
 
-ngeo.module.value('ngeoOlcsControls3dTemplateUrl',
-  /**
-   * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
-   * @return {string} Template URL.
-   */
-  (element, attrs) => {
-    const templateUrl = attrs['ngeoOlcsControls3dTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/olcs/controls3d.html`;
-  });
+ngeo.module.value('ngeoOlcsControls3dTemplateUrl', '');
 
 
 /**
- * @param {!angular.JQLite} $element Element.
  * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} ngeoOlcsControls3dTemplateUrl Template function.
+ * @param {!string} ngeoOlcsControls3dTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
-function ngeoOlcsControls3dTemplateUrl($element, $attrs, ngeoOlcsControls3dTemplateUrl) {
-  return ngeoOlcsControls3dTemplateUrl($element, $attrs);
+function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTemplateUrl) {
+  if (ngeoOlcsControls3dTemplateUrl) {
+    return ngeoOlcsControls3dTemplateUrl;
+  }
+  const templateUrl = $attrs['ngeoOlcsControls3dTemplateUrl'];
+  return templateUrl ? templateUrl : `${ngeo.baseModuleTemplateUrl}/olcs/controls3d.html`;
 }
 
 /**
@@ -241,7 +234,7 @@ function ngeoOlcsControls3dTemplateUrl($element, $attrs, ngeoOlcsControls3dTempl
  */
 const component = {
   controller: Controller,
-  templateUrl: ngeoOlcsControls3dTemplateUrl
+  templateUrl: ngeoOlcsControls3dTemplateUrlInjectable
 };
 
 const name = 'ngeoOlcsControls3d';
