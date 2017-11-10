@@ -1,7 +1,8 @@
 /*eslint valid-jsdoc: 0 */
-beforeEach(() => {
-  module('ngeo');
 
+goog.require('ngeo.search.searchModule');
+
+beforeEach(() => {
   jasmine.addMatchers({
     /**
      * A matcher similar to `expect(...).toBeCloseTo(...)` to check that
