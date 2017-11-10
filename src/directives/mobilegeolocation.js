@@ -129,8 +129,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
   this.deviceOrientation;
 
   if (options.autorotate) {
-    //this.autorotateListener();
-    this.autorotateFn();
+    this.autorotateListener();
   }
 
   // handle geolocation error.
@@ -321,51 +320,8 @@ ngeo.MobileGeolocationController.prototype.handleViewChange_ = function(event) {
   }
 };
 
-function isIOS() {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-    !window['MSStream'];
-}
-
-// Get heading depending on devices
-function headingFromDevices(deviceOrientation) {
-  let hdg = deviceOrientation.getHeading();
-  let orientation = window.orientation;
-  if (hdg === undefined) {
-    return undefined;
-  }
-  if (!isIOS()) {
-    hdg = -hdg;
-    if (window.screen.orientation.angle) {
-      orientation = window.screen.orientation.angle;
-    }
-  }
-  // Normalize to be between -90 and 180
-  orientation =  ((orientation + 179) % 360 - 179);
-  // Add to hdg in radian
-  hdg += orientation * Math.PI / 180;
-  return hdg;
-}
-
-// Update heading
-ngeo.MobileGeolocationController.prototype.headingUpdate = function() {
-  let heading = headingFromDevices(this.deviceOrientation);
-  if (heading !== undefined) {
-    heading = -heading;
-    const currRotation = this.map_.getView().getRotation();
-    const diff = heading - currRotation;
-
-    if (diff > Math.PI) {
-      heading -= 2 * Math.PI;
-    }
-    this.map_.getView().animate({
-      rotation: heading,
-      duration: 350,
-      easing: ol.easing.linear
-    });
-  }
-};
-
-ngeo.MobileGeolocationController.prototype.autorotateFn = function() {
+// Orientation control events
+ngeo.MobileGeolocationController.prototype.autorotateListener = function() {
   if (window.DeviceOrientationEvent) {
 
     let currAlpha = 0;
@@ -376,7 +332,6 @@ ngeo.MobileGeolocationController.prototype.autorotateFn = function() {
         return;
       }
 
-      console.log(Math.abs(alpha - currAlpha));
       if (Math.abs(alpha - currAlpha) > 0.2) {
         currAlpha = alpha;
         const radAlpha = currAlpha * Math.PI / 180;
@@ -398,75 +353,6 @@ ngeo.MobileGeolocationController.prototype.autorotateFn = function() {
     console.error('Orientation is not supported on this device');
   }
 };
-
-// Orientation control events
-ngeo.MobileGeolocationController.prototype.autorotateListener = function() {
-  this.deviceOrientation = new ol.DeviceOrientation();
-
-  let currHeading = 0;
-  const headngUpdateWhenMapRotate = throttle(this.headingUpdate, 300, this);
-
-  this.deviceOrientation.on(['change'], (event) => {
-    const heading = headingFromDevices(this.deviceOrientation);
-    if (heading === undefined) {
-      console.error('Heading is undefined');
-      return;
-    }
-
-    if (Math.abs(heading - currHeading) > 0.05) {
-      currHeading = heading;
-      headngUpdateWhenMapRotate();
-    }
-  });
-
-  this.deviceOrientation.setTracking(true);
-};
-
-function throttle(fn, time, context) {
-  let lock, args, asyncKey, destroyed;
-
-  function later() {
-    // reset lock and call if queued
-    lock = false;
-    if (args) {
-      throttled.call(context, args);
-      args = false;
-    }
-  }
-
-  const checkDestroyed = function() {
-    if (destroyed) {
-      throw new Error('Method was already destroyed');
-    }
-  };
-
-  function throttled(...argumentList) {
-    checkDestroyed();
-
-    if (lock) {
-      // called too soon, queue to call later
-      args = argumentList;
-      return;
-    }
-
-    // call and lock until later
-    fn.apply(context, argumentList);
-    asyncKey = setTimeout(later, time);
-    lock = true;
-  }
-
-  throttled.destroy = function() {
-    checkDestroyed();
-
-    if (asyncKey) {
-      clearTimeout(asyncKey);
-    }
-
-    destroyed = true;
-  };
-
-  return throttled;
-}
 
 
 ngeo.module.controller('NgeoMobileGeolocationController', ngeo.MobileGeolocationController);
