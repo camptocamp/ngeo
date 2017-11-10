@@ -370,30 +370,16 @@ ngeo.MobileGeolocationController.prototype.autorotateFn = function() {
 
     let currAlpha = 0;
     window.addEventListener('deviceorientation', (evt) => {
-      //console.log(evt);
       const alpha = evt.alpha;
 
       if (alpha === undefined || alpha === null) {
         return;
       }
 
-      if (Math.abs(alpha - currAlpha) > 0.1) {
+      console.log(Math.abs(alpha - currAlpha));
+      if (Math.abs(alpha - currAlpha) > 0.2) {
         currAlpha = alpha;
-
-        let radAlpha = alpha * Math.PI / 180;
-
-        //alpha = -alpha;
-        const currRotation = this.map_.getView().getRotation();
-        const diff = radAlpha - currRotation;
-        console.log(`radAlpha: ${radAlpha}`);
-        //console.log(`currRotation: ${currRotation}`);
-        //console.log(`diff: ${diff}`);
-
-        console.log(`deg: ${alpha}`);
-        radAlpha *= 2;
-        if (radAlpha >= ol.math.toRadians(360)) {
-          radAlpha -= ol.math.toRadians(360);
-        }
+        const radAlpha = currAlpha * Math.PI / 180;
 
         this.map_.getView().animate({
           rotation: radAlpha,
@@ -409,7 +395,7 @@ ngeo.MobileGeolocationController.prototype.autorotateFn = function() {
       console.log(evt.x * 50);
     }, true);
   } else {
-    console.info('Orientation is not supported on this device');
+    console.error('Orientation is not supported on this device');
   }
 };
 
