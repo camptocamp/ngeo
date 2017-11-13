@@ -106,6 +106,7 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
+ * @param {ngeo.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {angular.$timeout} $timeout Angular timeout service.
@@ -117,7 +118,7 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @ngdoc controller
  * @ngname GmfDisplayquerygridController
  */
-gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
+gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
 
   const queryOptions = /** @type {ngeox.QueryOptions} */ (
@@ -141,6 +142,12 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
    * @export
    */
   this.ngeoQueryResult = ngeoQueryResult;
+
+  /**
+   * @type {ngeo.MapQuerent}
+   * @private
+   */
+  this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
    * @type {ngeo.CsvDownload}
@@ -643,6 +650,7 @@ gmf.DisplayquerygridController.prototype.clear = function() {
   this.tooManyResults = false;
   this.features_.clear();
   this.highlightFeatures_.clear();
+  this.ngeoMapQuerent_.clear();
   this.featuresForSources_ = {};
   if (this.unregisterSelectWatcher_) {
     this.unregisterSelectWatcher_();
