@@ -21,7 +21,7 @@ ngeo.File = function($q, $http, gettext) {
   };
 
   this.isWmtsGetCap = function(fileContent) {
-    return /wmtsGetCapabilities/.test(fileContent);
+    return /<Capabilities/.test(fileContent);
   };
 
   this.isKml = function(fileContent) {
