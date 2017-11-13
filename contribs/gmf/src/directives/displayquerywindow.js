@@ -87,6 +87,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
+ * @param {!ngeo.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
@@ -95,7 +96,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @ngdoc controller
  * @ngname GmfDisplayquerywindowController
  */
-gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
+gmf.DisplayquerywindowController = function($scope, ngeoQueryResult, ngeoMapQuerent,
   ngeoFeatureOverlayMgr) {
 
   /**
@@ -134,6 +135,12 @@ gmf.DisplayquerywindowController = function($scope, ngeoQueryResult,
     total: 0,
     pending: false
   };
+
+  /**
+   * @type {ngeo.MapQuerent}
+   * @private
+   */
+  this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
    * @type {?ngeox.QueryResultSource}
@@ -477,6 +484,7 @@ function(opt_lastFeature) {
 gmf.DisplayquerywindowController.prototype.close = function() {
   this.open = false;
   this.clear();
+  this.ngeoMapQuerent_.clear();
 };
 
 
