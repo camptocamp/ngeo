@@ -34,30 +34,34 @@ angularGettext.Catalog.prototype.currentLanguage;
 angularGettext.Catalog.prototype.debug;
 
 
+// https://github.com/rubenv/angular-gettext/blob/5a5b42ba4d0a2eff1d60bdff65a0e849aea19cf5/src/catalog.js#L265
 /**
  * @param {number} n
  * @param {string} string
  * @param {string} stringPlural
- * @param {string=} opt_context
+ * @param {Object<string, string>=} opt_scope Scope to do interpolation against
+ * @param {string=} opt_context translation key context
  * @return {string}
  */
-angularGettext.Catalog.prototype.getPlural = function(n, string, stringPlural, opt_context) {};
+angularGettext.Catalog.prototype.getPlural = function(n, string, stringPlural, opt_scope, opt_context) {};
 
 
+// https://github.com/rubenv/angular-gettext/blob/5a5b42ba4d0a2eff1d60bdff65a0e849aea19cf5/src/catalog.js#L214
 /**
  * @param {string} language
  * @param {string} key
- * @param {number} n
+ * @param {number=} opt_n
  * @param {string=} opt_context translation key context
  * @return {string|null}
  */
-angularGettext.Catalog.prototype.getStringForm = function(language, key, n, opt_context) {};
+angularGettext.Catalog.prototype.getStringForm = function(language, key, opt_n, opt_context) {};
 
 
+// https://github.com/rubenv/angular-gettext/blob/5a5b42ba4d0a2eff1d60bdff65a0e849aea19cf5/src/catalog.js#L243
 /**
  * @param {string} string
- * @param {Object.<string, string>=} opt_scope
- * @param {string=} opt_context
+ * @param {Object.<string, string>=} opt_scope Scope to do interpolation against
+ * @param {string=} opt_context translation key context
  * @return {string}
  */
 angularGettext.Catalog.prototype.getString = function(string, opt_scope, opt_context) {};

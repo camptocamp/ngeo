@@ -1,0 +1,97 @@
+@controls3d-border: 20px;
+@controls3d-button-padding: 17px;
+
+ngeo-olcs-controls3d {
+  position: absolute;
+  bottom: 20px - @controls3d-border;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 180px + 2 * @controls3d-border;
+  button {
+    width: 24px;
+    height: 20px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: 0;
+    padding: @controls3d-button-padding;
+    cursor: pointer;
+    &.ngeo-left {
+      background-image: data-uri('img/left.png');
+      background-position: 100% 0%;
+    }
+    &.ngeo-right {
+      background-image: data-uri('img/right.png');
+      background-position: 0% 0%;
+    }
+    &.ngeo-left-inactive {
+      background-image: data-uri('img/left_grey.png');
+      background-position: 100% 0%;
+      cursor: default;
+    }
+    &.ngeo-right-inactive {
+      background-image: data-uri('img/right_grey.png');
+      background-position: 0% 0%;
+      cursor: default;
+    }
+  }
+  .ngeo-tools, .ngeo-zoom {
+    display: table-cell;
+    text-align: center;
+  }
+  .ngeo-tools {
+    margin: 0;
+    width: 74px;
+    .ngeo-angle, .ngeo-rotation {
+      margin: 5px 3px 3px;
+      height: 64px;
+      width: 64px;
+      position: relative;
+      overflow: hidden;
+      .ngeo-angle3d, .ngeo-rotation3d {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+      .ngeo-angle3d {
+        background-image: data-uri('img/angle.png');
+      }
+      .ngeo-rotation3d {
+        background-image: data-uri('img/rotation.png');
+      }
+    }
+  }
+  .ngeo-zoom {
+    padding: 25px 0px 0;
+    vertical-align: top;
+    width: 20px;
+    line-height: 0;
+    button {
+      width: 20px;
+      height: 20px;
+      margin: 7px 0;
+    }
+  }
+
+  .ol-zoom-in, .ol-zoom-out {
+    display: block;
+    width: 40px;
+    height: 32px;
+    border: 0;
+    background-repeat: no-repeat;
+    background-color: transparent;
+  }
+  .ol-zoom-in {
+    background-position: 50% 100%;
+    background-image: data-uri('img/zoomin.png');
+  }
+  .ol-zoom-out {
+    background-position: 50% 0%;
+    background-image: data-uri('img/zoomout.png');
+  }
+}

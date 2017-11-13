@@ -32,7 +32,8 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     ".build/templatecache.js",
 % endif
     "node_modules/openlayers/src/**/*.js",
-    "node_modules/openlayers/build/ol.ext/*.js"
+    "node_modules/openlayers/build/ol.ext/*.js",
+    "node_modules/ol-cesium/src/**/*.js"
   ],
   "compile": {
 % if entry_point:
@@ -52,6 +53,8 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "node_modules/openlayers/externs/proj4js.js",
       "node_modules/openlayers/externs/tilejson.js",
       "node_modules/openlayers/externs/topojson.js",
+      "node_modules/ol-cesium/Cesium.externs.js",
+      "node_modules/ol-cesium/externs/olcsx.js",
       "${_ngeo_folder}externs/angular-gettext.js",
       "${_ngeo_folder}externs/d3.js",
       "${_ngeo_folder}externs/google_maps_api_v3_27.js",

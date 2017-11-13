@@ -3,6 +3,7 @@
   "src": [
     "node_modules/openlayers/src/**/*.js",
     "node_modules/openlayers/build/ol.ext/*.js",
+    "node_modules/ol-cesium/src/**/*.js",
     "src/**/*.js",
     ".build/templatecache.js"
   ]
