@@ -5,11 +5,10 @@ goog.provide('ngeo.File');
  * @constructor
  * @param {angular.$q} $q .
  * @param {angular.$http} $http .
- * @param {Window} $window .
  * @param {gettext} gettext .
  * @ngInject
  */
-ngeo.File = function($q, $http, $window, gettext) {
+ngeo.File = function($q, $http, gettext) {
   let fileReader, canceler;
 
   // Test the validity of the file size
@@ -48,7 +47,7 @@ ngeo.File = function($q, $http, $window, gettext) {
     };
     fileReader.onerror = function(evt) {
       const err = evt.target.error;
-      $window.console.error('Reading file failed: ', err);
+      console.error('Reading file failed: ', err);
       defer.reject({
         'message': err.code == 20 ? gettext('Operation canceled') : gettext('Read failed'),
         'reason': err.message
@@ -81,7 +80,7 @@ ngeo.File = function($q, $http, $window, gettext) {
     }).then((response) => {
       defer.resolve(response.data);
     }, (reason) => {
-      $window.console.error('Uploading file failed: ', reason);
+      console.error('Uploading file failed: ', reason);
       defer.reject({
         'message': gettext('Upload failed'),
         'reason': reason
