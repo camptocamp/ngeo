@@ -43,7 +43,7 @@ gmfapp.module.value('gmfLayersUrl',
 gmfapp.module.value('gmfExternalOGCServers', [{
   'name': 'Swiss Topo WMS',
   'type': 'WMS',
-  'url': 'http://wms.geo.admin.ch/?lang=fr'
+  'url': 'https://wms.geo.admin.ch/?lang=fr'
 }, {
   'name': 'ASIT VD',
   'type': 'WMTS',
