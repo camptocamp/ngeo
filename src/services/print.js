@@ -2,7 +2,6 @@ goog.provide('ngeo.CreatePrint');
 goog.provide('ngeo.Print');
 
 
-goog.require('goog.color.alpha');
 goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.utils');
@@ -568,10 +567,8 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
 ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
   let fillColor = fillStyle.getColor();
   if (fillColor !== null) {
-    if (typeof (fillColor) === 'string') {
-      const hex = goog.color.alpha.parse(fillColor).hex;
-      fillColor = goog.color.alpha.hexToRgba(hex);
-    }
+    goog.asserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
+    fillColor = ol.color.asArray(fillColor);
     goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
     symbolizer.fillColor = ngeo.utils.rgbArrayToHex(fillColor);
     symbolizer.fillOpacity = fillColor[3];
