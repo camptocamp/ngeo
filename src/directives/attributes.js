@@ -139,8 +139,7 @@ ngeo.AttributesController.prototype.$onInit = function() {
       ol.ObjectEventType.PROPERTYCHANGE,
       this.handleFeaturePropertyChange_,
       this
-    ),
-    true
+    )
   );
 
   const lang = this.gettextCatalog_.getCurrentLanguage();
