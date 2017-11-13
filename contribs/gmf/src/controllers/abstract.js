@@ -132,7 +132,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
     });
   };
 
-  const userChange = function(evt) {
+  const userChange = (evt) => {
     const roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
 
     // Open filter panel if 'open_panel' is set in functionalities and
@@ -147,14 +147,16 @@ gmf.AbstractController = function(config, $scope, $injector) {
     });
 
     // Reload theme and background layer when login status changes.
+    const previousThemeName = this.gmfThemeManager.getThemeName();
+    this.gmfThemeManager.setThemeName('', true);
     if (evt.type !== gmf.AuthenticationEventType.READY) {
-      this.updateCurrentTheme_();
+      this.updateCurrentTheme_(previousThemeName);
       this.updateCurrentBackgroundLayer_(true);
     }
     // Reload themes when login status changes.
     this.gmfThemes_.loadThemes(roleId);
     this.updateHasEditableLayers_();
-  }.bind(this);
+  };
 
   ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.READY, userChange);
   ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.LOGIN, userChange);
@@ -615,9 +617,10 @@ gmf.AbstractController.prototype.initLanguage = function() {
 
 
 /**
+ * @param {string} fallbackThemeName fallback theme name.
  * @private
  */
-gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
+gmf.AbstractController.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
     if (themeName) {
@@ -625,6 +628,8 @@ gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
       if (theme) {
         this.gmfThemeManager.addTheme(theme, true);
       }
+    } else {
+      this.gmfThemeManager.setThemeName(fallbackThemeName, true);
     }
   });
 };
