@@ -238,8 +238,14 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
    * @type {?gmf.ObjectEditingManager}
    * @private
    */
-  this.gmfObjectEditingManager_ = $injector.has('gmfObjectEditingManager') ?
-    $injector.get('gmfObjectEditingManager') : null;
+  this.gmfObjectEditingManager_;
+  if ($injector.has('gmfObjectEditingManager')) {
+    try {
+      this.gmfObjectEditingManager_ = $injector.get('gmfObjectEditingManager');
+    } catch (e) {
+      this.gmfObjectEditingManager_ = null;
+    }
+  }
 
   /**
    * @type {?gmf.ThemeManager}
