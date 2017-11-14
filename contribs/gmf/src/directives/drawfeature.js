@@ -517,33 +517,33 @@ gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
     ol.events.listen(this.map, 'click',
       this.handleMapClick_, this);
 
-    goog.events.listen(mapDiv, 'contextmenu',
-      this.handleMapContextMenu_, false, this);
+    ol.events.listen(mapDiv, 'contextmenu',
+      this.handleMapContextMenu_, this);
 
-    goog.events.listen(mapDiv, 'touchstart',
-      this.handleMapTouchStart_, false, this);
+    ol.events.listen(mapDiv, 'touchstart',
+      this.handleMapTouchStart_, this);
 
-    goog.events.listen(mapDiv, 'touchmove',
-      this.handleMapTouchEnd_, false, this);
+    ol.events.listen(mapDiv, 'touchmove',
+      this.handleMapTouchEnd_, this);
 
-    goog.events.listen(mapDiv, 'touchend',
-      this.handleMapTouchEnd_, false, this);
+    ol.events.listen(mapDiv, 'touchend',
+      this.handleMapTouchEnd_, this);
 
   } else {
     ol.events.unlisten(this.map, 'click',
       this.handleMapClick_, this);
 
-    goog.events.unlisten(mapDiv, 'contextmenu',
-      this.handleMapContextMenu_, false, this);
+    ol.events.unlisten(mapDiv, 'contextmenu',
+      this.handleMapContextMenu_, this);
 
-    goog.events.unlisten(mapDiv, 'touchstart',
-      this.handleMapTouchStart_, false, this);
+    ol.events.unlisten(mapDiv, 'touchstart',
+      this.handleMapTouchStart_, this);
 
-    goog.events.unlisten(mapDiv, 'touchmove',
-      this.handleMapTouchEnd_, false, this);
+    ol.events.unlisten(mapDiv, 'touchmove',
+      this.handleMapTouchEnd_, this);
 
-    goog.events.unlisten(mapDiv, 'touchend',
-      this.handleMapTouchEnd_, false, this);
+    ol.events.unlisten(mapDiv, 'touchend',
+      this.handleMapTouchEnd_, this);
   }
 };
 

@@ -134,8 +134,8 @@ gmf.ContextualdataController.prototype.init = function() {
   const mapDiv = this.map.getTargetElement();
   goog.asserts.assertElement(mapDiv);
 
-  goog.events.listen(mapDiv, 'contextmenu',
-    this.handleMapContextMenu_, false, this);
+  ol.events.listen(mapDiv, 'contextmenu',
+    this.handleMapContextMenu_, this);
 };
 
 /**
