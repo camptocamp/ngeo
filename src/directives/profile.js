@@ -110,7 +110,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
           }
         });
 
-      window.addEventListener('resize', ngeoDebounce(refreshData, 50, true));
+      ol.events.listen(window, 'resize', ngeoDebounce(refreshData, 50, true), this);
 
       function refreshData() {
         if (profile !== undefined) {
