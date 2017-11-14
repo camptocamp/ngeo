@@ -230,8 +230,7 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
         ol.interaction.DrawEventType.DRAWEND,
         this.handleDrawEnd_,
         this
-      ),
-      true
+      )
     );
   } else if (interaction instanceof ngeo.interaction.MeasureLength ||
      interaction instanceof ngeo.interaction.MeasureArea) {
@@ -242,8 +241,7 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
         ngeo.MeasureEventType.MEASUREEND,
         this.handleDrawEnd_,
         this
-      ),
-      true
+      )
     );
   }
 };
