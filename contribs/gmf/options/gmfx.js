@@ -706,11 +706,3 @@ cgxp.tools.openInfoWindow;
  * @param {string=} opt_height CSS height.
  */
 gmfx.openPopup_
-
-/**
- * @typedef {{
- *     goog: (Array.<goog.events.Key>),
- *     ol: (Array.<ol.EventsKey>)
- * }}
- */
-gmfx.PermalinkListenerKeys;

@@ -13,6 +13,7 @@ goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.Debounce');
+goog.require('ngeo.EventHelper');
 goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
@@ -105,13 +106,14 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$injector} $injector Main injector.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
+ * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
  * @param {ngeo.Location} ngeoLocation ngeo location service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */
-gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce,
+gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeoEventHelper,
   ngeoStateManager, ngeoLocation) {
 
   /**
@@ -141,12 +143,6 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce,
    */
   this.mapViewPropertyChangeEventKey_ = null;
 
-  /**
-   * @type {Object.<number, gmfx.PermalinkListenerKeys>}
-   * @private
-   */
-  this.listenerKeys_ = {};
-
   // == properties from params ==
 
   /**
@@ -154,6 +150,12 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce,
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
+
+  /**
+   * @type {ngeo.EventHelper}
+   * @private
+   */
+  this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
    * @type {ngeo.StateManager}
@@ -506,64 +508,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce,
   this.initLayers_();
 };
 
-
-/**
- * Utility method that does 2 things:
- * - initialize the listener keys of a given uid with an array (if that key
- *   has not array set yet)
- * - unlisten any events if the array already exists for the given uid and
- *   empty the array.
- * @param {number} uid Unique id.
- * @private
- */
-gmf.Permalink.prototype.initListenerKey_ = function(uid) {
-  if (!this.listenerKeys_[uid]) {
-    this.listenerKeys_[uid] = {
-      goog: [],
-      ol: []
-    };
-  } else {
-    if (this.listenerKeys_[uid].goog.length) {
-      this.listenerKeys_[uid].goog.forEach((key) => {
-        goog.events.unlistenByKey(key);
-      }, this);
-      this.listenerKeys_[uid].goog.length = 0;
-    }
-    if (this.listenerKeys_[uid].ol.length) {
-      this.listenerKeys_[uid].ol.forEach((key) => {
-        ol.events.unlistenByKey(key);
-      }, this);
-      this.listenerKeys_[uid].ol.length = 0;
-    }
-  }
-};
-
-
-/**
- * Utility method to add a listener key bound to a unique id. The key can
- * come from an `ol.events` (default) or `goog.events`.
- * @param {number} uid Unique id.
- * @param {ol.EventsKey|goog.events.Key} key Key.
- * @param {boolean=} opt_isol Whether it's an OpenLayers event or not. Defaults
- *     to true.
- * @private
- */
-gmf.Permalink.prototype.addListenerKey_ = function(uid, key, opt_isol) {
-  if (!this.listenerKeys_[uid]) {
-    this.initListenerKey_(uid);
-  }
-
-  const isol = opt_isol !== undefined ? opt_isol : true;
-  if (isol) {
-    this.listenerKeys_[uid].ol.push(/** @type {ol.EventsKey} */ (key));
-  } else {
-    this.listenerKeys_[uid].goog.push(/** @type {goog.events.Key} */ (key));
-  }
-};
-
-
 // === Map X, Y, Z ===
-
 
 /**
  * Get the coordinate to use to initialize the map view from the state manager.
@@ -1130,11 +1075,10 @@ gmf.Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {
  */
 gmf.Permalink.prototype.addNgeoFeature_ = function(feature) {
   const uid = ol.getUid(feature);
-  this.addListenerKey_(
+  this.ngeoEventHelper_.addListenerKey(
     uid,
     ol.events.listen(feature, ol.events.EventType.CHANGE,
-      this.ngeoDebounce_(this.handleNgeoFeaturesChange_, 250, true), this),
-    true
+      this.ngeoDebounce_(this.handleNgeoFeaturesChange_, 250, true), this)
   );
 };
 
@@ -1146,7 +1090,7 @@ gmf.Permalink.prototype.addNgeoFeature_ = function(feature) {
  */
 gmf.Permalink.prototype.removeNgeoFeature_ = function(feature) {
   const uid = ol.getUid(feature);
-  this.initListenerKey_(uid); // clear event listeners
+  this.ngeoEventHelper_.clearListenerKey(uid);
   this.handleNgeoFeaturesChange_();
 };
 
