@@ -490,6 +490,44 @@ gmf.Themes.prototype.hasNodeEditableLayers_ = function(node) {
 
 
 /**
+ * Get the maximal resolution defined for this layer. Looks in the
+ *     layer itself before to look into its metadata.
+ * @param {gmfThemes.GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
+ *     also allowed (the type is defined as GmfLayerWMS only to avoid some
+ *     useless tests to know if a maxResolutionHint property can exist
+ *     on the node).
+ * @return {number|undefined} the max resolution or undefined if any.
+ */
+gmf.Themes.getNodeMaxResolution = function(gmfLayer) {
+  var metadata = gmfLayer.metadata;
+  var maxResolution = gmfLayer.maxResolutionHint;
+  if (maxResolution === undefined && metadata !== undefined) {
+    maxResolution = metadata.maxResolution;
+  }
+  return maxResolution;
+};
+
+
+/**
+ * Get the minimal resolution defined for this layer. Looks in the
+ *     layer itself before to look into its metadata.
+ * @param {gmfThemes.GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
+ *     also allowed (the type is defined as GmfLayerWMS only to avoid some
+ *     useless tests to know if a minResolutionHint property can exist
+ *     on the node).
+ * @return {number|undefined} the min resolution or undefined if any.
+ */
+gmf.Themes.getNodeMinResolution = function(gmfLayer) {
+  var metadata = gmfLayer.metadata;
+  var minResolution = gmfLayer.minResolutionHint;
+  if (minResolution === undefined && metadata !== undefined) {
+    minResolution = metadata.minResolution;
+  }
+  return minResolution;
+};
+
+
+/**
  * @param {number=} opt_roleId The role id to send in the request.
  * Load themes from the "themes" service.
  * @export
