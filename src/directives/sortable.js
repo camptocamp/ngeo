@@ -1,7 +1,5 @@
 goog.provide('ngeo.sortableDirective');
 
-goog.require('goog.fx.DragListDirection');
-goog.require('goog.fx.DragListGroup');
 goog.require('ngeo');
 
 
@@ -61,6 +59,10 @@ ngeo.sortableDirective = function($timeout) {
               (scope.$eval(attrs['ngeoSortable'])) || [];
       goog.asserts.assert(Array.isArray(sortable));
 
+      scope.$watchCollection(() => sortable, () => {
+        sortable.length && $timeout(resetUpDragDrop, 0);
+      });
+
       const optionsObject = scope.$eval(attrs['ngeoSortableOptions']);
       const options = getOptions(optionsObject);
 
@@ -68,110 +70,56 @@ ngeo.sortableDirective = function($timeout) {
       const callbackCtx = scope.$eval(attrs['ngeoSortableCallbackCtx']);
 
       /**
-       * @type {goog.fx.DragListGroup}
-       */
-      let dragListGroup = null;
-
-      scope.$watchCollection(() => sortable, () => {
-        sortable.length && $timeout(resetUpDragDrop, 0);
-      });
-
-      /**
        * This function resets drag&drop for the list. It is called each
        * time the sortable array changes (see $watchCollection above).
        */
       function resetUpDragDrop() {
-        // Save the current nodes in order to restore the state if the node
-        // is dropped at the same place
-        // In this case the comments and element nodes are messed up
-        const savedNodes = element.contents();
-
+        // Add an index to the sortable to allow sorting of the
+        // underlying data.
         const children = element.children();
         for (let i = 0; i < children.length; ++i) {
           angular.element(children[i]).data('idx', i);
         }
 
-        if (dragListGroup !== null) {
-          dragListGroup.dispose();
-        }
+        const sortableElement = $(element[0]);
 
-        dragListGroup = new goog.fx.DragListGroup();
-        dragListGroup.addDragList(element[0], goog.fx.DragListDirection.DOWN);
-        dragListGroup.setFunctionToGetHandleForDragItem(
-          /**
-           * @param {Element} dragItem Drag item.
-           * @return {Element} The handle.
-           */
-          (dragItem) => {
-            const className = options['handleClassName'];
-            return dragItem.getElementsByClassName(className)[0];
+        sortableElement.sortable({
+          handle: `.${options['handleClassName']}`
+        });
+
+        // Add draggerClass to element being dragged
+        sortableElement.on('sortstart', (event, ui) => {
+          if (options['draggerClassName']) {
+            $(ui.item).addClass(options['draggerClassName']);
+          }
+        });
+
+        // Remove draggerClass from element not being dragged anymore
+        sortableElement.on('sortstop', (event, ui) => {
+          if (options['draggerClassName']) {
+            $(ui.item).removeClass(options['draggerClassName']);
+          }
+        });
+
+        // This event is triggered when the user stopped sorting and
+        // the DOM position has changed.
+        sortableElement.on('sortupdate', (event, ui) => {
+          const oldIndex = $(ui.item[0]).data('idx');
+          const newIndex = ui.item.index();
+
+          // Update (data)-index on dom element to its new position
+          $(ui.item[0]).data('idx', newIndex);
+
+          // Move dragged item to new position
+          scope.$apply(() => {
+            sortable.splice(newIndex, 0, sortable.splice(oldIndex, 1)[0]);
           });
 
-        if (options['draggerClassName'] !== undefined) {
-          dragListGroup.setDraggerElClass(options['draggerClassName']);
-        }
-
-        if (options['currDragItemClassName'] !== undefined) {
-          dragListGroup.setCurrDragItemClass(options['currDragItemClassName']);
-        }
-
-        /** @type {number} */
-        let hoverNextItemIdx = -1;
-
-        /** @type {Element} */
-        let hoverList = null;
-
-        goog.events.listen(dragListGroup, 'dragstart', (e) => {
-          hoverNextItemIdx = -1;
-          hoverList = null;
-          /**
-           * Adding dynamically the width of the draggerEl to fit the currDragItem width.
-           * - > the draggerEl is clipped to the body with an absolute position.
-           */
-          angular.element(e.draggerEl).css('width', e.currDragItem.offsetWidth);
-        });
-
-        goog.events.listen(dragListGroup, 'dragmove', (e) => {
-          const next = e.hoverNextItem;
-          hoverNextItemIdx = next === null ? -1 : /** @type {number} */ (angular.element(next).data('idx'));
-          hoverList = e.hoverList;
-        });
-
-        goog.events.listen(dragListGroup, 'dragend', (e) => {
-          const li = e.currDragItem;
-          const idx = /** @type {number} */ (angular.element(li).data('idx'));
-          if (hoverList === null ||
-                  hoverNextItemIdx == idx + 1 ||
-                  (hoverNextItemIdx == -1 &&
-                   idx == element.children().length - 1)) {
-            // element dropped out of the list container
-            // or
-            // element dropped at the same location
-            // -> restore initial nodes list
-            element.append(savedNodes);
-          } else if (hoverNextItemIdx != -1) {
-            // there's a next item, so insert
-            if (hoverNextItemIdx != idx) {
-              if (hoverNextItemIdx > idx) {
-                hoverNextItemIdx--;
-              }
-              scope.$apply(() => {
-                sortable.splice(hoverNextItemIdx, 0, sortable.splice(idx, 1)[0]);
-              });
-            }
-          } else {
-            // there's no next item, so push
-            scope.$apply(() => {
-              sortable.push(sortable.splice(idx, 1)[0]);
-            });
-          }
           // Call the callback function if it exists.
           if (callbackFn instanceof Function) {
-            callbackFn.apply(callbackCtx, [element, sortable]);
+            callbackFn.apply(callbackCtx, [element, sortable]); // TODO: test
           }
         });
-
-        dragListGroup.init();
       }
 
       /**
