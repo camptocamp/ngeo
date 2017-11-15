@@ -639,7 +639,7 @@ ngeo.RuleController = class {
       keys.push(
         ol.events.listen(
           this.rotate_,
-          ngeo.RotateEventType.ROTATEEND,
+          ngeo.interaction.Rotate.EventType.ROTATEEND,
           this.handleRotateEnd_,
           this
         )
@@ -882,7 +882,7 @@ ngeo.RuleController = class {
   }
 
   /**
-   * @param {ngeo.RotateEvent} evt Event.
+   * @param {ngeo.interaction.Rotate.Event} evt Event.
    * @private
    */
   handleRotateEnd_(evt) {
