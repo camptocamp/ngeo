@@ -87,9 +87,7 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
 
   Object.defineProperty(layer, 'loading', {
     configurable: true,
-    get() {
-      return /** @type {number} */ (layer.get('load_count')) > 0;
-    }
+    get: () => /** @type {number} */ (layer.get('load_count')) > 0
   });
 
   /**

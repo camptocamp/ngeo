@@ -86,7 +86,7 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
   }
   const source = new ol.source.ImageWMS({
     url: sourceURL,
-    params,
+    params: params,
     serverType: olServerType,
     crossOrigin: opt_crossOrigin
   });
@@ -217,7 +217,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
   return new ol.layer.Tile({
     'capabilitiesStyles': layerCap['Style'],
     preload: Infinity,
-    source
+    source: source
   });
 };
 

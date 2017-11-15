@@ -364,8 +364,8 @@ gmf.datasource.DataSourcesManager = class {
       if (layers) {
         ogcLayers = layers.split(',').map((layer) => {
           return {
-            maxResolution,
-            minResolution,
+            maxResolution: maxResolution,
+            minResolution: minResolution,
             name: layer,
             queryable: true
           };

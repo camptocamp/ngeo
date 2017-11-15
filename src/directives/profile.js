@@ -44,7 +44,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Atttributes.
      */
-    link(scope, element, attrs) {
+    link: (scope, element, attrs) => {
 
       const optionsAttr = attrs['ngeoProfileOptions'];
       goog.asserts.assert(optionsAttr !== undefined);

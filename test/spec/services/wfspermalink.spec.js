@@ -48,7 +48,7 @@ describe('ngeo.WfsPermalink', () => {
       map = new ol.Map({
         layers: [],
         view: new ol.View({
-          projection,
+          projection: projection,
           resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
           center: [537635, 152640],
           zoom: 0

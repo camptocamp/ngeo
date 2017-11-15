@@ -627,7 +627,7 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
   /** @type {Function} */ (this.$http_)({
     url: this.gmfProfileJsonUrl_,
     method: 'POST',
-    params,
+    params: params,
     paramSerializer: '$httpParamSerializerJQLike',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'

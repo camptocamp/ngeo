@@ -221,9 +221,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       wrapX: false,
       features: new ol.Collection()
     }),
-    style(feature, resolution) {
-      return ngeoFeatureHelper.createEditingStyles(feature);
-    }
+    style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(feature)
     // style: ngeoFeatureHelper.createEditingStyles.bind(ngeoFeatureHelper)
   });
   this.editFeatureVectorLayer.setMap(this.map);

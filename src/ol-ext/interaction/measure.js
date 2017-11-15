@@ -219,7 +219,7 @@ ngeo.interaction.Measure = function(opt_options) {
    */
   this.vectorLayer_ = new ol.layer.Vector({
     source: new ol.source.Vector(),
-    style
+    style: style
   });
 
   /**

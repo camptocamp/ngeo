@@ -67,7 +67,7 @@ gmf.ShareService.prototype.getShortUrl = function(url) {
 gmf.ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
   const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
     url: shortUrl,
-    email
+    email: email
   });
 
   if (opt_message) {

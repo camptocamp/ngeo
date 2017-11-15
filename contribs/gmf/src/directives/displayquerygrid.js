@@ -285,9 +285,13 @@ gmf.DisplayquerygridController.prototype.$onInit = function() {
     const fill = new ol.style.Fill({color: [255, 0, 0, 0.6]});
     const stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
     highlightFeatureStyle = new ol.style.Style({
-      fill,
-      image: new ol.style.Circle({fill, radius: 5, stroke}),
-      stroke,
+      fill: fill,
+      image: new ol.style.Circle({
+        fill: fill,
+        radius: 5,
+        stroke: stroke
+      }),
+      stroke: stroke,
       zIndex: 10
     });
   }
@@ -593,7 +597,7 @@ gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
   }
   this.gridSources[sourceLabel] = {
     configuration: gridConfig,
-    source
+    source: source
   };
   return true;
 };

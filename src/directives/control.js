@@ -34,7 +34,7 @@ ngeo.controlDirective = function() {
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Atttributes.
      */
-    link(scope, element, attrs) {
+    link: (scope, element, attrs) => {
 
       const control = /** @type {ol.control.Control} */
               (scope.$eval(attrs['ngeoControl']));

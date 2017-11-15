@@ -124,8 +124,8 @@ ngeo.MapQuerent = class {
     //     request.
     const limit = options.limit !== undefined ? options.limit : this.limit_;
     ol.obj.assign(options, {
-      queryableDataSources,
-      limit,
+      queryableDataSources: queryableDataSources,
+      limit: limit,
       tolerancePx: this.tolerancePx_,
       wfsCount: this.queryCountFirst_
     });
@@ -188,13 +188,13 @@ ngeo.MapQuerent = class {
         const featuresByType = typeSeparatedFeatures[type];
         this.result_.sources.push({
           features: featuresByType,
-          id,
-          label,
-          limit,
+          id: id,
+          label: label,
+          limit: limit,
           pending: false,
           queried: true,
-          tooManyResults,
-          totalFeatureCount
+          tooManyResults: tooManyResults,
+          totalFeatureCount: totalFeatureCount
         });
         total += features.length;
       }
