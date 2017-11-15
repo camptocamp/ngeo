@@ -1,9 +1,7 @@
 goog.provide('gmf.Authentication');
-goog.provide('gmf.AuthenticationEventType');
-goog.provide('gmf.AuthenticationEvent');
 
+goog.require('ngeo.CustomEvent');
 goog.require('gmf');
-goog.require('ol.events.Event');
 goog.require('ol.events.EventTarget');
 
 
@@ -46,48 +44,6 @@ gmf.module.value('gmfUser', {
   'role_name': null,
   'username': null
 });
-
-
-/**
- * @enum {string}
- */
-gmf.AuthenticationEventType = {
-  /**
-   * Triggered after a login.
-   */
-  LOGIN: 'login',
-  /**
-   * Triggered after a logout.
-   */
-  LOGOUT: 'logout',
-  /**
-   * Triggered after the authentication service has loaded the login status.
-   */
-  READY: 'ready'
-};
-
-/**
- * @classdesc
- * Event emitted by the authentication service.
- *
- * @constructor
- * @struct
- * @extends {ol.events.Event}
- * @param {gmf.AuthenticationEventType} type Event type.
- * @param {gmfx.User} user The current user.
- */
-gmf.AuthenticationEvent = function(type, user) {
-
-  ol.events.Event.call(this, type);
-
-  /**
-   * The logged-in user.
-   * @type {gmfx.User}
-   */
-  this.user = user;
-
-};
-ol.inherits(gmf.AuthenticationEvent, ol.events.Event);
 
 
 /**
@@ -253,8 +209,9 @@ gmf.Authentication.prototype.handleLogin_ = function(checkingLoginStatus, resp) 
   const respData = /** @type {gmf.AuthenticationLoginResponse} */ (resp.data);
   this.setUser_(respData, !checkingLoginStatus);
   if (checkingLoginStatus) {
-    this.dispatchEvent(new gmf.AuthenticationEvent(
-      gmf.AuthenticationEventType.READY, this.user_));
+    /** @type {gmfx.AuthenticationEvent} */
+    const event = new ngeo.CustomEvent('ready', {user: this.user_});
+    this.dispatchEvent(event);
   }
   return resp;
 };
@@ -270,8 +227,9 @@ gmf.Authentication.prototype.setUser_ = function(respData, emitEvent) {
     this.user_[key] = respData[key];
   }
   if (emitEvent && respData.username !== undefined) {
-    this.dispatchEvent(new gmf.AuthenticationEvent(
-      gmf.AuthenticationEventType.LOGIN, this.user_));
+    /** @type {gmfx.AuthenticationEvent} */
+    const event = new ngeo.CustomEvent('login', {user: this.user_});
+    this.dispatchEvent(event);
   }
 };
 
@@ -283,8 +241,9 @@ gmf.Authentication.prototype.resetUser_ = function() {
   for (const key in this.user_) {
     this.user_[key] = null;
   }
-  this.dispatchEvent(new gmf.AuthenticationEvent(
-    gmf.AuthenticationEventType.LOGOUT, this.user_));
+  /** @type {gmfx.AuthenticationEvent} */
+  const event = new ngeo.CustomEvent('logout', {user: this.user_});
+  this.dispatchEvent(event);
 };
 
 

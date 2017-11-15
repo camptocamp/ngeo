@@ -328,18 +328,6 @@ ngeox.QuerentResultItem.prototype.totalFeatureCount;
 
 
 /**
- * @interface
- */
-ngeox.MenuEvent = function() {};
-
-
-/**
- * @type {string}
- */
-ngeox.MenuEvent.prototype.action;
-
-
-/**
  * The options for the contextual menu overlay.
  * @typedef {{
  *     actions: (Array.<ngeox.MenuActionOptions>),
@@ -1940,30 +1928,6 @@ ngeox.profile.I18n.prototype.yAxis;
 
 
 /**
- * @interface
- */
-ngeox.MeasureEvent = function() {};
-
-
-/**
- * @type {ol.Feature}
- */
-ngeox.MeasureEvent.prototype.feature;
-
-
-/**
- * @interface
- */
-ngeox.RotateEvent = function() {};
-
-
-/**
- * @type {ol.Feature}
- */
-ngeox.RotateEvent.prototype.feature;
-
-
-/**
  * Options for the mobile geolocations directive.
  * @typedef {{
  *    accuracyFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
@@ -2139,17 +2103,6 @@ ngeox.TimeProperty;
  */
 ngeox.TimeRange;
 
-
-/**
- * @interface
- */
-ngeox.BackgroundEvent = function() {};
-
-
-/**
- * @type {ol.layer.Base}
- */
-ngeox.BackgroundEvent.prototype.previous;
 
 /**
  * Format a number with a precision.
@@ -2610,3 +2563,32 @@ ngeox.ImportWmsGetCapItemOptions;
  * }}
  */
 ngeox.ImportWmtsGetCapItemOptions;
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   action: string
+ * }>}
+ */
+ngeox.MenuEvent;
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   current: ol.layer.Base,
+ *   previous: ol.layer.Base
+ * }>}
+ */
+ngeox.BackgroundEvent;
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   feature: ol.Feature
+ * }>}
+ */
+ngeox.MeasureEvent;
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   feature: ol.Feature
+ * }>}
+ */
+ngeox.RotateEvent;

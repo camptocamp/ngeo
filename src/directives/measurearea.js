@@ -46,7 +46,7 @@ ngeo.measureareaDirective = function($compile, gettextCatalog, $filter, $injecto
 
       ol.events.listen(
         measureArea,
-        ngeo.MeasureEventType.MEASUREEND,
+        'measureend',
         drawFeatureCtrl.handleDrawEnd.bind(
           drawFeatureCtrl, ngeo.GeometryType.POLYGON),
         drawFeatureCtrl

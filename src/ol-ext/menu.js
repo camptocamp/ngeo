@@ -1,48 +1,9 @@
 goog.provide('ngeo.Menu');
-goog.provide('ngeo.MenuEvent');
-goog.provide('ngeo.MenuEventType');
 
+goog.require('ngeo.CustomEvent');
 goog.require('ol.events');
 goog.require('ol.Overlay');
 goog.require('ol.OverlayPositioning');
-goog.require('ol.events.Event');
-
-
-/**
- * @enum {string}
- */
-ngeo.MenuEventType = {
-  /**
-   * Triggered upon clicking an action button
-   * @event ngeo.MenuEvent#actionclick
-   */
-  ACTION_CLICK: 'actionclick'
-};
-
-
-/**
- * @classdesc
- * Events emitted by {@link ngeo.Menu} instances are instances of this type.
- *
- * @constructor
- * @extends {ol.events.Event}
- * @implements {ngeox.MenuEvent}
- * @param {ngeo.MenuEventType} type Type.
- * @param {string} action Action name that was clicked.
- */
-ngeo.MenuEvent = function(type, action) {
-
-  ol.events.Event.call(this, type);
-
-  /**
-   * The action name that was clicked.
-   * @type {string}
-   * @api stable
-   */
-  this.action = action;
-
-};
-ol.inherits(ngeo.MenuEvent, ol.events.Event);
 
 
 /**
@@ -212,8 +173,7 @@ ngeo.Menu.prototype.close = function() {
  */
 ngeo.Menu.prototype.handleActionClick_ = function(action, evt) {
 
-  this.dispatchEvent(
-    new ngeo.MenuEvent(ngeo.MenuEventType.ACTION_CLICK, action));
+  this.dispatchEvent(new ngeo.CustomEvent('actionclick', action));
 
   if (this.autoClose_) {
     this.close();

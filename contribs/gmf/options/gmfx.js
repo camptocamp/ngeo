@@ -691,3 +691,11 @@ cgxp.tools.openInfoWindow;
  * @param {string=} opt_height CSS height.
  */
 gmfx.openPopup_
+
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   user: gmfx.User
+ * }>}
+ */
+gmfx.AuthenticationEvent;

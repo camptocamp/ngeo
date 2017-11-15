@@ -3,7 +3,6 @@ goog.provide('gmf.backgroundlayerselectorComponent');
 goog.require('goog.asserts');
 goog.require('gmf');
 goog.require('gmf.Themes');
-goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ol.events');
 
@@ -137,13 +136,13 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
-  this.listenerKeys_.push(ol.events.listen(
-    this.backgroundLayerMgr_,
-    ngeo.BackgroundEventType.CHANGE,
-    function(event) {
-      this.bgLayer = event.current;
-    },
-    this));
+  this.listenerKeys_.push(ol.events.listen(this.backgroundLayerMgr_, 'change',
+    /**
+     * @param {!ngeox.BackgroundEvent} event Event.
+     */
+    (event) => {
+      this.bgLayer = event.detail.current;
+    }));
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 };

@@ -10,7 +10,6 @@ goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.ThemeManager');
 goog.require('gmf.datasource.ExternalDataSourcesManager');
-goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.Debounce');
 goog.require('ngeo.EventHelper');
@@ -385,7 +384,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   if (this.ngeoBackgroundLayerMgr_) {
     ol.events.listen(
       this.ngeoBackgroundLayerMgr_,
-      ngeo.BackgroundEventType.CHANGE,
+      'change',
       this.handleBackgroundLayerManagerChange_,
       this);
   }

@@ -387,9 +387,7 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
       ol.interaction.TranslateEventType.TRANSLATEEND,
       this.handleTranslateEnd_, this));
 
-    keys.push(ol.events.listen(this.rotate_,
-      ngeo.RotateEventType.ROTATEEND,
-      this.handleRotateEnd_, this));
+    keys.push(ol.events.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
 
     toolMgr.registerTool(drawUid, this.drawToolActivate, false);
     toolMgr.registerTool(drawUid, this.mapSelectToolActivate, true);
@@ -659,7 +657,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
       actions
     });
 
-    ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
+    ol.events.listen(this.menu_, 'actionclick',
       this.handleMenuActionClick_, this);
     this.map.addOverlay(this.menu_);
 
@@ -683,11 +681,11 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
 
 
 /**
- * @param {!ngeo.MenuEvent} evt Event.
+ * @param {!ngeox.MenuEvent} evt Event.
  * @private
  */
 gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
-  const action = evt.action;
+  const action = evt.detail.action;
 
   switch (action) {
     case gmf.DrawfeatureController.MenuActionType.DELETE:
@@ -723,7 +721,7 @@ gmf.DrawfeatureController.prototype.handleTranslateEnd_ = function(evt) {
 
 
 /**
- * @param {!ngeo.RotateEvent} evt Event.
+ * @param {!ngeox.RotateEvent} evt Event.
  * @private
  */
 gmf.DrawfeatureController.prototype.handleRotateEnd_ = function(evt) {

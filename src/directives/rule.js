@@ -639,7 +639,7 @@ ngeo.RuleController = class {
       keys.push(
         ol.events.listen(
           this.rotate_,
-          ngeo.RotateEventType.ROTATEEND,
+          'rotateend',
           this.handleRotateEnd_,
           this
         )
@@ -827,7 +827,7 @@ ngeo.RuleController = class {
 
       ol.events.listen(
         this.menu_,
-        ngeo.MenuEventType.ACTION_CLICK,
+        'actionclick',
         this.handleMenuActionClick_,
         this
       );
@@ -850,7 +850,7 @@ ngeo.RuleController = class {
     if (this.menu_) {
       ol.events.unlisten(
         this.menu_,
-        ngeo.MenuEventType.ACTION_CLICK,
+        'actionclick',
         this.handleMenuActionClick_,
         this
       );
@@ -860,11 +860,11 @@ ngeo.RuleController = class {
   }
 
   /**
-   * @param {ngeo.MenuEvent} evt Event.
+   * @param {ngeox.MenuEvent} evt Event.
    * @private
    */
   handleMenuActionClick_(evt) {
-    const action = evt.action;
+    const action = evt.detail.action;
 
     switch (action) {
       case ngeo.RuleController.MenuActionType.MOVE:
@@ -882,7 +882,7 @@ ngeo.RuleController = class {
   }
 
   /**
-   * @param {ngeo.RotateEvent} evt Event.
+   * @param {ngeox.RotateEvent} evt Event.
    * @private
    */
   handleRotateEnd_(evt) {

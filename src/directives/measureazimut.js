@@ -49,17 +49,17 @@ ngeo.measureazimutDirective = function($compile, gettextCatalog, $filter, $injec
 
       ol.events.listen(
         measureAzimut,
-        ngeo.MeasureEventType.MEASUREEND,
+        'measureend',
         /**
-           * @param {ngeo.MeasureEvent} event Event.
-           */
+         * @param {ngeox.MeasureEvent} event Event.
+         */
         (event) => {
           // In the case of azimut measure interaction, the feature's
           // geometry is actually a collection (line + circle)
           // For our purpose here, we only need the circle, which gets
           // transformed into a polygon with 64 sides.
           const geometry = /** @type {ol.geom.GeometryCollection} */
-                (event.feature.getGeometry());
+                (event.detail.feature.getGeometry());
           const circle = /** @type {ol.geom.Circle} */ (
             geometry.getGeometries()[1]);
           const polygon = ol.geom.Polygon.fromCircle(circle, 64);
@@ -67,7 +67,7 @@ ngeo.measureazimutDirective = function($compile, gettextCatalog, $filter, $injec
           const azimut = ngeo.interaction.MeasureAzimut.getAzimut(
             /** @type {ol.geom.LineString} */ (geometry.getGeometries()[0])
           );
-          event.feature.set('azimut', azimut);
+          event.detail.feature.set('azimut', azimut);
 
           drawFeatureCtrl.handleDrawEnd(ngeo.GeometryType.CIRCLE, event);
         },

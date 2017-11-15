@@ -4,7 +4,6 @@ goog.require('gmf');
 goog.require('gmf.datasource.OGC');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
-goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.DataSources');
@@ -153,7 +152,7 @@ gmf.datasource.DataSourcesManager = class {
 
     ol.events.listen(
       this.ngeoBackgroundLayerMgr_,
-      ngeo.BackgroundEventType.CHANGE,
+      'change',
       this.handleNgeoBackgroundLayerChange_,
       this
     );
@@ -784,13 +783,13 @@ gmf.datasource.DataSourcesManager = class {
    * The `querySourceIds` property in the layer is used to determine the
    * data sources that are bound to the layer.
    *
-   * @param {!ngeo.BackgroundEvent} evt Event.
+   * @param {!ngeox.BackgroundEvent} evt Event.
    * @private
    */
   handleNgeoBackgroundLayerChange_(evt) {
 
-    const previousBackgroundLayer = evt.previous;
-    const currentBackgroundLayer = evt.current;
+    const previousBackgroundLayer = evt.detail.previous;
+    const currentBackgroundLayer = evt.detail.current;
     const cache = this.dataSourcesCache_;
 
     // Remove data sources linked to previous background layer

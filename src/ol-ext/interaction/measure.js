@@ -1,7 +1,6 @@
-goog.provide('ngeo.MeasureEvent');
-goog.provide('ngeo.MeasureEventType');
 goog.provide('ngeo.interaction.Measure');
 
+goog.require('ngeo.CustomEvent');
 goog.require('goog.asserts');
 goog.require('ol.dom');
 goog.require('ol.events');
@@ -32,44 +31,6 @@ goog.require('ol.style.Style');
  * }}
  */
 ngeo.interaction.MeasureBaseOptions;
-
-
-/**
- * @enum {string}
- */
-ngeo.MeasureEventType = {
-  /**
-   * Triggered upon feature draw end
-   * @event ngeo.MeasureEvent#measureend
-   */
-  MEASUREEND: 'measureend'
-};
-
-
-/**
- * Events emitted by {@link ngeo.interaction.Interaction} instances are
- * instances of this type.
- *
- * @constructor
- * @struct
- * @extends {ol.events.Event}
- * @implements {ngeox.MeasureEvent}
- * @param {ngeo.MeasureEventType} type Type.
- * @param {ol.Feature} feature The feature drawn.
- */
-ngeo.MeasureEvent = function(type, feature) {
-
-  ol.events.Event.call(this, type);
-
-  /**
-   * The feature being drawn.
-   * @type {ol.Feature}
-   * @api stable
-   */
-  this.feature = feature;
-
-};
-ol.inherits(ngeo.MeasureEvent, ol.events.Event);
 
 
 /**
@@ -437,8 +398,9 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
   this.measureTooltipElement_.classList.add('ngeo-tooltip-static');
   this.measureTooltipOverlay_.setOffset([0, -7]);
-  this.dispatchEvent(new ngeo.MeasureEvent(ngeo.MeasureEventType.MEASUREEND,
-    this.sketchFeature));
+  /** @type {ngeox.MeasureEvent} */
+  const event = new ngeo.CustomEvent('measureend', {feature: this.sketchFeature});
+  this.dispatchEvent(event);
   this.sketchFeature = null;
   goog.asserts.assert(this.changeEventKey_ !== null);
   goog.asserts.assert(this.postcomposeEventKey_ !== null);

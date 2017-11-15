@@ -133,8 +133,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
     });
   };
 
+  /**
+   * @param {gmfx.AuthenticationEvent} evt Event.
+   */
   const userChange = function(evt) {
-    const roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
+    const user = evt.detail.user;
+    const roleId = (user.username !== null) ? user.role_id : undefined;
 
     // Open filter panel if 'open_panel' is set in functionalities and
     // has 'layer_filter' as first value
@@ -148,7 +152,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
     });
 
     // Reload theme and background layer when login status changes.
-    if (evt.type !== gmf.AuthenticationEventType.READY) {
+    if (evt.type !== 'ready') {
       this.updateCurrentTheme_();
       this.updateCurrentBackgroundLayer_(true);
     }
@@ -157,9 +161,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
     this.updateHasEditableLayers_();
   }.bind(this);
 
-  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.READY, userChange);
-  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.LOGIN, userChange);
-  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.LOGOUT, userChange);
+  ol.events.listen(gmfAuthentication, 'ready', userChange);
+  ol.events.listen(gmfAuthentication, 'login', userChange);
+  ol.events.listen(gmfAuthentication, 'logout', userChange);
 
   /**
    * @type {Array.<gmfx.SearchDirectiveDatasource>}
@@ -205,9 +209,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
     backgroundLayerMgr.updateDimensions(this.map, this.dimensions);
   });
 
-  backgroundLayerMgr.on(ngeo.BackgroundEventType.CHANGE, function() {
+  backgroundLayerMgr.on('change', () => {
     backgroundLayerMgr.updateDimensions(this.map, this.dimensions);
-  }, this);
+  });
 
   /**
    * @type {boolean}
