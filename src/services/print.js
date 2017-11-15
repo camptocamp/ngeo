@@ -165,7 +165,7 @@ ngeo.Print.prototype.createSpec = function(
   map, scale, dpi, layout, format, customAttributes) {
 
   const specMap = /** @type {MapFishPrintMap} */ ({
-    dpi,
+    dpi: dpi,
     rotation: /** number */ (customAttributes['rotation'])
   });
 
@@ -302,10 +302,10 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
     baseURL: ngeo.Print.getAbsoluteUrl_(url_url.origin + url_url.pathname),
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
-    customParams,
+    customParams: customParams,
     serverType: params['SERVERTYPE'],
     type: 'wms',
-    opacity,
+    opacity: opacity,
     version: params['VERSION']
   });
   arr.push(object);
@@ -382,7 +382,7 @@ ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
     dimensionParams: dimensions,
     imageFormat: source.getFormat(),
     layer: source.getLayer(),
-    matrices,
+    matrices: matrices,
     matrixSet: source.getMatrixSet(),
     opacity: layer.getOpacity(),
     requestEncoding: source.getRequestEncoding(),

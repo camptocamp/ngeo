@@ -144,7 +144,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Atttributes.
      */
-    link(scope, element, attrs) {
+    link: (scope, element, attrs) => {
       if (!scope['clearbutton']) {
         const ctrl = scope['ctrl'];
         // Empty the search field on focus and blur.
@@ -405,11 +405,11 @@ gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCa
     name: 'coordinates',
     display: 'label',
     templates: {
-      header() {
+      header: () => {
         const header = gettextCatalog.getString('Recenter to');
         return `<div class="gmf-search-header" translate>${header}</div>`;
       },
-      suggestion(suggestion) {
+      suggestion: (suggestion) => {
         const coordinates = suggestion['label'];
 
         let html = `<p class="gmf-search-label">${coordinates}</p>`;
@@ -521,12 +521,12 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
   const typeaheadDataset = /** @type {TypeaheadDataset} */ ({
     limit: Infinity,
     source: bloodhoundEngine.ttAdapter(),
-    display(suggestion) {
+    display: (suggestion) => {
       const feature = /** @type {ol.Feature} */ (suggestion);
       return feature.get(config.labelKey);
     },
     templates: /* TypeaheadTemplates */ ({
-      header() {
+      header: () => {
         if (config.datasetTitle === undefined) {
           return '';
         } else {
@@ -534,7 +534,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
           return `<div class="gmf-search-header">${header}</div>`;
         }
       },
-      suggestion(suggestion) {
+      suggestion: (suggestion) => {
         const feature = /** @type {ol.Feature} */ (suggestion);
 
         const scope = directiveScope.$new(true);
@@ -637,7 +637,7 @@ gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
   const gettextCatalog = this.gettextCatalog_;
   return {
     rateLimitWait: 50,
-    prepare(query, settings) {
+    prepare: (query, settings) => {
       const url = settings.url;
       const lang = gettextCatalog.currentLanguage;
       const interfaceName = 'mobile'; // FIXME dynamic interfaces
@@ -676,7 +676,7 @@ gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
     }
     suggestions.push({
       label: coordinates.join(' '),
-      position,
+      position: position,
       'tt_source': 'coordinates'
     });
     callback(suggestions);
@@ -709,13 +709,13 @@ gmf.SearchController.prototype.initStyles_ = function() {
     width: 2
   });
   this.styles_['default'] = new ol.style.Style({
-    fill,
-    stroke,
+    fill: fill,
     image: new ol.style.Circle({
+      fill: fill,
       radius: 5,
-      fill,
-      stroke
-    })
+      stroke: stroke
+    }),
+    stroke: stroke
   });
   const customStyles = this.scope_['featuresStyles'] || {};
   ol.obj.assign(this.styles_, customStyles);
@@ -889,8 +889,9 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
     const fitArray = featureGeometry.getType() === 'GeometryCollection' ?
       featureGeometry.getExtent() : featureGeometry;
     view.fit(fitArray, {
-      size,
-      maxZoom: this.maxZoom});
+      size: size,
+      maxZoom: this.maxZoom
+    });
   }
   this.leaveSearch_();
 };

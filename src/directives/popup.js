@@ -47,7 +47,7 @@ ngeo.popupDirective = function(ngeoPopupTemplateUrl) {
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Atttributes.
      */
-    link(scope, element, attrs) {
+    link: (scope, element, attrs) => {
       element.addClass('popover');
 
       /**

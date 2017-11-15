@@ -39,14 +39,14 @@ ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
     controller: 'ngeoDatePickerController as datepickerCtrl',
     restrict: 'AE',
     templateUrl: ngeoDatePickerTemplateUrl,
-    link(scope, element, attrs, ctrl) {
+    link: (scope, element, attrs, ctrl) => {
       ctrl.init();
 
       const lang =  ctrl.gettextCatalog_.getCurrentLanguage();
       $['datepicker']['setDefaults']($['datepicker']['regional'][lang]);
 
       ctrl.sdateOptions = angular.extend({}, ctrl.sdateOptions, {
-        'onClose': function(selectedDate) {
+        'onClose': (selectedDate) => {
           if (selectedDate) {
             $(element[0]).find('input[name="edate"]').datepicker('option', 'minDate', selectedDate);
           }
@@ -54,7 +54,7 @@ ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
       });
 
       ctrl.edateOptions = angular.extend({}, ctrl.edateOptions, {
-        'onClose': function(selectedDate) {
+        'onClose': (selectedDate) => {
           if (selectedDate) {
             $(element[0]).find('input[name="sdate"]').datepicker('option', 'maxDate', selectedDate);
           }

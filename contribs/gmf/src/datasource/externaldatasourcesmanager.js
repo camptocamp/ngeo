@@ -349,16 +349,16 @@ gmf.datasource.ExternalDataSourcesManager = class {
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator
       dataSource = new ngeo.datasource.OGC({
-        id,
+        id: id,
         name: layer['Title'],
-        ogcImageType,
+        ogcImageType: ogcImageType,
         ogcLayers: [{
           name: layer['Name'],
-          queryable
+          queryable: queryable
         }],
         ogcType: ngeo.datasource.OGC.Type.WMS,
         visible: true,
-        wmsInfoFormat,
+        wmsInfoFormat: wmsInfoFormat,
         wmsUrl: url
       });
 
@@ -381,7 +381,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
         dataSources: [dataSource],
         injector: this.injector_,
         title: service['Title'],
-        url
+        url: url
       });
       this.addLayer_(wmsGroup.layer);
       this.addWMSGroup_(wmsGroup);
@@ -417,12 +417,12 @@ gmf.datasource.ExternalDataSourcesManager = class {
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator
       dataSource = new ngeo.datasource.OGC({
-        id,
-        name,
+        id: id,
+        name: name,
         ogcType: ngeo.datasource.OGC.Type.WMTS,
         visible: true,
-        wmtsLayer,
-        wmtsUrl
+        wmtsLayer: wmtsLayer,
+        wmtsUrl: wmtsUrl
       });
 
       // Keep a reference to the external data source in the cache
@@ -453,7 +453,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
 
     // (6) Create and set WMTS cache item
     this.wmtsCache_[id] = {
-      layerObj,
+      layerObj: layerObj,
       // This watcher synchronizes the data source visible property to
       // the OL layer object visible property
       unregister: this.rootScope_.$watch(
@@ -527,7 +527,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
 
           const dataSource = new ngeo.datasource.File({
             features: new ol.Collection(features),
-            id,
+            id: id,
             name: file.name,
             visible: true
           });

@@ -134,7 +134,7 @@ gmf.printDirective = function(gmfPrintTemplateUrl) {
       'hiddenAttributeNames': '=?gmfPrintHiddenattributes',
       'attributesOut': '=?gmfPrintAttributesOut'
     },
-    link(scope, element, attr) {
+    link: (scope, element, attr) => {
       const ctrl = scope['ctrl'];
 
       scope.$watch(() => ctrl.active, function(active) {

@@ -208,7 +208,7 @@ ngeo.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
 
   const options = {
     stroke: new ol.style.Stroke({
-      color,
+      color: color,
       width: strokeWidth
     })
   };
@@ -317,7 +317,7 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       color: fillColor
     }),
     stroke: new ol.style.Stroke({
-      color,
+      color: color,
       width: strokeWidth
     })
   })];
@@ -335,7 +335,7 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
           color: fillColor
         }),
         stroke: new ol.style.Stroke({
-          color,
+          color: color,
           width: strokeWidth
         }),
         text: this.createTextStyle_({
@@ -431,7 +431,7 @@ ngeo.FeatureHelper.prototype.createEditingStyles = function(feature) {
         new ol.style.Style({
           stroke: new ol.style.Stroke({
             color: blue,
-            width
+            width: width
           })
         })
       );

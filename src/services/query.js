@@ -543,7 +543,7 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
     const wmsGetFeatureInfoUrl = items[0].source.wmsSource.getGetFeatureInfoUrl(
       coordinate, resolution, projCode);
 
-    this.$http_.get(wmsGetFeatureInfoUrl, {params, timeout: this.registerCanceler_().promise})
+    this.$http_.get(wmsGetFeatureInfoUrl, {params: params, timeout: this.registerCanceler_().promise})
       .then(function(items, response) {
         items.forEach(function(item) {
           item['resultSource'].pending = false;
@@ -636,7 +636,7 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
         featurePrefix: this.featurePrefix_,
         featureTypes: layers,
         outputFormat: 'GML3',
-        bbox,
+        bbox: bbox,
         geometryName: this.geometryName_
       };
 
@@ -656,7 +656,7 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
         const featureRequest = xmlSerializer.serializeToString(featureRequestXml);
 
         const canceler = this.registerCanceler_();
-        this.$http_.post(url, featureRequest, {params, timeout: canceler.promise})
+        this.$http_.post(url, featureRequest, {params: params, timeout: canceler.promise})
           .then((response) => {
             item['resultSource'].pending = false;
             const features = [];

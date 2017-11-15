@@ -50,7 +50,7 @@ gmf.elevationDirective = function() {
       'layer': '<gmfElevationLayer',
       'map': '=gmfElevationMap'
     },
-    link(scope, element, attr) {
+    link: (scope, element, attr) => {
       const ctrl = scope['ctrl'];
 
       // Watch active or not.

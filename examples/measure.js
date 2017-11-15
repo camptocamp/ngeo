@@ -49,7 +49,7 @@ app.measuretoolsDirective = function() {
      * @param {angular.Attributes} attrs Attributes.
      * @param {app.MeasuretoolsController} controller Controller.
      */
-    link(scope, element, attrs, controller) {
+    link: (scope, element, attrs, controller) => {
       controller.init();
     }
   };

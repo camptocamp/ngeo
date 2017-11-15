@@ -55,7 +55,7 @@ ngeo.interaction.ModifyRectangle = function(options) {
       wrapX: !!options.wrapX
     }),
     visible: this.getActive(),
-    style,
+    style: style,
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });

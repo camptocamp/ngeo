@@ -38,7 +38,7 @@ ngeo.bboxQueryDirective = function(ngeoMapQuerent) {
   return {
     restrict: 'A',
     scope: false,
-    link(scope, elem, attrs) {
+    link: (scope, elem, attrs) => {
       /**
        * @type {ol.Map}
        */
@@ -57,8 +57,8 @@ ngeo.bboxQueryDirective = function(ngeoMapQuerent) {
         const extent = interaction.getGeometry().getExtent();
         ngeoMapQuerent.issue({
           limit: scope.$eval(attrs['ngeoBboxQueryLimit']),
-          extent,
-          map
+          extent: extent,
+          map: map
         });
       };
       interaction.on('boxend', handleBoxEnd);

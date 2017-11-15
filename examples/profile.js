@@ -181,7 +181,7 @@ app.MainController = function($http, $scope) {
       * @param {number=} opt_z Z value.
       * @return {number} Z value.
       */
-    z(item, opt_z) {
+    z: (item, opt_z) => {
       if (opt_z !== undefined) {
         item['z'] = opt_z;
       }

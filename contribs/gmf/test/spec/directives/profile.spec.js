@@ -34,7 +34,7 @@ describe('gmf.GmfProfileController', () => {
       };
       profileController = $controller(
         'GmfProfileController', {
-          $scope,
+          $scope: $scope,
           ngeoCsvDownload: csvDownloadServiceMock,
           $element: $('<div></div>')}, data);
       $rootScope.$digest();

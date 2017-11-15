@@ -35,7 +35,7 @@ ngeo.search.searchDirective = function() {
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Atttributes.
      */
-    link(scope, element, attrs) {
+    link: (scope, element, attrs) => {
 
       const typeaheadOptionsExpr = attrs['ngeoSearch'];
       const typeaheadOptions = /** @type {TypeaheadOptions} */

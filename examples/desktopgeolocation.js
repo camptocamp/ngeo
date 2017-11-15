@@ -46,8 +46,8 @@ app.MainController = function($scope, ngeoFeatureOverlayMgr) {
    * @export
    */
   this.desktopGeolocationOptions = {
-    positionFeatureStyle,
-    accuracyFeatureStyle,
+    positionFeatureStyle: positionFeatureStyle,
+    accuracyFeatureStyle: accuracyFeatureStyle,
     zoom: 17
   };
 

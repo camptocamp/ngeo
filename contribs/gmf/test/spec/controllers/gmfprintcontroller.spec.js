@@ -11,12 +11,10 @@ describe('GmfPrintController', () => {
     $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
-    gmfPrintCtrl = $controller('GmfPrintController',
-      {
-        $scope,
-        gmfPrintUrl: ''
-      }
-    );
+    gmfPrintCtrl = $controller('GmfPrintController', {
+      $scope: $scope,
+      gmfPrintUrl: ''
+    });
     gmfPrintCtrl.map = new ol.Map({
       view: new ol.View({
         center: [0, 0],

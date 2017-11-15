@@ -65,7 +65,7 @@ ngeo.sortableDirective = function($timeout) {
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Atttributes.
      */
-    link(scope, element, attrs) {
+    link: (scope, element, attrs) => {
 
       const sortable = /** @type {Array} */
               (scope.$eval(attrs['ngeoSortable'])) || [];

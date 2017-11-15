@@ -99,12 +99,12 @@ exports = function(options) {
     dimensions: {
       'Time': options.timestamp
     },
-    projection,
+    projection: projection,
     requestEncoding: 'REST',
     layer: options.layer,
     style: 'default',
     matrixSet: projectionCode,
-    format,
+    format: format,
     tileGrid: tilegrid,
     crossOrigin: options.crossOrigin
   });

@@ -37,7 +37,7 @@ ngeo.filereaderDirective = function($window) {
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Atttributes.
      */
-    link(scope, element, attrs) {
+    link: (scope, element, attrs) => {
       const supported = 'FileReader' in $window;
       scope['supported'] = supported;
       if (!supported) {

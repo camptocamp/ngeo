@@ -86,7 +86,7 @@ ngeo.RuleHelper = class {
       case ngeo.AttributeType.DATETIME:
         if (isCustom) {
           rule = new ngeo.rule.Date({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.TemporalOperatorType.EQUALS,
             operators: [
               ngeo.rule.Rule.TemporalOperatorType.EQUALS,
@@ -98,7 +98,7 @@ ngeo.RuleHelper = class {
           });
         } else {
           rule = new ngeo.rule.Date({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.TemporalOperatorType.DURING,
             propertyName: attribute.name,
             type: attribute.type
@@ -107,7 +107,7 @@ ngeo.RuleHelper = class {
         break;
       case ngeo.AttributeType.GEOMETRY:
         rule = new ngeo.rule.Geometry({
-          name,
+          name: name,
           operator: ngeo.rule.Rule.SpatialOperatorType.WITHIN,
           operators: [
             ngeo.rule.Rule.SpatialOperatorType.CONTAINS,
@@ -121,7 +121,7 @@ ngeo.RuleHelper = class {
       case ngeo.AttributeType.NUMBER:
         if (isCustom) {
           rule = new ngeo.rule.Rule({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.OperatorType.EQUAL_TO,
             operators: [
               ngeo.rule.Rule.OperatorType.EQUAL_TO,
@@ -136,7 +136,7 @@ ngeo.RuleHelper = class {
           });
         } else {
           rule = new ngeo.rule.Rule({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.OperatorType.BETWEEN,
             propertyName: attribute.name,
             type: ngeo.AttributeType.NUMBER
@@ -146,14 +146,14 @@ ngeo.RuleHelper = class {
       case ngeo.AttributeType.SELECT:
         rule = new ngeo.rule.Select({
           choices: goog.asserts.assert(attribute.choices),
-          name,
+          name: name,
           propertyName: attribute.name
         });
         break;
       default:
         if (isCustom) {
           rule = new ngeo.rule.Text({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.OperatorType.LIKE,
             operators: [
               ngeo.rule.Rule.OperatorType.LIKE,
@@ -164,7 +164,7 @@ ngeo.RuleHelper = class {
           });
         } else {
           rule = new ngeo.rule.Text({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.OperatorType.LIKE,
             propertyName: attribute.name
           });

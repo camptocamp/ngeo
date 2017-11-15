@@ -68,7 +68,7 @@ gmf.mobileMeasureLengthDirective =
          * @param {angular.Attributes} attrs Attributes.
          * @param {gmf.MobileMeasureLengthController} controller Controller.
          */
-        link(scope, element, attrs, controller) {
+        link: (scope, element, attrs, controller) => {
           controller.init();
         }
       };

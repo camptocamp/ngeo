@@ -59,8 +59,8 @@ ngeo.interaction.MeasureLength.prototype.createDrawInteraction = function(style,
   return new ol.interaction.Draw(
     /** @type {olx.interaction.DrawOptions} */ ({
       type: 'LineString',
-      source,
-      style
+      source: source,
+      style: style
     }));
 
 };

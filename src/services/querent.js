@@ -554,7 +554,7 @@ ngeo.Querent = class {
         let filter;
         if (options.filter) {
           filter = this.ngeoRuleHelper_.createFilter({
-            dataSource,
+            dataSource: dataSource,
             filter: options.filter,
             incTime: true
           });
@@ -568,9 +568,9 @@ ngeo.Querent = class {
           );
 
           filter = this.ngeoRuleHelper_.createFilter({
-            dataSource,
+            dataSource: dataSource,
             incTime: true,
-            srsName
+            srsName: srsName
           });
         }
 
@@ -620,7 +620,7 @@ ngeo.Querent = class {
           url,
           featureCountRequest,
           {
-            params,
+            params: params,
             timeout: canceler.promise
           }
         ).then(((response) => {
@@ -658,7 +658,7 @@ ngeo.Querent = class {
             url,
             featureRequest,
             {
-              params,
+              params: params,
               timeout: canceler.promise
             }
           ).then((response) => {
@@ -744,7 +744,7 @@ ngeo.Querent = class {
           goog.asserts.assert(dataSources.length === 1);
           filtrableLayerName = dataSource.getFiltrableOGCLayerName();
           filterString = this.ngeoRuleHelper_.createFilterString({
-            dataSource,
+            dataSource: dataSource,
             srsName: projCode
           });
         }

@@ -83,7 +83,7 @@ gmf.mobileMeasurePointDirective =
          * @param {!angular.Attributes} attrs Attributes.
          * @param {!gmf.MobileMeasurePointController} controller Controller.
          */
-        link(scope, element, attrs, controller) {
+        link: (scope, element, attrs, controller) => {
           controller.init();
         }
       };
