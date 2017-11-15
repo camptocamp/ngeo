@@ -355,24 +355,6 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
 
 
 /**
- * Return 'out-of-resolution' if the current resolution of the map is out of
- * the min/max resolution in the node.
- * @param {gmfThemes.GmfLayerWMS} gmfLayerWMS the GeoMapFish Layer WMS.
- * @return {string|undefined} 'out-of-resolution' or undefined.
- * @export
- */
-gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayerWMS) {
-  var style;
-  var resolution = this.map.getView().getResolution();
-  if (gmfLayerWMS.minResolutionHint !== undefined && resolution < gmfLayerWMS.minResolutionHint ||
-      gmfLayerWMS.maxResolutionHint !== undefined && resolution > gmfLayerWMS.maxResolutionHint) {
-    style = 'out-of-resolution';
-  }
-  return style;
-};
-
-
-/**
  * Toggle the state of treeCtrl's node.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
@@ -586,6 +568,30 @@ gmf.LayertreeController.prototype.removeNode = function(node) {
 
 
 /**
+ * Return 'out-of-resolution' if the current resolution of the map is out of
+ * the min/max resolution in the node.
+ * @param {gmfThemes.GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
+ *     also allowed (the type is defined as GmfLayerWMS only to avoid some
+ *     useless tests to know if a minResolutionHint property can exist
+ *     on the node).
+ * @return {string|undefined} 'out-of-resolution' or undefined.
+ * @export
+ */
+gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayer) {
+  var resolution = this.map.getView().getResolution();
+  var minResolution = gmf.Themes.getNodeMinResolution(gmfLayer);
+  if (minResolution !== undefined && resolution < minResolution) {
+    return 'out-of-resolution';
+  }
+  var maxResolution = gmf.Themes.getNodeMaxResolution(gmfLayer);
+  if (maxResolution !== undefined && resolution > maxResolution) {
+    return 'out-of-resolution';
+  }
+  return undefined;
+};
+
+
+/**
  * Set the resolution of the map with the max or min resolution of the node.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
@@ -595,11 +601,14 @@ gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
   var gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
   var view = this.map.getView();
   var resolution = view.getResolution();
-  if (gmfLayer.minResolutionHint !== undefined && resolution < gmfLayer.minResolutionHint) {
-    view.setResolution(view.constrainResolution(gmfLayer.minResolutionHint, 0, 1));
-  }
-  if (gmfLayer.maxResolutionHint !== undefined && resolution > gmfLayer.maxResolutionHint) {
-    view.setResolution(view.constrainResolution(gmfLayer.maxResolutionHint, 0, -1));
+  var minResolution = gmf.Themes.getNodeMinResolution(gmfLayer);
+  if (minResolution !== undefined && resolution < minResolution) {
+    view.setResolution(view.constrainResolution(minResolution, 0, 1));
+  } else {
+    var maxResolution = gmf.Themes.getNodeMaxResolution(gmfLayer);
+    if (maxResolution !== undefined && resolution > maxResolution) {
+      view.setResolution(view.constrainResolution(maxResolution, 0, -1));
+    }
   }
 };
 
