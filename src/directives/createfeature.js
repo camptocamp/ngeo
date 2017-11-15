@@ -7,6 +7,7 @@ goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureLength');
 goog.require('ngeo.utils');
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');

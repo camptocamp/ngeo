@@ -4,6 +4,7 @@ goog.require('ngeo');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.Notification');
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Geolocation');
 goog.require('ol.GeolocationProperty');

@@ -15,6 +15,7 @@ goog.require('ngeo.exportfeaturesDirective');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
+goog.require('ol.events');
 goog.require('ol.Collection');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');

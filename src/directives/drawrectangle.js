@@ -1,6 +1,7 @@
 goog.provide('ngeo.drawrectangleDirective');
 
 goog.require('ngeo');
+goog.require('ol.events');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
 goog.require('ol.interaction.DrawEventType');

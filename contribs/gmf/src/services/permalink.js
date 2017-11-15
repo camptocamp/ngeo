@@ -29,6 +29,7 @@ goog.require('ngeo.datasource.WMSGroup');
 goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.WfsPermalink');
 goog.require('goog.asserts');
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.geom.Point');
 goog.require('ol.proj');

@@ -5,6 +5,7 @@ goog.require('gmf.Themes');
 goog.require('ngeo.Notification');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.LayertreeController');
+goog.require('ol.events');
 
 
 /**

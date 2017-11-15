@@ -5,6 +5,7 @@ goog.require('ngeo.CsvDownload');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Overlay');
 goog.require('ol.geom.LineString');

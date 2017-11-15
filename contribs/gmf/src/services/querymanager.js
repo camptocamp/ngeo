@@ -1,5 +1,6 @@
 goog.provide('gmf.QueryManager');
 
+goog.require('ol.events');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('ngeo.Query');

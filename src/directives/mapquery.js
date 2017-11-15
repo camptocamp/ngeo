@@ -2,6 +2,7 @@ goog.provide('ngeo.mapQueryDirective');
 
 goog.require('ngeo');
 goog.require('ngeo.MapQuerent');
+goog.require('ol.events');
 
 
 /**

@@ -2,6 +2,7 @@ goog.provide('ngeo.interaction.Modify');
 
 goog.require('ngeo.interaction.ModifyCircle');
 goog.require('ngeo.interaction.ModifyRectangle');
+goog.require('ol.events');
 goog.require('ol.functions');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.Collection');

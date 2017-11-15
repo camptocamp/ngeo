@@ -1,6 +1,7 @@
 goog.provide('ngeo.rule.Geometry');
 
 goog.require('ngeo.rule.Rule');
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.format.GeoJSON');
 
