@@ -1,48 +1,9 @@
 goog.provide('ngeo.Menu');
-goog.provide('ngeo.MenuEvent');
-goog.provide('ngeo.MenuEventType');
 
 goog.require('ol.events');
 goog.require('ol.Overlay');
 goog.require('ol.OverlayPositioning');
 goog.require('ol.events.Event');
-
-
-/**
- * @enum {string}
- */
-ngeo.MenuEventType = {
-  /**
-   * Triggered upon clicking an action button
-   * @event ngeo.MenuEvent#actionclick
-   */
-  ACTION_CLICK: 'actionclick'
-};
-
-
-/**
- * @classdesc
- * Events emitted by {@link ngeo.Menu} instances are instances of this type.
- *
- * @constructor
- * @extends {ol.events.Event}
- * @implements {ngeox.MenuEvent}
- * @param {ngeo.MenuEventType} type Type.
- * @param {string} action Action name that was clicked.
- */
-ngeo.MenuEvent = function(type, action) {
-
-  ol.events.Event.call(this, type);
-
-  /**
-   * The action name that was clicked.
-   * @type {string}
-   * @api stable
-   */
-  this.action = action;
-
-};
-ol.inherits(ngeo.MenuEvent, ol.events.Event);
 
 
 /**
@@ -213,7 +174,7 @@ ngeo.Menu.prototype.close = function() {
 ngeo.Menu.prototype.handleActionClick_ = function(action, evt) {
 
   this.dispatchEvent(
-    new ngeo.MenuEvent(ngeo.MenuEventType.ACTION_CLICK, action));
+    new ngeo.Menu.Event(ngeo.Menu.EventType.ACTION_CLICK, action));
 
   if (this.autoClose_) {
     this.close();
@@ -257,3 +218,40 @@ ngeo.Menu.prototype.handleMapPointerMove_ = function(evt) {
     evt.pixel = [Infinity, Infinity];
   }
 };
+
+
+/**
+ * @enum {string}
+ */
+ngeo.Menu.EventType = {
+  /**
+   * Triggered upon clicking an action button
+   * @event ngeo.Menu.Event#actionclick
+   */
+  ACTION_CLICK: 'actionclick'
+};
+
+
+/**
+ * @classdesc
+ * Events emitted by {@link ngeo.Menu} instances are instances of this type.
+ *
+ * @constructor
+ * @extends {ol.events.Event}
+ * @implements {ngeox.MenuEvent}
+ * @param {ngeo.Menu.EventType} type Type.
+ * @param {string} action Action name that was clicked.
+ */
+ngeo.Menu.Event = function(type, action) {
+
+  ol.events.Event.call(this, type);
+
+  /**
+   * The action name that was clicked.
+   * @type {string}
+   * @api stable
+   */
+  this.action = action;
+
+};
+ol.inherits(ngeo.Menu.Event, ol.events.Event);

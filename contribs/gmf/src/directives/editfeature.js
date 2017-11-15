@@ -785,7 +785,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
     // FIXME
     //this.registerInteractions_();
 
-    keys.push(ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
+    keys.push(ol.events.listen(this.menu_, ngeo.Menu.EventType.ACTION_CLICK,
       this.handleMenuActionClick_, this));
 
     keys.push(ol.events.listen(this.translate_,
@@ -1100,7 +1100,7 @@ gmf.EditfeatureController.prototype.handleFeatureGeometryChange_ = function() {
 
 
 /**
- * @param {ngeo.MenuEvent} evt Event.
+ * @param {ngeo.Menu.Event} evt Event.
  * @private
  */
 gmf.EditfeatureController.prototype.handleMenuActionClick_ = function(evt) {

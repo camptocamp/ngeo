@@ -659,7 +659,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
       actions
     });
 
-    ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
+    ol.events.listen(this.menu_, ngeo.Menu.Event.ACTION_CLICK,
       this.handleMenuActionClick_, this);
     this.map.addOverlay(this.menu_);
 
@@ -683,7 +683,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
 
 
 /**
- * @param {!ngeo.MenuEvent} evt Event.
+ * @param {!ngeo.Menu.Event} evt Event.
  * @private
  */
 gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
