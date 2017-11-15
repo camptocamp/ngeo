@@ -1,4 +1,3 @@
-goog.provide('gmf.LayertreeController');
 goog.provide('gmf.layertreeComponent');
 
 goog.require('ngeo.SyncArrays');
@@ -131,7 +130,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
  * @param {!gmf.Themes} gmfThemes The gmf Themes service.
  * @constructor
- * @export
+ * @private
  * @struct
  * @ngInject
  * @ngdoc controller
@@ -793,21 +792,6 @@ gmf.LayertreeController.prototype.supportsOpacityChange = function(treeCtrl) {
         treeCtrl.depth > 1 && parentNode.mixed
       )
     );
-};
-
-
-/**
- * Get the snapping configuration object from a Layertree controller
- *
- * @param {ngeo.LayertreeController} treeCtrl Layertree controller,
- * @return {?gmfThemes.GmfSnappingConfig} Snapping configuration, if found.
- * @export
- */
-gmf.LayertreeController.getSnappingConfig = function(treeCtrl) {
-  const node = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
-  const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
-    node.metadata.snappingConfig : null;
-  return config;
 };
 
 gmf.module.controller('GmfLayertreeController', gmf.LayertreeController);
