@@ -15,6 +15,7 @@ goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.utils');
 goog.require('ol.Collection');
+goog.require('ol.events');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.MultiPolygon');
 goog.require('ol.interaction.Modify');

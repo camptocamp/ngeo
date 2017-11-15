@@ -4,6 +4,8 @@ goog.provide('ngeo.layertreeDirective');
 goog.require('ngeo');
 goog.require('ngeo.DecorateLayer');
 goog.require('ngeo.DecorateLayerLoading');
+goog.require('ol.events');
+
 
 ngeo.module.value('ngeoLayertreeTemplateUrl',
   /**

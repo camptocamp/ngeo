@@ -6,6 +6,7 @@ goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureLengthMobile');
 goog.require('ngeo.interaction.MobileDraw');
+goog.require('ol.events');
 goog.require('ol.style.Fill');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Stroke');

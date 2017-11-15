@@ -4,6 +4,7 @@ goog.require('gmf');
 goog.require('gmf.ThemeManager');
 goog.require('gmf.Themes');
 goog.require('gmf.ThemesEventType');
+goog.require('ol.events');
 
 
 /**

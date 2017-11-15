@@ -16,6 +16,7 @@ goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
 goog.require('ol.Collection');
+goog.require('ol.events');
 
 
 /**

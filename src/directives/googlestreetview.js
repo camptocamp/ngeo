@@ -1,5 +1,6 @@
 goog.provide('ngeo.googlestreetviewComponent');
 
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Observable');
 goog.require('ol.geom.Point');

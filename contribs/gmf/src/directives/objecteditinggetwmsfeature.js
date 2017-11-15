@@ -2,6 +2,7 @@ goog.provide('gmf.objecteditinggetwmsfeatureDirective');
 
 goog.require('gmf');
 goog.require('gmf.ObjectEditingQuery');
+goog.require('ol.events');
 
 
 /**

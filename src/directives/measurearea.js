@@ -1,6 +1,7 @@
 goog.provide('ngeo.measureareaDirective');
 
 goog.require('ngeo');
+goog.require('ol.events');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureArea');

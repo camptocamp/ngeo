@@ -1,5 +1,6 @@
 goog.provide('ngeo.interaction.DrawRegularPolygonFromClick');
 
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.functions');
 goog.require('ol.geom.Circle');

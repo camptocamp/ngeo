@@ -5,6 +5,7 @@ goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
+goog.require('ol.events');
 
 
 gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',

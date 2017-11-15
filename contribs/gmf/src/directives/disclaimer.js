@@ -1,5 +1,6 @@
 goog.provide('gmf.disclaimerComponent');
 
+goog.require('ol.events');
 goog.require('gmf');
 goog.require('ngeo.Disclaimer');
 goog.require('ngeo.EventHelper');

@@ -4,6 +4,7 @@ goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('gmf.LayertreeController');
+goog.require('ol.events');
 goog.require('ol.Collection');
 goog.require('ol.ViewProperty');
 goog.require('ol.format.WFS');

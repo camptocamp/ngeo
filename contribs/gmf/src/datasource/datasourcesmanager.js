@@ -11,6 +11,7 @@ goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.WMSTime');
+goog.require('ol.events');
 goog.require('ol.obj');
 goog.require('ol.layer.Image');
 goog.require('ol.source.ImageWMS');

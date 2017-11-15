@@ -7,6 +7,7 @@ goog.require('gmf');
 goog.require('gmf.Raster');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Debounce');
+goog.require('ol.events');
 goog.require('ol.events.EventType');
 
 

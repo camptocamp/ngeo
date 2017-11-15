@@ -2,6 +2,7 @@ goog.provide('ngeo.Menu');
 goog.provide('ngeo.MenuEvent');
 goog.provide('ngeo.MenuEventType');
 
+goog.require('ol.events');
 goog.require('ol.Overlay');
 goog.require('ol.OverlayPositioning');
 goog.require('ol.events.Event');

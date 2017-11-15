@@ -3,6 +3,7 @@
 
 goog.provide('gmf.datasource.ExternalDataSourcesManager');
 
+goog.require('ol.events');
 goog.require('gmf');
 goog.require('ngeo.File');
 goog.require('ngeo.datasource.DataSources');

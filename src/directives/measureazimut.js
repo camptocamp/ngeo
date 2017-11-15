@@ -4,6 +4,7 @@ goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureAzimut');
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.geom.Polygon');
 goog.require('ol.style.Style');

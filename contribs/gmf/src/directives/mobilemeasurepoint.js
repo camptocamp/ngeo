@@ -6,6 +6,7 @@ goog.require('ngeo.Debounce');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.interaction.MeasurePointMobile');
 goog.require('ngeo.interaction.MobileDraw');
+goog.require('ol.events');
 goog.require('ol.style.Fill');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Stroke');

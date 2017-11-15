@@ -1,8 +1,10 @@
 goog.provide('ngeo.attributesComponent');
 
+goog.require('ol.events');
 goog.require('ol.ObjectEventType');
 goog.require('ngeo');
 goog.require('ngeo.EventHelper');
+
 
 /**
  * Component used to render the attributes of a feature into a form.

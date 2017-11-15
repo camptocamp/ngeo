@@ -25,6 +25,7 @@ goog.require('ngeo.interaction.Translate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.modalDirective');
 goog.require('ol.Collection');
+goog.require('ol.events');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Modify');
 goog.require('ol.interaction.TranslateEventType');

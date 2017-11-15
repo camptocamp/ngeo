@@ -38,6 +38,7 @@ goog.require('ngeo.MapQuerent');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
+goog.require('ol.events');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');

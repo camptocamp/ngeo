@@ -1,6 +1,7 @@
 goog.provide('ngeo.profileDirective');
 
 goog.require('goog.asserts');
+goog.require('ol.events');
 goog.require('ngeo');
 goog.require('ngeo.profile');
 goog.require('ngeo.Debounce');

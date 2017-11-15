@@ -3,6 +3,7 @@ goog.provide('ngeo.scaleselectorDirective');
 
 goog.require('ngeo');
 goog.require('ol.array');
+goog.require('ol.events');
 goog.require('ol.Map');
 goog.require('ol.Object');
 goog.require('ol.events');
