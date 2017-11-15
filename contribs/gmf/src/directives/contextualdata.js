@@ -1,5 +1,4 @@
 goog.provide('gmf.contextualdataDirective');
-goog.provide('gmf.contextualdatacontentDirective');
 
 goog.require('gmf');
 goog.require('gmf.Raster');
