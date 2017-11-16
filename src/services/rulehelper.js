@@ -625,7 +625,11 @@ ngeo.RuleHelper = class {
       const stringExpression = String(expression);
       filter = ol.format.filter.like(
         propertyName,
-        stringExpression
+        stringExpression,
+        '*', /* wildCard */
+        '.', /* singleChar */
+        '!', /* escapeChar */
+        false /* matchCase */
       );
     } else if (operator === rot.NOT_EQUAL_TO) {
       filter = ol.format.filter.notEqualTo(

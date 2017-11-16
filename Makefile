@@ -183,7 +183,7 @@ help:
 	@echo "- cleanall                Remove all the build artefacts"
 	@echo "- cleanallcache           Remove all the build artefacts and the extra caches (npm and pip)"
 	@echo
-	@echo "Segondary targets:"
+	@echo "Secondary targets:"
 	@echo
 	@echo "- apidoc                  Build the API documentation using JSDoc"
 	@echo "- examples-hosted         Build the hosted examples"
