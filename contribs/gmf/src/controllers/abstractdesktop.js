@@ -43,8 +43,6 @@ goog.require('ngeo.FeatureOverlay');
 /** @suppress {extraRequire} */
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
-goog.require('ngeo.ScaleselectorOptions');
-/** @suppress {extraRequire} */
 goog.require('ngeo.scaleselectorDirective');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
@@ -240,11 +238,11 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
 
   /**
-   * @type {ngeo.ScaleselectorOptions}
+   * @type {ngeox.ScaleselectorOptions}
    * @export
    */
   this.scaleSelectorOptions = {
-    'dropup': true
+    dropup: true
   };
 
   /**

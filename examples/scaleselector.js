@@ -1,6 +1,5 @@
 goog.provide('app.scaleselector');
 
-goog.require('ngeo.ScaleselectorOptions');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 /** @suppress {extraRequire} */
@@ -51,11 +50,11 @@ app.MainController = function($scope) {
 
   /**
    * Use the "dropup" variation of the Bootstrap dropdown.
-   * @type {ngeo.ScaleselectorOptions}
+   * @type {ngeox.ScaleselectorOptions}
    * @export
    */
   this.options = {
-    'dropup': true
+    dropup: true
   };
 
 };
