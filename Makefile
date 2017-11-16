@@ -47,7 +47,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/moment/moment.js \
 	node_modules/url-polyfill/url-polyfill.js \
 	third-party/jquery-ui/jquery-ui.js \
-	third-party/jquery-ui/jquery.ui.touch-punch.min.js \
+	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js \
 	node_modules/google-closure-library/closure/goog/transpile.js
 else
 GMF_APPS_LIBS_JS_FILES += \
@@ -71,7 +71,8 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/jsts/dist/jsts.min.js \
 	node_modules/moment/min/moment.min.js \
 	node_modules/url-polyfill/url-polyfill.min.js \
-	third-party/jquery-ui/jquery.ui.touch-punch.min.js
+	third-party/jquery-ui/jquery-ui.min.js \
+	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js
 endif
 
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
@@ -430,7 +431,7 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/lib/jquery.ui.touch-punch.min.js: third-party/jquery-ui/jquery.ui.touch-punch.min.js
+.build/examples-hosted/lib/jquery.ui.touch-punch.min.js: node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
@@ -546,9 +547,8 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
 		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.js|lib/jquery-ui.min.js|' \
-		-e 's|\.\./third-party/jquery-ui/jquery.ui.touch-punch.min\.js|lib/jquery.ui.touch-punch.min.js|' \
+		-e 's|\.\./node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js|lib/jquery.ui.touch-punch.min.js|' \
 		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.css|lib/jquery-ui.min.css|' \
-		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
 		-e 's|\.\./node_modules/angular-animate/angular-animate.js|lib/angular-animate.min.js|' \
 		-e 's|\.\./node_modules/angular-float-thead/angular-floatThead.js|lib/angular-floatThead.js|' \
@@ -579,7 +579,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery\.js|lib/jquery.min.js|' \
 		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.js|lib/jquery-ui.min.js|' \
-		-e 's|\.\./third-party/jquery-ui/jquery.ui.touch-punch.min\.js|lib/jquery.ui.touch-punch.min.js|' \
+		-e 's|\.\./node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js|lib/jquery.ui.touch-punch.min.js|' \
 		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.css|lib/jquery-ui.min.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap\.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular\.js|lib/angular.min.js|' \
