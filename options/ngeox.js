@@ -838,6 +838,15 @@ ngeox.ScaleselectorOptions.prototype.dropup;
 
 
 /**
+ * @typedef {{
+ *     handleClassName: (string|undefined),
+ *     draggerClassName: (string|undefined)
+ * }}
+ */
+ngeox.SortableOptions;
+
+
+/**
  * A WFS type. To be used with {@link ngeox.WfsPermalinkOptions}.
  * @typedef {{
  *     featureType: (string),

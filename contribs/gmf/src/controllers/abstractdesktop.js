@@ -63,8 +63,6 @@ gmf.module.value('isDesktop', true);
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.sortableDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.SortableOptions');
 
 
 gmf.module.value('ngeoQueryOptions', {

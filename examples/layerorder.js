@@ -1,8 +1,6 @@
 goog.provide('app.layerorder');
 
 goog.require('ngeo.DecorateLayer');
-/** @suppress {extraRequire} */
-goog.require('ngeo.SortableOptions');
 goog.require('ngeo.SyncArrays');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
