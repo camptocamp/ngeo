@@ -86,7 +86,7 @@ ngeox.Attribute.prototype.type;
 
 
 /**
- * The options to use when creating a filter uwing the `ngeo.RuleHelper`
+ * The options to use when creating a filter using the `ngeo.RuleHelper`
  * service.
  *
  * @typedef {{
