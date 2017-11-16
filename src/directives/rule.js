@@ -639,7 +639,7 @@ ngeo.RuleController = class {
       keys.push(
         ol.events.listen(
           this.rotate_,
-          ngeo.RotateEventType.ROTATEEND,
+          ngeo.interaction.Rotate.EventType.ROTATEEND,
           this.handleRotateEnd_,
           this
         )
@@ -827,7 +827,7 @@ ngeo.RuleController = class {
 
       ol.events.listen(
         this.menu_,
-        ngeo.MenuEventType.ACTION_CLICK,
+        ngeo.Menu.Event.ACTION_CLICK,
         this.handleMenuActionClick_,
         this
       );
@@ -850,7 +850,7 @@ ngeo.RuleController = class {
     if (this.menu_) {
       ol.events.unlisten(
         this.menu_,
-        ngeo.MenuEventType.ACTION_CLICK,
+        ngeo.Menu.Event.ACTION_CLICK,
         this.handleMenuActionClick_,
         this
       );
@@ -860,7 +860,7 @@ ngeo.RuleController = class {
   }
 
   /**
-   * @param {ngeo.MenuEvent} evt Event.
+   * @param {ngeo.Menu.Event} evt Event.
    * @private
    */
   handleMenuActionClick_(evt) {
@@ -882,7 +882,7 @@ ngeo.RuleController = class {
   }
 
   /**
-   * @param {ngeo.RotateEvent} evt Event.
+   * @param {ngeo.interaction.Rotate.Event} evt Event.
    * @private
    */
   handleRotateEnd_(evt) {
