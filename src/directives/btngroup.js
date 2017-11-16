@@ -1,5 +1,4 @@
 goog.provide('ngeo.btnDirective');
-goog.provide('ngeo.btngroupDirective');
 
 goog.require('ngeo');
 

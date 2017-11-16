@@ -7,7 +7,7 @@ goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
+goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.drawfeatureDirective');
 /** @suppress {extraRequire} */

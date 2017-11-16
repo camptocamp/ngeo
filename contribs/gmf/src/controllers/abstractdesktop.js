@@ -31,7 +31,7 @@ goog.require('gmf.TimeSliderDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.shareDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
+goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.resizemapDirective');
 /** @suppress {extraRequire} */

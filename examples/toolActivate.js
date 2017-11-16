@@ -5,7 +5,7 @@ goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
+goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Collection');
