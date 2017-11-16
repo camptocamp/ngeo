@@ -834,6 +834,22 @@ ngeox.QuerySource.prototype.wfsQuery;
 
 
 /**
+ * Options to configure the scale selector
+ * @typedef {{
+ *     dropup: (boolean|undefined)
+ * }}
+ */
+ngeox.ScaleselectorOptions;
+
+
+/**
+ * True to get a drop menu that opens imself to the top, instead of the bottom.
+ * @type {boolean|undefined}
+ */
+ngeox.ScaleselectorOptions.prototype.dropup;
+
+
+/**
  * A WFS type. To be used with {@link ngeox.WfsPermalinkOptions}.
  * @typedef {{
  *     featureType: (string),
