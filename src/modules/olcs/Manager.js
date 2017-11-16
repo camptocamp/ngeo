@@ -7,8 +7,8 @@ const Manager = class extends olcs.contrib.Manager {
   /**
    * @override
    */
-  constructor() {
-    super(...arguments);
+  constructor(...args) {
+    super(...args);
     /**
      * @type {angular.Scope}
      * @private
