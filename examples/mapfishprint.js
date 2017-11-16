@@ -2,7 +2,6 @@ goog.provide('app.mapfishprint');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.CreatePrint');
 goog.require('ngeo.Print');
 goog.require('ngeo.PrintUtils');
 /** @suppress {extraRequire} */

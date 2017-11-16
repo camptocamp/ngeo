@@ -3,7 +3,7 @@ goog.provide('gmf.printDirective');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
-goog.require('ngeo.CreatePrint');
+goog.require('ngeo.Print');
 goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.PrintUtils');
