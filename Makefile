@@ -20,6 +20,12 @@ GMF_TEST_JS_FILES := $(shell find contribs/gmf/test -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 GMF_APPS += mobile desktop desktop_alt mobile_alt oeedit oeview
+GMF_APP_ENTRY_POINT_mobile := MobileController
+GMF_APP_ENTRY_POINT_desktop := DesktopController
+GMF_APP_ENTRY_POINT_desktop_alt := AlternativeDesktopController
+GMF_APP_ENTRY_POINT_mobile_alt := AlternativeMobileController
+GMF_APP_ENTRY_POINT_oeedit := OEEditController
+GMF_APP_ENTRY_POINT_oeview := OEViewController
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less src/modules -type f -name '*.less')
 DEVELOPMENT ?= FALSE
@@ -798,7 +804,7 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		$(CLOSURE_VARS) \
 		--var 'src=contribs/gmf/apps/**/js/*.js,contribs/gmf/apps/appmodule.js' \
 		--var src_set=contribs_gmf \
-		--var entry_point=app_$* \
+		--var entry_point=app.$(GMF_APP_ENTRY_POINT_$*) \
 		--var source_map=contribs/gmf/build/$*.js.map $< > $@
 
 contribs/gmf/build/angular-locale_%.js: github_versions
