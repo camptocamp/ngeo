@@ -1,6 +1,6 @@
 goog.provide('app.popupservice');
 
-goog.require('ngeo.CreatePopup');
+goog.require('ngeo.Popup');
 
 
 /** @type {!angular.Module} **/

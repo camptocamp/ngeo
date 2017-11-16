@@ -5,7 +5,7 @@
 
 goog.provide('app.layertree');
 
-goog.require('ngeo.CreatePopup');
+goog.require('ngeo.Popup');
 /** @suppress {extraRequire} */
 goog.require('ngeo.layertreeDirective');
 /** @suppress {extraRequire} */

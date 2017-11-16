@@ -2,7 +2,7 @@ goog.provide('ngeo.Disclaimer');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
-goog.require('ngeo.CreatePopup');
+goog.require('ngeo.Popup');
 goog.require('ngeo.Message');
 
 

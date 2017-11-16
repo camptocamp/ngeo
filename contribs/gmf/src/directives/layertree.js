@@ -10,7 +10,7 @@ goog.require('gmf.Permalink');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.WMSTime');
-goog.require('ngeo.CreatePopup');
+goog.require('ngeo.Popup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
 goog.require('ngeo.datasource.OGC');

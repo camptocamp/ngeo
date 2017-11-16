@@ -1,4 +1,3 @@
-goog.provide('ngeo.CreatePopup');
 goog.provide('ngeo.Popup');
 
 goog.require('ngeo');
