@@ -1,6 +1,4 @@
 goog.provide('ngeo.popoverDirective');
-goog.provide('ngeo.popoverAnchorDirective');
-goog.provide('ngeo.popoverContentDirective');
 
 goog.require('ngeo');
 
