@@ -4,7 +4,7 @@ goog.require('ngeo');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
+goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.drawpointDirective');
 /** @suppress {extraRequire} */

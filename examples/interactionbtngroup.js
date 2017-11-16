@@ -3,7 +3,7 @@ goog.provide('app.interactionbtngroup');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
+goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapDirective');
 goog.require('ol.Collection');
