@@ -485,6 +485,19 @@ gmf.Themes.prototype.hasNodeEditableLayers_ = function(node) {
 
 
 /**
+ * Get the snapping configuration object from a Layertree controller
+ * @param {gmfThemes.GmfLayer} node Layer node from the theme.
+ * @return {?gmfThemes.GmfSnappingConfig} Snapping configuration, if found.
+ * @export
+ */
+gmf.Themes.getSnappingConfig = function(node) {
+  const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
+    node.metadata.snappingConfig : null;
+  return config;
+};
+
+
+/**
  * @param {number=} opt_roleId The role id to send in the request.
  * Load themes from the "themes" service.
  * @export

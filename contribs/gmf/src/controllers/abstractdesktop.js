@@ -7,8 +7,6 @@ goog.require('ngeo.bboxQueryDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdataDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.contextualdatacontentDirective');
-/** @suppress {extraRequire} */
 goog.require('gmf.displayquerygridComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawfeatureDirective');
