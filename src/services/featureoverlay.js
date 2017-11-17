@@ -133,4 +133,3 @@ ngeo.FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {
   const feature = /** @type {ol.Feature} */ (evt.element);
   this.removeFeature(feature);
 };
-
