@@ -1,5 +1,5 @@
-goog.provide('ngeo.GridConfig');
-goog.provide('ngeo.gridComponent');
+goog.module('ngeo.gridComponent');
+goog.module.declareLegacyNamespace();
 
 goog.require('ngeo');
 goog.require('ol.has');
@@ -19,134 +19,6 @@ ngeo.module.value('ngeoGridTemplateUrl',
       `${ngeo.baseTemplateUrl}/grid.html`;
   }
 );
-
-
-/**
- * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
- * @param {Array.<ngeox.GridColumnDef>|undefined} columnDefs Column definition of a grid.
- * @constructor
- * @struct
- * @export
- */
-ngeo.GridConfig = function(data, columnDefs) {
-  /**
-   * @type {Array.<Object>|undefined}
-   * @export
-   */
-  this.data = data;
-
-  /**
-   * @type {Array.<ngeox.GridColumnDef>|undefined}
-   * @export
-   */
-  this.columnDefs = columnDefs;
-
-  /**
-   * @type {!Object.<string, Object>}
-   * @export
-   */
-  this.selectedRows = {};
-};
-
-
-/**
- * Get an ID for a row.
- * @param {Object} attributes An entry/row.
- * @return {string} Unique id for this object.
- * @export
- */
-ngeo.GridConfig.getRowUid = function(attributes) {
-  return `${ol.getUid(attributes)}`;
-};
-
-
-/**
- * Is the given row selected?
- * @param {Object} attributes An entry/row.
- * @return {boolean} True if already selected. False otherwise.
- * @export
- */
-ngeo.GridConfig.prototype.isRowSelected = function(attributes) {
-  return !!this.selectedRows[ngeo.GridConfig.getRowUid(attributes)];
-};
-
-
-/**
- * Returns the number of selected rows.
- * @return {number} Number of selected rows.
- * @export
- */
-ngeo.GridConfig.prototype.getSelectedCount = function() {
-  return Object.keys(this.selectedRows).length;
-};
-
-
-/**
- * Returns the selected rows.
- * @return {Array.<Object>} Selected rows in the current ordering.
- * @export
- */
-ngeo.GridConfig.prototype.getSelectedRows = function() {
-  return this.data.filter(row => this.isRowSelected(row));
-};
-
-
-/**
- * @param {Object} attributes An entry/row.
- * @public
- */
-ngeo.GridConfig.prototype.selectRow = function(attributes) {
-  const uid = ngeo.GridConfig.getRowUid(attributes);
-  this.selectedRows[uid] = attributes;
-};
-
-
-/**
- * @param {Object} attributes An entry/row.
- * @public
- */
-ngeo.GridConfig.prototype.toggleRow = function(attributes) {
-  const uid = ngeo.GridConfig.getRowUid(attributes);
-  const isSelected = this.isRowSelected(attributes);
-  if (isSelected) {
-    delete this.selectedRows[uid];
-  } else {
-    this.selectedRows[uid] = attributes;
-  }
-};
-
-
-/**
- * Select all rows.
- * @export
- */
-ngeo.GridConfig.prototype.selectAll = function() {
-  this.data.forEach((attributes) => {
-    this.selectRow(attributes);
-  });
-};
-
-
-/**
- * Unselect all rows.
- * @export
- */
-ngeo.GridConfig.prototype.unselectAll = function() {
-  for (const rowId in this.selectedRows) {
-    delete this.selectedRows[rowId];
-  }
-};
-
-
-/**
- * Invert selection.
- * @export
- */
-ngeo.GridConfig.prototype.invertSelection = function() {
-  this.data.forEach((attributes) => {
-    this.toggleRow(attributes);
-  });
-};
 
 
 /**
@@ -178,7 +50,7 @@ function ngeoGridTemplateUrl($element, $attrs, ngeoGridTemplateUrl) {
  * @ngdoc component
  * @ngname ngeoGrid
  */
-ngeo.gridComponent = {
+const gridComponent = {
   controller: 'ngeoGridController as ctrl',
   bindings: {
     'configuration': '=ngeoGridConfiguration'
@@ -186,7 +58,7 @@ ngeo.gridComponent = {
   templateUrl: ngeoGridTemplateUrl
 };
 
-ngeo.module.component('ngeoGrid', ngeo.gridComponent);
+ngeo.module.component('ngeoGrid', gridComponent);
 
 
 /**
@@ -198,7 +70,7 @@ ngeo.module.component('ngeoGrid', ngeo.gridComponent);
  * @ngdoc controller
  * @ngname ngeoGridController
  */
-ngeo.GridController = function($scope) {
+const GridController = function($scope) {
 
   /**
    * @type {!angular.Scope}
@@ -247,7 +119,7 @@ ngeo.GridController = function($scope) {
 /**
  * Init the controller
  */
-ngeo.GridController.prototype.$onInit = function() {
+GridController.prototype.$onInit = function() {
   this.selectedRows = this.configuration.selectedRows;
 };
 
@@ -260,7 +132,7 @@ ngeo.GridController.prototype.$onInit = function() {
  *    sort the data.
  * @export
  */
-ngeo.GridController.prototype.sort = function(columnName) {
+GridController.prototype.sort = function(columnName) {
   this.sortAscending = this.sortedBy === columnName ? !this.sortAscending : true;
   this.sortedBy = columnName;
 
@@ -283,7 +155,7 @@ ngeo.GridController.prototype.sort = function(columnName) {
  * @param {jQuery.Event} event Event.
  * @export
  */
-ngeo.GridController.prototype.clickRow = function(attributes, event) {
+GridController.prototype.clickRow = function(attributes, event) {
   const shiftKey = this.isShiftKeyOnly_(event);
   const platformModifierKey = this.isPlatformModifierKeyOnly_(event);
 
@@ -297,7 +169,7 @@ ngeo.GridController.prototype.clickRow = function(attributes, event) {
  * @param {boolean} platformModifierKey CTRL/Meta pressed?
  * @private
  */
-ngeo.GridController.prototype.clickRow_ = function(
+GridController.prototype.clickRow_ = function(
   attributes, shiftKey, platformModifierKey) {
 
   if (shiftKey && !platformModifierKey) {
@@ -319,7 +191,7 @@ ngeo.GridController.prototype.clickRow_ = function(
  * @param {Object} attributes An entry/row.
  * @private
  */
-ngeo.GridController.prototype.selectRange_ = function(attributes) {
+GridController.prototype.selectRange_ = function(attributes) {
   const targetUid = ngeo.GridConfig.getRowUid(attributes);
   const data = this.configuration.data;
 
@@ -377,7 +249,7 @@ ngeo.GridController.prototype.selectRange_ = function(attributes) {
  * @param {jQuery.Event} event Event.
  * @export
  */
-ngeo.GridController.prototype.preventTextSelection = function(event) {
+GridController.prototype.preventTextSelection = function(event) {
   const shiftKey = this.isShiftKeyOnly_(event);
   const platformModifierKey = this.isPlatformModifierKeyOnly_(event);
 
@@ -393,7 +265,7 @@ ngeo.GridController.prototype.preventTextSelection = function(event) {
  * @return {boolean} True if only the platform modifier key is pressed.
  * @private
  */
-ngeo.GridController.prototype.isPlatformModifierKeyOnly_ = function(event) {
+GridController.prototype.isPlatformModifierKeyOnly_ = function(event) {
   return (
     !event.altKey &&
       (ol.has.MAC ? event.metaKey : event.ctrlKey) &&
@@ -407,7 +279,7 @@ ngeo.GridController.prototype.isPlatformModifierKeyOnly_ = function(event) {
  * @return {boolean} True if only the shift key is pressed.
  * @private
  */
-ngeo.GridController.prototype.isShiftKeyOnly_ = function(event) {
+GridController.prototype.isShiftKeyOnly_ = function(event) {
   return (
     !event.altKey &&
       !(event.metaKey || event.ctrlKey) &&
@@ -415,4 +287,7 @@ ngeo.GridController.prototype.isShiftKeyOnly_ = function(event) {
 };
 
 
-ngeo.module.controller('ngeoGridController', ngeo.GridController);
+ngeo.module.controller('ngeoGridController', GridController);
+
+
+exports = gridComponent;
