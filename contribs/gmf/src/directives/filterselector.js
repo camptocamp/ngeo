@@ -708,6 +708,5 @@ gmf.module.component('gmfFilterselector', {
     toolGroup: '<'
   },
   controller: gmf.FilterselectorController,
-  controllerAs: 'fsCtrl',
   templateUrl: () => `${gmf.baseTemplateUrl}/filterselector.html`
 });

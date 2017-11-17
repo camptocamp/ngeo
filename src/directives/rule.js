@@ -927,6 +927,5 @@ ngeo.module.component('ngeoRule', {
     'toolGroup': '<'
   },
   controller: ngeo.RuleController,
-  controllerAs: 'ruleCtrl',
   templateUrl: () => `${ngeo.baseTemplateUrl}/rule.html`
 });
