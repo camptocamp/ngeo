@@ -1,7 +1,6 @@
 goog.provide('ngeo.FeatureOverlay');
 
 goog.require('ngeo');
-goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ol');
 goog.require('ol.events');
 goog.require('ol.Collection');

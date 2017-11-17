@@ -115,7 +115,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {!angular.$http} $http Angular http service.
  * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!ngeo.CreatePopup} ngeoCreatePopup Popup service.
+ * @param {!ngeo.Popup.Factory} ngeoCreatePopup Popup service.
  * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {gmf.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being

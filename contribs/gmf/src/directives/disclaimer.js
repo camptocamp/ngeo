@@ -79,7 +79,7 @@ gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.$timeout} $timeout Angular timeout service.
- * @param {!ngeo.CreatePopup} ngeoCreatePopup Popup service.
+ * @param {!ngeo.Popup.Factory} ngeoCreatePopup Popup service.
  * @param {!ngeo.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
@@ -148,7 +148,7 @@ gmf.DisclaimerController = function($element, $scope, $sce, $timeout,
   this.element_ = $element;
 
   /**
-   * @type {!ngeo.CreatePopup}
+   * @type {!ngeo.Popup.Factory}
    * @private
    */
   this.createPopup_ = ngeoCreatePopup;

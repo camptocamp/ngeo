@@ -3,8 +3,6 @@ goog.provide('ngeo.FeatureOverlayMgr');
 goog.require('ngeo');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ol');
-goog.require('ol.events');
-goog.require('ol.Collection');
 goog.require('ol.Feature');
 goog.require('ol.layer.Vector');
 goog.require('ol.obj');
@@ -85,7 +83,7 @@ ngeo.FeatureOverlayMgr = function() {
 /**
  * @param {ol.Feature} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
- * @protected
+ * @export
  */
 ngeo.FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
@@ -100,7 +98,7 @@ ngeo.FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
 /**
  * @param {ol.Feature} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
- * @protected
+ * @export
  */
 ngeo.FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
@@ -114,7 +112,7 @@ ngeo.FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
 
 /**
  * @param {number} groupIndex The group groupIndex.
- * @protected
+ * @export
  */
 ngeo.FeatureOverlayMgr.prototype.clear = function(groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
@@ -163,7 +161,7 @@ ngeo.FeatureOverlayMgr.prototype.init = function(map) {
  * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} style
  * Style.
  * @param {number} groupIndex Group index.
- * @protected
+ * @export
  */
 ngeo.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);

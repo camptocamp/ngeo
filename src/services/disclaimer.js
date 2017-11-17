@@ -13,7 +13,7 @@ goog.require('ngeo.Message');
  *
  * @param {angular.$sce} $sce Angular sce service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
- * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
+ * @param {ngeo.Popup.Factory} ngeoCreatePopup Popup service.
  * @constructor
  * @struct
  * @extends {ngeo.Message}
@@ -37,7 +37,7 @@ ngeo.Disclaimer = function($sce, gettextCatalog, ngeoCreatePopup) {
 
   /**
    * @private
-   * @type {ngeo.CreatePopup}
+   * @type {ngeo.Popup.Factory}
    */
   this.createPopup_ = ngeoCreatePopup;
 
