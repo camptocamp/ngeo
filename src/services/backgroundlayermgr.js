@@ -1,53 +1,12 @@
-goog.provide('ngeo.BackgroundEvent');
-goog.provide('ngeo.BackgroundEventType');
 goog.provide('ngeo.BackgroundLayerMgr');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
+goog.require('ngeo.CustomEvent');
 goog.require('ol.Observable');
-goog.require('ol.events');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('ol.source.WMTS');
-
-
-/**
- * @enum {string}
- */
-ngeo.BackgroundEventType = {
-  /**
-   * Triggered when the background layer changes.
-   */
-  CHANGE: 'change'
-};
-
-
-/**
- * @constructor
- * @struct
- * @extends {ol.events.Event}
- * @param {ngeo.BackgroundEventType} type Type.
- * @param {ol.layer.Base} current Current background layer.
- * @param {ol.layer.Base} previous Previous background layer.
- * @implements {ngeox.BackgroundEvent}
- */
-ngeo.BackgroundEvent = function(type, current, previous) {
-
-  ol.events.Event.call(this, type);
-
-  /**
-   * The current (new) layer used as background.
-   * @type {ol.layer.Base}
-   */
-  this.current = current;
-
-  /**
-   * The layer used as background before a change.
-   * @type {ol.layer.Base}
-   */
-  this.previous = previous;
-};
-ol.inherits(ngeo.BackgroundEvent, ol.events.Event);
 
 
 /**
@@ -144,9 +103,13 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
     map.getLayers().insertAt(0, layer);
     this.mapUids_[mapUid] = true;
   }
+  /** @type {ngeox.BackgroundEvent} */
+  const event = new ngeo.CustomEvent('change', {
+    current: layer,
+    previous: previous
+  });
+  this.dispatchEvent(event);
 
-  this.dispatchEvent(new ngeo.BackgroundEvent(ngeo.BackgroundEventType.CHANGE,
-    layer, previous));
   return previous;
 };
 

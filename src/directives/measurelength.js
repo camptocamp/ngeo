@@ -46,7 +46,7 @@ ngeo.measurelengthDirective = function($compile, gettextCatalog, $filter, $injec
 
       ol.events.listen(
         measureLength,
-        ngeo.MeasureEventType.MEASUREEND,
+        'measureend',
         drawFeatureCtrl.handleDrawEnd.bind(
           drawFeatureCtrl, ngeo.GeometryType.LINE_STRING),
         drawFeatureCtrl

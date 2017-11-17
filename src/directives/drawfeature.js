@@ -268,22 +268,33 @@ ngeo.DrawfeatureController.prototype.handleActiveChange = function(event) {
  * Called when a feature is finished being drawn. Set the default properties
  * for its style, then set its style and add it to the features collection.
  * @param {string} type Type of geometry being drawn.
- * @param {ol.interaction.Draw.Event|ngeo.MeasureEvent} event Event.
+ * @param {ol.interaction.Draw.Event|ngeox.MeasureEvent} event Event.
  * @export
  */
 ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
+  let sketch;
+  if (event.feature) {
+    // ol.interaction.Draw.Event
+    sketch = event.feature;
+  } else {
+    // ngeox.MeasureEvent
+    sketch = event.detail.feature;
+  }
+  goog.asserts.assert(sketch);
+
+  const azimut = sketch.get('azimut');
 
   const features = this.features || this.ngeoFeatures_;
 
-  const feature = new ol.Feature(event.feature.getGeometry());
+  const feature = new ol.Feature(sketch.getGeometry());
 
   const prop = ngeo.FeatureProperties;
 
   switch (type) {
     case ngeo.GeometryType.CIRCLE:
       feature.set(prop.IS_CIRCLE, true);
-      if (event.feature.get('azimut') !== undefined) {
-        feature.set(prop.AZIMUT, event.feature.get('azimut'));
+      if (azimut !== undefined) {
+        feature.set(prop.AZIMUT, azimut);
       }
       break;
     case ngeo.GeometryType.TEXT:

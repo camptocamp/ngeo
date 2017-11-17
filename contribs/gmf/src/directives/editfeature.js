@@ -785,16 +785,14 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
     // FIXME
     //this.registerInteractions_();
 
-    keys.push(ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
+    keys.push(ol.events.listen(this.menu_, 'actionclick',
       this.handleMenuActionClick_, this));
 
     keys.push(ol.events.listen(this.translate_,
       ol.interaction.TranslateEventType.TRANSLATEEND,
       this.handleTranslateEnd_, this));
 
-    keys.push(ol.events.listen(this.rotate_,
-      ngeo.RotateEventType.ROTATEEND,
-      this.handleRotateEnd_, this));
+    keys.push(ol.events.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
 
     toolMgr.registerTool(createUid, this.createToolActivate, false);
     toolMgr.registerTool(createUid, this.mapSelectToolActivate, true);
@@ -1100,11 +1098,11 @@ gmf.EditfeatureController.prototype.handleFeatureGeometryChange_ = function() {
 
 
 /**
- * @param {ngeo.MenuEvent} evt Event.
+ * @param {ngeox.MenuEvent} evt Event.
  * @private
  */
 gmf.EditfeatureController.prototype.handleMenuActionClick_ = function(evt) {
-  const action = evt.action;
+  const action = evt.detail.action;
 
   switch (action) {
     case gmf.EditfeatureController.MenuActionType.MOVE:
@@ -1132,7 +1130,7 @@ gmf.EditfeatureController.prototype.handleTranslateEnd_ = function(evt) {
 
 
 /**
- * @param {ngeo.RotateEvent} evt Event.
+ * @param {!ngeox.RotateEvent} evt Event.
  * @private
  */
 gmf.EditfeatureController.prototype.handleRotateEnd_ = function(evt) {
