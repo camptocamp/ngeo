@@ -549,6 +549,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.js|lib/jquery-ui.min.js|' \
 		-e 's|\.\./node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js|lib/jquery.ui.touch-punch.min.js|' \
 		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.css|lib/jquery-ui.min.css|' \
+		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
 		-e 's|\.\./node_modules/angular-animate/angular-animate.js|lib/angular-animate.min.js|' \
 		-e 's|\.\./node_modules/angular-float-thead/angular-floatThead.js|lib/angular-floatThead.js|' \
