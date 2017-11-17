@@ -383,11 +383,7 @@ ngeo.Querent = class {
         totalFeatureCount = response;
       } else {
         if (dataSource instanceof ngeo.datasource.OGC) {
-          if (wfs) {
-            features = dataSource.wfsFormat.readFeatures(response.data);
-          } else {
-            features = dataSource.wmsFormat.readFeatures(response.data);
-          }
+          features = this.readAndTypeFeatures_(dataSource, response.data, wfs);
         } else {
           features = [];
         }
