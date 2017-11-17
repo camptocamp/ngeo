@@ -13,6 +13,8 @@ goog.require('ngeo.WMSTime');
 goog.require('ngeo.CreatePopup');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.LayertreeController');
+/** @suppress {extraRequire} */
+goog.require('ngeo.layertreeDirective');
 goog.require('ngeo.datasource.OGC');
 goog.require('ol.layer.Tile');
 
