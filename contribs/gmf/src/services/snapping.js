@@ -3,7 +3,7 @@ goog.provide('gmf.Snapping');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
-goog.require('gmf.LayertreeController');
+goog.require('ol.events');
 goog.require('ol.Collection');
 goog.require('ol.ViewProperty');
 goog.require('ol.format.WFS');
@@ -228,14 +228,15 @@ gmf.Snapping.prototype.handleThemesChange_ = function() {
 gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
-  const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
+  let node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
   if (node.children) {
     return;
   }
 
   // If treeCtrl is snappable and supports WFS, listen to its state change.
   // When it becomes visible, it's added to the list of snappable tree ctrls.
-  const snappingConfig = gmf.LayertreeController.getSnappingConfig(treeCtrl);
+  node = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const snappingConfig = gmf.Themes.getSnappingConfig(node);
   if (snappingConfig) {
     const wfsConfig = this.getWFSConfig_(treeCtrl);
     if (wfsConfig) {
@@ -257,10 +258,10 @@ gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
         interaction: null,
         maxFeatures: 50,
         requestDeferred: null,
-        snappingConfig,
-        treeCtrl,
-        wfsConfig,
-        stateWatcherUnregister
+        snappingConfig: snappingConfig,
+        treeCtrl: treeCtrl,
+        wfsConfig: wfsConfig,
+        stateWatcherUnregister: stateWatcherUnregister
       };
 
       // This extra call is to initialize the treeCtrl with its current state
@@ -499,7 +500,7 @@ gmf.Snapping.prototype.loadItemFeatures_ = function(item) {
     srsName: projCode,
     featureNS: item.featureNS,
     featurePrefix: item.featurePrefix,
-    featureTypes,
+    featureTypes: featureTypes,
     outputFormat: 'GML3',
     bbox: extent,
     geometryName: item.geometryName,

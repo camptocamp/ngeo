@@ -4,9 +4,12 @@
     <div class="gmf-wmscapabilitylayertreenode-header">
 
     <span
+      class="gmf-wmscapabilitylayertreenode-popover-container"
       ng-if="::(layer.Name !== undefined || layer.Abstract !== undefined)"
       ngeo-popover
-      ngeo-popover-dismiss=".content">
+      ngeo-popover-dismiss=".content"
+      ngeo-popover-placement="left"
+    >
 
       <span
         ngeo-popover-anchor
@@ -61,7 +64,9 @@
       ng-if="::(layer.Layer === undefined || layer.Layer.length === 0)"
     ></a>
 
-    <span>{{ ::layer.Title }}</span>
+    <span
+      class="gmf-wmscapabilitylayertreenode-title"
+    >{{ ::layer.Title }}</span>
 
     <div
       class="collapse gmf-wmscapabilitylayertreenode-description"

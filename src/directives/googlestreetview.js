@@ -1,5 +1,6 @@
 goog.provide('ngeo.googlestreetviewComponent');
 
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Observable');
 goog.require('ol.geom.Point');
@@ -337,7 +338,7 @@ ngeo.GooglestreetviewController = class {
 
   /**
    * @param {!ol.Coordinate} lonLat LonLat coordinate.
-   * @return {!ol.Coordinate} Map view projection coordinate.
+   * @return {ol.Coordinate} Map view projection coordinate.
    */
   fromLonLat_(lonLat) {
     return ol.proj.fromLonLat(
@@ -348,7 +349,7 @@ ngeo.GooglestreetviewController = class {
 
   /**
    * @param {!ol.Coordinate} coordinate Map view projection coordinate.
-   * @return {!ol.Coordinate} LonLat coordinate.
+   * @return {ol.Coordinate} LonLat coordinate.
    */
   toLonLat_(coordinate) {
     return ol.proj.toLonLat(
@@ -361,10 +362,10 @@ ngeo.GooglestreetviewController = class {
 
 ngeo.module.component('ngeoGooglestreetview', {
   bindings: {
-    active: '<',
-    featureStyle: '<?',
-    map: '<',
-    radius: '<?'
+    'active': '<',
+    'featureStyle': '<?',
+    'map': '<',
+    'radius': '<?'
   },
   controller: ngeo.GooglestreetviewController,
   controllerAs: 'gsvCtrl',

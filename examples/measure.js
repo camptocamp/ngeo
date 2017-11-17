@@ -2,7 +2,7 @@ goog.provide('app.measure');
 
 goog.require('ngeo.DecorateInteraction');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
+goog.require('ngeo.btnDirective');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ngeo.interaction.MeasureLength');
@@ -49,7 +49,7 @@ app.measuretoolsDirective = function() {
      * @param {angular.Attributes} attrs Attributes.
      * @param {app.MeasuretoolsController} controller Controller.
      */
-    link(scope, element, attrs, controller) {
+    link: (scope, element, attrs, controller) => {
       controller.init();
     }
   };

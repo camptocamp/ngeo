@@ -1,8 +1,8 @@
-goog.provide('ngeo.ScaleselectorOptions');
 goog.provide('ngeo.scaleselectorDirective');
 
 goog.require('ngeo');
 goog.require('ol.array');
+goog.require('ol.events');
 goog.require('ol.Map');
 goog.require('ol.Object');
 goog.require('ol.events');
@@ -19,12 +19,6 @@ ngeo.module.value('ngeoScaleselectorTemplateUrl',
     return templateUrl !== undefined ? templateUrl :
       `${ngeo.baseTemplateUrl}/scaleselector.html`;
   });
-
-
-/**
- * @typedef {{dropup: (boolean|undefined)}}
- */
-ngeo.ScaleselectorOptions;
 
 
 /**
@@ -45,6 +39,16 @@ ngeo.ScaleselectorOptions;
  * classes, and `data-toggle="dropdown"`, so it is meant to be used with
  * Bootstrap's "dropdown" jQuery plugin.
  *
+ * You can pass options to configure the behaviors of this element. Options is
+ * a {@link ngeox.ScaleselectorOptions} object.
+ *
+ * Example:
+ *
+ *     <div ngeo-scaleselector="ctrl.scales"
+ *       ngeo-scaleselector-map="ctrl.map"
+ *       ngeo-scaleselector-options="ctrl.scaleSelectorOptions">
+ *     </div>
+ *
  * By default the directive uses "scaleselector.html" as its templateUrl. This
  * an be changed by redefining the "ngeoScaleselectorTemplateUrl" value.
  *
@@ -59,6 +63,8 @@ ngeo.ScaleselectorOptions;
  *
  * @htmlAttribute {!Array.<number>} ngeo-scaleselector The available scales.
  * @htmlAttribute {ol.Map} ngeo-scaleselector-map The map.
+ * @htmlAttribute {ngeox.ScaleselectorOptions} ngeo-scaleselector-options
+ *     Optionnal. The configuration options.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
  * @return {angular.Directive} Directive Definition Object.
@@ -127,7 +133,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   const options = $scope.$eval(optionsExpr);
 
   /**
-   * @type {!ngeo.ScaleselectorOptions}
+   * @type {!ngeox.ScaleselectorOptions}
    * @export
    */
   this.options = ngeo.ScaleselectorController.getOptions_(options);
@@ -170,20 +176,17 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
 
 /**
  * @param {?} options Options after expression evaluation.
- * @return {!ngeo.ScaleselectorOptions} Options object.
+ * @return {!ngeox.ScaleselectorOptions} Options object.
  * @private
  */
 ngeo.ScaleselectorController.getOptions_ = function(options) {
-  let ret;
-  if (options === undefined) {
-    ret = {'dropup': false};
-  } else {
-    if (options['dropup'] === undefined) {
-      options['dropup'] = false;
-    }
-    ret = /** @type {ngeo.ScaleselectorOptions} */ (options);
+  let dropup = false;
+  if (options !== undefined) {
+    dropup = options['dropup'] == true;
   }
-  return ret;
+  return /** @type {ngeox.ScaleselectorOptions} */ ({
+    dropup: dropup
+  });
 };
 
 

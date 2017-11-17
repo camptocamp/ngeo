@@ -131,10 +131,10 @@ gmf.printDirective = function(gmfPrintTemplateUrl) {
       'active': '=gmfPrintActive',
       'rotateMask': '&?gmfPrintRotatemask',
       'fieldValues': '&?gmfPrintFieldvalues',
-      'hiddenAttributeNames': '=gmfPrintHiddenattributes',
-      'attributesOut': '=gmfPrintAttributesOut'
+      'hiddenAttributeNames': '=?gmfPrintHiddenattributes',
+      'attributesOut': '=?gmfPrintAttributesOut'
     },
-    link(scope, element, attr) {
+    link: (scope, element, attr) => {
       const ctrl = scope['ctrl'];
 
       scope.$watch(() => ctrl.active, function(active) {
@@ -163,7 +163,6 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
  * @param {string} gmfPrintUrl A MapFishPrint url.
  * @param {gmf.Authentication} gmfAuthentication The authentication service.
  * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper the ngeo FeatureHelper service.
  * @param {angular.$filter} $filter Angular $filter service.
  * @param {gmf.PrintStateEnum} gmfPrintState GMF print state.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
@@ -176,7 +175,7 @@ gmf.module.directive('gmfPrint', gmf.printDirective);
 gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils,
   ngeoCreatePrint, gmfPrintUrl, gmfAuthentication, ngeoQueryResult,
-  ngeoFeatureHelper, $filter, gmfPrintState, gmfThemes) {
+  $filter, gmfPrintState, gmfThemes) {
 
   /**
    * @type {gmf.PrintStateEnum}
@@ -189,12 +188,6 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
    * @private
    */
   this.translate_ = $filter('translate');
-
-  /**
-   * @type {ngeo.FeatureHelper}
-   * @private
-   */
-  this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
    * @type {boolean}
@@ -439,6 +432,16 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
 
   gmfThemes.getOgcServersObject().then((ogcServersObject) => {
     this.ogcServers_ = ogcServersObject;
+  });
+
+  /**
+   * @type {Array.<gmfThemes.GmfTheme>}
+   * @private
+   */
+  this.currentThemes_;
+
+  gmfThemes.getThemesObject().then((currentThemes) => {
+    this.currentThemes_ = currentThemes;
   });
 };
 
@@ -776,6 +779,7 @@ gmf.PrintController.prototype.print = function(format) {
           layer = this.ngeoLayerHelper_.createBasicWMSLayer(
             server.url,
             layer_names,
+            server.imageType,
             server.type
           );
         } else {
@@ -862,7 +866,7 @@ gmf.PrintController.prototype.getDataSource_ = function() {
     columns = [];
     source.features.forEach(function(feature, i) {
       goog.asserts.assert(feature);
-      const properties = this.ngeoFeatureHelper_.getFilteredFeatureValues(feature);
+      const properties = ngeo.FeatureHelper.getFilteredFeatureValues(feature);
       if (i === 0) {
         columns = Object.keys(properties).map(function tanslateColumns(prop) {
           return this.translate_(prop);
@@ -986,16 +990,18 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
   // For each visible layer in reverse order, get the legend url.
   layers.reverse().forEach((layer) => {
     classes = [];
-
     if (layer.getVisible() && layer.getSource()) {
       // For WMTS layers.
       if (layer instanceof ol.layer.Tile) {
-        layerName = layer.get('layerNodeName');
-        icons = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
+        layerName = `${layer.get('layerNodeName')}`;
+        icons = this.getMetadataLegendImage_(layerName);
+        if (!icons) {
+          icons = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
+        }
         // Don't add classes without legend url.
         if (icons) {
           classes.push({
-            'name': gettextCatalog.getString(`${layerName}`),
+            'name': gettextCatalog.getString(layerName),
             'icons': [icons]
           });
         }
@@ -1004,13 +1010,16 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
         // For each name in a WMS layer.
         layerNames = source.getParams()['LAYERS'].split(',');
         layerNames.forEach((name) => {
-          icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
-            scale);
+          icons = this.getMetadataLegendImage_(name);
+          if (!icons) {
+            icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
+              scale);
+          }
           // Don't add classes without legend url or from layers without any
           // active name.
           if (icons && name.length !== 0) {
             classes.push({
-              'name': gettextCatalog.getString(`${name}`),
+              'name': gettextCatalog.getString(name),
               'icons': [icons]
             });
           }
@@ -1026,6 +1035,27 @@ gmf.PrintController.prototype.getLegend_ = function(scale) {
   });
 
   return legend['classes'].length > 0 ?  legend : null;
+};
+
+
+/**
+ * Return the metadata legendImage of a layer from the found corresponding node
+ * or undefined.
+ * @param {string} layerName a layer name.
+ * @return {string|undefined} The legendImage or undefined.
+ * @private
+ */
+gmf.PrintController.prototype.getMetadataLegendImage_ = function(layerName) {
+  const groupNode = gmf.Themes.findGroupByLayerNodeName(this.currentThemes_, layerName);
+  let node;
+  if (groupNode && groupNode.children) {
+    node = gmf.Themes.findObjectByName(groupNode.children, layerName);
+  }
+  let legendImage;
+  if (node && node.metadata) {
+    legendImage = node.metadata.legendImage;
+  }
+  return legendImage;
 };
 
 

@@ -5,6 +5,7 @@ goog.require('ngeo.CsvDownload');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Overlay');
 goog.require('ol.geom.LineString');
@@ -626,7 +627,7 @@ gmf.ProfileController.prototype.getJsonProfile_ = function() {
   /** @type {Function} */ (this.$http_)({
     url: this.gmfProfileJsonUrl_,
     method: 'POST',
-    params,
+    params: params,
     paramSerializer: '$httpParamSerializerJQLike',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'

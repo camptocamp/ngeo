@@ -2,6 +2,7 @@ goog.provide('ngeo.mapQueryDirective');
 
 goog.require('ngeo');
 goog.require('ngeo.MapQuerent');
+goog.require('ol.events');
 
 
 /**
@@ -37,7 +38,7 @@ ngeo.mapQueryDirective = function(ngeoMapQuerent, $injector) {
   return {
     restrict: 'A',
     scope: false,
-    link(scope, elem, attrs) {
+    link: (scope, elem, attrs) => {
       const map = scope.$eval(attrs['ngeoMapQueryMap']);
       let clickEventKey_ = null;
       let pointerMoveEventKey_ = null;

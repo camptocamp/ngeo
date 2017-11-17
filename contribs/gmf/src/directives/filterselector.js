@@ -13,6 +13,7 @@ goog.require('ngeo.filterComponent');
 goog.require('ngeo.modalDirective');
 goog.require('ngeo.Notification');
 goog.require('ngeo.RuleHelper');
+goog.require('ol.events');
 goog.require('ol.CollectionEventType');
 
 

@@ -1,12 +1,10 @@
-goog.provide('gmf.ElevationController');
-goog.provide('gmf.ElevationwidgetController');
 goog.provide('gmf.elevationDirective');
-goog.provide('gmf.elevationWidgetDirective');
 
 goog.require('gmf');
 goog.require('gmf.Raster');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Debounce');
+goog.require('ol.events');
 goog.require('ol.events.EventType');
 
 
@@ -49,7 +47,7 @@ gmf.elevationDirective = function() {
       'layer': '<gmfElevationLayer',
       'map': '=gmfElevationMap'
     },
-    link(scope, element, attr) {
+    link: (scope, element, attr) => {
       const ctrl = scope['ctrl'];
 
       // Watch active or not.
@@ -74,7 +72,7 @@ gmf.module.directive('gmfElevation', gmf.elevationDirective);
  * @param {ngeo.Debounce} ngeoDebounce Ngeo debounce service
  * @param {gmf.Raster} gmfRaster Gmf Raster service
  * @constructor
- * @export
+ * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfElevationController
@@ -260,7 +258,7 @@ gmf.module.component('gmfElevationwidget', gmf.elevationwidgetComponent);
 
 /**
  * @constructor
- * @export
+ * @private
  * @ngdoc controller
  */
 gmf.ElevationwidgetController = function() {

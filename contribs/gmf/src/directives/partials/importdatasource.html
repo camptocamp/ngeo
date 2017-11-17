@@ -53,8 +53,9 @@
     name="idsc_form"
     novalidate
     ng-show="$ctrl.mode === 'Online'">
-    <div class="form-group">
+    <div class="form-group gmf-importdatasource-url-form-group">
       <input
+        autocomplete="off"
         class="form-control"
         name="url"
         placeholder="{{'Choose or enter online resource URL' | translate}}"
@@ -91,7 +92,6 @@
   class="gmf-importdatasource-layers"
   ng-if="$ctrl.wmsCapabilities !== null || $ctrl.wmtsCapabilities !== null">
   <hr />
-  <h4>{{ 'Layers' | translate }}</h4>
   <gmf-wmscapabilitylayertreenode
     capabilities="::$ctrl.wmsCapabilities"
     layer="::$ctrl.wmsCapabilities.Capability.Layer"

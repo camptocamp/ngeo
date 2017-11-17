@@ -1,8 +1,10 @@
 goog.provide('ngeo.attributesComponent');
 
+goog.require('ol.events');
 goog.require('ol.ObjectEventType');
 goog.require('ngeo');
 goog.require('ngeo.EventHelper');
+
 
 /**
  * Component used to render the attributes of a feature into a form.
@@ -139,8 +141,7 @@ ngeo.AttributesController.prototype.$onInit = function() {
       ol.ObjectEventType.PROPERTYCHANGE,
       this.handleFeaturePropertyChange_,
       this
-    ),
-    true
+    )
   );
 
   const lang = this.gettextCatalog_.getCurrentLanguage();

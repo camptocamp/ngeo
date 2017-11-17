@@ -86,7 +86,7 @@ describe('gmf.contextualdataDirective', () => {
       const event = {
         clientX: 100,
         clientY: 200,
-        preventDefault() {}
+        preventDefault: () => {}
       };
       contextualdataController.handleMapContextMenu_(event);
       // make sure the template for contextualdatacontent directive is loaded

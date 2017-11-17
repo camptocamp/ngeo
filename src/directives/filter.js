@@ -236,17 +236,17 @@ ngeo.FilterController = class {
     const map = this.map;
     const projCode = map.getView().getProjection().getCode();
     const filter = this.ngeoRuleHelper_.createFilter({
-      dataSource,
-      filterRules,
+      dataSource: dataSource,
+      filterRules: filterRules,
       srsName: projCode
     });
     goog.asserts.assert(filter);
 
     this.ngeoMapQuerent_.issue({
       dataSources: [dataSource],
-      filter,
-      limit,
-      map
+      filter: filter,
+      limit: limit,
+      map: map
     });
   }
 
@@ -393,15 +393,15 @@ ngeo.FilterController.Condition;
 
 ngeo.module.component('ngeoFilter', {
   bindings: {
-    aRuleIsActive: '=',
-    customRules: '<',
+    'aRuleIsActive': '=',
+    'customRules': '<',
     // It's 'datasource' instead of 'dataSource', because that would require
     // the attribute to be 'data-source', and Angular strips the 'data-'.
-    datasource: '<',
-    directedRules: '<',
-    featureOverlay: '<',
-    map: '<',
-    toolGroup: '<'
+    'datasource': '<',
+    'directedRules': '<',
+    'featureOverlay': '<',
+    'map': '<',
+    'toolGroup': '<'
   },
   controller: ngeo.FilterController,
   controllerAs: 'filterCtrl',

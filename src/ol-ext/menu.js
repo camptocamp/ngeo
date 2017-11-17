@@ -2,6 +2,7 @@ goog.provide('ngeo.Menu');
 goog.provide('ngeo.MenuEvent');
 goog.provide('ngeo.MenuEventType');
 
+goog.require('ol.events');
 goog.require('ol.Overlay');
 goog.require('ol.OverlayPositioning');
 goog.require('ol.events.Event');
@@ -62,22 +63,16 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
   options.positioning = ol.OverlayPositioning.TOP_LEFT;
 
   /**
-   * @type {Array.<goog.events.Key>}
+   * @type {Array.<ol.EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {goog.events.Key}
+   * @type {?ol.EventsKey}
    * @private
    */
   this.clickOutListenerKey_ = null;
-
-  /**
-   * @type {Array.<ol.EventsKey>}
-   * @private
-   */
-  this.olListenerKeys_ = [];
 
   const contentEl = $('<div/>', {
     'class': 'panel panel-default'
@@ -138,25 +133,16 @@ ol.inherits(ngeo.Menu, ol.Overlay);
 
 
 /**
- * @param {ol.Map|undefined} map Map.
+ * @param {ol.PluggableMap|undefined} map Map.
  * @export
  * @override
  */
 ngeo.Menu.prototype.setMap = function(map) {
 
-  const keys = this.listenerKeys_;
-  const olKeys = this.olListenerKeys_;
-
   const currentMap = this.getMap();
   if (currentMap) {
-    keys.forEach((key) => {
-      goog.events.unlistenByKey(key);
-    }, this);
-    keys.length = 0;
-    olKeys.forEach((key) => {
-      ol.events.unlistenByKey(key);
-    }, this);
-    olKeys.length = 0;
+    this.listenerKeys_.forEach(ol.events.unlistenByKey);
+    this.listenerKeys_.length = 0;
   }
 
   ol.Overlay.prototype.setMap.call(this, map);
@@ -164,19 +150,17 @@ ngeo.Menu.prototype.setMap = function(map) {
   if (map) {
     this.actions_.forEach((action) => {
       const data = action.data();
-      keys.push(
-        goog.events.listen(
+      this.listenerKeys_.push(
+        ol.events.listen(
           action[0],
           'click',
-          this.handleActionClick_.bind(this, data.name),
-          false,
-          this
+          this.handleActionClick_.bind(this, data.name)
         )
       );
     });
 
     // Autoclose the menu when clicking anywhere else than the menu
-    olKeys.push(
+    this.listenerKeys_.push(
       ol.events.listen(
         map,
         'pointermove',
@@ -198,11 +182,10 @@ ngeo.Menu.prototype.setMap = function(map) {
 ngeo.Menu.prototype.open = function(coordinate) {
   this.setPosition(coordinate);
   if (this.autoClose_) {
-    this.clickOutListenerKey_ =  goog.events.listen(
+    this.clickOutListenerKey_ = ol.events.listen(
       document.documentElement,
       'mousedown',
       this.handleClickOut_,
-      false,
       this
     );
   }
@@ -217,7 +200,7 @@ ngeo.Menu.prototype.close = function() {
   this.setPosition(undefined);
 
   if (this.clickOutListenerKey_ !== null) {
-    goog.events.unlistenByKey(this.clickOutListenerKey_);
+    ol.events.unlistenByKey(this.clickOutListenerKey_);
   }
 };
 

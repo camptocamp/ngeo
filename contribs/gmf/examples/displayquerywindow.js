@@ -11,6 +11,8 @@ goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
+goog.require('ngeo.bboxQueryDirective');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
@@ -101,9 +103,13 @@ gmfapp.MainController = function(gmfThemes, gmfDataSourcesManager,
    * @export
    */
   this.featureStyle = new ol.style.Style({
-    fill,
-    image: new ol.style.Circle({fill, radius: 5, stroke}),
-    stroke
+    fill: fill,
+    image: new ol.style.Circle({
+      fill: fill,
+      radius: 5,
+      stroke: stroke
+    }),
+    stroke: stroke
   });
 
   /**

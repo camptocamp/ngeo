@@ -46,7 +46,7 @@ ngeo.mapDirective = function($window, ngeoSyncDataSourcesMap) {
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Atttributes.
      */
-    link(scope, element, attrs) {
+    link: (scope, element, attrs) => {
       // Get the 'ol.Map' object from attributes and manage it accordingly
       const attr = 'ngeoMap';
       const prop = attrs[attr];

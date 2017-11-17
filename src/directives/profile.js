@@ -1,7 +1,7 @@
 goog.provide('ngeo.profileDirective');
 
 goog.require('goog.asserts');
-goog.require('goog.events');
+goog.require('ol.events');
 goog.require('ngeo');
 goog.require('ngeo.profile');
 goog.require('ngeo.Debounce');
@@ -44,7 +44,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Atttributes.
      */
-    link(scope, element, attrs) {
+    link: (scope, element, attrs) => {
 
       const optionsAttr = attrs['ngeoProfileOptions'];
       goog.asserts.assert(optionsAttr !== undefined);
@@ -111,9 +111,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
           }
         });
 
-      goog.events.listen(window, 'resize',
-        ngeoDebounce(refreshData, 50, true),
-        false, this);
+      ol.events.listen(window, 'resize', ngeoDebounce(refreshData, 50, true), this);
 
       function refreshData() {
         if (profile !== undefined) {

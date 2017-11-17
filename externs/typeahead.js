@@ -7,7 +7,7 @@
 
 
 /**
- * @typedef {Object.<string,*>}
+ * @typedef {Object.<string,*>|string}
  */
 let BloodhoundDatum;
 
@@ -39,7 +39,7 @@ let BloodhoundPrefetchOptions;
  *   datumTokenizer: function(BloodhoundDatum):Array.<string>,
  *   queryTokenizer: function(string):Array.<string>,
  *   initialize: (string|undefined),
- *   identify: (function(BloodhoundDatum):string|undefined),
+ *   identify: ((function(BloodhoundDatum):string|undefined)|boolean),
  *   sufficient: (number|undefined),
  *   sorter: (function(BloodhoundDatum,BloodhoundDatum):number|undefined),
  *   local: (Array.<BloodhoundDatum>|function():Array.<BloodhoundDatum>|undefined),

@@ -41,7 +41,6 @@ ngeo.utils.isSafari = function() {
 
 /**
  * Takes a hex value and prepends a zero if it's a single digit.
- * Small helper method for use by goog.color and friends.
  * @param {string} hex Hex value to prepend if single digit.
  * @return {string} hex value prepended with zero if it was single digit,
  *     otherwise the same value that was passed in.

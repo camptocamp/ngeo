@@ -4,6 +4,7 @@ goog.provide('ngeo.interaction.Measure');
 
 goog.require('goog.asserts');
 goog.require('ol.dom');
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Overlay');
@@ -218,7 +219,7 @@ ngeo.interaction.Measure = function(opt_options) {
    */
   this.vectorLayer_ = new ol.layer.Vector({
     source: new ol.source.Vector(),
-    style
+    style: style
   });
 
   /**

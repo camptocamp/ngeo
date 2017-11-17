@@ -28,7 +28,7 @@ ngeo.downloadFactory_ = function() {
     // makes it a least possible to show the file content so that users can
     // do a manual download with "Save as".
     // See also: https://github.com/eligrey/FileSaver.js/issues/12
-    /** @type{string} */
+    /** @type {string} */
     const fileType = opt_fileType !== undefined && !ngeo.utils.isSafari() ?
       opt_fileType : 'text/plain;charset=utf-8';
 

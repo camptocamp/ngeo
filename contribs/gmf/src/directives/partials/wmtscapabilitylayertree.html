@@ -3,8 +3,10 @@
     <div class="gmf-wmscapabilitylayertreenode-header">
 
       <span
+        class="gmf-wmscapabilitylayertreenode-popover-container"
         ngeo-popover
         ngeo-popover-dismiss=".content"
+        ngeo-popover-placement="left"
       >
         <span
           ngeo-popover-anchor
@@ -42,7 +44,9 @@
       </span>
 
       <a class="fa fa-circle-thin gmf-wmscapabilitylayertreenode-no-icon fa-fw"></a>
-      <span>{{ ::layer.Title }}</span>
+      <span
+        class="gmf-wmscapabilitylayertreenode-title"
+      >{{ ::layer.Title }}</span>
 
       <div
         class="collapse gmf-wmscapabilitylayertreenode-description"

@@ -22,8 +22,6 @@ goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 
-goog.require('app.GmfImportHelper');
-
 
 gmf.module.value('ngeoQueryOptions', {
   'limit': 20,
@@ -32,9 +30,17 @@ gmf.module.value('ngeoQueryOptions', {
 });
 
 gmf.module.value('gmfExternalOGCServers', [{
-  'name': 'Swiss Topo',
+  'name': 'Swiss Topo WMS',
   'type': 'WMS',
-  'url': 'http://wms.geo.admin.ch/?lang=fr'
+  'url': 'https://wms.geo.admin.ch/?lang=fr'
+}, {
+  'name': 'ASIT VD',
+  'type': 'WMTS',
+  'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml'
+}, {
+  'name': 'Swiss Topo WMTS',
+  'type': 'WMTS',
+  'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
 }]);
 
 gmf.module.value('gmfPrintOptions', {
@@ -121,7 +127,7 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
    * @export
    */
   this.gridMergeTabs = {
-    'OSM time merged': ['110', '126', '147']
+    'OSM time merged': ['osm_time', 'osm_time2']
   };
 
   // Allow angular-gettext-tools to collect the strings to translate
@@ -131,11 +137,6 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
-
-  /**
-   * @export
-   */
-  this.importOptions = new app.GmfImportHelper(this.map, $scope, gettext, ngeoFile, $q).createOptions();
 };
 ol.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
 

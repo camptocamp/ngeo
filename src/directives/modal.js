@@ -60,7 +60,7 @@ ngeo.modalDirective = function($parse) {
      * @param {!function(!angular.Scope=, !function(Element)=)=} transcludeFn is a transclude linking
      *      function pre-bound to the correct transclusion scope.
      */
-    link(scope, element, attrs, ngModelController, transcludeFn) {
+    link: (scope, element, attrs, ngModelController, transcludeFn) => {
       const modal = element.children();
       const destroyContent = attrs['ngeoModalDestroyContentOnHide'] === 'true';
       const resizable = attrs['ngeoModalResizable'] === 'true';

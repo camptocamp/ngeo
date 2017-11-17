@@ -4,6 +4,7 @@ goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureAzimut');
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.geom.Polygon');
 goog.require('ol.style.Style');
@@ -29,7 +30,7 @@ ngeo.measureazimutDirective = function($compile, gettextCatalog, $filter, $injec
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
      */
-    link($scope, element, attrs, drawFeatureCtrl) {
+    link: ($scope, element, attrs, drawFeatureCtrl) => {
 
       const helpMsg = gettextCatalog.getString('Click to start drawing circle');
       const contMsg = gettextCatalog.getString('Click to finish');

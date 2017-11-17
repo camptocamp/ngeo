@@ -1,5 +1,4 @@
 goog.provide('gmf.contextualdataDirective');
-goog.provide('gmf.contextualdatacontentDirective');
 
 goog.require('gmf');
 goog.require('gmf.Raster');
@@ -58,7 +57,7 @@ gmf.contextualdataDirective = function() {
      * @param {angular.Attributes} attrs Attributes.
      * @param {gmf.ContextualdataController} controller Controller.
      */
-    link(scope, element, attrs, controller) {
+    link: (scope, element, attrs, controller) => {
       controller.init();
     }
   };
@@ -134,8 +133,8 @@ gmf.ContextualdataController.prototype.init = function() {
   const mapDiv = this.map.getTargetElement();
   goog.asserts.assertElement(mapDiv);
 
-  goog.events.listen(mapDiv, 'contextmenu',
-    this.handleMapContextMenu_, false, this);
+  ol.events.listen(mapDiv, 'contextmenu',
+    this.handleMapContextMenu_, this);
 };
 
 /**

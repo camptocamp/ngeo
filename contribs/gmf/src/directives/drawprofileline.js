@@ -51,7 +51,7 @@ gmf.drawprofilelineDirective = function() {
      * @param {angular.Attributes} attrs Attributes.
      * @param {gmf.ContextualdataController} controller Controller.
      */
-    link(scope, element, attrs, controller) {
+    link: (scope, element, attrs, controller) => {
       controller.init();
     }
   };

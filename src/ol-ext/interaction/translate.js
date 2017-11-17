@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.Translate');
 
 goog.require('ol.Feature');
+goog.require('ol.events');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
@@ -38,7 +39,7 @@ ngeo.interaction.Translate = function(options) {
   this.featureListenerKeys_ = {};
 
   /**
-   * @type {?goog.events.Key}
+   * @type {?ol.EventsKey}
    * @private
    */
   this.keyPressListenerKey_ = null;
@@ -89,18 +90,17 @@ ol.inherits(ngeo.interaction.Translate, ol.interaction.Translate);
 ngeo.interaction.Translate.prototype.setActive = function(active) {
 
   if (this.keyPressListenerKey_) {
-    goog.events.unlistenByKey(this.keyPressListenerKey_);
+    ol.events.unlistenByKey(this.keyPressListenerKey_);
     this.keyPressListenerKey_ = null;
   }
 
   ol.interaction.Translate.prototype.setActive.call(this, active);
 
   if (active) {
-    this.keyPressListenerKey_ = goog.events.listen(
+    this.keyPressListenerKey_ = ol.events.listen(
       document,
       'keyup',
       this.handleKeyUp_,
-      false,
       this
     );
   }
@@ -113,7 +113,7 @@ ngeo.interaction.Translate.prototype.setActive = function(active) {
  * Remove the interaction from its current map and attach it to the new map.
  * Subclasses may set up event handlers to get notified about changes to
  * the map here.
- * @param {ol.Map} map Map.
+ * @param {ol.PluggableMap} map Map.
  * @override
  */
 ngeo.interaction.Translate.prototype.setMap = function(map) {
@@ -272,7 +272,7 @@ ngeo.interaction.Translate.prototype.getGeometryCenterPoint_ = function(
 
 /**
  * Deactivate this interaction if the ESC key is pressed.
- * @param {goog.events.Event} evt Event.
+ * @param {KeyboardEvent} evt Event.
  * @private
  */
 ngeo.interaction.Translate.prototype.handleKeyUp_ = function(evt) {

@@ -2,17 +2,9 @@ goog.module('ngeo.source.AsitVD');
 goog.module.declareLegacyNamespace();
 
 goog.require('ol');
-goog.require('ol.Attribution');
 goog.require('ol.source.WMTS');
 goog.require('ol.tilegrid.WMTS');
 
-
-/**
- * @const {ol.Attribution}
- */
-const ATTRIBUTION = new ol.Attribution({
-  html: 'géodonnées &copy; Etat de Vaud & &copy; contributeurs OpenStreetMap'
-});
 
 /**
  * @const {!Array.<number>}
@@ -45,7 +37,7 @@ const asitVDTileGrid = new ol.tilegrid.WMTS({
 exports = function(options) {
 
   ol.source.WMTS.call(this, {
-    attributions: [ATTRIBUTION],
+    attributions: 'géodonnées &copy; Etat de Vaud & &copy; contributeurs OpenStreetMap',
     url: 'https://ows{1-4}.asitvd.ch/wmts/1.0.0/{Layer}/default/default/0/' +
         '21781/{TileMatrix}/{TileRow}/{TileCol}.png',
     projection: 'EPSG:21781',

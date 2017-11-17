@@ -1,4 +1,5 @@
 @import "../../../node_modules/font-awesome/less/variables.less";
+@import "typeahead.less";
 
 @search-results-max-height: calc(~"100vh -" 6 * @app-margin);
 
@@ -49,10 +50,6 @@ gmf-search {
       background-color: @onhover-color;
     }
   }
-  .twitter-typeahead {
-    width: 100%;
-    height: 100%;
-  }
   .form-control {
     box-shadow: none;
     height: 100%;
@@ -68,18 +65,8 @@ gmf-search {
     z-index: @search-index;
   }
 
-  .tt-hint {
-    display: none;
-  }
-
   .tt-menu {
-    width: 100%;
     max-height: @search-results-max-height;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-color: @map-tools-bg-color;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    border: solid 1px @border-color;
     .gmf-search-no-results {
       padding: @app-margin;
       cursor: default;
@@ -89,13 +76,6 @@ gmf-search {
       display: none;
     }
     .gmf-search-datum {
-      border-bottom: solid 1px @border-color;
-      padding: @app-margin;
-      text-align: left;
-      &:hover, &.tt-cursor {
-        cursor: pointer;
-        background-color: @onhover-color;
-      }
       p {
         margin: 0;
       }

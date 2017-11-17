@@ -406,6 +406,71 @@ ngeo.Querent = class {
   }
 
   /**
+   * Read and assign the type of the feature to each feature in the data.
+   * The type will be stocked in the properties of the features as
+   * "ngeo_feature_type_".
+   * @param {ngeo.datasource.OGC} dataSource used to read the features.
+   * @param {Document | Node | Object | string} data the response data.
+   * @param {boolean} wfs Whether the query was WFS or WMS.
+   * @return {Array.<ol.Feature>} returned features with a type in each features.
+   * @private
+   */
+  readAndTypeFeatures_(dataSource, data, wfs) {
+    const features = [];
+    let readFeatures;
+    // Copy the types to be able to set it AND iterate on it.
+    const featureTypes = this.getSetOlFormatTypes_(dataSource, wfs).slice();
+    featureTypes.forEach((type) => {
+      // Assign temporarily a single feature type to read features separately.
+      this.getSetOlFormatTypes_(dataSource, wfs, [type]);
+      if (wfs) {
+        readFeatures = dataSource.wfsFormat.readFeatures(data);
+      } else {
+        readFeatures = dataSource.wmsFormat.readFeatures(data);
+      }
+      if (readFeatures.length > 0) {
+        readFeatures.forEach((feature) => {
+          feature.set('ngeo_feature_type_', type);
+          features.push(feature);
+        });
+      }
+    });
+    // Re-set the value to the datasource.xxxFormat to be able to re-use
+    // it later (in another query);
+    this.getSetOlFormatTypes_(dataSource, wfs, featureTypes);
+    return features;
+  }
+
+  /**
+   * Return the types defined in the format of the datasource. Can set the
+   * types if one is given.
+   * @param {ngeo.datasource.OGC} dataSource that contains the format object.
+   * @param {boolean} wfs Whether the query was WFS or WMS.
+   * @param {Array.<string>=} opt_types An array of type if you want to set the
+   *     type of the format object.
+   * @return {Array.<string>} The types defined in the format.
+   * @private
+   */
+  getSetOlFormatTypes_(dataSource, wfs, opt_types) {
+    let types;
+    if (wfs) {
+      if (opt_types) {
+        dataSource.wfsFormat.setFeatureType(opt_types);
+      }
+      types = dataSource.wfsFormat.getFeatureType();
+    } else {
+      if (opt_types) {
+        dataSource.wmsFormat.setLayers(opt_types);
+      }
+      types = dataSource.wmsFormat.getLayers();
+    }
+    if (!types) {
+      return [];
+    }
+    return (Array.isArray(types)) ? types : [types];
+  }
+
+  /**
    * Issue WFS GetFeature requests using the given combined data sources, map
    * and optional filters.
    *
@@ -489,7 +554,7 @@ ngeo.Querent = class {
         let filter;
         if (options.filter) {
           filter = this.ngeoRuleHelper_.createFilter({
-            dataSource,
+            dataSource: dataSource,
             filter: options.filter,
             incTime: true
           });
@@ -503,9 +568,9 @@ ngeo.Querent = class {
           );
 
           filter = this.ngeoRuleHelper_.createFilter({
-            dataSource,
+            dataSource: dataSource,
             incTime: true,
-            srsName
+            srsName: srsName
           });
         }
 
@@ -539,7 +604,7 @@ ngeo.Querent = class {
       let countPromise;
       if (wfsCount) {
         const getCountOptions =
-            /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
+            /** @type {olx.format.WFSWriteGetFeatureOptions} */ (
             ol.obj.assign(
               {
                 resultType: 'hits'
@@ -555,7 +620,7 @@ ngeo.Querent = class {
           url,
           featureCountRequest,
           {
-            params,
+            params: params,
             timeout: canceler.promise
           }
         ).then(((response) => {
@@ -575,7 +640,7 @@ ngeo.Querent = class {
         if (numberOfFeatures === undefined || numberOfFeatures < maxFeatures) {
 
           const getFeatureOptions =
-              /** @type{olx.format.WFSWriteGetFeatureOptions} */ (
+              /** @type {olx.format.WFSWriteGetFeatureOptions} */ (
               ol.obj.assign(
                 {
                   maxFeatures
@@ -593,7 +658,7 @@ ngeo.Querent = class {
             url,
             featureRequest,
             {
-              params,
+              params: params,
               timeout: canceler.promise
             }
           ).then((response) => {
@@ -679,7 +744,7 @@ ngeo.Querent = class {
           goog.asserts.assert(dataSources.length === 1);
           filtrableLayerName = dataSource.getFiltrableOGCLayerName();
           filterString = this.ngeoRuleHelper_.createFilterString({
-            dataSource,
+            dataSource: dataSource,
             srsName: projCode
           });
         }

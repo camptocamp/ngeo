@@ -17,7 +17,7 @@ describe('ngeo.filereaderDirective', () => {
         };
         this.onload(progressEvent);
       };
-      $provide.value('$window', {FileReader, angular: window.angular});
+      $provide.value('$window', {FileReader: FileReader, angular: window.angular});
     });
 
     inject(($rootScope, $compile) => {

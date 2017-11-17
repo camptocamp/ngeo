@@ -1,6 +1,7 @@
 goog.provide('ngeo.measurelengthDirective');
 
 goog.require('ngeo');
+goog.require('ol.events');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureLength');
@@ -27,7 +28,7 @@ ngeo.measurelengthDirective = function($compile, gettextCatalog, $filter, $injec
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
      */
-    link($scope, element, attrs, drawFeatureCtrl) {
+    link: ($scope, element, attrs, drawFeatureCtrl) => {
 
       const helpMsg = gettextCatalog.getString('Click to start drawing line');
       const contMsg = gettextCatalog.getString('Click to continue drawing<br/>' +

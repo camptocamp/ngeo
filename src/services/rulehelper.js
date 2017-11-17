@@ -10,7 +10,6 @@ goog.require('ngeo.rule.Select');
 goog.require('ngeo.rule.Text');
 goog.require('ol.format.WFS');
 goog.require('ol.format.filter');
-goog.require('ol.format.filter.Spatial');
 
 
 ngeo.RuleHelper = class {
@@ -87,7 +86,7 @@ ngeo.RuleHelper = class {
       case ngeo.AttributeType.DATETIME:
         if (isCustom) {
           rule = new ngeo.rule.Date({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.TemporalOperatorType.EQUALS,
             operators: [
               ngeo.rule.Rule.TemporalOperatorType.EQUALS,
@@ -99,7 +98,7 @@ ngeo.RuleHelper = class {
           });
         } else {
           rule = new ngeo.rule.Date({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.TemporalOperatorType.DURING,
             propertyName: attribute.name,
             type: attribute.type
@@ -108,7 +107,7 @@ ngeo.RuleHelper = class {
         break;
       case ngeo.AttributeType.GEOMETRY:
         rule = new ngeo.rule.Geometry({
-          name,
+          name: name,
           operator: ngeo.rule.Rule.SpatialOperatorType.WITHIN,
           operators: [
             ngeo.rule.Rule.SpatialOperatorType.CONTAINS,
@@ -122,7 +121,7 @@ ngeo.RuleHelper = class {
       case ngeo.AttributeType.NUMBER:
         if (isCustom) {
           rule = new ngeo.rule.Rule({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.OperatorType.EQUAL_TO,
             operators: [
               ngeo.rule.Rule.OperatorType.EQUAL_TO,
@@ -137,7 +136,7 @@ ngeo.RuleHelper = class {
           });
         } else {
           rule = new ngeo.rule.Rule({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.OperatorType.BETWEEN,
             propertyName: attribute.name,
             type: ngeo.AttributeType.NUMBER
@@ -147,14 +146,14 @@ ngeo.RuleHelper = class {
       case ngeo.AttributeType.SELECT:
         rule = new ngeo.rule.Select({
           choices: goog.asserts.assert(attribute.choices),
-          name,
+          name: name,
           propertyName: attribute.name
         });
         break;
       default:
         if (isCustom) {
           rule = new ngeo.rule.Text({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.OperatorType.LIKE,
             operators: [
               ngeo.rule.Rule.OperatorType.LIKE,
@@ -165,7 +164,7 @@ ngeo.RuleHelper = class {
           });
         } else {
           rule = new ngeo.rule.Text({
-            name,
+            name: name,
             operator: ngeo.rule.Rule.OperatorType.LIKE,
             propertyName: attribute.name
           });
@@ -570,8 +569,7 @@ ngeo.RuleHelper = class {
       goog.asserts.assertInstanceof(rule, ngeo.rule.Geometry);
       const geometry = goog.asserts.assert(rule.geometry);
       if (operator === rsot.CONTAINS) {
-        filter = new ol.format.filter.Spatial(
-          'Contains',
+        filter = ol.format.filter.contains(
           geometryName,
           geometry,
           opt_srsName
@@ -627,7 +625,11 @@ ngeo.RuleHelper = class {
       const stringExpression = String(expression);
       filter = ol.format.filter.like(
         propertyName,
-        stringExpression
+        stringExpression,
+        '*', /* wildCard */
+        '.', /* singleChar */
+        '!', /* escapeChar */
+        false /* matchCase */
       );
     } else if (operator === rot.NOT_EQUAL_TO) {
       filter = ol.format.filter.notEqualTo(

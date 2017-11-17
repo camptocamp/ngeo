@@ -138,11 +138,8 @@ gmf.Themes.findGroupByLayerNodeName = function(themes, name) {
       const group = theme.children[j];
       const childNodes = [];
       gmf.Themes.getFlatNodes(group, childNodes);
-      for (let k = 0, kk = childNodes.length; k < kk; k++) {
-        const layer = childNodes[k];
-        if (layer.name == name) {
-          return group;
-        }
+      if (gmf.Themes.findObjectByName(childNodes, name)) {
+        return group;
       }
     }
   }
@@ -160,7 +157,9 @@ gmf.Themes.findGroupByName = function(themes, name) {
     const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
       const group = theme.children[j];
-      if (group.name == name) {
+      const internalNodes = [];
+      gmf.Themes.getFlatInternalNodes(group, internalNodes);
+      if (gmf.Themes.findObjectByName(internalNodes, name)) {
         return group;
       }
     }
@@ -175,9 +174,8 @@ gmf.Themes.findGroupByName = function(themes, name) {
  * @param {string} objectName The object name.
  * @return {T} The object or null.
  * @template T
- * @private
  */
-gmf.Themes.findObjectByName_ = function(objects, objectName) {
+gmf.Themes.findObjectByName = function(objects, objectName) {
   return ol.array.find(objects, object => object['name'] === objectName);
 };
 
@@ -189,16 +187,33 @@ gmf.Themes.findObjectByName_ = function(objects, objectName) {
  * @return {gmfThemes.GmfTheme} The theme object or null.
  */
 gmf.Themes.findThemeByName = function(themes, themeName) {
-  return gmf.Themes.findObjectByName_(themes, themeName);
+  return gmf.Themes.findObjectByName(themes, themeName);
 };
 
 
 /**
- * Fill the given "nodes" array with all node in the given node including the
- * given node itself.
+ * Fill the given "nodes" array with all internal nodes (non-leaf nones) in
+ * the given node.
+ *
  * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layertree node.
  * @param {Array.<gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An array.
- * @export
+ */
+gmf.Themes.getFlatInternalNodes = function(node, nodes) {
+  const children = node.children;
+  if (children !== undefined) {
+    nodes.push(node);
+    for (let i = 0; i < children.length; i++) {
+      gmf.Themes.getFlatInternalNodes(children[i], nodes);
+    }
+  }
+};
+
+
+/**
+ * Fill the given "nodes" array with all leaf nodes in the given node.
+ *
+ * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layertree node.
+ * @param {Array.<gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An array.
  */
 gmf.Themes.getFlatNodes = function(node, nodes) {
   let i;
@@ -279,9 +294,11 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
       const server = ogcServers[gmfLayerWMS.ogcServer];
       goog.asserts.assert(server, 'The OGC server was not found');
       goog.asserts.assert(server.url, 'The server URL is required');
+      goog.asserts.assert(server.imageType, 'The server image type is required');
       return callback(gmfLayer, layerHelper.createBasicWMSLayer(
         server.url,
         gmfLayerWMS.layers || '',
+        server.imageType,
         server.type,
         undefined, // time
         gmfLayer.dimensions,
@@ -464,6 +481,19 @@ gmf.Themes.prototype.hasNodeEditableLayers_ = function(node) {
     hasEditableLayers = children.some(this.hasNodeEditableLayers_.bind(this));
   }
   return hasEditableLayers;
+};
+
+
+/**
+ * Get the snapping configuration object from a Layertree controller
+ * @param {gmfThemes.GmfLayer} node Layer node from the theme.
+ * @return {?gmfThemes.GmfSnappingConfig} Snapping configuration, if found.
+ * @export
+ */
+gmf.Themes.getSnappingConfig = function(node) {
+  const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
+    node.metadata.snappingConfig : null;
+  return config;
 };
 
 

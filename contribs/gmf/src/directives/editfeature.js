@@ -25,6 +25,7 @@ goog.require('ngeo.interaction.Translate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.modalDirective');
 goog.require('ol.Collection');
+goog.require('ol.events');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Modify');
 goog.require('ol.interaction.TranslateEventType');
@@ -413,10 +414,22 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.geomType;
 
   /**
-   * @type{boolean}
+   * @type {boolean}
    * @export
    */
   this.showServerError = false;
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.serverErrorMessage = null;
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.serverErrorType = null;
 };
 
 
@@ -583,9 +596,11 @@ gmf.EditfeatureController.prototype.save = function() {
       this.pending = false;
       this.handleEditFeature_(response);
     },
-    () => {
+    (response) => {
       this.showServerError = true;
       this.pending = false;
+      this.serverErrorType =  `error type : ${response.data['error_type']}`;
+      this.serverErrorMessage = `error message : ${response.data['message']}`;
     }
   );
 };
@@ -674,9 +689,11 @@ gmf.EditfeatureController.prototype.delete = function() {
         // (2) Reset selected feature
         this.cancel();
       },
-      () => {
+      (response) => {
         this.showServerError = true;
         this.pending = false;
+        this.serverErrorType =  `error type : ${response.data['error_type']}`;
+        this.serverErrorMessage = `error message : ${response.data['message']}`;
       }
     );
 
@@ -830,15 +847,15 @@ gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
     ol.events.listen(this.map, 'click',
       this.handleMapClick_, this);
 
-    goog.events.listen(mapDiv, 'contextmenu',
-      this.handleMapContextMenu_, false, this);
+    ol.events.listen(mapDiv, 'contextmenu',
+      this.handleMapContextMenu_, this);
 
   } else {
     ol.events.unlisten(this.map, 'click',
       this.handleMapClick_, this);
 
-    goog.events.unlisten(mapDiv, 'contextmenu',
-      this.handleMapContextMenu_, false, this);
+    ol.events.unlisten(mapDiv, 'contextmenu',
+      this.handleMapContextMenu_, this);
   }
 };
 

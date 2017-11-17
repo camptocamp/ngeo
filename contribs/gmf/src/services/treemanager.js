@@ -5,6 +5,7 @@ goog.require('gmf.Themes');
 goog.require('ngeo.Notification');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.LayertreeController');
+goog.require('ol.events');
 
 
 /**
@@ -147,8 +148,8 @@ gmf.TreeManager.prototype.handleThemesChange_ = function() {
  * Set some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param{Array.<gmfThemes.GmfGroup>} firstLevelGroups An array of gmf theme group.
- * @return{boolean} True if the group has been added. False otherwise.
+ * @param {Array.<gmfThemes.GmfGroup>} firstLevelGroups An array of gmf theme group.
+ * @return {boolean} True if the group has been added. False otherwise.
  * @export
  */
 gmf.TreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {

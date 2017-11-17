@@ -36,7 +36,7 @@ ngeo.resizemapDirective = function($window) {
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Atttributes.
      */
-    link(scope, element, attrs) {
+    link: (scope, element, attrs) => {
       const attr = 'ngeoResizemap';
       const prop = attrs[attr];
       const map = scope.$eval(prop);

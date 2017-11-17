@@ -55,7 +55,7 @@ gmf.mobileNavDirective = function() {
      * @param {angular.Attributes} attrs Atttributes.
      * @param {gmf.MobileNavController} navCtrl Controller.
      */
-    link(scope, element, attrs, navCtrl) {
+    link: (scope, element, attrs, navCtrl) => {
       navCtrl.init(element);
     }
   };
@@ -291,7 +291,7 @@ gmf.mobileNavBackDirective = function() {
      * @param {angular.Attributes} attrs Atttributes.
      * @param {gmf.MobileNavController} navCtrl Controller.
      */
-    link(scope, element, attrs, navCtrl) {
+    link: (scope, element, attrs, navCtrl) => {
       scope.$watch(attrs['gmfMobileNavBack'], (newVal, oldVal) => {
         if (newVal === true) {
           navCtrl.backIfActive(element[0]);
@@ -333,7 +333,7 @@ gmf.mobileNavBackOnClickDirective = function() {
      * @param {angular.Attributes} attrs Atttributes.
      * @param {gmf.MobileNavController} navCtrl Controller.
      */
-    link(scope, element, attrs, navCtrl) {
+    link: (scope, element, attrs, navCtrl) => {
       element.on('click', () => {
         navCtrl.backIfActive(element[0]);
       });

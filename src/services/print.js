@@ -2,7 +2,6 @@ goog.provide('ngeo.CreatePrint');
 goog.provide('ngeo.Print');
 
 
-goog.require('goog.color.alpha');
 goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.utils');
@@ -166,7 +165,7 @@ ngeo.Print.prototype.createSpec = function(
   map, scale, dpi, layout, format, customAttributes) {
 
   const specMap = /** @type {MapFishPrintMap} */ ({
-    dpi,
+    dpi: dpi,
     rotation: /** number */ (customAttributes['rotation'])
   });
 
@@ -303,10 +302,10 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
     baseURL: ngeo.Print.getAbsoluteUrl_(url_url.origin + url_url.pathname),
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
-    customParams,
+    customParams: customParams,
     serverType: params['SERVERTYPE'],
     type: 'wms',
-    opacity,
+    opacity: opacity,
     version: params['VERSION']
   });
   arr.push(object);
@@ -383,7 +382,7 @@ ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
     dimensionParams: dimensions,
     imageFormat: source.getFormat(),
     layer: source.getLayer(),
-    matrices,
+    matrices: matrices,
     matrixSet: source.getMatrixSet(),
     opacity: layer.getOpacity(),
     requestEncoding: source.getRequestEncoding(),
@@ -568,10 +567,8 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
 ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
   let fillColor = fillStyle.getColor();
   if (fillColor !== null) {
-    if (typeof (fillColor) === 'string') {
-      const hex = goog.color.alpha.parse(fillColor).hex;
-      fillColor = goog.color.alpha.hexToRgba(hex);
-    }
+    goog.asserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
+    fillColor = ol.color.asArray(fillColor);
     goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
     symbolizer.fillColor = ngeo.utils.rgbArrayToHex(fillColor);
     symbolizer.fillOpacity = fillColor[3];
@@ -646,7 +643,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
      * Mapfish Print does not support image defined with ol.style.RegularShape.
      * As a workaround, I try to map the image on a well-known image name.
      */
-    const points = /** @type{ol.style.RegularShape} */ (imageStyle).getPoints();
+    const points = /** @type {ol.style.RegularShape} */ (imageStyle).getPoints();
     if (points !== null) {
       symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
         type: 'point'

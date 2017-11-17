@@ -124,8 +124,8 @@ ngeo.MapQuerent = class {
     //     request.
     const limit = options.limit !== undefined ? options.limit : this.limit_;
     ol.obj.assign(options, {
-      queryableDataSources,
-      limit,
+      queryableDataSources: queryableDataSources,
+      limit: limit,
       tolerancePx: this.tolerancePx_,
       wfsCount: this.queryCountFirst_
     });
@@ -164,7 +164,7 @@ ngeo.MapQuerent = class {
     for (const idStr in response) {
       const id = Number(idStr);
       const dataSource = this.ngeoDataSourcesHelper_.getDataSource(id);
-      const label = dataSource.name;
+      let label = dataSource.name;
       goog.asserts.assert(dataSource);
 
 
@@ -174,17 +174,30 @@ ngeo.MapQuerent = class {
       const tooManyResults = querentResultItem.tooManyFeatures === true;
       const totalFeatureCount = querentResultItem.totalFeatureCount;
 
-      this.result_.sources.push({
-        features,
-        id,
-        label,
-        limit,
-        pending: false,
-        queried: true,
-        tooManyResults,
-        totalFeatureCount
+      const typeSeparatedFeatures = {};
+      features.forEach((feature) => {
+        const type = goog.asserts.assertString(feature.get('ngeo_feature_type_'));
+        if (!typeSeparatedFeatures[type]) {
+          typeSeparatedFeatures[type] = [];
+        }
+        typeSeparatedFeatures[type].push(feature);
       });
-      total += features.length;
+
+      for (const type in typeSeparatedFeatures) {
+        label = type ? type : label;
+        const featuresByType = typeSeparatedFeatures[type];
+        this.result_.sources.push({
+          features: featuresByType,
+          id: id,
+          label: label,
+          limit: limit,
+          pending: false,
+          queried: true,
+          tooManyResults: tooManyResults,
+          totalFeatureCount: totalFeatureCount
+        });
+        total += features.length;
+      }
     }
 
     // (2) Update total & pending

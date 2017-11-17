@@ -3,8 +3,6 @@ goog.provide('app.createfeature');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.createfeatureDirective');

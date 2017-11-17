@@ -101,8 +101,8 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
    * @export
    */
   this.mobileGeolocationOptions = {
-    positionFeatureStyle,
-    accuracyFeatureStyle,
+    positionFeatureStyle: positionFeatureStyle,
+    accuracyFeatureStyle: accuracyFeatureStyle,
     zoom: config.geolocationZoom,
     autorotate: config.autorotate
   };

@@ -74,16 +74,14 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
-    limit,
-    display(suggestion) {
+    limit: limit,
+    display: (suggestion) => {
       const feature = /** @type {ol.Feature} */ (suggestion);
       return feature.get('label_no_html');
     },
     templates: {
-      header() {
-        return '<div class="ngeo-header">Locations</div>';
-      },
-      suggestion(suggestion) {
+      header: () => '<div class="ngeo-header">Locations</div>',
+      suggestion: (suggestion) => {
         const feature = /** @type {ol.Feature} */ (suggestion);
         return `<p>${feature.get('label')}</p>`;
       }
@@ -113,9 +111,9 @@ app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLoc
   goog.asserts.assert(epsg3857 !== null);
   const bloodhound = ngeoCreateLocationSearchBloodhound({
     targetProjection: epsg3857,
-    limit,
+    limit: limit,
     origins: 'gazetteer',
-    prepare(query, settings) {
+    prepare: (query, settings) => {
       // in a real application the interface language could be used here
       const lang = 'fr';
       settings.url += `&lang=${lang}`;

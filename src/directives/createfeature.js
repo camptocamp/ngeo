@@ -7,6 +7,7 @@ goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureLength');
 goog.require('ngeo.utils');
+goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
@@ -230,8 +231,7 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
         ol.interaction.DrawEventType.DRAWEND,
         this.handleDrawEnd_,
         this
-      ),
-      true
+      )
     );
   } else if (interaction instanceof ngeo.interaction.MeasureLength ||
      interaction instanceof ngeo.interaction.MeasureArea) {
@@ -242,8 +242,7 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
         ngeo.MeasureEventType.MEASUREEND,
         this.handleDrawEnd_,
         this
-      ),
-      true
+      )
     );
   }
 };

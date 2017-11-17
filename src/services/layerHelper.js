@@ -59,6 +59,7 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
  *
  * @param {string} sourceURL The source URL.
  * @param {string} sourceLayersName A comma separated names string.
+ * @param {string} sourceFormat Image format, for example 'image/png'.
  * @param {string=} opt_serverType Type of the server ("mapserver",
  *     "geoserver", "qgisserver", …).
  * @param {string=} opt_time time parameter for layer queryable by time/periode
@@ -68,9 +69,12 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
  * @export
  */
 ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
-  sourceLayersName, opt_serverType, opt_time, opt_params, opt_crossOrigin) {
+  sourceLayersName, sourceFormat, opt_serverType, opt_time, opt_params, opt_crossOrigin) {
 
-  const params = {'LAYERS': sourceLayersName};
+  const params = {
+    'FORMAT': sourceFormat,
+    'LAYERS': sourceLayersName
+  };
   let olServerType;
   if (opt_time) {
     params['TIME'] = opt_time;
@@ -82,7 +86,7 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
   }
   const source = new ol.source.ImageWMS({
     url: sourceURL,
-    params,
+    params: params,
     serverType: olServerType,
     crossOrigin: opt_crossOrigin
   });
@@ -110,11 +114,13 @@ ngeo.LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
 
   const layerNames = dataSource.getOGCLayerNames().join(',');
   const serverType = dataSource.ogcServerType;
+  const imageType = dataSource.ogcImageType;
 
   // (1) Layer creation
   const layer = this.createBasicWMSLayer(
     url,
     layerNames,
+    imageType,
     serverType,
     undefined,
     undefined,
@@ -211,7 +217,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
   return new ol.layer.Tile({
     'capabilitiesStyles': layerCap['Style'],
     preload: Infinity,
-    source
+    source: source
   });
 };
 
@@ -403,7 +409,7 @@ ngeo.LayerHelper.prototype.refreshWMSLayer = function(layer) {
     source_ instanceof ol.source.ImageWMS ||
     source_ instanceof ol.source.TileWMS
   );
-  const source = /** @type{ol.source.ImageWMS|ol.source.TileWMS} */ (source_);
+  const source = /** @type {ol.source.ImageWMS|ol.source.TileWMS} */ (source_);
   const params = source.getParams();
   params[ngeo.LayerHelper.REFRESH_PARAM] = Math.random();
   source.updateParams(params);

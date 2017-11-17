@@ -3,7 +3,6 @@ goog.provide('ngeo.RotateEventType');
 goog.provide('ngeo.interaction.Rotate');
 
 goog.require('goog.asserts');
-goog.require('goog.events');
 goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
@@ -86,7 +85,7 @@ ngeo.interaction.Rotate = function(options) {
   this.modified_ = false;
 
   /**
-   * @type {?goog.events.Key}
+   * @type {?ol.EventsKey}
    * @private
    */
   this.keyPressListenerKey_ = null;
@@ -143,7 +142,7 @@ ngeo.interaction.Rotate = function(options) {
       useSpatialIndex: false,
       wrapX: !!options.wrapX
     }),
-    style,
+    style: style,
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });
@@ -173,18 +172,17 @@ ol.inherits(ngeo.interaction.Rotate, ol.interaction.Pointer);
 ngeo.interaction.Rotate.prototype.setActive = function(active) {
 
   if (this.keyPressListenerKey_) {
-    goog.events.unlistenByKey(this.keyPressListenerKey_);
+    ol.events.unlistenByKey(this.keyPressListenerKey_);
     this.keyPressListenerKey_ = null;
   }
 
   ol.interaction.Pointer.prototype.setActive.call(this, active);
 
   if (active) {
-    this.keyPressListenerKey_ = goog.events.listen(
+    this.keyPressListenerKey_ = ol.events.listen(
       document,
       'keyup',
       this.handleKeyUp_,
-      false,
       this
     );
     this.features_.forEach(this.addFeature_, this);
@@ -396,7 +394,7 @@ ngeo.interaction.Rotate.prototype.handleUp_ = function(evt) {
 
 /**
  * Deactivate this interaction if the ESC key is pressed.
- * @param {goog.events.Event} evt Event.
+ * @param {KeyboardEvent} evt Event.
  * @private
  */
 ngeo.interaction.Rotate.prototype.handleKeyUp_ = function(evt) {

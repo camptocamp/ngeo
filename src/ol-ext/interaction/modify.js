@@ -2,6 +2,7 @@ goog.provide('ngeo.interaction.Modify');
 
 goog.require('ngeo.interaction.ModifyCircle');
 goog.require('ngeo.interaction.ModifyRectangle');
+goog.require('ol.events');
 goog.require('ol.functions');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.Collection');
@@ -116,7 +117,7 @@ ngeo.interaction.Modify.prototype.setActive = function(active) {
  * Remove the interaction from its current map and attach it to the new map.
  * Subclasses may set up event handlers to get notified about changes to
  * the map here.
- * @param {ol.Map} map Map.
+ * @param {ol.PluggableMap} map Map.
  * @override
  */
 ngeo.interaction.Modify.prototype.setMap = function(map) {

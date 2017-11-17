@@ -278,8 +278,12 @@
   <body ng-controller="MainController as ctrl">
 
     <gmf-map gmf-map-map="ctrl.map"
-        ngeo-map-query="" ngeo-map-query-map="::ctrl.map"
-        ngeo-map-query-active="ctrl.queryActive">
+        ngeo-map-query=""
+        ngeo-map-query-map="::ctrl.map"
+        ngeo-map-query-active="ctrl.queryActive"
+        ngeo-bbox-query=""
+        ngeo-bbox-query-map="::ctrl.map"
+        ngeo-bbox-query-active="ctrl.queryActive">
     </gmf-map>
 
     <div id="tree-container">
@@ -293,7 +297,7 @@
       </div>
       <gmf-layertree
           gmf-layertree-map="::ctrl.map"
-          gmf-layertree-openlinksinnewwindow="true">
+          gmf-layertree-openlinksinnewwindow="::true">
       </gmf-layertree>
     </div>
 

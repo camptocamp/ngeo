@@ -98,8 +98,8 @@ gmfx.GridSource.prototype.source;
  * Configuration option for {@link gmf.displayquerygridComponent} to merge
  * grid tabs.
  *
- * E.g. `'my_merged_source': ['123', '234']}` merges the sources with id `123`
- * and `234` into a new source `my_merged_source`.
+ * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources
+ * with label `velo_park` and `moto_park` into a new source `two_wheels_park`.
  *
  * @typedef {Object<string, Array.<string>>}
  */
@@ -458,21 +458,6 @@ gmfx.SearchDirectiveDatasource.prototype.url;
 
 
 /**
- * @typedef {{
- *     exportgpxkml: string
- * }}
- */
-gmfx.ServiceUrls;
-
-
-/**
- * URL to the "exportgpxkml" service.
- * @type {string}
- */
-gmfx.ServiceUrls.prototype.exportgpxkml;
-
-
-/**
  * Availables functionalities.
  * @typedef {{
  *     default_basemap: Array.<string>,
@@ -706,11 +691,3 @@ cgxp.tools.openInfoWindow;
  * @param {string=} opt_height CSS height.
  */
 gmfx.openPopup_
-
-/**
- * @typedef {{
- *     goog: (Array.<goog.events.Key>),
- *     ol: (Array.<ol.EventsKey>)
- * }}
- */
-gmfx.PermalinkListenerKeys;

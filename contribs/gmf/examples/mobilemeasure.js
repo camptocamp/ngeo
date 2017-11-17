@@ -8,7 +8,7 @@ goog.require('gmf.mobileMeasurepointDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
+goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ol.Map');
@@ -50,8 +50,8 @@ gmfapp.MainController = function(gmfPermalink) {
     view: new ol.View({
       projection: 'EPSG:21781',
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
-      center,
-      zoom
+      center: center,
+      zoom: zoom
     })
   });
 

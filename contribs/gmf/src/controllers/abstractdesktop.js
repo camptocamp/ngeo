@@ -7,8 +7,6 @@ goog.require('ngeo.bboxQueryDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdataDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.contextualdatacontentDirective');
-/** @suppress {extraRequire} */
 goog.require('gmf.displayquerygridComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawfeatureDirective');
@@ -33,7 +31,7 @@ goog.require('gmf.TimeSliderDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.shareDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
+goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.resizemapDirective');
 /** @suppress {extraRequire} */
@@ -44,8 +42,6 @@ goog.require('ngeo.Features');
 goog.require('ngeo.FeatureOverlay');
 /** @suppress {extraRequire} */
 goog.require('ngeo.FeatureOverlayMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.ScaleselectorOptions');
 /** @suppress {extraRequire} */
 goog.require('ngeo.scaleselectorDirective');
 goog.require('ngeo.ToolActivate');
@@ -221,9 +217,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       wrapX: false,
       features: new ol.Collection()
     }),
-    style(feature, resolution) {
-      return ngeoFeatureHelper.createEditingStyles(feature);
-    }
+    style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(feature)
     // style: ngeoFeatureHelper.createEditingStyles.bind(ngeoFeatureHelper)
   });
   this.editFeatureVectorLayer.setMap(this.map);
@@ -244,11 +238,11 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
 
   /**
-   * @type {ngeo.ScaleselectorOptions}
+   * @type {ngeox.ScaleselectorOptions}
    * @export
    */
   this.scaleSelectorOptions = {
-    'dropup': true
+    dropup: true
   };
 
   /**

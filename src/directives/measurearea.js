@@ -1,6 +1,7 @@
 goog.provide('ngeo.measureareaDirective');
 
 goog.require('ngeo');
+goog.require('ol.events');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureArea');
@@ -27,7 +28,7 @@ ngeo.measureareaDirective = function($compile, gettextCatalog, $filter, $injecto
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
      */
-    link($scope, element, attrs, drawFeatureCtrl) {
+    link: ($scope, element, attrs, drawFeatureCtrl) => {
 
       const helpMsg = gettextCatalog.getString('Click to start drawing polygon');
       const contMsg = gettextCatalog.getString('Click to continue drawing<br/>' +

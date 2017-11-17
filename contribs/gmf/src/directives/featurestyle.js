@@ -1,6 +1,7 @@
 goog.provide('gmf.featurestyleDirective');
 
 goog.require('gmf');
+goog.require('ol.events');
 goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.colorpickerDirective');

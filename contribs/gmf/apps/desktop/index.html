@@ -49,7 +49,7 @@
           <gmf-layertree
             gmf-layertree-dimensions="mainCtrl.dimensions"
             gmf-layertree-map="::mainCtrl.map"
-            gmf-layertree-openlinksinnewwindow="true">
+            gmf-layertree-openlinksinnewwindow="::true">
           </gmf-layertree>
         </div>
       </div>
@@ -211,6 +211,15 @@
           gmf-search-placeholder="{{'Search…'|translate}}"
           gmf-search-clearbutton="true">
         </gmf-search>
+        <gmf-displaywindow
+          content="mainCtrl.displaywindowContent"
+          desktop="true"
+          height="mainCtrl.displaywindowHeight"
+          open="mainCtrl.displaywindowOpen"
+          title="mainCtrl.displaywindowTitle"
+          url="mainCtrl.displaywindowUrl"
+          width="mainCtrl.displaywindowWidth"
+        ></gmf-displaywindow>
         <div class="gmf-app-map-bottom-controls">
           <div class="gmf-backgroundlayerbutton btn-group dropup">
             <button

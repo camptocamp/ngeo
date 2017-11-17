@@ -16,6 +16,7 @@ goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
 goog.require('ol.Collection');
+goog.require('ol.events');
 
 
 /**
@@ -920,10 +921,10 @@ ngeo.RuleController.MenuActionType = {
  */
 ngeo.module.component('ngeoRule', {
   bindings: {
-    featureOverlay: '<',
-    map: '<',
-    rule: '<',
-    toolGroup: '<'
+    'featureOverlay': '<',
+    'map': '<',
+    'rule': '<',
+    'toolGroup': '<'
   },
   controller: ngeo.RuleController,
   controllerAs: 'ruleCtrl',

@@ -543,7 +543,7 @@ ngeo.Query.prototype.doGetFeatureInfoRequests_ = function(
     const wmsGetFeatureInfoUrl = items[0].source.wmsSource.getGetFeatureInfoUrl(
       coordinate, resolution, projCode);
 
-    this.$http_.get(wmsGetFeatureInfoUrl, {params, timeout: this.registerCanceler_().promise})
+    this.$http_.get(wmsGetFeatureInfoUrl, {params: params, timeout: this.registerCanceler_().promise})
       .then(function(items, response) {
         items.forEach(function(item) {
           item['resultSource'].pending = false;
@@ -629,14 +629,14 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
       item['resultSource'].pending = true;
       item['resultSource'].queried = true;
 
-      /** @type{olx.format.WFSWriteGetFeatureOptions} */
+      /** @type {olx.format.WFSWriteGetFeatureOptions} */
       const getFeatureOptions = {
         srsName: projCode,
         featureNS: this.featureNS_,
         featurePrefix: this.featurePrefix_,
         featureTypes: layers,
         outputFormat: 'GML3',
-        bbox,
+        bbox: bbox,
         geometryName: this.geometryName_
       };
 
@@ -648,15 +648,15 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
       const params = this.getDimensionsParams_(items[0].source.dimensions);
 
       const getFeatures = function() {
-        /** @type{olx.format.WFSWriteGetFeatureOptions} */
-        const options = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.obj.assign({
+        /** @type {olx.format.WFSWriteGetFeatureOptions} */
+        const options = /** @type {olx.format.WFSWriteGetFeatureOptions} */ (ol.obj.assign({
           maxFeatures: this.limit_
         }, getFeatureOptions));
         const featureRequestXml = wfsFormat.writeGetFeature(options);
         const featureRequest = xmlSerializer.serializeToString(featureRequestXml);
 
         const canceler = this.registerCanceler_();
-        this.$http_.post(url, featureRequest, {params, timeout: canceler.promise})
+        this.$http_.post(url, featureRequest, {params: params, timeout: canceler.promise})
           .then((response) => {
             item['resultSource'].pending = false;
             const features = [];
@@ -672,7 +672,7 @@ ngeo.Query.prototype.doGetFeatureRequests_ = function(
       }.bind(this);
 
       if (this.queryCountFirst_) {
-        const getCountOptions = /** @type{olx.format.WFSWriteGetFeatureOptions} */ (ol.obj.assign({
+        const getCountOptions = /** @type {olx.format.WFSWriteGetFeatureOptions} */ (ol.obj.assign({
           resultType: 'hits'
         }, getFeatureOptions));
         const featureCountXml = wfsFormat.writeGetFeature(getCountOptions);

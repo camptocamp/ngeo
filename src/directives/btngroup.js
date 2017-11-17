@@ -1,5 +1,4 @@
 goog.provide('ngeo.btnDirective');
-goog.provide('ngeo.btngroupDirective');
 
 goog.require('ngeo');
 
@@ -47,7 +46,7 @@ ngeo.btngroupDirective = function($parse) {
      * @param {!angular.Attributes=} attrs Atttributes.
      * @param {!ngeo.BtnGroupController=} controller Controller.
      */
-    link(scope, element, attrs, controller) {
+    link: (scope, element, attrs, controller) => {
       const setActive = $parse(attrs['ngeoBtnGroupActive']).assign;
 
       if (setActive) {
@@ -144,7 +143,7 @@ ngeo.btnDirective = function($parse) {
      * @param {!angular.Attributes=} attrs Atttributes.
      * @param {!Array.<!Object>=} ctrls Controller.
      */
-    link(scope, element, attrs, ctrls) {
+    link: (scope, element, attrs, ctrls) => {
       const buttonsCtrl = ctrls[0];
       const ngModelCtrl = ctrls[1];
       let indexInGroup = -1;
