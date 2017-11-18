@@ -45,7 +45,7 @@
     "font-awesome": "4.7.0",
     "fs-extra": "4.0.2",
     "gaze": "1.1.2",
-    "google-closure-library": "20170910.0.0",
+    "google-closure-library": "20171112.0.0",
     "jasmine-core": "2.8.0",
     "jquery": "3.2.1",
     "jsdoc": "3.5.5",
