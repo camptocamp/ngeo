@@ -123,11 +123,10 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
    * @type {!ol.interaction.Draw}
    * @export
    */
-  this.interaction = new ol.interaction.Draw(
-    /** @type {olx.interaction.DrawOptions} */ ({
-      type: 'LineString',
-      features: this.features_
-    }));
+  this.interaction = new ol.interaction.Draw({
+    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    features: this.features_
+  });
 
   ngeoDecorateInteraction(this.interaction);
 

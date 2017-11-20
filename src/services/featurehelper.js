@@ -401,7 +401,7 @@ ngeo.FeatureHelper.prototype.createEditingStyles = function(feature) {
   console.assert(geom);
   const type = geom.getType();
 
-  if (type === ol.geom.GeometryType.POINT) {
+  if (type === 'Point') {
     styles.push(
       new ol.style.Style({
         image: new ol.style.Circle({
@@ -418,7 +418,7 @@ ngeo.FeatureHelper.prototype.createEditingStyles = function(feature) {
       })
     );
   } else {
-    if (type === ol.geom.GeometryType.LINE_STRING) {
+    if (type === 'LineString') {
       styles.push(
         new ol.style.Style({
           stroke: new ol.style.Stroke({
@@ -489,7 +489,7 @@ ngeo.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
     options.geometry = function(feature) {
       const geom = feature.getGeometry();
 
-      if (geom.getType() == ol.geom.GeometryType.POINT) {
+      if (geom.getType() == 'Point') {
         return;
       }
 

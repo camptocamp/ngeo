@@ -31,11 +31,10 @@ ol.inherits(
 /**
  * @inheritDoc
  */
-ngeo.interaction.MeasureLengthMobile.prototype.createDrawInteraction =
-    function(style, source) {
-      return new ngeo.interaction.MobileDraw({
-        'type': /** @type {ol.geom.GeometryType<string>} */ ('LineString'),
-        'style': style,
-        'source': source
-      });
-    };
+ngeo.interaction.MeasureLengthMobile.prototype.createDrawInteraction = function(style, source) {
+  return new ngeo.interaction.MobileDraw({
+    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    style: style,
+    source: source
+  });
+};

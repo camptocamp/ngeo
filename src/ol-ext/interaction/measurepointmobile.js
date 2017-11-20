@@ -38,9 +38,9 @@ ol.inherits(ngeo.interaction.MeasurePointMobile, ngeo.interaction.Measure);
  */
 ngeo.interaction.MeasurePointMobile.prototype.createDrawInteraction = function(style, source) {
   return new ngeo.interaction.MobileDraw({
-    'type': /** @type {ol.geom.GeometryType<string>} */ ('Point'),
-    'style': style,
-    'source': source
+    type: /** @type {ol.geom.GeometryType} */ ('Point'),
+    style: style,
+    source: source
   });
 };
 

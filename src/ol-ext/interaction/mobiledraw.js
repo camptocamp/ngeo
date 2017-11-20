@@ -67,7 +67,7 @@ ngeo.interaction.MobileDraw = function(options) {
    */
   this.minPoints_ = options.minPoints ?
     options.minPoints :
-    (this.type_ === ol.geom.GeometryType.POLYGON ? 3 : 2);
+    (this.type_ === 'Polygon' ? 3 : 2);
 
   /**
    * Sketch feature.
@@ -217,7 +217,7 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
   let coordinates;
 
   // == point ==
-  if (this.type_ === ol.geom.GeometryType.POINT) {
+  if (this.type_ === 'Point') {
     if (!this.sketchFeature_) {
       this.sketchFeature_ = new ol.Feature(new ol.geom.Point(coordinate));
       this.dispatchEvent(new ol.interaction.Draw.Event(
@@ -230,7 +230,7 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
   }
 
   // == line string ==
-  if (this.type_ === ol.geom.GeometryType.LINE_STRING) {
+  if (this.type_ === 'LineString') {
     this.sketchPoints_.push(this.sketchPoint_);
     if (!this.sketchFeature_) {
       coordinates = [coordinate.slice(), coordinate.slice()];
@@ -253,7 +253,7 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
 
   // minPoints validation
   const valid = this.getValid();
-  if (this.type_ === ol.geom.GeometryType.LINE_STRING) {
+  if (this.type_ === 'LineString') {
     if (coordinates.length >= this.minPoints_) {
       if (!valid) {
         this.set(ngeo.interaction.MobileDrawProperty.VALID, true);
@@ -320,7 +320,7 @@ ngeo.interaction.MobileDraw.prototype.startDrawing_ = function() {
   this.createOrUpdateSketchPoint_();
   this.updateSketchFeatures_();
 
-  if (this.type_ === ol.geom.GeometryType.POINT) {
+  if (this.type_ === 'Point') {
     this.addToDrawing();
   }
 };
@@ -338,7 +338,7 @@ ngeo.interaction.MobileDraw.prototype.modifyDrawing_ = function() {
 
   const center = this.getCenter_();
 
-  if (this.type_ === ol.geom.GeometryType.LINE_STRING) {
+  if (this.type_ === 'LineString') {
     const sketchFeatureGeom = this.sketchFeature_.getGeometry();
     goog.asserts.assertInstanceof(sketchFeatureGeom, ol.geom.SimpleGeometry);
     const coordinates = sketchFeatureGeom.getCoordinates();
@@ -405,7 +405,7 @@ ngeo.interaction.MobileDraw.prototype.handleViewCenterChange_ = function(evt) {
 
   this.createOrUpdateSketchPoint_();
 
-  if (this.type_ === ol.geom.GeometryType.POINT) {
+  if (this.type_ === 'Point') {
     this.addToDrawing();
   } else {
     this.modifyDrawing_();

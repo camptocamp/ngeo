@@ -34,21 +34,14 @@ ngeo.format.FeatureHashStyleType = {
  * @type {Object.<ol.geom.GeometryType, ngeo.format.FeatureHashStyleType>}
  * @private
  */
-ngeo.format.FeatureHashStyleTypes_ = {};
-
-ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.LINE_STRING] =
-    ngeo.format.FeatureHashStyleType.LINE_STRING;
-ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.POINT] =
-    ngeo.format.FeatureHashStyleType.POINT;
-ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.POLYGON] =
-    ngeo.format.FeatureHashStyleType.POLYGON;
-ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.MULTI_LINE_STRING] =
-    ngeo.format.FeatureHashStyleType.LINE_STRING;
-ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.MULTI_POINT] =
-    ngeo.format.FeatureHashStyleType.POINT;
-ngeo.format.FeatureHashStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
-    ngeo.format.FeatureHashStyleType.POLYGON;
-
+ngeo.format.FeatureHashStyleTypes_ = {
+  'LineString': ngeo.format.FeatureHashStyleType.LINE_STRING,
+  'Point': ngeo.format.FeatureHashStyleType.POINT,
+  'Polygon': ngeo.format.FeatureHashStyleType.POLYGON,
+  'MultiLineString': ngeo.format.FeatureHashStyleType.LINE_STRING,
+  'MultiPoint': ngeo.format.FeatureHashStyleType.POINT,
+  'MultiPolygon': ngeo.format.FeatureHashStyleType.POLYGON
+};
 
 /**
  * @type {Object.<string, string>}

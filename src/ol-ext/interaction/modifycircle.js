@@ -9,7 +9,6 @@ goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.coordinate');
 goog.require('ol.events');
 goog.require('ol.extent');
-goog.require('ol.geom.GeometryType');
 goog.require('ol.geom.Circle');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
@@ -133,7 +132,7 @@ ol.inherits(ngeo.interaction.ModifyCircle, ol.interaction.Pointer);
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.addFeature_ = function(feature) {
-  if (feature.getGeometry().getType() === ol.geom.GeometryType.POLYGON &&
+  if (feature.getGeometry().getType() === 'Polygon' &&
       !!feature.get(ngeo.FeatureProperties.IS_CIRCLE)) {
     const geometry = /** @type {ol.geom.Polygon}*/ (feature.getGeometry());
     this.writeCircleGeometry_(feature, geometry);
@@ -492,6 +491,6 @@ ngeo.interaction.ModifyCircle.prototype.setGeometryCoordinates_ = function(geome
 ngeo.interaction.ModifyCircle.getDefaultStyleFunction = function() {
   const style = ol.style.Style.createDefaultEditing();
   return function(feature, resolution) {
-    return style[ol.geom.GeometryType.POINT];
+    return style[/**@type {ol.geom.GeometryType} */ ('Point')];
   };
 };

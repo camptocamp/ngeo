@@ -794,14 +794,14 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     fill: new ol.style.Fill({color: rgbaColor})
   });
 
-  styles[ol.geom.GeometryType.POINT] = new ol.style.Style({
+  styles['Point'] = new ol.style.Style({
     image
   });
-  styles[ol.geom.GeometryType.MULTI_POINT] = new ol.style.Style({
+  styles['MultiPoint'] = new ol.style.Style({
     image
   });
 
-  styles[ol.geom.GeometryType.LINE_STRING] = [
+  styles['LineString'] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: color,
@@ -810,11 +810,11 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles[ol.geom.GeometryType.LINE_STRING].push(
+    styles['LineString'].push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }
-  styles[ol.geom.GeometryType.MULTI_LINE_STRING] = [
+  styles['MultiLineString'] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: color,
@@ -823,12 +823,12 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles[ol.geom.GeometryType.MULTI_LINE_STRING].push(
+    styles['MultiLineString'].push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }
 
-  styles[ol.geom.GeometryType.POLYGON] = [
+  styles['Polygon'] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: color,
@@ -840,11 +840,11 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles[ol.geom.GeometryType.POLYGON].push(
+    styles['Polygon'].push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }
-  styles[ol.geom.GeometryType.MULTI_POLYGON] = [
+  styles['MultiPolygon'] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: color,
@@ -856,7 +856,7 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles[ol.geom.GeometryType.MULTI_POLYGON].push(
+    styles['MultiPolygon'].push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }
