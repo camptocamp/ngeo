@@ -18,7 +18,6 @@ goog.require('ol.events');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.MultiPolygon');
 goog.require('ol.interaction.Modify');
-goog.require('ol.interaction.ModifyEventType');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
@@ -664,7 +663,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
     keys.push(
       ol.events.listen(
         this.modify_,
-        ol.interaction.ModifyEventType.MODIFYEND,
+        'modifyend',
         this.handleModifyInteractionModifyEnd_,
         this
       )
