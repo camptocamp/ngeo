@@ -27,7 +27,6 @@ goog.require('ol.Collection');
 goog.require('ol.events');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Modify');
-goog.require('ol.interaction.TranslateEventType');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
@@ -787,7 +786,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
       this.handleMenuActionClick_, this));
 
     keys.push(ol.events.listen(this.translate_,
-      ol.interaction.TranslateEventType.TRANSLATEEND,
+      'translateend',
       this.handleTranslateEnd_, this));
 
     keys.push(ol.events.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));

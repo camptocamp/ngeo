@@ -629,7 +629,7 @@ ngeo.RuleController = class {
       keys.push(
         ol.events.listen(
           this.translate_,
-          ol.interaction.TranslateEventType.TRANSLATEEND,
+          'translateend',
           this.handleTranslateEnd_,
           this
         )
