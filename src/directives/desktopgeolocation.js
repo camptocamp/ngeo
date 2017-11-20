@@ -49,7 +49,7 @@ ngeo.desktopGeolocationDirective = function() {
       'getDesktopMapFn': '&ngeoDesktopGeolocationMap',
       'getDesktopGeolocationOptionsFn': '&ngeoDesktopGeolocationOptions'
     },
-    controller: 'NgeoDesktopGeolocationController as ctrl'
+    controller: ngeo.DesktopGeolocationController
   };
 };
 
@@ -223,7 +223,3 @@ ngeo.DesktopGeolocationController.prototype.setPosition_ = function(event) {
 
   this.geolocation_.setTracking(false);
 };
-
-
-ngeo.module.controller('NgeoDesktopGeolocationController',
-  ngeo.DesktopGeolocationController);

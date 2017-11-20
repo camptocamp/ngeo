@@ -1,41 +1,41 @@
 <div
     class="dropdown"
-    ng-class="{open: ruleCtrl.rule.active}">
+    ng-class="{open: $ctrl.rule.active}">
   <a
       class="btn btn-default btn-sm dropdown-toggle"
       type="button"
-      ng-click="ruleCtrl.toggle()">
-    <span>{{ ::ruleCtrl.clone.name | translate }}</span>
+      ng-click="$ctrl.toggle()">
+    <span>{{ ::$ctrl.clone.name | translate }}</span>
     <span class="caret"></span>
   </a>
   <div class="dropdown-menu form-group">
 
     <select
         class="form-control input-sm ngeo-rule-operators-list"
-        ng-disabled="ruleCtrl.drawActive"
-        ng-if="::ruleCtrl.clone.operators"
-        ng-model="ruleCtrl.clone.operator"
-        ng-options="ruleCtrl.operators[operator] | translate for operator in ::ruleCtrl.clone.operators track by operator">
+        ng-disabled="$ctrl.drawActive"
+        ng-if="::$ctrl.clone.operators"
+        ng-model="$ctrl.clone.operator"
+        ng-options="$ctrl.operators[operator] | translate for operator in ::$ctrl.clone.operators track by operator">
     </select>
 
-    <div ng-switch="::ruleCtrl.clone.type">
+    <div ng-switch="::$ctrl.clone.type">
 
       <div
           class="ngeo-rule-type-date form-group"
-          ng-if="ruleCtrl.rule.active"
+          ng-if="$ctrl.rule.active"
           ng-switch-when="date|datetime"
           ng-switch-when-separator="|">
-        <div ng-switch="ruleCtrl.clone.operator">
+        <div ng-switch="$ctrl.clone.operator">
           <div ng-switch-when="..">
             <ngeo-date-picker
-                time="ruleCtrl.timeRangeMode"
-                on-date-selected="ruleCtrl.onDateRangeSelected(time)">
+                time="$ctrl.timeRangeMode"
+                on-date-selected="$ctrl.onDateRangeSelected(time)">
             </ngeo-date-picker>
           </div>
           <div ng-switch-default>
             <ngeo-date-picker
-                time="ruleCtrl.timeValueMode"
-                on-date-selected="ruleCtrl.onDateSelected(time)">
+                time="$ctrl.timeValueMode"
+                on-date-selected="$ctrl.onDateSelected(time)">
             </ngeo-date-picker>
           </div>
         </div>
@@ -44,7 +44,7 @@
       <div
           class="ngeo-rule-type-geometry form-group"
           ng-switch-when="geometry">
-        <div ng-switch="ruleCtrl.geomType">
+        <div ng-switch="$ctrl.geomType">
           <span
               class="gmf-icon gmf-icon-point"
               ng-switch-when="Point">
@@ -67,9 +67,9 @@
           </span>
         </div>
         <ngeo-drawfeature
-            ngeo-drawfeature-active="ruleCtrl.drawActive"
-            ngeo-drawfeature-features="ruleCtrl.drawnFeatures"
-            ngeo-drawfeature-map="ruleCtrl.map">
+            ngeo-drawfeature-active="$ctrl.drawActive"
+            ngeo-drawfeature-features="$ctrl.drawnFeatures"
+            ngeo-drawfeature-map="$ctrl.map">
           <div
               ngeo-btn-group
               class="btn-group">
@@ -80,7 +80,7 @@
                 ngeo-btn
                 ngeo-drawpoint
                 class="btn btn-sm btn-default ngeo-drawfeature-point"
-                ng-show="['intersects', 'within'].indexOf(ruleCtrl.clone.operator) !== -1"
+                ng-show="['intersects', 'within'].indexOf($ctrl.clone.operator) !== -1"
                 ng-class="{active: dfCtrl.drawPoint.active}"
                 ng-model="dfCtrl.drawPoint.active">
                 <span class="gmf-icon gmf-icon-point"></span>
@@ -92,7 +92,7 @@
                 ngeo-btn
                 ngeo-measurelength
                 class="btn btn-sm btn-default ngeo-drawfeature-linestring"
-                ng-show="['intersects', 'within'].indexOf(ruleCtrl.clone.operator) !== -1"
+                ng-show="['intersects', 'within'].indexOf($ctrl.clone.operator) !== -1"
                 ng-class="{active: dfCtrl.measureLength.active}"
                 ng-model="dfCtrl.measureLength.active">
                 <span class="gmf-icon gmf-icon-line"></span>
@@ -134,7 +134,7 @@
 
           <div
               class="ngeo-rule-type-geometry-instructions"
-              ng-if="ruleCtrl.drawActive">
+              ng-if="$ctrl.drawActive">
             <span ng-if="dfCtrl.drawPoint.active">
               {{ 'Draw a point on the map.' | translate }}
             </span>
@@ -158,15 +158,15 @@
           class="checkbox ngeo-rule-type-select"
           ng-switch-when="select">
         <a
-            ng-click="ruleCtrl.selectAllChoices()"
+            ng-click="$ctrl.selectAllChoices()"
             href>{{ All | translate}}
         </a>
         <label
             class="form-group ol-unselectable"
-            ng-repeat="choice in ::ruleCtrl.clone.choices">
+            ng-repeat="choice in ::$ctrl.clone.choices">
           <input
-              ng-checked="ruleCtrl.clone.getExpression() && ruleCtrl.clone.getExpression().split(',').indexOf(choice) > -1"
-              ng-click="ruleCtrl.toggleChoiceSelection(choice)"
+              ng-checked="$ctrl.clone.getExpression() && $ctrl.clone.getExpression().split(',').indexOf(choice) > -1"
+              ng-click="$ctrl.toggleChoiceSelection(choice)"
               type="checkbox"
               value="choice" />
           <span>{{ choice | translate }}</span>
@@ -177,28 +177,28 @@
       <div
           class="form-group ngeo-rule-type-text"
           ng-switch-default>
-        <div ng-switch="ruleCtrl.clone.operator">
+        <div ng-switch="$ctrl.clone.operator">
           <div ng-switch-when="..">
             <input
                 type="number"
                 class="form-control input-sm"
-                ng-model="ruleCtrl.clone.lowerBoundary"/>
+                ng-model="$ctrl.clone.lowerBoundary"/>
             <input
                 type="number"
                 class="form-control input-sm"
-                ng-model="ruleCtrl.clone.upperBoundary"/>
+                ng-model="$ctrl.clone.upperBoundary"/>
           </div>
           <div ng-switch-default>
             <input
                 type="number"
                 class="form-control input-sm"
-                ng-if="ruleCtrl.clone.type === 'number'"
-                ng-model="ruleCtrl.clone.expression"/>
+                ng-if="$ctrl.clone.type === 'number'"
+                ng-model="$ctrl.clone.expression"/>
             <input
                 type="text"
                 class="form-control input-sm"
-                ng-if="ruleCtrl.clone.type !== 'number'"
-                ng-model="ruleCtrl.clone.expression"/>
+                ng-if="$ctrl.clone.type !== 'number'"
+                ng-model="$ctrl.clone.expression"/>
           </div>
         </div>
       </div>
@@ -206,11 +206,11 @@
       <div class="ngeo-rule-btns">
         <button
             class="btn btn-xs btn-default"
-            ng-click="ruleCtrl.apply()"
+            ng-click="$ctrl.apply()"
             type="button">{{'Apply' | translate}}</button>
         <button
             class="btn btn-xs btn-default"
-            ng-click="ruleCtrl.cancel()"
+            ng-click="$ctrl.cancel()"
             type="button">{{'Cancel' | translate}}</button>
       </div>
 
@@ -221,38 +221,38 @@
 
 <div
     class="ngeo-rule-value"
-    ng-if="ruleCtrl.rule.value !== null">
+    ng-if="$ctrl.rule.value !== null">
 
   <a
       class="btn btn-xs btn-link"
-      ng-click="!ruleCtrl.rule.active && ruleCtrl.reset()"
-      ng-disabled="ruleCtrl.rule.active"
+      ng-click="!$ctrl.rule.active && $ctrl.reset()"
+      ng-disabled="$ctrl.rule.active"
       href>
     <span class="fa fa-remove"></span>
   </a>
 
-  <div ng-switch="::ruleCtrl.rule.type">
+  <div ng-switch="::$ctrl.rule.type">
 
     <div
         ng-switch-when="date|datetime"
         ng-switch-when-separator="|">
-      <div ng-switch="ruleCtrl.rule.operator">
+      <div ng-switch="$ctrl.rule.operator">
         <div ng-switch-when="..">
           <span translate>From </span>
-          <span>{{ ruleCtrl.timeToDate(ruleCtrl.rule.lowerBoundary) }}</span>
+          <span>{{ $ctrl.timeToDate($ctrl.rule.lowerBoundary) }}</span>
           <span translate> to </span>
-          <span>{{ ruleCtrl.timeToDate(ruleCtrl.rule.upperBoundary) }}</span>
+          <span>{{ $ctrl.timeToDate($ctrl.rule.upperBoundary) }}</span>
         </div>
         <div ng-switch-default>
-          <span>{{ ruleCtrl.rule.operator }}</span>
-          <span>{{ ruleCtrl.timeToDate(ruleCtrl.rule.getExpression()) }}</span>
+          <span>{{ $ctrl.rule.operator }}</span>
+          <span>{{ $ctrl.timeToDate($ctrl.rule.getExpression()) }}</span>
         </div>
       </div>
     </div>
 
     <div ng-switch-when="geometry">
-      <span>{{ ruleCtrl.operators[ruleCtrl.rule.operator] }}</span>
-      <span ng-switch="ruleCtrl.getRuleGeometryType()">
+      <span>{{ $ctrl.operators[$ctrl.rule.operator] }}</span>
+      <span ng-switch="$ctrl.getRuleGeometryType()">
         <span
             class="gmf-icon gmf-icon-point"
             ng-switch-when="Point">
@@ -277,22 +277,22 @@
     </div>
 
     <div ng-switch-when="select">
-      <span ng-repeat="choice in ruleCtrl.rule.getExpression().split(',')">
+      <span ng-repeat="choice in $ctrl.rule.getExpression().split(',')">
         {{ choice | translate }}{{ $last ? '' : ', ' }}
       </span>
     </div>
 
     <div ng-switch-default>
-      <div ng-switch="ruleCtrl.rule.operator">
+      <div ng-switch="$ctrl.rule.operator">
         <div ng-switch-when="..">
           <span translate>Between </span>
-          <span>{{ ruleCtrl.rule.lowerBoundary }}</span>
+          <span>{{ $ctrl.rule.lowerBoundary }}</span>
           <span translate> and </span>
-          <span>{{ ruleCtrl.rule.upperBoundary }}</span>
+          <span>{{ $ctrl.rule.upperBoundary }}</span>
         </div>
         <div ng-switch-default>
-          <span>{{ ruleCtrl.rule.operator }}</span>
-          <span>{{ ruleCtrl.rule.getExpression() }}</span>
+          <span>{{ $ctrl.rule.operator }}</span>
+          <span>{{ $ctrl.rule.getExpression() }}</span>
         </div>
       </div>
     </div>

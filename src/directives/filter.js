@@ -404,6 +404,5 @@ ngeo.module.component('ngeoFilter', {
     'toolGroup': '<'
   },
   controller: ngeo.FilterController,
-  controllerAs: 'filterCtrl',
   templateUrl: () => `${ngeo.baseTemplateUrl}/filter.html`
 });
