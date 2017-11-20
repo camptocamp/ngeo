@@ -747,15 +747,6 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/closure-compiler/compiler.jar: .build/closure-compiler/compiler-latest.zip
-	unzip $< -d .build/closure-compiler
-	touch $@
-
-.build/closure-compiler/compiler-latest.zip:
-	mkdir -p $(dir $@)
-	wget -O $@ http://closure-compiler.googlecode.com/files/compiler-latest.zip
-	touch $@
-
 .PRECIOUS: .build/examples/%.json
 .build/examples/%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
 	mkdir -p $(dir $@)
