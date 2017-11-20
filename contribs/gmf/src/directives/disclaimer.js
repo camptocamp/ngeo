@@ -58,7 +58,7 @@ goog.require('ngeo.LayerHelper');
  * @ngname gmfDisclaimer
  */
 gmf.disclaimerComponent = {
-  controller: 'GmfDisclaimerController as dclCtrl',
+  controller: gmf.DisclaimerController,
   bindings: {
     'popup': '<?gmfDisclaimerPopup',
     'map': '=gmfDisclaimerMap',
@@ -335,6 +335,3 @@ gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
     });
   }
 };
-
-
-gmf.module.controller('GmfDisclaimerController', gmf.DisclaimerController);

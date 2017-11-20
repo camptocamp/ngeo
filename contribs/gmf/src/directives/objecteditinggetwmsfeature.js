@@ -32,7 +32,7 @@ goog.require('ol.events');
  */
 gmf.objecteditinggetwmsfeatureDirective = function() {
   return {
-    controller: 'GmfObjecteditinggetwmsfeatureController as gwfCtrl',
+    controller: gmf.ObjecteditinggetwmsfeatureController,
     scope: {
       'active': '=gmfObjecteditinggetwmsfeatureActive',
       'features': '<gmfObjecteditinggetwmsfeatureFeatures',
@@ -148,8 +148,3 @@ gmf.ObjecteditinggetwmsfeatureController.prototype.handleMapClick_ = function(
   });
 
 };
-
-
-gmf.module.controller(
-  'GmfObjecteditinggetwmsfeatureController',
-  gmf.ObjecteditinggetwmsfeatureController);

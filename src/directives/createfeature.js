@@ -55,7 +55,7 @@ goog.require('ol.style.Style');
  */
 ngeo.createfeatureDirective = function() {
   return {
-    controller: 'ngeoCreatefeatureController as cfCtrl',
+    controller: ngeo.CreatefeatureController,
     bindToController: true,
     scope: {
       'active': '=ngeoCreatefeatureActive',
@@ -291,7 +291,3 @@ ngeo.CreatefeatureController.prototype.$onDestroy = function() {
     this.map.removeInteraction(this.interaction_);
   }, 0);
 };
-
-
-ngeo.module.controller(
-  'ngeoCreatefeatureController', ngeo.CreatefeatureController);

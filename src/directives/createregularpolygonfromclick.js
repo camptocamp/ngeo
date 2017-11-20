@@ -54,7 +54,7 @@ goog.require('ol.interaction.DrawEventType');
  */
 ngeo.createregularpolygonfromclickDirective = function() {
   return {
-    controller: 'ngeoCreateregularpolygonfromclickController as crpfcCtrl',
+    controller: ngeo.CreateregularpolygonfromclickController,
     bindToController: true,
     scope: {
       'active': '=ngeoCreateregularpolygonfromclickActive',
@@ -191,8 +191,3 @@ ngeo.CreateregularpolygonfromclickController.prototype.handleDestroy_ = function
   this.interaction_.setActive(false);
   this.map.removeInteraction(this.interaction_);
 };
-
-
-ngeo.module.controller(
-  'ngeoCreateregularpolygonfromclickController',
-  ngeo.CreateregularpolygonfromclickController);
