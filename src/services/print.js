@@ -279,6 +279,9 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
  * @private
  */
 ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
+  if (url.startsWith('//')) {
+    url = window.location.protocol  + url;
+  }
   const url_url = new URL(url);
   const customParams = {'TRANSPARENT': true};
   if (url_url.searchParams) {
