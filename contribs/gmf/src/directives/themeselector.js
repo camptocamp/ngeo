@@ -3,7 +3,6 @@ goog.provide('gmf.themeselectorDirective');
 goog.require('gmf');
 goog.require('gmf.ThemeManager');
 goog.require('gmf.Themes');
-goog.require('gmf.ThemesEventType');
 goog.require('ol.events');
 
 
@@ -122,8 +121,7 @@ gmf.ThemeselectorController = function($scope, gmfThemeManager, gmfThemes) {
    */
   this.listenerKeys_ = [];
 
-  this.listenerKeys_.push(ol.events.listen(this.gmfThemes_,
-    gmf.ThemesEventType.CHANGE, this.setThemes_, this));
+  this.listenerKeys_.push(ol.events.listen(this.gmfThemes_, 'change', this.setThemes_, this));
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 

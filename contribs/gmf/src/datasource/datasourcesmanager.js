@@ -156,8 +156,7 @@ gmf.datasource.DataSourcesManager = class {
       this.handleNgeoBackgroundLayerChange_,
       this
     );
-    ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE,
-      this.handleThemesChange_, this);
+    ol.events.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
   }
 
   /**

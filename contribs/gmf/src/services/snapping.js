@@ -176,7 +176,7 @@ gmf.Snapping.prototype.setMap = function(map) {
     const view = map.getView();
 
     keys.push(
-      ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE, this.handleThemesChange_, this),
+      ol.events.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this),
       ol.events.listen(view, 'change:center', this.handleMapViewChange_, this),
       ol.events.listen(view, 'change:resolution', this.handleMapViewChange_, this)
     );

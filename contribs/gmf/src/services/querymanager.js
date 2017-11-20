@@ -59,8 +59,7 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, $q) {
    */
   this.cache_ = {};
 
-  ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE,
-    this.handleThemesChange_, this);
+  ol.events.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
 };
 
 
