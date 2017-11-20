@@ -106,9 +106,7 @@ ngeo.interaction.MobileDraw = function(options) {
     updateWhileInteracting: true
   });
 
-  ol.events.listen(this,
-    ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
-    this.updateState_, this);
+  ol.events.listen(this, 'change:active', this.updateState_, this);
 
   this.set(ngeo.interaction.MobileDrawProperty.DIRTY, false);
   this.set(ngeo.interaction.MobileDrawProperty.DRAWING, false);

@@ -53,8 +53,7 @@ ngeo.drawrectangleDirective = function() {
       );
       ol.events.listen(
         drawRectangle,
-        ol.Object.getChangeEventType(
-          ol.interaction.Property.ACTIVE),
+        'change:active',
         drawFeatureCtrl.handleActiveChange,
         drawFeatureCtrl
       );

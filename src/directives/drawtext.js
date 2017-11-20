@@ -40,8 +40,7 @@ ngeo.drawtextDirective = function() {
       );
       ol.events.listen(
         drawText,
-        ol.Object.getChangeEventType(
-          ol.interaction.Property.ACTIVE),
+        'change:active',
         drawFeatureCtrl.handleActiveChange,
         drawFeatureCtrl
       );

@@ -53,8 +53,7 @@ ngeo.measureareaDirective = function($compile, gettextCatalog, $filter, $injecto
       );
       ol.events.listen(
         measureArea,
-        ol.Object.getChangeEventType(
-          ol.interaction.Property.ACTIVE),
+        'change:active',
         drawFeatureCtrl.handleActiveChange,
         drawFeatureCtrl
       );

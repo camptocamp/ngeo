@@ -223,10 +223,7 @@ ngeo.interaction.DrawAzimut = function(options) {
       options.style : ol.interaction.Draw.getDefaultStyleFunction()
   });
 
-
-  ol.events.listen(this,
-    ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
-    this.updateState_, this);
+  ol.events.listen(this, 'change:active', this.updateState_, this);
 };
 ol.inherits(ngeo.interaction.DrawAzimut, ol.interaction.Pointer);
 

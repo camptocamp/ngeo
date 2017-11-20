@@ -132,14 +132,11 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
   ngeoDecorateInteraction(this.interaction);
 
   // Clear the line as soon as the interaction is activated.
-  this.interaction.on(
-    ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
-    function() {
-      if (this.interaction.getActive()) {
-        this.clear_();
-      }
-    }, this
-  );
+  this.interaction.on('change:active', () => {
+    if (this.interaction.getActive()) {
+      this.clear_();
+    }
+  });
 
   // Update the profile with the new geometry.
   this.interaction.on('drawend', (event) => {
