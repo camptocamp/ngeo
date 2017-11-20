@@ -156,3 +156,42 @@ ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
 
 
 ngeo.module.service('ngeoBackgroundLayerMgr', ngeo.BackgroundLayerMgr);
+
+
+/**
+ * @enum {string}
+ */
+ngeo.BackgroundLayerMgr.EventType = {
+  /**
+   * Triggered when the background layer changes.
+   */
+  CHANGE: 'change'
+};
+
+
+/**
+ * @constructor
+ * @struct
+ * @extends {ol.events.Event}
+ * @param {ngeo.BackgroundLayerMgr.EventType} type Type.
+ * @param {ol.layer.Base} current Current background layer.
+ * @param {ol.layer.Base} previous Previous background layer.
+ * @implements {ngeox.BackgroundEvent}
+ */
+ngeo.BackgroundLayerMgr.BackgroundEvent = function(type, current, previous) {
+
+  ol.events.Event.call(this, type);
+
+  /**
+   * The current (new) layer used as background.
+   * @type {ol.layer.Base}
+   */
+  this.current = current;
+
+  /**
+   * The layer used as background before a change.
+   * @type {ol.layer.Base}
+   */
+  this.previous = previous;
+};
+ol.inherits(ngeo.BackgroundLayerMgr.BackgroundEvent, ol.events.Event);
