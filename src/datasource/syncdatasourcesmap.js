@@ -9,7 +9,6 @@ goog.require('ol.CollectionEventType');
 goog.require('ol.Object');
 goog.require('ol.Observable');
 goog.require('ol.View');
-goog.require('ol.ViewProperty');
 goog.require('goog.asserts');
 
 
@@ -88,12 +87,7 @@ ngeo.datasource.SyncDataSourcesMap = class {
     // (1) Event listeners
     const view = map.getView();
     this.listenerKeys_.push(
-      ol.events.listen(
-        view,
-        ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
-        this.handleViewResolutionChange_,
-        this
-      )
+      ol.events.listen(view, 'change:resolution', this.handleViewResolutionChange_, this)
     );
 
     // (2) Sync resolution with existing data sources

@@ -5,7 +5,6 @@ goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ol.events');
 goog.require('ol.Collection');
-goog.require('ol.ViewProperty');
 goog.require('ol.format.WFS');
 goog.require('ol.interaction.Snap');
 
@@ -174,31 +173,12 @@ gmf.Snapping.prototype.setMap = function(map) {
       }, 0);
     });
 
-    keys.push(
-      ol.events.listen(
-        this.gmfThemes_,
-        gmf.ThemesEventType.CHANGE,
-        this.handleThemesChange_,
-        this
-      )
-    );
-
     const view = map.getView();
+
     keys.push(
-      ol.events.listen(
-        view,
-        ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
-        this.handleMapViewChange_,
-        this
-      )
-    );
-    keys.push(
-      ol.events.listen(
-        view,
-        ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
-        this.handleMapViewChange_,
-        this
-      )
+      ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE, this.handleThemesChange_, this),
+      ol.events.listen(view, 'change:center', this.handleMapViewChange_, this),
+      ol.events.listen(view, 'change:resolution', this.handleMapViewChange_, this)
     );
   }
 };

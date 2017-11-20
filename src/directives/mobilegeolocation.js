@@ -9,7 +9,6 @@ goog.require('ol.Feature');
 goog.require('ol.Geolocation');
 goog.require('ol.GeolocationProperty');
 goog.require('ol.Map');
-goog.require('ol.ViewProperty');
 goog.require('ol.geom.Point');
 goog.require('ol.DeviceOrientation');
 
@@ -214,17 +213,9 @@ ngeo.MobileGeolocationController = function($scope, $element,
 
   const view = map.getView();
 
-  ol.events.listen(
-    view,
-    ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
-    this.handleViewChange_,
-    this);
+  ol.events.listen(view, 'change:center', this.handleViewChange_, this);
 
-  ol.events.listen(
-    view,
-    ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
-    this.handleViewChange_,
-    this);
+  ol.events.listen(view, 'change:resolution', this.handleViewChange_, this);
 
 };
 

@@ -11,7 +11,6 @@ goog.require('ol.interaction.DrawEventType');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
-goog.require('ol.ViewProperty');
 
 
 /**
@@ -136,7 +135,7 @@ ngeo.interaction.MobileDraw.prototype.setMap = function(map) {
 
   if (map) {
     this.changeEventKey_ = ol.events.listen(map.getView(),
-      ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
+      'change:center',
       this.handleViewCenterChange_, this);
   }
 
