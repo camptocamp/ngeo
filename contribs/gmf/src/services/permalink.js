@@ -436,10 +436,8 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
     }, this);
 
     this.ngeoFeatures_.extend(features);
-    ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.ADD,
-      this.handleNgeoFeaturesAdd_, this);
-    ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.REMOVE,
-      this.handleNgeoFeaturesRemove_, this);
+    ol.events.listen(this.ngeoFeatures_, 'add', this.handleNgeoFeaturesAdd_, this);
+    ol.events.listen(this.ngeoFeatures_, 'remove', this.handleNgeoFeaturesRemove_, this);
   }
 
   if (this.featureHelper_) {
@@ -471,25 +469,25 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
       // update the url accordingly.
       ol.events.listen(
         this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
-        ol.CollectionEventType.ADD,
+        'add',
         this.handleExternalDSGroupCollectionAdd_,
         this
       );
       ol.events.listen(
         this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
-        ol.CollectionEventType.REMOVE,
+        'remove',
         this.handleExternalDSGroupCollectionRemove_,
         this
       );
       ol.events.listen(
         this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
-        ol.CollectionEventType.ADD,
+        'add',
         this.handleExternalDSGroupCollectionAdd_,
         this
       );
       ol.events.listen(
         this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
-        ol.CollectionEventType.REMOVE,
+        'remove',
         this.handleExternalDSGroupCollectionRemove_,
         this
       );
@@ -1365,13 +1363,13 @@ gmf.Permalink.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
 gmf.Permalink.prototype.registerExternalDSGroup_ = function(group) {
   ol.events.listen(
     group.dataSourcesCollection,
-    ol.CollectionEventType.ADD,
+    'add',
     this.setExternalDataSourcesState_,
     this
   );
   ol.events.listen(
     group.dataSourcesCollection,
-    ol.CollectionEventType.REMOVE,
+    'remove',
     this.setExternalDataSourcesState_,
     this
   );
@@ -1397,13 +1395,13 @@ gmf.Permalink.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
 gmf.Permalink.prototype.unregisterExternalDSGroup_ = function(group) {
   ol.events.unlisten(
     group.dataSourcesCollection,
-    ol.CollectionEventType.ADD,
+    'add',
     this.setExternalDataSourcesState_,
     this
   );
   ol.events.unlisten(
     group.dataSourcesCollection,
-    ol.CollectionEventType.REMOVE,
+    'remove',
     this.setExternalDataSourcesState_,
     this
   );

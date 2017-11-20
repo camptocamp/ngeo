@@ -683,7 +683,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
     keys.push(
       ol.events.listen(
         this.sketchFeatures,
-        ol.CollectionEventType.ADD,
+        'add',
         this.handleSketchFeaturesAdd_,
         this
       )

@@ -5,7 +5,6 @@ goog.require('ngeo.datasource.DataSource');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.DataSources');
 goog.require('ol.events');
-goog.require('ol.CollectionEventType');
 goog.require('ol.Object');
 goog.require('ol.Observable');
 goog.require('ol.View');
@@ -53,12 +52,7 @@ ngeo.datasource.SyncDataSourcesMap = class {
      */
     this.listenerKeys_ = [];
 
-    ol.events.listen(
-      this.ngeoDataSources_,
-      ol.CollectionEventType.ADD,
-      this.handleDataSourcesAdd_,
-      this
-    );
+    ol.events.listen(this.ngeoDataSources_, 'add', this.handleDataSourcesAdd_, this);
   }
 
   /**

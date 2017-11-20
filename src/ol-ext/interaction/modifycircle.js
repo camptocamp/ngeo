@@ -122,10 +122,8 @@ ngeo.interaction.ModifyCircle = function(options) {
   this.features_ = options.features;
 
   this.features_.forEach(this.addFeature_, this);
-  ol.events.listen(this.features_, ol.CollectionEventType.ADD,
-    this.handleFeatureAdd_, this);
-  ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
-    this.handleFeatureRemove_, this);
+  ol.events.listen(this.features_, 'add', this.handleFeatureAdd_, this);
+  ol.events.listen(this.features_, 'remove', this.handleFeatureRemove_, this);
 
 };
 ol.inherits(ngeo.interaction.ModifyCircle, ol.interaction.Pointer);

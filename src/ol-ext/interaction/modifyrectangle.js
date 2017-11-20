@@ -85,10 +85,8 @@ ngeo.interaction.ModifyRectangle = function(options) {
    */
   this.params_ = null;
 
-  ol.events.listen(this.features_, ol.CollectionEventType.ADD,
-    this.handleFeatureAdd_, this);
-  ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
-    this.handleFeatureRemove_, this);
+  ol.events.listen(this.features_, 'add', this.handleFeatureAdd_, this);
+  ol.events.listen(this.features_, 'remove', this.handleFeatureRemove_, this);
 
   this.features_.forEach(this.addFeature_, this);
 

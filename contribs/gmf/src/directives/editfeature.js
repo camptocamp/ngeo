@@ -520,7 +520,7 @@ gmf.EditfeatureController.prototype.$onInit = function() {
     uid,
     ol.events.listen(
       this.features,
-      ol.CollectionEventType.ADD,
+      'add',
       this.handleFeatureAdd_,
       this
     )

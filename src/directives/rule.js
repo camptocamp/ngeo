@@ -611,7 +611,7 @@ ngeo.RuleController = class {
       keys.push(
         ol.events.listen(
           this.drawnFeatures,
-          ol.CollectionEventType.ADD,
+          'add',
           this.handleFeaturesAdd_,
           this
         )

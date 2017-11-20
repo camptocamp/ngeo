@@ -14,7 +14,6 @@ goog.require('ngeo.modalDirective');
 goog.require('ngeo.Notification');
 goog.require('ngeo.RuleHelper');
 goog.require('ol.events');
-goog.require('ol.CollectionEventType');
 
 
 /**
@@ -324,20 +323,8 @@ gmf.FilterselectorController = class {
     if (register) {
       // Listen to data sources being added/removed
       keys.push(
-        ol.events.listen(
-          this.gmfDataSources_,
-          ol.CollectionEventType.ADD,
-          this.handleDataSourcesAdd_,
-          this
-        )
-      );
-      keys.push(
-        ol.events.listen(
-          this.gmfDataSources_,
-          ol.CollectionEventType.REMOVE,
-          this.handleDataSourcesRemove_,
-          this
-        )
+        ol.events.listen(this.gmfDataSources_, 'add', this.handleDataSourcesAdd_, this),
+        ol.events.listen(this.gmfDataSources_, 'remove', this.handleDataSourcesRemove_, this)
       );
 
       // Manage the data sources that are already in the collection
