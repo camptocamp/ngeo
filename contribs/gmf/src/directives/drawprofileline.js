@@ -4,7 +4,6 @@ goog.require('gmf');
 goog.require('ol.Collection');
 goog.require('ol.geom.LineString');
 goog.require('ol.interaction.Draw');
-goog.require('ol.interaction.DrawEventType');
 goog.require('ol.style.Style');
 goog.require('ol.style.Stroke');
 goog.require('ngeo.DecorateInteraction');
@@ -143,13 +142,13 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
   );
 
   // Update the profile with the new geometry.
-  this.interaction.on(ol.interaction.DrawEventType.DRAWEND, function(e) {
-    this.line = e.feature.getGeometry();
+  this.interaction.on('drawend', (event) => {
+    this.line = event.feature.getGeometry();
     // using timeout to prevent double click to zoom the map
     $timeout(() => {
       this.interaction.setActive(false);
     }, 0);
-  }, this);
+  });
 
   // Line may be removed from an other component
   // for example closing the chart panel

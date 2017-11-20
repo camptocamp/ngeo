@@ -11,7 +11,6 @@ goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
-goog.require('ol.interaction.DrawEventType');
 goog.require('ol.style.Style');
 
 
@@ -228,7 +227,7 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
       uid,
       ol.events.listen(
         interaction,
-        ol.interaction.DrawEventType.DRAWEND,
+        'drawend',
         this.handleDrawEnd_,
         this
       )

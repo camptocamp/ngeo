@@ -4,7 +4,6 @@ goog.require('ngeo');
 goog.require('ol.events');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
-goog.require('ol.interaction.DrawEventType');
 
 
 /**
@@ -34,7 +33,7 @@ ngeo.drawtextDirective = function() {
 
       ol.events.listen(
         drawText,
-        ol.interaction.DrawEventType.DRAWEND,
+        'drawend',
         drawFeatureCtrl.handleDrawEnd.bind(
           drawFeatureCtrl, ngeo.GeometryType.TEXT),
         drawFeatureCtrl

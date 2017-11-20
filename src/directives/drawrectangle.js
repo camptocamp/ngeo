@@ -4,7 +4,6 @@ goog.require('ngeo');
 goog.require('ol.events');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
-goog.require('ol.interaction.DrawEventType');
 goog.require('ol.geom.Polygon');
 
 
@@ -47,7 +46,7 @@ ngeo.drawrectangleDirective = function() {
 
       ol.events.listen(
         drawRectangle,
-        ol.interaction.DrawEventType.DRAWEND,
+        'drawend',
         drawFeatureCtrl.handleDrawEnd.bind(
           drawFeatureCtrl, ngeo.GeometryType.RECTANGLE),
         drawFeatureCtrl
