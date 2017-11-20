@@ -195,7 +195,7 @@ ngeo.interaction.Translate.prototype.addFeature_ = function(feature) {
 
   this.featureListenerKeys_[uid] = ol.events.listen(
     geometry,
-    ol.events.EventType.CHANGE,
+    'change',
     this.handleGeometryChange_.bind(this, feature),
     this
   );

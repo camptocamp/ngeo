@@ -5,7 +5,6 @@ goog.require('gmf.Raster');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Debounce');
 goog.require('ol.events');
-goog.require('ol.events.EventType');
 
 
 /**
@@ -163,15 +162,13 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
       this.ngeoDebounce_(this.pointerStop_.bind(this), 500, true)
     ));
 
-    this.listenerKeys_.push(ol.events.listen(this.map.getViewport(),
-      ol.events.EventType.MOUSEOUT,
-      function(e) {
-        this.scope_.$apply(() => {
-          this.elevation = undefined;
-          this.inViewport_ = false;
-          this.loading = false;
-        });
-      }, this));
+    this.listenerKeys_.push(ol.events.listen(this.map.getViewport(), 'mouseout', () => {
+      this.scope_.$apply(() => {
+        this.elevation = undefined;
+        this.inViewport_ = false;
+        this.loading = false;
+      });
+    }));
   } else {
     this.elevation = undefined;
     this.listenerKeys_.forEach(ol.events.unlistenByKey);

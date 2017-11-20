@@ -1027,7 +1027,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
     goog.asserts.assert(geom);
     ol.events.unlisten(
       geom,
-      ol.events.EventType.CHANGE,
+      'change',
       this.handleFeatureGeometryChange_,
       this
     );
@@ -1041,7 +1041,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
     goog.asserts.assert(geom);
     ol.events.listen(
       geom,
-      ol.events.EventType.CHANGE,
+      'change',
       this.handleFeatureGeometryChange_,
       this
     );

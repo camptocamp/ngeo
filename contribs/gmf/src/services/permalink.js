@@ -1075,7 +1075,7 @@ gmf.Permalink.prototype.addNgeoFeature_ = function(feature) {
   const uid = ol.getUid(feature);
   this.ngeoEventHelper_.addListenerKey(
     uid,
-    ol.events.listen(feature, ol.events.EventType.CHANGE,
+    ol.events.listen(feature, 'change',
       this.ngeoDebounce_(this.handleNgeoFeaturesChange_, 250, true), this)
   );
 };
