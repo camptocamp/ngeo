@@ -31,7 +31,6 @@ goog.require('ol.interaction.TranslateEventType');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
-goog.require('ol.ObjectEventType');
 
 
 /**
@@ -1024,12 +1023,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
 
   let geom;
   if (oldFeature) {
-    ol.events.unlisten(
-      oldFeature,
-      ol.ObjectEventType.PROPERTYCHANGE,
-      this.handleFeaturePropertyChange_,
-      this
-    );
+    ol.events.unlisten(oldFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = oldFeature.getGeometry();
     goog.asserts.assert(geom);
     ol.events.unlisten(
@@ -1043,12 +1037,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
 
   if (newFeature) {
     this.featureId = newFeature.getId();
-    ol.events.listen(
-      newFeature,
-      ol.ObjectEventType.PROPERTYCHANGE,
-      this.handleFeaturePropertyChange_,
-      this
-    );
+    ol.events.listen(newFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = newFeature.getGeometry();
     goog.asserts.assert(geom);
     ol.events.listen(
