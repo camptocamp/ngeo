@@ -19,7 +19,6 @@ goog.require('ngeo.bboxQueryDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
 goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
@@ -59,7 +58,7 @@ gmfapp.MainController = class {
    * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
-   * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+   * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
    *     service.
    * @ngInject
    */

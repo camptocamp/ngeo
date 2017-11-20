@@ -37,7 +37,6 @@ goog.require('ngeo.GetBrowserLanguage');
 goog.require('ngeo.MapQuerent');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.events');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
@@ -394,7 +393,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.ToolActivateMgr}
+   * @type {ngeo.ToolActivate.Mgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 

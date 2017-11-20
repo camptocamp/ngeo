@@ -45,7 +45,6 @@ goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.scaleselectorDirective');
 goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -224,7 +223,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.ToolActivateMgr}
+   * @type {ngeo.ToolActivate.Mgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 

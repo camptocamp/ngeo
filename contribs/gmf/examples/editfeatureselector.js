@@ -12,7 +12,6 @@ goog.require('gmf.layertreeComponent');
 goog.require('gmf.mapDirective');
 goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Collection');
@@ -51,7 +50,7 @@ gmfapp.module.value('gmfLayersUrl',
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmfx.User} gmfUser User.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
  * @constructor

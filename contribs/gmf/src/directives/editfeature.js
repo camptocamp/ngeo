@@ -19,7 +19,6 @@ goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 /** @suppress {extraRequire} */
@@ -109,7 +108,7 @@ gmf.module.directive(
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -241,7 +240,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {ngeo.ToolActivateMgr}
+   * @type {ngeo.ToolActivate.Mgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
