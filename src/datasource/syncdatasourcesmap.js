@@ -5,7 +5,6 @@ goog.require('ngeo.datasource.DataSource');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.DataSources');
 goog.require('ol.events');
-goog.require('ol.Object');
 goog.require('ol.Observable');
 goog.require('ol.View');
 goog.require('goog.asserts');
