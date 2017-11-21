@@ -95,16 +95,6 @@ ngeo.extendedProfile.plot = function(options) {
   const distanceExtractor = options.distanceExtractor;
 
   /**
-   * Line configuration object.
-   */
-  const linesConfiguration = options.linesConfiguration;
-
-  /**
-   * Number of differents configurations for the line.
-   */
-  const numberOfLines = Object.keys(linesConfiguration).length;
-
-  /**
    * Method to get the coordinate in pixels from a distance.
    */
   const bisectDistance = d3.bisector(d => distanceExtractor(d)).left;
@@ -237,8 +227,9 @@ ngeo.extendedProfile.plot = function(options) {
 
 
   const extendedProfile = function(selection) {
-    ngeo.extendedProfile.config.getProfileConfig('http://nesitn7/pytree');
-    ngeo.extendedProfile.loader.getProfileByLOD(0, ngeo.extendedProfile.config.plotParams.initialLOD, $('#coordinates').val(), 0, $('#width').val(), true);
+    // ngeo.extendedProfile.config.getProfileConfig(options.pytreeLidarProfileJsonUrl);
+    // ngeo.extendedProfile.loader.getProfileByLOD(0, ngeo.extendedProfile.config.plotParams.initialLOD, 
+    // '{2528725.0,1195975.0},{2538725.0,1197975.0},{2538735.0,1197995.0}', 0, 10, true);
   };
 
   return extendedProfile;

@@ -85,7 +85,7 @@ ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordina
 };
 
 ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOffset, lastLOD, resetPlot) {
-  try {
+  // try {
     // ***Get header size***
     let typedArrayInt32 = new Int32Array(profile, 0,4);
     let headerSize = typedArrayInt32[0];
@@ -185,9 +185,9 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
       }
     }
 
-  } catch (e) {
-    console.log('error during buffer processing: ' + e);
-  }
+  // } catch (e) {
+    // console.log('error during buffer processing: ' + e);
+  // }
 
 }
 

@@ -6,7 +6,8 @@ Utility fonctions for point cloud Profile
 
 ngeo.extendedProfile.utils.getLinestring = function () {
 
-  let linestringStr = $('#coordinates').val().replace(/{/g, '').replace(/}/g, '').split(',');
+  let toto = '{2528725.0,1195975.0},{2538725.0,1197975.0},{2538735.0,1197995.0}'
+  let linestringStr = toto.replace(/{/g, '').replace(/}/g, '').split(',');
   let linestring = [];
 
   for (let j=0; j<linestringStr.length;j++) {

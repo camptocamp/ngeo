@@ -313,6 +313,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * @export
    */
   this.drawProfilePanelActive = false;
+  
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.drawLidarProfilePanelActive = false;
 
   /**
    * @type {gmfx.User}
@@ -408,6 +414,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   const drawProfilePanelActivate = new ngeo.ToolActivate(this, 'drawProfilePanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, drawProfilePanelActivate, false);
+  
+  const drawLidarProfilePanelActivate = new ngeo.ToolActivate(this, 'drawLidarProfilePanelActive');
+  ngeoToolActivateMgr.registerTool(mapTools, drawLidarProfilePanelActivate, false);
 
   const printPanelActivate = new ngeo.ToolActivate(this, 'printPanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);

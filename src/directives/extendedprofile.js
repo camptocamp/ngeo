@@ -36,7 +36,7 @@ goog.require('ngeo.Debounce');
  * @ngdoc directive
  * @ngname ngeoextendedProfile
  */
-ngeo.extendedProfileDirective = function(ngeoDebounce) {
+ngeo.extendedProfileDirective = function(ngeoDebounce, pytreeLidarProfileJsonUrl) {
 
   return {
     restrict: 'A',
@@ -76,6 +76,8 @@ ngeo.extendedProfileDirective = function(ngeoDebounce) {
               scope.$applyAsync();
             };
           }
+          
+          options.pytreeLidarProfileJsonUrl = pytreeLidarProfileJsonUrl;
 
           if (options.outCallback !== undefined) {
             const origOutCallback = options.outCallback;

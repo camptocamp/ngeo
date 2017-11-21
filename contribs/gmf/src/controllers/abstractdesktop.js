@@ -21,6 +21,12 @@ goog.require('gmf.mousepositionComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.printDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.lidarProfileComponent');
+/** @suppress {extraRequire} */
+goog.require('gmf.lidarPanelComponent');
+/** @suppress {extraRequire} */
+goog.require('gmf.LidarProfileConfig');
+/** @suppress {extraRequire} */
 goog.require('gmf.profileComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawprofilelineDirective');
@@ -250,6 +256,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @export
    */
   this.profileLine = null;
+
+  /**
+   * @type {ol.geom.LineString}
+   * @export
+   */
+  this.lidarProfileLine = null;
 
   gmf.AbstractController.call(this, config, $scope, $injector);
 
