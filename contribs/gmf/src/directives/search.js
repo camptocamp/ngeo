@@ -168,6 +168,7 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
 /**
  * @constructor
  * @private
+ * @param {jQuery} $element Element.
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$timeout} $timeout Angular timeout service.
@@ -185,10 +186,16 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  * @ngdoc controller
  * @ngname GmfSearchController
  */
-gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCatalog,
+gmf.SearchController = function($element, $scope, $compile, $timeout, $injector, gettextCatalog,
   ngeoAutoProjection, ngeoSearchCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
   gmfThemes, gmfTreeManager, gmfFulltextSearchService) {
 
+
+  /**
+   * @type {jQuery}
+   * @private
+   */
+  this.element_ = $element;
 
   /**
    * @type {angular.Scope}
@@ -769,7 +776,7 @@ gmf.SearchController.prototype.setStyleColor = function(color) {
  */
 gmf.SearchController.prototype.setTTDropdownVisibility_ = function() {
   if (this.clearButton) {
-    const ttDropdown = $('.twitter-typeahead .tt-menu');
+    const ttDropdown = this.element_.find('.twitter-typeahead .tt-menu');
     (this.inputValue) ? ttDropdown.show() : ttDropdown.hide();
   }
 };
@@ -788,7 +795,7 @@ gmf.SearchController.prototype.onClearButton = function() {
  * @export
  */
 gmf.SearchController.prototype.clear = function() {
-  const typeahead = $('.twitter-typeahead');
+  const typeahead = this.element_.find('.twitter-typeahead');
   const ttmenu = typeahead.children('.tt-menu');
   const inputs = typeahead.children('input');
   // clear model value, the 'real' input value and tt's suggestions
@@ -804,7 +811,7 @@ gmf.SearchController.prototype.clear = function() {
  * @export
  */
 gmf.SearchController.prototype.blur = function() {
-  const typeahead = $('.twitter-typeahead');
+  const typeahead = this.element_.find('.twitter-typeahead');
   const inputs = typeahead.children('input');
   // Blur as soon as possible in digest loops
   this.timeout_(() => {
@@ -933,7 +940,7 @@ gmf.SearchController.datasetsempty_ = function(event, query, empty) {
   // based on https://github.com/twitter/typeahead.js/issues/780#issuecomment-251554452
   // FIXME: remove this workaround when https://github.com/corejavascript/typeahead.js/issues/60 is fixed
 
-  const menu = $('.twitter-typeahead .tt-menu');
+  const menu = this.element_.find('.twitter-typeahead .tt-menu');
   const message = menu.children('.gmf-search-no-results');
   if (message.length == 0) {
     const div = $('<div class="gmf-search-no-results" translate>No result found</div>');
