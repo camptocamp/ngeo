@@ -391,29 +391,7 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
   });
 };
 
-
 /**
-<<<<<<< HEAD
- * Return 'out-of-resolution' if the current resolution of the map is out of
- * the min/max resolution in the node.
- * @param {gmfThemes.GmfLayerWMS} gmfLayerWMS the GeoMapFish Layer WMS.
- * @return {string|undefined} 'out-of-resolution' or undefined.
- * @export
- */
-gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayerWMS) {
-  let style;
-  const resolution = this.map.getView().getResolution();
-  if (gmfLayerWMS.minResolutionHint !== undefined && resolution < gmfLayerWMS.minResolutionHint ||
-      gmfLayerWMS.maxResolutionHint !== undefined && resolution > gmfLayerWMS.maxResolutionHint) {
-    style = 'out-of-resolution';
-  }
-  return style;
-};
-
-
-/**
-=======
->>>>>>> origin/2.1
  * Toggle the state of treeCtrl's node.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
  *     the current node.
