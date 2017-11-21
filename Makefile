@@ -830,11 +830,6 @@ $(EXTERNS_JQUERY): github_versions
 	.build/python-venv/bin/pip install `grep ^beautifulsoup4== $< --colour=never`
 	touch $@
 
-.build/closure-library: github_versions
-	mkdir -p $(dir $@)
-	git clone http://github.com/google/closure-library/ $@
-	cd $@; git checkout `grep ^closure-library= $< | cut -d = -f 2`
-
 .build/ol-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="node_modules/openlayers/src ../../../openlayers/src" \
