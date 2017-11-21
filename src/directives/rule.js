@@ -805,7 +805,7 @@ ngeo.RuleController = class {
         actions.push({
           cls: 'fa fa-arrows',
           label: gettextCatalog.getString('Move'),
-          name: ngeo.RuleController.MenuActionType.MOVE
+          name: 'move'
         });
       }
       if (type == ngeo.GeometryType.LINE_STRING ||
@@ -814,7 +814,7 @@ ngeo.RuleController = class {
         actions.push({
           cls: 'fa fa-rotate-right',
           label: gettextCatalog.getString('Rotate'),
-          name: ngeo.RuleController.MenuActionType.ROTATE
+          name: 'rotate'
         });
       }
     }
@@ -867,11 +867,11 @@ ngeo.RuleController = class {
     const action = evt.detail.action;
 
     switch (action) {
-      case ngeo.RuleController.MenuActionType.MOVE:
+      case 'move':
         this.translate_.setActive(true);
         this.scope_.$apply();
         break;
-      case ngeo.RuleController.MenuActionType.ROTATE:
+      case 'rotate':
         this.rotate_.setActive(true);
         this.scope_.$apply();
         break;
@@ -899,15 +899,6 @@ ngeo.RuleController = class {
     this.scope_.$apply();
   }
 
-};
-
-
-/**
- * @enum {string}
- */
-ngeo.RuleController.MenuActionType = {
-  MOVE: 'move',
-  ROTATE: 'rotate'
 };
 
 
