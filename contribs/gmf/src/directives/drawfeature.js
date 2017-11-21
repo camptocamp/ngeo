@@ -403,6 +403,7 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
     // when deactivated
 
     keys.forEach(ol.events.unlistenByKey);
+    keys.length = 0;
 
     toolMgr.unregisterTool(drawUid, this.drawToolActivate);
     toolMgr.unregisterTool(drawUid, this.mapSelectToolActivate);

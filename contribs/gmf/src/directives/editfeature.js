@@ -808,6 +808,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
     //this.unregisterInteractions_();
 
     keys.forEach(ol.events.unlistenByKey);
+    keys.length = 0;
 
     toolMgr.unregisterTool(createUid, this.createToolActivate);
     toolMgr.unregisterTool(createUid, this.mapSelectToolActivate);

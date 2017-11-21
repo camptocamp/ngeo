@@ -165,6 +165,7 @@ ngeo.interaction.Modify.prototype.setState_ = function() {
       this.handleFeaturesRemove_, this));
   } else {
     keys.forEach(ol.events.unlistenByKey);
+    keys.length = 0;
     this.features_.forEach(this.removeFeature_, this);
   }
 };

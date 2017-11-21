@@ -152,6 +152,7 @@ ngeo.interaction.Rotate.prototype.setActive = function(active) {
 
   } else {
     this.listenerKeys_.forEach(ol.events.unlistenByKey);
+    this.listenerKeys_.length = 0;
     this.features_.forEach(this.removeFeature_, this);
   }
 };

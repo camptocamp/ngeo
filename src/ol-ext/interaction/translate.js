@@ -156,6 +156,7 @@ ngeo.interaction.Translate.prototype.setState_ = function() {
     }
 
     keys.forEach(ol.events.unlistenByKey);
+    keys.length = 0;
     features.forEach(this.removeFeature_, this);
   }
 };
