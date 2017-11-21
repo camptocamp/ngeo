@@ -46,22 +46,17 @@ gmfapp.module.constant(
 
 /**
  * Demo, NOT USED.
- * A sample directive to display the result.
+ * A sample component to display the result.
  *
- * @return {angular.Directive} The directive specs.
- * @ngInject
+ * @type {!angular.Component}
  */
-gmfapp.queryresultDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {},
-    controller: 'gmfappQueryresultController as qrCtrl',
-    bindToController: true,
-    templateUrl: 'partials/queryresult.html'
-  };
+gmfapp.queryresultComponent = {
+  controller: 'gmfappQueryresultController',
+  controllerAs: 'qrCtrl',
+  templateUrl: 'partials/queryresult.html'
 };
 
-gmfapp.module.directive('gmfappQueryresult', gmfapp.queryresultDirective);
+gmfapp.module.component('gmfappQueryresult', gmfapp.queryresultComponent);
 
 
 /**
