@@ -15,28 +15,22 @@ app.module = angular.module('app', ['ngeo']);
 
 
 /**
- * App-specific directive wrapping the ngeo map directive. The directive's
+ * App-specific component wrapping the ngeo map component. The component's
  * controller has a property "map" including a reference to the OpenLayers
  * map.
  *
- * @return {angular.Directive} The directive specs.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.mapDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appMap',
-      'class': '=appMapClass'
-    },
-    controller: () => {},
-    bindToController: true,
-    template: '<div ngeo-map="$ctrl.map"></div>'
-  };
+app.mapComponent = {
+  bindings: {
+    'map': '=appMap',
+    'class': '=appMapClass'
+  },
+  template: '<div ngeo-map="$ctrl.map"></div>'
 };
 
 
-app.module.directive('appMap', app.mapDirective);
+app.module.component('appMap', app.mapComponent);
 
 
 /**

@@ -20,49 +20,41 @@ app.module = angular.module('app', [ngeo.module.name]);
 
 
 /**
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.searchDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appSearchMap'
-    },
-    controller: 'AppSearchController as ctrl',
-    bindToController: true,
-    template:
-        '<input type="text" placeholder="search…" ' +
-        'ngeo-search="ctrl.options" ' +
-        'ngeo-search-datasets="ctrl.datasets" ' +
-        'ngeo-search-listeners="ctrl.listeners">',
-    /**
-     * @param {angular.Scope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Atttributes.
-     */
-    link: (scope, element, attrs) => {
-      // Empty the search field on focus and blur.
-      element.find('input').on('focus blur', function() {
-        $(this).val('');
-      });
-    }
-  };
+app.searchComponent = {
+  bndings: {
+    'map': '=appSearchMap'
+  },
+  controller: 'AppSearchController',
+  controllerAs: 'ctrl',
+  template:
+      '<input type="text" placeholder="search…" ' +
+      'ngeo-search="ctrl.options" ' +
+      'ngeo-search-datasets="ctrl.datasets" ' +
+      'ngeo-search-listeners="ctrl.listeners">'
 };
 
 
-app.module.directive('appSearch', app.searchDirective);
+app.module.component('appSearch', app.searchComponent);
 
 
 /**
  * @constructor
+ * @param {angular.JQLite} $element Element.
  * @param {angular.Scope} $rootScope Angular root scope.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @ngInject
  */
-app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
+app.SearchController = function($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
+  /**
+   * @private
+   * @type {angular.JQLite}
+   */
+  this.$element = $element;
+
 
   /**
    * @type {ol.Map}
@@ -127,7 +119,18 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
   this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
     select: app.SearchController.select_.bind(this)
   });
+};
 
+
+/**
+ * @export
+ */
+app.SearchController.prototype.$onInit = function() {
+  // Empty the search field on focus and blur.
+  const input = this.$element.find('input');
+  input.on('focus blur', () => {
+    input.val('');
+  });
 };
 
 

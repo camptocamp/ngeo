@@ -18,33 +18,29 @@ app.module = angular.module('app', ['ngeo']);
 
 
 /**
- * The application-specific background layer directive.
+ * The application-specific background layer component.
  *
- * The directive is based on Angular's select, ngOptions, ngModel, and
- * ngChange directives. ngChange is used to avoid adding a watcher on
+ * The component is based on Angular's select, ngOptions, ngModel, and
+ * ngChange components. ngChange is used to avoid adding a watcher on
  * the ngModel expression.
  *
  * Note: we don't need two-way binding for ngModel here, but using ::
  * for the ngModel expression doesn't actually make a difference. This
  * is because ngModel doesn't actually watch the ngModel expression.
  *
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.backgroundlayerDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appBackgroundlayerMap'
-    },
-    templateUrl: 'partials/backgroundlayer.html',
-    bindToController: true,
-    controller: 'AppBackgroundlayerController as ctrl'
-  };
+app.backgroundlayerComponent = {
+  bindings: {
+    'map': '=appBackgroundlayerMap'
+  },
+  templateUrl: 'partials/backgroundlayer.html',
+  controller: 'AppBackgroundlayerController',
+  controllerAs: 'ctrl'
 };
 
 
-app.module.directive('appBackgroundlayer', app.backgroundlayerDirective);
+app.module.component('appBackgroundlayer', app.backgroundlayerComponent);
 
 
 /**
