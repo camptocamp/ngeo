@@ -151,9 +151,8 @@ ngeo.interaction.Rotate.prototype.setActive = function(active) {
       ol.CollectionEventType.REMOVE, this.handleFeatureRemove_, this));
 
   } else {
-    this.listenerKeys_.forEach((key) => {
-      ol.events.unlistenByKey(key);
-    }, this);
+    this.listenerKeys_.forEach(ol.events.unlistenByKey);
+    this.listenerKeys_.length = 0;
     this.features_.forEach(this.removeFeature_, this);
   }
 };

@@ -155,9 +155,8 @@ ngeo.interaction.Translate.prototype.setState_ = function() {
       elem.style.cursor = 'default';
     }
 
-    keys.forEach((key) => {
-      ol.events.unlistenByKey(key);
-    }, this);
+    keys.forEach(ol.events.unlistenByKey);
+    keys.length = 0;
     features.forEach(this.removeFeature_, this);
   }
 };
