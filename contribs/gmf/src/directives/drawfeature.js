@@ -319,16 +319,6 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog, ngeoDecor
 
 
 /**
- * @enum {string}
- */
-gmf.DrawfeatureController.MenuActionType = {
-  DELETE: 'delete',
-  MOVE: 'move',
-  ROTATE: 'rotate'
-};
-
-
-/**
  * Initialize interactions by setting them inactive and decorating them
  * @private
  */
@@ -638,18 +628,18 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
       actions = actions.concat([{
         cls: 'fa fa-arrows',
         label: gettextCatalog.getString('Move'),
-        name: gmf.DrawfeatureController.MenuActionType.MOVE
+        name: 'move'
       }, {
         cls: 'fa fa-rotate-right',
         label: gettextCatalog.getString('Rotate'),
-        name: gmf.DrawfeatureController.MenuActionType.ROTATE
+        name: 'rotate'
       }]);
     }
 
     actions = actions.concat([{
       cls: 'fa fa-trash-o',
       label: gettextCatalog.getString('Delete'),
-      name: gmf.DrawfeatureController.MenuActionType.DELETE
+      name: 'delete'
     }]);
 
     this.menu_ = new ngeo.Menu({
@@ -687,17 +677,17 @@ gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
   const action = evt.detail.action;
 
   switch (action) {
-    case gmf.DrawfeatureController.MenuActionType.DELETE:
+    case 'delete':
       goog.asserts.assert(
         this.selectedFeature, 'Selected feature should be truthy');
       this.removeFeature(this.selectedFeature);
       this.scope_.$apply();
       break;
-    case gmf.DrawfeatureController.MenuActionType.MOVE:
+    case 'move':
       this.translate_.setActive(true);
       this.scope_.$apply();
       break;
-    case gmf.DrawfeatureController.MenuActionType.ROTATE:
+    case 'rotate':
       this.rotate_.setActive(true);
       this.scope_.$apply();
       break;
