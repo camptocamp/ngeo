@@ -1,18 +1,8 @@
-goog.provide('ngeo.SortableOptions');
 goog.provide('ngeo.sortableDirective');
 
 goog.require('goog.fx.DragListDirection');
 goog.require('goog.fx.DragListGroup');
 goog.require('ngeo');
-
-
-/**
- * @typedef {{
- *     handleClassName: (string|undefined),
- *     draggerClassName: (string|undefined)
- * }}
- */
-ngeo.SortableOptions;
 
 
 /**
@@ -45,7 +35,7 @@ ngeo.SortableOptions;
  * See our live example: [../examples/layerorder.html](../examples/layerorder.html)
  *
  * @htmlAttribute {Array.<ol.layer.Base>} ngeo-sortable The layers to sort.
- * @htmlAttribute {!ngeo.SortableOptions} ngeo-sortable-options The options.
+ * @htmlAttribute {!ngeox.SortableOptions} ngeo-sortable-options The options.
  * @htmlAttribute {Function(angular.JQLite, Array)?} ngeo-sortable-callback
  *     Callback function called after the move end. The Function will be called
  *     with the element and the sort array as arguments.
@@ -186,7 +176,7 @@ ngeo.sortableDirective = function($timeout) {
 
       /**
        * @param {?} options Options after expression evaluation.
-       * @return {!ngeo.SortableOptions} Options object.
+       * @return {!ngeox.SortableOptions} Options object.
        * @private
        */
       function getOptions(options) {
@@ -198,7 +188,7 @@ ngeo.sortableDirective = function($timeout) {
           if (options['handleClassName'] === undefined) {
             options['handleClassName'] = defaultHandleClassName;
           }
-          ret = /** @type {ngeo.SortableOptions} */ (options);
+          ret = /** @type {ngeox.SortableOptions} */ (options);
         }
         return ret;
       }

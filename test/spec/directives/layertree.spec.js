@@ -1,5 +1,5 @@
 goog.require('ol.Map');
-goog.require('ngeo.LayertreeController');
+goog.require('ngeo.layertreeDirective');
 
 describe('ngeo.layertreeDirective', () => {
 
