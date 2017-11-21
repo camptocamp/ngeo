@@ -4,6 +4,16 @@ goog.require('ngeo');
 
 
 /**
+ * @typedef {{
+ *     handleClassName: (string|undefined),
+ *     draggerClassName: (string|undefined),
+ *     placeholderClassName: (string|undefined)
+ * }}
+ */
+ngeo.SortableOptions;
+
+
+/**
  * Provides a directive that allows drag-and-dropping DOM items between them.
  * It also changes the order of elements in the given array.
  *
@@ -81,11 +91,24 @@ ngeo.sortableDirective = function($timeout) {
           angular.element(children[i]).data('idx', i);
         }
 
-        const sortableElement = $(element[0]);
+        const sortableElement = $(element);
 
-        sortableElement.sortable({
-          handle: `.${options['handleClassName']}`
-        });
+        const sortableOptions = {
+          axis: 'y'
+        };
+
+        // CSS class of the handle
+        if (options['handleClassName']) {
+          sortableOptions['handle'] = `.${options['handleClassName']}`;
+        }
+
+        // Placeholder for the item being dragged in the sortable list
+        if (options['placeholderClassName']) {
+          sortableOptions['placeholder'] = `${options['placeholderClassName']}`;
+          sortableOptions['forcePlaceholderSize'] = true;
+        }
+
+        sortableElement.sortable(sortableOptions);
 
         // Add draggerClass to element being dragged
         sortableElement.on('sortstart', (event, ui) => {
@@ -119,7 +142,7 @@ ngeo.sortableDirective = function($timeout) {
 
           // Call the callback function if it exists.
           if (callbackFn instanceof Function) {
-            callbackFn.apply(callbackCtx, [element, sortable]); // TODO: test
+            callbackFn.apply(callbackCtx, [element, sortable]);
           }
         });
       }

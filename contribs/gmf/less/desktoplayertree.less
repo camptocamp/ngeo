@@ -59,16 +59,6 @@ gmf-layertree {
       display: none;
     }
   }
-  &.gmf-layertree-curr-drag-item {
-    * {
-      visibility: hidden;
-    }
-    background-color: transparent;
-    border: 1px dashed black;
-    ul {
-      display: none;
-    }
-  }
 
   .gmf-layertree-group.gmf-layertree-depth-1 {
     background-color: @main-bg-color;
@@ -122,4 +112,10 @@ gmf-layertree {
     right: 0;
     transform: translate(-50%, -50%);
   }
+}
+
+.gmf-layertree-curr-drag-item {
+  border: 1px dashed black;
+  margin: 0 @micro-app-margin @app-margin @micro-app-margin;
+  box-shadow: 0 0 4px 1px @input-border-focus;
 }

@@ -39,6 +39,9 @@
           -webkit-box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.5);
           box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.5);
         }
+        .placeholder {
+          border: 1px dashed black;
+        }
     </style>
   </head>
   <body ng-controller="MainController as ctrl">
@@ -49,7 +52,8 @@
       <br>
       Hint: drag-drop elements using the handle.
     </p>
-    <ul ngeo-sortable="ctrl.selectedLayers" ngeo-sortable-options="{handleClassName: 'sortable-handle', draggerClassName: 'sortable-dragger'}">
+    <ul ngeo-sortable="ctrl.selectedLayers"
+        ngeo-sortable-options="{handleClassName: 'sortable-handle', draggerClassName: 'sortable-dragger', currDragItemClassName: 'placeholder'}">
       <li ng-repeat="layer in ctrl.selectedLayers">
         <span class="sortable-handle fa fa-reorder"></span>{{layer.get('name')}}
       </li>
