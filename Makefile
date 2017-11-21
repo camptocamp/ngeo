@@ -3,14 +3,13 @@ TEST_JS_FILES := $(shell find test -type f -name '*.js')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
 NGEO_MODULES_PARTIALS_FILES := $(shell find src/modules/ -name '*.html')
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
-NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
 GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
 
 OS := $(shell uname)
 
-EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
+EXAMPLES_HTML_FILES := $(wildcard examples/*.html)
 EXAMPLES_JS_FILES := $(EXAMPLES_HTML_FILES:.html=.js)
-
+EXAMPLES_BUILD_JS_FILES := $(patsubst examples/%.html, .build/examples/%.js, $(EXAMPLES_HTML_FILES))
 
 FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2)
 JQUERY_UI = contribs/gmf/build/images/
@@ -71,43 +70,12 @@ GMF_APPS_LIBS_JS_FILES += \
 	third-party/jquery-ui/jquery-ui.min.js
 endif
 
-BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
+BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES)) \
 	$(addprefix .build/contribs/gmf/apps/,$(addsuffix .check.timestamp,$(GMF_APPS)))
-EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
-	.build/examples-hosted/lib/angular.min.js \
-	.build/examples-hosted/lib/angular-animate.min.js \
-	.build/examples-hosted/lib/angular-floatThead.js \
-	.build/examples-hosted/lib/angular-gettext.min.js \
-	.build/examples-hosted/lib/angular-sanitize.min.js \
-	.build/examples-hosted/lib/angular-touch.min.js \
-	.build/examples-hosted/lib/date.min.js \
-	.build/examples-hosted/lib/jquery.floatThead.min.js \
-	.build/examples-hosted/lib/slider.min.js \
-	.build/examples-hosted/lib/tmhDynamicLocale.min.js \
-	.build/examples-hosted/lib/bootstrap.min.js \
-	.build/examples-hosted/lib/bootstrap.min.css \
-	.build/examples-hosted/lib/jquery.min.js \
-	.build/examples-hosted/lib/jquery-ui.min.js \
-	.build/examples-hosted/lib/jquery-ui.min.css \
+GMF_EXAMPLES_HOSTED_REQUIREMENTS := \
 	.build/examples-hosted/contribs/gmf/build/images/ \
-	.build/examples-hosted/lib/images/ \
-	.build/examples-hosted/lib/d3.min.js \
-	.build/examples-hosted/lib/FileSaver.min.js \
-	.build/examples-hosted/lib/watchwatchers.js \
-	.build/examples-hosted/lib/typeahead.bundle.min.js \
-	.build/examples-hosted/lib/proj4.js \
-	.build/examples-hosted/lib/jsts.min.js \
-	.build/examples-hosted/lib/moment.min.js \
-	.build/examples-hosted/lib/transpile.js \
-	.build/examples-hosted/https.js \
-	.build/examples-hosted/lib/font-awesome.min.css \
-	$(addprefix .build/examples-hosted/fonts/fontawesome-webfont.,eot ttf woff woff2) \
 	$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur)
-NGEO_EXAMPLES_HOSTED_REQUIREMENTS = $(EXAMPLES_HOSTED_REQUIREMENTS) \
-	$(subst examples,.build/examples-hosted,$(NGEO_EXAMPLES_PARTIALS_FILES)) \
-	.build/examples-hosted/data \
-	.build/templatecache.js
 GMF_EXAMPLES_PARTIALS_FILES = $(EXAMPLES_PARTIALS_FILES) \
 	$(subst contibs/gmf/examples,.build/examples-hosted/contribs/gmf,$(GMF_EXAMPLES_PARTIALS_FILES)) \
 	.build/examples-hosted/contribs/gmf/data \
@@ -211,7 +179,8 @@ build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),
 	$(ANGULAR_LOCALES_FILES)
 
 .PHONY: check-examples
-check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
+check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES) examples-hosted-ngeo
+	cd examples; $(MAKE) $(MFLAGS) -f examples-hosted-ngeo.mk check
 
 .PHONY: lint
 lint: .build/eslint.timestamp
@@ -225,13 +194,13 @@ eof-newline:
 	buildtools/test-eof-newline
 
 .PHONY: test
-test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js
+test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 	@cat .build/coverage/coverage.txt
 	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: test-debug
-test-debug: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js .build/node_modules_karma-chrome-launcher.timestamp
+test-debug: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/node_modules_karma-chrome-launcher.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true --debug
 
 .build/node_modules_karma-chrome-launcher.timestamp:
@@ -245,21 +214,26 @@ serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGUL
 
 .PHONY: examples-hosted
 examples-hosted: \
-		examples-hosted-ngeo \
-		examples-hosted-gmf \
-		examples-hosted-apps
+	examples-hosted-ngeo \
+	examples-hosted-gmf \
+	examples-hosted-apps
 
 .PHONY: examples-hosted-ngeo
 examples-hosted-ngeo: \
-		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(EXAMPLES_HTML_FILES)) \
+		.build/python-venv/bin/mako-render \
+		.build/beautifulsoup4.timestamp \
+		.build/templatecache.js \
+		dist/ngeo.css \
+		$(EXAMPLES_BUILD_JS_FILES)
+	cd examples; $(MAKE) $(MFLAGS) -f examples-hosted-ngeo.mk
 
 .PHONY: examples-hosted-gmf
 examples-hosted-gmf: \
-		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
+	$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
 
 .PHONY: examples-hosted-apps
 examples-hosted-apps: \
-		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
+	$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
 .build/glob2.timestamp: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^glob2== $< --colour=never`
@@ -367,76 +341,7 @@ dist/gmf.js.map: dist/gmf.js
 	node buildtools/build.js $< $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
 
-.PRECIOUS: .build/examples-hosted/lib/%.css
-.build/examples-hosted/lib/%.css: dist/%.css
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/angular.min.js: node_modules/angular/angular.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/angular-animate.min.js: node_modules/angular-animate/angular-animate.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/angular-floatThead.js: node_modules/angular-float-thead/angular-floatThead.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/jquery.floatThead.min.js: node_modules/floatthead/dist/jquery.floatThead.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/angular-gettext.min.js: node_modules/angular-gettext/dist/angular-gettext.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/angular-sanitize.min.js: node_modules/angular-sanitize/angular-sanitize.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/angular-touch.min.js: node_modules/angular-touch/angular-touch.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/tmhDynamicLocale.min.js: node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/date.min.js: node_modules/angular-ui-date/dist/date.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/slider.min.js: node_modules/angular-ui-slider/src/slider.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/bootstrap.min.js: node_modules/bootstrap/dist/js/bootstrap.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
-	mkdir -p $(dir $@)
-	cp $< $@
-
 .build/examples-hosted/contribs/gmf/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/jquery.min.js: node_modules/jquery/dist/jquery.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/jquery-ui.min.js: third-party/jquery-ui/jquery-ui.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/jquery-ui.min.css: third-party/jquery-ui/jquery-ui.min.css
 	mkdir -p $(dir $@)
 	cp $< $@
 
@@ -444,59 +349,10 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $@
 	cp -r $</* $@
 
-.build/examples-hosted/lib/images/: third-party/jquery-ui/images/
-	mkdir -p $@
-	cp -r $</* $@
-
-.build/examples-hosted/lib/d3.min.js: node_modules/d3/build/d3.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/FileSaver.min.js: node_modules/file-saver/FileSaver.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/watchwatchers.js: utils/watchwatchers.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/typeahead.bundle.min.js: node_modules/corejs-typeahead/dist/typeahead.bundle.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/proj4.js: node_modules/proj4/dist/proj4.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/jsts.min.js: node_modules/jsts/dist/jsts.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/moment.min.js: node_modules/moment/min/moment.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/font-awesome.min.css: node_modules/font-awesome/css/font-awesome.min.css
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/transpile.js: node_modules/google-closure-library/closure/goog/transpile.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/fonts/%
-.build/examples-hosted/fonts/%: node_modules/font-awesome/fonts/%
-	mkdir -p $(dir $@)
-	cp $< $@
-
 .PRECIOUS: .build/examples-hosted/contribs/gmf/cursors/%
 .build/examples-hosted/contribs/gmf/cursors/%: contribs/gmf/cursors/%
 	mkdir -p $(dir $@)
 	cp $< $@
-
-.build/examples-hosted/data: examples/data
-	mkdir -p $@
-	cp examples/data/* $@
 
 .build/examples-hosted/contribs/gmf/data: contribs/gmf/examples/data
 	mkdir -p $@
@@ -527,43 +383,7 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.PRECIOUS: .build/examples-hosted/https.js
-.build/examples-hosted/https.js: examples/https.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
-
-.PRECIOUS: .build/examples-hosted/%.html
-.build/examples-hosted/%.html: examples/%.html \
-		.build/examples-hosted/%.js \
-		$(NGEO_EXAMPLES_HOSTED_REQUIREMENTS)
-	mkdir -p $(dir $@)
-	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
-		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
-		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
-		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
-		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.js|lib/jquery-ui.min.js|' \
-		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.css|lib/jquery-ui.min.css|' \
-		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
-		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
-		-e 's|\.\./node_modules/angular-animate/angular-animate.js|lib/angular-animate.min.js|' \
-		-e 's|\.\./node_modules/angular-float-thead/angular-floatThead.js|lib/angular-floatThead.js|' \
-		-e 's|\.\./node_modules/floatthead/dist/jquery.floatThead.min.js|lib/jquery.floatThead.min.js|' \
-		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext.js|lib/angular-gettext.min.js|' \
-		-e 's|\.\./node_modules/angular-touch/angular-touch.js|lib/angular-touch.min.js|' \
-		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
-		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
-		-e 's|\.\./node_modules/d3/build/d3.js|lib/d3.min.js|' \
-		-e 's|\.\./node_modules/file-saver/FileSaver.min.js|lib/FileSaver.min.js|' \
-		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
-		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
-		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
-		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
-		-e 's|/@?main=$*.js|lib/transpile.js|' \
-		-e 's|default\.js|$*.js|' \
-		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
-		-e '/<head>/a\$(SED_NEW_LINE)    <script src="https.js"></script>$(SED_NEW_LINE)' $< > $@
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
 .build/examples-hosted/contribs/gmf/%.html: contribs/gmf/examples/%.html \
@@ -606,7 +426,6 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/examples-hosted/contribs/gmf/apps/%/image/background-layer-button.png \
 		.build/examples-hosted/contribs/gmf/build/%.js \
 		.build/examples-hosted/contribs/gmf/build/%.css \
-		.build/examples-hosted/lib/watchwatchers.js \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
@@ -672,27 +491,13 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/examples-hosted/contribs/gmf/apps/mobile/image/background-layer-button.png:
 	# no background layer button for the mobile
 
-.PRECIOUS: .build/examples-hosted/%.js
-.build/examples-hosted/%.js: .build/examples/%.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.js
 .build/examples-hosted/contribs/gmf/%.js: .build/contribs/gmf/examples/%.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/index.html: \
-		buildtools/examples-index.mako.html \
-		$(EXAMPLES_HTML_FILES) \
-		.build/python-venv/bin/mako-render \
-		.build/beautifulsoup4.timestamp \
-		.build/examples-hosted/bootstrap.min.css
-	mkdir -p $(dir $@)
-	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
-
 .build/examples-hosted/contribs/gmf/index.html: \
-		buildtools/examples-index.mako.html \
+		examples/index/examples-index.mako.html \
 		$(GMF_EXAMPLES_HTML_FILES) \
 		.build/python-venv/bin/mako-render \
 		.build/beautifulsoup4.timestamp \
@@ -706,13 +511,6 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		--app 'Object editing viewer' apps/oeview/index.html 'An example application for viewing an object.' \
 		--app 'Object editing editor' apps/oeedit/index.html 'An example application for editing an object.' \
 		$< $(GMF_EXAMPLES_HTML_FILES) > $@
-
-.build/%.check.timestamp: .build/examples-hosted/%.html \
-		.build/examples-hosted/%.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
-	touch $@
 
 .build/contribs/gmf/%.check.timestamp: .build/examples-hosted/contribs/gmf/%.html \
 		.build/examples-hosted/contribs/gmf/%.js \

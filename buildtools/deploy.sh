@@ -4,7 +4,7 @@ make .build/node_modules.timestamp
 
 if [ "${JOB}" == publish-examples-ngeo ]
 then
-    make examples-hosted-ngeo .build/examples-hosted/index.html
+    make examples-hosted-ngeo
 fi
 if [ "${JOB}" == publish-examples-gmf ]
 then
