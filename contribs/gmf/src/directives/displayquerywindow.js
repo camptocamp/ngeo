@@ -73,6 +73,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
 gmf.displayquerywindowComponent = {
   controller: 'GmfDisplayquerywindowController as ctrl',
   bindings: {
+    'draggableContainment': '<?gmfDisplayquerywindowDraggableContainment',
     'featuresStyleFn': '&gmfDisplayquerywindowFeaturesstyle',
     'selectedFeatureStyleFn': '&gmfDisplayquerywindowSelectedfeaturestyle',
     'defaultCollapsedFn': '&?gmfDisplayquerywindowDefaultcollapsed',
@@ -100,6 +101,12 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  */
 gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult,
   ngeoFeatureOverlayMgr) {
+
+  /**
+   * @type {Element|string}
+   * @export
+   */
+  this.draggableContainment;
 
   /**
    * @type {boolean}
@@ -227,6 +234,7 @@ gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult,
  * Initialise the controller.
  */
 gmf.DisplayquerywindowController.prototype.$onInit = function() {
+  this.draggableContainment = this.draggableContainment || 'document';
   this.desktop = this.desktop;
   this.collapsed = this['defaultCollapsedFn'] ?
     this['defaultCollapsedFn']() === true : !this.desktop;
@@ -264,7 +272,8 @@ gmf.DisplayquerywindowController.prototype.$onInit = function() {
 
   if (this.desktop) {
     this.element_.find('.gmf-displayquerywindow').draggable({
-      'cancel': 'input,textarea,button,select,option,tr'
+      'cancel': 'input,textarea,button,select,option,tr',
+      'containment': this.draggableContainment
     });
     this.element_.find('.gmf-displayquerywindow-container').resizable({
       'minHeight': 240,
