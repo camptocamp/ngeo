@@ -1,4 +1,3 @@
-goog.provide('ngeo.CreatePrint');
 goog.provide('ngeo.Print');
 
 

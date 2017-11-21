@@ -1,4 +1,3 @@
-goog.provide('ngeo.CreatePopup');
 goog.provide('ngeo.Popup');
 
 goog.require('ngeo');
@@ -10,12 +9,6 @@ goog.require('goog.asserts');
  * @suppress {extraRequire}
  */
 goog.require('ngeo.popupDirective');
-
-
-/**
- * @typedef {function():!ngeo.Popup}
- */
-ngeo.CreatePopup;
 
 
 /**
@@ -250,13 +243,17 @@ ngeo.Popup.prototype.open = function(options) {
   this.setOpen(true);
 };
 
+/**
+ * @typedef {function():!ngeo.Popup}
+ */
+ngeo.Popup.Factory;
 
 /**
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.Scope} $rootScope Angular rootScope service.
  * @param {angular.$sce} $sce Angular sce service.
  * @param {angular.$timeout} $timeout Angular timeout service.
- * @return {ngeo.CreatePopup} The function to create a popup.
+ * @return {ngeo.Popup.Factory} The function to create a popup.
  * @ngInject
  */
 ngeo.createPopupServiceFactory = function($compile, $rootScope, $sce,

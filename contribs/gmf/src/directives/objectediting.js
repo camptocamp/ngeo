@@ -12,7 +12,6 @@ goog.require('ngeo.geom');
 goog.require('ngeo.jstsExports');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.utils');
 goog.require('ol.Collection');
 goog.require('ol.events');
@@ -107,7 +106,7 @@ gmf.module.component('gmfObjectediting', gmf.objecteditingComponent);
  * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
 goog.require('ngeo.LayerHelper');
  * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -255,7 +254,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!ngeo.ToolActivateMgr}
+   * @type {!ngeo.ToolActivate.Mgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

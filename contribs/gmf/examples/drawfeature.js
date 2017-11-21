@@ -8,7 +8,6 @@ goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
 goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -29,7 +28,7 @@ gmfapp.module.value('ngeoExportFeatureFormats', [
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
  *     manager

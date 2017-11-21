@@ -1,7 +1,6 @@
 goog.provide('app.createfeature');
 
 goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
@@ -22,7 +21,7 @@ app.module = angular.module('app', ['ngeo']);
 
 
 /**
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @ngInject

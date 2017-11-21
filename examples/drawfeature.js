@@ -1,7 +1,6 @@
 goog.provide('app.drawfeature');
 
 goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
 /** @suppress {extraRequire} */
@@ -23,7 +22,7 @@ app.module = angular.module('app', ['ngeo']);
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
  * @constructor

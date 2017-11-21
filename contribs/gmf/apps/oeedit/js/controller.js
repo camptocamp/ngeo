@@ -23,7 +23,6 @@ goog.require('gmf.objecteditingComponent');
 goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
 goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.Collection');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -56,7 +55,7 @@ app.OEEditController = function($scope, $injector, $timeout) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.ToolActivateMgr}
+   * @type {ngeo.ToolActivate.Mgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 

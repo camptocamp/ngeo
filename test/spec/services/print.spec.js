@@ -16,10 +16,9 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 goog.require('ol.tilegrid.WMTS');
-goog.require('ngeo.CreatePrint');
 goog.require('ngeo.Print');
 
-describe('ngeo.CreatePrint', () => {
+describe('ngeo.Print', () => {
 
   let ngeoCreatePrint;
 

@@ -5,7 +5,7 @@
 
 goog.provide('app.layertree');
 
-goog.require('ngeo.CreatePopup');
+goog.require('ngeo.Popup');
 /** @suppress {extraRequire} */
 goog.require('ngeo.layertreeDirective');
 /** @suppress {extraRequire} */
@@ -57,7 +57,7 @@ app.module.directive('appLayertree', app.layertreeDirective);
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$sce} $sce Angular sce service.
  * @param {function(Object):ol.layer.Layer} appGetLayer Get layer service.
- * @param {ngeo.CreatePopup} ngeoCreatePopup Popup service.
+ * @param {ngeo.Popup.Factory} ngeoCreatePopup Popup service.
  * @ngInject
  * @export
  */

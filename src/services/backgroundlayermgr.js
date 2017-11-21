@@ -154,5 +154,4 @@ ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
   }
 };
 
-
 ngeo.module.service('ngeoBackgroundLayerMgr', ngeo.BackgroundLayerMgr);

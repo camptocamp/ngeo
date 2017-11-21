@@ -1,14 +1,7 @@
 goog.provide('ngeo.Location');
-goog.provide('ngeo.MockLocationProvider');
 
 goog.require('ngeo');
 goog.require('ngeo.utils');
-
-
-/**
- * @typedef {function(angular.$locationProvider)}
- */
-ngeo.MockLocationProvider;
 
 
 /**
@@ -21,11 +14,11 @@ ngeo.MockLocationProvider;
  * ng-view directives (which are based on the $anchorScroll and $route
  * services). See <https://github.com/angular/angular.js/issues/1417>.
  *
- * This file also provides an ngeo.mockLocationProvider function that you can
+ * This file also provides an ngeo.Location.MockProvider function that you can
  * use to mock Angular's $location provider and make it possible to use both
  * ngeoLocation and ng-include.
  *
- *     app.module.config(ngeo.mockLocationProvider);
+ *     app.module.config(ngeo.Location.MockProvider);
  *
  * The ngeo Location type.
  *
@@ -413,13 +406,13 @@ ngeo.module.factory('ngeoLocation', ngeo.LocationFactory);
  * when both ngeoLocation and $location are used in an application. This
  * is how you can use that function in an application:
  *
- * app.module.config(ngeo.mockLocationProvider);
+ * app.module.config(ngeo.Location.MockProvider);
  *
  * @param {angular.$locationProvider} $locationProvider Angular location
  *     provider.
  * @ngInject
  */
-ngeo.mockLocationProvider = function($locationProvider) {
+ngeo.Location.MockProvider = function($locationProvider) {
   /**
    * @return {angular.$location} Mock object for Angular location service.
    */
