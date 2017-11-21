@@ -118,7 +118,7 @@ gmf.ThemeselectorController = function($scope, gmfThemeManager, gmfThemes) {
 
   /**
    * @type {Array.<ol.EventsKey>}
-   * @export
+   * @private
    */
   this.listenerKeys_ = [];
 
