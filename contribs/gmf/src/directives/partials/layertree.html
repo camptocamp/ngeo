@@ -243,27 +243,6 @@
 </div>
 
 <ul
-  id="gmf-layertree-layer-group-{{::layertreeCtrl.uid}}"
-  ng-if="::layertreeCtrl.node.children"
-  ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded}"
-  ngeo-sortable="::layertreeCtrl.isRoot && layertreeCtrl.node.children"
-  ngeo-sortable-options="{handleClassName: 'ngeo-sortable-handle', draggerClassName: 'gmf-layertree-dragger', currDragItemClassName : 'gmf-layertree-curr-drag-item'}"
-  ngeo-sortable-callback="::gmfLayertreeCtrl.afterReorder"
-  ngeo-sortable-callback-ctx="::gmfLayertreeCtrl">
-
-  <li
-    class="gmf-layertree-node"
-    ng-repeat="node in layertreeCtrl.node.children"
-    ng-class="'gmf-layertree-depth-' + layertreeCtrl.depth"
-    ngeo-layertree="node"
-    ngeo-layertree-notroot
-    ngeo-layertree-map="layertreeCtrl.map"
-    ngeo-layertree-nodelayerexpr="layertreeCtrl.nodelayerExpr"
-    ngeo-layertree-listenersexpr="layertreeCtrl.listenersExpr">
-  </li>
-</ul>
-
-<ul
    class="gmf-layertree-root-external-datasources"
    ng-if="layertreeCtrl.isRoot && (gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups.length || gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmtsGroups.length || gmfLayertreeCtrl.gmfExternalDataSourcesManager.fileGroup.dataSources.length)">
   <gmf-datasourcegrouptree
@@ -284,4 +263,25 @@
     group="gmfLayertreeCtrl.gmfExternalDataSourcesManager.fileGroup"
   >
   </gmf-datasourcegrouptree>
+</ul>
+
+<ul
+  id="gmf-layertree-layer-group-{{::layertreeCtrl.uid}}"
+  ng-if="::layertreeCtrl.node.children"
+  ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded}"
+  ngeo-sortable="::layertreeCtrl.isRoot && layertreeCtrl.node.children"
+  ngeo-sortable-options="{handleClassName: 'ngeo-sortable-handle', draggerClassName: 'gmf-layertree-dragger', currDragItemClassName : 'gmf-layertree-curr-drag-item'}"
+  ngeo-sortable-callback="::gmfLayertreeCtrl.afterReorder"
+  ngeo-sortable-callback-ctx="::gmfLayertreeCtrl">
+
+  <li
+    class="gmf-layertree-node"
+    ng-repeat="node in layertreeCtrl.node.children"
+    ng-class="'gmf-layertree-depth-' + layertreeCtrl.depth"
+    ngeo-layertree="node"
+    ngeo-layertree-notroot
+    ngeo-layertree-map="layertreeCtrl.map"
+    ngeo-layertree-nodelayerexpr="layertreeCtrl.nodelayerExpr"
+    ngeo-layertree-listenersexpr="layertreeCtrl.listenersExpr">
+  </li>
 </ul>
