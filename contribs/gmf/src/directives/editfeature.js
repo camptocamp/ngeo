@@ -807,9 +807,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
     // FIXME
     //this.unregisterInteractions_();
 
-    keys.forEach((key) => {
-      ol.events.unlistenByKey(key);
-    }, this);
+    keys.forEach(ol.events.unlistenByKey);
 
     toolMgr.unregisterTool(createUid, this.createToolActivate);
     toolMgr.unregisterTool(createUid, this.mapSelectToolActivate);

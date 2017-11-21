@@ -119,7 +119,7 @@ ngeo.interaction.DrawRegularPolygonFromClick.prototype.enable_ = function() {
 ngeo.interaction.DrawRegularPolygonFromClick.prototype.disable_ = function() {
   const map = this.getMap();
   goog.asserts.assert(map, 'Map should be set.');
-  this.listenerKeys_.forEach(ol.events.unlistenByKey, this);
+  this.listenerKeys_.forEach(ol.events.unlistenByKey);
   this.listenerKeys_.length = 0;
 };
 

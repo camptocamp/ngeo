@@ -114,9 +114,7 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
   const keys = this.featureListenerKeys_;
 
   if (previousFeature) {
-    keys.forEach((key) => {
-      ol.events.unlistenByKey(key);
-    }, this);
+    keys.forEach(ol.events.unlistenByKey);
     this.type = undefined;
     this.color = undefined;
     this.measure = undefined;

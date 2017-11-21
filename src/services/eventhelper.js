@@ -63,9 +63,7 @@ ngeo.EventHelper.prototype.initListenerKey_ = function(uid) {
     this.listenerKeys_[uid] = [];
   } else {
     if (this.listenerKeys_[uid].length) {
-      this.listenerKeys_[uid].forEach((key) => {
-        ol.events.unlistenByKey(key);
-      }, this);
+      this.listenerKeys_[uid].forEach(ol.events.unlistenByKey);
       this.listenerKeys_[uid].length = 0;
     }
   }

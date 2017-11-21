@@ -697,9 +697,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
 
     this.undoAllChanges_();
 
-    keys.forEach((key) => {
-      ol.events.unlistenByKey(key);
-    }, this);
+    keys.forEach(ol.events.unlistenByKey);
 
     toolMgr.unregisterTool(uid, this.modifyToolActivate_);
     toolMgr.unregisterTool(uid, this.toolsToolActivate_);
