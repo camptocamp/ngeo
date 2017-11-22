@@ -6,7 +6,6 @@ goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.Querent');
 goog.require('ngeo.format.WFSAttribute');
 goog.require('ol.events');
-goog.require('ol.CollectionEventType');
 
 
 ngeo.datasource.DataSourcesHelper = class {
@@ -56,18 +55,8 @@ ngeo.datasource.DataSourcesHelper = class {
 
     // Events
 
-    ol.events.listen(
-      ngeoDataSources,
-      ol.CollectionEventType.ADD,
-      this.handleDataSourcesAdd_,
-      this
-    );
-    ol.events.listen(
-      ngeoDataSources,
-      ol.CollectionEventType.REMOVE,
-      this.handleDataSourcesRemove_,
-      this
-    );
+    ol.events.listen(ngeoDataSources, 'add', this.handleDataSourcesAdd_, this);
+    ol.events.listen(ngeoDataSources, 'remove', this.handleDataSourcesRemove_, this);
   }
 
   /**

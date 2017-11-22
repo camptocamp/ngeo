@@ -185,7 +185,7 @@ ngeo.rule.Geometry = class extends ngeo.rule.Rule {
     if (geometry) {
       this.geometryChangeListenerKey_ = ol.events.listen(
         geometry,
-        ol.events.EventType.CHANGE,
+        'change',
         this.handleGeometryChange_,
         this
       );

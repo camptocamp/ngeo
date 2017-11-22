@@ -164,8 +164,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
     }
   }
 
-  ol.events.listen(this.map_, ol.Object.getChangeEventType('view'),
-    this.handleViewChange_, this);
+  ol.events.listen(this.map_, 'change:view', this.handleViewChange_, this);
 
   this.registerResolutionChangeListener_();
 
@@ -255,7 +254,7 @@ ngeo.ScaleselectorController.prototype.registerResolutionChangeListener_ = funct
   }
   const view = this.map_.getView();
   this.resolutionChangeKey_ = ol.events.listen(view,
-    ol.Object.getChangeEventType('resolution'), this.handleResolutionChange_,
+    'change:resolution', this.handleResolutionChange_,
     this);
 };
 

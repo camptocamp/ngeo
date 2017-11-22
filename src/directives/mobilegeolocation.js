@@ -7,9 +7,7 @@ goog.require('ngeo.Notification');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Geolocation');
-goog.require('ol.GeolocationProperty');
 goog.require('ol.Map');
-goog.require('ol.ViewProperty');
 goog.require('ol.geom.Point');
 goog.require('ol.DeviceOrientation');
 
@@ -194,37 +192,20 @@ ngeo.MobileGeolocationController = function($scope, $element,
    */
   this.viewChangedByMe_ = false;
 
-  ol.events.listen(
-    this.geolocation_,
-    ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
-    function() {
-      this.accuracyFeature_.setGeometry(
-        this.geolocation_.getAccuracyGeometry());
-      this.setPosition_();
-    },
-    this);
+  ol.events.listen(this.geolocation_, 'change:accuracyGeometry', () => {
+    this.accuracyFeature_.setGeometry(this.geolocation_.getAccuracyGeometry());
+    this.setPosition_();
+  });
 
-  ol.events.listen(
-    this.geolocation_,
-    ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
-    function() {
-      this.setPosition_();
-    },
-    this);
+  ol.events.listen(this.geolocation_, 'change:position', () => {
+    this.setPosition_();
+  });
 
   const view = map.getView();
 
-  ol.events.listen(
-    view,
-    ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
-    this.handleViewChange_,
-    this);
+  ol.events.listen(view, 'change:center', this.handleViewChange_, this);
 
-  ol.events.listen(
-    view,
-    ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
-    this.handleViewChange_,
-    this);
+  ol.events.listen(view, 'change:resolution', this.handleViewChange_, this);
 
 };
 

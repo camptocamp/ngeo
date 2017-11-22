@@ -117,12 +117,7 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
    */
   this.ogcServers_ = null;
 
-  ol.events.listen(
-    this.gmfThemes_,
-    gmf.ThemesEventType.CHANGE,
-    this.handleThemesChange_,
-    this
-  );
+  ol.events.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
 };
 
 /**

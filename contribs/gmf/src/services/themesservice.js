@@ -1,5 +1,4 @@
 goog.provide('gmf.Themes');
-goog.provide('gmf.ThemesEventType');
 
 goog.require('goog.asserts');
 goog.require('gmf');
@@ -8,14 +7,6 @@ goog.require('ol.array');
 goog.require('ol.Collection');
 goog.require('ol.events.EventTarget');
 goog.require('ol.layer.Tile');
-
-
-/**
- * @enum {string}
- */
-gmf.ThemesEventType = {
-  CHANGE: 'change'
-};
 
 
 gmf.module.value('gmfThemesOptions', {});
@@ -533,7 +524,7 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
       }
     }
     this.deferred_.resolve(response.data);
-    this.dispatchEvent(gmf.ThemesEventType.CHANGE);
+    this.dispatchEvent('change');
     this.loaded_ = true;
   }, (response) => {
     this.deferred_.reject(response);

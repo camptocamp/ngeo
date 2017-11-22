@@ -9,9 +9,7 @@ goog.require('ngeo.interaction.MeasureLength');
 goog.require('ngeo.utils');
 goog.require('ol.events');
 goog.require('ol.Feature');
-goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
-goog.require('ol.interaction.DrawEventType');
 goog.require('ol.style.Style');
 
 
@@ -178,7 +176,7 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
       this.geomType === ngeo.GeometryType.MULTI_POINT
   ) {
     interaction = new ol.interaction.Draw({
-      type: ol.geom.GeometryType.POINT
+      type: /** @type {ol.geom.GeometryType} */ ('Point')
     });
   } else if (this.geomType === ngeo.GeometryType.LINE_STRING ||
       this.geomType === ngeo.GeometryType.MULTI_LINE_STRING
@@ -228,7 +226,7 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
       uid,
       ol.events.listen(
         interaction,
-        ol.interaction.DrawEventType.DRAWEND,
+        'drawend',
         this.handleDrawEnd_,
         this
       )

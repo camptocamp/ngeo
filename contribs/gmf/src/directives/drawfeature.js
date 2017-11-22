@@ -19,7 +19,6 @@ goog.require('ol.Collection');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
-goog.require('ol.interaction.TranslateEventType');
 
 
 /**
@@ -367,13 +366,13 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
   if (active) {
     // when activated
 
-    keys.push(ol.events.listen(this.features, ol.CollectionEventType.ADD,
-      this.handleFeaturesAdd_, this));
-    keys.push(ol.events.listen(this.features, ol.CollectionEventType.REMOVE,
-      this.handleFeaturesRemove_, this));
+    keys.push(
+      ol.events.listen(this.features, 'add', this.handleFeaturesAdd_, this),
+      ol.events.listen(this.features, 'remove', this.handleFeaturesRemove_, this)
+    );
 
     keys.push(ol.events.listen(this.translate_,
-      ol.interaction.TranslateEventType.TRANSLATEEND,
+      'translateend',
       this.handleTranslateEnd_, this));
 
     keys.push(ol.events.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));

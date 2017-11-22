@@ -94,8 +94,8 @@ app.MapComponentController.prototype.$onInit = function() {
   view.on('propertychange',
     this.ngeoDebounce_(
       /**
-           * @param {ol.ObjectEventType} e Object event.
-           */
+       * @param {ol.Object.Event} e Object event.
+       */
       (e) => {
         const center = view.getCenter();
         const params = {

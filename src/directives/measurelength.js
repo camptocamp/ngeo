@@ -53,8 +53,7 @@ ngeo.measurelengthDirective = function($compile, gettextCatalog, $filter, $injec
       );
       ol.events.listen(
         measureLength,
-        ol.Object.getChangeEventType(
-          ol.interaction.Property.ACTIVE),
+        'change:active',
         drawFeatureCtrl.handleActiveChange,
         drawFeatureCtrl
       );

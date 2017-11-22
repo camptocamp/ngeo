@@ -27,11 +27,9 @@ goog.require('ol.Collection');
 goog.require('ol.events');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Modify');
-goog.require('ol.interaction.TranslateEventType');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
-goog.require('ol.ObjectEventType');
 
 
 /**
@@ -512,7 +510,7 @@ gmf.EditfeatureController.prototype.$onInit = function() {
     uid,
     ol.events.listen(
       this.features,
-      ol.CollectionEventType.ADD,
+      'add',
       this.handleFeatureAdd_,
       this
     )
@@ -779,7 +777,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
       this.handleMenuActionClick_, this));
 
     keys.push(ol.events.listen(this.translate_,
-      ol.interaction.TranslateEventType.TRANSLATEEND,
+      'translateend',
       this.handleTranslateEnd_, this));
 
     keys.push(ol.events.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
@@ -1015,17 +1013,12 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
 
   let geom;
   if (oldFeature) {
-    ol.events.unlisten(
-      oldFeature,
-      ol.ObjectEventType.PROPERTYCHANGE,
-      this.handleFeaturePropertyChange_,
-      this
-    );
+    ol.events.unlisten(oldFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = oldFeature.getGeometry();
     goog.asserts.assert(geom);
     ol.events.unlisten(
       geom,
-      ol.events.EventType.CHANGE,
+      'change',
       this.handleFeatureGeometryChange_,
       this
     );
@@ -1034,17 +1027,12 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
 
   if (newFeature) {
     this.featureId = newFeature.getId();
-    ol.events.listen(
-      newFeature,
-      ol.ObjectEventType.PROPERTYCHANGE,
-      this.handleFeaturePropertyChange_,
-      this
-    );
+    ol.events.listen(newFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = newFeature.getGeometry();
     goog.asserts.assert(geom);
     ol.events.listen(
       geom,
-      ol.events.EventType.CHANGE,
+      'change',
       this.handleFeatureGeometryChange_,
       this
     );

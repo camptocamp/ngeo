@@ -159,10 +159,10 @@ ngeo.interaction.Modify.prototype.setState_ = function() {
 
   if (active && map) {
     this.features_.forEach(this.addFeature_, this);
-    keys.push(ol.events.listen(this.features_, ol.CollectionEventType.ADD,
-      this.handleFeaturesAdd_, this));
-    keys.push(ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
-      this.handleFeaturesRemove_, this));
+    keys.push(
+      ol.events.listen(this.features_, 'add', this.handleFeaturesAdd_, this),
+      ol.events.listen(this.features_, 'remove', this.handleFeaturesRemove_, this)
+    );
   } else {
     keys.forEach(ol.events.unlistenByKey);
     keys.length = 0;

@@ -1,7 +1,6 @@
 goog.provide('ngeo.attributesComponent');
 
 goog.require('ol.events');
-goog.require('ol.ObjectEventType');
 goog.require('ngeo');
 goog.require('ngeo.EventHelper');
 
@@ -136,12 +135,7 @@ ngeo.AttributesController.prototype.$onInit = function() {
   const uid = ol.getUid(this);
   this.ngeoEventHelper_.addListenerKey(
     uid,
-    ol.events.listen(
-      this.feature,
-      ol.ObjectEventType.PROPERTYCHANGE,
-      this.handleFeaturePropertyChange_,
-      this
-    )
+    ol.events.listen(this.feature, 'propertychange', this.handleFeaturePropertyChange_, this)
   );
 
   const lang = this.gettextCatalog_.getCurrentLanguage();

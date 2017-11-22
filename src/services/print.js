@@ -46,21 +46,14 @@ ngeo.PrintStyleType = {
  * @type {Object.<ol.geom.GeometryType, ngeo.PrintStyleType>}
  * @private
  */
-ngeo.PrintStyleTypes_ = {};
-
-ngeo.PrintStyleTypes_[ol.geom.GeometryType.LINE_STRING] =
-    ngeo.PrintStyleType.LINE_STRING;
-ngeo.PrintStyleTypes_[ol.geom.GeometryType.POINT] =
-    ngeo.PrintStyleType.POINT;
-ngeo.PrintStyleTypes_[ol.geom.GeometryType.POLYGON] =
-    ngeo.PrintStyleType.POLYGON;
-ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_LINE_STRING] =
-    ngeo.PrintStyleType.LINE_STRING;
-ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POINT] =
-    ngeo.PrintStyleType.POINT;
-ngeo.PrintStyleTypes_[ol.geom.GeometryType.MULTI_POLYGON] =
-    ngeo.PrintStyleType.POLYGON;
-
+ngeo.PrintStyleTypes_ = {
+  'LineString': ngeo.PrintStyleType.LINE_STRING,
+  'Point': ngeo.PrintStyleType.POINT,
+  'Polygon': ngeo.PrintStyleType.POLYGON,
+  'MultiLineString': ngeo.PrintStyleType.LINE_STRING,
+  'MultiPoint': ngeo.PrintStyleType.POINT,
+  'MultiPolygon': ngeo.PrintStyleType.POLYGON
+};
 
 /**
  * Provides a function to create ngeo.Print objects used to

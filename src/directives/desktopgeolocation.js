@@ -7,7 +7,6 @@ goog.require('ngeo.Notification');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Geolocation');
-goog.require('ol.GeolocationProperty');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
 
@@ -153,22 +152,13 @@ ngeo.DesktopGeolocationController = function($scope, $element,
    */
   this.active_ = false;
 
-  ol.events.listen(
-    this.geolocation_,
-    ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
-    function() {
-      this.accuracyFeature_.setGeometry(
-        this.geolocation_.getAccuracyGeometry());
-    },
-    this);
+  ol.events.listen(this.geolocation_, 'change:accuracyGeometry', () => {
+    this.accuracyFeature_.setGeometry(this.geolocation_.getAccuracyGeometry());
+  });
 
-  ol.events.listen(
-    this.geolocation_,
-    ol.Object.getChangeEventType(ol.GeolocationProperty.POSITION),
-    function(e) {
-      this.setPosition_(e);
-    },
-    this);
+  ol.events.listen(this.geolocation_, 'change:position', (event) => {
+    this.setPosition_(event);
+  });
 
 };
 

@@ -53,16 +53,12 @@ ol.inherits(ngeo.interaction.MeasureArea, ngeo.interaction.Measure);
 /**
  * @inheritDoc
  */
-ngeo.interaction.MeasureArea.prototype.createDrawInteraction = function(style,
-  source) {
-
-  return new ol.interaction.Draw(
-    /** @type {olx.interaction.DrawOptions} */ ({
-      type: 'Polygon',
-      source: source,
-      style: style
-    }));
-
+ngeo.interaction.MeasureArea.prototype.createDrawInteraction = function(style, source) {
+  return new ol.interaction.Draw({
+    type: /** @type {ol.geom.GeometryType} */ ('Polygon'),
+    source: source,
+    style: style
+  });
 };
 
 

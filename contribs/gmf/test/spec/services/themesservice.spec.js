@@ -1,6 +1,5 @@
 /* global themes capabilities */
 goog.require('gmf.Themes');
-goog.require('gmf.ThemesEventType');
 goog.require('gmf.test.data.themes');
 
 describe('gmf.Themes', () => {
@@ -65,7 +64,7 @@ describe('gmf.Themes', () => {
   it('Emit change event', () => {
     const spy = jasmine.createSpy();
     const eventSpy = jasmine.createSpy();
-    ol.events.listen(gmfThemes, gmf.ThemesEventType.CHANGE, eventSpy);
+    ol.events.listen(gmfThemes, 'change', eventSpy);
 
     gmfThemes.promise_.then(spy);
 

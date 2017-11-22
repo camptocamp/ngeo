@@ -18,7 +18,6 @@ goog.require('ol.events');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.MultiPolygon');
 goog.require('ol.interaction.Modify');
-goog.require('ol.interaction.ModifyEventType');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
@@ -655,8 +654,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
     keys.push(
       ol.events.listen(
         this.modify_,
-        ol.Object.getChangeEventType(
-          ol.interaction.Property.ACTIVE),
+        'change:active',
         this.setFeatureStyle_,
         this
       )
@@ -665,7 +663,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
     keys.push(
       ol.events.listen(
         this.modify_,
-        ol.interaction.ModifyEventType.MODIFYEND,
+        'modifyend',
         this.handleModifyInteractionModifyEnd_,
         this
       )
@@ -683,7 +681,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
     keys.push(
       ol.events.listen(
         this.sketchFeatures,
-        ol.CollectionEventType.ADD,
+        'add',
         this.handleSketchFeaturesAdd_,
         this
       )
@@ -796,14 +794,14 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     fill: new ol.style.Fill({color: rgbaColor})
   });
 
-  styles[ol.geom.GeometryType.POINT] = new ol.style.Style({
+  styles['Point'] = new ol.style.Style({
     image
   });
-  styles[ol.geom.GeometryType.MULTI_POINT] = new ol.style.Style({
+  styles['MultiPoint'] = new ol.style.Style({
     image
   });
 
-  styles[ol.geom.GeometryType.LINE_STRING] = [
+  styles['LineString'] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: color,
@@ -812,11 +810,11 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles[ol.geom.GeometryType.LINE_STRING].push(
+    styles['LineString'].push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }
-  styles[ol.geom.GeometryType.MULTI_LINE_STRING] = [
+  styles['MultiLineString'] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: color,
@@ -825,12 +823,12 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles[ol.geom.GeometryType.MULTI_LINE_STRING].push(
+    styles['MultiLineString'].push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }
 
-  styles[ol.geom.GeometryType.POLYGON] = [
+  styles['Polygon'] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: color,
@@ -842,11 +840,11 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles[ol.geom.GeometryType.POLYGON].push(
+    styles['Polygon'].push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }
-  styles[ol.geom.GeometryType.MULTI_POLYGON] = [
+  styles['MultiPolygon'] = [
     new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: color,
@@ -858,7 +856,7 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
     })
   ];
   if (incVertice) {
-    styles[ol.geom.GeometryType.MULTI_POLYGON].push(
+    styles['MultiPolygon'].push(
       this.ngeoFeatureHelper_.getVertexStyle(true)
     );
   }

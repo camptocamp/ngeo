@@ -218,12 +218,7 @@ ngeo.GooglestreetviewController = class {
 
     if (active) {
       keys.push(
-        ol.events.listen(
-          this.map,
-          ol.events.EventType.CLICK,
-          this.handleMapClick_,
-          this
-        )
+        ol.events.listen(this.map, 'click', this.handleMapClick_, this)
       );
     } else {
       ol.Observable.unByKey(keys);

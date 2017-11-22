@@ -140,12 +140,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
      */
     this.wmtsCache_ = {};
 
-    ol.events.listen(
-      this.ngeoDataSources_,
-      ol.CollectionEventType.REMOVE,
-      this.handleDataSourcesRemove_,
-      this
-    );
+    ol.events.listen(this.ngeoDataSources_, 'remove', this.handleDataSourcesRemove_, this);
   }
 
 

@@ -9,13 +9,11 @@ goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.coordinate');
 goog.require('ol.events');
 goog.require('ol.extent');
-goog.require('ol.geom.GeometryType');
 goog.require('ol.geom.Circle');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
 goog.require('ol.interaction.Modify');
-goog.require('ol.interaction.ModifyEventType');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -122,10 +120,8 @@ ngeo.interaction.ModifyCircle = function(options) {
   this.features_ = options.features;
 
   this.features_.forEach(this.addFeature_, this);
-  ol.events.listen(this.features_, ol.CollectionEventType.ADD,
-    this.handleFeatureAdd_, this);
-  ol.events.listen(this.features_, ol.CollectionEventType.REMOVE,
-    this.handleFeatureRemove_, this);
+  ol.events.listen(this.features_, 'add', this.handleFeatureAdd_, this);
+  ol.events.listen(this.features_, 'remove', this.handleFeatureRemove_, this);
 
 };
 ol.inherits(ngeo.interaction.ModifyCircle, ol.interaction.Pointer);
@@ -136,7 +132,7 @@ ol.inherits(ngeo.interaction.ModifyCircle, ol.interaction.Pointer);
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.addFeature_ = function(feature) {
-  if (feature.getGeometry().getType() === ol.geom.GeometryType.POLYGON &&
+  if (feature.getGeometry().getType() === 'Polygon' &&
       !!feature.get(ngeo.FeatureProperties.IS_CIRCLE)) {
     const geometry = /** @type {ol.geom.Polygon}*/ (feature.getGeometry());
     this.writeCircleGeometry_(feature, geometry);
@@ -157,7 +153,7 @@ ngeo.interaction.ModifyCircle.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
     this.dispatchEvent(new ol.interaction.Modify.Event(
-      ol.interaction.ModifyEventType.MODIFYSTART, this.features_, evt));
+      /** @type {ol.interaction.ModifyEventType} */ ('modifystart'), this.features_, evt));
   }
 };
 
@@ -372,7 +368,7 @@ ngeo.interaction.ModifyCircle.handleUpEvent_ = function(evt) {
 
   if (this.modified_) {
     this.dispatchEvent(new ol.interaction.Modify.Event(
-      ol.interaction.ModifyEventType.MODIFYEND, this.features_, evt));
+      /** @type {ol.interaction.ModifyEventType} */ ('modifyend'), this.features_, evt));
     this.modified_ = false;
   }
   return false;
@@ -495,6 +491,6 @@ ngeo.interaction.ModifyCircle.prototype.setGeometryCoordinates_ = function(geome
 ngeo.interaction.ModifyCircle.getDefaultStyleFunction = function() {
   const style = ol.style.Style.createDefaultEditing();
   return function(feature, resolution) {
-    return style[ol.geom.GeometryType.POINT];
+    return style[/**@type {ol.geom.GeometryType} */ ('Point')];
   };
 };

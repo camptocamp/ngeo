@@ -144,10 +144,10 @@ ngeo.interaction.Translate.prototype.setState_ = function() {
 
   if (map && active && features) {
     features.forEach(this.addFeature_, this);
-    keys.push(ol.events.listen(features, ol.CollectionEventType.ADD,
-      this.handleFeaturesAdd_, this));
-    keys.push(ol.events.listen(features, ol.CollectionEventType.REMOVE,
-      this.handleFeaturesRemove_, this));
+    keys.push(
+      ol.events.listen(features, 'add', this.handleFeaturesAdd_, this),
+      ol.events.listen(features, 'remove', this.handleFeaturesRemove_, this)
+    );
   } else {
 
     if (map) {
@@ -195,7 +195,7 @@ ngeo.interaction.Translate.prototype.addFeature_ = function(feature) {
 
   this.featureListenerKeys_[uid] = ol.events.listen(
     geometry,
-    ol.events.EventType.CHANGE,
+    'change',
     this.handleGeometryChange_.bind(this, feature),
     this
   );
