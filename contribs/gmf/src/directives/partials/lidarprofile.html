@@ -2,15 +2,24 @@
   class="gmf-extended-profile-container panel"
   ng-show="$ctrl.active">
 
-    <div class="extended-profile" ngeo-extended-profile="::ctrl.profileData"
-         ngeo-extended-profile-options="::ctrl.profileOptions"
-         ngeo-extended-profile-pois="::ctrl.profilePoisData"
-         ngeo-extended-profile-highlight="ctrl.profileHighlight">
-      <canvas id="profileCanvas"></canvas>
-      <svg id="profileSVG" style="fill: #ffff00;position:absolute;z-index:1"></svg>
-    </div>
-    <div id="classes"></div>
-    <div id="profileInfo"></div>
+  <div class="extended-profile"
+      ngeo-extended-profile="::ctrl.profileData"
+       ngeo-extended-profile-options="::ctrl.profileOptions"
+       ngeo-extended-profile-pois="::ctrl.profilePoisData"
+       ngeo-extended-profile-highlight="ctrl.profileHighlight">
+    <canvas id="profileCanvas"></canvas>
+    <svg id="profileSVG" style="fill: #ffff00;position:absolute;z-index:1"></svg>
+  </div>
+  <div id="classes"></div>
+  <div id="profileInfo"></div>
+  
+    <!-- <div -->
+    <!-- class="ngeo-profile" -->
+    <!-- ng-show="!ctrl.isErrored" -->
+    <!-- ngeo-profile="ctrl.profileData" -->
+    <!-- ngeo-profile-highlight="ctrl.profileHighlight" -->
+    <!-- ngeo-profile-options="::ctrl.profileOptions"> -->
+  <!-- </div> -->
 
   <ul
     class="gmf-extended-profile-legend"

@@ -376,6 +376,7 @@ gmf.LidarProfileController.prototype.update_ = function() {
     this.profileData = [];
   }
   this.active = !!this.line;
+  console.log('Active ? : ' + this.active);
 };
 
 
