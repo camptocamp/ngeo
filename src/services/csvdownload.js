@@ -62,7 +62,7 @@ ngeo.CsvDownload = function($injector, gettextCatalog) {
    * @private
    */
   this.separator_ = $injector.has('ngeoCsvSeparator') ?
-    $injector.get('ngeoCsvSeparator') : ',';
+    $injector.get('ngeoCsvSeparator') : ';';
 
   /**
    * Download service.
