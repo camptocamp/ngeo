@@ -38,9 +38,23 @@ gmf.LidarProfileConfig.prototype.getClassificationColors = function() {
   });
 };
 
+gmf.LidarProfileConfig.prototype.getMaterials = function() {
+  // this.$http_.get(this.pytreeLidarProfileJsonUrl_ + '/get_default_material').then((resp) => {
+    // this.profileConfig.defautMaterial = resp.data;
+  // });
+  
+  // TODO use pytree service once available
+  this.profileConfig.materials = [
+    {'name': 'COLOR_PACKED', 'value': 'COLOR_PACKED', 'default': ''},
+    {'name': 'RGB', 'value': 'RGB','default': ''},
+    {'name': 'CLASSIFICATION',  'value': 'CLASSIFICATION','default': 'selected'}
+  ]
+
+};
+
 gmf.LidarProfileConfig.prototype.getDefaultMaterial = function() {
   this.$http_.get(this.pytreeLidarProfileJsonUrl_ + '/get_default_material').then((resp) => {
-    this.profileConfig.defautMaterial = resp.data;
+    this.profileConfig.Materials = resp.data;
   });
 };
 

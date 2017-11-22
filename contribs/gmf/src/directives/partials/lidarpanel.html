@@ -14,8 +14,29 @@
       Use double-click to finish the drawing.
     </em>
   </p>
-  <p>TODO ajouter des champs</p>
+  <div>
+    Material:
+    <select ng-model="option.model" ng-change="$ctrl.setMaterial(option)">
+      <option ng-selected="option.default" ng-repeat="option in ::$ctrl.getMaterials()" ng-value="option.value">{{option.name}}</option>
+    </select>
+  </div>
+  <hr>
+  <div>
+    Width:
+    <input type="number" ng-init="profilwidth = $ctrl.getDefaultWidth()" pattern="^(0|[1-9][0-9]*)$" min=0 max=100 ng-model="profilwidth" ng-change="$ctrl.setWidth(profilwidth)"></input>
+  </div>
+  <hr>
+  Classes:
   <div ng-repeat="(key, classification) in ::$ctrl.getClassification()">
     <input type="checkbox" ng-model="classification.checked" ng-change="$ctrl.setClassification(classification)"></input>{{classification.name}}
+  </div>
+  <hr>
+  <div>
+    <button class="btn btn-default" ng-click="$ctrl.csvExport()">
+      CSV export
+    </button>
+    <button class="btn btn-default" ng-click="$ctrl.pngExport()">
+      PNG export
+    </button>
   </div>
 </div>

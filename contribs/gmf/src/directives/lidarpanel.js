@@ -124,16 +124,44 @@ gmf.LidarPanelController.prototype.$onInit = function() {
   this.map = this.map;
   this.gmfLidarProfileConfig.getClassificationColors();
   this.gmfLidarProfileConfig.getDefaultMaterial();
+  this.gmfLidarProfileConfig.getMaterials();
 };
 
 gmf.LidarPanelController.prototype.getClassification = function() {
   return this.gmfLidarProfileConfig.profileConfig.classification;
 }
 
+gmf.LidarPanelController.prototype.getMaterials = function() {
+  return this.gmfLidarProfileConfig.profileConfig.materials;
+}
+
+gmf.LidarPanelController.prototype.getDefaultMaterial = function() {
+  return this.gmfLidarProfileConfig.profileConfig.defautMaterial;
+}
+
+gmf.LidarPanelController.prototype.getDefaultWidth = function() {
+  return 5;
+}
+
 gmf.LidarPanelController.prototype.setClassification = function(classification, value) {
   debugger;
 }
 
+gmf.LidarPanelController.prototype.setMaterial = function(material, value) {
+  // debugger;
+}
+
+gmf.LidarPanelController.prototype.setWidth = function(profileWidth) {
+  debugger;
+}
+
+gmf.LidarPanelController.prototype.csvExport = function() {
+  debugger;
+}
+
+gmf.LidarPanelController.prototype.pngExport = function() {
+  debugger;
+}
 
 
 gmf.module.controller('gmfLidarPanelController', gmf.LidarPanelController);
