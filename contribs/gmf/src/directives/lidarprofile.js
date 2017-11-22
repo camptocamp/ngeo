@@ -369,8 +369,19 @@ gmf.LidarProfileController.prototype.$onInit = function() {
 gmf.LidarProfileController.prototype.update_ = function() {
   this.isErrored = false;
   if (this.line) {
+    
+    let flat = this.line.flatCoordinates;
+    let pytreeLineString = '';
+    for (let i=0; i<flat.length; i++) {
+      let px = 2000000 + flat[i];
+      let py = 1000000 + flat[i+1];
+      pytreeLineString += '{' + Math.round(100*px)/100 + ',' + Math.round(100*py)/100+ '},';
+      i+= 1;
+    };
+    console.log(pytreeLineString);
+    pytreeLineString = pytreeLineString.substr(0,pytreeLineString.length -1);
     ngeo.extendedProfile.loader.getProfileByLOD(this.gmfLidarProfileConfig_.profileConfig, 0, ngeo.extendedProfile.config.plotParams.initialLOD, 
-    '{2528725.0,1195975.0},{2538725.0,1197975.0},{2538735.0,1197995.0}', 0, 10, true);
+    pytreeLineString, 0, 10, true);
   } else {
     this.profileData = [];
   }
