@@ -145,17 +145,15 @@ gmf.LidarPanelController.prototype.getWidth = function() {
 }
 
 gmf.LidarPanelController.prototype.setClassification = function(classification, value) {
-  debugger;
+  this.gmfLidarProfileConfig.profileConfig.classification = classification;
 }
 
 gmf.LidarPanelController.prototype.setMaterial = function(material, value) {
-  console.log(material);
   this.gmfLidarProfileConfig.profileConfig.material = material;
 }
 
 gmf.LidarPanelController.prototype.setWidth = function(profileWidth) {
   this.gmfLidarProfileConfig.profileConfig.width = profileWidth;
-  debugger;
 }
 
 gmf.LidarPanelController.prototype.csvExport = function() {

@@ -304,6 +304,16 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
         this.update_();
       }
     });
+    
+  $scope.$watch(
+    () => this.gmfLidarProfileConfig_,
+    (newConfig, oldConfig) => {
+      if (oldConfig !== newConfig) {
+        alert("tadam");
+        this.update_();
+      }
+    }
+    );
 
   this.updateEventsListening_();
 };
@@ -368,8 +378,8 @@ gmf.LidarProfileController.prototype.$onInit = function() {
  */
 gmf.LidarProfileController.prototype.update_ = function() {
   this.isErrored = false;
+
   if (this.line) {
-    
     let flat = this.line.flatCoordinates;
     let pytreeLineString = '';
     for (let i=0; i<flat.length; i++) {
@@ -378,10 +388,8 @@ gmf.LidarProfileController.prototype.update_ = function() {
       pytreeLineString += '{' + Math.round(100*px)/100 + ',' + Math.round(100*py)/100+ '},';
       i+= 1;
     };
-    console.log(pytreeLineString);
     pytreeLineString = pytreeLineString.substr(0,pytreeLineString.length -1);
-    ngeo.extendedProfile.loader.getProfileByLOD(this.gmfLidarProfileConfig_.profileConfig, 0, ngeo.extendedProfile.config.plotParams.initialLOD, 
-    pytreeLineString, 0, 10, true);
+    ngeo.extendedProfile.loader.getProfileByLOD(this.gmfLidarProfileConfig_.profileConfig, 0, 5, pytreeLineString, 0, 10, true);
   } else {
     this.profileData = [];
   }
