@@ -240,6 +240,14 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
   this.highlightFeatureOverlay_.setFeatures(this.highlightFeatures_);
 
   /**
+   * Filename
+   * @type {string}
+   * @private
+   */
+  this.filename_ = $injector.has('gmfCsvFilename') ?
+    $injector.get('gmfCsvFilename') : 'query-results.csv';
+
+  /**
    * @type {ol.Map}
    * @private
    */
@@ -853,7 +861,7 @@ gmf.DisplayquerygridController.prototype.downloadCsv = function() {
     const selectedRows = source.configuration.getSelectedRows();
 
     this.ngeoCsvDownload_.startDownload(
-      selectedRows, columnDefs, 'query-results.csv');
+      selectedRows, columnDefs, this.filename_);
   }
 };
 

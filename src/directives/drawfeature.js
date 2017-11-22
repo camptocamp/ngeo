@@ -97,7 +97,8 @@ ngeo.drawfeatureDirective = function() {
     bindToController: {
       'active': '=ngeoDrawfeatureActive',
       'features': '=?ngeoDrawfeatureFeatures',
-      'map': '=ngeoDrawfeatureMap'
+      'map': '=ngeoDrawfeatureMap',
+      'showMeasure': '=?ngeoDrawfeatureShowmeasure'
     }
   };
 };
@@ -146,6 +147,12 @@ ngeo.DrawfeatureController = function($scope, $sce, gettextCatalog,
    * @export
    */
   this.map;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.showMeasure;
 
   /**
    * @type {angularGettext.Catalog}
@@ -321,7 +328,7 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
 
   feature.set(prop.ANGLE, 0);
   feature.set(prop.OPACITY, 0.2);
-  feature.set(prop.SHOW_MEASURE, false);
+  feature.set(prop.SHOW_MEASURE, this.showMeasure ? true : false);
   feature.set(prop.SIZE, 10);
   feature.set(prop.STROKE, 1);
 
