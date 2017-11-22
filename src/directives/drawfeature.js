@@ -85,6 +85,9 @@ goog.require('ol.Feature');
  *     collection in which to push the drawn features. If none is provided,
  *     then the `ngeoFeatures` collection is used.
  * @htmlAttribute {ol.Map} ngeo-drawfeature-map The map.
+ * @htmlAttribute {boolean} ngeo-drawfeature-showmeasure. Checks the
+ *      checkbox in order to display the feature measurements as a label.
+ *      Default to false.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
