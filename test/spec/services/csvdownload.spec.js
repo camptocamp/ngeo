@@ -28,9 +28,9 @@ describe('ngeo.csvdownload', () => {
       const csv = ngeoCsvDownload.generateCsv(data, columnDefs);
 
       const expectedCsv =
-          '"col 1","col 2","col 3"\n' +
-          '"some text","123","true"\n' +
-          '"some ""more"" text",,\n';
+          '"col 1";"col 2";"col 3"\n' +
+          '"some text";"123";"true"\n' +
+          '"some ""more"" text";;\n';
 
       expect(csv).toBe(expectedCsv);
     });
