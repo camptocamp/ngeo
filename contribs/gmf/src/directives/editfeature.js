@@ -362,11 +362,11 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
     actions: [{
       cls: 'fa fa-arrows',
       label: gettextCatalog.getString('Move'),
-      name: gmf.EditfeatureController.MenuActionType.MOVE
+      name: 'move'
     }, {
       cls: 'fa fa-rotate-right',
       label: gettextCatalog.getString('Rotate'),
-      name: gmf.EditfeatureController.MenuActionType.ROTATE
+      name: 'rotate'
     }]
   });
 
@@ -429,15 +429,6 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
    * @export
    */
   this.serverErrorType = null;
-};
-
-
-/**
- * @enum {string}
- */
-gmf.EditfeatureController.MenuActionType = {
-  MOVE: 'move',
-  ROTATE: 'rotate'
 };
 
 
@@ -1103,11 +1094,11 @@ gmf.EditfeatureController.prototype.handleMenuActionClick_ = function(evt) {
   const action = evt.detail.action;
 
   switch (action) {
-    case gmf.EditfeatureController.MenuActionType.MOVE:
+    case 'move':
       this.translate_.setActive(true);
       this.scope_.$apply();
       break;
-    case gmf.EditfeatureController.MenuActionType.ROTATE:
+    case 'rotate':
       this.rotate_.setActive(true);
       this.scope_.$apply();
       break;
