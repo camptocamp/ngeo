@@ -50,7 +50,7 @@ ngeo.module.value('ngeoScaleselectorTemplateUrl',
  *     </div>
  *
  * By default the directive uses "scaleselector.html" as its templateUrl. This
- * an be changed by redefining the "ngeoScaleselectorTemplateUrl" value.
+ * can be changed by redefining the "ngeoScaleselectorTemplateUrl" value.
  *
  * The directive has its own scope, but it is not isolate scope. That scope
  * includes a reference to the directive's controller: the "scaleselectorCtrl"

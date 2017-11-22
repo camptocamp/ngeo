@@ -406,25 +406,6 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
   });
 };
 
-
-/**
- * Return 'out-of-resolution' if the current resolution of the map is out of
- * the min/max resolution in the node.
- * @param {gmfThemes.GmfLayerWMS} gmfLayerWMS the GeoMapFish Layer WMS.
- * @return {string|undefined} 'out-of-resolution' or undefined.
- * @export
- */
-gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayerWMS) {
-  let style;
-  const resolution = this.map.getView().getResolution();
-  if (gmfLayerWMS.minResolutionHint !== undefined && resolution < gmfLayerWMS.minResolutionHint ||
-      gmfLayerWMS.maxResolutionHint !== undefined && resolution > gmfLayerWMS.maxResolutionHint) {
-    style = 'out-of-resolution';
-  }
-  return style;
-};
-
-
 /**
  * Toggle the state of treeCtrl's node.
  * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
@@ -684,6 +665,29 @@ gmf.LayertreeController.prototype.nodesCount = function() {
   return this.gmfTreeManager_.root.children.length;
 };
 
+/**
+ * Return 'out-of-resolution' if the current resolution of the map is out of
+ * the min/max resolution in the node.
+ * @param {gmfThemes.GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
+ *     also allowed (the type is defined as GmfLayerWMS only to avoid some
+ *     useless tests to know if a minResolutionHint property can exist
+ *     on the node).
+ * @return {string|undefined} 'out-of-resolution' or undefined.
+ * @export
+ */
+gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayer) {
+  const resolution = this.map.getView().getResolution();
+  const minResolution = gmf.Themes.getNodeMinResolution(gmfLayer);
+  if (minResolution !== undefined && resolution < minResolution) {
+    return 'out-of-resolution';
+  }
+  const maxResolution = gmf.Themes.getNodeMaxResolution(gmfLayer);
+  if (maxResolution !== undefined && resolution > maxResolution) {
+    return 'out-of-resolution';
+  }
+  return undefined;
+};
+
 
 /**
  * Set the resolution of the map with the max or min resolution of the node.
@@ -695,11 +699,14 @@ gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
   const gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
-  if (gmfLayer.minResolutionHint !== undefined && resolution < gmfLayer.minResolutionHint) {
-    view.setResolution(view.constrainResolution(gmfLayer.minResolutionHint, 0, 1));
-  }
-  if (gmfLayer.maxResolutionHint !== undefined && resolution > gmfLayer.maxResolutionHint) {
-    view.setResolution(view.constrainResolution(gmfLayer.maxResolutionHint, 0, -1));
+  const minResolution = gmf.Themes.getNodeMinResolution(gmfLayer);
+  if (minResolution !== undefined && resolution < minResolution) {
+    view.setResolution(view.constrainResolution(minResolution, 0, 1));
+  } else {
+    const maxResolution = gmf.Themes.getNodeMaxResolution(gmfLayer);
+    if (maxResolution !== undefined && resolution > maxResolution) {
+      view.setResolution(view.constrainResolution(maxResolution, 0, -1));
+    }
   }
 };
 

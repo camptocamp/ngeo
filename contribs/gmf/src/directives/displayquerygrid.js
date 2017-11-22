@@ -18,10 +18,10 @@ goog.require('ol.style.Style');
 
 ngeo.module.value('gmfDisplayquerygridTemplateUrl',
   /**
-     * @param {!angular.JQLite} $element Element.
-     * @param {!angular.Attributes} $attrs Attributes.
-     * @return {string} Template URL.
-     */
+   * @param {!angular.JQLite} $element Element.
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} Template URL.
+   */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfDisplayquerygridTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
@@ -75,7 +75,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  *     empty columns be hidden? Default: `false`.
  * @htmlAttribute {number?} gmf-displayquerygrid-maxrecenterzoom Optional. Maximum
  *     zoom-level to use when zooming to selected features.
- * @htmlAttribute {gmfx.GridMergeTabs?} gmf-displayquerygrid-gridmergetabas Optional.
+ * @htmlAttribute {gmfx.GridMergeTabs?} gmf-displayquerygrid-gridmergetabs Optional.
  *     Configuration to merge grids with the same attributes into a single grid.
  *
  * @ngdoc component
@@ -106,6 +106,7 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
+ * @param {ngeo.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {angular.$timeout} $timeout Angular timeout service.
@@ -117,7 +118,7 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @ngdoc controller
  * @ngname GmfDisplayquerygridController
  */
-gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
+gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
 
   const queryOptions = /** @type {ngeox.QueryOptions} */ (
@@ -141,6 +142,12 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
    * @export
    */
   this.ngeoQueryResult = ngeoQueryResult;
+
+  /**
+   * @type {ngeo.MapQuerent}
+   * @private
+   */
+  this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
    * @type {ngeo.CsvDownload}
@@ -244,8 +251,8 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
    * @type {string}
    * @private
    */
-   this.filename_ = $injector.has('gmfCsvFilename') ?
-     $injector.get('gmfCsvFilename') : 'query-results.csv';
+  this.filename_ = $injector.has('gmfCsvFilename') ?
+    $injector.get('gmfCsvFilename') : 'query-results.csv';
 
   /**
    * @type {ol.Map}
@@ -655,6 +662,7 @@ gmf.DisplayquerygridController.prototype.clear = function() {
   this.tooManyResults = false;
   this.features_.clear();
   this.highlightFeatures_.clear();
+  this.ngeoMapQuerent_.clear();
   this.featuresForSources_ = {};
   if (this.unregisterSelectWatcher_) {
     this.unregisterSelectWatcher_();

@@ -379,7 +379,8 @@ ngeo.FeatureHelper.prototype.getTextStyle_ = function(feature) {
       text: this.getNameProperty(feature),
       size: this.getSizeProperty(feature),
       angle: this.getAngleProperty(feature),
-      color: this.getRGBAColorProperty(feature)
+      color: this.getRGBAColorProperty(feature),
+      width: this.getStrokeProperty(feature)
     })
   });
 };
