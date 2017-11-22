@@ -68,9 +68,9 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     'bottom': 40
   }
 
-  let containerWidth = $('div.extended-profile').width();
-  let containerHeight = $('div.extended-profile').height();
-  
+  let containerWidth = $('.gmf-extended-profile-container').width();
+  let containerHeight = $('.gmf-extended-profile-container').height();
+  console.log(containerWidth, containerHeight);
   let width = containerWidth - (margin.left + margin.right);
   let height = containerHeight - (margin.top + margin.bottom);
 
