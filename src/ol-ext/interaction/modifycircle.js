@@ -6,7 +6,6 @@ goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserPointerEvent');
-goog.require('ol.ViewHint');
 goog.require('ol.coordinate');
 goog.require('ol.events');
 goog.require('ol.extent');
@@ -394,7 +393,7 @@ ngeo.interaction.ModifyCircle.handleEvent = function(mapBrowserEvent) {
   }
 
   let handled;
-  if (!mapBrowserEvent.map.getView().getHints()[ol.ViewHint.INTERACTING] &&
+  if (!mapBrowserEvent.map.getView().getInteracting() &&
       mapBrowserEvent.type == 'pointermove' && !this.handlingDownUpSequence) {
     this.handlePointerMove_(mapBrowserEvent);
   }
