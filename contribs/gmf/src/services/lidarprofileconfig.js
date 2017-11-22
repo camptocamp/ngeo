@@ -45,17 +45,20 @@ gmf.LidarProfileConfig.prototype.getMaterials = function() {
   
   // TODO use pytree service once available
   this.profileConfig.materials = [
-    {'name': 'COLOR_PACKED', 'value': 'COLOR_PACKED', 'default': ''},
-    {'name': 'RGB', 'value': 'RGB','default': ''},
-    {'name': 'CLASSIFICATION',  'value': 'CLASSIFICATION','default': 'selected'}
+    {'name': 'COLOR_PACKED', 'value': 'COLOR_PACKED', 'selected': ''},
+    {'name': 'RGB', 'value': 'RGB','selected': 'selected'},
+    {'name': 'CLASSIFICATION',  'value': 'CLASSIFICATION','selected': ''}
   ]
-
 };
 
 gmf.LidarProfileConfig.prototype.getDefaultMaterial = function() {
   this.$http_.get(this.pytreeLidarProfileJsonUrl_ + '/get_default_material').then((resp) => {
-    this.profileConfig.Materials = resp.data;
+    this.profileConfig.defaultMaterial = resp.data;
   });
+};
+
+gmf.LidarProfileConfig.prototype.getWidth = function() {
+  this.profileConfig.width = 5;
 };
 
 gmf.LidarProfileConfig.pointAttributes = {};

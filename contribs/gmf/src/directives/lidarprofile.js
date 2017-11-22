@@ -362,7 +362,8 @@ gmf.LidarProfileController.prototype.update_ = function() {
   this.isErrored = false;
   if (this.line) {
     //this.getJsonProfile_();
-    //this.gmfLidarProfileConfig_.profileConfig.classification["5"]
+    console.log(this.gmfLidarProfileConfig_.profileConfig);
+
     debugger;
   } else {
     this.profileData = [];

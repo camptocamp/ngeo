@@ -16,8 +16,8 @@
   </p>
   <div>
     Material:
-    <select ng-model="option.model" ng-change="$ctrl.setMaterial(option)">
-      <option ng-selected="option.default" ng-repeat="option in ::$ctrl.getMaterials()" ng-value="option.value">{{option.name}}</option>
+    <select ng-model="option.value" ng-change="$ctrl.setMaterial(option)">
+      <option ng-repeat="option in ::$ctrl.getMaterials()" ng-value="option.value">{{option.name}}</option>
     </select>
   </div>
   <hr>
