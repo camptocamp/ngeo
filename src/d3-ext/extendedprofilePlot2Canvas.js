@@ -44,7 +44,6 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
       } else {
         ctx.fillStyle = 'RGB(' + 150 + ', ' + 150 + ', ' + 150 + ')';
       }
-      // ctx.fillRect(cx, cy, pointSize, pointSize);
       ctx.arc(cx, cy, pointSize, 0, 2 * Math.PI, false);
       ctx.fill();
     }
@@ -59,7 +58,6 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   let canvasEl = d3.select('#profileCanvas').node();
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
-  console.log(ctx);
   ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
 
   // MOVE THAT!

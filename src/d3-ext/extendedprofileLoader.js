@@ -15,6 +15,7 @@ ngeo.extendedProfile.loader.requestsQueue = [];
 // Load points by LOD
 ngeo.extendedProfile.loader.getProfileByLOD = function (options, minLOD, maxLOD, polyline, distanceOffset, width, resetPlot) {
   console.log(options);
+  ngeo.extendedProfile.config.profileConfig.classification = options.classification
   let uuid = ngeo.extendedProfile.utils.UUID();
   ngeo.extendedProfile.loader.lastUuid = uuid;
   let lastLOD = false;

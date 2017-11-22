@@ -368,7 +368,6 @@ gmf.LidarProfileController.prototype.$onInit = function() {
  */
 gmf.LidarProfileController.prototype.update_ = function() {
   this.isErrored = false;
-  console.log(this);
   if (this.line) {
     ngeo.extendedProfile.loader.getProfileByLOD(this.gmfLidarProfileConfig_.profileConfig, 0, ngeo.extendedProfile.config.plotParams.initialLOD, 
     '{2528725.0,1195975.0},{2538725.0,1197975.0},{2538735.0,1197995.0}', 0, 10, true);
@@ -376,7 +375,6 @@ gmf.LidarProfileController.prototype.update_ = function() {
     this.profileData = [];
   }
   this.active = !!this.line;
-  console.log('Active ? : ' + this.active);
 };
 
 
