@@ -4,12 +4,12 @@ The code in this directory and subdirectories is organized in angular modules.
 # Recommended setup
 The recommended setup from https://docs.angularjs.org/guide/module is:
 - a module for each feature
-- a module for each reusable component (especially directives and filters)
+- a module for each reusable element (especially components and filters)
 - (and an application level module which depends on the above modules and contains any initialization code.)
 
 Example for the search feature:
 - an `ngeoSearchModule` module in `modules/search/searchmodule.js`;
-- an `ngeoSearch` directive (in partials `ngeo-search`) in `modules/search/searchdirective.js`;
+- an `ngeoSearch` component (in partials `ngeo-search`) in `modules/search/searchcomponent.js`;
 - an `ngeoCreateGeoJSONBloodhound` service in ``modules/search/creategeojsonbloodhound.js`.
 
 

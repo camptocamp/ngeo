@@ -22,7 +22,7 @@ goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.searchDirective');
+goog.require('gmf.searchComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.themeselectorDirective');
 /** @suppress {extraRequire} */
@@ -169,7 +169,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
   ol.events.listen(gmfAuthentication, 'logout', userChange);
 
   /**
-   * @type {Array.<gmfx.SearchDirectiveDatasource>}
+   * @type {Array.<gmfx.SearchComponentDatasource>}
    * @export
    */
   this.searchDatasources = [{

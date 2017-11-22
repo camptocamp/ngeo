@@ -1,4 +1,4 @@
-goog.provide('gmf.searchDirective');
+goog.provide('gmf.searchComponent');
 
 goog.require('gmf');
 goog.require('gmf.Themes');
@@ -42,23 +42,35 @@ gmf.module.value('gmfSearchTemplateUrl',
 
 
 /**
- * A directive that allows to search and recenter on a selected
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfSearchTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
+  return gmfSearchTemplateUrl($element, $attrs);
+}
+
+
+/**
+ * A component that allows to search and recenter on a selected
  * result's feature.
  * It can search in multiple GeoJSON datasources.
  * It can filter and group results by a feature's property.
  *
- * This directive uses the {@link ngeo.FeatureOverlayMgr} to create a
+ * This component uses the {@link ngeo.FeatureOverlayMgr} to create a
  * feature overlay for drawing features on the map. The application
  * is responsible to initialize the {@link ngeo.FeatureOverlayMgr}
  * with the map.
  *
  * Example flat results:
  *
- *      <gmf-search gmf-search-map="ctrl.map"
- *        gmf-search-options="ctrl.searchOptions"
- *        gmf-search-styles="ctrl.searchStyles"
- *        gmf-search-datasources="ctrl.searchDatasources"
- *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
+ *      <gmf-search gmf-search-map="::ctrl.map"
+ *        gmf-search-options="::ctrl.searchOptions"
+ *        gmf-search-styles="::ctrl.searchStyles"
+ *        gmf-search-datasources="::ctrl.searchDatasources"
+ *        gmf-search-coordinatesprojections="::ctrl.searchCoordinatesProjections"
  *        gmf-search-clearbutton="true">
  *      </gmf-search>
  *      <script>
@@ -76,11 +88,11 @@ gmf.module.value('gmfSearchTemplateUrl',
  *
  * Example with categories:
  *
- *      <gmf-search gmf-search-map="ctrl.map"
- *        gmf-search-options="ctrl.searchOptions"
- *        gmf-search-styles="ctrl.searchStyles"
- *        gmf-search-datasources="ctrl.searchDatasources"
- *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
+ *      <gmf-search gmf-search-map="::ctrl.map"
+ *        gmf-search-options="::ctrl.searchOptions"
+ *        gmf-search-styles="::ctrl.searchStyles"
+ *        gmf-search-datasources="::ctrl.searchDatasources"
+ *        gmf-search-coordinatesprojections="::ctrl.searchCoordinatesProjections"
  *        gmf-search-clearbutton="true">
  *        gmf-search-colorchooser="true">
  *      </gmf-search>
@@ -93,11 +105,10 @@ gmf.module.value('gmfSearchTemplateUrl',
  *        })();
  *      </script>
  *
- * @param {string} gmfSearchTemplateUrl URL to template.
  * @htmlAttribute {string} gmf-search-input-value The input value (read only).
  * @htmlAttribute {ol.Map} gmf-search-map The map.
  * @htmlAttribute {TypeaheadOptions|undefined} gmf-search-options Addition Typeahead options.
- * @htmlAttribute {gmfx.SearchDirectiveDatasource} gmf-search-datasource
+ * @htmlAttribute {gmfx.SearchComponentDatasource} gmf-search-datasource
  *      The datasources.
  * @htmlAttribute {Object.<string, ol.style.Style>}
  *      gmf-search-styles A map of styles to apply on searched features. Keys
@@ -112,67 +123,41 @@ gmf.module.value('gmfSearchTemplateUrl',
  * @htmlAttribute {boolean} gmf-search-clearbutton The clear button.
  * @htmlAttribute {boolean} gmf-search-colorchooser Whether to let the user
  *      change the style of the feature on the map. Default is false.
- * @htmlAttribute {ngeox.SearchDirectiveListeners} gmf-search-listeners
+ * @htmlAttribute {ngeox.SearchComponentListeners} gmf-search-listeners
  *      The listeners.
  * @htmlAttribute {number} gmf-search-maxzoom The maximum zoom we will zoom on result, default is 16.
- * @htmlAttribute {function} gmf-search-on-init Optional function called when the directive is initialized.
- * @return {angular.Directive} The Directive Definition Object.
- * @ngInject
- * @ngdoc directive
+ * @htmlAttribute {function} gmf-search-on-init Optional function called when the component is initialized.
+ * @ngdoc component
  * @ngname gmfSearch
  */
-gmf.searchDirective = function(gmfSearchTemplateUrl) {
-  return {
-    restrict: 'E',
-    bindToController: {
-      'inputValue': '=?gmfSearchInputValue',
-      'placeholder': '@?gmfSearchPlaceholder'
-    },
-    scope: {
-      'getMapFn': '&gmfSearchMap',
-      'getDatasourcesFn': '&gmfSearchDatasources',
-      'typeaheadOptions': '<?gmfSearchOptions',
-      'featuresStyles': '<?gmfSearchStyles',
-      'clearbutton': '=gmfSearchClearbutton',
-      'colorchooser': '=gmfSearchColorchooser',
-      'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
-      'additionalListeners': '=gmfSearchListeners',
-      'maxZoom': '<gmfSearchMaxzoom',
-      'onInitCallback': '&?gmfSearchOnInit'
-    },
-    controller: 'GmfSearchController as ctrl',
-    templateUrl: gmfSearchTemplateUrl,
-    /**
-     * @param {angular.Scope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Atttributes.
-     */
-    link: (scope, element, attrs) => {
-      if (!scope['clearbutton']) {
-        const ctrl = scope['ctrl'];
-        // Empty the search field on focus and blur.
-        element.find('input').on('focus blur', () => {
-          ctrl.clear();
-        });
-      }
-
-      const callback = scope['onInitCallback'];
-      if (callback) {
-        callback();
-      }
-    }
-  };
+gmf.searchComponent = {
+  bindings: {
+    'inputValue': '=?gmfSearchInputValue',
+    'placeholder': '@?gmfSearchPlaceholder',
+    'map': '<gmfSearchMap',
+    'datasources': '<gmfSearchDatasources',
+    'typeaheadOptions': '<?gmfSearchOptions',
+    'featuresStyles': '<?gmfSearchStyles',
+    'clearButton': '=gmfSearchClearbutton',
+    'colorChooser': '=gmfSearchColorchooser',
+    'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
+    'additionalListeners': '=gmfSearchListeners',
+    'maxZoom': '<gmfSearchMaxzoom',
+    'onInitCallback': '<?gmfSearchOnInit'
+  },
+  controller: 'GmfSearchController',
+  templateUrl: gmfSearchTemplateUrl
 };
 
 
-gmf.module.directive('gmfSearch', gmf.searchDirective);
+gmf.module.component('gmfSearch', gmf.searchComponent);
 
 
 /**
  * @constructor
  * @private
  * @param {jQuery} $element Element.
- * @param {angular.Scope} $scope The directive's scope.
+ * @param {angular.Scope} $scope The component's scope.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angular.$injector} $injector Main injector.
@@ -189,9 +174,9 @@ gmf.module.directive('gmfSearch', gmf.searchDirective);
  * @ngdoc controller
  * @ngname GmfSearchController
  */
-gmf.SearchController = function($element, $scope, $compile, $timeout, $injector, gettextCatalog,
-  ngeoAutoProjection, ngeoSearchCreateGeoJSONBloodhound, ngeoFeatureOverlayMgr,
-  gmfThemes, gmfTreeManager, gmfFulltextSearchService) {
+gmf.SearchController = function($element, $scope, $compile, $timeout, $injector,
+  gettextCatalog, ngeoAutoProjection, ngeoSearchCreateGeoJSONBloodhound,
+  ngeoFeatureOverlayMgr, gmfThemes, gmfTreeManager, gmfFulltextSearchService) {
 
 
   /**
@@ -270,14 +255,11 @@ gmf.SearchController = function($element, $scope, $compile, $timeout, $injector,
    */
   this.ngeoAutoProjection_ = ngeoAutoProjection;
 
-  const map = this.scope_['getMapFn']();
-  goog.asserts.assertInstanceof(map, ol.Map);
-
   /**
    * @type {!ol.Map}
-   * @private
+   * @export
    */
-  this.map_ = map;
+  this.map;
 
   /**
    * @type {Object}
@@ -286,18 +268,24 @@ gmf.SearchController = function($element, $scope, $compile, $timeout, $injector,
   this.styles_ = {};
 
   /**
+   * @type {function()}
+   * @export
+   */
+  this.onInitCallback;
+
+  /**
    * Whether or not to show a button to clear the search text.
    * Default to false.
    * @type {boolean}
    * @export
    */
-  this.clearButton = this.scope_['clearbutton'] || false;
+  this.clearButton = false;
 
   /**
    * @type {boolean}
    * @export
    */
-  this.colorchooser = this.scope_['colorchooser'] || false;
+  this.colorChooser = false;
 
   /**
    * @type {string}
@@ -310,38 +298,26 @@ gmf.SearchController = function($element, $scope, $compile, $timeout, $injector,
    * @type {number}
    * @export
    */
-  this.maxZoom = parseInt(this.scope_['maxZoom'], 10) || 16;
+  this.maxZoom = 16;
 
-  let coordProj = this.scope_['coordinatesProjections'];
-  if (coordProj === undefined) {
-    coordProj = [this.map_.getView().getProjection()];
-  } else {
-    coordProj = this.ngeoAutoProjection_.getProjectionList(coordProj);
-  }
   /**
-   * Supported projection for coordinates search.
+   * Supported projections for coordinates search.
    * @type {Array.<ol.proj.Projection>}
    * @private
    */
-  this.coordinatesProjections_ = coordProj;
-
-  this.initStyles_();
+  this.coordinatesProjections_;
 
   /**
    * @type {ngeo.FeatureOverlay}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
-  this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
-
-  const datasources = this.scope_['getDatasourcesFn']();
-  goog.asserts.assertArray(datasources);
 
   /**
-   * @type {Array.<gmfx.SearchDirectiveDatasource>}
-   * @private
+   * @type {Array.<gmfx.SearchComponentDatasource>}
+   * @export
    */
-  this.datasources_ = datasources;
+  this.datasources = [];
 
   /**
    * @type {TypeaheadOptions}
@@ -350,8 +326,6 @@ gmf.SearchController = function($element, $scope, $compile, $timeout, $injector,
   this.options = /** @type {TypeaheadOptions} */ ({
     highlight: true
   });
-
-  ol.obj.assign(this.options, this.scope_['typeaheadOptions'] || {});
 
   /**
    * @type {Array.<TypeaheadDataset>}
@@ -363,11 +337,148 @@ gmf.SearchController = function($element, $scope, $compile, $timeout, $injector,
    * @type {string}
    * @export
    */
-  this.inputValue;
+  this.inputValue = '';
 
-  // Create each datasource
-  for (let i = 0; i < this.datasources_.length; i++) {
-    const datasource = this.datasources_[i];
+  /**
+   * @type {string}
+   * @export
+   */
+  this.placeholder = '';
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.color;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.displayColorPicker = false;
+
+  /**
+   * @type {ngeox.SearchDirectiveListeners}
+   * @export
+   */
+  this.listeners;
+
+  /**
+   * @type {ngeox.SearchDirectiveListeners}
+   * @export
+   */
+  this.additionalListeners;
+};
+
+
+/**
+ * Called on initialization of the controller.
+ */
+gmf.SearchController.prototype.$onInit = function() {
+
+  // Init coordinates projections
+  let coordProj = this.coordinatesProjections_;
+  if (coordProj === undefined) {
+    coordProj = [this.map.getView().getProjection()];
+  } else {
+    coordProj = this.ngeoAutoProjection_.getProjectionList(
+      /** @type {Array.<string>} */ (coordProj)
+    );
+  }
+  this.coordinatesProjections_ = coordProj;
+
+  if (!this.clearButton) {
+    // Empty the search field on focus and blur.
+    this.element_.find('input').on('focus blur', () => {
+      this.clear();
+    });
+  }
+
+  if (this.onInitCallback) {
+    this.onInitCallback();
+  }
+
+  this.initStyles_();
+
+  this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
+
+  if (this.typeaheadOptions) {
+    ol.obj.assign(this.options, this.typeaheadOptions);
+  }
+
+  this.initDatasets_();
+
+  this.scope_.$watch(
+    () => this.color,
+    this.setStyleColor.bind(this)
+  );
+
+  this.listeners = this.mergeListeners_(
+    this.additionalListeners,
+    /** @type {ngeox.SearchDirectiveListeners} */ ({
+      select: gmf.SearchController.select_.bind(this),
+      close: gmf.SearchController.close_.bind(this),
+      datasetsempty: gmf.SearchController.datasetsempty_.bind(this)
+    })
+  );
+
+  if (this.ngeoLocation_) {
+    const searchQuery = this.ngeoLocation_.getParam('search');
+    if (searchQuery) {
+      let resultIndex = 1;
+      if (this.ngeoLocation_.getParam('search-select-index')) {
+        resultIndex = parseInt(this.ngeoLocation_.getParam('search-select-index'), 10);
+      }
+      let mapZoom;
+      if (this.ngeoLocation_.getParam('map_zoom')) {
+        mapZoom = parseInt(this.ngeoLocation_.getParam('map_zoom'), 10);
+      }
+      this.fulltextsearch_(searchQuery, resultIndex, mapZoom);
+    }
+  }
+};
+
+
+/**
+ * Merges the custom listeners received via the component attributes and the
+ * listeners that are needed for this controller to function (close and select).
+ * @param {ngeox.SearchDirectiveListeners} additionalListeners Custom provided
+ *    listeners.
+ * @param {ngeox.SearchDirectiveListeners} listeners Default listeners.
+ * @return {ngeox.SearchDirectiveListeners} Merged listeners.
+ * @private
+ */
+gmf.SearchController.prototype.mergeListeners_ = function(additionalListeners, listeners) {
+  if (additionalListeners === undefined) {
+    return listeners;
+  }
+  return {
+    open: additionalListeners.open,
+    close: additionalListeners.close === undefined ?
+      listeners.close : function() {
+        listeners.close();
+        additionalListeners.close();
+      },
+    cursorchange: additionalListeners.cursorchange,
+    datasetsempty: additionalListeners.datasetsempty,
+    select: additionalListeners.select === undefined ?
+      listeners.select : function(evt, obj, dataset) {
+        listeners.select(evt, obj, dataset);
+        additionalListeners.select(evt, obj, dataset);
+      },
+    autocomplete: additionalListeners.autocomplete
+  };
+};
+
+
+/**
+ * Initialize datasets for the search
+ * @private
+ */
+gmf.SearchController.prototype.initDatasets_ = function() {
+  const gettextCatalog = this.gettextCatalog_;
+  for (let i = 0; i < this.datasources.length; i++) {
+    const datasource = this.datasources[i];
 
     /** @type {Array.<string>} */
     const groupValues = datasource.groupValues !== undefined ? datasource.groupValues : [];
@@ -411,7 +522,7 @@ gmf.SearchController = function($element, $scope, $compile, $timeout, $injector,
 
   // For searching coordinates
   this.datasets.push({
-    source: this.createSearchCoordinates_(this.map_.getView()),
+    source: this.createSearchCoordinates_(this.map.getView()),
     name: 'coordinates',
     display: 'label',
     templates: {
@@ -428,96 +539,11 @@ gmf.SearchController = function($element, $scope, $compile, $timeout, $injector,
       }
     }
   });
-
-  /**
-   * @type {string}
-   * @export
-   */
-  this.color;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.displayColorPicker = false;
-
-  $scope.$watch(
-    () => this.color,
-    this.setStyleColor.bind(this)
-  );
-
-  /**
-   * @type {ngeox.SearchDirectiveListeners}
-   * @export
-   */
-  this.listeners = this.mergeListeners_(
-    this.scope_['additionalListeners'],
-    /** @type {ngeox.SearchDirectiveListeners} */ ({
-      select: gmf.SearchController.select_.bind(this),
-      close: gmf.SearchController.close_.bind(this),
-      datasetsempty: gmf.SearchController.datasetsempty_.bind(this)
-    }));
 };
 
 
 /**
- * Called on initialization of the controller.
- */
-gmf.SearchController.prototype.$onInit = function() {
-  this.inputValue = this.inputValue || '';
-  this.placeholder = this.placeholder || '';
-
-  if (this.ngeoLocation_) {
-    const searchQuery = this.ngeoLocation_.getParam('search');
-    if (searchQuery) {
-      let resultIndex = 1;
-      if (this.ngeoLocation_.getParam('search-select-index')) {
-        resultIndex = parseInt(this.ngeoLocation_.getParam('search-select-index'), 10);
-      }
-      let mapZoom;
-      if (this.ngeoLocation_.getParam('map_zoom')) {
-        mapZoom = parseInt(this.ngeoLocation_.getParam('map_zoom'), 10);
-      }
-      this.fulltextsearch_(searchQuery, resultIndex, mapZoom);
-    }
-  }
-};
-
-
-/**
- * Merges the custom listeners received via the directive attributes and the
- * listeners that are needed for this controller to function (close and select).
- * @param {ngeox.SearchDirectiveListeners} additionalListeners Custom provided
- *    listeners.
- * @param {ngeox.SearchDirectiveListeners} listeners Default listeners.
- * @return {ngeox.SearchDirectiveListeners} Merged listeners.
- * @private
- */
-gmf.SearchController.prototype.mergeListeners_ = function(additionalListeners, listeners) {
-  if (additionalListeners === undefined) {
-    return listeners;
-  }
-  return {
-    open: additionalListeners.open,
-    close: additionalListeners.close === undefined ?
-      listeners.close : function() {
-        listeners.close();
-        additionalListeners.close();
-      },
-    cursorchange: additionalListeners.cursorchange,
-    datasetsempty: additionalListeners.datasetsempty,
-    select: additionalListeners.select === undefined ?
-      listeners.select : function(evt, obj, dataset) {
-        listeners.select(evt, obj, dataset);
-        additionalListeners.select(evt, obj, dataset);
-      },
-    autocomplete: additionalListeners.autocomplete
-  };
-};
-
-
-/**
- * @param {gmfx.SearchDirectiveDatasource} config The config of the dataset.
+ * @param {gmfx.SearchComponentDatasource} config The config of the dataset.
  * @param {(function(GeoJSONFeature): boolean)=} opt_filter A filter function
  *     based on a GeoJSONFeaturesCollection's array.
  * @return {TypeaheadDataset} A typeahead dataset.
@@ -525,7 +551,7 @@ gmf.SearchController.prototype.mergeListeners_ = function(additionalListeners, l
  */
 gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
   const gettextCatalog = this.gettextCatalog_;
-  const directiveScope = this.scope_;
+  const componentScope = this.scope_;
   const compile = this.compile_;
   const bloodhoundEngine = this.createAndInitBloodhound_(config, opt_filter);
   const typeaheadDataset = /** @type {TypeaheadDataset} */ ({
@@ -547,7 +573,7 @@ gmf.SearchController.prototype.createDataset_ = function(config, opt_filter) {
       suggestion: (suggestion) => {
         const feature = /** @type {ol.Feature} */ (suggestion);
 
-        const scope = directiveScope.$new(true);
+        const scope = componentScope.$new(true);
         scope['feature'] = feature;
 
         let html = `<p class="gmf-search-label" translate>${
@@ -621,7 +647,7 @@ gmf.SearchController.prototype.filterLayername_ = function(opt_layerName) {
 
 
 /**
- * @param {gmfx.SearchDirectiveDatasource} config The config of the dataset.
+ * @param {gmfx.SearchComponentDatasource} config The config of the dataset.
  * @param {(function(GeoJSONFeature): boolean)=} opt_filter Afilter function
  *     based on a GeoJSONFeaturesCollection's array.
  * @return {Bloodhound} The bloodhound engine.
@@ -629,7 +655,7 @@ gmf.SearchController.prototype.filterLayername_ = function(opt_layerName) {
  */
 gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
   opt_filter) {
-  const mapProjectionCode = this.map_.getView().getProjection().getCode();
+  const mapProjectionCode = this.map.getView().getProjection().getCode();
   const remoteOptions = this.getBloodhoudRemoteOptions_();
   const bloodhound = this.ngeoSearchCreateGeoJSONBloodhound_(config.url, opt_filter,
     ol.proj.get(mapProjectionCode), ol.proj.get(config.projection),
@@ -696,8 +722,8 @@ gmf.SearchController.prototype.createSearchCoordinates_ = function(view) {
 
 /**
  * Init the style object for the search results. It set defaults for the
- * coordinates and the polygon styles, and both can be overloaded from directive
- * attributes. The styles from directive attributes can specify custom styles
+ * coordinates and the polygon styles, and both can be overloaded from component
+ * attributes. The styles from component attributes can specify custom styles
  * for each search group.
  * @private
  */
@@ -839,7 +865,7 @@ gmf.SearchController.select_ = function(event, suggestion, dataset) {
       geometry: geom,
       'layer_name': gmf.COORDINATES_LAYER_NAME
     }));
-    this.map_.getView().setCenter(suggestion['position']);
+    this.map.getView().setCenter(suggestion['position']);
     this.leaveSearch_();
   } else {
     goog.asserts.assertInstanceof(suggestion, ol.Feature);
@@ -875,7 +901,7 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
         this.gmfTreeManager_.addGroupByName(actionData, true);
       } else if (actionName == 'add_layer') {
         const groupActions = /** @type {Array.<string>} */ (
-          this.datasources_[0].groupActions);
+          this.datasources[0].groupActions);
         let datasourcesActionsHaveAddLayer;
         groupActions.forEach((groupAction) => {
           if (groupAction['action'] === 'add_layer') {
@@ -890,9 +916,9 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
     }
   }
 
-  const size = this.map_.getSize();
+  const size = this.map.getSize();
   if (featureGeometry && size) {
-    const view = this.map_.getView();
+    const view = this.map.getView();
     this.featureOverlay_.clear();
     this.featureOverlay_.addFeature(feature);
     this.displayColorPicker = true;
@@ -979,7 +1005,7 @@ gmf.SearchController.prototype.fulltextsearch_ = function(query, resultIndex, op
         if (opt_zoom !== undefined) {
           fitOptions.maxZoom = opt_zoom;
         }
-        this.map_.getView().fit(feature.getGeometry().getExtent(), fitOptions);
+        this.map.getView().fit(feature.getGeometry().getExtent(), fitOptions);
         this.inputValue = /** @type {string} */ (feature.get('label'));
       }
     });
