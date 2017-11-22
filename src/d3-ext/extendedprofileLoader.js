@@ -13,7 +13,8 @@ ngeo.extendedProfile.loader.profilePoints = {
 ngeo.extendedProfile.loader.requestsQueue = [];
 
 // Load points by LOD
-ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline, distanceOffset, width, resetPlot) {
+ngeo.extendedProfile.loader.getProfileByLOD = function (options, minLOD, maxLOD, polyline, distanceOffset, width, resetPlot) {
+  console.log(options);
   let uuid = ngeo.extendedProfile.utils.UUID();
   ngeo.extendedProfile.loader.lastUuid = uuid;
   let lastLOD = false;
@@ -28,13 +29,13 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline
 
   for (var i=0; i<maxLOD; i++) {
     if (i==0){
-      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 4, i, polyline, distanceOffset, lastLOD, width, resetPlot, uuid);
+      ngeo.extendedProfile.loader.xhrRequest(options, minLOD + i, minLOD + i + 4, i, polyline, distanceOffset, lastLOD, width, resetPlot, uuid);
       i += 3;
     } else if (i < maxLOD - 1) {
-      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width, false, uuid);
+      ngeo.extendedProfile.loader.xhrRequest(options, minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width, false, uuid);
     } else {
       lastLOD = true;
-      ngeo.extendedProfile.loader.xhrRequest(minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width, false, uuid);
+      ngeo.extendedProfile.loader.xhrRequest(options, minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width, false, uuid);
     }
   }
 
@@ -45,7 +46,7 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (minLOD, maxLOD, polyline
  * Provides a function that sends xhr requests to cpotree app and parses
  * its binary output format
  */
-ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot, uuid) {
+ngeo.extendedProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot, uuid) {
 
   // let hurl = 'http://localhost:5001/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
   let hurl = 'http://sitn.ne.ch/pytree/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
@@ -70,7 +71,7 @@ ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordina
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         if (this.uuid == ngeo.extendedProfile.loader.lastUuid) {
-          ngeo.extendedProfile.loader.processBuffer(xhr.response, iter, distanceOffset, lastLOD, resetPlot);
+          ngeo.extendedProfile.loader.processBuffer(options, xhr.response, iter, distanceOffset, lastLOD, resetPlot);
         }
       }
     }
@@ -84,7 +85,8 @@ ngeo.extendedProfile.loader.xhrRequest = function(minLOD, maxLOD, iter, coordina
   }
 };
 
-ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOffset, lastLOD, resetPlot) {
+ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, distanceOffset, lastLOD, resetPlot) {
+    console.log('processBuffer');
   // try {
     // ***Get header size***
     let typedArrayInt32 = new Int32Array(profile, 0,4);
@@ -172,17 +174,18 @@ ngeo.extendedProfile.loader.processBuffer = function (profile, iter, distanceOff
     let rangeY = [ngeo.extendedProfile.plot2canvas.arrayMin(points.altitude), ngeo.extendedProfile.plot2canvas.arrayMax(points.altitude)];
     if (iter==0 && resetPlot) {
       ngeo.extendedProfile.plot2canvas.setupPlot(rangeX, rangeY);
-      ngeo.extendedProfile.plot2canvas.drawPoints(points, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
+      ngeo.extendedProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
 
     } else {
-      ngeo.extendedProfile.plot2canvas.drawPoints(points, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
+      ngeo.extendedProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
     }
 
     if (resetPlot) {
       // ngeo.extendedProfile.raster.generateDemDsm(); // For now only add GMF
-      if ($('#demdsm')[0].checked) {
-        ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring(), 0);
-      }
+      // TODO add this in lidarpanel
+      // if ($('#demdsm')[0].checked) {
+        // ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring(), 0);
+      // }
     }
 
   // } catch (e) {
@@ -207,24 +210,24 @@ ngeo.extendedProfile.loader.updateData = function () {
   let zoomDir = previousSpan - span;
 
   if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir > 0) {
-    console.log("zoom in, no new LOD");
-    if ($('#demdsm')[0].checked) {
-      ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
-    }
+    
+    // if ($('#demdsm')[0].checked) {
+      // ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
+    // }
 
-    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
+    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, options.defaultMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
 
   } else if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && Math.abs(dxL) == 0 && Math.abs(dxR) == 0) {
     console.log("If zoom, only along Y");
-    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, d3.select('#material').node().value, ngeo.extendedProfile.config.plotParams.currentZoom);
+    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, options.defaultMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
 
   } else {
     console.log("Load deeper LOD");
-    if ($('#demdsm')[0].checked) {
-      ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
-    }
+    // if ($('#demdsm')[0].checked) {
+      // ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
+    // }
 
     let line = clip.clippedLine;
     if(clip.clippedLine.length < 2) {

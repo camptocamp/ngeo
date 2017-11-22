@@ -37,7 +37,7 @@ goog.require('ngeo.Debounce');
  * @ngname ngeoextendedProfile
  */
 ngeo.extendedProfileDirective = function(ngeoDebounce, pytreeLidarProfileJsonUrl) {
-
+  console.log("extendedProfileDirective");
   return {
     restrict: 'A',
     /**
@@ -87,7 +87,9 @@ ngeo.extendedProfileDirective = function(ngeoDebounce, pytreeLidarProfileJsonUrl
             };
           }
 
-          extendedProfile = ngeo.extendedProfile.plot(options);
+          // extendedProfile = ngeo.extendedProfile.plot(options);
+          ngeo.extendedProfile.loader.getProfileByLOD(options, 0, ngeo.extendedProfile.config.plotParams.initialLOD, 
+          '{2528725.0,1195975.0},{2538725.0,1197975.0},{2538735.0,1197995.0}', 0, 10, true);
           refreshData();
         }
       });

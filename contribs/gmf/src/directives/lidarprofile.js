@@ -4,7 +4,7 @@ goog.require('gmf');
 goog.require('ngeo.CsvDownload');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
-goog.require('ngeo.extendedProfileDirective');
+// goog.require('ngeo.extendedProfileDirective');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Overlay');
@@ -14,6 +14,14 @@ goog.require('ol.obj');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.extendedProfile.config');
+goog.require('ngeo.extendedProfile.loader');
+goog.require('ngeo.extendedProfile.utils');
+goog.require('ngeo.extendedProfile.config');
+goog.require('ngeo.extendedProfile.measure');
+goog.require('ngeo.extendedProfile.plot2canvas');
+goog.require('ngeo.extendedProfile.raster');
 
 
 ngeo.module.value('gmfLidarProfileTemplateUrl',
@@ -360,11 +368,10 @@ gmf.LidarProfileController.prototype.$onInit = function() {
  */
 gmf.LidarProfileController.prototype.update_ = function() {
   this.isErrored = false;
+  console.log(this);
   if (this.line) {
-    //this.getJsonProfile_();
-    console.log(this.gmfLidarProfileConfig_.profileConfig);
-
-    debugger;
+    ngeo.extendedProfile.loader.getProfileByLOD(this.gmfLidarProfileConfig_.profileConfig, 0, ngeo.extendedProfile.config.plotParams.initialLOD, 
+    '{2528725.0,1195975.0},{2538725.0,1197975.0},{2538735.0,1197995.0}', 0, 10, true);
   } else {
     this.profileData = [];
   }

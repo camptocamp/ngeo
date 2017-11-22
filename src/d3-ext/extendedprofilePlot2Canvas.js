@@ -55,9 +55,11 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
 Setup the d3 canvas & svg plot
 ***/
 ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
+  console.log('setupPlot');
   let canvasEl = d3.select('#profileCanvas').node();
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
+  console.log(ctx);
   ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
 
   // MOVE THAT!
