@@ -17,9 +17,6 @@ ngeo.extendedProfile.setOptions = function(options) {
   console.log(ngeo.extendedProfile.options);
 }
 
-// ngeo.extendedProfile.config = {};
-// ngeo.extendedProfile.options.profileConfig = {};
-
 ngeo.extendedProfile.loader.requestsQueue = [];
 
 // Load points by LOD
@@ -232,7 +229,9 @@ ngeo.extendedProfile.loader.updateData = function () {
       cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
     }
     cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
-    ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, ngeo.extendedProfile.options.profileConfig.profileWidth, false);
+    // ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, ngeo.extendedProfile.options.profileConfig.profileWidth, false);
+    // TODO update linestring with clipped line
+    ngeo.extendedProfile.loader.getProfileByLOD(clip.distanceOffset, false, 0, niceLOD);
 
   }
 
