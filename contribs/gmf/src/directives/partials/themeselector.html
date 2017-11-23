@@ -1,8 +1,8 @@
 <ul class="gmf-theme-selector">
   <li
-      ng-repeat="theme in tsCtrl.themes"
-      ng-click="tsCtrl.setTheme(theme)"
-      ng-class="{'gmf-theme-selector-active': tsCtrl.gmfThemeManager.getThemeName() == theme.name}">
+      ng-repeat="theme in $ctrl.themes"
+      ng-click="$ctrl.setTheme(theme)"
+      ng-class="{'gmf-theme-selector-active': $ctrl.gmfThemeManager.getThemeName() == theme.name}">
     <img class="gmf-thumb"
          ng-src="{{::theme.icon}}" />
     <span class="gmf-text">{{theme.name | translate}}</span>

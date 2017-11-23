@@ -1,4 +1,4 @@
-goog.provide('gmf.themeselectorDirective');
+goog.provide('gmf.themeselectorComponent');
 
 goog.require('gmf');
 goog.require('gmf.ThemeManager');
@@ -7,7 +7,7 @@ goog.require('ol.events');
 
 
 /**
- * Note that this directive works with the {@link gmf.TreeManager}. Setting the
+ * Note that this component works with the {@link gmf.TreeManager}. Setting the
  * theme will update the "tree" object of this {@link gmf.TreeManager}.
  *
  * Example:
@@ -59,24 +59,18 @@ goog.require('ol.events');
  *      </script>
  *
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
- * @return {angular.Directive} The directive specs.
- * @ngInject
- * @ngdoc directive
- * @ngname gmfThemeselector
+ *
+ * @type {!angular.Component}
  */
-gmf.themeselectorDirective = function() {
-  return {
-    restrict: 'E',
-    controller: 'gmfThemeselectorController as tsCtrl',
-    scope: {
-      'filter': '=gmfThemeselectorFilter'
-    },
-    bindToController: true,
-    templateUrl: `${gmf.baseTemplateUrl}/themeselector.html`
-  };
+gmf.themeselectorComponent = {
+  bindings: {
+    'filter': '<gmfThemeselectorFilter'
+  },
+  controller: 'gmfThemeselectorController',
+  templateUrl: () => `${gmf.baseTemplateUrl}/themeselector.html`
 };
 
-gmf.module.directive('gmfThemeselector', gmf.themeselectorDirective);
+gmf.module.component('gmfThemeselector', gmf.themeselectorComponent);
 
 
 /**

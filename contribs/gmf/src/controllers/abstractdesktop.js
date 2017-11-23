@@ -29,7 +29,7 @@ goog.require('ngeo.DatePickerDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.TimeSliderDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.shareDirective');
+goog.require('gmf.shareComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */

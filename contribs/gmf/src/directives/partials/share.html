@@ -6,22 +6,22 @@
   <form role="form" name="gmfShareForm" novalidate>
     <div class="form-group">
       <label for="gmfShareInputShortLink" translate>Permalink</label>
-      <input type="text" class="form-control" id="gmfShareInputShortLink" onclick="this.select()" ng-model="shareCtrl.shortLink" readonly="True">
+      <input type="text" class="form-control" id="gmfShareInputShortLink" onclick="this.select()" ng-model="$ctrl.shortLink" readonly="True">
       <p class="help-block" translate>Copy this link to share it.</p>
-      <p class="text-danger" ng-if="shareCtrl.showLenghtWarning">
+      <p class="text-danger" ng-if="$ctrl.showLengthWarning">
         <span class="fa fa-exclamation-triangle"></span>
         {{'You have a lot of drawn elements in this map. The above link may not be correctly supported by some browsers.' | translate}}
       </p>
-      <p class="text-danger" ng-if="::shareCtrl.errorOnGetShortUrl">
+      <p class="text-danger" ng-if="::$ctrl.errorOnGetShortUrl">
         <span class="fa fa-exclamation"></span>
         {{'Error, cannot get the shortened URL.' | translate}}
       </p>
     </div>
     <hr>
-    <div class="gmf-share-email" ng-if="::shareCtrl.enableEmail">
+    <div class="gmf-share-email" ng-if="::$ctrl.enableEmail">
       <div class="form-group">
         <label for="gmfShareInputEmail" translate>Send this link to</label>
-        <input type="email" class="form-control"  name="inputEmail" id="gmfShareInputEmail" placeholder="E-mail" ng-model="shareCtrl.email" required>
+        <input type="email" class="form-control"  name="inputEmail" id="gmfShareInputEmail" placeholder="E-mail" ng-model="$ctrl.email" required>
         <span ng-show="gmfShareForm.$submitted || gmfShareForm.inputEmail.$touched">
           <span class="text-danger" ng-show="gmfShareForm.inputEmail.$error.email || gmfShareForm.inputEmail.$error.required">
             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -29,22 +29,22 @@
         </span>
       </div>
       <div class="form-group">
-        <textarea class="form-control" ng-attr-placeholder="{{'Message (optional)' | translate }}" ng-model="shareCtrl.message"></textarea>
+        <textarea class="form-control" ng-attr-placeholder="{{'Message (optional)' | translate }}" ng-model="$ctrl.message"></textarea>
       </div>
-      <span class="text-success" ng-if="shareCtrl.successfullySent">
+      <span class="text-success" ng-if="$ctrl.successfullySent">
         <i class="fa fa-check" aria-hidden="true"></i>
           {{ 'Link successfully sent.' | translate }}
       </span>
-      <span class="text-danger" ng-if="shareCtrl.errorOnsend">
+      <span class="text-danger" ng-if="$ctrl.errorOnsend">
         <i class="fa fa-exclamation" aria-hidden="true"></i>
           {{ 'Error, the link has not been sent.' | translate }}
       </span>
     </div>
     <div class="text-right">
       <button type="button" class="btn btn-default" data-dismiss="modal" translate>Close</button>
-      <button ng-if="::shareCtrl.enableEmail"
+      <button ng-if="::$ctrl.enableEmail"
         type="submit" class="btn btn-default btn-primary"
-        ng-click="shareCtrl.sendShortUrl()"
+        ng-click="$ctrl.sendShortUrl()"
         ng-disabled="!gmfShareForm.$valid"
         translate>Send
       </button>

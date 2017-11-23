@@ -1,7 +1,7 @@
 goog.provide('gmfapp.share');
 
 /** @suppress {extraRequire} */
-goog.require('gmf.shareDirective');
+goog.require('gmf.shareComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.modalDirective');
 

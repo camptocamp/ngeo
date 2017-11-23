@@ -24,7 +24,7 @@ goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.searchDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.themeselectorDirective');
+goog.require('gmf.themeselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
