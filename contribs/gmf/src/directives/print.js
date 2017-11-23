@@ -1,4 +1,4 @@
-goog.provide('gmf.printDirective');
+goog.provide('gmf.printComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
@@ -66,9 +66,20 @@ gmf.module.value('gmfPrintTemplateUrl',
       `${gmf.baseTemplateUrl}/print.html`;
   });
 
+/**
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfPrintTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
+  return gmfPrintTemplateUrl($element, $attrs);
+}
+
 
 /**
- * Provide a directive that display a print panel. This panel is populated with
+ * Provide a component that display a print panel. This panel is populated with
  * a form corresponding to the capabilities delivered by a GMF print v3 server.
  * If you want to use another template for your print panel, you can see the
  * available layout information in the 'gmfx.PrintLayoutInfo' classes.
@@ -76,20 +87,20 @@ gmf.module.value('gmfPrintTemplateUrl',
  * Simple example:
  *
  *      <gmf-print
- *        gmf-print-map="mainCtrl.map"
+ *        gmf-print-map="::mainCtrl.map"
  *        gmf-print-active="printActive"
- *        gmf-print-rotatemask="true">
+ *        gmf-print-rotatemask="::true">
  *      </gmf-print>
  *
  * Example with user defined attribute:
  *
  *      <gmf-print
- *        gmf-print-map="mainCtrl.map"
+ *        gmf-print-map="::mainCtrl.map"
  *        gmf-print-active="printActive"
- *        gmf-print-rotatemask="true"
- *        gmf-print-hiddenattributes="['name']"
- *        gmf-print-attributes-out="attributes">
- *        <div ng-repeat="attribute in attributes">
+ *        gmf-print-rotatemask="::true"
+ *        gmf-print-hiddenattributes="::['name']"
+ *        gmf-print-attributes-out="::attributes">
+ *        <div ng-repeat="attribute in ::attributes">
  *          <div ng-if="attribute.name == 'name'">
  *            <input ng-model="attribute.value" placeholder="name" />
  *          </div>
@@ -111,41 +122,25 @@ gmf.module.value('gmfPrintTemplateUrl',
  *     Example: {'comments': 'demo', 'legend': false}. Doesn't work for the dpi
  *     and the scale. Server's values are used in priorty.
  * @htmlAttribute {Array.<string>} gmf-print-hiddenattributes The list of attributes that should be hidden.
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
- *     gmfPrintTemplateUrl Template url for the directive.
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
- * @ngdoc directive
+ * @ngdoc component
  * @ngname gmfPrint
  */
-gmf.printDirective = function(gmfPrintTemplateUrl) {
-  return {
-    bindToController: true,
-    controller: 'GmfPrintController as ctrl',
-    templateUrl: gmfPrintTemplateUrl,
-    replace: true,
-    restrict: 'E',
-    transclude: true,
-    scope: {
-      'map': '=gmfPrintMap',
-      'active': '=gmfPrintActive',
-      'rotateMask': '&?gmfPrintRotatemask',
-      'fieldValues': '&?gmfPrintFieldvalues',
-      'hiddenAttributeNames': '=?gmfPrintHiddenattributes',
-      'attributesOut': '=?gmfPrintAttributesOut'
-    },
-    link: (scope, element, attr) => {
-      const ctrl = scope['ctrl'];
-
-      scope.$watch(() => ctrl.active, function(active) {
-        this.togglePrintPanel_(active);
-      }.bind(ctrl));
-    }
-  };
+gmf.printComponent = {
+  bindings: {
+    'map': '=gmfPrintMap',
+    'active': '=gmfPrintActive',
+    'rotateMask': '<?gmfPrintRotatemask',
+    'fieldValues': '<?gmfPrintFieldvalues',
+    'hiddenAttributeNames': '<?gmfPrintHiddenattributes',
+    'attributesOut': '<?gmfPrintAttributesOut'
+  },
+  controller: 'GmfPrintController',
+  templateUrl: gmfPrintTemplateUrl,
+  transclude: true
 };
 
 
-gmf.module.directive('gmfPrint', gmf.printDirective);
+gmf.module.component('gmfPrint', gmf.printComponent);
 
 
 /**
@@ -196,16 +191,21 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
 
   /**
    * @type {boolean}
-   * @private
+   * @export
    */
-  this.rotateMask_ = this['rotateMask'] ? this['rotateMask']() : false;
+  this.rotateMask = false;
 
   /**
    * @type {Object.<string, string|number|boolean>!}
+   * @export
+   */
+  this.fieldValues = {};
+
+  /**
+   * @type {angular.Scope}
    * @private
    */
-  this.fieldValues_ = this['fieldValues'] ?
-    this['fieldValues']() : {};
+  this.$rootScope_ = $rootScope;
 
   /**
    * @type {angular.Scope}
@@ -260,6 +260,18 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
    * @private
    */
   this.ngeoQueryResult_ = ngeoQueryResult;
+
+  /**
+   * @type {gmf.Authentication}
+   * @private
+   */
+  this.gmfAuthentication_ = gmfAuthentication;
+
+  /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
 
   this.cacheVersion_ = '0';
   if ($injector.has('cacheVersion')) {
@@ -365,6 +377,63 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   this.hiddenAttributeNames;
 
   /**
+   * @type {function(ol.render.Event)}
+   */
+  this.postcomposeListener_;
+
+  /**
+   * @type {angular.$http.HttpPromise}
+   * @private
+   */
+  this.capabilities_;
+
+  /**
+   * @type {gmfThemes.GmfOgcServers}
+   * @private
+   */
+  this.ogcServers_;
+
+  /**
+   * @type {Array.<gmfThemes.GmfTheme>}
+   * @private
+   */
+  this.currentThemes_;
+};
+
+
+/**
+ * Init the controller
+ */
+gmf.PrintController.prototype.$onInit = function() {
+  // Clear the capabilities if the roleId changes
+  this.$scope_.$watch(() => this.gmfAuthentication_.getRoleId(), () => {
+    this.gmfPrintState_.state = gmf.PrintStateEnum.CAPABILITIES_NOT_LOADED;
+    this.capabilities_ = null;
+  });
+
+  this.$scope_.$watch(() => this.active, (active) => {
+    this.togglePrintPanel_(active);
+  });
+
+  // Print on event.
+  this.$rootScope_.$on('gmfStartPrint', (event, format) => {
+    this.print(`${format}`);
+  });
+
+  // Cancel print task on event.
+  this.$rootScope_.$on('gmfCancelPrint', () => {
+    this.cancel();
+  });
+
+  this.gmfThemes_.getOgcServersObject().then((ogcServersObject) => {
+    this.ogcServers_ = ogcServersObject;
+  });
+
+  this.gmfThemes_.getThemesObject().then((currentThemes) => {
+    this.currentThemes_ = currentThemes;
+  });
+
+  /**
    * @return {ol.Size} Size in dots of the map to print.
    */
   const getSizeFn = () => this.paperSize_;
@@ -388,61 +457,15 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   };
 
   let getRotationFn;
-  if (this.rotateMask_) {
+  if (this.rotateMask) {
     /**
      * @return {number} rotation to apply.
      */
     getRotationFn = () => this.rotation;
   }
 
-  /**
-   * @type {function(ol.render.Event)}
-   */
-  this.postcomposeListener_ = ngeoPrintUtils.createPrintMaskPostcompose(
+  this.postcomposeListener_ = this.ngeoPrintUtils_.createPrintMaskPostcompose(
     getSizeFn, getScaleFn, getRotationFn);
-
-  /**
-   * @type {angular.$http.HttpPromise}
-   * @private
-   */
-  this.capabilities_;
-
-  // Clear the capabilities if the roleId changes
-  $scope.$watch(() => gmfAuthentication.getRoleId(), () => {
-    this.gmfPrintState_.state = gmf.PrintStateEnum.CAPABILITIES_NOT_LOADED;
-    this.capabilities_ = null;
-  });
-
-  // Print on event.
-  $rootScope.$on('gmfStartPrint', (event, format) => {
-    this.print(`${format}`);
-  });
-
-  // Cancel print task on event.
-  $rootScope.$on('gmfCancelPrint', () => {
-    this.cancel();
-  });
-
-
-  /**
-   * @type {gmfThemes.GmfOgcServers}
-   * @private
-   */
-  this.ogcServers_;
-
-  gmfThemes.getOgcServersObject().then((ogcServersObject) => {
-    this.ogcServers_ = ogcServersObject;
-  });
-
-  /**
-   * @type {Array.<gmfThemes.GmfTheme>}
-   * @private
-   */
-  this.currentThemes_;
-
-  gmfThemes.getThemesObject().then((currentThemes) => {
-    this.currentThemes_ = currentThemes;
-  });
 };
 
 
@@ -545,7 +568,7 @@ gmf.PrintController.prototype.updateFields_ = function() {
   const legend = this.isAttributeInCurrentLayout_('legend');
   if (this.layoutInfo.legend === undefined) {
     this.layoutInfo.legend = !!(legend !== undefined ?
-      legend : this.fieldValues_['legend']);
+      legend : this.fieldValues['legend']);
   }
 
   this.layoutInfo.scales = clientInfo['scales'] || [];
@@ -590,7 +613,7 @@ gmf.PrintController.prototype.updateCustomFields_ = function() {
       name = `${attribute.name}`;
       const defaultValue = attribute.default;
       value = (defaultValue !== undefined && defaultValue !== '') ?
-        defaultValue : this.fieldValues_[name];
+        defaultValue : this.fieldValues[name];
 
       // Try to use existing form field type
       rawType = `${attribute.type}`;
@@ -663,7 +686,7 @@ gmf.PrintController.prototype.getSetRotation = function(opt_rotation) {
     this.rotation = rotation;
 
     // Render the map to update the postcompose mask or rotate the map.
-    if (this.rotateMask_) {
+    if (this.rotateMask) {
       this.map.render();
     } else {
       this.map.getView().setRotation(ol.math.toRadians(this.rotation));
@@ -736,7 +759,7 @@ gmf.PrintController.prototype.print = function(format) {
   const mapSize = this.map.getSize();
   const viewResolution = this.map.getView().getResolution();
   const scale = this.getOptimalScale_(mapSize, viewResolution);
-  const rotation = this.rotateMask_ ? -this.rotation : this.rotation;
+  const rotation = this.rotateMask ? -this.rotation : this.rotation;
   const datasource = this.getDataSource_();
 
   const customAttributes = {

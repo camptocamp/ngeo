@@ -4,7 +4,7 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.printDirective');
+goog.require('gmf.printComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
@@ -33,6 +33,10 @@ gmfapp.module.value(
   'authenticationBaseUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi'
 );
+
+
+gmfapp.module.value('gmfLayersUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
 
 /**

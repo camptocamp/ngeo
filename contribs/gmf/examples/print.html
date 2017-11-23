@@ -179,8 +179,8 @@
     <div class="clear-left"></div>
 
     <p id="desc">
-      This example shows how to use the <code>gmf.printDirective</code>.
-      Directive that generates layout information and manages tools to print with a
+      This example shows how to use the <code>gmf.printComponent</code>.
+      Component that generates layout information and manages tools to print with a
       MapFishPrint v3.
     </p>
 
@@ -193,11 +193,11 @@
             <a class="btn close" ng-click="printActive = false">&times;</a>
           </div>
           <gmf-print
-            gmf-print-map="ctrl.map"
+            gmf-print-map="::ctrl.map"
             gmf-print-active="printActive"
-            gmf-print-fieldvalues="ctrl.defaulPrintFieldstValues"
-            gmf-print-hiddenattributes="['title', 'comments']"
-            gmf-print-attributes-out="attributes">
+            gmf-print-fieldvalues="::ctrl.defaulPrintFieldstValues"
+            gmf-print-hiddenattributes="::['title', 'comments']"
+            gmf-print-attributes-out="::attributes">
             <div
               ng-repeat="attribute in attributes"
               class="gmf-print-layoutinfo">
