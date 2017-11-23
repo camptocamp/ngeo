@@ -18,8 +18,11 @@ ngeo.extendedProfile.loader.requestsQueue = [];
 // Load points by LOD
 ngeo.extendedProfile.loader.getProfileByLOD = function (options, minLOD, maxLOD, polyline, distanceOffset, width, resetPlot) {
   
+  ngeo.extendedProfile.linestring = polyline;
   // TODO use only options object
   ngeo.extendedProfile.config.profileConfig.classification = options.profileConfig.classification;
+  ngeo.extendedProfile.config.profileConfig.selectedMaterial = options.profileConfig.selectedMaterial;
+  ngeo.extendedProfile.config.profileConfig.profileWidth = options.profileConfig.profileWidth;
   ngeo.extendedProfile.config.pointAttributes = options.profileConfig.pointAttributes;
   ngeo.extendedProfile.config.plotParams = options.plotParams;
   let uuid = ngeo.extendedProfile.utils.UUID();
@@ -54,9 +57,8 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (options, minLOD, maxLOD,
  * its binary output format
  */
 ngeo.extendedProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot, uuid) {
-
-  // let hurl = 'http://localhost:5001/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
-  let hurl = 'http://sitn.ne.ch/pytree/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
+  console.log(options);
+  let hurl = options.pytreeLidarProfileJsonUrl_ + '/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
   hurl += '&width=' + width + '&coordinates=' + coordinates;
   hurl += '&pointCloud=sitn2016';
   hurl += '&attributes=';
@@ -210,11 +212,11 @@ ngeo.extendedProfile.loader.updateData = function () {
 
   if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir > 0) {
 
-    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, options.defaultMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
+    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.config.profileConfig.selectedMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
 
   } else if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && Math.abs(dxL) == 0 && Math.abs(dxR) == 0) {
-    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, options.defaultMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
+    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.config.profileConfig.selectedMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
 
   } else {
@@ -229,7 +231,7 @@ ngeo.extendedProfile.loader.updateData = function () {
       cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
     }
     cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
-    ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, d3.select('#width').val(), false);
+    ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, ngeo.extendedProfile.config.profileConfig.profileWidth, false);
 
   }
 

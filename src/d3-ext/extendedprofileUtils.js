@@ -6,8 +6,7 @@ Utility fonctions for point cloud Profile
 
 ngeo.extendedProfile.utils.getLinestring = function () {
 
-  let toto = '{2528725.0,1195975.0},{2538725.0,1197975.0},{2538735.0,1197995.0}'
-  let linestringStr = toto.replace(/{/g, '').replace(/}/g, '').split(',');
+  let linestringStr = ngeo.extendedProfile.linestring.replace(/{/g, '').replace(/}/g, '').split(',');
   let linestring = [];
 
   for (let j=0; j<linestringStr.length;j++) {
@@ -42,18 +41,6 @@ ngeo.extendedProfile.utils.getLinestring = function () {
   return lShifted;
 };
 
-ngeo.extendedProfile.utils.formatLinestring = function () {
-  
-  let linestringStr = d3.select('#coordinates').val().replace(/{/g, '').replace(/}/g, '').split(',');
-  let linestring = [];
-
-  for (let j=0; j<linestringStr.length;j++) {
-    linestring.push([parseFloat(linestringStr[j]), parseFloat(linestringStr[j+1])]);
-    j+=1;
-  }
-  return linestring
-};
-
 /***
 Interpolate the 2D coordinate from a profile distance (=measure M)
 ***/
@@ -77,7 +64,7 @@ Clip a linestring to a given plot domain
 ngeo.extendedProfile.utils.clipLineByMeasure = function (dLeft, dRight) {
   let l = ngeo.extendedProfile.utils.getLinestring();
   let clippedLine = [];
-  // CHECK LOGIC HERE!!!
+
   for (let i=0; i<l.length; i++) {
 
     if (dLeft <= l[i].endD) {
