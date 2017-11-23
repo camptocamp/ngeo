@@ -67,8 +67,8 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     'bottom': 40
   }
 
-  let containerWidth = $('.gmf-extended-profile-container').width();
-  let containerHeight = $('.gmf-extended-profile-container').height();
+  let containerWidth = d3.select('.gmf-extended-profile-container').node().getBoundingClientRect().width;
+  let containerHeight = d3.select('.gmf-extended-profile-container').node().getBoundingClientRect().height;
   console.log(containerWidth, containerHeight);
   let width = containerWidth - (margin.left + margin.right);
   let height = containerHeight - (margin.top + margin.bottom);
@@ -257,14 +257,15 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
     html += 'Classification: ' + ngeo.extendedProfile.config.profileConfig.classification[p.classification].name + '  -  ';
     html += 'Intensity: ' + p.intensity;
 
-    $('#profileInfo').css('color', 'orange');
-    $('#profileInfo').css('font-size', '14px');
-    $('#profileInfo').css('font-weight', 'bold');
-    $('#profileInfo').html(html);
+    d3.select('#profileInfo').style('color', 'orange')
+      .style('color', 'orange')
+      .style('font-size', '14px')
+      .style('font-weight', 'bold')
+      .html(html);
 
   } else {
     svg.select('#highlightCircle').remove();
-    $('#profileInfo').html('');
+    d3.select('#profileInfo').html('');
   }
 };
 

@@ -19,7 +19,7 @@ ngeo.extendedProfile.measure.clearMeasure = function () {
   svg.selectAll('#end_m').remove();
   svg.selectAll('#line_m').remove();
 
-  $('#height_measure').html('');
+  d3.select('#height_measure').html('');
 
 }
 
@@ -118,7 +118,7 @@ ngeo.extendedProfile.measure.measureHeight = function () {
   let height = Math.round(10 * Math.sqrt(Math.pow(dH,2) + Math.pow(dD,2)))/10;
 
   if (!isNaN(height)) {
-    $('#height_measure').html('Hauteur: ' + height + '</p>');
+    d3.select('#height_measure').html('Hauteur: ' + height + '</p>');
     d3.select('svg#profileSVG').append('text')
     .attr('id', 'text_m')
     .attr('x', 10 + (ngeo.extendedProfile.measure.profileMeasure.pStart.cx + ngeo.extendedProfile.measure.profileMeasure.pEnd.cx)/2)

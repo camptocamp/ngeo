@@ -190,7 +190,7 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
     if (resetPlot) {
       // ngeo.extendedProfile.raster.generateDemDsm(); // For now only add GMF
       // TODO add this in lidarpanel
-      // if ($('#demdsm')[0].checked) {
+      // if (d3.select('#demdsm')[0].checked) {
         // ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring(), 0);
       // }
     }
@@ -218,7 +218,7 @@ ngeo.extendedProfile.loader.updateData = function () {
 
   if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir > 0) {
     
-    // if ($('#demdsm')[0].checked) {
+    // if (d3.select('#demdsm')[0].checked) {
       // ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
     // }
 
@@ -232,7 +232,7 @@ ngeo.extendedProfile.loader.updateData = function () {
 
   } else {
     console.log("Load deeper LOD");
-    // if ($('#demdsm')[0].checked) {
+    // if (d3.select('#demdsm')[0].checked) {
       // ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
     // }
 
@@ -246,7 +246,7 @@ ngeo.extendedProfile.loader.updateData = function () {
       cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
     }
     cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
-    ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, $('#width').val(), false);
+    ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, d3.select('#width').val(), false);
 
   }
 

@@ -44,7 +44,7 @@ ngeo.extendedProfile.utils.getLinestring = function () {
 
 ngeo.extendedProfile.utils.formatLinestring = function () {
   
-  let linestringStr = $('#coordinates').val().replace(/{/g, '').replace(/}/g, '').split(',');
+  let linestringStr = d3.select('#coordinates').val().replace(/{/g, '').replace(/}/g, '').split(',');
   let linestring = [];
 
   for (let j=0; j<linestringStr.length;j++) {
