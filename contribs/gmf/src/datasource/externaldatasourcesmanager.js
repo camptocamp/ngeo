@@ -5,7 +5,8 @@ goog.provide('gmf.datasource.ExternalDataSourcesManager');
 
 goog.require('ol.events');
 goog.require('gmf');
-goog.require('ngeo.File');
+/** @suppress {extraRequire} */
+goog.require('ngeo.fileService');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.File');
 goog.require('ngeo.datasource.FileGroup');

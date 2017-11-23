@@ -8,11 +8,13 @@ rules:
     no-console: 0
 globals:
     angular: false
+    Cesium: false
     goog: false
     google: false
     d3: false
     Bloodhound: false
     ol: false
+    olcs: false
     proj4: false
     saveAs: false
     ngeo: false

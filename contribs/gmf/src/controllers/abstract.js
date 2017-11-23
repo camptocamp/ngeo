@@ -135,7 +135,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
   /**
    * @param {gmfx.AuthenticationEvent} evt Event.
    */
-  const userChange = function(evt) {
+  const userChange = (evt) => {
     const user = evt.detail.user;
     const roleId = (user.username !== null) ? user.role_id : undefined;
 
@@ -151,14 +151,18 @@ gmf.AbstractController = function(config, $scope, $injector) {
     });
 
     // Reload theme and background layer when login status changes.
+    const previousThemeName = this.gmfThemeManager.getThemeName();
+    this.gmfThemeManager.setThemeName('', true);
     if (evt.type !== 'ready') {
-      this.updateCurrentTheme_();
-      this.updateCurrentBackgroundLayer_(true);
+      this.updateCurrentTheme_(previousThemeName);
+    } else {
+      // initialize default background layer
+      this.setDefaultBackground_(null, true);
     }
     // Reload themes when login status changes.
     this.gmfThemes_.loadThemes(roleId);
     this.updateHasEditableLayers_();
-  }.bind(this);
+  };
 
   ol.events.listen(gmfAuthentication, 'ready', userChange);
   ol.events.listen(gmfAuthentication, 'login', userChange);
@@ -201,15 +205,19 @@ gmf.AbstractController = function(config, $scope, $injector) {
     }
   }
 
-  const backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
+  /**
+   * @type {ngeo.BackgroundLayerMgr}
+   * @private
+   */
+  this.backgroundLayerMgr_ = $injector.get('ngeoBackgroundLayerMgr');
 
   // watch any change on dimensions object to refresh the background layer
   $scope.$watchCollection(() => this.dimensions, () => {
-    backgroundLayerMgr.updateDimensions(this.map, this.dimensions);
+    this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
   });
 
-  backgroundLayerMgr.on('change', () => {
-    backgroundLayerMgr.updateDimensions(this.map, this.dimensions);
+  this.backgroundLayerMgr_.on('change', () => {
+    this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
   });
 
   /**
@@ -416,19 +424,9 @@ gmf.AbstractController = function(config, $scope, $injector) {
   ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
 
   $scope.$root.$on(gmf.ThemeManagerEventType.THEME_NAME_SET, (event, name) => {
-    const map = this.map;
     this.gmfThemes_.getThemeObject(name).then((theme) => {
       if (theme) {
-        const backgrounds = theme.functionalities.default_basemap;
-        if (backgrounds && backgrounds.length > 0) {
-          const background = backgrounds[0];
-          this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
-            const layer = ol.array.find(layers, layer => layer.get('label') === background);
-            if (layer) {
-              backgroundLayerMgr.set(map, layer);
-            }
-          });
-        }
+        this.setDefaultBackground_(theme, false);
       }
     });
   });
@@ -463,7 +461,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
       }
 
       if (background) {
-        backgroundLayerMgr.set(this.map, background);
+        this.backgroundLayerMgr_.set(this.map, background);
       }
     });
   }.bind(this);
@@ -648,9 +646,44 @@ gmf.AbstractController.prototype.initLanguage = function() {
 
 
 /**
+ * @param {gmfThemes.GmfTheme} theme Theme.
+ * @param {boolean} use_permalink Get background from the permalink.
  * @private
  */
-gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
+gmf.AbstractController.prototype.setDefaultBackground_ = function(theme, use_permalink) {
+  this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
+    let default_basemap;
+    let layer;
+
+    if (use_permalink) {
+      // get the background from the permalink
+      layer = this.permalink_.getBackgroundLayer(layers);
+    }
+    if (!layer) {
+      if (this.gmfUser.functionalities) {
+        // get the background from the user settings
+        default_basemap = this.gmfUser.functionalities.default_basemap;
+      } else if (theme) {
+        // get the background from the theme
+        default_basemap = theme.functionalities.default_basemap;
+      }
+      if (default_basemap && default_basemap.length > 0) {
+        layer = ol.array.find(layers, layer => layer.get('label') === default_basemap[0]);
+      }
+    }
+    // fallback to the layers list, use the second one because the first is the blank layer.
+    layer = layer || layers[1];
+    goog.asserts.assert(layer);
+
+    this.backgroundLayerMgr_.set(this.map, layer);
+  });
+};
+
+/**
+ * @param {string} fallbackThemeName fallback theme name.
+ * @private
+ */
+gmf.AbstractController.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
     if (themeName) {
@@ -658,6 +691,8 @@ gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
       if (theme) {
         this.gmfThemeManager.addTheme(theme, true);
       }
+    } else {
+      this.gmfThemeManager.setThemeName(fallbackThemeName, true);
     }
   });
 };

@@ -53,6 +53,7 @@ let manager = new closure.Manager({
     'contribs/**/src/**/*.js',
     'externs/*.js',
     'node_modules/openlayers/src/**/*.js',
+    'node_modules/ol-cesium/src/**/*.js',
     'node_modules/openlayers/build/ol.ext/*.js'
   ],
   main: ['examples/*.js', 'contribs/**/examples/*.js', 'contribs/**/apps/**/*.js']

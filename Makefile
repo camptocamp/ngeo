@@ -199,7 +199,7 @@ apidoc: .build/apidoc
 dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
 
 .PHONY: check
-check: git-attributes eof-newline lint check-examples test dist build-gmf-apps check-ngeox
+check: lint check-examples test dist build-gmf-apps
 
 .PHONY: check-ngeox
 check-ngeox: options/ngeox.js
@@ -214,7 +214,10 @@ build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 
 .PHONY: lint
-lint: .build/eslint.timestamp
+lint: .build/eslint.timestamp git-attributes eof-newline check-ngeox
+
+.PHONY: eslint
+eslint: .build/eslint.timestamp
 
 .PHONY: git-attributes
 git-attributes:
@@ -289,7 +292,7 @@ gh-pages:
 		$(GMF_SRC_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES)
-	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp .eslintrc.yaml .eslintrc-es6.yaml, $?)
+	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp .eslintrc.yaml .eslintrc-es6.yaml, $^)
 	touch $@
 
 dist/ngeo.js: .build/ngeo.json \
