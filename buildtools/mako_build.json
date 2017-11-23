@@ -24,8 +24,10 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
     "${s}",
 % endfor
 % endif
+    "${_ngeo_folder}src/*.js",
     "${_ngeo_folder}src/**/*.js",
 % if src_set == 'contribs_gmf':
+    "${_ngeo_folder}contribs/gmf/src/*.js",
     "${_ngeo_folder}contribs/gmf/src/**/*.js",
 % endif
     "node_modules/openlayers/src/**/*.js",
@@ -83,7 +85,6 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "${_ngeo_folder}options/ngeox.js",
 % if development != 'true':
       "node_modules/openlayers/externs/olx.js",
-      "node_modules/openlayers/src/ol/typedefs.js",
 % endif
       "node_modules/openlayers/externs/oli.js"
     ],
@@ -126,7 +127,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
 % endif
     "output_wrapper": "(function(){%output%}).call(window);",
 % endif
-    "warning_level": "VERBOSE",
+    "warning_level": "DEFAULT",
     "export_local_property_definitions": true,
     "dependency_mode": "LOOSE",
     "use_types_for_optimization": true

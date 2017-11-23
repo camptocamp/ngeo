@@ -2,24 +2,14 @@ goog.provide('gmf.Permalink');
 
 goog.require('gmf');
 goog.require('ngeo');
-goog.require('ngeo.AutoProjection');
-/** @suppress {extraRequire} */
-goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
-goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.ThemeManager');
-goog.require('gmf.datasource.ExternalDataSourcesManager');
-goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.Debounce');
 goog.require('ngeo.EventHelper');
-goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
-goog.require('ngeo.FeatureOverlay');
-goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.Popover');
-goog.require('ngeo.Querent');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.datasource.Group');
 goog.require('ngeo.datasource.OGC');
@@ -1114,7 +1104,7 @@ gmf.Permalink.prototype.handleNgeoFeaturesChange_ = function() {
 
 /**
  * Get the query data for a WFS permalink.
- * @return {ngeo.WfsPermalinkData|null} The query data.
+ * @return {?ngeo.WfsPermalinkData} The query data.
  * @private
  */
 gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
