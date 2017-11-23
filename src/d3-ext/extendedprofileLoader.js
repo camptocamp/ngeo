@@ -93,13 +93,12 @@ ngeo.extendedProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter,
 };
 
 ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, distanceOffset, lastLOD, resetPlot) {
-    console.log('processBuffer');
-  // try {
-    // ***Get header size***
+
+  try {
+    
     let typedArrayInt32 = new Int32Array(profile, 0,4);
     let headerSize = typedArrayInt32[0];
 
-    // ***Get JSON header content***
     let uInt8header = new Uint8Array(profile, 4, headerSize);
     let strHeaderLocal = '';
     for (let i =0; i < uInt8header.length; i++) {
@@ -120,7 +119,6 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
       }
     }
 
-    // ***Get points from buffer ***
     let scale = jHeader.scale;
     let points = {
       distance: [],
@@ -174,7 +172,6 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
       }
     }
 
-    // draw this LOD
     let initialProfile = ngeo.extendedProfile.utils.getLinestring();
     let lastSegment = initialProfile[initialProfile.length-1];
     let rangeX = [0, lastSegment.endD];
@@ -188,17 +185,12 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
     }
 
     if (resetPlot) {
-      // ngeo.extendedProfile.raster.generateDemDsm(); // For now only add GMF
-      // TODO add this in lidarpanel
-      // if (d3.select('#demdsm')[0].checked) {
-        // ngeo.extendedProfile.raster.getGmfProfile(ngeo.extendedProfile.utils.formatLinestring(), 0);
-      // }
+        // TODO reset plot
     }
 
-  // } catch (e) {
-    // console.log('error during buffer processing: ' + e);
-  // }
-
+  } catch (e) {
+    console.log('error during buffer processing: ' + e);
+  }
 }
 
 ngeo.extendedProfile.loader.updateData = function () {
@@ -217,24 +209,15 @@ ngeo.extendedProfile.loader.updateData = function () {
   let zoomDir = previousSpan - span;
 
   if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir > 0) {
-    
-    // if (d3.select('#demdsm')[0].checked) {
-      // ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
-    // }
 
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, options.defaultMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
 
   } else if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && Math.abs(dxL) == 0 && Math.abs(dxR) == 0) {
-    console.log("If zoom, only along Y");
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, options.defaultMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
     return;
 
   } else {
-    console.log("Load deeper LOD");
-    // if (d3.select('#demdsm')[0].checked) {
-      // ngeo.extendedProfile.raster.getGmfProfile(clip.clippedLine, clip.distanceOffset);
-    // }
 
     let line = clip.clippedLine;
     if(clip.clippedLine.length < 2) {

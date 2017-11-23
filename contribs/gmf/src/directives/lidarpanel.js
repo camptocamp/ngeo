@@ -170,7 +170,6 @@ gmf.LidarPanelController.prototype.setClassification = function(classification, 
 }
 
 gmf.LidarPanelController.prototype.setWidth = function(profileWidth) {
-  console.log("ici");
   this.gmfLidarProfileConfig.profileConfig.profilWidth = profileWidth;
   if (this.line) {
     let flat = this.line.flatCoordinates;

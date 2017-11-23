@@ -18,8 +18,6 @@ goog.require('ngeo.extendedProfile.loader');
 goog.require('ngeo.extendedProfile.utils');
 goog.require('ngeo.extendedProfile.measure');
 goog.require('ngeo.extendedProfile.plot2canvas');
-goog.require('ngeo.extendedProfile.raster');
-
 
 ngeo.module.value('gmfLidarProfileTemplateUrl',
   /**
@@ -652,7 +650,6 @@ gmf.LidarProfileController.prototype.getProfileDataSuccess_ = function(resp) {
  */
 gmf.LidarProfileController.prototype.getProfileDataError_ = function(resp) {
   this.isErrored = true;
-  console.error('Can not get JSON profile.');
 };
 
 
