@@ -27,7 +27,6 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
     let rgb = points.color_packed[i];
     let intensity = points.intensity[i];
     let classification = points.classification[i];
-
     if (ngeo.extendedProfile.config.profileConfig.classification[classification] && ngeo.extendedProfile.config.profileConfig.classification[classification].visible) {
       
       cx = ngeo.extendedProfile.config.plotParams.scaleX(distance);
@@ -272,16 +271,16 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
 ngeo.extendedProfile.plot2canvas.changeStyle = function(material) {
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
-  ctx.clearRect(0, 0, $('#profileCanvas').width(), $('#profileCanvas').height());
+  ctx.clearRect(0, 0, d3.select('#profileCanvas').node().width, d3.select('#profileCanvas').node().height);
   ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, material, ngeo.extendedProfile.config.plotParams.currentZoom);
 }
 
-ngeo.extendedProfile.plot2canvas.setClassActive = function(me) {
-  ngeo.extendedProfile.config.profileConfig.classification[me.value].visible = me.checked;
+ngeo.extendedProfile.plot2canvas.setClassActive = function(classification, material) {
+  ngeo.extendedProfile.config.profileConfig.classification = classification;
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
-  ctx.clearRect(0, 0, $('#profileCanvas').width(), $('#profileCanvas').height());
-  ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, $('#material').val(), ngeo.extendedProfile.config.plotParams.currentZoom);
+  ctx.clearRect(0, 0, d3.select('#profileCanvas').node().width, d3.select('#profileCanvas').node().height);
+  ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, material, ngeo.extendedProfile.config.plotParams.currentZoom);
 }
 
 ngeo.extendedProfile.plot2canvas.arrayMax = function (array) {

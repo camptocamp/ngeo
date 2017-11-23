@@ -15,10 +15,8 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 
-goog.require('ngeo.extendedProfile.config');
 goog.require('ngeo.extendedProfile.loader');
 goog.require('ngeo.extendedProfile.utils');
-goog.require('ngeo.extendedProfile.config');
 goog.require('ngeo.extendedProfile.measure');
 goog.require('ngeo.extendedProfile.plot2canvas');
 goog.require('ngeo.extendedProfile.raster');
@@ -389,7 +387,7 @@ gmf.LidarProfileController.prototype.update_ = function() {
       i+= 1;
     };
     pytreeLineString = pytreeLineString.substr(0,pytreeLineString.length -1);
-    ngeo.extendedProfile.loader.getProfileByLOD(this.gmfLidarProfileConfig_.profileConfig, 0, 5, pytreeLineString, 0, 10, true);
+    ngeo.extendedProfile.loader.getProfileByLOD(this.gmfLidarProfileConfig_, 0, 5, pytreeLineString, 0, 10, true);
   } else {
     this.profileData = [];
   }
