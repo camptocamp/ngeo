@@ -15,6 +15,15 @@
     </em>
   </p>
   <div>
+    <button class="btn btn-default" ng-click="$ctrl.csvExport()">
+      CSV export
+    </button>
+    <button class="btn btn-default" ng-click="$ctrl.pngExport()">
+      PNG export
+    </button>
+  </div>
+  <div>
+  <hr>
     Material:
     <select ng-model="option.value" ng-change="$ctrl.setSelectedMaterial(option)">
       <option ng-repeat="option in ::$ctrl.getMaterials()" ng-value="option.value">{{option.name}}</option>
@@ -24,19 +33,13 @@
   <div>
     Width:
     <input type="number" pattern="^(0|[1-9][0-9]*)$" min=5 max=100 ng-init="$ctrl.getWidth()" ng-model="$ctrl.profilWidth" ng-change="$ctrl.setWidth($ctrl.profilWidth)"></input>
+    [m]
   </div>
   <hr>
   Classes:
+  <br></br>
   <div ng-repeat="(key, classification) in ::$ctrl.getClassification()">
-    <input type="checkbox" ng-model="classification.visible" ng-change="$ctrl.setClassification(classification, key)" ng-checked="!!classification.visible"></input>{{classification.name}}
-  </div>
-  <hr>
-  <div>
-    <button class="btn btn-default" ng-click="$ctrl.csvExport()">
-      CSV export
-    </button>
-    <button class="btn btn-default" ng-click="$ctrl.pngExport()">
-      PNG export
-    </button>
+    <input ng-model="classification.visible" ng-change="$ctrl.setClassification(classification, key)" ng-checked="!!classification.visible"type="checkbox">
+    <span>{{classification.name | translate}}</span>
   </div>
 </div>
