@@ -39,7 +39,6 @@ gmf.LidarProfileConfig = function($http, pytreeLidarProfileJsonUrl) {
 gmf.LidarProfileConfig.prototype.getClassificationColors = function() {
   this.$http_.get(this.pytreeLidarProfileJsonUrl_ + '/get_classification_colors').then((resp) => {
     this.profileConfig.classification = resp.data;
-    console.log(this.profileConfig.classification);
   });
 };
 
@@ -63,7 +62,7 @@ gmf.LidarProfileConfig.prototype.getSelectedMaterial = function() {
 };
 
 gmf.LidarProfileConfig.prototype.getWidth = function() {
-  this.profileConfig.width = 5;
+  this.profileConfig.profilWidth = 11;
 };
 
 gmf.LidarProfileConfig.prototype.getPointAttributes = function() {

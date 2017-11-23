@@ -23,7 +23,7 @@
   <hr>
   <div>
     Width:
-    <input type="number" ng-init="profilwidth = $ctrl.getDefaultWidth()" pattern="^(0|[1-9][0-9]*)$" min=0 max=100 ng-model="profilwidth" ng-change="$ctrl.setWidth(profilwidth)"></input>
+    <input type="number" pattern="^(0|[1-9][0-9]*)$" min=5 max=100 ng-init="$ctrl.getWidth()" ng-model="$ctrl.profilWidth" ng-change="$ctrl.setWidth($ctrl.profilWidth)"></input>
   </div>
   <hr>
   Classes:
