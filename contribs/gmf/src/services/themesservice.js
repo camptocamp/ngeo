@@ -70,7 +70,7 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmf
   }
 
   /**
-   * @type {ngeo.Location}
+   * @type {?ngeo.Location}
    * @private
    */
   this.ngeoLocation_ = null;

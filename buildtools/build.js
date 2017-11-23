@@ -31,16 +31,20 @@ function assertValidConfig(config, callback) {
       callback(new Error('Config "namespace" must be a string'));
       return;
     }
-    if (config.compile && typeof config.compile !== 'object') {
-      callback(new Error('Config "compile" must be an object'));
+    if (!config.compile || typeof config.compile !== 'object') {
+      callback(new Error('Config "compile" is required and must be an object'));
       return;
     }
     if (config.jvm && !Array.isArray(config.jvm)) {
       callback(new Error('Config "jvm" must be an array'));
       return;
     }
-    if (config.src && !Array.isArray(config.src)) {
-      callback(new Error('Config "src" must be an array'));
+    if (!config.src || !Array.isArray(config.src)) {
+      callback(new Error('Config "src" is required and must be an array'));
+      return;
+    }
+    if (!config.compile.js || !Array.isArray(config.compile.js)) {
+      callback(new Error('Config "compile.js" is required and must be an array'));
       return;
     }
     callback(null);
@@ -169,21 +173,20 @@ function concatenate(paths, callback) {
  *     any error.
  */
 function build(config, paths, callback) {
-  let options = {
+  console.log("Closure dependencies:")
+  console.log(paths.filter((p) => {
+    return p.indexOf("closure-util") >= 0;
+  }).join("\n"));
+  const options = {
     compile: config.compile,
     cwd: config.cwd || root,
     jvm: config.jvm
   };
-  if (!options.compile) {
-    log.info('ol', 'No compile options found.  Concatenating ' +
-        paths.length + ' sources');
-    concatenate(paths, callback);
-  } else {
-    log.info('ol', 'Compiling ' + paths.length + ' sources');
-    paths = paths.concat(options.compile.js || []);
-    options.compile.js = paths;
-    closure.compile(options, callback);
-  }
+  log.info('ol', 'Compiling ' + paths.length + ' sources');
+  options.compile.js = config.src.concat(options.compile.js).concat(paths.filter((p) => {
+    return p.indexOf("closure-util") >= 0;
+  }));
+  closure.compile(options, callback);
 }
 
 

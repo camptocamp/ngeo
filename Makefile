@@ -196,7 +196,7 @@ help:
 apidoc: .build/apidoc
 
 .PHONY: dist
-dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
+dist: dist/ngeo.js dist/gmf.js
 
 .PHONY: check
 check: lint check-examples test dist build-gmf-apps
@@ -310,19 +310,6 @@ dist/ngeo.js: .build/ngeo.json \
 	@rm /tmp/ngeo.js.gz
 
 dist/ngeo.js.map: dist/ngeo.js
-
-dist/ngeo-debug.js: buildtools/ngeo-debug.json \
-		$(EXTERNS_FILES) \
-		$(SRC_JS_FILES) \
-		.build/templatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
-	@$(STAT_UNCOMPRESSED) $@
-	@cp $@ /tmp/
-	@gzip /tmp/ngeo-debug.js
-	@$(STAT_COMPRESSED) /tmp/ngeo-debug.js.gz
-	@rm /tmp/ngeo-debug.js.gz
 
 # At this point ngeo does not include its own CSS, so dist/ngeo.css is just
 # a minified version of ol.css. This will change in the future.
