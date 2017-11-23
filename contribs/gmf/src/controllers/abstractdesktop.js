@@ -19,7 +19,7 @@ goog.require('gmf.filterselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mousepositionComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.printDirective');
+goog.require('gmf.printComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.profileComponent');
 /** @suppress {extraRequire} */
