@@ -635,38 +635,6 @@ gmf.LidarProfileController.prototype.getDist_ = function(item) {
   return 0;
 };
 
-
-/**
- * Request the profile.
- * @private
- */
-gmf.LidarProfileController.prototype.getJsonProfile_ = function() {
-  const geom = {
-    'type': 'LineString',
-    'coordinates': this.line.getCoordinates()
-  };
-
-  const params = {
-    'layers': this.layersNames_.join(','),
-    'geom': JSON.stringify(geom),
-    'nbPoints': this.nbPoints_
-  };
-
-  /** @type {Function} */ (this.$http_)({
-    url: this.pytreeLidarProfileJsonUrl_,
-    method: 'POST',
-    params: params,
-    paramSerializer: '$httpParamSerializerJQLike',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  }).then(
-    this.getProfileDataSuccess_.bind(this),
-    this.getProfileDataError_.bind(this)
-  );
-};
-
-
 /**
  * @param {!angular.$http.Response} resp Response.
  * @private
@@ -686,51 +654,6 @@ gmf.LidarProfileController.prototype.getProfileDataSuccess_ = function(resp) {
 gmf.LidarProfileController.prototype.getProfileDataError_ = function(resp) {
   this.isErrored = true;
   console.error('Can not get JSON profile.');
-};
-
-
-/**
- * Request the csv profile with the current profile data.
- * @export
- */
-gmf.LidarProfileController.prototype.downloadCsv = function() {
-  if (this.profileData.length === 0) {
-    return;
-  }
-
-  /** @type {Array.<ngeox.GridColumnDef>} */
-  const headers = [];
-  let hasDistance = false;
-  const firstPoint = this.profileData[0];
-  if ('dist' in firstPoint) {
-    headers.push({name: 'distance'});
-    hasDistance = true;
-  }
-  const layers = [];
-  for (const layer in firstPoint['values']) {
-    headers.push({'name': layer});
-    layers.push(layer);
-  }
-  headers.push({name: 'x'});
-  headers.push({name: 'y'});
-
-  const rows = this.profileData.map((point) => {
-    const row = {};
-    if (hasDistance) {
-      row['distance'] = point['dist'];
-    }
-
-    layers.forEach((layer) => {
-      row[layer] = point['values'][layer];
-    });
-
-    row['x'] = point['x'];
-    row['y'] = point['y'];
-
-    return row;
-  });
-
-  this.ngeoCsvDownload_.startDownload(rows, headers, 'profile.csv');
 };
 
 
