@@ -10,21 +10,23 @@ ngeo.extendedProfile.loader.profilePoints = {
   classification: []
 }
 
-ngeo.extendedProfile.config = {};
-ngeo.extendedProfile.config.profileConfig = {};
+ngeo.extendedProfile.options = {};
+
+ngeo.extendedProfile.setOptions = function(options) {
+  ngeo.extendedProfile.options = options;
+  console.log(ngeo.extendedProfile.options);
+}
+
+// ngeo.extendedProfile.config = {};
+// ngeo.extendedProfile.options.profileConfig = {};
 
 ngeo.extendedProfile.loader.requestsQueue = [];
 
 // Load points by LOD
-ngeo.extendedProfile.loader.getProfileByLOD = function (options, minLOD, maxLOD, polyline, distanceOffset, width, resetPlot) {
+ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlot, minLOD, maxLOD) {
+
+  ngeo.extendedProfile.options.linestring =  ngeo.extendedProfile.utils.getPytreeLinestring(ngeo.extendedProfile.options.linestring);;
   
-  ngeo.extendedProfile.linestring = polyline;
-  // TODO use only options object
-  ngeo.extendedProfile.config.profileConfig.classification = options.profileConfig.classification;
-  ngeo.extendedProfile.config.profileConfig.selectedMaterial = options.profileConfig.selectedMaterial;
-  ngeo.extendedProfile.config.profileConfig.profileWidth = options.profileConfig.profileWidth;
-  ngeo.extendedProfile.config.pointAttributes = options.profileConfig.pointAttributes;
-  ngeo.extendedProfile.config.plotParams = options.plotParams;
   let uuid = ngeo.extendedProfile.utils.UUID();
   ngeo.extendedProfile.loader.lastUuid = uuid;
   let lastLOD = false;
@@ -39,13 +41,13 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (options, minLOD, maxLOD,
 
   for (var i=0; i<maxLOD; i++) {
     if (i==0){
-      ngeo.extendedProfile.loader.xhrRequest(options, minLOD + i, minLOD + i + 4, i, polyline, distanceOffset, lastLOD, width, resetPlot, uuid);
+      ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD + i, minLOD + i + 4, i, ngeo.extendedProfile.options.linestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, resetPlot, uuid);
       i += 3;
     } else if (i < maxLOD - 1) {
-      ngeo.extendedProfile.loader.xhrRequest(options, minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width, false, uuid);
+      ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD + i, minLOD + i + 1, i, ngeo.extendedProfile.options.linestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, false, uuid);
     } else {
       lastLOD = true;
-      ngeo.extendedProfile.loader.xhrRequest(options, minLOD + i, minLOD + i + 1, i, polyline, distanceOffset, lastLOD, width, false, uuid);
+      ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD + i, minLOD + i + 1, i, ngeo.extendedProfile.options.linestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, false, uuid);
     }
   }
 
@@ -57,7 +59,6 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (options, minLOD, maxLOD,
  * its binary output format
  */
 ngeo.extendedProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot, uuid) {
-  console.log(options);
   let hurl = options.pytreeLidarProfileJsonUrl_ + '/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
   hurl += '&width=' + width + '&coordinates=' + coordinates;
   hurl += '&pointCloud=sitn2016';
@@ -96,7 +97,7 @@ ngeo.extendedProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter,
 
 ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, distanceOffset, lastLOD, resetPlot) {
 
-  try {
+  // try {
     
     let typedArrayInt32 = new Int32Array(profile, 0,4);
     let headerSize = typedArrayInt32[0];
@@ -116,8 +117,8 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
     let attr = jHeader.pointAttributes;
     let attributes = [];
     for (let j=0; j<attr.length; j++){
-      if (ngeo.extendedProfile.config.pointAttributes[attr[j]] != undefined){
-      attributes.push(ngeo.extendedProfile.config.pointAttributes[attr[j]]);
+      if (ngeo.extendedProfile.options.profileConfig.pointAttributes[attr[j]] != undefined){
+      attributes.push(ngeo.extendedProfile.options.profileConfig.pointAttributes[attr[j]]);
       }
     }
 
@@ -180,43 +181,43 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
     let rangeY = [ngeo.extendedProfile.plot2canvas.arrayMin(points.altitude), ngeo.extendedProfile.plot2canvas.arrayMax(points.altitude)];
     if (iter==0 && resetPlot) {
       ngeo.extendedProfile.plot2canvas.setupPlot(rangeX, rangeY);
-      ngeo.extendedProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
+      ngeo.extendedProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
 
     } else {
-      ngeo.extendedProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
+      ngeo.extendedProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
     }
 
     if (resetPlot) {
         // TODO reset plot
     }
 
-  } catch (e) {
-    console.log('error during buffer processing: ' + e);
-  }
+  // } catch (e) {
+    // console.log('error during buffer processing: ' + e);
+  // }
 }
 
 ngeo.extendedProfile.loader.updateData = function () {
-  let domain = ngeo.extendedProfile.config.plotParams.scaleX.domain();
+  let domain = ngeo.extendedProfile.options.profileConfig.scaleX.domain();
   let clip = ngeo.extendedProfile.utils.clipLineByMeasure(domain[0], domain[1]);
   let span = domain[1] - domain[0];
   let niceLOD = ngeo.extendedProfile.utils.getNiceLOD(span);
-  let previousSpan = ngeo.extendedProfile.config.plotParams.previousDomain[1] - ngeo.extendedProfile.config.plotParams.previousDomain[0];
-  let dxL = ngeo.extendedProfile.config.plotParams.previousDomain[0] - domain[0];
-  let dxR = ngeo.extendedProfile.config.plotParams.previousDomain[1] - domain[1];
+  let previousSpan = ngeo.extendedProfile.options.profileConfig.previousDomain[1] - ngeo.extendedProfile.options.profileConfig.previousDomain[0];
+  let dxL = ngeo.extendedProfile.options.profileConfig.previousDomain[0] - domain[0];
+  let dxR = ngeo.extendedProfile.options.profileConfig.previousDomain[1] - domain[1];
 
-  ngeo.extendedProfile.config.plotParams.previousDomain = domain;
+  ngeo.extendedProfile.options.profileConfig.previousDomain = domain;
   let canvasEl = d3.select('#profileCanvas').node();
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
   let zoomDir = previousSpan - span;
 
-  if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && zoomDir > 0) {
+  if (niceLOD <= ngeo.extendedProfile.options.profileConfig.initialLOD && zoomDir > 0) {
 
-    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.config.profileConfig.selectedMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
+    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.options.profileConfig.selectedMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
     return;
 
-  } else if (niceLOD <= ngeo.extendedProfile.config.plotParams.initialLOD && Math.abs(dxL) == 0 && Math.abs(dxR) == 0) {
-    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.config.profileConfig.selectedMaterial, ngeo.extendedProfile.config.plotParams.currentZoom);
+  } else if (niceLOD <= ngeo.extendedProfile.options.profileConfig.initialLOD && Math.abs(dxL) == 0 && Math.abs(dxR) == 0) {
+    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.options.profileConfig.selectedMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
     return;
 
   } else {
@@ -231,7 +232,7 @@ ngeo.extendedProfile.loader.updateData = function () {
       cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
     }
     cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
-    ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, ngeo.extendedProfile.config.profileConfig.profileWidth, false);
+    ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, ngeo.extendedProfile.options.profileConfig.profileWidth, false);
 
   }
 

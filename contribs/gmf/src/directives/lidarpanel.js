@@ -131,12 +131,13 @@ gmf.LidarPanelController.prototype.$onInit = function() {
   this.line = this.line;
   this.active = this.active;
   this.map = this.map;
-  this.gmfLidarProfileConfig.getClassificationColors();
-  this.gmfLidarProfileConfig.getSelectedMaterial();
-  this.gmfLidarProfileConfig.getMaterials();
-  this.gmfLidarProfileConfig.getWidth();
-  this.gmfLidarProfileConfig.getPointAttributes();
+  this.gmfLidarProfileConfig.initProfileConfig();
+
 };
+
+gmf.LidarPanelController.prototype.getProfileConfig = function() {
+  return this.gmfLidarProfileConfig.profileConfig;
+}
 
 gmf.LidarPanelController.prototype.getClassification = function() {
   return this.gmfLidarProfileConfig.profileConfig.classification;
@@ -172,18 +173,10 @@ gmf.LidarPanelController.prototype.setClassification = function(classification, 
 gmf.LidarPanelController.prototype.setWidth = function(profileWidth) {
   this.gmfLidarProfileConfig.profileConfig.profilWidth = profileWidth;
   if (this.line) {
-    let flat = this.line.flatCoordinates;
-    let pytreeLineString = '';
-    for (let i=0; i<flat.length; i++) {
-      let px = 2000000 + flat[i];
-      let py = 1000000 + flat[i+1];
-      pytreeLineString += '{' + Math.round(100*px)/100 + ',' + Math.round(100*py)/100+ '},';
-      i+= 1;
-    };
-    pytreeLineString = pytreeLineString.substr(0,pytreeLineString.length -1);
-    ngeo.extendedProfile.loader.getProfileByLOD(this.gmfLidarProfileConfig, 0, 5, pytreeLineString, 0, 10, true);
-  } else {
-    this.profileData = [];
+    this.gmfLidarProfileConfig.linestring = this.line;
+    this.gmfLidarProfileConfig.map = this.map;
+    ngeo.extendedProfile.setOptions(this.gmfLidarProfileConfig);
+    ngeo.extendedProfile.loader.getProfileByLOD(0, true, this.gmfLidarProfileConfig.profileConfig.minLOD, this.gmfLidarProfileConfig.profileConfig.maxLOD);
   }
 }
 

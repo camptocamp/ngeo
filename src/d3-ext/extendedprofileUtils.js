@@ -6,7 +6,7 @@ Utility fonctions for point cloud Profile
 
 ngeo.extendedProfile.utils.getLinestring = function () {
 
-  let linestringStr = ngeo.extendedProfile.linestring.replace(/{/g, '').replace(/}/g, '').split(',');
+  let linestringStr = ngeo.extendedProfile.options.linestring.replace(/{/g, '').replace(/}/g, '').split(',');
   let linestring = [];
 
   for (let j=0; j<linestringStr.length;j++) {
@@ -30,7 +30,7 @@ ngeo.extendedProfile.utils.getLinestring = function () {
       origY: linestring[k][1],
       endX: linestring[k+1][0],
       endY: linestring[k+1][1],
-      coeffA: shiftedY/shiftedX, 
+      coeffA: shiftedY/shiftedX,
       startD: distance,
       endD: endDistance
     });
@@ -279,3 +279,15 @@ ngeo.extendedProfile.utils.UUID = function() {
         randStr.substr(18, 12)
         ].join("");
 };
+
+ngeo.extendedProfile.utils.getPytreeLinestring = function(line) {
+      let flat = line.flatCoordinates;
+      let pytreeLineString = '';
+      for (let i=0; i<flat.length; i++) {
+      let px = 2000000 + flat[i];
+      let py = 1000000 + flat[i+1];
+      pytreeLineString += '{' + Math.round(100*px)/100 + ',' + Math.round(100*py)/100+ '},';
+      i+= 1;
+    };
+    return pytreeLineString.substr(0,pytreeLineString.length -1)
+}

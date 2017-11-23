@@ -375,16 +375,12 @@ gmf.LidarProfileController.prototype.update_ = function() {
   this.isErrored = false;
 
   if (this.line) {
-    let flat = this.line.flatCoordinates;
-    let pytreeLineString = '';
-    for (let i=0; i<flat.length; i++) {
-      let px = 2000000 + flat[i];
-      let py = 1000000 + flat[i+1];
-      pytreeLineString += '{' + Math.round(100*px)/100 + ',' + Math.round(100*py)/100+ '},';
-      i+= 1;
-    };
-    pytreeLineString = pytreeLineString.substr(0,pytreeLineString.length -1);
-    ngeo.extendedProfile.loader.getProfileByLOD(this.gmfLidarProfileConfig_, 0, 5, pytreeLineString, 0, 10, true);
+
+    this.gmfLidarProfileConfig_.linestring = this.line;
+    this.gmfLidarProfileConfig_.map = this.map;
+    ngeo.extendedProfile.setOptions(this.gmfLidarProfileConfig_);
+    console.log(this.gmfLidarProfileConfig_.profileConfig.minLOD, this.gmfLidarProfileConfig_.profileConfig.maxLOD);
+    ngeo.extendedProfile.loader.getProfileByLOD(0, true, this.gmfLidarProfileConfig_.profileConfig.minLOD, this.gmfLidarProfileConfig_.profileConfig.maxLOD);
   } else {
     this.profileData = [];
   }

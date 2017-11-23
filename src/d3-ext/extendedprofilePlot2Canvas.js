@@ -27,10 +27,10 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
     let rgb = points.color_packed[i];
     let intensity = points.intensity[i];
     let classification = points.classification[i];
-    if (ngeo.extendedProfile.config.profileConfig.classification[classification] && ngeo.extendedProfile.config.profileConfig.classification[classification].visible) {
+    if (ngeo.extendedProfile.options.profileConfig.classification[classification] && ngeo.extendedProfile.options.profileConfig.classification[classification].visible) {
       
-      cx = ngeo.extendedProfile.config.plotParams.scaleX(distance);
-      cy = ngeo.extendedProfile.config.plotParams.scaleY(altitude);
+      cx = ngeo.extendedProfile.options.profileConfig.scaleX(distance);
+      cy = ngeo.extendedProfile.options.profileConfig.scaleY(altitude);
 
       ctx.beginPath();
       ctx.moveTo(cx, cy);
@@ -39,7 +39,7 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
       } else if (material == 'INTENSITY') {
         ctx.fillStyle = 'RGB(' + intensity + ', ' + intensity + ', ' + intensity + ')';
       } else if (material == 'CLASSIFICATION') {
-        ctx.fillStyle = 'RGB(' + ngeo.extendedProfile.config.profileConfig.classification[classification].color + ')';
+        ctx.fillStyle = 'RGB(' + ngeo.extendedProfile.options.profileConfig.classification[classification].color + ')';
       } else {
         ctx.fillStyle = 'RGB(' + 150 + ', ' + 150 + ', ' + 150 + ')';
       }
@@ -114,8 +114,8 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
         domainHeightCentroid + domainScaledHeight / 2 ])
       .range([height, 0]);
   }
-  ngeo.extendedProfile.config.plotParams.scaleX = sx;
-  ngeo.extendedProfile.config.plotParams.scaleY = sy;
+  ngeo.extendedProfile.options.profileConfig.scaleX = sx;
+  ngeo.extendedProfile.options.profileConfig.scaleY = sy;
   
   function zoomed() {
     let tr = d3.event.transform;
@@ -129,9 +129,9 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     .style('stroke', '#d8d8d8');
 
     ngeo.extendedProfile.measure.clearMeasure();
-    ngeo.extendedProfile.config.plotParams.currentZoom = tr.k;
-    ngeo.extendedProfile.config.plotParams.scaleX = tr.rescaleX(sx);
-    ngeo.extendedProfile.config.plotParams.scaleY = tr.rescaleY(sy);
+    ngeo.extendedProfile.options.profileConfig.currentZoom = tr.k;
+    ngeo.extendedProfile.options.profileConfig.scaleX = tr.rescaleX(sx);
+    ngeo.extendedProfile.options.profileConfig.scaleY = tr.rescaleY(sy);
     // ngeo.extendedProfile.loader.updateData();
   }
 
@@ -176,7 +176,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   .style('opacity', '0.5')
   .style('stroke', '#d8d8d8');
   
-  ngeo.extendedProfile.config.plotParams.previousDomain= sx.domain();
+  ngeo.extendedProfile.options.profileConfig.previousDomain= sx.domain();
 
 };
 
@@ -186,8 +186,8 @@ Find the closest neighboor of the mouse coordinates within tolerance
 ngeo.extendedProfile.plot2canvas.getClosestPoint = function (points, xs,ys,tolerance) {
   let d = points;
   let tol = tolerance;
-  let sx = ngeo.extendedProfile.config.plotParams.scaleX;
-  let sy = ngeo.extendedProfile.config.plotParams.scaleY;
+  let sx = ngeo.extendedProfile.options.profileConfig.scaleX;
+  let sy = ngeo.extendedProfile.options.profileConfig.scaleY;
   let distances = [];
   let hP = [];
 
@@ -233,8 +233,8 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
   let xs = svgCoordinates[0];
   let ys = svgCoordinates[1];
   let tolerance = 5; 
-  let sx = ngeo.extendedProfile.config.plotParams.scaleX;
-  let sy = ngeo.extendedProfile.config.plotParams.scaleY;
+  let sx = ngeo.extendedProfile.options.profileConfig.scaleX;
+  let sy = ngeo.extendedProfile.options.profileConfig.scaleY;
 
   let p = ngeo.extendedProfile.plot2canvas.getClosestPoint(ngeo.extendedProfile.loader.profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
   if (p != undefined) {
@@ -252,7 +252,7 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
     .style('fill', 'orange');
 
     let html = 'distance: ' + Math.round(10 * p.distance) / 10 + ' alti: ' + Math.round( 10 * p.altitude) / 10 + '  -  ';
-    html += 'Classification: ' + ngeo.extendedProfile.config.profileConfig.classification[p.classification].name + '  -  ';
+    html += 'Classification: ' + ngeo.extendedProfile.options.profileConfig.classification[p.classification].name + '  -  ';
     html += 'Intensity: ' + p.intensity;
 
     d3.select('#profileInfo').style('color', 'orange')
@@ -271,15 +271,15 @@ ngeo.extendedProfile.plot2canvas.changeStyle = function(material) {
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
   ctx.clearRect(0, 0, d3.select('#profileCanvas').node().width, d3.select('#profileCanvas').node().height);
-  ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, material, ngeo.extendedProfile.config.plotParams.currentZoom);
+  ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, material, ngeo.extendedProfile.options.profileConfig.currentZoom);
 }
 
 ngeo.extendedProfile.plot2canvas.setClassActive = function(classification, material) {
-  ngeo.extendedProfile.config.profileConfig.classification = classification;
+  ngeo.extendedProfile.options.profileConfig.classification = classification;
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
   ctx.clearRect(0, 0, d3.select('#profileCanvas').node().width, d3.select('#profileCanvas').node().height);
-  ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, material, ngeo.extendedProfile.config.plotParams.currentZoom);
+  ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, material, ngeo.extendedProfile.options.profileConfig.currentZoom);
 }
 
 ngeo.extendedProfile.plot2canvas.arrayMax = function (array) {

@@ -18,23 +18,27 @@ gmf.LidarProfileConfig = function($http, pytreeLidarProfileJsonUrl) {
    * @private
    */
   this.$http_ = $http;
-  
   this.pytreeLidarProfileJsonUrl_ = pytreeLidarProfileJsonUrl;
-  
-  this.plotParams = {};
-  this.plotParams.scaleX = {};
-  this.plotParams.currentScaleY = {};
-  this.plotParams.currentZoom = 1;
-  this.plotParams.previousDomain = [];
-  this.plotParams.distanceOffset = 0;
-
-  this.plotParams.initialLOD = 7;
   this.profileConfig = {};
-  this.profileConfig = {};
-  
-  // gmf.LidarProfileConfig.pointAttributes = {};
+  this.profileConfig.scaleX = {};
+  this.profileConfig.currentScaleY = {};
+  this.profileConfig.currentZoom = 1;
+  this.profileConfig.previousDomain = [];
+  this.profileConfig.distanceOffset = 0;
+  this.profileConfig.initialLOD = 7;
   this.profileConfig.pointAttributes = {};
+
 };
+
+gmf.LidarProfileConfig.prototype.initProfileConfig = function() {
+  this.getClassificationColors();
+  this.getSelectedMaterial();
+  this.getMaterials();
+  this.getWidth();
+  this.getPointAttributes();
+  this.getMinLOD();
+  this.getMaxLOD();
+}
 
 gmf.LidarProfileConfig.prototype.getClassificationColors = function() {
   this.$http_.get(this.pytreeLidarProfileJsonUrl_ + '/get_classification_colors').then((resp) => {
@@ -43,11 +47,7 @@ gmf.LidarProfileConfig.prototype.getClassificationColors = function() {
 };
 
 gmf.LidarProfileConfig.prototype.getMaterials = function() {
-  // this.$http_.get(this.pytreeLidarProfileJsonUrl_ + '/get_default_material').then((resp) => {
-    // this.profileConfig.defautMaterial = resp.data;
-  // });
-  
-  // TODO use pytree service once available
+
   this.profileConfig.materials = [
     {'name': 'COLOR_PACKED', 'value': 'COLOR_PACKED', 'selected': ''},
     {'name': 'RGB', 'value': 'RGB','selected': 'selected'},
@@ -63,6 +63,14 @@ gmf.LidarProfileConfig.prototype.getSelectedMaterial = function() {
 
 gmf.LidarProfileConfig.prototype.getWidth = function() {
   this.profileConfig.profilWidth = 11;
+};
+
+gmf.LidarProfileConfig.prototype.getMinLOD = function() {
+  this.profileConfig.minLOD = 0;
+};
+
+gmf.LidarProfileConfig.prototype.getMaxLOD = function() {
+  this.profileConfig.maxLOD = 5;
 };
 
 gmf.LidarProfileConfig.prototype.getPointAttributes = function() {
@@ -109,47 +117,5 @@ gmf.LidarProfileConfig.prototype.getPointAttributes = function() {
     bytes: 1
   }
 };
-
-// gmf.LidarProfileConfig.pointAttributes.POSITION_CARTESIAN = {
-  // name: 'POSITION_CARTESIAN',
-  // elements: 3,
-  // bytes: 12
-// }
-
-// gmf.LidarProfileConfig.pointAttributes.POSITION_PROJECTED_PROFILE = {
-  // name: 'POSITION_PROJECTED_PROFILE',
-  // elements: 2,
-  // bytes: 8
-// }
-
-// gmf.LidarProfileConfig.pointAttributes.COLOR_PACKED = {
-  // name: 'COLOR_PACKED',
-  // elements: 4,
-  // bytes: 4
-// }
-
-// gmf.LidarProfileConfig.pointAttributes.RGB = {
-  // name: 'RGB',
-  // elements: 3,
-  // bytes: 3
-// }
-
-// gmf.LidarProfileConfig.pointAttributes.RGBA = {
-  // name: 'RGBA',
-  // elements: 4,
-  // bytes: 4
-// }
-
-// gmf.LidarProfileConfig.pointAttributes.INTENSITY = {
-  // name: 'INTENSITY',
-  // elements: 1,
-  // bytes: 2
-// }
-
-// gmf.LidarProfileConfig.pointAttributes.CLASSIFICATION = {
-  // name: 'CLASSIFICATION',
-  // elements: 1,
-  // bytes: 1
-// }
 
 gmf.module.service('gmfLidarProfileConfig', gmf.LidarProfileConfig);
