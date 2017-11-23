@@ -51,11 +51,11 @@
         ng-click="mainCtrl.toggleLeftNavVisibility()">
         <span class="gmf-icon gmf-icon-layers"></span>
       </button>
-      <gmf-search gmf-search-map="mainCtrl.map"
-        gmf-search-datasources="mainCtrl.searchDatasources"
-        gmf-search-clearbutton="true"
+      <gmf-search gmf-search-map="::mainCtrl.map"
+        gmf-search-datasources="::mainCtrl.searchDatasources"
+        gmf-search-clearbutton="::true"
         gmf-search-placeholder="{{'Search…'|translate}}"
-        gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
+        gmf-search-coordinatesprojections="::mainCtrl.searchCoordinatesProjections"
         gmf-search-listeners="::mainCtrl.searchListeners">
       </gmf-search>
       <button class="gmf-mobile-nav-trigger gmf-mobile-nav-right-trigger"

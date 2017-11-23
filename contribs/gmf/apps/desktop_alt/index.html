@@ -214,12 +214,12 @@
         </div>
       </div>
       <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
-        <gmf-search gmf-search-map="mainCtrl.map"
-          gmf-search-datasources="mainCtrl.searchDatasources"
-          gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
-          gmf-search-colorchooser="true"
+        <gmf-search gmf-search-map="::mainCtrl.map"
+          gmf-search-datasources="::mainCtrl.searchDatasources"
+          gmf-search-coordinatesprojections="::mainCtrl.searchCoordinatesProjections"
+          gmf-search-colorchooser="::true"
           gmf-search-placeholder="{{'Search…'|translate}}"
-          gmf-search-clearbutton="true">
+          gmf-search-clearbutton="::true">
         </gmf-search>
         <gmf-displaywindow
           content="mainCtrl.displaywindowContent"
