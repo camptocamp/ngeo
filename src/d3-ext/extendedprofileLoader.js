@@ -177,8 +177,7 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
     let lastSegment = initialProfile[initialProfile.length-1];
     let rangeX = [0, lastSegment.endD];
     let rangeY = [ngeo.extendedProfile.plot2canvas.arrayMin(points.altitude), ngeo.extendedProfile.plot2canvas.arrayMax(points.altitude)];
-    console.log("ICICICCI");
-    console.log(resetPlot);
+
     if (iter==0 && resetPlot) {
       ngeo.extendedProfile.plot2canvas.setupPlot(rangeX, rangeY);
       ngeo.extendedProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
@@ -193,7 +192,6 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
 }
 
 ngeo.extendedProfile.loader.updateData = function () {
-  console.log("updateData");
   let domain = ngeo.extendedProfile.options.profileConfig.scaleX.domain();
   let clip = ngeo.extendedProfile.utils.clipLineByMeasure(domain[0], domain[1]);
   let span = domain[1] - domain[0];
@@ -209,20 +207,14 @@ ngeo.extendedProfile.loader.updateData = function () {
   let zoomDir = previousSpan - span;
 
   if (niceLOD <= ngeo.extendedProfile.options.profileConfig.initialLOD && zoomDir > 0) {
-    console.log("la")
-    console.log(zoomDir);
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.options.profileConfig.selectedMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
     return;
 
   } else if (niceLOD <= ngeo.extendedProfile.options.profileConfig.initialLOD && Math.abs(dxL) == 0 && Math.abs(dxR) == 0) {
-        console.log("li")
-
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.options.profileConfig.selectedMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
     return;
 
   } else {
-    console.log("lu")
-
     let line = clip.clippedLine;
     if(clip.clippedLine.length < 2) {
       return;
@@ -233,7 +225,6 @@ ngeo.extendedProfile.loader.updateData = function () {
       cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
     }
     cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
-    // TODO update linestring with clipped line
     ngeo.extendedProfile.loader.getProfileByLOD(clip.distanceOffset, false, 0, niceLOD);
 
   }

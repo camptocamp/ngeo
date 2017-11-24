@@ -22,11 +22,21 @@ gmf.LidarProfileConfig = function($http, pytreeLidarProfileJsonUrl) {
   this.profileConfig = {};
   this.profileConfig.scaleX = {};
   this.profileConfig.currentScaleY = {};
-  this.profileConfig.currentZoom = 1;
   this.profileConfig.previousDomain = [];
+  this.profileConfig.pointAttributes = {};
+  
+  // TODO get this params from pytree server
+  this.profileConfig.currentZoom = 1;
   this.profileConfig.distanceOffset = 0;
   this.profileConfig.initialLOD = 5;
-  this.profileConfig.pointAttributes = {};
+  this.profileConfig.pointSize = 1;
+  this.profileConfig.margin = {
+    'left': 40,
+    'top': 10,
+    'right': 10,
+    'bottom': 40
+  };
+  this.profileConfig.defaultColor = 'RGB(250,150,150)';
 
 };
 

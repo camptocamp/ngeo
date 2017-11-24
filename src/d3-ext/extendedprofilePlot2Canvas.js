@@ -9,9 +9,6 @@ LiDAR profile from protreeViewer adapated for new d3 API after d3 4.0 API break
 Draw the points to canvas
 ***/
 ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) {
-  
-  // TODO get this value from config
-  let pointSize = 2;
 
   let i = -1;
   let n = points.distance.length;
@@ -39,9 +36,9 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
       } else if (material == 'CLASSIFICATION') {
         ctx.fillStyle = 'RGB(' + ngeo.extendedProfile.options.profileConfig.classification[classification].color + ')';
       } else {
-        ctx.fillStyle = 'RGB(' + 150 + ', ' + 150 + ', ' + 150 + ')';
+        ctx.fillStyle = ngeo.extendedProfile.options.profileConfig.defaultColor;
       }
-      ctx.arc(cx, cy, pointSize, 0, 2 * Math.PI, false);
+      ctx.arc(cx, cy, ngeo.extendedProfile.options.profileConfig.pointSize, 0, 2 * Math.PI, false);
       ctx.fill();
     }
   }
@@ -57,16 +54,10 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   .node().getContext('2d');
   ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
   // TODO move this to options
-  margin = {
-    'left': 40,
-    'top': 10,
-    'right': 10,
-    'bottom': 40
-  }
+  let margin = ngeo.extendedProfile.options.profileConfig.margin;
 
   let containerWidth = d3.select('.gmf-extended-profile-container').node().getBoundingClientRect().width;
   let containerHeight = d3.select('.gmf-extended-profile-container').node().getBoundingClientRect().height;
-  console.log(containerWidth, containerHeight);
   let width = containerWidth - (margin.left + margin.right);
   let height = containerHeight - (margin.top + margin.bottom);
 
@@ -138,9 +129,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   let zoom = d3.zoom()
     .scaleExtent([1, 100])
     .on("zoom", zoomed);
-  // zoom.translateExtent([[0, null], [rangeX[1], null]]);
 
-  // d3.select('svg#profileSVG').call(zoom.on('end', ngeo.extendedProfile.loader.updateData));
   d3.select('svg#profileSVG').call(zoom);
 
   let context = d3.select('#profileCanvas')
