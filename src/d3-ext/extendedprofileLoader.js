@@ -22,7 +22,7 @@ ngeo.extendedProfile.loader.requestsQueue = [];
 // Load points by LOD
 ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlot, minLOD, maxLOD) {
 
-  ngeo.extendedProfile.options.linestring =  ngeo.extendedProfile.utils.getPytreeLinestring(ngeo.extendedProfile.options.linestring);;
+  ngeo.extendedProfile.options.pytreeLinestring =  ngeo.extendedProfile.utils.getPytreeLinestring(ngeo.extendedProfile.options.olLinestring);;
   
   let uuid = ngeo.extendedProfile.utils.UUID();
   ngeo.extendedProfile.loader.lastUuid = uuid;
@@ -36,15 +36,16 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlo
     classification: []
   }
 
-  for (var i=0; i<maxLOD; i++) {
+  for (let i=0; i<maxLOD; i++) {
     if (i==0){
-      ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD + i, minLOD + i + 4, i, ngeo.extendedProfile.options.linestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, resetPlot, uuid);
+      // TODO set defaultLOD from config
+      ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD + i, minLOD + i + 4, i, ngeo.extendedProfile.options.pytreeLinestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, resetPlot, uuid);
       i += 3;
     } else if (i < maxLOD - 1) {
-      ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD + i, minLOD + i + 1, i, ngeo.extendedProfile.options.linestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, false, uuid);
+      ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD + i, minLOD + i + 1, i, ngeo.extendedProfile.options.pytreeLinestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, false, uuid);
     } else {
       lastLOD = true;
-      ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD + i, minLOD + i + 1, i, ngeo.extendedProfile.options.linestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, false, uuid);
+      ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD + i, minLOD + i + 1, i, ngeo.extendedProfile.options.pytreeLinestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, false, uuid);
     }
   }
 
@@ -56,6 +57,7 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlo
  * its binary output format
  */
 ngeo.extendedProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot, uuid) {
+  console.log("xhrRequest");
   let hurl = options.pytreeLidarProfileJsonUrl_ + '/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
   hurl += '&width=' + width + '&coordinates=' + coordinates;
   hurl += '&pointCloud=sitn2016';
@@ -194,6 +196,7 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
 }
 
 ngeo.extendedProfile.loader.updateData = function () {
+  console.log("updateData");
   let domain = ngeo.extendedProfile.options.profileConfig.scaleX.domain();
   let clip = ngeo.extendedProfile.utils.clipLineByMeasure(domain[0], domain[1]);
   let span = domain[1] - domain[0];
@@ -229,7 +232,6 @@ ngeo.extendedProfile.loader.updateData = function () {
       cPotreeLineStr += '{' + line[i][0] + ',' + line[i][1] + '},';
     }
     cPotreeLineStr = cPotreeLineStr.substr(0,cPotreeLineStr.length-1);
-    // ngeo.extendedProfile.loader.getProfileByLOD(0, niceLOD, cPotreeLineStr, clip.distanceOffset, ngeo.extendedProfile.options.profileConfig.profileWidth, false);
     // TODO update linestring with clipped line
     ngeo.extendedProfile.loader.getProfileByLOD(clip.distanceOffset, false, 0, niceLOD);
 

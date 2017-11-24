@@ -173,7 +173,7 @@ gmf.LidarPanelController.prototype.setClassification = function(classification, 
 gmf.LidarPanelController.prototype.setWidth = function(profileWidth) {
   this.gmfLidarProfileConfig.profileConfig.profilWidth = profileWidth;
   if (this.line) {
-    this.gmfLidarProfileConfig.linestring = this.line;
+    this.gmfLidarProfileConfig.olLinestring = this.line;
     this.gmfLidarProfileConfig.map = this.map;
     ngeo.extendedProfile.setOptions(this.gmfLidarProfileConfig);
     ngeo.extendedProfile.loader.getProfileByLOD(0, true, this.gmfLidarProfileConfig.profileConfig.minLOD, this.gmfLidarProfileConfig.profileConfig.maxLOD);

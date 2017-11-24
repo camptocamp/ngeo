@@ -118,6 +118,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   ngeo.extendedProfile.options.profileConfig.scaleY = sy;
   
   function zoomed() {
+    console.log("zoomed");
     let tr = d3.event.transform;
     svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(sx)));
     svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(sy)));
@@ -132,7 +133,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     ngeo.extendedProfile.options.profileConfig.currentZoom = tr.k;
     ngeo.extendedProfile.options.profileConfig.scaleX = tr.rescaleX(sx);
     ngeo.extendedProfile.options.profileConfig.scaleY = tr.rescaleY(sy);
-    // ngeo.extendedProfile.loader.updateData();
+    ngeo.extendedProfile.loader.updateData();
   }
 
   let zoom = d3.zoom()
@@ -140,8 +141,8 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     .on("zoom", zoomed);
   // zoom.translateExtent([[0, null], [rangeX[1], null]]);
 
-  d3.select('svg#profileSVG').call(zoom.on('end', ngeo.extendedProfile.loader.updateData));
-  // d3.select('svg#profileSVG').call(zoom);
+  // d3.select('svg#profileSVG').call(zoom.on('end', ngeo.extendedProfile.loader.updateData));
+  d3.select('svg#profileSVG').call(zoom);
 
   let context = d3.select('#profileCanvas')
     .node().getContext('2d');

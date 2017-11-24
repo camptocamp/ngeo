@@ -6,7 +6,7 @@ Utility fonctions for point cloud Profile
 
 ngeo.extendedProfile.utils.getLinestring = function () {
 
-  let linestringStr = ngeo.extendedProfile.options.linestring.replace(/{/g, '').replace(/}/g, '').split(',');
+  let linestringStr = ngeo.extendedProfile.options.pytreeLinestring.replace(/{/g, '').replace(/}/g, '').split(',');
   let linestring = [];
 
   for (let j=0; j<linestringStr.length;j++) {
