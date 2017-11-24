@@ -24,32 +24,29 @@ app.module = angular.module('app', ['ngeo']);
 
 
 /**
- * An application-specific directive wrapping the ngeo tree layer directive.
- * The directive includes a controller defining the tree tree.
- * @return {angular.Directive} The Directive Definition Object.
- * @ngInject
+ * An application-specific component wrapping the ngeo tree layer component.
+ * The component includes a controller defining the tree tree.
+ *
+ * @type {!angular.Component}
  */
-app.layertreeDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appLayertreeMap'
-    },
-    controller: 'AppLayertreeController as ctrl',
-    bindToController: true,
-    // use "::ctrl.tree" for the "tree" expression as we know the
-    // layer tree won't change
-    template:
-        '<div ngeo-layertree="::ctrl.tree" ' +
-        'ngeo-layertree-templateurl="partials/layertree.html" ' +
-        'ngeo-layertree-map="ctrl.map" ' +
-        'ngeo-layertree-nodelayer="ctrl.getLayer(node)">' +
-        '</div>'
-  };
+app.layertreeComponent = {
+  bindings: {
+    'map': '=appLayertreeMap'
+  },
+  controller: 'AppLayertreeController',
+  controllerAs: 'ctrl',
+  // use "::ctrl.tree" for the "tree" expression as we know the
+  // layer tree won't change
+  template:
+      '<div ngeo-layertree="::ctrl.tree" ' +
+      'ngeo-layertree-templateurl="partials/layertree.html" ' +
+      'ngeo-layertree-map="ctrl.map" ' +
+      'ngeo-layertree-nodelayer="ctrl.getLayer(node)">' +
+      '</div>'
 };
 
 
-app.module.directive('appLayertree', app.layertreeDirective);
+app.module.component('appLayertree', app.layertreeComponent);
 
 
 /**

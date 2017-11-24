@@ -28,22 +28,17 @@ app.module.value('ngeoQueryOptions', {
 
 
 /**
- * A sample directive to display the result.
+ * A sample component to display the result.
  *
- * @return {angular.Directive} The directive specs.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.queryresultDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {},
-    controller: 'AppQueryresultController as qrCtrl',
-    bindToController: true,
-    templateUrl: 'partials/queryresult.html'
-  };
+app.queryresultComponent = {
+  controller: 'AppQueryresultController',
+  controllerAs: 'qrCtrl',
+  templateUrl: 'partials/queryresult.html'
 };
 
-app.module.directive('appQueryresult', app.queryresultDirective);
+app.module.component('appQueryresult', app.queryresultComponent);
 
 
 /**

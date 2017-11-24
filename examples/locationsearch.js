@@ -17,27 +17,23 @@ app.module = angular.module('app', [ngeo.module.name]);
 
 
 /**
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.locationSearchDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appSearchMap'
-    },
-    controller: 'AppSearchController as ctrl',
-    bindToController: true,
-    template:
-        '<input type="text" placeholder="Search…" ' +
-        'ngeo-search="ctrl.options" ' +
-        'ngeo-search-datasets="ctrl.datasets" ' +
-        'ngeo-search-listeners="ctrl.listeners">'
-  };
+app.locationSearchComponent = {
+  bindings: {
+    'map': '=appSearchMap'
+  },
+  controller: 'AppSearchController',
+  controllerAs: 'ctrl',
+  template:
+      '<input type="text" placeholder="Search…" ' +
+      'ngeo-search="ctrl.options" ' +
+      'ngeo-search-datasets="ctrl.datasets" ' +
+      'ngeo-search-listeners="ctrl.listeners">'
 };
 
 
-app.module.directive('appLocationSearch', app.locationSearchDirective);
+app.module.component('appLocationSearch', app.locationSearchComponent);
 
 
 /**

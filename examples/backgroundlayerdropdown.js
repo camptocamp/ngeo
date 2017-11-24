@@ -18,28 +18,24 @@ app.module = angular.module('app', ['ngeo']);
 
 
 /**
- * The application-specific background layer directive.
+ * The application-specific background layer component.
  *
- * The directive is based on Bootstrap's dropdown jQuery plugin and on
+ * The component is based on Bootstrap's dropdown jQuery plugin and on
  * the ngeoBackgroundLayerMgr service.
  *
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.backgroundlayerDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appBackgroundlayerMap'
-    },
-    templateUrl: 'partials/backgroundlayerdropdown.html',
-    bindToController: true,
-    controller: 'AppBackgroundlayerController as ctrl'
-  };
+app.backgroundlayerComponent = {
+  bindings: {
+    'map': '=appBackgroundlayerMap'
+  },
+  templateUrl: 'partials/backgroundlayerdropdown.html',
+  controller: 'AppBackgroundlayerController',
+  controllerAs: 'ctrl'
 };
 
 
-app.module.directive('appBackgroundlayer', app.backgroundlayerDirective);
+app.module.component('appBackgroundlayer', app.backgroundlayerComponent);
 
 
 /**
